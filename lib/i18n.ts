@@ -74,6 +74,7 @@ export const translations = {
       mockupProgress: "completed",
       mockupMore: "+ 4 more resources",
       mockupRead: "Read →",
+      resourcesMinRead: "min read",
     },
     personal: {
       label: "Personal Pathway",
@@ -245,6 +246,7 @@ export const translations = {
       mockupProgress: "selesai",
       mockupMore: "+ 4 sumber daya lainnya",
       mockupRead: "Baca →",
+      resourcesMinRead: "menit baca",
     },
     personal: {
       label: "Jalur Pribadi",

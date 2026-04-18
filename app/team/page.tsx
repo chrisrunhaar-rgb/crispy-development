@@ -59,7 +59,7 @@ export default function TeamPathwayPage() {
       {/* ── DASHBOARD PREVIEW ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(3rem, 6vw, 6rem)", alignItems: "start" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(3rem, 6vw, 6rem)", alignItems: "start" }}>
             <div>
               <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Team Dashboard</p>
               <h2 className="t-section" style={{ marginBottom: "1.5rem" }}>Everything you<br />need, in one place.</h2>

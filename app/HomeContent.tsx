@@ -40,39 +40,29 @@ export default function HomeContent() {
           </div>
         </div>
 
+        {/* Compass — large decorative element, visible on all screen sizes */}
+        <div aria-hidden="true" style={{ position: "absolute", right: "-3%", top: "50%", transform: "translateY(-50%)", width: "min(52vw, 480px)", height: "min(52vw, 480px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.55 }}>
+          <Image src="/logo-icon.png" alt="" fill style={{ objectFit: "contain" }} priority />
+        </div>
+
         <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "clamp(1rem, 4vw, 4rem)", alignItems: "center" }}>
-
-            {/* Text */}
-            <div style={{ maxWidth: "680px" }}>
-              <p className="t-label animate-fade-up" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.75rem", fontSize: "0.65rem" }}>
-                {h.label}
-              </p>
-              <h1 className="t-hero animate-fade-up animate-delay-1" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
-                {h.h1a}<br />{h.h1b}
-              </h1>
-              <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
-                {h.tagline}
-              </p>
-              <div className="animate-fade-up animate-delay-3" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                <Link href="/signup?pathway=personal" className="btn-primary">
-                  {h.ctaPrimary} <span style={{ fontSize: "0.9em" }}>→</span>
-                </Link>
-                <Link href="/signup?pathway=team" className="btn-ghost">
-                  {h.ctaTeam}
-                </Link>
-              </div>
-            </div>
-
-            {/* Compass logo — prominent visual */}
-            <div className="hidden-mobile" aria-hidden="true" style={{ width: "clamp(220px, 28vw, 360px)", aspectRatio: "1", position: "relative", flexShrink: 0, pointerEvents: "none" }}>
-              <Image
-                src="/logo-icon.png"
-                alt=""
-                fill
-                style={{ objectFit: "contain", mixBlendMode: "screen", opacity: 0.75 }}
-                priority
-              />
+          <div style={{ maxWidth: "640px" }}>
+            <p className="t-label animate-fade-up" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.75rem", fontSize: "0.65rem" }}>
+              {h.label}
+            </p>
+            <h1 className="t-hero animate-fade-up animate-delay-1" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
+              {h.h1a}<br />{h.h1b}
+            </h1>
+            <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
+              {h.tagline}
+            </p>
+            <div className="animate-fade-up animate-delay-3" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <Link href="/signup?pathway=personal" className="btn-primary">
+                {h.ctaPrimary} <span style={{ fontSize: "0.9em" }}>→</span>
+              </Link>
+              <Link href="/signup?pathway=team" className="btn-ghost">
+                {h.ctaTeam}
+              </Link>
             </div>
           </div>
         </div>
@@ -211,7 +201,7 @@ export default function HomeContent() {
                 <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.0625rem", lineHeight: 1.3, color: "oklch(22% 0.005 260)", marginBottom: "0.75rem" }}>{r.title}</h3>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.6, color: "oklch(48% 0.008 260)", marginBottom: "1.5rem" }}>{r.description}</p>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.006 260)", fontWeight: 300 }}>{r.readTime} {h.resourcesLabel === "Free Resources" ? "min read" : "menit baca"}</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.006 260)", fontWeight: 300 }}>{r.readTime} {h.resourcesMinRead}</span>
                   <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(30% 0.12 260)", textDecoration: "none" }}>{h.resourcesDownload}</Link>
                 </div>
               </div>
