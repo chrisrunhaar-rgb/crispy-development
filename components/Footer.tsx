@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -17,25 +18,28 @@ export default function Footer() {
 
           {/* Brand column */}
           <div style={{ gridColumn: "span 1" }}>
-            <div style={{ marginBottom: "1rem" }}>
-              <span style={{
-                fontFamily: "var(--font-montserrat)",
-                fontWeight: 800,
-                fontSize: "0.875rem",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "oklch(30% 0.12 260)",
-                display: "block",
-              }}>Crispy</span>
-              <span style={{
-                fontFamily: "var(--font-montserrat)",
-                fontWeight: 300,
-                fontSize: "0.65rem",
-                letterSpacing: "0.25em",
-                textTransform: "uppercase",
-                color: "oklch(52% 0.008 260)",
-                display: "block",
-              }}>Development</span>
+            <div style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.625rem" }}>
+              <Image src="/logo-icon.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0 }} />
+              <div>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 800,
+                  fontSize: "0.875rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "oklch(30% 0.12 260)",
+                  display: "block",
+                }}>Crispy</span>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 300,
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "oklch(52% 0.008 260)",
+                  display: "block",
+                }}>Development</span>
+              </div>
             </div>
             <p style={{
               fontFamily: "var(--font-cormorant)",

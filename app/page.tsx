@@ -11,6 +11,7 @@ export default function HomePage() {
         position: "relative",
         overflow: "hidden",
       }}>
+        {/* Top orange rule */}
         <div style={{
           position: "absolute",
           top: 0, left: 0, right: 0,
@@ -18,7 +19,42 @@ export default function HomePage() {
           background: "oklch(65% 0.15 45)",
         }} />
 
-        <div className="container-wide">
+        {/* Decorative concentric arcs — bottom right */}
+        <div aria-hidden="true" style={{
+          position: "absolute",
+          bottom: "-220px",
+          right: "-220px",
+          width: "640px",
+          height: "640px",
+          borderRadius: "50%",
+          border: "1px solid oklch(97% 0.005 80 / 0.07)",
+          pointerEvents: "none",
+        }}>
+          <div style={{
+            position: "absolute",
+            top: "80px", left: "80px", right: "80px", bottom: "80px",
+            borderRadius: "50%",
+            border: "1px solid oklch(97% 0.005 80 / 0.07)",
+          }}>
+            <div style={{
+              position: "absolute",
+              top: "80px", left: "80px", right: "80px", bottom: "80px",
+              borderRadius: "50%",
+              border: "1px solid oklch(65% 0.15 45 / 0.25)",
+            }} />
+          </div>
+        </div>
+
+        {/* Dot grid */}
+        <div aria-hidden="true" style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.07) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          pointerEvents: "none",
+        }} />
+
+        <div className="container-wide" style={{ position: "relative" }}>
           <div style={{ maxWidth: "800px" }}>
             <p className="t-label animate-fade-up" style={{
               color: "oklch(65% 0.15 45)",
@@ -91,7 +127,7 @@ export default function HomePage() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                 {["Curated leadership content", "Cross-cultural reflection tools", "Personal progress tracking", "Community discussion access", "8 PDF resources included"].map(item => (
                   <li key={item} style={{ display: "flex", gap: "0.75rem", fontSize: "0.875rem", color: "oklch(38% 0.008 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: "0.1em" }}>✓</span>
                     {item}
                   </li>
                 ))}
@@ -106,8 +142,28 @@ export default function HomePage() {
               background: "oklch(30% 0.12 260)",
               padding: "clamp(2rem, 4vw, 3rem)",
               display: "flex", flexDirection: "column", gap: "2rem",
+              position: "relative",
+              overflow: "hidden",
             }}>
-              <div>
+              {/* Subtle arc decoration on team card */}
+              <div aria-hidden="true" style={{
+                position: "absolute",
+                bottom: "-80px",
+                right: "-80px",
+                width: "240px",
+                height: "240px",
+                borderRadius: "50%",
+                border: "1px solid oklch(97% 0.005 80 / 0.08)",
+                pointerEvents: "none",
+              }}>
+                <div style={{
+                  position: "absolute",
+                  top: "40px", left: "40px", right: "40px", bottom: "40px",
+                  borderRadius: "50%",
+                  border: "1px solid oklch(65% 0.15 45 / 0.2)",
+                }} />
+              </div>
+              <div style={{ position: "relative" }}>
                 <span className="pathway-badge team" style={{ marginBottom: "1.5rem", display: "inline-flex", background: "oklch(97% 0.005 80 / 0.12)", color: "oklch(88% 0.008 80)" }}>Team</span>
                 <h3 className="t-card-heading" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem" }}>Equip your entire team.</h3>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", maxWidth: "48ch" }}>
@@ -115,15 +171,15 @@ export default function HomePage() {
                   the content your team needs, and track collective growth in a shared dashboard.
                 </p>
               </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.75rem", position: "relative" }}>
                 {["Team dashboard with member overview", "Leader-curated content selection", "Invite members via link or email", "Everything in Personal, for your whole team", "Dedicated team discussion space"].map(item => (
                   <li key={item} style={{ display: "flex", gap: "0.75rem", fontSize: "0.875rem", color: "oklch(78% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: "0.1em" }}>✓</span>
                     {item}
                   </li>
                 ))}
               </ul>
-              <div style={{ marginTop: "auto" }}>
+              <div style={{ marginTop: "auto", position: "relative" }}>
                 <Link href="/team" className="btn-primary">Explore Team Pathway <span style={{ fontSize: "0.9em" }}>→</span></Link>
               </div>
             </div>
@@ -131,7 +187,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="divider" />
+      {/* ── ORANGE RULE DIVIDER ── */}
+      <div style={{ height: "3px", background: "oklch(65% 0.15 45)", margin: 0 }} />
 
       {/* ── FREE RESOURCES ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
@@ -146,25 +203,36 @@ export default function HomePage() {
             </Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
-            {freeResources.map(r => <ResourceCard key={r.id} resource={r} />)}
+            {freeResources.map((r, i) => <ResourceCard key={r.id} resource={r} index={i} />)}
           </div>
         </div>
       </section>
 
       {/* ── TRUST BAR ── */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "3.5rem" }}>
-        <div className="container-wide">
+      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "3.5rem", position: "relative", overflow: "hidden" }}>
+        {/* Subtle background arc */}
+        <div aria-hidden="true" style={{
+          position: "absolute",
+          top: "-120px",
+          left: "-120px",
+          width: "400px",
+          height: "400px",
+          borderRadius: "50%",
+          border: "1px solid oklch(97% 0.005 80 / 0.05)",
+          pointerEvents: "none",
+        }} />
+        <div className="container-wide" style={{ position: "relative" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2.5rem" }}>
             {[
-              { label: "Platform", value: "8", sub: "Leadership resources" },
+              { label: "Platform", value: "8 Resources", sub: "Curated for cross-cultural leaders" },
               { label: "Audience", value: "Cross-cultural leaders", sub: "Missionaries, expats, multicultural teams" },
               { label: "Foundation", value: "Faith-rooted", sub: "Grounded in biblical values, globally minded" },
               { label: "Location", value: "Penang, Malaysia", sub: "Built from the field, for the field" },
             ].map(item => (
               <div key={item.label}>
                 <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>{item.label}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: item.label === "Platform" ? "2.5rem" : "1.25rem", color: "oklch(97% 0.005 80)", lineHeight: 1.1, marginBottom: "0.375rem" }}>{item.value}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(72% 0.04 260)" }}>{item.sub}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2, marginBottom: "0.375rem" }}>{item.value}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(72% 0.04 260)", lineHeight: 1.5 }}>{item.sub}</p>
               </div>
             ))}
           </div>
@@ -172,9 +240,18 @@ export default function HomePage() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)", position: "relative" }}>
+        {/* Vertical rule accent */}
+        <div style={{
+          position: "absolute",
+          left: "clamp(1.5rem, 5vw, 4rem)",
+          top: "clamp(4rem, 7vw, 7rem)",
+          bottom: "clamp(4rem, 7vw, 7rem)",
+          width: "3px",
+          background: "oklch(65% 0.15 45)",
+        }} />
         <div className="container-wide">
-          <div style={{ maxWidth: "600px" }}>
+          <div style={{ maxWidth: "600px", paddingLeft: "2.5rem" }}>
             <p className="t-tagline" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.25rem" }}>
               "Leadership that endures is leadership that is grounded."
             </p>
@@ -196,10 +273,22 @@ const freeResources = [
   { id: 3, label: "PDF Resource", title: "Identity Under Pressure", description: "Maintaining a grounded sense of self when living and leading between worlds.", readTime: "10 min read" },
 ];
 
-function ResourceCard({ resource }: { resource: typeof freeResources[0] }) {
+function ResourceCard({ resource, index }: { resource: typeof freeResources[0]; index: number }) {
+  const accentColors = [
+    "oklch(65% 0.15 45)",
+    "oklch(30% 0.12 260)",
+    "oklch(45% 0.09 260)",
+  ];
   return (
-    <div className="resource-card">
-      <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.6rem" }}>{resource.label}</p>
+    <div className="resource-card" style={{ position: "relative", overflow: "hidden" }}>
+      {/* Top color accent per card */}
+      <div style={{
+        position: "absolute",
+        top: 0, left: 0, right: 0,
+        height: "3px",
+        background: accentColors[index % accentColors.length],
+      }} />
+      <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.6rem", marginTop: "0.5rem" }}>{resource.label}</p>
       <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.0625rem", lineHeight: 1.3, color: "oklch(22% 0.005 260)", marginBottom: "0.75rem" }}>{resource.title}</h3>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.6, color: "oklch(48% 0.008 260)", marginBottom: "1.5rem" }}>{resource.description}</p>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

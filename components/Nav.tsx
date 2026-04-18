@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Nav() {
@@ -22,28 +23,31 @@ export default function Nav() {
           {/* Wordmark */}
           <Link
             href="/"
-            style={{ textDecoration: "none", display: "flex", flexDirection: "column", gap: "0.1rem" }}
+            style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.75rem" }}
           >
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
-              fontSize: "0.875rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "oklch(30% 0.12 260)",
-            }}>
-              Crispy
-            </span>
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 300,
-              fontSize: "0.65rem",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              color: "oklch(52% 0.008 260)",
-            }}>
-              Development
-            </span>
+            <Image src="/logo-icon.png" alt="Crispy Development" width={36} height={36} style={{ flexShrink: 0 }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.1rem" }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 800,
+                fontSize: "0.875rem",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "oklch(30% 0.12 260)",
+              }}>
+                Crispy
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 300,
+                fontSize: "0.65rem",
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                color: "oklch(52% 0.008 260)",
+              }}>
+                Development
+              </span>
+            </div>
           </Link>
 
           {/* Desktop nav */}
@@ -109,35 +113,13 @@ export default function Nav() {
         )}
       </div>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .show-mobile { display: none !important; }
-        }
-      `}</style>
     </header>
   );
 }
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link
-      href={href}
-      style={{
-        fontFamily: "var(--font-montserrat)",
-        fontWeight: 600,
-        fontSize: "0.8rem",
-        letterSpacing: "0.06em",
-        color: "oklch(38% 0.008 260)",
-        textDecoration: "none",
-        transition: "color 0.15s ease",
-      }}
-      onMouseEnter={e => (e.currentTarget.style.color = "oklch(30% 0.12 260)")}
-      onMouseLeave={e => (e.currentTarget.style.color = "oklch(38% 0.008 260)")}
-    >
+    <Link href={href} className="nav-link">
       {children}
     </Link>
   );

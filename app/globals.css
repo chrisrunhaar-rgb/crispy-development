@@ -323,6 +323,22 @@ body {
   .animate-fade-up { animation: none; }
 }
 
+/* ── LEGAL PAGE LISTS ── */
+.container-text ul {
+  padding-left: 1.25rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.container-text li {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: oklch(38% 0.008 260);
+  line-height: 1.75;
+}
+
 /* ── FOOTER LINKS ── */
 .footer-link {
   font-family: var(--font-montserrat), system-ui, sans-serif;
@@ -335,6 +351,50 @@ body {
 
 .footer-link:hover {
   color: oklch(30% 0.12 260);
+}
+
+/* ── NAV LINK ── */
+.nav-link {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: oklch(38% 0.008 260);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: oklch(30% 0.12 260);
+}
+
+/* ── MOBILE NAV ── */
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+}
+
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
+
+/* ── FOCUS VISIBLE ── */
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.btn-outline-navy:focus-visible {
+  outline: 2px solid oklch(65% 0.15 45);
+  outline-offset: 3px;
+}
+
+.form-input:focus-visible {
+  outline: none;
+  border-color: oklch(30% 0.12 260);
+}
+
+a:focus-visible {
+  outline: 2px solid oklch(65% 0.15 45);
+  outline-offset: 2px;
+  border-radius: 1px;
 }
 
 /* ── MOBILE ── */
