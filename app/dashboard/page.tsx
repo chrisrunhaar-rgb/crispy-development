@@ -1,15 +1,23 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { signOut } from "@/app/auth/actions";
 import PwaInstall from "@/components/PwaInstall";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
 };
 
-// This is a UI shell — authentication and data will be wired via Supabase
-export default function DashboardPage() {
-  // Placeholder: in production, session/user data comes from Supabase
-  const user = { name: "Chris", pathway: "personal", teamName: null as string | null };
-  const isTeamLeader = false; // Toggle to preview team leader view
+export default async function DashboardPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Middleware handles redirect, but guard here too
+  if (!user) redirect("/login");
+
+  const firstName = user.user_metadata?.first_name ?? user.email?.split("@")[0] ?? "there";
+  const pathway = (user.user_metadata?.pathway as string) ?? "personal";
+  const isTeamLeader = pathway === "team";
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 120px)" }}>
@@ -26,32 +34,25 @@ export default function DashboardPage() {
               {isTeamLeader ? "Team Pathway" : "Personal Pathway"}
             </p>
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
-              Welcome back, {user.name}.
+              Welcome back, {firstName}.
             </h1>
           </div>
-          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            {isTeamLeader && (
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)" }}>
-                Team: {user.teamName ?? "Your Team"}
-              </span>
-            )}
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
             <PwaInstall />
             <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
               Resources →
             </Link>
+            <form action={signOut}>
+              <button type="submit" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.006 260)", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+                Sign out
+              </button>
+            </form>
           </div>
         </div>
       </div>
 
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
-
-        {isTeamLeader ? (
-          /* ── TEAM LEADER VIEW ── */
-          <TeamLeaderDashboard />
-        ) : (
-          /* ── PERSONAL VIEW ── */
-          <PersonalDashboard />
-        )}
+        {isTeamLeader ? <TeamLeaderDashboard /> : <PersonalDashboard />}
       </div>
     </div>
   );

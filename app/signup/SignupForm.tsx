@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
+import { signUp } from "@/app/auth/actions";
 
 type Pathway = "personal" | "team";
+const initialState = { error: "" };
 
 export default function SignupForm({ defaultPathway = "personal" }: { defaultPathway?: Pathway }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
+  const [state, formAction, pending] = useActionState(
+    async (_prev: typeof initialState, formData: FormData) => {
+      const result = await signUp(formData);
+      return result ?? initialState;
+    },
+    initialState
+  );
 
   return (
     <div style={{
@@ -38,65 +47,61 @@ export default function SignupForm({ defaultPathway = "personal" }: { defaultPat
         <div style={{ marginBottom: "2rem" }}>
           <p className="form-label" style={{ marginBottom: "0.75rem" }}>Choose your pathway</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <label
-              className={`pathway-option${pathway === "personal" ? " selected" : ""}`}
-              style={{ cursor: "pointer" }}
-              onClick={() => setPathway("personal")}
-            >
-              <input
-                type="radio"
-                name="pathway"
-                value="personal"
-                checked={pathway === "personal"}
-                onChange={() => setPathway("personal")}
-                style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
-              />
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
-                  Personal Pathway
-                </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
-                  Individual access — grow as a cross-cultural leader at your own pace.
-                </p>
-              </div>
-            </label>
-            <label
-              className={`pathway-option${pathway === "team" ? " selected" : ""}`}
-              style={{ cursor: "pointer" }}
-              onClick={() => setPathway("team")}
-            >
-              <input
-                type="radio"
-                name="pathway"
-                value="team"
-                checked={pathway === "team"}
-                onChange={() => setPathway("team")}
-                style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
-              />
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
-                  Team Pathway
-                </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
-                  For team leaders — manage members, select content, and grow together.
-                </p>
-              </div>
-            </label>
+            {(["personal", "team"] as const).map((p) => (
+              <label
+                key={p}
+                className={`pathway-option${pathway === p ? " selected" : ""}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => setPathway(p)}
+              >
+                <input
+                  type="radio"
+                  name="pathway-visual"
+                  value={p}
+                  checked={pathway === p}
+                  onChange={() => setPathway(p)}
+                  style={{ marginTop: "0.125rem", accentColor: "oklch(30% 0.12 260)", flexShrink: 0 }}
+                />
+                <div>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>
+                    {p === "personal" ? "Personal Pathway" : "Team Pathway"}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5 }}>
+                    {p === "personal"
+                      ? "Individual access — grow as a cross-cultural leader at your own pace."
+                      : "For team leaders — manage members, select content, and grow together."}
+                  </p>
+                </div>
+              </label>
+            ))}
           </div>
         </div>
 
         {/* Form */}
-        <form style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <input type="hidden" name="pathway" value={pathway} />
+
+          {state.error && (
+            <div style={{
+              background: "oklch(95% 0.02 25)",
+              border: "1px solid oklch(75% 0.08 25)",
+              padding: "0.875rem 1rem",
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.875rem",
+              color: "oklch(35% 0.1 25)",
+            }}>
+              {state.error}
+            </div>
+          )}
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div className="form-field">
-              <label className="form-label" htmlFor="first-name">First name</label>
-              <input className="form-input" type="text" id="first-name" name="firstName" placeholder="Chris" autoComplete="given-name" required />
+              <label className="form-label" htmlFor="firstName">First name</label>
+              <input className="form-input" type="text" id="firstName" name="firstName" placeholder="Chris" autoComplete="given-name" required />
             </div>
             <div className="form-field">
-              <label className="form-label" htmlFor="last-name">Last name</label>
-              <input className="form-input" type="text" id="last-name" name="lastName" placeholder="Runhaar" autoComplete="family-name" required />
+              <label className="form-label" htmlFor="lastName">Last name</label>
+              <input className="form-input" type="text" id="lastName" name="lastName" placeholder="Runhaar" autoComplete="family-name" required />
             </div>
           </div>
 
@@ -110,8 +115,13 @@ export default function SignupForm({ defaultPathway = "personal" }: { defaultPat
             <input className="form-input" type="password" id="password" name="password" placeholder="Minimum 8 characters" autoComplete="new-password" minLength={8} required />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: "0.5rem" }}>
-            Create Account →
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={pending}
+            style={{ width: "100%", justifyContent: "center", marginTop: "0.5rem", opacity: pending ? 0.7 : 1 }}
+          >
+            {pending ? "Creating account…" : "Create Account →"}
           </button>
         </form>
 
