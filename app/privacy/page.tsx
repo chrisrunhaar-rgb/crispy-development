@@ -9,8 +9,8 @@ export default function PrivacyPage() {
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", marginBottom: "3rem" }}>Last updated: April 2026</p>
 
         <LegalSection heading="1. Who We Are">
-          <p>Crispy Development is a cross-cultural Christian leadership resource and coaching platform operated by Chris Runhaar, based in Penang, Malaysia.</p>
-          <p style={{ marginTop: "1rem" }}><strong>Contact:</strong><br />Crispy Development · Penang, Malaysia<br /><a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a></p>
+          <p>Crispy Development is a cross-cultural Christian leadership resource and coaching platform operated by Chris Runhaar, based in Malaysia.</p>
+          <p style={{ marginTop: "1rem" }}><strong>Contact:</strong><br />Crispy Development · Malaysia<br /><a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a></p>
           <p style={{ marginTop: "1rem" }}>If you are located in the European Union and wish to exercise your data rights or lodge a concern, you may contact us directly at the address above. EU users retain all rights granted under GDPR, as described in Section 7 below.</p>
         </LegalSection>
 
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
           <p>
             <strong>Chris Runhaar — Crispy Development</strong><br />
             <a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a><br />
-            Penang, Malaysia
+            Malaysia
           </p>
         </LegalSection>
       </div>

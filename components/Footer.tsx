@@ -50,7 +50,7 @@ export default function Footer() {
               maxWidth: "22ch",
               lineHeight: 1.5,
             }}>
-              Cross-Cultural Leadership.<br />Grounded in Faith.
+              Raising leaders that<br />cross cultures.
             </p>
           </div>
 
