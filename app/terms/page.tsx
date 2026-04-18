@@ -11,7 +11,7 @@ export default function TermsPage() {
         <LegalSection heading="1. Who These Terms Apply To">
           <p>These Terms of Service govern your use of the Crispy Development website, your subscription to our email newsletter, your access to any free resources or downloadable content, and your participation in any community platform we operate (collectively, the "Services").</p>
           <p style={{ marginTop: "1rem" }}>By visiting our website, subscribing to our email list, downloading any resource, or joining any community we manage, you agree to be bound by these Terms.</p>
-          <p style={{ marginTop: "1rem" }}><strong>Operator:</strong><br />Chris Runhaar — Crispy Development · Malaysia<br /><a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a></p>
+          <p style={{ marginTop: "1rem" }}><strong>Operator:</strong><br />Chris Runhaar — Crispy Development · Southeast Asia<br /><a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a></p>
         </LegalSection>
 
         <LegalSection heading="2. What We Offer">
@@ -88,7 +88,7 @@ export default function TermsPage() {
           <p>
             <strong>Chris Runhaar — Crispy Development</strong><br />
             <a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a><br />
-            Malaysia
+            Southeast Asia
           </p>
         </LegalSection>
       </div>

@@ -3,6 +3,7 @@ import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/lib/LanguageContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -20,12 +21,12 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Crispy Development — Cross-Cultural Leadership. Grounded in Faith.",
+  title: "Crispy Development — Raising leaders that cross cultures.",
   description:
     "Resources, tools, and community for cross-cultural leaders, missionaries, and multicultural team managers.",
   openGraph: {
     title: "Crispy Development",
-    description: "Cross-Cultural Leadership. Grounded in Faith.",
+    description: "Raising leaders that cross cultures.",
     url: "https://crispyleaders.com",
     siteName: "Crispy Development",
     locale: "en_US",
@@ -44,9 +45,11 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Nav />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
