@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import PwaRegister from "@/components/PwaRegister";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
+        <PwaRegister />
         <LanguageProvider>
           <Nav />
           <main className="flex-1">{children}</main>

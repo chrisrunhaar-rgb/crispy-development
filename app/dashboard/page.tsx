@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PwaInstall from "@/components/PwaInstall";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -34,6 +35,7 @@ export default function DashboardPage() {
                 Team: {user.teamName ?? "Your Team"}
               </span>
             )}
+            <PwaInstall />
             <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
               Resources →
             </Link>
@@ -57,7 +59,7 @@ export default function DashboardPage() {
 
 function PersonalDashboard() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: "3rem", alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
 
       {/* Main content */}
       <div>
@@ -138,9 +140,9 @@ function PersonalDashboard() {
 
 function TeamLeaderDashboard() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
       {/* Members */}
-      <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
+      <div style={{ background: "oklch(97% 0.005 80)", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
           <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem" }}>Team Members</p>
           <button style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(65% 0.15 45)", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.06em" }}>
@@ -163,7 +165,7 @@ function TeamLeaderDashboard() {
       </div>
 
       {/* Selected content */}
-      <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
+      <div style={{ background: "oklch(97% 0.005 80)", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
           <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem" }}>Selected Content</p>
           <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(65% 0.15 45)", textDecoration: "none", letterSpacing: "0.06em" }}>
