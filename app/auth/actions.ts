@@ -25,7 +25,7 @@ export async function signUp(formData: FormData) {
   const lastName = formData.get("lastName") as string;
   const pathway = (formData.get("pathway") as string) || "personal";
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -34,6 +34,11 @@ export async function signUp(formData: FormData) {
   });
 
   if (error) return { error: error.message };
+
+  // If email confirmation is required, session will be null
+  if (!data.session) {
+    redirect("/signup/confirm");
+  }
 
   revalidatePath("/", "layout");
   redirect("/dashboard");
