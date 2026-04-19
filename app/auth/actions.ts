@@ -25,10 +25,13 @@ export async function signUp(formData: FormData) {
   const lastName = formData.get("lastName") as string;
   const pathway = (formData.get("pathway") as string) || "personal";
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
+      emailRedirectTo: `${siteUrl}/auth/callback`,
       data: { first_name: firstName, last_name: lastName, pathway },
     },
   });
