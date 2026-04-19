@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Crispy Development",
     short_name: "Crispy",
-    description: "Raising leaders that cross cultures.",
+    description: "Raising leaders who cross cultures.",
     start_url: "/dashboard",
     display: "standalone",
     background_color: "#F8F7F4",

@@ -12,7 +12,7 @@ export const translations = {
       teamFull: "Team Pathway",
     },
     footer: {
-      tagline: "Raising leaders that cross cultures.",
+      tagline: "Raising leaders who cross cultures.",
       pathways: "Pathways",
       personal: "Personal Pathway",
       team: "Team Pathway",
@@ -27,7 +27,7 @@ export const translations = {
       copyright: "Crispy Development. All rights reserved.",
     },
     home: {
-      label: "Raising leaders that cross cultures",
+      label: "Raising leaders who cross cultures",
       h1a: "Lead across",
       h1b: "cultures.",
       tagline: "Resources, pathways, and community for missionaries, expat leaders, and multicultural team managers.",

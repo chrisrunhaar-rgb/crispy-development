@@ -22,12 +22,12 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Crispy Development — Raising leaders that cross cultures.",
+  title: "Crispy Development — Raising leaders who cross cultures.",
   description:
     "Resources, tools, and community for cross-cultural leaders, missionaries, and multicultural team managers.",
   openGraph: {
     title: "Crispy Development",
-    description: "Raising leaders that cross cultures.",
+    description: "Raising leaders who cross cultures.",
     url: "https://crispyleaders.com",
     siteName: "Crispy Development",
     locale: "en_US",
