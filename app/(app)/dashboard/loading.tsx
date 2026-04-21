@@ -26,10 +26,12 @@ export default function DashboardLoading() {
             </div>
           </div>
           {/* Tab bar skeleton */}
-          <div style={{ paddingBottom: "1.75rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
-            {[120, 80, 110].map((w, i) => (
-              <div key={i} style={{ width: w, height: 36, borderRadius: 20, background: i === 0 ? "oklch(65% 0.15 45)" : shimmer }} />
-            ))}
+          <div style={{ paddingBottom: "1.75rem", display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 100, padding: "5px", gap: "2px" }}>
+              {[110, 80, 120].map((w, i) => (
+                <div key={i} style={{ width: w, height: 34, borderRadius: 100, background: i === 0 ? "oklch(65% 0.15 45)" : shimmer }} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

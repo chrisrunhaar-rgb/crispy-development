@@ -559,56 +559,81 @@ export default async function DashboardPage({
             </div>
           </div>
 
-          {/* 3-Tab switcher */}
+          {/* 3-Tab switcher — pill capsule */}
           <div style={{ paddingBottom: "1.75rem", display: "flex", justifyContent: "center" }}>
-            <div>
-              <p style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.55rem",
-                fontWeight: 700,
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "oklch(52% 0.04 260)",
-                textAlign: "center",
-                marginBottom: "0.5rem",
-              }}>
-                Dashboards
-              </p>
-              <div style={{ display: "inline-flex", border: "1px solid oklch(42% 0.06 260 / 0.5)" }}>
-                {(["personal", "team", "peer"] as const).map((t) => {
-                  const labels = { personal: "Personal", team: "Team", peer: "Peer Group" };
-                  const active = currentTab === t;
-                  const enabled = t === "personal" || (t === "team" && hasTeam) || (t === "peer" && hasPeer);
-                  const href = t === "personal" ? "/dashboard" : `/dashboard?tab=${t}`;
-                  const sharedStyle: React.CSSProperties = {
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    padding: "0.55rem 1.375rem",
-                    background: active ? "oklch(65% 0.15 45)" : "transparent",
-                    color: active ? "white" : "oklch(65% 0.15 45)",
-                    border: "none",
-                    transition: "all 0.15s",
-                    whiteSpace: "nowrap" as const,
-                    minWidth: "100px",
-                    textAlign: "center" as const,
-                  };
-                  if (!enabled) {
-                    return (
-                      <span key={t} style={{ ...sharedStyle, color: "oklch(42% 0.04 260)", cursor: "not-allowed" }}>
-                        {labels[t]}
-                      </span>
-                    );
-                  }
+            <div style={{
+              display: "inline-flex",
+              background: "oklch(18% 0.09 260)",
+              borderRadius: 100,
+              padding: "5px",
+              gap: "2px",
+              boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)",
+            }}>
+              {(["personal", "team", "peer"] as const).map((t) => {
+                const labels = { personal: "Personal", team: "Team", peer: "Peer Group" };
+                const icons = {
+                  personal: (
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                      <circle cx="8" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" />
+                      <path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  ),
+                  team: (
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                      <circle cx="5.5" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+                      <circle cx="10.5" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+                      <path d="M1 14c0-2.761 2.015-4.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      <path d="M15 14c0-2.761-2.015-4.5-4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      <path d="M5.5 9.5C5.5 11.985 6.515 14 8 14s2.5-2.015 2.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  ),
+                  peer: (
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
+                      <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.5" />
+                      <path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  ),
+                };
+                const active = currentTab === t;
+                const enabled = t === "personal" || (t === "team" && hasTeam) || (t === "peer" && hasPeer);
+                const href = t === "personal" ? "/dashboard" : `/dashboard?tab=${t}`;
+
+                const pillStyle: React.CSSProperties = {
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "0.5rem 1.125rem",
+                  borderRadius: 100,
+                  border: "none",
+                  whiteSpace: "nowrap" as const,
+                  transition: "background 0.15s ease, color 0.15s ease",
+                  background: active ? "oklch(65% 0.15 45)" : "transparent",
+                  color: active ? "white" : enabled ? "oklch(68% 0.06 260)" : "oklch(40% 0.04 260)",
+                  cursor: enabled ? "pointer" : "not-allowed",
+                  textDecoration: "none",
+                };
+
+                if (!enabled) {
                   return (
-                    <Link key={t} href={href} style={{ ...sharedStyle, textDecoration: "none", display: "inline-block" }}>
+                    <span key={t} style={pillStyle}>
+                      {icons[t]}
                       {labels[t]}
-                    </Link>
+                    </span>
                   );
-                })}
-              </div>
+                }
+                return (
+                  <Link key={t} href={href} style={pillStyle}>
+                    {icons[t]}
+                    {labels[t]}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
