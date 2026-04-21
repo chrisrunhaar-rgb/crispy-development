@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import PersonalContent from "./PersonalContent";
+import { getGeoInfo } from "@/lib/geo";
 
 export const metadata = {
   title: "Personal Pathway — Crispy Development",
@@ -7,8 +8,8 @@ export const metadata = {
 };
 
 export default async function PersonalPathwayPage() {
-  const supabase = await createClient();
+  const [supabase, geo] = await Promise.all([createClient(), getGeoInfo()]);
   const { data: { user } } = await supabase.auth.getUser();
   const ctaHref = user ? "/dashboard" : "/signup?pathway=personal";
-  return <PersonalContent ctaHref={ctaHref} />;
+  return <PersonalContent ctaHref={ctaHref} geo={geo} />;
 }

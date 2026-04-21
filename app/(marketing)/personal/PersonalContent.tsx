@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import type { GeoInfo } from "@/lib/geo";
 
 const personalFeatureKeys = [
   "Curated Leadership Content",
@@ -59,7 +60,7 @@ const featureTitles: Record<string, Record<string, string>> = {
   },
 };
 
-export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }: { ctaHref?: string }) {
+export default function PersonalContent({ ctaHref = "/signup?pathway=personal", geo }: { ctaHref?: string; geo?: GeoInfo }) {
   const { t, lang } = useLanguage();
   const p = t.personal;
   const langKey = lang in personalFeatureDescriptions ? lang : "en";
@@ -194,7 +195,15 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }
             </div>
           </div>
 
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "1.5rem" }}>
+          {geo?.hasRegionalPricing && (
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginTop: "1.5rem", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.625rem 1rem" }}>
+              <span style={{ fontSize: "0.85rem" }}>📍</span>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(82% 0.04 45)", lineHeight: 1.5, margin: 0 }}>
+                <strong>You&apos;re browsing from {geo.regionLabel}</strong> — regional pricing will apply when plans launch. Prices will be lower than the USD rates shown.
+              </p>
+            </div>
+          )}
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "0.875rem" }}>
             USD pricing shown · Regional rates for SE Asia, South Asia &amp; Africa · <Link href="/team" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none" }}>See Team plan →</Link>
           </p>
         </div>

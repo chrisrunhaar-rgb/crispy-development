@@ -10,7 +10,9 @@ const LogoRevealPlayer = dynamic(
   { ssr: false }
 );
 
-export default function HomeContent() {
+import type { GeoInfo } from "@/lib/geo";
+
+export default function HomeContent({ geo }: { geo?: GeoInfo }) {
   const { t } = useLanguage();
   const h = t.home;
 
@@ -398,7 +400,15 @@ export default function HomeContent() {
 
           </div>
 
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1.75rem" }}>
+          {geo?.hasRegionalPricing && (
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginTop: "1.75rem", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.625rem 1rem" }}>
+              <span style={{ fontSize: "0.85rem" }}>📍</span>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(82% 0.04 45)", lineHeight: 1.5, margin: 0 }}>
+                <strong>You&apos;re browsing from {geo.regionLabel}</strong> — regional pricing will apply when plans launch. Prices will be lower than the USD rates shown.
+              </p>
+            </div>
+          )}
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: geo?.hasRegionalPricing ? "0.875rem" : "1.75rem" }}>
             Prices shown in USD · Regional pricing available for SE Asia, South Asia &amp; Africa · Annual plans only
           </p>
         </div>
