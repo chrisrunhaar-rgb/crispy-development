@@ -1433,7 +1433,7 @@ export default function BigFiveTeamClient({ user }: { user: User | null }) {
 
                 {user && resultSaved && (
                   <Link
-                    href="/dashboard"
+                    href="/dashboard?tab=team"
                     style={{
                       fontFamily: "var(--font-montserrat)",
                       fontWeight: 700,

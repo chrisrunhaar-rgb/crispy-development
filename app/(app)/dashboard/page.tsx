@@ -20,6 +20,7 @@ import PeerGroupsSection, { type InitiatedGroup, type JoinedGroup, type PeerMemb
 import TimezoneDetector from "@/components/TimezoneDetector";
 import TeamAssessmentSelector from "./TeamAssessmentSelector";
 import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
+import { type FeedbackEntry } from "@/components/StepFeedback";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -370,15 +371,36 @@ export default async function DashboardPage({
   // ── Team journey step completions + broadcasts ──
   type StepCompletionRow = { user_id: string; step_number: number; completed_at: string };
   type BroadcastRow = { id: string; message: string; sent_at: string };
+  type FbRow = { user_id: string; step_number: number; comment: string; rating: number | null; updated_at: string };
   let teamStepCompletions: StepCompletionRow[] = [];
   let teamBroadcasts: BroadcastRow[] = [];
+  let leaderStepFeedback: Record<number, FeedbackEntry[]> = {};
   if (isTeamLeader && teamRecord) {
-    const [{ data: scRows }, { data: bcRows }] = await Promise.all([
+    const [{ data: scRows }, { data: bcRows }, { data: fbRows }] = await Promise.all([
       admin.from("team_step_data").select("user_id, step_number, completed_at").eq("team_id", teamRecord.id),
       admin.from("team_broadcasts").select("id, message, sent_at").eq("team_id", teamRecord.id).order("sent_at", { ascending: false }).limit(20),
+      admin.from("team_step_feedback").select("user_id, step_number, comment, rating, updated_at").eq("team_id", teamRecord.id),
     ]);
     teamStepCompletions = (scRows ?? []) as StepCompletionRow[];
     teamBroadcasts = (bcRows ?? []) as BroadcastRow[];
+
+    if (fbRows && fbRows.length > 0) {
+      const leaderFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
+      const fbNameMap = new Map<string, string>();
+      fbNameMap.set(user.id, leaderFullName);
+      teamMembers.forEach(m => fbNameMap.set(m.id, m.name));
+      for (const row of fbRows as FbRow[]) {
+        if (!leaderStepFeedback[row.step_number]) leaderStepFeedback[row.step_number] = [];
+        leaderStepFeedback[row.step_number].push({
+          user_id: row.user_id,
+          user_name: fbNameMap.get(row.user_id) ?? "Team member",
+          comment: row.comment,
+          rating: row.rating,
+          updated_at: row.updated_at,
+          is_current_user: row.user_id === user.id,
+        });
+      }
+    }
   }
 
   // ── Step completions + results for team members ──
@@ -452,6 +474,33 @@ export default async function DashboardPage({
         memberTeamLeaderUserId = leaderProfileId;
         const lp = profileMap.get(leaderProfileId);
         if (lp) memberTeamLeaderName = `${lp.first_name ?? ""} ${lp.last_name ?? ""}`.trim() || undefined;
+      }
+    }
+  }
+
+  // ── Step feedback for member dashboard ──
+  let memberStepFeedback: Record<number, FeedbackEntry[]> = {};
+  if (memberOfTeam) {
+    const { data: mfbRows } = await admin
+      .from("team_step_feedback")
+      .select("user_id, step_number, comment, rating, updated_at")
+      .eq("team_id", memberOfTeam.id);
+    if (mfbRows && mfbRows.length > 0) {
+      const mfbNameMap = new Map<string, string>();
+      if (memberTeamLeaderUserId && memberTeamLeaderName) mfbNameMap.set(memberTeamLeaderUserId, memberTeamLeaderName);
+      memberTeamRoster.forEach(m => mfbNameMap.set(m.id, m.name));
+      const myFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
+      mfbNameMap.set(user.id, myFullName);
+      for (const row of mfbRows as FbRow[]) {
+        if (!memberStepFeedback[row.step_number]) memberStepFeedback[row.step_number] = [];
+        memberStepFeedback[row.step_number].push({
+          user_id: row.user_id,
+          user_name: mfbNameMap.get(row.user_id) ?? "Team member",
+          comment: row.comment,
+          rating: row.rating,
+          updated_at: row.updated_at,
+          is_current_user: row.user_id === user.id,
+        });
       }
     }
   }
@@ -606,6 +655,7 @@ export default async function DashboardPage({
             finalizedSteps={teamRecord?.finalized_steps ?? []}
             selectedAssessments={teamRecord?.selected_assessments ?? []}
             teamResults={leaderTeamResults}
+            stepFeedback={leaderStepFeedback}
           />
         )}
 
@@ -618,8 +668,10 @@ export default async function DashboardPage({
             roster={memberTeamRoster}
             leaderName={memberTeamLeaderName}
             leaderUserId={memberTeamLeaderUserId}
+            currentUserId={user.id}
             stepCompletions={memberStepCompletions}
             teamResults={memberTeamResults}
+            stepFeedback={memberStepFeedback}
           />
         )}
 
@@ -1173,6 +1225,7 @@ function TeamLeaderDashboard({
   finalizedSteps,
   selectedAssessments,
   teamResults,
+  stepFeedback = {},
 }: {
   teamRecord: { id: string; name: string; language: string; current_step: number; finalized_steps: number[]; selected_assessments: string[] } | null;
   teamMembers: { id: string; name: string; email: string; completed: number; title: string | null; tenureLabel: string | null }[];
@@ -1187,6 +1240,7 @@ function TeamLeaderDashboard({
   finalizedSteps: number[];
   selectedAssessments: string[];
   teamResults: TeamMemberResult[];
+  stepFeedback?: Record<number, FeedbackEntry[]>;
 }) {
   if (!teamRecord) {
     return (
@@ -1241,12 +1295,14 @@ function TeamLeaderDashboard({
         teamName={teamRecord.name}
         leaderName={leaderName}
         leaderUserId={leaderId}
+        currentUserId={leaderId}
         currentStep={teamRecord.current_step ?? 1}
         teamMembers={journeyMembers}
         stepCompletions={stepCompletions}
         isLeader={true}
         finalizedSteps={finalizedSteps}
         selectedAssessments={selectedAssessments}
+        stepFeedback={stepFeedback}
       />
 
       {/* Team Results Grid */}
@@ -1284,8 +1340,10 @@ function TeamMemberDashboard({
   roster = [],
   leaderName,
   leaderUserId,
+  currentUserId,
   stepCompletions = [],
   teamResults = [],
+  stepFeedback = {},
 }: {
   team: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] };
   teamContent: Module[];
@@ -1294,12 +1352,11 @@ function TeamMemberDashboard({
   roster?: RosterMember[];
   leaderName?: string;
   leaderUserId?: string;
+  currentUserId?: string;
   stepCompletions?: { user_id: string; step_number: number; completed_at: string }[];
   teamResults?: TeamMemberResult[];
+  stepFeedback?: Record<number, FeedbackEntry[]>;
 }) {
-  const items = teamContent.length > 0 ? teamContent : allModules.filter(m => m.is_free);
-  const completed = items.filter(m => completedIds.has(m.id)).length;
-  const total = items.length;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
@@ -1314,18 +1371,32 @@ function TeamMemberDashboard({
         />
       )}
 
+      {/* Journey intro for members */}
+      <div style={{ background: "oklch(65% 0.15 45 / 0.08)", borderLeft: "3px solid oklch(65% 0.15 45)", padding: "1.125rem 1.5rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
+          {leaderName ? (
+            <><strong>{leaderName}</strong> created this journey for your team.</>
+          ) : (
+            <>Your team leader created this journey for your team.</>
+          )}{" "}
+          Each member works through each step at the same pace. You will receive a notification when the next step is unlocked. Enjoy the journey!
+        </p>
+      </div>
+
       {/* Team Journey — read-only for members, shows Open Content links */}
       <TeamJourney
         teamId={team.id}
         teamName={team.name}
         leaderName={leaderName}
         leaderUserId={leaderUserId}
+        currentUserId={currentUserId}
         currentStep={team.current_step ?? 1}
         teamMembers={roster}
         stepCompletions={stepCompletions}
         isLeader={false}
         finalizedSteps={team.finalized_steps ?? []}
         selectedAssessments={team.selected_assessments ?? []}
+        stepFeedback={stepFeedback}
       />
 
       {/* Team Results Grid — all members' quiz results */}
@@ -1337,135 +1408,6 @@ function TeamMemberDashboard({
         />
       )}
 
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
-            Your team content
-          </h2>
-          <span className="pathway-badge team" style={{ fontSize: "0.58rem" }}>{team.name}</span>
-        </div>
-        {items.length === 0 ? (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(55% 0.008 260)", lineHeight: 1.6 }}>
-            Your team leader hasn&apos;t selected content yet. Check back soon.
-          </p>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-            {items.map((item, i) => {
-              const isCompleted = completedIds.has(item.id);
-              return (
-                <div key={item.id} style={{
-                  display: "flex", alignItems: "center", gap: "1.5rem",
-                  paddingBlock: "1.25rem",
-                  borderTop: i === 0 ? "none" : "1px solid oklch(88% 0.008 80)",
-                }}>
-                  <div style={{
-                    width: "36px", height: "36px", flexShrink: 0,
-                    background: isCompleted ? "oklch(65% 0.15 45)" : "oklch(88% 0.008 80)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    {isCompleted ? (
-                      <span style={{ color: "white", fontSize: "0.75rem", fontWeight: 700 }}>✓</span>
-                    ) : (
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: "oklch(52% 0.008 260)" }}>
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.2rem" }}>
-                      {item.title}
-                    </p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(55% 0.008 260)" }}>
-                      {item.type}
-                    </p>
-                  </div>
-                  {item.slug ? (
-                    <Link href={`/resources/${item.slug}`} style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700,
-                      letterSpacing: "0.08em", color: isCompleted ? "oklch(55% 0.008 260)" : "oklch(30% 0.12 260)",
-                      textDecoration: "none", whiteSpace: "nowrap",
-                    }}>
-                      {isCompleted ? "Review" : "Read →"}
-                    </Link>
-                  ) : (
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(65% 0.15 45)", whiteSpace: "nowrap" }}>
-                      Coming soon
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        <div className="stat-block">
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>Progress</p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
-            {completed}<span style={{ fontSize: "1.5rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/{total}</span>
-          </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginTop: "0.375rem" }}>resources completed</p>
-          <div style={{ height: "4px", background: "oklch(88% 0.008 80)", marginTop: "1rem" }}>
-            <div style={{ height: "100%", width: `${total > 0 ? Math.round((completed / total) * 100) : 0}%`, background: "oklch(65% 0.15 45)", transition: "width 0.5s ease" }} />
-          </div>
-        </div>
-        <div className="stat-block">
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>Your Team</p>
-          <span className="pathway-badge team">{team.name}</span>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginTop: "0.75rem", lineHeight: 1.5 }}>
-            Content curated by your team leader.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* Assessment steps added by team leader */}
-    {team.selected_assessments.length > 0 && (
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", margin: 0 }}>Team Assessments</p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)", margin: 0 }}>
-            Your team&apos;s assessment pathway
-          </h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-          {TEAM_ASSESSMENTS.filter(a => team.selected_assessments.includes(a.id)).map((a, i) => (
-            <div key={a.id} style={{
-              display: "flex", alignItems: "center", gap: "1.5rem",
-              paddingBlock: "1.25rem",
-              borderTop: i === 0 ? "none" : "1px solid oklch(88% 0.008 80)",
-            }}>
-              <div style={{
-                width: "36px", height: "36px", flexShrink: 0,
-                background: "oklch(65% 0.15 45 / 0.12)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: "oklch(65% 0.15 45)" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", marginBottom: "0.2rem" }}>
-                  {a.label}
-                </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(55% 0.008 260)" }}>
-                  Assessment
-                </p>
-              </div>
-              <Link href={a.href} style={{
-                fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700,
-                letterSpacing: "0.08em", color: "oklch(30% 0.12 260)",
-                textDecoration: "none", whiteSpace: "nowrap",
-              }}>
-                Take test →
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
     </div>
   );
 }

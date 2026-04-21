@@ -117,7 +117,7 @@ export default function TrustSafetyClient({ user }: { user: User | null }) {
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -1070,7 +1070,7 @@ export default function TrustSafetyClient({ user }: { user: User | null }) {
               Module 06: Roles & Contribution →
             </Link>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 600,

@@ -1027,7 +1027,7 @@ export default function Personalities16TeamClient({ user }: { user: User | null 
                   )}
 
                   {user && resultSaved && (
-                    <Link href="/dashboard" style={{
+                    <Link href="/dashboard?tab=team" style={{
                       fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem",
                       letterSpacing: "0.06em", textDecoration: "none",
                       color: "oklch(72% 0.14 145)",

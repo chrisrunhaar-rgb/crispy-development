@@ -326,7 +326,7 @@ export default function TeamPurposeVisionClient({ user }: { user: User | null })
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -912,7 +912,7 @@ export default function TeamPurposeVisionClient({ user }: { user: User | null })
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 700,

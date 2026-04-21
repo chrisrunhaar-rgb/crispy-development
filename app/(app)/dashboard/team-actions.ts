@@ -208,6 +208,37 @@ export async function removeTeamMember(
   return { error: null };
 }
 
+export async function markTeamStepComplete(
+  teamId: string,
+  stepNumber: number,
+  complete: boolean
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+
+  if (complete) {
+    await admin
+      .from("team_step_data")
+      .upsert(
+        { team_id: teamId, step_number: stepNumber, user_id: user.id, completed_at: new Date().toISOString() },
+        { onConflict: "team_id,step_number,user_id" }
+      );
+  } else {
+    await admin
+      .from("team_step_data")
+      .delete()
+      .eq("team_id", teamId)
+      .eq("step_number", stepNumber)
+      .eq("user_id", user.id);
+  }
+
+  revalidatePath("/dashboard");
+  return { error: null };
+}
+
 export async function finalizeTeamStep(
   teamId: string,
   stepNumber: number,
@@ -335,6 +366,41 @@ export async function sendTeamBroadcast(
       }
     }
   } catch { /* push failure is non-fatal */ }
+
+  revalidatePath("/dashboard");
+  return { error: null };
+}
+
+export async function submitStepFeedback(
+  teamId: string,
+  stepNumber: number,
+  comment: string,
+  rating: number | null
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  if (!comment.trim()) return { error: "Comment cannot be empty" };
+  if (rating !== null && (rating < 1 || rating > 5)) return { error: "Invalid rating" };
+
+  const admin = createAdminClient();
+
+  const { error } = await admin
+    .from("team_step_feedback")
+    .upsert(
+      {
+        team_id: teamId,
+        step_number: stepNumber,
+        user_id: user.id,
+        comment: comment.trim(),
+        rating,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "team_id,step_number,user_id" }
+    );
+
+  if (error) return { error: error.message };
 
   revalidatePath("/dashboard");
   return { error: null };

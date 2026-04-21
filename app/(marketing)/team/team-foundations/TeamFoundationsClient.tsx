@@ -80,7 +80,7 @@ export default function TeamFoundationsClient({ user }: { user: User | null }) {
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -869,7 +869,7 @@ export default function TeamFoundationsClient({ user }: { user: User | null }) {
             <li>What cultural differences do we bring to this team — and how can we make those a strength rather than a source of friction?</li>
           </ol>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               fontFamily: "var(--font-montserrat)",
               fontWeight: 600,

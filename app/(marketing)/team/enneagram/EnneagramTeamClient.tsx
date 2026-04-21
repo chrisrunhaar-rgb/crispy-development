@@ -527,7 +527,7 @@ export default function EnneagramTeamClient({ user }: { user: User | null }) {
               )}
               {resultSaved && (
                 <Link
-                  href="/dashboard"
+                  href="/dashboard?tab=team"
                   style={{
                     fontFamily: "var(--font-montserrat)",
                     fontWeight: 700,

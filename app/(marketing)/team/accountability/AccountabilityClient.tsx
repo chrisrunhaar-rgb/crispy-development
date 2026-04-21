@@ -189,7 +189,7 @@ export default function AccountabilityClient({ user }: Props) {
             </Link>
             {user && (
               <Link
-                href="/app/dashboard"
+                href="/dashboard?tab=team"
                 style={{
                   padding: "11px 24px",
                   borderRadius: 5,

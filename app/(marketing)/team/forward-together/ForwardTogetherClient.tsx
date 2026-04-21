@@ -278,7 +278,7 @@ export default function ForwardTogetherClient({ user }: Props) {
             </Link>
             {user && (
               <Link
-                href="/app/dashboard"
+                href="/dashboard?tab=team"
                 style={{
                   padding: "11px 24px",
                   borderRadius: 5,
@@ -1141,7 +1141,7 @@ export default function ForwardTogetherClient({ user }: Props) {
           >
             {user ? (
               <Link
-                href="/app/dashboard"
+                href="/dashboard?tab=team"
                 style={{
                   padding: "13px 30px",
                   background: warmAccent,
