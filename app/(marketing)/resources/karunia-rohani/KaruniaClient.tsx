@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { saveKaruniaResult } from "../actions";
+import VerseChip from "@/components/VerseChip";
+import { VERSES } from "@/lib/verses";
 
 type Lang = "en" | "id";
 
@@ -791,14 +793,11 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "1.25rem" }}>
                 {[
-                  { ref: "1 Korintus 12", body: lang === "id" ? "Daftar karunia rohani dan kesatuan Tubuh Kristus" : "Lists spiritual gifts and the unity of the Body" },
-                  { ref: "Roma 12:6–8", body: lang === "id" ? "Karunia yang berbeda-beda sesuai anugerah yang diberikan" : "Gifts that differ according to the grace given" },
-                  { ref: "Efesus 4:11–12", body: lang === "id" ? "Karunia diberikan untuk membangun jemaat" : "Gifts given to build up the church to maturity" },
-                ].map(({ ref, body }) => (
-                  <div key={ref} style={{ background: BG_LIGHT, border: `1px solid ${BORDER}`, padding: "1rem 1.125rem" }}>
-                    <p style={{ fontWeight: 800, fontSize: "0.8125rem", color: PRIMARY, margin: "0 0 0.25rem" }}>{ref}</p>
-                    <p style={{ fontSize: "0.78rem", color: "oklch(45% 0.008 260)", lineHeight: 1.55, margin: 0 }}>{body}</p>
-                  </div>
+                  VERSES.find(v => v.ref === "1 Corinthians 12 (key verses)")!,
+                  VERSES.find(v => v.ref === "Romans 12:6–8")!,
+                  VERSES.find(v => v.ref === "Ephesians 4:11–12")!,
+                ].map(verse => verse && (
+                  <VerseChip key={verse.ref} verse={verse} lang={lang} variant="tile" />
                 ))}
               </div>
               <p style={{ fontSize: "0.9375rem", color: "oklch(38% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
