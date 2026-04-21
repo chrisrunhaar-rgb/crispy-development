@@ -206,9 +206,8 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
 
             {!userId && (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", marginTop: "1.75rem", lineHeight: 1.6 }}>
-                Free resources are open to everyone.{" "}
-                <Link href="/signup" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>Create an account</Link>
-                {" "}to unlock the full library.
+                🔓 Free modules are open to everyone.{" "}
+                🔒 Full library access — <strong style={{ color: "oklch(42% 0.008 260)" }}>Coming Soon</strong>.
               </p>
             )}
           </div>
@@ -304,11 +303,17 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                     <div style={{ minWidth: 0 }}>
                       {/* Title row */}
                       <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap", marginBottom: "0.375rem" }}>
+                        {!isAccessible && (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="oklch(58% 0.008 260)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ width: "0.875rem", height: "0.875rem", flexShrink: 0 }}>
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                          </svg>
+                        )}
                         <h3 style={{
                           fontFamily: "var(--font-montserrat)",
                           fontWeight: 700,
                           fontSize: "clamp(0.9rem, 2vw, 1rem)",
-                          color: isAccessible ? "oklch(22% 0.005 260)" : "oklch(42% 0.005 260)",
+                          color: isAccessible ? "oklch(22% 0.005 260)" : "oklch(52% 0.005 260)",
                           margin: 0,
                           lineHeight: 1.25,
                         }}>
@@ -396,21 +401,18 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                           </button>
                         )
                       )}
-                      {/* Not signed in, gated resource: sign-up CTA */}
+                      {/* Not signed in, gated resource: members-only indicator */}
                       {!userId && resource.gated && hasPage && (
-                        <Link
-                          href={`/signup?redirectTo=/resources/${resource.slug}`}
-                          onClick={e => e.stopPropagation()}
+                        <span
                           style={{
-                            fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700,
+                            fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700,
                             letterSpacing: "0.06em", textTransform: "uppercase",
-                            background: "oklch(30% 0.12 260)", color: "oklch(97% 0.005 80)",
-                            padding: "0.3rem 0.75rem", textDecoration: "none",
+                            color: "oklch(58% 0.008 260)",
                             whiteSpace: "nowrap",
                           }}
                         >
-                          Sign up to access →
-                        </Link>
+                          🔒 Members only
+                        </span>
                       )}
                       {/* Arrow for accessible resources */}
                       {isClickable ? (
@@ -438,47 +440,46 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
             </div>
 
             {!userId && lockedCount > 0 && (
-              <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", marginTop: "1.75rem", padding: "1rem 1.25rem", background: "oklch(30% 0.12 260 / 0.05)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", marginTop: "1.75rem", padding: "1rem 1.25rem", background: "oklch(65% 0.15 45 / 0.07)", borderLeft: "3px solid oklch(65% 0.15 45)" }}>
                 <div style={{ flex: 1 }}>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(28% 0.008 260)", marginBottom: "0.25rem" }}>
-                    {lockedCount} resources require a free account
+                    {lockedCount} resources are members-only
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)" }}>
-                    Create your free account to unlock the full library and save resources to your personal dashboard.
+                    Full library access launches soon. The 4 free modules are open to everyone — no account needed.
                   </p>
                 </div>
-                <Link href="/signup" style={{
+                <span style={{
                   fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
                   letterSpacing: "0.06em", textTransform: "uppercase",
-                  background: "oklch(30% 0.12 260)", color: "oklch(97% 0.005 80)",
-                  padding: "0.625rem 1.25rem", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,
+                  color: "oklch(65% 0.15 45)",
+                  whiteSpace: "nowrap", flexShrink: 0,
                 }}>
-                  Create free account →
-                </Link>
+                  Coming Soon
+                </span>
               </div>
             )}
           </div>
         </section>
       )}
 
-      {/* ── CTA ── */}
+      {/* ── COMING SOON CTA ── */}
       {!userId && (
         <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
           <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide">
-            <div style={{ maxWidth: "600px", paddingLeft: "2.5rem" }}>
-              <p className="t-tagline" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.25rem", fontStyle: "italic" }}>
-                {r.ctaQuote}
-              </p>
+            <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
+              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Full Library Access</p>
               <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-                {r.ctaHeading}
+                Membership launching soon
               </h2>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
-                {r.tagline}
+                The full library — 30+ resources, assessments, and team tools — will be available with a membership plan. The 4 free modules are open now.
               </p>
-              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                <Link href="/signup" className="btn-primary">{r.ctaPrimary} →</Link>
-                <Link href="/peer-groups" className="btn-ghost">{t.home.peerCta}</Link>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.5rem 1rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
+                  Coming Soon
+                </span>
               </div>
             </div>
           </div>

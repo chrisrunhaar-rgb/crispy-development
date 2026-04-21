@@ -272,21 +272,118 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)", position: "relative" }}>
-        <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
+      {/* ── PRICING COMING SOON ── */}
+      <section style={{ paddingBlock: "clamp(5rem, 8vw, 8rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <div style={{ maxWidth: "600px", paddingLeft: "2.5rem" }}>
-            <p className="t-tagline" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.25rem" }}>{h.ctaQuote}</p>
-            <h2 className="t-section" style={{ marginBottom: "1.75rem" }}>
-              {h.ctaHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
-            </h2>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              <Link href="/signup?pathway=personal" className="btn-primary">{h.ctaPrimaryFull}</Link>
-              <Link href="/signup?pathway=team" className="btn-outline-navy">{h.ctaTeamFull}</Link>
-              <Link href="/peer-groups" className="btn-outline-navy">{h.ctaPeerFull}</Link>
+          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.35)", padding: "0.375rem 0.875rem", marginBottom: "1.25rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
+                Launching Soon
+              </span>
             </div>
+            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem" }}>
+              Simple pricing.<br />Serious impact.
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", maxWidth: "48ch", margin: "0 auto" }}>
+              Four modules are free — forever. Full access and team tools launch with membership.
+            </p>
           </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1px", background: "oklch(42% 0.06 260)" }}>
+
+            {/* FREE */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Free</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$0</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Always free</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["4 core leadership modules", "Three Thinking Styles", "Leadership Altitudes", "Comfort Zone + Six Thinking Hats"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", textDecoration: "none", border: "1px solid oklch(55% 0.008 260)", padding: "0.5rem 1rem", textAlign: "center" }}>
+                Start free →
+              </Link>
+            </div>
+
+            {/* PERSONAL + PEER */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Personal + Peer</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Peer Groups included · no auto-renewal</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Full library — 30+ resources", "8 personality assessments", "Peer Group access (EN · ID · NL)", "Personal leadership journey", "New content monthly"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", padding: "0.5rem 1rem", border: "1px solid oklch(65% 0.15 45 / 0.4)", textAlign: "center" }}>
+                Coming Soon
+              </div>
+            </div>
+
+            {/* TEAM */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Team</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$497</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Up to 9 people · leader + 8 members</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Everything in Personal + Peer", "Team journey dashboard", "Team assessments + reflection", "Leader content toolkit", "Member progress tracking"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
+                Coming Soon
+              </div>
+            </div>
+
+            {/* COACHING */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Coaching</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$297</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Application-based · EN · ID · NL</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Personal + Team included", "1-on-1 coaching with Chris", "Personalised development plan", "Cultural context coaching", "Approval required — limited spots"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
+                Coming Soon
+              </div>
+            </div>
+
+          </div>
+
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1.75rem" }}>
+            Prices shown in USD · Regional pricing available for Southeast Asia, South Asia, and Africa · No auto-renewal on annual plans
+          </p>
         </div>
       </section>
     </>
