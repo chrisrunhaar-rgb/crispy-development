@@ -13,6 +13,88 @@ export const metadata = {
 
 const ADMIN_USER_ID = "e04e4310-075a-4df5-9113-4fe7f993afe6";
 
+const ASSESSMENT_KEYS = [
+  "disc_completed_at",
+  "thinking_style_completed_at",
+  "wheel_of_life_saved_at",
+  "karunia_completed_at",
+];
+
+const CONTENT_MODULES = [
+  {
+    category: "Assessments",
+    modules: [
+      { slug: "disc", title: "DISC Profile" },
+      { slug: "wheel-of-life", title: "Wheel of Life" },
+      { slug: "three-thinking-styles", title: "Three Thinking Styles" },
+      { slug: "karunia-rohani", title: "Karunia Rohani" },
+      { slug: "enneagram", title: "Enneagram" },
+      { slug: "myers-briggs", title: "Myers-Briggs" },
+      { slug: "big-five", title: "Big Five" },
+      { slug: "16-personalities", title: "16 Personalities" },
+    ],
+  },
+  {
+    category: "Cross-Cultural Leadership",
+    modules: [
+      { slug: "cultural-intelligence", title: "Cultural Intelligence" },
+      { slug: "power-distance", title: "Power Distance" },
+      { slug: "time-and-culture", title: "Time & Culture" },
+      { slug: "intercultural-communication", title: "Intercultural Communication" },
+      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures" },
+      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures" },
+      { slug: "conflict-resolution", title: "Conflict Resolution" },
+    ],
+  },
+  {
+    category: "Thinking & Decisions",
+    modules: [
+      { slug: "six-thinking-hats", title: "Six Thinking Hats" },
+      { slug: "cognitive-biases", title: "Cognitive Biases" },
+      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset" },
+      { slug: "decision-making", title: "Decision Making" },
+      { slug: "ladder-of-inference", title: "Ladder of Inference" },
+      { slug: "johari-window", title: "Johari Window" },
+    ],
+  },
+  {
+    category: "Leadership",
+    modules: [
+      { slug: "leadership-altitudes", title: "Leadership Altitudes" },
+      { slug: "servant-leadership", title: "Servant Leadership" },
+      { slug: "vision-casting", title: "Vision Casting" },
+      { slug: "managing-up", title: "Managing Up" },
+      { slug: "storytelling-leadership", title: "Storytelling for Leaders" },
+      { slug: "smart-goals", title: "SMART Goals" },
+      { slug: "above-below-the-line", title: "Above & Below the Line" },
+      { slug: "red-light-green-light", title: "Red Light Green Light" },
+      { slug: "raising-next-generation", title: "Raising the Next Generation" },
+      { slug: "team-health", title: "Team Health" },
+    ],
+  },
+  {
+    category: "Personal Growth",
+    modules: [
+      { slug: "emotional-intelligence", title: "Emotional Intelligence" },
+      { slug: "overcoming-procrastination", title: "Overcoming Procrastination" },
+      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone" },
+      { slug: "sabbath-leadership", title: "Sabbath Leadership" },
+      { slug: "leaders-are-readers", title: "Leaders Are Readers" },
+      { slug: "attention-retention", title: "Attention & Retention" },
+      { slug: "debriefing-reflection", title: "Debriefing & Reflection" },
+    ],
+  },
+  {
+    category: "Training",
+    modules: [
+      { slug: "zoom-training", title: "Zoom Training (EN)" },
+      { slug: "zoom-training-id", title: "Zoom Training (ID)" },
+      { slug: "teams-training", title: "Teams Training (EN)" },
+      { slug: "teams-training-id", title: "Teams Training (ID)" },
+    ],
+  },
+];
+
 export default async function AdminPage({
   searchParams,
 }: {
@@ -23,24 +105,32 @@ export default async function AdminPage({
   if (!user || user.id !== ADMIN_USER_ID) redirect("/");
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : "members";
+  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : "members";
 
   const admin = createAdminClient();
 
+  // ── Always fetch all users ──
+  const { data: { users: allAuthUsers } } = await admin.auth.admin.listUsers({ perPage: 200 });
+  const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  type UserRow = { id: string; email?: string; created_at: string; last_sign_in_at: string | null; user_metadata: Record<string, unknown> };
+  const allUsers: UserRow[] = (allAuthUsers ?? []).filter(u => u.id !== ADMIN_USER_ID).map(u => ({
+    id: u.id,
+    email: u.email,
+    created_at: u.created_at,
+    last_sign_in_at: u.last_sign_in_at ?? null,
+    user_metadata: u.user_metadata ?? {},
+  }));
+
+  const activeInLast30 = allUsers.filter(u =>
+    u.last_sign_in_at && new Date(u.last_sign_in_at) >= thirtyDaysAgo
+  ).length;
+
   // ── Members tab ──
-  let allUsers: Array<{ id: string; email?: string; created_at: string; user_metadata: Record<string, string> }> = [];
   let progressCounts = new Map<string, number>();
 
   if (activeTab === "members") {
-    const { data: { users } } = await admin.auth.admin.listUsers({ perPage: 200 });
-    allUsers = (users ?? []).filter(u => u.id !== ADMIN_USER_ID).map(u => ({
-      id: u.id,
-      email: u.email,
-      created_at: u.created_at,
-      user_metadata: u.user_metadata ?? {},
-    }));
-
-    // Fetch module completion counts for all users
     const { data: progressRows } = await admin
       .from("user_progress")
       .select("user_id")
@@ -70,43 +160,37 @@ export default async function AdminPage({
     pendingTeam = (p.data ?? []) as Record<string, unknown>[];
     approvedLeaders = (a.data ?? []) as Record<string, unknown>[];
 
-    // Map teams by leader user_id → {id, name}
     const teamByLeaderUserId = new Map<string, { id: string; name: string }>();
     (t.data ?? []).forEach((row: { leader_user_id: string; name: string; id: string }) => {
       teamNameByLeader.set(row.leader_user_id, row.name);
       teamByLeaderUserId.set(row.leader_user_id, { id: row.id, name: row.name });
     });
 
-    // Fetch all users with progress counts for team members
-    const { data: { users: allAuthUsers } } = await admin.auth.admin.listUsers({ perPage: 200 });
     const { data: progressRows } = await admin.from("user_progress").select("user_id").eq("status", "completed");
     const memberProgressCounts = new Map<string, number>();
     (progressRows ?? []).forEach((r: { user_id: string }) => {
       memberProgressCounts.set(r.user_id, (memberProgressCounts.get(r.user_id) ?? 0) + 1);
     });
 
-    // Group team members by team_id, then map to leader
     const membersByTeamId = new Map<string, TeamMemberRow[]>();
     (allAuthUsers ?? []).forEach(u => {
       const tid = u.user_metadata?.team_id;
       if (tid) {
-        teamMemberCountByLeader.set(tid, (teamMemberCountByLeader.get(tid) ?? 0) + 1);
-        const existing = membersByTeamId.get(tid) ?? [];
+        teamMemberCountByLeader.set(tid as string, (teamMemberCountByLeader.get(tid as string) ?? 0) + 1);
+        const existing = membersByTeamId.get(tid as string) ?? [];
         existing.push({
           name: `${u.user_metadata?.first_name ?? ""} ${u.user_metadata?.last_name ?? ""}`.trim() || (u.email ?? ""),
           email: u.email ?? "",
           completed: memberProgressCounts.get(u.id) ?? 0,
         });
-        membersByTeamId.set(tid, existing);
+        membersByTeamId.set(tid as string, existing);
       }
     });
 
-    // Map members to leader user_id
     teamByLeaderUserId.forEach((team, leaderUserId) => {
       teamMembersByLeaderId.set(leaderUserId, membersByTeamId.get(team.id) ?? []);
     });
 
-    // Group messages by leader user_id
     (m.data ?? []).forEach((msg: CoachMsgRow) => {
       const existing = messagesByLeaderId.get(msg.user_id) ?? [];
       existing.push(msg);
@@ -132,7 +216,6 @@ export default async function AdminPage({
     approvedInitiators = (ap.data ?? []) as Record<string, unknown>[];
     peerMessages = (pm.data ?? []) as Record<string, unknown>[];
 
-    // Fetch member counts for all groups
     const groupIds = (pg.data ?? []).map((g: { id: string }) => g.id);
     if (groupIds.length > 0) {
       const { data: memberCounts } = await admin
@@ -153,18 +236,46 @@ export default async function AdminPage({
     }
   }
 
-  // Stats (always show)
-  const _memberCountRes = await admin.auth.admin.listUsers({ perPage: 1 });
-  const memberCount = (_memberCountRes.data as { total?: number } | undefined)?.total ?? 0;
+  // ── Content tab ──
+  const contentSaveCounts = new Map<string, number>();
+  const contentReadCounts = new Map<string, number>();
+  if (activeTab === "content") {
+    allUsers.forEach(u => {
+      const saved = u.user_metadata?.saved_resources;
+      if (Array.isArray(saved)) {
+        (saved as string[]).forEach(slug => {
+          contentSaveCounts.set(slug, (contentSaveCounts.get(slug) ?? 0) + 1);
+        });
+      }
+      const read = u.user_metadata?.resource_read;
+      if (Array.isArray(read)) {
+        (read as string[]).forEach(slug => {
+          contentReadCounts.set(slug, (contentReadCounts.get(slug) ?? 0) + 1);
+        });
+      }
+    });
+  }
+
+  // ── Stats ──
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: newMessagesCount } = await admin.from("coach_messages").select("id", { count: "exact", head: true }).eq("status", "new");
+
+  const memberCount = allUsers.length;
 
   const TABS = [
     { key: "members", label: "Members" },
     { key: "leaders", label: "Team Leaders", badge: pendingTeamCount ?? 0 },
     { key: "peers", label: "Peer Initiators", badge: pendingPeerCount ?? 0 },
+    { key: "content", label: "Content" },
   ];
+
+  // Members list for broadcast form targeting
+  const membersList = allUsers.map(u => ({
+    id: u.id,
+    name: `${u.user_metadata?.first_name ?? ""} ${u.user_metadata?.last_name ?? ""}`.trim(),
+    email: u.email ?? "",
+  }));
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 120px)" }}>
@@ -180,7 +291,8 @@ export default async function AdminPage({
               </h1>
             </div>
             <div style={{ display: "flex", gap: "2rem" }}>
-              <Stat label="Total Members" value={(memberCount ?? 0) - 1} />
+              <Stat label="Total Members" value={memberCount} />
+              <Stat label="Active 30 Days" value={activeInLast30} />
               <Stat label="Pending Leaders" value={pendingTeamCount ?? 0} accent />
               <Stat label="Pending Groups" value={pendingPeerCount ?? 0} accent />
               <Stat label="New Messages" value={newMessagesCount ?? 0} />
@@ -226,87 +338,94 @@ export default async function AdminPage({
 
         {/* ── MEMBERS TAB ── */}
         {activeTab === "members" && (
-          <section>
-            <h2 style={sectionHeading}>Notify All Members</h2>
-            <AdminBroadcastForm />
-          </section>
-        )}
+          <>
+            <section>
+              <h2 style={sectionHeading}>All Members ({allUsers.length})</h2>
+              {allUsers.length === 0 ? (
+                <p style={emptyText}>No members yet.</p>
+              ) : (
+                <div style={{ background: "oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px" }}>
+                  {/* Column headers */}
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 110px 60px 60px 80px 55px 90px 100px 130px",
+                    gap: "1rem",
+                    padding: "0.625rem 1.5rem",
+                    background: "oklch(94% 0.006 80)",
+                  }}>
+                    {["Member", "Pathway", "Team", "Peer", "Modules", "Tests", "Timezone", "Last Login", "Joined"].map(h => (
+                      <p key={h} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
+                    ))}
+                  </div>
 
-        {activeTab === "members" && (
-          <section>
-            <h2 style={sectionHeading}>All Members ({allUsers.length})</h2>
-            {allUsers.length === 0 ? (
-              <p style={emptyText}>No members yet.</p>
-            ) : (
-              <div style={{ background: "oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px" }}>
-                {/* Column headers */}
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 110px 60px 60px 80px 90px 130px",
-                  gap: "1rem",
-                  padding: "0.625rem 1.5rem",
-                  background: "oklch(94% 0.006 80)",
-                }}>
-                  {["Member", "Pathway", "Team", "Peer", "Modules", "Timezone", "Joined"].map(h => (
-                    <p key={h} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
-                  ))}
-                </div>
+                  {/* Member rows */}
+                  {allUsers.map(u => {
+                    const firstName = u.user_metadata?.first_name as string ?? "";
+                    const lastName = u.user_metadata?.last_name as string ?? "";
+                    const fullName = `${firstName} ${lastName}`.trim() || "—";
+                    const pathway = u.user_metadata?.pathway as string ?? "personal";
+                    const hasTeam = pathway === "team" || !!u.user_metadata?.team_id;
+                    const hasPeer = pathway === "peer" || !!u.user_metadata?.peer_group_id;
+                    const modulesCompleted = progressCounts.get(u.id) ?? 0;
+                    const timezone = u.user_metadata?.timezone as string ?? null;
+                    const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
 
-                {/* Member rows */}
-                {allUsers.map(u => {
-                  const firstName = u.user_metadata?.first_name ?? "";
-                  const lastName = u.user_metadata?.last_name ?? "";
-                  const fullName = `${firstName} ${lastName}`.trim() || "—";
-                  const pathway = u.user_metadata?.pathway ?? "personal";
-                  const hasTeam = pathway === "team" || !!u.user_metadata?.team_id;
-                  const hasPeer = pathway === "peer" || !!u.user_metadata?.peer_group_id;
-                  const modulesCompleted = progressCounts.get(u.id) ?? 0;
-                  const timezone = u.user_metadata?.timezone ?? null;
-
-                  return (
-                    <div key={u.id} style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 110px 60px 60px 80px 90px 130px",
-                      gap: "1rem",
-                      padding: "0.875rem 1.5rem",
-                      background: "oklch(99% 0.002 80)",
-                      alignItems: "center",
-                    }}>
-                      <div>
-                        <p style={nameStyle}>{fullName}</p>
-                        <p style={metaStyle}>{u.email}</p>
-                      </div>
-                      <span style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.6rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        padding: "0.2rem 0.5rem",
-                        display: "inline-block",
-                        background: "oklch(30% 0.12 260 / 0.08)",
-                        color: "oklch(30% 0.12 260)",
+                    return (
+                      <div key={u.id} style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 110px 60px 60px 80px 55px 90px 100px 130px",
+                        gap: "1rem",
+                        padding: "0.875rem 1.5rem",
+                        background: "oklch(99% 0.002 80)",
+                        alignItems: "center",
                       }}>
-                        {pathway.toUpperCase()}
-                      </span>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasTeam ? 700 : 400, color: hasTeam ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                        {hasTeam ? "Yes" : "—"}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasPeer ? 700 : 400, color: hasPeer ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                        {hasPeer ? "Yes" : "—"}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: modulesCompleted > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                        {modulesCompleted > 0 ? modulesCompleted : "—"}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: timezone ? "oklch(38% 0.008 260)" : "oklch(72% 0.008 260)", margin: 0, fontWeight: timezone ? 600 : 400 }}>
-                        {timezone ?? "—"}
-                      </p>
-                      <p style={metaStyle}>{formatDate(u.created_at)}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </section>
+                        <div>
+                          <p style={nameStyle}>{fullName}</p>
+                          <p style={metaStyle}>{u.email}</p>
+                        </div>
+                        <span style={{
+                          fontFamily: "var(--font-montserrat)",
+                          fontSize: "0.6rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
+                          padding: "0.2rem 0.5rem",
+                          display: "inline-block",
+                          background: "oklch(30% 0.12 260 / 0.08)",
+                          color: "oklch(30% 0.12 260)",
+                        }}>
+                          {pathway.toUpperCase()}
+                        </span>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasTeam ? 700 : 400, color: hasTeam ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {hasTeam ? "Yes" : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasPeer ? 700 : 400, color: hasPeer ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {hasPeer ? "Yes" : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: modulesCompleted > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {modulesCompleted > 0 ? modulesCompleted : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: testsDone > 0 ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {testsDone > 0 ? `${testsDone}/${ASSESSMENT_KEYS.length}` : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: timezone ? "oklch(38% 0.008 260)" : "oklch(72% 0.008 260)", margin: 0, fontWeight: timezone ? 600 : 400 }}>
+                          {timezone ?? "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
+                          {u.last_sign_in_at ? formatDate(u.last_sign_in_at) : "—"}
+                        </p>
+                        <p style={metaStyle}>{formatDate(u.created_at)}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+
+            <section>
+              <h2 style={sectionHeading}>Send Notification</h2>
+              <AdminBroadcastForm members={membersList} />
+            </section>
+          </>
         )}
 
         {/* ── LEADERS TAB ── */}
@@ -356,7 +475,7 @@ export default async function AdminPage({
               )}
             </section>
 
-            {/* Active leaders — accordion rows */}
+            {/* Active leaders */}
             <section>
               <h2 style={sectionHeading}>Active Team Leaders ({approvedLeaders.length})</h2>
               {approvedLeaders.length === 0 ? (
@@ -598,6 +717,91 @@ export default async function AdminPage({
                 </div>
               )}
             </section>
+          </>
+        )}
+
+        {/* ── CONTENT TAB ── */}
+        {activeTab === "content" && (
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "-1.5rem" }}>
+              <h2 style={{ ...sectionHeading, margin: 0 }}>
+                Content Library
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 400, color: "oklch(62% 0.008 260)", marginLeft: "0.75rem", textTransform: "none", letterSpacing: 0 }}>
+                  Save counts from {allUsers.length} members
+                </span>
+              </h2>
+            </div>
+
+            {CONTENT_MODULES.map(group => (
+              <section key={group.category}>
+                <h3 style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 700,
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "oklch(65% 0.15 45)",
+                  marginBottom: "0.75rem",
+                }}>
+                  {group.category}
+                </h3>
+                <div style={{ background: "oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px" }}>
+                  {/* Header row */}
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 80px 80px 120px",
+                    gap: "1rem",
+                    padding: "0.5rem 1.5rem",
+                    background: "oklch(94% 0.006 80)",
+                  }}>
+                    {["Module", "Saved", "Read", ""].map((h, i) => (
+                      <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
+                    ))}
+                  </div>
+                  {group.modules.map(mod => {
+                    const saves = contentSaveCounts.get(mod.slug) ?? 0;
+                    const reads = contentReadCounts.get(mod.slug) ?? 0;
+                    return (
+                      <div key={mod.slug} style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 80px 80px 120px",
+                        gap: "1rem",
+                        padding: "0.75rem 1.5rem",
+                        background: "oklch(99% 0.002 80)",
+                        alignItems: "center",
+                      }}>
+                        <div>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", margin: 0 }}>{mod.title}</p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(62% 0.008 260)", margin: "0.125rem 0 0" }}>/resources/{mod.slug}</p>
+                        </div>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: saves > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {saves > 0 ? saves : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: saves > 0 ? 600 : 400, fontSize: "0.875rem", color: reads > 0 ? "oklch(42% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {reads > 0 ? reads : "—"}
+                        </p>
+                        <Link
+                          href={`/resources/${mod.slug}`}
+                          target="_blank"
+                          style={{
+                            fontFamily: "var(--font-montserrat)",
+                            fontSize: "0.65rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.06em",
+                            textTransform: "uppercase",
+                            color: "oklch(65% 0.15 45)",
+                            textDecoration: "none",
+                            opacity: 0.8,
+                          }}
+                        >
+                          View →
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            ))}
           </>
         )}
 
