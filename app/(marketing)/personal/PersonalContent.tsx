@@ -133,7 +133,7 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }
             </div>
             <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>Launching soon</h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "48ch" }}>
-              Personal + Peer access opens full library, assessments, and peer groups. All included in one annual plan — no auto-renewal.
+              12 months of unlimited access — resources, assessments, and peer groups in one plan.
             </p>
           </div>
 
@@ -145,10 +145,10 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$0</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Always free</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Always free · no account needed</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["4 core leadership modules", "Three Thinking Styles", "Leadership Altitudes", "Comfort Zone + Six Thinking Hats"].map(f => (
+                {["4 core leadership modules", "Three Thinking Styles", "Leadership Altitudes", "Comfort Zone + Six Thinking Hats", "1 free assessment — Spiritual Giftings"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -159,19 +159,30 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }
               </Link>
             </div>
 
-            {/* PERSONAL + PEER */}
+            {/* PERSONAL */}
             <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Personal + Peer</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>Personal</p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.1rem 0.4rem" }}>+ Peer Groups FREE</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Peer Groups included · no auto-renewal</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>12 months unlimited access to:</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Full library — 30+ resources", "8 personality assessments", "Peer Group access (EN · ID · NL)", "Personal leadership journey", "New content monthly"].map(f => (
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  30+ leadership resources — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>browse all →</Link>
+                </li>
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  8 assessments — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>see all →</Link>
+                </li>
+                {["Personal leadership journey", "Progress tracking", "New content added monthly", "🎁 Peer Groups — free gift"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -184,7 +195,7 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal" }
           </div>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "1.5rem" }}>
-            USD pricing shown · Regional rates available for SE Asia, South Asia &amp; Africa · <Link href="/team" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none" }}>Team plan →</Link>
+            USD pricing shown · Regional rates for SE Asia, South Asia &amp; Africa · <Link href="/team" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none" }}>See Team plan →</Link>
           </p>
         </div>
       </section>

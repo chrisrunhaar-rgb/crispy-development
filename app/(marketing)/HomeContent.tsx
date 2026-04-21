@@ -285,7 +285,7 @@ export default function HomeContent() {
               Simple pricing.<br />Serious impact.
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", maxWidth: "48ch", margin: "0 auto" }}>
-              Four modules are free — forever. Full access and team tools launch with membership.
+              Start free — always. Full access and team tools launch with membership.
             </p>
           </div>
 
@@ -298,10 +298,10 @@ export default function HomeContent() {
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$0</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Always free</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Always free · no account needed</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["4 core leadership modules", "Three Thinking Styles", "Leadership Altitudes", "Comfort Zone + Six Thinking Hats"].map(f => (
+                {["4 core leadership modules", "Three Thinking Styles", "Leadership Altitudes", "Comfort Zone + Six Thinking Hats", "1 free assessment — Spiritual Giftings"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -312,19 +312,30 @@ export default function HomeContent() {
               </Link>
             </div>
 
-            {/* PERSONAL + PEER */}
+            {/* PERSONAL */}
             <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Personal + Peer</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>Personal</p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.1rem 0.4rem" }}>+ Peer Groups FREE</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Peer Groups included · no auto-renewal</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>12 months unlimited access to:</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Full library — 30+ resources", "8 personality assessments", "Peer Group access (EN · ID · NL)", "Personal leadership journey", "New content monthly"].map(f => (
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  30+ leadership resources — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>browse all →</Link>
+                </li>
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  8 assessments — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>see all →</Link>
+                </li>
+                {["Personal leadership journey", "Progress tracking", "New content added monthly", "🎁 Peer Groups — free gift"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -343,14 +354,17 @@ export default function HomeContent() {
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$497</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Up to 9 people · leader + 8 members</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Leader + up to 8 members (worth $1,192)</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Everything in Personal + Peer", "Team journey dashboard", "Team assessments + reflection", "Leader content toolkit", "Member progress tracking"].map(f => (
+                {["Full Personal access for all 9", "Full Team Dashboard", "Team Coach support via Chat", "Tailored roadmap — cross-cultural teams", "EN + ID fully supported"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
                 ))}
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(58% 0.006 260)", alignItems: "flex-start", fontStyle: "italic" }}>
+                  <span style={{ color: "oklch(52% 0.008 260)", fontWeight: 700, flexShrink: 0 }}>+</span>NL, FR, ZH coming soon
+                </li>
               </ul>
               <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
                 Coming Soon
@@ -360,15 +374,18 @@ export default function HomeContent() {
             {/* COACHING */}
             <div style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Coaching</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: 0 }}>Coaching</p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", background: "oklch(36% 0.06 260)", border: "1px solid oklch(45% 0.06 260)", padding: "0.1rem 0.4rem" }}>Add-on</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$297</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Application-based · EN · ID · NL</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Requires Personal or Team · EN · ID · NL</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Personal + Team included", "1-on-1 coaching with Chris", "Personalised development plan", "Cultural context coaching", "Approval required — limited spots"].map(f => (
+                {["4 personal development sessions", "Personal development plan", "1-on-1 with Chris", "Cultural context coaching", "Application-based — limited spots"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -382,7 +399,7 @@ export default function HomeContent() {
           </div>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1.75rem" }}>
-            Prices shown in USD · Regional pricing available for Southeast Asia, South Asia, and Africa · No auto-renewal on annual plans
+            Prices shown in USD · Regional pricing available for SE Asia, South Asia &amp; Africa · Annual plans only
           </p>
         </div>
       </section>

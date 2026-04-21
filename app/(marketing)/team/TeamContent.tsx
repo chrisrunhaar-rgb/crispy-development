@@ -149,32 +149,44 @@ export default function TeamContent({ ctaHref = "/signup?pathway=personal" }: { 
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>Team Pricing</span>
             </div>
             <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>Launching soon</h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "48ch" }}>
-              One Team plan covers the leader and up to 8 members — all with Personal + Peer access included. No auto-renewal.
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch" }}>
+              One Team plan. Leader + 8 members. All with full Personal access. Annual — that&apos;s it.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)", maxWidth: "820px" }}>
-            {/* PERSONAL + PEER */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)" }}>
+
+            {/* PERSONAL (for reference) */}
             <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Personal + Peer</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: 0 }}>Personal</p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.1rem 0.4rem" }}>+ Peer Free</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Per person · included with Team</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Per person — included in Team</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Full library access", "8 personality assessments", "Peer Group access", "Personal journey tracking"].map(f => (
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  30+ resources — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>browse all →</Link>
+                </li>
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  8 assessments — <Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>see all →</Link>
+                </li>
+                {["Personal journey + tracking", "🎁 Peer Groups free"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
                 ))}
               </ul>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
-                Coming Soon
-              </div>
+              <Link href="/personal" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.04 260)", textDecoration: "none", border: "1px solid oklch(42% 0.06 260)", padding: "0.5rem 1rem", textAlign: "center" }}>
+                See Personal →
+              </Link>
             </div>
 
             {/* TEAM */}
@@ -186,32 +198,38 @@ export default function TeamContent({ ctaHref = "/signup?pathway=personal" }: { 
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$497</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Leader + up to 8 members · no auto-renewal</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Leader + 8 members — worth $1,192 separately</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Everything in Personal + Peer for all 9", "Team journey dashboard", "Team assessments + reflections", "Leader content toolkit", "Member progress tracking"].map(f => (
+                {["Full Personal access for all 9", "Full Team Dashboard", "Team Coach support via Chat", "Tailored roadmap — cross-cultural teams", "EN + ID fully supported"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
                 ))}
+                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(58% 0.006 260)", alignItems: "flex-start", fontStyle: "italic" }}>
+                  <span style={{ color: "oklch(52% 0.008 260)", fontWeight: 700, flexShrink: 0 }}>+</span>NL, FR, ZH coming soon
+                </li>
               </ul>
               <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", padding: "0.5rem 1rem", border: "1px solid oklch(65% 0.15 45 / 0.4)", textAlign: "center" }}>
                 Coming Soon
               </div>
             </div>
 
-            {/* COACHING */}
+            {/* COACHING ADD-ON */}
             <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Coaching</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: 0 }}>Coaching</p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", background: "oklch(36% 0.06 260)", border: "1px solid oklch(45% 0.06 260)", padding: "0.1rem 0.4rem" }}>Add-on</span>
+                </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$297</span>
                   <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Application-based · EN · ID · NL only</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Requires Personal or Team · EN · ID · NL</p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {["Personal + Team included", "1-on-1 coaching with Chris", "Personalised development plan", "Cultural context coaching", "Limited spots — approval required"].map(f => (
+                {["4 personal development sessions", "Personal development plan", "1-on-1 with Chris", "Cultural context coaching", "Application-based — limited spots"].map(f => (
                   <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
                     <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
                   </li>
@@ -221,10 +239,11 @@ export default function TeamContent({ ctaHref = "/signup?pathway=personal" }: { 
                 Coming Soon
               </div>
             </div>
+
           </div>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "1.5rem" }}>
-            USD pricing shown · Regional rates available for SE Asia, South Asia &amp; Africa
+            USD pricing shown · Regional rates for SE Asia, South Asia &amp; Africa · Annual plans only
           </p>
         </div>
       </section>
