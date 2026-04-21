@@ -309,22 +309,30 @@ export default async function DashboardPage({
     : (tab === "peer" || !!joinGroup) && hasPeer ? "peer"
     : "personal";
 
-  // ── Modules + progress (personal & peer) ──
+  // ── Modules + progress + messages — all independent, fired in parallel ──
   let modules: Module[] = [];
   let completedIds = new Set<string>();
+  let userMessages: CoachMsg[] = [];
 
-  const { data: allMods } = await supabase
-    .from("modules")
-    .select("id, slug, title, description, type, pathway, is_free, order_index")
-    .order("order_index", { ascending: true });
+  const [{ data: allMods }, { data: progress }, { data: msgs }] = await Promise.all([
+    supabase
+      .from("modules")
+      .select("id, slug, title, description, type, pathway, is_free, order_index")
+      .order("order_index", { ascending: true }),
+    supabase
+      .from("user_progress")
+      .select("module_id")
+      .eq("user_id", user.id)
+      .eq("status", "completed"),
+    supabase
+      .from("coach_messages")
+      .select("id, message, subject, created_at, reply, replied_at, status, message_type")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: true }),
+  ]);
   modules = allMods ?? [];
-
-  const { data: progress } = await supabase
-    .from("user_progress")
-    .select("module_id")
-    .eq("user_id", user.id)
-    .eq("status", "completed");
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
+  userMessages = (msgs ?? []) as CoachMsg[];
 
   // ── Team leader data ──
   let teamMembers: { id: string; name: string; email: string; completed: number; title: string | null; tenureLabel: string | null }[] = [];
@@ -372,17 +380,20 @@ export default async function DashboardPage({
   type StepCompletionRow = { user_id: string; step_number: number; completed_at: string };
   type BroadcastRow = { id: string; message: string; sent_at: string };
   type FbRow = { user_id: string; step_number: number; comment: string; rating: number | null; updated_at: string };
+  let leaderTeamResults: TeamMemberResult[] = [];
   let teamStepCompletions: StepCompletionRow[] = [];
   let teamBroadcasts: BroadcastRow[] = [];
   let leaderStepFeedback: Record<number, FeedbackEntry[]> = {};
   if (isTeamLeader && teamRecord) {
-    const [{ data: scRows }, { data: bcRows }, { data: fbRows }] = await Promise.all([
+    const [{ data: scRows }, { data: bcRows }, { data: fbRows }, { data: ltResultRows }] = await Promise.all([
       admin.from("team_step_data").select("user_id, step_number, completed_at").eq("team_id", teamRecord.id),
       admin.from("team_broadcasts").select("id, message, sent_at").eq("team_id", teamRecord.id).order("sent_at", { ascending: false }).limit(20),
       admin.from("team_step_feedback").select("user_id, step_number, comment, rating, updated_at").eq("team_id", teamRecord.id),
+      admin.from("team_member_results").select("user_id, result_type, result_key, scores, completed_at").eq("team_id", teamRecord.id),
     ]);
     teamStepCompletions = (scRows ?? []) as StepCompletionRow[];
     teamBroadcasts = (bcRows ?? []) as BroadcastRow[];
+    leaderTeamResults = (ltResultRows ?? []) as TeamMemberResult[];
 
     if (fbRows && fbRows.length > 0) {
       const leaderFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
@@ -403,28 +414,23 @@ export default async function DashboardPage({
     }
   }
 
-  // ── Step completions + results for team members ──
+  // ── Step completions + results + feedback for team members — all fired in parallel ──
   let memberStepCompletions: StepCompletionRow[] = [];
   let memberTeamLeaderUserId: string | undefined;
   let memberTeamResults: TeamMemberResult[] = [];
+  let mfbRowsForMember: FbRow[] | null = null;
   if (memberOfTeam) {
-    const [{ data: mscRows }, { data: mResultRows }] = await Promise.all([
+    const [{ data: mscRows }, { data: mResultRows }, { data: mfbRows }] = await Promise.all([
       admin.from("team_step_data").select("user_id, step_number, completed_at").eq("team_id", memberOfTeam.id),
       admin.from("team_member_results").select("user_id, result_type, result_key, scores, completed_at").eq("team_id", memberOfTeam.id),
+      admin.from("team_step_feedback").select("user_id, step_number, comment, rating, updated_at").eq("team_id", memberOfTeam.id),
     ]);
     memberStepCompletions = (mscRows ?? []) as StepCompletionRow[];
     memberTeamResults = (mResultRows ?? []) as TeamMemberResult[];
+    mfbRowsForMember = (mfbRows ?? []) as FbRow[];
   }
 
-  // ── Team results for leader view ──
-  let leaderTeamResults: TeamMemberResult[] = [];
-  if (isTeamLeader && teamRecord) {
-    const { data: ltResultRows } = await admin
-      .from("team_member_results")
-      .select("user_id, result_type, result_key, scores, completed_at")
-      .eq("team_id", teamRecord.id);
-    leaderTeamResults = (ltResultRows ?? []) as TeamMemberResult[];
-  }
+  // leaderTeamResults populated in team journey Promise.all above
 
   // ── Team member content + roster (invited via link) ──
   let memberTeamContent: Module[] = [];
@@ -478,43 +484,27 @@ export default async function DashboardPage({
     }
   }
 
-  // ── Step feedback for member dashboard ──
+  // ── Step feedback for member dashboard — use pre-fetched mfbRowsForMember ──
   let memberStepFeedback: Record<number, FeedbackEntry[]> = {};
-  if (memberOfTeam) {
-    const { data: mfbRows } = await admin
-      .from("team_step_feedback")
-      .select("user_id, step_number, comment, rating, updated_at")
-      .eq("team_id", memberOfTeam.id);
-    if (mfbRows && mfbRows.length > 0) {
-      const mfbNameMap = new Map<string, string>();
-      if (memberTeamLeaderUserId && memberTeamLeaderName) mfbNameMap.set(memberTeamLeaderUserId, memberTeamLeaderName);
-      memberTeamRoster.forEach(m => mfbNameMap.set(m.id, m.name));
-      const myFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
-      mfbNameMap.set(user.id, myFullName);
-      for (const row of mfbRows as FbRow[]) {
-        if (!memberStepFeedback[row.step_number]) memberStepFeedback[row.step_number] = [];
-        memberStepFeedback[row.step_number].push({
-          user_id: row.user_id,
-          user_name: mfbNameMap.get(row.user_id) ?? "Team member",
-          comment: row.comment,
-          rating: row.rating,
-          updated_at: row.updated_at,
-          is_current_user: row.user_id === user.id,
-        });
-      }
+  if (memberOfTeam && mfbRowsForMember && mfbRowsForMember.length > 0) {
+    const mfbNameMap = new Map<string, string>();
+    if (memberTeamLeaderUserId && memberTeamLeaderName) mfbNameMap.set(memberTeamLeaderUserId, memberTeamLeaderName);
+    memberTeamRoster.forEach(m => mfbNameMap.set(m.id, m.name));
+    const myFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
+    mfbNameMap.set(user.id, myFullName);
+    for (const row of mfbRowsForMember) {
+      if (!memberStepFeedback[row.step_number]) memberStepFeedback[row.step_number] = [];
+      memberStepFeedback[row.step_number].push({
+        user_id: row.user_id,
+        user_name: mfbNameMap.get(row.user_id) ?? "Team member",
+        comment: row.comment,
+        rating: row.rating,
+        updated_at: row.updated_at,
+        is_current_user: row.user_id === user.id,
+      });
     }
   }
 
-  // ── All coach messages for this user ──
-  let userMessages: { id: string; message: string; subject: string | null; created_at: string; reply: string | null; replied_at: string | null; status: string; message_type: string }[] = [];
-  {
-    const { data: msgs } = await supabase
-      .from("coach_messages")
-      .select("id, message, subject, created_at, reply, replied_at, status, message_type")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: true });
-    userMessages = (msgs ?? []) as CoachMsg[];
-  }
   const leaderMessages = userMessages.filter(m => m.message_type !== "peer");
   const peerMessages = userMessages.filter(m => m.message_type === "peer");
 
