@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { signOut } from "@/app/auth/actions";
+import AccountMenu from "@/components/AccountMenu";
 import PwaInstall from "@/components/PwaInstall";
 import ContactCoach from "@/components/ContactCoach";
 import AddTeamContentForm from "@/components/AddTeamContentForm";
@@ -556,15 +556,15 @@ export default async function DashboardPage({
                 </h1>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-              <PersonalLanguageSelector currentLanguage={languagePreference} />
+            <div style={{ display: "flex", gap: "0.875rem", alignItems: "center", flexWrap: "wrap" }}>
+              <PersonalLanguageSelector currentLanguage={languagePreference} compact />
               <PushNotificationToggle />
               <PwaInstall />
-              <form action={signOut}>
-                <button type="submit" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.006 260)", background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-                  Sign out
-                </button>
-              </form>
+              <AccountMenu
+                firstName={user.user_metadata?.first_name ?? firstName}
+                lastName={user.user_metadata?.last_name}
+                email={user.email ?? ""}
+              />
             </div>
           </div>
 

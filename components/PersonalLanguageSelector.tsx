@@ -11,7 +11,7 @@ const LANGS = [
 
 type Lang = "en" | "id" | "nl";
 
-export default function PersonalLanguageSelector({ currentLanguage }: { currentLanguage: Lang }) {
+export default function PersonalLanguageSelector({ currentLanguage, compact = false }: { currentLanguage: Lang; compact?: boolean }) {
   const [optimisticLang, setOptimisticLang] = useState<Lang>(currentLanguage);
   const [isPending, startTransition] = useTransition();
 
@@ -25,17 +25,19 @@ export default function PersonalLanguageSelector({ currentLanguage }: { currentL
 
   return (
     <div>
-      <p style={{
-        fontFamily: "var(--font-montserrat)",
-        fontSize: "0.62rem",
-        fontWeight: 700,
-        letterSpacing: "0.12em",
-        textTransform: "uppercase",
-        color: "oklch(52% 0.008 260)",
-        marginBottom: "0.5rem",
-      }}>
-        Content Language
-      </p>
+      {!compact && (
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.62rem",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "oklch(52% 0.008 260)",
+          marginBottom: "0.5rem",
+        }}>
+          Content Language
+        </p>
+      )}
       <div style={{ display: "flex", gap: "2px" }}>
         {LANGS.map(({ code, label, full }) => {
           const isActive = optimisticLang === code;
