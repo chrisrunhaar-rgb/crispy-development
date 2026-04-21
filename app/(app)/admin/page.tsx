@@ -20,77 +20,80 @@ const ASSESSMENT_KEYS = [
   "karunia_completed_at",
 ];
 
-const CONTENT_MODULES = [
+type ContentModule = { slug: string; title: string; created: string; updated: string; languages: string[] };
+type ContentGroup = { category: string; modules: ContentModule[] };
+
+const CONTENT_MODULES: ContentGroup[] = [
   {
     category: "Assessments",
     modules: [
-      { slug: "disc", title: "DISC Profile" },
-      { slug: "wheel-of-life", title: "Wheel of Life" },
-      { slug: "three-thinking-styles", title: "Three Thinking Styles" },
-      { slug: "karunia-rohani", title: "Karunia Rohani" },
-      { slug: "enneagram", title: "Enneagram" },
-      { slug: "myers-briggs", title: "Myers-Briggs" },
-      { slug: "big-five", title: "Big Five" },
-      { slug: "16-personalities", title: "16 Personalities" },
+      { slug: "disc", title: "DISC Profile", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "wheel-of-life", title: "Wheel of Life", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "enneagram", title: "Enneagram", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "myers-briggs", title: "Myers-Briggs", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "big-five", title: "Big Five", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "16-personalities", title: "16 Personalities", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],
   },
   {
     category: "Cross-Cultural Leadership",
     modules: [
-      { slug: "cultural-intelligence", title: "Cultural Intelligence" },
-      { slug: "power-distance", title: "Power Distance" },
-      { slug: "time-and-culture", title: "Time & Culture" },
-      { slug: "intercultural-communication", title: "Intercultural Communication" },
-      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures" },
-      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures" },
-      { slug: "conflict-resolution", title: "Conflict Resolution" },
+      { slug: "cultural-intelligence", title: "Cultural Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "power-distance", title: "Power Distance", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "time-and-culture", title: "Time & Culture", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "intercultural-communication", title: "Intercultural Communication", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "conflict-resolution", title: "Conflict Resolution", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],
   },
   {
     category: "Thinking & Decisions",
     modules: [
-      { slug: "six-thinking-hats", title: "Six Thinking Hats" },
-      { slug: "cognitive-biases", title: "Cognitive Biases" },
-      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset" },
-      { slug: "decision-making", title: "Decision Making" },
-      { slug: "ladder-of-inference", title: "Ladder of Inference" },
-      { slug: "johari-window", title: "Johari Window" },
+      { slug: "six-thinking-hats", title: "Six Thinking Hats", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "cognitive-biases", title: "Cognitive Biases", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "decision-making", title: "Decision Making", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "ladder-of-inference", title: "Ladder of Inference", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "johari-window", title: "Johari Window", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],
   },
   {
     category: "Leadership",
     modules: [
-      { slug: "leadership-altitudes", title: "Leadership Altitudes" },
-      { slug: "servant-leadership", title: "Servant Leadership" },
-      { slug: "vision-casting", title: "Vision Casting" },
-      { slug: "managing-up", title: "Managing Up" },
-      { slug: "storytelling-leadership", title: "Storytelling for Leaders" },
-      { slug: "smart-goals", title: "SMART Goals" },
-      { slug: "above-below-the-line", title: "Above & Below the Line" },
-      { slug: "red-light-green-light", title: "Red Light Green Light" },
-      { slug: "raising-next-generation", title: "Raising the Next Generation" },
-      { slug: "team-health", title: "Team Health" },
+      { slug: "leadership-altitudes", title: "Leadership Altitudes", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "servant-leadership", title: "Servant Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "vision-casting", title: "Vision Casting", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "managing-up", title: "Managing Up", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "storytelling-leadership", title: "Storytelling for Leaders", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "smart-goals", title: "SMART Goals", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "above-below-the-line", title: "Above & Below the Line", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "red-light-green-light", title: "Red Light Green Light", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "raising-next-generation", title: "Raising the Next Generation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "team-health", title: "Team Health", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],
   },
   {
     category: "Personal Growth",
     modules: [
-      { slug: "emotional-intelligence", title: "Emotional Intelligence" },
-      { slug: "overcoming-procrastination", title: "Overcoming Procrastination" },
-      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone" },
-      { slug: "sabbath-leadership", title: "Sabbath Leadership" },
-      { slug: "leaders-are-readers", title: "Leaders Are Readers" },
-      { slug: "attention-retention", title: "Attention & Retention" },
-      { slug: "debriefing-reflection", title: "Debriefing & Reflection" },
+      { slug: "emotional-intelligence", title: "Emotional Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "overcoming-procrastination", title: "Overcoming Procrastination", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "sabbath-leadership", title: "Sabbath Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "leaders-are-readers", title: "Leaders Are Readers", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "attention-retention", title: "Attention & Retention", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "debriefing-reflection", title: "Debriefing & Reflection", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],
   },
   {
     category: "Training",
     modules: [
-      { slug: "zoom-training", title: "Zoom Training (EN)" },
-      { slug: "zoom-training-id", title: "Zoom Training (ID)" },
-      { slug: "teams-training", title: "Teams Training (EN)" },
-      { slug: "teams-training-id", title: "Teams Training (ID)" },
+      { slug: "zoom-training", title: "Zoom Training (EN)", created: "2026-04-21", updated: "2026-04-21", languages: ["EN"] },
+      { slug: "zoom-training-id", title: "Zoom Training (ID)", created: "2026-04-21", updated: "2026-04-21", languages: ["ID"] },
+      { slug: "teams-training", title: "Teams Training (EN)", created: "2026-04-21", updated: "2026-04-21", languages: ["EN"] },
+      { slug: "teams-training-id", title: "Teams Training (ID)", created: "2026-04-21", updated: "2026-04-21", languages: ["ID"] },
     ],
   },
 ];
@@ -749,12 +752,12 @@ export default async function AdminPage({
                   {/* Header row */}
                   <div style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 80px 80px 120px",
+                    gridTemplateColumns: "1fr 95px 95px 90px 70px 70px 80px",
                     gap: "1rem",
                     padding: "0.5rem 1.5rem",
                     background: "oklch(94% 0.006 80)",
                   }}>
-                    {["Module", "Saved", "Read", ""].map((h, i) => (
+                    {["Module", "Created", "Updated", "Languages", "Opened", "Saved", ""].map((h, i) => (
                       <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
                     ))}
                   </div>
@@ -764,7 +767,7 @@ export default async function AdminPage({
                     return (
                       <div key={mod.slug} style={{
                         display: "grid",
-                        gridTemplateColumns: "1fr 80px 80px 120px",
+                        gridTemplateColumns: "1fr 95px 95px 90px 70px 70px 80px",
                         gap: "1rem",
                         padding: "0.75rem 1.5rem",
                         background: "oklch(99% 0.002 80)",
@@ -774,11 +777,30 @@ export default async function AdminPage({
                           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", margin: 0 }}>{mod.title}</p>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(62% 0.008 260)", margin: "0.125rem 0 0" }}>/resources/{mod.slug}</p>
                         </div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: saves > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {saves > 0 ? saves : "—"}
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
+                          {formatDate(mod.created)}
                         </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: saves > 0 ? 600 : 400, fontSize: "0.875rem", color: reads > 0 ? "oklch(42% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
+                          {formatDate(mod.updated)}
+                        </p>
+                        <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" }}>
+                          {mod.languages.map(lang => (
+                            <span key={lang} style={{
+                              fontFamily: "var(--font-montserrat)",
+                              fontSize: "0.58rem",
+                              fontWeight: 700,
+                              letterSpacing: "0.06em",
+                              padding: "0.15rem 0.35rem",
+                              background: "oklch(30% 0.12 260 / 0.08)",
+                              color: "oklch(30% 0.12 260)",
+                            }}>{lang}</span>
+                          ))}
+                        </div>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: reads > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
                           {reads > 0 ? reads : "—"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: saves > 0 ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
+                          {saves > 0 ? saves : "—"}
                         </p>
                         <Link
                           href={`/resources/${mod.slug}`}
