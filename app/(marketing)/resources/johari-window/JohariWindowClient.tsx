@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -10,184 +11,112 @@ const tFn = (en: string, id: string, nl: string, lang: Lang) =>
 const PANES = [
   {
     key: "open",
-    en_title: "Open — The Arena",
-    id_title: "Terbuka — Arena",
-    nl_title: "Open — De Arena",
-    en_desc: "What is known both to you and to others. This is the space of transparent, effective communication. The larger your Arena, the more authentic and productive your relationships become. Growing this quadrant is the entire point of the model.",
-    id_desc: "Apa yang diketahui baik oleh Anda maupun orang lain. Ini adalah ruang komunikasi yang transparan dan efektif. Semakin besar Arena Anda, semakin autentik dan produktif hubungan Anda.",
-    nl_desc: "Wat zowel aan jou als aan anderen bekend is. Dit is de ruimte van transparante, effectieve communicatie. Hoe groter je Arena, hoe authentieker en productiever je relaties worden.",
-    en_cross: "In Dutch and Western contexts, the Arena tends to be large by default — directness and openness are cultural values. In Indonesian and Malaysian settings, the Arena builds slowly, only expanding after long-term trust is established. Professional roles often define the Arena's visible edge.",
-    id_cross: "Dalam konteks Belanda dan Barat, Arena cenderung besar secara default — kejujuran dan keterbukaan adalah nilai budaya. Dalam setting Indonesia dan Malaysia, Arena berkembang perlahan, hanya meluas setelah kepercayaan jangka panjang terbangun.",
-    nl_cross: "In Nederlandse en Westerse contexten is de Arena van nature groot — directheid en openheid zijn culturele waarden. In Indonesische en Maleisische settings bouwt de Arena langzaam op, pas na vertrouwen op de lange termijn.",
-    color: "oklch(50% 0.14 260)",
-    colorBg: "oklch(96% 0.02 260)",
+    row: 0, col: 0,
+    color: "oklch(65% 0.15 45)",
+    colorBg: "oklch(65% 0.15 45 / 0.08)",
+    colorBorder: "oklch(65% 0.15 45)",
+    en_title: "Open", en_sub: "The Arena",
+    id_title: "Terbuka", id_sub: "Arena",
+    nl_title: "Open", nl_sub: "De Arena",
+    en_body: "What is known both to you and to those around you. This is the space of honest, effective collaboration. The larger your Arena, the less energy people spend guessing your motives, second-guessing your decisions, or managing around your blind spots.",
+    id_body: "Apa yang diketahui baik oleh Anda maupun orang-orang di sekitar Anda. Ini adalah ruang kolaborasi yang jujur dan efektif. Semakin besar Arena Anda, semakin sedikit energi yang dihabiskan orang untuk menebak motif Anda, meragukan keputusan Anda, atau mengelola sekitar titik buta Anda.",
+    nl_body: "Wat zowel aan jou als aan mensen om je heen bekend is. Dit is de ruimte van eerlijke, effectieve samenwerking. Hoe groter je Arena, hoe minder energie mensen steken in het raden van je motieven, twijfelen aan je beslissingen of omgaan met je blinde vlekken.",
+    en_cross: "In Dutch and German contexts, the Arena tends to be large — directness and transparency are cultural defaults. In Indonesian, Filipino, and many East Asian contexts, the Arena builds slowly through relational investment. Expecting a large Arena early often creates mistrust.",
+    id_cross: "Dalam konteks Belanda dan Jerman, Arena cenderung besar — kejujuran dan transparansi adalah default budaya. Dalam konteks Indonesia, Filipina, dan banyak konteks Asia Timur, Arena berkembang perlahan melalui investasi relasional. Mengharapkan Arena yang besar di awal sering menciptakan ketidakpercayaan.",
+    nl_cross: "In Nederlandse en Duitse contexten is de Arena doorgaans groot — directheid en transparantie zijn culturele standaarden. In Indonesische, Filippijnse en veel Oost-Aziatische contexten groeit de Arena langzaam via relationele investering. Het verwachten van een grote Arena vroeg schept vaak wantrouwen.",
+    en_question: "Where in your leadership relationships has the Arena shrunk — and what closed it?",
+    id_question: "Di mana dalam hubungan kepemimpinan Anda Arena menyusut — dan apa yang menutupnya?",
+    nl_question: "Waar in je leiderschapsrelaties is de Arena gekrompen — en wat sloot hem?",
+    en_action: "This week: share one thing about how you process conflict or feedback that your team probably doesn't know. Not vulnerability for vulnerability's sake — but information that helps them work with you better.",
+    id_action: "Minggu ini: bagikan satu hal tentang bagaimana Anda memproses konflik atau umpan balik yang mungkin tidak diketahui tim Anda. Bukan kerentanan demi kerentanan — tetapi informasi yang membantu mereka bekerja lebih baik dengan Anda.",
+    nl_action: "Deze week: deel één ding over hoe jij conflict of feedback verwerkt dat je team waarschijnlijk niet weet. Niet kwetsbaarheid om de kwetsbaarheid — maar informatie die hen helpt beter met jou samen te werken.",
   },
   {
     key: "blind",
-    en_title: "Blind Spot",
-    id_title: "Titik Buta",
-    nl_title: "Blinde Vlek",
-    en_desc: "What others know about you that you do not know about yourself — patterns, behaviours, and impacts you are unaware of. Leaders with large blind spots often derail not from incompetence but because no one has told them the truth. Feedback is the cure.",
-    id_desc: "Apa yang orang lain ketahui tentang Anda yang tidak Anda ketahui tentang diri Anda sendiri — pola, perilaku, dan dampak yang tidak Anda sadari. Pemimpin dengan titik buta besar sering tergelincir bukan karena ketidakmampuan tetapi karena tidak ada yang memberi tahu mereka kebenaran.",
-    nl_desc: "Wat anderen over jou weten wat jij niet over jezelf weet — patronen, gedragingen en impacts waarvan jij je niet bewust bent. Leiders met grote blinde vlekken ontsporen vaak niet door incompetentie maar omdat niemand hen de waarheid heeft verteld.",
-    en_cross: "In Western settings, leaders are expected to actively solicit feedback to shrink blind spots. In Southeast Asia, high power distance means subordinates often see the leader's blind spot but stay silent — speaking would shame the leader and violate hierarchy. The blind spot grows unseen.",
-    id_cross: "Dalam setting Barat, pemimpin diharapkan secara aktif meminta umpan balik untuk memperkecil titik buta. Di Asia Tenggara, jarak kekuasaan yang tinggi berarti bawahan sering melihat titik buta pemimpin tetapi tetap diam — berbicara akan mempermalukan pemimpin.",
-    nl_cross: "In Westerse settings wordt van leiders verwacht dat ze actief feedback vragen om blinde vlekken te verkleinen. In Zuidoost-Azië betekent hoge machtafstand dat ondergeschikten de blinde vlek van de leider vaak zien maar zwijgen — spreken zou de leider beschamen.",
-    color: "oklch(45% 0.15 20)",
-    colorBg: "oklch(97% 0.02 20)",
+    row: 0, col: 1,
+    color: "oklch(58% 0.15 15)",
+    colorBg: "oklch(58% 0.15 15 / 0.08)",
+    colorBorder: "oklch(58% 0.15 15)",
+    en_title: "Blind Spot",  en_sub: "What others see in you",
+    id_title: "Titik Buta",  id_sub: "Apa yang dilihat orang lain pada Anda",
+    nl_title: "Blinde vlek", nl_sub: "Wat anderen in jou zien",
+    en_body: "What others observe in you that you cannot see yourself. This is the most dangerous quadrant for leaders: your impact on the room, the way your stress lands on your team, the patterns in how you make decisions under pressure. You are the last to know.",
+    id_body: "Apa yang diamati orang lain pada diri Anda yang tidak bisa Anda lihat sendiri. Ini adalah kuadran paling berbahaya bagi pemimpin: dampak Anda di ruangan, cara stres Anda mempengaruhi tim, pola cara Anda mengambil keputusan di bawah tekanan. Anda adalah orang terakhir yang tahu.",
+    nl_body: "Wat anderen in jou waarnemen dat jij zelf niet kunt zien. Dit is het gevaarlijkste kwadrant voor leiders: je impact op de kamer, de manier waarop je stress op je team landt, de patronen in hoe je beslissingen neemt onder druk. Jij bent de laatste die het weet.",
+    en_cross: "Cross-cultural blind spots are especially common. A Western leader's 'directness' may land as aggression. An Indonesian leader's 'respect for hierarchy' may land as withholding. Neither intends the impact they create.",
+    id_cross: "Titik buta lintas budaya sangat umum terjadi. 'Ketegasan' pemimpin Barat mungkin terasa seperti agresi. 'Penghormatan terhadap hierarki' pemimpin Indonesia mungkin terasa seperti menahan informasi. Tidak ada yang bermaksud menciptakan dampak yang mereka buat.",
+    nl_cross: "Interculturele blinde vlekken komen bijzonder vaak voor. De 'directheid' van een westerse leider kan agressief overkomen. Het 'respect voor hiërarchie' van een Indonesische leider kan overkomen als achterhouden. Niemand bedoelt de impact die ze creëren.",
+    en_question: "If you could hear an honest conversation your team was having about your leadership style when you weren't in the room — what would you be afraid to hear?",
+    id_question: "Jika Anda bisa mendengar percakapan jujur yang dilakukan tim Anda tentang gaya kepemimpinan Anda saat Anda tidak ada di ruangan — apa yang akan Anda takutkan untuk didengar?",
+    nl_question: "Als je een eerlijk gesprek van je team over jouw leiderschapsstijl kon horen als je er niet bij was — wat zou je bang zijn te horen?",
+    en_action: "This week: ask one person who will be honest with you — 'What's one thing I do that makes your job harder?' Listen without defending. Thank them. That gap is your blind spot.",
+    id_action: "Minggu ini: tanyakan kepada satu orang yang akan jujur kepada Anda — 'Apa satu hal yang saya lakukan yang membuat pekerjaan Anda lebih sulit?' Dengarkan tanpa membela diri. Ucapkan terima kasih. Celah itu adalah titik buta Anda.",
+    nl_action: "Deze week: vraag één persoon die eerlijk tegen je zal zijn — 'Wat is één ding wat ik doe dat jouw werk moeilijker maakt?' Luister zonder je te verdedigen. Bedank hen. Dat gat is je blinde vlek.",
   },
   {
     key: "hidden",
-    en_title: "Hidden — The Facade",
-    id_title: "Tersembunyi — Fasad",
-    nl_title: "Verborgen — De Façade",
-    en_desc: "What you know about yourself that others do not know — fears, struggles, motivations, and past experiences you have not shared. In cross-cultural leadership, some things legitimately stay private. But excessive concealment quietly erodes connection and trust.",
-    id_desc: "Apa yang Anda ketahui tentang diri Anda yang tidak diketahui orang lain — ketakutan, perjuangan, motivasi, dan pengalaman masa lalu yang belum Anda bagikan. Dalam kepemimpinan lintas budaya, beberapa hal memang layak tetap pribadi. Namun penyembunyian berlebihan secara diam-diam mengikis koneksi.",
-    nl_desc: "Wat jij over jezelf weet wat anderen niet weten — angsten, worstelingen, motivaties en vroegere ervaringen. In intercultureel leiderschap blijft sommige informatie legitiem privé. Maar overmatige verberging ondermijnt verbinding en vertrouwen.",
-    en_cross: "Western leaders often use voluntary self-disclosure to build rapport — sharing struggles signals authenticity. Southeast Asian leaders are often culturally required to maintain a larger Facade to preserve dignity and hierarchy. Oversharing can actually undermine authority and cause discomfort.",
-    id_cross: "Pemimpin Barat sering menggunakan pengungkapan diri sukarela untuk membangun hubungan. Pemimpin Asia Tenggara sering secara budaya diharuskan mempertahankan Fasad yang lebih besar untuk menjaga martabat dan hierarki.",
-    nl_cross: "Westerse leiders gebruiken vaak vrijwillige zelfonthulling om rapport op te bouwen. Zuidoost-Aziatische leiders moeten cultureel gezien een grotere Façade bewaren om waardigheid en hiërarchie te bewaken. Te veel delen kan autoriteit ondermijnen.",
-    color: "oklch(50% 0.12 45)",
-    colorBg: "oklch(97% 0.02 45)",
+    row: 1, col: 0,
+    color: "oklch(48% 0.14 145)",
+    colorBg: "oklch(48% 0.14 145 / 0.08)",
+    colorBorder: "oklch(48% 0.14 145)",
+    en_title: "Hidden", en_sub: "The Facade",
+    id_title: "Tersembunyi", id_sub: "Fasad",
+    nl_title: "Verborgen", nl_sub: "De Façade",
+    en_body: "What you know about yourself but have chosen not to share. Some of this is appropriate — not everything needs to be disclosed. But when the Hidden pane grows too large, the gap between your private self and your presented self creates exhaustion. You spend energy managing the gap.",
+    id_body: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar — tidak semuanya perlu diungkapkan. Tetapi ketika pane Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
+    nl_body: "Wat je over jezelf weet maar hebt gekozen niet te delen. Sommige hiervan is gepast — niet alles hoeft onthuld te worden. Maar wanneer het Verborgen deel te groot wordt, creëert de kloof tussen je private zelf en je gepresenteerde zelf uitputting. Je besteedt energie aan het beheren van de kloof.",
+    en_cross: "In high-context cultures (Indonesia, Japan, Korea), a larger Hidden pane is not dysfunction — it is social wisdom. What you share with your team leader is different from what you share with a peer. Cross-cultural leaders must read this without pathologising it.",
+    id_cross: "Dalam budaya high-context (Indonesia, Jepang, Korea), pane Tersembunyi yang lebih besar bukan disfungsi — itu adalah kebijaksanaan sosial. Apa yang Anda bagikan dengan pemimpin tim berbeda dari apa yang Anda bagikan dengan rekan. Pemimpin lintas budaya harus membaca ini tanpa menjadikannya patologis.",
+    nl_cross: "In high-context culturen (Indonesië, Japan, Korea) is een groter Verborgen deel geen disfunctie — het is sociale wijsheid. Wat je deelt met je teamleider verschilt van wat je deelt met een peer. Interculturele leiders moeten dit kunnen lezen zonder het te pathologiseren.",
+    en_question: "What is something true about your leadership — a struggle, a fear, a pattern — that you have never said out loud to your team?",
+    id_question: "Apa sesuatu yang benar tentang kepemimpinan Anda — sebuah perjuangan, ketakutan, pola — yang belum pernah Anda katakan dengan keras kepada tim Anda?",
+    nl_question: "Wat is iets waars over je leiderschap — een strijd, een angst, een patroon — dat je nooit hardop hebt gezegd tegen je team?",
+    en_action: "This week: identify one thing in your Hidden pane that, if shared appropriately, would actually help your team trust you more. Consider whether it is time to move it toward the Open.",
+    id_action: "Minggu ini: identifikasi satu hal dalam pane Tersembunyi Anda yang, jika dibagikan dengan tepat, sebenarnya akan membantu tim Anda mempercayai Anda lebih banyak. Pertimbangkan apakah sudah waktunya untuk memindahkannya ke arah Terbuka.",
+    nl_action: "Deze week: identificeer één ding in je Verborgen deel dat, indien gepast gedeeld, je team er eigenlijk toe zou brengen je meer te vertrouwen. Overweeg of het tijd is om het naar het Open te verplaatsen.",
   },
   {
     key: "unknown",
-    en_title: "Unknown",
-    id_title: "Tidak Diketahui",
-    nl_title: "Onbekend",
-    en_desc: "What neither you nor others know about you — undiscovered potential, unconscious patterns, or responses to situations you have never faced. This quadrant shrinks as you grow through new experiences, honest feedback, and deep reflection.",
-    id_desc: "Apa yang tidak Anda maupun orang lain ketahui tentang Anda — potensi yang belum ditemukan, pola tidak sadar, atau respons terhadap situasi yang belum pernah Anda hadapi. Kuadran ini menyusut seiring pertumbuhan Anda.",
-    nl_desc: "Wat noch jij noch anderen over jou weten — onontdekt potentieel, onbewuste patronen of reacties op situaties die je nooit hebt meegemaakt. Dit kwadrant slinkt naarmate je groeit.",
-    en_cross: "Western leaders often explore the Unknown through risk-taking and individual experimentation. In Southeast Asian cultures, the Unknown is more likely to surface through collective wisdom, shared journeys, and harmony — the group reveals what the individual cannot see alone.",
-    id_cross: "Pemimpin Barat sering mengeksplorasi yang Tidak Diketahui melalui pengambilan risiko. Dalam budaya Asia Tenggara, yang Tidak Diketahui lebih mungkin muncul melalui kebijaksanaan kolektif dan perjalanan bersama.",
-    nl_cross: "Westerse leiders verkennen het Onbekende vaak via risico's nemen. In Zuidoost-Aziatische culturen komt het Onbekende vaker naar boven via collectieve wijsheid en gedeelde reizen — de groep onthult wat het individu alleen niet kan zien.",
-    color: "oklch(40% 0.12 150)",
-    colorBg: "oklch(96% 0.02 150)",
+    row: 1, col: 1,
+    color: "oklch(45% 0.08 260)",
+    colorBg: "oklch(45% 0.08 260 / 0.08)",
+    colorBorder: "oklch(45% 0.08 260)",
+    en_title: "Unknown", en_sub: "Undiscovered territory",
+    id_title: "Tidak Diketahui", id_sub: "Wilayah yang belum ditemukan",
+    nl_title: "Onbekend", nl_sub: "Onontdekt terrein",
+    en_body: "What neither you nor others currently know about you. This is not emptiness — it is potential. It includes gifts not yet discovered, patterns not yet seen, capacities not yet tested. Cross-cultural challenge is one of the fastest ways to bring the Unknown into view.",
+    id_body: "Apa yang saat ini tidak diketahui oleh Anda maupun orang lain tentang Anda. Ini bukan kekosongan — ini adalah potensi. Ini mencakup karunia yang belum ditemukan, pola yang belum terlihat, kapasitas yang belum diuji. Tantangan lintas budaya adalah salah satu cara tercepat untuk membawa yang Tidak Diketahui ke permukaan.",
+    nl_body: "Wat op dit moment noch jij noch anderen over jou weten. Dit is geen leegte — het is potentieel. Het omvat gaven die nog niet ontdekt zijn, patronen die nog niet gezien zijn, capaciteiten die nog niet getest zijn. Interculturele uitdaging is een van de snelste manieren om het Onbekende zichtbaar te maken.",
+    en_cross: "Every major cross-cultural posting reveals something leaders didn't know about themselves — a resilience they didn't have at home, a rigidity that only shows under unfamiliar pressure. The Unknown shrinks through challenge, not comfort.",
+    id_cross: "Setiap penugasan lintas budaya utama mengungkapkan sesuatu tentang diri pemimpin yang belum mereka ketahui — ketahanan yang tidak mereka miliki di rumah, kekakuan yang hanya muncul di bawah tekanan yang tidak familiar. Yang Tidak Diketahui menyusut melalui tantangan, bukan kenyamanan.",
+    nl_cross: "Elke grote interculturele uitzending onthult iets wat leiders niet over zichzelf wisten — een veerkracht die ze thuis niet hadden, een rigiditeit die alleen onder onbekende druk zichtbaar wordt. Het Onbekende krimpt door uitdaging, niet door comfort.",
+    en_question: "What cross-cultural experience in the past two years has shown you something about yourself you didn't previously know?",
+    id_question: "Pengalaman lintas budaya apa dalam dua tahun terakhir yang telah menunjukkan sesuatu tentang diri Anda yang belum Anda ketahui sebelumnya?",
+    nl_question: "Welke interculturele ervaring in de afgelopen twee jaar heeft je iets over jezelf laten zien dat je eerder niet wist?",
+    en_action: "This week: step deliberately into one unfamiliar cross-cultural situation — a conversation, a meeting, a responsibility you usually avoid. Notice what it surfaces in you. That is the Unknown becoming visible.",
+    id_action: "Minggu ini: masuki dengan sengaja satu situasi lintas budaya yang tidak familiar — percakapan, rapat, tanggung jawab yang biasanya Anda hindari. Perhatikan apa yang muncul dalam diri Anda. Itulah yang Tidak Diketahui menjadi terlihat.",
+    nl_action: "Deze week: stap bewust in één onbekende interculturele situatie — een gesprek, een vergadering, een verantwoordelijkheid die je normaal vermijdt. Merk op wat het in je naar boven brengt. Dat is het Onbekende dat zichtbaar wordt.",
   },
 ];
 
-const SCENARIOS = [
-  {
-    title: { en: "The Direct Feedback Clash", id: "Benturan Umpan Balik Langsung", nl: "De Directe Feedback-botsing" },
-    setup: {
-      en: "A Dutch leader decides to 'clear the Arena' by giving direct, corrective feedback to an Indonesian team member in front of the whole group — believing transparency and openness will build trust.",
-      id: "Seorang pemimpin Belanda memutuskan untuk 'membersihkan Arena' dengan memberikan umpan balik korektif langsung kepada anggota tim Indonesia di depan seluruh kelompok — percaya bahwa transparansi akan membangun kepercayaan.",
-      nl: "Een Nederlandse leider besluit de 'Arena te verhelderen' door directe, corrigerende feedback te geven aan een Indonesisch teamlid voor de hele groep — gelooft dat transparantie vertrouwen opbouwt.",
-    },
-    breakdown: {
-      en: "The team member feels publicly shamed — a profound loss of face. Rather than opening the Arena, this closes it entirely. The team member withdraws, stops sharing, and begins filtering all communication carefully. Trust has been damaged, not built.",
-      id: "Anggota tim merasa dipermalukan di depan umum — kehilangan muka yang mendalam. Alih-alih membuka Arena, ini menutupnya sepenuhnya. Anggota tim menarik diri dan mulai menyaring semua komunikasi dengan hati-hati.",
-      nl: "Het teamlid voelt zich publiekelijk beschaamd — een diep gezichtsverlies. In plaats van de Arena te openen, sluit dit hem volledig. Het teamlid trekt zich terug en begint alle communicatie zorgvuldig te filteren.",
-    },
-    response: {
-      en: "Expand the Arena through private, one-on-one conversations first. Share something from your own Hidden pane to invite reciprocity. Build enough trust that honest dialogue can eventually happen — but at the other person's pace, not yours.",
-      id: "Perluas Arena melalui percakapan pribadi terlebih dahulu. Bagikan sesuatu dari panel Tersembunyi Anda sendiri untuk mengundang timbal balik. Bangun kepercayaan yang cukup sehingga dialog jujur ​​akhirnya dapat terjadi.",
-      nl: "Vergroot de Arena eerst via privégesprekken, één op één. Deel iets uit je eigen Verborgen pane om wederkerigheid uit te nodigen. Bouw genoeg vertrouwen op zodat eerlijke dialoog uiteindelijk kan plaatsvinden.",
-    },
+const VERSES = {
+  "ps-139-23": {
+    en_ref: "Psalm 139:23–24",
+    id_ref: "Mazmur 139:23–24",
+    nl_ref: "Psalm 139:23–24",
+    en: "Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting.",
+    id: "Selidikilah aku, ya Allah, dan kenallah hatiku, ujilah aku dan kenallah pikiran-pikiranku; lihatlah, apakah jalanku serong, dan tuntunlah aku di jalan yang kekal!",
+    nl: "Doorgrond mij, God, en ken mijn hart, peil mij, weet wat mij beweegt, zie of ik niet op een dwaalweg ben en leid mij op de weg die eeuwig is.",
   },
-  {
-    title: { en: "The Over-Disclosure Disconnect", id: "Ketidaksesuaian Pengungkapan Berlebihan", nl: "De Te-veel-delen Kloof" },
-    setup: {
-      en: "A Western leader, trying to build team intimacy, shares deep personal failures and insecurities openly in a team meeting with a Malaysian team — intending it as vulnerability and authenticity.",
-      id: "Seorang pemimpin Barat, mencoba membangun keintiman tim, berbagi kegagalan dan kelemahan pribadi yang mendalam secara terbuka dalam pertemuan tim dengan tim Malaysia — bermaksud sebagai kerentanan dan keaslian.",
-      nl: "Een Westerse leider, die teamintimiteit wil opbouwen, deelt diepe persoonlijke mislukkingen en onzekerheden openlijk in een teamvergadering met een Maleisisch team — bedoeld als kwetsbaarheid en authenticiteit.",
-    },
-    breakdown: {
-      en: "The team feels profoundly uncomfortable. Rather than building trust, oversharing reads as a failure to maintain the professional dignity expected of a leader. They question his competence and begin to lose confidence in his leadership.",
-      id: "Tim merasa sangat tidak nyaman. Alih-alih membangun kepercayaan, berbagi terlalu banyak dibaca sebagai kegagalan untuk mempertahankan martabat profesional yang diharapkan dari seorang pemimpin.",
-      nl: "Het team voelt zich diep ongemakkelijk. In plaats van vertrouwen op te bouwen, wordt het oversharen gelezen als een mislukking om de professionele waardigheid van een leider te bewaken.",
-    },
-    response: {
-      en: "Calibrate your Hidden pane to cultural context. In high-context, high-hierarchy cultures, share enough to be human but not so much that professional dignity is compromised. Find trusted one-on-one relationships for deeper disclosure.",
-      id: "Kalibrasi panel Tersembunyi Anda ke konteks budaya. Dalam budaya konteks tinggi dan hierarki tinggi, bagikan cukup untuk menjadi manusiawi tetapi tidak sampai martabat profesional terganggu.",
-      nl: "Kalibreer je Verborgen pane naar culturele context. In hoge-context, hoge-hiërarchie culturen, deel genoeg om menselijk te zijn maar niet zoveel dat professionele waardigheid in gevaar komt.",
-    },
+  "1cor-13-12": {
+    en_ref: "1 Corinthians 13:12",
+    id_ref: "1 Korintus 13:12",
+    nl_ref: "1 Korintiërs 13:12",
+    en: "For now we see only a reflection as in a mirror; then we shall see face to face. Now I know in part; then I shall know fully, even as I am fully known.",
+    id: "Karena sekarang kita melihat dalam cermin suatu gambaran yang samar-samar, tetapi nanti kita akan melihat muka dengan muka. Sekarang aku hanya mengenal dengan tidak sempurna, tetapi nanti aku akan mengenal dengan sempurna, seperti aku sendiri dikenal dengan sempurna.",
+    nl: "Nu kijken we nog in een spiegel en zien slechts een onduidelijk beeld, maar straks staan we oog in oog. Nu ken ik nog slechts ten dele, maar straks zal ik volledig kennen, zoals ik zelf gekend word.",
   },
-  {
-    title: { en: "The Silent Blind Spot", id: "Titik Buta yang Sunyi", nl: "De Stille Blinde Vlek" },
-    setup: {
-      en: "A Western leader presents a flawed strategy to a Filipino team. The team clearly sees the flaw but says nothing — silence from hierarchy and face-saving instincts. The leader assumes silence means the Arena is clear and implements the plan.",
-      id: "Seorang pemimpin Barat mempresentasikan strategi yang cacat kepada tim Filipina. Tim dengan jelas melihat kecacatan tersebut tetapi tidak mengatakan apa-apa — keheningan dari hierarki dan naluri menyelamatkan muka.",
-      nl: "Een Westerse leider presenteert een gebrekkige strategie aan een Filipijns team. Het team ziet duidelijk de fout maar zegt niets — stilte vanwege hiërarchie en gezichtsbesparingsinstincten.",
-    },
-    breakdown: {
-      en: "The plan fails. The leader feels betrayed by the team's silence. The team feels the leader should have created a safer space to share concerns. Both sides are right — and both have partially failed each other.",
-      id: "Rencana itu gagal. Pemimpin merasa dikhianati oleh keheningan tim. Tim merasa pemimpin seharusnya menciptakan ruang yang lebih aman untuk berbagi kekhawatiran.",
-      nl: "Het plan mislukt. De leider voelt zich verraden door de stilte van het team. Het team vindt dat de leider een veiligere ruimte had moeten creëren. Beide kanten hebben gelijk — en hebben elkaar deels in de steek gelaten.",
-    },
-    response: {
-      en: "Create structured channels for blind spot feedback that don't require public confrontation — anonymous input, small-group conversations, or trusted intermediaries. Assume your blind spot exists until proven otherwise, especially across cultural difference.",
-      id: "Buat saluran terstruktur untuk umpan balik titik buta yang tidak memerlukan konfrontasi publik — input anonim, percakapan kelompok kecil, atau perantara terpercaya.",
-      nl: "Creëer gestructureerde kanalen voor blinde-vlek-feedback die geen publieke confrontatie vereisen — anonieme input, kleine groepsgesprekken of vertrouwde tussenpersonen.",
-    },
-  },
-];
-
-const PRACTICES = [
-  {
-    en: "Regularly invite specific, structured feedback from people at multiple levels of your organisation — not just peers.",
-    id: "Secara teratur undang umpan balik spesifik dan terstruktur dari orang-orang di berbagai tingkat organisasi Anda — bukan hanya rekan.",
-    nl: "Nodig regelmatig specifieke, gestructureerde feedback uit van mensen op meerdere niveaus van je organisatie — niet alleen collega's.",
-  },
-  {
-    en: "Share appropriately from your Hidden pane — purposeful vulnerability builds trust when it is calibrated to cultural context.",
-    id: "Bagikan dengan tepat dari panel Tersembunyi Anda — kerentanan yang bertujuan membangun kepercayaan ketika dikalibrasi ke konteks budaya.",
-    nl: "Deel passend uit je Verborgen pane — doelgerichte kwetsbaarheid bouwt vertrouwen op wanneer gekalibreerd naar culturele context.",
-  },
-  {
-    en: "Create anonymous or private feedback channels so high-power-distance team members can point out blind spots without public risk.",
-    id: "Buat saluran umpan balik anonim atau pribadi sehingga anggota tim berjarak kekuasaan tinggi dapat menunjukkan titik buta tanpa risiko publik.",
-    nl: "Creëer anonieme of privé feedbackkanalen zodat teamleden met hoge machtafstand blinde vlekken kunnen aanwijzen zonder publiek risico.",
-  },
-  {
-    en: "Use the Johari Window as a team exercise — map together what's in the Open area and what might be in each other's blind spots.",
-    id: "Gunakan Jendela Johari sebagai latihan tim — petakan bersama apa yang ada di area Terbuka dan apa yang mungkin ada di titik buta satu sama lain.",
-    nl: "Gebruik het Johari-venster als teamoefening — breng samen in kaart wat in het Open gebied staat en wat in elkaars blinde vlekken kan zitten.",
-  },
-  {
-    en: "Seek out cross-cultural exposure — new environments reveal the Unknown quadrant faster than any exercise.",
-    id: "Carilah paparan lintas budaya — lingkungan baru mengungkapkan kuadran Tidak Diketahui lebih cepat daripada latihan apa pun.",
-    nl: "Zoek interculturele blootstelling — nieuwe omgevingen onthullen het Onbekende kwadrant sneller dan welke oefening dan ook.",
-  },
-  {
-    en: "After any significant leadership decision, ask your team: 'What did I miss? What are you thinking that you haven't said?'",
-    id: "Setelah keputusan kepemimpinan yang signifikan, tanyakan kepada tim Anda: 'Apa yang saya lewatkan? Apa yang Anda pikirkan yang belum Anda katakan?'",
-    nl: "Vraag na elke significante leiderschapsbeslissing je team: 'Wat miste ik? Wat denk je dat je nog niet hebt gezegd?'",
-  },
-];
-
-const REFLECTION = [
-  {
-    roman: "I",
-    en: "Which of your four panes is currently largest? Which do you most want to shrink?",
-    id: "Manakah dari empat panel Anda yang saat ini paling besar? Mana yang paling ingin Anda perkecil?",
-    nl: "Welke van je vier panes is momenteel het grootst? Welke wil je het liefst verkleinen?",
-  },
-  {
-    roman: "II",
-    en: "When did you last receive feedback that genuinely surprised you — something you didn't know others could see?",
-    id: "Kapan terakhir kali Anda menerima umpan balik yang benar-benar mengejutkan Anda — sesuatu yang tidak Anda tahu bisa dilihat orang lain?",
-    nl: "Wanneer kreeg je voor het laatst feedback die je echt verraste — iets dat je niet wist dat anderen konden zien?",
-  },
-  {
-    roman: "III",
-    en: "In your cultural context, what is the unspoken rule about feedback — and how does that rule help or hinder growth?",
-    id: "Dalam konteks budaya Anda, apa aturan tak terucapkan tentang umpan balik — dan bagaimana aturan itu membantu atau menghambat pertumbuhan?",
-    nl: "In jouw culturele context, wat is de onuitgesproken regel over feedback — en hoe helpt of belemmert die regel groei?",
-  },
-  {
-    roman: "IV",
-    en: "Who in your life has the clearest view of your blind spot? When did you last actively listen to them?",
-    id: "Siapa dalam hidup Anda yang memiliki pandangan paling jelas tentang titik buta Anda? Kapan terakhir kali Anda secara aktif mendengarkan mereka?",
-    nl: "Wie in je leven heeft het duidelijkste beeld van jouw blinde vlek? Wanneer heb je voor het laatst actief naar ze geluisterd?",
-  },
-  {
-    roman: "V",
-    en: "What part of you is still Unknown — neither you nor your team can fully see it yet? What might unlock it?",
-    id: "Bagian apa dari Anda yang masih Tidak Diketahui — baik Anda maupun tim Anda belum bisa melihatnya sepenuhnya? Apa yang mungkin membukanya?",
-    nl: "Welk deel van jou is nog steeds Onbekend — noch jij noch je team kan het volledig zien? Wat zou het kunnen ontsluiten?",
-  },
-];
+};
 
 type Props = { userPathway: string | null; isSaved: boolean };
 
@@ -195,8 +124,11 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
   const [lang, setLang] = useState<Lang>("en");
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
-  const [openScenario, setOpenScenario] = useState<number | null>(null);
+  const [activePane, setActivePane] = useState<string | null>(null);
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const showSave = userPathway !== null;
+  const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
 
   function handleSave() {
     if (saved) return;
@@ -206,255 +138,281 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
     });
   }
 
-  const navy = "oklch(22% 0.10 260)";
-  const offWhite = "oklch(97% 0.005 80)";
-  const lightGray = "oklch(95% 0.008 80)";
-  const orange = "oklch(65% 0.15 45)";
-  const bodyText = "oklch(38% 0.05 260)";
+  const selected = activePane ? PANES.find(p => p.key === activePane) ?? null : null;
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
-      {/* Language bar */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 14px", border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText }}>
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
-
-      {/* Hero */}
-      <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
-        <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Self-Leadership", "Kepemimpinan Diri", "Zelfleiderschap")}
-        </p>
-        <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 760, lineHeight: 1.15 }}>
-          {t("The Johari Window", "Jendela Johari", "Het Johari-venster")}
-        </h1>
-        <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(85% 0.03 80)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6, fontStyle: "italic" }}>
-          {t(
-            "The most dangerous blind spot is the one you don't know exists — and in cross-cultural leadership, entire teams can see it while you cannot.",
-            "Titik buta yang paling berbahaya adalah yang tidak Anda tahu ada — dan dalam kepemimpinan lintas budaya, seluruh tim bisa melihatnya sementara Anda tidak bisa.",
-            "De gevaarlijkste blinde vlek is de vlek waarvan je niet weet dat hij bestaat — en in intercultureel leiderschap kan het hele team hem zien terwijl jij dat niet kunt."
-          )}
-        </p>
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, background: saved ? "oklch(55% 0.08 260)" : orange, color: offWhite }}>
-            {saved ? t("Saved", "Tersimpan", "Opgeslagen") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
-          </button>
-          <Link href="/resources" style={{ padding: "12px 28px", border: "1px solid oklch(50% 0.05 260)", fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: offWhite, textDecoration: "none" }}>
-            {t("All Resources", "Semua Sumber", "Alle Bronnen")}
+    <>
+      {/* ── HERO ── */}
+      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
+        <div className="container-wide" style={{ position: "relative" }}>
+          <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
+            ← Resources
           </Link>
-        </div>
-      </div>
 
-      {/* Opening */}
-      <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
-        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
-          {t(
-            "Psychologists Joseph Luft and Harrington Ingham created the Johari Window in 1955 to map the relationship between self-knowledge and interpersonal trust. They named it after themselves: Jo-hari. The model divides personal awareness into four panes — and the ratio between them shapes everything about how you lead.",
-            "Psikolog Joseph Luft dan Harrington Ingham menciptakan Jendela Johari pada tahun 1955 untuk memetakan hubungan antara pengetahuan diri dan kepercayaan antarpribadi. Mereka menamakannya setelah nama mereka: Jo-hari.",
-            "Psychologen Joseph Luft en Harrington Ingham creëerden het Johari-venster in 1955 om de relatie tussen zelfkennis en interpersoonlijk vertrouwen in kaart te brengen. Ze noemden het naar zichzelf: Jo-hari."
-          )}
-        </p>
-        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75 }}>
-          {t(
-            "In cross-cultural leadership, the model becomes considerably more complex. The size of each pane is not fixed — it shifts with cultural norms around self-disclosure, hierarchy, and face. What expands your Arena in Amsterdam may shut it entirely in Surabaya. Learning to work the Johari Window across cultures is one of the most sophisticated skills in cross-cultural leadership.",
-            "Dalam kepemimpinan lintas budaya, model menjadi jauh lebih kompleks. Ukuran setiap panel tidak tetap — berubah dengan norma budaya seputar pengungkapan diri, hierarki, dan muka.",
-            "In intercultureel leiderschap wordt het model aanzienlijk complexer. De grootte van elk paneel is niet vast — het verschuift met culturele normen rondom zelfonthulling, hiërarchie en gezicht bewaren."
-          )}
-        </p>
-      </div>
-
-      {/* 4 Panes */}
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 12, textAlign: "center" }}>
-            {t("The Four Panes", "Empat Panel", "De Vier Panes")}
-          </h2>
-          <p style={{ textAlign: "center", color: bodyText, fontSize: 15, marginBottom: 48 }}>
-            {t("Each pane — with a cross-cultural lens", "Setiap panel — dengan perspektif lintas budaya", "Elk paneel — met een interculturele lens")}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            {PANES.map((p) => (
-              <div key={p.key} style={{ background: offWhite, padding: "32px 36px" }}>
-                <div style={{ display: "flex", gap: 20, alignItems: "flex-start", marginBottom: 20 }}>
-                  <div style={{ width: 12, height: 12, background: p.color, flexShrink: 0, marginTop: 6 }} />
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 700, color: navy, marginBottom: 10 }}>
-                      {lang === "en" ? p.en_title : lang === "id" ? p.id_title : p.nl_title}
-                    </h3>
-                    <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                      {lang === "en" ? p.en_desc : lang === "id" ? p.id_desc : p.nl_desc}
-                    </p>
-                  </div>
-                </div>
-                <div style={{ background: p.colorBg, padding: "14px 18px", marginLeft: 32 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: p.color, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
-                    {t("Cross-Cultural Lens", "Perspektif Lintas Budaya", "Interculturele Lens")}
-                  </p>
-                  <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
-                    {lang === "en" ? p.en_cross : lang === "id" ? p.id_cross : p.nl_cross}
-                  </p>
-                </div>
-              </div>
+          <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.75rem" }}>
+            {(["en", "id", "nl"] as Lang[]).map(l => (
+              <button key={l} onClick={() => setLang(l)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "0.3rem 0.7rem", background: lang === l ? "oklch(65% 0.15 45)" : "transparent", color: lang === l ? "oklch(14% 0.08 260)" : "oklch(60% 0.04 260)", border: "1px solid", borderColor: lang === l ? "oklch(65% 0.15 45)" : "oklch(35% 0.05 260)", cursor: "pointer" }}>
+                {l.toUpperCase()}
+              </button>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Scenarios */}
-      <div style={{ padding: "72px 24px", maxWidth: 800, margin: "0 auto" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 12, textAlign: "center" }}>
-          {t("When the Model Breaks Down", "Ketika Model Gagal", "Wanneer het Model Faalt")}
-        </h2>
-        <p style={{ textAlign: "center", color: bodyText, fontSize: 15, marginBottom: 48 }}>
-          {t("Three cross-cultural Johari failures — and what high-awareness leadership looks like", "Tiga kegagalan Johari lintas budaya — dan seperti apa kepemimpinan kesadaran tinggi", "Drie interculturele Johari-mislukkingen — en hoe hoog-bewust leiderschap eruitziet")}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {SCENARIOS.map((s, i) => {
-            const isOpen = openScenario === i;
-            return (
-              <div key={i} style={{ border: `1px solid ${isOpen ? orange : "oklch(88% 0.01 80)"}`, overflow: "hidden" }}>
-                <button
-                  onClick={() => setOpenScenario(isOpen ? null : i)}
-                  style={{ width: "100%", padding: "20px 28px", background: isOpen ? navy : offWhite, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, textAlign: "left" }}
-                >
-                  <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 16, fontWeight: 700, color: isOpen ? offWhite : navy }}>
-                    {s.title[lang]}
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", padding: "0.25rem 0.75rem", display: "inline-flex", marginBottom: "1.25rem" }}>
+            {t("Self & Others", "Diri & Orang Lain", "Zelf & Anderen")}
+          </span>
+
+          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem", lineHeight: 1.05, maxWidth: "14ch" }}>
+            {lang === "en" ? <>The Johari<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Window.</span></> : lang === "id" ? <>Jendela<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Johari.</span></> : <>Het Johari<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Venster.</span></>}
+          </h1>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "50ch", marginBottom: "2rem", lineHeight: 1.65 }}>
+            {t(
+              "A map of what is seen, hidden, and unknown in your leadership. Click each quadrant to explore it.",
+              "Peta tentang apa yang terlihat, tersembunyi, dan tidak diketahui dalam kepemimpinan Anda. Klik setiap kuadran untuk menjelajahinya.",
+              "Een kaart van wat zichtbaar, verborgen en onbekend is in jouw leiderschap. Klik op elk kwadrant om het te verkennen.",
+            )}
+          </p>
+
+          {showSave && (
+            saved ? (
+              <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
+                ✓ {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
+              </Link>
+            ) : (
+              <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.625rem 1.25rem", cursor: isPending ? "wait" : "pointer" }}>
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
+              </button>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* ── THE WINDOW ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
+        <div className="container-wide">
+
+          {/* Axis labels + grid */}
+          <div style={{ marginBottom: "0.5rem" }}>
+            {/* Top axis labels */}
+            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
+              <div style={{ width: "clamp(60px, 8vw, 100px)" }} />
+              <div style={{ padding: "0 1rem 0.5rem", textAlign: "center" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(45% 0.05 260)" }}>
+                  {t("Known to yourself", "Diketahui diri sendiri", "Bekend aan jezelf")}
+                </span>
+              </div>
+              <div style={{ padding: "0 1rem 0.5rem", textAlign: "center" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(45% 0.05 260)" }}>
+                  {t("Unknown to yourself", "Tidak diketahui diri sendiri", "Onbekend aan jezelf")}
+                </span>
+              </div>
+            </div>
+
+            {/* Grid rows */}
+            {[0, 1].map(row => (
+              <div key={row} style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
+                {/* Left axis label */}
+                <div style={{ width: "clamp(60px, 8vw, 100px)", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: "0.75rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.05 260)", writingMode: "vertical-rl", transform: "rotate(180deg)", whiteSpace: "nowrap" }}>
+                    {row === 0
+                      ? t("Known to others", "Diketahui orang lain", "Bekend aan anderen")
+                      : t("Unknown to others", "Tidak diketahui orang lain", "Onbekend aan anderen")}
                   </span>
-                  <span style={{ color: isOpen ? orange : bodyText, fontSize: 20, flexShrink: 0, lineHeight: 1 }}>{isOpen ? "−" : "+"}</span>
-                </button>
-                {isOpen && (
-                  <div style={{ padding: "28px 28px 32px", background: offWhite }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
-                      {t("The Situation", "Situasinya", "De Situatie")}
-                    </p>
-                    <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 24 }}>{s.setup[lang]}</p>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: "oklch(45% 0.15 20)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
-                      {t("What Went Wrong", "Yang Salah", "Wat Misging")}
-                    </p>
-                    <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 24 }}>{s.breakdown[lang]}</p>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: "oklch(40% 0.12 160)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
-                      {t("The High-Awareness Response", "Respons Kesadaran Tinggi", "De Hoog-Bewuste Respons")}
-                    </p>
-                    <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>{s.response[lang]}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Biblical anchor */}
-      <div style={{ background: navy, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Faith Anchor", "Jangkar Iman", "Geloofsanker")}
-          </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: offWhite, marginBottom: 48 }}>
-            {t("Self-Knowledge in Scripture", "Pengetahuan Diri dalam Kitab Suci", "Zelfkennis in de Schrift")}
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-            {[
-              {
-                ref: "Proverbs 27:17",
-                verse: {
-                  en: '"As iron sharpens iron, so one person sharpens another."',
-                  id: '"Besi menajamkan besi, orang menajamkan sesamanya."',
-                  nl: '"IJzer wordt scherp door ijzer, de een mens wordt door de ander gevormd."',
-                },
-                comment: {
-                  en: "The communal necessity of feedback. We cannot see our own blind spot without others. The Johari Window is not a solo exercise — it requires a community willing to speak and a leader willing to hear.",
-                  id: "Kebutuhan komunal akan umpan balik. Kita tidak dapat melihat titik buta kita sendiri tanpa orang lain. Jendela Johari bukan latihan solo — ini membutuhkan komunitas yang mau berbicara dan pemimpin yang mau mendengar.",
-                  nl: "De communale noodzaak van feedback. We kunnen onze eigen blinde vlek niet zien zonder anderen. Het Johari-venster is geen solo-oefening — het vereist een gemeenschap die wil spreken en een leider die wil horen.",
-                },
-              },
-              {
-                ref: "Ephesians 4:15",
-                verse: {
-                  en: '"Instead, speaking the truth in love, we will grow to become in every respect the mature body of him who is the head."',
-                  id: '"Tetapi dengan berbicara kebenaran di dalam kasih kita bertumbuh di dalam segala hal ke arah Dia, Kristus, yang adalah Kepala."',
-                  nl: '"Maar dan, de waarheid doende in liefde, zullen wij in alle opzichten toenemen naar Hem toe, die het hoofd is, Christus."',
-                },
-                comment: {
-                  en: "A framework that balances the Western need for truth (reducing blind spots) with the Southeast Asian concern for love (preserving relationship and dignity). Truth without love destroys the Arena. Love without truth leaves the blind spot intact.",
-                  id: "Kerangka yang menyeimbangkan kebutuhan Barat akan kebenaran (mengurangi titik buta) dengan kepedulian Asia Tenggara terhadap kasih (menjaga hubungan dan martabat). Kebenaran tanpa kasih menghancurkan Arena.",
-                  nl: "Een raamwerk dat de Westerse behoefte aan waarheid (blinde vlekken verkleinen) in balans brengt met de Zuidoost-Aziatische zorg voor liefde (relatie en waardigheid bewaren). Waarheid zonder liefde vernietigt de Arena.",
-                },
-              },
-            ].map((item, i) => (
-              <div key={i} style={{ textAlign: "left" }}>
-                <p style={{ color: orange, fontSize: 13, fontWeight: 700, marginBottom: 10 }}>{item.ref}</p>
-                <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, fontStyle: "italic", color: offWhite, lineHeight: 1.6, marginBottom: 16 }}>
-                  {item.verse[lang]}
-                </p>
-                <p style={{ fontSize: 15, color: "oklch(78% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
-                  {item.comment[lang]}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Practices */}
-      <div style={{ padding: "72px 24px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 48, textAlign: "center" }}>
-            {t("6 Practices to Expand Your Arena", "6 Praktik untuk Memperluas Arena Anda", "6 Praktijken om je Arena te Vergroten")}
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
-            {PRACTICES.map((p, i) => (
-              <div key={i} style={{ background: lightGray, padding: "24px 28px", display: "flex", gap: 18, alignItems: "flex-start" }}>
-                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 40, fontWeight: 700, color: orange, lineHeight: 1, minWidth: 32, flexShrink: 0 }}>
-                  {String(i + 1).padStart(2, "0")}
                 </div>
-                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0, paddingTop: 4 }}>
-                  {lang === "en" ? p.en : lang === "id" ? p.id : p.nl}
-                </p>
+
+                {/* Two cells in this row */}
+                {PANES.filter(p => p.row === row).map(pane => {
+                  const isActive = activePane === pane.key;
+                  const title = lang === "en" ? pane.en_title : lang === "id" ? pane.id_title : pane.nl_title;
+                  const sub = lang === "en" ? pane.en_sub : lang === "id" ? pane.id_sub : pane.nl_sub;
+                  return (
+                    <button
+                      key={pane.key}
+                      onClick={() => setActivePane(isActive ? null : pane.key)}
+                      style={{
+                        background: isActive ? pane.colorBg : "oklch(97% 0.005 80)",
+                        border: `2px solid ${isActive ? pane.colorBorder : "oklch(88% 0.008 80)"}`,
+                        cursor: "pointer",
+                        padding: "clamp(1.5rem, 4vw, 2.5rem)",
+                        textAlign: "left",
+                        minHeight: "clamp(120px, 18vw, 180px)",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        transition: "all 0.15s ease",
+                        position: "relative",
+                      }}
+                    >
+                      {isActive && (
+                        <div style={{ position: "absolute", top: "1rem", right: "1rem", width: "8px", height: "8px", borderRadius: "50%", background: pane.color }} />
+                      )}
+                      <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", fontWeight: 700, color: isActive ? pane.color : "oklch(75% 0.008 80)", lineHeight: 1, display: "block", marginBottom: "0.375rem" }}>
+                        {title}
+                      </span>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: isActive ? pane.color : "oklch(65% 0.005 260)" }}>
+                        {sub}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Reflection */}
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 40, textAlign: "center" }}>
-            {t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen")}
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {REFLECTION.map((q) => (
-              <div key={q.roman} style={{ background: offWhite, padding: "24px 28px", display: "flex", gap: 20, alignItems: "flex-start" }}>
-                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 700, color: orange, minWidth: 28, flexShrink: 0 }}>{q.roman}</div>
-                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                  {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: offWhite, marginBottom: 16 }}>
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
-        </h2>
-        <p style={{ color: "oklch(80% 0.03 80)", fontSize: 16, lineHeight: 1.75, maxWidth: 540, margin: "0 auto 32px" }}>
-          {t(
-            "Explore more resources to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
-            "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
+          {!activePane && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(60% 0.04 260)", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic" }}>
+              {t("Select any quadrant to explore it.", "Pilih kuadran mana pun untuk menjelajahinya.", "Selecteer een kwadrant om het te verkennen.")}
+            </p>
           )}
-        </p>
-        <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-          {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
-        </Link>
-      </div>
-    </div>
+        </div>
+      </section>
+
+      {/* ── QUADRANT DETAIL ── */}
+      {selected && (
+        <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: selected.colorBg, borderTop: `3px solid ${selected.color}` }}>
+          <div className="container-wide">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+              {lang === "en" ? selected.en_sub : lang === "id" ? selected.id_sub : selected.nl_sub}
+            </p>
+            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2.25rem)", color: "oklch(22% 0.10 260)", marginBottom: "2rem" }}>
+              {lang === "en" ? selected.en_title : lang === "id" ? selected.id_title : selected.nl_title}
+            </h2>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 5vw, 4rem)" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: "1.5rem" }}>
+                  {lang === "en" ? selected.en_body : lang === "id" ? selected.id_body : selected.nl_body}
+                </p>
+                <div style={{ background: "oklch(22% 0.10 260 / 0.06)", padding: "1.25rem 1.5rem", marginBottom: "1.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+                    {t("Cross-cultural dimension", "Dimensi lintas budaya", "Interculturele dimensie")}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(38% 0.05 260)", margin: 0 }}>
+                    {lang === "en" ? selected.en_cross : lang === "id" ? selected.id_cross : selected.nl_cross}
+                  </p>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                <div style={{ background: "oklch(97% 0.005 80)", padding: "1.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: selected.color, marginBottom: "0.625rem" }}>
+                    {t("Reflection", "Refleksi", "Reflectie")}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(28% 0.10 260)", lineHeight: 1.65, margin: 0 }}>
+                    {lang === "en" ? selected.en_question : lang === "id" ? selected.id_question : selected.nl_question}
+                  </p>
+                </div>
+                <div style={{ background: "oklch(22% 0.10 260)", padding: "1.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
+                    {t("This week", "Minggu ini", "Deze week")}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(78% 0.03 80)", margin: 0 }}>
+                    {lang === "en" ? selected.en_action : lang === "id" ? selected.id_action : selected.nl_action}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── BIBLICAL FOUNDATION ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
+        <div className="container-wide">
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("Biblical Foundation", "Landasan Alkitab", "Bijbelse basis")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
+            {t("Being known — and knowing yourself", "Dikenal — dan mengenal diri sendiri", "Gekend worden — en jezelf kennen")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
+            {t(
+              "Psalm 139 is one of the most radical invitations in Scripture: 'Search me, God, and know my heart.' It is a prayer that deliberately opens the Blind Spot and the Unknown to God's sight — trusting that what He sees will not destroy you, but lead you.",
+              "Mazmur 139 adalah salah satu undangan paling radikal dalam Kitab Suci: 'Selidikilah aku, ya Allah, dan kenallah hatiku.' Ini adalah doa yang dengan sengaja membuka Titik Buta dan yang Tidak Diketahui kepada pandangan Allah — mempercayai bahwa apa yang Dia lihat tidak akan menghancurkan Anda, tetapi memimpin Anda.",
+              "Psalm 139 is een van de meest radicale uitnodigingen in de Schrift: 'Doorgrond mij, God, en ken mijn hart.' Het is een gebed dat bewust de Blinde Vlek en het Onbekende opent voor Gods blik — vertrouwend dat wat Hij ziet je niet zal vernietigen, maar leiden.",
+            )}
+          </p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
+            {t(
+              "Paul's words in 1 Corinthians 13 name the fundamental limit of every Johari Window: we see in part. Full self-knowledge is eschatological — something awaiting us in the presence of God. That is not an excuse for complacency. It is a call to humility: the leader who thinks they see themselves clearly is often the most dangerous one in the room.",
+              "Kata-kata Paulus dalam 1 Korintus 13 menyebutkan batas mendasar dari setiap Jendela Johari: kita melihat sebagian. Pengetahuan diri yang penuh bersifat eskatologis — sesuatu yang menanti kita di hadirat Allah. Itu bukan alasan untuk berpuas diri. Itu adalah panggilan untuk rendah hati: pemimpin yang berpikir mereka melihat diri mereka dengan jelas seringkali adalah yang paling berbahaya di ruangan.",
+              "Paulus' woorden in 1 Korintiërs 13 benoemen de fundamentele grens van elk Johari Venster: we zien ten dele. Volledige zelfkennis is eschatologisch — iets dat ons wacht in de aanwezigheid van God. Dat is geen excuus voor zelfgenoegzaamheid. Het is een oproep tot nederigheid: de leider die denkt zichzelf duidelijk te zien is vaak de gevaarlijkste in de kamer.",
+            )}
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
+            {(["ps-139-23", "1cor-13-12"] as const).map(key => {
+              const v = VERSES[key];
+              const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
+              const text = lang === "en" ? v.en : lang === "id" ? v.id : v.nl;
+              return (
+                <div key={key} style={{ background: "oklch(28% 0.11 260)", padding: "2rem" }}>
+                  <button onClick={() => setActiveVerse(key)} style={{ background: "none", border: "none", cursor: "pointer", color: "oklch(65% 0.15 45)", fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "underline dotted", padding: 0, marginBottom: "0.875rem", display: "block" }}>
+                    {ref} ({translation})
+                  </button>
+                  <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.05rem", fontStyle: "italic", color: "oklch(85% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
+                    "{text}"
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
+        <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
+          <div>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {t("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de Bibliotheek")}
+            </p>
+            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
+              {t("Part of the full content library.", "Bagian dari perpustakaan konten lengkap.", "Onderdeel van de volledige contentbibliotheek.")}
+            </h2>
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              {!userPathway ? (
+                <Link href="/signup" className="btn-primary">{t("Join the Community →", "Bergabung →", "Word lid →")}</Link>
+              ) : saved ? (
+                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard →", "Ke Dashboard →", "Naar Dashboard →")}</Link>
+              ) : (
+                <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
+                  {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
+                </button>
+              )}
+              <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>
+            </div>
+          </div>
+          <div style={{ background: "oklch(22% 0.10 260)", padding: "2.5rem" }}>
+            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(80% 0.04 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+              {t(
+                "\"The most growth-resistant leaders are not the ones with the most blind spots — they are the ones who never ask.\"",
+                "\"Pemimpin yang paling resisten terhadap pertumbuhan bukan yang memiliki titik buta terbanyak — mereka yang tidak pernah bertanya.\"",
+                "\"De meest groeiresistente leiders zijn niet degenen met de meeste blinde vlekken — het zijn degenen die nooit vragen.\"",
+              )}
+            </p>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crispy Development</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VERSE POPUP ── */}
+      {activeVerse && (
+        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1.5rem" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)", maxWidth: "520px", width: "100%" }}>
+            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(22% 0.10 260)", lineHeight: 1.65, marginBottom: "1rem" }}>
+              "{lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id : VERSES[activeVerse as keyof typeof VERSES].nl}"
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              — {lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en_ref : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id_ref : VERSES[activeVerse as keyof typeof VERSES].nl_ref} ({translation})
+            </p>
+            <button onClick={() => setActiveVerse(null)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, background: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", border: "none", padding: "0.625rem 1.5rem", cursor: "pointer", borderRadius: "4px" }}>
+              {t("Close", "Tutup", "Sluiten")}
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
