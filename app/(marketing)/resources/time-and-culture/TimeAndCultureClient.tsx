@@ -8,208 +8,185 @@ type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
   lang === "en" ? en : lang === "id" ? id : nl;
 
-const COMPARISON = [
+const SARI_MOMENTS = [
   {
-    aspect: { en: "Time structure", id: "Struktur waktu", nl: "Tijdstructuur" },
-    mono:   { en: "Linear, sequential — one thing at a time", id: "Linear, berurutan — satu hal pada satu waktu", nl: "Lineair, sequentieel — één ding tegelijk" },
-    poly:   { en: "Fluid, simultaneous — many things at once", id: "Cair, simultan — banyak hal sekaligus", nl: "Vloeiend, gelijktijdig — meerdere dingen tegelijk" },
+    time: "08:40",
+    en_action: "Arrives at the office. Notices Hendra at his desk — something tense in his posture. She changes course before reaching the meeting room.",
+    id_action: "Tiba di kantor. Memperhatikan Hendra di mejanya — ada sesuatu yang tegang dalam posturnya. Dia mengubah arah sebelum mencapai ruang rapat.",
+    nl_action: "Komt op kantoor aan. Ziet Hendra aan zijn bureau — er is iets gespannens in zijn houding. Ze verandert van richting voor ze de vergaderruimte bereikt.",
+    en_thought: "Something's not right with him. A few minutes now will make him more present for the whole morning.",
+    id_thought: "Ada yang tidak beres dengannya. Beberapa menit sekarang akan membuatnya lebih hadir untuk seluruh pagi ini.",
+    nl_thought: "Er klopt iets niet. Een paar minuten nu maakt hem meer aanwezig voor de rest van de ochtend.",
   },
   {
-    aspect: { en: "Meetings", id: "Rapat", nl: "Vergaderingen" },
-    mono:   { en: "Fixed start/end, agenda-driven, task-focused", id: "Mulai/selesai tetap, berbasis agenda, fokus tugas", nl: "Vaste start/einde, agendagericht, taakgericht" },
-    poly:   { en: "Flexible timing, relationship-driven, holistic", id: "Waktu fleksibel, berbasis hubungan, holistik", nl: "Flexibele timing, relatiegericht, holistisch" },
+    time: "08:47",
+    en_action: "She learns Hendra's mother has been admitted to hospital. He was planning to push through the meeting without mentioning it.",
+    id_action: "Dia mengetahui bahwa ibu Hendra dirawat di rumah sakit. Hendra berencana melewati rapat tanpa menyebutkannya.",
+    nl_action: "Ze hoort dat Hendra's moeder is opgenomen in het ziekenhuis. Hij was van plan de vergadering door te zetten zonder het te noemen.",
+    en_thought: "Good. Now he can actually be here. A team that doesn't show up for each other cannot do good work.",
+    id_thought: "Bagus. Sekarang dia bisa benar-benar hadir. Tim yang tidak hadir untuk satu sama lain tidak bisa bekerja dengan baik.",
+    nl_thought: "Goed. Nu kan hij er echt bij zijn. Een team dat er niet voor elkaar is, kan geen goed werk leveren.",
   },
   {
-    aspect: { en: "Deadlines", id: "Tenggat waktu", nl: "Deadlines" },
-    mono:   { en: "Firm commitments — missing one signals failure", id: "Komitmen teguh — melanggarnya menandakan kegagalan", nl: "Vaste toezeggingen — missen ervan signaleert falen" },
-    poly:   { en: "Approximate targets — context can shift them", id: "Target perkiraan — konteks bisa mengubahnya", nl: "Geschatte doelen — context kan ze verschuiven" },
+    time: "08:55",
+    en_action: "Walking to the meeting room, she stops when Dewi calls from the printer area with a question about the report format.",
+    id_action: "Berjalan menuju ruang rapat, dia berhenti ketika Dewi memanggil dari area printer dengan pertanyaan tentang format laporan.",
+    nl_action: "Op weg naar de vergaderruimte stopt ze als Dewi roept vanuit het printergedeelte met een vraag over het rapportformat.",
+    en_thought: "Two minutes now saves half an hour of confusion later. And she needed to know she could ask.",
+    id_thought: "Dua menit sekarang menghemat setengah jam kebingungan nanti. Dan dia perlu tahu bahwa dia bisa bertanya.",
+    nl_thought: "Twee minuten nu bespaart een half uur verwarring later. En ze moest weten dat ze mocht vragen.",
   },
   {
-    aspect: { en: "Interruptions", id: "Gangguan", nl: "Onderbrekingen" },
-    mono:   { en: "Disruptive and disrespectful — to be avoided", id: "Mengganggu dan tidak sopan — harus dihindari", nl: "Verstorend en onrespectvol — te vermijden" },
-    poly:   { en: "Normal and relational — people take priority", id: "Normal dan relasional — orang lebih diprioritaskan", nl: "Normaal en relationeel — mensen krijgen prioriteit" },
-  },
-  {
-    aspect: { en: "Core priority", id: "Prioritas utama", nl: "Kernprioriteit" },
-    mono:   { en: "Task completion — results before relationships", id: "Penyelesaian tugas — hasil sebelum hubungan", nl: "Taakvoltooiing — resultaten boven relaties" },
-    poly:   { en: "Relationship quality — trust enables results", id: "Kualitas hubungan — kepercayaan menghasilkan hasil", nl: "Relatiekwaliteit — vertrouwen maakt resultaten mogelijk" },
-  },
-];
-
-const SCENARIOS = [
-  {
-    title: { en: "The 9:00 AM Meeting", id: "Rapat Pukul 09:00", nl: "De 9:00 vergadering" },
-    setup: {
-      en: "A Dutch leader schedules a planning meeting for exactly 9:00 AM. At 9:05, three Indonesian team members are still in the hallway — one finishing a conversation, one helping a colleague with a quick question, one making tea.",
-      id: "Seorang pemimpin Belanda menjadwalkan rapat perencanaan tepat pukul 09:00. Pukul 09:05, tiga anggota tim Indonesia masih di lorong — satu menyelesaikan percakapan, satu membantu rekan dengan pertanyaan singkat, satu membuat teh.",
-      nl: "Een Nederlandse leider plant een planningsvergadering voor precies 9:00 uur. Om 9:05 staan drie Indonesische teamleden nog in de gang — één rondt een gesprek af, één helpt een collega met een snelle vraag, één zet thee.",
-    },
-    dutch: {
-      en: "\"They don't respect my time. They're disorganised and unprofessional.\"",
-      id: "\"Mereka tidak menghormati waktuku. Mereka tidak terorganisir dan tidak profesional.\"",
-      nl: "\"Ze respecteren mijn tijd niet. Ze zijn ongeorganiseerd en onprofessioneel.\"",
-    },
-    sea: {
-      en: "\"He's rigid and cold. Why would I ignore my colleague mid-conversation just because of a clock?\"",
-      id: "\"Dia kaku dan dingin. Mengapa saya harus mengabaikan rekan di tengah percakapan hanya karena jam?\"",
-      nl: "\"Hij is star en kil. Waarom zou ik mijn collega midden in een gesprek negeren vanwege een klok?\"",
-    },
-    insight: {
-      en: "In polychronic cultures, finishing a relational duty is not lateness — it is the higher priority. The clock has not been forgotten; it has been outranked.",
-      id: "Dalam budaya polychronic, menyelesaikan kewajiban relasional bukan keterlambatan — itu prioritas yang lebih tinggi. Jam tidak dilupakan; ia hanya kalah prioritas.",
-      nl: "In polychronische culturen is het afmaken van een relationele plicht geen te-laat-komen — het is de hogere prioriteit. De klok is niet vergeten; hij is overtroffen in prioriteit.",
-    },
-  },
-  {
-    title: { en: "The Sliding Deadline", id: "Tenggat Waktu yang Bergeser", nl: "De verschuivende deadline" },
-    setup: {
-      en: "A report was due Friday. The Malaysian team member delivers it Monday morning with a brief apology — his pastor's father passed away over the weekend and he spent three days supporting the family.",
-      id: "Laporan seharusnya selesai Jumat. Anggota tim Malaysia menyerahkannya Senin pagi dengan permintaan maaf singkat — ayah pendetanya meninggal akhir pekan dan ia menghabiskan tiga hari mendampingi keluarga.",
-      nl: "Een rapport was vrijdag verwacht. Het Maleisische teamlid levert het maandag af met een korte verontschuldiging — zijn pastoors vader overleed in het weekend en hij bracht drie dagen door met de familie.",
-    },
-    dutch: {
-      en: "\"He missed the deadline again. If I can't rely on him for this, how can I trust him with bigger things?\"",
-      id: "\"Dia melewatkan tenggat waktu lagi. Jika saya tidak bisa mengandalkannya untuk ini, bagaimana saya bisa mempercayainya untuk hal yang lebih besar?\"",
-      nl: "\"Hij heeft de deadline weer gemist. Als ik niet op hem kan rekenen hiervoor, hoe kan ik hem dan vertrouwen met grotere dingen?\"",
-    },
-    sea: {
-      en: "\"He doesn't understand that human obligations come first. Being present for a grieving family is not optional in my culture.\"",
-      id: "\"Dia tidak mengerti bahwa kewajiban manusiawi harus didahulukan. Hadir untuk keluarga yang berduka bukan pilihan dalam budayaku.\"",
-      nl: "\"Hij begrijpt niet dat menselijke verplichtingen eerst komen. Aanwezig zijn voor een rouwende familie is niet optioneel in mijn cultuur.\"",
-    },
-    insight: {
-      en: "Polychronic reliability is not about keeping to schedules — it is about being present for people when they need you. That reliability is just as real; it runs in a different direction.",
-      id: "Keandalan polychronic bukan tentang mematuhi jadwal — melainkan hadir untuk orang ketika mereka membutuhkan Anda. Keandalan itu sama nyatanya; hanya berjalan ke arah yang berbeda.",
-      nl: "Polychronische betrouwbaarheid gaat niet over het naleven van schema's — maar over aanwezig zijn voor mensen wanneer ze je nodig hebben. Die betrouwbaarheid is net zo echt; ze loopt in een andere richting.",
-    },
-  },
-  {
-    title: { en: "The Decision That Won't Land", id: "Keputusan yang Tak Kunjung Selesai", nl: "Het besluit dat maar niet valt" },
-    setup: {
-      en: "A Dutch leader is running a team meeting and pushes for a final decision by the hour's end. The Filipino team keeps looping back, raising implications for other departments, asking how this will affect relationships with the partner organisation.",
-      id: "Seorang pemimpin Belanda memimpin rapat tim dan mendorong keputusan akhir sebelum jam selesai. Tim Filipina terus kembali ke awal, mengangkat implikasi untuk departemen lain, menanyakan bagaimana ini akan mempengaruhi hubungan dengan organisasi mitra.",
-      nl: "Een Nederlandse leider leidt een teamvergadering en dringt aan op een definitief besluit voor het einde van het uur. Het Filippijnse team blijft teruggaan, wijst op implicaties voor andere afdelingen en vraagt hoe dit de relaties met de partnerorganisatie beïnvloedt.",
-    },
-    dutch: {
-      en: "\"We're going in circles. We'll never make progress at this pace. Why can't they just decide?\"",
-      id: "\"Kita berputar-putar. Kita tidak akan pernah maju dengan kecepatan ini. Mengapa mereka tidak bisa memutuskan?\"",
-      nl: "\"We draaien in cirkels. Op dit tempo komen we nooit vooruit. Waarom kunnen ze niet gewoon beslissen?\"",
-    },
-    sea: {
-      en: "\"He's being reckless. A decision this big affects 20 people and three partners. Rushing it will cost us more than taking another week.\"",
-      id: "\"Dia tidak hati-hati. Keputusan sebesar ini mempengaruhi 20 orang dan tiga mitra. Terburu-buru akan lebih merugikan kami daripada menunggu seminggu lagi.\"",
-      nl: "\"Hij is onbezonnen. Een besluit van deze omvang beïnvloedt 20 mensen en drie partners. Haasten kost meer dan nog een week nemen.\"",
-    },
-    insight: {
-      en: "The team is not avoiding the decision — they are being thorough about its relational impact. In high-context, polychronic cultures, the quality of a decision includes how it lands relationally, not just what it achieves logically.",
-      id: "Tim tidak menghindari keputusan — mereka sedang teliti tentang dampak relasionalnya. Dalam budaya high-context dan polychronic, kualitas keputusan mencakup bagaimana dampaknya secara relasional, bukan hanya apa yang dicapainya secara logis.",
-      nl: "Het team vermijdt de beslissing niet — ze zijn grondig over de relationele impact ervan. In high-context, polychronische culturen omvat de kwaliteit van een besluit hoe het relationeel landt, niet alleen wat het logisch bereikt.",
-    },
+    time: "09:03",
+    en_action: "Enters the meeting room. The team is settling in. Klaus looks up from his laptop.",
+    id_action: "Memasuki ruang rapat. Tim sedang bersiap. Klaus mendongak dari laptopnya.",
+    nl_action: "Betreedt de vergaderruimte. Het team gaat zitten. Klaus kijkt op van zijn laptop.",
+    en_thought: "Good. Everyone's here. We're ready to work.",
+    id_thought: "Bagus. Semua sudah ada. Kita siap bekerja.",
+    nl_thought: "Goed. Iedereen is er. We zijn klaar om te werken.",
   },
 ];
 
-const STRATEGIES = [
+const KLAUS_MOMENTS = [
   {
-    en: "Name your time orientation openly with your team. Make the invisible expectation visible — most people assume everyone shares their default.",
-    id: "Ungkapkan orientasi waktu Anda secara terbuka dengan tim. Buat harapan tak terlihat menjadi terlihat — kebanyakan orang berasumsi semua orang memiliki default yang sama.",
-    nl: "Benoem je tijdoriëntatie openlijk met je team. Maak de onzichtbare verwachting zichtbaar — de meeste mensen nemen aan dat iedereen hun standaard deelt.",
+    time: "08:40",
+    en_action: "Arrives at the office. Goes directly to the meeting room. Opens his laptop and reviews the agenda he prepared last Thursday.",
+    id_action: "Tiba di kantor. Langsung menuju ruang rapat. Membuka laptop dan meninjau agenda yang disiapkannya Kamis lalu.",
+    nl_action: "Komt op kantoor aan. Loopt direct naar de vergaderruimte. Opent zijn laptop en bekijkt de agenda die hij donderdag heeft voorbereid.",
+    en_thought: "Good to be early. I can run through the Q3 milestones once more before the others arrive.",
+    id_thought: "Bagus bisa datang lebih awal. Saya bisa meninjau target Q3 sekali lagi sebelum yang lain tiba.",
+    nl_thought: "Goed om vroeg te zijn. Ik kan de Q3-mijlpalen nog eens doorlopen voordat de anderen komen.",
   },
   {
-    en: "Build relationship time intentionally into meetings — five minutes at the start is not wasted time, it is the lubricant that makes everything else run.",
-    id: "Bangun waktu hubungan dengan sengaja ke dalam rapat — lima menit di awal bukan waktu yang terbuang, itu adalah pelumas yang membuat segalanya berjalan.",
-    nl: "Bouw relationele tijd bewust in vergaderingen — vijf minuten aan het begin is geen verspilde tijd, het is het smeermiddel dat alles laat werken.",
+    time: "08:55",
+    en_action: "Notes are ready. Agenda is clear. He looks up — the room is still empty.",
+    id_action: "Catatan sudah siap. Agenda sudah jelas. Dia mendongak — ruangan masih kosong.",
+    nl_action: "Aantekeningen zijn klaar. Agenda is helder. Hij kijkt op — de ruimte is nog leeg.",
+    en_thought: "Five minutes. Fine. They'll be here shortly.",
+    id_thought: "Lima menit lagi. Tidak apa-apa. Mereka akan segera datang.",
+    nl_thought: "Vijf minuten. Prima. Ze komen zo.",
   },
   {
-    en: "Agree explicitly on what 'on time' and 'deadline' mean in your context. Don't assume shared definitions — negotiate them.",
-    id: "Sepakati secara eksplisit apa arti 'tepat waktu' dan 'tenggat waktu' dalam konteks Anda. Jangan berasumsi definisi yang sama — negosiasikan mereka.",
-    nl: "Spreek expliciet af wat 'op tijd' en 'deadline' in jouw context betekenen. Neem geen gedeelde definities aan — onderhandel ze.",
+    time: "09:00",
+    en_action: "He hears relaxed voices and laughter from the hallway. Checks his watch: exactly 9:00. No one has entered yet.",
+    id_action: "Dia mendengar suara santai dan tawa dari lorong. Memeriksa jamnya: tepat pukul 09:00. Belum ada yang masuk.",
+    nl_action: "Hij hoort ontspannen stemmen en gelach op de gang. Kijkt op zijn horloge: precies 9:00. Niemand is nog binnengekomen.",
+    en_thought: "We have a scheduled meeting. Right now. Why is no one coming in?",
+    id_thought: "Kita punya rapat yang sudah dijadwalkan. Sekarang. Mengapa tidak ada yang masuk?",
+    nl_thought: "We hebben een geplande vergadering. Nu. Waarom komt er niemand naar binnen?",
   },
   {
-    en: "When timelines slip, ask before you conclude. The real reason is often relational, familial, or communal — not laziness.",
-    id: "Ketika jadwal meleset, tanyakan sebelum menyimpulkan. Alasan sebenarnya sering bersifat relasional, keluarga, atau komunal — bukan kemalasan.",
-    nl: "Wanneer tijdlijnen verschuiven, vraag voordat je concludeert. De echte reden is vaak relationeel, familiaal of communaal — geen luiheid.",
-  },
-  {
-    en: "Protect the relationship when enforcing accountability. The person always comes before the task — even when the task is urgent.",
-    id: "Lindungi hubungan saat menegakkan akuntabilitas. Orang selalu lebih penting dari tugas — bahkan ketika tugasnya mendesak.",
-    nl: "Bescherm de relatie bij het handhaven van verantwoording. De persoon komt altijd voor de taak — ook als de taak urgent is.",
-  },
-  {
-    en: "Model healthy margin yourself. Leaders who are always rushed give their teams permission to be the same — or teach anxiety as a virtue.",
-    id: "Tunjukkan batas yang sehat sendiri. Pemimpin yang selalu terburu-buru memberi timnya izin untuk sama — atau mengajarkan kecemasan sebagai kebajikan.",
-    nl: "Modelleer zelf gezonde marge. Leiders die altijd gehaast zijn geven hun teams toestemming hetzelfde te zijn — of leren angst als een deugd.",
+    time: "09:03",
+    en_action: "The team files in over two minutes. Sari is last. She's calm, unhurried, greeting each person as she takes her seat.",
+    id_action: "Tim masuk satu per satu selama dua menit. Sari yang terakhir. Dia tenang, tidak terburu-buru, menyapa setiap orang saat duduk.",
+    nl_action: "Het team druppelt binnen over twee minuten. Sari is de laatste. Ze is rustig, heeft geen haast, begroet iedereen terwijl ze gaat zitten.",
+    en_thought: "She leads this team and she's the last one in. Three minutes late to her own meeting — and she seems completely unbothered.",
+    id_thought: "Dia memimpin tim ini dan dia yang terakhir masuk. Tiga menit terlambat ke rapatnya sendiri — dan dia tampak sama sekali tidak terganggu.",
+    nl_thought: "Ze leidt dit team en ze is de laatste die binnenkomt. Drie minuten te laat voor haar eigen vergadering — en ze lijkt er totaal niet door te zitten.",
   },
 ];
+
+const FRAMEWORK_POINTS = [
+  {
+    number: "01",
+    en_label: "Two visions of time",
+    id_label: "Dua visi tentang waktu",
+    nl_label: "Twee visies op tijd",
+    en_body: "Sari is polychronic: time is relational. Being present for Hendra and Dewi was not distraction — it was preparation. Klaus is monochronic: time is a resource to be managed. 9:00 means 9:00 because the schedule is the shared commitment.",
+    id_body: "Sari bersifat polychronic: waktu bersifat relasional. Hadir untuk Hendra dan Dewi bukan gangguan — itu adalah persiapan. Klaus bersifat monochronic: waktu adalah sumber daya yang harus dikelola. 09:00 berarti 09:00 karena jadwal adalah komitmen bersama.",
+    nl_body: "Sari is polychronisch: tijd is relationeel. Aanwezig zijn voor Hendra en Dewi was geen afleiding — het was voorbereiding. Klaus is monochronisch: tijd is een middel om te beheren. 9:00 is 9:00 omdat het schema de gedeelde toezegging is.",
+  },
+  {
+    number: "02",
+    en_label: "Two kinds of preparation",
+    id_label: "Dua jenis persiapan",
+    nl_label: "Twee soorten voorbereiding",
+    en_body: "Klaus prepared the task scaffolding — the agenda, the milestones, the plan. Sari prepared the relational scaffolding — the people, their readiness, their capacity to work. Both were doing real preparation. They simply had different definitions of what 'ready' means.",
+    id_body: "Klaus menyiapkan kerangka tugas — agenda, target, rencana. Sari menyiapkan kerangka relasional — orang-orang, kesiapan mereka, kapasitas mereka untuk bekerja. Keduanya melakukan persiapan nyata. Mereka hanya memiliki definisi berbeda tentang apa artinya 'siap'.",
+    nl_body: "Klaus bereidde het taakgeraamte voor — de agenda, de mijlpalen, het plan. Sari bereidde het relationele geraamte voor — de mensen, hun bereidheid, hun vermogen om te werken. Beiden deden echte voorbereiding. Ze hadden simpelweg verschillende definities van wat 'klaar' betekent.",
+  },
+  {
+    number: "03",
+    en_label: "Two reliability systems",
+    id_label: "Dua sistem keandalan",
+    nl_label: "Twee systemen van betrouwbaarheid",
+    en_body: "Klaus measures reliability by keeping to schedules. Sari measures it by being present for people. When Klaus sees lateness, he reads unreliability. When Sari watches Klaus leave immediately after meetings, she reads coldness. Both readings are real. Both are incomplete.",
+    id_body: "Klaus mengukur keandalan dengan mematuhi jadwal. Sari mengukurnya dengan hadir bagi orang-orang. Ketika Klaus melihat keterlambatan, dia membaca ketidakandalan. Ketika Sari melihat Klaus langsung pergi setelah rapat, dia membaca sikap dingin. Kedua pembacaan itu nyata. Keduanya tidak lengkap.",
+    nl_body: "Klaus meet betrouwbaarheid aan het nakomen van schema's. Sari meet het door aanwezig te zijn voor mensen. Wanneer Klaus te-laat-zijn ziet, leest hij onbetrouwbaarheid. Wanneer Sari ziet dat Klaus direct na vergaderingen vertrekt, leest ze koudheid. Beide lezingen zijn reëel. Beide zijn onvolledig.",
+  },
+];
+
+const BRIDGES = [
+  {
+    en: "Name your time orientation openly with your team. The invisible assumption — that everyone shares your definition of 'on time' — is the thing that keeps fracturing trust.",
+    id: "Ungkapkan orientasi waktu Anda secara terbuka dengan tim. Asumsi tak terlihat — bahwa semua orang berbagi definisi Anda tentang 'tepat waktu' — adalah hal yang terus merusak kepercayaan.",
+    nl: "Benoem je tijdoriëntatie openlijk met je team. De onzichtbare aanname — dat iedereen jouw definitie van 'op tijd' deelt — is wat het vertrouwen blijft ondermijnen.",
+  },
+  {
+    en: "Build five minutes of relational time into the start of every meeting. It is not wasted time — it is the lubricant that makes everything else possible.",
+    id: "Bangun lima menit waktu relasional di awal setiap rapat. Ini bukan waktu yang terbuang — ini adalah pelumas yang membuat segalanya menjadi mungkin.",
+    nl: "Bouw vijf minuten relationele tijd in aan het begin van elke vergadering. Het is geen verspilde tijd — het is het smeermiddel dat alles mogelijk maakt.",
+  },
+  {
+    en: "Agree explicitly on what 'on time' and 'deadline' mean in your specific context. Don't inherit someone's cultural default — negotiate your own shared definition.",
+    id: "Sepakati secara eksplisit apa arti 'tepat waktu' dan 'tenggat waktu' dalam konteks spesifik Anda. Jangan mewarisi default budaya seseorang — negosiasikan definisi bersama Anda sendiri.",
+    nl: "Spreek expliciet af wat 'op tijd' en 'deadline' in jouw specifieke context betekenen. Erf niet iemands culturele standaard — onderhandel je eigen gedeelde definitie.",
+  },
+  {
+    en: "When timelines slip, ask before you conclude. The real reason is often relational, familial, or communal — not laziness or disorganisation.",
+    id: "Ketika jadwal meleset, tanyakan sebelum menyimpulkan. Alasan sebenarnya sering bersifat relasional, keluarga, atau komunal — bukan kemalasan atau ketidakorganisasian.",
+    nl: "Wanneer tijdlijnen verschuiven, vraag voordat je een conclusie trekt. De echte reden is vaak relationeel, familiaal of communaal — niet luiheid of desorganisatie.",
+  },
+  {
+    en: "Protect the person when you enforce accountability. Accountability is necessary — but how you apply it reveals whether your system serves the task or the human being.",
+    id: "Lindungi orang tersebut saat Anda menegakkan akuntabilitas. Akuntabilitas memang diperlukan — tetapi cara Anda menerapkannya mengungkapkan apakah sistem Anda melayani tugas atau manusia.",
+    nl: "Bescherm de persoon als je verantwoording afdwingt. Verantwoording is noodzakelijk — maar hoe je het toepast onthult of je systeem de taak of de mens dient.",
+  },
+];
+
+const VERSES = {
+  "eccl-3-1": {
+    en_ref: "Ecclesiastes 3:1",
+    id_ref: "Pengkhotbah 3:1",
+    nl_ref: "Prediker 3:1",
+    en: "There is a time for everything, and a season for every activity under the heavens.",
+    id: "Untuk segala sesuatu ada masanya, untuk apa pun di bawah langit ada waktunya.",
+    nl: "Alles heeft zijn uur, voor alles onder de hemel is er een tijd.",
+  },
+  "gal-4-4": {
+    en_ref: "Galatians 4:4",
+    id_ref: "Galatia 4:4",
+    nl_ref: "Galaten 4:4",
+    en: "But when the set time had fully come, God sent his Son, born of a woman, born under the law.",
+    id: "Tetapi setelah genap waktunya, maka Allah mengutus Anak-Nya, yang lahir dari seorang perempuan dan takluk kepada hukum Taurat.",
+    nl: "Maar toen de tijd volledig gekomen was, zond God zijn Zoon, geboren uit een vrouw en onderworpen aan de wet.",
+  },
+};
 
 const QUESTIONS = [
   {
     roman: "I",
-    en: "Where do you sit on the monochronic–polychronic spectrum? How does your default shape the frustrations you carry into cross-cultural situations?",
-    id: "Di mana posisi Anda dalam spektrum monochronic–polychronic? Bagaimana default Anda membentuk frustrasi yang Anda bawa ke situasi lintas budaya?",
-    nl: "Waar zit jij op het monochronisch–polychronisch spectrum? Hoe vormt jouw standaard de frustraties die je meeneemt naar interculturele situaties?",
+    en: "If you are honest: which timeline felt more natural to you — Sari's or Klaus's? What does that tell you about your default?",
+    id: "Jika Anda jujur: sisi mana dari timeline yang terasa lebih alami bagi Anda — Sari atau Klaus? Apa yang dikatakan itu tentang default Anda?",
+    nl: "Als je eerlijk bent: welke tijdlijn voelde natuurlijker voor jou — die van Sari of van Klaus? Wat zegt dat over jouw standaard?",
   },
   {
     roman: "II",
-    en: "Think of a team member who was 'always late' or 'never met deadlines'. What was likely happening from their cultural framework?",
-    id: "Pikirkan anggota tim yang 'selalu terlambat' atau 'tidak pernah memenuhi tenggat waktu'. Apa yang kemungkinan terjadi dari kerangka budaya mereka?",
-    nl: "Denk aan een teamlid dat 'altijd te laat' was of 'nooit deadlines haalde'. Wat speelde er waarschijnlijk vanuit hun cultureel kader?",
+    en: "Think of someone you have labelled 'unreliable' or 'always late'. What was probably happening from their cultural framework?",
+    id: "Pikirkan seseorang yang pernah Anda beri label 'tidak dapat diandalkan' atau 'selalu terlambat'. Apa yang kemungkinan terjadi dari kerangka budaya mereka?",
+    nl: "Denk aan iemand die je ooit 'onbetrouwbaar' of 'altijd te laat' hebt genoemd. Wat speelde er waarschijnlijk vanuit hun cultureel kader?",
   },
   {
     roman: "III",
-    en: "How does the biblical concept of Kairos — God's appointed moment, not clock-measured — challenge purely monochronic assumptions about effectiveness?",
-    id: "Bagaimana konsep alkitabiah Kairos — momen yang ditetapkan Tuhan, bukan diukur jam — menantang asumsi murni monochronic tentang efektivitas?",
-    nl: "Hoe daagt het bijbelse concept Kairos — Gods aangewezen moment, niet klokgemeten — puur monochronische aannames over effectiviteit uit?",
+    en: "The Bible speaks of Kairos — God's appointed moment, not clock-measured. How does that concept challenge your assumptions about what 'productive' time looks like?",
+    id: "Alkitab berbicara tentang Kairos — momen yang ditetapkan Tuhan, bukan diukur jam. Bagaimana konsep itu menantang asumsi Anda tentang seperti apa waktu yang 'produktif'?",
+    nl: "De Bijbel spreekt over Kairos — Gods aangewezen moment, niet klokgemeten. Hoe daagt dat concept jouw aannames uit over hoe 'productieve' tijd eruitziet?",
   },
   {
     roman: "IV",
-    en: "Do the time agreements in your team reflect one person's cultural default, or have you genuinely negotiated them together?",
-    id: "Apakah kesepakatan waktu dalam tim Anda mencerminkan default budaya satu orang, atau apakah Anda benar-benar telah merundingkannya bersama?",
-    nl: "Weerspiegelen de tijdsafspraken in je team de culturele standaard van één persoon, of heb je ze echt samen onderhandeld?",
-  },
-  {
-    roman: "V",
-    en: "When has someone's flexible relationship with time led to a better outcome than your tight schedule would have allowed?",
-    id: "Kapan hubungan fleksibel seseorang dengan waktu menghasilkan hasil yang lebih baik daripada yang diizinkan jadwal ketat Anda?",
-    nl: "Wanneer heeft iemands flexibele omgang met tijd tot een beter resultaat geleid dan jouw strakke schema zou hebben toegestaan?",
-  },
-];
-
-const LEVELS = [
-  {
-    level: { en: "Beginner", id: "Pemula", nl: "Beginner" },
-    title: { en: "Becoming Aware", id: "Menjadi Sadar", nl: "Bewust worden" },
-    steps: {
-      en: ["Name your own time orientation without judgment", "Identify 2 team members whose time behaviour confuses you", "Ask one question before drawing a conclusion next time"],
-      id: ["Kenali orientasi waktu Anda sendiri tanpa penilaian", "Identifikasi 2 anggota tim yang perilaku waktunya membingungkan Anda", "Ajukan satu pertanyaan sebelum menarik kesimpulan berikutnya"],
-      nl: ["Benoem je eigen tijdoriëntatie zonder oordeel", "Identificeer 2 teamleden wier tijdsgedrag je verward", "Stel één vraag voordat je de volgende keer een conclusie trekt"],
-    },
-    color: "oklch(48% 0.14 145)",
-    colorBg: "oklch(48% 0.14 145 / 0.07)",
-    colorBorder: "oklch(48% 0.14 145 / 0.2)",
-  },
-  {
-    level: { en: "Practitioner", id: "Praktisi", nl: "Beoefenaar" },
-    title: { en: "Bridging Actively", id: "Menjembatani Secara Aktif", nl: "Actief overbruggen" },
-    steps: {
-      en: ["Open team conversations about time norms explicitly", "Redesign your meeting structure to include relational time", "Agree on a shared definition of 'deadline' with your team"],
-      id: ["Buka percakapan tim tentang norma waktu secara eksplisit", "Redesain struktur rapat Anda untuk menyertakan waktu relasional", "Sepakati definisi 'tenggat waktu' bersama tim Anda"],
-      nl: ["Open teamgesprekken over tijdsnormen expliciet", "Herontwerp je vergaderstructuur om relationele tijd op te nemen", "Spreek een gezamenlijke definitie van 'deadline' af met je team"],
-    },
-    color: "oklch(50% 0.14 25)",
-    colorBg: "oklch(50% 0.14 25 / 0.07)",
-    colorBorder: "oklch(50% 0.14 25 / 0.2)",
-  },
-  {
-    level: { en: "Advanced", id: "Mahir", nl: "Gevorderd" },
-    title: { en: "Integrating Both", id: "Mengintegrasikan Keduanya", nl: "Beide integreren" },
-    steps: {
-      en: ["Build team rhythms that serve both orientations", "Coach others to navigate time tension with curiosity, not judgment", "Design accountability systems that honour relationship without abandoning results"],
-      id: ["Bangun ritme tim yang melayani kedua orientasi", "Latih orang lain untuk menghadapi ketegangan waktu dengan rasa ingin tahu, bukan penilaian", "Rancang sistem akuntabilitas yang menghormati hubungan tanpa meninggalkan hasil"],
-      nl: ["Bouw teamritmes die beide oriëntaties dienen", "Coach anderen om tijdspanning te navigeren met nieuwsgierigheid, niet oordeel", "Ontwerp verantwoordingssystemen die relaties eren zonder resultaten te laten varen"],
-    },
-    color: "oklch(52% 0.14 45)",
-    colorBg: "oklch(52% 0.14 45 / 0.07)",
-    colorBorder: "oklch(52% 0.14 45 / 0.2)",
+    en: "Do the time agreements in your team reflect one person's cultural default — or have you genuinely negotiated them together?",
+    id: "Apakah kesepakatan waktu dalam tim Anda mencerminkan default budaya satu orang — atau apakah Anda benar-benar telah merundingkannya bersama?",
+    nl: "Weerspiegelen de tijdsafspraken in je team de culturele standaard van één persoon — of heb je ze echt samen onderhandeld?",
   },
 ];
 
@@ -219,9 +196,12 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
   const [lang, setLang] = useState<Lang>("en");
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
-  const [openScenario, setOpenScenario] = useState<number | null>(null);
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [showReflection, setShowReflection] = useState(false);
+  const [reflection, setReflection] = useState("");
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
   const showSave = userPathway !== null;
+  const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
 
   function handleSave() {
     if (saved) return;
@@ -250,269 +230,206 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
             ))}
           </div>
 
-          <span className="pathway-badge" style={{ background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", marginBottom: "1.25rem", display: "inline-flex" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", padding: "0.25rem 0.75rem", display: "inline-flex", marginBottom: "1.25rem" }}>
             {t("Cultural Dimensions", "Dimensi Budaya", "Culturele Dimensies")}
           </span>
 
-          <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "18ch" }}>
-            {lang === "en"
-              ? <>Time &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Culture.</span></>
-              : lang === "id"
-              ? <>Waktu &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Budaya.</span></>
-              : <>Tijd &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Cultuur.</span></>}
+          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem", lineHeight: 1.05, maxWidth: "14ch" }}>
+            {lang === "en" ? <>Time &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Culture.</span></> : lang === "id" ? <>Waktu &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Budaya.</span></> : <>Tijd &amp;<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Cultuur.</span></>}
           </h1>
-          <p className="t-tagline" style={{ color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.15rem)", color: "oklch(72% 0.04 260)", maxWidth: "50ch", marginBottom: "2rem", lineHeight: 1.65 }}>
             {t(
-              "Time is not neutral. How your culture handles it is one of the deepest sources of cross-cultural friction — and one of the most overlooked.",
-              "Waktu tidak netral. Bagaimana budaya Anda menanganinya adalah salah satu sumber gesekan lintas budaya yang paling dalam — dan paling sering diabaikan.",
-              "Tijd is niet neutraal. Hoe jouw cultuur ermee omgaat is een van de diepste bronnen van interculturele wrijving — en een van de meest over het hoofd geziene.",
+              "The same Monday morning. Two people. Completely different worlds.",
+              "Senin pagi yang sama. Dua orang. Dunia yang sepenuhnya berbeda.",
+              "Dezelfde maandagochtend. Twee mensen. Volkomen verschillende werelden.",
             )}
           </p>
 
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            {showSave && (
-              saved ? (
-                <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                  ✓ {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
-                </Link>
-              ) : (
-                <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.625rem 1.25rem", cursor: isPending ? "wait" : "pointer", transition: "background 0.15s" }}>
-                  {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
-                </button>
-              )
+          {showSave && (
+            saved ? (
+              <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
+                ✓ {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
+              </Link>
+            ) : (
+              <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.625rem 1.25rem", cursor: isPending ? "wait" : "pointer" }}>
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
+              </button>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* ── SETUP ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
+        <div className="container-wide">
+          <div style={{ maxWidth: "64ch" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+              {t("The Story", "Ceritanya", "Het verhaal")}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: "1rem" }}>
+              {t(
+                "Sari is an Indonesian team leader at a development organisation. Klaus is a German colleague who co-leads a six-month project with her. It is Monday. They have a planning meeting scheduled for 9:00 AM.",
+                "Sari adalah pemimpin tim Indonesia di sebuah organisasi pembangunan. Klaus adalah rekan kerja Jerman yang memimpin bersama proyek enam bulan bersamanya. Hari ini Senin. Mereka memiliki rapat perencanaan yang dijadwalkan pukul 09:00.",
+                "Sari is een Indonesische teamleider bij een ontwikkelingsorganisatie. Klaus is een Duitse collega die een project van zes maanden samen met haar leidt. Het is maandag. Ze hebben een planningsvergadering gepland om 9:00 uur.",
+              )}
+            </p>
+            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.2rem", fontStyle: "italic", color: "oklch(22% 0.10 260)", lineHeight: 1.6 }}>
+              {t(
+                "What follows is the same morning — from two completely different worlds.",
+                "Yang berikut adalah pagi yang sama — dari dua dunia yang sepenuhnya berbeda.",
+                "Wat volgt is dezelfde ochtend — vanuit twee volkomen verschillende werelden.",
+              )}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TWO TIMELINES ── */}
+      <section style={{ background: "oklch(93% 0.008 80)" }}>
+        {/* Column headers */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div style={{ background: "oklch(96% 0.018 65)", padding: "1.5rem clamp(1.5rem, 4vw, 3rem)", borderBottom: "2px solid oklch(65% 0.15 45)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
+              {t("Sari — Indonesian Leader", "Sari — Pemimpin Indonesia", "Sari — Indonesische leider")}
+            </p>
+          </div>
+          <div style={{ background: "oklch(95% 0.005 260)", padding: "1.5rem clamp(1.5rem, 4vw, 3rem)", borderBottom: "2px solid oklch(42% 0.08 260)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(42% 0.08 260)", margin: 0 }}>
+              {t("Klaus — German Colleague", "Klaus — Rekan Kerja Jerman", "Klaus — Duitse collega")}
+            </p>
+          </div>
+        </div>
+
+        {/* Moment rows */}
+        {[0, 1, 2, 3].map(i => (
+          <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: i < 3 ? "1px solid oklch(88% 0.008 80)" : "none" }}>
+            {/* Sari moment */}
+            <div style={{ background: "oklch(96% 0.018 65)", padding: "2rem clamp(1.5rem, 4vw, 3rem)", borderRight: "1px solid oklch(88% 0.008 80)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.12em", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+                {SARI_MOMENTS[i].time}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(38% 0.05 260)", marginBottom: "0.875rem" }}>
+                {lang === "en" ? SARI_MOMENTS[i].en_action : lang === "id" ? SARI_MOMENTS[i].id_action : SARI_MOMENTS[i].nl_action}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1rem", fontStyle: "italic", color: "oklch(52% 0.10 45)", lineHeight: 1.6, margin: 0 }}>
+                "{lang === "en" ? SARI_MOMENTS[i].en_thought : lang === "id" ? SARI_MOMENTS[i].id_thought : SARI_MOMENTS[i].nl_thought}"
+              </p>
+            </div>
+            {/* Klaus moment */}
+            <div style={{ background: "oklch(95% 0.005 260)", padding: "2rem clamp(1.5rem, 4vw, 3rem)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.12em", color: "oklch(42% 0.08 260)", marginBottom: "0.75rem" }}>
+                {KLAUS_MOMENTS[i].time}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(38% 0.05 260)", marginBottom: "0.875rem" }}>
+                {lang === "en" ? KLAUS_MOMENTS[i].en_action : lang === "id" ? KLAUS_MOMENTS[i].id_action : KLAUS_MOMENTS[i].nl_action}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1rem", fontStyle: "italic", color: "oklch(40% 0.08 260)", lineHeight: 1.6, margin: 0 }}>
+                "{lang === "en" ? KLAUS_MOMENTS[i].en_thought : lang === "id" ? KLAUS_MOMENTS[i].id_thought : KLAUS_MOMENTS[i].nl_thought}"
+              </p>
+            </div>
+          </div>
+        ))}
+
+        {/* Convergence moment */}
+        <div style={{ background: "oklch(22% 0.10 260)", padding: "2rem clamp(1.5rem, 4vw, 3rem)", textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.16em", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>09:05</p>
+          <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.3rem", fontStyle: "italic", color: "oklch(88% 0.02 80)", lineHeight: 1.5, margin: 0 }}>
+            {t(
+              "The meeting begins. Same room. Same agenda. Two completely different stories about what just happened.",
+              "Rapat dimulai. Ruangan yang sama. Agenda yang sama. Dua cerita yang sepenuhnya berbeda tentang apa yang baru saja terjadi.",
+              "De vergadering begint. Dezelfde ruimte. Dezelfde agenda. Twee volkomen verschillende verhalen over wat er zojuist is gebeurd.",
             )}
-          </div>
+          </p>
         </div>
       </section>
 
-      {/* ── OPENING STORY ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(2rem, 5vw, 4rem)", alignItems: "start" }}>
-            <div>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-                {t("Opening Story", "Cerita Pembuka", "Openingsverhaal")}
-              </p>
-              <h2 className="t-section" style={{ marginBottom: "1.25rem" }}>
-                {t("9:05 AM.", "Pukul 09:05.", "9:05 uur.")}
-              </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.005 260)", marginBottom: "1rem" }}>
-                {t(
-                  "Lars scheduled the meeting for 9:00 AM sharp. He arrived at 8:55, laptop open, agenda printed. By 9:05, three of his Indonesian team members had still not entered the room.",
-                  "Lars menjadwalkan rapat tepat pukul 09:00. Ia tiba pukul 08:55, laptop terbuka, agenda tercetak. Pukul 09:05, tiga anggota tim Indonesianya belum masuk ruangan.",
-                  "Lars had de vergadering ingepland voor precies 9:00 uur. Hij arriveerde om 8:55, laptop open, agenda uitgeprint. Om 9:05 waren drie van zijn Indonesische teamleden nog niet binnengekomen.",
-                )}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.005 260)", marginBottom: "1rem" }}>
-                {t(
-                  "He could see them through the glass — Dimas was finishing a conversation with someone from another department, Rini was helping a colleague find a file, Yanto was making tea and listening to both of them.",
-                  "Ia bisa melihat mereka melalui kaca — Dimas sedang menyelesaikan percakapan dengan seseorang dari departemen lain, Rini membantu rekan menemukan file, Yanto membuat teh sambil mendengarkan keduanya.",
-                  "Hij kon ze door het glas zien — Dimas rondde een gesprek af met iemand van een andere afdeling, Rini hielp een collega een bestand te vinden, Yanto zette thee en luisterde naar hen allebei.",
-                )}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.005 260)" }}>
-                {t(
-                  "Lars felt disrespected. His team felt nothing was unusual. Same moment — completely different worlds.",
-                  "Lars merasa tidak dihormati. Timnya merasa tidak ada yang tidak biasa. Momen yang sama — dunia yang benar-benar berbeda.",
-                  "Lars voelde zich niet gerespecteerd. Zijn team voelde dat er niets bijzonders was. Zelfde moment — volledig andere werelden.",
-                )}
-              </p>
-            </div>
-
-            <div style={{ background: "oklch(22% 0.10 260)", padding: "clamp(1.75rem, 4vw, 2.5rem)" }}>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.6rem" }}>
-                {t("The Root Cause", "Akar Masalah", "De Oorzaak")}
-              </p>
-              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontStyle: "italic", color: "oklch(85% 0.03 80)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
-                {t(
-                  "\"Neither Lars nor his team was wrong. They were operating from different core assumptions about what time is for — and neither had ever made those assumptions visible.\"",
-                  "\"Baik Lars maupun timnya tidak salah. Mereka beroperasi dari asumsi inti yang berbeda tentang untuk apa waktu itu — dan tidak ada yang pernah membuat asumsi tersebut terlihat.\"",
-                  "\"Noch Lars noch zijn team had het mis. Ze opereerden vanuit verschillende kernassumpties over waarvoor tijd is — en niemand had die aannames ooit zichtbaar gemaakt.\"",
-                )}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(70% 0.04 260)" }}>
-                {t(
-                  "Anthropologist Edward T. Hall called this the difference between monochronic and polychronic time. It is one of the most fundamental — and most invisible — cultural divides in global teams.",
-                  "Antropolog Edward T. Hall menyebut ini perbedaan antara waktu monochronic dan polychronic. Ini adalah salah satu perbedaan budaya yang paling mendasar — dan paling tidak terlihat — dalam tim global.",
-                  "Antropoloog Edward T. Hall noemde dit het verschil tussen monochronische en polychronische tijd. Het is een van de meest fundamentele — en meest onzichtbare — culturele kloven in mondiale teams.",
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── COMPARISON TABLE ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(99% 0.002 80)" }}>
-        <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("Hall's Framework", "Kerangka Hall", "Hall's Framework")}
-            </p>
-            <h2 className="t-section">
-              {t("Two ways of experiencing time", "Dua cara mengalami waktu", "Twee manieren om tijd te ervaren")}
-            </h2>
-          </div>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", background: "oklch(97% 0.005 80)", border: "1px solid oklch(88% 0.008 80)" }}>
-              <thead>
-                <tr style={{ background: "oklch(22% 0.10 260)" }}>
-                  <th style={{ padding: "1rem 1.25rem", textAlign: "left", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(60% 0.04 260)", width: "25%" }}>
-                    {t("Aspect", "Aspek", "Aspect")}
-                  </th>
-                  <th style={{ padding: "1rem 1.25rem", textAlign: "left", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", width: "37.5%" }}>
-                    {t("Monochronic", "Monochronic", "Monochronisch")}
-                    <span style={{ display: "block", fontWeight: 400, letterSpacing: "0.05em", fontSize: "0.65rem", color: "oklch(55% 0.04 260)", marginTop: "0.2rem", textTransform: "none" }}>
-                      {t("Netherlands, Germany, Scandinavia, USA", "Belanda, Jerman, Skandinavia, AS", "Nederland, Duitsland, Scandinavië, VS")}
-                    </span>
-                  </th>
-                  <th style={{ padding: "1rem 1.25rem", textAlign: "left", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(72% 0.14 145)", width: "37.5%" }}>
-                    {t("Polychronic", "Polychronic", "Polychronisch")}
-                    <span style={{ display: "block", fontWeight: 400, letterSpacing: "0.05em", fontSize: "0.65rem", color: "oklch(55% 0.04 260)", marginTop: "0.2rem", textTransform: "none" }}>
-                      {t("Indonesia, Malaysia, Philippines, Middle East, Latin America", "Indonesia, Malaysia, Filipina, Timur Tengah, Amerika Latin", "Indonesië, Maleisië, Filipijnen, Midden-Oosten, Latijns-Amerika")}
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON.map((row, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid oklch(90% 0.008 80)", background: i % 2 === 0 ? "oklch(97% 0.005 80)" : "oklch(99% 0.002 80)" }}>
-                    <td style={{ padding: "1rem 1.25rem", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.825rem", color: "oklch(30% 0.12 260)" }}>
-                      {row.aspect[lang]}
-                    </td>
-                    <td style={{ padding: "1rem 1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6 }}>
-                      {row.mono[lang]}
-                    </td>
-                    <td style={{ padding: "1rem 1.25rem", fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6 }}>
-                      {row.poly[lang]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3 SCENARIOS ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("In the Field", "Di Lapangan", "In het veld")}
-            </p>
-            <h2 className="t-section">
-              {t("Three clashes that happen every week", "Tiga benturan yang terjadi setiap minggu", "Drie botsingen die elke week voorkomen")}
-            </h2>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-            {SCENARIOS.map((s, i) => {
-              const isOpen = openScenario === i;
-              return (
-                <div key={i} style={{ background: "oklch(97% 0.005 80)" }}>
-                  <button
-                    onClick={() => setOpenScenario(isOpen ? null : i)}
-                    style={{ width: "100%", textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: "1.5rem 2rem", display: "flex", alignItems: "center", gap: "1.5rem" }}
-                  >
-                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, minWidth: "2rem" }}>{i + 1}</span>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", color: "oklch(22% 0.10 260)", flex: 1 }}>{s.title[lang]}</span>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", color: "oklch(55% 0.008 260)", flexShrink: 0 }}>{isOpen ? "−" : "+"}</span>
-                  </button>
-                  {isOpen && (
-                    <div style={{ padding: "0 2rem 2rem 2rem" }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.008 260)", marginBottom: "1.5rem", paddingLeft: "3.5rem" }}>
-                        {s.setup[lang]}
-                      </p>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem", marginBottom: "1.25rem", paddingLeft: "3.5rem" }}>
-                        <div style={{ background: "oklch(30% 0.12 260 / 0.06)", border: "1px solid oklch(30% 0.12 260 / 0.15)", padding: "1.25rem 1.5rem" }}>
-                          <p className="t-label" style={{ fontSize: "0.55rem", color: "oklch(30% 0.12 260)", marginBottom: "0.5rem" }}>
-                            {t("Western perspective", "Perspektif Barat", "Westers perspectief")}
-                          </p>
-                          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem", fontStyle: "italic", color: "oklch(30% 0.12 260)", lineHeight: 1.6, margin: 0 }}>{s.dutch[lang]}</p>
-                        </div>
-                        <div style={{ background: "oklch(65% 0.15 45 / 0.06)", border: "1px solid oklch(65% 0.15 45 / 0.2)", padding: "1.25rem 1.5rem" }}>
-                          <p className="t-label" style={{ fontSize: "0.55rem", color: "oklch(52% 0.12 45)", marginBottom: "0.5rem" }}>
-                            {t("SEA perspective", "Perspektif Asia Tenggara", "ZO-Aziatisch perspectief")}
-                          </p>
-                          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem", fontStyle: "italic", color: "oklch(38% 0.10 45)", lineHeight: 1.6, margin: 0 }}>{s.sea[lang]}</p>
-                        </div>
-                      </div>
-                      <div style={{ paddingLeft: "3.5rem", paddingTop: "0.5rem" }}>
-                        <p className="t-label" style={{ fontSize: "0.55rem", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
-                          {t("What's really happening", "Yang sebenarnya terjadi", "Wat er werkelijk speelt")}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(38% 0.008 260)", margin: 0 }}>{s.insight[lang]}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAITH ANCHOR ── */}
+      {/* ── THE GAP ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2rem, 5vw, 4rem)", alignItems: "start" }}>
-            <div>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.6rem" }}>
-                {t("A Word on Time", "Sepatah Kata tentang Waktu", "Een woord over tijd")}
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem", textAlign: "center" }}>
+            {t("What Each Concluded", "Apa yang Disimpulkan Masing-masing", "Wat ieder concludeerde")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", textAlign: "center", marginBottom: "3rem" }}>
+            {t("By 9:10, the damage was already done.", "Pada pukul 09:10, kerusakannya sudah terjadi.", "Om 9:10 was de schade al aangericht.")}
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+                {t("Sari's conclusion about Klaus", "Kesimpulan Sari tentang Klaus", "Sari's conclusie over Klaus")}
               </p>
-              <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-                {t("Chronos and Kairos", "Chronos dan Kairos", "Chronos en Kairos")}
-              </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", marginBottom: "1rem" }}>
+              <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.15rem", fontStyle: "italic", color: "oklch(82% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
                 {t(
-                  "The Bible uses two distinct words for time. Chronos refers to clock time — minutes, hours, deadlines. Kairos refers to the appointed moment — the right time, the opportune season, the moment God has prepared.",
-                  "Alkitab menggunakan dua kata berbeda untuk waktu. Chronos mengacu pada waktu jam — menit, jam, tenggat waktu. Kairos mengacu pada momen yang ditetapkan — waktu yang tepat, musim yang tepat, momen yang telah Tuhan siapkan.",
-                  "De Bijbel gebruikt twee verschillende woorden voor tijd. Chronos verwijst naar kloktijd — minuten, uren, deadlines. Kairos verwijst naar het aangewezen moment — de juiste tijd, het geschikte seizoen, het moment dat God heeft bereid.",
-                )}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)" }}>
-                {t(
-                  "Monochronic cultures are deeply comfortable with Chronos. But the most pivotal moments in Scripture — a burning bush, a chance encounter at a well, a tax collector in a tree — did not arrive on schedule. Cross-cultural leaders who can hold both orientations are better positioned to recognise when God is in the interruption.",
-                  "Budaya monochronic sangat nyaman dengan Chronos. Tetapi momen-momen paling penting dalam Kitab Suci — semak yang terbakar, pertemuan kebetulan di sumur, pemungut cukai di pohon — tidak tiba sesuai jadwal. Pemimpin lintas budaya yang bisa memegang kedua orientasi lebih siap untuk mengenali ketika Tuhan ada dalam gangguan.",
-                  "Monochronische culturen zijn diep comfortabel met Chronos. Maar de meest cruciale momenten in de Schrift — een brandende struik, een toevallige ontmoeting bij een put, een tollenaar in een boom — kwamen niet op schema. Interculturele leiders die beide oriëntaties kunnen vasthouden zijn beter gepositioneerd om te herkennen wanneer God in de onderbreking is.",
+                  "\"He had everything prepared before anyone arrived — but he sat alone in that room for twenty minutes without thinking to check on anyone. He works hard, but I'm not sure he understands what it means to lead people.\"",
+                  "\"Dia sudah menyiapkan segalanya sebelum siapapun tiba — tetapi dia duduk sendirian di ruangan itu selama dua puluh menit tanpa terpikirkan untuk memeriksa siapapun. Dia bekerja keras, tapi saya tidak yakin dia mengerti apa artinya memimpin orang.\"",
+                  "\"Hij had alles klaar voordat iemand er was — maar hij zat twintig minuten alleen in die ruimte zonder eraan te denken om bij iemand in te checken. Hij werkt hard, maar ik weet niet zeker of hij begrijpt wat het betekent om mensen te leiden.\"",
                 )}
               </p>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {[
-                { ref: "Ecclesiastes 3:1", en: "\"There is a time for everything, and a season for every activity under the heavens.\" — Not all time is equal. Wisdom knows which kind is which.", id: "\"Ada waktu untuk segala sesuatu, ada musim untuk segala kejadian di bawah langit.\" — Tidak semua waktu setara. Kebijaksanaan mengetahui mana yang mana.", nl: "\"Er is een tijd voor alles en een uur voor elk doel onder de hemel.\" — Niet alle tijd is gelijk. Wijsheid weet welke welke is." },
-                { ref: "Ephesians 5:15–16", en: "\"Be very careful, then, how you live — not as unwise but as wise, making the most of every opportunity.\" — Redeeming time is not filling a schedule; it is recognising the moment.", id: "\"Karena itu, perhatikanlah dengan saksama bagaimana kamu hidup, janganlah seperti orang bebal, tetapi seperti orang arif, dan pergunakanlah waktu yang ada.\" — Menebus waktu bukan mengisi jadwal; itu mengenali momen.", nl: "\"Pas dus goed op hoe u leeft, niet als onverstandigen maar als verstandigen. Benut de tijd ten volle.\" — Tijd benutten is geen schema vullen; het is het moment herkennen." },
-                { ref: "2 Peter 3:8", en: "\"With the Lord a day is like a thousand years, and a thousand years are like a day.\" — God is not bound by either monochronic or polychronic time. Both are held within His.", id: "\"Di hadapan Tuhan satu hari sama seperti seribu tahun dan seribu tahun sama seperti satu hari.\" — Tuhan tidak terikat oleh waktu monochronic maupun polychronic. Keduanya ada dalam milik-Nya.", nl: "\"Voor de Heer is een dag als duizend jaar en duizend jaar als één dag.\" — God is niet gebonden aan monochronische noch polychronische tijd. Beide worden gehouden in de Zijne." },
-              ].map(v => (
-                <div key={v.ref} style={{ background: "oklch(28% 0.11 260)", padding: "1.5rem" }}>
-                  <p className="t-label" style={{ fontSize: "0.6rem", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>{v.ref}</p>
-                  <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem", fontStyle: "italic", color: "oklch(85% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
-                    {lang === "en" ? v.en : lang === "id" ? v.id : v.nl}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: "1rem" }}>
+                {t("Klaus's conclusion about Sari", "Kesimpulan Klaus tentang Sari", "Klaus' conclusie over Sari")}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.15rem", fontStyle: "italic", color: "oklch(82% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
+                {t(
+                  "\"She leads this team and she was three minutes late to her own meeting. If she can't keep to 9:00 AM, how do I trust her with a six-month project deadline? I need to know if I can rely on her.\"",
+                  "\"Dia memimpin tim ini dan dia tiga menit terlambat ke rapatnya sendiri. Jika dia tidak bisa mempertahankan pukul 09:00, bagaimana saya mempercayainya dengan tenggat waktu proyek enam bulan? Saya perlu tahu apakah saya bisa mengandalkannya.\"",
+                  "\"Ze leidt dit team en ze was drie minuten te laat voor haar eigen vergadering. Als ze 9:00 uur niet kan nakomen, hoe kan ik haar dan vertrouwen met een deadline van zes maanden? Ik moet weten of ik op haar kan rekenen.\"",
+                )}
+              </p>
+            </div>
+          </div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(62% 0.04 260)", textAlign: "center", maxWidth: "56ch", margin: "2.5rem auto 0" }}>
+            {t(
+              "Neither conclusion was malicious. Both were sincere. And both were wrong — because each person was reading the other through an invisible cultural lens they didn't know they were wearing.",
+              "Tidak ada kesimpulan yang bersifat jahat. Keduanya tulus. Dan keduanya salah — karena setiap orang membaca yang lain melalui lensa budaya tak terlihat yang tidak mereka sadari sedang mereka kenakan.",
+              "Geen van beide conclusies was kwaadwillig. Beide waren oprecht. En beide waren verkeerd — omdat ieder de ander las door een onzichtbare culturele lens die ze niet wisten dat ze droegen.",
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ── WHAT WAS OPERATING ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
+        <div className="container-wide">
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("What Was Operating", "Yang Sedang Beroperasi", "Wat er speelde")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "3rem", maxWidth: "36ch" }}>
+            {t("Three things happening under the surface", "Tiga hal yang terjadi di bawah permukaan", "Drie dingen die onder de oppervlakte speelden")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+            {FRAMEWORK_POINTS.map((p, i) => (
+              <div key={p.number} style={{ display: "flex", gap: "2rem", alignItems: "flex-start", padding: "2rem 0", borderBottom: i < FRAMEWORK_POINTS.length - 1 ? "1px solid oklch(90% 0.008 80)" : "none" }}>
+                <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "3rem", fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, minWidth: "3.5rem", paddingTop: "0.1rem" }}>{p.number}</span>
+                <div>
+                  <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.625rem" }}>
+                    {lang === "en" ? p.en_label : lang === "id" ? p.id_label : p.nl_label}
+                  </h3>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", margin: 0, maxWidth: "64ch" }}>
+                    {lang === "en" ? p.en_body : lang === "id" ? p.id_body : p.nl_body}
                   </p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── STRATEGIES ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
+      {/* ── BRIDGES ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
         <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("Practical Leadership", "Kepemimpinan Praktis", "Praktisch leiderschap")}
-            </p>
-            <h2 className="t-section">
-              {t("Six bridging strategies", "Enam strategi menjembatani", "Zes verbindingsstrategieën")}
-            </h2>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-            {STRATEGIES.map((s, i) => (
-              <div key={i} style={{ background: "oklch(97% 0.005 80)", padding: "2rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "2.5rem", fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, minWidth: "2rem" }}>{i + 1}</span>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.008 260)", margin: 0, paddingTop: "0.4rem" }}>
-                  {lang === "en" ? s.en : lang === "id" ? s.id : s.nl}
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("Practical Leadership", "Kepemimpinan Praktis", "Praktisch leiderschap")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "3rem", maxWidth: "32ch" }}>
+            {t("Five things you can do this week", "Lima hal yang bisa Anda lakukan minggu ini", "Vijf dingen die je deze week kunt doen")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(85% 0.008 80)" }}>
+            {BRIDGES.map((b, i) => (
+              <div key={i} style={{ background: "oklch(97% 0.005 80)", padding: "1.5rem 2rem", display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>
+                <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "2rem", fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, minWidth: "2rem", paddingTop: "0.1rem" }}>{i + 1}</span>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", margin: 0, paddingTop: "0.35rem" }}>
+                  {lang === "en" ? b.en : lang === "id" ? b.id : b.nl}
                 </p>
               </div>
             ))}
@@ -520,78 +437,114 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
         </div>
       </section>
 
-      {/* ── DEVELOPMENT PATH ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(99% 0.002 80)" }}>
+      {/* ── BIBLICAL FOUNDATION ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("Your Development Path", "Jalur Pengembangan Anda", "Jouw ontwikkelpad")}
-            </p>
-            <h2 className="t-section">
-              {t("Where are you now?", "Di mana Anda sekarang?", "Waar ben jij nu?")}
-            </h2>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-            {LEVELS.map((l) => (
-              <div key={l.level.en} style={{ background: "oklch(97% 0.005 80)", padding: "2rem" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: l.colorBg, border: `1px solid ${l.colorBorder}`, padding: "0.2rem 0.75rem", marginBottom: "1rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: l.color }}>
-                    {l.level[lang]}
-                  </span>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("Biblical Foundation", "Landasan Alkitab", "Bijbelse basis")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
+            {t("Chronos and Kairos", "Chronos dan Kairos", "Chronos en Kairos")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
+            {t(
+              "The Bible uses two distinct Greek words for time. Chronos is clock time — minutes, schedules, deadlines. Kairos is the appointed moment — the right season, the opportune time, the moment God has prepared.",
+              "Alkitab menggunakan dua kata Yunani yang berbeda untuk waktu. Chronos adalah waktu jam — menit, jadwal, tenggat waktu. Kairos adalah momen yang ditetapkan — musim yang tepat, waktu yang opportun, momen yang telah Tuhan siapkan.",
+              "De Bijbel gebruikt twee verschillende Griekse woorden voor tijd. Chronos is kloktijd — minuten, schema's, deadlines. Kairos is het aangewezen moment — het juiste seizoen, de geschikte tijd, het moment dat God heeft bereid.",
+            )}
+          </p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
+            {t(
+              "Klaus is deeply fluent in Chronos. Sari moves more naturally in Kairos. Neither is wrong — Scripture holds both. The most important leadership moments in the Bible rarely arrived on schedule: a burning bush, an encounter at a well, a tax collector in a tree. Cross-cultural leaders who can hold both orientations are better positioned to recognise when the Spirit is moving in what looks like an interruption.",
+              "Klaus sangat fasih dalam Chronos. Sari bergerak lebih alami dalam Kairos. Tidak ada yang salah — Kitab Suci menampung keduanya. Momen kepemimpinan paling penting dalam Alkitab jarang tiba sesuai jadwal: semak yang terbakar, pertemuan di sumur, pemungut cukai di pohon. Pemimpin lintas budaya yang bisa memegang kedua orientasi lebih siap untuk mengenali ketika Roh bergerak dalam apa yang terlihat seperti gangguan.",
+              "Klaus is diep vloeiend in Chronos. Sari beweegt natuurlijker in Kairos. Geen van beiden is verkeerd — de Schrift houdt beide vast. De belangrijkste leiderschapsmomenten in de Bijbel kwamen zelden op schema: een brandende struik, een ontmoeting bij een put, een tollenaar in een boom. Interculturele leiders die beide oriëntaties kunnen vasthouden zijn beter gepositioneerd om te herkennen wanneer de Geest beweegt in wat eruitziet als een onderbreking.",
+            )}
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
+            {(["eccl-3-1", "gal-4-4"] as const).map(key => {
+              const v = VERSES[key];
+              const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
+              const text = lang === "en" ? v.en : lang === "id" ? v.id : v.nl;
+              return (
+                <div key={key} style={{ background: "oklch(28% 0.11 260)", padding: "2rem" }}>
+                  <button onClick={() => setActiveVerse(key)} style={{ background: "none", border: "none", cursor: "pointer", color: "oklch(65% 0.15 45)", fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "underline dotted", padding: 0, marginBottom: "0.875rem", display: "block" }}>
+                    {ref} ({translation})
+                  </button>
+                  <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(85% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
+                    "{text}"
+                  </p>
                 </div>
-                <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.005 260)", marginBottom: "1.25rem" }}>
-                  {l.title[lang]}
-                </h3>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                  {l.steps[lang].map((step, i) => (
-                    <li key={i} style={{ display: "flex", gap: "0.75rem", fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(38% 0.008 260)", lineHeight: 1.6 }}>
-                      <span style={{ color: l.color, fontWeight: 700, flexShrink: 0 }}>+</span>
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── REFLECTION QUESTIONS ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)", position: "relative" }}>
-        <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
+      {/* ── REFLECTION ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
-          <div style={{ paddingLeft: "2.5rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>
-              {t("Reflection", "Refleksi", "Reflectie")}
-            </p>
-            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "2.5rem" }}>
-              {t("Five questions worth sitting with.", "Lima pertanyaan yang layak direnungkan.", "Vijf vragen om bij stil te staan.")}
-            </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(40% 0.008 260 / 0.3)" }}>
-              {QUESTIONS.map((q) => (
-                <div key={q.roman} style={{ background: "oklch(28% 0.10 260)", padding: "1.75rem 2rem", display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.7rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", flexShrink: 0, paddingTop: "0.15rem", minWidth: "1.75rem" }}>{q.roman}</span>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", margin: 0 }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("Your Turn", "Giliran Anda", "Jouw beurt")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.5rem", maxWidth: "36ch" }}>
+            {t("Think of your own Klaus or Sari.", "Pikirkan Klaus atau Sari Anda sendiri.", "Denk aan je eigen Klaus of Sari.")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.05 260)", marginBottom: "1rem", maxWidth: "52ch", lineHeight: 1.7 }}>
+            {t(
+              "A specific person comes to mind — someone whose relationship with time has frustrated or confused you. Write a few sentences about them here.",
+              "Seseorang terlintas di pikiran — seseorang yang hubungannya dengan waktu telah membuat Anda frustrasi atau bingung. Tuliskan beberapa kalimat tentang mereka di sini.",
+              "Een specifiek persoon komt in gedachten — iemand wiens omgang met tijd je heeft gefrustreerd of verward. Schrijf hier een paar zinnen over hen.",
+            )}
+          </p>
+          <textarea
+            value={reflection}
+            onChange={e => setReflection(e.target.value)}
+            placeholder={t(
+              "Their name, your context, what happened…",
+              "Nama mereka, konteks Anda, apa yang terjadi…",
+              "Hun naam, jouw context, wat er gebeurde…",
+            )}
+            rows={4}
+            style={{ width: "100%", maxWidth: "640px", fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(30% 0.08 260)", background: "oklch(99% 0.003 80)", border: "1px solid oklch(80% 0.008 80)", padding: "1rem 1.25rem", resize: "vertical", outline: "none", boxSizing: "border-box", display: "block", marginBottom: "1.5rem" }}
+          />
+
+          <button
+            onClick={() => setShowReflection(v => !v)}
+            style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(22% 0.10 260)", background: "none", border: "1px solid oklch(22% 0.10 260)", padding: "0.625rem 1.25rem", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+          >
+            {showReflection
+              ? t("Hide questions", "Sembunyikan pertanyaan", "Vragen verbergen")
+              : t("Show reflection questions", "Tampilkan pertanyaan refleksi", "Reflectievragen tonen")}
+            <span style={{ fontSize: "0.9rem" }}>{showReflection ? "↑" : "↓"}</span>
+          </button>
+
+          {showReflection && (
+            <div style={{ marginTop: "1.5rem", display: "flex", flexDirection: "column", gap: "1px", background: "oklch(85% 0.008 80)", maxWidth: "640px" }}>
+              {QUESTIONS.map(q => (
+                <div key={q.roman} style={{ background: "oklch(97% 0.005 80)", padding: "1.5rem 2rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", flexShrink: 0, paddingTop: "0.2rem", minWidth: "1.5rem" }}>{q.roman}</span>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(38% 0.05 260)", margin: 0 }}>
                     {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
                   </p>
                 </div>
               ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
           <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
               {t("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de Bibliotheek")}
             </p>
-            <h2 className="t-section" style={{ marginBottom: "1rem" }}>
+            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem" }}>
               {t("Part of the full content library.", "Bagian dari perpustakaan konten lengkap.", "Onderdeel van de volledige contentbibliotheek.")}
             </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(65% 0.04 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
               {t(
                 "Time & Culture is one of many dimensions explored in the Crispy Development library — built for leaders navigating cross-cultural complexity.",
                 "Waktu & Budaya adalah salah satu dari banyak dimensi yang dieksplorasi dalam perpustakaan Crispy Development — dibangun untuk pemimpin yang menavigasi kompleksitas lintas budaya.",
@@ -611,21 +564,35 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>
             </div>
           </div>
-          <div style={{ background: "oklch(30% 0.12 260)", padding: "2.5rem" }}>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.375rem", fontStyle: "italic", color: "oklch(78% 0.04 260)", lineHeight: 1.5, marginBottom: "1.25rem" }}>
+          <div style={{ background: "oklch(28% 0.11 260)", padding: "2.5rem" }}>
+            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(80% 0.04 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
               {t(
                 "\"The most disruptive cross-cultural tool is a question asked before a conclusion is drawn.\"",
-                "\"Alat lintas budaya yang paling mengganggu adalah pertanyaan yang diajukan sebelum kesimpulan ditarik.\"",
-                "\"Het meest disruptieve interculturele instrument is een vraag die wordt gesteld voordat een conclusie wordt getrokken.\"",
+                "\"Alat lintas budaya yang paling transformatif adalah pertanyaan yang diajukan sebelum kesimpulan ditarik.\"",
+                "\"Het meest transformatieve interculturele instrument is een vraag die wordt gesteld voordat een conclusie wordt getrokken.\"",
               )}
             </p>
-            <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-              <div style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(65% 0.15 45)" }} />
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crispy Development</span>
-            </div>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crispy Development</span>
           </div>
         </div>
       </section>
+
+      {/* ── VERSE POPUP ── */}
+      {activeVerse && (
+        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1.5rem" }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)", maxWidth: "520px", width: "100%" }}>
+            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(22% 0.10 260)", lineHeight: 1.65, marginBottom: "1rem" }}>
+              "{lang === "en" ? VERSES[activeVerse].en : lang === "id" ? VERSES[activeVerse].id : VERSES[activeVerse].nl}"
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
+              — {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} ({translation})
+            </p>
+            <button onClick={() => setActiveVerse(null)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, background: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", border: "none", padding: "0.625rem 1.5rem", cursor: "pointer", borderRadius: "4px" }}>
+              {t("Close", "Tutup", "Sluiten")}
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
