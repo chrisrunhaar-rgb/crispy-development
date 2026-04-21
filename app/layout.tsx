@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Cormorant_Garamond } from "next/font/google";
+import { Montserrat, Cormorant_Garamond, Kalam } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
@@ -19,6 +19,13 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant-var",
   weight: ["300", "400"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  variable: "--font-kalam-var",
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -56,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${cormorant.variable} h-full`}
+      className={`${montserrat.variable} ${cormorant.variable} ${kalam.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
         {/* Google Analytics 4 */}

@@ -15,6 +15,7 @@
   /* Typography */
   --font-montserrat: var(--font-montserrat-var), system-ui, sans-serif;
   --font-cormorant:  var(--font-cormorant-var), Georgia, serif;
+  --font-kalam:      var(--font-kalam-var), cursive;
 
   /* Spacing — 4pt base scale */
   --spacing-1:  0.25rem;
