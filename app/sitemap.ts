@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const resourceSlugs = [
   "above-below-the-line",
   "attention-retention",
-  "comfort-zone",
+  "escaping-the-comfort-zone",
   "fixed-growth-mindset",
   "ladder-of-inference",
   "leaders-are-readers",

@@ -136,7 +136,7 @@ export default function ComfortZoneClient({
 
   function handleSave() {
     startTransition(async () => {
-      const result = await saveResourceToDashboard("comfort-zone");
+      const result = await saveResourceToDashboard("escaping-the-comfort-zone");
       if (!result.error) setSaved(true);
     });
   }

@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/resources/comfort-zone",
+        destination: "/resources/escaping-the-comfort-zone",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

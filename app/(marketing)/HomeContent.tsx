@@ -21,7 +21,7 @@ export default function HomeContent({ geo }: { geo?: GeoInfo }) {
   const freeModules = [
     { slug: "three-thinking-styles",  label: "Framework",  title: "Three Thinking Styles",       hook: "Discover why smart people reach opposite conclusions.",         bg: "oklch(22% 0.10 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
     { slug: "leadership-altitudes",   label: "Model",      title: "Leadership Altitudes",         hook: "Know when to zoom in and when to fly high.",                  bg: "oklch(97% 0.005 80)", text: "oklch(22% 0.10 260)", accent: "oklch(65% 0.15 45)" },
-    { slug: "comfort-zone",           label: "Challenge",  title: "Escaping the Comfort Zone",    hook: "The zone that feels safe is the one holding you back.",        bg: "oklch(30% 0.12 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
+    { slug: "escaping-the-comfort-zone", label: "Challenge",  title: "Escaping the Comfort Zone",    hook: "The zone that feels safe is the one holding you back.",        bg: "oklch(30% 0.12 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
     { slug: "karunia-rohani",         label: "Assessment", title: "Spiritual Giftings",            hook: "Find out how God has wired you to serve.",                    bg: "oklch(97% 0.005 80)", text: "oklch(22% 0.10 260)", accent: "oklch(65% 0.15 45)" },
   ];
 

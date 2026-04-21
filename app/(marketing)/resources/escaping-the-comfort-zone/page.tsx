@@ -14,6 +14,6 @@ export default async function ComfortZonePage() {
   const { data: { user } } = await supabase.auth.getUser();
   const pathway = (user?.user_metadata?.pathway as string | null | undefined) ?? null;
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
-  const isSaved = savedResources.includes("comfort-zone");
+  const isSaved = savedResources.includes("escaping-the-comfort-zone");
   return <ComfortZoneClient userPathway={pathway} isSaved={isSaved} />;
 }
