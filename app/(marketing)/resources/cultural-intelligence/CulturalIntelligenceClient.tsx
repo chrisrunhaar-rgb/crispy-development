@@ -18,10 +18,10 @@ const cqDimensions = [
     en_tagline: "Do you actually want to understand them — or just manage them?",
     id_tagline: "Apakah Anda benar-benar ingin memahami mereka — atau sekadar mengelola mereka?",
     nl_tagline: "Wil je hen echt begrijpen — of alleen maar managen?",
-    en_desc: "Motivational CQ is the energy source of the whole model. It is your intrinsic interest in cross-cultural engagement — your willingness to sit with discomfort, your confidence that you can learn, your genuine curiosity about how other people see the world. Without this, the other three dimensions never activate.",
+    en_desc: "Motivational CQ drives the whole model. It is your genuine desire to understand people who are different from you — your willingness to feel uncomfortable, your belief that you can grow, and your curiosity about how others see the world. Without this, nothing else works.",
     id_desc: "CQ Motivasi adalah sumber energi dari seluruh model. Ini adalah minat intrinsik Anda dalam keterlibatan lintas budaya — kesediaan Anda untuk duduk dengan ketidaknyamanan, keyakinan bahwa Anda bisa belajar, keingintahuan sejati tentang bagaimana orang lain melihat dunia.",
     nl_desc: "Motivationele CQ is de energiebron van het hele model. Het is je intrinsieke interesse in interculturele betrokkenheid — je bereidheid om met ongemak te zitten, je vertrouwen dat je kunt leren, je echte nieuwsgierigheid naar hoe anderen de wereld zien.",
-    en_low: "Low Motivational CQ looks like: anxiety masked as 'I just prefer working with my own people.' It looks like checking cultural boxes on a form while privately wishing everyone would just think like you do.",
+    en_low: "Low Motivational CQ sounds like: 'I just prefer working with my own people' — which is often fear wearing a polite face. It looks like ticking diversity boxes on a form while secretly wishing everyone would just think like you do.",
     id_low: "CQ Motivasi rendah terlihat seperti: kecemasan yang disamarkan sebagai 'Saya lebih suka bekerja dengan orang-orang saya sendiri.' Terlihat seperti mencentang kotak budaya di formulir sambil diam-diam berharap semua orang berpikir seperti Anda.",
     nl_low: "Lage Motivationele CQ ziet eruit als: angst vermomd als 'Ik werk liever met mijn eigen mensen.' Het lijkt op het afvinken van culturele vakjes op een formulier terwijl je stiekem wenst dat iedereen gewoon zoals jij zou denken.",
     en_scenario: "Scenario: A Dutch leader in Jakarta notices his Indonesian team rarely speaks up in group meetings. Low Motivational CQ assumes they're passive. High Motivational CQ gets curious: what does respectful contribution look like here? He asks. He listens. He restructures his meetings.",
@@ -36,10 +36,10 @@ const cqDimensions = [
     en_tagline: "Understanding cultures is not the same as knowing facts about them.",
     id_tagline: "Memahami budaya tidak sama dengan mengetahui fakta tentang mereka.",
     nl_tagline: "Culturen begrijpen is niet hetzelfde als feiten over hen kennen.",
-    en_desc: "Cognitive CQ is your cultural knowledge base — but it is more than memorizing customs. It is understanding how culture shapes the deep architecture of human thought: how people define time, authority, shame, honour, family obligation, and truth. It includes understanding cultural value dimensions like individualism vs. collectivism, high vs. low power distance, and direct vs. indirect communication.",
+    en_desc: "Cognitive CQ is knowledge — but deeper than memorising customs. It means understanding how culture shapes the way people think: how they see time, authority, family, honour, and truth. It also means knowing the key differences between cultures — like whether a society values the individual or the group, how people relate to those in power, and whether communication tends to be direct or indirect.",
     id_desc: "CQ Kognitif adalah basis pengetahuan budaya Anda — tetapi lebih dari sekadar menghafal adat istiadat. Ini adalah memahami bagaimana budaya membentuk arsitektur mendalam pemikiran manusia: bagaimana orang mendefinisikan waktu, otoritas, rasa malu, kehormatan, kewajiban keluarga, dan kebenaran.",
     nl_desc: "Cognitieve CQ is je culturele kennisbasis — maar het is meer dan gewoonten memoriseren. Het is begrijpen hoe cultuur de diepe architectuur van menselijk denken vormt: hoe mensen tijd, autoriteit, schaamte, eer, familieverplichting en waarheid definiëren.",
-    en_low: "Low Cognitive CQ looks like: assuming that because you've read one book on a culture, you understand it. It looks like applying Hofstede's dimensions as if they're descriptions of individuals rather than statistical tendencies. It looks like 'I've been here 3 months, I get this place.'",
+    en_low: "Low Cognitive CQ sounds like: 'I've read a book on this culture — I get it.' Or arriving somewhere new and thinking three months on the ground makes you an expert. Cultural knowledge is a starting point, not a destination.",
     id_low: "CQ Kognitif rendah terlihat seperti: mengasumsikan bahwa karena Anda telah membaca satu buku tentang suatu budaya, Anda memahaminya. Terlihat seperti menerapkan dimensi Hofstede seolah-olah mereka menggambarkan individu daripada kecenderungan statistik.",
     nl_low: "Lage Cognitieve CQ ziet eruit als: aannemen dat je een cultuur begrijpt omdat je er één boek over hebt gelezen. Het lijkt op het toepassen van Hofstedes dimensies alsof ze individuen beschrijven in plaats van statistische tendensen.",
     en_scenario: "Scenario: A Korean-American pastor plants a church in Lagos, Nigeria. He's studied African cultures — or so he thinks. He arrives expecting a high-context, oral, communal culture. What he finds is a sophisticated urban congregation shaped by Pentecostalism, British colonial history, and 21st-century tech entrepreneurship. His framework was a starting point, not a destination.",
@@ -54,10 +54,10 @@ const cqDimensions = [
     en_tagline: "The hardest skill: watching yourself think — in real time.",
     id_tagline: "Keterampilan tersulit: mengamati diri sendiri berpikir — secara real time.",
     nl_tagline: "De moeilijkste vaardigheid: jezelf zien denken — in real time.",
-    en_desc: "Metacognitive CQ is awareness of your own thinking process during cross-cultural encounters. It is the capacity to pause mid-interpretation and ask: 'Am I reading this situation through my own cultural lens? What assumptions am I importing here?' High metacognitive CQ leaders plan before, monitor during, and reflect after culturally complex interactions. They catch themselves before a misread becomes a misstep.",
+    en_desc: "Metacognitive CQ is the ability to watch your own thinking in real time. It is the habit of pausing and asking: 'Am I reading this through my own cultural assumptions? What might I be missing?' Leaders with high metacognitive CQ prepare before entering complex cross-cultural situations, stay aware during them, and reflect afterwards. They catch themselves before a wrong assumption turns into a real mistake.",
     id_desc: "CQ Metakognitif adalah kesadaran tentang proses berpikir Anda sendiri selama pertemuan lintas budaya. Ini adalah kapasitas untuk berhenti di tengah interpretasi dan bertanya: 'Apakah saya membaca situasi ini melalui lensa budaya saya sendiri?'",
     nl_desc: "Metacognitieve CQ is bewustzijn van je eigen denkproces tijdens interculturele ontmoetingen. Het is het vermogen om midden in een interpretatie te pauzeren en te vragen: 'Lees ik deze situatie door mijn eigen culturele lens? Welke aannames breng ik hier mee?'",
-    en_low: "Low Metacognitive CQ looks like: never questioning your first read of a situation. Assuming silence means agreement. Assuming directness means respect. Assuming busyness means commitment. These are all cultural defaults dressed up as universal truth.",
+    en_low: "Low Metacognitive CQ looks like never questioning your first read of a situation. Assuming silence means agreement. Assuming directness means respect. Assuming busyness means commitment. These are habits from your own culture — not universal truths.",
     id_low: "CQ Metakognitif rendah terlihat seperti: tidak pernah mempertanyakan pembacaan pertama Anda tentang suatu situasi. Mengasumsikan keheningan berarti persetujuan. Mengasumsikan ketegasan berarti rasa hormat. Ini semua adalah default budaya yang disamarkan sebagai kebenaran universal.",
     nl_low: "Lage Metacognitieve CQ ziet eruit als: nooit je eerste lezing van een situatie in twijfel trekken. Ervan uitgaan dat stilte instemming betekent. Ervan uitgaan dat directheid respect betekent. Dit zijn allemaal culturele standaardinstellingen vermomd als universele waarheid.",
     en_scenario: "Scenario: A British NGO director in Cairo gets frustrated that her Egyptian counterpart never disagrees with her in meetings. She concludes he's a yes-man. Metacognitive CQ would prompt her to ask: 'Is public disagreement with a female foreign director simply not the way criticism works here? Where does his real feedback surface?' Answer: in private conversations, over tea, after the meeting ends.",
@@ -72,10 +72,10 @@ const cqDimensions = [
     en_tagline: "Knowing is not enough. You have to actually change how you show up.",
     id_tagline: "Mengetahui saja tidak cukup. Anda harus benar-benar mengubah cara Anda hadir.",
     nl_tagline: "Weten is niet genoeg. Je moet daadwerkelijk veranderen hoe je verschijnt.",
-    en_desc: "Behavioral CQ is the visible output of the whole model — the actual adjustment of your verbal and nonverbal behavior in cross-cultural settings. This includes tone, pace of speech, eye contact, physical proximity, touch, directness, formality, how you give feedback, how you handle silence, and how you open and close meetings. High behavioral CQ doesn't mean becoming a different person. It means expanding your range.",
+    en_desc: "Behavioral CQ is where everything shows up — in your actual behavior. It is how you adjust the way you speak, listen, and carry yourself in cross-cultural settings: your tone, pace, eye contact, how direct you are, how you give feedback, how you handle silence. High behavioral CQ doesn't mean pretending to be someone else. It means expanding your range.",
     id_desc: "CQ Perilaku adalah output yang terlihat dari seluruh model — penyesuaian aktual dari perilaku verbal dan nonverbal Anda dalam pengaturan lintas budaya. Ini mencakup nada, kecepatan berbicara, kontak mata, kedekatan fisik, kesentuhan, ketegasan, formalitas.",
     nl_desc: "Gedragsmatige CQ is de zichtbare uitvoer van het hele model — de feitelijke aanpassing van je verbale en non-verbale gedrag in interculturele omgevingen. Dit omvat toon, spreektempo, oogcontact, fysieke nabijheid, aanraking, directheid, formaliteit.",
-    en_low: "Low Behavioral CQ looks like: knowing everything about a culture and still reverting to your default style under pressure. Or over-correcting so aggressively that people feel patronised. ('He tries too hard to be one of us.') The goal is authentic range, not performance.",
+    en_low: "Low Behavioral CQ looks like knowing everything about a culture — and still reverting to your default style the moment things get tense. Or going so far in the other direction that people feel patronised. ('He tries too hard to be one of us.') The goal is genuine flexibility, not a performance.",
     id_low: "CQ Perilaku rendah terlihat seperti: mengetahui segalanya tentang suatu budaya dan masih kembali ke gaya default Anda di bawah tekanan. Atau terlalu mengoreksi secara agresif sehingga orang merasa direndahkan. Tujuannya adalah jangkauan yang otentik, bukan pertunjukan.",
     nl_low: "Lage Gedragsmatige CQ ziet eruit als: alles over een cultuur weten en toch terugvallen op je standaardstijl onder druk. Of zo agressief overcorrigeren dat mensen zich betutteld voelen. Het doel is authentiek bereik, geen optreden.",
     en_scenario: "Scenario: An American church planter in Thailand learns intellectually that Thai culture values indirect communication and 'saving face.' But in a tense team meeting, he reverts to his direct American style: 'Let's just be honest about what's not working.' The room goes silent — not with agreement, but with shutdown. His behavioral CQ failed at the moment it mattered most.",
@@ -344,7 +344,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
-            "Cultural Intelligence (CQ) was introduced in 2003 by researchers Christopher Earley and Soon Ang, and significantly developed by David Livermore. It is the capability to function effectively across culturally diverse situations — not just national cultures, but ethnic, generational, organisational, and religious cultures too.",
+            "Cultural Intelligence (CQ) was developed by researchers Christopher Earley and David Livermore. Simply put: it is your ability to work well with people from different backgrounds — not just different countries, but different generations, organisations, and faith traditions too.",
             "Kecerdasan Budaya (CQ) diperkenalkan pada tahun 2003 oleh peneliti Christopher Earley dan Soon Ang, dan dikembangkan secara signifikan oleh David Livermore. Ini adalah kemampuan untuk berfungsi secara efektif di berbagai situasi yang beragam secara budaya.",
             "Culturele Intelligentie (CQ) werd in 2003 geïntroduceerd door onderzoekers Christopher Earley en Soon Ang, en significant ontwikkeld door David Livermore. Het is het vermogen om effectief te functioneren in cultureel diverse situaties."
           )}
@@ -487,15 +487,15 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       {/* Format: Editorial essay with bold statement callouts */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("A Non-Western Lens", "Lensa Non-Barat", "Een Niet-Westers Perspectief")}
+          {t("For the Whole Team", "Untuk Seluruh Tim", "Voor het Hele Team")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("When You Are the Cultural Minority", "Ketika Anda Adalah Minoritas Budaya", "Wanneer Jij de Culturele Minderheid Bent")}
+          {t("CQ Goes Both Ways", "CQ Berlaku untuk Semua", "CQ Werkt Twee Kanten Op")}
         </h2>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>
           {t(
-            "Here is the problem with most CQ training: it was built for Westerners navigating non-Western contexts. The dominant narrative assumes you are the outsider crossing into someone else's culture — usually a white, Western, educated professional entering Asia, Africa, or the Middle East.",
+            "Most CQ books were written for Westerners stepping into non-Western contexts — a foreigner arriving in Asia, Africa, or the Middle East. But that is only half the picture. CQ matters for everyone on a cross-cultural team. Not just the outsider. Not just the local. Both.",
             "Inilah masalah dengan sebagian besar pelatihan CQ: itu dibangun untuk orang Barat yang bernavigasi konteks non-Barat. Narasi dominan mengasumsikan Anda adalah orang luar yang memasuki budaya orang lain — biasanya profesional berkulit putih, Barat, berpendidikan yang memasuki Asia, Afrika, atau Timur Tengah.",
             "Hier is het probleem met de meeste CQ-training: het werd gebouwd voor Westerlingen die niet-westerse contexten navigeren. De dominante vertelling veronderstelt dat je de buitenstaander bent die de cultuur van iemand anders binnentreedt — gewoonlijk een witte, westerse, opgeleide professional die Azië, Afrika of het Midden-Oosten binnenstapt."
           )}
@@ -505,23 +505,23 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <div style={{ background: navyOklch, borderRadius: 10, padding: "28px 36px", margin: "32px 0" }}>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 27px)", color: offWhite, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>
             {t(
-              "But what about the Filipino leader navigating a Korean-dominated church? The Nigerian pastor working under Swiss mission leadership? The Indonesian team member in a Dutch-founded NGO? CQ cuts both ways — and power matters.",
-              "Tapi bagaimana dengan pemimpin Filipina yang bernavigasi di gereja yang didominasi Korea? Pendeta Nigeria yang bekerja di bawah kepemimpinan misi Swiss? Anggota tim Indonesia di LSM yang didirikan Belanda? CQ berlaku dua arah — dan kekuasaan penting.",
-              "Maar hoe zit het met de Filipijnse leider die een door Korea gedomineerde kerk navigeert? De Nigeriaanse pastor die werkt onder Zwitserse zendingsleiding? Het Indonesische teamlid in een door Nederland opgerichte NGO? CQ werkt beide kanten op — en macht telt."
+              "But what about the Filipino leader navigating a Korean-dominated church? The Nigerian pastor working under Swiss mission leadership? The Indonesian pastor from Kalimantan, starting a new ministry plant in Bali? CQ cuts both ways — and power matters.",
+              "Tapi bagaimana dengan pemimpin Filipina yang bernavigasi di gereja yang didominasi Korea? Pendeta Nigeria yang bekerja di bawah kepemimpinan misi Swiss? Pendeta Indonesia dari Kalimantan, yang memulai penanaman jemaat baru di Bali? CQ berlaku dua arah — dan kekuasaan penting.",
+              "Maar hoe zit het met de Filipijnse leider die een door Korea gedomineerde kerk navigeert? De Nigeriaanse pastor die werkt onder Zwitserse zendingsleiding? De Indonesische pastor uit Kalimantan, die een nieuwe gemeenteplanting start in Bali? CQ werkt beide kanten op — en macht telt."
             )}
           </p>
         </div>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
-            "When you are the minority culture in your organisation, CQ development looks different. You are already doing the adaptation work every day — often invisibly, often without acknowledgement, often at real personal cost. The emotional labour of constantly translating yourself is exhausting in ways that majority-culture leaders rarely notice.",
+            "The foreign leader joining a local team needs CQ — to understand the culture they have stepped into. But the local team needs it too — to bridge the gap from their side, to not just wait and hope the foreigner figures it out. On a healthy cross-cultural team, everyone is moving toward each other. No one gets to stay put.",
             "Ketika Anda adalah budaya minoritas dalam organisasi Anda, pengembangan CQ terlihat berbeda. Anda sudah melakukan pekerjaan adaptasi setiap hari — seringkali tidak terlihat, seringkali tanpa pengakuan, seringkali dengan biaya pribadi yang nyata. Kerja emosional dalam terus-menerus menerjemahkan diri Anda sangat melelahkan dengan cara yang jarang diperhatikan oleh pemimpin budaya mayoritas.",
             "Wanneer je de minderheidscultuur bent in je organisatie, ziet CQ-ontwikkeling er anders uit. Je doet het aanpassingswerk al elke dag — vaak onzichtbaar, vaak zonder erkenning, vaak tegen echte persoonlijke kosten. De emotionele arbeid van jezelf voortdurend vertalen is uitputtend op manieren die leiders van de meerderheidscultuur zelden opmerken."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
-            "CQ is not the same as assimilation. There is a critical difference between adapting your style and abandoning your identity. High CQ does not mean becoming culturally neutral — it means being able to move between cultural registers without losing your core. The Korean leader who learns to lead with Western-style directness in board meetings does not need to stop being Korean. The adaptation is contextual. The identity remains.",
+            "And none of this means giving up who you are. There is a big difference between adapting your style and losing your identity. High CQ does not mean becoming culturally neutral — it means being able to move between different cultural settings without losing your core. The Indonesian team member who learns to speak up more directly in meetings does not stop being Indonesian. The adaptation fits the moment. The identity stays.",
             "CQ tidak sama dengan asimilasi. Ada perbedaan penting antara mengadaptasi gaya Anda dan meninggalkan identitas Anda. CQ tinggi tidak berarti menjadi netral secara budaya — itu berarti mampu bergerak di antara register budaya tanpa kehilangan inti Anda.",
             "CQ is niet hetzelfde als assimilatie. Er is een cruciaal verschil tussen je stijl aanpassen en je identiteit opgeven. Hoge CQ betekent niet cultureel neutraal worden — het betekent in staat zijn tussen culturele registers te bewegen zonder je kern te verliezen."
           )}
@@ -529,13 +529,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
         <div style={{ background: lightGray, borderRadius: 10, padding: "28px 32px", marginTop: 32 }}>
           <p style={{ fontSize: 13, fontWeight: 700, color: navyOklch, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
-            {t("A Word on Power", "Tentang Kekuasaan", "Een Woord over Macht")}
+            {t("A Word on Responsibility", "Tentang Tanggung Jawab", "Een Woord over Verantwoordelijkheid")}
           </p>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
             {t(
-              "True CQ development in any organisation must include structural honesty: who has power here, whose cultural norms are treated as the default, and who carries the heaviest adaptation burden? If CQ training only asks minority-culture staff to adapt further, it is not CQ — it is compliance dressed in development language. Healthy cross-cultural organisations distribute the adaptation work. They ask the majority culture to move too.",
-              "Pengembangan CQ sejati dalam organisasi mana pun harus mencakup kejujuran struktural: siapa yang memiliki kekuasaan di sini, norma budaya siapa yang diperlakukan sebagai default, dan siapa yang menanggung beban adaptasi terbesar? Jika pelatihan CQ hanya meminta staf budaya minoritas untuk beradaptasi lebih jauh, itu bukan CQ — itu adalah kepatuhan yang ditutupi dalam bahasa pengembangan.",
-              "Echte CQ-ontwikkeling in elke organisatie moet structurele eerlijkheid omvatten: wie heeft hier macht, wiens culturele normen worden behandeld als de standaard, en wie draagt de zwaarste aanpassingslast? Als CQ-training alleen minderheidscultuurmedewerkers vraagt om verder aan te passen, is het geen CQ — het is compliance gekleed in ontwikkelingstaal."
+              "The person with the most influence in a team — whether that is the foreign leader or the senior local member — carries the most responsibility to adapt. CQ is not just for the newcomer. It is not just for the local team. Whoever holds the most trust in the room should be the one most willing to stretch. Leadership and cultural humility belong together.",
+              "Orang yang paling berpengaruh dalam sebuah tim — baik itu pemimpin asing maupun anggota lokal senior — memiliki tanggung jawab terbesar untuk beradaptasi. CQ bukan hanya untuk pendatang baru. Bukan hanya untuk tim lokal. Siapa pun yang memiliki kepercayaan terbesar di ruangan itu harus paling bersedia untuk meregangkan diri. Kepemimpinan dan kerendahan hati budaya berjalan bersama.",
+              "Degene met de meeste invloed in een team — of dat nu de buitenlandse leider is of het senior lokale lid — draagt de meeste verantwoordelijkheid om zich aan te passen. CQ is niet alleen voor de nieuwkomer. Niet alleen voor het lokale team. Wie het meeste vertrouwen heeft in de kamer, moet het meest bereid zijn om te groeien. Leiderschap en culturele bescheidenheid horen bij elkaar."
             )}
           </p>
         </div>
