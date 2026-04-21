@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
 import { saveKaruniaResult } from "../actions";
 
 type Lang = "en" | "id";
 
 const PRIMARY = "oklch(65% 0.15 45)";
-const PRIMARY_DARK = "oklch(42% 0.14 45)";
 const BG_DARK = "oklch(22% 0.10 260)";
 const BG_LIGHT = "oklch(97% 0.005 80)";
 const BORDER = "oklch(88% 0.008 80)";
@@ -34,26 +32,211 @@ const KARUNIA_MAP: Record<string, number[]> = {
   tafsir_bahasa_roh: [19, 38, 57, 76],
 };
 
-const GIFTS: Record<string, { label: string; en: string; desc: string; descEn: string }> = {
-  melayani:          { label: "Melayani",           en: "Serving",                   desc: "Kamu memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita.",                                               descEn: "The ability to see and joyfully meet the practical needs of others." },
-  murah_hati:        { label: "Murah Hati",          en: "Mercy",                     desc: "Kamu peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan.",                                            descEn: "Deep sensitivity to the suffering of others, with a calling to be present in their pain." },
-  keramahan:         { label: "Keramahan",           en: "Hospitality",               desc: "Kamu memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan.",                                                           descEn: "The ability to create environments where people feel genuinely welcomed and safe." },
-  bahasa_roh:        { label: "Bahasa Roh",          en: "Tongues",                   desc: "Kamu telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari.",                                               descEn: "The Spirit-given ability to communicate in a spiritual language not previously learned." },
-  menyembuhkan:      { label: "Menyembuhkan",        en: "Healing",                   desc: "Allah memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",                                              descEn: "God uses your prayers as a channel for physical, emotional, or spiritual healing." },
-  menguatkan:        { label: "Menguatkan",          en: "Exhortation",               desc: "Kamu mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah.",                                                descEn: "The ability to encourage, strengthen, and guide others to grow and not give up." },
-  memberi:           { label: "Memberi",             en: "Giving",                    desc: "Kamu dengan senang hati dan sukarela menggunakan sumber daya yang kamu miliki untuk kebutuhan pelayanan.",                                        descEn: "A wholehearted willingness to use personal resources generously for ministry needs." },
-  hikmat:            { label: "Hikmat",              en: "Wisdom",                    desc: "Kamu mampu melihat situasi dengan sudut pandang Allah dan memberikan arah yang bijak kepada orang lain.",                                         descEn: "The ability to see situations from God's perspective and give wise, God-centred direction." },
-  pengetahuan:       { label: "Pengetahuan",         en: "Knowledge",                 desc: "Kamu menerima pemahaman supranatural tentang firman Allah atau situasi tertentu yang relevan bagi pelayanan.",                                    descEn: "Supernatural understanding of God's word or specific situations relevant to ministry." },
-  iman:              { label: "Iman",                en: "Faith",                     desc: "Kamu memiliki keyakinan yang kuat bahwa Allah akan bekerja bahkan dalam situasi yang tampaknya mustahil.",                                        descEn: "An extraordinary conviction that God will act even when circumstances seem impossible." },
-  kerasulan:         { label: "Kerasulan",           en: "Apostleship",               desc: "Kamu dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru.",                                            descEn: "A calling to pioneer and develop ministry in new regions or cross-cultural contexts." },
-  penginjilan:       { label: "Penginjilan",         en: "Evangelism",                desc: "Kamu memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya.",                                     descEn: "A deep longing and Spirit-empowered ability to share the Gospel with unbelievers." },
-  bernubuat:         { label: "Bernubuat",           en: "Prophecy",                  desc: "Kamu menerima dan menyampaikan pesan dari Allah yang menguatkan, mengingatkan, atau menantang jemaat.",                                           descEn: "Receiving and delivering messages from God that strengthen, warn, or challenge the community." },
-  mengajar:          { label: "Mengajar",            en: "Teaching",                  desc: "Kamu mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain.",                                        descEn: "The ability to explain biblical truth in a clear, engaging, and understandable way." },
-  gembala:           { label: "Gembala",             en: "Shepherding",               desc: "Kamu dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang.",                                    descEn: "A calling to nurture, guide, and take responsibility for the spiritual growth of a group." },
-  memimpin:          { label: "Memimpin",            en: "Leadership",                desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Allah tetapkan.",                                  descEn: "The ability to mobilize, inspire, and unite people toward God-appointed goals." },
-  administrasi:      { label: "Administrasi",        en: "Administration",            desc: "Kamu mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan.",                                     descEn: "The ability to plan, organize, and coordinate resources to achieve ministry goals effectively." },
-  mukjizat:          { label: "Mukjizat",            en: "Miracles",                  desc: "Allah menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia.",                                                   descEn: "God reveals His power through your life in ways that surpass natural explanation." },
-  tafsir_bahasa_roh: { label: "Tafsir Bahasa Roh",  en: "Interpretation of Tongues", desc: "Kamu menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat.",                                                         descEn: "The ability to convey the meaning of tongue messages to the gathered community." },
+type GiftData = {
+  label: string;
+  en: string;
+  desc: string;
+  descEn: string;
+  realLife: string;
+  realLifeEn: string;
+  longDesc: string;
+  longDescEn: string;
+};
+
+const GIFTS: Record<string, GiftData> = {
+  melayani: {
+    label: "Melayani", en: "Serving",
+    desc: "Kamu memiliki kemampuan untuk melihat dan memenuhi kebutuhan praktis orang lain dengan sukacita.",
+    descEn: "The ability to see and joyfully meet the practical needs of others.",
+    realLife: "Dalam kehidupan nyata: Kamu adalah orang yang datang lebih awal untuk menyiapkan ruangan, memperhatikan ketika seseorang perlu bantuan, dan tinggal lebih lama untuk membereskan — tanpa diminta.",
+    realLifeEn: "In real life: You're the person who arrives early to set up the room, notices when someone needs a hand, and stays late to clean up — without being asked.",
+    longDesc: "Karunia Melayani (diakonia) adalah salah satu karunia paling mendasar dalam Tubuh Kristus. Mereka yang memiliki karunia ini melihat kebutuhan yang orang lain lewati begitu saja — tugas yang belum selesai, beban yang terlalu berat, detail yang bisa membuat atau menghancurkan sebuah acara — dan mereka bergerak untuk melakukannya dengan sukacita tulus. Pelayanan mereka tidak mencari pengakuan; ini adalah ungkapan kasih yang mengalir secara alami. Dalam konteks lintas budaya, karunia ini sangat berharga karena melampaui hambatan bahasa dan budaya, membangun kepercayaan melalui tindakan sebelum kata-kata bisa.",
+    longDescEn: "The gift of Serving (diakonia) is one of the most foundational gifts in the Body of Christ. Those who carry it notice needs others walk past — the unfinished task, the burden that's too heavy, the detail that could make or break a gathering — and they move toward it with genuine joy. Their service doesn't seek recognition; it is simply love expressed naturally. In cross-cultural contexts, this gift is especially powerful because it crosses language and cultural barriers, building trust through action before words can.",
+  },
+  murah_hati: {
+    label: "Murah Hati", en: "Mercy",
+    desc: "Kamu peka terhadap penderitaan orang lain dan dipanggil untuk hadir bersama mereka dalam kesulitan.",
+    descEn: "Deep sensitivity to the suffering of others, with a calling to be present in their pain.",
+    realLife: "Dalam kehidupan nyata: Ketika seseorang berbagi rasa sakit mereka, kamu tidak langsung mencari solusi — kamu duduk bersama mereka, sungguh merasakan kesedihan mereka, dan hadir hingga mereka merasa benar-benar dipahami.",
+    realLifeEn: "In real life: When someone shares their pain, you don't immediately reach for solutions — you sit with them, genuinely feel their sadness, and stay present until they feel truly understood.",
+    longDesc: "Karunia Murah Hati (eleos) adalah kemampuan yang diberikan Roh untuk merasakan dan merespons rasa sakit emosional dan rohani orang lain. Mereka yang memilikinya ditarik secara naluriah kepada orang-orang yang terluka, terbuang, atau berduka. Mereka tidak terintimidasi oleh kesedihan atau kesulitan — sebaliknya, mereka menemukannya sebagai tempat di mana mereka paling efektif. Kehadiran mereka sendiri membawa penghiburan. Dalam pelayanan lintas budaya, karunia ini sangat berharga dalam situasi trauma, perpindahan, dan kehilangan budaya, di mana kata-kata sering kali tidak mencukupi.",
+    longDescEn: "The gift of Mercy (eleos) is a Spirit-given ability to feel and respond to the emotional and spiritual pain of others. Those who carry it are drawn instinctively toward the wounded, the outcast, and the grieving. They are not intimidated by sadness or hardship — rather, they find it the place where they are most effective. Their very presence brings comfort. In cross-cultural ministry, this gift is especially vital in situations of trauma, displacement, and cultural loss, where words often fall short.",
+  },
+  keramahan: {
+    label: "Keramahan", en: "Hospitality",
+    desc: "Kamu memiliki kemampuan untuk membuat orang merasa disambut, aman, dan diperhatikan.",
+    descEn: "The ability to create environments where people feel genuinely welcomed and safe.",
+    realLife: "Dalam kehidupan nyata: Orang asing merasa nyaman di sekitarmu dalam hitungan menit. Kamu memperhatikan ketika seseorang berdiri sendiri di sebuah acara, dan kamu bergerak untuk menyambut mereka — bukan karena tugas, tetapi karena kamu benar-benar ingin mereka merasa diterima.",
+    realLifeEn: "In real life: Strangers feel at ease around you within minutes. You notice when someone is standing alone at a gathering, and you move toward them — not out of duty, but because you genuinely want them to feel they belong.",
+    longDesc: "Karunia Keramahan (philoxenia — secara harfiah 'kasih kepada orang asing') melampaui sekadar menjadi tuan rumah yang baik. Ini adalah kemampuan ilahi untuk menciptakan ruang aman di mana orang merasa terlihat, diterima, dan dihargai. Mereka yang memiliki karunia ini mengubah rumah, meja, atau bahkan percakapan biasa menjadi tempat perjumpaan yang berarti. Dalam konteks lintas budaya, keramahan adalah fondasi dari semua pembangunan hubungan, membuka pintu untuk kepercayaan, berbagi iman, dan komunitas yang sejati.",
+    longDescEn: "The gift of Hospitality (philoxenia — literally 'love of strangers') goes far beyond being a good host. It is a divine capacity to create safe spaces where people feel seen, accepted, and valued. Those with this gift transform homes, tables, or even ordinary conversations into places of meaningful encounter. In cross-cultural contexts, hospitality is the foundation of all relationship-building, opening doors for trust, faith-sharing, and genuine community.",
+  },
+  bahasa_roh: {
+    label: "Bahasa Roh", en: "Tongues",
+    desc: "Kamu telah menerima karunia untuk berkomunikasi dalam bahasa rohani yang belum pernah dipelajari.",
+    descEn: "The Spirit-given ability to communicate in a spiritual language not previously learned.",
+    realLife: "Dalam kehidupan nyata: Saat berdoa atau menyembah, kamu mengungkapkan dirimu dalam bahasa yang tidak kamu pelajari, merasakan komunikasi yang lebih dalam dengan Allah yang melampaui kata-kata yang kamu pahami.",
+    realLifeEn: "In real life: During prayer or worship, you express yourself in a language you have not learned, experiencing a depth of communication with God that transcends words you understand.",
+    longDesc: "Karunia Bahasa Roh (glossolalia) disebutkan dalam 1 Korintus 12-14 sebagai salah satu manifestasi Roh. Ini adalah kemampuan untuk berdoa atau berbicara kepada Allah dalam bahasa yang tidak dipelajari — baik untuk penggunaan pribadi dalam berdoa, atau untuk pesan kepada jemaat (yang kemudian membutuhkan tafsiran). Rasul Paulus menghargai karunia ini sambil menekankan bahwa kasih harus memandu ekspresinya, dan bahwa tafsiran diperlukan bila digunakan di depan umum. Karunia ini mempertajam kehidupan doa dan keintiman dengan Roh.",
+    longDescEn: "The gift of Tongues (glossolalia) is mentioned in 1 Corinthians 12-14 as one of the Spirit's manifestations. It is the ability to pray or speak to God in a language not learned — either for personal prayer use, or as a message to the congregation (which then requires interpretation). Paul valued this gift while emphasising that love must guide its expression, and that interpretation is required when used publicly. This gift sharpens prayer life and intimacy with the Spirit.",
+  },
+  menyembuhkan: {
+    label: "Menyembuhkan", en: "Healing",
+    desc: "Allah memakai doa-doamu sebagai sarana untuk kesembuhan fisik, emosi, atau rohani bagi orang lain.",
+    descEn: "God uses your prayers as a channel for physical, emotional, or spiritual healing.",
+    realLife: "Dalam kehidupan nyata: Kamu mendapati dirimu berdoa untuk orang yang sakit dengan keyakinan yang tulus — dan kamu telah menyaksikan Allah bekerja melalui doa-doa itu dengan cara yang tidak dapat dijelaskan secara medis.",
+    realLifeEn: "In real life: You find yourself praying for the sick with genuine conviction — and you have witnessed God work through those prayers in ways that cannot be medically explained.",
+    longDesc: "Karunia Menyembuhkan (iama) adalah karunia di mana Allah bekerja melalui seseorang sebagai saluran kesembuhan — fisik, emosional, atau rohani. Kesembuhan selalu merupakan tindakan Allah; orang yang memiliki karunia ini adalah alat, bukan sumber. Karunia ini dinyatakan dalam 1 Korintus 12 dan dilakukan dalam pelayanan Yesus dan para rasul. Dalam konteks budaya yang beragam, karunia ini sering menjadi kesaksian yang kuat tentang kuasa dan belas kasihan Allah yang melampaui batas.",
+    longDescEn: "The gift of Healing (iama) is a gift in which God works through a person as a channel of healing — physical, emotional, or spiritual. Healing is always God's act; the person with this gift is the instrument, not the source. This gift is listed in 1 Corinthians 12 and demonstrated throughout Jesus's ministry and the apostles'. In diverse cultural contexts, this gift often becomes a powerful testimony to God's power and compassion that transcends boundaries.",
+  },
+  menguatkan: {
+    label: "Menguatkan", en: "Exhortation",
+    desc: "Kamu mampu mendorong, menguatkan, dan membimbing orang lain untuk bertumbuh dan tidak menyerah.",
+    descEn: "The ability to encourage, strengthen, and guide others to grow and not give up.",
+    realLife: "Dalam kehidupan nyata: Orang meninggalkan percakapan denganmu merasa lebih kuat dari sebelumnya. Kamu tahu persis kapan seseorang membutuhkan dorongan dan kata-kata yang tepat untuk dikatakan — bukan klise, tetapi sesuatu yang tepat sasaran.",
+    realLifeEn: "In real life: People leave conversations with you feeling stronger than when they came. You know exactly when someone needs a push and the precise words to say — not clichés, but something that lands with pinpoint accuracy.",
+    longDesc: "Karunia Menguatkan (paraklesis — kata yang sama dengan 'Penghibur' yang digunakan untuk Roh Kudus) adalah kemampuan untuk datang di samping seseorang dan mendukung mereka melalui kesulitan. Ini bukan sekedar optimisme; ini adalah bimbingan rohani yang berakar pada kebenaran. Mereka yang memiliki karunia ini melihat potensi dalam orang lain bahkan ketika orang lain tidak melihatnya dalam diri mereka sendiri, dan mereka berbicara dengan cara yang memobilisasi orang menuju pertumbuhan dan tindakan.",
+    longDescEn: "The gift of Exhortation (paraklesis — the same word used for the 'Comforter' or Holy Spirit) is the ability to come alongside someone and support them through difficulty. It is not mere optimism; it is Spirit-grounded guidance rooted in truth. Those with this gift see potential in others even when those people cannot see it themselves, and they speak in ways that mobilise people toward growth and action.",
+  },
+  memberi: {
+    label: "Memberi", en: "Giving",
+    desc: "Kamu dengan senang hati dan sukarela menggunakan sumber daya yang kamu miliki untuk kebutuhan pelayanan.",
+    descEn: "A wholehearted willingness to use personal resources generously for ministry needs.",
+    realLife: "Dalam kehidupan nyata: Ketika kamu mendengar tentang kebutuhan nyata, responmu pertama adalah berpikir tentang bagaimana kamu bisa membantu secara finansial atau material — dan kamu melakukannya dengan sukacita, bukan dengan berat hati.",
+    realLifeEn: "In real life: When you hear about a genuine need, your first response is to think about how you can help financially or materially — and you do so with joy, not reluctance.",
+    longDesc: "Karunia Memberi (metadidomi) disebutkan dalam Roma 12:8 dengan arahan untuk melakukannya 'dengan kemurahan hati'. Ini bukan hanya tentang kemampuan finansial — ini adalah kesiapan hati untuk menggunakan apa yang Allah percayakan dengan kemurahan hati demi memajukan Kerajaan-Nya. Mereka yang memiliki karunia ini sering memiliki kemampuan khusus untuk menghasilkan, mengelola, dan mendistribusikan sumber daya dengan bijaksana. Mereka memberi dengan cara yang tidak menarik perhatian kepada diri mereka sendiri tetapi kepada kebutuhan yang dipenuhi.",
+    longDescEn: "The gift of Giving (metadidomi) is listed in Romans 12:8 with the direction to do it 'with generosity'. It is not merely about financial capacity — it is a heart readiness to use what God has entrusted generously for the advance of His Kingdom. Those with this gift often have a special ability to generate, manage, and distribute resources wisely. They give in ways that draw attention not to themselves but to the need being met.",
+  },
+  hikmat: {
+    label: "Hikmat", en: "Wisdom",
+    desc: "Kamu mampu melihat situasi dengan sudut pandang Allah dan memberikan arah yang bijak kepada orang lain.",
+    descEn: "The ability to see situations from God's perspective and give wise, God-centred direction.",
+    realLife: "Dalam kehidupan nyata: Orang datang kepadamu ketika mereka menghadapi keputusan besar karena saran-saranmu cenderung memotong kerumitan dan menemukan apa yang benar-benar penting — secara praktis dan rohani.",
+    realLifeEn: "In real life: People seek you out when facing big decisions because your counsel tends to cut through complexity and find what truly matters — practically and spiritually.",
+    longDesc: "Karunia Hikmat (sophia) adalah kemampuan yang diberikan Roh untuk menerapkan kebenaran Alkitab secara tepat pada situasi kehidupan nyata. Berbeda dengan pengetahuan (yang mengumpulkan kebenaran), hikmat tahu apa yang harus dilakukan dengan kebenaran itu. Ini adalah karunia yang membantu komunitas menavigasi konflik, membuat keputusan sulit, dan menemukan jalan maju ketika situasinya tidak jelas. Yakobus 1:5 menjanjikan bahwa hikmat tersedia bagi siapa saja yang memintanya — tetapi bagi mereka yang memiliki karunia ini, hikmat mengalir dengan cara yang luar biasa.",
+    longDescEn: "The gift of Wisdom (sophia) is a Spirit-given ability to apply biblical truth accurately to real-life situations. Unlike knowledge (which accumulates truth), wisdom knows what to do with that truth. It is the gift that helps communities navigate conflict, make difficult decisions, and find a way forward when situations are unclear. James 1:5 promises wisdom is available to all who ask — but for those with this gift, wisdom flows in an extraordinary way.",
+  },
+  pengetahuan: {
+    label: "Pengetahuan", en: "Knowledge",
+    desc: "Kamu menerima pemahaman supranatural tentang firman Allah atau situasi tertentu yang relevan bagi pelayanan.",
+    descEn: "Supernatural understanding of God's word or specific situations relevant to ministry.",
+    realLife: "Dalam kehidupan nyata: Kamu memiliki pemahaman mendalam tentang Alkitab yang datang dari studi serius — dan terkadang kamu menerima wawasan tentang seseorang atau situasi yang tidak dapat kamu jelaskan secara rasional, yang kemudian terbukti tepat.",
+    realLifeEn: "In real life: You have a deep grasp of Scripture that comes from serious study — and sometimes you receive insight about a person or situation you cannot rationally explain, which later proves accurate.",
+    longDesc: "Karunia Pengetahuan (gnosis) disebutkan dalam 1 Korintus 12 sebagai 'perkataan pengetahuan' — wawasan yang datang secara supranatural tentang situasi atau kebutuhan yang tidak bisa diketahui secara alami. Ini berbeda dari belajar keras yang baik (meskipun mereka yang memiliki karunia ini sering juga merupakan pelajar yang setia). Karunia ini berguna khusus dalam doa syafaat, konseling pastoral, dan konteks di mana kebutuhan tersembunyi seseorang perlu disingkapkan untuk pelayanan yang efektif.",
+    longDescEn: "The gift of Knowledge (gnosis) is listed in 1 Corinthians 12 as a 'word of knowledge' — supernaturally given insight about a situation or need that could not be known naturally. This is distinct from diligent study (though those with this gift are often also faithful learners). The gift is especially useful in intercessory prayer, pastoral counselling, and contexts where a person's hidden need must be uncovered for effective ministry.",
+  },
+  iman: {
+    label: "Iman", en: "Faith",
+    desc: "Kamu memiliki keyakinan yang kuat bahwa Allah akan bekerja bahkan dalam situasi yang tampaknya mustahil.",
+    descEn: "An extraordinary conviction that God will act even when circumstances seem impossible.",
+    realLife: "Dalam kehidupan nyata: Ketika orang lain melihat hambatan, kamu melihat peluang. Kehadiranmu dalam sebuah tim mengubah atmosfer dari ketakutan menjadi kepercayaan — bukan karena kamu mengabaikan realita, tetapi karena kamu sungguh percaya Allah lebih besar dari realita.",
+    realLifeEn: "In real life: When others see obstacles, you see opportunities. Your presence in a team shifts the atmosphere from fear to trust — not because you ignore reality, but because you genuinely believe God is bigger than the reality.",
+    longDesc: "Karunia Iman (pistis) yang disebutkan dalam 1 Korintus 12 bukan sekedar iman penyelamatan yang dimiliki semua orang Kristen — ini adalah manifestasi khusus dari Roh di mana seseorang menerima keyakinan yang luar biasa bahwa Allah akan bertindak dalam cara tertentu. Ini adalah iman yang menggerakkan gunung. Mereka yang memiliki karunia ini menjadi jangkar komunitas di saat krisis, ketidakpastian, atau saat proyek besar tampaknya tidak mungkin. Iman mereka menular dan memobilisasi orang lain untuk bertindak.",
+    longDescEn: "The gift of Faith (pistis) listed in 1 Corinthians 12 is not merely the saving faith every Christian has — it is a specific Spirit manifestation in which a person receives extraordinary conviction that God will act in a specific way. This is the faith that moves mountains. Those with this gift become anchors for community in crisis, uncertainty, or when a large vision seems impossible. Their faith is contagious and mobilises others to act.",
+  },
+  kerasulan: {
+    label: "Kerasulan", en: "Apostleship",
+    desc: "Kamu dipanggil untuk merintis dan mengembangkan pelayanan di wilayah atau konteks budaya yang baru.",
+    descEn: "A calling to pioneer and develop ministry in new regions or cross-cultural contexts.",
+    realLife: "Dalam kehidupan nyata: Kamu tertarik pada tempat-tempat di mana tidak ada gereja atau pelayanan yang ada — wilayah baru, budaya yang belum dijangkau, konteks perkotaan yang sulit. Kamu tidak menunggu seseorang membuka jalan; kamu adalah orang yang membuka jalan.",
+    realLifeEn: "In real life: You are drawn to places where there is no existing church or ministry — new territories, unreached cultures, difficult urban contexts. You don't wait for someone to open the way; you are the person who opens the way.",
+    longDesc: "Karunia Kerasulan (apostolos — 'yang diutus') dalam pengertian fungsional mengacu pada mereka yang dipanggil untuk merintis dan meletakkan fondasi pelayanan di wilayah atau konteks baru. Paulus menggambarkan dirinya sebagai 'tukang bangunan yang ahli' yang meletakkan fondasi (1 Kor 3:10). Dalam era misi modern, karunia ini terlihat dalam mereka yang dipanggil untuk masuk ke konteks yang belum diinjili, membangun komunitas iman dari awal, dan kemudian mempercayakannya kepada pemimpin lokal. Karunia ini sangat cocok untuk kepemimpinan lintas budaya.",
+    longDescEn: "The gift of Apostleship (apostolos — 'sent one') in its functional sense refers to those called to pioneer and lay foundations for ministry in new territories or contexts. Paul describes himself as a 'skilled master builder' who lays foundations (1 Cor 3:10). In modern missions, this gift shows in those called to enter unevangelised contexts, build faith communities from scratch, and then entrust them to local leaders. This gift is especially fitted for cross-cultural leadership.",
+  },
+  penginjilan: {
+    label: "Penginjilan", en: "Evangelism",
+    desc: "Kamu memiliki kerinduan yang mendalam dan kemampuan untuk membagikan Injil kepada orang yang belum percaya.",
+    descEn: "A deep longing and Spirit-empowered ability to share the Gospel with unbelievers.",
+    realLife: "Dalam kehidupan nyata: Percakapan dengan orang yang belum percaya terasa alami bagimu, bukan canggung. Kamu menemukan cara organik untuk berbagi tentang iman — melalui cerita, pertanyaan, atau momen yang tepat — dan kamu melihat orang merespons.",
+    realLifeEn: "In real life: Conversations with unbelievers feel natural to you, not awkward. You find organic ways to share about faith — through stories, questions, or timely moments — and you see people respond.",
+    longDesc: "Karunia Penginjilan (euangelistes) adalah karunia yang diberikan Roh untuk memberitakan Injil Yesus Kristus dengan cara yang efektif dan mengundang respons iman. Meskipun semua orang Kristen dipanggil untuk menjadi saksi, mereka yang memiliki karunia ini memiliki kemampuan yang luar biasa untuk menjelaskan Injil dengan jelas, menjawab pertanyaan dengan bijaksana, dan membuat percakapan rohani terasa aman bagi orang yang belum percaya. Efesus 4:11 mencantumkan penginjil sebagai hadiah Kristus bagi Gereja.",
+    longDescEn: "The gift of Evangelism (euangelistes) is a Spirit-given gift to proclaim the Gospel of Jesus Christ in ways that effectively invite a faith response. While all Christians are called to be witnesses, those with this gift have an extraordinary ability to explain the Gospel clearly, answer questions wisely, and make spiritual conversations feel safe for unbelievers. Ephesians 4:11 lists the evangelist as one of Christ's gifts to the Church.",
+  },
+  bernubuat: {
+    label: "Bernubuat", en: "Prophecy",
+    desc: "Kamu menerima dan menyampaikan pesan dari Allah yang menguatkan, mengingatkan, atau menantang jemaat.",
+    descEn: "Receiving and delivering messages from God that strengthen, warn, or challenge the community.",
+    realLife: "Dalam kehidupan nyata: Kamu sering merasakan dorongan untuk menyampaikan sesuatu kepada komunitas atau individu — dan ketika kamu melakukannya dalam kerendahan hati, pesanmu beresonansi dengan cara yang melampaui apa yang bisa kamu ketahui sendiri.",
+    realLifeEn: "In real life: You often sense an urge to speak something to a community or individual — and when you do so in humility, your message resonates in ways that go beyond what you could have known on your own.",
+    longDesc: "Karunia Bernubuat (propheteia) dalam Perjanjian Baru terutama bersifat forthtelling (menyampaikan) daripada foretelling (meramalkan). Paulus menggambarkannya sebagai membawa 'penguatan, dorongan, dan penghiburan' (1 Kor 14:3). Mereka yang memiliki karunia ini menerima pesan dari Allah yang relevan dengan kebutuhan saat ini komunitas dan menyampaikannya dengan otoritas yang direndahkan. Karunia ini bukan tentang membuat prediksi pribadi; ini tentang menjadi mulut Allah bagi umat-Nya. Semua nubuat harus diuji terhadap Kitab Suci dan komunitas.",
+    longDescEn: "The gift of Prophecy (propheteia) in the New Testament is primarily forthtelling rather than foretelling. Paul describes it as bringing 'strengthening, encouragement, and comfort' (1 Cor 14:3). Those with this gift receive messages from God relevant to the present needs of the community and deliver them with humble authority. This gift is not about making personal predictions; it is about being God's voice to His people. All prophecy should be tested against Scripture and community.",
+  },
+  mengajar: {
+    label: "Mengajar", en: "Teaching",
+    desc: "Kamu mampu menjelaskan kebenaran Alkitab dengan cara yang jelas, menarik, dan mudah dipahami orang lain.",
+    descEn: "The ability to explain biblical truth in a clear, engaging, and understandable way.",
+    realLife: "Dalam kehidupan nyata: Orang berkata bahwa konsep-konsep sulit menjadi masuk akal ketika kamu menjelaskannya. Kamu menikmati menggali Alkitab dalam kedalaman dan secara alami menemukan cara untuk membuat kebenaran itu dapat diterapkan dan mudah diingat.",
+    realLifeEn: "In real life: People say that difficult concepts make sense when you explain them. You enjoy digging deep into Scripture and naturally find ways to make that truth applicable and memorable.",
+    longDesc: "Karunia Mengajar (didaskalos) adalah kemampuan yang diberikan Roh untuk menyampaikan kebenaran Alkitab dengan cara yang jelas, sistematis, dan transformatif. Guru-guru sejati tidak hanya mentransfer informasi — mereka membantu orang memahami Alkitab dengan cara yang mengubah cara mereka berpikir dan hidup. Yesus adalah guru terbesar; Paulus, Apolos, dan lainnya meneladani karunia ini. Efesus 4:11 mencantumkan pengajar sebagai hadiah Kristus bagi Gereja untuk kedewasaan jemaat.",
+    longDescEn: "The gift of Teaching (didaskalos) is a Spirit-given ability to deliver biblical truth in ways that are clear, systematic, and transformative. True teachers don't merely transfer information — they help people understand Scripture in ways that reshape how they think and live. Jesus was the supreme teacher; Paul, Apollos, and others modelled this gift. Ephesians 4:11 lists the teacher as one of Christ's gifts to the Church for the maturity of the congregation.",
+  },
+  gembala: {
+    label: "Gembala", en: "Shepherding",
+    desc: "Kamu dipanggil untuk memelihara, membimbing, dan bertanggung jawab atas pertumbuhan rohani sekelompok orang.",
+    descEn: "A calling to nurture, guide, and take responsibility for the spiritual growth of a group.",
+    realLife: "Dalam kehidupan nyata: Kamu secara alami melacak bagaimana orang-orang dalam komunitasmu — secara rohani, emosional, dan relasional. Kamu merasakan tanggung jawab yang mendalam ketika seseorang mulai menjauh, dan kamu bergerak menuju mereka.",
+    realLifeEn: "In real life: You naturally track how people in your community are doing — spiritually, emotionally, and relationally. You feel a deep sense of responsibility when someone starts drifting away, and you move toward them.",
+    longDesc: "Karunia Gembala (poimen) adalah panggilan untuk memelihara dan melindungi pertumbuhan rohani sekelompok orang secara terus-menerus. Berbeda dengan pengajar yang dapat mengajar banyak orang sekaligus, gembala berkomitmen pada seseorang jangka panjang — mengenal mereka secara mendalam, berjalan bersama mereka dalam kesulitan, dan menjaga mereka agar tetap di jalan. 1 Petrus 5:2-4 menggambarkan gembala sebagai yang memimpin bukan dengan paksaan tetapi rela, bukan dengan motif keuntungan tetapi semangat.",
+    longDescEn: "The gift of Shepherding (poimen) is a calling to nurture and protect the spiritual growth of a group of people over time. Unlike teaching which can reach many at once, the shepherd commits to a group long-term — knowing them deeply, walking with them through difficulty, and keeping them on the path. 1 Peter 5:2-4 describes the shepherd as one who leads not by compulsion but willingly, not for dishonest gain but eagerly.",
+  },
+  memimpin: {
+    label: "Memimpin", en: "Leadership",
+    desc: "Kamu mampu menggerakkan, menginspirasi, dan membawa orang lain bersama-sama menuju tujuan yang Allah tetapkan.",
+    descEn: "The ability to mobilize, inspire, and unite people toward God-appointed goals.",
+    realLife: "Dalam kehidupan nyata: Ketika ada kekosongan kepemimpinan dalam sebuah kelompok, orang-orang secara alami melihat ke arahmu. Kamu menemukan cara untuk menyatukan orang dengan latar belakang berbeda di belakang tujuan bersama.",
+    realLifeEn: "In real life: When there is a leadership vacuum in a group, people naturally look to you. You find ways to unite people from different backgrounds behind a shared goal.",
+    longDesc: "Karunia Memimpin (proistemi — 'berdiri di depan') dalam Roma 12:8 diarahkan untuk dilakukan 'dengan rajin'. Pemimpin rohani tidak memimpin untuk kekuasaan tetapi untuk melayani tujuan Allah. Mereka memiliki kemampuan untuk memvisionkan ke mana komunitas perlu pergi, menyelaraskan sumber daya dan orang, dan memotivasi orang lain untuk bergerak bersama. Dalam konteks lintas budaya, pemimpin yang efektif belajar bagaimana memimpin dengan cara yang menghormati nilai-nilai budaya yang beragam sambil tetap setia pada misi.",
+    longDescEn: "The gift of Leadership (proistemi — 'to stand before') in Romans 12:8 is directed to be done 'with diligence'. Spiritual leaders lead not for power but to serve God's purposes. They have the ability to vision where the community needs to go, align resources and people, and motivate others to move together. In cross-cultural contexts, effective leaders learn to lead in ways that honour diverse cultural values while remaining faithful to the mission.",
+  },
+  administrasi: {
+    label: "Administrasi", en: "Administration",
+    desc: "Kamu mampu merencanakan, mengorganisasi, dan mengkoordinasikan sumber daya untuk mencapai tujuan pelayanan.",
+    descEn: "The ability to plan, organize, and coordinate resources to achieve ministry goals effectively.",
+    realLife: "Dalam kehidupan nyata: Kamu secara alami melihat bagaimana bagian-bagian yang berbeda dari sebuah proyek saling berhubungan, siapa yang perlu melakukan apa, dan apa yang bisa salah — lalu kamu menciptakan sistem yang membuat semuanya berjalan lancar.",
+    realLifeEn: "In real life: You naturally see how the different parts of a project connect, who needs to do what, and what could go wrong — then you create systems that make everything run smoothly.",
+    longDesc: "Karunia Administrasi (kubernesis — istilah Yunani untuk 'mengemudikan kapal') adalah kemampuan untuk mengatur, mengelola, dan mengarahkan program dan sumber daya untuk mencapai tujuan. Sementara pemimpin menentukan ke mana tujuan, administrator memastikan kapal tetap di jalur. Mereka unggul dalam perencanaan proyek, manajemen sumber daya, dan koordinasi orang. Tanpa karunia ini, bahkan visi terbaik pun gagal dalam pelaksanaan. Dalam pelayanan multikultural, karunia ini membantu komunitas yang beragam bekerja bersama secara efektif.",
+    longDescEn: "The gift of Administration (kubernesis — the Greek term for 'steering a ship') is the ability to organise, manage, and steer programmes and resources toward goals. While leaders determine the destination, administrators ensure the ship stays on course. They excel in project planning, resource management, and coordinating people. Without this gift, even the best vision fails in execution. In multicultural ministry, this gift helps diverse communities work together effectively.",
+  },
+  mukjizat: {
+    label: "Mukjizat", en: "Miracles",
+    desc: "Allah menyatakan kuasa-Nya melalui hidupmu dalam cara-cara yang melampaui penjelasan manusia.",
+    descEn: "God reveals His power through your life in ways that surpass natural explanation.",
+    realLife: "Dalam kehidupan nyata: Kamu telah menyaksikan atau menjadi bagian dari situasi di mana Allah bertindak dengan cara yang tidak dapat dijelaskan secara alami — jawaban doa yang dramatis, pemulihan yang tidak terduga, atau kejadian yang terlalu tepat waktu untuk menjadi kebetulan.",
+    realLifeEn: "In real life: You have witnessed or been part of situations where God acted in ways that cannot be naturally explained — dramatic answers to prayer, unexpected restorations, or events too perfectly timed to be coincidence.",
+    longDesc: "Karunia Mukjizat (dunamis — 'kuasa') adalah karunia di mana Allah bekerja melalui seseorang untuk melakukan hal-hal yang melampaui hukum alam. Disebutkan dalam 1 Korintus 12, karunia ini berfungsi sebagai tanda yang menunjuk kepada realitas Kerajaan Allah. Mereka yang memiliki karunia ini bukanlah penampil mukjizat — mereka adalah saluran yang rendah hati melalui mana kuasa Allah mengalir. Dalam konteks di mana Injil sedang disampaikan untuk pertama kalinya, mukjizat sering menjadi sarana utama melalui mana hati dibuka.",
+    longDescEn: "The gift of Miracles (dunamis — 'power') is a gift in which God works through a person to do things beyond natural law. Listed in 1 Corinthians 12, this gift functions as a sign pointing to the reality of God's Kingdom. Those with this gift are not performers of miracles — they are humble channels through which God's power flows. In contexts where the Gospel is being presented for the first time, miracles often become a primary means through which hearts are opened.",
+  },
+  tafsir_bahasa_roh: {
+    label: "Tafsir Bahasa Roh", en: "Interpretation of Tongues",
+    desc: "Kamu menerima kemampuan untuk menyampaikan makna dari pesan bahasa roh kepada jemaat.",
+    descEn: "The ability to convey the meaning of tongue messages to the gathered community.",
+    realLife: "Dalam kehidupan nyata: Ketika seseorang berbicara dalam bahasa roh dalam lingkungan ibadah, kamu menerima pemahaman tentang apa yang sedang dikomunikasikan dan merasa terdorong untuk menyampaikannya kepada jemaat.",
+    realLifeEn: "In real life: When someone speaks in tongues in a worship setting, you receive understanding of what is being communicated and feel compelled to convey it to the gathered community.",
+    longDesc: "Karunia Tafsir Bahasa Roh (hermenia glosson) adalah pasangan karunia bahasa roh. Paulus menjelaskan dalam 1 Korintus 14 bahwa ketika bahasa roh digunakan dalam pertemuan umum, harus ada penafsiran sehingga seluruh jemaat dapat mendapat manfaat. Mereka yang memiliki karunia ini menerima makna dari pesan yang disampaikan dalam bahasa roh dan menyampaikannya dalam bahasa yang dapat dimengerti. Ini bukan terjemahan kata per kata tetapi penyampaian makna dan maksud rohani.",
+    longDescEn: "The gift of Interpretation of Tongues (hermenia glosson) is the companion gift to tongues. Paul explains in 1 Corinthians 14 that when tongues are used in a public gathering, there must be interpretation so the whole community can benefit. Those with this gift receive the meaning of a tongue message and convey it in an understandable language. This is not word-for-word translation but the conveyance of spiritual meaning and intent.",
+  },
+};
+
+const GIFT_ICONS: Record<string, React.ReactElement> = {
+  melayani: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>,
+  murah_hati: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>,
+  keramahan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  bahasa_roh: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v2m0 4h.01"/></svg>,
+  menyembuhkan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>,
+  menguatkan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+  memberi: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M12 7v14M8 7v0a4 4 0 0 1 4-4v0a4 4 0 0 1 4 4v0"/></svg>,
+  hikmat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,
+  pengetahuan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+  iman: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
+  kerasulan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+  penginjilan: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.89 12 19.79 19.79 0 0 1 1.85 3.5 2 2 0 0 1 3.82 1.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.4a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+  bernubuat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+  mengajar: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+  gembala: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+  memimpin: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>,
+  administrasi: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
+  mukjizat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  tafsir_bahasa_roh: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M7 8h10M7 12h6"/></svg>,
 };
 
 const QUESTIONS: { id: string; en: string }[] = [
@@ -155,6 +338,7 @@ function getTopGifts(scores: Record<string, number>): string[] {
 
 interface Props {
   isSaved: boolean;
+  isLoggedIn: boolean;
   karuniaTopGifts: string[] | null;
   karuniaScores: Record<string, number> | null;
 }
@@ -166,7 +350,7 @@ const GIFT_OVERVIEW_ORDER = [
   "memimpin", "administrasi", "mukjizat", "tafsir_bahasa_roh",
 ];
 
-export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores }: Props) {
+export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, karuniaScores }: Props) {
   const [lang, setLang] = useState<Lang>("id");
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [page, setPage] = useState(0);
@@ -220,6 +404,10 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
   }
 
   function handleSave() {
+    if (!isLoggedIn) {
+      window.location.href = "/signup?redirect=/resources/karunia-rohani";
+      return;
+    }
     if (!resultScores || resultTopGifts.length === 0) return;
     startTransition(async () => {
       const { error } = await saveKaruniaResult(resultTopGifts, resultScores);
@@ -229,6 +417,10 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
         setSaved(true);
       }
     });
+  }
+
+  function handlePrint() {
+    window.print();
   }
 
   const ratingLabels = lang === "id"
@@ -266,167 +458,268 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
     const ordinals = ["1.", "2.", "3."];
 
     return (
-      <div style={{ fontFamily: "var(--font-montserrat)" }}>
-        <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem" }}>
-          <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "1.5rem" }}>
-              <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: 0 }}>
-                {lang === "id" ? "Hasil Tes" : "Test Results"}
+      <>
+        {/* Print styles */}
+        <style>{`
+          @media print {
+            body * { visibility: hidden !important; }
+            #print-results { display: block !important; visibility: visible !important; position: absolute; left: 0; top: 0; width: 100%; }
+            #print-results * { visibility: visible !important; }
+            .no-print { display: none !important; }
+          }
+        `}</style>
+
+        <div style={{ fontFamily: "var(--font-montserrat)" }}>
+          {/* ── RESULTS HERO ── */}
+          <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem" }} className="no-print">
+            <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "1.5rem" }}>
+                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: 0 }}>
+                  {lang === "id" ? "Hasil Tes" : "Test Results"}
+                </p>
+                <LangToggle />
+              </div>
+              <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
+                {lang === "id" ? "Karunia Rohani Kamu" : "Your Spiritual Gifts"}
+              </h1>
+              <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>
+                {lang === "id"
+                  ? "Berdasarkan jawabanmu, berikut adalah karunia rohani utama yang Allah berikan kepadamu."
+                  : "Based on your answers, here are the primary spiritual gifts God has given you."}
               </p>
-              <LangToggle />
             </div>
-            <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
-              {lang === "id" ? "Karunia Rohani Kamu" : "Your Spiritual Gifts"}
-            </h1>
-            <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>
-              {lang === "id"
-                ? "Berdasarkan jawabanmu, berikut adalah karunia rohani utama yang Allah berikan kepadamu."
-                : "Based on your answers, here are the primary spiritual gifts God has given you."}
-            </p>
           </div>
-        </div>
 
-        <div style={{ background: BG_LIGHT, padding: "3rem 1.5rem" }}>
-          <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "3rem" }}>
-              {resultTopGifts.slice(0, 3).map((key, idx) => {
-                const gift = GIFTS[key];
-                const score = resultScores[key] ?? 0;
-                if (!gift) return null;
-                return (
-                  <div key={key} style={{
-                    background: "white",
-                    border: `2px solid ${idx === 0 ? PRIMARY : BORDER}`,
-                    padding: "1.5rem",
-                    display: "flex",
-                    gap: "1.25rem",
-                    alignItems: "flex-start",
-                  }}>
-                    <div style={{
-                      flexShrink: 0,
-                      width: "2.5rem",
-                      height: "2.5rem",
-                      background: idx === 0 ? PRIMARY : "oklch(92% 0.04 45)",
-                      color: idx === 0 ? "white" : PRIMARY,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: 800,
-                      fontSize: "1rem",
-                    }}>
-                      {ordinals[idx]}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.375rem" }}>
-                        <p style={{ fontWeight: 800, fontSize: "1.0625rem", color: "oklch(18% 0.05 260)", margin: 0 }}>
-                          {lang === "id" ? gift.label : gift.en}
-                        </p>
-                        <p style={{ fontSize: "0.72rem", fontWeight: 700, color: PRIMARY, margin: 0 }}>
-                          {score}/12
-                        </p>
-                      </div>
-                      <p style={{ fontSize: "0.8rem", fontWeight: 500, color: "oklch(52% 0.008 260)", marginBottom: "0.5rem" }}>
-                        {lang === "id" ? gift.en : gift.label}
-                      </p>
-                      <p style={{ fontSize: "0.875rem", color: "oklch(38% 0.008 260)", lineHeight: 1.7, margin: 0 }}>
-                        {lang === "id" ? gift.desc : gift.descEn}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+          {/* ── TOP 3 + ALL GIFTS ── */}
+          <div style={{ background: BG_LIGHT, padding: "3rem 1.5rem" }} className="no-print">
+            <div style={{ maxWidth: "720px", margin: "0 auto" }}>
 
-            <div style={{ marginBottom: "2.5rem" }}>
-              <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(52% 0.008 260)", textTransform: "uppercase", marginBottom: "1.25rem" }}>
-                {lang === "id" ? "Semua Karunia" : "All Gifts"}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {sortedAll.map(([key, score]) => {
+              {/* Top 3 */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "3rem" }}>
+                {resultTopGifts.slice(0, 3).map((key, idx) => {
                   const gift = GIFTS[key];
+                  const score = resultScores[key] ?? 0;
                   if (!gift) return null;
-                  const pct = Math.round((score / 12) * 100);
+                  const icon = GIFT_ICONS[key];
                   return (
-                    <div key={key}>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
-                        <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "oklch(32% 0.008 260)" }}>
-                          {lang === "id" ? gift.label : gift.en}
-                        </span>
-                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: PRIMARY }}>{score}/12</span>
+                    <div key={key} style={{
+                      background: "white",
+                      border: `2px solid ${idx === 0 ? PRIMARY : BORDER}`,
+                      padding: "1.75rem",
+                      display: "flex",
+                      gap: "1.25rem",
+                      alignItems: "flex-start",
+                    }}>
+                      <div style={{
+                        flexShrink: 0,
+                        width: "3rem",
+                        height: "3rem",
+                        background: idx === 0 ? PRIMARY : "oklch(93% 0.04 45)",
+                        color: idx === 0 ? "white" : PRIMARY,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: "0.625rem",
+                      }}>
+                        {icon}
                       </div>
-                      <div style={{ height: "5px", background: BORDER, overflow: "hidden" }}>
-                        <div style={{ height: "100%", width: `${pct}%`, background: PRIMARY, transition: "width 0.5s ease" }} />
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.25rem" }}>
+                          <p style={{ fontWeight: 800, fontSize: "1.0625rem", color: "oklch(18% 0.05 260)", margin: 0 }}>
+                            {lang === "id" ? gift.label : gift.en}
+                          </p>
+                          <p style={{ fontSize: "0.72rem", fontWeight: 700, color: PRIMARY, margin: 0 }}>
+                            {score}/12
+                          </p>
+                        </div>
+                        <p style={{ fontSize: "0.8125rem", lineHeight: 1.65, color: "oklch(38% 0.008 260)", marginBottom: "0.75rem" }}>
+                          {lang === "id" ? gift.longDesc : gift.longDescEn}
+                        </p>
+                        <p style={{ fontSize: "0.8125rem", fontStyle: "italic", color: PRIMARY, margin: 0, lineHeight: 1.6, borderLeft: `3px solid ${PRIMARY}`, paddingLeft: "0.75rem" }}>
+                          {lang === "id" ? gift.realLife : gift.realLifeEn}
+                        </p>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
 
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "2rem" }}>
-              {saved ? (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: PRIMARY }}>
-                  <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  {lang === "id" ? "Tersimpan di Dashboard" : "Saved to Dashboard"}
+              {/* All gifts bar chart */}
+              <div style={{ marginBottom: "2.5rem" }}>
+                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(52% 0.008 260)", textTransform: "uppercase", marginBottom: "1.25rem" }}>
+                  {lang === "id" ? "Semua Karunia" : "All Gifts"}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {sortedAll.map(([key, score]) => {
+                    const gift = GIFTS[key];
+                    if (!gift) return null;
+                    const pct = Math.round((score / 12) * 100);
+                    return (
+                      <div key={key}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+                          <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "oklch(32% 0.008 260)" }}>
+                            {lang === "id" ? gift.label : gift.en}
+                          </span>
+                          <span style={{ fontSize: "0.78rem", fontWeight: 700, color: PRIMARY }}>{score}/12</span>
+                        </div>
+                        <div style={{ height: "5px", background: BORDER, overflow: "hidden" }}>
+                          <div style={{ height: "100%", width: `${pct}%`, background: PRIMARY, transition: "width 0.5s ease" }} />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ) : (
+              </div>
+
+              {/* Action buttons */}
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "2rem" }}>
+                {saved ? (
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", fontWeight: 700, color: PRIMARY }}>
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    {lang === "id" ? "Tersimpan di Dashboard" : "Saved to Dashboard"}
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleSave}
+                    disabled={isPending}
+                    style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.78rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      background: PRIMARY,
+                      color: "white",
+                      border: "none",
+                      padding: "0.65rem 1.375rem",
+                      cursor: isPending ? "not-allowed" : "pointer",
+                      opacity: isPending ? 0.7 : 1,
+                    }}
+                  >
+                    {isPending
+                      ? (lang === "id" ? "Menyimpan..." : "Saving...")
+                      : (lang === "id" ? "Simpan ke Dashboard →" : "Save to Dashboard →")}
+                  </button>
+                )}
                 <button
-                  onClick={handleSave}
-                  disabled={isPending}
+                  onClick={handlePrint}
                   style={{
                     fontFamily: "var(--font-montserrat)",
                     fontSize: "0.78rem",
                     fontWeight: 700,
                     letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    background: PRIMARY,
-                    color: "white",
-                    border: "none",
+                    background: "transparent",
+                    color: PRIMARY,
+                    border: `1px solid ${PRIMARY}`,
                     padding: "0.65rem 1.375rem",
-                    cursor: isPending ? "not-allowed" : "pointer",
-                    opacity: isPending ? 0.7 : 1,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
                   }}
                 >
-                  {isPending
-                    ? (lang === "id" ? "Menyimpan..." : "Saving...")
-                    : (lang === "id" ? "Simpan ke Dashboard →" : "Save to Dashboard →")}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+                  </svg>
+                  {lang === "id" ? "Unduh PDF" : "Download PDF"}
                 </button>
+                <button
+                  onClick={handleRetake}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.78rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    background: "transparent",
+                    color: "oklch(52% 0.008 260)",
+                    border: `1px solid ${BORDER}`,
+                    padding: "0.65rem 1.375rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  {lang === "id" ? "Ulangi Tes" : "Retake Test"}
+                </button>
+              </div>
+
+              {saveError && (
+                <p style={{ fontSize: "0.8rem", color: "oklch(52% 0.18 25)", marginBottom: "1rem" }}>
+                  {lang === "id" ? "Terjadi kesalahan. Silakan coba lagi." : "Something went wrong. Please try again."}
+                </p>
               )}
-              <button
-                onClick={handleRetake}
-                style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.78rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  background: "transparent",
-                  color: PRIMARY,
-                  border: `1px solid ${PRIMARY}`,
-                  padding: "0.65rem 1.375rem",
-                  cursor: "pointer",
-                }}
-              >
-                {lang === "id" ? "Ulangi Tes" : "Retake Test"}
-              </button>
+
+              <p style={{ fontSize: "0.72rem", color: "oklch(62% 0.008 260)", lineHeight: 1.6, borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem" }}>
+                {lang === "id"
+                  ? <>Diadaptasi dari Jim Burns &amp; Doug Fields, &ldquo;The Word on Finding and Using Your Spiritual Gifts&rdquo;</>
+                  : <>Adapted from Jim Burns &amp; Doug Fields, &ldquo;The Word on Finding and Using Your Spiritual Gifts&rdquo;</>}
+              </p>
+            </div>
+          </div>
+
+          {/* ── PRINT VIEW (hidden on screen, visible on print) ── */}
+          <div id="print-results" style={{ display: "none", fontFamily: "var(--font-montserrat)", padding: "2rem", maxWidth: "800px" }}>
+            {/* Print header */}
+            <div style={{ borderBottom: "3px solid #c27a2e", paddingBottom: "1.25rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c27a2e", margin: "0 0 0.25rem" }}>Crispy Development</p>
+                <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1a1a2e", margin: "0 0 0.25rem" }}>
+                  {lang === "id" ? "Hasil Tes Karunia Rohani" : "Spiritual Gifts Test Results"}
+                </h1>
+                <p style={{ fontSize: "0.8rem", color: "#666", margin: 0 }}>crispyleaders.com</p>
+              </div>
+              {/* QR */}
+              <div style={{ textAlign: "center" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=https://crispyleaders.com" alt="QR crispyleaders.com" width={70} height={70} />
+                <p style={{ fontSize: "0.55rem", color: "#999", margin: "0.2rem 0 0", textAlign: "center" }}>crispyleaders.com</p>
+              </div>
             </div>
 
-            {saveError && (
-              <p style={{ fontSize: "0.8rem", color: "oklch(52% 0.18 25)", marginBottom: "1rem" }}>
-                Error: {saveError}
-              </p>
-            )}
+            {/* Print top 3 */}
+            <h2 style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c27a2e", marginBottom: "1rem" }}>
+              {lang === "id" ? "Tiga Karunia Utama" : "Your Top Three Gifts"}
+            </h2>
+            {resultTopGifts.slice(0, 3).map((key, idx) => {
+              const gift = GIFTS[key];
+              const score = resultScores[key] ?? 0;
+              if (!gift) return null;
+              return (
+                <div key={key} style={{ borderLeft: `3px solid ${idx === 0 ? "#c27a2e" : "#ddd"}`, paddingLeft: "1rem", marginBottom: "1.25rem" }}>
+                  <p style={{ fontWeight: 800, fontSize: "1rem", color: "#1a1a2e", margin: "0 0 0.2rem" }}>
+                    {idx + 1}. {lang === "id" ? gift.label : gift.en}
+                    <span style={{ fontWeight: 500, fontSize: "0.78rem", color: "#c27a2e", marginLeft: "0.5rem" }}>{score}/12</span>
+                  </p>
+                  <p style={{ fontSize: "0.78rem", color: "#444", lineHeight: 1.6, margin: "0 0 0.4rem" }}>
+                    {lang === "id" ? gift.desc : gift.descEn}
+                  </p>
+                  <p style={{ fontSize: "0.75rem", fontStyle: "italic", color: "#888", margin: 0 }}>
+                    {lang === "id" ? gift.realLife : gift.realLifeEn}
+                  </p>
+                </div>
+              );
+            })}
 
-            <p style={{ fontSize: "0.72rem", color: "oklch(62% 0.008 260)", lineHeight: 1.6, borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem" }}>
-              {lang === "id"
-                ? <>Diadaptasi dari Jim Burns &amp; Doug Fields, &ldquo;The Word on Finding and Using Your Spiritual Gifts&rdquo;</>
-                : <>Adapted from Jim Burns &amp; Doug Fields, &ldquo;The Word on Finding and Using Your Spiritual Gifts&rdquo;</>}
-            </p>
+            {/* Print promo */}
+            <div style={{ borderTop: "1px solid #eee", marginTop: "2rem", paddingTop: "1.5rem", background: "#f9f7f4", padding: "1.25rem", marginTop: "2rem" }}>
+              <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c27a2e", margin: "0 0 0.5rem" }}>
+                {lang === "id" ? "Lebih Banyak di Crispy Development" : "More at Crispy Development"}
+              </p>
+              <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "#1a1a2e", margin: "0 0 0.5rem" }}>
+                {lang === "id" ? "Temukan lebih banyak alat untuk pemimpin lintas budaya" : "Discover more tools for cross-cultural leaders"}
+              </p>
+              <p style={{ fontSize: "0.75rem", color: "#555", margin: "0 0 0.75rem", lineHeight: 1.6 }}>
+                {lang === "id"
+                  ? "Gaya Kepemimpinan · Ketinggian Kepemimpinan · Tiga Gaya Berpikir · Zona Nyaman · dan lebih banyak lagi"
+                  : "Leadership Style · Leadership Altitudes · Three Thinking Styles · Comfort Zone · and more"}
+              </p>
+              <p style={{ fontSize: "0.78rem", fontWeight: 700, color: "#c27a2e", margin: 0 }}>→ crispyleaders.com/resources</p>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -435,6 +728,7 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
 
   return (
     <div style={{ fontFamily: "var(--font-montserrat)" }}>
+      {/* ── HERO ── */}
       <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "1.5rem" }}>
@@ -446,33 +740,75 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
           <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
             {lang === "id" ? "Tes Karunia Rohani" : "Spiritual Gifts Test"}
           </h1>
-          <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>
+          <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
             {lang === "id"
               ? "Temukan karunia rohani yang Allah berikan kepadamu — dan bagaimana karunia itu bisa dimaksimalkan dalam pelayanan dan kepemimpinan."
               : "Discover the spiritual gifts God has given you — and how they can be maximised in service and leadership."}
           </p>
+          {/* "This test will help you to..." */}
+          <div style={{ background: "oklch(97% 0.005 80 / 0.08)", border: "1px solid oklch(97% 0.005 80 / 0.15)", padding: "1.25rem 1.5rem" }}>
+            <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: "0 0 0.625rem" }}>
+              {lang === "id" ? "Tes ini akan membantumu untuk:" : "This test will help you to:"}
+            </p>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              {(lang === "id" ? [
+                "Mengidentifikasi karunia rohani yang Allah berikan secara unik kepadamu",
+                "Memahami bagaimana karunia-karuniamu terhubung dengan gaya kepemimpinanmu",
+                "Menemukan tempat di mana kamu bisa melayani dengan penuh sukacita dan efektivitas",
+                "Memulai percakapan dengan tim atau komunitasmu tentang karunia bersama",
+              ] : [
+                "Identify the spiritual gifts God has uniquely given you",
+                "Understand how your gifts connect to your leadership style",
+                "Discover the places you can serve with the most joy and effectiveness",
+                "Start a conversation with your team or community about shared gifts",
+              ]).map((item, i) => (
+                <li key={i} style={{ display: "flex", gap: "0.5rem", fontSize: "0.875rem", color: "oklch(85% 0.008 80)", lineHeight: 1.55 }}>
+                  <span style={{ color: PRIMARY, fontWeight: 700, flexShrink: 0 }}>→</span>{item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
       {!isQuizStarted && (
         <div style={{ background: "white", padding: "4rem 1.5rem" }}>
           <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+            {/* Biblical foundation */}
             <div style={{ marginBottom: "3.5rem" }}>
               <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", marginBottom: "0.75rem" }}>
-                {lang === "id" ? "Mengapa Karunia Rohani?" : "Why Spiritual Gifts?"}
+                {lang === "id" ? "Dasar Alkitab" : "Biblical Foundation"}
               </p>
               <h2 style={{ fontSize: "clamp(1.25rem, 3vw, 1.75rem)", fontWeight: 800, color: "oklch(18% 0.05 260)", lineHeight: 1.2, marginBottom: "1.25rem" }}>
                 {lang === "id"
                   ? "Setiap orang percaya memiliki karunia. Kebanyakan belum pernah menemukannya."
                   : "Every believer has a gift. Most have never discovered it."}
               </h2>
+              <p style={{ fontSize: "0.9375rem", color: "oklch(38% 0.008 260)", lineHeight: 1.8, marginBottom: "1.25rem" }}>
+                {lang === "id"
+                  ? "Perjanjian Baru mengajarkan dengan jelas bahwa setiap pengikut Kristus telah diberikan setidaknya satu karunia rohani — kemampuan yang diberdayakan oleh Roh, dirancang bukan untuk keuntungan pribadi, tetapi untuk membangun Tubuh Kristus dan memajukan Kerajaan-Nya."
+                  : "The New Testament teaches clearly that every follower of Christ has been given at least one spiritual gift — a Spirit-empowered ability designed not for personal gain, but to build up the Body of Christ and advance His Kingdom."}
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "1.25rem" }}>
+                {[
+                  { ref: "1 Korintus 12", body: lang === "id" ? "Daftar karunia rohani dan kesatuan Tubuh Kristus" : "Lists spiritual gifts and the unity of the Body" },
+                  { ref: "Roma 12:6–8", body: lang === "id" ? "Karunia yang berbeda-beda sesuai anugerah yang diberikan" : "Gifts that differ according to the grace given" },
+                  { ref: "Efesus 4:11–12", body: lang === "id" ? "Karunia diberikan untuk membangun jemaat" : "Gifts given to build up the church to maturity" },
+                ].map(({ ref, body }) => (
+                  <div key={ref} style={{ background: BG_LIGHT, border: `1px solid ${BORDER}`, padding: "1rem 1.125rem" }}>
+                    <p style={{ fontWeight: 800, fontSize: "0.8125rem", color: PRIMARY, margin: "0 0 0.25rem" }}>{ref}</p>
+                    <p style={{ fontSize: "0.78rem", color: "oklch(45% 0.008 260)", lineHeight: 1.55, margin: 0 }}>{body}</p>
+                  </div>
+                ))}
+              </div>
               <p style={{ fontSize: "0.9375rem", color: "oklch(38% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
                 {lang === "id"
-                  ? "Perjanjian Baru mengajarkan bahwa setiap pengikut Kristus telah diberikan setidaknya satu karunia rohani — kemampuan yang diberdayakan oleh Roh, dirancang bukan untuk keuntungan pribadi, tetapi untuk membangun Tubuh Kristus dan memajukan Kerajaan-Nya. Namun kebanyakan orang percaya melayani dari kebiasaan atau kewajiban, bukan dari kesadaran mendalam tentang bagaimana Allah secara unik merancang mereka. Penilaian ini membantumu mengidentifikasi bagaimana Allah telah merancangmu untuk melayani — sehingga kamu bisa memimpin dan memberi dengan lebih jelas, sukacita, dan berbuah."
-                  : "The New Testament teaches that every follower of Christ has been given at least one spiritual gift — a Spirit-empowered ability designed not for personal gain, but to build up the Body of Christ and advance His Kingdom. Yet most believers serve from habit or obligation rather than from a deep awareness of how God has uniquely wired them. This assessment helps you identify how God has designed you to serve — so you can lead and give with greater clarity, joy, and fruitfulness."}
+                  ? "Namun kebanyakan orang percaya melayani dari kebiasaan atau kewajiban, bukan dari kesadaran mendalam tentang bagaimana Allah secara unik merancang mereka. Penilaian ini membantumu mengidentifikasi bagaimana Allah telah merancangmu untuk melayani — sehingga kamu bisa memimpin dan memberi dengan lebih jelas, sukacita, dan berbuah."
+                  : "Yet most believers serve from habit or obligation rather than from a deep awareness of how God has uniquely wired them. This assessment helps you identify how God has designed you to serve — so you can lead and give with greater clarity, joy, and fruitfulness."}
               </p>
             </div>
 
+            {/* 19 gifts overview */}
             <div>
               <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", marginBottom: "1.5rem" }}>
                 {lang === "id" ? "19 Karunia yang Diukur" : "19 Gifts Assessed"}
@@ -480,18 +816,24 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
                 {GIFT_OVERVIEW_ORDER.map(key => {
                   const gift = GIFTS[key];
+                  const icon = GIFT_ICONS[key];
                   if (!gift) return null;
                   return (
-                    <div key={key} style={{ border: `1px solid ${BORDER}`, padding: "1.125rem 1.25rem", background: BG_LIGHT }}>
-                      <p style={{ fontWeight: 800, fontSize: "0.875rem", color: "oklch(18% 0.05 260)", marginBottom: "0.25rem" }}>
-                        {lang === "id" ? gift.label : gift.en}
-                        <span style={{ fontWeight: 500, color: "oklch(58% 0.008 260)", marginLeft: "0.5rem", fontSize: "0.78rem" }}>
-                          {lang === "id" ? gift.en : gift.label}
-                        </span>
-                      </p>
-                      <p style={{ fontSize: "0.8125rem", color: "oklch(45% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                        {lang === "id" ? gift.desc : gift.descEn}
-                      </p>
+                    <div key={key} style={{ border: `1px solid ${BORDER}`, padding: "1.125rem 1.25rem", background: BG_LIGHT, display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                      <div style={{ width: "2rem", height: "2rem", color: PRIMARY, flexShrink: 0 }}>
+                        {icon}
+                      </div>
+                      <div>
+                        <p style={{ fontWeight: 800, fontSize: "0.875rem", color: "oklch(18% 0.05 260)", marginBottom: "0.25rem" }}>
+                          {lang === "id" ? gift.label : gift.en}
+                        </p>
+                        <p style={{ fontSize: "0.8125rem", color: "oklch(45% 0.008 260)", lineHeight: 1.65, margin: "0 0 0.4rem" }}>
+                          {lang === "id" ? gift.desc : gift.descEn}
+                        </p>
+                        <p style={{ fontSize: "0.75rem", fontStyle: "italic", color: "oklch(55% 0.008 260)", margin: 0, lineHeight: 1.55 }}>
+                          {lang === "id" ? gift.realLife : gift.realLifeEn}
+                        </p>
+                      </div>
                     </div>
                   );
                 })}
@@ -501,6 +843,7 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
         </div>
       )}
 
+      {/* ── QUESTIONS ── */}
       <div style={{ background: BG_LIGHT, padding: "3rem 1.5rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
           <div style={{ marginBottom: "2rem" }}>
@@ -554,7 +897,7 @@ export default function KaruniaClient({ isSaved, karuniaTopGifts, karuniaScores 
                             justifyContent: "center",
                             background: isSelected ? PRIMARY : "transparent",
                             color: isSelected ? "white" : PRIMARY,
-                            border: `1.5px solid ${isSelected ? PRIMARY : PRIMARY}`,
+                            border: `1.5px solid ${PRIMARY}`,
                             cursor: "pointer",
                             transition: "all 0.12s",
                           }}

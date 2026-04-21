@@ -16,5 +16,5 @@ export default async function KaruniaRohaniPage() {
   const isSaved = savedResources.includes("karunia-rohani");
   const karuniaTopGifts = (user?.user_metadata?.karunia_top_gifts ?? null) as string[] | null;
   const karuniaScores = (user?.user_metadata?.karunia_scores ?? null) as Record<string, number> | null;
-  return <KaruniaClient isSaved={isSaved} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} />;
+  return <KaruniaClient isSaved={isSaved} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} isLoggedIn={!!user} />;
 }
