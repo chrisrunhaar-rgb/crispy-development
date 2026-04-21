@@ -18,6 +18,7 @@ import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
 import PeerGroupsSection, { type InitiatedGroup, type JoinedGroup, type PeerMember, type PeerBroadcast } from "@/components/PeerGroupsSection";
 import TimezoneDetector from "@/components/TimezoneDetector";
 import TeamAssessmentSelector from "./TeamAssessmentSelector";
+import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -378,15 +379,27 @@ export default async function DashboardPage({
     teamBroadcasts = (bcRows ?? []) as BroadcastRow[];
   }
 
-  // ── Step completions for team members ──
+  // ── Step completions + results for team members ──
   let memberStepCompletions: StepCompletionRow[] = [];
   let memberTeamLeaderUserId: string | undefined;
+  let memberTeamResults: TeamMemberResult[] = [];
   if (memberOfTeam) {
-    const { data: mscRows } = await admin
-      .from("team_step_data")
-      .select("user_id, step_number, completed_at")
-      .eq("team_id", memberOfTeam.id);
+    const [{ data: mscRows }, { data: mResultRows }] = await Promise.all([
+      admin.from("team_step_data").select("user_id, step_number, completed_at").eq("team_id", memberOfTeam.id),
+      admin.from("team_member_results").select("user_id, result_type, result_key, scores, completed_at").eq("team_id", memberOfTeam.id),
+    ]);
     memberStepCompletions = (mscRows ?? []) as StepCompletionRow[];
+    memberTeamResults = (mResultRows ?? []) as TeamMemberResult[];
+  }
+
+  // ── Team results for leader view ──
+  let leaderTeamResults: TeamMemberResult[] = [];
+  if (isTeamLeader && teamRecord) {
+    const { data: ltResultRows } = await admin
+      .from("team_member_results")
+      .select("user_id, result_type, result_key, scores, completed_at")
+      .eq("team_id", teamRecord.id);
+    leaderTeamResults = (ltResultRows ?? []) as TeamMemberResult[];
   }
 
   // ── Team member content + roster (invited via link) ──
@@ -582,6 +595,7 @@ export default async function DashboardPage({
             leaderId={user.id}
             finalizedSteps={teamRecord?.finalized_steps ?? []}
             selectedAssessments={teamRecord?.selected_assessments ?? []}
+            teamResults={leaderTeamResults}
           />
         )}
 
@@ -595,6 +609,7 @@ export default async function DashboardPage({
             leaderName={memberTeamLeaderName}
             leaderUserId={memberTeamLeaderUserId}
             stepCompletions={memberStepCompletions}
+            teamResults={memberTeamResults}
           />
         )}
 
@@ -1188,6 +1203,7 @@ function TeamLeaderDashboard({
   leaderId,
   finalizedSteps,
   selectedAssessments,
+  teamResults,
 }: {
   teamRecord: { id: string; name: string; language: string; current_step: number; finalized_steps: number[]; selected_assessments: string[] } | null;
   teamMembers: { id: string; name: string; email: string; completed: number; title: string | null; tenureLabel: string | null }[];
@@ -1201,6 +1217,7 @@ function TeamLeaderDashboard({
   leaderId: string;
   finalizedSteps: number[];
   selectedAssessments: string[];
+  teamResults: TeamMemberResult[];
 }) {
   if (!teamRecord) {
     return (
@@ -1263,6 +1280,20 @@ function TeamLeaderDashboard({
         selectedAssessments={selectedAssessments}
       />
 
+      {/* Team Results Grid */}
+      {(() => {
+        const gridMembers: TeamResultMember[] = [
+          { id: leaderId, name: leaderName },
+          ...teamMembers.map(m => ({ id: m.id, name: m.name })),
+        ];
+        return (
+          <TeamResultsGrid
+            members={gridMembers}
+            results={teamResults}
+          />
+        );
+      })()}
+
       {/* Compact comms section */}
       <TeamCommsSection
         teamId={teamRecord.id}
@@ -1284,6 +1315,7 @@ function TeamMemberDashboard({
   leaderName,
   leaderUserId,
   stepCompletions = [],
+  teamResults = [],
 }: {
   team: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] };
   teamContent: Module[];
@@ -1293,6 +1325,7 @@ function TeamMemberDashboard({
   leaderName?: string;
   leaderUserId?: string;
   stepCompletions?: { user_id: string; step_number: number; completed_at: string }[];
+  teamResults?: TeamMemberResult[];
 }) {
   const items = teamContent.length > 0 ? teamContent : allModules.filter(m => m.is_free);
   const completed = items.filter(m => completedIds.has(m.id)).length;
@@ -1324,6 +1357,14 @@ function TeamMemberDashboard({
         finalizedSteps={team.finalized_steps ?? []}
         selectedAssessments={team.selected_assessments ?? []}
       />
+
+      {/* Team Results Grid — all members' quiz results */}
+      {(() => {
+        const gridMembers: TeamResultMember[] = roster.map(m => ({ id: m.id, name: m.name }));
+        return teamResults.length > 0 ? (
+          <TeamResultsGrid members={gridMembers} results={teamResults} />
+        ) : null;
+      })()}
 
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
       <div>
