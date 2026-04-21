@@ -526,7 +526,7 @@ export default async function DashboardPage({
       <TimezoneDetector savedTimezone={userTimezone} />
 
       {/* ── DASHBOARD HEADER ── */}
-      <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative" }}>
         {/* Hero watermark logo — left side */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
