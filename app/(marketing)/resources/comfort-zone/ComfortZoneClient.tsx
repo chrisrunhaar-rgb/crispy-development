@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 
@@ -314,26 +315,38 @@ export default function ComfortZoneClient({
       {/* ── CONCENTRIC CIRCLE INSIGHT ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
-          <div style={{ maxWidth: "720px" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {t("Key Insight", "Wawasan Utama", "Belangrijkste Inzicht", lang)}
-            </p>
-            <h2 className="t-section" style={{ marginBottom: "1.25rem" }}>
-              {t(
-                "Growth doesn't replace fear — it expands around it.",
-                "Pertumbuhan tidak menggantikan ketakutan — ia berkembang di sekitarnya.",
-                "Groei vervangt angst niet — het breidt zich eromheen uit.",
-                lang
-              )}
-            </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "1.25rem" }}>
-              {t(
-                "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones — even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.",
-                "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan — bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
-                "Merk op hoe de comfort- en angstzone het kleinst zijn. Daarin blijven maakt je toekomst klein. Maar de groeizone omvat nog steeds de angst- en comfortzones — ook als je groeit, zul je nog steeds angsten ervaren. Je comfortzone breidt alleen uit naarmate je meer tijd doorbrengt in de leer- en groeizone.",
-                lang
-              )}
-            </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(2rem, 5vw, 5rem)", alignItems: "center" }}>
+            <div>
+              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+                {t("Key Insight", "Wawasan Utama", "Belangrijkste Inzicht", lang)}
+              </p>
+              <h2 className="t-section" style={{ marginBottom: "1.25rem" }}>
+                {t(
+                  "Growth doesn't replace fear — it expands around it.",
+                  "Pertumbuhan tidak menggantikan ketakutan — ia berkembang di sekitarnya.",
+                  "Groei vervangt angst niet — het breidt zich eromheen uit.",
+                  lang
+                )}
+              </h2>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)" }}>
+                {t(
+                  "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones — even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.",
+                  "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan — bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
+                  "Merk op hoe de comfort- en angstzone het kleinst zijn. Daarin blijven maakt je toekomst klein. Maar de groeizone omvat nog steeds de angst- en comfortzones — ook als je groeit, zul je nog steeds angsten ervaren. Je comfortzone breidt alleen uit naarmate je meer tijd doorbrengt in de leer- en groeizone.",
+                  lang
+                )}
+              </p>
+            </div>
+
+            <div style={{ position: "relative", width: "100%", maxWidth: "480px", margin: "0 auto" }}>
+              <Image
+                src={lang === "id" ? "/resources/comfort-zone-diagram-id.png" : "/resources/comfort-zone-diagram-en.png"}
+                alt={t("Comfort Zone diagram — four concentric circles", "Diagram Zona Nyaman — empat lingkaran konsentris", "Comfortzone diagram — vier concentrische cirkels", lang)}
+                width={480}
+                height={480}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </div>
           </div>
         </div>
       </section>
