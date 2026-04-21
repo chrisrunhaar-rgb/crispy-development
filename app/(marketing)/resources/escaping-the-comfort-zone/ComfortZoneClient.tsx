@@ -193,14 +193,6 @@ export default function ComfortZoneClient({
           </p>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            <a
-              href={`/resources/escaping-the-comfort-zone-${lang}.pdf`}
-              download
-              className="btn-primary"
-              style={{ textDecoration: "none" }}
-            >
-              {t("↓ Download PDF", "↓ Unduh PDF", "↓ Download PDF", lang)}
-            </a>
             {showAddToDashboard && (
               saved ? (
                 <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
@@ -387,16 +379,6 @@ export default function ComfortZoneClient({
               ))}
             </div>
 
-            <div style={{ marginTop: "2.5rem" }}>
-              <a
-                href={`/resources/escaping-the-comfort-zone-${lang}.pdf`}
-                download
-                className="btn-primary"
-                style={{ textDecoration: "none", display: "inline-flex" }}
-              >
-                {t("↓ Download Worksheet PDF", "↓ Unduh PDF Lembar Kerja", "↓ Download Werkblad PDF", lang)}
-              </a>
-            </div>
           </div>
         </div>
       </section>

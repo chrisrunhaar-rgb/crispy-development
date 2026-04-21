@@ -362,15 +362,6 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           </p>
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <a href={`/resources/leadership-altitudes-${lang}.pdf`} download style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)",
-              padding: "14px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14,
-              letterSpacing: "0.04em", textDecoration: "none",
-            }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M3 19h18"/></svg>
-              {t("Download PDF", "Unduh PDF", "Download PDF")}
-            </a>
             <button onClick={handleSave} disabled={saved || isPending} style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               background: saved ? "oklch(35% 0.08 260)" : "transparent",

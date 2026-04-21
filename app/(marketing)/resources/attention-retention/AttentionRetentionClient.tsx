@@ -265,15 +265,6 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </p>
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <a href={`/resources/attention-retention-${lang}.pdf`} download style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)",
-              padding: "14px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14,
-              letterSpacing: "0.04em", textDecoration: "none",
-            }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M3 19h18"/></svg>
-              {tr("Download PDF", "Unduh PDF", "PDF Downloaden")}
-            </a>
             <button onClick={handleSave} disabled={saved || isPending} style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               background: saved ? "oklch(35% 0.08 260)" : "transparent",
@@ -542,21 +533,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
             {tr("Design Better Training", "Rancang Pelatihan yang Lebih Baik", "Ontwerp Betere Training")}
           </h2>
-          <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
-            {tr(
-              "Download the full Attention & Retention guide for worksheets, session design templates, and cross-cultural application notes.",
-              "Unduh panduan Perhatian & Retensi lengkap untuk lembar kerja, template desain sesi, dan catatan penerapan lintas budaya.",
-              "Download de volledige Aandacht & Retentie-gids voor werkbladen, sessieontwerptemplates en interculturele toepassingsnotities."
-            )}
-          </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href={`/resources/attention-retention-${lang}.pdf`} download style={{
-              display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)",
-              padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14,
-              letterSpacing: "0.04em", textDecoration: "none",
-            }}>
-              {tr("Download PDF Guide", "Unduh Panduan PDF", "Download PDF-gids")}
-            </a>
             <Link href={userPathway ? "/dashboard" : "/personal"} style={{
               display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)",
               padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14,

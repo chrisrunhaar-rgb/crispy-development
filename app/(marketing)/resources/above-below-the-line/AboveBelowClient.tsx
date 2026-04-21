@@ -123,7 +123,6 @@ export default function AboveBelowClient({
             lang
           )}</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <a href={`/resources/above-below-the-line-${lang}.pdf`} download style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>{t("Download PDF", "Unduh PDF", "Download PDF", lang)}</a>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Add to Dashboard", "Tambah ke Dasbor", "Toevoegen aan Dashboard", lang)}</button>
             ) : (
@@ -297,14 +296,7 @@ export default function AboveBelowClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>{t("Choose to Lead Above the Line", "Pilih untuk Memimpin Di Atas Garis", "Kies om Boven de Lijn te Leiden", lang)}</h2>
-          <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>{t(
-            "Download the PDF for the full framework card — perfect for team training sessions.",
-            "Unduh PDF untuk kartu kerangka lengkap — sempurna untuk sesi pelatihan tim.",
-            "Download de PDF voor de volledige kaderkaart — perfect voor teamtrainingen.",
-            lang
-          )}</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href={`/resources/above-below-the-line-${lang}.pdf`} download style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>{t("Download PDF", "Unduh PDF", "Download PDF", lang)}</a>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen", lang)}</Link>
           </div>
         </div>

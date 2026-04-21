@@ -165,9 +165,6 @@ export default function LeadersReadersClient({
           </p>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            <a href={`/resources/leaders-are-readers-${lang}.pdf`} download className="btn-primary" style={{ textDecoration: "none" }}>
-              {t("↓ Download PDF", "↓ Unduh PDF", "↓ Download PDF", lang)}
-            </a>
             {showAddToDashboard && (
               saved ? (
                 <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
@@ -284,32 +281,6 @@ export default function LeadersReadersClient({
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── READING PLAN WORKSHEET ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
-        <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div className="container-wide">
-          <div style={{ paddingLeft: "2.5rem" }}>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>
-              {t("Included in the PDF", "Termasuk dalam PDF", "Inbegrepen in de PDF", lang)}
-            </p>
-            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
-              {t("Your personal reading plan.", "Rencana membaca pribadimu.", "Jouw persoonlijk leesplan.", lang)}
-            </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", marginBottom: "1.5rem", maxWidth: "52ch" }}>
-              {t(
-                "The downloadable PDF includes a structured reading plan worksheet — for topics you want to learn about, books related to those topics, a dedicated reading schedule, and your personal reading setup.",
-                "PDF yang dapat diunduh menyertakan lembar kerja rencana membaca terstruktur — untuk topik yang ingin kamu pelajari, buku-buku terkait topik tersebut, jadwal membaca khusus, dan pengaturan membaca pribadimu.",
-                "De downloadbare PDF bevat een gestructureerd leesplan werkblad — voor onderwerpen die je wilt leren, boeken gerelateerd aan die onderwerpen, een speciaal leesrooster en je persoonlijke leesomgeving.",
-                lang
-              )}
-            </p>
-            <a href={`/resources/leaders-are-readers-${lang}.pdf`} download className="btn-primary" style={{ textDecoration: "none", display: "inline-flex" }}>
-              {t("↓ Download Reading Plan PDF", "↓ Unduh PDF Rencana Membaca", "↓ Download Leesplan PDF", lang)}
-            </a>
           </div>
         </div>
       </section>

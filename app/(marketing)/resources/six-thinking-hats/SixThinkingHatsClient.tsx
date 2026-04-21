@@ -226,10 +226,6 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <a href={`/resources/six-thinking-hats-${lang}.pdf`} download style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M3 19h18"/></svg>
-              {tr("Download PDF", "Unduh PDF", "PDF Downloaden")}
-            </a>
             <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved ? tr("Saved", "Tersimpan", "Opgeslagen") : tr("Add to Dashboard", "Simpan ke Dashboard", "Toevoegen aan Dashboard")}
@@ -361,17 +357,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
             {tr("Try It in Your Next Meeting", "Coba di Rapat Berikutnya", "Probeer het in je Volgende Vergadering")}
           </h2>
-          <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
-            {tr(
-              "Download the PDF for a ready-to-use reference card you can share with your team.",
-              "Unduh PDF untuk kartu referensi siap pakai yang bisa Anda bagikan kepada tim Anda.",
-              "Download de PDF voor een direct te gebruiken referentiekaart die je met je team kunt delen."
-            )}
-          </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href={`/resources/six-thinking-hats-${lang}.pdf`} download style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>
-              {tr("Download PDF", "Unduh PDF", "PDF Downloaden")}
-            </a>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
               {tr("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen")}
             </Link>
