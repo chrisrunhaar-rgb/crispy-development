@@ -433,7 +433,7 @@ function PathwayCard({
 }: {
   href: string; image: string; imagePosition: string;
   badgeLabel: string; heading: string; body: string;
-  features: string[]; ctaLabel: string;
+  features: readonly string[]; ctaLabel: string;
 }) {
   const [hovered, setHovered] = useState(false);
 
