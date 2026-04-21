@@ -1290,6 +1290,7 @@ function TeamLeaderDashboard({
           <TeamResultsGrid
             members={gridMembers}
             results={teamResults}
+            selectedAssessments={selectedAssessments}
           />
         );
       })()}
@@ -1359,12 +1360,13 @@ function TeamMemberDashboard({
       />
 
       {/* Team Results Grid — all members' quiz results */}
-      {(() => {
-        const gridMembers: TeamResultMember[] = roster.map(m => ({ id: m.id, name: m.name }));
-        return teamResults.length > 0 ? (
-          <TeamResultsGrid members={gridMembers} results={teamResults} />
-        ) : null;
-      })()}
+      {teamResults.length > 0 && (
+        <TeamResultsGrid
+          members={roster.map(m => ({ id: m.id, name: m.name }))}
+          results={teamResults}
+          selectedAssessments={team.selected_assessments}
+        />
+      )}
 
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
       <div>

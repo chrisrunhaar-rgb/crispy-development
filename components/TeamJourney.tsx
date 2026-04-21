@@ -143,7 +143,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
     collectsData: true,
     dataLabel: "Life Balance",
-    contentUrl: "/resources/wheel-of-life",
+    contentUrl: "/team/wheel-of-life",
     insertAfter: 3,
   },
   "enneagram": {
@@ -153,7 +153,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z",
     collectsData: true,
     dataLabel: "Enneagram Type",
-    contentUrl: "/resources/enneagram",
+    contentUrl: "/team/enneagram",
     insertAfter: 3,
   },
   // After step 4 "Communication Culture" — behavioural & personality styles shape how teams communicate
@@ -164,7 +164,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
     collectsData: true,
     dataLabel: "DISC Type",
-    contentUrl: "/resources/disc",
+    contentUrl: "/team/disc",
     insertAfter: 4,
   },
   "three-thinking-styles": {
@@ -174,7 +174,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
     collectsData: true,
     dataLabel: "Thinking Style",
-    contentUrl: "/resources/three-thinking-styles",
+    contentUrl: "/team/three-thinking-styles",
     insertAfter: 4,
   },
   "myers-briggs": {
@@ -184,7 +184,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
     collectsData: true,
     dataLabel: "MBTI Type",
-    contentUrl: "/resources/myers-briggs",
+    contentUrl: "/team/myers-briggs",
     insertAfter: 4,
   },
   "16-personalities": {
@@ -194,7 +194,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
     collectsData: true,
     dataLabel: "Personality",
-    contentUrl: "/resources/16-personalities",
+    contentUrl: "/team/16-personalities",
     insertAfter: 4,
   },
   "big-five": {
@@ -204,7 +204,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
     collectsData: true,
     dataLabel: "OCEAN Profile",
-    contentUrl: "/resources/big-five",
+    contentUrl: "/team/big-five",
     insertAfter: 4,
   },
   // After step 5 "Trust & Psychological Safety" — spiritual gifts are shared most freely in a safe team
@@ -215,7 +215,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
     collectsData: true,
     dataLabel: "Gift Profile",
-    contentUrl: "/resources/karunia-rohani",
+    contentUrl: "/team/karunia-rohani",
     insertAfter: 5,
   },
 };

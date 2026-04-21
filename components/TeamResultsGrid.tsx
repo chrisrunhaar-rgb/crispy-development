@@ -69,12 +69,30 @@ function Pill({ label, color }: { label: string; color: string }) {
   );
 }
 
+// All possible result columns — always shown if data exists OR if selected by leader
+const ALL_RESULT_TYPES: Record<string, { label: string; href: string; assessmentId?: string }> = {
+  comm_style:        { label: "Comm Style",        href: "/team/communication-culture" },
+  trust:             { label: "Trust Score",        href: "/team/trust-psychological-safety" },
+  contribution_zone: { label: "Contribution Zone", href: "/team/roles-contribution" },
+  conflict_style:    { label: "Conflict Style",     href: "/team/navigating-conflict" },
+  disc:              { label: "DISC",               href: "/team/disc",                assessmentId: "disc" },
+  wheel_of_life:     { label: "Wheel of Life",      href: "/team/wheel-of-life",       assessmentId: "wheel-of-life" },
+  thinking_style:    { label: "Thinking Style",     href: "/team/three-thinking-styles", assessmentId: "three-thinking-styles" },
+  enneagram:         { label: "Enneagram",          href: "/team/enneagram",           assessmentId: "enneagram" },
+  mbti:              { label: "MBTI",               href: "/team/myers-briggs",        assessmentId: "myers-briggs" },
+  personalities16:   { label: "16 Personalities",  href: "/team/16-personalities",    assessmentId: "16-personalities" },
+  big_five:          { label: "Big Five",           href: "/team/big-five",            assessmentId: "big-five" },
+  karunia:           { label: "Karunia Rohani",     href: "/team/karunia-rohani",      assessmentId: "karunia-rohani" },
+};
+
 export default function TeamResultsGrid({
   members,
   results,
+  selectedAssessments = [],
 }: {
   members: TeamResultMember[];
   results: TeamMemberResult[];
+  selectedAssessments?: string[];
 }) {
   if (members.length === 0) return null;
 
@@ -85,24 +103,24 @@ export default function TeamResultsGrid({
     lookup.get(r.user_id)!.set(r.result_type, r);
   }
 
+  // Show columns: always show the 4 core team module columns + any selected assessment that has data
+  const resultTypesInData = new Set(results.map(r => r.result_type));
+  const RESULT_TYPES = Object.entries(ALL_RESULT_TYPES).filter(([key, meta]) => {
+    if (!meta.assessmentId) return true; // always show core 4
+    return selectedAssessments.includes(meta.assessmentId) || resultTypesInData.has(key);
+  }).map(([key, meta]) => ({ key, ...meta }));
+
   const hasAny = results.length > 0;
   if (!hasAny) {
     return (
       <div>
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>Team Results</p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(55% 0.008 260)", lineHeight: 1.6 }}>
-          No results yet. Results from modules 4–7 will appear here once team members complete them.
+          No results yet. Results from team modules and assessments will appear here once members complete them.
         </p>
       </div>
     );
   }
-
-  const RESULT_TYPES = [
-    { key: "comm_style", label: "Comm Style", href: "/team/communication-culture" },
-    { key: "trust", label: "Trust Score", href: "/team/trust-psychological-safety" },
-    { key: "contribution_zone", label: "Contribution Zone", href: "/team/roles-contribution" },
-    { key: "conflict_style", label: "Conflict Style", href: "/team/navigating-conflict" },
-  ];
 
   return (
     <div>
@@ -154,44 +172,53 @@ export default function TeamResultsGrid({
                     </p>
                   </td>
 
-                  {/* Comm Style */}
-                  <td style={{ padding: "0.875rem 0.75rem" }}>
-                    {(() => {
-                      const r = memberResults?.get("comm_style");
-                      if (!r?.result_key) return <span style={{ color: "oklch(72% 0.006 260)", fontSize: "0.72rem" }}>—</span>;
-                      const meta = COMM_STYLE_LABELS[r.result_key];
-                      return meta ? <Pill label={meta.name} color={meta.color} /> : <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;
-                    })()}
-                  </td>
-
-                  {/* Trust Score */}
-                  <td style={{ padding: "0.875rem 0.75rem" }}>
-                    {(() => {
-                      const r = memberResults?.get("trust");
-                      if (!r?.result_key) return <span style={{ color: "oklch(72% 0.006 260)", fontSize: "0.72rem" }}>—</span>;
-                      return <TrustBadge avg={parseFloat(r.result_key)} />;
-                    })()}
-                  </td>
-
-                  {/* Contribution Zone */}
-                  <td style={{ padding: "0.875rem 0.75rem" }}>
-                    {(() => {
-                      const r = memberResults?.get("contribution_zone");
-                      if (!r?.result_key) return <span style={{ color: "oklch(72% 0.006 260)", fontSize: "0.72rem" }}>—</span>;
-                      const color = ZONE_COLORS[r.result_key] ?? "oklch(42% 0.008 260)";
-                      return <Pill label={r.result_key} color={color} />;
-                    })()}
-                  </td>
-
-                  {/* Conflict Style */}
-                  <td style={{ padding: "0.875rem 0.75rem" }}>
-                    {(() => {
-                      const r = memberResults?.get("conflict_style");
-                      if (!r?.result_key) return <span style={{ color: "oklch(72% 0.006 260)", fontSize: "0.72rem" }}>—</span>;
-                      const meta = CONFLICT_STYLE_LABELS[r.result_key];
-                      return meta ? <Pill label={meta.name} color={meta.color} /> : <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;
-                    })()}
-                  </td>
+                  {RESULT_TYPES.map(rt => (
+                    <td key={rt.key} style={{ padding: "0.875rem 0.75rem" }}>
+                      {(() => {
+                        const r = memberResults?.get(rt.key);
+                        if (!r?.result_key) return <span style={{ color: "oklch(72% 0.006 260)", fontSize: "0.72rem" }}>—</span>;
+                        switch (rt.key) {
+                          case "comm_style": {
+                            const meta = COMM_STYLE_LABELS[r.result_key];
+                            return meta ? <Pill label={meta.name} color={meta.color} /> : <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;
+                          }
+                          case "trust":
+                            return <TrustBadge avg={parseFloat(r.result_key)} />;
+                          case "contribution_zone": {
+                            const color = ZONE_COLORS[r.result_key] ?? "oklch(42% 0.008 260)";
+                            return <Pill label={r.result_key} color={color} />;
+                          }
+                          case "conflict_style": {
+                            const meta = CONFLICT_STYLE_LABELS[r.result_key];
+                            return meta ? <Pill label={meta.name} color={meta.color} /> : <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;
+                          }
+                          case "disc": {
+                            const colors: Record<string, string> = { D: "oklch(48% 0.18 20)", I: "oklch(48% 0.14 85)", S: "oklch(42% 0.14 145)", C: "oklch(42% 0.18 250)" };
+                            return <Pill label={r.result_key} color={colors[r.result_key] ?? "oklch(42% 0.008 260)"} />;
+                          }
+                          case "wheel_of_life":
+                            return <TrustBadge avg={parseFloat(r.result_key)} />;
+                          case "thinking_style": {
+                            const labels: Record<string, string> = { C: "Conceptual", H: "Holistic", I: "Intuitional", CH: "C·H", CI: "C·I", HI: "H·I", CHI: "Balanced" };
+                            return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(42% 0.008 260)" }}>{labels[r.result_key] ?? r.result_key}</span>;
+                          }
+                          case "enneagram":
+                            return <Pill label={`Type ${r.result_key}`} color="oklch(42% 0.14 260)" />;
+                          case "mbti":
+                          case "personalities16":
+                            return <Pill label={r.result_key} color="oklch(42% 0.14 200)" />;
+                          case "big_five":
+                            return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(42% 0.008 260)" }}>{r.result_key}</span>;
+                          case "karunia": {
+                            const KARUNIA_LABELS: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", memberi: "Memberi", hikmat: "Hikmat", iman: "Iman", memimpin: "Memimpin", mengajar: "Mengajar", gembala: "Gembala", bernubuat: "Bernubuat" };
+                            return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(42% 0.14 145)" }}>{KARUNIA_LABELS[r.result_key] ?? r.result_key}</span>;
+                          }
+                          default:
+                            return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;
+                        }
+                      })()}
+                    </td>
+                  ))}
                 </tr>
               );
             })}
