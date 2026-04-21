@@ -1286,10 +1286,10 @@ const TEAM_ASSESSMENTS = [
   { id: "karunia-rohani", label: "Karunia Rohani", href: "/resources/karunia-rohani" },
   { id: "three-thinking-styles", label: "Three Thinking Styles", href: "/resources/three-thinking-styles" },
   { id: "wheel-of-life", label: "Wheel of Life", href: "/resources/wheel-of-life" },
-  { id: "myers-briggs", label: "Myers-Briggs (MBTI)", href: "#" },
-  { id: "16-personalities", label: "16 Personalities", href: "#" },
-  { id: "enneagram", label: "Enneagram", href: "#" },
-  { id: "big-five", label: "Big Five (OCEAN)", href: "#" },
+  { id: "myers-briggs", label: "Myers-Briggs (MBTI)", href: "/resources/myers-briggs" },
+  { id: "16-personalities", label: "16 Personalities", href: "/resources/16-personalities" },
+  { id: "enneagram", label: "Enneagram", href: "/resources/enneagram" },
+  { id: "big-five", label: "Big Five (OCEAN)", href: "/resources/big-five" },
 ];
 
 // ── State components ────────────────────────────────────────────────────────

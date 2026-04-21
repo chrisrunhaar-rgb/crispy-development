@@ -12,7 +12,7 @@ export default function AppLayout({
   return (
     <>
       <PushNotificationPrompt />
-      <main style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+      <main style={{ paddingBottom: "calc(80px + env(safe-area-inset-bottom, 0px))" }}>
         {children}
       </main>
       <AppBottomNav />
