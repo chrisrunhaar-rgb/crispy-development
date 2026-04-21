@@ -68,6 +68,14 @@ export default async function DashboardPage({
   const wheelOfLifeScores = (user.user_metadata?.wheel_of_life_scores ?? null) as Record<string, number> | null;
   const peerGroupId = user.user_metadata?.peer_group_id as string | undefined;
   const userTimezone = user.user_metadata?.timezone as string | undefined;
+  const commStyle = (user.user_metadata?.comm_style ?? null) as string | null;
+  const commStyleScores = (user.user_metadata?.comm_style_scores ?? null) as Record<string, number> | null;
+  const trustAvg = (user.user_metadata?.trust_avg ?? null) as number | null;
+  const trustScores = (user.user_metadata?.trust_scores ?? null) as Record<string, number> | null;
+  const contributionZone = (user.user_metadata?.contribution_zone ?? null) as string | null;
+  const contributionScores = (user.user_metadata?.contribution_scores ?? null) as Record<string, number> | null;
+  const conflictStyle = (user.user_metadata?.conflict_style ?? null) as string | null;
+  const conflictScores = (user.user_metadata?.conflict_scores ?? null) as Record<string, number> | null;
 
   const admin = createAdminClient();
 
@@ -108,7 +116,7 @@ export default async function DashboardPage({
 
   // ── Check if user was invited to a team (any pathway) ──
   // Users invited via link keep their original pathway metadata but are in team_members
-  let memberOfTeam: { id: string; name: string; selected_assessments: string[] } | null = null;
+  let memberOfTeam: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] } | null = null;
   if (!isLeaderByMeta) {
     const { data: memberRow } = await admin
       .from("team_members")
@@ -118,10 +126,10 @@ export default async function DashboardPage({
     if (memberRow) {
       const { data: mt } = await admin
         .from("teams")
-        .select("id, name, selected_assessments")
+        .select("id, name, selected_assessments, current_step, finalized_steps")
         .eq("id", memberRow.team_id)
         .maybeSingle();
-      memberOfTeam = mt ? { ...mt, selected_assessments: mt.selected_assessments ?? [] } : null;
+      memberOfTeam = mt ? { ...mt, selected_assessments: mt.selected_assessments ?? [], finalized_steps: mt.finalized_steps ?? [] } : null;
     }
   }
 
@@ -370,6 +378,17 @@ export default async function DashboardPage({
     teamBroadcasts = (bcRows ?? []) as BroadcastRow[];
   }
 
+  // ── Step completions for team members ──
+  let memberStepCompletions: StepCompletionRow[] = [];
+  let memberTeamLeaderUserId: string | undefined;
+  if (memberOfTeam) {
+    const { data: mscRows } = await admin
+      .from("team_step_data")
+      .select("user_id, step_number, completed_at")
+      .eq("team_id", memberOfTeam.id);
+    memberStepCompletions = (mscRows ?? []) as StepCompletionRow[];
+  }
+
   // ── Team member content + roster (invited via link) ──
   let memberTeamContent: Module[] = [];
   let memberTeamRoster: RosterMember[] = [];
@@ -415,6 +434,7 @@ export default async function DashboardPage({
       });
 
       if (leaderProfileId) {
+        memberTeamLeaderUserId = leaderProfileId;
         const lp = profileMap.get(leaderProfileId);
         if (lp) memberTeamLeaderName = `${lp.first_name ?? ""} ${lp.last_name ?? ""}`.trim() || undefined;
       }
@@ -544,7 +564,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} />
           </>
         )}
 
@@ -573,6 +593,8 @@ export default async function DashboardPage({
             completedIds={completedIds}
             roster={memberTeamRoster}
             leaderName={memberTeamLeaderName}
+            leaderUserId={memberTeamLeaderUserId}
+            stepCompletions={memberStepCompletions}
           />
         )}
 
@@ -709,7 +731,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -724,6 +746,14 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   wheelOfLifeScores?: Record<string, number> | null;
   karuniaTopGifts?: string[] | null;
   karuniaScores?: Record<string, number> | null;
+  commStyle?: string | null;
+  commStyleScores?: Record<string, number> | null;
+  trustAvg?: number | null;
+  trustScores?: Record<string, number> | null;
+  contributionZone?: string | null;
+  contributionScores?: Record<string, number> | null;
+  conflictStyle?: string | null;
+  conflictScores?: Record<string, number> | null;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -957,6 +987,138 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           </div>
         )}
 
+        {/* Comm Style result card */}
+        {commStyle && commStyleScores && (() => {
+          const COMM_STYLE_LABELS: Record<string, { name: string; color: string; description: string }> = {
+            A: { name: "The Architect", color: "oklch(42% 0.18 250)", description: "Direct, structured, task-focused. You communicate with clarity and precision." },
+            D: { name: "The Diplomat", color: "oklch(42% 0.18 145)", description: "Relational, harmony-seeking, indirect. You build bridges and smooth tensions." },
+            C: { name: "The Connector", color: "oklch(48% 0.18 45)", description: "Warm, energetic, people-first. You inspire and bring people together." },
+            N: { name: "The Analyst", color: "oklch(42% 0.18 300)", description: "Thoughtful, detail-oriented, logical. You communicate through data and precision." },
+          };
+          const meta = COMM_STYLE_LABELS[commStyle] ?? { name: commStyle, color: "oklch(42% 0.008 260)", description: "" };
+          return (
+            <div className="stat-block">
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Communication Style</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{meta.name}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              {commStyleScores && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "0.875rem" }}>
+                  {Object.entries(commStyleScores).sort(([,a],[,b]) => b - a).map(([key, pct]) => {
+                    const labels: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+                    return (
+                      <div key={key}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
+                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(52% 0.008 260)", fontWeight: 600 }}>{labels[key] ?? key}</span>
+                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: "oklch(38% 0.008 260)" }}>{pct}%</span>
+                        </div>
+                        <div style={{ height: "4px", background: "oklch(88% 0.008 80)" }}>
+                          <div style={{ height: "100%", width: `${pct}%`, background: meta.color }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              <Link href="/team/communication-culture" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+            </div>
+          );
+        })()}
+
+        {/* Trust Score result card */}
+        {trustAvg !== null && (
+          <div className="stat-block">
+            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Trust Score</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
+              {trustAvg}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/5</span>
+            </p>
+            {(() => {
+              const tier = trustAvg >= 4.5 ? { label: "High Trust", color: "oklch(42% 0.14 145)" }
+                : trustAvg >= 3.5 ? { label: "Building Trust", color: "oklch(55% 0.14 85)" }
+                : trustAvg >= 2.5 ? { label: "Fragile Trust", color: "oklch(55% 0.14 55)" }
+                : { label: "Critical — Needs Attention", color: "oklch(50% 0.18 20)" };
+              return <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: tier.color, fontWeight: 700, marginTop: "0.375rem", marginBottom: "0.875rem" }}>{tier.label}</p>;
+            })()}
+            {trustScores && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "0.875rem" }}>
+                {Object.entries(trustScores).map(([key, val]) => (
+                  <div key={key}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(52% 0.008 260)", fontWeight: 600, textTransform: "capitalize" }}>{key.replace(/_/g, " ")}</span>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: "oklch(38% 0.008 260)" }}>{val}/5</span>
+                    </div>
+                    <div style={{ height: "4px", background: "oklch(88% 0.008 80)" }}>
+                      <div style={{ height: "100%", width: `${(val / 5) * 100}%`, background: "oklch(42% 0.14 145)" }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <Link href="/team/trust-psychological-safety" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake assessment →</Link>
+          </div>
+        )}
+
+        {/* Contribution Zone result card */}
+        {contributionZone && contributionScores && (() => {
+          const ZONE_META: Record<string, { color: string; description: string }> = {
+            Pioneer: { color: "oklch(48% 0.18 45)", description: "You thrive in new territory — initiating, exploring, and building from scratch." },
+            Builder: { color: "oklch(42% 0.18 250)", description: "You take ideas and turn them into systems — structuring, scaling, and executing." },
+            Sustainer: { color: "oklch(42% 0.14 145)", description: "You keep things running — reliable, relational, and consistent." },
+            Connector: { color: "oklch(48% 0.18 300)", description: "You link people, ideas, and resources — bridging gaps and building community." },
+          };
+          const meta = ZONE_META[contributionZone] ?? { color: "oklch(42% 0.008 260)", description: "" };
+          return (
+            <div className="stat-block">
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Contribution Zone</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{contributionZone}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "0.875rem" }}>
+                {Object.entries(contributionScores).sort(([,a],[,b]) => b - a).map(([zone, score]) => (
+                  <div key={zone}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(52% 0.008 260)", fontWeight: 600 }}>{zone}</span>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: "oklch(38% 0.008 260)" }}>{score}</span>
+                    </div>
+                    <div style={{ height: "4px", background: "oklch(88% 0.008 80)" }}>
+                      <div style={{ height: "100%", width: `${Math.min((score / 30) * 100, 100)}%`, background: meta.color }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link href="/team/roles-contribution" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+            </div>
+          );
+        })()}
+
+        {/* Conflict Style result card */}
+        {conflictStyle && conflictScores && (() => {
+          const CONFLICT_META: Record<string, { name: string; color: string; description: string }> = {
+            A: { name: "Avoider", color: "oklch(42% 0.14 260)", description: "You step back from tension and prefer harmony over direct confrontation." },
+            C: { name: "Collaborator", color: "oklch(42% 0.14 145)", description: "You work through conflict together — honest, patient, and solution-focused." },
+            M: { name: "Mediator", color: "oklch(48% 0.14 45)", description: "You seek middle ground — balancing relationships and outcomes." },
+          };
+          const meta = CONFLICT_META[conflictStyle] ?? { name: conflictStyle, color: "oklch(42% 0.008 260)", description: "" };
+          return (
+            <div className="stat-block">
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Conflict Style</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{meta.name}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.875rem" }}>
+                {Object.entries(conflictScores).map(([key, score]) => {
+                  const labels: Record<string, string> = { A: "Avoider", C: "Collaborator", M: "Mediator" };
+                  const isTop = key === conflictStyle;
+                  return (
+                    <div key={key} style={{ flex: 1, textAlign: "center", padding: "0.5rem", background: isTop ? `${meta.color} / 0.1` : "oklch(95% 0.003 80)", outline: isTop ? `1.5px solid ${meta.color}` : "none" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, color: isTop ? meta.color : "oklch(55% 0.008 260)", marginBottom: "0.2rem" }}>{labels[key] ?? key}</p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", fontWeight: 800, color: isTop ? meta.color : "oklch(42% 0.008 260)" }}>{score}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <Link href="/team/navigating-conflict" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+            </div>
+          );
+        })()}
+
         {/* Karunia Rohani result card */}
         {karuniaTopGifts && karuniaTopGifts.length > 0 && karuniaScores ? (
           <div className="stat-block">
@@ -1120,13 +1282,17 @@ function TeamMemberDashboard({
   completedIds,
   roster = [],
   leaderName,
+  leaderUserId,
+  stepCompletions = [],
 }: {
-  team: { id: string; name: string; selected_assessments: string[] };
+  team: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] };
   teamContent: Module[];
   allModules: Module[];
   completedIds: Set<string>;
   roster?: RosterMember[];
   leaderName?: string;
+  leaderUserId?: string;
+  stepCompletions?: { user_id: string; step_number: number; completed_at: string }[];
 }) {
   const items = teamContent.length > 0 ? teamContent : allModules.filter(m => m.is_free);
   const completed = items.filter(m => completedIds.has(m.id)).length;
@@ -1144,6 +1310,20 @@ function TeamMemberDashboard({
           isLeader={false}
         />
       )}
+
+      {/* Team Journey — read-only for members, shows Open Content links */}
+      <TeamJourney
+        teamId={team.id}
+        teamName={team.name}
+        leaderName={leaderName}
+        leaderUserId={leaderUserId}
+        currentStep={team.current_step ?? 1}
+        teamMembers={roster}
+        stepCompletions={stepCompletions}
+        isLeader={false}
+        finalizedSteps={team.finalized_steps ?? []}
+        selectedAssessments={team.selected_assessments ?? []}
+      />
 
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
       <div>
