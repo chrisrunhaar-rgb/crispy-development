@@ -841,51 +841,48 @@ export default function TeamFoundationsClient({ user }: { user: User | null }) {
             lineHeight: 1.2,
             marginBottom: "1rem",
           }}>
-            You've laid the groundwork. Now define the destination.
+            Put it into practice.
           </h2>
           <p style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "0.9375rem",
             lineHeight: 1.75,
             color: "oklch(72% 0.04 260)",
-            marginBottom: "2.5rem",
+            marginBottom: "2rem",
           }}>
-            Module 2 takes everything you've just reflected on and puts it to work — helping your team articulate a shared purpose and vision that will hold you together when it gets hard.
+            During your next team meeting, try to answer the following questions together:
           </p>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            <Link
-              href="/team/team-purpose-vision"
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontWeight: 700,
-                fontSize: "0.8125rem",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                background: "oklch(65% 0.15 45)",
-                color: "white",
-                textDecoration: "none",
-                padding: "0.875rem 1.75rem",
-                display: "inline-block",
-                transition: "opacity 0.15s ease",
-              }}
-            >
-              Module 02: Team Purpose & Vision →
-            </Link>
-            <Link
-              href="/team"
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontWeight: 600,
-                fontSize: "0.8125rem",
-                letterSpacing: "0.06em",
-                color: "oklch(72% 0.04 260)",
-                textDecoration: "none",
-                padding: "0.875rem 0",
-              }}
-            >
-              ← Back to Team Dashboard
-            </Link>
-          </div>
+          <ol style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.9375rem",
+            lineHeight: 1.8,
+            color: "oklch(82% 0.02 260)",
+            paddingLeft: "1.25rem",
+            marginBottom: "2.5rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.875rem",
+          }}>
+            <li>What does belonging look like on our team — and who might feel like they don't quite fit?</li>
+            <li>What unspoken rules or expectations shape how we work together? Are they helping us or holding us back?</li>
+            <li>On a scale of 1–10, how safe does it feel to be honest on this team? What would raise that number?</li>
+            <li>What cultural differences do we bring to this team — and how can we make those a strength rather than a source of friction?</li>
+          </ol>
+          <Link
+            href="/team"
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontWeight: 600,
+              fontSize: "0.8125rem",
+              letterSpacing: "0.06em",
+              color: "oklch(72% 0.04 260)",
+              textDecoration: "none",
+              padding: "0.875rem 0",
+              display: "inline-block",
+            }}
+          >
+            ← Back to Team Dashboard
+          </Link>
         </div>
       </section>
 
