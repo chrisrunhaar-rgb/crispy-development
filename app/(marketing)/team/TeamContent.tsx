@@ -141,40 +141,91 @@ export default function TeamContent({ ctaHref = "/signup?pathway=personal" }: { 
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
-        <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div className="container-wide" style={{ paddingLeft: "2.5rem" }}>
-          <p className="t-tagline" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.25rem", fontStyle: "italic" }}>
-            {p.ctaQuote}
-          </p>
-          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-            {p.ctaHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "3rem", maxWidth: "48ch" }}>
-            {p.tagline}
-          </p>
+      {/* ── PRICING COMING SOON ── */}
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
+        <div className="container-wide">
+          <div style={{ marginBottom: "3rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.35)", padding: "0.375rem 0.875rem", marginBottom: "1.25rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>Team Pricing</span>
+            </div>
+            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>Launching soon</h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "48ch" }}>
+              One Team plan covers the leader and up to 8 members — all with Personal + Peer access included. No auto-renewal.
+            </p>
+          </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1px", background: "oklch(22% 0.10 260 / 0.5)", maxWidth: "760px" }}>
-            <div style={{ background: "oklch(26% 0.11 260)", padding: "2rem" }}>
-              <span className="pathway-badge" style={{ background: "oklch(97% 0.005 80 / 0.1)", color: "oklch(82% 0.06 260)", marginBottom: "1rem", display: "inline-flex", fontSize: "0.58rem" }}>{t.home.personalBadge}</span>
-              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", marginBottom: "0.5rem", lineHeight: 1.3 }}>{t.home.personalHeading}</h3>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(65% 0.04 260)", marginBottom: "1.5rem" }}>{t.home.personalBody}</p>
-              <Link href="/personal" className="btn-outline-navy" style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem", color: "oklch(78% 0.04 260)", borderColor: "oklch(42% 0.008 260)" }}>{t.home.personalCta} →</Link>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)", maxWidth: "820px" }}>
+            {/* PERSONAL + PEER */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Personal + Peer</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Per person · included with Team</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Full library access", "8 personality assessments", "Peer Group access", "Personal journey tracking"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
+                Coming Soon
+              </div>
             </div>
-            <div style={{ background: "oklch(24% 0.10 260)", padding: "2rem" }}>
-              <span className="pathway-badge team" style={{ background: "oklch(97% 0.005 80 / 0.1)", color: "oklch(82% 0.06 260)", marginBottom: "1rem", display: "inline-flex", fontSize: "0.58rem" }}>{t.home.teamBadge}</span>
-              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", marginBottom: "0.5rem", lineHeight: 1.3 }}>{t.home.teamHeading}</h3>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(65% 0.04 260)", marginBottom: "1.5rem" }}>{t.home.teamBody}</p>
-              <Link href="/signup?pathway=team" className="btn-primary" style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}>{p.ctaPrimary} →</Link>
+
+            {/* TEAM */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Team</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$497</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Leader + up to 8 members · no auto-renewal</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Everything in Personal + Peer for all 9", "Team journey dashboard", "Team assessments + reflections", "Leader content toolkit", "Member progress tracking"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", padding: "0.5rem 1rem", border: "1px solid oklch(65% 0.15 45 / 0.4)", textAlign: "center" }}>
+                Coming Soon
+              </div>
             </div>
-            <div style={{ background: "oklch(22% 0.10 260)", padding: "2rem" }}>
-              <span className="pathway-badge" style={{ background: "oklch(97% 0.005 80 / 0.1)", color: "oklch(82% 0.06 260)", marginBottom: "1rem", display: "inline-flex", fontSize: "0.58rem" }}>{t.home.peerBadge}</span>
-              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", marginBottom: "0.5rem", lineHeight: 1.3 }}>{t.home.peerHeading}</h3>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(65% 0.04 260)", marginBottom: "1.5rem" }}>{t.home.peerBody}</p>
-              <Link href="/peer-groups" className="btn-outline-navy" style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem", color: "oklch(78% 0.04 260)", borderColor: "oklch(42% 0.008 260)" }}>{t.home.peerCta} →</Link>
+
+            {/* COACHING */}
+            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Coaching</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$297</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>Application-based · EN · ID · NL only</p>
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
+                {["Personal + Team included", "1-on-1 coaching with Chris", "Personalised development plan", "Cultural context coaching", "Limited spots — approval required"].map(f => (
+                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
+                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
+                Coming Soon
+              </div>
             </div>
           </div>
+
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "1.5rem" }}>
+            USD pricing shown · Regional rates available for SE Asia, South Asia &amp; Africa
+          </p>
         </div>
       </section>
     </>
