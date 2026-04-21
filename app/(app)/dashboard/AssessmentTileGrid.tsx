@@ -191,7 +191,7 @@ function ThinkingBarsSVG({ scores, size }: { scores: { C: number; H: number; I: 
 }
 
 // ── Spiritual Gifts mini visual ───────────────────────────────────────────────
-const KARUNIA_LABELS: Record<string, string> = {
+const KARUNIA_LABELS_ID: Record<string, string> = {
   melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan",
   bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan",
   memberi: "Memberi", hikmat: "Hikmat", pengetahuan: "Pengetahuan",
@@ -200,6 +200,29 @@ const KARUNIA_LABELS: Record<string, string> = {
   memimpin: "Memimpin", administrasi: "Administrasi", mukjizat: "Mukjizat",
   tafsir_bahasa_roh: "Tafsir",
 };
+const KARUNIA_LABELS_EN: Record<string, string> = {
+  melayani: "Serving", murah_hati: "Mercy", keramahan: "Hospitality",
+  bahasa_roh: "Tongues", menyembuhkan: "Healing", menguatkan: "Exhortation",
+  memberi: "Giving", hikmat: "Wisdom", pengetahuan: "Knowledge",
+  iman: "Faith", kerasulan: "Apostleship", penginjilan: "Evangelism",
+  bernubuat: "Prophecy", mengajar: "Teaching", gembala: "Shepherding",
+  memimpin: "Leadership", administrasi: "Administration", mukjizat: "Miracles",
+  tafsir_bahasa_roh: "Interpretation",
+};
+const KARUNIA_LABELS_NL: Record<string, string> = {
+  melayani: "Dienstbetoon", murah_hati: "Barmhartigheid", keramahan: "Gastvrijheid",
+  bahasa_roh: "Tongen", menyembuhkan: "Genezing", menguatkan: "Bemoediging",
+  memberi: "Vrijgevigheid", hikmat: "Wijsheid", pengetahuan: "Kennis",
+  iman: "Geloof", kerasulan: "Apostelschap", penginjilan: "Evangelisatie",
+  bernubuat: "Profetie", mengajar: "Onderwijs", gembala: "Herderschap",
+  memimpin: "Leiderschap", administrasi: "Bestuur", mukjizat: "Wonderen",
+  tafsir_bahasa_roh: "Uitleg",
+};
+function karuniaLabel(key: string, lang: string): string {
+  if (lang === "id") return KARUNIA_LABELS_ID[key] ?? key;
+  if (lang === "nl") return KARUNIA_LABELS_NL[key] ?? key;
+  return KARUNIA_LABELS_EN[key] ?? key;
+}
 
 // ── Modal overlay ─────────────────────────────────────────────────────────────
 type ModalData =
@@ -484,7 +507,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
           }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.1rem", fontWeight: 800, color: i === 0 ? orange : navy, marginBottom: "0.25rem" }}>{i + 1}</p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, color: i === 0 ? "oklch(85% 0.01 80)" : "oklch(42% 0.008 260)", lineHeight: 1.3 }}>
-              {KARUNIA_LABELS[gift] ?? gift}
+              {karuniaLabel(gift, lang)}
             </p>
           </div>
         ))}
@@ -498,7 +521,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
             <div key={key}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: i < 3 ? navy : "oklch(52% 0.008 260)", fontWeight: i < 3 ? 700 : 400 }}>
-                  {KARUNIA_LABELS[key] ?? key}
+                  {karuniaLabel(key, lang)}
                 </span>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: navy }}>{score}</span>
               </div>
@@ -685,11 +708,11 @@ export default function AssessmentTileGrid({
   const karuniaVisual = karuniaTopGifts && karuniaTopGifts.length > 0 ? (
     <div style={{ textAlign: "center" }}>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: orange, lineHeight: 1, marginBottom: "0.2rem" }}>
-        {KARUNIA_LABELS[karuniaTopGifts[0]] ?? karuniaTopGifts[0]}
+        {karuniaLabel(karuniaTopGifts[0], lang)}
       </p>
       {karuniaTopGifts[1] && (
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)" }}>
-          + {KARUNIA_LABELS[karuniaTopGifts[1]] ?? karuniaTopGifts[1]}
+          + {karuniaLabel(karuniaTopGifts[1], lang)}
         </p>
       )}
     </div>
