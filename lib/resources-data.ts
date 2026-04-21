@@ -75,6 +75,12 @@ export const TOPICS: Topic[] = [
     description: "Becoming more of who you are — and who you're being called to be.",
     icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
   },
+  {
+    slug: "self-assessments",
+    title: "Self-Assessments",
+    description: "Discover how you're wired — personality, strengths, thinking style, and calling — through eight validated assessments.",
+    icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+  },
 ];
 
 export const RESOURCES: Resource[] = [
@@ -87,7 +93,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en", "id", "nl"],
     gated: false,
-    topics: ["communication", "leadership"],
+    topics: ["communication", "leadership", "self-assessments"],
   },
   {
     id: "understanding-high-context",
@@ -230,7 +236,7 @@ export const RESOURCES: Resource[] = [
     format: "Worksheet",
     languages: ["en", "id", "nl"],
     gated: true,
-    topics: ["personal-growth", "faith-calling"],
+    topics: ["personal-growth", "faith-calling", "self-assessments"],
   },
   {
     id: "red-light-green-light",
@@ -307,7 +313,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en", "id"],
     gated: true,
-    topics: ["leadership", "communication", "team-dynamics"],
+    topics: ["leadership", "communication", "team-dynamics", "self-assessments"],
   },
   {
     id: "karunia-rohani",
@@ -318,7 +324,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en", "id"],
     gated: true,
-    topics: ["faith-calling", "team-dynamics"],
+    topics: ["faith-calling", "team-dynamics", "self-assessments"],
   },
   {
     id: "enneagram",
@@ -329,7 +335,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en"],
     gated: true,
-    topics: ["leadership", "personal-growth", "team-dynamics"],
+    topics: ["leadership", "personal-growth", "team-dynamics", "self-assessments"],
   },
   {
     id: "big-five",
@@ -340,7 +346,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en"],
     gated: true,
-    topics: ["leadership", "personal-growth", "team-dynamics"],
+    topics: ["leadership", "personal-growth", "team-dynamics", "self-assessments"],
   },
   {
     id: "16-personalities",
@@ -351,7 +357,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en"],
     gated: true,
-    topics: ["leadership", "personal-growth", "communication"],
+    topics: ["leadership", "personal-growth", "communication", "self-assessments"],
   },
   {
     id: "myers-briggs",
@@ -362,7 +368,7 @@ export const RESOURCES: Resource[] = [
     format: "Assessment",
     languages: ["en"],
     gated: true,
-    topics: ["leadership", "personal-growth", "communication"],
+    topics: ["leadership", "personal-growth", "communication", "self-assessments"],
   },
 ];
 
