@@ -589,7 +589,7 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
               {t("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de Bibliotheek")}
             </p>
             <h2 className="t-section" style={{ marginBottom: "1rem" }}>
-              {t(<>Part of the full<br />content library.</>, <>Bagian dari perpustakaan<br />konten lengkap.</>, <>Onderdeel van de volledige<br />contentbibliotheek.</>)}
+              {t("Part of the full content library.", "Bagian dari perpustakaan konten lengkap.", "Onderdeel van de volledige contentbibliotheek.")}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
               {t(
