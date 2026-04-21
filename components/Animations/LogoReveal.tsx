@@ -156,7 +156,7 @@ export const LogoReveal: React.FC = () => {
           marginBottom: 28,
         }}>
           <Img
-            src="/logo-icon.png"
+            src="/logo-icon-dark.png"
             style={{
               width: 120,
               height: 120,

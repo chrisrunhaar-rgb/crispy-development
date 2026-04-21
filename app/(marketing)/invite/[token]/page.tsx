@@ -121,7 +121,7 @@ export default async function InviteLandingPage({
 
         {/* Logo */}
         <div style={{ marginBottom: "2.5rem" }}>
-          <Image src="/logo-full.png" alt="Crispy Development" width={160} height={40} style={{ height: "32px", width: "auto", filter: "brightness(0) invert(1) opacity(0.9)" }} />
+          <Image src="/logo-icon-dark.png" alt="Crispy Development" width={40} height={40} style={{ height: "40px", width: "40px" }} />
         </div>
 
         {/* Orange accent line */}

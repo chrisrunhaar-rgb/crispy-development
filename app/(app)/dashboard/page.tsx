@@ -484,7 +484,7 @@ export default async function DashboardPage({
               {/* CD logo mark */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-icon.png"
+                src="/logo-icon-dark.png"
                 alt="Crispy Development"
                 style={{ width: "38px", height: "38px", objectFit: "contain", marginTop: "0.1rem", flexShrink: 0 }}
               />
