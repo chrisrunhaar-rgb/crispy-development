@@ -1028,10 +1028,12 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                   </div>
                 )}
 
-                {/* 4. Karunia Rohani */}
+                {/* 4. Spiritual Gifts / Karunia Rohani */}
                 {karuniaTopGifts && karuniaTopGifts.length > 0 ? (
                   <div style={tileDone}>
-                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Karunia Rohani</p>
+                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>
+                      {languagePreference === "id" ? "Karunia Rohani" : languagePreference === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts"}
+                    </p>
                     <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.2rem", flex: 1 }}>
                       {karuniaTopGifts.slice(0, 3).map((k, i) => (
                         <p key={k} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.67rem", color: "oklch(42% 0.008 260)" }}>
@@ -1039,47 +1041,55 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                         </p>
                       ))}
                     </div>
-                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>Ulangi →</Link>
+                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>
+                      {languagePreference === "id" ? "Ulangi →" : languagePreference === "nl" ? "Opnieuw →" : "Retake →"}
+                    </Link>
                   </div>
                 ) : (
                   <div style={tileEmpty}>
                     <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Spiritual</p>
-                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Karunia Rohani</p>
-                    <p style={tDesc}>Temukan karunia rohani yang Allah berikan kepadamu.</p>
-                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Mulai →</Link>
+                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>
+                      {languagePreference === "id" ? "Karunia Rohani" : languagePreference === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts"}
+                    </p>
+                    <p style={tDesc}>
+                      {languagePreference === "id" ? "Temukan karunia rohani yang Allah berikan kepadamu." : languagePreference === "nl" ? "Ontdek de geestelijke gaven die God aan jou heeft gegeven." : "Discover the spiritual gifts God has given you."}
+                    </p>
+                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>
+                      {languagePreference === "id" ? "Mulai →" : languagePreference === "nl" ? "Begin →" : "Take test →"}
+                    </Link>
                   </div>
                 )}
 
-                {/* 5. Enneagram (external) */}
+                {/* 5. Enneagram (in-house) */}
                 <div style={tileEmpty}>
                   <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
                   <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Enneagram</p>
                   <p style={tDesc}>Discover your core motivation, fears, and growth path.</p>
-                  <a href="https://tests.enneagraminstitute.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                  <Link href="/resources/enneagram" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
                 </div>
 
-                {/* 6. Myers-Briggs (external) */}
+                {/* 6. Myers-Briggs (in-house) */}
                 <div style={tileEmpty}>
                   <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
                   <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Myers-Briggs</p>
                   <p style={tDesc}>Understand how you perceive the world and make decisions.</p>
-                  <a href="https://www.mbtionline.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                  <Link href="/resources/myers-briggs" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
                 </div>
 
-                {/* 7. 16 Personalities (external) */}
+                {/* 7. 16 Personalities (in-house) */}
                 <div style={tileEmpty}>
                   <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
                   <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>16 Personalities</p>
                   <p style={tDesc}>A free, in-depth personality type analysis based on the MBTI.</p>
-                  <a href="https://www.16personalities.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                  <Link href="/resources/16-personalities" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
                 </div>
 
-                {/* 8. Big Five (external) */}
+                {/* 8. Big Five (in-house) */}
                 <div style={tileEmpty}>
                   <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
                   <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Big Five (OCEAN)</p>
                   <p style={tDesc}>Measure openness, conscientiousness, extraversion, agreeableness, and neuroticism.</p>
-                  <a href="https://www.truity.com/test/big-five-personality-test" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                  <Link href="/resources/big-five" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
                 </div>
 
               </div>
