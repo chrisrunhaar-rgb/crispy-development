@@ -5,6 +5,18 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+export async function setPersonalLanguage(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const language = formData.get("language") as string;
+  if (!["en", "id", "nl"].includes(language)) throw new Error("Invalid language");
+
+  await supabase.auth.updateUser({ data: { language_preference: language } });
+  revalidatePath("/dashboard");
+}
+
 export async function setTeamLanguage(formData: FormData) {
   const supabase = await createClient();
   const admin = createAdminClient();

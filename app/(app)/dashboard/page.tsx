@@ -10,6 +10,7 @@ import PushNotificationToggle from "@/components/PushNotificationToggle";
 import SendNotificationForm from "@/components/SendNotificationForm";
 import InviteButton from "@/components/InviteButton";
 import TeamLanguageSelector from "@/components/TeamLanguageSelector";
+import PersonalLanguageSelector from "@/components/PersonalLanguageSelector";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import TeamJourney from "@/components/TeamJourney";
@@ -77,6 +78,7 @@ export default async function DashboardPage({
   const contributionScores = (user.user_metadata?.contribution_scores ?? null) as Record<string, number> | null;
   const conflictStyle = (user.user_metadata?.conflict_style ?? null) as string | null;
   const conflictScores = (user.user_metadata?.conflict_scores ?? null) as Record<string, number> | null;
+  const languagePreference = ((user.user_metadata?.language_preference ?? "en") as "en" | "id" | "nl");
 
   const admin = createAdminClient();
 
@@ -475,18 +477,26 @@ export default async function DashboardPage({
       <TimezoneDetector savedTimezone={userTimezone} />
 
       {/* ── DASHBOARD HEADER ── */}
-      <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
+      <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative", overflow: "hidden" }}>
+        {/* Hero watermark logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-icon-dark-badge.png"
+          alt=""
+          aria-hidden="true"
+          style={{ position: "absolute", right: "-1rem", top: "50%", transform: "translateY(-50%)", width: "200px", height: "200px", objectFit: "contain", opacity: 0.06, pointerEvents: "none", userSelect: "none" }}
+        />
         <div className="container-wide">
 
           {/* Top row: title + utilities */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", paddingBottom: "1.5rem" }}>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "1.25rem" }}>
               {/* CD logo mark */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logo-icon-dark-badge.png"
                 alt="Crispy Development"
-                style={{ width: "38px", height: "38px", objectFit: "contain", marginTop: "0.1rem", flexShrink: 0 }}
+                style={{ width: "64px", height: "64px", objectFit: "contain", flexShrink: 0 }}
               />
               <div>
                 <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>
@@ -577,7 +587,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
           </>
         )}
 
@@ -746,7 +756,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -769,11 +779,11 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   contributionScores?: Record<string, number> | null;
   conflictStyle?: string | null;
   conflictScores?: Record<string, number> | null;
+  languagePreference?: "en" | "id" | "nl";
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
-  // Progress = completed modules from DB (real tracking) or fall back to saved count proxy
-  const completed = modules.filter(m => completedIds.has(m.id)).length;
+  const completed = savedItems.filter(slug => resourceRead.includes(slug) || completedAssessments.has(slug)).length;
   const progressPct = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
@@ -828,13 +838,15 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
       {/* Right: progress + assessments */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+
+        {/* Progress stat */}
         <div className="stat-block">
           <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>My Progress</p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
-            {total}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}> saved</span>
+            {completed}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/{total}</span>
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginTop: "0.375rem" }}>
-            resources in your library
+            resources completed
           </p>
           {total > 0 && (
             <div style={{ height: "4px", background: "oklch(88% 0.008 80)", marginTop: "1rem" }}>
@@ -843,164 +855,168 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           )}
         </div>
 
-        {/* Wheel of Life result card */}
-        {wheelOfLifeScores ? (
-          <div className="stat-block">
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>Wheel of Life</p>
-            {(() => {
-              const avg = (Object.values(wheelOfLifeScores).reduce((a, b) => a + b, 0) / Object.values(wheelOfLifeScores).length).toFixed(1);
-              const lowest = WHEEL_SEGMENTS.slice().sort((a, b) => (wheelOfLifeScores[a.key] ?? 5) - (wheelOfLifeScores[b.key] ?? 5))[0];
-              // Mini wheel SVG constants
-              const WCX = 150, WCY = 150, WMAXR = 85, WLABELR = 107;
-              const wSectorPath = (i: number, r: number) => {
-                const a1 = (-90 + i * 45 - 22.5) * Math.PI / 180;
-                const a2 = (-90 + i * 45 + 22.5) * Math.PI / 180;
-                return `M ${WCX} ${WCY} L ${(WCX + r * Math.cos(a1)).toFixed(2)} ${(WCY + r * Math.sin(a1)).toFixed(2)} A ${r} ${r} 0 0 1 ${(WCX + r * Math.cos(a2)).toFixed(2)} ${(WCY + r * Math.sin(a2)).toFixed(2)} Z`;
-              };
-              const wPoint = (i: number, score: number): [number, number] => {
-                const rad = (-90 + i * 45) * Math.PI / 180;
-                const r = (score / 10) * WMAXR;
-                return [WCX + r * Math.cos(rad), WCY + r * Math.sin(rad)];
-              };
-              const wLabelAnchor = (angle: number): { anchor: "middle" | "start" | "end"; dy: number } => {
-                if (angle > 67.5 && angle < 112.5) return { anchor: "middle", dy: 13 };
-                if (angle < -67.5 && angle > -112.5) return { anchor: "middle", dy: -5 };
-                if (angle >= -22.5 && angle <= 22.5) return { anchor: "start", dy: 4 };
-                if (angle > 22.5 && angle <= 67.5) return { anchor: "start", dy: 4 };
-                if (angle > 112.5) return { anchor: "end", dy: 4 };
-                if (angle < -22.5 && angle >= -67.5) return { anchor: "start", dy: 4 };
-                return { anchor: "end", dy: 4 };
-              };
-              const orderedScores = WHEEL_SEGMENTS.map(s => wheelOfLifeScores[s.key] ?? 5);
-              const polygonPts = orderedScores.map((s, i) => wPoint(i, s).map(v => v.toFixed(2)).join(",")).join(" ");
-              return (
-                <>
-                  <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.875rem" }}>
-                    <div style={{ border: "1px solid oklch(88% 0.008 80)", padding: "0.75rem", background: "white", display: "inline-block" }}>
-                    <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: "100%", height: "auto", display: "block" }}>
-                      <rect width="300" height="300" fill="oklch(97% 0.005 80)" />
-                      {/* Sector fills */}
-                      {WHEEL_SEGMENTS.map((seg, i) => (
-                        <path key={seg.key} d={wSectorPath(i, WMAXR)} fill={seg.color} opacity="0.13" />
+        {/* Language preference */}
+        <PersonalLanguageSelector currentLanguage={languagePreference} />
+
+        {/* ── Assessment tile grid (2 × 4) ── */}
+        {(() => {
+          const DISC_NAMES: Record<string, string> = { D: "Dominant", I: "Influential", S: "Steady", C: "Conscientious" };
+          const discLabel = discResult
+            ? discResult.split("").map(k => DISC_NAMES[k] ?? k).join(" · ")
+            : null;
+          const wheelAvg = wheelOfLifeScores
+            ? (Object.values(wheelOfLifeScores).reduce((a, b) => a + b, 0) / Object.values(wheelOfLifeScores).length).toFixed(1)
+            : null;
+          const wheelLowest = wheelOfLifeScores
+            ? WHEEL_SEGMENTS.slice().sort((a, b) => (wheelOfLifeScores[a.key] ?? 5) - (wheelOfLifeScores[b.key] ?? 5))[0]
+            : null;
+          const KARUNIA_LABELS: Record<string, string> = {
+            melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan",
+            bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan",
+            memberi: "Memberi", hikmat: "Hikmat", pengetahuan: "Pengetahuan",
+            iman: "Iman", kerasulan: "Kerasulan", penginjilan: "Penginjilan",
+            bernubuat: "Bernubuat", mengajar: "Mengajar", gembala: "Gembala",
+            memimpin: "Memimpin", administrasi: "Administrasi", mukjizat: "Mukjizat",
+            tafsir_bahasa_roh: "Tafsir",
+          };
+          const tileEmpty = { background: "oklch(97% 0.005 80)", border: "1px solid oklch(90% 0.006 80)", padding: "1.125rem", display: "flex", flexDirection: "column" as const, gap: "0.5rem", minHeight: "170px" };
+          const tileDone = { background: "white", border: "1px solid oklch(85% 0.008 80)", padding: "1.125rem", display: "flex", flexDirection: "column" as const, gap: "0.5rem", minHeight: "170px" };
+          const tLabel = { fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const };
+          const tTitle = { fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", lineHeight: 1.3 };
+          const tDesc = { fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(55% 0.008 260)", lineHeight: 1.5, flex: 1 };
+          const tLink = { fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, textDecoration: "none", marginTop: "auto" as const };
+
+          return (
+            <div>
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>My Assessments</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem" }}>
+
+                {/* 1. DISC */}
+                {discResult && discScores ? (
+                  <div style={tileDone}>
+                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
+                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>DISC Profile</p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "#C44A2A" }}>{discResult}</p>
+                    <p style={{ ...tDesc, fontSize: "0.67rem" }}>{discLabel}</p>
+                    <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" as const }}>
+                      {(["D","I","S","C"] as const).map(k => (
+                        <span key={k} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(48% 0.008 260)" }}>
+                          {k}:{discScores[k]}%
+                        </span>
                       ))}
-                      {/* Grid rings */}
-                      {[2, 4, 6, 8, 10].map(ring => (
-                        <circle key={ring} cx={WCX} cy={WCY} r={(ring / 10) * WMAXR} fill="none" stroke="#1b3a6b" strokeWidth={ring === 10 ? 1.2 : 0.5} opacity="0.15" />
-                      ))}
-                      {/* Spoke lines */}
-                      {WHEEL_SEGMENTS.map((seg, i) => {
-                        const [x, y] = wPoint(i, 10);
-                        return <line key={seg.key} x1={WCX} y1={WCY} x2={x} y2={y} stroke="#1b3a6b" strokeWidth="0.5" opacity="0.12" />;
-                      })}
-                      {/* Score polygon */}
-                      <polygon points={polygonPts} fill="rgba(27,58,107,0.18)" stroke="#1b3a6b" strokeWidth="1.5" strokeLinejoin="round" />
-                      {/* Score dots */}
-                      {WHEEL_SEGMENTS.map((seg, i) => {
-                        const score = wheelOfLifeScores[seg.key] ?? 5;
-                        const [x, y] = wPoint(i, score);
-                        return <circle key={seg.key} cx={x} cy={y} r="3.5" fill={seg.color} stroke="white" strokeWidth="1.2" />;
-                      })}
-                      {/* Segment labels */}
-                      {WHEEL_SEGMENTS.map((seg, i) => {
-                        const angle = -90 + i * 45;
-                        const rad = angle * Math.PI / 180;
-                        const lx = WCX + WLABELR * Math.cos(rad);
-                        const ly = WCY + WLABELR * Math.sin(rad);
-                        const { anchor, dy } = wLabelAnchor(angle);
-                        const score = wheelOfLifeScores[seg.key] ?? 5;
-                        return (
-                          <g key={seg.key}>
-                            <text x={lx} y={ly + dy} textAnchor={anchor} fontSize="7.5" fontWeight="700" fontFamily="Montserrat, sans-serif" fill={seg.color} letterSpacing="0.02em">{seg.label}</text>
-                            <text x={lx} y={ly + dy + 10} textAnchor={anchor} fontSize="9" fontWeight="800" fontFamily="Montserrat, sans-serif" fill={seg.color}>{score}</text>
-                          </g>
-                        );
-                      })}
-                      {/* Center avg */}
-                      <circle cx={WCX} cy={WCY} r="20" fill="white" stroke="#1b3a6b" strokeWidth="0.8" opacity="0.9" />
-                      <text x={WCX} y={WCY - 1} textAnchor="middle" fontSize="12" fontWeight="800" fontFamily="Montserrat, sans-serif" fill="#1b3a6b">{avg}</text>
-                      <text x={WCX} y={WCY + 10} textAnchor="middle" fontSize="6" fontWeight="600" fontFamily="Montserrat, sans-serif" fill="#1b3a6b" opacity="0.6" letterSpacing="0.05em">AVG</text>
-                    </svg>
                     </div>
+                    <Link href="/resources/disc" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>Retake →</Link>
                   </div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", marginBottom: "0.625rem" }}>
-                    Focus area: <span style={{ fontWeight: 700, color: lowest.color }}>{lowest.label}</span>
-                  </p>
-                  <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-                    Update scores →
-                  </Link>
-                </>
-              );
-            })()}
-          </div>
-        ) : (
-          <div className="stat-block" style={{ background: "oklch(97% 0.005 80)" }}>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.5rem", fontSize: "0.62rem" }}>Wheel of Life</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>
-              Rate 8 areas of your life and see where to grow.
-            </p>
-            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Take the assessment →
-            </Link>
-          </div>
-        )}
+                ) : (
+                  <div style={tileEmpty}>
+                    <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
+                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>DISC Profile</p>
+                    <p style={tDesc}>Understand your behavioural style and how you impact your team.</p>
+                    <Link href="/resources/disc" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
+                  </div>
+                )}
 
-        {/* Thinking Style result card */}
-        {thinkingStyleResult && thinkingStyleScores ? (
-          <div className="stat-block">
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Thinking Style</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.005 260)", marginBottom: "1rem", lineHeight: 1.3 }}>
-              {THINKING_STYLE_LABELS[thinkingStyleResult] ?? thinkingStyleResult}
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
-              {[
-                { key: "C", label: "Conceptual", color: "oklch(48% 0.18 250)", pct: thinkingStyleScores.C },
-                { key: "H", label: "Holistic", color: "oklch(48% 0.18 145)", pct: thinkingStyleScores.H },
-                { key: "I", label: "Intuitional", color: "oklch(48% 0.18 300)", pct: thinkingStyleScores.I },
-              ].map(bar => (
-                <div key={bar.key}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(52% 0.008 260)", fontWeight: 600 }}>{bar.label}</span>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(52% 0.008 260)", fontWeight: 700 }}>{bar.pct}%</span>
+                {/* 2. Wheel of Life */}
+                {wheelOfLifeScores && wheelAvg && wheelLowest ? (
+                  <div style={tileDone}>
+                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
+                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Wheel of Life</p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(30% 0.12 260)" }}>{wheelAvg} / 10</p>
+                    <p style={{ ...tDesc, fontSize: "0.67rem" }}>Focus area: <span style={{ fontWeight: 700, color: wheelLowest.color }}>{wheelLowest.label}</span></p>
+                    <Link href="/resources/wheel-of-life" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>Update →</Link>
                   </div>
-                  <div style={{ height: "5px", background: "oklch(88% 0.008 80)", overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${bar.pct}%`, background: bar.color }} />
+                ) : (
+                  <div style={tileEmpty}>
+                    <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Life Balance</p>
+                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Wheel of Life</p>
+                    <p style={tDesc}>Rate 8 life areas and see where to invest your energy next.</p>
+                    <Link href="/resources/wheel-of-life" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
                   </div>
+                )}
+
+                {/* 3. Three Thinking Styles */}
+                {thinkingStyleResult && thinkingStyleScores ? (
+                  <div style={tileDone}>
+                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
+                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Thinking Styles</p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(42% 0.18 250)" }}>
+                      {THINKING_STYLE_LABELS[thinkingStyleResult] ?? thinkingStyleResult}
+                    </p>
+                    <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" as const }}>
+                      {([["C","Conceptual","oklch(48% 0.18 250)"],["H","Holistic","oklch(48% 0.18 145)"],["I","Intuitional","oklch(48% 0.18 300)"]] as [string,string,string][]).map(([k,l,c]) => (
+                        <span key={k} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: c }}>{l}: {thinkingStyleScores[k as "C"|"H"|"I"]}%</span>
+                      ))}
+                    </div>
+                    <Link href="/resources/three-thinking-styles" style={{ ...tLink, color: "oklch(30% 0.12 260)", marginTop: "auto" }}>Retake →</Link>
+                  </div>
+                ) : (
+                  <div style={tileEmpty}>
+                    <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Cognition</p>
+                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Thinking Styles</p>
+                    <p style={tDesc}>Do you lead with structure, relationships, or intuition?</p>
+                    <Link href="/resources/three-thinking-styles" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</Link>
+                  </div>
+                )}
+
+                {/* 4. Karunia Rohani */}
+                {karuniaTopGifts && karuniaTopGifts.length > 0 ? (
+                  <div style={tileDone}>
+                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
+                    <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Karunia Rohani</p>
+                    <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.2rem", flex: 1 }}>
+                      {karuniaTopGifts.slice(0, 3).map((k, i) => (
+                        <p key={k} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.67rem", color: "oklch(42% 0.008 260)" }}>
+                          {i + 1}. {KARUNIA_LABELS[k] ?? k}
+                        </p>
+                      ))}
+                    </div>
+                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>Ulangi →</Link>
+                  </div>
+                ) : (
+                  <div style={tileEmpty}>
+                    <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Spiritual</p>
+                    <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Karunia Rohani</p>
+                    <p style={tDesc}>Temukan karunia rohani yang Allah berikan kepadamu.</p>
+                    <Link href="/resources/karunia-rohani" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Mulai →</Link>
+                  </div>
+                )}
+
+                {/* 5. Enneagram (external) */}
+                <div style={tileEmpty}>
+                  <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
+                  <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Enneagram</p>
+                  <p style={tDesc}>Discover your core motivation, fears, and growth path.</p>
+                  <a href="https://tests.enneagraminstitute.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
                 </div>
-              ))}
-            </div>
-            <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Retake quiz →
-            </Link>
-          </div>
-        ) : (
-          <div className="stat-block" style={{ background: "oklch(97% 0.005 80)" }}>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.5rem", fontSize: "0.62rem" }}>My Thinking Style</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>
-              Discover whether you lead with structure, relationships, or intuition.
-            </p>
-            <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Take the quiz →
-            </Link>
-          </div>
-        )}
 
-        {/* DISC result card */}
-        {discResult && discScores ? (
-          <div className="stat-block">
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "1rem", fontSize: "0.62rem" }}>My DISC Profile</p>
-            <DiscPieCard result={discResult} scores={discScores} />
-          </div>
-        ) : (
-          <div className="stat-block" style={{ background: "oklch(97% 0.005 80)" }}>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.5rem", fontSize: "0.62rem" }}>My DISC Profile</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>
-              Discover your behavioural style and how it shapes the way you lead.
-            </p>
-            <Link href="/resources/disc" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Take the quiz →
-            </Link>
-          </div>
-        )}
+                {/* 6. Myers-Briggs (external) */}
+                <div style={tileEmpty}>
+                  <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
+                  <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Myers-Briggs</p>
+                  <p style={tDesc}>Understand how you perceive the world and make decisions.</p>
+                  <a href="https://www.mbtionline.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                </div>
+
+                {/* 7. 16 Personalities (external) */}
+                <div style={tileEmpty}>
+                  <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
+                  <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>16 Personalities</p>
+                  <p style={tDesc}>A free, in-depth personality type analysis based on the MBTI.</p>
+                  <a href="https://www.16personalities.com" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                </div>
+
+                {/* 8. Big Five (external) */}
+                <div style={tileEmpty}>
+                  <p style={{ ...tLabel, color: "oklch(62% 0.008 260)" }}>Personality</p>
+                  <p style={{ ...tTitle, color: "oklch(38% 0.008 260)" }}>Big Five (OCEAN)</p>
+                  <p style={tDesc}>Measure openness, conscientiousness, extraversion, agreeableness, and neuroticism.</p>
+                  <a href="https://www.truity.com/test/big-five-personality-test" target="_blank" rel="noopener noreferrer" style={{ ...tLink, color: "oklch(42% 0.08 260)" }}>Take test →</a>
+                </div>
+
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Comm Style result card */}
         {commStyle && commStyleScores && (() => {
@@ -1134,53 +1150,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           );
         })()}
 
-        {/* Karunia Rohani result card */}
-        {karuniaTopGifts && karuniaTopGifts.length > 0 && karuniaScores ? (
-          <div className="stat-block">
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>Karunia Rohani</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "1rem" }}>
-              {karuniaTopGifts.slice(0, 3).map((key, idx) => {
-                const KARUNIA_LABELS: Record<string, string> = {
-                  melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan",
-                  bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan",
-                  memberi: "Memberi", hikmat: "Hikmat", pengetahuan: "Pengetahuan",
-                  iman: "Iman", kerasulan: "Kerasulan", penginjilan: "Penginjilan",
-                  bernubuat: "Bernubuat", mengajar: "Mengajar", gembala: "Gembala",
-                  memimpin: "Memimpin", administrasi: "Administrasi", mukjizat: "Mukjizat",
-                  tafsir_bahasa_roh: "Tafsir Bahasa Roh",
-                };
-                const score = karuniaScores[key] ?? 0;
-                const pct = Math.round((score / 12) * 100);
-                return (
-                  <div key={key}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(52% 0.008 260)", fontWeight: 600 }}>
-                        {idx + 1}. {KARUNIA_LABELS[key] ?? key}
-                      </span>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(48% 0.18 145)", fontWeight: 700 }}>{score}/12</span>
-                    </div>
-                    <div style={{ height: "5px", background: "oklch(88% 0.008 145)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${pct}%`, background: "oklch(48% 0.18 145)" }} />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <Link href="/resources/karunia-rohani" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Ulangi tes →
-            </Link>
-          </div>
-        ) : (
-          <div className="stat-block" style={{ background: "oklch(97% 0.005 80)" }}>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.5rem", fontSize: "0.62rem" }}>Karunia Rohani</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>
-              Temukan karunia rohani yang Allah berikan kepadamu.
-            </p>
-            <Link href="/resources/karunia-rohani" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
-              Temukan karunia rohanimu →
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );
