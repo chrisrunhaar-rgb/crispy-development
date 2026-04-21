@@ -13,7 +13,10 @@ export async function setPersonalLanguage(formData: FormData) {
   const language = formData.get("language") as string;
   if (!["en", "id", "nl"].includes(language)) throw new Error("Invalid language");
 
-  await supabase.auth.updateUser({ data: { language_preference: language } });
+  const admin = createAdminClient();
+  await admin.auth.admin.updateUserById(user.id, {
+    user_metadata: { language_preference: language },
+  });
   revalidatePath("/dashboard");
 }
 

@@ -101,14 +101,14 @@ export default function PushNotificationToggle() {
   if (subscribed && permState === "granted") {
     return (
       <button style={btnStyle} onClick={handleDisable} disabled={loading} type="button">
-        {loading ? "…" : "🔔 Notifications on"}
+        {loading ? "…" : "🔔 on"}
       </button>
     );
   }
 
   return (
     <button style={btnStyle} onClick={handleEnable} disabled={loading} type="button">
-      {loading ? "…" : "🔕 Notifications off"}
+      {loading ? "…" : "🔕 off"}
     </button>
   );
 }

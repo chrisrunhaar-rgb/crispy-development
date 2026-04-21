@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { setPersonalLanguage } from "@/app/(app)/dashboard/actions";
 
 const LANGS = [
@@ -12,10 +12,12 @@ const LANGS = [
 type Lang = "en" | "id" | "nl";
 
 export default function PersonalLanguageSelector({ currentLanguage }: { currentLanguage: Lang }) {
+  const [optimisticLang, setOptimisticLang] = useState<Lang>(currentLanguage);
   const [isPending, startTransition] = useTransition();
 
   function handleChange(lang: Lang) {
-    if (lang === currentLanguage || isPending) return;
+    if (lang === optimisticLang || isPending) return;
+    setOptimisticLang(lang);
     const formData = new FormData();
     formData.set("language", lang);
     startTransition(() => setPersonalLanguage(formData));
@@ -36,7 +38,7 @@ export default function PersonalLanguageSelector({ currentLanguage }: { currentL
       </p>
       <div style={{ display: "flex", gap: "2px" }}>
         {LANGS.map(({ code, label, full }) => {
-          const isActive = currentLanguage === code;
+          const isActive = optimisticLang === code;
           return (
             <button
               key={code}

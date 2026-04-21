@@ -527,13 +527,13 @@ export default async function DashboardPage({
 
       {/* ── DASHBOARD HEADER ── */}
       <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative", overflow: "hidden" }}>
-        {/* Hero watermark logo */}
+        {/* Hero watermark logo — left side */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo-icon-dark-badge.png"
           alt=""
           aria-hidden="true"
-          style={{ position: "absolute", right: "-1rem", top: "50%", transform: "translateY(-50%)", width: "200px", height: "200px", objectFit: "contain", opacity: 0.06, pointerEvents: "none", userSelect: "none" }}
+          style={{ position: "absolute", left: "-1rem", top: "50%", transform: "translateY(-50%)", width: "200px", height: "200px", objectFit: "contain", opacity: 0.06, pointerEvents: "none", userSelect: "none" }}
         />
         <div className="container-wide">
 
@@ -557,6 +557,7 @@ export default async function DashboardPage({
               </div>
             </div>
             <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+              <PersonalLanguageSelector currentLanguage={languagePreference} />
               <PushNotificationToggle />
               <PwaInstall />
               <form action={signOut}>
@@ -907,9 +908,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           )}
         </div>
 
-        {/* Language preference */}
-        <PersonalLanguageSelector currentLanguage={languagePreference} />
-
         {/* ── Assessment tile grid (2 × 4) ── */}
         {(() => {
           const DISC_NAMES: Record<string, string> = { D: "Dominant", I: "Influential", S: "Steady", C: "Conscientious" };
@@ -932,7 +930,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             tafsir_bahasa_roh: "Tafsir",
           };
           const tileEmpty = { background: "oklch(97% 0.005 80)", border: "1px solid oklch(90% 0.006 80)", padding: "1.125rem", display: "flex", flexDirection: "column" as const, gap: "0.5rem", minHeight: "170px" };
-          const tileDone = { background: "white", border: "1px solid oklch(85% 0.008 80)", padding: "1.125rem", display: "flex", flexDirection: "column" as const, gap: "0.5rem", minHeight: "170px" };
+          const tileDone = { background: "white", border: "1px solid oklch(90% 0.006 80)", borderLeft: "3px solid oklch(65% 0.15 45)", padding: "1.125rem", display: "flex", flexDirection: "column" as const, gap: "0.5rem", minHeight: "170px" };
           const tLabel = { fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const };
           const tTitle = { fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", lineHeight: 1.3 };
           const tDesc = { fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(55% 0.008 260)", lineHeight: 1.5, flex: 1 };
@@ -946,17 +944,39 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 {/* 1. DISC */}
                 {discResult && discScores ? (
                   <div style={tileDone}>
-                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
                     <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>DISC Profile</p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "#C44A2A" }}>{discResult}</p>
-                    <p style={{ ...tDesc, fontSize: "0.67rem" }}>{discLabel}</p>
-                    <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" as const }}>
-                      {(["D","I","S","C"] as const).map(k => (
-                        <span key={k} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(48% 0.008 260)" }}>
-                          {k}:{discScores[k]}%
-                        </span>
-                      ))}
-                    </div>
+                    {(() => {
+                      const cx = 45, cy = 45, r = 41, gap = 1.2;
+                      let angle = 0;
+                      const slices = DISC_SLICES.map(s => {
+                        const pct = discScores[s.key as keyof typeof discScores];
+                        const span = (pct / 100) * 360;
+                        const start = angle + gap / 2;
+                        const end = angle + span - gap / 2;
+                        angle += span;
+                        return { ...s, pct, start, end };
+                      });
+                      return (
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flex: 1 }}>
+                          <svg width="90" height="90" viewBox="0 0 90 90" style={{ flexShrink: 0 }}>
+                            {slices.map(s => (
+                              <path key={s.key} d={discSlicePath(cx, cy, r, s.start, s.end)} fill={s.fill} />
+                            ))}
+                            <circle cx={cx} cy={cy} r={20} fill="white" />
+                            <text x={cx} y={cy - 3} textAnchor="middle" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "11px", fill: "#1a1a2e" }}>{discResult}</text>
+                            <text x={cx} y={cy + 8} textAnchor="middle" style={{ fontFamily: "var(--font-montserrat)", fontSize: "5px", fill: "#6b6b8a", letterSpacing: "0.04em" }}>DISC</text>
+                          </svg>
+                          <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.18rem" }}>
+                            {DISC_SLICES.map(s => (
+                              <div key={s.key} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                                <div style={{ width: "6px", height: "6px", background: s.fill, flexShrink: 0 }} />
+                                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)" }}>{s.key}: {discScores[s.key as keyof typeof discScores]}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
                     <Link href="/resources/disc" style={{ ...tLink, color: "oklch(30% 0.12 260)" }}>Retake →</Link>
                   </div>
                 ) : (
@@ -971,7 +991,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 {/* 2. Wheel of Life */}
                 {wheelOfLifeScores && wheelAvg && wheelLowest ? (
                   <div style={tileDone}>
-                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
                     <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Wheel of Life</p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(30% 0.12 260)" }}>{wheelAvg} / 10</p>
                     <p style={{ ...tDesc, fontSize: "0.67rem" }}>Focus area: <span style={{ fontWeight: 700, color: wheelLowest.color }}>{wheelLowest.label}</span></p>
@@ -989,7 +1008,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 {/* 3. Three Thinking Styles */}
                 {thinkingStyleResult && thinkingStyleScores ? (
                   <div style={tileDone}>
-                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
                     <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Thinking Styles</p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: "oklch(42% 0.18 250)" }}>
                       {THINKING_STYLE_LABELS[thinkingStyleResult] ?? thinkingStyleResult}
@@ -1013,7 +1031,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 {/* 4. Karunia Rohani */}
                 {karuniaTopGifts && karuniaTopGifts.length > 0 ? (
                   <div style={tileDone}>
-                    <p style={{ ...tLabel, color: "oklch(65% 0.15 45)" }}>COMPLETED</p>
                     <p style={{ ...tTitle, color: "oklch(22% 0.005 260)" }}>Karunia Rohani</p>
                     <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.2rem", flex: 1 }}>
                       {karuniaTopGifts.slice(0, 3).map((k, i) => (
