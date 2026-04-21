@@ -147,7 +147,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
   const labelPos = angles.map((a, i) => ({
     x: cx + labelOffset * Math.cos(a),
     y: cy + labelOffset * Math.sin(a),
-    anchor: Math.cos(a) > 0.15 ? "start" : Math.cos(a) < -0.15 ? "end" : "middle" as string,
+    anchor: (Math.cos(a) > 0.15 ? "start" : Math.cos(a) < -0.15 ? "end" : "middle") as "start" | "end" | "middle",
     dy: Math.sin(a) > 0.4 ? 14 : Math.sin(a) < -0.4 ? -4 : 4,
   }));
 

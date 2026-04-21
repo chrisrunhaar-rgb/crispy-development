@@ -196,7 +196,7 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
   const [lang, setLang] = useState<Lang>("en");
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [activeVerse, setActiveVerse] = useState<keyof typeof VERSES | null>(null);
   const [showReflection, setShowReflection] = useState(false);
   const [reflection, setReflection] = useState("");
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);

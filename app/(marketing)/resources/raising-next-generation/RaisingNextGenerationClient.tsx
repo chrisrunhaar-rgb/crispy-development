@@ -25,7 +25,7 @@ const VERSES: Record<VerseKey, { en_ref: string; id_ref: string; nl_ref: string;
 
 const PHASES = [
   {
-    id: 1,
+    phaseId: 1,
     en_label: "Invite", id_label: "Undang", nl_label: "Uitnodigen",
     en_subtitle: "Come with me", id_subtitle: "Ikutlah denganku", nl_subtitle: "Kom met mij mee",
     en: "Paul invited Timothy into his journey (Acts 16:3). He did not advertise a leadership programme — he identified a young person of good character and reputation, and made the invitation personal. The most powerful developmental invitation is not a form to fill in. It is a specific word, spoken to a specific person: 'I see something in you. Come and learn alongside me.'",
@@ -33,7 +33,7 @@ const PHASES = [
     nl: "Paulus nodigde Timoteüs uit in zijn reis (Handelingen 16:3). Hij adverteerde geen leiderschapsprogramma — hij identificeerde een jongvolwassene met goed karakter en reputatie en maakte de uitnodiging persoonlijk. De krachtigste ontwikkelingsuitnodiging is geen formulier om in te vullen. Het zijn specifieke woorden, gesproken tot een specifiek persoon: 'Ik zie iets in jou. Kom en leer naast mij.'",
   },
   {
-    id: 2,
+    phaseId: 2,
     en_label: "Invest", id_label: "Investasi", nl_label: "Investeren",
     en_subtitle: "Do as I do", id_subtitle: "Lakukan seperti yang kulakukan", nl_subtitle: "Doe zoals ik doe",
     en: "Investment is not a curriculum — it is a lifestyle. Paul invested in Timothy by involving him in real ministry (Philippians 2:22), sending him on real missions (1 Corinthians 4:17), and writing him honest, formative letters. Development happens in the doing, not in the classroom. You cannot develop a leader at arm's length. They need proximity — to your decisions, your failures, your way of handling pressure.",
@@ -41,7 +41,7 @@ const PHASES = [
     nl: "Investering is geen curriculum — het is een levensstijl. Paulus investeerde in Timoteüs door hem te betrekken bij echte bediening (Filippenzen 2:22), hem op echte missies te sturen (1 Korintiërs 4:17) en hem eerlijke, vormende brieven te schrijven. Ontwikkeling gebeurt in het doen, niet in het klaslokaal. Je kunt een leider niet op afstand ontwikkelen. Ze hebben nabijheid nodig — bij jouw beslissingen, jouw mislukkingen, jouw manier van omgaan met druk.",
   },
   {
-    id: 3,
+    phaseId: 3,
     en_label: "Release", id_label: "Lepaskan", nl_label: "Loslaten",
     en_subtitle: "You go ahead of me", id_subtitle: "Kamu pergi mendahuluiku", nl_subtitle: "Jij gaat voor mij",
     en: "The goal of all investment is release. Paul sent Timothy to places he himself could not go. The truest test of a leader-developer is whether they can celebrate someone surpassing them. Release requires letting go of control, credit, and the need to remain central. In many cultures, releasing someone is countercultural — it means giving away what you spent years building. But this is the logic of the Kingdom: the grain of wheat must fall into the ground.",
@@ -331,16 +331,16 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {PHASES.map(phase => {
-              const isOpen = expandedPhase === phase.id;
+              const isOpen = expandedPhase === phase.phaseId;
               return (
-                <div key={phase.id} style={{ borderRadius: 10, overflow: "hidden", border: `1px solid ${isOpen ? navy : "oklch(87% 0.008 80)"}`, transition: "border-color 0.15s ease" }}>
-                  <button onClick={() => setExpandedPhase(isOpen ? null : phase.id)} style={{
+                <div key={phase.phaseId} style={{ borderRadius: 10, overflow: "hidden", border: `1px solid ${isOpen ? navy : "oklch(87% 0.008 80)"}`, transition: "border-color 0.15s ease" }}>
+                  <button onClick={() => setExpandedPhase(isOpen ? null : phase.phaseId)} style={{
                     width: "100%", padding: "20px 24px", background: isOpen ? navy : offWhite,
                     border: "none", cursor: "pointer", textAlign: "left",
                     display: "flex", alignItems: "center", gap: 20,
                   }}>
                     <span style={{ fontFamily: serif, fontSize: 36, fontWeight: 700, color: isOpen ? orange : "oklch(75% 0.08 260)", lineHeight: 1, minWidth: 28 }}>
-                      {phase.id}
+                      {phase.phaseId}
                     </span>
                     <div style={{ flex: 1 }}>
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: isOpen ? offWhite : navy, margin: 0, letterSpacing: "0.04em" }}>
