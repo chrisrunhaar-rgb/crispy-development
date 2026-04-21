@@ -703,7 +703,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             })}
 
             {/* Print promo */}
-            <div style={{ borderTop: "1px solid #eee", marginTop: "2rem", paddingTop: "1.5rem", background: "#f9f7f4", padding: "1.25rem", marginTop: "2rem" }}>
+            <div style={{ borderTop: "1px solid #eee", marginTop: "2rem", background: "#f9f7f4", padding: "1.25rem" }}>
               <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c27a2e", margin: "0 0 0.5rem" }}>
                 {lang === "id" ? "Lebih Banyak di Crispy Development" : "More at Crispy Development"}
               </p>
