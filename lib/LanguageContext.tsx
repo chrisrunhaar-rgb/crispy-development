@@ -18,9 +18,11 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
+  const VALID_LANGS: Lang[] = ["en", "id", "nl", "es", "fr", "pt"];
+
   useEffect(() => {
     const stored = localStorage.getItem("crispy-lang") as Lang | null;
-    if (stored === "en" || stored === "id") setLangState(stored);
+    if (stored && VALID_LANGS.includes(stored)) setLangState(stored);
   }, []);
 
   const setLang = (l: Lang) => {
@@ -28,8 +30,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("crispy-lang", l);
   };
 
+  // Fall back to English for languages without full translations yet
+  const activeTranslations = (translations as unknown as Record<string, typeof translations.en>)[lang] ?? translations.en;
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] as typeof translations.en }}>
+    <LanguageContext.Provider value={{ lang, setLang, t: activeTranslations }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -378,6 +378,75 @@ body {
   .show-mobile { display: none !important; }
 }
 
+/* ── DASHBOARD FORM FOCUS ── */
+/* Replaces inline outline:none — provides visible focus ring for keyboard users */
+.dashboard-input:focus-visible,
+.dashboard-textarea:focus-visible {
+  outline: 2px solid oklch(65% 0.15 45);
+  outline-offset: 0px;
+}
+
+/* Inline edit panel reveal */
+@keyframes edit-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.edit-panel-reveal {
+  animation: edit-reveal 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edit-panel-reveal { animation: none; }
+}
+
+/* ── JOURNEY PATH ANIMATIONS ── */
+
+/* Flowing energy along completed path segments */
+@keyframes path-flow {
+  from { background-position: 0 0; }
+  to   { background-position: 0 28px; }
+}
+
+.journey-path-flow {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    oklch(65% 0.15 45)      0px,
+    oklch(65% 0.15 45)      16px,
+    oklch(65% 0.15 45 / 0.2) 16px,
+    oklch(65% 0.15 45 / 0.2) 28px
+  ) !important;
+  background-size: 2px 28px !important;
+  animation: path-flow 0.9s linear infinite;
+}
+
+/* Pulsing ring on active journey node */
+@keyframes node-pulse-ring {
+  0%   { box-shadow: 0 0 0 0   oklch(65% 0.15 45 / 0.55); }
+  65%  { box-shadow: 0 0 0 9px oklch(65% 0.15 45 / 0);    }
+  100% { box-shadow: 0 0 0 0   oklch(65% 0.15 45 / 0);    }
+}
+
+.journey-node-pulse {
+  animation: node-pulse-ring 2.4s ease-out infinite;
+}
+
+/* Staggered step entrance */
+@keyframes journey-step-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+.journey-step-enter {
+  animation: journey-step-in 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-path-flow    { animation: none; }
+  .journey-node-pulse   { animation: none; }
+  .journey-step-enter   { animation: none; }
+}
+
 /* ── FOCUS VISIBLE ── */
 .btn-primary:focus-visible,
 .btn-ghost:focus-visible,

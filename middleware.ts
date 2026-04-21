@@ -47,9 +47,47 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(dashboardUrl);
   }
 
+  // Protect /community — require auth
+  if (!user && request.nextUrl.pathname.startsWith("/community")) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Protect /apply and /peer-groups/apply — require auth
+  if (!user && (request.nextUrl.pathname.startsWith("/apply") || request.nextUrl.pathname.startsWith("/peer-groups/apply"))) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Protect /admin — only Chris's account
+  const ADMIN_USER_ID = "e04e4310-075a-4df5-9113-4fe7f993afe6";
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    if (!user || user.id !== ADMIN_USER_ID) {
+      const homeUrl = request.nextUrl.clone();
+      homeUrl.pathname = "/";
+      return NextResponse.redirect(homeUrl);
+    }
+  }
+
+  // Gate individual resource pages — only 4 are free
+  const FREE_RESOURCE_SLUGS = ["comfort-zone", "six-thinking-hats", "three-thinking-styles", "leadership-altitudes"];
+  if (!user && request.nextUrl.pathname.startsWith("/resources/")) {
+    const slug = request.nextUrl.pathname.split("/resources/")[1]?.split("/")[0];
+    if (slug && !FREE_RESOURCE_SLUGS.includes(slug) && slug !== "topic") {
+      const signupUrl = request.nextUrl.clone();
+      signupUrl.pathname = "/signup";
+      signupUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+      return NextResponse.redirect(signupUrl);
+    }
+  }
+
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/signup"],
+  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/apply/:path*", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+"],
 };
