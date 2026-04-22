@@ -567,7 +567,7 @@ export default function MBTIClient({
         <section style={{ marginBottom: 32 }}>
           <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 16 }}>Leadership Strengths</h2>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
-            {typeData.strengths.map(s => (
+            {typeData.strengths.en.map(s => (
               <li key={s} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "white", borderRadius: 10, padding: "14px 18px", border: "1px solid oklch(90% 0.03 45)" }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: typeData.color, marginTop: 8, flexShrink: 0 }} />
                 <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.6, color: "oklch(28% 0.05 45)" }}>{s}</span>
