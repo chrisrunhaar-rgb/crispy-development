@@ -5,12 +5,66 @@
   --color-navy:       oklch(30% 0.12 260);
   --color-navy-deep:  oklch(22% 0.10 260);
   --color-navy-mid:   oklch(38% 0.11 260);
+  --color-navy-900:   oklch(22% 0.10 260);
+  --color-navy-800:   oklch(28% 0.11 260);
   --color-orange:     oklch(65% 0.15 45);
   --color-orange-dim: oklch(58% 0.13 45);
   --color-off-white:  oklch(97% 0.005 80);
+  --color-off-white-100: oklch(97% 0.005 80);
   --color-light-gray: oklch(88% 0.008 80);
   --color-mid-gray:   oklch(68% 0.006 80);
   --color-charcoal:   oklch(22% 0.005 260);
+  --color-charcoal-600: oklch(45% 0.006 260);
+  --color-charcoal-700: oklch(38% 0.007 260);
+  --color-charcoal-800: oklch(30% 0.006 260);
+
+  /* DISC Colors */
+  --color-disc-d: #DC2626;
+  --color-disc-i: #F59E0B;
+  --color-disc-s: #10B981;
+  --color-disc-c: #3B82F6;
+
+  /* Wheel of Life Colors */
+  --color-wheel-warm-1: #DC2626;
+  --color-wheel-warm-2: #F59E0B;
+  --color-wheel-warm-3: #10B981;
+  --color-wheel-warm-4: #8B5CF6;
+
+  /* Thinking Styles Colors */
+  --color-thinking-1: #3B82F6;
+  --color-thinking-2: #F59E0B;
+  --color-thinking-3: #EC4899;
+
+  /* Enneagram Colors */
+  --color-enneagram-1: #DC2626;
+  --color-enneagram-2: #F97316;
+  --color-enneagram-3: #EAB308;
+  --color-enneagram-3-light: #FEF9C310;
+
+  /* Myers-Briggs Colors */
+  --color-mb-e: #DC2626;
+  --color-mb-e-light: #FEE2E210;
+  --color-mb-s: #F59E0B;
+  --color-mb-s-light: #FEF3C710;
+  --color-mb-t: #3B82F6;
+  --color-mb-t-light: #EFF6FF10;
+  --color-mb-j: #10B981;
+  --color-mb-j-light: #F0FDF410;
+
+  /* 16 Personalities Color */
+  --color-personalities: #3B82F6;
+  --color-personalities-light: #EFF6FF10;
+
+  /* Big Five Colors */
+  --color-big5-o: #3B82F6;
+  --color-big5-c: #10B981;
+  --color-big5-e: #F59E0B;
+  --color-big5-a: #EC4899;
+  --color-big5-n: #8B5CF6;
+
+  /* Spiritual Gifts Colors */
+  --color-gifts-primary: #EC4899;
+  --color-gifts-primary-light: #FCE7F310;
 
   /* Typography */
   --font-montserrat: var(--font-montserrat-var), system-ui, sans-serif;
