@@ -596,12 +596,13 @@ export default function TeamJourney({
                   display: "flex",
                   alignItems: "center",
                   paddingRight: "0.875rem",
+                  paddingLeft: isActive ? "0.25rem" : "0",
                   flexShrink: 0,
                 }}>
                   <span style={{
                     fontFamily: "var(--font-montserrat)",
                     fontWeight: 900,
-                    fontSize: "1.125rem",
+                    fontSize: isActive ? "1.375rem" : "1.125rem",
                     lineHeight: 1,
                     letterSpacing: "-0.03em",
                     color: isActive
@@ -609,7 +610,8 @@ export default function TeamJourney({
                       : localFinalizedSteps.includes(step.number) ? "oklch(52% 0.14 145)"
                       : stepStatus === "completed" ? "oklch(52% 0.14 145)"
                       : "oklch(82% 0.005 80)",
-                    transition: "color 0.25s ease",
+                    textShadow: isActive ? "0 0 8px oklch(65% 0.15 45 / 0.4)" : "none",
+                    transition: "all 0.25s ease",
                   }}>
                     {String(step.number).padStart(2, "0")}
                   </span>

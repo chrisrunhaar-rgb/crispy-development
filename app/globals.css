@@ -421,15 +421,31 @@ body {
   animation: path-flow 0.9s linear infinite;
 }
 
-/* Pulsing ring on active journey node */
-@keyframes node-pulse-ring {
-  0%   { box-shadow: 0 0 0 0   oklch(65% 0.15 45 / 0.55); }
-  65%  { box-shadow: 0 0 0 9px oklch(65% 0.15 45 / 0);    }
-  100% { box-shadow: 0 0 0 0   oklch(65% 0.15 45 / 0);    }
+/* Glowing effect on active journey node — like Team Foundations indicator */
+@keyframes node-glow-pulse {
+  0%   {
+    box-shadow:
+      0 0 0 3px   oklch(65% 0.15 45 / 0.3),
+      0 0 12px 2px oklch(65% 0.15 45 / 0.5),
+      inset 0 0 8px oklch(65% 0.15 45 / 0.4);
+  }
+  50%  {
+    box-shadow:
+      0 0 0 3px   oklch(65% 0.15 45 / 0.5),
+      0 0 18px 4px oklch(65% 0.15 45 / 0.65),
+      inset 0 0 12px oklch(65% 0.15 45 / 0.6);
+  }
+  100% {
+    box-shadow:
+      0 0 0 3px   oklch(65% 0.15 45 / 0.3),
+      0 0 12px 2px oklch(65% 0.15 45 / 0.5),
+      inset 0 0 8px oklch(65% 0.15 45 / 0.4);
+  }
 }
 
 .journey-node-pulse {
-  animation: node-pulse-ring 2.4s ease-out infinite;
+  animation: node-glow-pulse 2.0s ease-in-out infinite;
+  box-shadow: 0 0 0 3px oklch(65% 0.15 45 / 0.3), 0 0 12px 2px oklch(65% 0.15 45 / 0.5), inset 0 0 8px oklch(65% 0.15 45 / 0.4);
 }
 
 /* Staggered step entrance */
