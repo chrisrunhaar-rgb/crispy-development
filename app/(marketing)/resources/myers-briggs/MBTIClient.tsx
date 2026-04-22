@@ -577,9 +577,9 @@ export default function MBTIClient({
         </section>
 
         {[
-          { title: "Growth Edge", content: typeData.growth },
-          { title: "Communication Insights", content: typeData.communication },
-          { title: "Cross-Cultural Awareness", content: typeData.crossCultural },
+          { title: "Growth Edge", content: typeData.growth.en },
+          { title: "Communication Insights", content: typeData.communication.en },
+          { title: "Cross-Cultural Awareness", content: typeData.crossCultural.en },
         ].map(section => (
           <section key={section.title} style={{ marginBottom: 20, background: "white", borderRadius: 16, padding: "24px 28px", border: "1px solid oklch(90% 0.03 45)" }}>
             <h3 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 18, fontWeight: 400, color: "oklch(20% 0.06 45)", marginBottom: 12 }}>{section.title}</h3>
