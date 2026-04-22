@@ -486,7 +486,7 @@ export default function MBTIClient({
                 <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
                   <span style={{ fontFamily: "'Source Serif 4', serif", fontSize: 22, fontWeight: 400, color: dimMeta.color, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{opt.label}</span>
                   <p style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: "clamp(16px, 2vw, 18px)", lineHeight: 1.6, color: "oklch(20% 0.05 45)", margin: 0, fontWeight: 400 }}>
-                    {opt.text}
+                    {opt.text.en}
                   </p>
                 </div>
               </button>
