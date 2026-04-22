@@ -62,6 +62,10 @@ export default async function DashboardPage({
     ...(user.user_metadata?.wheel_of_life_saved_at ? ["wheel-of-life"] : []),
     ...(user.user_metadata?.disc_completed_at ? ["disc"] : []),
     ...(user.user_metadata?.karunia_completed_at ? ["karunia-rohani"] : []),
+    ...(user.user_metadata?.enneagram_completed_at ? ["enneagram"] : []),
+    ...(user.user_metadata?.big_five_completed_at ? ["big-five"] : []),
+    ...(user.user_metadata?.mbti_completed_at ? ["myers-briggs"] : []),
+    ...(user.user_metadata?.personalities16_completed_at ? ["16-personalities"] : []),
   ]);
   const thinkingStyleResult = (user.user_metadata?.thinking_style_result ?? null) as string | null;
   const thinkingStyleScores = (user.user_metadata?.thinking_style_scores ?? null) as { C: number; H: number; I: number } | null;
@@ -70,6 +74,13 @@ export default async function DashboardPage({
   const karuniaTopGifts = (user.user_metadata?.karunia_top_gifts ?? null) as string[] | null;
   const karuniaScores = (user.user_metadata?.karunia_scores ?? null) as Record<string, number> | null;
   const wheelOfLifeScores = (user.user_metadata?.wheel_of_life_scores ?? null) as Record<string, number> | null;
+  const enneagramType = (user.user_metadata?.enneagram_type ?? null) as number | null;
+  const enneagramScores = (user.user_metadata?.enneagram_scores ?? null) as Record<string, number> | null;
+  const bigFiveScores = (user.user_metadata?.big_five_scores ?? null) as Record<string, number> | null;
+  const mbtiType = (user.user_metadata?.mbti_type ?? null) as string | null;
+  const mbtiScores = (user.user_metadata?.mbti_scores ?? null) as Record<string, number> | null;
+  const personalities16Type = (user.user_metadata?.personalities16_type ?? null) as string | null;
+  const personalities16Scores = (user.user_metadata?.personalities16_scores ?? null) as Record<string, number> | null;
   const peerGroupId = user.user_metadata?.peer_group_id as string | undefined;
   const userTimezone = user.user_metadata?.timezone as string | undefined;
   const commStyle = (user.user_metadata?.comm_style ?? null) as string | null;
@@ -935,6 +946,13 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             thinkingStyleScores={thinkingStyleScores}
             karuniaTopGifts={karuniaTopGifts}
             karuniaScores={karuniaScores}
+            enneagramType={enneagramType}
+            enneagramScores={enneagramScores}
+            bigFiveScores={bigFiveScores}
+            mbtiType={mbtiType}
+            mbtiScores={mbtiScores}
+            personalities16Type={personalities16Type}
+            personalities16Scores={personalities16Scores}
             languagePreference={languagePreference}
           />
         </div>

@@ -229,7 +229,11 @@ type ModalData =
   | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number } }
   | { type: "wheel"; scores: Record<string, number> }
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number } }
-  | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" };
+  | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "enneagram"; type_num: number; scores: Record<string, number> }
+  | { type: "mbti"; type: string; scores: Record<string, number> }
+  | { type: "bigfive"; scores: Record<string, number> }
+  | { type: "16personalities"; type: string; scores: Record<string, number> };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
   return (
@@ -256,6 +260,10 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
         {data.type === "wheel" && <WheelModal data={data} onClose={onClose} />}
         {data.type === "thinking" && <ThinkingModal data={data} onClose={onClose} />}
         {data.type === "karunia" && <KaruniaModal data={data} onClose={onClose} />}
+        {data.type === "enneagram" && <EnneagramModal data={data} onClose={onClose} />}
+        {data.type === "mbti" && <MBTIModal data={data} onClose={onClose} />}
+        {data.type === "bigfive" && <BigFiveModal data={data} onClose={onClose} />}
+        {data.type === "16personalities" && <PersonalitiesModal data={data} onClose={onClose} />}
       </div>
     </div>
   );
@@ -545,6 +553,166 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
   );
 }
 
+function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "enneagram" }>; onClose: () => void }) {
+  const { type_num, scores } = data;
+  return (
+    <>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+        Personality Assessment
+      </p>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
+        Enneagram Type {type_num}
+      </h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        {Object.entries(scores).sort(([, a], [, b]) => b - a).slice(0, 5).map(([key, score]) => (
+          <div key={key}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>Type {key}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+            </div>
+            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake quiz →
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+}
+
+function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
+  const { type: mbtiType, scores } = data;
+  return (
+    <>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+        Personality Type
+      </p>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
+        {mbtiType}
+      </h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        {Object.entries(scores).map(([key, score]) => (
+          <div key={key}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{key}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+            </div>
+            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <Link href="/resources/myers-briggs" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake quiz →
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+}
+
+function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "bigfive" }>; onClose: () => void }) {
+  const { scores } = data;
+  const OCEAN_LABELS = { O: "Openness", C: "Conscientiousness", E: "Extraversion", A: "Agreeableness", N: "Neuroticism" };
+  return (
+    <>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+        The Big Five
+      </p>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
+        OCEAN Profile
+      </h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        {Object.entries(OCEAN_LABELS).map(([key, label]) => {
+          const score = scores[key] ?? 0;
+          return (
+            <div key={key}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{label}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+              </div>
+              <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+                <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake quiz →
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+}
+
+function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type: "16personalities" }>; onClose: () => void }) {
+  const { type: personalityType, scores } = data;
+  return (
+    <>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+        Personality Type
+      </p>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
+        {personalityType}
+      </h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        {Object.entries(scores).map(([key, score]) => (
+          <div key={key}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{key}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+            </div>
+            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake quiz →
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+}
+
+// ── Assessment title translations ──────────────────────────────────────────
+
+const ASSESSMENT_TITLES: Record<string, Record<"en" | "id" | "nl", string>> = {
+  disc: { en: "DISC Profile", id: "Profil DISC", nl: "DISC-profiel" },
+  wheel: { en: "Wheel of Life", id: "Roda Kehidupan", nl: "Levensrad" },
+  thinking: { en: "Thinking Styles", id: "Gaya Berpikir", nl: "Denkstijlen" },
+  enneagram: { en: "Enneagram", id: "Enneagram", nl: "Enneagram" },
+  mbti: { en: "Myers-Briggs", id: "Myers-Briggs", nl: "Myers-Briggs" },
+  "16personalities": { en: "16 Personalities", id: "16 Kepribadian", nl: "16 Persoonlijkheden" },
+  bigfive: { en: "Big Five", id: "Big Five", nl: "Big Five" },
+};
+
+function getTitle(key: string, lang: "en" | "id" | "nl"): string {
+  return ASSESSMENT_TITLES[key]?.[lang] || ASSESSMENT_TITLES[key]?.en || key;
+}
+
 // ── Tile components ───────────────────────────────────────────────────────────
 
 function CompactTile({
@@ -661,6 +829,13 @@ export default function AssessmentTileGrid({
   thinkingStyleScores = null,
   karuniaTopGifts = null,
   karuniaScores = null,
+  enneagramType = null,
+  enneagramScores = null,
+  bigFiveScores = null,
+  mbtiType = null,
+  mbtiScores = null,
+  personalities16Type = null,
+  personalities16Scores = null,
   languagePreference = "en",
 }: {
   discResult?: string | null;
@@ -670,6 +845,13 @@ export default function AssessmentTileGrid({
   thinkingStyleScores?: { C: number; H: number; I: number } | null;
   karuniaTopGifts?: string[] | null;
   karuniaScores?: Record<string, number> | null;
+  enneagramType?: number | null;
+  enneagramScores?: Record<string, number> | null;
+  bigFiveScores?: Record<string, number> | null;
+  mbtiType?: string | null;
+  mbtiScores?: Record<string, number> | null;
+  personalities16Type?: string | null;
+  personalities16Scores?: Record<string, number> | null;
   languagePreference?: "en" | "id" | "nl";
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
@@ -732,7 +914,7 @@ export default function AssessmentTileGrid({
 
         {/* 1. DISC */}
         <CompactTile
-          title="DISC Profile"
+          title={getTitle("disc", lang)}
           visual={discVisual}
           done={!!(discResult && discScores)}
           href="/resources/disc"
@@ -741,7 +923,7 @@ export default function AssessmentTileGrid({
 
         {/* 2. Wheel of Life */}
         <CompactTile
-          title="Wheel of Life"
+          title={getTitle("wheel", lang)}
           visual={wheelVisual}
           done={!!wheelOfLifeScores}
           href="/resources/wheel-of-life"
@@ -750,7 +932,7 @@ export default function AssessmentTileGrid({
 
         {/* 3. Three Thinking Styles */}
         <CompactTile
-          title="Thinking Styles"
+          title={getTitle("thinking", lang)}
           visual={thinkingVisual}
           done={!!(thinkingStyleResult && thinkingStyleScores)}
           href="/resources/three-thinking-styles"
@@ -770,34 +952,38 @@ export default function AssessmentTileGrid({
 
         {/* 5. Enneagram */}
         <CompactTile
-          title="Enneagram"
-          visual={<EmptyTileVisual />}
-          done={false}
+          title={getTitle("enneagram", lang)}
+          visual={enneagramScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.4rem", fontWeight: 800, color: navy }}>Type {enneagramType}</p></div> : <EmptyTileVisual />}
+          done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
+          onClick={enneagramType && enneagramScores ? () => setModal({ type: "enneagram", type_num: enneagramType, scores: enneagramScores }) : undefined}
         />
 
         {/* 6. Myers-Briggs */}
         <CompactTile
-          title="Myers-Briggs"
-          visual={<EmptyTileVisual />}
-          done={false}
+          title={getTitle("mbti", lang)}
+          visual={mbtiScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: navy }}>{mbtiType}</p></div> : <EmptyTileVisual />}
+          done={!!(mbtiType && mbtiScores)}
           href="/resources/myers-briggs"
+          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", type: mbtiType, scores: mbtiScores }) : undefined}
         />
 
         {/* 7. 16 Personalities */}
         <CompactTile
-          title="16 Personalities"
-          visual={<EmptyTileVisual />}
-          done={false}
+          title={getTitle("16personalities", lang)}
+          visual={personalities16Scores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
+          done={!!(personalities16Type && personalities16Scores)}
           href="/resources/16-personalities"
+          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", type: personalities16Type, scores: personalities16Scores }) : undefined}
         />
 
         {/* 8. Big Five */}
         <CompactTile
-          title="Big Five"
-          visual={<EmptyTileVisual />}
-          done={false}
+          title={getTitle("bigfive", lang)}
+          visual={bigFiveScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy, lineHeight: 1.2 }}>Results saved</p></div> : <EmptyTileVisual />}
+          done={!!bigFiveScores}
           href="/resources/big-five"
+          onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores }) : undefined}
         />
 
       </div>
