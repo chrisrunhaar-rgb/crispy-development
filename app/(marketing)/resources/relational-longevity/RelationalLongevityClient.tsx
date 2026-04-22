@@ -195,6 +195,8 @@ const SKILLS: {
       "A senior team member repeatedly dismisses ideas from a junior colleague in team meetings — not aggressively, but consistently. The junior colleague says nothing in the meetings, but begins withdrawing from team activities.",
     id_scenario:
       "Seorang anggota tim senior berulang kali mengabaikan ide dari kolega junior dalam rapat tim — tidak secara agresif, tetapi secara konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
+    nl_scenario:
+      "Een senior teamlid spreekt herhaaldelijk ideeën van een junior collega tegen in teamvergaderingen — niet agressief, maar consequent. De junior collega zegt niets in de vergaderingen, maar begint zich terug te trekken uit teamactiviteiten.",
     en_typical_label: "Stage 1 — Signal",
     id_typical_label: "Tahap 1 — Sinyal",
     nl_typical_label: "Fase 1 — Signaal",
