@@ -519,12 +519,12 @@ export default function MBTIClient({
           <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
             <span style={{ fontFamily: "'Source Serif 4', serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 600, color: typeData.color, lineHeight: 1 }}>{type}</span>
             <div>
-              <div style={{ fontFamily: "'Source Serif 4', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle}</div>
-              <div style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(78% 0.05 45)", marginTop: 6 }}>{typeData.jungian}</div>
+              <div style={{ fontFamily: "'Source Serif 4', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle.en}</div>
+              <div style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(78% 0.05 45)", marginTop: 6 }}>{typeData.jungian.en}</div>
             </div>
           </div>
           <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.04 45)", maxWidth: 580 }}>
-            {typeData.overview}
+            {typeData.overview.en}
           </p>
         </div>
       </div>
