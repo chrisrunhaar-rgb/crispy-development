@@ -57,6 +57,12 @@ export const TOPICS: Topic[] = [
     description: "Staying rooted in what matters most — the biblical foundations of leadership, identity, and purpose.",
     icon: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z",
   },
+  {
+    slug: "self-care",
+    title: "Self-Care & Resilience",
+    description: "Protecting your wellbeing — burnout prevention, mental health, healthy rhythms, and personal sustainability for the long haul.",
+    icon: "M14.828 14.828a4 4 0 01-5.656 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-4a1 1 0 11-2 0 1 1 0 012 0zm0 8a1 1 0 11-2 0 1 1 0 012 0z",
+  },
 ];
 
 export const RESOURCES: Resource[] = [
@@ -505,7 +511,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en", "id", "nl"],
     gated: true,
-    topics: ["personal-development", "faith-calling"],
+    topics: ["personal-development", "faith-calling", "self-care"],
   },
   {
     id: "relational-longevity",
@@ -516,7 +522,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en", "id", "nl"],
     gated: true,
-    topics: ["team-facilitation", "personal-development"],
+    topics: ["team-facilitation", "personal-development", "self-care"],
   },
   {
     id: "emotional-safety-families",
@@ -527,7 +533,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "faith-calling"],
+    topics: ["personal-development", "faith-calling", "self-care"],
   },
   {
     id: "healthy-transitions",
@@ -538,7 +544,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "cross-cultural"],
+    topics: ["personal-development", "cross-cultural", "self-care"],
   },
   {
     id: "psychological-first-aid",
@@ -549,7 +555,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en", "id", "nl"],
     gated: true,
-    topics: ["team-facilitation", "personal-development"],
+    topics: ["team-facilitation", "personal-development", "self-care"],
   },
   {
     id: "sustainable-pace",
@@ -560,7 +566,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "faith-calling"],
+    topics: ["personal-development", "faith-calling", "self-care"],
   },
 ];
 
