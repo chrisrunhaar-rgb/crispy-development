@@ -263,7 +263,7 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
   function handleSave() {
     startTransition(async () => {
       const result = await saveResourceToDashboard("psychological-first-aid");
-      if (result.success) setSaved(true);
+      if (!result.error) setSaved(true);
     });
   }
 

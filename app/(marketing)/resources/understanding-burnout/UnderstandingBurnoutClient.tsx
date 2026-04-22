@@ -210,7 +210,7 @@ export default function UnderstandingBurnoutClient({ userPathway, isSaved: initi
   function handleSave() {
     startTransition(async () => {
       const result = await saveResourceToDashboard("understanding-burnout");
-      if (result.success) setSaved(true);
+      if (!result.error) setSaved(true);
     });
   }
 

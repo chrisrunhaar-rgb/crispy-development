@@ -273,7 +273,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
   function handleSave() {
     startTransition(async () => {
       const result = await saveResourceToDashboard("identity-under-pressure");
-      if (result.success) setSaved(true);
+      if (!result.error) setSaved(true);
     });
   }
 
