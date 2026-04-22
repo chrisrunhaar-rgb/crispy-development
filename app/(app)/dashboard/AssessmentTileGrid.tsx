@@ -231,9 +231,9 @@ type ModalData =
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number } }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "enneagram"; type_num: number; scores: Record<string, number> }
-  | { type: "mbti"; type: string; scores: Record<string, number> }
+  | { type: "mbti"; mbtiType: string; scores: Record<string, number> }
   | { type: "bigfive"; scores: Record<string, number> }
-  | { type: "16personalities"; type: string; scores: Record<string, number> };
+  | { type: "16personalities"; personalityType: string; scores: Record<string, number> };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
   return (
@@ -589,7 +589,7 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 }
 
 function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
-  const { type: mbtiType, scores } = data;
+  const { mbtiType, scores } = data;
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
@@ -663,7 +663,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
 }
 
 function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type: "16personalities" }>; onClose: () => void }) {
-  const { type: personalityType, scores } = data;
+  const { personalityType, scores } = data;
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
@@ -965,7 +965,7 @@ export default function AssessmentTileGrid({
           visual={mbtiScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: navy }}>{mbtiType}</p></div> : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
           href="/resources/myers-briggs"
-          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", type: mbtiType, scores: mbtiScores }) : undefined}
+          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores }) : undefined}
         />
 
         {/* 7. 16 Personalities */}
@@ -974,7 +974,7 @@ export default function AssessmentTileGrid({
           visual={personalities16Scores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
           done={!!(personalities16Type && personalities16Scores)}
           href="/resources/16-personalities"
-          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", type: personalities16Type, scores: personalities16Scores }) : undefined}
+          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores }) : undefined}
         />
 
         {/* 8. Big Five */}
