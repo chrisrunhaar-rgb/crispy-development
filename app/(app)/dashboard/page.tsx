@@ -664,7 +664,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} mbtiType={mbtiType} mbtiScores={mbtiScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
           </>
         )}
 
@@ -836,7 +836,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, mbtiType = null, mbtiScores = null, personalities16Type = null, personalities16Scores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -851,6 +851,13 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   wheelOfLifeScores?: Record<string, number> | null;
   karuniaTopGifts?: string[] | null;
   karuniaScores?: Record<string, number> | null;
+  enneagramType?: number | null;
+  enneagramScores?: Record<string, number> | null;
+  bigFiveScores?: Record<string, number> | null;
+  mbtiType?: string | null;
+  mbtiScores?: Record<string, number> | null;
+  personalities16Type?: string | null;
+  personalities16Scores?: Record<string, number> | null;
   commStyle?: string | null;
   commStyleScores?: Record<string, number> | null;
   trustAvg?: number | null;
