@@ -825,9 +825,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                         color: bodyText,
                         lineHeight: 1.8,
                         marginBottom: 32,
-                        paddingTop: 8,
-                        borderTop: `2px solid ${skill.accentBg}`,
                         paddingTop: 20,
+                        borderTop: `2px solid ${skill.accentBg}`,
                       }}
                     >
                       {lang === "en"
