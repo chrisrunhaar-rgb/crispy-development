@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { BulkActionsBar } from './BulkActionsBar';
+import { exportSingleRow } from '@/lib/admin-export';
 
 interface Member {
   id: string;
@@ -25,6 +27,8 @@ interface AdminMembersTableProps {
   members: Member[];
   onEdit?: (memberId: string) => void;
   onDelete?: (memberId: string) => void;
+  onDeleteMultiple?: (memberIds: string[]) => Promise<void>;
+  onExport?: (members: Member[]) => void;
   showSearch?: boolean;
   showFilters?: boolean;
   testCount?: number;
@@ -101,6 +105,8 @@ export default function AdminMembersTable({
   members,
   onEdit,
   onDelete,
+  onDeleteMultiple,
+  onExport,
   showSearch = true,
   showFilters = true,
   testCount = 4,
@@ -110,6 +116,9 @@ export default function AdminMembersTable({
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [pathwayFilter, setPathwayFilter] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [isLoading, setIsLoading] = useState(false);
+  const headerCheckboxRef = useRef<HTMLInputElement>(null);
 
   // Debounced search
   const debouncedSearch = useCallback((term: string) => {
@@ -226,6 +235,53 @@ export default function AdminMembersTable({
 
   const hasActiveFilters = pathwayFilter.length > 0 || statusFilter.length > 0 || searchTerm;
 
+  // Checkbox handlers
+  const toggleRowSelection = useCallback((memberId: string) => {
+    setSelectedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(memberId)) {
+        newSet.delete(memberId);
+      } else {
+        newSet.add(memberId);
+      }
+      return newSet;
+    });
+  }, []);
+
+  const selectAllVisible = useCallback(() => {
+    const allIds = new Set(filteredAndSorted.map(m => m.id));
+    setSelectedIds(allIds);
+  }, [filteredAndSorted]);
+
+  const deselectAll = useCallback(() => {
+    setSelectedIds(new Set());
+  }, []);
+
+  const handleDeleteSelected = useCallback(async () => {
+    if (!onDeleteMultiple || selectedIds.size === 0) return;
+    setIsLoading(true);
+    try {
+      await onDeleteMultiple(Array.from(selectedIds));
+      setSelectedIds(new Set());
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedIds, onDeleteMultiple]);
+
+  const handleExportSelected = useCallback(() => {
+    if (onExport && selectedIds.size > 0) {
+      const selectedMembers = members.filter(m => selectedIds.has(m.id));
+      onExport(selectedMembers);
+    }
+  }, [selectedIds, members, onExport]);
+
+  // Update indeterminate state on header checkbox
+  useEffect(() => {
+    if (headerCheckboxRef.current) {
+      headerCheckboxRef.current.indeterminate = selectedIds.size > 0 && selectedIds.size < filteredAndSorted.length;
+    }
+  }, [selectedIds, filteredAndSorted.length]);
+
   const SortIcon = ({ column }: { column: SortColumn }) => {
     if (sortColumn !== column) return <span style={{ opacity: 0.3 }}>⇅</span>;
     return <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>;
@@ -260,7 +316,20 @@ export default function AdminMembersTable({
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', paddingBottom: selectedIds.size > 0 ? '5rem' : '0' }}>
+      {/* Bulk Actions Bar */}
+      {selectedIds.size > 0 && (
+        <BulkActionsBar
+          selectedCount={selectedIds.size}
+          totalCount={filteredAndSorted.length}
+          onSelectAll={selectAllVisible}
+          onDeselectAll={deselectAll}
+          onRemoveSelected={handleDeleteSelected}
+          onExportSelected={handleExportSelected}
+          isLoading={isLoading}
+        />
+      )}
+
       {/* Search and Filters */}
       {(showSearch || showFilters) && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -354,28 +423,44 @@ export default function AdminMembersTable({
           <table className="ds-table">
             <thead className="ds-table-header">
               <tr>
-                <th style={{ width: '25%', cursor: 'pointer' }} onClick={() => handleSort('name')}>
+                <th style={{ width: '3%', textAlign: 'center' }}>
+                  <input
+                    ref={headerCheckboxRef}
+                    type="checkbox"
+                    checked={selectedIds.size > 0 && selectedIds.size === filteredAndSorted.length}
+                    onChange={() => {
+                      if (selectedIds.size === filteredAndSorted.length) {
+                        deselectAll();
+                      } else {
+                        selectAllVisible();
+                      }
+                    }}
+                    aria-label="Select all visible members"
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                </th>
+                <th style={{ width: '22%', cursor: 'pointer' }} onClick={() => handleSort('name')}>
                   Name <SortIcon column="name" />
                 </th>
-                <th style={{ width: '20%', cursor: 'pointer' }} onClick={() => handleSort('pathway')}>
+                <th style={{ width: '18%', cursor: 'pointer' }} onClick={() => handleSort('pathway')}>
                   Pathway <SortIcon column="pathway" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('team')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('team')}>
                   Team <SortIcon column="team" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('peer')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('peer')}>
                   Peer <SortIcon column="peer" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('modules')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('modules')}>
                   Modules <SortIcon column="modules" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('tests')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('tests')}>
                   Tests <SortIcon column="tests" />
                 </th>
-                <th style={{ width: '15%', cursor: 'pointer' }} onClick={() => handleSort('lastLogin')}>
+                <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('lastLogin')}>
                   Last Login <SortIcon column="lastLogin" />
                 </th>
-                <th style={{ width: '15%', cursor: 'pointer' }} onClick={() => handleSort('joined')}>
+                <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('joined')}>
                   Joined <SortIcon column="joined" />
                 </th>
               </tr>
@@ -388,9 +473,26 @@ export default function AdminMembersTable({
                     : member.email;
                 const initials = getInitials(member.first_name, member.last_name, member.email);
                 const avatarBg = getAvatarColor(member.id);
+                const isSelected = selectedIds.has(member.id);
 
                 return (
-                  <tr key={member.id} className="ds-table-row-hover">
+                  <tr
+                    key={member.id}
+                    className="ds-table-row-hover"
+                    style={{
+                      backgroundColor: isSelected ? 'oklch(97% 0.005 80 / 0.05)' : 'transparent',
+                      transition: 'background-color 0.15s',
+                    }}
+                  >
+                    <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleRowSelection(member.id)}
+                        aria-label={`Select ${name}`}
+                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                      />
+                    </td>
                     <td data-label="Name">
                       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                         <div

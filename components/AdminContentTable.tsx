@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { BulkActionsBar } from './BulkActionsBar';
+import { exportSingleRow } from '@/lib/admin-export';
 
 interface ContentModule {
   slug: string;
@@ -18,6 +20,8 @@ type SortDirection = 'asc' | 'desc';
 
 interface AdminContentTableProps {
   modules: ContentModule[];
+  onArchiveMultiple?: (slugs: string[]) => Promise<void>;
+  onExport?: (modules: ContentModule[]) => void;
   showSearch?: boolean;
   showFilters?: boolean;
 }
@@ -33,6 +37,8 @@ function formatDate(iso: string | null | undefined): string {
 
 export default function AdminContentTable({
   modules,
+  onArchiveMultiple,
+  onExport,
   showSearch = true,
   showFilters = true,
 }: AdminContentTableProps) {
@@ -41,6 +47,9 @@ export default function AdminContentTable({
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [categoryFilter, setCategoryFilter] = useState<string[]>([]);
   const [languageFilter, setLanguageFilter] = useState<string[]>([]);
+  const [selectedSlugs, setSelectedSlugs] = useState<Set<string>>(new Set());
+  const [isLoading, setIsLoading] = useState(false);
+  const headerCheckboxRef = useRef<HTMLInputElement>(null);
 
   // Get unique categories and languages
   const categories = useMemo(
@@ -158,6 +167,53 @@ export default function AdminContentTable({
 
   const hasActiveFilters = categoryFilter.length > 0 || languageFilter.length > 0 || searchTerm;
 
+  // Checkbox handlers
+  const toggleRowSelection = useCallback((slug: string) => {
+    setSelectedSlugs(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(slug)) {
+        newSet.delete(slug);
+      } else {
+        newSet.add(slug);
+      }
+      return newSet;
+    });
+  }, []);
+
+  const selectAllVisible = useCallback(() => {
+    const allSlugs = new Set(filteredAndSorted.map(m => m.slug));
+    setSelectedSlugs(allSlugs);
+  }, [filteredAndSorted]);
+
+  const deselectAll = useCallback(() => {
+    setSelectedSlugs(new Set());
+  }, []);
+
+  const handleArchiveSelected = useCallback(async () => {
+    if (!onArchiveMultiple || selectedSlugs.size === 0) return;
+    setIsLoading(true);
+    try {
+      await onArchiveMultiple(Array.from(selectedSlugs));
+      setSelectedSlugs(new Set());
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedSlugs, onArchiveMultiple]);
+
+  const handleExportSelected = useCallback(() => {
+    if (onExport && selectedSlugs.size > 0) {
+      const selectedModules = modules.filter(m => selectedSlugs.has(m.slug));
+      onExport(selectedModules);
+    }
+  }, [selectedSlugs, modules, onExport]);
+
+  // Update indeterminate state on header checkbox
+  useEffect(() => {
+    if (headerCheckboxRef.current) {
+      headerCheckboxRef.current.indeterminate = selectedSlugs.size > 0 && selectedSlugs.size < filteredAndSorted.length;
+    }
+  }, [selectedSlugs, filteredAndSorted.length]);
+
   const SortIcon = ({ column }: { column: SortColumn }) => {
     if (sortColumn !== column) return <span style={{ opacity: 0.3 }}>⇅</span>;
     return <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>;
@@ -192,7 +248,20 @@ export default function AdminContentTable({
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', paddingBottom: selectedSlugs.size > 0 ? '5rem' : '0' }}>
+      {/* Bulk Actions Bar */}
+      {selectedSlugs.size > 0 && (
+        <BulkActionsBar
+          selectedCount={selectedSlugs.size}
+          totalCount={filteredAndSorted.length}
+          onSelectAll={selectAllVisible}
+          onDeselectAll={deselectAll}
+          onRemoveSelected={handleArchiveSelected}
+          onExportSelected={handleExportSelected}
+          isLoading={isLoading}
+        />
+      )}
+
       {/* Search and Filters */}
       {(showSearch || showFilters) && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -308,29 +377,63 @@ export default function AdminContentTable({
           <table className="ds-table">
             <thead className="ds-table-header">
               <tr>
-                <th style={{ width: '30%', cursor: 'pointer' }} onClick={() => handleSort('title')}>
+                <th style={{ width: '3%', textAlign: 'center' }}>
+                  <input
+                    ref={headerCheckboxRef}
+                    type="checkbox"
+                    checked={selectedSlugs.size > 0 && selectedSlugs.size === filteredAndSorted.length}
+                    onChange={() => {
+                      if (selectedSlugs.size === filteredAndSorted.length) {
+                        deselectAll();
+                      } else {
+                        selectAllVisible();
+                      }
+                    }}
+                    aria-label="Select all visible modules"
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                </th>
+                <th style={{ width: '27%', cursor: 'pointer' }} onClick={() => handleSort('title')}>
                   Title <SortIcon column="title" />
                 </th>
-                <th style={{ width: '20%', cursor: 'pointer' }} onClick={() => handleSort('category')}>
+                <th style={{ width: '18%', cursor: 'pointer' }} onClick={() => handleSort('category')}>
                   Category <SortIcon column="category" />
                 </th>
-                <th style={{ width: '15%', cursor: 'pointer' }} onClick={() => handleSort('languages')}>
+                <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('languages')}>
                   Languages <SortIcon column="languages" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
                   Reads <SortIcon column="reads" />
                 </th>
-                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
+                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
                   Saves <SortIcon column="saves" />
                 </th>
-                <th style={{ width: '15%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
+                <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
                   Updated <SortIcon column="updated" />
                 </th>
               </tr>
             </thead>
             <tbody className="ds-table-body">
-              {filteredAndSorted.map((module) => (
-                <tr key={module.slug} className="ds-table-row-hover">
+              {filteredAndSorted.map((module) => {
+                const isSelected = selectedSlugs.has(module.slug);
+                return (
+                <tr
+                  key={module.slug}
+                  className="ds-table-row-hover"
+                  style={{
+                    backgroundColor: isSelected ? 'oklch(97% 0.005 80 / 0.05)' : 'transparent',
+                    transition: 'background-color 0.15s',
+                  }}
+                >
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleRowSelection(module.slug)}
+                      aria-label={`Select ${module.title}`}
+                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                    />
+                  </td>
                   <td data-label="Title">
                     <span style={{ fontWeight: '500', color: '#1F2937' }}>{module.title}</span>
                   </td>
@@ -373,7 +476,8 @@ export default function AdminContentTable({
                     </span>
                   </td>
                 </tr>
-              ))}
+              );
+              })}
             </tbody>
           </table>
         </div>

@@ -199,3 +199,26 @@ export function exportSingleRow<T extends Record<string, any>>(row: T, filename:
   const csv = arrayToCSV([row]);
   downloadCSV(csv, filename);
 }
+
+/**
+ * Export members with simple transformation for bulk export
+ */
+export function exportMembersAsCSV(members: Array<{
+  id: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  pathway?: string;
+  created_at?: string;
+}>): void {
+  const data = members.map((member) => ({
+    name: `${member.first_name || ''} ${member.last_name || ''}`.trim(),
+    email: member.email || '',
+    pathway: member.pathway || 'personal',
+    'joined_date': formatDateForExport(member.created_at || new Date().toISOString()),
+  }));
+
+  const csv = arrayToCSV(data);
+  const filename = `crispyleaders_members_${new Date().toISOString().split('T')[0]}.csv`;
+  downloadCSV(csv, filename);
+}
