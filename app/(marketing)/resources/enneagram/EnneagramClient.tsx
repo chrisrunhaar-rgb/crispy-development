@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
+import EnneagramTypesGrid from "./EnneagramTypesGrid";
+import TypeCard from "./TypeCard";
 
 // ── LANGUAGE ──────────────────────────────────────────────────────────────────
 type Lang = "en" | "id" | "nl";
@@ -693,10 +695,10 @@ const TYPES = [
     number: 7,
     name: { en: "The Enthusiast", id: "Si Antusias", nl: "De Enthousiast" },
     tagline: { en: "Visionary. Energetic. Possibility-focused.", id: "Visioner. Energetik. Berfokus pada kemungkinan.", nl: "Visionair. Energiek. Gericht op mogelijkheden." },
-    color: "oklch(60% 0.18 52)",
-    colorLight: "oklch(72% 0.14 52)",
-    colorVeryLight: "oklch(94% 0.04 52)",
-    bg: "oklch(18% 0.12 52)",
+    color: "oklch(60% 0.18 30)",
+    colorLight: "oklch(72% 0.14 30)",
+    colorVeryLight: "oklch(94% 0.04 30)",
+    bg: "oklch(18% 0.12 30)",
     overview: {
       en: "The Type 7 leader brings energy, ideas, and irresistible forward momentum. They see possibility where others see problems and inspire teams to believe that things can be different. Their gift is keeping teams moving with joy and vision — their growth edge is learning to stay present when things are hard, rather than seeking the next new thing.",
       id: "Pemimpin Tipe 7 membawa energi, ide, dan momentum maju yang tak tertahankan. Mereka melihat kemungkinan di mana orang lain melihat masalah dan menginspirasi tim untuk percaya bahwa sesuatu bisa berbeda. Hadiah mereka adalah menjaga tim terus bergerak dengan sukacita dan visi — tepi pertumbuhan mereka adalah belajar untuk tetap hadir ketika segala sesuatu menjadi sulit, daripada mencari hal baru berikutnya.",
@@ -904,6 +906,7 @@ export default function EnneagramClient({
   const [resultSaved, setResultSaved] = useState(!!savedType);
   const [expandedType, setExpandedType] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [resultFlipped, setResultFlipped] = useState(false);
 
   function startQuiz() {
     setCurrentIdx(0);
@@ -1115,6 +1118,18 @@ export default function EnneagramClient({
       {quizState === "done" && (
         <div style={{ maxWidth: "760px", margin: "0 auto", padding: "3rem 2rem" }}>
 
+          {/* Result Type Tile */}
+          <div style={{ marginBottom: "3rem" }}>
+            <div style={{ height: "280px" }}>
+              <TypeCard
+                type={primaryType}
+                lang={lang}
+                isFlipped={resultFlipped}
+                onClick={() => setResultFlipped(!resultFlipped)}
+              />
+            </div>
+          </div>
+
           {/* Primary type overview */}
           <div style={{
             background: primaryType.colorVeryLight,
@@ -1249,63 +1264,8 @@ export default function EnneagramClient({
             </div>
           </div>
 
-          {/* All 9 types expandable */}
-          <div style={{ borderTop: "1px solid oklch(88% 0.006 80)", paddingTop: "2rem" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "1.25rem" }}>
-              {t(UI.allNineTypes)}
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-              {TYPES.map((tp) => {
-                const isExpanded = expandedType === tp.number;
-                const isPrimary = tp.number === primaryType.number;
-                return (
-                  <div key={tp.number} style={{ borderTop: "1px solid oklch(90% 0.005 80)" }}>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedType(isExpanded ? null : tp.number)}
-                      style={{
-                        width: "100%", display: "flex", alignItems: "center", gap: "1rem",
-                        padding: "1rem 0", background: "none", border: "none", cursor: "pointer",
-                        textAlign: "left",
-                      }}
-                    >
-                      <span style={{
-                        width: "28px", height: "28px", flexShrink: 0, display: "flex",
-                        alignItems: "center", justifyContent: "center",
-                        background: isPrimary ? tp.color : tp.colorVeryLight,
-                        fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 800,
-                        color: isPrimary ? "white" : tp.color,
-                      }}>
-                        {tp.number}
-                      </span>
-                      <span style={{ flex: 1, fontFamily: "var(--font-montserrat)", fontWeight: isPrimary ? 700 : 500, fontSize: "0.9rem", color: isPrimary ? "oklch(22% 0.005 260)" : "oklch(38% 0.008 260)" }}>
-                        {t(tp.name)}
-                      </span>
-                      {isPrimary && (
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: tp.color, flexShrink: 0 }}>
-                          {t(UI.yourTypeBadge)}
-                        </span>
-                      )}
-                      <svg viewBox="0 0 16 16" fill="none" stroke="oklch(60% 0.006 260)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"
-                        style={{ width: "13px", height: "13px", flexShrink: 0, transform: isExpanded ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s ease" }}>
-                        <path d="M4 6l4 4 4-4" />
-                      </svg>
-                    </button>
-                    {isExpanded && (
-                      <div style={{ padding: "0 0 1.25rem 2.75rem" }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(30% 0.006 260)", lineHeight: 1.75, marginBottom: "0.625rem" }}>
-                          {t(tp.overview)}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(44% 0.008 260)", lineHeight: 1.6 }}>
-                          <strong style={{ fontWeight: 700, color: tp.color }}>{t(UI.motivation)}</strong>{t(tp.motivation)}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {/* All 9 types grid */}
+          <EnneagramTypesGrid types={TYPES} lang={lang} />
         </div>
       )}
 
@@ -1315,12 +1275,17 @@ export default function EnneagramClient({
 
           {/* What is the Enneagram */}
           <div style={{ marginBottom: "3rem" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
-              {t(UI.aboutAssessment)}
-            </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "1.25rem" }}>
-              {t(UI.whatIsEnneagram)}
-            </h2>
+            <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+                  {t(UI.aboutAssessment)}
+                </p>
+                <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "1.25rem" }}>
+                  {t(UI.whatIsEnneagram)}
+                </h2>
+              </div>
+              <img src="/enneagram-types/enneagram-map.jpg" alt="Enneagram Map" style={{ width: "180px", height: "auto", opacity: 0.5, borderRadius: "0.5rem", flexShrink: 0 }} />
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.006 260)", lineHeight: 1.75 }}>
                 {t(UI.enneagramP1)}
@@ -1332,28 +1297,11 @@ export default function EnneagramClient({
                 {t(UI.enneagramP3)}
               </p>
             </div>
+            <img src="/enneagram-types/overview.png" alt="Enneagram Overview" style={{ width: "100%", maxWidth: "600px", marginTop: "2rem", borderRadius: "0.5rem" }} />
           </div>
 
-          {/* The 9 types overview */}
-          <div style={{ marginBottom: "3rem" }}>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "1.5rem" }}>
-              {t(UI.nineTypes)}
-            </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.75rem" }}>
-              {TYPES.map((tp) => (
-                <div key={tp.number} style={{ background: tp.colorVeryLight, padding: "1.125rem 1.25rem", display: "flex", gap: "0.875rem", alignItems: "flex-start" }}>
-                  <span style={{
-                    width: "28px", height: "28px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-                    background: tp.color, fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 800, color: "white",
-                  }}>{tp.number}</span>
-                  <div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem" }}>{t(tp.name)}</p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(44% 0.008 260)", lineHeight: 1.5 }}>{t(tp.tagline)}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* The 9 types with card flip */}
+          <EnneagramTypesGrid types={TYPES} lang={lang} />
 
           {/* How to take it */}
           <div style={{ background: "oklch(97% 0.01 50)", padding: "1.75rem 2rem", marginBottom: "2.5rem", outline: "1px solid oklch(88% 0.008 80)" }}>
