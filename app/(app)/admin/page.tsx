@@ -6,6 +6,9 @@ import { approveApplication, declineApplication, markMessageRead, approvePeerApp
 import AdminReplyForm from "./AdminReplyForm";
 import AdminBroadcastForm from "./AdminBroadcastForm";
 import AdminLeaderRow from "./AdminLeaderRow";
+import AdminSidebar from "@/components/AdminSidebar";
+import AdminMembersTable from "@/components/AdminMembersTable";
+import AdminSearchBar from "@/components/AdminSearchBar";
 
 export const metadata = {
   title: "Community Dashboard — Crispy Development",
@@ -281,9 +284,11 @@ export default async function AdminPage({
   }));
 
   return (
-    <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 120px)" }}>
+    <div style={{ background: "#FAFBFC", minHeight: "100dvh", display: "flex" }}>
+      <AdminSidebar />
 
-      {/* Header */}
+      <div className="ds-main" style={{ flex: 1, minHeight: "100dvh" }}>
+        {/* Header */}
       <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "2rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
         <div className="container-wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "2rem" }}>
@@ -827,6 +832,7 @@ export default async function AdminPage({
           </>
         )}
 
+      </div>
       </div>
     </div>
   );
