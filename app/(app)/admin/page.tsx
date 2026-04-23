@@ -16,8 +16,6 @@ export const metadata = {
   title: "Community Dashboard — Crispy Development",
 };
 
-const ADMIN_USER_ID = "e04e4310-075a-4df5-9113-4fe7f993afe6";
-
 const ASSESSMENT_KEYS = [
   "disc_completed_at",
   "thinking_style_completed_at",
@@ -110,7 +108,7 @@ export default async function AdminPage({
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user || user.id !== ADMIN_USER_ID) redirect("/");
+  if (!user || user.email !== "chris.runhaar@world-outreach.com") redirect("/");
 
   const { tab } = await searchParams;
   const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : "members";
@@ -123,7 +121,7 @@ export default async function AdminPage({
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
   type UserRow = { id: string; email?: string; created_at: string; last_sign_in_at: string | null; user_metadata: Record<string, unknown> };
-  const allUsers: UserRow[] = (allAuthUsers ?? []).filter(u => u.id !== ADMIN_USER_ID).map(u => ({
+  const allUsers: UserRow[] = (allAuthUsers ?? []).filter(u => u.email !== "chris.runhaar@gmail.com").map(u => ({
     id: u.id,
     email: u.email,
     created_at: u.created_at,

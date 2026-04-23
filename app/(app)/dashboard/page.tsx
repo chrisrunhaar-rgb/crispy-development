@@ -41,57 +41,81 @@ type Module = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; joined?: string; join?: string }>;
+  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { tab, joined, join } = await searchParams;
-  const firstName = user.user_metadata?.first_name ?? user.email?.split("@")[0] ?? "there";
-  const pathway = (user.user_metadata?.pathway as string) ?? "personal";
-  const savedResources = (user.user_metadata?.saved_resources ?? []) as string[];
-  const resourceNotes = (user.user_metadata?.resource_notes ?? {}) as Record<string, string>;
-  const resourceRatings = (user.user_metadata?.resource_ratings ?? {}) as Record<string, number>;
-  const resourceRead = (user.user_metadata?.resource_read ?? []) as string[];
+  const { tab, joined, join, member, leader, initiator } = await searchParams;
+
+  // Admin mode: check if current user is admin and a target user param exists
+  const isAdmin = user.email === "chris.runhaar@world-outreach.com";
+  const targetUserId = member ?? leader ?? initiator;
+  let viewingAsAdmin = false;
+  let viewedUserName = "";
+  let metadata = user.user_metadata ?? {};
+  let viewingUserId = user.id;
+
+  if (isAdmin && targetUserId) {
+    // Fetch target user's metadata
+    const admin = createAdminClient();
+    const { data: { users } } = await admin.auth.admin.listUsers({ perPage: 1000 });
+    const targetUser = users?.find((u) => u.id === targetUserId);
+
+    if (targetUser) {
+      viewingAsAdmin = true;
+      viewingUserId = targetUserId;
+      metadata = targetUser.user_metadata ?? {};
+      viewedUserName = `${metadata.first_name ?? ""} ${metadata.last_name ?? ""}`.trim() || (targetUser.email ?? "User");
+    }
+  }
+
+  // Extract metadata from session user OR target user (if admin)
+  const firstName = metadata.first_name ?? (viewingAsAdmin ? viewedUserName : user.email?.split("@")[0]) ?? "there";
+  const pathway = (metadata.pathway as string) ?? "personal";
+  const savedResources = (metadata.saved_resources ?? []) as string[];
+  const resourceNotes = (metadata.resource_notes ?? {}) as Record<string, string>;
+  const resourceRatings = (metadata.resource_ratings ?? {}) as Record<string, number>;
+  const resourceRead = (metadata.resource_read ?? []) as string[];
   const completedAssessments = new Set<string>([
-    ...(user.user_metadata?.mindset_completed_at ? ["fixed-growth-mindset"] : []),
-    ...(user.user_metadata?.rlgl_completed_at ? ["red-light-green-light"] : []),
-    ...(user.user_metadata?.smart_goal_saved_at ? ["smart-goals"] : []),
-    ...(user.user_metadata?.thinking_style_completed_at ? ["three-thinking-styles"] : []),
-    ...(user.user_metadata?.wheel_of_life_saved_at ? ["wheel-of-life"] : []),
-    ...(user.user_metadata?.disc_completed_at ? ["disc"] : []),
-    ...(user.user_metadata?.karunia_completed_at ? ["karunia-rohani"] : []),
-    ...(user.user_metadata?.enneagram_completed_at ? ["enneagram"] : []),
-    ...(user.user_metadata?.big_five_completed_at ? ["big-five"] : []),
-    ...(user.user_metadata?.mbti_completed_at ? ["myers-briggs"] : []),
-    ...(user.user_metadata?.personalities16_completed_at ? ["16-personalities"] : []),
+    ...(metadata.mindset_completed_at ? ["fixed-growth-mindset"] : []),
+    ...(metadata.rlgl_completed_at ? ["red-light-green-light"] : []),
+    ...(metadata.smart_goal_saved_at ? ["smart-goals"] : []),
+    ...(metadata.thinking_style_completed_at ? ["three-thinking-styles"] : []),
+    ...(metadata.wheel_of_life_saved_at ? ["wheel-of-life"] : []),
+    ...(metadata.disc_completed_at ? ["disc"] : []),
+    ...(metadata.karunia_completed_at ? ["karunia-rohani"] : []),
+    ...(metadata.enneagram_completed_at ? ["enneagram"] : []),
+    ...(metadata.big_five_completed_at ? ["big-five"] : []),
+    ...(metadata.mbti_completed_at ? ["myers-briggs"] : []),
+    ...(metadata.personalities16_completed_at ? ["16-personalities"] : []),
   ]);
-  const thinkingStyleResult = (user.user_metadata?.thinking_style_result ?? null) as string | null;
-  const thinkingStyleScores = (user.user_metadata?.thinking_style_scores ?? null) as { C: number; H: number; I: number } | null;
-  const discResult = (user.user_metadata?.disc_result ?? null) as string | null;
-  const discScores = (user.user_metadata?.disc_scores ?? null) as { D: number; I: number; S: number; C: number } | null;
-  const karuniaTopGifts = (user.user_metadata?.karunia_top_gifts ?? null) as string[] | null;
-  const karuniaScores = (user.user_metadata?.karunia_scores ?? null) as Record<string, number> | null;
-  const wheelOfLifeScores = (user.user_metadata?.wheel_of_life_scores ?? null) as Record<string, number> | null;
-  const enneagramType = (user.user_metadata?.enneagram_type ?? null) as number | null;
-  const enneagramScores = (user.user_metadata?.enneagram_scores ?? null) as Record<string, number> | null;
-  const bigFiveScores = (user.user_metadata?.big_five_scores ?? null) as Record<string, number> | null;
-  const mbtiType = (user.user_metadata?.mbti_type ?? null) as string | null;
-  const mbtiScores = (user.user_metadata?.mbti_scores ?? null) as Record<string, number> | null;
-  const personalities16Type = (user.user_metadata?.personalities16_type ?? null) as string | null;
-  const personalities16Scores = (user.user_metadata?.personalities16_scores ?? null) as Record<string, number> | null;
-  const peerGroupId = user.user_metadata?.peer_group_id as string | undefined;
-  const userTimezone = user.user_metadata?.timezone as string | undefined;
-  const commStyle = (user.user_metadata?.comm_style ?? null) as string | null;
-  const commStyleScores = (user.user_metadata?.comm_style_scores ?? null) as Record<string, number> | null;
-  const trustAvg = (user.user_metadata?.trust_avg ?? null) as number | null;
-  const trustScores = (user.user_metadata?.trust_scores ?? null) as Record<string, number> | null;
-  const contributionZone = (user.user_metadata?.contribution_zone ?? null) as string | null;
-  const contributionScores = (user.user_metadata?.contribution_scores ?? null) as Record<string, number> | null;
-  const conflictStyle = (user.user_metadata?.conflict_style ?? null) as string | null;
-  const conflictScores = (user.user_metadata?.conflict_scores ?? null) as Record<string, number> | null;
-  const languagePreference = ((user.user_metadata?.language_preference ?? "en") as "en" | "id" | "nl");
+  const thinkingStyleResult = (metadata.thinking_style_result ?? null) as string | null;
+  const thinkingStyleScores = (metadata.thinking_style_scores ?? null) as { C: number; H: number; I: number } | null;
+  const discResult = (metadata.disc_result ?? null) as string | null;
+  const discScores = (metadata.disc_scores ?? null) as { D: number; I: number; S: number; C: number } | null;
+  const karuniaTopGifts = (metadata.karunia_top_gifts ?? null) as string[] | null;
+  const karuniaScores = (metadata.karunia_scores ?? null) as Record<string, number> | null;
+  const wheelOfLifeScores = (metadata.wheel_of_life_scores ?? null) as Record<string, number> | null;
+  const enneagramType = (metadata.enneagram_type ?? null) as number | null;
+  const enneagramScores = (metadata.enneagram_scores ?? null) as Record<string, number> | null;
+  const bigFiveScores = (metadata.big_five_scores ?? null) as Record<string, number> | null;
+  const mbtiType = (metadata.mbti_type ?? null) as string | null;
+  const mbtiScores = (metadata.mbti_scores ?? null) as Record<string, number> | null;
+  const personalities16Type = (metadata.personalities16_type ?? null) as string | null;
+  const personalities16Scores = (metadata.personalities16_scores ?? null) as Record<string, number> | null;
+  const peerGroupId = metadata.peer_group_id as string | undefined;
+  const userTimezone = metadata.timezone as string | undefined;
+  const commStyle = (metadata.comm_style ?? null) as string | null;
+  const commStyleScores = (metadata.comm_style_scores ?? null) as Record<string, number> | null;
+  const trustAvg = (metadata.trust_avg ?? null) as number | null;
+  const trustScores = (metadata.trust_scores ?? null) as Record<string, number> | null;
+  const contributionZone = (metadata.contribution_zone ?? null) as string | null;
+  const contributionScores = (metadata.contribution_scores ?? null) as Record<string, number> | null;
+  const conflictStyle = (metadata.conflict_style ?? null) as string | null;
+  const conflictScores = (metadata.conflict_scores ?? null) as Record<string, number> | null;
+  const languagePreference = ((metadata.language_preference ?? "en") as "en" | "id" | "nl");
 
   const admin = createAdminClient();
 
@@ -108,14 +132,14 @@ export default async function DashboardPage({
       const { data: team } = await admin
         .from("teams")
         .select("id, name, language, current_step, finalized_steps, selected_assessments")
-        .eq("leader_user_id", user.id)
+        .eq("leader_user_id", viewingUserId)
         .maybeSingle();
       teamRecord = team ?? null;
     } else {
       const { data: application } = await supabase
         .from("team_applications")
         .select("status")
-        .eq("user_id", user.id)
+        .eq("user_id", viewingUserId)
         .maybeSingle();
       teamApplicationStatus = application?.status ?? null;
 
@@ -137,7 +161,7 @@ export default async function DashboardPage({
     const { data: memberRow } = await admin
       .from("team_members")
       .select("team_id")
-      .eq("user_id", user.id)
+      .eq("user_id", viewingUserId)
       .maybeSingle();
     if (memberRow) {
       const { data: mt } = await admin
@@ -161,7 +185,7 @@ export default async function DashboardPage({
   const { data: initiatedRows } = await admin
     .from("peer_groups")
     .select("id, name, region, timezone, is_open, current_topic, language")
-    .eq("initiator_user_id", user.id)
+    .eq("initiator_user_id", viewingUserId)
     .order("created_at", { ascending: true });
 
   if (initiatedRows && initiatedRows.length > 0) {
@@ -184,7 +208,7 @@ export default async function DashboardPage({
 
     const peerProgressMap = new Map<string, number>();
     {
-      const allPeerProgressIds = [...peerMemberIds, user.id];
+      const allPeerProgressIds = [...peerMemberIds, viewingUserId];
       const { data: peerProgressRows } = await admin
         .from("user_progress")
         .select("user_id")
@@ -195,18 +219,18 @@ export default async function DashboardPage({
       });
     }
 
-    const initiatorFullName = `${user.user_metadata?.first_name ?? ""} ${user.user_metadata?.last_name ?? ""}`.trim() || firstName;
+    const initiatorFullName = `${metadata.first_name ?? ""} ${metadata.last_name ?? ""}`.trim() || firstName;
 
     initiatedGroups = (initiatedRows as PeerGroupRow[]).map(g => ({
       ...g,
       members: [
         {
-          id: user.id,
+          id: viewingUserId,
           name: initiatorFullName,
-          email: user.email ?? "",
+          email: viewingAsAdmin ? viewedUserName.split(" - ")[1]?.trim() || "" : (user.email ?? ""),
           status: "active" as const,
           questionnaireAnswers: null,
-          completedModules: peerProgressMap.get(user.id) ?? 0,
+          completedModules: peerProgressMap.get(viewingUserId) ?? 0,
           isInitiator: true,
         } satisfies PeerMember,
         ...((allPeerMembers ?? []) as PeerMemberRow[])
@@ -233,7 +257,7 @@ export default async function DashboardPage({
   const { data: joinedMemberRows } = await admin
     .from("peer_group_members")
     .select("group_id, status")
-    .eq("user_id", user.id)
+    .eq("user_id", viewingUserId)
     .eq("status", "active");
   const initiatedGroupIdSet = new Set((initiatedRows ?? []).map((g: { id: string }) => g.id));
   const joinedGroupIds = (joinedMemberRows ?? [])
@@ -334,12 +358,12 @@ export default async function DashboardPage({
     supabase
       .from("user_progress")
       .select("module_id")
-      .eq("user_id", user.id)
+      .eq("user_id", viewingUserId)
       .eq("status", "completed"),
     supabase
       .from("coach_messages")
       .select("id, message, subject, created_at, reply, replied_at, status, message_type")
-      .eq("user_id", user.id)
+      .eq("user_id", viewingUserId)
       .order("created_at", { ascending: true }),
   ]);
   modules = allMods ?? [];
@@ -526,6 +550,16 @@ export default async function DashboardPage({
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
       <TimezoneDetector savedTimezone={userTimezone} />
+
+      {/* Admin viewing banner */}
+      {viewingAsAdmin && (
+        <div style={{ background: "oklch(65% 0.15 45 / 0.1)", borderBottom: "2px solid oklch(65% 0.15 45)", padding: "1rem 1.5rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <span style={{ fontSize: "1rem" }}>👁️</span>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(38% 0.008 260)", fontWeight: 600, margin: 0 }}>
+            You are viewing <strong>{viewedUserName}</strong>'s dashboard (read-only)
+          </p>
+        </div>
+      )}
 
       {/* ── DASHBOARD HEADER ── */}
       <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative" }}>
