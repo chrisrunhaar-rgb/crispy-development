@@ -1009,7 +1009,8 @@ export default function EnneagramClient({
         padding: "4rem 2rem 3.5rem",
         transition: "background 0.6s ease",
       }}>
-        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "3rem", alignItems: "flex-start" }}>
+          <div style={{ flex: 1 }}>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 800,
             letterSpacing: "0.22em", textTransform: "uppercase",
@@ -1069,6 +1070,12 @@ export default function EnneagramClient({
               )}
             </div>
           )}
+          </div>
+
+          {quizState === "idle" && (
+            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" style={{ width: "320px", height: "auto", opacity: 0.85, flexShrink: 0 }} />
+          )}
+
 
           {quizState === "done" && (
             <div style={{ display: "flex", gap: "1rem", marginTop: "2rem", flexWrap: "wrap" }}>
