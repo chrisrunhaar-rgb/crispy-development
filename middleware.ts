@@ -63,8 +63,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Protect /admin — only Chris's account
-  const ADMIN_USER_ID = "e04e4310-075a-4df5-9113-4fe7f993afe6";
+  // Protect /admin — only Chris's admin account (world-outreach.com)
+  const ADMIN_USER_ID = "c8526fd3-ab76-4514-ad0c-2310e37c5053";
   if (request.nextUrl.pathname.startsWith("/admin")) {
     if (!user || user.id !== ADMIN_USER_ID) {
       const homeUrl = request.nextUrl.clone();
