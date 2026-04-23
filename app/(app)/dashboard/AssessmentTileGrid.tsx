@@ -2,11 +2,143 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import TypeCard from "../../../app/(marketing)/resources/enneagram/TypeCard";
 
 // ── Brand tokens ─────────────────────────────────────────────────────────────
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
 const offWhite = "oklch(97% 0.005 80)";
+
+// ── Enneagram Types ───────────────────────────────────────────────────────────
+const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
+  1: {
+    number: 1,
+    name: { en: "The Reformer", id: "Si Perfeksionis", nl: "De Hervormer" },
+    tagline: { en: "The Principled Idealist", id: "Si Idealis Berprinsip", nl: "De Principiële Idealist" },
+    color: "oklch(55% 0.12 260)",
+    colorLight: "oklch(88% 0.02 260)",
+    overview: { en: "Type 1s are driven by a strong inner sense of right and wrong. They are conscientious, focused on improvement, and hold themselves and others to high standards.", id: "Tipe 1 didorong oleh rasa kuat tentang benar dan salah. Mereka teliti, fokus pada peningkatan, dan memegang standar tinggi untuk diri sendiri dan orang lain.", nl: "Type 1 wordt gedreven door een sterk gevoel van goed en fout. Ze zijn consciëntieus, gericht op verbetering, en houden zichzelf en anderen aan hoge normen." },
+    motivation: { en: "To be right, to improve themselves and the world, and to do things correctly.", id: "Menjadi benar, meningkatkan diri dan dunia, dan melakukan segala sesuatu dengan benar.", nl: "Om gelijk te hebben, zichzelf en de wereld te verbeteren, en dingen goed te doen." },
+    fear: { en: "Being wrong, incompetent, or not doing enough to make things better.", id: "Menjadi salah, tidak kompeten, atau tidak melakukan cukup untuk membuat hal-hal lebih baik.", nl: "Fout zijn, incompetent zijn, of niet genoeg doen om dingen beter te maken." },
+    strengths: { en: ["Principled", "Responsible", "Improvement-focused"], id: ["Berprinsip", "Bertanggung jawab", "Fokus pada peningkatan"], nl: ["Principieel", "Verantwoord", "Gericht op verbetering"] },
+    blindspots: { en: ["Overly critical", "Rigid", "Perfectionist"], id: ["Terlalu kritikus", "Kaku", "Perfeksionis"], nl: ["Te kritisch", "Rigide", "Perfectionist"] },
+    communication: { en: "Practice accepting imperfection in yourself and others. Learn to balance idealism with compassion and forgiveness.", id: "Praktikkan menerima ketidaksempurnaan dalam diri Anda dan orang lain. Pelajari cara menyeimbangkan idealisme dengan belas kasih dan pengampunan.", nl: "Oefen het accepteren van onvolmaaktheid in jezelf en anderen. Leer idealisme in evenwicht te brengen met medelijden en vergeving." },
+    crossCultural: { en: "Your sense of justice is a strength, but be aware that different cultures have different standards. Listen to understand before correcting.", id: "Rasa keadilan Anda adalah kekuatan, tetapi sadari bahwa budaya yang berbeda memiliki standar yang berbeda. Dengarkan untuk memahami sebelum mengoreksi.", nl: "Je gevoel voor rechtvaardigheid is een sterkte, maar besef dat verschillende culturen andere normen hebben. Luister om te begrijpen voordat je corrigeert." },
+  },
+  2: {
+    number: 2,
+    name: { en: "The Helper", id: "Si Penolong", nl: "De Helper" },
+    tagline: { en: "The Caring Supporter", id: "Si Pendukung Peduli", nl: "De Zorgzame Ondersteunaar" },
+    color: "oklch(65% 0.20 25)",
+    colorLight: "oklch(92% 0.02 25)",
+    overview: { en: "Type 2s are warm, caring, and driven by a need to feel loved and appreciated. They are naturally attuned to others' emotions and are generous with their time and energy.", id: "Tipe 2 hangat, peduli, dan didorong oleh kebutuhan untuk merasa dicintai dan dihargai. Mereka secara alami menyadari emosi orang lain dan murah hati dengan waktu dan energi mereka.", nl: "Type 2 is warm, zorgzaam, en gedreven door de behoefte om zich bemind en gewaardeerd te voelen. Ze zijn van nature afgestemd op de emoties van anderen en geven vrijgevig van hun tijd en energie." },
+    motivation: { en: "To be loved, appreciated, and needed; to help others and feel valued.", id: "Untuk dicintai, dihargai, dan dibutuhkan; untuk membantu orang lain dan merasa berharga.", nl: "Om bemind, gewaardeerd en nodig te zijn; anderen helpen en zich waardevol voelen." },
+    fear: { en: "Being unloved, rejected, or of no value to others.", id: "Tidak dicintai, ditolak, atau tidak berharga bagi orang lain.", nl: "Niet bemind zijn, afgewezen worden, of geen waarde hebben voor anderen." },
+    strengths: { en: ["Empathetic", "Generous", "Relationship-focused"], id: ["Empatik", "Murah hati", "Fokus pada hubungan"], nl: ["Empathisch", "Gul", "Gericht op relaties"] },
+    blindspots: { en: ["Overly accommodating", "Codependent", "Passive-aggressive"], id: ["Terlalu mengakomodasi", "Codependent", "Pasif-agresif"], nl: ["Te meegaand", "Codependent", "Passief-agressief"] },
+    communication: { en: "Learn to set healthy boundaries and prioritize your own needs. Your value isn't dependent on what you do for others.", id: "Pelajari cara menetapkan batas yang sehat dan prioritaskan kebutuhan Anda sendiri. Nilai Anda tidak bergantung pada apa yang Anda lakukan untuk orang lain.", nl: "Leer gezonde grenzen in te stellen en je eigen behoeften voorrang te geven. Je waarde hangt niet af van wat je voor anderen doet." },
+    crossCultural: { en: "Your warmth translates well across cultures, but be aware that different cultures show appreciation differently. Ask directly what people need.", id: "Kehangatan Anda diterjemahkan dengan baik di berbagai budaya, tetapi sadari bahwa budaya yang berbeda menunjukkan apresiasi secara berbeda. Tanya secara langsung apa yang dibutuhkan orang.", nl: "Je warmte vertaalt goed over culturen heen, maar besef dat verschillende culturen waardering anders tonen. Vraag direct wat mensen nodig hebben." },
+  },
+  3: {
+    number: 3,
+    name: { en: "The Achiever", id: "Si Pencapai", nl: "De Bereiker" },
+    tagline: { en: "The Goal-Oriented Performer", id: "Si Pemain yang Berorientasi pada Tujuan", nl: "De Doelgerichte Performer" },
+    color: "oklch(65% 0.25 40)",
+    colorLight: "oklch(92% 0.03 40)",
+    overview: { en: "Type 3s are driven to succeed, excel, and be recognized for their accomplishments. They are energetic, efficient, and focused on results. They adapt easily to different environments.", id: "Tipe 3 didorong untuk sukses, unggul, dan diakui atas pencapaian mereka. Mereka energik, efisien, dan fokus pada hasil. Mereka mudah beradaptasi dengan lingkungan yang berbeda.", nl: "Type 3 wordt aangedreven om succesvol te zijn, uit te blinken en erkend te worden voor hun prestaties. Ze zijn energiek, efficiënt en gericht op resultaten. Ze passen zich gemakkelijk aan verschillende omgevingen aan." },
+    motivation: { en: "To succeed, be recognized, and be valued for their achievements and effectiveness.", id: "Untuk sukses, diakui, dan dihargai atas prestasi dan efektivitas mereka.", nl: "Om succesvol te zijn, erkend te worden en gewaardeerd te worden voor hun prestaties en effectiviteit." },
+    fear: { en: "Being worthless, ineffective, or unsuccessful; failure and being exposed as incompetent.", id: "Tidak berharga, tidak efektif, atau tidak berhasil; kegagalan dan terbukti tidak kompeten.", nl: "Waardeloos zijn, ineffectief zijn, of niet succesvol zijn; falen en als incompetent worden ontmaskerd." },
+    strengths: { en: ["Ambitious", "Efficient", "Adaptable"], id: ["Ambisius", "Efisien", "Dapat beradaptasi"], nl: ["Ambitieus", "Efficiënt", "Aanpasbaar"] },
+    blindspots: { en: ["Workaholic", "Image-focused", "Disconnected from emotions"], id: ["Workaholik", "Fokus pada citra", "Terputus dari emosi"], nl: ["Workaholic", "Gericht op imago", "Losgekoppeld van emoties"] },
+    communication: { en: "Remember that your worth isn't tied to your accomplishments. Take time to connect with your authentic self and deeper relationships.", id: "Ingat bahwa nilai Anda tidak terikat pada pencapaian Anda. Ambil waktu untuk terhubung dengan diri autentik Anda dan hubungan yang lebih dalam.", nl: "Onthoud dat je waarde niet gekoppeld is aan je prestaties. Neem tijd om verbinding te maken met je authentieke zelf en diepere relaties." },
+    crossCultural: { en: "Your drive for results is valuable, but different cultures define success differently. Build relationships before pushing for outcomes.", id: "Dorongan Anda untuk hasil berharga, tetapi budaya yang berbeda mendefinisikan kesuksesan secara berbeda. Bangun hubungan sebelum mendorong hasil.", nl: "Je drang om resultaten te behalen is waardevol, maar verschillende culturen definiëren succes anders. Bouw relaties op voordat je naar resultaten streeft." },
+  },
+  4: {
+    number: 4,
+    name: { en: "The Individualist", id: "Si Individualis", nl: "De Individualist" },
+    tagline: { en: "The Authentic Expresser", id: "Si Pengekspresi Autentik", nl: "De Authentieke Expressionist" },
+    color: "oklch(55% 0.20 310)",
+    colorLight: "oklch(88% 0.03 310)",
+    overview: { en: "Type 4s are creative, introspective, and driven by a need to understand themselves and express their unique identity. They are sensitive to emotions and often feel misunderstood.", id: "Tipe 4 kreatif, introspektif, dan didorong oleh kebutuhan untuk memahami diri mereka sendiri dan mengekspresikan identitas unik mereka. Mereka sensitif terhadap emosi dan sering merasa disalahpahami.", nl: "Type 4 is creatief, introspectief, en gedreven door de behoefte om zichzelf te begrijpen en hun unieke identiteit uit te drukken. Ze zijn gevoelig voor emoties en voelen zich vaak misbegrepenl." },
+    motivation: { en: "To discover their true identity, express their uniqueness, and be understood in their depth and complexity.", id: "Untuk menemukan identitas sejati mereka, mengekspresikan keunikan mereka, dan dipahami dalam kedalaman dan kompleksitas mereka.", nl: "Om hun ware identiteit te ontdekken, hun uniekheid uit te drukken en begrepen te worden in hun diepte en complexiteit." },
+    fear: { en: "Being ordinary, not having a unique identity, or being fundamentally flawed or defective.", id: "Menjadi biasa, tidak memiliki identitas unik, atau cacat atau rusak secara fundamental.", nl: "Gewoon zijn, geen unieke identiteit hebben, of fundamenteel gebrekkig of defect zijn." },
+    strengths: { en: ["Creative", "Self-aware", "Emotionally expressive"], id: ["Kreatif", "Sadar diri", "Pengekspresi emosi"], nl: ["Creatief", "Zelfbewust", "Emotioneel expressief"] },
+    blindspots: { en: ["Overly moody", "Self-absorbed", "Emotionally volatile"], id: ["Terlalu murung", "Berpusat pada diri", "Emosional bergejolak"], nl: ["Te humeurig", "Zelfzuchtig", "Emotioneel volatiel"] },
+    communication: { en: "Your emotional depth is a gift, but try to move beyond self-focus to understand others. Find healthy outlets for your intensity.", id: "Kedalaman emosional Anda adalah hadiah, tetapi cobalah bergerak melampaui fokus diri untuk memahami orang lain. Temukan saluran sehat untuk intensitas Anda.", nl: "Je emotionele diepte is een gift, maar probeer voorbij zelfgerichtheid te gaan om anderen te begrijpen. Vind gezonde uitwegen voor je intensiteit." },
+    crossCultural: { en: "Your authenticity is respected, but cultural norms around emotional expression vary. Honor both your needs and cultural context.", id: "Autentisitas Anda dihormati, tetapi norma budaya seputar ekspresi emosional bervariasi. Hormati kebutuhan Anda dan konteks budaya.", nl: "Je authenticiteit wordt gerespecteerd, maar culturele normen rond emotionele expressie variëren. Respect je behoeften en culturele context." },
+  },
+  5: {
+    number: 5,
+    name: { en: "The Investigator", id: "Si Peneliti", nl: "De Onderzoeker" },
+    tagline: { en: "The Knowledge Seeker", id: "Si Pencari Pengetahuan", nl: "De Kenniszoeker" },
+    color: "oklch(50% 0.15 260)",
+    colorLight: "oklch(88% 0.03 260)",
+    overview: { en: "Type 5s are curious, analytical, and driven by a need to understand how things work. They are independent thinkers who value knowledge and expertise.", id: "Tipe 5 penasaran, analitis, dan didorong oleh kebutuhan untuk memahami cara kerja hal-hal. Mereka adalah pemikir independen yang menghargai pengetahuan dan keahlian.", nl: "Type 5 is nieuwsgierig, analytisch, en gedreven door de behoefte om te begrijpen hoe dingen werken. Ze zijn onafhankelijke denkers die kennis en expertise waarderen." },
+    motivation: { en: "To gain knowledge and understanding, to be competent and independent, and to explore ideas deeply.", id: "Untuk mendapatkan pengetahuan dan pemahaman, menjadi kompeten dan mandiri, dan mengeksplorasi ide secara mendalam.", nl: "Om kennis en begrip te verwerven, competent en onafhankelijk te zijn, en ideeën diep te verkennen." },
+    fear: { en: "Being incompetent or useless; lacking knowledge or understanding; being perceived as ignorant.", id: "Menjadi tidak kompeten atau tidak berguna; kekurangan pengetahuan atau pemahaman; dianggap bodoh.", nl: "Incompetent of nutteloos zijn; gebrek aan kennis of begrip; als ignorant worden beschouwd." },
+    strengths: { en: ["Analytical", "Independent", "Knowledge-focused"], id: ["Analitis", "Independen", "Fokus pengetahuan"], nl: ["Analytisch", "Onafhankelijk", "Kennisgeoriënteerd"] },
+    blindspots: { en: ["Detached", "Isolated", "Overcomplicated thinking"], id: ["Terlepas", "Terisolasi", "Pemikiran rumit"], nl: ["Losgelaten", "Geïsoleerd", "Overcomplicated denken"] },
+    communication: { en: "Balance your need for knowledge with connection. Share what you know in accessible ways. Engage emotionally even when uncomfortable.", id: "Seimbangkan kebutuhan Anda akan pengetahuan dengan koneksi. Bagikan apa yang Anda tahu dengan cara yang dapat diakses. Terlibat secara emosional bahkan saat tidak nyaman.", nl: "Balanceer je behoefte aan kennis met verbinding. Deel wat je weet op begrijpelijke manieren. Betrek je emotioneel, zelfs als het ongemakkelijk is." },
+    crossCultural: { en: "Your analytical skills are valuable across cultures. However, remember that knowledge is interpreted differently in different contexts. Be humble.", id: "Keterampilan analitis Anda berharga di berbagai budaya. Namun, ingat bahwa pengetahuan ditafsirkan secara berbeda dalam konteks yang berbeda. Jadilah rendah hati.", nl: "Je analytische vaardigheden zijn waardevol in verschillende culturen. Onthoud echter dat kennis in verschillende contexten anders wordt geïnterpreteerd. Wees bescheiden." },
+  },
+  6: {
+    number: 6,
+    name: { en: "The Loyalist", id: "Si Setia", nl: "De Loyalist" },
+    tagline: { en: "The Committed Team Member", id: "Si Anggota Tim yang Berkomitmen", nl: "De Toegewijd Teamlid" },
+    color: "oklch(55% 0.18 45)",
+    colorLight: "oklch(90% 0.02 45)",
+    overview: { en: "Type 6s are loyal, responsible, and driven by a need for security and trust. They are team players who value belonging and are naturally cautious.", id: "Tipe 6 setia, bertanggung jawab, dan didorong oleh kebutuhan akan keamanan dan kepercayaan. Mereka adalah pemain tim yang menghargai rasa memiliki dan secara alami berhati-hati.", nl: "Type 6 is loyal, verantwoord, en gedreven door de behoefte naar veiligheid en vertrouwen. Ze zijn teamspelers die samenhorig waarderen en van nature voorzichtig zijn." },
+    motivation: { en: "To be secure, to belong to a trusted group, to be dependable, and to prepare for potential risks.", id: "Untuk aman, menjadi bagian dari kelompok terpercaya, dapat diandalkan, dan mempersiapkan risiko potensial.", nl: "Om veilig te zijn, tot een vertrouwde groep te behoren, betrouwbaar te zijn en op potentiële risico's voor te bereiden." },
+    fear: { en: "Being without support, betrayed, or facing danger without adequate protection or guidance.", id: "Tanpa dukungan, dikhianati, atau menghadapi bahaya tanpa perlindungan atau panduan yang memadai.", nl: "Zonder ondersteuning zijn, verraden worden, of gevaar onder ogen zien zonder adequate bescherming of begeleiding." },
+    strengths: { en: ["Loyal", "Responsible", "Team-oriented"], id: ["Setia", "Bertanggung jawab", "Berorientasi tim"], nl: ["Loyal", "Verantwoord", "Teamgericht"] },
+    blindspots: { en: ["Anxious", "Suspicious", "Overly cautious"], id: ["Cemas", "Curiga", "Terlalu berhati-hati"], nl: ["Bezorgd", "Achterdochtig", "Te voorzichtig"] },
+    communication: { en: "Work on building trust in yourself and others. Not every scenario is a worst-case scenario. Practice risk-taking in safe environments.", id: "Kerjakan membangun kepercayaan pada diri sendiri dan orang lain. Tidak setiap skenario adalah skenario terburuk. Praktikkan pengambilan risiko di lingkungan yang aman.", nl: "Werken aan het opbouwen van vertrouwen in jezelf en anderen. Niet elk scenario is een worst-case scenario. Oefen risicopoging in veilige omgevingen." },
+    crossCultural: { en: "Your reliability is valued everywhere. However, be aware that different cultures show trust differently. Give people time to earn trust.", id: "Keandalan Anda dihargai di mana saja. Namun, sadari bahwa budaya yang berbeda menunjukkan kepercayaan secara berbeda. Beri orang waktu untuk mendapatkan kepercayaan.", nl: "Je betrouwbaarheid wordt overal gewaardeerd. Wees echter bewust dat verschillende culturen vertrouwen anders tonen. Geef mensen tijd om vertrouwen te verdienen." },
+  },
+  7: {
+    number: 7,
+    name: { en: "The Enthusiast", id: "Si Antusias", nl: "De Enthousiasteling" },
+    tagline: { en: "The Optimistic Adventurer", id: "Si Petualang Optimis", nl: "De Optimistische Avonturier" },
+    color: "oklch(70% 0.20 80)",
+    colorLight: "oklch(92% 0.03 80)",
+    overview: { en: "Type 7s are upbeat, spontaneous, and driven by a need for excitement and new experiences. They are optimistic, creative, and hate feeling trapped or bored.", id: "Tipe 7 ceria, spontan, dan didorong oleh kebutuhan akan kegembiraan dan pengalaman baru. Mereka optimis, kreatif, dan benci merasa terjebak atau bosan.", nl: "Type 7 is opgewekt, spontaan, en gedreven door de behoefte naar opwinding en nieuwe ervaringen. Ze zijn optimistisch, creatief en haten het gevoel om vast te zitten of zich te vervelen." },
+    motivation: { en: "To have fun, experience joy and stimulation, avoid pain and boredom, and keep options open.", id: "Untuk bersenang-senang, mengalami kegembiraan dan stimulasi, menghindari rasa sakit dan kebosanan, dan membuat pilihan tetap terbuka.", nl: "Om plezier te hebben, vreugde en stimulatie te beleven, pijn en verveling te vermijden, en opties open te houden." },
+    fear: { en: "Missing out, being trapped, experiencing pain or suffering, or being bored and unfulfilled.", id: "Ketinggalan, merasa terjebak, mengalami rasa sakit atau penderitaan, atau bosan dan tidak puas.", nl: "Iets missen, vast zitten voelen, pijn of lijden ervaren, of zich vervelen en niet vervuld voelen." },
+    strengths: { en: ["Enthusiastic", "Creative", "Optimistic"], id: ["Antusias", "Kreatif", "Optimis"], nl: ["Enthousiast", "Creatief", "Optimistisch"] },
+    blindspots: { en: ["Scattered", "Superficial", "Avoidant of pain"], id: ["Tersebar", "Permukaan", "Menghindari rasa sakit"], nl: ["Verspreid", "Oppervlakkig", "Vermijdend van pijn"] },
+    communication: { en: "Develop depth in your relationships and work. Facing discomfort leads to growth. Practice staying present with difficult emotions.", id: "Kembangkan kedalaman dalam hubungan dan pekerjaan Anda. Menghadapi ketidaknyamanan menghasilkan pertumbuhan. Praktikkan tetap hadir dengan emosi yang sulit.", nl: "Ontwikkel diepte in je relaties en werk. Ongemak onder ogen zien leidt tot groei. Oefen om aanwezig te blijven met moeilijke emoties." },
+    crossCultural: { en: "Your enthusiasm for new experiences is infectious, but respect that some cultures value stability over novelty. Find balance.", id: "Antusiasme Anda untuk pengalaman baru menular, tetapi hormati bahwa beberapa budaya menghargai stabilitas daripada kebaruan. Temukan keseimbangan.", nl: "Je enthousiasme voor nieuwe ervaringen is aanstekelijk, maar respect dat sommige culturen stabiliteit boven nieuwheid waarderen. Vind balans." },
+  },
+  8: {
+    number: 8,
+    name: { en: "The Challenger", id: "Si Penegak", nl: "De Uitdager" },
+    tagline: { en: "The Bold Protector", id: "Si Pelindung Berani", nl: "De Mutige Beschermer" },
+    color: "oklch(50% 0.25 10)",
+    colorLight: "oklch(88% 0.04 10)",
+    overview: { en: "Type 8s are strong-willed, direct, and driven by a need to be powerful and independent. They are natural leaders who are protective of those they care about.", id: "Tipe 8 berkemauan kuat, langsung, dan didorong oleh kebutuhan untuk kuat dan mandiri. Mereka adalah pemimpin alami yang melindungi mereka yang mereka sayangi.", nl: "Type 8 is sterke-wilvast, direct, en gedreven door de behoefte om krachtig en onafhankelijk te zijn. Ze zijn natuurlijke leiders die degenen beschermen van wie ze houden." },
+    motivation: { en: "To be strong and in control, to protect themselves and others, and to avoid being vulnerable or dependent.", id: "Untuk menjadi kuat dan mengendalikan, melindungi diri sendiri dan orang lain, dan menghindari kerentanan atau ketergantungan.", nl: "Om sterk en in controle te zijn, zichzelf en anderen te beschermen, en kwetsbaarheid of afhankelijkheid te vermijden." },
+    fear: { en: "Being controlled, weak, or betrayed; being vulnerable or taken advantage of.", id: "Dikendalai, lemah, atau dikhianati; menjadi rentan atau dimanfaatkan.", nl: "Gecontroleerd, zwak of verraden worden; kwetsbaar zijn of misbruikt worden." },
+    strengths: { en: ["Strong", "Direct", "Protective"], id: ["Kuat", "Langsung", "Melindungi"], nl: ["Sterk", "Direct", "Beschermend"] },
+    blindspots: { en: ["Domineering", "Aggressive", "Insensitive"], id: ["Dominan", "Agresif", "Tidak sensitif"], nl: ["Overheersend", "Agressief", "Ongevoelig"] },
+    communication: { en: "Soften your approach with those you care about. Vulnerability is strength, not weakness. Let people help you sometimes.", id: "Lunak pendekatan Anda dengan mereka yang Anda sayangi. Kerentanan adalah kekuatan, bukan kelemahan. Biarkan orang membantu Anda kadang-kadang.", nl: "Verzacht je benadering met degenen van wie je houdt. Kwetsbaarheid is kracht, niet zwakte. Laat mensen je soms helpen." },
+    crossCultural: { en: "Your directness can be misinterpreted as rudeness in some cultures. Adapt your communication while maintaining your authenticity.", id: "Ketegasan Anda dapat disalahartikan sebagai kasar dalam beberapa budaya. Sesuaikan komunikasi Anda sambil mempertahankan autentisitas Anda.", nl: "Je directheid kan in sommige culturen als onbeschoftheid worden geïnterpreteerd. Pas je communicatie aan terwijl je je authenticiteit bewaart." },
+  },
+  9: {
+    number: 9,
+    name: { en: "The Peacemaker", id: "Si Pembuat Perdamaian", nl: "De Vredestichter" },
+    tagline: { en: "The Harmonious Mediator", id: "Si Mediator Harmonis", nl: "De Harmonieuze Bemiddelaar" },
+    color: "oklch(55% 0.12 140)",
+    colorLight: "oklch(88% 0.02 140)",
+    overview: { en: "Type 9s are easygoing, accommodating, and driven by a need for peace and harmony. They are natural mediators who seek to avoid conflict and create unity.", id: "Tipe 9 santai, akomodasi, dan didorong oleh kebutuhan untuk perdamaian dan harmoni. Mereka adalah mediator alami yang berusaha menghindari konflik dan menciptakan kesatuan.", nl: "Type 9 is relaxed, invoerend, en gedreven door de behoefte naar vrede en harmonie. Ze zijn natuurlijke bemiddelaars die conflict vermijden en eenheid creëren." },
+    motivation: { en: "To maintain peace, avoid conflict, and ensure everyone feels heard and included.", id: "Untuk mempertahankan perdamaian, menghindari konflik, dan memastikan semua orang merasa didengar dan disertakan.", nl: "Om vrede te handhaven, conflict te vermijden, en iedereen gehoord en inbegrepen te voelen." },
+    fear: { en: "Conflict, disruption, disconnection, or being forced to take sides.", id: "Konflik, gangguan, putus hubungan, atau dipaksa memilih pihak.", nl: "Conflict, verstoring, verbreking, of gedwongen worden om partij te kiezen." },
+    strengths: { en: ["Peaceful", "Empathetic", "Inclusive"], id: ["Damai", "Empatik", "Inklusif"], nl: ["Vreedzaam", "Empathisch", "Inclusief"] },
+    blindspots: { en: ["Passive", "Indecisive", "Self-neglecting"], id: ["Pasif", "Tidak tegas", "Mengabaikan diri"], nl: ["Passief", "Besluiteloos", "Zelfverzorgend"] },
+    communication: { en: "Your voice matters. Express your own needs and preferences, not just go along with others. Take a stand when needed for important matters.", id: "Suara Anda penting. Ekspresikan kebutuhan dan preferensi Anda sendiri, jangan hanya ikut saja dengan orang lain. Ambil posisi tegas ketika diperlukan untuk hal-hal penting.", nl: "Je stem is belangrijk. Druk je eigen behoeften en voorkeuren uit, niet zomaar met anderen mee. Neem stelling wanneer dit nodig is voor belangrijke kwesties." },
+    crossCultural: { en: "Your ability to bring people together is valuable across cultures. However, ensure you don't sacrifice your own needs for false peace.", id: "Kemampuan Anda untuk menyatukan orang adalah berharga di berbagai budaya. Namun, pastikan Anda tidak mengorbankan kebutuhan Anda sendiri untuk perdamaian palsu.", nl: "Je vermogen om mensen samen te brengen is waardevol in verschillende culturen. Zorg er echter voor dat je je eigen behoeften niet opgeeft voor valse vrede." },
+  },
+};
+
 
 // ── DISC ─────────────────────────────────────────────────────────────────────
 const DISC_SLICES = [
@@ -225,12 +357,28 @@ function karuniaLabel(key: string, lang: string): string {
 }
 
 // ── Modal overlay ─────────────────────────────────────────────────────────────
+type T3 = { en: string; id: string; nl: string };
+type EnneagramTypeData = {
+  number: number;
+  name: T3;
+  tagline: T3;
+  color: string;
+  colorLight: string;
+  overview: T3;
+  motivation: T3;
+  fear: T3;
+  strengths: { en: string[]; id: string[]; nl: string[] };
+  blindspots: { en: string[]; id: string[]; nl: string[] };
+  communication: T3;
+  crossCultural: T3;
+};
+
 type ModalData =
   | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number } }
   | { type: "wheel"; scores: Record<string, number> }
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number } }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "enneagram"; type_num: number; scores: Record<string, number> }
+  | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "mbti"; mbtiType: string; scores: Record<string, number> }
   | { type: "bigfive"; scores: Record<string, number> }
   | { type: "16personalities"; personalityType: string; scores: Record<string, number> };
@@ -554,28 +702,40 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
 }
 
 function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "enneagram" }>; onClose: () => void }) {
-  const { type_num, scores } = data;
+  const { typeData, scores, lang } = data;
+  const [flipped, setFlipped] = useState(false);
+
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
         Personality Assessment
       </p>
-      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
-        Enneagram Type {type_num}
-      </h3>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+
+      {/* Type Card */}
+      <div style={{ height: "320px", marginBottom: "1.5rem" }}>
+        <TypeCard
+          type={typeData}
+          lang={lang as "en" | "id" | "nl"}
+          isFlipped={flipped}
+          onClick={() => setFlipped(!flipped)}
+        />
+      </div>
+
+      {/* Score bars */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
         {Object.entries(scores).sort(([, a], [, b]) => b - a).slice(0, 5).map(([key, score]) => (
           <div key={key}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>Type {key}</span>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(42% 0.008 260)" }}>Type {key}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
             </div>
-            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
+            <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
+              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 2 }} />
             </div>
           </div>
         ))}
       </div>
+
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           Retake quiz →
@@ -855,6 +1015,7 @@ export default function AssessmentTileGrid({
   languagePreference?: "en" | "id" | "nl";
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
+  const [enneagramFlipped, setEnneagramFlipped] = useState(false);
   const lang = languagePreference;
 
   const karuniaTitle = lang === "id" ? "Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts";
@@ -862,41 +1023,49 @@ export default function AssessmentTileGrid({
   // ── Compact visuals ──────────────────────────────────────────────────────────
 
   const discVisual = discScores ? (
-    <DiscPieSVG scores={discScores} size={80} result={discResult ?? ""} />
+    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <DiscPieSVG scores={discScores} size={80} result={discResult ?? ""} />
+    </div>
   ) : <EmptyTileVisual />;
 
   const wheelVisual = wheelOfLifeScores ? (
-    <WheelSpiderSVG scores={wheelOfLifeScores} size={72} showLabels={false} />
+    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <WheelSpiderSVG scores={wheelOfLifeScores} size={72} showLabels={false} />
+    </div>
   ) : <EmptyTileVisual />;
 
   const thinkingVisual = thinkingStyleScores ? (
-    <div style={{ width: "100%", paddingInline: "0.25rem" }}>
-      {(["C", "H", "I"] as const).map(k => (
-        <div key={k} style={{ marginBottom: "0.35rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: THINKING_STYLE_COLORS[k], fontWeight: 700 }}>
-              {k === "C" ? "Conceptual" : k === "H" ? "Holistic" : "Intuitional"}
-            </span>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 800, color: navy }}>{thinkingStyleScores[k]}%</span>
+    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ width: "100%", paddingInline: "0.25rem" }}>
+        {(["C", "H", "I"] as const).map(k => (
+          <div key={k} style={{ marginBottom: "0.35rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: THINKING_STYLE_COLORS[k], fontWeight: 700 }}>
+                {k === "C" ? "Conceptual" : k === "H" ? "Holistic" : "Intuitional"}
+              </span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 800, color: navy }}>{thinkingStyleScores[k]}%</span>
+            </div>
+            <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+              <div style={{ height: "100%", width: `${thinkingStyleScores[k]}%`, background: THINKING_STYLE_COLORS[k], borderRadius: 3 }} />
+            </div>
           </div>
-          <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-            <div style={{ height: "100%", width: `${thinkingStyleScores[k]}%`, background: THINKING_STYLE_COLORS[k], borderRadius: 3 }} />
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   ) : <EmptyTileVisual />;
 
   const karuniaVisual = karuniaTopGifts && karuniaTopGifts.length > 0 ? (
-    <div style={{ textAlign: "center" }}>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: orange, lineHeight: 1, marginBottom: "0.2rem" }}>
-        {karuniaLabel(karuniaTopGifts[0], lang)}
-      </p>
-      {karuniaTopGifts[1] && (
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)" }}>
-          + {karuniaLabel(karuniaTopGifts[1], lang)}
+    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: orange, lineHeight: 1, marginBottom: "0.2rem" }}>
+          {karuniaLabel(karuniaTopGifts[0], lang)}
         </p>
-      )}
+        {karuniaTopGifts[1] && (
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)" }}>
+            + {karuniaLabel(karuniaTopGifts[1], lang)}
+          </p>
+        )}
+      </div>
     </div>
   ) : <EmptyTileVisual />;
 
@@ -953,16 +1122,16 @@ export default function AssessmentTileGrid({
         {/* 5. Enneagram */}
         <CompactTile
           title={getTitle("enneagram", lang)}
-          visual={enneagramScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.4rem", fontWeight: 800, color: navy }}>Type {enneagramType}</p></div> : <EmptyTileVisual />}
+          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 180, height: 110, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id" | "nl"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div> : <EmptyTileVisual />}
           done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
-          onClick={enneagramType && enneagramScores ? () => setModal({ type: "enneagram", type_num: enneagramType, scores: enneagramScores }) : undefined}
+          onClick={enneagramType && enneagramScores && ENNEAGRAM_TYPES[enneagramType] ? () => setModal({ type: "enneagram", typeData: ENNEAGRAM_TYPES[enneagramType], scores: enneagramScores, lang: lang as "en" | "id" | "nl" }) : undefined}
         />
 
         {/* 6. Myers-Briggs */}
         <CompactTile
           title={getTitle("mbti", lang)}
-          visual={mbtiScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: navy }}>{mbtiType}</p></div> : <EmptyTileVisual />}
+          visual={mbtiScores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: navy }}>{mbtiType}</p></div> : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
           href="/resources/myers-briggs"
           onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores }) : undefined}
@@ -971,7 +1140,7 @@ export default function AssessmentTileGrid({
         {/* 7. 16 Personalities */}
         <CompactTile
           title={getTitle("16personalities", lang)}
-          visual={personalities16Scores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
+          visual={personalities16Scores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
           done={!!(personalities16Type && personalities16Scores)}
           href="/resources/16-personalities"
           onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores }) : undefined}
@@ -980,7 +1149,7 @@ export default function AssessmentTileGrid({
         {/* 8. Big Five */}
         <CompactTile
           title={getTitle("bigfive", lang)}
-          visual={bigFiveScores ? <div style={{ textAlign: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy, lineHeight: 1.2 }}>Results saved</p></div> : <EmptyTileVisual />}
+          visual={bigFiveScores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy, lineHeight: 1.2 }}>Results saved</p></div> : <EmptyTileVisual />}
           done={!!bigFiveScores}
           href="/resources/big-five"
           onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores }) : undefined}
