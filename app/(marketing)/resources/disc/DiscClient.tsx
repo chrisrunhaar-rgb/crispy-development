@@ -605,7 +605,7 @@ export default function DiscClient({
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3rem" }}>
             <button onClick={startQuiz} className="btn-primary">
               {quizState === "done"
-                ? tr("Retake the Quiz →", "Ulangi Kuis →", "Herkans de quiz →")
+                ? tr("Retake Assessment →", "Ulangi Assessment →", "Assessment opnieuw doen →")
                 : tr("Discover Your Style →", "Temukan Gaya Anda →", "Ontdek jouw stijl →")}
             </button>
             <a href="#disc-types" className="btn-ghost" style={{ textDecoration: "none" }}>
