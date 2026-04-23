@@ -1,0 +1,15 @@
+# Robots.txt for crispyleaders.com
+# Allow public crawling of marketing pages
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api
+Disallow: /login
+Disallow: /signup
+Disallow: /apply
+Disallow: /community
+Disallow: /invite
+
+# Sitemap location
+Sitemap: https://crispyleaders.com/sitemap.xml
