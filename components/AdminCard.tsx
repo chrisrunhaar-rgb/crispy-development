@@ -11,6 +11,7 @@ interface AdminCardProps {
   onExpandChange?: (expanded: boolean) => void;
   className?: string;
   style?: React.CSSProperties;
+  headerAction?: React.ReactNode;
 }
 
 export function AdminCard({
@@ -22,6 +23,7 @@ export function AdminCard({
   onExpandChange,
   className = '',
   style = {},
+  headerAction,
 }: AdminCardProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
@@ -34,22 +36,25 @@ export function AdminCard({
   return (
     <div className={`ds-card ${className}`} style={style}>
       {title && (
-        <div className="ds-card-header">
+        <div className="ds-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 className="ds-h3">{title}</h3>
-          {expandable && (
-            <button
-              onClick={handleToggle}
-              className="ds-btn-icon"
-              aria-expanded={isExpanded}
-              aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${title}`}
-              style={{
-                transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
-                transition: 'transform 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-            >
-              ›
-            </button>
-          )}
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            {headerAction}
+            {expandable && (
+              <button
+                onClick={handleToggle}
+                className="ds-btn-icon"
+                aria-expanded={isExpanded}
+                aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${title}`}
+                style={{
+                  transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+                }}
+              >
+                ›
+              </button>
+            )}
+          </div>
         </div>
       )}
 

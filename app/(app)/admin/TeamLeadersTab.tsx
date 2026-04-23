@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { AdminCard } from '@/components/AdminCard';
 import { StatusIndicator } from '@/components/AdminStatusIndicators';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
@@ -401,6 +402,42 @@ export default function TeamLeadersTab({
                   title={leader.team_name || `${leader.first_name || ''} ${leader.last_name || ''}`.trim() || 'Unknown'}
                   expandable={true}
                   defaultExpanded={false}
+                  headerAction={
+                    leader.user_id ? (
+                      <Link
+                        href={`/dashboard?tab=team&leader=${leader.user_id}`}
+                        title={`View ${leader.team_name || 'Team'} Dashboard`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '36px',
+                          height: '36px',
+                          minHeight: '44px',
+                          minWidth: '44px',
+                          borderRadius: '6px',
+                          background: '#6EE7B7',
+                          color: 'white',
+                          textDecoration: 'none',
+                          fontSize: '16px',
+                          fontWeight: 600,
+                          transition: 'all 200ms',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.opacity = '0.8';
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.opacity = '1';
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                        aria-label={`View ${leader.team_name || 'Team'} Dashboard`}
+                      >
+                        →
+                      </Link>
+                    ) : null
+                  }
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div>

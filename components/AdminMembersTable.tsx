@@ -463,6 +463,9 @@ export default function AdminMembersTable({
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('joined')}>
                   Joined <SortIcon column="joined" />
                 </th>
+                <th style={{ width: '8%', textAlign: 'center' }}>
+                  View
+                </th>
               </tr>
             </thead>
             <tbody className="ds-table-body">
@@ -559,6 +562,39 @@ export default function AdminMembersTable({
                       <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>
                         {formatDate(member.created_at)}
                       </span>
+                    </td>
+                    <td style={{ width: '8%', textAlign: 'center' }}>
+                      <a
+                        href={`/dashboard?tab=personal&member=${member.id}`}
+                        title={`View ${name}'s Dashboard`}
+                        aria-label={`View ${name}'s Dashboard`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '32px',
+                          height: '32px',
+                          minHeight: '44px',
+                          minWidth: '44px',
+                          borderRadius: '6px',
+                          background: '#F3F4F6',
+                          color: '#1F2937',
+                          textDecoration: 'none',
+                          fontSize: '18px',
+                          transition: 'all 200ms',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#E5E7EB';
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = '#F3F4F6';
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                      >
+                        →
+                      </a>
                     </td>
                   </tr>
                 );

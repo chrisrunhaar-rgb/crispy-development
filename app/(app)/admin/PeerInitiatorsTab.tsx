@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { AdminCard } from '@/components/AdminCard';
 import { StatusIndicator } from '@/components/AdminStatusIndicators';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
@@ -470,6 +471,42 @@ export default function PeerInitiatorsTab({
                     title={`${initiator.first_name || ''} ${initiator.last_name || ''}`.trim() || 'Unknown'}
                     expandable={groups.length > 0}
                     defaultExpanded={false}
+                    headerAction={
+                      initiator.user_id && groups.length > 0 ? (
+                        <Link
+                          href={`/dashboard?tab=peer&initiator=${initiator.user_id}`}
+                          title={`Manage ${initiator.first_name || 'Peer'} Groups`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '36px',
+                            height: '36px',
+                            minHeight: '44px',
+                            minWidth: '44px',
+                            borderRadius: '6px',
+                            background: '#F87171',
+                            color: 'white',
+                            textDecoration: 'none',
+                            fontSize: '16px',
+                            fontWeight: 600,
+                            transition: 'all 200ms',
+                            cursor: 'pointer',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.opacity = '0.8';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.opacity = '1';
+                            e.currentTarget.style.transform = 'scale(1)';
+                          }}
+                          aria-label={`Manage Peer Groups for ${initiator.first_name || 'Initiator'}`}
+                        >
+                          →
+                        </Link>
+                      ) : null
+                    }
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div>

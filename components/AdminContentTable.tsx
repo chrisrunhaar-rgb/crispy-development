@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { BulkActionsBar } from './BulkActionsBar';
 import { exportSingleRow } from '@/lib/admin-export';
 
@@ -411,6 +412,9 @@ export default function AdminContentTable({
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
                   Updated <SortIcon column="updated" />
                 </th>
+                <th style={{ width: '6%', textAlign: 'center' }}>
+                  View
+                </th>
               </tr>
             </thead>
             <tbody className="ds-table-body">
@@ -474,6 +478,39 @@ export default function AdminContentTable({
                     <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>
                       {formatDate(module.updated_at)}
                     </span>
+                  </td>
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                    <Link
+                      href={`/resources/${module.slug}`}
+                      title={`View ${module.title}`}
+                      aria-label={`View ${module.title}`}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '32px',
+                        height: '32px',
+                        minHeight: '44px',
+                        minWidth: '44px',
+                        borderRadius: '6px',
+                        background: '#F3F4F6',
+                        color: '#1F2937',
+                        textDecoration: 'none',
+                        fontSize: '18px',
+                        transition: 'all 200ms',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#E5E7EB';
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = '#F3F4F6';
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    >
+                      👁
+                    </Link>
                   </td>
                 </tr>
               );
