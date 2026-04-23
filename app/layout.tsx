@@ -68,6 +68,35 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} ${kalam.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
+        {/* Organization Schema */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Crispy Development",
+              url: "https://crispyleaders.com",
+              logo: "https://crispyleaders.com/logo-full.png",
+              description: "Resources, tools, and community for Christian leaders, expat professionals, and multicultural team managers.",
+              foundingDate: "2024",
+              founder: {
+                "@type": "Person",
+                name: "Chris Runhaar",
+              },
+              sameAs: [
+                "https://www.instagram.com/crispydevelopment/",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "Customer Support",
+                email: "chris@crispydevelopment.com",
+              },
+            }),
+          }}
+        />
+
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
