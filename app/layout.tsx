@@ -6,6 +6,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import PwaRegister from "@/components/PwaRegister";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import GlobalErrorSetup from "@/components/GlobalErrorSetup";
 
 const GA_ID = "G-ER3Z5GN1J7";
 
@@ -68,6 +70,8 @@ export default function RootLayout({
       className={`${montserrat.variable} ${cormorant.variable} ${kalam.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
+        <GlobalErrorSetup />
+
         {/* Organization Schema */}
         <Script
           id="organization-schema"
@@ -111,9 +115,11 @@ export default function RootLayout({
           `}
         </Script>
         <PwaRegister />
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+        <ErrorBoundary componentName="RootLayout">
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

@@ -3,6 +3,8 @@ import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
 import { getResourceMetadata } from "@/config/seo-metadata";
 import { generateBreadcrumbSchema, generateCanonicalUrl } from "@/lib/seo-utils";
+import Breadcrumb from "@/components/Breadcrumb";
+import RelatedResources from "@/components/RelatedResources";
 import DiscClient from "./DiscClient";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +29,8 @@ export default async function ResourcePage(props: any) {
     { name: "Resources", url: "https://crispyleaders.com/resources" },
     { name: resourceMeta.title.split(" — ")[0], url: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`) },
   ]);
+  const discResult = (user?.user_metadata?.disc_result ?? null) as string | null;
+  const discScores = (user?.user_metadata?.disc_scores ?? null) as { D: number; I: number; S: number; C: number } | null;
 
   return (
     <>
@@ -37,7 +41,36 @@ export default async function ResourcePage(props: any) {
           __html: JSON.stringify(breadcrumbSchema),
         }}
       />
-      <DiscClient {...props} isSaved={isSaved} />
+      <Script
+        id="disc-ga-tracking"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `window.gtag?.('event', 'resource_viewed', { resource: '${RESOURCE_SLUG}', category: 'assessments' });`,
+        }}
+      />
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-gray-50 border-b border-gray-200 py-3 sticky top-0 z-10">
+        <div className="container-wide">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Resources", href: "/resources" },
+              { label: "DISC Profile" },
+            ]}
+          />
+        </div>
+      </div>
+
+      {/* Assessment Content */}
+      <DiscClient isSaved={isSaved} discResult={discResult} discScores={discScores} />
+
+      {/* Related Resources */}
+      <div className="bg-gray-50 border-t border-gray-200 py-12">
+        <div className="container-wide">
+          <RelatedResources slug="disc" />
+        </div>
+      </div>
     </>
   );
 }
