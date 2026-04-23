@@ -1,4 +1,20 @@
-// SEO metadata for all resource pages
+/**
+ * SEO METADATA FOR RESOURCES
+ *
+ * ⚠️ IMPORTANT: When you update resource content, ALSO UPDATE this file
+ *
+ * Each resource has:
+ * - title: Page title (shown in browser tab, search results)
+ * - description: Meta description (shown in search results, 155 chars max)
+ *
+ * To update:
+ * 1. Edit the resource page content (e.g., /resources/disc/page.tsx or DiscClient.tsx)
+ * 2. Come back here and update the matching entry below
+ * 3. Commit both changes together
+ *
+ * Helps with: SEO, Google search results, social media preview
+ */
+
 export const resourceMetadata: Record<string, { title: string; description: string }> = {
   // Assessments
   disc: {

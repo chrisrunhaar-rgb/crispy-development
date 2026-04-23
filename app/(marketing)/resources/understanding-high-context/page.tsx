@@ -1,19 +1,43 @@
 import { Metadata } from "next";
+import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
+import { getResourceMetadata } from "@/config/seo-metadata";
+import { generateBreadcrumbSchema, generateCanonicalUrl } from "@/lib/seo-utils";
 import UnderstandingHighContextClient from "./UnderstandingHighContextClient";
 
 export const dynamic = "force-dynamic";
 
+const RESOURCE_SLUG = "understanding-high-context";
+const resourceMeta = getResourceMetadata(RESOURCE_SLUG);
+
 export const metadata: Metadata = {
-  title: "Understanding High-Context Cultures — Crispy Development",
-  description: "How communication styles shape relationships — and what that means for cross-cultural teams.",
+  title: resourceMeta.title,
+  description: resourceMeta.description,
+  canonical: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`),
 };
 
-export default async function UnderstandingHighContextPage() {
+export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const pathway = (user?.user_metadata?.pathway as string | null | undefined) ?? null;
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
-  const isSaved = savedResources.includes("understanding-high-context");
-  return <UnderstandingHighContextClient userPathway={pathway} isSaved={isSaved} />;
+  const isSaved = savedResources.includes(RESOURCE_SLUG);
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://crispyleaders.com" },
+    { name: "Resources", url: "https://crispyleaders.com/resources" },
+    { name: resourceMeta.title.split(" — ")[0], url: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`) },
+  ]);
+
+  return (
+    <>
+      <Script
+        id={`breadcrumb-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <UnderstandingHighContextClient {...props} isSaved={isSaved} />
+    </>
+  );
 }

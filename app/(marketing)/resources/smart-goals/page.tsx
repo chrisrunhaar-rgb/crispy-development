@@ -1,20 +1,43 @@
 import { Metadata } from "next";
+import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
+import { getResourceMetadata } from "@/config/seo-metadata";
+import { generateBreadcrumbSchema, generateCanonicalUrl } from "@/lib/seo-utils";
 import SmartGoalsClient from "./SmartGoalsClient";
 
 export const dynamic = "force-dynamic";
 
+const RESOURCE_SLUG = "smart-goals";
+const resourceMeta = getResourceMetadata(RESOURCE_SLUG);
+
 export const metadata: Metadata = {
-  title: "SMART Goals — Crispy Development",
-  description: "A practical goal-setting framework: Specific, Motivational, Achievable, Relevant, Trackable. Learn how to set goals that actually stick — and what to do when they don't.",
+  title: resourceMeta.title,
+  description: resourceMeta.description,
+  canonical: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`),
 };
 
-export default async function SmartGoalsPage() {
+export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const pathway = (user?.user_metadata?.pathway as string | null | undefined) ?? null;
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
-  const isSaved = savedResources.includes("smart-goals");
-  const savedGoal = (user?.user_metadata?.smart_goal ?? null) as Record<string, string> | null;
-  return <SmartGoalsClient userPathway={pathway} isSaved={isSaved} savedGoal={savedGoal} />;
+  const isSaved = savedResources.includes(RESOURCE_SLUG);
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://crispyleaders.com" },
+    { name: "Resources", url: "https://crispyleaders.com/resources" },
+    { name: resourceMeta.title.split(" — ")[0], url: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`) },
+  ]);
+
+  return (
+    <>
+      <Script
+        id={`breadcrumb-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <SmartGoalsClient {...props} isSaved={isSaved} />
+    </>
+  );
 }
