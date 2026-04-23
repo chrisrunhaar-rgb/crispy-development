@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import ResourcesContent from "./ResourcesContent";
 
 export const dynamic = "force-dynamic";
+import { generateBreadcrumbSchema } from "@/lib/seo-utils";
 
 export const metadata = {
   title: "Resources — Crispy Development",

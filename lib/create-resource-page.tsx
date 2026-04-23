@@ -14,7 +14,6 @@ export async function createResourcePageMetadata(slug: string): Promise<Metadata
   return {
     title: resourceMeta.title,
     description: resourceMeta.description,
-    canonical: generateCanonicalUrl(`/resources/${slug}`),
   };
 }
 

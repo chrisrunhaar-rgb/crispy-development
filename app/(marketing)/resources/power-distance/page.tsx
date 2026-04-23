@@ -2,7 +2,9 @@ import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
 import { getResourceMetadata } from "@/config/seo-metadata";
-import { generateBreadcrumbSchema, generateCanonicalUrl } from "@/lib/seo-utils";
+import { generateBreadcrumbSchema } from "@/lib/seo-utils";
+import Breadcrumb from "@/components/Breadcrumb";
+import RelatedResources from "@/components/RelatedResources";
 import PowerDistanceClient from "./PowerDistanceClient";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +15,6 @@ const resourceMeta = getResourceMetadata(RESOURCE_SLUG);
 export const metadata: Metadata = {
   title: resourceMeta.title,
   description: resourceMeta.description,
-  canonical: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`),
 };
 
 export default async function ResourcePage(props: any) {
@@ -25,7 +26,6 @@ export default async function ResourcePage(props: any) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "https://crispyleaders.com" },
     { name: "Resources", url: "https://crispyleaders.com/resources" },
-    { name: resourceMeta.title.split(" — ")[0], url: generateCanonicalUrl(`/resources/${RESOURCE_SLUG}`) },
   ]);
 
   return (
@@ -37,7 +37,33 @@ export default async function ResourcePage(props: any) {
           __html: JSON.stringify(breadcrumbSchema),
         }}
       />
+      <Script
+        id="pd-ga-tracking"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `window.gtag?.('event', 'resource_viewed', { resource: '${RESOURCE_SLUG}', category: 'cross-cultural' });`,
+        }}
+      />
+
+      <div className="bg-gray-50 border-b border-gray-200 py-3 sticky top-0 z-10">
+        <div className="container-wide">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Resources", href: "/resources" },
+              { label: "Power Distance" },
+            ]}
+          />
+        </div>
+      </div>
+
       <PowerDistanceClient {...props} isSaved={isSaved} />
+
+      <div className="bg-gray-50 border-t border-gray-200 py-12">
+        <div className="container-wide">
+          <RelatedResources slug="power-distance" />
+        </div>
+      </div>
     </>
   );
 }

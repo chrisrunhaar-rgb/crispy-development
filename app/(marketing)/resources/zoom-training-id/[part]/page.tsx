@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ZOOM_PARTS_ID } from "@/lib/zoom-training-data-id";
 import TrainingPartView from "@/components/Training/TrainingPartView";
+import { generateBreadcrumbSchema } from "@/lib/seo-utils";
 
 interface Props {
   params: Promise<{ part: string }>;
