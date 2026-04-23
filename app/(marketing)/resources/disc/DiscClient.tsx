@@ -596,9 +596,9 @@ export default function DiscClient({
           </h1>
           <p className="t-tagline" style={{ color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem" }}>
             {tr(
-              "Understand your behavioural style and how it shapes the way you lead, communicate, and collaborate across cultures.",
-              "Pahami gaya perilaku Anda dan bagaimana hal itu membentuk cara Anda memimpin, berkomunikasi, dan berkolaborasi lintas budaya.",
-              "Begrijp je gedragsstijl en hoe die bepaalt hoe jij leidt, communiceert en samenwerkt in interculturele contexten."
+              "See how you lead across cultures — authentically.",
+              "Lihat bagaimana Anda memimpin lintas budaya — dengan autentik.",
+              "Zie hoe je authentiek leiding geeft in interculturele contexten."
             )}
           </p>
 
@@ -697,29 +697,28 @@ export default function DiscClient({
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {DISC_TYPES.map(type => (
                 <div key={type.key} style={{
-                  background: "white",
+                  background: type.color,
                   padding: "1.5rem",
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.5rem",
-                  backgroundImage: `linear-gradient(135deg, ${type.colorVeryLight}40, transparent)`
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
                     <div style={{
                       width: "2rem", height: "2rem",
-                      background: type.colorVeryLight,
-                      border: `2px solid ${type.color}`,
+                      background: "white",
+                      border: "none",
                       display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                     }}>
                       <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.875rem", color: type.color }}>
                         {type.key}
                       </span>
                     </div>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(22% 0.005 260)" }}>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white" }}>
                       {type.label[lang]}
                     </span>
                   </div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: type.color, fontWeight: 700, letterSpacing: "0.04em" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "white", fontWeight: 700, letterSpacing: "0.04em" }}>
                     {type.tagline[lang]}
                   </p>
                 </div>
@@ -1111,36 +1110,25 @@ export default function DiscClient({
         <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
           <div>
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {tr("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de bibliotheek")}
+              {tr("Next Steps", "Langkah Selanjutnya", "Volgende stappen")}
             </p>
             <h2 className="t-section" style={{ marginBottom: "1rem" }}>
               {lang === "en"
-                ? <>Part of the full<br />content library.</>
+                ? <>Explore Cross-Cultural<br />Tools.</>
                 : lang === "nl"
-                ? <>Onderdeel van de volledige<br />contentbibliotheek.</>
-                : <>Bagian dari perpustakaan<br />konten lengkap.</>}
+                ? <>Ontdek interculturele<br />tools.</>
+                : <>Jelajahi Tools Lintas<br />Budaya.</>}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
               {tr(
-                "The DISC Profile is one of many frameworks in the Crispy Development library — tools, reflections, and assessments built for cross-cultural leaders.",
-                "Profil DISC adalah salah satu dari banyak kerangka kerja dalam perpustakaan Crispy Development — alat, refleksi, dan penilaian yang dibangun untuk pemimpin lintas budaya.",
-                "Het DISC-profiel is een van de vele kaders in de Crispy Development-bibliotheek — tools, reflecties en assessments gebouwd voor interculturele leiders."
+                "Now that you understand your DISC profile, you're ready to explore how your style shows up in cross-cultural contexts. The Crispy library offers frameworks, reflections, and tools designed for leaders like you.",
+                "Sekarang Anda memahami profil DISC Anda, Anda siap untuk mengeksplorasi bagaimana gaya Anda muncul dalam konteks lintas budaya. Perpustakaan Crispy menawarkan kerangka kerja, refleksi, dan alat yang dirancang untuk pemimpin seperti Anda.",
+                "Nu je je DISC-profiel begrijpt, ben je klaar om te verkennen hoe jouw stijl zich manifesteert in interculturele contexten. De Crispy-bibliotheek biedt kaders, reflecties en tools speciaal ontworpen voor leiders zoals jij."
               )}
             </p>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {saved ? (
-                <Link href="/dashboard" className="btn-primary">
-                  {tr("Go to Dashboard →", "Ke Dashboard →", "Naar dashboard →")}
-                </Link>
-              ) : (
-                <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? tr("Saving…", "Menyimpan…", "Opslaan…") : tr("+ Save to Dashboard", "+ Simpan ke Dashboard", "+ Opslaan in dashboard")}
-                </button>
-              )}
-              <Link href="/resources" className="btn-ghost" style={{ textDecoration: "none" }}>
-                {tr("Browse Library →", "Jelajahi Perpustakaan →", "Verken de bibliotheek →")}
-              </Link>
-            </div>
+            <Link href="/resources" className="btn-primary" style={{ textDecoration: "none", display: "inline-block" }}>
+              {tr("Explore Cross-Cultural Tools →", "Jelajahi Cross-Cultural Tools →", "Verken Cross-Cultural Tools →")}
+            </Link>
           </div>
         </div>
       </section>
