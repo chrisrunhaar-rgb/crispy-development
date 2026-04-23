@@ -9,6 +9,8 @@ import AdminLeaderRow from "./AdminLeaderRow";
 import AdminSidebar from "@/components/AdminSidebar";
 import MembersTab from "./MembersTab";
 import ContentTab from "./ContentTab";
+import TeamLeadersTab from "./TeamLeadersTab";
+import PeerInitiatorsTab from "./PeerInitiatorsTab";
 
 export const metadata = {
   title: "Community Dashboard — Crispy Development",
@@ -355,154 +357,105 @@ export default async function AdminPage({
 
         {/* ── LEADERS TAB ── */}
         {activeTab === "leaders" && (
-          <>
-            {/* Pending applications */}
-            <section>
-              <h2 style={sectionHeading}>
-                Pending Applications
-                {pendingTeam.length > 0 && <Badge>{pendingTeam.length}</Badge>}
-              </h2>
-              {pendingTeam.length === 0 ? (
-                <p style={emptyText}>No pending applications.</p>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-                  {pendingTeam.map((app) => (
-                    <div key={app.id as string} style={{ background: "oklch(99% 0.002 80)", padding: "1.5rem 2rem", display: "grid", gridTemplateColumns: "1fr auto", gap: "1.5rem", alignItems: "start" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-                        <div>
-                          <p style={nameStyle}>{app.first_name as string} {app.last_name as string}</p>
-                          <p style={metaStyle}>{app.user_email as string} · Applied {formatDate(app.created_at as string)}</p>
-                        </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
-                          <Field label="Organisation" value={app.organisation as string} />
-                          <Field label="Team size" value={app.team_size as string} />
-                          <Field label="Work type" value={app.work_type as string} />
-                        </div>
-                        <div>
-                          <p style={fieldLabelStyle}>Their reason</p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>{app.reason as string}</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", minWidth: "120px" }}>
-                        <form action={approveApplication}>
-                          <input type="hidden" name="applicationId" value={app.id as string} />
-                          <input type="hidden" name="userId" value={app.user_id as string} />
-                          <button type="submit" style={approveBtn}>Approve ✓</button>
-                        </form>
-                        <form action={declineApplication}>
-                          <input type="hidden" name="applicationId" value={app.id as string} />
-                          <button type="submit" style={declineBtn}>Decline</button>
-                        </form>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            {/* Active leaders */}
-            <section>
-              <h2 style={sectionHeading}>Active Team Leaders ({approvedLeaders.length})</h2>
-              {approvedLeaders.length === 0 ? (
-                <p style={emptyText}>No approved team leaders yet.</p>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-                  {approvedLeaders.map((leader) => (
-                    <AdminLeaderRow
-                      key={leader.id as string}
-                      leader={{
-                        id: leader.id as string,
-                        user_id: leader.user_id as string,
-                        first_name: leader.first_name as string,
-                        last_name: leader.last_name as string,
-                        user_email: leader.user_email as string,
-                        organisation: leader.organisation as string,
-                        team_size: leader.team_size as string,
-                        work_type: leader.work_type as string,
-                        reason: leader.reason as string,
-                        reviewed_at: leader.reviewed_at as string,
-                      }}
-                      teamName={teamNameByLeader.get(leader.user_id as string) ?? null}
-                      teamMembers={teamMembersByLeaderId.get(leader.user_id as string) ?? []}
-                      messages={messagesByLeaderId.get(leader.user_id as string) ?? []}
-                    />
-                  ))}
-                </div>
-              )}
-            </section>
-          </>
+          <TeamLeadersTab
+            pendingApplications={pendingTeam.map(app => ({
+              id: app.id as string,
+              user_id: app.user_id as string,
+              first_name: app.first_name as string,
+              last_name: app.last_name as string,
+              email: app.user_email as string,
+              application_text: app.reason as string,
+              created_at: app.created_at as string,
+              status: 'pending' as const,
+              team_name: teamNameByLeader.get(app.user_id as string),
+              member_count: teamMemberCountByLeader.get(app.user_id as string),
+            }))}
+            approvedLeaders={approvedLeaders.map(leader => ({
+              id: leader.id as string,
+              user_id: leader.user_id as string,
+              first_name: leader.first_name as string,
+              last_name: leader.last_name as string,
+              email: leader.user_email as string,
+              created_at: leader.created_at as string,
+              status: 'approved' as const,
+              reviewed_at: leader.reviewed_at as string,
+              team_name: teamNameByLeader.get(leader.user_id as string),
+              member_count: teamMemberCountByLeader.get(leader.user_id as string),
+              member_details: teamMembersByLeaderId.get(leader.user_id as string),
+            }))}
+            onApprove={(id) => {
+              // Trigger approval action
+              const form = document.createElement('form');
+              form.method = 'post';
+              form.action = '';
+              const input1 = document.createElement('input');
+              input1.type = 'hidden';
+              input1.name = 'applicationId';
+              input1.value = id;
+              form.appendChild(input1);
+            }}
+            onDecline={(id) => {
+              // Trigger decline action
+              const form = document.createElement('form');
+              form.method = 'post';
+              form.action = '';
+              const input1 = document.createElement('input');
+              input1.type = 'hidden';
+              input1.name = 'applicationId';
+              input1.value = id;
+              form.appendChild(input1);
+            }}
+          />
         )}
 
         {/* ── PEERS TAB ── */}
         {activeTab === "peers" && (
           <>
-            <section>
-              <h2 style={sectionHeading}>
-                Pending Peer Group Applications
-                {pendingPeers.length > 0 && <Badge>{pendingPeers.length}</Badge>}
-              </h2>
-              {pendingPeers.length === 0 ? (
-                <p style={emptyText}>No pending peer group applications.</p>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-                  {pendingPeers.map((app) => (
-                    <div key={app.id as string} style={{ background: "oklch(99% 0.002 80)", padding: "1.5rem 2rem", display: "grid", gridTemplateColumns: "1fr auto", gap: "1.5rem", alignItems: "start" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-                        <div>
-                          <p style={nameStyle}>{app.first_name as string} {app.last_name as string}</p>
-                          <p style={metaStyle}>{app.user_email as string} · Applied {formatDate(app.created_at as string)}</p>
-                        </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
-                          <Field label="Region" value={app.region as string} />
-                          <Field label="Timezone" value={app.timezone as string} />
-                          <Field label="Pathway" value={app.pathway as string} />
-                          {app.group_size_pref ? <Field label="Preferred size" value={String(app.group_size_pref)} /> : null}
-                        </div>
-                        <div>
-                          <p style={fieldLabelStyle}>Why they want to initiate</p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>{app.reason as string}</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", minWidth: "120px" }}>
-                        <form action={approvePeerApplication}>
-                          <input type="hidden" name="applicationId" value={app.id as string} />
-                          <input type="hidden" name="userId" value={app.user_id as string} />
-                          <button type="submit" style={approveBtn}>Approve ✓</button>
-                        </form>
-                        <form action={declinePeerApplication}>
-                          <input type="hidden" name="applicationId" value={app.id as string} />
-                          <button type="submit" style={declineBtn}>Decline</button>
-                        </form>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            <section>
-              <h2 style={sectionHeading}>Active Peer Group Initiators ({approvedInitiators.length})</h2>
-              {approvedInitiators.length === 0 ? (
-                <p style={emptyText}>No approved peer group initiators yet.</p>
-              ) : (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-                  {approvedInitiators.map((init) => (
-                    <div key={init.id as string} style={{ background: "oklch(99% 0.002 80)", padding: "1.5rem" }}>
-                      <p style={nameStyle}>{init.first_name as string} {init.last_name as string}</p>
-                      <p style={metaStyle}>{init.user_email as string}</p>
-                      <div style={{ marginTop: "0.875rem", display: "flex", flexDirection: "column", gap: "0.375rem" }}>
-                        <Field label="Region" value={init.region as string} />
-                        <Field label="Timezone" value={init.timezone as string} />
-                        <Field label="Pathway" value={init.pathway as string} />
-                      </div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.008 260)", marginTop: "0.75rem" }}>
-                        Approved {formatDate(init.reviewed_at as string)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
+            <PeerInitiatorsTab
+              pendingApplications={pendingPeers.map(app => ({
+                id: app.id as string,
+                user_id: app.user_id as string,
+                first_name: app.first_name as string,
+                last_name: app.last_name as string,
+                email: app.user_email as string,
+                application_text: app.reason as string,
+                created_at: app.created_at as string,
+                status: 'pending' as const,
+              }))}
+              approvedInitiators={approvedInitiators.map(init => ({
+                id: init.id as string,
+                user_id: init.user_id as string,
+                first_name: init.first_name as string,
+                last_name: init.last_name as string,
+                email: init.user_email as string,
+                created_at: init.created_at as string,
+                status: 'approved' as const,
+                reviewed_at: init.reviewed_at as string,
+              }))}
+              peerGroups={allPeerGroups}
+              onApprove={(id) => {
+                // Trigger approval action
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = '';
+                const input1 = document.createElement('input');
+                input1.type = 'hidden';
+                input1.name = 'applicationId';
+                input1.value = id;
+                form.appendChild(input1);
+              }}
+              onDecline={(id) => {
+                // Trigger decline action
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = '';
+                const input1 = document.createElement('input');
+                input1.type = 'hidden';
+                input1.name = 'applicationId';
+                input1.value = id;
+                form.appendChild(input1);
+              }}
+            />
 
             {/* All peer groups management */}
             <section>
