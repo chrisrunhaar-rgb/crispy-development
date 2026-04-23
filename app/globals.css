@@ -713,6 +713,77 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Pathway color variants */
+.ds-btn-pathway-indigo {
+  background: #818CF8;
+  border-color: #818CF8;
+  color: #FFFFFF;
+}
+
+.ds-btn-pathway-indigo:hover {
+  opacity: 0.9;
+}
+
+.ds-btn-pathway-emerald {
+  background: #6EE7B7;
+  border-color: #6EE7B7;
+  color: #FFFFFF;
+}
+
+.ds-btn-pathway-emerald:hover {
+  opacity: 0.9;
+}
+
+.ds-btn-pathway-red {
+  background: #F87171;
+  border-color: #F87171;
+  color: #FFFFFF;
+}
+
+.ds-btn-pathway-red:hover {
+  opacity: 0.9;
+}
+
+.ds-btn-text {
+  background: transparent;
+  color: #1B3A6B;
+  font-weight: 500;
+  padding: 8px 12px;
+}
+
+.ds-btn-text:hover {
+  text-decoration: underline;
+}
+
+.ds-btn-destructive {
+  background: #EF4444;
+  color: #FFFFFF;
+  border-color: #EF4444;
+}
+
+.ds-btn-destructive:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+}
+
+.ds-btn-large {
+  height: 48px;
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+.ds-btn-small {
+  height: 32px;
+  font-size: 12px;
+  padding: 8px 12px;
+}
+
+.ds-btn-compact {
+  height: 28px;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
 .ds-btn-icon {
   size: 32px;
   background: transparent;
