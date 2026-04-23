@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
 
-// ── QUIZ DATA ─────────────────────────────────────────────────────────────────
+// ── ASSESSMENT DATA ─────────────────────────────────────────────────────────────────
 
 // Fixed per-question shuffle orders so options are never always in D/I/S/C order
 const SHUFFLE_ORDERS: number[][] = [
@@ -501,6 +501,18 @@ export default function DiscClient({
     });
   }
 
+  // Progress bar color cycling: D→I→S→C (6 questions per color)
+  const getProgressBarColor = (questionIndex: number) => {
+    const colorIndex = Math.floor(questionIndex / 6);
+    const colors = [
+      "oklch(52% 0.20 25)",    // D-red (Q 0-5)
+      "oklch(52% 0.18 80)",    // I-yellow (Q 6-11)
+      "oklch(48% 0.18 145)",   // S-green (Q 12-17)
+      "oklch(48% 0.18 250)",   // C-blue (Q 18-23)
+    ];
+    return colors[colorIndex % 4];
+  };
+
   const primaryType = DISC_TYPES.find(t => t.key === resultKey[0]) ?? DISC_TYPES[0];
 
   return (
@@ -684,7 +696,14 @@ export default function DiscClient({
             {/* Right: 2x2 summary grid */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {DISC_TYPES.map(type => (
-                <div key={type.key} style={{ background: "white", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div key={type.key} style={{
+                  background: "white",
+                  padding: "1.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                  backgroundImage: `linear-gradient(135deg, ${type.colorVeryLight}40, transparent)`
+                }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
                     <div style={{
                       width: "2rem", height: "2rem",
@@ -713,7 +732,11 @@ export default function DiscClient({
       {/* ── DISC TYPE DETAIL SECTIONS ── */}
       <div id="disc-types">
         {DISC_TYPES.map((type) => (
-          <section key={type.key} id={`disc-${type.key}`} style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: type.bg }}>
+          <section key={type.key} id={`disc-${type.key}`} style={{
+            paddingBlock: "clamp(4rem, 7vw, 7rem)",
+            background: type.bg,
+            borderLeft: `4px solid ${type.color}`
+          }}>
             <div className="container-wide">
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(3rem, 6vw, 5rem)", alignItems: "start" }}>
 
@@ -840,13 +863,21 @@ export default function DiscClient({
         ))}
       </div>
 
-      {/* ── QUIZ ── */}
-      <section id="quiz-section" style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)", position: "relative" }}>
+      {/* ── ASSESSMENT ── */}
+      <section id="quiz-section" style={{
+        paddingBlock: "clamp(4rem, 7vw, 7rem)",
+        background: "oklch(97% 0.005 80)",
+        position: "relative",
+        borderTop: "4px solid transparent",
+        backgroundImage: `linear-gradient(to right, oklch(97% 0.005 80), oklch(97% 0.005 80)), linear-gradient(90deg, oklch(52% 0.20 25) 0%, oklch(52% 0.18 80) 33%, oklch(48% 0.18 145) 66%, oklch(48% 0.18 250) 100%)`,
+        backgroundClip: "padding-box, border-box",
+        backgroundOrigin: "padding-box, border-box"
+      }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>
             {tr("Self-Assessment", "Penilaian Diri", "Zelfreflectie")}
           </p>
-          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+          <h2 className="t-section" style={{ color: "oklch(22% 0.005 260)", marginBottom: "0.75rem" }}>
             {tr("Discover your DISC style.", "Temukan gaya DISC Anda.", "Ontdek jouw DISC-stijl.")}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
@@ -871,19 +902,24 @@ export default function DiscClient({
                     )}
                   </p>
                   <button onClick={startQuiz} className="btn-primary">
-                    {tr("Begin the Quiz →", "Mulai Kuis →", "Begin de quiz →")}
+                    {tr("Begin the Assessment →", "Mulai Assessment →", "Begin de assessment →")}
                   </button>
                 </div>
               )}
 
               {quizState === "active" && (
                 <div>
-                  {/* Progress bar */}
+                  {/* Progress bar with color cycling */}
                   <div style={{ marginBottom: "2rem" }}>
                     <div style={{ height: "2px", background: "oklch(97% 0.005 80 / 0.08)", marginBottom: "0.625rem" }}>
-                      <div style={{ height: "100%", background: "oklch(65% 0.15 45)", width: `${((currentQ + 1) / QS.length) * 100}%`, transition: "width 0.4s ease" }} />
+                      <div style={{
+                        height: "100%",
+                        background: getProgressBarColor(currentQ),
+                        width: `${((currentQ + 1) / QS.length) * 100}%`,
+                        transition: "width 0.4s ease, background 0.3s ease"
+                      }} />
                     </div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(55% 0.008 260)" }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: getProgressBarColor(currentQ) }}>
                       {tr("Question", "Pertanyaan", "Vraag")} {currentQ + 1} {tr("of", "dari", "van")} {QS.length}
                     </p>
                   </div>
@@ -1057,7 +1093,7 @@ export default function DiscClient({
                   {/* Retake + dashboard */}
                   <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                     <button onClick={retake} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.04 260)", background: "none", border: "1px solid oklch(38% 0.008 260)", padding: "0.7rem 1.375rem", cursor: "pointer" }}>
-                      {tr("Retake Quiz", "Ulangi Kuis", "Quiz opnieuw doen")}
+                      {tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")}
                     </button>
                     <Link href="/dashboard" className="btn-primary" style={{ textDecoration: "none" }}>
                       {tr("Go to Dashboard →", "Ke Dashboard →", "Naar dashboard →")}
