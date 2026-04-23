@@ -3,6 +3,10 @@
 import React, { useState, useMemo } from 'react';
 import { AdminCard } from '@/components/AdminCard';
 import { StatusIndicator } from '@/components/AdminStatusIndicators';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { ToastContainer } from '@/components/Toast';
+import { useToast } from '@/hooks/useToast';
+import { approveApplication, declineApplication } from './actions';
 
 interface LeaderApp {
   id: string;
@@ -39,6 +43,21 @@ export default function TeamLeadersTab({
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    type: 'approve' | 'decline';
+    applicationId: string;
+    userId: string;
+    leaderName: string;
+  }>({
+    isOpen: false,
+    type: 'approve',
+    applicationId: '',
+    userId: '',
+    leaderName: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { toasts, dismissToast, success, error } = useToast();
 
   const allLeaders = [
     ...pendingApplications.map(app => ({ ...app, status: 'pending' as const })),
@@ -118,6 +137,58 @@ export default function TeamLeadersTab({
   };
 
   const hasActiveFilters = statusFilter.length > 0 || searchTerm;
+
+  /**
+   * Open confirmation dialog before approving
+   */
+  const handleApproveClick = (id: string, userId: string, leaderName: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      type: 'approve',
+      applicationId: id,
+      userId,
+      leaderName,
+    });
+  };
+
+  /**
+   * Open confirmation dialog before declining
+   */
+  const handleDeclineClick = (id: string, userId: string, leaderName: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      type: 'decline',
+      applicationId: id,
+      userId,
+      leaderName,
+    });
+  };
+
+  /**
+   * Execute the confirmed action
+   */
+  const handleConfirm = async () => {
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('applicationId', confirmDialog.applicationId);
+      formData.append('userId', confirmDialog.userId);
+
+      if (confirmDialog.type === 'approve') {
+        await approveApplication(formData);
+        success(`Team leader "${confirmDialog.leaderName}" approved successfully!`);
+      } else {
+        await declineApplication(formData);
+        success(`Application from "${confirmDialog.leaderName}" declined.`);
+      }
+
+      setConfirmDialog({ isOpen: false, type: 'approve', applicationId: '', userId: '', leaderName: '' });
+    } catch (err) {
+      error(`Failed to ${confirmDialog.type} application. Please try again.`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const sectionHeading: React.CSSProperties = {
     fontFamily: 'var(--font-montserrat)',
@@ -236,7 +307,8 @@ export default function TeamLeadersTab({
                   footer={
                     <div style={{ display: 'flex', gap: '0.75rem' }}>
                       <button
-                        onClick={() => onApprove?.(leader.id)}
+                        onClick={() => handleApproveClick(leader.id, leader.user_id, `${leader.first_name || ''} ${leader.last_name || ''}`.trim() || 'Unknown')}
+                        disabled={isLoading}
                         style={{
                           flex: 1,
                           background: 'oklch(45% 0.14 145)',
@@ -244,15 +316,17 @@ export default function TeamLeadersTab({
                           border: 'none',
                           padding: '0.5rem 1rem',
                           borderRadius: '4px',
-                          cursor: 'pointer',
+                          cursor: isLoading ? 'not-allowed' : 'pointer',
                           fontWeight: 600,
                           fontSize: '0.875rem',
+                          opacity: isLoading ? 0.6 : 1,
                         }}
                       >
-                        Approve
+                        {isLoading ? 'Processing...' : 'Approve'}
                       </button>
                       <button
-                        onClick={() => onDecline?.(leader.id)}
+                        onClick={() => handleDeclineClick(leader.id, leader.user_id, `${leader.first_name || ''} ${leader.last_name || ''}`.trim() || 'Unknown')}
+                        disabled={isLoading}
                         style={{
                           flex: 1,
                           background: 'transparent',
@@ -260,9 +334,10 @@ export default function TeamLeadersTab({
                           border: '1px solid oklch(65% 0.15 45)',
                           padding: '0.5rem 1rem',
                           borderRadius: '4px',
-                          cursor: 'pointer',
+                          cursor: isLoading ? 'not-allowed' : 'pointer',
                           fontWeight: 600,
                           fontSize: '0.875rem',
+                          opacity: isLoading ? 0.6 : 1,
                         }}
                       >
                         Decline
@@ -369,6 +444,25 @@ export default function TeamLeadersTab({
           </div>
         )}
       </section>
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={confirmDialog.isOpen}
+        title={confirmDialog.type === 'approve' ? 'Approve Team Leader?' : 'Decline Application?'}
+        message={
+          confirmDialog.type === 'approve'
+            ? `Approve ${confirmDialog.leaderName} as a team leader? They'll gain access to create and manage teams.`
+            : `Decline the application from ${confirmDialog.leaderName}? They can apply again later.`
+        }
+        confirmText={confirmDialog.type === 'approve' ? 'Approve' : 'Decline'}
+        isDangerous={confirmDialog.type === 'decline'}
+        onConfirm={handleConfirm}
+        onCancel={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}
+        isLoading={isLoading}
+      />
+
+      {/* Toast Notifications */}
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </>
   );
 }
