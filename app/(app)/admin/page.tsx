@@ -7,8 +7,8 @@ import AdminReplyForm from "./AdminReplyForm";
 import AdminBroadcastForm from "./AdminBroadcastForm";
 import AdminLeaderRow from "./AdminLeaderRow";
 import AdminSidebar from "@/components/AdminSidebar";
-import AdminMembersTable from "@/components/AdminMembersTable";
-import AdminSearchBar from "@/components/AdminSearchBar";
+import MembersTab from "./MembersTab";
+import ContentTab from "./ContentTab";
 
 export const metadata = {
   title: "Community Dashboard — Crispy Development",
@@ -346,94 +346,11 @@ export default async function AdminPage({
 
         {/* ── MEMBERS TAB ── */}
         {activeTab === "members" && (
-          <>
-            <section>
-              <h2 style={sectionHeading}>All Members ({allUsers.length})</h2>
-              {allUsers.length === 0 ? (
-                <p style={emptyText}>No members yet.</p>
-              ) : (
-                <div style={{ background: "oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px" }}>
-                  {/* Column headers */}
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 110px 60px 60px 80px 55px 90px 100px 130px",
-                    gap: "1rem",
-                    padding: "0.625rem 1.5rem",
-                    background: "oklch(94% 0.006 80)",
-                  }}>
-                    {["Member", "Pathway", "Team", "Peer", "Modules", "Tests", "Timezone", "Last Login", "Joined"].map(h => (
-                      <p key={h} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
-                    ))}
-                  </div>
-
-                  {/* Member rows */}
-                  {allUsers.map(u => {
-                    const firstName = u.user_metadata?.first_name as string ?? "";
-                    const lastName = u.user_metadata?.last_name as string ?? "";
-                    const fullName = `${firstName} ${lastName}`.trim() || "—";
-                    const pathway = u.user_metadata?.pathway as string ?? "personal";
-                    const hasTeam = pathway === "team" || !!u.user_metadata?.team_id;
-                    const hasPeer = pathway === "peer" || !!u.user_metadata?.peer_group_id;
-                    const modulesCompleted = progressCounts.get(u.id) ?? 0;
-                    const timezone = u.user_metadata?.timezone as string ?? null;
-                    const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
-
-                    return (
-                      <div key={u.id} style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 110px 60px 60px 80px 55px 90px 100px 130px",
-                        gap: "1rem",
-                        padding: "0.875rem 1.5rem",
-                        background: "oklch(99% 0.002 80)",
-                        alignItems: "center",
-                      }}>
-                        <div>
-                          <p style={nameStyle}>{fullName}</p>
-                          <p style={metaStyle}>{u.email}</p>
-                        </div>
-                        <span style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontSize: "0.6rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.08em",
-                          padding: "0.2rem 0.5rem",
-                          display: "inline-block",
-                          background: "oklch(30% 0.12 260 / 0.08)",
-                          color: "oklch(30% 0.12 260)",
-                        }}>
-                          {pathway.toUpperCase()}
-                        </span>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasTeam ? 700 : 400, color: hasTeam ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {hasTeam ? "Yes" : "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: hasPeer ? 700 : 400, color: hasPeer ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {hasPeer ? "Yes" : "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: modulesCompleted > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {modulesCompleted > 0 ? modulesCompleted : "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: testsDone > 0 ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {testsDone > 0 ? `${testsDone}/${ASSESSMENT_KEYS.length}` : "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: timezone ? "oklch(38% 0.008 260)" : "oklch(72% 0.008 260)", margin: 0, fontWeight: timezone ? 600 : 400 }}>
-                          {timezone ?? "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
-                          {u.last_sign_in_at ? formatDate(u.last_sign_in_at) : "—"}
-                        </p>
-                        <p style={metaStyle}>{formatDate(u.created_at)}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-
-            <section>
-              <h2 style={sectionHeading}>Send Notification</h2>
-              <AdminBroadcastForm members={membersList} />
-            </section>
-          </>
+          <MembersTab
+            users={allUsers}
+            progressCounts={progressCounts}
+            membersList={membersList}
+          />
         )}
 
         {/* ── LEADERS TAB ── */}
@@ -730,106 +647,18 @@ export default async function AdminPage({
 
         {/* ── CONTENT TAB ── */}
         {activeTab === "content" && (
-          <>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "-1.5rem" }}>
-              <h2 style={{ ...sectionHeading, margin: 0 }}>
-                Content Library
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 400, color: "oklch(62% 0.008 260)", marginLeft: "0.75rem", textTransform: "none", letterSpacing: 0 }}>
-                  Save counts from {allUsers.length} members
-                </span>
-              </h2>
-            </div>
-
-            {CONTENT_MODULES.map(group => (
-              <section key={group.category}>
-                <h3 style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontWeight: 700,
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "oklch(65% 0.15 45)",
-                  marginBottom: "0.75rem",
-                }}>
-                  {group.category}
-                </h3>
-                <div style={{ background: "oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px" }}>
-                  {/* Header row */}
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 95px 95px 90px 70px 70px 80px",
-                    gap: "1rem",
-                    padding: "0.5rem 1.5rem",
-                    background: "oklch(94% 0.006 80)",
-                  }}>
-                    {["Module", "Created", "Updated", "Languages", "Opened", "Saved", ""].map((h, i) => (
-                      <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", margin: 0 }}>{h}</p>
-                    ))}
-                  </div>
-                  {group.modules.map(mod => {
-                    const saves = contentSaveCounts.get(mod.slug) ?? 0;
-                    const reads = contentReadCounts.get(mod.slug) ?? 0;
-                    return (
-                      <div key={mod.slug} style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 95px 95px 90px 70px 70px 80px",
-                        gap: "1rem",
-                        padding: "0.75rem 1.5rem",
-                        background: "oklch(99% 0.002 80)",
-                        alignItems: "center",
-                      }}>
-                        <div>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", margin: 0 }}>{mod.title}</p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(62% 0.008 260)", margin: "0.125rem 0 0" }}>/resources/{mod.slug}</p>
-                        </div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
-                          {formatDate(mod.created)}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0 }}>
-                          {formatDate(mod.updated)}
-                        </p>
-                        <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" }}>
-                          {mod.languages.map(lang => (
-                            <span key={lang} style={{
-                              fontFamily: "var(--font-montserrat)",
-                              fontSize: "0.58rem",
-                              fontWeight: 700,
-                              letterSpacing: "0.06em",
-                              padding: "0.15rem 0.35rem",
-                              background: "oklch(30% 0.12 260 / 0.08)",
-                              color: "oklch(30% 0.12 260)",
-                            }}>{lang}</span>
-                          ))}
-                        </div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: reads > 0 ? "oklch(30% 0.12 260)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {reads > 0 ? reads : "—"}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: saves > 0 ? "oklch(45% 0.14 145)" : "oklch(72% 0.008 260)", margin: 0 }}>
-                          {saves > 0 ? saves : "—"}
-                        </p>
-                        <Link
-                          href={`/resources/${mod.slug}`}
-                          target="_blank"
-                          style={{
-                            fontFamily: "var(--font-montserrat)",
-                            fontSize: "0.65rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.06em",
-                            textTransform: "uppercase",
-                            color: "oklch(65% 0.15 45)",
-                            textDecoration: "none",
-                            opacity: 0.8,
-                          }}
-                        >
-                          View →
-                        </Link>
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-            ))}
-          </>
+          <ContentTab
+            modules={CONTENT_MODULES.flatMap(group =>
+              group.modules.map(mod => ({
+                ...mod,
+                category: group.category,
+                created_at: mod.created,
+                updated_at: mod.updated,
+                reads: contentReadCounts.get(mod.slug) ?? 0,
+                saves: contentSaveCounts.get(mod.slug) ?? 0,
+              }))
+            )}
+          />
         )}
 
       </div>
