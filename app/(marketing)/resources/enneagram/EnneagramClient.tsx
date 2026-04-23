@@ -1275,17 +1275,13 @@ export default function EnneagramClient({
 
           {/* What is the Enneagram */}
           <div style={{ marginBottom: "3rem" }}>
-            <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
-                  {t(UI.aboutAssessment)}
-                </p>
-                <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "1.25rem" }}>
-                  {t(UI.whatIsEnneagram)}
-                </h2>
-              </div>
-              <img src="/enneagram-types/enneagram-map.jpg" alt="Enneagram Map" style={{ width: "180px", height: "auto", opacity: 0.5, borderRadius: "0.5rem", flexShrink: 0 }} />
-            </div>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+              {t(UI.aboutAssessment)}
+            </p>
+            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "2rem" }}>
+              {t(UI.whatIsEnneagram)}
+            </h2>
+            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" style={{ width: "100%", maxWidth: "500px", height: "auto", display: "block", margin: "0 auto 2rem auto" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.006 260)", lineHeight: 1.75 }}>
                 {t(UI.enneagramP1)}
