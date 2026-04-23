@@ -96,7 +96,7 @@ export default function TypeCard({
               style={{
                 position: "absolute",
                 inset: 0,
-                background: `linear-gradient(135deg, ${type.color} / 0.2 0%, ${type.color} / 0.2 100%)`,
+                background: `linear-gradient(135deg, color-mix(in oklch, ${type.color} 80%, transparent) 0%, color-mix(in oklch, ${type.color} 80%, transparent) 100%)`,
               }}
             />
           )}
