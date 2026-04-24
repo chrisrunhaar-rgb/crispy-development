@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -629,7 +629,7 @@ export default function DiscClient({
               }}>
                 {isPending
                   ? tr("Saving…", "Menyimpan…", "Opslaan…")
-                  : tr("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan dashboard")}
+                  : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             )}
           </div>
@@ -689,7 +689,7 @@ export default function DiscClient({
                 )}
               </p>
               <a href="#quiz-section" className="btn-primary" style={{ textDecoration: "none", display: "inline-block" }}>
-                {tr("Take the Assessment →", "Mulai Penilaian →", "Start de assessment →")}
+                {tr("Start Assessment →", "Mulai Tes →", "Start Test →")}
               </a>
             </div>
 
@@ -901,7 +901,7 @@ export default function DiscClient({
                     )}
                   </p>
                   <button onClick={startQuiz} className="btn-primary">
-                    {tr("Begin the Assessment →", "Mulai Assessment →", "Begin de assessment →")}
+                    {tr("Start Assessment →", "Mulai Tes →", "Start Test →")}
                   </button>
                 </div>
               )}

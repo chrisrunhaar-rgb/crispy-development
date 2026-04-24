@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
@@ -316,9 +316,9 @@ const SCALE_LABELS: T3[] = [
 const UI: Record<string, T3> = {
   personalityAssessment: { en: "Personality Assessment", id: "Penilaian Kepribadian", nl: "Persoonlijkheidsbeoordeling" },
   enneagram:             { en: "Enneagram",              id: "Enneagram",             nl: "Enneagram" },
-  startAssessment:       { en: "Start Assessment →",     id: "Mulai Penilaian →",     nl: "Start Beoordeling →" },
-  saveDashboard:         { en: "Save to Dashboard",      id: "Simpan ke Dasbor",      nl: "Opslaan in Dashboard" },
-  saved:                 { en: "✓ Saved",                id: "✓ Tersimpan",           nl: "✓ Opgeslagen" },
+  startAssessment:       { en: "Start Assessment →",     id: "Mulai Tes →",     nl: "Start Test →" },
+  saveDashboard:         { en: "Save to Dashboard",      id: "Simpan ke Dashboard",      nl: "Opslaan in Dashboard" },
+  saved:                 { en: "✓ Saved to Dashboard",                id: "✓ Tersimpan di Dashboard",           nl: "✓ Opgeslagen in Dashboard" },
   saving:                { en: "Saving…",                id: "Menyimpan…",            nl: "Opslaan…" },
   saveMyResult:          { en: "Save My Result →",       id: "Simpan Hasil Saya →",   nl: "Mijn Resultaat Opslaan →" },
   resultSaved:           { en: "✓ Result saved to your dashboard", id: "✓ Hasil disimpan ke dasbor Anda", nl: "✓ Resultaat opgeslagen in uw dashboard" },

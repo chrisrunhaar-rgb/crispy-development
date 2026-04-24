@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -622,8 +622,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+                ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
+                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             <Link
               href="/resources"
@@ -1437,7 +1437,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               borderRadius: 4,
             }}
           >
-            {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+            {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
           </Link>
           <Link
             href="/resources/conflict-resolution"

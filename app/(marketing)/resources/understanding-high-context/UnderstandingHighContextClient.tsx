@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -509,7 +509,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
             transition: "all 0.2s",
           }}
         >
-          {saved ? t("Saved", "Tersimpan", "Opgeslagen") : t("Save", "Simpan", "Opslaan")}
+          {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save", "Simpan", "Opslaan in Dashboard")}
         </button>
       </div>
 

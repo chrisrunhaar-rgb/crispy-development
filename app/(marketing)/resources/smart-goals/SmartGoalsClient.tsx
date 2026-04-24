@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -611,10 +611,10 @@ export default function SmartGoalsClient({
                 disabled={savingWorksheet}
                 style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "12px 24px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: savingWorksheet ? "not-allowed" : "pointer" }}
               >
-                {savingWorksheet ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in dashboard")}
+                {savingWorksheet ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>✓ {t("Saved to Dashboard", "Disimpan ke Dasbor", "Opgeslagen in dashboard")}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
             )}
             <button
               onClick={handleRetake}
@@ -665,10 +665,10 @@ export default function SmartGoalsClient({
             </button>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Add to Dashboard", "Tambah ke Dasbor", "Aan dashboard toevoegen")}
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>✓ {t("Saved to Dashboard", "Disimpan ke Dasbor", "Opgeslagen in dashboard")}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
             )}
           </div>
         </div>
@@ -896,7 +896,7 @@ export default function SmartGoalsClient({
               {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
             </button>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk alle bronnen")}
+              {t("← Content Library", "← Perpustakaan Konten", "Bekijk alle bronnen")}
             </Link>
           </div>
         </div>

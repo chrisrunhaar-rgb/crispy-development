@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -228,7 +228,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("Saved", "Tersimpan", "Opgeslagen") : tr("Add to Dashboard", "Simpan ke Dashboard", "Toevoegen aan Dashboard")}
+              {saved ? tr("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
         </div>
@@ -359,7 +359,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           </h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {tr("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen")}
+              {tr("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
             </Link>
           </div>
         </div>

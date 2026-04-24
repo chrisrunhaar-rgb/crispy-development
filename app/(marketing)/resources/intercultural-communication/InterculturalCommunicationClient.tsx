@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -232,7 +232,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           <p style={{ color: "oklch(65% 0.05 260)", fontSize: 13, marginBottom: 36, fontStyle: "italic" }}>— George Bernard Shaw</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "13px 30px", borderRadius: 6, border: "none", cursor: saved ? "default" : "pointer", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, background: saved ? "oklch(45% 0.08 260)" : orange, color: offWhite }}>
-              {saved ? t("Saved ✓", "Tersimpan ✓", "Opgeslagen ✓") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+              {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             <Link href="/resources" style={{ padding: "13px 30px", borderRadius: 6, border: "1px solid oklch(45% 0.05 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: offWhite, textDecoration: "none" }}>
               {t("All Resources", "Semua Sumber", "Alle Bronnen")}
@@ -536,7 +536,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
             </Link>
             <Link href="/resources/time-and-culture" style={{ display: "inline-block", padding: "14px 32px", border: "1px solid oklch(45% 0.05 260)", color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, textDecoration: "none" }}>
               {t("Time & Culture →", "Waktu & Budaya →", "Tijd & Cultuur →")}

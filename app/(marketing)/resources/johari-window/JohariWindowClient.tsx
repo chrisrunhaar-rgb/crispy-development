@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -148,7 +148,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-            ← Resources
+            ← Content Library
           </Link>
 
           <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.75rem" }}>
@@ -181,7 +181,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
               </Link>
             ) : (
               <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.625rem 1.25rem", cursor: isPending ? "wait" : "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             )
           )}
@@ -378,7 +378,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
                 <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard →", "Ke Dashboard →", "Naar Dashboard →")}</Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard")}
+                  {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>

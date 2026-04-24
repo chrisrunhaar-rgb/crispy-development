@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -359,11 +359,11 @@ export default function LadderOfInferenceClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Add to Dashboard", "Tambah ke Dasbor", "Toevoegen aan Dashboard", lang)}
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ✓ {t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen op Dashboard", lang)}
+                ✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
               </span>
             )}
           </div>
@@ -613,7 +613,7 @@ export default function LadderOfInferenceClient({
               {t("Start at the Ground Floor", "Mulai dari Lantai Dasar", "Begin op de Begane Grond", lang)}
             </button>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen", lang)}
+              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek", lang)}
             </Link>
           </div>
         </div>

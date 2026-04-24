@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -707,11 +707,11 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
               >
                 {isPending
                   ? t("Saving…", "Menyimpan…", "Opslaan…", lang)
-                  : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard", lang)}
+                  : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
               </button>
             ) : (
               <span style={{ padding: "14px 32px", background: "oklch(40% 0.15 145)", color: "white", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: "0.06em" }}>
-                ✓ {t("Saved", "Tersimpan", "Opgeslagen", lang)}
+                ✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
               </span>
             )}
             {userPathway && (

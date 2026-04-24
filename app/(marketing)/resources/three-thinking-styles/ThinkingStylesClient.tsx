@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
@@ -364,7 +364,7 @@ export default function ThinkingStylesClient({
         <div className="container-wide" style={{ position: "relative" }}>
           {/* Breadcrumb */}
           <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-            ← Resources
+            ← Content Library
           </Link>
 
           {/* Lang toggle */}
@@ -442,7 +442,7 @@ export default function ThinkingStylesClient({
                 >
                   {isPending
                     ? tr("Saving…", "Menyimpan…", "Opslaan…")
-                    : tr("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan dashboard")}
+                    : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )
             )}
@@ -809,7 +809,7 @@ export default function ThinkingStylesClient({
                     )}
                   </p>
                   <button onClick={startQuiz} className="btn-primary">
-                    {tr("Begin the Quiz →", "Mulai Kuis →", "Start de quiz →")}
+                    {tr("Start Assessment →", "Mulai Kuis →", "Start de quiz →")}
                   </button>
                 </div>
               )}
@@ -902,7 +902,7 @@ export default function ThinkingStylesClient({
                       </div>
                       {resultSaved ? (
                         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: "oklch(55% 0.15 145)", whiteSpace: "nowrap" }}>
-                          ✓ {tr("Saved to dashboard", "Tersimpan", "Opgeslagen")}
+                          ✓ {tr("Saved to dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")}
                         </span>
                       ) : (
                         <button
@@ -978,7 +978,7 @@ export default function ThinkingStylesClient({
                 >
                   {isPending
                     ? tr("Saving…", "Menyimpan…", "Opslaan…")
-                    : tr("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan dashboard")}
+                    : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">

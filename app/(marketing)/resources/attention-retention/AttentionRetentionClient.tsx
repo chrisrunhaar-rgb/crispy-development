@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -273,7 +273,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("Saved", "Tersimpan", "Opgeslagen") : tr("Add to Dashboard", "Simpan ke Dashboard", "Toevoegen aan Dashboard")}
+              {saved ? tr("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition, useMemo } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -576,7 +576,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", borderRadius: 6, border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, background: saved ? "oklch(55% 0.08 260)" : orange, color: offWhite }}>
-            {saved ? t("Saved", "Tersimpan", "Opgeslagen") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+            {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
           </button>
           <Link href="/resources" style={{ padding: "12px 28px", borderRadius: 6, border: "1px solid oklch(50% 0.05 260)", fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: offWhite, textDecoration: "none" }}>
             {t("All Resources", "Semua Sumber", "Alle Bronnen")}
@@ -781,7 +781,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
           {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
         <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-          {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+          {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
         </Link>
       </div>
     </div>

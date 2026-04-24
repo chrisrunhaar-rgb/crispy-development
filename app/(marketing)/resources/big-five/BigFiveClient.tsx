@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveBigFiveResult } from "../actions";
@@ -552,7 +552,7 @@ const UI = {
       ["No right answers", "Every profile has genuine strengths. This is not a pass/fail test."],
       ["Takes about 8–10 minutes", "Find a quiet moment. Rushed answers produce less accurate profiles."],
     ],
-    beginBtn: "Begin the Assessment",
+    beginBtn: "Start Assessment",
     progressLabel: (cur: number, tot: number) => `${cur} / ${tot}`,
     backBtn: "← Back",
     resultsLabel: "Your Big Five Profile",
@@ -575,7 +575,7 @@ const UI = {
     heroTitle1: "Big Five",
     heroTitleItalic: "Profil OCEAN",
     heroDesc: "Kerangka kepribadian yang paling tervalidasi secara ilmiah di dunia — lima dimensi yang memprediksi cara Anda memimpin, berkolaborasi, beradaptasi, dan berkembang di setiap budaya.",
-    startBtn: "Mulai Penilaian →",
+    startBtn: "Mulai Tes →",
     whatIsTitle: "Apa itu Big Five?",
     whatIsP1: "Big Five — juga dikenal sebagai model OCEAN — muncul dari dekade penelitian lintas budaya, bahasa, dan demografi. Tidak seperti tipologi kepribadian yang memaksa Anda masuk ke salah satu dari enam belas kotak, Big Five mengukur lima dimensi kontinu. Anda menerima skor unik pada masing-masing, menciptakan profil kepribadian yang benar-benar milik Anda.",
     whatIsP2: "Ini adalah kerangka yang paling banyak digunakan dalam penelitian kepemimpinan lintas budaya, sehingga sangat relevan jika Anda memimpin lintas budaya nasional atau organisasi. Memahami profil Anda membantu Anda memimpin dengan kesadaran diri yang lebih besar — dan memahami orang-orang dalam tim Anda dengan kedalaman yang lebih besar.",
@@ -588,7 +588,7 @@ const UI = {
       ["Tidak ada jawaban yang benar", "Setiap profil memiliki kekuatan yang nyata. Ini bukan tes lulus/gagal."],
       ["Membutuhkan sekitar 8–10 menit", "Temukan momen yang tenang. Jawaban yang terburu-buru menghasilkan profil yang kurang akurat."],
     ],
-    beginBtn: "Mulai Penilaian",
+    beginBtn: "Mulai Tes",
     progressLabel: (cur: number, tot: number) => `${cur} / ${tot}`,
     backBtn: "← Kembali",
     resultsLabel: "Profil Big Five Anda",
@@ -599,7 +599,7 @@ const UI = {
     leadershipEdge: "Keunggulan Kepemimpinan",
     crossCulturalAwareness: "Kesadaran Lintas Budaya",
     mostDistinctive: "Sifat Paling Menonjol",
-    saveDashboard: "Simpan ke Dasbor",
+    saveDashboard: "Simpan ke Dashboard",
     saving: "Menyimpan…",
     savedDashboard: "✓ Tersimpan di dasbor Anda",
     retake: "Ulangi Penilaian",

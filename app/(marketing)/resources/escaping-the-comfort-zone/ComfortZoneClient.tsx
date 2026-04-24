@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
@@ -154,7 +154,7 @@ export default function ComfortZoneClient({
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-            ← Resources
+            ← Content Library
           </Link>
 
           <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.75rem" }}>
@@ -206,7 +206,7 @@ export default function ComfortZoneClient({
                 >
                   {isPending
                     ? t("Saving…", "Menyimpan…", "Opslaan…", lang)
-                    : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard", lang)}
+                    : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
                 </button>
               )
             )}
@@ -414,7 +414,7 @@ export default function ComfortZoneClient({
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
                   {isPending
                     ? t("Saving…", "Menyimpan…", "Opslaan…", lang)
-                    : t("+ Add to Dashboard", "+ Tambah ke Dashboard", "+ Toevoegen aan Dashboard", lang)}
+                    : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek", lang)}</Link>

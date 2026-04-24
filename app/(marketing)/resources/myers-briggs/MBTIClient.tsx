@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveMBTIResult } from "../actions";
@@ -439,7 +439,7 @@ export default function MBTIClient({
                 className="mbti-btn"
                 style={{ marginTop: 24, padding: "13px 32px", background: "oklch(25% 0.08 45)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600 }}
               >
-                Begin the Assessment
+                Start Assessment
               </button>
             </div>
           </section>

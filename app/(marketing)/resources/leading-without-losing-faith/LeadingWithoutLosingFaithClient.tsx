@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -369,7 +369,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
-              {saved ? t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+              {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             <Link href="/resources" style={{ padding: "12px 28px", border: "1px solid oklch(45% 0.05 260)", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, color: "oklch(78% 0.03 80)", textDecoration: "none", borderRadius: 4 }}>
               {t("All Resources", "Semua Sumber", "Alle Bronnen")}
@@ -619,7 +619,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
           )}
         </p>
         <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em" }}>
-          {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+          {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
         </Link>
       </div>
 

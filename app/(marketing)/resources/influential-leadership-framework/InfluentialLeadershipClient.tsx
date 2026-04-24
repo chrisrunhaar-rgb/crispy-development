@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -480,8 +480,8 @@ export default function InfluentialLeadershipClient({
             }}
           >
             {saved
-              ? t("Saved", "Tersimpan", "Opgeslagen")
-              : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+              ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
+              : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
           </button>
           <Link
             href="/resources"
@@ -1260,7 +1260,7 @@ export default function InfluentialLeadershipClient({
             textDecoration: "none",
           }}
         >
-          {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+          {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
         </Link>
       </div>
 

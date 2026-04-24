@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
@@ -485,7 +485,7 @@ export default function Personalities16Client({
               className="p16-btn"
               style={{ marginTop: 28, padding: "13px 32px", background: "oklch(20% 0.18 260)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600 }}
             >
-              Begin the Assessment
+              Start Assessment
             </button>
           </section>
         </div>

@@ -397,7 +397,7 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                               whiteSpace: "nowrap", opacity: pendingSlug === resource.slug ? 0.5 : 1,
                             }}
                           >
-                            {pendingSlug === resource.slug ? "…" : "+ Add to Dashboard"}
+                            {pendingSlug === resource.slug ? "…" : "Save to Dashboard"}
                           </button>
                         )
                       )}

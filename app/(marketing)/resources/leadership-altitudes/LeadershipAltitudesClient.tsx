@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import dynamic from "next/dynamic";
 import { useState, useTransition } from "react";
@@ -371,8 +371,8 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved
-                ? t("Saved", "Tersimpan", "Opgeslagen")
-                : t("Add to Dashboard", "Simpan ke Dashboard", "Toevoegen aan Dashboard")}
+                ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
+                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
         </div>
@@ -673,7 +673,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
               padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14,
               letterSpacing: "0.04em", textDecoration: "none",
             }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen")}
+              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
             </Link>
             <Link href={userPathway ? "/dashboard" : "/personal"} style={{
               display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)",

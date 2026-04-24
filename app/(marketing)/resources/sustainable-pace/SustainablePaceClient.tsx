@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -560,8 +560,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               }}
             >
               {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+                ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
+                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             <Link
               href="/resources"
@@ -1283,8 +1283,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               }}
             >
               {saved
-                ? `✓ ${t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen in Dashboard")}`
-                : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan in Dashboard")}
+                ? `✓ ${t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")}`
+                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             {userPathway && (
               <Link
@@ -1344,7 +1344,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em",
           }}
         >
-          {t("Browse All Resources", "Jelajahi Semua Sumber", "Bekijk Alle Bronnen")}
+          {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
         </Link>
       </section>
 

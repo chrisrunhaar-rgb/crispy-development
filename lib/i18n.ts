@@ -5,7 +5,7 @@ export const translations = {
     nav: {
       personal: "Personal",
       team: "Team",
-      resources: "Library",
+      resources: "Content Library",
       login: "Log in",
       cta: "Get Started",
       personalFull: "Personal Pathway",
@@ -222,7 +222,7 @@ export const translations = {
     nav: {
       personal: "Pribadi",
       team: "Tim",
-      resources: "Perpustakaan",
+      resources: "Perpustakaan Konten",
       login: "Masuk",
       cta: "Mulai",
       personalFull: "Jalur Pribadi",
@@ -439,7 +439,7 @@ export const translations = {
     nav: {
       personal: "Persoonlijk",
       team: "Team",
-      resources: "Bibliotheek",
+      resources: "Contentbibliotheek",
       login: "Inloggen",
       cta: "Begin",
       personalFull: "Persoonlijk Traject",

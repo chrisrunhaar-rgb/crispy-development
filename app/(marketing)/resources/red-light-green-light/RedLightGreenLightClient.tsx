@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -286,11 +286,11 @@ export default function RedLightGreenLightClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Add to Dashboard", "Tambah ke Dasbor", "Toevoegen aan Dashboard")}
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ✓ {t("Saved to Dashboard", "Disimpan ke Dasbor", "Opgeslagen in Dashboard")}
+                ✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
               </span>
             )}
           </div>
@@ -528,7 +528,7 @@ export default function RedLightGreenLightClient({
                         disabled={isSavingScore}
                         style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "12px 28px", borderRadius: 6, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
                       >
-                        {isSavingScore ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save Score to Dashboard", "Simpan Skor ke Dasbor", "Score Opslaan in Dashboard")}
+                        {isSavingScore ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save Score to Dashboard", "Simpan Skor ke Dashboard", "Score Opslaan in Dashboard")}
                       </button>
                     ) : (
                       <span style={{ display: "flex", alignItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWeight: 700, fontSize: 13 }}>✓ {t("Score Saved", "Skor Disimpan", "Score Opgeslagen")}</span>
@@ -596,7 +596,7 @@ export default function RedLightGreenLightClient({
           </h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen")}
+              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
             </Link>
           </div>
         </div>

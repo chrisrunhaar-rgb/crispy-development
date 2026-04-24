@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -180,7 +180,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
           cursor: saved ? "default" : "pointer",
         }}>
-          {saved ? t("✓ Saved", "✓ Tersimpan", "✓ Opgeslagen") : t("Save to Dashboard", "Simpan ke Dasbor", "Opslaan")}
+          {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
         </button>
       </div>
 
@@ -455,7 +455,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
             color: navy, textDecoration: "none", letterSpacing: "0.08em",
             padding: "12px 28px", border: `2px solid ${navy}`, borderRadius: 6, display: "inline-block",
           }}>
-            {t("← Back to Resources", "← Kembali ke Sumber Daya", "← Terug naar Bronnen")}
+            {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
           </Link>
         </div>
       </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -282,10 +282,10 @@ export default function OvercomingProcrastinationClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Add to Dashboard", "Tambah ke Dasbor", "Toevoegen aan Dashboard", lang)}
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>✓ {t("Saved to Dashboard", "Tersimpan di Dasbor", "Opgeslagen op Dashboard", lang)}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>✓ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
             )}
           </div>
         </div>
@@ -509,7 +509,7 @@ export default function OvercomingProcrastinationClient({
           <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: "oklch(75% 0.05 80)", lineHeight: 1.6, margin: "0 0 40px" }}>&ldquo;The time for action is now. It&apos;s never too late to do something.&rdquo;<br /><span style={{ fontSize: 14, fontStyle: "normal", color: "oklch(60% 0.06 260)", fontFamily: "Montserrat, sans-serif" }}>— Antoine de Saint-Exupéry</span></p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>
-              {t("Browse All Resources", "Jelajahi Semua Sumber Daya", "Bekijk Alle Bronnen", lang)}
+              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek", lang)}
             </Link>
           </div>
         </div>
