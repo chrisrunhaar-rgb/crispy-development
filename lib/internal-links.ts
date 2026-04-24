@@ -175,7 +175,7 @@ export const internalLinkMap: Record<string, LinkedResource[]> = {
   ],
   'raising-next-generation': [
     { slug: 'servant-leadership', title: 'Servant Leadership', reason: 'Develop others through servant-hearted investment' },
-    { slug: 'coaching-culture', title: 'Team Health', reason: 'Build teams that develop next-gen leaders' },
+    { slug: 'team-health', title: 'Team Health', reason: 'Build teams that develop next-gen leaders' },
     { slug: 'vision-casting', title: 'Vision Casting', reason: 'Cast a vision that inspires the next generation' },
   ],
   'team-health': [

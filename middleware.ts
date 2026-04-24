@@ -66,17 +66,11 @@ export async function middleware(request: NextRequest) {
   // Protect /admin — only Chris's admin account (world-outreach.com)
   const ADMIN_USER_ID = "c8526fd3-ab76-4514-ad0c-2310e37c5053";
   if (request.nextUrl.pathname.startsWith("/admin")) {
-    console.log("[ADMIN DEBUG] pathname:", request.nextUrl.pathname);
-    console.log("[ADMIN DEBUG] user:", user ? { id: user.id, email: user.email } : null);
-    console.log("[ADMIN DEBUG] expected ID:", ADMIN_USER_ID);
-    console.log("[ADMIN DEBUG] id match:", user?.id === ADMIN_USER_ID);
     if (!user || user.id !== ADMIN_USER_ID) {
-      console.log("[ADMIN DEBUG] REDIRECTING — reason:", !user ? "no user" : `wrong id (got ${user.id})`);
       const homeUrl = request.nextUrl.clone();
       homeUrl.pathname = "/";
       return NextResponse.redirect(homeUrl);
     }
-    console.log("[ADMIN DEBUG] ALLOWING access");
   }
 
   // Gate individual resource pages — only 4 are free
