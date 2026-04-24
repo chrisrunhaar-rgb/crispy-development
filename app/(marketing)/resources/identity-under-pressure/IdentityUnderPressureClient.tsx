@@ -306,7 +306,7 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("Identity Under Pressure", "Identitas di Bawah Tekanan", "Identiteit Onder Druk", lang)}
           </h1>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, fontStyle: "italic", marginBottom: 32, maxWidth: 580, margin: "0 auto 32px" }}>
+          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 32px" }}>
             {t(
               "Maintaining a grounded sense of self when living and leading between worlds.",
               "Mempertahankan rasa diri yang membumi ketika hidup dan memimpin di antara dua dunia.",

@@ -337,12 +337,6 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
           {/* lang toggle */}
 
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
-              {t("Leadership Framework", "Kerangka Kepemimpinan", "Leiderschapskader")}
-            </span>
-          </div>
-
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
           </p>

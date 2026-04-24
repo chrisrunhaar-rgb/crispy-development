@@ -321,13 +321,11 @@ export default function EmotionalSafetyFamiliesClient({
           <p
             style={{
               fontFamily: serif,
-              fontSize: "clamp(19px, 2.4vw, 24px)",
+              fontSize: "clamp(16px, 2vw, 19px)",
               color: "oklch(82% 0.025 80)",
-              lineHeight: 1.8,
-              marginBottom: 16,
-              fontStyle: "italic",
-              maxWidth: 600,
-              margin: "0 auto 16px",
+              lineHeight: 1.65,
+              maxWidth: 580,
+              margin: "0 0 16px",
             }}
           >
             {t(
@@ -339,13 +337,11 @@ export default function EmotionalSafetyFamiliesClient({
           <p
             style={{
               fontFamily: serif,
-              fontSize: "clamp(22px, 2.8vw, 30px)",
+              fontSize: "clamp(16px, 2vw, 19px)",
               color: offWhite,
-              lineHeight: 1.6,
-              marginBottom: 48,
-              fontStyle: "italic",
-              maxWidth: 600,
-              margin: "0 auto 48px",
+              lineHeight: 1.65,
+              maxWidth: 580,
+              margin: "0 0 48px",
               fontWeight: 700,
             }}
           >
@@ -362,18 +358,14 @@ export default function EmotionalSafetyFamiliesClient({
               onClick={handleSave}
               disabled={saved || isPending}
               style={{
-                padding: "12px 28px",
-                border: "none",
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                fontWeight: 700,
-                background: saved ? "oklch(35% 0.05 260)" : orange,
-                color: offWhite,
-                letterSpacing: "0.04em",
-                borderRadius: 4,
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: saved ? "oklch(35% 0.08 260)" : "transparent",
+                color: "oklch(75% 0.04 260)",
+                padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14,
+                border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
               }}
             >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved
                 ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}

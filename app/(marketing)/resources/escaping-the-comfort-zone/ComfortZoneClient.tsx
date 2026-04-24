@@ -157,15 +157,6 @@ export default function ComfortZoneClient({
       }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-            ← Content Library
-          </Link>
-
-
-          <span className="pathway-badge" style={{ background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", marginBottom: "1.25rem", display: "inline-flex" }}>
-            {t("Personal Growth", "Pertumbuhan Pribadi", "Persoonlijke Groei", lang)}
-          </span>
-
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Personal Development · Worksheet", "Pengembangan Pribadi · Lembar Kerja", "Persoonlijke Ontwikkeling · Werkblad", lang)}
           </p>
@@ -176,7 +167,7 @@ export default function ComfortZoneClient({
               ? <>{`Keluar dari`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Zona Nyaman.</span></>
               : <>{`Ontsnappen aan de`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Comfortzone.</span></>}
           </h1>
-          <p className="t-tagline" style={{ color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {t(
               "Identify where your comfort zone ends and growth begins. Fear and personal growth go hand in hand — the discomfort you feel is the signal.",
               "Identifikasi di mana batas zona nyamanmu dan pertumbuhan dimulai. Ketakutan dan pertumbuhan pribadi berjalan beriringan — ketidaknyamanan yang kamu rasakan adalah sinyal itu.",

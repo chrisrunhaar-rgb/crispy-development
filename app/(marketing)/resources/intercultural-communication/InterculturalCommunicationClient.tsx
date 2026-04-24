@@ -219,7 +219,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Intercultural Communication", "Komunikasi Antarbudaya", "Interculturele Communicatie")}
           </h1>
-          <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 26px)", color: "oklch(85% 0.03 80)", maxWidth: 620, margin: "0 auto 16px", lineHeight: 1.6, fontStyle: "italic" }}>
+          <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 16px", lineHeight: 1.65 }}>
             {t(
               '"The biggest problem in communication is the illusion that it has taken place."',
               '"Masalah terbesar dalam komunikasi adalah ilusi bahwa komunikasi telah terjadi."',
@@ -228,7 +228,8 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           </p>
           <p style={{ color: "oklch(65% 0.05 260)", fontSize: 13, marginBottom: 36, fontStyle: "italic" }}>— George Bernard Shaw</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "13px 30px", borderRadius: 6, border: "none", cursor: saved ? "default" : "pointer", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, background: saved ? "oklch(45% 0.08 260)" : orange, color: offWhite }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>

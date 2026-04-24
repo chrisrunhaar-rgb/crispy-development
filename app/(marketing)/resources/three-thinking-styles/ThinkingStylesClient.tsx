@@ -366,27 +366,17 @@ export default function ThinkingStylesClient({
         </div>
 
         <div className="container-wide" style={{ position: "relative" }}>
-          {/* Breadcrumb */}
-          <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-            ← Content Library
-          </Link>
-
-          {/* Lang toggle */}
-
-          <span className="pathway-badge" style={{ background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", marginBottom: "1.25rem", display: "inline-flex" }}>
-            {tr("Cross-Cultural Leadership", "Kepemimpinan Lintas Budaya", "Intercultureel Leiderschap")}
-          </span>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {tr("Thinking Tools · Assessment", "Alat Berpikir · Penilaian", "Denktools · Beoordeling")}
           </p>
-          <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "14ch" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "14ch" }}>
             {lang === "en"
               ? <>Three<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Thinking Styles.</span></>
               : lang === "id"
               ? <>Tiga<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Gaya Berpikir.</span></>
               : <>Drie<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Denkstijlen.</span></>}
           </h1>
-          <p className="t-tagline" style={{ color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
               <>When leaders understand thinking patterns, they stop taking differences personally. &ldquo;Why are they so difficult?&rdquo; becomes &ldquo;How are they processing this differently?&rdquo;</> as unknown as string,
               <>Ketika pemimpin memahami pola-pola berpikir, mereka berhenti memandang perbedaan secara pribadi. &ldquo;Mengapa mereka begitu sulit?&rdquo; berubah menjadi &ldquo;Bagaimana mereka memproses hal ini secara berbeda?&rdquo;</> as unknown as string,
@@ -421,18 +411,14 @@ export default function ThinkingStylesClient({
                   onClick={handleSave}
                   disabled={isPending}
                   style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.06em",
-                    color: "oklch(97% 0.005 80)",
-                    background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)",
-                    border: "none",
-                    padding: "0.625rem 1.25rem",
-                    cursor: isPending ? "wait" : "pointer",
-                    transition: "background 0.15s",
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    background: "transparent",
+                    color: "oklch(75% 0.04 260)",
+                    padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14,
+                    border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer",
                   }}
                 >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                   {isPending
                     ? tr("Saving…", "Menyimpan…", "Opslaan…")
                     : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
