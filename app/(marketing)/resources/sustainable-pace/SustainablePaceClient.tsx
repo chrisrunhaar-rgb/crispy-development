@@ -549,16 +549,6 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                 ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-            <Link
-              href="/resources"
-              style={{
-                padding: "12px 28px", border: "1px solid oklch(45% 0.05 260)",
-                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
-                color: "oklch(78% 0.03 80)", textDecoration: "none", borderRadius: 4,
-              }}
-            >
-              {t("All Resources", "Semua Sumber", "Alle Bronnen")}
-            </Link>
           </div>
         </div>
       </section>
@@ -1286,18 +1276,6 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                 {t("Back to Pathway", "Kembali ke Jalur", "Terug naar Pad")}
               </Link>
             )}
-            <Link
-              href="/resources"
-              style={{
-                padding: "14px 32px", background: "transparent",
-                color: bodyText, border: `1.5px solid oklch(85% 0.008 80)`,
-                borderRadius: 4, fontFamily: "Montserrat, sans-serif",
-                fontWeight: 600, fontSize: 13, textDecoration: "none",
-                letterSpacing: "0.04em",
-              }}
-            >
-              {t("All Resources", "Semua Sumber", "Alle Bronnen")}
-            </Link>
           </div>
         </div>
       </section>

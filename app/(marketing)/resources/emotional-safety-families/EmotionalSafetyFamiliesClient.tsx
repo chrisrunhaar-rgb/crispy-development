@@ -379,21 +379,6 @@ export default function EmotionalSafetyFamiliesClient({
                 ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard")
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-            <Link
-              href="/resources"
-              style={{
-                padding: "12px 28px",
-                border: "1px solid oklch(45% 0.05 260)",
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                fontWeight: 600,
-                color: "oklch(78% 0.03 80)",
-                textDecoration: "none",
-                borderRadius: 4,
-              }}
-            >
-              {t("All Resources", "Semua Sumber", "Alle Bronnen")}
-            </Link>
           </div>
         </div>
       </div>

@@ -247,12 +247,6 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             >
               {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-            <Link
-              href="/resources"
-              style={{ padding: "13px 30px", borderRadius: 6, border: "1px solid oklch(45% 0.05 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: offWhite, textDecoration: "none" }}
-            >
-              {t("All Resources", "Semua Sumber", "Alle Bronnen")}
-            </Link>
           </div>
         </div>
       </div>

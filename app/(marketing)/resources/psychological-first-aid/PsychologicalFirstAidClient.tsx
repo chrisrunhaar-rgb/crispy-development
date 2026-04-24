@@ -716,9 +716,6 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
                 {t("Back to Pathway", "Kembali ke Jalur", "Terug naar Pad", lang)}
               </Link>
             )}
-            <Link href="/resources" style={{ padding: "14px 32px", background: "transparent", color: offWhite, border: `1.5px solid oklch(50% 0.06 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", letterSpacing: "0.06em" }}>
-              {t("All Resources", "Semua Sumber", "Alle Bronnen", lang)}
-            </Link>
           </div>
         </div>
       </section>
