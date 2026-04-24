@@ -240,12 +240,6 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
           {/* lang toggle */}
 
-          <div style={{ marginBottom: 20 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
-              {tr("Training Design", "Desain Pelatihan", "Trainingsontwerp")}
-            </span>
-          </div>
-
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {tr("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
           </p>

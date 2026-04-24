@@ -255,9 +255,7 @@ export default function OvercomingProcrastinationClient({
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ marginBottom: 32 }}>
-            <Link href="/resources" style={{ fontSize: 13, color: "oklch(65% 0.08 260)", textDecoration: "none", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>← {t("All Resources", "Semua Sumber Daya", "Alle Bronnen", lang)}</Link>
-          </div>
+
           <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.12)", padding: "4px 10px", borderRadius: 4 }}>{t("Guide", "Panduan", "Gids", lang)}</span>
             
