@@ -1,8 +1,7 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
-import { getResourceMetadata } from "@/config/seo-metadata";
-import { generateBreadcrumbSchema } from "@/lib/seo-utils";
+import { generateBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ConflictResolutionClient from "./ConflictResolutionClient";
@@ -10,12 +9,8 @@ import ConflictResolutionClient from "./ConflictResolutionClient";
 export const dynamic = "force-dynamic";
 
 const RESOURCE_SLUG = "conflict-resolution";
-const resourceMeta = getResourceMetadata(RESOURCE_SLUG);
 
-export const metadata: Metadata = {
-  title: resourceMeta.title,
-  description: resourceMeta.description,
-};
+export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 
 export default async function ResourcePage(props: any) {
   const supabase = await createClient();
