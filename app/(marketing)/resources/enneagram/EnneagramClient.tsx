@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
 import EnneagramTypesGrid from "./EnneagramTypesGrid";
 import TypeCard from "./TypeCard";
@@ -891,7 +892,8 @@ export default function EnneagramClient({
   savedType: number | null;
   savedScores: Record<string, number> | null;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const t = (obj: T3) => tFn(obj, lang);
   const [quizState, setQuizState] = useState<QuizState>(
     savedType && savedScores ? "done" : "idle"

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
 
@@ -418,7 +419,8 @@ export default function DiscClient({
   discResult: string | null;
   discScores: { D: number; I: number; S: number; C: number } | null;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [quizState, setQuizState] = useState<QuizState>(
     discResult && discScores ? "done" : "idle"
   );

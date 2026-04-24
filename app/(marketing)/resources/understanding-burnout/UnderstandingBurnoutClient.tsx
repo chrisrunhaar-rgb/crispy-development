@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 
@@ -200,7 +201,8 @@ const THREE_PS = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function UnderstandingBurnoutClient({ userPathway, isSaved: initialSaved }: Props) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<BurnoutType | null>(null);
   const [openP, setOpenP] = useState<string | null>(null);

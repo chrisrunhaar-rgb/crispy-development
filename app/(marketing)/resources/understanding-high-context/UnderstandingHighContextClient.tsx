@@ -1,5 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 
@@ -358,7 +359,8 @@ const ASSESSMENT_QUESTIONS = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function UnderstandingHighContextClient({ userPathway, isSaved: initialSaved }: Props) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeDimension, setActiveDimension] = useState<number>(0);
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [assessmentAnswers, setAssessmentAnswers] = useState<Record<number, string>>({});

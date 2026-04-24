@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -303,7 +304,8 @@ const REFLECTION = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function LeadershipAltitudesClient({ userPathway, isSaved: initialSaved }: Props) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [activeAltitude, setActiveAltitude] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -129,7 +130,8 @@ export default function ComfortZoneClient({
   userPathway: string | null;
   isSaved: boolean;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(isSavedProp);
   const [isPending, startTransition] = useTransition();
   const showAddToDashboard = userPathway !== null;

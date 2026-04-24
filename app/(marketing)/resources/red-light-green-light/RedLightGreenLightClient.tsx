@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveRLGLScore } from "../actions";
 
@@ -195,7 +196,8 @@ export default function RedLightGreenLightClient({
   isSaved: boolean;
   savedScore?: number | null;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activePhase, setActivePhase] = useState<"green" | "red">("green");
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();

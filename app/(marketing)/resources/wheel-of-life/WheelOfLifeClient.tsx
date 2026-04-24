@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition, useRef, useCallback } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveWheelScores } from "../actions";
 
@@ -232,7 +233,8 @@ export default function WheelOfLifeClient({
   isSaved: boolean;
   savedScores?: Record<string, number> | null;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [scores, setScores] = useState<Record<string, number>>(savedScores ?? DEFAULT_SCORES);
   const [saved, setSaved] = useState(isSaved);
   const [scoresSaved, setScoresSaved] = useState(!!savedScores);

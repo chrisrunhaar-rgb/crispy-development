@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveSmartGoal } from "../actions";
 
@@ -296,7 +297,8 @@ export default function SmartGoalsClient({
   isSaved: boolean;
   savedGoal?: Record<string, string> | null;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeLetter, setActiveLetter] = useState<number | null>(0);
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();

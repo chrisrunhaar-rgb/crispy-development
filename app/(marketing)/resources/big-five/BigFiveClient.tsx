@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveBigFiveResult } from "../actions";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
@@ -669,7 +670,8 @@ export default function BigFiveClient({
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedScores);
   const [isPending, startTransition] = useTransition();
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
 
   const t = UI[lang];
 

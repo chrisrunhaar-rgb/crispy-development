@@ -1,5 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
@@ -191,7 +192,8 @@ const reflectionQuestions = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function PowerDistanceClient({ userPathway, isSaved: initialSaved }: Props) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openPoint, setOpenPoint] = useState<number | null>(null);

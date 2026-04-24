@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 
@@ -294,7 +295,8 @@ export default function LadderOfInferenceClient({
   userPathway: string | null;
   isSaved: boolean;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   // Start at bottom (Observations = rung 0), climb up to Actions (rung 6)
   const [activeRung, setActiveRung] = useState<number>(0);
   const [saved, setSaved] = useState(isSaved);

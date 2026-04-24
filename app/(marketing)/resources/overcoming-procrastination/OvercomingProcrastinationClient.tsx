@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 
@@ -227,7 +228,8 @@ export default function OvercomingProcrastinationClient({
   userPathway: string | null;
   isSaved: boolean;
 }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang: _ctxLang, setLang } = useLanguage();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeRootCause, setActiveRootCause] = useState<number | null>(null);
   const [activeTechnique, setActiveTechnique] = useState<number | null>(0);
   const [saved, setSaved] = useState(isSaved);
