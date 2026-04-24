@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 // 60 questions, 15 per dichotomy.
@@ -376,6 +377,7 @@ export default function Personalities16Client({
   if (quizState === "idle") {
     return (
       <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
           .p16-btn { transition: all 0.18s ease; cursor: pointer; }
@@ -386,8 +388,8 @@ export default function Personalities16Client({
 
         <div style={{ background: "oklch(20% 0.18 260)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(72% 0.12 260)", marginBottom: 20 }}>
-              Personality Assessment
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+              Personal Development · Assessment
             </p>
             <h1 style={{ fontFamily: "'Libre Baskerville', Georgia, serif", fontSize: "clamp(34px, 5vw, 54px)", fontWeight: 400, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.01em" }}>
               16 Personalities
@@ -504,6 +506,7 @@ export default function Personalities16Client({
 
     return (
       <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Outfit:wght@400;500;600&display=swap');
           .scale-btn16 { transition: all 0.15s ease; cursor: pointer; border: 2px solid oklch(88% 0.04 260); background: white; border-radius: 10px; padding: 14px 8px; }
@@ -551,6 +554,7 @@ export default function Personalities16Client({
 
   return (
     <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+      <LangToggle />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
         .bar16 { transition: width 1s cubic-bezier(0.4,0,0.2,1); }

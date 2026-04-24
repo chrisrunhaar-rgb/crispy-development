@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -225,7 +226,7 @@ const PLANNER_PROMPTS = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function HealthyTransitionsClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -273,31 +274,15 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* Language bar */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button
-            key={l}
-            onClick={() => setLang(l)}
-            style={{
-              padding: "4px 14px", border: "none", cursor: "pointer",
-              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
-              background: lang === l ? navy : "transparent",
-              color: lang === l ? offWhite : bodyText,
-              borderRadius: 3,
-            }}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Cross-Cultural Leadership · Personal Development", "Kepemimpinan Lintas Budaya · Pengembangan Diri", "Intercultureel Leiderschap · Persoonlijke Ontwikkeling")}
+            {t("Personal Development · Guide", "Pengembangan Pribadi · Panduan", "Persoonlijke Ontwikkeling · Gids")}
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(36px, 5.5vw, 64px)", fontWeight: 700, color: offWhite, margin: "0 auto 32px", lineHeight: 1.15, fontStyle: "italic" }}>
             {t("Healthy Transitions", "Transisi yang Sehat", "Gezonde Transities")}

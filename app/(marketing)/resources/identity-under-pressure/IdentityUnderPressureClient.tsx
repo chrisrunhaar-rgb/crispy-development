@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const t = (en: string, id: string, nl: string, lang: Lang) =>
@@ -263,7 +264,7 @@ const RECOMMENDATIONS: Record<AnchorKey, { en: string; id: string; nl: string }>
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function IdentityUnderPressureClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [openAnchor, setOpenAnchor] = useState<AnchorKey | null>(null);
@@ -291,27 +292,16 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", color: bodyText, background: offWhite }}>
+      <LangToggle />
 
       {/* LANGUAGE TOGGLE */}
-      <div style={{ position: "sticky", top: 0, zIndex: 50, background: navy, padding: "10px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: "oklch(75% 0.04 260)", textTransform: "uppercase" }}>
-          {t("Faith & Calling", "Iman & Panggilan", "Geloof & Roeping", lang)}
-        </span>
-        <div style={{ display: "flex", gap: 6 }}>
-          {(["en", "id", "nl"] as Lang[]).map(l => (
-            <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 12px", borderRadius: 4, border: "1px solid", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", cursor: "pointer", background: lang === l ? orange : "transparent", color: lang === l ? "white" : "oklch(65% 0.06 260)", borderColor: lang === l ? orange : "oklch(42% 0.08 260)", textTransform: "uppercase" }}>
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* HERO */}
       <section style={{ background: navy, padding: "80px 24px 64px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 0%, oklch(32% 0.12 300 / 0.4) 0%, transparent 65%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
-            {t("Faith & Calling", "Iman & Panggilan", "Geloof & Roeping", lang)}
+            {t("Faith & Calling · Article", "Iman & Panggilan · Artikel", "Geloof & Roeping · Artikel", lang)}
           </p>
           <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, color: offWhite, lineHeight: 1.1, marginBottom: 20 }}>
             {t("Identity Under Pressure", "Identitas di Bawah Tekanan", "Identiteit Onder Druk", lang)}

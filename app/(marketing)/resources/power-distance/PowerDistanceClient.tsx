@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -192,7 +193,7 @@ const reflectionQuestions = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function PowerDistanceClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -215,19 +216,9 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
 
   return (
     <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* ─── LANG SWITCHER ──────────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button
-            key={l}
-            onClick={() => setLang(l)}
-            style={{ padding: "4px 14px", borderRadius: 4, border: "none", cursor: "pointer", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 600, background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText, transition: "all 0.15s ease" }}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* ─── HERO ───────────────────────────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
@@ -235,7 +226,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto", textAlign: "center" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Cultural Dimensions", "Dimensi Budaya", "Culturele Dimensies")}
+            {t("Cross-Cultural · Guide", "Lintas Budaya · Panduan", "Cross-Cultureel · Gids")}
           </p>
           <h1 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(34px, 5.5vw, 58px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 780, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
             {t("Power Distance", "Jarak Kekuasaan", "Machtafstand")}

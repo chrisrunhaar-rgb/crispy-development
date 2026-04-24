@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -220,7 +221,7 @@ function getProfile(answers: Record<number, ChoiceKey>): ProfileKey {
 
 type Props = { userPathway: string | null; isSaved: boolean };
 export default function DecisionMakingClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -270,21 +271,10 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
 
   return (
     <div style={{ minHeight: "100vh", background: offWhite, fontFamily: "Montserrat, sans-serif" }}>
+      <LangToggle />
 
       {/* Language + Save bar */}
       <div style={{ background: navy, padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-        <div style={{ display: "flex", gap: 8 }}>
-          {(["en", "id", "nl"] as Lang[]).map(l => (
-            <button key={l} onClick={() => setLang(l)} style={{
-              padding: "6px 16px", border: "none", borderRadius: 4, cursor: "pointer",
-              fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em",
-              background: lang === l ? orange : "transparent",
-              color: lang === l ? offWhite : "oklch(70% 0.04 260)",
-            }}>
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
         <button onClick={() => {
           startTransition(async () => {
             await saveResourceToDashboard("decision-making");
@@ -304,7 +294,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
       {/* Hero */}
       <div style={{ background: navy, padding: "64px 24px 80px", textAlign: "center" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, marginBottom: 20, textTransform: "uppercase" }}>
-          {t("Module 12 · Decision Making", "Modul 12 · Pengambilan Keputusan", "Module 12 · Besluitvorming")}
+          {t("Thinking Tools · Guide", "Alat Berpikir · Panduan", "Denktools · Gids")}
         </p>
         <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 70px)", fontWeight: 600, color: offWhite, margin: "0 auto 20px", maxWidth: 700, lineHeight: 1.15 }}>
           {t("The Decision Under Pressure", "Keputusan di Bawah Tekanan", "De Beslissing onder Druk")}

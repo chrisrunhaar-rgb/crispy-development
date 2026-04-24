@@ -3,6 +3,7 @@ import { useState, useTransition, useMemo } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -517,7 +518,7 @@ const reflectionQuestions = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function CognitiveBiasesClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -552,19 +553,13 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
       {/* Lang bar */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 14px", borderRadius: 4, border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText }}>
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
         <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Self-Leadership", "Kepemimpinan Diri", "Zelfleiderschap")}
+          {t("Thinking Tools · Guide", "Alat Berpikir · Panduan", "Denktools · Gids")}
         </p>
         <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 760, lineHeight: 1.15 }}>
           {t("Cognitive Biases in Leadership", "Bias Kognitif dalam Kepemimpinan", "Cognitieve Biases in Leiderschap")}

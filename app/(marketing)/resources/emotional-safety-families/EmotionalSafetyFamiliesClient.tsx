@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -214,7 +215,7 @@ export default function EmotionalSafetyFamiliesClient({
   userPathway,
   isSaved: initialSaved,
 }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -276,37 +277,8 @@ export default function EmotionalSafetyFamiliesClient({
     <div
       style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}
     >
+      <LangToggle />
       {/* Language bar */}
-      <div
-        style={{
-          background: lightGray,
-          borderBottom: "1px solid oklch(90% 0.01 80)",
-          padding: "10px 24px",
-          display: "flex",
-          gap: 8,
-          justifyContent: "flex-end",
-        }}
-      >
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button
-            key={l}
-            onClick={() => setLang(l)}
-            style={{
-              padding: "4px 14px",
-              border: "none",
-              cursor: "pointer",
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 13,
-              fontWeight: 600,
-              background: lang === l ? navy : "transparent",
-              color: lang === l ? offWhite : bodyText,
-              borderRadius: 3,
-            }}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "96px 24px 88px" }}>

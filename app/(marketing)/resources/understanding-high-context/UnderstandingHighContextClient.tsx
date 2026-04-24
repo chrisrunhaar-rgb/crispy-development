@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -359,7 +360,7 @@ const ASSESSMENT_QUESTIONS = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function UnderstandingHighContextClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [activeDimension, setActiveDimension] = useState<number>(0);
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
@@ -453,6 +454,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
 
   return (
     <div style={{ background: offWhite, minHeight: "100vh", fontFamily: "Montserrat, sans-serif", color: bodyText }}>
+      <LangToggle />
 
       {/* ── Language Toggle ─────────────────────────────────────────────── */}
       <div style={{
@@ -471,29 +473,6 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
           {t("Resources", "Sumber Daya", "Bronnen")}
         </Link>
-        <div style={{ display: "flex", gap: 4 }}>
-          {(["en", "id", "nl"] as Lang[]).map(l => (
-            <button
-              key={l}
-              onClick={() => setLang(l)}
-              style={{
-                padding: "6px 14px",
-                borderRadius: 6,
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: "0.06em",
-                background: lang === l ? navy : "transparent",
-                color: lang === l ? offWhite : bodyText,
-                transition: "all 0.15s",
-              }}
-            >
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
         <button
           onClick={handleSave}
           disabled={saved || isPending}
@@ -534,7 +513,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           color: orange,
           marginBottom: 24,
         }}>
-          {t("Cross-Cultural Leadership", "Kepemimpinan Lintas Budaya", "Intercultureel Leiderschap")}
+          {t("Cross-Cultural · Article", "Lintas Budaya · Artikel", "Cross-Cultureel · Artikel")}
         </div>
         <h1 style={{
           fontFamily: "Cormorant Garamond, Georgia, serif",

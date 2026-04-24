@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 
@@ -149,7 +150,7 @@ export default function AboveBelowClient({
   userPathway: string | null;
   isSaved: boolean;
 }) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
@@ -163,22 +164,18 @@ export default function AboveBelowClient({
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 260)", minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-            <Link href="/resources" style={{ fontSize: 13, color: "oklch(65% 0.08 260)", textDecoration: "none", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>← {t("All Resources", "Semua Sumber Daya", "Alle Bronnen", lang)}</Link>
-            <div style={{ display: "flex", gap: 8 }}>
-              {(["en", "id", "nl"] as Lang[]).map(l => (
-                <button key={l} onClick={() => setLang(l)} style={{ padding: "5px 14px", borderRadius: 4, border: "1px solid", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", cursor: "pointer", background: lang === l ? "oklch(65% 0.15 45)" : "transparent", color: lang === l ? "oklch(15% 0.05 45)" : "oklch(65% 0.06 260)", borderColor: lang === l ? "oklch(65% 0.15 45)" : "oklch(42% 0.08 260)" }}>{l.toUpperCase()}</button>
-              ))}
-            </div>
-          </div>
           <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.12)", padding: "4px 10px", borderRadius: 4 }}>Guide</span>
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(72% 0.05 260)", background: "oklch(55% 0.05 260 / 0.20)", padding: "4px 10px", borderRadius: 4 }}>EN · ID · NL</span>
+            
           </div>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids", lang)}
+          </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px", lineHeight: 1.1 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>{t(
             "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns — blame, excuse, denial — and choose ownership, accountability, and responsibility instead.",

@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -288,7 +289,7 @@ type Props = { userPathway: string | null; isSaved: boolean };
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -331,15 +332,9 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* Language bar */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end", position: "sticky", top: 0, zIndex: 100 }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 14px", border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText, borderRadius: 3 }}>
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* Slow reading notice */}
       <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>

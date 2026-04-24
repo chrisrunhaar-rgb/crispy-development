@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
 import EnneagramTypesGrid from "./EnneagramTypesGrid";
 import TypeCard from "./TypeCard";
+import LangToggle from "@/components/LangToggle";
 
 // ── LANGUAGE ──────────────────────────────────────────────────────────────────
 type Lang = "en" | "id" | "nl";
@@ -892,7 +893,7 @@ export default function EnneagramClient({
   savedType: number | null;
   savedScores: Record<string, number> | null;
 }) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const t = (obj: T3) => tFn(obj, lang);
   const [quizState, setQuizState] = useState<QuizState>(
@@ -983,27 +984,8 @@ export default function EnneagramClient({
 
   return (
     <>
+      <LangToggle />
       {/* ── LANGUAGE TOGGLE ── */}
-      <div style={{ display: "flex", justifyContent: "flex-end", padding: "0.75rem 2rem 0", maxWidth: "760px", margin: "0 auto" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button
-            key={l}
-            type="button"
-            onClick={() => setLang(l)}
-            style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700,
-              letterSpacing: "0.12em", textTransform: "uppercase",
-              background: lang === l ? "oklch(65% 0.15 45)" : "transparent",
-              color: lang === l ? "white" : "oklch(55% 0.008 260)",
-              border: "1px solid " + (lang === l ? "oklch(65% 0.15 45)" : "oklch(78% 0.006 260)"),
-              padding: "0.3rem 0.65rem", cursor: "pointer",
-              marginLeft: l === "en" ? 0 : "0.375rem",
-            }}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* ── HERO ── */}
       <div style={{

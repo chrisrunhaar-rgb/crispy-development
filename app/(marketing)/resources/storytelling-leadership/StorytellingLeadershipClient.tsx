@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -94,7 +95,7 @@ const REFLECTIONS = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function StorytellingLeadershipClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -123,22 +124,14 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* Language toggle */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{
-            padding: "4px 14px", borderRadius: 4, border: "none", cursor: "pointer",
-            fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
-            background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText,
-          }}>{l.toUpperCase()}</button>
-        ))}
-      </div>
 
       {/* Hero */}
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "80px 24px 56px" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
-          {t("Resource · Storytelling for Leaders", "Sumber · Bercerita untuk Pemimpin", "Resource · Vertellen voor Leiders")}
+          {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
         </p>
         <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(44px, 6vw, 72px)", fontWeight: 600, color: navy, lineHeight: 1.1, margin: "0 0 28px" }}>
           {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}

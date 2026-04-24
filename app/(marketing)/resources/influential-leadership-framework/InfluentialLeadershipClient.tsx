@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -311,7 +312,7 @@ export default function InfluentialLeadershipClient({
   userPathway,
   isSaved: initialSaved,
 }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -366,41 +367,9 @@ export default function InfluentialLeadershipClient({
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* ── LANGUAGE TOGGLE ──────────────────────────────────────────────── */}
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          background: lightGray,
-          borderBottom: "1px solid oklch(90% 0.01 80)",
-          padding: "10px 24px",
-          display: "flex",
-          gap: 8,
-          justifyContent: "flex-end",
-        }}
-      >
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button
-            key={l}
-            onClick={() => setLang(l)}
-            style={{
-              padding: "4px 14px",
-              borderRadius: 4,
-              border: "none",
-              cursor: "pointer",
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 13,
-              fontWeight: 600,
-              background: lang === l ? navy : "transparent",
-              color: lang === l ? offWhite : bodyText,
-            }}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
@@ -414,7 +383,7 @@ export default function InfluentialLeadershipClient({
             marginBottom: 16,
           }}
         >
-          {t("Leadership", "Kepemimpinan", "Leiderschap")}
+          {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
         </p>
         <h1
           style={{

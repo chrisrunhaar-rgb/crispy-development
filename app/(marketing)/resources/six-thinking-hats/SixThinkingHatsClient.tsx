@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── TYPES ──────────────────────────────────────────────────────────────────────
 
@@ -189,7 +190,7 @@ const USE_CASES = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function SixThinkingHatsClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [activeHat, setActiveHat] = useState<number | null>(null);
@@ -204,19 +205,18 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 80% 30%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
-          <div style={{ display: "flex", gap: 8, marginBottom: 32 }}>
-            {(["en", "id", "nl"] as Lang[]).map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{ padding: "6px 16px", borderRadius: 4, border: "1px solid oklch(60% 0.04 260)", background: lang === l ? "oklch(65% 0.15 45)" : "transparent", color: lang === l ? "oklch(15% 0.05 260)" : "oklch(75% 0.04 260)", fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer" }}>{l.toUpperCase()}</button>
-            ))}
-          </div>
           <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", display: "block", marginBottom: 20 }}>
             {tr("Decision-Making Framework", "Kerangka Pengambilan Keputusan", "Besluitvormingskader")}
           </span>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {tr("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
+          </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
             {tr("Six Thinking Hats", "Enam Topi Berpikir", "Zes Denkhoeden")}
           </h1>

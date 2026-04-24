@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveBigFiveResult } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 // 50 statements (10 per trait). Field `t` = trait key.
@@ -670,7 +671,7 @@ export default function BigFiveClient({
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedScores);
   const [isPending, startTransition] = useTransition();
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
 
   const t = UI[lang];
@@ -728,36 +729,6 @@ export default function BigFiveClient({
     });
   }
 
-  // Language switcher component
-  const LangSwitcher = () => (
-    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 600, color: "oklch(60% 0.08 280)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-        {t.langLabel}
-      </span>
-      {(["en", "id", "nl"] as Lang[]).map(l => (
-        <button
-          key={l}
-          onClick={() => setLang(l)}
-          style={{
-            padding: "4px 10px",
-            borderRadius: 6,
-            border: lang === l ? "2px solid oklch(52% 0.22 280)" : "2px solid oklch(88% 0.04 280)",
-            background: lang === l ? "oklch(52% 0.22 280)" : "white",
-            color: lang === l ? "white" : "oklch(45% 0.08 280)",
-            fontFamily: "'Barlow', sans-serif",
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: "pointer",
-            textTransform: "uppercase",
-            letterSpacing: "0.04em",
-            transition: "all 0.15s ease",
-          }}
-        >
-          {l.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
 
   function pctLabel(pct: number): string {
     if (pct >= 75) return t.pctLabels[4];
@@ -771,6 +742,7 @@ export default function BigFiveClient({
   if (quizState === "idle") {
     return (
       <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Literata', Georgia, serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
           .ocean-btn { transition: all 0.18s ease; cursor: pointer; }
@@ -782,38 +754,9 @@ export default function BigFiveClient({
         {/* Hero */}
         <div style={{ background: "oklch(22% 0.16 280)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
-              <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(80% 0.12 280)", margin: 0 }}>
-                {t.assessmentLabel}
-              </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 600, color: "oklch(70% 0.10 280)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                  {t.langLabel}:
-                </span>
-                {(["en", "id", "nl"] as Lang[]).map(l => (
-                  <button
-                    key={l}
-                    onClick={() => setLang(l)}
-                    style={{
-                      padding: "4px 10px",
-                      borderRadius: 6,
-                      border: lang === l ? "2px solid oklch(78% 0.14 280)" : "2px solid oklch(45% 0.10 280)",
-                      background: lang === l ? "oklch(65% 0.18 280)" : "transparent",
-                      color: lang === l ? "white" : "oklch(70% 0.10 280)",
-                      fontFamily: "'Barlow', sans-serif",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.04em",
-                      transition: "all 0.15s ease",
-                    }}
-                  >
-                    {l.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+              {lang === "en" ? "Personal Development · Assessment" : lang === "id" ? "Pengembangan Pribadi · Penilaian" : "Persoonlijke Ontwikkeling · Beoordeling"}
+            </p>
             <h1 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(36px, 5vw, 58px)", fontWeight: 300, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.02em" }}>
               {t.heroTitle1}<br />
               <em style={{ fontStyle: "italic", fontWeight: 400, color: "oklch(78% 0.14 280)" }}>{t.heroTitleItalic}</em>
@@ -914,6 +857,7 @@ export default function BigFiveClient({
 
     return (
       <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Barlow', sans-serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
           .scale-btn { transition: all 0.15s ease; cursor: pointer; border: 2px solid oklch(88% 0.04 280); background: white; border-radius: 10px; padding: 14px 8px; }
@@ -931,7 +875,6 @@ export default function BigFiveClient({
                 <span style={{ fontSize: 13, fontWeight: 600, color: trait.color }}>
                   {tTrait(trait, "name")}
                 </span>
-                <LangSwitcher />
               </div>
             </div>
             <div style={{ height: 4, background: "oklch(90% 0.04 280)", borderRadius: 4, overflow: "hidden" }}>
@@ -995,6 +938,7 @@ export default function BigFiveClient({
 
   return (
     <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Barlow', sans-serif" }}>
+      <LangToggle />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
         .bar-fill { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
@@ -1004,38 +948,6 @@ export default function BigFiveClient({
       {/* Header */}
       <div style={{ background: "oklch(22% 0.16 280)", color: "white", padding: "56px 24px 48px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(70% 0.12 280)", margin: 0 }}>
-              {t.resultsLabel}
-            </p>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, fontWeight: 600, color: "oklch(70% 0.10 280)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                {t.langLabel}:
-              </span>
-              {(["en", "id", "nl"] as Lang[]).map(l => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  style={{
-                    padding: "4px 10px",
-                    borderRadius: 6,
-                    border: lang === l ? "2px solid oklch(78% 0.14 280)" : "2px solid oklch(45% 0.10 280)",
-                    background: lang === l ? "oklch(65% 0.18 280)" : "transparent",
-                    color: lang === l ? "white" : "oklch(70% 0.10 280)",
-                    fontFamily: "'Barlow', sans-serif",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.04em",
-                    transition: "all 0.15s ease",
-                  }}
-                >
-                  {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
           <h1 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 16 }}>
             {t.resultsTitle}
           </h1>

@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -278,7 +279,7 @@ const PRINCIPLES = [
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function GivingFeedbackClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -318,21 +319,15 @@ export default function GivingFeedbackClient({ userPathway, isSaved: initialSave
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* Language bar */}
-      <div style={{ background: lightGray, borderBottom: "1px solid oklch(90% 0.01 80)", padding: "10px 24px", display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        {(["en", "id", "nl"] as Lang[]).map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{ padding: "4px 14px", border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, background: lang === l ? navy : "transparent", color: lang === l ? offWhite : bodyText, borderRadius: 3 }}>
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Module 10 · Communication", "Modul 10 · Komunikasi", "Module 10 · Communicatie")}
+            {t("Cross-Cultural · Guide", "Lintas Budaya · Panduan", "Cross-Cultureel · Gids")}
           </p>
           <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, color: offWhite, margin: "0 0 24px", lineHeight: 1.15 }}>
             {t("Giving Feedback Across Cultures", "Memberikan Umpan Balik Lintas Budaya", "Feedback Geven over Culturen Heen")}

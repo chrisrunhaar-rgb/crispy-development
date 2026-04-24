@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── TYPES & LANG ──────────────────────────────────────────────────────────────
 type Lang = "en" | "id" | "nl";
@@ -400,7 +401,7 @@ type Props = { userPathway: string | null; isSaved: boolean };
 
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 export default function SustainablePaceClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -439,6 +440,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* ── LANGUAGE BAR ── */}
       <div style={{
@@ -453,24 +455,6 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
         }}>
           {t("Personal Development · Health Architecture", "Pengembangan Pribadi · Arsitektur Kesehatan", "Persoonlijke Ontwikkeling · Gezondheidsarchitectuur")}
         </span>
-        <div style={{ display: "flex", gap: 6 }}>
-          {(["en", "id", "nl"] as Lang[]).map(l => (
-            <button
-              key={l}
-              onClick={() => setLang(l)}
-              style={{
-                padding: "4px 12px", borderRadius: 4, border: "1px solid",
-                fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", cursor: "pointer",
-                background: lang === l ? orange : "transparent",
-                color: lang === l ? "white" : "oklch(65% 0.06 260)",
-                borderColor: lang === l ? orange : "oklch(42% 0.08 260)",
-                textTransform: "uppercase",
-              }}
-            >
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* ── HERO: SURVIVING VS THRIVING ── */}
@@ -485,7 +469,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: orange, fontSize: 11, fontWeight: 700,
             letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 20,
           }}>
-            {t("Sustainable Pace · Health Architecture", "Sustainable Pace · Arsitektur Kesehatan", "Sustainable Pace · Gezondheidsarchitectuur")}
+            {t("Personal Development · Guide", "Pengembangan Pribadi · Panduan", "Persoonlijke Ontwikkeling · Gids")}
           </p>
           <h1 style={{
             fontFamily: serif, fontSize: "clamp(38px, 6vw, 72px)",

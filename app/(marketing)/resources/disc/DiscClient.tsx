@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── ASSESSMENT DATA ─────────────────────────────────────────────────────────────────
 
@@ -419,7 +420,7 @@ export default function DiscClient({
   discResult: string | null;
   discScores: { D: number; I: number; S: number; C: number } | null;
 }) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [quizState, setQuizState] = useState<QuizState>(
     discResult && discScores ? "done" : "idle"
@@ -519,6 +520,7 @@ export default function DiscClient({
 
   return (
     <>
+      <LangToggle />
       {/* ── HERO ── */}
       <section style={{
         background: "oklch(22% 0.10 260)",
@@ -570,25 +572,14 @@ export default function DiscClient({
           </Link>
 
           {/* Lang toggle */}
-          <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.75rem" }}>
-            {(["en", "id", "nl"] as Lang[]).map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{
-                fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em",
-                textTransform: "uppercase", padding: "0.3rem 0.7rem",
-                background: lang === l ? "oklch(65% 0.15 45)" : "transparent",
-                color: lang === l ? "oklch(14% 0.08 260)" : "oklch(60% 0.04 260)",
-                border: "1px solid", borderColor: lang === l ? "oklch(65% 0.15 45)" : "oklch(35% 0.05 260)",
-                cursor: "pointer",
-              }}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
 
           <span className="pathway-badge" style={{ background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", marginBottom: "1.25rem", display: "inline-flex" }}>
             {tr("Cross-Cultural Leadership", "Kepemimpinan Lintas Budaya", "Intercultureel Leiderschap")}
           </span>
 
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {tr("Leadership · Assessment", "Kepemimpinan · Penilaian", "Leiderschap · Beoordeling")}
+          </p>
           <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "18ch" }}>
             {lang === "en"
               ? <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Personality Profile.</span></>

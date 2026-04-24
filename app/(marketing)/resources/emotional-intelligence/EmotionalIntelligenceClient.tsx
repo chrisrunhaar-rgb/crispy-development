@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
@@ -115,7 +116,7 @@ const VERSES = {
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function EmotionalIntelligenceClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang, setLang } = useLanguage();
+  const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
@@ -145,6 +146,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
 
   return (
     <>
+      <LangToggle />
       {/* ── HERO ── */}
       <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
@@ -154,18 +156,14 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
             ← Content Library
           </Link>
 
-          <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.75rem" }}>
-            {(["en", "id", "nl"] as Lang[]).map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "0.3rem 0.7rem", background: lang === l ? "oklch(65% 0.15 45)" : "transparent", color: lang === l ? "oklch(14% 0.08 260)" : "oklch(60% 0.04 260)", border: "1px solid", borderColor: lang === l ? "oklch(65% 0.15 45)" : "oklch(35% 0.05 260)", cursor: "pointer" }}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
 
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", background: "oklch(65% 0.15 45 / 0.15)", color: "oklch(82% 0.08 60)", padding: "0.25rem 0.75rem", display: "inline-flex", marginBottom: "1.25rem" }}>
             {t("Self-Assessment", "Penilaian Diri", "Zelfevaluatie")}
           </span>
 
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Personal Development · Guide", "Pengembangan Pribadi · Panduan", "Persoonlijke Ontwikkeling · Gids")}
+          </p>
           <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem", lineHeight: 1.05, maxWidth: "16ch" }}>
             {lang === "en" ? <>Emotional<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligence.</span></> : lang === "id" ? <>Kecerdasan<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Emosional.</span></> : <>Emotionele<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligentie.</span></>}
           </h1>

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveMBTIResult } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 // 40 forced-choice pairs (10 per dichotomy).
@@ -348,6 +349,7 @@ export default function MBTIClient({
   if (quizState === "idle") {
     return (
       <div style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Source Serif 4', Georgia, serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Jost:wght@300;400;500;600&display=swap');
           .mbti-btn { transition: all 0.18s ease; cursor: pointer; }
@@ -356,8 +358,8 @@ export default function MBTIClient({
 
         <div style={{ background: "oklch(25% 0.08 45)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 13, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(72% 0.06 45)", marginBottom: 20 }}>
-              Personality Assessment
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+              Personal Development · Assessment
             </p>
             <h1 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: "clamp(34px, 5vw, 56px)", fontWeight: 300, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.02em" }}>
               Myers-Briggs<br />
@@ -457,6 +459,7 @@ export default function MBTIClient({
 
     return (
       <div id="quiz-mbti" style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Jost', sans-serif" }}>
+        <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,400&family=Jost:wght@400;500;600&display=swap');
           .choice-btn { transition: all 0.15s ease; cursor: pointer; background: white; border: 2px solid oklch(88% 0.03 45); border-radius: 14px; padding: 22px 24px; text-align: left; width: 100%; }
@@ -506,6 +509,7 @@ export default function MBTIClient({
 
   return (
     <div style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Jost', sans-serif" }}>
+      <LangToggle />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Jost:wght@300;400;500;600&display=swap');
         .mbti-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }

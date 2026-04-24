@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { saveKaruniaResult } from "../actions";
 import VerseChip from "@/components/VerseChip";
 import { VERSES } from "@/lib/verses";
+import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
 
@@ -494,7 +495,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
     ? ["Helemaal niet", "Zelden", "Soms", "Vaak"]
     : ["Not at all", "Rarely", "Sometimes", "Often"];
 
-  const LangToggle = () => (
+  const KaruniaLangToggle = () => (
     <div style={{ display: "flex", gap: "0", border: `1px solid ${BORDER}`, overflow: "hidden", flexShrink: 0 }}>
       {(["id", "nl", "en"] as Lang[]).map(l => (
         <button
@@ -526,6 +527,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
 
     return (
       <>
+        <LangToggle />
         {/* Print styles */}
         <style>{`
           @media print {
@@ -544,7 +546,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: 0 }}>
                   {lang === "id" ? "Hasil Tes" : lang === "nl" ? "Testresultaten" : "Test Results"}
                 </p>
-                <LangToggle />
+                <KaruniaLangToggle />
               </div>
               <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
                 {lang === "id" ? "Karunia Rohani Kamu" : lang === "nl" ? "Jouw Geestelijke Gaven" : "Your Spiritual Gifts"}
@@ -798,6 +800,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
 
   return (
     <div style={{ fontFamily: "var(--font-montserrat)" }}>
+      <LangToggle />
       {/* ── HERO ── */}
       <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
@@ -805,7 +808,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: 0 }}>
               {lang === "id" ? "Assessment · 20 menit" : lang === "nl" ? "Assessment · 20 minuten" : "Assessment · 20 minutes"}
             </p>
-            <LangToggle />
+            <KaruniaLangToggle />
           </div>
           <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
             {lang === "id" ? "Tes Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven Test" : "Spiritual Gifts Test"}
