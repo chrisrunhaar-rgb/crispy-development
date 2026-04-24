@@ -309,7 +309,7 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
           </p>
-          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem", lineHeight: 1.05, maxWidth: "14ch" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {lang === "en" ? <>The Servant<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></> : lang === "id" ? <>Ujian<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Hamba.</span></> : <>De Dienende<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></>}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem", lineHeight: 1.65 }}>

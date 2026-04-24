@@ -391,7 +391,7 @@ export default function Personalities16Client({
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
               Personal Development · Assessment
             </p>
-            <h1 style={{ fontFamily: "'Libre Baskerville', Georgia, serif", fontSize: "clamp(34px, 5vw, 54px)", fontWeight: 400, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.01em" }}>
+            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
               16 Personalities
             </h1>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 17, fontWeight: 400, lineHeight: 1.7, color: "oklch(82% 0.07 260)", maxWidth: 580 }}>

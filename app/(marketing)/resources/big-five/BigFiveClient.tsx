@@ -757,7 +757,7 @@ export default function BigFiveClient({
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
               {lang === "en" ? "Personal Development · Assessment" : lang === "id" ? "Pengembangan Pribadi · Penilaian" : "Persoonlijke Ontwikkeling · Beoordeling"}
             </p>
-            <h1 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(36px, 5vw, 58px)", fontWeight: 300, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.02em" }}>
+            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
               {t.heroTitle1}<br />
               <em style={{ fontStyle: "italic", fontWeight: 400, color: "oklch(78% 0.14 280)" }}>{t.heroTitleItalic}</em>
             </h1>

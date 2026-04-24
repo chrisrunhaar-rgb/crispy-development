@@ -372,7 +372,7 @@ export default function InfluentialLeadershipClient({
       {/* ── LANGUAGE TOGGLE ──────────────────────────────────────────────── */}
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
+      <div style={{ background: navy, padding: "80px 24px 72px" }}>
         <p
           style={{
             color: orange,
@@ -387,13 +387,12 @@ export default function InfluentialLeadershipClient({
         </p>
         <h1
           style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "clamp(28px, 5vw, 52px)",
-            fontWeight: 800,
+            fontFamily: "Cormorant Garamond, serif",
+            fontSize: "clamp(40px, 6vw, 72px)",
+            fontWeight: 600,
             color: offWhite,
-            margin: "0 auto 20px",
-            maxWidth: 780,
-            lineHeight: 1.15,
+            margin: "0 0 24px",
+            lineHeight: 1.08,
           }}
         >
           {t(

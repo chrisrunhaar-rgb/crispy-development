@@ -224,11 +224,11 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orange }} />
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
-        <div style={{ position: "relative", maxWidth: 780, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
             {t("Cross-Cultural · Guide", "Lintas Budaya · Panduan", "Cross-Cultureel · Gids")}
           </p>
-          <h1 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(34px, 5.5vw, 58px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 780, lineHeight: 1.1, letterSpacing: "-0.01em" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Power Distance", "Jarak Kekuasaan", "Machtafstand")}
           </h1>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 26px)", color: "oklch(85% 0.03 80)", maxWidth: 620, margin: "0 auto 16px", lineHeight: 1.6, fontStyle: "italic" }}>

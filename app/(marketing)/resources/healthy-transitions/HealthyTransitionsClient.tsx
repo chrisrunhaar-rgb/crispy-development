@@ -280,11 +280,11 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
 
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Personal Development · Guide", "Pengembangan Pribadi · Panduan", "Persoonlijke Ontwikkeling · Gids")}
           </p>
-          <h1 style={{ fontFamily: serif, fontSize: "clamp(36px, 5.5vw, 64px)", fontWeight: 700, color: offWhite, margin: "0 auto 32px", lineHeight: 1.15, fontStyle: "italic" }}>
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Healthy Transitions", "Transisi yang Sehat", "Gezonde Transities")}
           </h1>
           <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />

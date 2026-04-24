@@ -1004,9 +1004,9 @@ export default function EnneagramClient({
             {t(UI.personalityAssessment)}
           </p>
           <h1 style={{
-            fontFamily: "var(--font-montserrat)", fontWeight: 800,
-            fontSize: "clamp(2rem, 5vw, 3.25rem)",
-            color: "oklch(97% 0.005 80)", letterSpacing: "-0.03em", lineHeight: 1.05,
+            fontFamily: "Cormorant Garamond, serif", fontWeight: 600,
+            fontSize: "clamp(40px, 6vw, 72px)",
+            color: "oklch(97% 0.005 80)", lineHeight: 1.08,
             marginBottom: "1.25rem",
           }}>
             {quizState === "done"

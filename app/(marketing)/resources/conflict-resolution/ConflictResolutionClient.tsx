@@ -270,7 +270,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
           </p>
-          <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, color: offWhite, margin: "0 0 24px", lineHeight: 1.15 }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Conflict Resolution Across Cultures", "Resolusi Konflik Lintas Budaya", "Conflictoplossing over Culturen Heen")}
           </h1>
           <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", color: "oklch(82% 0.025 80)", lineHeight: 1.75, maxWidth: 640, marginBottom: 40, fontStyle: "italic" }}>

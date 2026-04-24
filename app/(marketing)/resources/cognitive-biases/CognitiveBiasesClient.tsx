@@ -557,11 +557,11 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       {/* Lang bar */}
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
+      <div style={{ background: navy, padding: "80px 24px 72px" }}>
         <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
           {t("Thinking Tools · Guide", "Alat Berpikir · Panduan", "Denktools · Gids")}
         </p>
-        <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 760, lineHeight: 1.15 }}>
+        <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Cognitive Biases in Leadership", "Bias Kognitif dalam Kepemimpinan", "Cognitieve Biases in Leiderschap")}
         </h1>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(85% 0.03 80)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6, fontStyle: "italic" }}>

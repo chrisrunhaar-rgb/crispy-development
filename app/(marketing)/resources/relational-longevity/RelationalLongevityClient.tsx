@@ -527,12 +527,12 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           </p>
           <h1
             style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "clamp(28px, 4vw, 52px)",
-              fontWeight: 800,
+              fontFamily: "Cormorant Garamond, serif",
+              fontSize: "clamp(40px, 6vw, 72px)",
+              fontWeight: 600,
               color: offWhite,
               margin: "0 0 24px",
-              lineHeight: 1.1,
+              lineHeight: 1.08,
             }}
           >
             {t("Relational Longevity", "Kelanggengan Relasional", "Relationele Longeviteit")}

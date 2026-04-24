@@ -285,13 +285,13 @@ export default function PsychologicalFirstAidClient({ userPathway, isSaved: init
       </div>
 
       {/* HERO */}
-      <section style={{ background: navy, padding: "80px 24px 64px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: navy, padding: "80px 24px 64px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 60% 0%, oklch(32% 0.12 260 / 0.5) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
             {t("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids", lang)}
           </p>
-          <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, color: offWhite, lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("When crisis hits, leaders are often first on the scene.", "Ketika krisis terjadi, pemimpin sering pertama di tempat kejadian.", "Als er een crisis is, zijn leiders vaak de eersten ter plaatse.", lang)}
           </h1>
           <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, fontStyle: "italic", marginBottom: 32, maxWidth: 580, margin: "0 auto 32px" }}>

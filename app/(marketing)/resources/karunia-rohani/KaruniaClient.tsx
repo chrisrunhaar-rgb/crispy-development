@@ -810,7 +810,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             </p>
             <KaruniaLangToggle />
           </div>
-          <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "white", lineHeight: 1.08, margin: "0 0 24px" }}>
             {lang === "id" ? "Tes Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven Test" : "Spiritual Gifts Test"}
           </h1>
           <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "1.5rem" }}>

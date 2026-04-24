@@ -164,7 +164,7 @@ export default function EmotionalIntelligenceClient({ userPathway, isSaved: init
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Personal Development · Guide", "Pengembangan Pribadi · Panduan", "Persoonlijke Ontwikkeling · Gids")}
           </p>
-          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem", lineHeight: 1.05, maxWidth: "16ch" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {lang === "en" ? <>Emotional<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligence.</span></> : lang === "id" ? <>Kecerdasan<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Emosional.</span></> : <>Emotionele<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligentie.</span></>}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "50ch", marginBottom: "2rem", lineHeight: 1.65 }}>

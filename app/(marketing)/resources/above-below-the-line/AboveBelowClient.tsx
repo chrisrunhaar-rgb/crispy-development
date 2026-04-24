@@ -176,7 +176,7 @@ export default function AboveBelowClient({
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids", lang)}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px", lineHeight: 1.1 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>{t(
             "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns — blame, excuse, denial — and choose ownership, accountability, and responsibility instead.",
             "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif — menyalahkan, mencari alasan, penyangkalan — dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",

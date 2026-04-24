@@ -133,7 +133,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
           {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
         </p>
-        <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(44px, 6vw, 72px)", fontWeight: 600, color: navy, lineHeight: 1.1, margin: "0 0 28px" }}>
+        <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(44px, 6vw, 72px)", fontWeight: 600, color: navy, lineHeight: 1.08, margin: "0 0 24px" }}>
           {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}
         </h1>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, color: bodyText, lineHeight: 1.75, fontStyle: "italic", maxWidth: 580, margin: 0 }}>

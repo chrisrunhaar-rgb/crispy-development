@@ -361,7 +361,7 @@ export default function MBTIClient({
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
               Personal Development · Assessment
             </p>
-            <h1 style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: "clamp(34px, 5vw, 56px)", fontWeight: 300, lineHeight: 1.1, marginBottom: 20, letterSpacing: "-0.02em" }}>
+            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
               Myers-Briggs<br />
               <em style={{ fontStyle: "italic", color: "oklch(78% 0.08 45)" }}>Type Indicator</em>
             </h1>

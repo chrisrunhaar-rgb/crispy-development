@@ -154,11 +154,11 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
       </div>
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "68px 24px 80px", textAlign: "center" }}>
+      <div style={{ background: navy, padding: "68px 24px 80px" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, marginBottom: 20, textTransform: "uppercase" }}>
           {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
         </p>
-        <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 70px)", fontWeight: 600, color: offWhite, margin: "0 auto 20px", maxWidth: 680, lineHeight: 1.15 }}>
+        <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Every Leader is a Seed", "Setiap Pemimpin adalah Benih", "Elke Leider is een Zaad")}
         </h1>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 16, color: "oklch(78% 0.04 260)", maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>

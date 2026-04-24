@@ -282,7 +282,7 @@ export default function EmotionalSafetyFamiliesClient({
 
       {/* Hero */}
       <div style={{ background: navy, padding: "96px 24px 88px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p
             style={{
               color: orange,
@@ -302,12 +302,11 @@ export default function EmotionalSafetyFamiliesClient({
           <h1
             style={{
               fontFamily: serif,
-              fontSize: "clamp(36px, 5.5vw, 62px)",
-              fontWeight: 700,
+              fontSize: "clamp(40px, 6vw, 72px)",
+              fontWeight: 600,
               color: offWhite,
-              margin: "0 auto 32px",
-              lineHeight: 1.15,
-              fontStyle: "italic",
+              margin: "0 0 24px",
+              lineHeight: 1.08,
             }}
           >
             {t(

@@ -297,13 +297,13 @@ export default function IdentityUnderPressureClient({ userPathway, isSaved: init
       {/* LANGUAGE TOGGLE */}
 
       {/* HERO */}
-      <section style={{ background: navy, padding: "80px 24px 64px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: navy, padding: "80px 24px 64px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 40% 0%, oklch(32% 0.12 300 / 0.4) 0%, transparent 65%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
             {t("Faith & Calling · Article", "Iman & Panggilan · Artikel", "Geloof & Roeping · Artikel", lang)}
           </p>
-          <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, color: offWhite, lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("Identity Under Pressure", "Identitas di Bawah Tekanan", "Identiteit Onder Druk", lang)}
           </h1>
           <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, fontStyle: "italic", marginBottom: 32, maxWidth: 580, margin: "0 auto 32px" }}>

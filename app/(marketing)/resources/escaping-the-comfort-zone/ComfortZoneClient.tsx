@@ -169,7 +169,7 @@ export default function ComfortZoneClient({
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Personal Development · Worksheet", "Pengembangan Pribadi · Lembar Kerja", "Persoonlijke Ontwikkeling · Werkblad", lang)}
           </p>
-          <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "16ch" }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "16ch" }}>
             {lang === "en"
               ? <>{`Escaping the`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Comfort Zone.</span></>
               : lang === "id"
