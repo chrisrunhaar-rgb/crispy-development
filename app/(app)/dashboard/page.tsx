@@ -123,7 +123,7 @@ export default async function DashboardPage({
   // ── Team pathway checks ──
   let teamApplicationStatus: string | null = null;
   let teamRecord: { id: string; name: string; language: string; current_step: number; finalized_steps: number[]; selected_assessments: string[] } | null = null;
-  const isLeaderByMeta = user.user_metadata?.is_leader === true;
+  const isLeaderByMeta = metadata?.is_leader === true;
 
   if (pathway === "team" || isLeaderByMeta) {
     // If metadata already marks this user as a leader, skip the application table
@@ -145,10 +145,10 @@ export default async function DashboardPage({
       teamApplicationStatus = application?.status ?? null;
 
       if (teamApplicationStatus === "approved") {
-        const { data: team } = await supabase
+        const { data: team } = await admin
           .from("teams")
           .select("id, name, language, current_step, finalized_steps, selected_assessments")
-          .eq("leader_user_id", user.id)
+          .eq("leader_user_id", viewingUserId)
           .maybeSingle();
         teamRecord = team ?? null;
       }
