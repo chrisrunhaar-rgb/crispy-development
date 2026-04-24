@@ -1,7 +1,7 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
-import { generateBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
+import { generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 
@@ -17,10 +17,7 @@ export default async function ResourcePage(props: any) {
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
 
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://crispyleaders.com" },
-    { name: "Resources", url: "https://crispyleaders.com/resources" },
-  ]);
+  const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
 
   return (
     <>

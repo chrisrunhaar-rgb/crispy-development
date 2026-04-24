@@ -26,6 +26,15 @@ export function generateCanonicalUrl(path: string) {
 
 const OG_IMAGE = "https://crispyleaders.com/logo-full.png";
 
+export function generateResourceBreadcrumbSchema(slug: string) {
+  const meta = getResourceMetadata(slug);
+  return generateBreadcrumbSchema([
+    { name: "Home", url: "https://crispyleaders.com" },
+    { name: "Resources", url: "https://crispyleaders.com/resources" },
+    { name: meta.title.split(" — ")[0], url: generateCanonicalUrl(`/resources/${slug}`) },
+  ]);
+}
+
 export function generateResourceMetadata(slug: string): Metadata {
   const meta = getResourceMetadata(slug);
   const url = generateCanonicalUrl(`/resources/${slug}`);

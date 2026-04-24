@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TEAMS_PARTS_ID } from "@/lib/teams-training-data-id";
 import TrainingPartView from "@/components/Training/TrainingPartView";

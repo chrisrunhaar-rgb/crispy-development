@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+﻿import { createClient } from "@/lib/supabase/server";
 import ResourcesContent from "./ResourcesContent";
 
 export const dynamic = "force-dynamic";

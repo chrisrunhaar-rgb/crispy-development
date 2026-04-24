@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ZOOM_PARTS } from "@/lib/zoom-training-data";
 import TrainingPartView from "@/components/Training/TrainingPartView";
