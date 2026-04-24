@@ -760,7 +760,7 @@ export default async function DashboardPage({
 const RESOURCE_META = Object.fromEntries(
   RESOURCES.filter(r => r.slug).map(r => [
     r.slug as string,
-    { title: r.title, description: r.description, path: `/resources/${r.slug}`, time: r.time, format: r.format },
+    { title: r.title, titleId: r.titleId, titleNl: r.titleNl, description: r.description, path: `/resources/${r.slug}`, time: r.time, format: r.format },
   ])
 );
 
@@ -940,11 +940,14 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
           <div>
             {savedItems.map(slug => {
               const meta = RESOURCE_META[slug];
+              const displayTitle = languagePreference === "id" && meta.titleId ? meta.titleId
+                : languagePreference === "nl" && meta.titleNl ? meta.titleNl
+                : meta.title;
               return (
                 <ResourceCard
                   key={slug}
                   slug={slug}
-                  title={meta.title}
+                  title={displayTitle}
                   format={meta.format}
                   time={meta.time}
                   path={meta.path}

@@ -23,7 +23,7 @@ const FORMAT_COLORS: Record<string, string> = {
 };
 
 export default function ResourcesContent({ userId, pathway, isTeamLeader, savedResources = [] }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const r = t.resources;
   const [view, setView] = useState<View>("list");
   const [localSaved, setLocalSaved] = useState<Set<string>>(new Set(savedResources));
@@ -44,8 +44,19 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
     });
   }
 
+  function localTitle(resource: typeof RESOURCES[0]) {
+    if (lang === "id" && resource.titleId) return resource.titleId;
+    if (lang === "nl" && resource.titleNl) return resource.titleNl;
+    return resource.title;
+  }
+  function localDescription(resource: typeof RESOURCES[0]) {
+    if (lang === "id" && resource.descriptionId) return resource.descriptionId;
+    if (lang === "nl" && resource.descriptionNl) return resource.descriptionNl;
+    return resource.description;
+  }
+
   const sortedResources = [...RESOURCES].sort((a, b) =>
-    a.title.localeCompare(b.title)
+    localTitle(a).localeCompare(localTitle(b))
   );
 
   const filteredResources = sortedResources.filter(r => {
@@ -317,7 +328,7 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                           margin: 0,
                           lineHeight: 1.25,
                         }}>
-                          {resource.title}
+                          {localTitle(resource)}
                         </h3>
                       </div>
 
@@ -330,7 +341,7 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                         margin: "0 0 0.75rem",
                         maxWidth: "68ch",
                       }}>
-                        {resource.description}
+                        {localDescription(resource)}
                       </p>
 
                       {/* Meta row */}
@@ -382,7 +393,7 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                       {isClickable && userId && (
                         localSaved.has(resource.slug!) ? (
                           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(55% 0.15 145)", whiteSpace: "nowrap" }}>
-                            ✓ Saved
+                            {lang === "id" ? "✓ Tersimpan" : lang === "nl" ? "✓ Opgeslagen" : "✓ Saved"}
                           </span>
                         ) : (
                           <button
@@ -397,7 +408,7 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                               whiteSpace: "nowrap", opacity: pendingSlug === resource.slug ? 0.5 : 1,
                             }}
                           >
-                            {pendingSlug === resource.slug ? "…" : "Save to Dashboard"}
+                            {pendingSlug === resource.slug ? "…" : lang === "id" ? "Simpan ke Dashboard" : lang === "nl" ? "Opslaan in Dashboard" : "Save to Dashboard"}
                           </button>
                         )
                       )}
