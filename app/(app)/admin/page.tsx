@@ -381,28 +381,6 @@ export default async function AdminPage({
               member_count: teamMemberCountByLeader.get(leader.user_id as string),
               member_details: teamMembersByLeaderId.get(leader.user_id as string),
             }))}
-            onApprove={(id) => {
-              // Trigger approval action
-              const form = document.createElement('form');
-              form.method = 'post';
-              form.action = '';
-              const input1 = document.createElement('input');
-              input1.type = 'hidden';
-              input1.name = 'applicationId';
-              input1.value = id;
-              form.appendChild(input1);
-            }}
-            onDecline={(id) => {
-              // Trigger decline action
-              const form = document.createElement('form');
-              form.method = 'post';
-              form.action = '';
-              const input1 = document.createElement('input');
-              input1.type = 'hidden';
-              input1.name = 'applicationId';
-              input1.value = id;
-              form.appendChild(input1);
-            }}
           />
         )}
 
@@ -431,28 +409,6 @@ export default async function AdminPage({
                 reviewed_at: init.reviewed_at as string,
               }))}
               peerGroups={allPeerGroups}
-              onApprove={(id) => {
-                // Trigger approval action
-                const form = document.createElement('form');
-                form.method = 'post';
-                form.action = '';
-                const input1 = document.createElement('input');
-                input1.type = 'hidden';
-                input1.name = 'applicationId';
-                input1.value = id;
-                form.appendChild(input1);
-              }}
-              onDecline={(id) => {
-                // Trigger decline action
-                const form = document.createElement('form');
-                form.method = 'post';
-                form.action = '';
-                const input1 = document.createElement('input');
-                input1.type = 'hidden';
-                input1.name = 'applicationId';
-                input1.value = id;
-                form.appendChild(input1);
-              }}
             />
 
             {/* All peer groups management */}
