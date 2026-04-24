@@ -1073,7 +1073,7 @@ export default function EnneagramClient({
           </div>
 
           {quizState === "idle" && (
-            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" style={{ width: "320px", height: "auto", opacity: 0.85, flexShrink: 0 }} />
+            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" loading="lazy" style={{ width: "320px", height: "auto", opacity: 0.85, flexShrink: 0 }} />
           )}
 
 
@@ -1288,7 +1288,7 @@ export default function EnneagramClient({
             <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(18% 0.005 260)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "2rem" }}>
               {t(UI.whatIsEnneagram)}
             </h2>
-            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" style={{ width: "100%", maxWidth: "500px", height: "auto", display: "block", margin: "0 auto 2rem auto" }} />
+            <img src="/enneagram-types/enneagram-wheel.png" alt="Enneagram Wheel" loading="lazy" style={{ width: "100%", maxWidth: "500px", height: "auto", display: "block", margin: "0 auto 2rem auto" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.006 260)", lineHeight: 1.75 }}>
                 {t(UI.enneagramP1)}
@@ -1300,7 +1300,7 @@ export default function EnneagramClient({
                 {t(UI.enneagramP3)}
               </p>
             </div>
-            <img src="/enneagram-types/overview.png" alt="Enneagram Overview" style={{ width: "100%", maxWidth: "600px", marginTop: "2rem", borderRadius: "0.5rem" }} />
+            <img src="/enneagram-types/overview.png" alt="Enneagram Overview" loading="lazy" style={{ width: "100%", maxWidth: "600px", marginTop: "2rem", borderRadius: "0.5rem" }} />
           </div>
 
           {/* The 9 types with card flip */}

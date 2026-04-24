@@ -26,6 +26,29 @@ export function generateCanonicalUrl(path: string) {
 
 const OG_IMAGE = "https://crispyleaders.com/logo-full.png";
 
+export function generateResourceArticleSchema(slug: string) {
+  const meta = getResourceMetadata(slug);
+  const url = generateCanonicalUrl(`/resources/${slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name: meta.title.split(" — ")[0],
+    description: meta.description,
+    url,
+    provider: {
+      "@type": "Organization",
+      name: "Crispy Development",
+      url: "https://crispyleaders.com",
+    },
+    author: {
+      "@type": "Person",
+      name: "Chris Runhaar",
+    },
+    educationalUse: "Leadership Development",
+    inLanguage: ["en", "id", "nl"],
+  };
+}
+
 export function generateResourceBreadcrumbSchema(slug: string) {
   const meta = getResourceMetadata(slug);
   return generateBreadcrumbSchema([

@@ -1,7 +1,7 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
-import { generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
+import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import UnderstandingHighContextClient from "./UnderstandingHighContextClient";
@@ -27,6 +27,13 @@ export default async function ResourcePage(props: any) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <Script
+        id={`article-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateResourceArticleSchema(RESOURCE_SLUG)),
         }}
       />
       <Script
