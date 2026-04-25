@@ -24,6 +24,7 @@ export const translations = {
       legal: "Legal",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
+      contact: "Contact",
       copyright: "Crispy Development. All rights reserved.",
     },
     home: {
@@ -241,6 +242,7 @@ export const translations = {
       legal: "Legal",
       privacy: "Kebijakan Privasi",
       terms: "Syarat Layanan",
+      contact: "Kontak",
       copyright: "Crispy Development. Seluruh hak cipta dilindungi.",
     },
     home: {
@@ -458,6 +460,7 @@ export const translations = {
       legal: "Juridisch",
       privacy: "Privacybeleid",
       terms: "Gebruiksvoorwaarden",
+      contact: "Contact",
       copyright: "Crispy Development. Alle rechten voorbehouden.",
     },
     home: {

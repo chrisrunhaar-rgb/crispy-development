@@ -241,3 +241,11 @@ export async function adminBulkDeleteMembers(userIds: string[]): Promise<{ succe
     return { success: false, error: message };
   }
 }
+
+export async function markContactMessageRead(formData: FormData) {
+  await assertAdmin();
+  const id = formData.get("id") as string;
+  const admin = createAdminClient();
+  await admin.from("contact_messages").update({ read: true }).eq("id", id);
+  revalidatePath("/admin");
+}

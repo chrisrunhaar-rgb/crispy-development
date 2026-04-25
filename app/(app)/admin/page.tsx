@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { approveApplication, declineApplication, markMessageRead, approvePeerApplication, declinePeerApplication, adminDeletePeerGroup, adminSetPeerGroupOpen, adminSetPeerGroupName } from "./actions";
+import { approveApplication, declineApplication, markMessageRead, approvePeerApplication, declinePeerApplication, adminDeletePeerGroup, adminSetPeerGroupOpen, adminSetPeerGroupName, markContactMessageRead } from "./actions";
 import AdminReplyForm from "./AdminReplyForm";
 import AdminBroadcastForm from "./AdminBroadcastForm";
 import AdminLeaderRow from "./AdminLeaderRow";
@@ -111,7 +111,7 @@ export default async function AdminPage({
   if (!user || user.email !== "chris.runhaar@world-outreach.com") redirect("/");
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : "members";
+  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : "members";
 
   const admin = createAdminClient();
 
@@ -242,6 +242,14 @@ export default async function AdminPage({
     }
   }
 
+  // ── Messages tab ──
+  type ContactMessage = { id: string; name: string; email: string; message: string; read: boolean; created_at: string };
+  let contactMessages: ContactMessage[] = [];
+  if (activeTab === "messages") {
+    const { data } = await admin.from("contact_messages").select("*").order("created_at", { ascending: false });
+    contactMessages = (data ?? []) as ContactMessage[];
+  }
+
   // ── Content tab ──
   const contentSaveCounts = new Map<string, number>();
   const contentReadCounts = new Map<string, number>();
@@ -266,6 +274,7 @@ export default async function AdminPage({
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: newMessagesCount } = await admin.from("coach_messages").select("id", { count: "exact", head: true }).eq("status", "new");
+  const { count: unreadContactCount } = await admin.from("contact_messages").select("id", { count: "exact", head: true }).eq("read", false);
 
   const memberCount = allUsers.length;
 
@@ -274,6 +283,7 @@ export default async function AdminPage({
     { key: "leaders", label: "Team Leaders", badge: pendingTeamCount ?? 0 },
     { key: "peers", label: "Peer Initiators", badge: pendingPeerCount ?? 0 },
     { key: "content", label: "Content" },
+    { key: "messages", label: "Contact", badge: unreadContactCount ?? 0 },
   ];
 
   // Members list for broadcast form targeting
@@ -550,6 +560,40 @@ export default async function AdminPage({
               )}
             </section>
           </>
+        )}
+
+        {/* ── MESSAGES TAB ── */}
+        {activeTab === "messages" && (
+          <section>
+            <h2 style={sectionHeading}>Contact Messages ({contactMessages.length})</h2>
+            {contactMessages.length === 0 ? (
+              <p style={emptyText}>No messages yet.</p>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {contactMessages.map(msg => (
+                  <div key={msg.id} style={{ background: "white", border: `1px solid ${msg.read ? "oklch(90% 0.005 260)" : "oklch(65% 0.15 45)"}`, padding: "1.5rem", position: "relative" }}>
+                    {!msg.read && <div style={{ position: "absolute", top: 0, left: 0, width: "3px", height: "100%", background: "oklch(65% 0.15 45)" }} />}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                      <div>
+                        <p style={nameStyle}>{msg.name}</p>
+                        <p style={metaStyle}><a href={`mailto:${msg.email}`} style={{ color: "inherit", textDecoration: "none" }}>{msg.email}</a> · {formatDate(msg.created_at)}</p>
+                      </div>
+                      {!msg.read && <span style={newBadge}>Unread</span>}
+                    </div>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)", whiteSpace: "pre-wrap" }}>{msg.message}</p>
+                    {!msg.read && (
+                      <form action={markContactMessageRead} style={{ marginTop: "0.75rem" }}>
+                        <input type="hidden" name="id" value={msg.id} />
+                        <button type="submit" style={{ background: "none", border: "none", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.008 260)", cursor: "pointer", padding: 0 }}>
+                          Mark as read
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
         )}
 
         {/* ── CONTENT TAB ── */}
