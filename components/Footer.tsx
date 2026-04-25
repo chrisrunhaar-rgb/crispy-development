@@ -4,6 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
+function IgIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const { t } = useLanguage();
   return (
@@ -23,6 +33,16 @@ export default function Footer() {
             <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 300, fontSize: "0.95rem", color: "oklch(52% 0.008 260)", maxWidth: "22ch", lineHeight: 1.5 }}>
               {t.footer.tagline}
             </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginTop: "1.1rem" }}>
+              <a href="https://instagram.com/crispy.dev_" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", textDecoration: "none" }} className="footer-link">
+                <IgIcon />
+                @crispy.dev_
+              </a>
+              <a href="https://instagram.com/crispy.dev_ind" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", textDecoration: "none" }} className="footer-link">
+                <IgIcon />
+                @crispy.dev_ind
+              </a>
+            </div>
           </div>
 
           {/* Pathways */}
