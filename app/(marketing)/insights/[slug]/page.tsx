@@ -145,6 +145,37 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             </div>
           )}
 
+          {/* Further reading */}
+          {article.furtherReading && article.furtherReading.length > 0 && (
+            <div style={{ marginTop: "2.5rem" }}>
+              <p style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.7rem",
+                letterSpacing: "0.18em", textTransform: "uppercase",
+                color: "oklch(52% 0.008 260)", marginBottom: "0.875rem",
+              }}>
+                Further reading
+              </p>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {article.furtherReading.map((link, i) => (
+                  <li key={i}>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.85rem",
+                        color: "oklch(45% 0.12 260)", textDecoration: "none",
+                        display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                      }}
+                    >
+                      {link.label} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Back link */}
           <div style={{ marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
             <Link href="/insights" style={{
