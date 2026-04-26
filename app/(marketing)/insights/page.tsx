@@ -79,7 +79,7 @@ export default function InsightsPage() {
             fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
             color: "oklch(45% 0.008 260)", maxWidth: "500px",
           }}>
-            Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources on this site.
+            Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources.
           </p>
         </div>
 
@@ -290,13 +290,13 @@ export default function InsightsPage() {
             fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
             color: "oklch(40% 0.007 260)", marginBottom: "0.875rem",
           }}>
-            He has lived and worked across cultures for nearly two decades, starting in community development and NGO work across Southeast Asia and Africa, and more recently focusing on leadership development and training for cross-cultural teams, field workers, and expat leaders.
+            He has lived and worked across cultures for nearly two decades. He led NGO and community development teams across Southeast Asia and Africa, and more recently focused on leadership development and training for cross-cultural teams, field workers, and expat leaders.
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
             color: "oklch(40% 0.007 260)",
           }}>
-            Leadership Bytes is his attempt to put leadership thinking in a format that travels well: short enough to read in a meeting break, specific enough to be useful, and honest enough to start a real conversation. Every byte links to the deeper resources on this site for those who want to go further.
+            Leadership Bytes is his attempt to put leadership thinking in a format that travels well: short enough to read in a meeting break, specific enough to be useful, and honest enough to start a real conversation. Every byte links to the deeper resources for those who want to go further.
           </p>
         </div>
       </section>
