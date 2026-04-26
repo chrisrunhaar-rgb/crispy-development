@@ -17,6 +17,7 @@ export type Insight = {
   tag: string;
   readMinutes: number;
   body: string;
+  illustration?: string;
   resourceSlug?: string;
   resourceLabel?: string;
   furtherReading?: InsightLink[];
@@ -31,6 +32,7 @@ export const insights: Insight[] = [
     date: "2026-05-17",
     tag: "Wellbeing",
     readMinutes: 4,
+    illustration: "/bytes/faith-and-the-counselor.jpg",
     furtherReading: [
       { label: "Focus on the Family — Counselling Referrals", url: "https://www.focusonthefamily.com" },
       { label: "Biblical Counseling Coalition", url: "https://www.biblicalcounselingcoalition.org" },
@@ -58,6 +60,7 @@ What would it take for your community to make it safe to ask for help?`,
     date: "2026-05-10",
     tag: "Leadership Practice",
     readMinutes: 3,
+    illustration: "/bytes/three-ways-to-zoom-out.jpg",
     resourceSlug: "leadership-altitudes",
     resourceLabel: "Leadership Altitudes",
     furtherReading: [
@@ -88,6 +91,7 @@ Where in your work are you too close right now to see clearly?`,
     date: "2026-05-03",
     tag: "Wellbeing",
     readMinutes: 4,
+    illustration: "/bytes/burnout-the-word-we-dont-say.jpg",
     furtherReading: [
       { label: "Burnout & Ministry Resilience — Christianity Today", url: "https://www.christianitytoday.com" },
       { label: "Member Care for Field Workers — Lausanne Movement", url: "https://lausanne.org" },
