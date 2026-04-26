@@ -188,7 +188,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75,
               color: "oklch(42% 0.007 260)",
             }}>
-              Chris Runhaar has lived and worked across cultures for over two decades, developing resources and training for missionaries, expat leaders, and international teams. He writes these bytes not as a researcher but as someone who has been in the field — trying to make complex leadership ideas human-sized and actionable.
+              Chris Runhaar has lived and worked across cultures for nearly two decades, developing leadership resources and training for field workers, NGO staff, and cross-cultural teams. He writes these bytes not as a researcher but as someone who has been in the field, trying to make complex leadership ideas human-sized and actionable.
             </p>
           </div>
 
