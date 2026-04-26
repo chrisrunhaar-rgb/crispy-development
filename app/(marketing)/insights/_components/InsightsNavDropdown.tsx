@@ -6,14 +6,20 @@ type ArticleOption = {
   title: string;
 };
 
-export function InsightsNavDropdown({ articles }: { articles: ArticleOption[] }) {
+export function InsightsNavDropdown({
+  articles,
+  basePath = "/insights",
+}: {
+  articles: ArticleOption[];
+  basePath?: string;
+}) {
   const router = useRouter();
 
   return (
     <select
       defaultValue=""
       onChange={(e) => {
-        if (e.target.value) router.push(`/insights/${e.target.value}`);
+        if (e.target.value) router.push(`${basePath}/${e.target.value}`);
       }}
       style={{
         fontFamily: "var(--font-montserrat)",

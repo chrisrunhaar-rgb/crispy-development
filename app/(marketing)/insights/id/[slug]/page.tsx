@@ -12,18 +12,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const article = getInsight(slug);
   if (!article) return {};
   return {
-    title: `${article.title} | Crispy Development`,
-    description: article.hook,
+    title: `${article.id?.title ?? article.title} | Crispy Development`,
+    description: article.id?.hook ?? article.hook,
     robots: { index: false, follow: false },
   };
 }
 
-export default async function InsightPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function InsightIdPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = getInsight(slug);
   if (!article) notFound();
 
-  const paragraphs = article.body.trim().split("\n\n");
+  const body = article.id?.body ?? article.body;
+  const paragraphs = body.trim().split("\n\n");
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
@@ -43,25 +44,25 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
         }}>
           {/* Breadcrumb + language switcher */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.75rem" }}>
-            <Link href="/insights" style={{
+            <Link href="/insights/id" style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.7rem",
               letterSpacing: "0.12em", textTransform: "uppercase",
               color: "oklch(65% 0.15 45)", textDecoration: "none",
               display: "inline-flex", alignItems: "center", gap: "0.4rem",
             }}>
-              ← Insights
+              ← Bytes
             </Link>
             <div style={{ display: "flex", gap: "0.25rem" }}>
+              <Link href={`/insights/${article.slug}`} style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
+                letterSpacing: "0.12em", color: "oklch(58% 0.008 260)",
+                padding: "0.25rem 0.5rem", textDecoration: "none",
+              }}>EN</Link>
               <span style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
                 letterSpacing: "0.12em", color: "oklch(22% 0.10 260)",
                 padding: "0.25rem 0.5rem",
-              }}>EN</span>
-              <Link href={`/insights/id/${article.slug}`} style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
-                letterSpacing: "0.12em", color: "oklch(58% 0.008 260)",
-                padding: "0.25rem 0.5rem", textDecoration: "none",
-              }}>ID</Link>
+              }}>ID</span>
             </div>
           </div>
 
@@ -80,7 +81,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             fontSize: "clamp(2.2rem, 5vw, 3.5rem)", lineHeight: 1.1,
             color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
           }}>
-            {article.title}
+            {article.id?.title ?? article.title}
           </h1>
 
           {/* Hook */}
@@ -89,7 +90,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             fontSize: "clamp(1.15rem, 2.2vw, 1.4rem)", lineHeight: 1.55,
             color: "oklch(38% 0.007 260)", marginBottom: "2rem",
           }}>
-            {article.hook}
+            {article.id?.hook ?? article.hook}
           </p>
 
           {/* Meta */}
@@ -105,7 +106,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
               color: "oklch(52% 0.008 260)",
             }}>
-              {article.readMinutes} min read
+              {article.readMinutes} menit baca
             </span>
           </div>
         </div>
@@ -130,7 +131,6 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               marginTop: "3rem",
               padding: "2rem",
               border: "1px solid oklch(88% 0.008 80)",
-              borderLeft: "4px solid oklch(65% 0.15 45)",
               background: "oklch(100% 0 0)",
             }}>
               <p style={{
@@ -138,13 +138,13 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
                 letterSpacing: "0.18em", textTransform: "uppercase",
                 color: "oklch(65% 0.15 45)", marginBottom: "0.625rem",
               }}>
-                Go deeper
+                Pelajari lebih lanjut
               </p>
               <p style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.65,
                 color: "oklch(38% 0.007 260)", marginBottom: "1rem",
               }}>
-                Want the full framework, assessments, and real-world examples? Explore the complete resource on this topic.
+                Ingin framework lengkap, penilaian, dan contoh nyata? Jelajahi sumber lengkap tentang topik ini.
               </p>
               <Link href={`/resources/${article.resourceSlug}`} style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem",
@@ -165,7 +165,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
                 letterSpacing: "0.18em", textTransform: "uppercase",
                 color: "oklch(52% 0.008 260)", marginBottom: "0.875rem",
               }}>
-                Further reading
+                Bacaan lanjutan
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {article.furtherReading.map((link, i) => (
@@ -195,25 +195,25 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               letterSpacing: "0.18em", textTransform: "uppercase",
               color: "oklch(52% 0.008 260)", marginBottom: "0.75rem",
             }}>
-              About the writer
+              Tentang penulis
             </p>
             <p style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75,
               color: "oklch(42% 0.007 260)",
             }}>
-              Chris Runhaar has lived and worked across cultures for nearly two decades, developing leadership resources and training for field workers, NGO staff, and cross-cultural teams. He writes these bytes not as a researcher but as someone who has been in the field, trying to make complex leadership ideas human-sized and actionable.
+              Chris Runhaar telah hidup dan bekerja lintas budaya selama hampir dua dekade, mengembangkan sumber daya kepemimpinan dan pelatihan untuk pekerja lapangan, staf NGO, dan tim lintas budaya. Ia menulis bytes ini bukan sebagai peneliti, melainkan sebagai seseorang yang telah ada di lapangan, berusaha membuat ide kepemimpinan yang kompleks menjadi manusiawi dan dapat diterapkan.
             </p>
           </div>
 
           {/* Back link */}
           <div style={{ marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
-            <Link href="/insights" style={{
+            <Link href="/insights/id" style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem",
               letterSpacing: "0.08em", textTransform: "uppercase",
               color: "oklch(52% 0.008 260)", textDecoration: "none",
               display: "inline-flex", alignItems: "center", gap: "0.4rem",
             }}>
-              ← All insights
+              ← Semua bytes
             </Link>
           </div>
         </div>

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { insights, formatDate } from "@/lib/insights";
-import { InsightsNavDropdown } from "./_components/InsightsNavDropdown";
+import { InsightsNavDropdown } from "../_components/InsightsNavDropdown";
 
 export const metadata: Metadata = {
-  title: "Leadership Bytes — Insights | Crispy Development",
-  description: "Short, practical articles on cross-cultural leadership. Timely topics, real-world examples, linked to deeper resources.",
+  title: "Leadership Bytes — Wawasan | Crispy Development",
+  description: "Artikel singkat dan praktis tentang kepemimpinan lintas budaya.",
   robots: { index: false, follow: false },
 };
 
-export default function InsightsPage() {
+export default function InsightsIdPage() {
   const latest = insights.slice(0, 3);
   const archive = insights.slice(3);
 
@@ -67,16 +67,16 @@ export default function InsightsPage() {
               </span>
             </div>
             <div style={{ display: "flex", gap: "0.25rem" }}>
+              <Link href="/insights" style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
+                letterSpacing: "0.12em", color: "oklch(58% 0.008 260)",
+                padding: "0.25rem 0.5rem", textDecoration: "none",
+              }}>EN</Link>
               <span style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
                 letterSpacing: "0.12em", color: "oklch(22% 0.10 260)",
                 padding: "0.25rem 0.5rem",
-              }}>EN</span>
-              <Link href="/insights/id" style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
-                letterSpacing: "0.12em", color: "oklch(58% 0.008 260)",
-                padding: "0.25rem 0.5rem", textDecoration: "none",
-              }}>ID</Link>
+              }}>ID</span>
             </div>
           </div>
 
@@ -93,7 +93,7 @@ export default function InsightsPage() {
             fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
             color: "oklch(45% 0.008 260)", maxWidth: "500px",
           }}>
-            Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources.
+            Bacaan singkat dan praktis tentang kepemimpinan lintas budaya. Topik aktual, contoh nyata, terhubung ke sumber yang lebih dalam.
           </p>
         </div>
 
@@ -110,14 +110,14 @@ export default function InsightsPage() {
               letterSpacing: "0.16em", textTransform: "uppercase",
               color: "oklch(65% 0.15 45)",
             }}>
-              {insights.length} articles
+              {insights.length} artikel
             </span>
             <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
             <span style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
               color: "oklch(55% 0.008 260)",
             }}>
-              Updated regularly
+              Diperbarui secara berkala
             </span>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function InsightsPage() {
 
           {/* Featured — latest article */}
           <Link
-            href={`/insights/${latest[0].slug}`}
+            href={`/insights/id/${latest[0].slug}`}
             className="bytes-featured"
             style={{ display: "block", textDecoration: "none", marginBottom: "3rem" }}
           >
@@ -146,7 +146,7 @@ export default function InsightsPage() {
                   fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
                   color: "oklch(62% 0.006 260)",
                 }}>
-                  {latest[0].readMinutes} min read
+                  {latest[0].readMinutes} menit baca
                 </span>
               </div>
 
@@ -159,14 +159,14 @@ export default function InsightsPage() {
                   transition: "color 0.15s",
                 }}
               >
-                {latest[0].title}
+                {latest[0].id?.title ?? latest[0].title}
               </h2>
 
               <p style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
                 color: "oklch(42% 0.007 260)", maxWidth: "620px", marginBottom: "1.75rem",
               }}>
-                {latest[0].hook}
+                {latest[0].id?.hook ?? latest[0].hook}
               </p>
 
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -184,7 +184,7 @@ export default function InsightsPage() {
                     transition: "color 0.15s",
                   }}
                 >
-                  Read this byte →
+                  Baca byte ini →
                 </span>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function InsightsPage() {
             {latest.slice(1).map((article) => (
               <Link
                 key={article.slug}
-                href={`/insights/${article.slug}`}
+                href={`/insights/id/${article.slug}`}
                 className="bytes-secondary"
                 style={{ display: "block", textDecoration: "none" }}
               >
@@ -221,14 +221,14 @@ export default function InsightsPage() {
                       transition: "color 0.15s",
                     }}
                   >
-                    {article.title}
+                    {article.id?.title ?? article.title}
                   </h3>
 
                   <p style={{
                     fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.65,
                     color: "oklch(48% 0.007 260)", marginBottom: "1.25rem",
                   }}>
-                    {article.hook}
+                    {article.id?.hook ?? article.hook}
                   </p>
 
                   <div style={{
@@ -248,7 +248,7 @@ export default function InsightsPage() {
                         color: "oklch(65% 0.15 45)", transition: "color 0.15s",
                       }}
                     >
-                      Read →
+                      Baca →
                     </span>
                   </div>
                 </div>
@@ -268,10 +268,11 @@ export default function InsightsPage() {
                 letterSpacing: "0.16em", textTransform: "uppercase",
                 color: "oklch(52% 0.008 260)", whiteSpace: "nowrap",
               }}>
-                Previous bytes
+                Bytes sebelumnya
               </span>
               <InsightsNavDropdown
-                articles={archive.map((a) => ({ slug: a.slug, title: a.title }))}
+                articles={archive.map((a) => ({ slug: a.slug, title: a.id?.title ?? a.title }))}
+                basePath="/insights/id"
               />
             </div>
           )}
@@ -291,26 +292,26 @@ export default function InsightsPage() {
             letterSpacing: "0.18em", textTransform: "uppercase",
             color: "oklch(52% 0.008 260)", marginBottom: "1.25rem",
           }}>
-            About the writer
+            Tentang penulis
           </p>
           <p style={{
             fontFamily: "var(--font-cormorant)", fontStyle: "italic",
             fontSize: "clamp(1.1rem, 2vw, 1.3rem)", lineHeight: 1.6,
             color: "oklch(30% 0.008 260)", marginBottom: "1rem",
           }}>
-            Chris Runhaar is the founder of Crispy Development, a platform for cross-cultural Christian leaders.
+            Chris Runhaar adalah pendiri Crispy Development, sebuah platform untuk pemimpin Kristen lintas budaya.
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
             color: "oklch(40% 0.007 260)", marginBottom: "0.875rem",
           }}>
-            He has lived and worked across cultures for nearly two decades. He led NGO and community development teams across Southeast Asia and Africa, and more recently focused on leadership development and training for cross-cultural teams, field workers, and expat leaders.
+            Ia telah hidup dan bekerja lintas budaya selama hampir dua dekade. Ia memimpin tim NGO dan pengembangan komunitas di Asia Tenggara dan Afrika, dan belakangan ini berfokus pada pengembangan kepemimpinan dan pelatihan untuk tim lintas budaya, pekerja lapangan, dan pemimpin ekspatriat.
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
             color: "oklch(40% 0.007 260)",
           }}>
-            Leadership Bytes is his attempt to put leadership thinking in a format that travels well: short enough to read in a meeting break, specific enough to be useful, and honest enough to start a real conversation. Every byte links to the deeper resources for those who want to go further.
+            Leadership Bytes adalah upayanya untuk menyampaikan pemikiran kepemimpinan dalam format yang mudah dipahami: cukup singkat untuk dibaca saat istirahat rapat, cukup spesifik untuk bermanfaat, dan cukup jujur untuk memulai percakapan yang sesungguhnya. Setiap byte terhubung ke sumber yang lebih dalam bagi mereka yang ingin melanjutkan.
           </p>
         </div>
       </section>
