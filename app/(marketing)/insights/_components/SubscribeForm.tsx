@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
   const [email, setEmail] = useState("");
+  const [prefLang, setPrefLang] = useState<"en" | "id">(lang);
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
 
   const copy = {
@@ -10,6 +11,7 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
       label: "GET NEW BYTES",
       heading: "New bytes, straight to your inbox.",
       sub: "A short read every two weeks. No noise.",
+      langLabel: "Receive in:",
       placeholder: "your@email.com",
       button: "Subscribe",
       loading: "Subscribing…",
@@ -21,6 +23,7 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
       label: "BYTES TERBARU",
       heading: "Bytes baru, langsung ke inbox kamu.",
       sub: "Bacaan singkat setiap dua minggu. Tidak ada kebisingan.",
+      langLabel: "Terima dalam:",
       placeholder: "email@kamu.com",
       button: "Langganan",
       loading: "Mendaftar…",
@@ -37,7 +40,7 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, lang: prefLang }),
       });
       const data = await res.json();
       if (data.ok) {
@@ -49,6 +52,12 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
       setStatus("error");
     }
   }
+
+  const pillBase: React.CSSProperties = {
+    fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.62rem",
+    letterSpacing: "0.1em", textTransform: "uppercase",
+    padding: "0.25rem 0.6rem", border: "none", cursor: "pointer",
+  };
 
   return (
     <div style={{
@@ -83,10 +92,35 @@ export function SubscribeForm({ lang = "en" }: { lang?: "en" | "id" }) {
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.875rem",
-            color: "oklch(70% 0.006 260)", marginBottom: "1.5rem",
+            color: "oklch(70% 0.006 260)", marginBottom: "1.25rem",
           }}>
             {copy.sub}
           </p>
+
+          {/* Language preference */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.25rem" }}>
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.65rem",
+              letterSpacing: "0.1em", textTransform: "uppercase",
+              color: "oklch(58% 0.008 260)",
+            }}>
+              {copy.langLabel}
+            </span>
+            {(["en", "id"] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setPrefLang(l)}
+                style={{
+                  ...pillBase,
+                  background: prefLang === l ? "oklch(65% 0.15 45)" : "oklch(30% 0.08 260)",
+                  color: prefLang === l ? "oklch(100% 0 0)" : "oklch(60% 0.006 260)",
+                }}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
           <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
             <input

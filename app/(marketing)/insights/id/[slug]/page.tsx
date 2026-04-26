@@ -222,7 +222,7 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
               fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75,
               color: "oklch(42% 0.007 260)",
             }}>
-              Chris Runhaar telah hidup dan bekerja lintas budaya selama hampir dua dekade, mengembangkan sumber daya kepemimpinan dan pelatihan untuk pekerja lapangan, staf NGO, dan tim lintas budaya. Ia menulis bytes ini bukan sebagai peneliti, melainkan sebagai seseorang yang telah ada di lapangan, berusaha membuat ide kepemimpinan yang kompleks menjadi manusiawi dan dapat diterapkan.
+              Chris Runhaar telah hidup dan bekerja lintas budaya selama hampir dua dekade, mengembangkan sumber daya kepemimpinan dan pelatihan untuk pekerja lapangan, staf NGO, dan tim lintas budaya. Ia menulis bytes ini bukan sebagai peneliti, melainkan sebagai seseorang yang telah ada di lapangan, berusaha membuat ide kepemimpinan yang kompleks menjadi mudah dicerna dan dapat diterapkan.
             </p>
           </div>
 
