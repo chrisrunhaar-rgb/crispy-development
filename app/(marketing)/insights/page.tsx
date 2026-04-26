@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { insights, formatDate } from "@/lib/insights";
+import { InsightsNavDropdown } from "./_components/InsightsNavDropdown";
 
 export const metadata: Metadata = {
   title: "Leadership Bytes — Insights | Crispy Development",
@@ -9,23 +10,23 @@ export const metadata: Metadata = {
 };
 
 export default function InsightsPage() {
+  const latest = insights.slice(0, 3);
+  const archive = insights.slice(3);
+
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       <style>{`
-        .insight-card {
-          background: oklch(100% 0 0);
-          border: 1px solid oklch(88% 0.008 80);
-          padding: 2rem;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          transition: border-color 0.15s, box-shadow 0.15s;
-          text-decoration: none;
+        .bytes-featured:hover .bytes-featured-title {
+          color: oklch(48% 0.12 260);
         }
-        .insight-card:hover {
-          border-color: oklch(65% 0.15 45);
-          box-shadow: 0 4px 24px oklch(22% 0.10 260 / 0.08);
+        .bytes-featured:hover .bytes-read-link {
+          color: oklch(55% 0.13 45);
+        }
+        .bytes-secondary:hover .bytes-secondary-title {
+          color: oklch(48% 0.12 260);
+        }
+        .bytes-secondary:hover .bytes-secondary-read {
+          color: oklch(55% 0.13 45);
         }
       `}</style>
 
@@ -42,7 +43,6 @@ export default function InsightsPage() {
           paddingTop: "clamp(3.5rem, 7vw, 6rem)",
           paddingBottom: "clamp(2.5rem, 5vw, 4rem)",
         }}>
-          {/* Publication masthead identifier */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
             <div style={{
               background: "oklch(65% 0.15 45)",
@@ -83,7 +83,6 @@ export default function InsightsPage() {
           </p>
         </div>
 
-        {/* Editorial meta strip */}
         <div style={{
           background: "oklch(94% 0.006 80)",
           borderTop: "1px solid oklch(88% 0.008 80)",
@@ -110,81 +109,195 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      {/* ── ARTICLE GRID ── */}
+      {/* ── LATEST BYTES ── */}
       <section style={{ padding: "clamp(3rem, 6vw, 5rem) 0" }}>
         <div className="container-wide">
+
+          {/* Featured — latest article */}
+          <Link
+            href={`/insights/${latest[0].slug}`}
+            className="bytes-featured"
+            style={{ display: "block", textDecoration: "none", marginBottom: "3rem" }}
+          >
+            <div style={{ paddingBottom: "2.75rem", borderBottom: "1px solid oklch(88% 0.008 80)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", marginBottom: "1.25rem" }}>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
+                  letterSpacing: "0.18em", textTransform: "uppercase",
+                  color: "oklch(65% 0.15 45)",
+                }}>
+                  {latest[0].tag}
+                </span>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
+                  color: "oklch(62% 0.006 260)",
+                }}>
+                  {latest[0].readMinutes} min read
+                </span>
+              </div>
+
+              <h2
+                className="bytes-featured-title"
+                style={{
+                  fontFamily: "var(--font-cormorant)", fontWeight: 600,
+                  fontSize: "clamp(1.9rem, 4vw, 3rem)", lineHeight: 1.1,
+                  color: "oklch(22% 0.10 260)", marginBottom: "1rem",
+                  transition: "color 0.15s",
+                }}
+              >
+                {latest[0].title}
+              </h2>
+
+              <p style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
+                color: "oklch(42% 0.007 260)", maxWidth: "620px", marginBottom: "1.75rem",
+              }}>
+                {latest[0].hook}
+              </p>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
+                  color: "oklch(58% 0.006 260)",
+                }}>
+                  {formatDate(latest[0].date)}
+                </span>
+                <span
+                  className="bytes-read-link"
+                  style={{
+                    fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem",
+                    letterSpacing: "0.05em", color: "oklch(65% 0.15 45)",
+                    transition: "color 0.15s",
+                  }}
+                >
+                  Read this byte →
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Secondary — next 2 articles */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))",
+            gap: "2rem",
           }}>
-            {insights.map((article) => (
+            {latest.slice(1).map((article) => (
               <Link
                 key={article.slug}
                 href={`/insights/${article.slug}`}
-                className="insight-card"
+                className="bytes-secondary"
+                style={{ display: "block", textDecoration: "none" }}
               >
-                <>
-                  {/* Tag + read time */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
-                      letterSpacing: "0.18em", textTransform: "uppercase",
-                      color: "oklch(65% 0.15 45)",
-                    }}>
-                      {article.tag}
-                    </span>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-                      color: "oklch(62% 0.006 260)",
-                    }}>
-                      {article.readMinutes} min read
-                    </span>
-                  </div>
-
-                  {/* Orange divider */}
-                  <div style={{ width: "40px", height: "3px", background: "oklch(65% 0.15 45)" }} />
-
-                  {/* Title */}
-                  <h2 style={{
-                    fontFamily: "var(--font-cormorant)", fontWeight: 600,
-                    fontSize: "clamp(1.35rem, 2.5vw, 1.65rem)", lineHeight: 1.15,
-                    color: "oklch(22% 0.10 260)", flex: 1,
+                <div style={{ paddingBottom: "1.75rem" }}>
+                  <span style={{
+                    fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
+                    letterSpacing: "0.18em", textTransform: "uppercase",
+                    color: "oklch(65% 0.15 45)", display: "block", marginBottom: "0.75rem",
                   }}>
-                    {article.title}
-                  </h2>
+                    {article.tag}
+                  </span>
 
-                  {/* Hook */}
+                  <h3
+                    className="bytes-secondary-title"
+                    style={{
+                      fontFamily: "var(--font-cormorant)", fontWeight: 600,
+                      fontSize: "clamp(1.3rem, 2.5vw, 1.65rem)", lineHeight: 1.15,
+                      color: "oklch(22% 0.10 260)", marginBottom: "0.875rem",
+                      transition: "color 0.15s",
+                    }}
+                  >
+                    {article.title}
+                  </h3>
+
                   <p style={{
                     fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.65,
-                    color: "oklch(45% 0.006 260)",
+                    color: "oklch(48% 0.007 260)", marginBottom: "1.25rem",
                   }}>
                     {article.hook}
                   </p>
 
-                  {/* Footer */}
                   <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
-                    paddingTop: "1rem", borderTop: "1px solid oklch(92% 0.005 80)",
-                    marginTop: "auto",
+                    paddingTop: "1rem", borderTop: "1px solid oklch(90% 0.006 80)",
                   }}>
                     <span style={{
-                      fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-                      color: "oklch(62% 0.006 260)",
+                      fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
+                      color: "oklch(58% 0.006 260)",
                     }}>
                       {formatDate(article.date)}
                     </span>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.75rem",
-                      letterSpacing: "0.04em", color: "oklch(65% 0.15 45)",
-                    }}>
+                    <span
+                      className="bytes-secondary-read"
+                      style={{
+                        fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.72rem",
+                        color: "oklch(65% 0.15 45)", transition: "color 0.15s",
+                      }}
+                    >
                       Read →
                     </span>
                   </div>
-                </>
+                </div>
               </Link>
             ))}
           </div>
+
+          {/* Archive nav */}
+          {archive.length > 0 && (
+            <div style={{
+              marginTop: "3rem", paddingTop: "2rem",
+              borderTop: "1px solid oklch(88% 0.008 80)",
+              display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap",
+            }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
+                letterSpacing: "0.16em", textTransform: "uppercase",
+                color: "oklch(52% 0.008 260)", whiteSpace: "nowrap",
+              }}>
+                Previous bytes
+              </span>
+              <InsightsNavDropdown
+                articles={archive.map((a) => ({ slug: a.slug, title: a.title }))}
+              />
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* ── ABOUT THE WRITER ── */}
+      <section style={{
+        background: "oklch(94% 0.006 80)",
+        borderTop: "1px solid oklch(88% 0.008 80)",
+        padding: "clamp(2.5rem, 5vw, 4rem) 0",
+      }}>
+        <div className="container-wide" style={{ maxWidth: "720px" }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem",
+            letterSpacing: "0.18em", textTransform: "uppercase",
+            color: "oklch(52% 0.008 260)", marginBottom: "1.25rem",
+          }}>
+            About the writer
+          </p>
+          <p style={{
+            fontFamily: "var(--font-cormorant)", fontStyle: "italic",
+            fontSize: "clamp(1.1rem, 2vw, 1.3rem)", lineHeight: 1.6,
+            color: "oklch(30% 0.008 260)", marginBottom: "1rem",
+          }}>
+            Chris Runhaar is the founder of Crispy Development, a platform for cross-cultural Christian leaders.
+          </p>
+          <p style={{
+            fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
+            color: "oklch(40% 0.007 260)", marginBottom: "0.875rem",
+          }}>
+            He has lived and worked across cultures for nearly two decades, starting in community development and NGO work across Southeast Asia and Africa, and more recently focusing on leadership development and training for cross-cultural teams, field workers, and expat leaders.
+          </p>
+          <p style={{
+            fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75,
+            color: "oklch(40% 0.007 260)",
+          }}>
+            Leadership Bytes is his attempt to put leadership thinking in a format that travels well: short enough to read in a meeting break, specific enough to be useful, and honest enough to start a real conversation. Every byte links to the deeper resources on this site for those who want to go further.
+          </p>
         </div>
       </section>
 
