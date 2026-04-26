@@ -28,7 +28,7 @@ export const insights: Insight[] = [
   {
     slug: "faith-and-the-counselor",
     title: "Faith and the Counsellor: Why Choosing One Doesn't Mean Abandoning the Other",
-    hook: "Many believers quietly assume that seeking professional help is a sign of insufficient faith. It isn't, and that assumption may be costing us more than we know.",
+    hook: "Many believers carry this question without ever saying it out loud: if my faith were stronger, would I still need this?",
     date: "2026-05-17",
     tag: "Wellbeing",
     readMinutes: 4,

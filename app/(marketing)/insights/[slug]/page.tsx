@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { insights, getInsight, formatDate } from "@/lib/insights";
+import { SubscribeForm } from "../_components/SubscribeForm";
 
 export function generateStaticParams() {
   return insights.map(i => ({ slug: i.slug }));
@@ -149,7 +150,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               padding: "2rem",
               border: "1px solid oklch(88% 0.008 80)",
               borderLeft: "4px solid oklch(65% 0.15 45)",
-              background: "oklch(100% 0 0)",
+              background: "oklch(94% 0.006 80)",
             }}>
               <p style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.7rem",
@@ -205,6 +206,8 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               </ul>
             </div>
           )}
+
+          <SubscribeForm lang="en" />
 
           {/* About the writer */}
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
