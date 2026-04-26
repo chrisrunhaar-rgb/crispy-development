@@ -29,23 +29,6 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
-      <style>{`
-        .byte-header-grid {
-          display: grid;
-          grid-template-columns: 1fr clamp(200px, 30vw, 340px);
-          gap: 3rem;
-          align-items: start;
-        }
-        @media (max-width: 640px) {
-          .byte-header-grid {
-            grid-template-columns: 1fr;
-          }
-          .byte-header-grid .byte-illustration {
-            display: none;
-          }
-        }
-      `}</style>
-
       {/* ── ARTICLE HEADER ── */}
       <section style={{
         background: "oklch(97% 0.005 80)",
@@ -54,8 +37,26 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
       }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
 
+        {/* Background illustration watermark */}
+        {article.illustration && (
+          <div style={{
+            position: "absolute", top: "50%", right: "-60px",
+            transform: "translateY(-50%)",
+            width: "clamp(280px, 40vw, 480px)", aspectRatio: "1",
+            pointerEvents: "none", zIndex: 0,
+          }}>
+            <Image
+              src={article.illustration}
+              alt=""
+              fill
+              style={{ objectFit: "contain", mixBlendMode: "multiply", opacity: 0.14 }}
+              sizes="480px"
+            />
+          </div>
+        )}
+
         <div className="container-wide" style={{
-          position: "relative", maxWidth: "1100px",
+          position: "relative", maxWidth: "720px", zIndex: 1,
           paddingTop: "clamp(3rem, 6vw, 5.5rem)",
           paddingBottom: "clamp(2.5rem, 5vw, 4.5rem)",
         }}>
@@ -83,66 +84,48 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
             </div>
           </div>
 
-          {/* Header: text + illustration */}
-          <div className={article.illustration ? "byte-header-grid" : undefined}>
-            <div style={{ maxWidth: "620px" }}>
-              {/* Tag */}
-              <p style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
-                letterSpacing: "0.22em", textTransform: "uppercase",
-                color: "oklch(65% 0.15 45)", marginBottom: "1rem",
-              }}>
-                {article.tag}
-              </p>
+          {/* Tag */}
+          <p style={{
+            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
+            letterSpacing: "0.22em", textTransform: "uppercase",
+            color: "oklch(65% 0.15 45)", marginBottom: "1rem",
+          }}>
+            {article.tag}
+          </p>
 
-              {/* Title */}
-              <h1 style={{
-                fontFamily: "var(--font-cormorant)", fontWeight: 600,
-                fontSize: "clamp(2.2rem, 5vw, 3.5rem)", lineHeight: 1.1,
-                color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
-              }}>
-                {article.id?.title ?? article.title}
-              </h1>
+          {/* Title */}
+          <h1 style={{
+            fontFamily: "var(--font-cormorant)", fontWeight: 600,
+            fontSize: "clamp(2.2rem, 5vw, 3.5rem)", lineHeight: 1.1,
+            color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
+          }}>
+            {article.id?.title ?? article.title}
+          </h1>
 
-              {/* Hook */}
-              <p style={{
-                fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400,
-                fontSize: "clamp(1.15rem, 2.2vw, 1.4rem)", lineHeight: 1.55,
-                color: "oklch(38% 0.007 260)", marginBottom: "2rem",
-              }}>
-                {article.id?.hook ?? article.hook}
-              </p>
+          {/* Hook */}
+          <p style={{
+            fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400,
+            fontSize: "clamp(1.15rem, 2.2vw, 1.4rem)", lineHeight: 1.55,
+            color: "oklch(38% 0.007 260)", marginBottom: "2rem",
+          }}>
+            {article.id?.hook ?? article.hook}
+          </p>
 
-              {/* Meta */}
-              <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-                <span style={{
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-                  color: "oklch(52% 0.008 260)",
-                }}>
-                  {formatDate(article.date)}
-                </span>
-                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "oklch(68% 0.006 260)", display: "inline-block" }} />
-                <span style={{
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-                  color: "oklch(52% 0.008 260)",
-                }}>
-                  {article.readMinutes} menit baca
-                </span>
-              </div>
-            </div>
-
-            {/* Illustration */}
-            {article.illustration && (
-              <div className="byte-illustration" style={{ position: "relative", aspectRatio: "1", width: "100%" }}>
-                <Image
-                  src={article.illustration}
-                  alt=""
-                  fill
-                  style={{ objectFit: "contain" }}
-                  sizes="340px"
-                />
-              </div>
-            )}
+          {/* Meta */}
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
+              color: "oklch(52% 0.008 260)",
+            }}>
+              {formatDate(article.date)}
+            </span>
+            <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "oklch(68% 0.006 260)", display: "inline-block" }} />
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
+              color: "oklch(52% 0.008 260)",
+            }}>
+              {article.readMinutes} menit baca
+            </span>
           </div>
         </div>
       </section>
