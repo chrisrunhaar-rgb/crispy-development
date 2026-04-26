@@ -31,40 +31,88 @@ export default function InsightsPage() {
 
       {/* ── PAGE HEADER ── */}
       <section style={{
-        background: "oklch(22% 0.10 260)",
-        padding: "clamp(3.5rem, 7vw, 6rem) 0 clamp(3rem, 6vw, 5rem)",
+        background: "oklch(27% 0.09 50)",
         position: "relative",
         overflow: "hidden",
       }}>
+        {/* Diagonal line texture — distinct from modules' dot grid */}
         <div aria-hidden="true" style={{
           position: "absolute", inset: 0,
-          backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.05) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
+          backgroundImage: "repeating-linear-gradient(-45deg, oklch(97% 0.005 80 / 0.035) 0px, oklch(97% 0.005 80 / 0.035) 1px, transparent 1px, transparent 18px)",
           pointerEvents: "none",
         }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "oklch(65% 0.15 45)" }} />
 
-        <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem",
-            letterSpacing: "0.22em", textTransform: "uppercase",
-            color: "oklch(65% 0.15 45)", marginBottom: "1.25rem",
-          }}>
-            Insights
-          </p>
+        <div className="container-wide" style={{
+          position: "relative",
+          paddingTop: "clamp(3.5rem, 7vw, 6rem)",
+          paddingBottom: "clamp(2.5rem, 5vw, 4rem)",
+        }}>
+          {/* Publication masthead identifier */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
+            <div style={{
+              background: "oklch(65% 0.15 45)",
+              padding: "0.28rem 0.75rem",
+              display: "inline-flex", alignItems: "center",
+            }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem",
+                letterSpacing: "0.3em", textTransform: "uppercase",
+                color: "oklch(20% 0.06 50)",
+              }}>
+                Bytes
+              </span>
+            </div>
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
+              letterSpacing: "0.16em", textTransform: "uppercase",
+              color: "oklch(62% 0.07 50)",
+            }}>
+              Crispy Development
+            </span>
+          </div>
+
           <h1 style={{
             fontFamily: "var(--font-cormorant)", fontWeight: 600,
-            fontSize: "clamp(2.4rem, 5vw, 4rem)", lineHeight: 1.08,
-            color: "oklch(97% 0.005 80)", marginBottom: "1.25rem",
+            fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)", lineHeight: 1.05,
+            color: "oklch(96% 0.006 80)", marginBottom: "1.5rem",
+            letterSpacing: "-0.01em",
           }}>
-            Leadership Bytes
+            Leadership<br />Bytes
           </h1>
+
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
-            color: "oklch(75% 0.008 260)", maxWidth: "540px",
+            color: "oklch(74% 0.055 50)", maxWidth: "500px",
           }}>
             Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources on this site.
           </p>
+        </div>
+
+        {/* Editorial meta strip */}
+        <div style={{
+          background: "oklch(22% 0.07 50)",
+          borderTop: "1px solid oklch(35% 0.08 50)",
+        }}>
+          <div className="container-wide" style={{
+            display: "flex", alignItems: "center", gap: "1.25rem",
+            paddingTop: "0.8rem", paddingBottom: "0.8rem",
+          }}>
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
+              letterSpacing: "0.16em", textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+            }}>
+              {insights.length} articles
+            </span>
+            <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(42% 0.07 50)", display: "inline-block" }} />
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
+              color: "oklch(56% 0.06 50)",
+            }}>
+              Updated regularly
+            </span>
+          </div>
         </div>
       </section>
 
