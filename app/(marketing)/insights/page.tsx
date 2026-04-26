@@ -11,6 +11,23 @@ export const metadata: Metadata = {
 export default function InsightsPage() {
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
+      <style>{`
+        .insight-card {
+          background: oklch(100% 0 0);
+          border: 1px solid oklch(88% 0.008 80);
+          padding: 2rem;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          transition: border-color 0.15s, box-shadow 0.15s;
+          text-decoration: none;
+        }
+        .insight-card:hover {
+          border-color: oklch(65% 0.15 45);
+          box-shadow: 0 4px 24px oklch(22% 0.10 260 / 0.08);
+        }
+      `}</style>
 
       {/* ── PAGE HEADER ── */}
       <section style={{
@@ -63,27 +80,9 @@ export default function InsightsPage() {
               <Link
                 key={article.slug}
                 href={`/insights/${article.slug}`}
-                style={{ textDecoration: "none", display: "block" }}
+                className="insight-card"
               >
-                <article style={{
-                  background: "oklch(100% 0 0)",
-                  border: "1px solid oklch(88% 0.008 80)",
-                  padding: "2rem",
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  transition: "border-color 0.15s, box-shadow 0.15s",
-                }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "oklch(65% 0.15 45)";
-                    (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px oklch(22% 0.10 260 / 0.08)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "oklch(88% 0.008 80)";
-                    (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                  }}
-                >
+                <>
                   {/* Tag + read time */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{
@@ -140,7 +139,7 @@ export default function InsightsPage() {
                       Read →
                     </span>
                   </div>
-                </article>
+                </>
               </Link>
             ))}
           </div>
