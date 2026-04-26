@@ -29,6 +29,22 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
+      <style>{`
+        .byte-header-grid {
+          display: grid;
+          grid-template-columns: 1fr clamp(200px, 30vw, 340px);
+          gap: 3rem;
+          align-items: start;
+        }
+        @media (max-width: 640px) {
+          .byte-header-grid {
+            grid-template-columns: 1fr;
+          }
+          .byte-header-grid .byte-illustration {
+            display: none;
+          }
+        }
+      `}</style>
 
       {/* ── ARTICLE HEADER ── */}
       <section style={{
@@ -39,7 +55,7 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
 
         <div className="container-wide" style={{
-          position: "relative", maxWidth: article.illustration ? "1100px" : "720px",
+          position: "relative", maxWidth: "1100px",
           paddingTop: "clamp(3rem, 6vw, 5.5rem)",
           paddingBottom: "clamp(2.5rem, 5vw, 4.5rem)",
         }}>
@@ -68,12 +84,7 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
           </div>
 
           {/* Header: text + illustration */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: article.illustration ? "1fr clamp(200px, 30vw, 340px)" : "1fr",
-            gap: "3rem",
-            alignItems: "start",
-          }}>
+          <div className={article.illustration ? "byte-header-grid" : undefined}>
             <div style={{ maxWidth: "620px" }}>
               {/* Tag */}
               <p style={{
@@ -122,13 +133,13 @@ export default async function InsightIdPage({ params }: { params: Promise<{ slug
 
             {/* Illustration */}
             {article.illustration && (
-              <div style={{ position: "relative", aspectRatio: "1", width: "100%" }}>
+              <div className="byte-illustration" style={{ position: "relative", aspectRatio: "1", width: "100%" }}>
                 <Image
                   src={article.illustration}
                   alt=""
                   fill
-                  style={{ objectFit: "cover" }}
-                  sizes="(max-width: 768px) 100vw, 340px"
+                  style={{ objectFit: "contain" }}
+                  sizes="340px"
                 />
               </div>
             )}
