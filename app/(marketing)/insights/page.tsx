@@ -31,17 +31,11 @@ export default function InsightsPage() {
 
       {/* ── PAGE HEADER ── */}
       <section style={{
-        background: "oklch(27% 0.09 50)",
+        background: "oklch(97% 0.005 80)",
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Diagonal line texture — distinct from modules' dot grid */}
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0,
-          backgroundImage: "repeating-linear-gradient(-45deg, oklch(97% 0.005 80 / 0.035) 0px, oklch(97% 0.005 80 / 0.035) 1px, transparent 1px, transparent 18px)",
-          pointerEvents: "none",
-        }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "oklch(65% 0.15 45)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
 
         <div className="container-wide" style={{
           position: "relative",
@@ -58,7 +52,7 @@ export default function InsightsPage() {
               <span style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem",
                 letterSpacing: "0.3em", textTransform: "uppercase",
-                color: "oklch(20% 0.06 50)",
+                color: "oklch(97% 0.005 80)",
               }}>
                 Bytes
               </span>
@@ -66,7 +60,7 @@ export default function InsightsPage() {
             <span style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
               letterSpacing: "0.16em", textTransform: "uppercase",
-              color: "oklch(62% 0.07 50)",
+              color: "oklch(55% 0.008 260)",
             }}>
               Crispy Development
             </span>
@@ -75,7 +69,7 @@ export default function InsightsPage() {
           <h1 style={{
             fontFamily: "var(--font-cormorant)", fontWeight: 600,
             fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)", lineHeight: 1.05,
-            color: "oklch(96% 0.006 80)", marginBottom: "1.5rem",
+            color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
             letterSpacing: "-0.01em",
           }}>
             Leadership<br />Bytes
@@ -83,7 +77,7 @@ export default function InsightsPage() {
 
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
-            color: "oklch(74% 0.055 50)", maxWidth: "500px",
+            color: "oklch(45% 0.008 260)", maxWidth: "500px",
           }}>
             Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources on this site.
           </p>
@@ -91,8 +85,8 @@ export default function InsightsPage() {
 
         {/* Editorial meta strip */}
         <div style={{
-          background: "oklch(22% 0.07 50)",
-          borderTop: "1px solid oklch(35% 0.08 50)",
+          background: "oklch(94% 0.006 80)",
+          borderTop: "1px solid oklch(88% 0.008 80)",
         }}>
           <div className="container-wide" style={{
             display: "flex", alignItems: "center", gap: "1.25rem",
@@ -105,10 +99,10 @@ export default function InsightsPage() {
             }}>
               {insights.length} articles
             </span>
-            <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(42% 0.07 50)", display: "inline-block" }} />
+            <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
             <span style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-              color: "oklch(56% 0.06 50)",
+              color: "oklch(55% 0.008 260)",
             }}>
               Updated regularly
             </span>

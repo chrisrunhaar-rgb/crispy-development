@@ -30,18 +30,17 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
 
       {/* ── ARTICLE HEADER ── */}
       <section style={{
-        background: "oklch(22% 0.10 260)",
-        padding: "clamp(3rem, 6vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4.5rem)",
+        background: "oklch(97% 0.005 80)",
         position: "relative", overflow: "hidden",
+        borderBottom: "1px solid oklch(88% 0.008 80)",
       }}>
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0,
-          backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.05) 1px, transparent 1px)",
-          backgroundSize: "32px 32px", pointerEvents: "none",
-        }} />
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
 
-        <div className="container-wide" style={{ position: "relative", maxWidth: "720px" }}>
+        <div className="container-wide" style={{
+          position: "relative", maxWidth: "720px",
+          paddingTop: "clamp(3rem, 6vw, 5.5rem)",
+          paddingBottom: "clamp(2.5rem, 5vw, 4.5rem)",
+        }}>
           {/* Breadcrumb */}
           <Link href="/insights" style={{
             fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.7rem",
@@ -57,7 +56,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           <p style={{
             fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
             letterSpacing: "0.22em", textTransform: "uppercase",
-            color: "oklch(65% 0.15 45 / 0.75)", marginBottom: "1rem",
+            color: "oklch(65% 0.15 45)", marginBottom: "1rem",
           }}>
             {article.tag}
           </p>
@@ -66,7 +65,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           <h1 style={{
             fontFamily: "var(--font-cormorant)", fontWeight: 600,
             fontSize: "clamp(2.2rem, 5vw, 3.5rem)", lineHeight: 1.1,
-            color: "oklch(97% 0.005 80)", marginBottom: "1.5rem",
+            color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
           }}>
             {article.title}
           </h1>
@@ -75,7 +74,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           <p style={{
             fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400,
             fontSize: "clamp(1.15rem, 2.2vw, 1.4rem)", lineHeight: 1.55,
-            color: "oklch(78% 0.008 260)", marginBottom: "2rem",
+            color: "oklch(38% 0.007 260)", marginBottom: "2rem",
           }}>
             {article.hook}
           </p>
@@ -84,14 +83,14 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <span style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-              color: "oklch(62% 0.006 260)",
+              color: "oklch(52% 0.008 260)",
             }}>
               {formatDate(article.date)}
             </span>
-            <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "oklch(50% 0.006 260)", display: "inline-block" }} />
+            <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "oklch(68% 0.006 260)", display: "inline-block" }} />
             <span style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
-              color: "oklch(62% 0.006 260)",
+              color: "oklch(52% 0.008 260)",
             }}>
               {article.readMinutes} min read
             </span>
@@ -175,6 +174,23 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
               </ul>
             </div>
           )}
+
+          {/* About the writer */}
+          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
+            <p style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.68rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              color: "oklch(52% 0.008 260)", marginBottom: "0.75rem",
+            }}>
+              About the writer
+            </p>
+            <p style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75,
+              color: "oklch(42% 0.007 260)",
+            }}>
+              Chris Runhaar has lived and worked across cultures for over two decades, developing resources and training for missionaries, expat leaders, and international teams. He writes these bytes not as a researcher but as someone who has been in the field — trying to make complex leadership ideas human-sized and actionable.
+            </p>
+          </div>
 
           {/* Back link */}
           <div style={{ marginTop: "3.5rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
