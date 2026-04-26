@@ -34,8 +34,8 @@ export const insights: Insight[] = [
     readMinutes: 4,
     illustration: "/bytes/faith-and-the-counselor.jpg",
     furtherReading: [
-      { label: "Focus on the Family — Counselling Referrals", url: "https://www.focusonthefamily.com" },
-      { label: "Biblical Counseling Coalition", url: "https://www.biblicalcounselingcoalition.org" },
+      { label: "Focus on the Family — Counselling Services & Referrals", url: "https://www.focusonthefamily.com/get-help/counseling-services-and-referrals/" },
+      { label: "Biblical Counseling Coalition — Resources", url: "https://www.biblicalcounselingcoalition.org/resources/" },
     ],
     body: `Here is a belief I've encountered in almost every Christian community I've worked in, across widely different cultures: that seeking professional psychological help is, somewhere underneath the surface, a small act of faithlessness. That a person who truly trusts God finds healing through prayer, community, and Scripture, and that reaching for something more is reaching past God to find it.
 
@@ -64,7 +64,7 @@ What would it take for your community to make it safe to ask for help?`,
     resourceSlug: "leadership-altitudes",
     resourceLabel: "Leadership Altitudes",
     furtherReading: [
-      { label: "The Gospel Coalition — Leadership & Calling", url: "https://www.thegospelcoalition.org" },
+      { label: "The Maddening Paradox of Leadership — The Gospel Coalition", url: "https://www.thegospelcoalition.org/article/paradox-of-leadership/" },
     ],
     body: `There's a kind of busyness that feels like faithfulness. Full calendar. Active email. Constant coordination. Always needed somewhere. It can go on for years before the question surfaces: what am I actually building here?
 
@@ -93,8 +93,8 @@ Where in your work are you too close right now to see clearly?`,
     readMinutes: 4,
     illustration: "/bytes/burnout-the-word-we-dont-say.jpg",
     furtherReading: [
-      { label: "Burnout & Ministry Resilience — Christianity Today", url: "https://www.christianitytoday.com" },
-      { label: "Member Care for Field Workers — Lausanne Movement", url: "https://lausanne.org" },
+      { label: "I Am a Survivor of Pastoral Exhaustion — Christianity Today", url: "https://www.christianitytoday.com/2017/08/i-am-survivor-of-pastoral-exhaustion/" },
+      { label: "Burnout Among Missionaries — Lausanne Movement", url: "https://lausanne.org/global-analysis/burnout-among-missionaries" },
     ],
     body: `In cross-cultural faith circles, burnout tends to live in a particular kind of silence. Not because people don't feel it. They do. But because naming it feels like naming a failure. The unspoken logic: if you're truly trusting God, you'll find the strength. If the calling is real, the resources will come. Struggle is a private matter.
 
