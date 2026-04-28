@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat, Cormorant_Garamond, Kalam } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import PwaRegister from "@/components/PwaRegister";
@@ -121,7 +120,6 @@ export default function RootLayout({
           </LanguageProvider>
         </ErrorBoundary>
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
