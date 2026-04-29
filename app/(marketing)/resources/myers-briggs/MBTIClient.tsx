@@ -1,6 +1,8 @@
 ﻿"use client";
 
 import { useState, useTransition } from "react";
+import Image from "next/image";
+import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveMBTIResult } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
@@ -277,6 +279,110 @@ const DIMENSION_META = [
   { d: "JP", label: "Orientation", poleA: "J", labelA: "Judging", poleB: "P", labelB: "Perceiving", color: "oklch(50% 0.20 25)" },
 ];
 
+const TEMPERAMENTS = [
+  {
+    code: "NT",
+    name: { en: "Analysts", id: "Analis", nl: "Analysten" },
+    tagline: { en: "Strategic visionaries who lead through intellect and independence.", id: "Visioner strategis yang memimpin melalui kecerdasan dan kemandirian.", nl: "Strategische visionairs die leiden via intellect en onafhankelijkheid." },
+    types: ["INTJ", "INTP", "ENTJ", "ENTP"],
+    color: "oklch(50% 0.20 285)",
+    colorLight: "oklch(95% 0.04 285)",
+  },
+  {
+    code: "NF",
+    name: { en: "Diplomats", id: "Diplomat", nl: "Diplomaten" },
+    tagline: { en: "Empathetic visionaries who lead through values, meaning, and care for people.", id: "Visioner berempati yang memimpin melalui nilai, makna, dan kepedulian.", nl: "Empathische visionairs die leiden door waarden, betekenis en zorg voor mensen." },
+    types: ["INFJ", "INFP", "ENFJ", "ENFP"],
+    color: "oklch(48% 0.20 145)",
+    colorLight: "oklch(95% 0.04 145)",
+  },
+  {
+    code: "SJ",
+    name: { en: "Sentinels", id: "Penjaga", nl: "Schildwachten" },
+    tagline: { en: "Dependable builders who lead through structure, duty, and faithful execution.", id: "Pembangun andal yang memimpin melalui struktur, kewajiban, dan eksekusi setia.", nl: "Betrouwbare bouwers die leiden door structuur, plicht en loyale uitvoering." },
+    types: ["ISTJ", "ISFJ", "ESTJ", "ESFJ"],
+    color: "oklch(48% 0.20 225)",
+    colorLight: "oklch(95% 0.04 225)",
+  },
+  {
+    code: "SP",
+    name: { en: "Explorers", id: "Penjelajah", nl: "Verkenners" },
+    tagline: { en: "Adaptable, present-moment leaders who act decisively with what is available right now.", id: "Pemimpin adaptif yang bertindak tegas dengan apa yang tersedia sekarang.", nl: "Aanpasbare, momentgerichte leiders die daadkrachtig handelen met wat nu beschikbaar is." },
+    types: ["ISTP", "ISFP", "ESTP", "ESFP"],
+    color: "oklch(55% 0.22 70)",
+    colorLight: "oklch(96% 0.05 70)",
+  },
+];
+
+const TEMPERAMENT_EMBLEMS: Record<string, { src: string; alt: string }> = {
+  NT: { src: "/mbti-emblem-nt.png", alt: "Compass over a chess board — NT Analyst emblem" },
+  NF: { src: "/mbti-emblem-nf.png", alt: "Tree with deep roots — NF Diplomat emblem" },
+  SJ: { src: "/mbti-emblem-sj.png", alt: "Foundation stone — SJ Sentinel emblem" },
+  SP: { src: "/mbti-emblem-sp.png", alt: "Mountain trail with footprints — SP Explorer emblem" },
+};
+
+const BIBLICAL_ANCHORS = [
+  {
+    figure: "Daniel",
+    temperament: { en: "NT — Analysts", id: "NT — Analis", nl: "NT — Analysten" },
+    reference: "Daniel 1–6",
+    color: "oklch(50% 0.20 285)",
+    text: {
+      en: "Daniel exemplifies the NT temperament — combining strategic intellect with long-range vision. As a captive in Babylon, he navigated complex political systems without compromising his values, offered insightful interpretation to power, and refused short-term pragmatism when it conflicted with deeper conviction. His mind was sharp; his integrity was sharper.",
+      id: "Daniel mencerminkan temperamen NT — memadukan kecerdasan strategis dengan visi jangka panjang. Sebagai tawanan di Babel, ia menavigasi sistem politik yang kompleks tanpa mengorbankan nilai-nilainya, memberikan interpretasi yang tajam kepada penguasa, dan menolak pragmatisme jangka pendek ketika bertentangan dengan keyakinan yang lebih dalam. Pikirannya tajam; integritasnya lebih tajam lagi.",
+      nl: "Daniël belichaamt het NT-temperament — hij combineerde strategisch intellect met een langetermijnvisie. Als gevangene in Babel navigeerde hij complexe politieke systemen zonder zijn waarden te compromitteren, bood hij inzichtvolle interpretatie aan de macht, en weigerde korte-termijn pragmatisme wanneer dit in strijd was met een diepere overtuiging. Zijn geest was scherp; zijn integriteit nog scherper.",
+    },
+  },
+  {
+    figure: "John",
+    temperament: { en: "NF — Diplomats", id: "NF — Diplomat", nl: "NF — Diplomaten" },
+    reference: "John 13–21; 1 John",
+    color: "oklch(48% 0.20 145)",
+    text: {
+      en: "John the apostle reflects the NF temperament — led by love, vision, and deep relational sensitivity. His Gospel opens with the cosmic and moves consistently toward the personal. He was the one leaning on Jesus at the table — and the one standing at the cross when others had fled. His letters return again and again to the same theme: love one another. NF leadership at its best.",
+      id: "Rasul Yohanes mencerminkan temperamen NF — dipimpin oleh kasih, visi, dan kepekaan relasional yang mendalam. Injilnya dibuka dengan yang kosmis dan bergerak secara konsisten menuju yang personal. Ia yang bersandar kepada Yesus di meja makan — dan yang berdiri di salib ketika yang lain melarikan diri. Surat-suratnya berulang kali kembali ke tema yang sama: saling mengasihi. Kepemimpinan NF pada yang terbaik.",
+      nl: "Johannes de apostel weerspiegelt het NF-temperament — geleid door liefde, visie en diepe relationele gevoeligheid. Zijn Evangelie opent met het kosmische en beweegt consequent naar het persoonlijke. Hij leunde op Jezus aan tafel — en stond bij het kruis toen anderen waren gevlucht. Zijn brieven keren steeds terug naar hetzelfde thema: heb elkaar lief. NF-leiderschap op zijn best.",
+    },
+  },
+  {
+    figure: "Nehemiah",
+    temperament: { en: "SJ — Sentinels", id: "SJ — Penjaga", nl: "SJ — Schildwachten" },
+    reference: "Nehemiah 1–6",
+    color: "oklch(48% 0.20 225)",
+    text: {
+      en: "Nehemiah is perhaps the clearest SJ leader in Scripture. He assessed the situation methodically, built a realistic plan, organised teams by section, and drove the work to completion in 52 days. He was faithful to authority, attentive to detail, and unwilling to be distracted from the mission. His greatest act of leadership may have been simply showing up — every day, rebuilding the wall.",
+      id: "Nehemia mungkin adalah pemimpin SJ yang paling jelas dalam Kitab Suci. Ia menilai situasi secara metodis, membangun rencana yang realistis, mengorganisir tim per seksi, dan mendorong pekerjaan hingga selesai dalam 52 hari. Ia setia pada otoritas, penuh perhatian terhadap detail, dan tidak mau terganggu dari misi. Tindakan kepemimpinannya yang terbesar mungkin hanyalah hadir — setiap hari, membangun kembali tembok.",
+      nl: "Nehemia is misschien wel de duidelijkste SJ-leider in de Schrift. Hij beoordeelde de situatie methodisch, bouwde een realistisch plan, organiseerde teams per sectie en dreef het werk in 52 dagen tot voltooiing. Hij was trouw aan het gezag, aandachtig voor detail en weigerde zich te laten afleiden van de missie. Zijn grootste daad van leiderschap was misschien gewoon opdagen — elke dag, de muur herbouwend.",
+    },
+  },
+  {
+    figure: "David",
+    temperament: { en: "SP — Explorers", id: "SP — Penjelajah", nl: "SP — Verkenners" },
+    reference: "1 Samuel 17",
+    color: "oklch(55% 0.22 70)",
+    text: {
+      en: "The young David embodies the SP temperament — spontaneous, physically present, and supremely gifted in reading the moment. He could not wear Saul's armour; he needed to fight his own way with his own tools. He ran toward Goliath when others retreated. SP leadership doesn't wait for the perfect system — it acts with what is available, right now, and trusts the outcome to God.",
+      id: "Daud muda mewujudkan temperamen SP — spontan, hadir secara fisik, dan sangat berbakat dalam membaca momen. Ia tidak bisa mengenakan baju zirah Saul; ia perlu bertarung dengan caranya sendiri menggunakan alatnya sendiri. Ia berlari menuju Goliat ketika yang lain mundur. Kepemimpinan SP tidak menunggu sistem yang sempurna — ia bertindak dengan apa yang tersedia, sekarang juga, dan mempercayakan hasilnya kepada Allah.",
+      nl: "De jonge David belichaamt het SP-temperament — spontaan, fysiek aanwezig en buitengewoon begaafd in het lezen van het moment. Hij kon Sauls harnas niet dragen; hij moest op zijn eigen manier vechten met zijn eigen gereedschap. Hij rende op Goliath af terwijl anderen terugtrokken. SP-leiderschap wacht niet op het perfecte systeem — het handelt met wat beschikbaar is, nu, en vertrouwt de uitkomst aan God toe.",
+    },
+  },
+];
+
+const VIDEOS_MBTI = [
+  {
+    id: "HifcDCyqGXg",
+    title: "Understanding Your Myers-Briggs Type",
+    description: "A practical introduction to how the MBTI works, what the 16 types reveal, and how to use your results for genuine self-awareness and leadership growth.",
+    duration: "12 min",
+  },
+  {
+    id: "YMyofREc5Jk",
+    title: "Cross-Cultural Leadership",
+    description: "Pellegrino Riccardi at TEDxBergen — a compelling look at how personality and culture intersect, and what it means to lead authentically across both.",
+    duration: "TEDx",
+  },
+];
+
 export default function MBTIClient({
   isSaved: isSavedProp,
   savedType,
@@ -286,6 +392,12 @@ export default function MBTIClient({
   savedType: string | null;
   savedScores: Record<string, number> | null;
 }) {
+  const { lang: _lang } = useLanguage();
+  const lang = (_lang === "id" || _lang === "nl" ? _lang : "en") as Lang;
+  function tr(en: string, id: string, nl: string) {
+    return lang === "id" ? id : lang === "nl" ? nl : en;
+  }
+
   const [quizState, setQuizState] = useState<QuizState>(savedType && savedScores ? "done" : "idle");
   const [currentIdx, setCurrentIdx] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>(
@@ -295,6 +407,9 @@ export default function MBTIClient({
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedType);
   const [isPending, startTransition] = useTransition();
+  const [expandedType, setExpandedType] = useState<string | null>(null);
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [mbtiFlippedCard, setMbtiFlippedCard] = useState<string | null>(null);
 
   function startQuiz() {
     setCurrentIdx(0);
@@ -348,105 +463,399 @@ export default function MBTIClient({
   // ── IDLE ────────────────────────────────────────────────────────────────────
   if (quizState === "idle") {
     return (
-      <div style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Source Serif 4', Georgia, serif" }}>
+      <>
         <LangToggle />
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Jost:wght@300;400;500;600&display=swap');
-          .mbti-btn { transition: all 0.18s ease; cursor: pointer; }
-          .mbti-btn:hover { transform: translateY(-1px); }
+          .mbti-flip-card { cursor: pointer; perspective: 1200px; height: 230px; }
+          .mbti-flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s ease; transform-style: preserve-3d; }
+          .mbti-flip-inner.flipped { transform: rotateY(180deg); }
+          .mbti-flip-front, .mbti-flip-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 1.75rem 2rem; display: flex; flex-direction: column; justify-content: space-between; }
+          .mbti-flip-front { background: white; border: 1px solid oklch(88% 0.008 260); }
+          .mbti-flip-back { transform: rotateY(180deg); background: oklch(22% 0.10 260); }
+          .mbti-type-btn { transition: border-color 0.12s, background 0.12s; cursor: pointer; border: 1px solid oklch(88% 0.008 260); background: white; text-align: left; padding: 1rem; width: 100%; }
+          .mbti-type-btn:hover { border-color: var(--tc); background: oklch(98% 0.005 260); }
+          .mbti-type-btn.active { border: 2px solid var(--tc); background: var(--tl); }
         `}</style>
 
-        <div style={{ background: "oklch(25% 0.08 45)", color: "white", padding: "72px 24px 64px" }}>
-          <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-              Personal Development · Assessment
-            </p>
-            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
-              Myers-Briggs<br />
-              <em style={{ fontStyle: "italic", color: "oklch(78% 0.08 45)" }}>Type Indicator</em>
-            </h1>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 17, fontWeight: 400, lineHeight: 1.7, color: "oklch(80% 0.05 45)", maxWidth: 580 }}>
-              One of the most widely used personality frameworks in the world — rooted in Jungian psychology and used by millions of leaders, teams, and organisations to understand how people think, decide, and relate.
-            </p>
-            <button
-              onClick={startQuiz}
-              className="mbti-btn"
-              style={{ marginTop: 36, padding: "14px 36px", background: "oklch(62% 0.18 45)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 16, fontWeight: 600 }}
-            >
-              Start Assessment →
-            </button>
+        {/* ── HERO ── */}
+        <section style={{ background: "oklch(18% 0.12 260)", paddingTop: "clamp(2.5rem, 5vw, 5rem)", paddingBottom: "clamp(2.5rem, 5vw, 5rem)", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "clamp(200px, 42%, 520px)", overflow: "hidden", opacity: 0.22, pointerEvents: "none" }}>
+            <Image src="/mbti-hero.png" alt="" fill style={{ objectFit: "cover", objectPosition: "center top" }} priority />
           </div>
-        </div>
-
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "56px 24px" }}>
-          <section style={{ marginBottom: 52 }}>
-            <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 16 }}>
-              What is the Myers-Briggs Type Indicator?
-            </h2>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(28% 0.04 45)", marginBottom: 14 }}>
-              The Myers-Briggs Type Indicator (MBTI) was developed by Isabel Briggs Myers and her mother Katharine Cook Briggs in the 1940s, drawing on the psychological theories of Carl Jung. It identifies how people prefer to direct their energy, take in information, make decisions, and organise their lives — producing one of 16 distinct personality types.
+          <div className="container-wide" style={{ position: "relative" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1.25rem" }}>
+              {tr("Personal Development · Assessment", "Pengembangan Diri · Penilaian", "Persoonlijke Ontwikkeling · Beoordeling")}
             </p>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(28% 0.04 45)" }}>
-              The MBTI is used in team-building, leadership development, coaching, and cross-cultural work in organisations around the world. It offers a language for understanding why people think, communicate, and lead differently — and what each style brings to a team.
+            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "16ch" }}>
+              Myers-Briggs<br />
+              <em style={{ fontStyle: "italic", color: "oklch(65% 0.15 45)" }}>
+                {tr("Type Indicator.", "Indikator Tipe.", "Type Indicator.")}
+              </em>
+            </h1>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 560, marginBottom: "2.5rem" }}>
+              {tr(
+                "One of the most widely used personality frameworks in the world — rooted in Jungian psychology and used by millions of leaders, teams, and organisations.",
+                "Salah satu kerangka kepribadian yang paling banyak digunakan di dunia — berakar pada psikologi Jung dan digunakan oleh jutaan pemimpin, tim, dan organisasi.",
+                "Een van de meest gebruikte persoonlijkheidsmodellen ter wereld — geworteld in de psychologie van Jung en gebruikt door miljoenen leiders, teams en organisaties."
+              )}
             </p>
-          </section>
-
-          <section style={{ marginBottom: 52 }}>
-            <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 8 }}>
-              The Jungian Foundations
-            </h2>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(40% 0.04 45)", marginBottom: 24 }}>
-              Jung identified two core mental processes: <em>perception</em> (how we gather information) and <em>judgement</em> (how we make decisions). The MBTI adds two further dimensions to produce four preference pairs.
-            </p>
-            <div style={{ display: "grid", gap: 14 }}>
-              {[
-                { pair: "Extraversion / Introversion", desc: "Where do you direct your mental energy? Outward to people and action, or inward to thoughts and reflection?", detail: "This is Jung's most fundamental distinction — not about shyness or sociability, but about where you naturally draw energy." },
-                { pair: "Sensing / Intuition", desc: "How do you take in information? Through concrete present facts, or through patterns and future possibilities?", detail: "Jung called these the two perception functions — the two radically different ways humans pay attention to the world." },
-                { pair: "Thinking / Feeling", desc: "How do you make decisions? Through logical analysis and objective criteria, or through personal values and interpersonal impact?", detail: "Both are rational functions — Thinking applies objective principles; Feeling applies subjective values. Neither is emotional vs rational." },
-                { pair: "Judging / Perceiving", desc: "How do you organise your outer world? With structure and closure, or with flexibility and openness?", detail: "Myers and Briggs added this fourth dimension to identify which function — judgement or perception — each type shows to the world." },
-              ].map(item => (
-                <div key={item.pair} style={{ background: "white", borderRadius: 12, padding: "20px 24px", border: "1px solid oklch(88% 0.03 45)" }}>
-                  <div style={{ fontFamily: "'Source Serif 4', serif", fontSize: 18, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 8 }}>{item.pair}</div>
-                  <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(32% 0.04 45)", lineHeight: 1.65, marginBottom: 8 }}>{item.desc}</p>
-                  <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 13, color: "oklch(50% 0.04 45)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>{item.detail}</p>
-                </div>
-              ))}
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+              <button onClick={startQuiz} className="btn-primary">
+                {tr("Discover Your Type →", "Temukan Tipe Anda →", "Ontdek jouw type →")}
+              </button>
+              <a href="#mbti-types" className="btn-ghost" style={{ textDecoration: "none" }}>
+                {tr("Explore the 16 Types", "Jelajahi 16 Tipe", "Verken de 16 typen")}
+              </a>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section style={{ marginBottom: 48 }}>
-            <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 8 }}>
-              How This Assessment Works
-            </h2>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(40% 0.04 45)", marginBottom: 20 }}>
-              Unlike typical Likert-scale assessments, the MBTI uses <strong>forced-choice pairs</strong> — you choose which of two statements feels more like you. This approach was designed by Myers to reveal natural preferences more directly.
+        {/* ── FOUR DIMENSIONS ── */}
+        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
+          <div className="container-wide">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {tr("Jungian Foundations", "Fondasi Jungian", "Jungiaanse grondslagen")}
             </p>
-            <div style={{ background: "white", borderRadius: 16, padding: "28px 32px", border: "1px solid oklch(88% 0.03 45)" }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(18% 0.08 260)", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+              {tr("Four preferences that shape every leader", "Empat preferensi yang membentuk setiap pemimpin", "Vier voorkeuren die elke leider vormen")}
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
+              {tr(
+                "Jung identified two core mental processes: perception (how we gather information) and judgement (how we make decisions). The MBTI adds two dimensions to produce four preference pairs. Click any card to explore.",
+                "Jung mengidentifikasi dua proses mental inti: persepsi dan penilaian. MBTI menambahkan dua dimensi untuk menghasilkan empat pasang preferensi. Klik kartu mana pun untuk menjelajahi.",
+                "Jung identificeerde twee kernprocessen: perceptie en oordeel. De MBTI voegt twee dimensies toe om vier voorkeurspaarden te produceren. Klik op een kaart om te verkennen."
+              )}
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
               {[
-                ["40 forced-choice pairs", "Choose the option that feels more like your natural self."],
-                ["No right or wrong", "Every type has genuine leadership strengths."],
-                ["Be honest, not ideal", "Describe how you are — not who you aspire to be."],
-                ["Takes about 8–10 minutes", "Find a quiet moment for the most accurate result."],
-              ].map(([label, desc]) => (
-                <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid oklch(94% 0.02 45)" }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "oklch(55% 0.12 45)", marginTop: 8, flexShrink: 0 }} />
-                  <div>
-                    <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.06 45)" }}>{label} — </span>
-                    <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(38% 0.04 45)" }}>{desc}</span>
+                {
+                  id: "EI",
+                  pair: tr("Extraversion / Introversion", "Ekstraversi / Introversi", "Extraversie / Introversie"),
+                  front: tr("Where do you direct your mental energy — outward to people and activity, or inward to thought and reflection?", "Ke mana Anda mengarahkan energi mental — keluar ke orang-orang dan aktivitas, atau ke dalam pikiran dan refleksi?", "Waar richt je je mentale energie op — naar buiten of naar binnen?"),
+                  back: tr("Not about shyness or sociability — but where you naturally draw energy. Extraverts recharge through interaction; introverts through solitude. Both are equally capable leaders.", "Bukan tentang pemalu — tetapi di mana Anda secara alami mengambil energi. Ekstravert mengisi ulang melalui interaksi; introvert melalui kesendirian.", "Niet over verlegenheid — maar waar je van nature energie uitput. Extraverten laden op via interactie; introverten via solitude."),
+                  color: "oklch(60% 0.18 52)",
+                },
+                {
+                  id: "SN",
+                  pair: tr("Sensing / Intuition", "Penginderaan / Intuisi", "Zintuiglijk / Intuïtie"),
+                  front: tr("How do you take in information — through concrete present facts, or through patterns and future possibilities?", "Bagaimana Anda menerima informasi — melalui fakta konkret atau melalui pola dan kemungkinan masa depan?", "Hoe neem je informatie op — via concrete feiten of via patronen en mogelijkheden?"),
+                  back: tr("Jung's two perception functions — radically different ways of paying attention. Sensors trust experience; Intuitives trust imagination and insight. Neither is more intelligent — they simply notice different things.", "Dua fungsi persepsi Jung. Sensing mempercayai pengalaman; Intuisi mempercayai imajinasi. Keduanya sama cerdasnya — hanya memperhatikan hal yang berbeda.", "Jungs twee perceptiefuncties. Sensors vertrouwen op ervaring; Intuitieven op verbeelding. Beide even intelligent — ze letten gewoon op verschillende dingen."),
+                  color: "oklch(52% 0.22 280)",
+                },
+                {
+                  id: "TF",
+                  pair: tr("Thinking / Feeling", "Pemikiran / Perasaan", "Denken / Gevoel"),
+                  front: tr("How do you make decisions — through logical analysis and objective criteria, or through personal values and interpersonal impact?", "Bagaimana Anda membuat keputusan — melalui analisis logis atau melalui nilai-nilai pribadi dan dampak interpersonal?", "Hoe neem je beslissingen — via logische analyse of via persoonlijke waarden?"),
+                  back: tr("Both are rational functions. Thinking applies objective principles; Feeling applies subjective values. This isn't 'emotional vs rational' — both reason carefully, just using different criteria.", "Keduanya adalah fungsi rasional. Pemikiran menerapkan prinsip objektif; Perasaan menerapkan nilai subjektif. Bukan 'emosional vs rasional' — keduanya beralasan, hanya berbeda.", "Beide rationele functies. Denken past objectieve principes toe; Gevoel subjectieve waarden. Niet 'emotioneel vs rationeel' — beide redeneren zorgvuldig, alleen anders."),
+                  color: "oklch(50% 0.18 215)",
+                },
+                {
+                  id: "JP",
+                  pair: tr("Judging / Perceiving", "Penilaian / Persepsi", "Oordelen / Waarnemen"),
+                  front: tr("How do you organise your outer world — with structure and closure, or with flexibility and openness to new information?", "Bagaimana Anda mengorganisir dunia luar — dengan struktur dan penutupan, atau dengan fleksibilitas?", "Hoe organiseer je je buitenwereld — met structuur of met flexibiliteit?"),
+                  back: tr("Myers and Briggs added this fourth dimension to identify which function each type presents to the world. J types prefer closure and plan ahead; P types prefer keeping options open and adapting as they go.", "Dimensi keempat yang ditambahkan Myers dan Briggs. Tipe J lebih suka penutupan; tipe P lebih suka membuka pilihan dan beradaptasi.", "Myers en Briggs voegden deze vierde dimensie toe. J-typen geven de voorkeur aan afsluiting; P-typen aan openheid en aanpassing."),
+                  color: "oklch(50% 0.20 25)",
+                },
+              ].map(card => (
+                <div
+                  key={card.id}
+                  className="mbti-flip-card"
+                  onClick={() => setMbtiFlippedCard(mbtiFlippedCard === card.id ? null : card.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => e.key === "Enter" && setMbtiFlippedCard(mbtiFlippedCard === card.id ? null : card.id)}
+                  aria-label={card.pair}
+                >
+                  <div className={`mbti-flip-inner${mbtiFlippedCard === card.id ? " flipped" : ""}`}>
+                    <div className="mbti-flip-front">
+                      <div>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: card.color, marginBottom: "0.625rem" }}>{card.id}</p>
+                        <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.125rem", color: "oklch(18% 0.08 260)", lineHeight: 1.3, marginBottom: "0.75rem" }}>{card.pair}</p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.65, color: "oklch(38% 0.008 260)", margin: 0 }}>{card.front}</p>
+                      </div>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: card.color, margin: "0.75rem 0 0" }}>
+                        {tr("Tap to learn more →", "Ketuk untuk pelajari lebih →", "Tik voor meer →")}
+                      </p>
+                    </div>
+                    <div className="mbti-flip-back">
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.75, color: "oklch(82% 0.04 260)", margin: 0 }}>{card.back}</p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: "oklch(65% 0.15 45)", margin: "0.75rem 0 0" }}>
+                        {tr("← Tap to return", "← Ketuk untuk kembali", "← Tik om terug te gaan")}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
-              <button
-                onClick={startQuiz}
-                className="mbti-btn"
-                style={{ marginTop: 24, padding: "13px 32px", background: "oklch(25% 0.08 45)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600 }}
-              >
-                Start Assessment
-              </button>
             </div>
-          </section>
-        </div>
-      </div>
+          </div>
+        </section>
+
+        {/* ── CROSS-CULTURAL CAVEAT ── */}
+        <section style={{ paddingBottom: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
+          <div className="container-wide">
+            <div style={{ padding: "2rem 2.5rem", background: "oklch(97% 0.06 60)", borderLeft: "3px solid oklch(65% 0.15 45)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(55% 0.14 50)", marginBottom: "0.5rem" }}>
+                {tr("A note on culture", "Catatan tentang budaya", "Een opmerking over cultuur")}
+              </p>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(28% 0.10 45)", lineHeight: 1.35, marginBottom: "0.75rem" }}>
+                {tr("Use with care across cultures.", "Gunakan dengan hati-hati di berbagai budaya.", "Gebruik met zorg over culturen heen.")}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(35% 0.06 50)", margin: 0 }}>
+                {tr(
+                  "The MBTI was developed primarily within Western individualist frameworks. In many Asian, African, and collectivist contexts, personality is understood more relationally — shaped by family, community, and role rather than individual preference. Use these types as conversation starters, not final verdicts. The goal is understanding, not labelling.",
+                  "MBTI dikembangkan terutama dalam kerangka individualis Barat. Dalam banyak konteks Asia, Afrika, dan kolektivis, kepribadian dipahami lebih relasional — dibentuk oleh keluarga, komunitas, dan peran. Gunakan tipe-tipe ini sebagai pembuka percakapan, bukan kesimpulan akhir. Tujuannya adalah pemahaman, bukan pelabelan.",
+                  "De MBTI is primair ontwikkeld binnen westerse individualistische kaders. In veel Aziatische, Afrikaanse en collectivistische contexten wordt persoonlijkheid relatiever begrepen — gevormd door familie, gemeenschap en rol. Gebruik deze typen als gespreksopener, niet als definitief oordeel. Het doel is begrip, niet labeling."
+                )}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 16 TYPES GRID ── */}
+        <section id="mbti-types" style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(99% 0.002 80)" }}>
+          <div className="container-wide">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {tr("The 16 Types", "16 Tipe", "De 16 typen")}
+            </p>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(18% 0.08 260)", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+              {tr("Four temperament families", "Empat keluarga temperamen", "Vier temperamentfamilies")}
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "60ch", marginBottom: "3.5rem" }}>
+              {tr(
+                "The 16 types group into four temperament families — each with a distinct way of seeing the world and leading within it. Click any type to explore its full profile.",
+                "16 tipe dikelompokkan menjadi empat keluarga temperamen — masing-masing dengan cara khas melihat dunia. Klik tipe apa pun untuk menjelajahi profilnya.",
+                "De 16 typen groeperen zich in vier temperamentfamilies. Klik op een type om het volledige profiel te bekijken."
+              )}
+            </p>
+
+            {TEMPERAMENTS.map(temp => (
+              <div key={temp.code} style={{ marginBottom: "3.5rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "1.25rem", paddingBottom: "1.25rem", borderBottom: `2px solid ${temp.color}` }}>
+                  <div style={{ width: "3.5rem", height: "3.5rem", flexShrink: 0, position: "relative" }}>
+                    <Image src={TEMPERAMENT_EMBLEMS[temp.code].src} alt={TEMPERAMENT_EMBLEMS[temp.code].alt} fill style={{ objectFit: "contain" }} />
+                  </div>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "0.25rem" }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: temp.color }}>{temp.code}</span>
+                      <span style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.375rem", color: "oklch(18% 0.08 260)" }}>{temp.name[lang]}</span>
+                    </div>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.008 260)", margin: 0, lineHeight: 1.5 }}>{temp.tagline[lang]}</p>
+                  </div>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "0.625rem" }}>
+                  {temp.types.map(typeCode => {
+                    const td = MBTI_TYPES[typeCode];
+                    const isActive = expandedType === typeCode;
+                    return (
+                      <button
+                        key={typeCode}
+                        className={`mbti-type-btn${isActive ? " active" : ""}`}
+                        onClick={() => setExpandedType(isActive ? null : typeCode)}
+                        style={{ "--tc": temp.color, "--tl": temp.colorLight } as React.CSSProperties}
+                      >
+                        <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "1.625rem", color: temp.color, margin: 0, lineHeight: 1.1 }}>{typeCode}</p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: "oklch(38% 0.008 260)", margin: "0.25rem 0 0", lineHeight: 1.4 }}>{td.subtitle[lang]}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {expandedType && temp.types.includes(expandedType) && (() => {
+                  const td = MBTI_TYPES[expandedType];
+                  return (
+                    <div style={{ marginTop: "0.625rem", background: "oklch(22% 0.10 260)", padding: "2.5rem" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem", gap: "1rem" }}>
+                        <div>
+                          <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", flexWrap: "wrap" }}>
+                            <span style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 3.5rem)", color: temp.color, lineHeight: 1 }}>{expandedType}</span>
+                            <span style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 400, fontSize: "1.375rem", color: "oklch(85% 0.04 260)", lineHeight: 1.2 }}>{td.subtitle[lang]}</span>
+                          </div>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(65% 0.04 260)", margin: "0.375rem 0 0", fontStyle: "italic" }}>{td.tagline[lang]}</p>
+                        </div>
+                        <button onClick={() => setExpandedType(null)} style={{ background: "none", border: "1px solid oklch(42% 0.08 260)", color: "oklch(65% 0.04 260)", padding: "0.375rem 0.875rem", cursor: "pointer", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", flexShrink: 0 }}>
+                          {tr("Close ✕", "Tutup ✕", "Sluiten ✕")}
+                        </button>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
+                        <div>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: temp.color, marginBottom: "0.5rem" }}>
+                            {tr("Jungian function", "Fungsi Jungian", "Jungiaanse functie")}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(72% 0.04 260)", lineHeight: 1.6, marginBottom: "1.5rem", fontStyle: "italic" }}>{td.jungian[lang]}</p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: temp.color, marginBottom: "0.5rem" }}>
+                            {tr("Overview", "Gambaran Umum", "Overzicht")}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(78% 0.04 260)", margin: 0 }}>{td.overview[lang]}</p>
+                        </div>
+                        <div>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: temp.color, marginBottom: "0.5rem" }}>
+                            {tr("Leadership strengths", "Kekuatan kepemimpinan", "Leiderschapssterktes")}
+                          </p>
+                          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.5rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                            {td.strengths[lang].map((s, i) => (
+                              <li key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                                <span style={{ color: temp.color, flexShrink: 0 }}>—</span>
+                                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(78% 0.04 260)", lineHeight: 1.5 }}>{s}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          {[
+                            { label: tr("Growth edge", "Area pertumbuhan", "Groeikant"), text: td.growth[lang] },
+                            { label: tr("Communication", "Komunikasi", "Communicatie"), text: td.communication[lang] },
+                            { label: tr("Cross-cultural awareness", "Kesadaran lintas budaya", "Intercultureel bewustzijn"), text: td.crossCultural[lang] },
+                          ].map(({ label, text }) => (
+                            <div key={label} style={{ marginBottom: "1rem", paddingLeft: "0.875rem", borderLeft: `2px solid ${temp.color}50` }}>
+                              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: temp.color, marginBottom: "0.3rem" }}>{label}</p>
+                              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", margin: 0 }}>{text}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── BIBLICAL ANCHORS ── */}
+        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(14% 0.08 260)" }}>
+          <div className="container-wide">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+              {tr("Faith & Leadership", "Iman & Kepemimpinan", "Geloof & Leiderschap")}
+            </p>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(95% 0.005 80)", lineHeight: 1.15, marginBottom: "0.75rem" }}>
+              {tr("Four leaders. Four temperaments.", "Empat pemimpin. Empat temperamen.", "Vier leiders. Vier temperamenten.")}
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(62% 0.04 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
+              {tr(
+                "Scripture gives us leaders from every temperament family — not as perfect models, but as honest portraits of how God shapes different kinds of people for different kinds of work.",
+                "Kitab Suci memberikan kita pemimpin dari setiap keluarga temperamen — bukan sebagai model sempurna, tetapi sebagai potret jujur bagaimana Tuhan membentuk orang-orang yang berbeda untuk pekerjaan yang berbeda.",
+                "De Schrift geeft ons leiders uit elke temperamentfamilie — niet als perfecte modellen, maar als eerlijke portretten van hoe God verschillende mensen vormt voor verschillende soorten werk."
+              )}
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+              {BIBLICAL_ANCHORS.map(anchor => (
+                <div key={anchor.figure} style={{ padding: "2rem", background: "oklch(22% 0.10 260)", borderLeft: `3px solid ${anchor.color}` }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: anchor.color, marginBottom: "0.375rem" }}>
+                    {anchor.temperament[lang]}
+                  </p>
+                  <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.625rem", color: anchor.color, marginBottom: "0.25rem", lineHeight: 1.1 }}>
+                    {anchor.figure}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: "oklch(55% 0.04 260)", marginBottom: "1rem" }}>
+                    {anchor.reference}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(75% 0.04 260)", margin: 0 }}>
+                    {anchor.text[lang]}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WATCH ── */}
+        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
+          <div className="container-wide">
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
+              {tr("Watch", "Tonton", "Bekijk")}
+            </p>
+            <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(22px, 3vw, 32px)", color: "oklch(22% 0.005 260)", marginBottom: "2.5rem" }}>
+              {tr("Recommended viewing", "Tontonan yang direkomendasikan", "Aanbevolen kijkmateriaal")}
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+              {VIDEOS_MBTI.map(video => (
+                <div key={video.id} style={{ background: "oklch(94% 0.006 80)", overflow: "hidden" }}>
+                  {playingVideo === video.id ? (
+                    <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setPlayingVideo(video.id)}
+                      style={{ display: "block", width: "100%", border: "none", padding: 0, background: "none", cursor: "pointer", position: "relative" }}
+                      aria-label={`Play ${video.title}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt={video.title}
+                        style={{ display: "block", width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
+                      />
+                      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "oklch(0% 0 0 / 0.28)" }}>
+                        <div style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", background: "oklch(100% 0 0 / 0.92)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <polygon points="5,3 15,9 5,15" fill="oklch(22% 0.10 260)" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div style={{ position: "absolute", top: "0.625rem", right: "0.625rem", background: "oklch(0% 0 0 / 0.62)", padding: "0.2rem 0.5rem" }}>
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", fontWeight: 600, color: "oklch(97% 0 0)", letterSpacing: "0.04em" }}>{video.duration}</span>
+                      </div>
+                    </button>
+                  )}
+                  <div style={{ padding: "1.25rem 1.5rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", marginBottom: "0.5rem", lineHeight: 1.35 }}>{video.title}</h3>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(42% 0.008 260)", margin: 0 }}>{video.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── ASSESSMENT CTA ── */}
+        <section id="quiz-mbti" style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
+          <div className="container-wide">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(2.5rem, 5vw, 4rem)", alignItems: "center" }}>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+                  {tr("The Assessment", "Penilaian", "De Beoordeling")}
+                </p>
+                <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.15, marginBottom: "1rem" }}>
+                  {tr("Ready to find your type?", "Siap menemukan tipe Anda?", "Klaar om jouw type te ontdekken?")}
+                </h2>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", marginBottom: "2rem" }}>
+                  {tr(
+                    "40 forced-choice pairs. About 8–10 minutes. Choose what feels most like your natural self — not who you aspire to be.",
+                    "40 pasangan pilihan terpaksa. Sekitar 8–10 menit. Pilih yang paling seperti diri alami Anda — bukan siapa yang ingin Anda capai.",
+                    "40 gedwongen-keuze paren. Ongeveer 8–10 minuten. Kies wat het meest aanvoelt als jouw natuurlijke zelf."
+                  )}
+                </p>
+                <button onClick={startQuiz} className="btn-primary">
+                  {tr("Start Assessment →", "Mulai Penilaian →", "Begin Beoordeling →")}
+                </button>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {([
+                  [tr("40 forced-choice pairs", "40 pasangan pilihan terpaksa", "40 gedwongen-keuze paren"), tr("Choose what feels more like you — no right answers.", "Pilih yang lebih seperti Anda — tidak ada jawaban benar.", "Kies wat meer bij je past — geen juiste antwoorden.")],
+                  [tr("No right or wrong", "Tidak ada benar atau salah", "Geen goed of fout"), tr("Every type has genuine leadership strengths.", "Setiap tipe memiliki kekuatan kepemimpinan yang nyata.", "Elk type heeft echte leiderschapssterktes.")],
+                  [tr("Be honest, not ideal", "Jujurlah, bukan ideal", "Wees eerlijk, niet ideaal"), tr("Describe how you are — not who you want to be.", "Gambarkan diri Anda — bukan siapa yang ingin Anda jadi.", "Beschrijf hoe je bent — niet wie je wil zijn.")],
+                  [tr("Takes about 8–10 minutes", "Sekitar 8–10 menit", "Duurt ongeveer 8–10 minuten"), tr("Find a quiet moment for the most accurate result.", "Cari momen tenang untuk hasil paling akurat.", "Zoek een rustig moment voor het nauwkeurigste resultaat.")],
+                ] as [string, string][]).map(([label, desc]) => (
+                  <div key={label} style={{ display: "flex", gap: "1rem", alignItems: "flex-start", padding: "1rem 1.25rem", background: "oklch(28% 0.10 260)" }}>
+                    <div style={{ width: "5px", height: "5px", background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: "0.4rem" }} />
+                    <div>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: 700, color: "oklch(88% 0.04 260)", marginBottom: "0.2rem" }}>{label}</p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(65% 0.04 260)", margin: 0 }}>{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
     );
   }
 
@@ -458,25 +867,24 @@ export default function MBTIClient({
     const progress = (currentIdx / QUESTION_ORDER.length) * 100;
 
     return (
-      <div id="quiz-mbti" style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Jost', sans-serif" }}>
+      <div id="quiz-mbti" style={{ minHeight: "100vh", background: "oklch(97% 0.005 80)", fontFamily: "var(--font-montserrat)" }}>
         <LangToggle />
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,400&family=Jost:wght@400;500;600&display=swap');
-          .choice-btn { transition: all 0.15s ease; cursor: pointer; background: white; border: 2px solid oklch(88% 0.03 45); border-radius: 14px; padding: 22px 24px; text-align: left; width: 100%; }
-          .choice-btn:hover { border-color: var(--dcolor); background: oklch(97% 0.01 45); transform: translateX(4px); }
+          .choice-btn { transition: all 0.15s ease; cursor: pointer; background: white; border: 2px solid oklch(88% 0.008 260); padding: 22px 24px; text-align: left; width: 100%; }
+          .choice-btn:hover { border-color: var(--dcolor); background: oklch(97% 0.005 80); transform: translateX(4px); }
         `}</style>
         <div style={{ maxWidth: 680, margin: "0 auto", padding: "40px 24px" }}>
           <div style={{ marginBottom: 40 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              <span style={{ fontSize: 13, color: "oklch(50% 0.04 45)", fontWeight: 500 }}>{currentIdx + 1} / {QUESTION_ORDER.length}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: dimMeta.color }}>{dimMeta.label}: {dimMeta.labelA} vs {dimMeta.labelB}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, color: "oklch(50% 0.008 260)", fontWeight: 500 }}>{currentIdx + 1} / {QUESTION_ORDER.length}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 600, color: dimMeta.color }}>{dimMeta.label}: {dimMeta.labelA} vs {dimMeta.labelB}</span>
             </div>
-            <div style={{ height: 4, background: "oklch(88% 0.03 45)", borderRadius: 4, overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${progress}%`, background: dimMeta.color, borderRadius: 4, transition: "width 0.3s ease" }} />
+            <div style={{ height: 4, background: "oklch(88% 0.008 260)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${progress}%`, background: dimMeta.color, transition: "width 0.3s ease" }} />
             </div>
           </div>
-          <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(50% 0.04 45)", marginBottom: 20 }}>
-            Which feels more like you?
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(50% 0.008 260)", marginBottom: 20 }}>
+            {tr("Which feels more like you?", "Yang mana lebih seperti Anda?", "Welke voelt meer als jij?")}
           </p>
           <div style={{ display: "grid", gap: 14 }}>
             {[{ label: "A", text: q.a }, { label: "B", text: q.b }].map(opt => (
@@ -487,16 +895,16 @@ export default function MBTIClient({
                 style={{ "--dcolor": dimMeta.color } as React.CSSProperties}
               >
                 <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: "'Source Serif 4', serif", fontSize: 22, fontWeight: 400, color: dimMeta.color, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{opt.label}</span>
-                  <p style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: "clamp(16px, 2vw, 18px)", lineHeight: 1.6, color: "oklch(20% 0.05 45)", margin: 0, fontWeight: 400 }}>
-                    {opt.text.en}
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: dimMeta.color, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{opt.label}</span>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(15px, 2vw, 17px)", lineHeight: 1.65, color: "oklch(20% 0.008 260)", margin: 0 }}>
+                    {opt.text[lang]}
                   </p>
                 </div>
               </button>
             ))}
           </div>
-          <button onClick={handleBack} style={{ marginTop: 28, background: "transparent", border: "none", color: "oklch(55% 0.05 45)", fontFamily: "'Jost', sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}>
-            ← Back
+          <button onClick={handleBack} style={{ marginTop: 28, background: "transparent", border: "none", color: "oklch(55% 0.008 260)", fontFamily: "var(--font-montserrat)", fontSize: 14, cursor: "pointer", padding: "8px 0" }}>
+            ← {tr("Back", "Kembali", "Terug")}
           </button>
         </div>
       </div>
@@ -506,60 +914,64 @@ export default function MBTIClient({
   // ── DONE ─────────────────────────────────────────────────────────────────────
   const { type, pcts } = computeType(scores);
   const typeData = MBTI_TYPES[type] ?? MBTI_TYPES.ENFP;
+  const tempGroup = TEMPERAMENTS.find(t => t.types.includes(type));
+  const tempColor = tempGroup?.color ?? typeData.color;
 
   return (
-    <div style={{ minHeight: "100vh", background: "oklch(97% 0.008 45)", fontFamily: "'Jost', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "oklch(97% 0.005 80)", fontFamily: "var(--font-montserrat)" }}>
       <LangToggle />
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Jost:wght@300;400;500;600&display=swap');
-        .mbti-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }
-      `}</style>
+      <style>{`.mbti-bar { transition: width 1s cubic-bezier(0.4,0,0.2,1); }`}</style>
 
-      <div style={{ background: typeData.bg, color: "white", padding: "56px 24px 48px" }}>
+      <div style={{ background: typeData.bg, color: "white", padding: "clamp(3rem, 5vw, 5rem) 24px clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: tempColor }} />
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 13, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(70% 0.05 45)", marginBottom: 12 }}>
-            Your Myers-Briggs Type
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.04 260)", marginBottom: 16 }}>
+            {tr("Your Myers-Briggs Type", "Tipe Myers-Briggs Anda", "Jouw Myers-Briggs Type")}
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
-            <span style={{ fontFamily: "'Source Serif 4', serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 600, color: typeData.color, lineHeight: 1 }}>{type}</span>
+            <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 700, color: tempColor, lineHeight: 1 }}>{type}</span>
             <div>
-              <div style={{ fontFamily: "'Source Serif 4', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle.en}</div>
-              <div style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, color: "oklch(78% 0.05 45)", marginTop: 6 }}>{typeData.jungian.en}</div>
+              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle[lang]}</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: 14, color: "oklch(72% 0.04 260)", marginTop: 6, fontStyle: "italic" }}>{typeData.jungian[lang]}</div>
             </div>
           </div>
-          <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.04 45)", maxWidth: 580 }}>
-            {typeData.overview.en}
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 16, lineHeight: 1.75, color: "oklch(80% 0.04 260)", maxWidth: 600, marginBottom: "1.5rem" }}>
+            {typeData.overview[lang]}
+          </p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 15, fontStyle: "italic", color: "oklch(68% 0.04 260)", margin: 0 }}>
+            &ldquo;{typeData.tagline[lang]}&rdquo;
           </p>
         </div>
       </div>
 
-      <div style={{ maxWidth: 760, margin: "0 auto", padding: "48px 24px" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "clamp(3rem, 5vw, 5rem) 24px" }}>
 
-        {/* Dimension profile */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 24 }}>Preference Profile</h2>
-          <div style={{ display: "grid", gap: 18 }}>
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.75rem", fontWeight: 600, color: "oklch(18% 0.08 260)", marginBottom: "1.5rem" }}>
+            {tr("Preference Profile", "Profil Preferensi", "Voorkeersprofiel")}
+          </h2>
+          <div style={{ display: "grid", gap: "1rem" }}>
             {DIMENSION_META.map(d => {
               const pctA = pcts[d.poleA] ?? 50;
               const pctB = 100 - pctA;
               const dominant = pctA >= 50 ? d.labelA : d.labelB;
               const dominantPct = pctA >= 50 ? pctA : pctB;
               return (
-                <div key={d.d} style={{ background: "white", borderRadius: 14, padding: "22px 26px", border: "1px solid oklch(90% 0.03 45)" }}>
+                <div key={d.d} style={{ background: "white", padding: "1.375rem 1.625rem", border: "1px solid oklch(90% 0.008 260)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-                    <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 13, fontWeight: 500, color: "oklch(45% 0.04 45)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{d.label}</span>
-                    <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 14, fontWeight: 600, color: d.color }}>{dominant} — {dominantPct}%</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 12, fontWeight: 600, color: "oklch(45% 0.008 260)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{d.label}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 700, color: d.color }}>{dominant} — {dominantPct}%</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: d.color, minWidth: 16 }}>{d.poleA}</span>
-                    <div style={{ flex: 1, height: 8, background: "oklch(91% 0.02 45)", borderRadius: 8, overflow: "hidden" }}>
-                      <div className="mbti-bar" style={{ height: "100%", width: `${pctA}%`, background: `linear-gradient(90deg, ${d.color}99, ${d.color})`, borderRadius: 8 }} />
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: d.color, minWidth: 18 }}>{d.poleA}</span>
+                    <div style={{ flex: 1, height: 6, background: "oklch(91% 0.008 260)", overflow: "hidden" }}>
+                      <div className="mbti-bar" style={{ height: "100%", width: `${pctA}%`, background: `linear-gradient(90deg, ${d.color}88, ${d.color})` }} />
                     </div>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "oklch(55% 0.04 45)", minWidth: 16 }}>{d.poleB}</span>
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: "oklch(62% 0.008 260)", minWidth: 18 }}>{d.poleB}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
-                    <span style={{ fontSize: 11, color: "oklch(55% 0.04 45)" }}>{d.labelA} {pctA}%</span>
-                    <span style={{ fontSize: 11, color: "oklch(55% 0.04 45)" }}>{d.labelB} {pctB}%</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 11, color: "oklch(55% 0.008 260)" }}>{d.labelA} {pctA}%</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 11, color: "oklch(55% 0.008 260)" }}>{d.labelB} {pctB}%</span>
                   </div>
                 </div>
               );
@@ -567,44 +979,44 @@ export default function MBTIClient({
           </div>
         </section>
 
-        {/* Strengths */}
-        <section style={{ marginBottom: 32 }}>
-          <h2 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.06 45)", marginBottom: 16 }}>Leadership Strengths</h2>
-          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
-            {typeData.strengths.en.map(s => (
-              <li key={s} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "white", borderRadius: 10, padding: "14px 18px", border: "1px solid oklch(90% 0.03 45)" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: typeData.color, marginTop: 8, flexShrink: 0 }} />
-                <span style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.6, color: "oklch(28% 0.05 45)" }}>{s}</span>
+        <section style={{ marginBottom: "2rem" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.75rem", fontWeight: 600, color: "oklch(18% 0.08 260)", marginBottom: "1rem" }}>
+            {tr("Leadership Strengths", "Kekuatan Kepemimpinan", "Leiderschapssterktes")}
+          </h2>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: "0.625rem" }}>
+            {typeData.strengths[lang].map(s => (
+              <li key={s} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start", background: "white", padding: "0.875rem 1.125rem", border: "1px solid oklch(90% 0.008 260)" }}>
+                <div style={{ width: 5, height: 5, background: tempColor, marginTop: 8, flexShrink: 0 }} />
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 14, lineHeight: 1.65, color: "oklch(28% 0.008 260)" }}>{s}</span>
               </li>
             ))}
           </ul>
         </section>
 
         {[
-          { title: "Growth Edge", content: typeData.growth.en },
-          { title: "Communication Insights", content: typeData.communication.en },
-          { title: "Cross-Cultural Awareness", content: typeData.crossCultural.en },
+          { title: tr("Growth Edge", "Area Pertumbuhan", "Groeikant"), content: typeData.growth[lang] },
+          { title: tr("Communication Insights", "Wawasan Komunikasi", "Communicatie-inzichten"), content: typeData.communication[lang] },
+          { title: tr("Cross-Cultural Awareness", "Kesadaran Lintas Budaya", "Intercultureel Bewustzijn"), content: typeData.crossCultural[lang] },
         ].map(section => (
-          <section key={section.title} style={{ marginBottom: 20, background: "white", borderRadius: 16, padding: "24px 28px", border: "1px solid oklch(90% 0.03 45)" }}>
-            <h3 style={{ fontFamily: "'Source Serif 4', serif", fontSize: 18, fontWeight: 400, color: "oklch(20% 0.06 45)", marginBottom: 12 }}>{section.title}</h3>
-            <p style={{ fontFamily: "'Jost', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.04 45)", margin: 0 }}>{section.content}</p>
+          <section key={section.title} style={{ marginBottom: "0.75rem", background: "white", padding: "1.5rem 1.75rem", border: "1px solid oklch(90% 0.008 260)", borderLeft: `3px solid ${tempColor}` }}>
+            <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.125rem", fontWeight: 600, color: "oklch(18% 0.08 260)", marginBottom: "0.75rem" }}>{section.title}</h3>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 14, lineHeight: 1.8, color: "oklch(30% 0.008 260)", margin: 0 }}>{section.content}</p>
           </section>
         ))}
 
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
-          {!resultSaved && (
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "2rem" }}>
+          {!resultSaved ? (
             <button onClick={handleSave} disabled={isPending}
-              style={{ padding: "13px 28px", background: typeData.color, color: "white", border: "none", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: isPending ? 0.7 : 1 }}>
-              {isPending ? "Saving…" : "Save to Dashboard"}
+              style={{ padding: "0.875rem 1.75rem", background: tempColor, color: "white", border: "none", fontFamily: "var(--font-montserrat)", fontSize: 14, fontWeight: 700, cursor: isPending ? "wait" : "pointer", opacity: isPending ? 0.7 : 1 }}>
+              {isPending ? tr("Saving…", "Menyimpan…", "Opslaan…") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          )}
-          {resultSaved && (
-            <div style={{ padding: "13px 20px", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600 }}>
-              ✓ Saved to your dashboard
+          ) : (
+            <div style={{ padding: "0.875rem 1.25rem", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", fontFamily: "var(--font-montserrat)", fontSize: 14, fontWeight: 700 }}>
+              ✓ {tr("Saved to your dashboard", "Tersimpan di dashboard Anda", "Opgeslagen in je dashboard")}
             </div>
           )}
-          <button onClick={startQuiz} style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.08 45)", border: "2px solid oklch(85% 0.03 45)", borderRadius: 8, fontFamily: "'Jost', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
-            Retake Assessment
+          <button onClick={startQuiz} style={{ padding: "0.875rem 1.75rem", background: "white", color: "oklch(35% 0.08 260)", border: "2px solid oklch(85% 0.008 260)", fontFamily: "var(--font-montserrat)", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+            {tr("Retake Assessment", "Ulangi Penilaian", "Beoordeling herhalen")}
           </button>
         </div>
       </div>
