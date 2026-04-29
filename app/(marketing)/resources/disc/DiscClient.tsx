@@ -210,6 +210,10 @@ const DISC_TYPES = [
       id: "Dalam budaya high-context, kecenderungan langsung tipe D bisa terasa agresif atau tidak sopan. Belajar untuk memperlambat, membaca situasi, dan membiarkan komunikasi tidak langsung berkembang adalah area pertumbuhan utama dalam konteks lintas budaya.",
       nl: "In high-context culturen kan de directheid van de D-type agressief of respectloos aanvoelen. Leren vertragen, de sfeer lezen en indirecte communicatie de ruimte geven is een belangrijk groeipunt in interculturele contexten.",
     },
+    biblical: {
+      name: "Paul",
+      text: "Paul was the prototypical D-leader. He pushed mission forward fast, planted churches across the Roman world, and was unafraid to confront — even Peter to his face. His drive launched the gospel into new cultures. His growth edge? Learning to lead without crushing his coworkers (Mark, John). Drive needs grace.",
+    },
   },
   {
     key: "I",
@@ -253,6 +257,10 @@ const DISC_TYPES = [
       en: "The I-type's expressiveness is a gift in relational cultures but can feel superficial or exhausting in more reserved contexts. Building genuine depth — not just warmth — is the growth edge in cross-cultural leadership.",
       id: "Ekspresivitas tipe I adalah anugerah dalam budaya relasional tetapi bisa terasa dangkal atau melelahkan dalam konteks yang lebih tertutup. Membangun kedalaman sejati — bukan hanya kehangatan — adalah area pertumbuhan dalam kepemimpinan lintas budaya.",
       nl: "De expressiviteit van de I-type is een gave in relationele culturen, maar kan oppervlakkig of vermoeiend aanvoelen in meer gereserveerde contexten. Echte diepgang opbouwen — niet alleen warmte — is het groeipunt in intercultureel leiderschap.",
+    },
+    biblical: {
+      name: "Peter",
+      text: "Peter is the I-leader of the early church — warm, expressive, the first to speak. His enthusiasm carried the disciples; his energy preached the first sermon at Pentecost. But his I-style also led him to bold declarations his courage could not yet match — including the night he denied Jesus. Influence needs depth.",
     },
   },
   {
@@ -298,6 +306,10 @@ const DISC_TYPES = [
       id: "Kesabaran dan pencarian harmoni tipe S sangat dihargai di sebagian besar budaya. Area pertumbuhan adalah belajar mengungkapkan ketidaksetujuan dan mengambil inisiatif — terutama dalam budaya yang menghormati ketegasan dan keterbukaan.",
       nl: "Het geduld en het streven naar harmonie van de S-type worden in de meeste culturen zeer gewaardeerd. Het groeipunt is leren om meningsverschillen te uiten en het voortouw te nemen — vooral in culturen die assertiviteit en directheid waarderen.",
     },
+    biblical: {
+      name: "Barnabas",
+      text: "Barnabas means 'Son of Encouragement' — a pure S-leader. He vouched for Saul when no one trusted him, mentored John Mark when Paul wrote him off, and held the early team together quietly. His patience built leaders Paul could not. Steadiness is rarely loud, but the church would have fractured without him.",
+    },
   },
   {
     key: "C",
@@ -341,6 +353,10 @@ const DISC_TYPES = [
       en: "The C-type's need for precision is a great asset in technical or quality-focused cultures. The growth edge is learning to work with relational ambiguity — where trust is built through relationships, not systems — and to communicate warmth alongside accuracy.",
       id: "Kebutuhan tipe C akan ketepatan adalah aset besar dalam budaya teknis atau yang berfokus pada kualitas. Area pertumbuhan adalah belajar bekerja dengan ambiguitas relasional — di mana kepercayaan dibangun melalui hubungan, bukan sistem — dan untuk mengkomunikasikan kehangatan bersama ketepatan.",
       nl: "De behoefte aan precisie van de C-type is een groot pluspunt in technische of kwaliteitsgerichte culturen. Het groeipunt is leren omgaan met relationele ambiguïteit — waar vertrouwen wordt opgebouwd via relaties, niet systemen — en warmte te communiceren naast nauwkeurigheid.",
+    },
+    biblical: {
+      name: "Luke",
+      text: "Luke wrote the most precise gospel — careful research, ordered chronology, named sources. His C-style preserved the historical anchor of the faith: dates, places, witnesses. Quiet, exact, unshowy. Without his rigour, the church would have lost the documentary weight of what happened. Faithful leadership sometimes looks like patient verification.",
     },
   },
 ];
@@ -388,6 +404,101 @@ const RESULT_PROFILES: Record<"en" | "id" | "nl", Record<ResultKey, string>> = {
   },
 };
 
+// ── CROSS-CULTURAL SCENARIOS ──────────────────────────────────────────────────
+
+const SCENARIOS = [
+  {
+    situation: "You lead a small NGO team in West Java, Indonesia. At the end of a project review, two local team members gave very vague answers when asked about their progress. They smiled, nodded, and said \"still in process.\" Three days later, you discover nothing has moved. This is the second time this has happened.",
+    prompt: "What do you do?",
+    options: [
+      {
+        letter: "A", style: "D",
+        action: "You call a direct team meeting, name the pattern clearly, and state that you need honest progress updates regardless of the news.",
+        outcome: "The message is clear. But the room goes cold. Your local team members feel publicly shamed. The nodding continues — what changes is that they now report less, not more.",
+        coaching: "Clarity is a virtue. In high-context cultures, the delivery channel matters as much as the content.",
+      },
+      {
+        letter: "B", style: "I",
+        action: "You create a lighter weekly check-in format — low-stakes and conversational — and build in a \"what's blocking you?\" question with a cheerful tone.",
+        outcome: "The team relaxes. A few people open up about obstacles they hadn't named. Progress picks up slightly. But the underlying discomfort around reporting bad news hasn't been named yet.",
+        coaching: "You built the bridge. Now walk across it and ask the real question.",
+      },
+      {
+        letter: "C", style: "S",
+        action: "You quietly pull each person aside individually, ask gently how things are going, and make it clear there is no judgment.",
+        outcome: "Both team members open up. You learn there were real obstacles they didn't know how to raise. Trust deepens. Progress restarts.",
+        coaching: "One-on-one care is often the most culturally safe entry point. Consider whether the team also needs to hear this permission.",
+      },
+      {
+        letter: "D", style: "C",
+        action: "You redesign the reporting process: create a structured weekly form, define what counts as \"in progress\" versus \"blocked,\" and ask everyone to submit it before the team meeting.",
+        outcome: "The form helps — it gives people a channel for reporting problems without face-to-face shame. But if it feels bureaucratic, it may just produce polished non-answers.",
+        coaching: "A good system lowers the cost of honesty. Pair it with a conversation about why you built it.",
+      },
+    ],
+  },
+  {
+    situation: "You are a British field worker leading a mixed team in Beirut, Lebanon. You have made a decision about a new community engagement strategy. Three weeks after communicating it, a senior Lebanese colleague says quietly over coffee: \"Some of us think the approach will not work here.\" He doesn't elaborate. He changes the subject almost immediately.",
+    prompt: "What do you do?",
+    options: [
+      {
+        letter: "A", style: "D",
+        action: "You follow up the same day: \"You mentioned some concerns earlier. I'd like to hear them directly. Can we sit down this afternoon?\"",
+        outcome: "He agrees to meet. But in the meeting, he hedges — says he was \"just thinking out loud.\" In honour-shame cultures, a direct request to say it face-to-face can shut the conversation down rather than open it.",
+        coaching: "You moved fast toward the truth. He moved away to protect the relationship. Only one of you adapted.",
+      },
+      {
+        letter: "B", style: "I",
+        action: "You set up a team session framed as \"let's pressure-test this strategy together\" — open, creative, no one singled out.",
+        outcome: "Your colleague contributes more than expected. Real concerns surface without anyone openly challenging you. You come out with a better strategy and a team that feels heard.",
+        coaching: "Sometimes the group protects the individual. An open room gives people permission to be honest without losing face.",
+      },
+      {
+        letter: "C", style: "S",
+        action: "You go back to him privately the next day and say simply: \"I've been thinking about what you said. I'd love to understand more if you're willing.\" You leave space.",
+        outcome: "He shares, slowly. He explains two cultural dynamics the strategy had missed. The conversation takes 45 minutes. You adjust the plan. The relationship deepens.",
+        coaching: "Patience was the leadership move. You created the conditions for truth to travel slowly but safely.",
+      },
+      {
+        letter: "D", style: "C",
+        action: "You go back to your desk, review the strategy with fresh eyes, and send the team a list of cultural assumptions you may have made: \"Tell me where I've got it wrong.\"",
+        outcome: "Your colleague replies with a thoughtful paragraph. Two others do too. You get the feedback you needed without anyone feeling exposed.",
+        coaching: "You made it safe to correct you by lowering the interpersonal cost. That is culturally intelligent leadership.",
+      },
+    ],
+  },
+  {
+    situation: "You are a Kenyan team leader managing a project with a German partner organisation. Your German counterpart consistently sends long, detailed critical feedback emails — tracked changes, numbered corrections. Your team members are starting to dread them. One says privately: \"He doesn't respect us.\" The German colleague believes he is being helpful.",
+    prompt: "What do you do?",
+    options: [
+      {
+        letter: "A", style: "D",
+        action: "You write directly to your German counterpart: \"I need to flag something. The way feedback is being delivered is landing badly with my team. Can we agree on a different approach?\"",
+        outcome: "He is surprised but responds professionally. He didn't know there was a problem. You agree on a weekly feedback call instead of multiple emails. Your team sees you advocating for them.",
+        coaching: "In low-context cultures, directness is respectful. You named the problem without drama, and it was received as professionalism.",
+      },
+      {
+        letter: "B", style: "I",
+        action: "You set up a joint \"collaboration check-in\" call and open with: \"Let's talk about what's making collaboration feel good or heavy.\"",
+        outcome: "Your German colleague raises his own efficiency concerns. Your team raises the feedback volume. Both sides get heard at the same time — and the atmosphere shifts.",
+        coaching: "A well-facilitated \"working together\" conversation can solve cultural friction without accusation. Your role is holding the frame.",
+      },
+      {
+        letter: "C", style: "S",
+        action: "You absorb most of the tension internally, continue buffering the emails before sharing them with your team, and reassure the most affected team member privately.",
+        outcome: "Short-term calm. But the pattern continues. The resentment builds slowly. And you are carrying a load that grows heavier each week.",
+        coaching: "Absorbing conflict is not the same as resolving it. At some point, the people involved need to find a way to understand each other.",
+      },
+      {
+        letter: "D", style: "C",
+        action: "You research German professional communication norms and prepare a \"working norms\" document that both teams agree to at the start of the next project phase.",
+        outcome: "Your German counterpart appreciates the structure. Your team has clarity on how to interpret the feedback. The friction doesn't disappear — but it becomes navigable.",
+        coaching: "You turned a cultural clash into a systems problem. That reframe made it solvable without anyone losing face.",
+      },
+    ],
+  },
+];
+
 // ── SCORE CALCULATION ─────────────────────────────────────────────────────────
 
 function getResultKey(scores: { D: number; I: number; S: number; C: number }): ResultKey {
@@ -434,6 +545,10 @@ export default function DiscClient({
   const [resultSaved, setResultSaved] = useState(!!discResult);
   const [expandedType, setExpandedType] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [hookSelected, setHookSelected] = useState<string | null>(null);
+  const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
 
   const tr = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "nl" ? nl : id;
 
@@ -642,71 +757,172 @@ export default function DiscClient({
         </div>
       </section>
 
-      {/* ── INTRO ── */}
+      {/* ── SECTION 1: HOOK ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "clamp(3rem, 6vw, 6rem)", alignItems: "start" }}>
-            <div>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-                {tr("A Behavioural Framework", "Kerangka Perilaku", "Een gedragskader")}
-              </p>
-              <h2 className="t-section" style={{ marginBottom: "1.5rem" }}>
-                {lang === "en"
-                  ? <>Understanding how people<br />are wired to behave.</>
-                  : lang === "nl"
-                  ? <>Begrijpen hoe mensen<br />van nature gedragen.</>
-                  : <>Memahami bagaimana orang<br />terkondisi untuk berperilaku.</>}
-              </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "52ch", marginBottom: "1rem" }}>
-                {tr(
-                  "DISC is one of the most widely used behavioural frameworks in the world. It describes four primary styles — Dominance, Influence, Steadiness, and Conscientiousness — that shape how people communicate, make decisions, handle conflict, and respond to pressure.",
-                  "DISC adalah salah satu kerangka perilaku yang paling banyak digunakan di dunia. Ini menggambarkan empat gaya utama — Dominance, Influence, Steadiness, dan Conscientiousness — yang membentuk cara orang berkomunikasi, mengambil keputusan, menangani konflik, dan merespons tekanan.",
-                  "DISC is een van de meest gebruikte gedragskaders ter wereld. Het beschrijft vier primaire stijlen — Dominantie, Invloed, Standvastigheid en Consciëntieusheid — die bepalen hoe mensen communiceren, beslissingen nemen, met conflicten omgaan en reageren op druk."
-                )}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "52ch", marginBottom: "2.5rem" }}>
-                {tr(
-                  "In cross-cultural leadership, DISC becomes even more powerful. When you understand your own default style, you can adapt more intentionally to the people and cultures around you — without losing who you are.",
-                  "Dalam kepemimpinan lintas budaya, DISC menjadi jauh lebih powerful. Ketika Anda memahami gaya default Anda sendiri, Anda bisa beradaptasi lebih disengaja terhadap orang-orang dan budaya di sekitar Anda — tanpa kehilangan jati diri Anda.",
-                  "In intercultureel leiderschap wordt DISC nog krachtiger. Als je je eigen standaardstijl kent, kun je je bewuster aanpassen aan de mensen en culturen om je heen — zonder jezelf te verliezen."
-                )}
-              </p>
-              <a href="#quiz-section" className="btn-primary" style={{ textDecoration: "none", display: "inline-block" }}>
-                {tr("Start Assessment →", "Mulai Tes →", "Start Test →")}
-              </a>
-            </div>
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            {tr("Self-Awareness", "Kesadaran Diri", "Zelfbewustzijn")}
+          </p>
+          <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
+            {tr("Which leader are you when things go wrong?", "Pemimpin seperti apa Anda ketika sesuatu tidak berjalan sesuai rencana?", "Welk leider ben jij als het fout gaat?")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
+            {tr(
+              "A team deadline was missed. No one said anything. Four leaders in the room — all with the same faith, same goal. Each one responds differently. Which one is closest to you?",
+              "Tenggat tim terlewat. Tidak ada yang berkata apa-apa. Empat pemimpin dalam ruangan — semua dengan iman yang sama, tujuan yang sama. Masing-masing merespons secara berbeda. Yang mana paling mirip dengan Anda?",
+              "Een teamdeadline is gemist. Niemand zei iets. Vier leiders in de ruimte — allemaal met hetzelfde geloof, hetzelfde doel. Elk reageert anders. Welke staat het dichtst bij jou?"
+            )}
+          </p>
 
-            {/* Right: 2x2 summary grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-              {DISC_TYPES.map(type => (
-                <div key={type.key} style={{
-                  background: type.color,
-                  padding: "1.5rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)", marginBottom: hookSelected ? "2.5rem" : 0 }}>
+            {[
+              { key: "D", color: "oklch(52% 0.20 25)", action: tr("You call the team together immediately. Someone needs to own this — and you're ready to figure out who.", "Anda segera mengumpulkan tim. Seseorang harus bertanggung jawab atas ini — dan Anda siap mencari tahu siapa.", "Jij roept het team meteen bij elkaar. Iemand moet dit opeisen — en jij bent klaar om uit te zoeken wie."), reaction: tr("When the pressure hits, you reach for control. That's not a flaw. It's a wiring.", "Ketika tekanan datang, Anda meraih kendali. Itu bukan kelemahan. Itu adalah cara Anda terhubung.", "Als de druk toeslaat, grijp jij naar controle. Dat is geen fout. Het is een bedrading.") },
+              { key: "I", color: "oklch(52% 0.18 80)", action: tr("You start by rallying the group. The mood is low — you want to bring the energy back before digging into what happened.", "Anda mulai dengan menyemangati kelompok. Suasana sedang rendah — Anda ingin memulihkan energi sebelum menggali apa yang terjadi.", "Jij begint met het mobiliseren van de groep. De sfeer is laag — je wilt de energie herstellen voor je dieper graaft."), reaction: tr("You know that how people feel in the room matters as much as what gets decided.", "Anda tahu bahwa bagaimana perasaan orang dalam ruangan sama pentingnya dengan apa yang diputuskan.", "Jij weet dat hoe mensen zich voelen even belangrijk is als wat er wordt besloten.") },
+              { key: "S", color: "oklch(48% 0.18 145)", action: tr("Before anything else, you check in privately with the people who look most affected.", "Sebelum hal lain, Anda memeriksa secara pribadi orang-orang yang tampaknya paling terpengaruh.", "Voordat je iets doet, check jij privé bij de mensen die het meest geraakt lijken."), reaction: tr("You notice who's carrying the weight. And you move toward them first.", "Anda memperhatikan siapa yang menanggung beban. Dan Anda bergerak menuju mereka terlebih dahulu.", "Jij merkt wie het gewicht draagt. En jij beweegt als eerste naar hen toe.") },
+              { key: "C", color: "oklch(48% 0.18 250)", action: tr("You go quiet. You want to review the timeline and understand exactly where and why things broke down before anyone says anything.", "Anda diam. Anda ingin meninjau linimasa dan memahami dengan tepat di mana dan mengapa sesuatu gagal sebelum ada yang berkata apa pun.", "Jij wordt stil. Je wilt de tijdlijn bekijken en precies begrijpen waar en waarom het fout ging voordat iemand iets zegt."), reaction: tr("You believe you can't fix what you don't understand. So you go looking for the truth first.", "Anda percaya Anda tidak bisa memperbaiki apa yang tidak Anda pahami. Jadi Anda mencari kebenaran terlebih dahulu.", "Jij gelooft dat je niet kunt repareren wat je niet begrijpt. Dus zoek jij eerst de waarheid.") },
+            ].map(card => (
+              <button
+                key={card.key}
+                onClick={() => setHookSelected(hookSelected === card.key ? null : card.key)}
+                style={{
+                  background: hookSelected === card.key ? `oklch(52% 0.20 25 / 0.08)`.replace("52% 0.20 25", card.color.replace("oklch(", "").replace(")", "")) : "oklch(97% 0.005 80)",
+                  outline: hookSelected === card.key ? `2px solid ${card.color}` : "none",
+                  outlineOffset: "-2px",
+                  padding: "1.75rem 1.5rem",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  border: "none",
+                  transition: "background 0.18s ease",
+                }}
+              >
+                <div style={{
+                  width: "2rem", height: "2rem",
+                  background: `color-mix(in oklch, ${card.color} 12%, transparent)`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: "1rem",
                 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
-                    <div style={{
-                      width: "2rem", height: "2rem",
-                      background: "white",
-                      border: "none",
-                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-                    }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.875rem", color: type.color }}>
-                        {type.key}
-                      </span>
-                    </div>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white" }}>
-                      {type.label[lang]}
-                    </span>
-                  </div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "white", fontWeight: 700, letterSpacing: "0.04em" }}>
-                    {type.tagline[lang]}
-                  </p>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.875rem", color: card.color }}>{card.key}</span>
                 </div>
-              ))}
-            </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(28% 0.008 260)", lineHeight: 1.65, marginBottom: 0 }}>
+                  {card.action}
+                </p>
+                {hookSelected === card.key && (
+                  <div style={{ overflow: "hidden", paddingTop: "0.875rem", borderTop: `1px solid ${card.color}50`, marginTop: "0.875rem" }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontStyle: "italic", color: "oklch(42% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                      {card.reaction}
+                    </p>
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {hookSelected && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(52% 0.008 260)", marginTop: "1.5rem" }}>
+              {tr("Scroll down to read about all four styles — then take the assessment.", "Gulir ke bawah untuk membaca semua empat gaya — lalu ikuti penilaian.", "Scroll naar beneden om alle vier stijlen te lezen — en doe dan de assessment.")}
+              {" "}<a href="#disc-types" style={{ color: "oklch(65% 0.15 45)", fontWeight: 600, textDecoration: "none" }}>↓</a>
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── SECTION 2: ABOUT DISC (FLIP CARDS) ── */}
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
+        <div className="container-wide">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            {tr("A Behavioural Framework", "Kerangka Perilaku", "Een gedragskader")}
+          </p>
+          <h2 className="t-section" style={{ marginBottom: "2.5rem" }}>
+            {tr("Understanding how people are wired to behave.", "Memahami bagaimana orang terkondisi untuk berperilaku.", "Begrijpen hoe mensen van nature gedragen.")}
+          </h2>
+
+          <style>{`
+            .disc-flip-card { perspective: 1000px; cursor: pointer; min-height: 220px; }
+            .disc-flip-inner { position: relative; width: 100%; height: 100%; min-height: 220px; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+            .disc-flip-card.flipped .disc-flip-inner { transform: rotateY(180deg); }
+            .disc-flip-front, .disc-flip-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 2rem; }
+            .disc-flip-front { background: oklch(97% 0.005 80); border: 1px solid oklch(88% 0.008 80); display: flex; flex-direction: column; justify-content: space-between; }
+            .disc-flip-back { transform: rotateY(180deg); background: oklch(22% 0.10 260); display: flex; flex-direction: column; justify-content: space-between; }
+            @media (prefers-reduced-motion: reduce) {
+              .disc-flip-inner { transition: none; }
+              .disc-flip-card.flipped .disc-flip-front { display: none; }
+              .disc-flip-card:not(.flipped) .disc-flip-back { display: none; }
+            }
+          `}</style>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
+            {[
+              {
+                title: tr("What DISC does", "Apa yang DISC lakukan", "Wat DISC doet"),
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>,
+                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The model has been used in leadership development since 1928. You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Anda mendapatkan gambaran cepat tentang default Anda.", "DISC brengt in kaart hoe jij geneigd bent te gedragen — niet wie jij bent. Het groepeert gedrag in vier patronen: Dominantie, Invloed, Standvastigheid en Consciëntieusheid."),
+              },
+              {
+                title: tr("Why it helps your team", "Mengapa ini membantu tim Anda", "Waarom het je team helpt"),
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+                back: tr("In cross-cultural teams, miscommunication is rarely about content — it is about style. DISC gives your team a shared vocabulary to name those differences without judgement. A team that knows its mix makes decisions more honestly, shares roles more wisely, and forgives each other's defaults more quickly.", "Dalam tim lintas budaya, miskomunikasi jarang tentang konten — ini tentang gaya. DISC memberi tim Anda kosakata bersama untuk menyebut perbedaan tersebut tanpa penilaian.", "In interculturele teams gaat miscommunicatie zelden over inhoud — het gaat over stijl. DISC geeft je team een gedeeld vocabulaire om die verschillen te benoemen zonder oordeel."),
+              },
+              {
+                title: tr("How to read your result", "Cara membaca hasil Anda", "Hoe je je resultaat leest"),
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+                back: tr("Read your result as a tendency, not a verdict. You are not 'a D.' You lead with D-energy and probably balance it with another style. Look at your top one or two letters and ask: where does this style serve me? Where does it cost me — especially cross-culturally? Which opposite style do I most need to learn from?", "Baca hasil Anda sebagai kecenderungan, bukan vonis. Anda bukan 'seorang D.' Anda memimpin dengan energi D dan kemungkinan menyeimbangkannya dengan gaya lain.", "Lees je resultaat als een neiging, niet als een vonnis. Jij bent niet 'een D.' Je leidt met D-energie en balanceert dat waarschijnlijk met een andere stijl."),
+              },
+              {
+                title: tr("Putting it to work", "Menerapkannya dalam praktik", "In de praktijk brengen"),
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>,
+                back: tr("Map your team on the four-quadrant chart. Before a hard conversation, look up the other person's profile and match your message to their style. When tension rises, name your default out loud: 'My D is showing up here — give me a second to slow down.' Self-aware leadership is contagious.", "Petakan tim Anda pada grafik empat kuadran. Sebelum percakapan sulit, cari profil orang lain dan sesuaikan pesan Anda dengan gaya mereka.", "Breng je team in kaart op het vierkvadrantenschema. Zoek voor een moeilijk gesprek het profiel van de ander op. Als spanning oploopt, benoem je default hardop."),
+              },
+            ].map((card, i) => (
+              <div
+                key={i}
+                className={`disc-flip-card${flippedCard === i ? " flipped" : ""}`}
+                onClick={() => setFlippedCard(flippedCard === i ? null : i)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={flippedCard === i}
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setFlippedCard(flippedCard === i ? null : i); } }}
+              >
+                <div className="disc-flip-inner">
+                  <div className="disc-flip-front">
+                    <div>
+                      <div style={{ marginBottom: "1rem" }}>{card.icon}</div>
+                      <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", lineHeight: 1.2, marginBottom: 0 }}>
+                        {card.title}
+                      </h3>
+                    </div>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", marginBottom: 0 }}>
+                      {tr("Tap to explore →", "Ketuk untuk jelajahi →", "Tik om te verkennen →")}
+                    </p>
+                  </div>
+                  <div className="disc-flip-back">
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(78% 0.04 260)", margin: 0 }}>
+                      {card.back}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginTop: "1rem", marginBottom: 0 }}>
+                      ↩ {tr("Tap to close", "Ketuk untuk tutup", "Tik om te sluiten")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Cross-cultural caveat */}
+          <div style={{
+            background: "oklch(65% 0.15 45 / 0.08)",
+            border: "1px solid oklch(65% 0.15 45 / 0.40)",
+            padding: "1.5rem 2rem",
+          }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(52% 0.14 45)", marginBottom: "0.5rem" }}>
+              {tr("CULTURAL CONTEXT", "KONTEKS BUDAYA", "CULTURELE CONTEXT")}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
+              {tr(
+                "DISC was built in the United States in 1928 and reflects mainstream American behavioural norms. Reliability is solid; cultural validity is not. A \"high D\" in Sumba is not the same person as a \"high D\" in Sydney. Use DISC to start the conversation — then let your team's actual cultures fill in the rest.",
+                "DISC dikembangkan di Amerika Serikat pada tahun 1928 dan mencerminkan norma perilaku Amerika arus utama. Gunakan DISC untuk memulai percakapan — lalu biarkan budaya nyata tim Anda mengisi sisanya.",
+                "DISC is ontwikkeld in de Verenigde Staten in 1928 en weerspiegelt mainstream Amerikaanse gedragsnormen. Gebruik DISC om het gesprek te starten — laat de werkelijke culturen van je team de rest invullen."
+              )}
+            </p>
           </div>
         </div>
       </section>
@@ -817,6 +1033,23 @@ export default function DiscClient({
                     </div>
                   </div>
 
+                  {/* Biblical anchor */}
+                  <div style={{
+                    padding: "1.25rem 1.5rem",
+                    background: "oklch(97% 0.005 80 / 0.05)",
+                    border: `1px solid ${type.color}30`,
+                  }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.5rem" }}>
+                      Biblical Example
+                    </p>
+                    <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1rem", color: type.colorLight, marginBottom: "0.375rem", lineHeight: 1.2 }}>
+                      {type.biblical.name}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(70% 0.04 260)", margin: 0 }}>
+                      {type.biblical.text}
+                    </p>
+                  </div>
+
                   {/* Expanded: communication + cross-cultural */}
                   {expandedType === type.key && (
                     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -844,6 +1077,158 @@ export default function DiscClient({
           </section>
         ))}
       </div>
+
+      {/* ── SECTION 5: CROSS-CULTURAL SCENARIOS ── */}
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
+        <div className="container-wide">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            Cross-Cultural Leadership
+          </p>
+          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+            How would you handle this?
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(68% 0.04 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
+            Three real cross-cultural situations. No right answer — only honest ones. Choose what feels most like you, then read what it reveals.
+          </p>
+
+          {/* Scenario tabs */}
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2.5rem", flexWrap: "wrap" }}>
+            {SCENARIOS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentScenario(i)}
+                style={{
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+                  letterSpacing: "0.1em", textTransform: "uppercase",
+                  padding: "0.6rem 1.25rem",
+                  background: currentScenario === i ? "oklch(65% 0.15 45)" : "transparent",
+                  color: currentScenario === i ? "oklch(14% 0.08 260)" : "oklch(55% 0.008 260)",
+                  border: currentScenario === i ? "1px solid oklch(65% 0.15 45)" : "1px solid oklch(38% 0.008 260)",
+                  cursor: "pointer",
+                  display: "flex", alignItems: "center", gap: "0.5rem",
+                }}
+              >
+                <span>Scenario {i + 1}</span>
+                {scenarioSelections[i] !== undefined && scenarioSelections[i] !== null && (
+                  <span style={{ opacity: 0.7 }}>✓</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Current scenario */}
+          {(() => {
+            const scenario = SCENARIOS[currentScenario];
+            const selected = scenarioSelections[currentScenario] ?? null;
+            return (
+              <div>
+                {/* Situation */}
+                <div style={{
+                  padding: "1.75rem 2rem",
+                  background: "oklch(28% 0.10 260)",
+                  borderLeft: "3px solid oklch(65% 0.15 45)",
+                  marginBottom: "2rem",
+                }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+                    The Situation
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(82% 0.04 260)", margin: 0 }}>
+                    {scenario.situation}
+                  </p>
+                </div>
+
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(92% 0.005 80)", marginBottom: "1.25rem" }}>
+                  {scenario.prompt}
+                </p>
+
+                {/* Options */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
+                  {scenario.options.map((opt) => {
+                    const isSelected = selected === opt.letter;
+                    const discType = DISC_TYPES.find(t => t.key === opt.style);
+                    return (
+                      <div key={opt.letter}>
+                        <button
+                          onClick={() => setScenarioSelections(prev => ({ ...prev, [currentScenario]: isSelected ? null : opt.letter }))}
+                          style={{
+                            width: "100%", textAlign: "left",
+                            fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.6,
+                            padding: "1rem 1.25rem",
+                            background: isSelected ? `${discType?.color ?? "oklch(65% 0.15 45)"}15` : "oklch(97% 0.005 80 / 0.04)",
+                            border: isSelected ? `1px solid ${discType?.color ?? "oklch(65% 0.15 45)"}` : "1px solid oklch(97% 0.005 80 / 0.1)",
+                            color: "oklch(78% 0.04 260)",
+                            cursor: "pointer",
+                            display: "flex", gap: "1rem", alignItems: "flex-start",
+                            transition: "background 0.15s, border-color 0.15s",
+                          }}
+                        >
+                          <span style={{
+                            fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
+                            letterSpacing: "0.1em",
+                            color: isSelected ? (discType?.colorLight ?? "oklch(65% 0.15 45)") : "oklch(55% 0.008 260)",
+                            flexShrink: 0, marginTop: "0.15rem",
+                          }}>
+                            {opt.letter}
+                          </span>
+                          {opt.action}
+                        </button>
+
+                        {isSelected && (
+                          <div style={{
+                            padding: "1.25rem 1.5rem",
+                            background: "oklch(28% 0.10 260)",
+                            borderLeft: `3px solid ${discType?.color ?? "oklch(65% 0.15 45)"}`,
+                            borderBottom: `1px solid ${discType?.color ?? "oklch(65% 0.15 45)"}30`,
+                          }}>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", marginBottom: "0.875rem" }}>
+                              <strong style={{ color: "oklch(62% 0.14 145)" }}>What happened:</strong> {opt.outcome}
+                            </p>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(68% 0.04 260)", margin: 0, fontStyle: "italic" }}>
+                              <strong style={{ color: "oklch(65% 0.15 45)", fontStyle: "normal" }}>Coaching note:</strong> {opt.coaching}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Navigation */}
+                <div style={{ display: "flex", gap: "0.75rem" }}>
+                  {currentScenario > 0 && (
+                    <button
+                      onClick={() => setCurrentScenario(currentScenario - 1)}
+                      style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "oklch(55% 0.008 260)", background: "none",
+                        border: "1px solid oklch(38% 0.008 260)",
+                        padding: "0.625rem 1.25rem", cursor: "pointer",
+                      }}
+                    >
+                      ← Previous
+                    </button>
+                  )}
+                  {currentScenario < SCENARIOS.length - 1 && (
+                    <button
+                      onClick={() => setCurrentScenario(currentScenario + 1)}
+                      style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+                        letterSpacing: "0.08em", textTransform: "uppercase",
+                        color: "oklch(65% 0.15 45)", background: "none",
+                        border: "1px solid oklch(65% 0.15 45 / 0.5)",
+                        padding: "0.625rem 1.25rem", cursor: "pointer",
+                      }}
+                    >
+                      Next Scenario →
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </section>
 
       {/* ── ASSESSMENT ── */}
       <section id="quiz-section" style={{
@@ -901,9 +1286,16 @@ export default function DiscClient({
                         transition: "width 0.4s ease, background 0.3s ease"
                       }} />
                     </div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: getProgressBarColor(currentQ) }}>
-                      {tr("Question", "Pertanyaan", "Vraag")} {currentQ + 1} {tr("of", "dari", "van")} {QS.length}
-                    </p>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: getProgressBarColor(currentQ), margin: 0 }}>
+                        {tr("Question", "Pertanyaan", "Vraag")} {currentQ + 1} {tr("of", "dari", "van")} {QS.length}
+                      </p>
+                      {currentQ < QS.length - 1 && (
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.008 260)", margin: 0 }}>
+                          ~{Math.max(1, Math.ceil((QS.length - currentQ - 1) * 0.5))} min left
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Question */}
@@ -1088,30 +1480,100 @@ export default function DiscClient({
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── SECTION 6: RESOURCES & NEXT STEPS ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
-          <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {tr("Next Steps", "Langkah Selanjutnya", "Volgende stappen")}
-            </p>
-            <h2 className="t-section" style={{ marginBottom: "1rem" }}>
-              {lang === "en"
-                ? <>Explore Cross-Cultural<br />Tools.</>
-                : lang === "nl"
-                ? <>Ontdek interculturele<br />tools.</>
-                : <>Jelajahi Tools Lintas<br />Budaya.</>}
-            </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
-              {tr(
-                "Now that you understand your DISC profile, you're ready to explore how your style shows up in cross-cultural contexts. The Crispy library offers frameworks, reflections, and tools designed for leaders like you.",
-                "Sekarang Anda memahami profil DISC Anda, Anda siap untuk mengeksplorasi bagaimana gaya Anda muncul dalam konteks lintas budaya. Perpustakaan Crispy menawarkan kerangka kerja, refleksi, dan alat yang dirancang untuk pemimpin seperti Anda.",
-                "Nu je je DISC-profiel begrijpt, ben je klaar om te verkennen hoe jouw stijl zich manifesteert in interculturele contexten. De Crispy-bibliotheek biedt kaders, reflecties en tools speciaal ontworpen voor leiders zoals jij."
-              )}
-            </p>
-            <Link href="/resources" className="btn-primary" style={{ textDecoration: "none", display: "inline-block" }}>
-              {tr("Explore Cross-Cultural Tools →", "Jelajahi Cross-Cultural Tools →", "Verken Cross-Cultural Tools →")}
-            </Link>
+        <div className="container-wide">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            {tr("Next Steps", "Langkah Selanjutnya", "Volgende stappen")}
+          </p>
+          <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
+            {tr("Put your profile to work.", "Terapkan profil Anda.", "Zet je profiel in de praktijk.")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "58ch", marginBottom: "3.5rem" }}>
+            {tr(
+              "Knowing your DISC type is only the beginning. Here is how to go deeper — in your own leadership and with your team.",
+              "Mengetahui tipe DISC Anda hanyalah permulaan. Berikut cara untuk mendalaminya — dalam kepemimpinan Anda sendiri dan bersama tim Anda.",
+              "Je DISC-type kennen is slechts het begin. Zo ga je dieper — in je eigen leiderschap en met je team."
+            )}
+          </p>
+
+          {/* Three application cards */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem", marginBottom: "3.5rem" }}>
+            {[
+              {
+                step: "01",
+                title: tr("Reflect on your default", "Renungkan default Anda", "Reflecteer op je standaard"),
+                body: tr(
+                  "Take one situation from last week where things felt tense. Which part of your DISC profile showed up — your strength or your blind spot? Write it down. Growth starts with honest observation.",
+                  "Ambil satu situasi dari minggu lalu di mana sesuatu terasa tegang. Bagian mana dari profil DISC Anda yang muncul — kekuatan atau titik buta Anda? Tuliskan. Pertumbuhan dimulai dengan pengamatan yang jujur.",
+                  "Neem een situatie van vorige week waarin iets gespannen aanvoelde. Welk deel van je DISC-profiel toonde zich — je kracht of je blinde vlek? Schrijf het op. Groei begint met eerlijk waarnemen."
+                ),
+                color: "oklch(52% 0.20 25)",
+              },
+              {
+                step: "02",
+                title: tr("Map your team", "Petakan tim Anda", "Breng je team in kaart"),
+                body: tr(
+                  "Ask your team to take the assessment and share their results. Then map the four types on a whiteboard. Where is your team heavy? Where is there a gap? That gap often explains recurring friction.",
+                  "Minta tim Anda untuk mengikuti assessment dan berbagi hasilnya. Kemudian petakan keempat tipe di papan tulis. Di mana tim Anda berat? Di mana ada kesenjangan? Kesenjangan itu sering menjelaskan gesekan yang berulang.",
+                  "Vraag je team de assessment te doen en hun resultaten te delen. Breng de vier typen dan in kaart op een whiteboard. Waar is je team zwaar? Waar is een gat? Dat gat verklaart vaak terugkerende wrijving."
+                ),
+                color: "oklch(52% 0.18 80)",
+              },
+              {
+                step: "03",
+                title: tr("Adapt your communication", "Sesuaikan komunikasi Anda", "Pas je communicatie aan"),
+                body: tr(
+                  "Before your next difficult conversation, identify the other person's likely DISC style and adjust your approach. A D needs directness. An S needs gentleness and time. A C needs evidence. An I needs enthusiasm and connection.",
+                  "Sebelum percakapan sulit berikutnya, identifikasi gaya DISC orang lain yang mungkin dan sesuaikan pendekatan Anda. D membutuhkan ketegasan. S membutuhkan kelembutan dan waktu. C membutuhkan bukti. I membutuhkan antusiasme dan koneksi.",
+                  "Identificeer voor je volgende moeilijke gesprek de waarschijnlijke DISC-stijl van de ander en pas je aanpak aan. Een D heeft directheid nodig. Een S heeft zachtheid en tijd nodig. Een C heeft bewijs nodig. Een I heeft enthousiasme en verbinding nodig."
+                ),
+                color: "oklch(48% 0.18 145)",
+              },
+            ].map(card => (
+              <div key={card.step} style={{
+                padding: "2rem",
+                background: "oklch(94% 0.006 80)",
+                borderTop: `3px solid ${card.color}`,
+              }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "0.65rem", letterSpacing: "0.16em", color: card.color, marginBottom: "0.875rem" }}>
+                  {card.step}
+                </p>
+                <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", lineHeight: 1.2, marginBottom: "0.875rem" }}>
+                  {card.title}
+                </h3>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", margin: 0 }}>
+                  {card.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Go deeper */}
+          <div style={{
+            padding: "2rem 2.5rem",
+            background: "oklch(22% 0.10 260)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: "2rem",
+            alignItems: "center",
+          }}>
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
+                {tr("Go Deeper", "Pelajari Lebih Lanjut", "Ga dieper")}
+              </p>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.5rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2, margin: 0 }}>
+                {tr("Explore more cross-cultural leadership tools.", "Jelajahi lebih banyak alat kepemimpinan lintas budaya.", "Verken meer interculturele leiderschapstools.")}
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <Link href="/resources" className="btn-primary" style={{ textDecoration: "none" }}>
+                {tr("Browse the Library →", "Telusuri Perpustakaan →", "Verken de bibliotheek →")}
+              </Link>
+              <a href="#quiz-section" className="btn-ghost" style={{ textDecoration: "none" }}>
+                {tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")}
+              </a>
+            </div>
           </div>
         </div>
       </section>
