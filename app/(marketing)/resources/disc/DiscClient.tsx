@@ -553,6 +553,7 @@ export default function DiscClient({
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
+  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
 
   const tr = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "nl" ? nl : id;
 
@@ -1551,6 +1552,85 @@ export default function DiscClient({
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Watch — YouTube videos */}
+          <div style={{ marginBottom: "3.5rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
+              Watch
+            </p>
+            <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.25rem", color: "oklch(22% 0.005 260)", marginBottom: "1.75rem" }}>
+              Recommended viewing
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+              {[
+                {
+                  id: "YMyofREc5Jk",
+                  title: "DISC Leadership Styles Explained",
+                  description: "A 20-minute deep dive into all four DISC types — how they lead, communicate, and conflict. Good starting point for team conversations.",
+                  duration: "20 min",
+                },
+                {
+                  id: "Hm31Ju8heEY",
+                  title: "Cross-Cultural Communication",
+                  description: "Pellegrino Riccardi at TEDxBergen. The best short talk on why the same behaviour lands differently across cultures — anchors the cross-cultural caveat in DISC.",
+                  duration: "TEDx",
+                },
+              ].map(video => (
+                <div key={video.id} style={{ background: "oklch(94% 0.006 80)", overflow: "hidden" }}>
+                  {playingVideo === video.id ? (
+                    <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setPlayingVideo(video.id)}
+                      style={{ display: "block", width: "100%", border: "none", padding: 0, background: "none", cursor: "pointer", position: "relative" }}
+                      aria-label={`Play ${video.title}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt={video.title}
+                        style={{ display: "block", width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
+                      />
+                      <div style={{
+                        position: "absolute", inset: 0,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        background: "oklch(0% 0 0 / 0.28)",
+                      }}>
+                        <div style={{
+                          width: "3.5rem", height: "3.5rem", borderRadius: "50%",
+                          background: "oklch(100% 0 0 / 0.92)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}>
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <polygon points="5,3 15,9 5,15" fill="oklch(22% 0.10 260)" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div style={{ position: "absolute", top: "0.625rem", right: "0.625rem", background: "oklch(0% 0 0 / 0.62)", padding: "0.2rem 0.5rem" }}>
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", fontWeight: 600, color: "oklch(97% 0 0)", letterSpacing: "0.04em" }}>{video.duration}</span>
+                      </div>
+                    </button>
+                  )}
+                  <div style={{ padding: "1.25rem 1.5rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(22% 0.005 260)", marginBottom: "0.5rem", lineHeight: 1.35 }}>
+                      {video.title}
+                    </h3>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(42% 0.008 260)", margin: 0 }}>
+                      {video.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Go deeper */}
