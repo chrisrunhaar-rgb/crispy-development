@@ -1566,15 +1566,15 @@ export default function DiscClient({
               {[
                 {
                   id: "YMyofREc5Jk",
-                  title: "DISC Leadership Styles Explained",
-                  description: "A 20-minute deep dive into all four DISC types — how they lead, communicate, and conflict. Good starting point for team conversations.",
-                  duration: "20 min",
-                },
-                {
-                  id: "Hm31Ju8heEY",
                   title: "Cross-Cultural Communication",
                   description: "Pellegrino Riccardi at TEDxBergen. The best short talk on why the same behaviour lands differently across cultures — anchors the cross-cultural caveat in DISC.",
                   duration: "TEDx",
+                },
+                {
+                  id: "Hm31Ju8heEY",
+                  title: "DISC Leadership Styles Explained",
+                  description: "A 20-minute deep dive into all four DISC types — how they lead, communicate, and conflict. Good starting point for team conversations.",
+                  duration: "20 min",
                 },
               ].map(video => (
                 <div key={video.id} style={{ background: "oklch(94% 0.006 80)", overflow: "hidden" }}>
