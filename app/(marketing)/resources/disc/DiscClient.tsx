@@ -172,9 +172,9 @@ const DISC_TYPES = [
     key: "D",
     label: { en: "Dominance", id: "Dominance", nl: "Dominantie" },
     tagline: { en: "Direct. Bold. Results-driven.", id: "Langsung. Berani. Berorientasi Hasil.", nl: "Direct. Gedurfd. Resultaatgericht." },
-    color: "oklch(52% 0.20 25)",
-    colorLight: "oklch(65% 0.16 25)",
-    colorVeryLight: "oklch(93% 0.04 25)",
+    color: "oklch(52% 0.27 25)",
+    colorLight: "oklch(62% 0.22 25)",
+    colorVeryLight: "oklch(96% 0.05 25)",
     bg: "oklch(18% 0.15 25)",
     overview: {
       en: "The D-type leader is direct, competitive, and driven by results. They make decisions quickly, take charge under pressure, and thrive in environments where they can set direction and drive outcomes. They are natural initiators who cut through complexity and act.",
@@ -220,9 +220,9 @@ const DISC_TYPES = [
     key: "I",
     label: { en: "Influence", id: "Influence", nl: "Invloed" },
     tagline: { en: "Enthusiastic. Persuasive. People-first.", id: "Antusias. Persuasif. Mengutamakan Orang.", nl: "Enthousiast. Overtuigend. Mensgericht." },
-    color: "oklch(52% 0.18 80)",
-    colorLight: "oklch(65% 0.14 80)",
-    colorVeryLight: "oklch(93% 0.04 80)",
+    color: "oklch(62% 0.22 87)",
+    colorLight: "oklch(72% 0.18 87)",
+    colorVeryLight: "oklch(96% 0.04 87)",
     bg: "oklch(18% 0.12 80)",
     overview: {
       en: "The I-type leader is enthusiastic, expressive, and energised by people. They are gifted communicators who inspire others, build rapport quickly, and create momentum through energy and optimism. They thrive in collaborative, visible roles where their personality can shine.",
@@ -268,9 +268,9 @@ const DISC_TYPES = [
     key: "S",
     label: { en: "Steadiness", id: "Steadiness", nl: "Standvastigheid" },
     tagline: { en: "Patient. Loyal. Consistently supportive.", id: "Sabar. Setia. Konsisten dalam Dukungan.", nl: "Geduldig. Loyaal. Betrouwbaar ondersteunend." },
-    color: "oklch(48% 0.18 145)",
-    colorLight: "oklch(62% 0.14 145)",
-    colorVeryLight: "oklch(92% 0.04 145)",
+    color: "oklch(52% 0.22 145)",
+    colorLight: "oklch(62% 0.18 145)",
+    colorVeryLight: "oklch(95% 0.05 145)",
     bg: "oklch(18% 0.10 145)",
     overview: {
       en: "The S-type leader is patient, dependable, and deeply loyal. They create stable, supportive environments where people feel safe and valued. They are skilled listeners and excellent mediators who hold teams together through consistency, warmth, and quiet strength.",
@@ -316,9 +316,9 @@ const DISC_TYPES = [
     key: "C",
     label: { en: "Conscientiousness", id: "Conscientiousness", nl: "Consciëntieusheid" },
     tagline: { en: "Precise. Analytical. Excellence-driven.", id: "Tepat. Analitis. Berorientasi Keunggulan.", nl: "Precies. Analytisch. Kwaliteitsgericht." },
-    color: "oklch(48% 0.18 250)",
-    colorLight: "oklch(62% 0.14 250)",
-    colorVeryLight: "oklch(92% 0.04 250)",
+    color: "oklch(50% 0.22 245)",
+    colorLight: "oklch(60% 0.18 245)",
+    colorVeryLight: "oklch(95% 0.05 245)",
     bg: "oklch(20% 0.14 250)",
     overview: {
       en: "The C-type leader is analytical, precise, and driven by accuracy. They value quality over speed, data over assumption, and systems over intuition. They are natural problem-solvers who bring rigour, structure, and careful thinking to everything they do.",
@@ -827,8 +827,8 @@ export default function DiscClient({
           </h2>
 
           <style>{`
-            .disc-flip-card { perspective: 1000px; cursor: pointer; min-height: 220px; }
-            .disc-flip-inner { position: relative; width: 100%; height: 100%; min-height: 220px; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+            .disc-flip-card { perspective: 1000px; cursor: pointer; min-height: 340px; }
+            .disc-flip-inner { position: relative; width: 100%; height: 100%; min-height: 340px; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
             .disc-flip-card.flipped .disc-flip-inner { transform: rotateY(180deg); }
             .disc-flip-front, .disc-flip-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 2rem; }
             .disc-flip-front { background: oklch(97% 0.005 80); border: 1px solid oklch(88% 0.008 80); display: flex; flex-direction: column; justify-content: space-between; }
@@ -933,7 +933,7 @@ export default function DiscClient({
         {DISC_TYPES.map((type) => (
           <section key={type.key} id={`disc-${type.key}`} style={{
             paddingBlock: "clamp(4rem, 7vw, 7rem)",
-            background: type.bg,
+            background: "oklch(99% 0.002 80)",
             borderLeft: `4px solid ${type.color}`
           }}>
             <div className="container-wide">
@@ -947,38 +947,38 @@ export default function DiscClient({
                       border: `3px solid ${type.color}`,
                       display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                     }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "2rem", color: type.colorLight }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "2rem", color: type.color }}>
                         {type.key}
                       </span>
                     </div>
                     <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.2rem" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: type.color, marginBottom: "0.2rem" }}>
                         {type.label[lang]}
                       </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: type.color, fontWeight: 600 }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", fontWeight: 600 }}>
                         {type.tagline[lang]}
                       </p>
                     </div>
                   </div>
 
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(70% 0.04 260)", marginBottom: "2rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.008 260)", marginBottom: "2rem" }}>
                     {type.overview[lang]}
                   </p>
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
-                    <div style={{ padding: "1.25rem", background: "oklch(97% 0.005 80 / 0.05)", borderLeft: `3px solid ${type.color}` }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.5rem" }}>
+                    <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
                         {tr("Motivated by", "Termotivasi oleh", "Gemotiveerd door")}
                       </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(72% 0.04 260)" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
                         {type.motivation[lang]}
                       </p>
                     </div>
-                    <div style={{ padding: "1.25rem", background: "oklch(97% 0.005 80 / 0.05)", borderLeft: `3px solid ${type.color}` }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.5rem" }}>
+                    <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
                         {tr("Fears", "Ketakutan", "Angsten")}
                       </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(72% 0.04 260)" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
                         {type.fear[lang]}
                       </p>
                     </div>
@@ -994,8 +994,8 @@ export default function DiscClient({
                     style={{
                       fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
                       letterSpacing: "0.1em", textTransform: "uppercase",
-                      color: type.colorLight, background: "oklch(97% 0.005 80 / 0.06)",
-                      border: `1px solid ${type.color}40`,
+                      color: "white", background: type.color,
+                      border: "none",
                       padding: "0.75rem 1.25rem", cursor: "pointer",
                       display: "flex", justifyContent: "space-between", alignItems: "center",
                       width: "100%",
@@ -1007,12 +1007,12 @@ export default function DiscClient({
                   {/* Always visible: strengths + blindspots */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                     <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.75rem" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
                         {tr("Strengths", "Kekuatan", "Sterktes")}
                       </p>
                       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                         {type.strengths[lang].map((s, i) => (
-                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(72% 0.04 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(32% 0.008 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                             <span style={{ color: type.color, flexShrink: 0, marginTop: "0.1rem" }}>+</span>
                             {s}
                           </li>
@@ -1020,13 +1020,13 @@ export default function DiscClient({
                       </ul>
                     </div>
                     <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.75rem" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
                         {tr("Blind Spots", "Titik Buta", "Blinde vlekken")}
                       </p>
                       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                         {type.blindspots[lang].map((s, i) => (
-                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(72% 0.04 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-                            <span style={{ color: "oklch(55% 0.12 25)", flexShrink: 0, marginTop: "0.1rem" }}>−</span>
+                          <li key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(32% 0.008 260)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+                            <span style={{ color: "oklch(52% 0.18 25)", flexShrink: 0, marginTop: "0.1rem" }}>−</span>
                             {s}
                           </li>
                         ))}
@@ -1037,16 +1037,16 @@ export default function DiscClient({
                   {/* Biblical anchor */}
                   <div style={{
                     padding: "1.25rem 1.5rem",
-                    background: "oklch(97% 0.005 80 / 0.05)",
-                    border: `1px solid ${type.color}30`,
+                    background: type.colorVeryLight,
+                    border: `1px solid ${type.color}50`,
                   }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.5rem" }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
                       Biblical Example
                     </p>
-                    <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1rem", color: type.colorLight, marginBottom: "0.375rem", lineHeight: 1.2 }}>
+                    <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1rem", color: type.color, marginBottom: "0.375rem", lineHeight: 1.2 }}>
                       {type.biblical.name}
                     </p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(70% 0.04 260)", margin: 0 }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)", margin: 0 }}>
                       {type.biblical.text}
                     </p>
                   </div>
@@ -1054,19 +1054,19 @@ export default function DiscClient({
                   {/* Expanded: communication + cross-cultural */}
                   {expandedType === type.key && (
                     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <div style={{ padding: "1.25rem 1.5rem", background: "oklch(97% 0.005 80 / 0.05)", borderTop: `2px solid ${type.color}` }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.625rem" }}>
+                      <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
                           {tr("How to Communicate with Them", "Cara Berkomunikasi dengan Mereka", "Hoe communiceer je met hen")}
                         </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)" }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
                           {type.communication[lang]}
                         </p>
                       </div>
-                      <div style={{ padding: "1.25rem 1.5rem", background: "oklch(97% 0.005 80 / 0.05)", borderTop: `2px solid ${type.color}` }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight, marginBottom: "0.625rem" }}>
+                      <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
                           {tr("Cross-Cultural Leadership Note", "Catatan Kepemimpinan Lintas Budaya", "Interculturele leiderschapsnotitie")}
                         </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)" }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
                           {type.crossCultural[lang]}
                         </p>
                       </div>
@@ -1091,17 +1091,6 @@ export default function DiscClient({
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(68% 0.04 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
             Three real cross-cultural situations. No right answer — only honest ones. Choose what feels most like you, then read what it reveals.
           </p>
-
-          {/* Scenario header image */}
-          <div style={{ marginBottom: "3rem", overflow: "hidden" }}>
-            <Image
-              src="/disc/scenario.png"
-              alt="Two leaders in an awkward cross-cultural conversation at a small table"
-              width={800}
-              height={800}
-              style={{ width: "min(100%, 480px)", height: "auto", display: "block" }}
-            />
-          </div>
 
           {/* Scenario tabs */}
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2.5rem", flexWrap: "wrap" }}>
@@ -1405,10 +1394,10 @@ export default function DiscClient({
                     {/* Score bars — tighter, mobile-safe */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                       {[
-                        { key: "D", label: "D", fullLabel: tr("Dominance", "Dominance", "Dominantie"), pct: pD, color: "oklch(52% 0.20 25)", light: "oklch(65% 0.16 25)" },
-                        { key: "I", label: "I", fullLabel: tr("Influence", "Influence", "Invloed"), pct: pI, color: "oklch(52% 0.18 80)", light: "oklch(65% 0.14 80)" },
-                        { key: "S", label: "S", fullLabel: tr("Steadiness", "Steadiness", "Standvastigheid"), pct: pS, color: "oklch(48% 0.18 145)", light: "oklch(62% 0.14 145)" },
-                        { key: "C", label: "C", fullLabel: tr("Conscientiousness", "Conscientiousness", "Consciëntieusheid"), pct: pC, color: "oklch(48% 0.18 250)", light: "oklch(62% 0.14 250)" },
+                        { key: "D", label: "D", fullLabel: tr("Dominance", "Dominance", "Dominantie"), pct: pD, color: "oklch(52% 0.27 25)", light: "oklch(62% 0.22 25)" },
+                        { key: "I", label: "I", fullLabel: tr("Influence", "Influence", "Invloed"), pct: pI, color: "oklch(62% 0.22 87)", light: "oklch(72% 0.18 87)" },
+                        { key: "S", label: "S", fullLabel: tr("Steadiness", "Steadiness", "Standvastigheid"), pct: pS, color: "oklch(52% 0.22 145)", light: "oklch(62% 0.18 145)" },
+                        { key: "C", label: "C", fullLabel: tr("Conscientiousness", "Conscientiousness", "Consciëntieusheid"), pct: pC, color: "oklch(50% 0.22 245)", light: "oklch(60% 0.18 245)" },
                       ].map(bar => {
                         const isPrimary = bar.key === resultKey[0];
                         return (
