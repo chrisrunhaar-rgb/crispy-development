@@ -733,28 +733,6 @@ export default function DiscClient({
             )}
           </div>
 
-          {/* DISC letter badges */}
-          <div style={{ display: "flex", gap: "clamp(1rem, 3vw, 2rem)", alignItems: "center", flexWrap: "wrap" }}>
-            {DISC_TYPES.map(type => (
-              <a key={type.key} href={`#disc-${type.key}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-                <div style={{
-                  width: "clamp(2.5rem, 5vw, 3.5rem)",
-                  height: "clamp(2.5rem, 5vw, 3.5rem)",
-                  background: type.bg,
-                  border: `2px solid ${type.color}`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
-                }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1rem, 2vw, 1.5rem)", color: type.colorLight }}>
-                    {type.key}
-                  </span>
-                </div>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.colorLight }}>
-                  {type.label[lang]}
-                </span>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
