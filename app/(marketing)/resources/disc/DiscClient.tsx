@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import Image from "next/image";
@@ -554,6 +554,12 @@ export default function DiscClient({
   const [currentScenario, setCurrentScenario] = useState(0);
   const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [noHover, setNoHover] = useState(false);
+  useEffect(() => {
+    if (!noHover) return;
+    const t = setTimeout(() => setNoHover(false), 120);
+    return () => clearTimeout(t);
+  }, [currentQ, noHover]);
 
   const tr = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "nl" ? nl : id;
 
@@ -572,6 +578,7 @@ export default function DiscClient({
   }
 
   function handleAnswer(t: ScoreKey) {
+    setNoHover(true);
     const newScores = { ...scores, [t]: scores[t] + 1 };
     const newHistory = [...answerHistory, t];
     if (currentQ < QS.length - 1) {
@@ -1314,7 +1321,7 @@ export default function DiscClient({
                     @media (hover: hover) { .disc-opt:hover { background: oklch(97% 0.005 80 / 0.08) !important; border-color: oklch(97% 0.005 80 / 0.2) !important; color: oklch(97% 0.005 80) !important; } }
                     .disc-opt:focus-visible { outline: 2px solid oklch(65% 0.15 45); outline-offset: 2px; }
                   `}</style>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", pointerEvents: noHover ? "none" : "auto" }}>
                     {getShuffledOptions(currentQ).map((opt, i) => (
                       <button
                         key={i}
