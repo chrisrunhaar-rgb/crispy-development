@@ -751,34 +751,65 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
   );
 }
 
+const MBTI_DASH_DIMS = [
+  { label: "Energy Direction", poleAKey: "EI_E", poleA: "E", labelA: "Extraversion", poleBKey: "EI_I", poleB: "I", labelB: "Introversion", color: "oklch(60% 0.18 52)" },
+  { label: "Perception",       poleAKey: "SN_S", poleA: "S", labelA: "Sensing",       poleBKey: "SN_N", poleB: "N", labelB: "Intuition",    color: "oklch(52% 0.22 280)" },
+  { label: "Judgement",        poleAKey: "TF_T", poleA: "T", labelA: "Thinking",      poleBKey: "TF_F", poleB: "F", labelB: "Feeling",      color: "oklch(50% 0.18 215)" },
+  { label: "Orientation",      poleAKey: "JP_J", poleA: "J", labelA: "Judging",       poleBKey: "JP_P", poleB: "P", labelB: "Perceiving",   color: "oklch(50% 0.20 25)" },
+];
+const MBTI_TEMPERAMENT_LABEL: Record<string, string> = {
+  INTJ:"Analyst",INTP:"Analyst",ENTJ:"Analyst",ENTP:"Analyst",
+  INFJ:"Diplomat",INFP:"Diplomat",ENFJ:"Diplomat",ENFP:"Diplomat",
+  ISTJ:"Sentinel",ISFJ:"Sentinel",ESTJ:"Sentinel",ESFJ:"Sentinel",
+  ISTP:"Explorer",ISFP:"Explorer",ESTP:"Explorer",ESFP:"Explorer",
+};
+
 function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
   const { mbtiType, scores } = data;
+  const temperament = MBTI_TEMPERAMENT_LABEL[mbtiType] ?? "Myers-Briggs Type";
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        Personality Type
+        Myers-Briggs Type · {temperament}
       </p>
-      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
+      <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "2.25rem", color: navy, marginBottom: "1.5rem", letterSpacing: "0.06em" }}>
         {mbtiType}
       </h3>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        {Object.entries(scores).map(([key, score]) => (
-          <div key={key}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{key}</span>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.5rem" }}>
+        {MBTI_DASH_DIMS.map(d => {
+          const scoreA = scores[d.poleAKey] ?? 0;
+          const scoreB = scores[d.poleBKey] ?? 0;
+          const total = scoreA + scoreB || 10;
+          const pctA = Math.round((scoreA / total) * 100);
+          const pctB = 100 - pctA;
+          const aIsDom = pctA >= 50;
+          const dominantLabel = aIsDom ? d.labelA : d.labelB;
+          const dominantPct = aIsDom ? pctA : pctB;
+          return (
+            <div key={d.label}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 600, color: "oklch(45% 0.008 260)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: d.color }}>{dominantLabel} {dominantPct}%</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 13, fontWeight: 700, color: aIsDom ? d.color : "oklch(72% 0.008 260)", minWidth: 12 }}>{d.poleA}</span>
+                <div style={{ flex: 1, height: 6, background: "oklch(90% 0.004 260)", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", height: "100%", width: `${dominantPct}%`, background: d.color, left: aIsDom ? 0 : "auto", right: aIsDom ? "auto" : 0 }} />
+                </div>
+                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 13, fontWeight: 700, color: aIsDom ? "oklch(72% 0.008 260)" : d.color, minWidth: 12 }}>{d.poleB}</span>
+              </div>
             </div>
-            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-        <Link href="/resources/myers-briggs" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake quiz →
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+        <Link href="/resources/myers-briggs#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake assessment →
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
+        <Link href="/resources/myers-briggs" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          Learn more
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           Close
         </button>
       </div>
