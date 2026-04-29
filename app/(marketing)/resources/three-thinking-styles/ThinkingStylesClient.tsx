@@ -104,6 +104,7 @@ const STYLES = [
     blindspots: ["May miss relational nuance", "Can over-analyse before acting", "May dismiss intuitive knowing", "Risks reducing people to processes"],
     blindspotsId: ["Mungkin melewatkan nuansa relasional", "Bisa terlalu banyak menganalisis sebelum bertindak", "Mungkin mengabaikan pengetahuan intuitif", "Risiko mereduksi orang menjadi proses"],
     blindspotsNl: ["Mist mogelijk relationele nuance", "Kan te veel analyseren vóór er gehandeld wordt", "Kan intuïtieve kennis afwijzen", "Risico om mensen te reduceren tot processen"],
+    shadow: "Conceptual thinking goes wrong by mistaking the model for the territory — becoming so confident in a framework that the leader stops asking whether reality still fits inside it. Decisions made on principle begin to destroy the relationships the principle was meant to protect. People feel the leader is loyal to the system rather than to the people inside it.",
     relatingTo: [
       {
         img: "/head-holistic.png",
@@ -160,6 +161,7 @@ const STYLES = [
     blindspots: ["May avoid necessary directness", "Can prioritise harmony over truth", "May lose focus in the details", "Risks over-explaining context"],
     blindspotsId: ["Mungkin menghindari ketegasan yang diperlukan", "Bisa memprioritaskan harmoni di atas kebenaran", "Mungkin kehilangan fokus dalam detail", "Risiko terlalu banyak menjelaskan konteks"],
     blindspotsNl: ["Kan noodzakelijke directheid vermijden", "Kan harmonie boven waarheid stellen", "Kan focus verliezen in de details", "Risico van overmatig uitleggen van context"],
+    shadow: "Holistic thinking goes wrong by valuing harmony over truth. A leader so committed to keeping the team together that they avoid the hard call that would briefly break it. Conflicts get smoothed over rather than resolved, and underperformance is tolerated because confronting it would disturb the relational web. The team eventually loses respect for the leader.",
     relatingTo: [
       {
         img: "/head-conceptual.png",
@@ -216,6 +218,7 @@ const STYLES = [
     blindspots: ["May struggle to explain insights clearly", "Can feel misunderstood by more analytical colleagues", "May resist structure even when it would help", "Risks acting on impression without verification"],
     blindspotsId: ["Mungkin kesulitan menjelaskan wawasan dengan jelas", "Bisa merasa kurang dipahami oleh rekan yang lebih analitis", "Mungkin menolak struktur bahkan ketika itu membantu", "Risiko bertindak berdasarkan kesan tanpa verifikasi"],
     blindspotsNl: ["Kan moeite hebben inzichten duidelijk te verwoorden", "Kan zich onbegrepen voelen door meer analytische collega's", "Kan structuur afwijzen ook als die zou helpen", "Risico van handelen op indruk zonder verificatie"],
+    shadow: "Intuitional thinking goes wrong by becoming unaccountable. A leader who claims inner conviction or felt rightness — without showing reasoning, inviting challenge, or naming the limits of their own perception — effectively closes the conversation. Healthy Intuitional discernment is submitted to community, to Scripture, and to the test of fruit over time.",
     relatingTo: [
       {
         img: "/head-conceptual.png",
@@ -672,7 +675,17 @@ export default function ThinkingStylesClient({
                   </div>
                 </div>
 
-                {/* Row 5: Relating To */}
+                {/* Row 5: Shadow Side */}
+                <div style={{ background: "oklch(98% 0.03 65)", padding: "2rem 2.5rem", borderLeft: "3px solid oklch(70% 0.16 65)" }}>
+                  <p className="t-label" style={{ color: "oklch(50% 0.14 65)", marginBottom: "0.875rem", fontSize: "0.6rem" }}>
+                    {tr("The Shadow Side", "Sisi Bayangan", "De schaduwkant")}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)", maxWidth: "80ch" }}>
+                    {style.shadow}
+                  </p>
+                </div>
+
+                {/* Row 6: Relating To */}
                 <div style={{ background: style.bg, padding: "0" }}>
                   <div style={{ padding: "1.5rem 2.5rem 1rem" }}>
                     <p className="t-label" style={{ color: style.colorLight, fontSize: "0.6rem" }}>
@@ -753,6 +766,65 @@ export default function ThinkingStylesClient({
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ── BIBLICAL ANCHORS ── */}
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
+        <div className="container-wide">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            {tr("Biblical Anchors", "Jangkar Alkitab", "Bijbelse ankerpunten")}
+          </p>
+          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+            {tr("Each style in Scripture.", "Setiap gaya dalam Alkitab.", "Elke stijl in de Bijbel.")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "58ch" }}>
+            {tr(
+              "These three thinking styles are not modern inventions. Scripture models each one — and shows where each style does its best work, and where it needs the others.",
+              "Ketiga gaya berpikir ini bukan penemuan modern. Alkitab memodelkan masing-masing — dan menunjukkan di mana setiap gaya bekerja paling baik, dan di mana ia membutuhkan yang lain.",
+              "Deze drie denkstijlen zijn geen moderne uitvindingen. De Bijbel modelleert ze alle drie — en laat zien waar elke stijl zijn beste werk doet, en waar hij de andere nodig heeft."
+            )}
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
+            {[
+              {
+                style: "Conceptual",
+                styleColor: "oklch(62% 0.14 250)",
+                person: "Paul",
+                reference: "Romans 1–11",
+                body: "Paul's letter to the Romans is the clearest Biblical example of Conceptual leadership. Careful argument from human sinfulness through justification to ethical application — each chapter building on the last. His Conceptual gift built doctrinal foundations the church still stands on. Conceptual thinking here is not coldness. It is care. But Paul had to be reminded by James in Acts 21 that his theology was right, and his pastoral approach to Jerusalem needed adjustment. Drive needs grace.",
+              },
+              {
+                style: "Holistic",
+                styleColor: "oklch(62% 0.14 145)",
+                person: "Nehemiah",
+                reference: "Nehemiah 1–13",
+                body: "Nehemiah did not just rebuild Jerusalem's wall. He simultaneously organised the workforce by family group, defended against opposition, restored the dignity of returnees, addressed economic exploitation of the poor, and held the people to the covenant. A Conceptual leader would have built the wall first and worried about the people later. Nehemiah saw that the wall meant nothing without the community inside it. Holistic thinking attends to the whole at once.",
+              },
+              {
+                style: "Intuitional",
+                styleColor: "oklch(62% 0.14 300)",
+                person: "Elijah",
+                reference: "1 Kings 19",
+                body: "When Elijah fled to Mount Horeb, God did not appear in the great wind, the earthquake, or the fire. He came in a low whisper that Elijah recognised because he had learned to listen below the surface. The whole Elijah narrative is a study in Intuitional discernment — sensing where God is moving, naming what others cannot yet see, holding still long enough to hear what shouting cannot say. Intuitional leadership is the trained ability to recognise when reason has reached its limit.",
+              },
+            ].map(anchor => (
+              <div key={anchor.person} style={{ background: "oklch(28% 0.10 260)", padding: "2.5rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.16em", textTransform: "uppercase", color: anchor.styleColor, marginBottom: "1.25rem" }}>
+                  {anchor.style}
+                </p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.5rem", color: "oklch(97% 0.005 80)", lineHeight: 1.1, marginBottom: "0.25rem" }}>
+                  {anchor.person}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(58% 0.04 260)", letterSpacing: "0.06em", marginBottom: "1.5rem" }}>
+                  {anchor.reference}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.8, color: "oklch(72% 0.04 260)" }}>
+                  {anchor.body}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
