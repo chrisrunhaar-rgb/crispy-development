@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
+import Image from "next/image";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
@@ -774,6 +775,17 @@ export default function DiscClient({
             )}
           </p>
 
+          <div style={{ marginBottom: "2.5rem", overflow: "hidden" }}>
+            <Image
+              src="/disc/hook.png"
+              alt="Four diverse leaders at a meeting table, each responding differently to a missed deadline"
+              width={1280}
+              height={720}
+              style={{ width: "100%", height: "auto", display: "block" }}
+              priority
+            />
+          </div>
+
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)", marginBottom: hookSelected ? "2.5rem" : 0 }}>
             {[
               { key: "D", color: "oklch(52% 0.20 25)", action: tr("You call the team together immediately. Someone needs to own this — and you're ready to figure out who.", "Anda segera mengumpulkan tim. Seseorang harus bertanggung jawab atas ini — dan Anda siap mencari tahu siapa.", "Jij roept het team meteen bij elkaar. Iemand moet dit opeisen — en jij bent klaar om uit te zoeken wie."), reaction: tr("When the pressure hits, you reach for control. That's not a flaw. It's a wiring.", "Ketika tekanan datang, Anda meraih kendali. Itu bukan kelemahan. Itu adalah cara Anda terhubung.", "Als de druk toeslaat, grijp jij naar controle. Dat is geen fout. Het is een bedrading.") },
@@ -926,6 +938,17 @@ export default function DiscClient({
           </div>
         </div>
       </section>
+
+      {/* ── SECTION 4 PORTRAITS ── */}
+      <div style={{ background: "oklch(14% 0.08 260)", overflow: "hidden" }}>
+        <Image
+          src="/disc/portraits.png"
+          alt="Four DISC leader portraits: D - determined woman, I - expressive man, S - calm older woman, C - thoughtful man with glasses"
+          width={1280}
+          height={720}
+          style={{ width: "100%", height: "auto", display: "block", opacity: 0.9 }}
+        />
+      </div>
 
       {/* ── DISC TYPE DETAIL SECTIONS ── */}
       <div id="disc-types">
@@ -1090,6 +1113,17 @@ export default function DiscClient({
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(68% 0.04 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
             Three real cross-cultural situations. No right answer — only honest ones. Choose what feels most like you, then read what it reveals.
           </p>
+
+          {/* Scenario header image */}
+          <div style={{ marginBottom: "3rem", overflow: "hidden" }}>
+            <Image
+              src="/disc/scenario.png"
+              alt="Two leaders in an awkward cross-cultural conversation at a small table"
+              width={800}
+              height={800}
+              style={{ width: "min(100%, 480px)", height: "auto", display: "block" }}
+            />
+          </div>
 
           {/* Scenario tabs */}
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2.5rem", flexWrap: "wrap" }}>
