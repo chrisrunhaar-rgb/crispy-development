@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveMBTIResult } from "../actions";
@@ -410,6 +410,13 @@ export default function MBTIClient({
   const [expandedType, setExpandedType] = useState<string | null>(null);
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const [mbtiFlippedCard, setMbtiFlippedCard] = useState<string | null>(null);
+  const [noHover, setNoHover] = useState(false);
+
+  useEffect(() => {
+    if (!noHover) return;
+    const t = setTimeout(() => setNoHover(false), 120);
+    return () => clearTimeout(t);
+  }, [currentIdx, noHover]);
 
   function startQuiz() {
     setCurrentIdx(0);
@@ -420,6 +427,7 @@ export default function MBTIClient({
   }
 
   function handleAnswer(pole: "A" | "B") {
+    setNoHover(true);
     const qIdx = QUESTION_ORDER[currentIdx];
     const q = QUESTIONS[qIdx];
     const poleMap: Record<string, Record<"A" | "B", string>> = {
@@ -886,7 +894,7 @@ export default function MBTIClient({
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(50% 0.008 260)", marginBottom: 20 }}>
             {tr("Which feels more like you?", "Yang mana lebih seperti Anda?", "Welke voelt meer als jij?")}
           </p>
-          <div style={{ display: "grid", gap: 14 }}>
+          <div style={{ display: "grid", gap: 14, pointerEvents: noHover ? "none" : "auto" }}>
             {[{ label: "A", text: q.a }, { label: "B", text: q.b }].map(opt => (
               <button
                 key={opt.label}
@@ -947,15 +955,19 @@ export default function MBTIClient({
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "clamp(3rem, 5vw, 5rem) 24px" }}>
 
         <section style={{ marginBottom: "3rem" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.75rem", fontWeight: 600, color: "oklch(18% 0.08 260)", marginBottom: "1.5rem" }}>
-            {tr("Preference Profile", "Profil Preferensi", "Voorkeersprofiel")}
-          </h2>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 18, marginBottom: "1.5rem", flexWrap: "wrap" }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.75rem", fontWeight: 600, color: "oklch(18% 0.08 260)", margin: 0 }}>
+              {tr("Preference Profile", "Profil Preferensi", "Voorkeersprofiel")}
+            </h2>
+            <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2.25rem", fontWeight: 700, color: tempColor, letterSpacing: "0.06em", lineHeight: 1 }}>{type}</span>
+          </div>
           <div style={{ display: "grid", gap: "1rem" }}>
             {DIMENSION_META.map(d => {
               const pctA = pcts[d.poleA] ?? 50;
               const pctB = 100 - pctA;
-              const dominant = pctA >= 50 ? d.labelA : d.labelB;
-              const dominantPct = pctA >= 50 ? pctA : pctB;
+              const aIsDom = pctA >= 50;
+              const dominant = aIsDom ? d.labelA : d.labelB;
+              const dominantPct = aIsDom ? pctA : pctB;
               return (
                 <div key={d.d} style={{ background: "white", padding: "1.375rem 1.625rem", border: "1px solid oklch(90% 0.008 260)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
@@ -963,11 +975,20 @@ export default function MBTIClient({
                     <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 13, fontWeight: 700, color: d.color }}>{dominant} — {dominantPct}%</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: d.color, minWidth: 18 }}>{d.poleA}</span>
-                    <div style={{ flex: 1, height: 6, background: "oklch(91% 0.008 260)", overflow: "hidden" }}>
-                      <div className="mbti-bar" style={{ height: "100%", width: `${pctA}%`, background: `linear-gradient(90deg, ${d.color}88, ${d.color})` }} />
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: aIsDom ? d.color : "oklch(72% 0.008 260)", minWidth: 18 }}>{d.poleA}</span>
+                    <div style={{ flex: 1, height: 8, background: "oklch(91% 0.008 260)", overflow: "hidden", position: "relative" }}>
+                      <div className="mbti-bar" style={{
+                        position: "absolute",
+                        height: "100%",
+                        width: `${dominantPct}%`,
+                        background: aIsDom
+                          ? `linear-gradient(90deg, ${d.color}88, ${d.color})`
+                          : `linear-gradient(270deg, ${d.color}88, ${d.color})`,
+                        left: aIsDom ? 0 : "auto",
+                        right: aIsDom ? "auto" : 0,
+                      }} />
                     </div>
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: "oklch(62% 0.008 260)", minWidth: 18 }}>{d.poleB}</span>
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 700, color: aIsDom ? "oklch(72% 0.008 260)" : d.color, minWidth: 18 }}>{d.poleB}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
                     <span style={{ fontFamily: "var(--font-montserrat)", fontSize: 11, color: "oklch(55% 0.008 260)" }}>{d.labelA} {pctA}%</span>
