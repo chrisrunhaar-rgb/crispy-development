@@ -14,6 +14,7 @@ interface ContentModule {
   languages: string[];
   reads?: number;
   saves?: number;
+  status?: string;
 }
 
 type SortColumn = 'title' | 'category' | 'created' | 'updated' | 'languages' | 'reads' | 'saves';
@@ -23,6 +24,7 @@ interface AdminContentTableProps {
   modules: ContentModule[];
   onArchiveMultiple?: (slugs: string[]) => Promise<void>;
   onExport?: (modules: ContentModule[]) => void;
+  onStatusChange?: (slug: string, status: string) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
 }
@@ -36,10 +38,17 @@ function formatDate(iso: string | null | undefined): string {
   });
 }
 
+const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  development: { label: 'Dev', color: '#6B7280', bg: '#F3F4F6' },
+  live_free:   { label: 'Free', color: '#059669', bg: '#D1FAE5' },
+  live_paid:   { label: 'Paid', color: '#2563EB', bg: '#DBEAFE' },
+};
+
 export default function AdminContentTable({
   modules,
   onArchiveMultiple,
   onExport,
+  onStatusChange,
   showSearch = true,
   showFilters = true,
 }: AdminContentTableProps) {
@@ -403,16 +412,19 @@ export default function AdminContentTable({
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('languages')}>
                   Languages <SortIcon column="languages" />
                 </th>
-                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
+                <th style={{ width: '18%' }}>
+                  Status
+                </th>
+                <th style={{ width: '8%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
                   Reads <SortIcon column="reads" />
                 </th>
-                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
+                <th style={{ width: '8%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
                   Saves <SortIcon column="saves" />
                 </th>
-                <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
+                <th style={{ width: '12%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
                   Updated <SortIcon column="updated" />
                 </th>
-                <th style={{ width: '6%', textAlign: 'center' }}>
+                <th style={{ width: '5%', textAlign: 'center' }}>
                   View
                 </th>
               </tr>
@@ -463,6 +475,40 @@ export default function AdminContentTable({
                         </span>
                       ))}
                     </div>
+                  </td>
+                  <td data-label="Status" style={{ verticalAlign: 'middle' }}>
+                    {onStatusChange ? (
+                      <div style={{ display: 'flex', gap: '2px' }}>
+                        {(['development', 'live_free', 'live_paid'] as const).map(s => {
+                          const cfg = STATUS_CONFIG[s];
+                          const active = (module.status ?? 'development') === s;
+                          return (
+                            <button
+                              key={s}
+                              onClick={() => onStatusChange(module.slug, s)}
+                              style={{
+                                fontFamily: 'var(--font-montserrat)',
+                                fontSize: '0.58rem',
+                                fontWeight: 700,
+                                letterSpacing: '0.06em',
+                                padding: '3px 7px',
+                                border: active ? `1px solid ${cfg.color}` : '1px solid #E5E7EB',
+                                background: active ? cfg.bg : 'transparent',
+                                color: active ? cfg.color : '#9CA3AF',
+                                cursor: 'pointer',
+                                borderRadius: '3px',
+                                transition: 'all 0.12s',
+                              }}
+                              title={s}
+                            >
+                              {cfg.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <span style={{ fontSize: '0.75rem', color: '#6B7280' }}>{module.status ?? 'development'}</span>
+                    )}
                   </td>
                   <td data-label="Reads" style={{ textAlign: 'center' }}>
                     <span style={{ fontWeight: '500', color: (module.reads ?? 0) > 0 ? '#1F2937' : '#9CA3AF' }}>

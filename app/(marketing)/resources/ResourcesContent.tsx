@@ -13,6 +13,7 @@ interface Props {
   pathway: string | null;
   isTeamLeader: boolean;
   savedResources?: string[];
+  moduleStatuses?: Record<string, string>;
 }
 
 const FORMAT_COLORS: Record<string, string> = {
@@ -22,7 +23,19 @@ const FORMAT_COLORS: Record<string, string> = {
   Guide: "oklch(65% 0.15 45)",
 };
 
-export default function ResourcesContent({ userId, pathway, isTeamLeader, savedResources = [] }: Props) {
+// Returns the effective access level for a resource based on DB status.
+// Falls back to static gated field if no DB record exists.
+function getModuleAccess(slug: string | null, gated: boolean, moduleStatuses: Record<string, string>): "development" | "live_free" | "live_paid" {
+  if (!slug) return "development";
+  const status = moduleStatuses[slug];
+  if (status === "live_free") return "live_free";
+  if (status === "live_paid") return "live_paid";
+  if (status === "development") return "development";
+  // No DB record — fall back to static gated
+  return gated ? "live_paid" : "live_free";
+}
+
+export default function ResourcesContent({ userId, pathway, isTeamLeader, savedResources = [], moduleStatuses = {} }: Props) {
   const { t, lang } = useLanguage();
   const r = t.resources;
   const [view, setView] = useState<View>("list");
@@ -65,8 +78,14 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
     return true;
   });
 
-  const freeCount = filteredResources.filter(r => !r.gated).length;
-  const lockedCount = filteredResources.filter(r => r.gated).length;
+  const freeCount = filteredResources.filter(r => {
+    const access = getModuleAccess(r.slug, r.gated, moduleStatuses);
+    return access === "live_free";
+  }).length;
+  const lockedCount = filteredResources.filter(r => {
+    const access = getModuleAccess(r.slug, r.gated, moduleStatuses);
+    return access === "live_paid";
+  }).length;
 
   const hasActiveFilters = activeLanguage !== null || activeCategory !== null;
 
@@ -160,9 +179,16 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
             </p>
             <div style={{ border: "1px solid oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {TOPICS.map(topic => {
-                const count = RESOURCES.filter(res => res.topics.includes(topic.slug)).length;
-                const freeCount = RESOURCES.filter(res => res.topics.includes(topic.slug) && !res.gated).length;
-                const lockedCount = count - freeCount;
+                const topicResources = RESOURCES.filter(res => res.topics.includes(topic.slug));
+                const count = topicResources.length;
+                const freeCount = topicResources.filter(res => {
+                  const a = getModuleAccess(res.slug, res.gated, moduleStatuses);
+                  return a === "live_free";
+                }).length;
+                const lockedCount = topicResources.filter(res => {
+                  const a = getModuleAccess(res.slug, res.gated, moduleStatuses);
+                  return a === "live_paid";
+                }).length;
                 return (
                   <Link key={topic.slug} href={`/resources/topic/${topic.slug}`} style={{ textDecoration: "none", display: "block" }}>
                     <div
@@ -291,20 +317,22 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
             )}
             <div style={{ border: "1px solid oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
               {filteredResources.map((resource) => {
-                const isAccessible = !resource.gated || !!userId;
-                const hasPage = !!resource.slug;
+                const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
+                const isDevelopment = access === "development";
+                const isAccessible = access === "live_free" || (access === "live_paid" && !!userId);
+                const hasPage = !!resource.slug && !isDevelopment;
                 const isClickable = hasPage && isAccessible;
 
                 const cardInner = (
                   <div
                     style={{
-                      background: isAccessible ? "oklch(99% 0.002 80)" : "oklch(98% 0.003 80)",
+                      background: isDevelopment ? "oklch(95% 0.003 260)" : isAccessible ? "oklch(99% 0.002 80)" : "oklch(98% 0.003 80)",
                       padding: "clamp(1rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)",
                       display: "grid",
                       gridTemplateColumns: "1fr auto",
                       gap: "1rem",
                       alignItems: "start",
-                      opacity: hasPage ? 1 : 0.65,
+                      opacity: isDevelopment ? 0.6 : hasPage ? 1 : 0.65,
                       cursor: isClickable ? "pointer" : "default",
                       transition: "background 0.12s",
                     }}
@@ -314,7 +342,12 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                     <div style={{ minWidth: 0 }}>
                       {/* Title row */}
                       <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap", marginBottom: "0.375rem" }}>
-                        {!isAccessible && (
+                        {isDevelopment && (
+                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", background: "oklch(90% 0.006 260)", padding: "2px 6px", borderRadius: 3 }}>
+                            Coming soon
+                          </span>
+                        )}
+                        {!isDevelopment && !isAccessible && (
                           <svg viewBox="0 0 24 24" fill="none" stroke="oklch(58% 0.008 260)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ width: "0.875rem", height: "0.875rem", flexShrink: 0 }}>
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>

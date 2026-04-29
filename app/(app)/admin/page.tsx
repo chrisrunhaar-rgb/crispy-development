@@ -253,6 +253,7 @@ export default async function AdminPage({
   // ── Content tab ──
   const contentSaveCounts = new Map<string, number>();
   const contentReadCounts = new Map<string, number>();
+  const moduleStatuses: Record<string, string> = {};
   if (activeTab === "content") {
     allUsers.forEach(u => {
       const saved = u.user_metadata?.saved_resources;
@@ -268,6 +269,11 @@ export default async function AdminPage({
         });
       }
     });
+    const adminClient = createAdminClient();
+    const { data: statusRows } = await adminClient.from("module_status").select("slug, status");
+    for (const row of statusRows ?? []) {
+      moduleStatuses[row.slug] = row.status;
+    }
   }
 
   // ── Stats ──
@@ -609,6 +615,7 @@ export default async function AdminPage({
                 saves: contentSaveCounts.get(mod.slug) ?? 0,
               }))
             )}
+            moduleStatuses={moduleStatuses}
           />
         )}
 

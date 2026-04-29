@@ -1,4 +1,5 @@
-﻿import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import ResourcesContent from "./ResourcesContent";
 
 export const dynamic = "force-dynamic";
@@ -16,12 +17,23 @@ export default async function ResourcesPage() {
   const isTeamLeader = user?.user_metadata?.is_leader === true;
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
 
+  const admin = createAdminClient();
+  const { data: statusRows } = await admin
+    .from("module_status")
+    .select("slug, status");
+
+  const moduleStatuses: Record<string, string> = {};
+  for (const row of statusRows ?? []) {
+    moduleStatuses[row.slug] = row.status;
+  }
+
   return (
     <ResourcesContent
       userId={user?.id ?? null}
       pathway={pathway}
       isTeamLeader={isTeamLeader}
       savedResources={savedResources}
+      moduleStatuses={moduleStatuses}
     />
   );
 }

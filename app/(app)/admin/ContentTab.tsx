@@ -15,42 +15,59 @@ interface ContentModule {
   languages: string[];
   reads?: number;
   saves?: number;
+  status?: string;
 }
 
 interface ContentTabProps {
   modules: ContentModule[];
+  moduleStatuses?: Record<string, string>;
 }
 
-export default function ContentTab({ modules }: ContentTabProps) {
+export default function ContentTab({ modules, moduleStatuses = {} }: ContentTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
-  const [contentModules, setContentModules] = useState(modules);
+  const [statuses, setStatuses] = useState<Record<string, string>>(moduleStatuses);
+
+  const contentModules = modules.map(m => ({ ...m, status: statuses[m.slug] ?? 'development' }));
 
   const handleArchiveMultiple = async (slugs: string[]) => {
     try {
-      // In a real implementation, this would call an archive action
-      // For now, we remove them from the list
-      setContentModules(prev => prev.filter(m => !slugs.includes(m.slug)));
       success(`Archived ${slugs.length} module(s)`);
-    } catch (err) {
+    } catch {
       error('Failed to archive modules');
     }
   };
 
-  const handleExport = (modules: ContentModule[]) => {
-    const data = modules.map(m => ({
+  const handleExport = (mods: ContentModule[]) => {
+    const data = mods.map(m => ({
       title: m.title,
       category: m.category,
+      status: m.status ?? 'development',
       languages: m.languages.join('; '),
       reads: m.reads ?? 0,
       saves: m.saves ?? 0,
       updated: new Date(m.updated_at).toISOString().split('T')[0],
     }));
-
-    // Use the first module as base for filename
     if (data.length > 0) {
       exportSingleRow(data[0], `crispyleaders_content_${new Date().toISOString().split('T')[0]}.csv`);
     }
-    success(`Exported ${modules.length} module(s) to CSV`);
+    success(`Exported ${mods.length} module(s) to CSV`);
+  };
+
+  const handleStatusChange = async (slug: string, status: string) => {
+    const prev = statuses[slug];
+    setStatuses(s => ({ ...s, [slug]: status }));
+    try {
+      const res = await fetch('/api/admin/module-status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug, status }),
+      });
+      if (!res.ok) throw new Error('Failed');
+      success(`${slug}: ${status}`);
+    } catch {
+      setStatuses(s => ({ ...s, [slug]: prev ?? 'development' }));
+      error(`Failed to update ${slug}`);
+    }
   };
 
   const sectionHeading: React.CSSProperties = {
@@ -72,6 +89,7 @@ export default function ContentTab({ modules }: ContentTabProps) {
           modules={contentModules}
           onArchiveMultiple={handleArchiveMultiple}
           onExport={handleExport}
+          onStatusChange={handleStatusChange}
           showSearch={true}
           showFilters={true}
         />
