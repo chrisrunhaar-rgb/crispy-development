@@ -320,8 +320,8 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
                 const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
                 const isDevelopment = access === "development";
                 const isAccessible = access === "live_free" || (access === "live_paid" && !!userId);
-                const hasPage = !!resource.slug && !isDevelopment;
-                const isClickable = hasPage && isAccessible;
+                const hasPage = !!resource.slug;
+                const isClickable = hasPage && (isAccessible || isDevelopment);
 
                 const cardInner = (
                   <div
