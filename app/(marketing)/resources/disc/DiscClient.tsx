@@ -509,7 +509,10 @@ function getResultKey(scores: { D: number; I: number; S: number; C: number }): R
   const second = entries[1];
   const threshold = top[1] * 0.75;
   if (second[1] >= threshold) {
-    const combo = [top[0], second[0]].sort().join("") as ResultKey;
+    const discOrder = ["D", "I", "S", "C"];
+    const combo = [top[0], second[0]]
+      .sort((a, b) => discOrder.indexOf(a) - discOrder.indexOf(b))
+      .join("") as ResultKey;
     return combo;
   }
   return top[0] as ResultKey;
