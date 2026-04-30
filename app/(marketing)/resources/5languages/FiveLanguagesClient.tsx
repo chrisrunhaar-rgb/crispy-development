@@ -194,94 +194,11 @@ function getInterpretation(
     action: "Ask each team member their receiving language. Write it down. Refer to the list before any care moment.",
   };
   return {
-    label: "Mismatch",
+    label: "Two Languages",
     labelColor: "oklch(62% 0.14 235)",
-    text: "Your receiving and giving primaries differ. This is the most insightful pattern. You carry natural fluency in two languages. The risk: you may be loving your team well without ever telling them what makes you feel cared for.",
+    text: "Your receiving and giving languages differ — the most insightful pattern. You carry natural fluency in two languages: how you are wired to receive care, and how you are wired to give it. The risk: your team may not know what you personally need.",
     action: `Tell your team both languages out loud: "What makes me feel cared for is ${LANG_DATA[rPrimary].name}. What I most naturally give is ${LANG_DATA[gPrimary].name}."`,
   };
-}
-
-// ── FLIP CARD ─────────────────────────────────────────────────────────────────
-
-function FlipCard({ front, back }: { front: string; back: string }) {
-  const [flipped, setFlipped] = useState(false);
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => setFlipped(!flipped)}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlipped(f => !f); } }}
-      style={{
-        cursor: "pointer",
-        perspective: "1000px",
-        height: "180px",
-      }}
-    >
-      <div style={{
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        transformStyle: "preserve-3d",
-        transition: "transform 0.5s ease",
-        transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-      }}>
-        {/* Front */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          background: "oklch(22% 0.10 260)",
-          border: "1px solid oklch(35% 0.08 260)",
-          borderRadius: "12px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1.5rem",
-          gap: "0.75rem",
-        }}>
-          <p style={{
-            fontFamily: "var(--font-montserrat, sans-serif)",
-            fontWeight: 700,
-            fontSize: "clamp(14px, 1.5vw, 16px)",
-            color: "oklch(97% 0.005 80)",
-            textAlign: "center",
-            lineHeight: 1.4,
-          }}>{front}</p>
-          <span style={{
-            fontSize: "11px",
-            color: "oklch(65% 0.15 45)",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-          }}>Tap to reveal</span>
-        </div>
-        {/* Back */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-          transform: "rotateY(180deg)",
-          background: "oklch(97% 0.005 80)",
-          border: "1px solid oklch(90% 0.01 80)",
-          borderRadius: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1.5rem",
-        }}>
-          <p style={{
-            fontSize: "clamp(13px, 1.3vw, 15px)",
-            color: "oklch(22% 0.10 260)",
-            lineHeight: 1.6,
-            textAlign: "center",
-          }}>{back}</p>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 // ── BAR CHART ─────────────────────────────────────────────────────────────────
@@ -560,40 +477,87 @@ export default function FiveLanguagesClient({
           </div>
         </section>
 
-        {/* Flip cards */}
-        <section style={{ background: "oklch(14% 0.07 260)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
+        {/* About section — light background, fully visible content */}
+        <section style={{ background: "white", padding: "clamp(2rem, 4vw, 3.5rem) 0", borderTop: "1px solid oklch(91% 0.006 80)" }}>
           <div className="container-wide">
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: "1rem",
-              marginBottom: "2.5rem",
+            <h2 style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)",
+              color: "oklch(22% 0.10 260)", marginBottom: "0.5rem",
             }}>
-              <FlipCard
-                front="What this assessment does"
-                back="Most frameworks tell you who you are. This one tells you how you give and receive care. Gary Chapman's 5 Languages of Appreciation adapted for ministry teams — two tests, two insights."
-              />
-              <FlipCard
-                front="Why two tests instead of one"
-                back="Test 1 reveals your receiving language — what makes you feel cared for. Test 2 reveals your giving language — how you naturally express care. The gap between the two is where most insight lives."
-              />
-              <FlipCard
-                front="How to read your results"
-                back="Match: you give what you need — strength and risk. Mismatch: you have fluency in two languages — most insightful. Both flat: broad sensitivity — name your top two."
-              />
-              <FlipCard
-                front="Putting this into practice"
-                back="Tell your team your two languages. Ask each team member theirs. Audit your giving once a quarter: am I loving each person in their language, or mine?"
-              />
+              About this assessment
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, maxWidth: 680, marginBottom: "2.5rem" }}>
+              Most personality frameworks tell you who you are. This one tells you something different — how you give and receive care. Gary Chapman&apos;s original 5 Love Languages adapted for ministry teams across cultures, with one key addition: a second test for how you give.
+            </p>
+
+            {/* 4 info cards — visible content, no flip */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem", marginBottom: "2.5rem" }}>
+              {[
+                {
+                  title: "Why two tests?",
+                  body: "Chapman's original test measures only receiving — what makes you feel loved. For team leaders, that is not enough. You need to know both: how you receive care so your team knows what you need, and how you give care so you can check whether you're loving people in their language or only in your own.",
+                },
+                {
+                  title: "The Golden Rule gap",
+                  body: "The most common pattern: leaders give in their own receiving language. A leader whose language is Words pours out written affirmation to a teammate whose language is Acts of Service — the teammate never feels seen. This is not malice. It is the Golden Rule misapplied: doing unto others as you would have them do unto you assumes the other person wants what you want.",
+                },
+                {
+                  title: "How to read your results",
+                  body: "Three patterns: Match (receiving = giving) — you give what you most need, which is your strength and your blind spot. Two Languages (receiving ≠ giving) — you have fluency in two languages, but your team may be guessing what you need. Broad (no clear primary) — your sensitivity is wide; name your top two and tell your team.",
+                },
+                {
+                  title: "Three practices",
+                  body: "Tell your team both your receiving and giving languages out loud — naming the gap is the highest-leverage move you can make. Ask each team member their receiving language and keep the list. Audit your giving once a quarter: for each person, have I expressed care in their language, or only in mine?",
+                },
+              ].map(({ title, body }) => (
+                <div key={title} style={{
+                  background: "oklch(97% 0.005 80)",
+                  border: "1px solid oklch(90% 0.006 80)",
+                  borderRadius: 12,
+                  padding: "1.25rem 1.5rem",
+                }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(22% 0.10 260)", marginBottom: "0.6rem" }}>{title}</p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>{body}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 5 language preview cards */}
+            <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
+              The five languages
+            </h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "2.5rem" }}>
+              {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => (
+                <div key={k} style={{
+                  background: LANG_DATA[k].colorLight,
+                  border: `1.5px solid ${LANG_DATA[k].color}40`,
+                  borderRadius: 12,
+                  padding: "1rem 1.25rem",
+                  borderTop: `4px solid ${LANG_DATA[k].color}`,
+                }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.85rem", color: LANG_DATA[k].color, marginBottom: "0.5rem" }}>
+                    {LANG_DATA[k].name}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)" }}>
+                    {LANG_DATA[k].desc}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: LANG_DATA[k].color, marginTop: "0.75rem", fontStyle: "italic" }}>
+                    {LANG_DATA[k].biblicalAnchor}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Cross-cultural note */}
+            <div style={{ background: "oklch(96% 0.02 235)", border: "1px solid oklch(85% 0.06 235)", borderRadius: 12, padding: "1.25rem 1.5rem", marginBottom: "2.5rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(35% 0.10 235)", marginBottom: "0.5rem" }}>Cross-cultural note</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>
+                The five languages travel across cultures, but their cultural weight does not. Words of Affirmation can feel performative in high-context Asian cultures. Appropriate Touch is the most variable — a side-hug normal in Filipino ministry is inappropriate in much of the Middle East. The test gives you your language. The cross-cultural work is learning how that language is properly spoken in the cultures around you.
+              </p>
             </div>
 
             {/* Empty chart previews */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "1.5rem",
-              marginBottom: "2.5rem",
-            }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2.5rem" }}>
               <EmptyBarChart label="Your Receiving Language" />
               <EmptyBarChart label="Your Giving Language" />
             </div>
@@ -617,9 +581,9 @@ export default function FiveLanguagesClient({
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
-                Begin Test 1
+                Begin Test 1 — Receiving
               </button>
-              <p style={{ marginTop: "0.75rem", fontSize: "13px", color: "oklch(55% 0.05 260)" }}>
+              <p style={{ marginTop: "0.75rem", fontSize: "13px", color: "oklch(55% 0.05 260)", fontFamily: "var(--font-montserrat)" }}>
                 Test 1 of 2 · 40 forced-choice pairs · ~8 minutes
               </p>
             </div>
@@ -1186,6 +1150,127 @@ export default function FiveLanguagesClient({
           >
             Retake
           </button>
+        </div>
+      </section>
+
+      {/* Full 5 languages reference */}
+      <section style={{ background: "oklch(96% 0.005 80)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
+        <div className="container-wide">
+          <h2 style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)",
+            color: "oklch(22% 0.10 260)",
+            marginBottom: "0.5rem",
+          }}>
+            The Five Languages
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(45% 0.008 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: "2rem" }}>
+            Full profiles for all five languages — with cross-cultural notes and biblical grounding.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
+            {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
+              const lang = LANG_DATA[k];
+              const isReceiving = k === rPrimary;
+              const isGiving = k === gPrimary;
+              return (
+                <div key={k} style={{
+                  background: "white",
+                  border: `1px solid ${lang.color}30`,
+                  borderRadius: "14px",
+                  overflow: "hidden",
+                  borderTop: `4px solid ${lang.color}`,
+                }}>
+                  {/* Card header */}
+                  <div style={{ padding: "1.25rem 1.5rem 1rem", borderBottom: `1px solid ${lang.color}15` }}>
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
+                      <h3 style={{
+                        fontFamily: "var(--font-montserrat)",
+                        fontWeight: 800,
+                        fontSize: "1rem",
+                        color: lang.color,
+                        margin: 0,
+                      }}>
+                        {lang.name}
+                      </h3>
+                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+                        {isReceiving && (
+                          <span style={{
+                            fontSize: "10px",
+                            fontWeight: 700,
+                            letterSpacing: "0.07em",
+                            textTransform: "uppercase",
+                            padding: "3px 8px",
+                            borderRadius: "20px",
+                            background: `${lang.color}18`,
+                            color: lang.color,
+                            border: `1px solid ${lang.color}50`,
+                          }}>
+                            Your receiving language
+                          </span>
+                        )}
+                        {isGiving && (
+                          <span style={{
+                            fontSize: "10px",
+                            fontWeight: 700,
+                            letterSpacing: "0.07em",
+                            textTransform: "uppercase",
+                            padding: "3px 8px",
+                            borderRadius: "20px",
+                            background: `${lang.color}18`,
+                            color: lang.color,
+                            border: `1px solid ${lang.color}50`,
+                          }}>
+                            Your giving language
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card body */}
+                  <div style={{ padding: "1.25rem 1.5rem", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(22% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
+                      {lang.desc}
+                    </p>
+
+                    <div>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
+                        What this does NOT mean
+                      </p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                        {lang.notMeans}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
+                        Cross-cultural note
+                      </p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                        {lang.crossCultural}
+                      </p>
+                    </div>
+
+                    <div style={{
+                      background: lang.colorLight,
+                      borderRadius: "8px",
+                      padding: "1rem 1.1rem",
+                      borderLeft: `3px solid ${lang.color}`,
+                    }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>
+                        Biblical anchor · {lang.biblicalAnchor}
+                      </p>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(25% 0.08 260)", lineHeight: 1.7, margin: 0 }}>
+                        {lang.biblical}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </div>

@@ -428,7 +428,8 @@ type ModalData =
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
 
   | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" };
+  | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "fivela"; receivingResult: string; givingResult: string; receivingScores: { A: number; B: number; C: number; D: number; E: number }; givingScores: { A: number; B: number; C: number; D: number; E: number } };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
   return (
@@ -460,6 +461,7 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
 
         {data.type === "bigfive" && <BigFiveModal data={data} onClose={onClose} />}
         {data.type === "16personalities" && <PersonalitiesModal data={data} onClose={onClose} />}
+        {data.type === "fivela" && <FivelaModal data={data} onClose={onClose} />}
       </div>
     </div>
   );
@@ -1144,135 +1146,7 @@ const P16_DICHOTOMY_LABELS: Record<string, string> = {
   JP_A: "J — Judging",      JP_B: "P — Perceiving",
 };
 
-function Personalities16Tile({
-  personalityType,
-  scores,
-  lang,
-  done,
-}: {
-  personalityType: string | null;
-  scores: Record<string, number> | null;
-  lang: "en" | "id" | "nl";
-  done: boolean;
-}) {
-  const [flipped, setFlipped] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const TILE_H = 165;
-  const typeColor = personalityType ? (P16_COLORS[personalityType] ?? navy) : navy;
-  const subtitle = personalityType ? (P16_SUBTITLES[personalityType] ?? "") : "";
-  const shortOverview = personalityType ? (P16_SHORT[personalityType] ?? "") : "";
 
-  const faceBase: React.CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    borderRadius: 12,
-    padding: "0.875rem",
-    display: "flex",
-    flexDirection: "column",
-    backfaceVisibility: "hidden",
-    WebkitBackfaceVisibility: "hidden",
-  };
-
-  if (!done) {
-    return (
-      <div style={{
-        background: offWhite, border: "1px solid oklch(91% 0.006 80)", borderRadius: 12,
-        padding: "0.875rem", display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "space-between", gap: "0.5rem", minHeight: TILE_H,
-      }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(58% 0.008 260)", width: "100%" }}>
-          {lang === "id" ? "16 Kepribadian" : lang === "nl" ? "16 Persoonlijkheden" : "16 Personalities"}
-        </p>
-        <EmptyTileVisual />
-        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }}>
-          Take test →
-        </Link>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{ position: "relative", height: TILE_H, perspective: "800px" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div style={{
-        position: "absolute", inset: 0,
-        transformStyle: "preserve-3d",
-        transition: "transform 0.45s cubic-bezier(0.4,0.2,0.2,1)",
-        transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-      }}>
-
-        {/* FRONT */}
-        <div style={{
-          ...faceBase,
-          background: "white",
-          border: `1px solid oklch(88% 0.006 80)`,
-          borderTop: `3px solid ${typeColor}`,
-          boxShadow: hovered ? "0 8px 24px oklch(22% 0.10 260 / 0.12)" : "0 1px 4px oklch(0% 0 0 / 0.04)",
-          transform: "rotateY(0deg)",
-          cursor: "pointer",
-          justifyContent: "space-between",
-        }} onClick={() => setFlipped(true)}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: navy, width: "100%" }}>
-            {lang === "id" ? "16 Kepribadian" : lang === "nl" ? "16 Persoonlijkheden" : "16 Personalities"}
-          </p>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.25rem" }}>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.75rem", fontWeight: 900, color: typeColor, lineHeight: 1 }}>
-              {personalityType}
-            </span>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 500, color: "oklch(48% 0.008 260)" }}>
-              {subtitle}
-            </span>
-          </div>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "oklch(62% 0.008 260)", alignSelf: "flex-end" }}>
-            Tap for details →
-          </p>
-        </div>
-
-        {/* BACK */}
-        <div style={{
-          ...faceBase,
-          background: offWhite,
-          border: `1px solid oklch(88% 0.006 80)`,
-          transform: "rotateY(180deg)",
-          justifyContent: "space-between",
-          overflow: "hidden",
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: typeColor, marginBottom: "0.2rem" }}>
-                {personalityType}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, color: navy }}>
-                {subtitle}
-              </p>
-            </div>
-            <button onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
-              style={{ background: "none", border: "none", fontSize: "0.7rem", color: "oklch(55% 0.008 260)", cursor: "pointer", padding: "0 0.25rem", lineHeight: 1 }}>
-              ×
-            </button>
-          </div>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", lineHeight: 1.55, color: "oklch(38% 0.008 260)", flex: 1, marginBlock: "0.5rem", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" }}>
-            {shortOverview}
-          </p>
-          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <Link href="/resources/16-personalities"
-              style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.35rem 0.75rem", borderRadius: 5, textDecoration: "none", whiteSpace: "nowrap" }}>
-              {lang === "id" ? "Modul →" : lang === "nl" ? "Module →" : "More info →"}
-            </Link>
-            <Link href="/resources/16-personalities"
-              style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: "oklch(48% 0.008 260)", textDecoration: "none", whiteSpace: "nowrap" }}>
-              {lang === "id" ? "Ulangi →" : lang === "nl" ? "Opnieuw →" : "Retake →"}
-            </Link>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
 
 function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type: "16personalities" }>; onClose: () => void }) {
   const { personalityType, scores, lang } = data;
@@ -1327,7 +1201,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} — {dominantPct}%</span>
               </div>
               <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-                <div style={{ height: "100%", width: `${pctA}%`, background: typeColor, borderRadius: 3 }} />
+                <div style={{ height: "100%", width: `${dominantPct}%`, background: typeColor, borderRadius: 3 }} />
               </div>
             </div>
           );
@@ -1335,14 +1209,147 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
       </div>
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+        <Link href="/resources/16-personalities?view=module" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {lang === "id" ? "Modul lengkap →" : lang === "nl" ? "Volledige module →" : "Full module →"}
         </Link>
-        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
+        <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+        </button>
+      </div>
+    </>
+  );
+}
+
+const FIVELA_MODAL_COLORS: Record<string, string> = {
+  A: "oklch(72% 0.18 85)",
+  B: "oklch(62% 0.14 235)",
+  C: "oklch(52% 0.14 150)",
+  D: "oklch(68% 0.15 10)",
+  E: "oklch(70% 0.16 65)",
+};
+const FIVELA_MODAL_NAMES: Record<string, string> = {
+  A: "Words of Affirmation",
+  B: "Quality Time",
+  C: "Acts of Service",
+  D: "Tangible Gifts",
+  E: "Appropriate Touch",
+};
+const FIVELA_MODAL_DESC: Record<string, string> = {
+  A: "You feel cared for when people speak specific, genuine appreciation. A well-timed sentence can carry you through a hard season.",
+  B: "You feel cared for when someone gives you their full, unhurried attention. Presence is the currency.",
+  C: "You feel cared for when someone does something practical to help you — without being asked.",
+  D: "You feel cared for when someone brings you something chosen specifically for you. The value is not the price — it is the evidence that someone thought of you.",
+  E: "You feel cared for when someone offers appropriate physical warmth — a firm handshake, a hand on the shoulder, a warm greeting.",
+};
+
+function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "fivela" }>; onClose: () => void }) {
+  const { receivingResult, givingResult, receivingScores, givingScores } = data;
+  const isMatch = receivingResult === givingResult;
+  const interpretLabel = isMatch ? "Same Language" : "Two Languages";
+  const interpretColor = isMatch ? "oklch(52% 0.14 150)" : "oklch(62% 0.14 235)";
+  const interpretText = isMatch
+    ? "Your receiving and giving languages match. You give what you most need, which is your strength — and your blind spot. Ask your team members their receiving language so you don't assume they want what you want."
+    : "Your receiving and giving languages differ — the most insightful pattern. You carry fluency in two languages. Your risk: your team may be giving back in your giving language, not your receiving one. Tell them both out loud.";
+
+  function MiniBarChart({ scores, primary, label }: { scores: { A: number; B: number; C: number; D: number; E: number }; primary: string; label: string }) {
+    const max = Math.max(...Object.values(scores));
+    return (
+      <div style={{ flex: 1 }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(52% 0.008 260)", marginBottom: "0.5rem" }}>{label}</p>
+        {(["A", "B", "C", "D", "E"] as const).map((k) => {
+          const val = scores[k] ?? 0;
+          const isPrimary = k === primary;
+          const pct = max > 0 ? Math.round((val / max) * 100) : 0;
+          return (
+            <div key={k} style={{ marginBottom: "0.375rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.1rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: isPrimary ? 800 : 500, color: isPrimary ? FIVELA_MODAL_COLORS[k] : "oklch(50% 0.008 260)" }}>
+                  {FIVELA_MODAL_NAMES[k]}
+                </span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: isPrimary ? 800 : 400, color: isPrimary ? FIVELA_MODAL_COLORS[k] : "oklch(60% 0.008 260)" }}>
+                  {val}
+                </span>
+              </div>
+              <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+                <div style={{ height: "100%", width: `${pct}%`, background: FIVELA_MODAL_COLORS[k], borderRadius: 3, opacity: isPrimary ? 1 : 0.5 }} />
+              </div>
+            </div>
+          );
+        })}
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: FIVELA_MODAL_COLORS[primary] ?? navy, marginTop: "0.5rem" }}>
+          Primary: {FIVELA_MODAL_NAMES[primary] ?? primary}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* Header */}
+      <div style={{ background: FIVELA_MODAL_COLORS[receivingResult] ?? navy, borderRadius: 10, padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: "0.4rem" }}>
+          5 Languages of Appreciation
+        </p>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", flexWrap: "wrap" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "1.2rem", color: "white", lineHeight: 1 }}>
+            {FIVELA_MODAL_NAMES[receivingResult] ?? receivingResult}
+          </span>
+          {!isMatch && (
+            <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8rem", color: "rgba(255,255,255,0.8)" }}>
+              → {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}
+            </span>
+          )}
+        </div>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "rgba(255,255,255,0.85)", marginTop: "0.35rem" }}>
+          Receive · {isMatch ? "Same giving language" : `Give: ${FIVELA_MODAL_NAMES[givingResult] ?? givingResult}`}
+        </p>
+      </div>
+
+      {/* Interpretation badge */}
+      <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: `${interpretColor}15`, border: `1px solid ${interpretColor}40`, borderRadius: 6, padding: "0.3rem 0.75rem", marginBottom: "0.75rem" }}>
+        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: interpretColor, textTransform: "uppercase", letterSpacing: "0.08em" }}>{interpretLabel}</span>
+      </div>
+
+      {/* Interpretation text */}
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)", marginBottom: "1.25rem", padding: "0.875rem", background: "oklch(95% 0.006 260)", borderRadius: 8, borderLeft: `3px solid ${interpretColor}` }}>
+        {interpretText}
+      </p>
+
+      {/* Dual bar charts */}
+      <div style={{ display: "flex", gap: "1rem", marginBottom: "1.25rem" }}>
+        <MiniBarChart scores={receivingScores} primary={receivingResult} label="Receiving" />
+        <div style={{ width: 1, background: "oklch(88% 0.006 80)", flexShrink: 0 }} />
+        <MiniBarChart scores={givingScores} primary={givingResult} label="Giving" />
+      </div>
+
+      {/* Primary language descriptions */}
+      {[{ key: receivingResult, role: "Receiving" }, { key: givingResult, role: "Giving" }]
+        .filter((item, idx, arr) => idx === 0 || item.key !== arr[0].key)
+        .map(({ key, role }) => (
+          <div key={`${role}-${key}`} style={{ background: `${FIVELA_MODAL_COLORS[key] ?? navy}10`, border: `1px solid ${FIVELA_MODAL_COLORS[key] ?? navy}30`, borderRadius: 8, padding: "0.875rem", marginBottom: "0.75rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: FIVELA_MODAL_COLORS[key] ?? navy, marginBottom: "0.3rem" }}>{role} language</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(22% 0.10 260)", marginBottom: "0.35rem" }}>{FIVELA_MODAL_NAMES[key] ?? key}</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.6, color: "oklch(40% 0.008 260)" }}>{FIVELA_MODAL_DESC[key] ?? ""}</p>
+          </div>
+        ))}
+
+      {/* Action sentence */}
+      <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 8, padding: "0.875rem 1rem", marginBottom: "1.25rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.65, color: "oklch(88% 0.03 260)", fontStyle: "italic" }}>
+          "What makes me feel cared for is {FIVELA_MODAL_NAMES[receivingResult] ?? receivingResult}. What I most naturally give is {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}."
+        </p>
+      </div>
+
+      {/* Buttons */}
+      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        <a href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: navy, textDecoration: "none", padding: "0.5rem 1rem", border: `1.5px solid ${navy}40`, borderRadius: 6 }}>
+          Full results & retake →
+        </a>
+        <button type="button" onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(55% 0.008 260)", background: "none", border: "none", cursor: "pointer", padding: "0.5rem 0.5rem" }}>
+          Close
         </button>
       </div>
     </>
@@ -1699,6 +1706,36 @@ export default function AssessmentTileGrid({
     </div>
   ) : <EmptyTileVisual />;
 
+  const p16TypeColor = personalities16Type ? (P16_COLORS[personalities16Type] ?? navy) : navy;
+  const personalities16Visual = personalities16Type && personalities16Scores ? (
+    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ width: "100%", paddingInline: "0.5rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.1rem", fontWeight: 900, color: p16TypeColor, textAlign: "center", marginBottom: "0.4rem", lineHeight: 1 }}>
+          {personalities16Type}
+        </p>
+        {(["EI", "SN", "TF", "JP"] as const).map(d => {
+          const scoreA = personalities16Scores![`${d}_A`] ?? 0;
+          const scoreB = personalities16Scores![`${d}_B`] ?? 0;
+          const total = scoreA + scoreB || 1;
+          const pctA = Math.round((scoreA / total) * 100);
+          const dominant = pctA >= 50 ? d[0] : d[1];
+          const dominantPct = pctA >= 50 ? pctA : 100 - pctA;
+          return (
+            <div key={d} style={{ marginBottom: "0.3rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.1rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: p16TypeColor, fontWeight: 700 }}>{dominant}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 800, color: navy }}>{dominantPct}%</span>
+              </div>
+              <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
+                <div style={{ height: "100%", width: `${dominantPct}%`, background: p16TypeColor, borderRadius: 2 }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  ) : <EmptyTileVisual />;
+
   const wheelVisual = wheelOfLifeScores ? (
     <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
       <WheelSpiderSVG scores={wheelOfLifeScores} size={72} showLabels={false} />
@@ -1783,7 +1820,7 @@ export default function AssessmentTileGrid({
         );
       })}
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", color: fivelaReceivingResult === fivelaGivingResult ? "oklch(52% 0.14 150)" : "oklch(62% 0.14 235)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: "0.1rem" }}>
-        {fivelaReceivingResult === fivelaGivingResult ? "Match" : "Mismatch"}
+        {fivelaReceivingResult === fivelaGivingResult ? "Match" : "Two Languages"}
       </p>
     </div>
   ) : <EmptyTileVisual />;
@@ -1849,11 +1886,12 @@ export default function AssessmentTileGrid({
 
 
         {/* 7. 16 Personalities */}
-        <Personalities16Tile
-          personalityType={personalities16Type}
-          scores={personalities16Scores}
-          lang={lang as "en" | "id" | "nl"}
+        <CompactTile
+          title={getTitle("16personalities", lang)}
+          visual={personalities16Visual}
           done={!!(personalities16Type && personalities16Scores)}
+          href="/resources/16-personalities"
+          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores, lang }) : undefined}
         />
 
         {/* 8. Big Five */}
@@ -1873,6 +1911,9 @@ export default function AssessmentTileGrid({
           visual={fivelaVisual}
           done={!!(fivelaReceivingResult && fivelaGivingResult)}
           href="/resources/5languages"
+          onClick={fivelaReceivingResult && fivelaGivingResult && fivelaReceivingScores && fivelaGivingScores
+            ? () => setModal({ type: "fivela", receivingResult: fivelaReceivingResult, givingResult: fivelaGivingResult, receivingScores: fivelaReceivingScores, givingScores: fivelaGivingScores })
+            : undefined}
         />
 
       </div>
