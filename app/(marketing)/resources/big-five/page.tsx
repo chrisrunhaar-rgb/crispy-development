@@ -56,7 +56,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <BigFiveClient {...props} isSaved={isSaved} />
+      <BigFiveClient {...props} isSaved={isSaved} startInQuiz={props.searchParams?.retake === "1"} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

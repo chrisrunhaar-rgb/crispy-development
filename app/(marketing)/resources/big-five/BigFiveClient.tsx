@@ -740,11 +740,13 @@ function calcPct(raw: number): number {
 export default function BigFiveClient({
   isSaved: isSavedProp,
   savedScores,
+  startInQuiz = false,
 }: {
   isSaved: boolean;
   savedScores: Record<string, number> | null;
+  startInQuiz?: boolean;
 }) {
-  const [quizState, setQuizState] = useState<QuizState>(savedScores ? "done" : "idle");
+  const [quizState, setQuizState] = useState<QuizState>(startInQuiz ? "active" : savedScores ? "done" : "idle");
   const [currentIdx, setCurrentIdx] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>(
     savedScores ?? { O: 0, C: 0, E: 0, A: 0, N: 0 }
@@ -775,7 +777,7 @@ export default function BigFiveClient({
     setScores({ O: 0, C: 0, E: 0, A: 0, N: 0 });
     setAnswerHistory([]);
     setQuizState("active");
-    window.scrollTo({ top: document.getElementById("quiz-section")?.offsetTop ?? 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function handleAnswer(value: number) {
