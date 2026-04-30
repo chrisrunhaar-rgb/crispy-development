@@ -374,14 +374,14 @@ type EnneagramTypeData = {
 };
 
 type ModalData =
-  | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number } }
-  | { type: "wheel"; scores: Record<string, number> }
-  | { type: "thinking"; result: string; scores: { C: number; H: number; I: number } }
+  | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" | "nl" }
+  | { type: "wheel"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" | "nl" }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "mbti"; mbtiType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "bigfive"; scores: Record<string, number> }
-  | { type: "16personalities"; personalityType: string; scores: Record<string, number> };
+  | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
   return (
@@ -418,7 +418,7 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
 }
 
 function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" }>; onClose: () => void }) {
-  const { result, scores } = data;
+  const { result, scores, lang } = data;
   const resultLabel = result.split("").map(k => DISC_NAMES[k] ?? k).join(" · ");
   const description = DISC_RESULT_TEXT[result] ?? null;
 
@@ -486,13 +486,13 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/disc#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake assessment →
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →"}
         </Link>
         <Link href="/resources/disc" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          Learn more
+          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          Close
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -500,7 +500,7 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 }
 
 function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel" }>; onClose: () => void }) {
-  const { scores } = data;
+  const { scores, lang } = data;
   const values = Object.values(scores);
   const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1);
   const sorted = WHEEL_SEGMENTS.slice().sort((a, b) => (scores[a.key] ?? 0) - (scores[b.key] ?? 0));
@@ -542,21 +542,21 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
       {/* Insight chips */}
       <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
         <div style={{ padding: "0.5rem 0.875rem", background: `${lowest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>Focus area</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>{lang === "id" ? "Area fokus" : lang === "nl" ? "Aandachtsgebied" : "Focus area"}</span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color }}>{lowest.label} ({scores[lowest.key]})</span>
         </div>
         <div style={{ padding: "0.5rem 0.875rem", background: `${highest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>Strongest</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>{lang === "id" ? "Terkuat" : lang === "nl" ? "Sterkste" : "Strongest"}</span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color }}>{highest.label} ({scores[highest.key]})</span>
         </div>
       </div>
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Update scores →
+          {lang === "id" ? "Perbarui skor →" : lang === "nl" ? "Scores bijwerken →" : "Update scores →"}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -586,7 +586,7 @@ const THINKING_STYLE_COLORS: Record<string, string> = {
 };
 
 function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "thinking" }>; onClose: () => void }) {
-  const { result, scores } = data;
+  const { result, scores, lang } = data;
   const bars = (["C", "H", "I"] as const).map(k => ({
     key: k,
     label: k === "C" ? "Conceptual" : k === "H" ? "Holistic" : "Intuitional",
@@ -626,10 +626,10 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake quiz →
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -696,8 +696,8 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
         <Link href="/resources/karunia-rohani" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {retakeLabel}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -741,27 +741,40 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake quiz →
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
   );
 }
 
-const MBTI_DASH_DIMS = [
-  { label: "Energy Direction", poleAKey: "EI_E", poleA: "E", labelA: "Extraversion", poleBKey: "EI_I", poleB: "I", labelB: "Introversion", color: "oklch(60% 0.18 52)" },
-  { label: "Perception",       poleAKey: "SN_S", poleA: "S", labelA: "Sensing",       poleBKey: "SN_N", poleB: "N", labelB: "Intuition",    color: "oklch(52% 0.22 280)" },
-  { label: "Judgement",        poleAKey: "TF_T", poleA: "T", labelA: "Thinking",      poleBKey: "TF_F", poleB: "F", labelB: "Feeling",      color: "oklch(50% 0.18 215)" },
-  { label: "Orientation",      poleAKey: "JP_J", poleA: "J", labelA: "Judging",       poleBKey: "JP_P", poleB: "P", labelB: "Perceiving",   color: "oklch(50% 0.20 25)" },
+type L3 = { en: string; id: string; nl: string };
+const MBTI_DASH_DIMS: { label: L3; poleAKey: string; poleA: string; labelA: L3; poleBKey: string; poleB: string; labelB: L3; color: string }[] = [
+  { label:{en:"Energy Direction",id:"Arah Energi",nl:"Energierichting"}, poleAKey:"EI_E", poleA:"E", labelA:{en:"Extraversion",id:"Ekstraversi",nl:"Extraversie"}, poleBKey:"EI_I", poleB:"I", labelB:{en:"Introversion",id:"Introversi",nl:"Introversie"}, color:"oklch(60% 0.18 52)" },
+  { label:{en:"Perception",id:"Persepsi",nl:"Waarneming"},               poleAKey:"SN_S", poleA:"S", labelA:{en:"Sensing",id:"Penginderaan",nl:"Zintuiglijk"},      poleBKey:"SN_N", poleB:"N", labelB:{en:"Intuition",id:"Intuisi",nl:"Intuïtie"},           color:"oklch(52% 0.22 280)" },
+  { label:{en:"Judgement",id:"Penilaian",nl:"Beoordeling"},              poleAKey:"TF_T", poleA:"T", labelA:{en:"Thinking",id:"Berpikir",nl:"Denken"},              poleBKey:"TF_F", poleB:"F", labelB:{en:"Feeling",id:"Merasakan",nl:"Voelen"},             color:"oklch(50% 0.18 215)" },
+  { label:{en:"Orientation",id:"Orientasi",nl:"Oriëntatie"},             poleAKey:"JP_J", poleA:"J", labelA:{en:"Judging",id:"Menilai",nl:"Beoordelend"},           poleBKey:"JP_P", poleB:"P", labelB:{en:"Perceiving",id:"Mempersepsi",nl:"Waarnemen"},    color:"oklch(50% 0.20 25)" },
 ];
-const MBTI_TEMPERAMENT_LABEL: Record<string, { en: string; id: string; nl: string }> = {
-  INTJ:{en:"Analyst",id:"Analis",nl:"Analist"},INTP:{en:"Analyst",id:"Analis",nl:"Analist"},ENTJ:{en:"Analyst",id:"Analis",nl:"Analist"},ENTP:{en:"Analyst",id:"Analis",nl:"Analist"},
-  INFJ:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},INFP:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},ENFJ:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},ENFP:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},
-  ISTJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ISFJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ESTJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ESFJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},
-  ISTP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ISFP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ESTP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ESFP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},
+const MBTI_TYPE_SUBTITLE: Record<string, L3> = {
+  INTJ:{en:"The Mastermind",   id:"Sang Arsitek Agung", nl:"De Strateeg"},
+  INTP:{en:"The Architect",    id:"Sang Pemikir",       nl:"De Denker"},
+  ENTJ:{en:"The Commander",    id:"Sang Komandan",      nl:"De Commandant"},
+  ENTP:{en:"The Visionary",    id:"Sang Visioner",      nl:"De Visionair"},
+  INFJ:{en:"The Counsellor",   id:"Sang Penasehat",     nl:"De Raadgever"},
+  INFP:{en:"The Healer",       id:"Sang Penyembuh",     nl:"De Idealist"},
+  ENFJ:{en:"The Teacher",      id:"Sang Guru",          nl:"De Mentor"},
+  ENFP:{en:"The Champion",     id:"Sang Juara",         nl:"De Inspirator"},
+  ISTJ:{en:"The Inspector",    id:"Sang Pemeriksa",     nl:"De Bewaker"},
+  ISFJ:{en:"The Nurturer",     id:"Sang Pelindung",     nl:"De Beschermer"},
+  ESTJ:{en:"The Supervisor",   id:"Sang Pengawas",      nl:"De Organisator"},
+  ESFJ:{en:"The Provider",     id:"Sang Penyedia",      nl:"De Verzorger"},
+  ISTP:{en:"The Craftsman",    id:"Sang Pengrajin",     nl:"De Vakman"},
+  ISFP:{en:"The Composer",     id:"Sang Petualang",     nl:"De Kunstenaar"},
+  ESTP:{en:"The Promoter",     id:"Sang Pengusaha",     nl:"De Ondernemer"},
+  ESFP:{en:"The Performer",    id:"Sang Penghibur",     nl:"De Entertainer"},
 };
 const MBTI_TEMP_COLOR: Record<string, string> = {
   INTJ:"oklch(50% 0.20 285)",INTP:"oklch(50% 0.20 285)",ENTJ:"oklch(50% 0.20 285)",ENTP:"oklch(50% 0.20 285)",
@@ -772,17 +785,18 @@ const MBTI_TEMP_COLOR: Record<string, string> = {
 
 function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
   const { mbtiType, scores, lang } = data;
-  const temperament = MBTI_TEMPERAMENT_LABEL[mbtiType]?.[lang] ?? "Myers-Briggs Type";
+  const subtitle = MBTI_TYPE_SUBTITLE[mbtiType]?.[lang] ?? mbtiType;
   const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →";
   const learnLabel = lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more";
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        Myers-Briggs Type · {temperament}
+        {lang === "id" ? "Tipe Myers-Briggs" : lang === "nl" ? "Myers-Briggs Type" : "Myers-Briggs Type"}
       </p>
-      <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "2.25rem", color: navy, marginBottom: "1.5rem", letterSpacing: "0.06em" }}>
-        {mbtiType}
-      </h3>
+      <div style={{ marginBottom: "1.5rem" }}>
+        <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "2.25rem", color: MBTI_TEMP_COLOR[mbtiType] ?? navy, letterSpacing: "0.06em", lineHeight: 1, margin: 0 }}>{mbtiType}</h3>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)", marginTop: 4 }}>{subtitle}</p>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.5rem" }}>
         {MBTI_DASH_DIMS.map(d => {
           const scoreA = scores[d.poleAKey] ?? 0;
@@ -791,12 +805,12 @@ function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" 
           const pctA = Math.round((scoreA / total) * 100);
           const pctB = 100 - pctA;
           const aIsDom = pctA >= 50;
-          const dominantLabel = aIsDom ? d.labelA : d.labelB;
+          const dominantLabel = (aIsDom ? d.labelA : d.labelB)[lang];
           const dominantPct = aIsDom ? pctA : pctB;
           return (
-            <div key={d.label}>
+            <div key={d.label.en}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 600, color: "oklch(45% 0.008 260)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 600, color: "oklch(45% 0.008 260)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label[lang]}</span>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: d.color }}>{dominantLabel} {dominantPct}%</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -826,7 +840,7 @@ function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" 
 }
 
 function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "bigfive" }>; onClose: () => void }) {
-  const { scores } = data;
+  const { scores, lang } = data;
   const OCEAN_LABELS = { O: "Openness", C: "Conscientiousness", E: "Extraversion", A: "Agreeableness", N: "Neuroticism" };
   return (
     <>
@@ -854,10 +868,10 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
       </div>
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake quiz →
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -865,7 +879,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
 }
 
 function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type: "16personalities" }>; onClose: () => void }) {
-  const { personalityType, scores } = data;
+  const { personalityType, scores, lang } = data;
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
@@ -889,10 +903,10 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
       </div>
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake quiz →
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, cursor: "pointer" }}>
-          Close
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -1129,7 +1143,7 @@ export default function AssessmentTileGrid({
           visual={discVisual}
           done={!!(discResult && discScores)}
           href="/resources/disc"
-          onClick={discResult && discScores ? () => setModal({ type: "disc", result: discResult, scores: discScores }) : undefined}
+          onClick={discResult && discScores ? () => setModal({ type: "disc", result: discResult, scores: discScores, lang }) : undefined}
         />
 
         {/* 2. Wheel of Life */}
@@ -1138,7 +1152,7 @@ export default function AssessmentTileGrid({
           visual={wheelVisual}
           done={!!wheelOfLifeScores}
           href="/resources/wheel-of-life"
-          onClick={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores }) : undefined}
+          onClick={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
         />
 
         {/* 3. Three Thinking Styles */}
@@ -1147,7 +1161,7 @@ export default function AssessmentTileGrid({
           visual={thinkingVisual}
           done={!!(thinkingStyleResult && thinkingStyleScores)}
           href="/resources/three-thinking-styles"
-          onClick={thinkingStyleResult && thinkingStyleScores ? () => setModal({ type: "thinking", result: thinkingStyleResult, scores: thinkingStyleScores }) : undefined}
+          onClick={thinkingStyleResult && thinkingStyleScores ? () => setModal({ type: "thinking", result: thinkingStyleResult, scores: thinkingStyleScores, lang }) : undefined}
         />
 
         {/* 4. Spiritual Gifts / Karunia Rohani */}
@@ -1176,7 +1190,7 @@ export default function AssessmentTileGrid({
           visual={mbtiType && mbtiScores ? (
             <div style={{ width: 180, padding: "10px 14px" }}>
               <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2.25rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.04em", lineHeight: 1 }}>{mbtiType}</div>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType]?.[lang] ?? ""}</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TYPE_SUBTITLE[mbtiType]?.[lang] ?? ""}</div>
             </div>
           ) : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
@@ -1190,7 +1204,7 @@ export default function AssessmentTileGrid({
           visual={personalities16Scores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
           done={!!(personalities16Type && personalities16Scores)}
           href="/resources/16-personalities"
-          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores }) : undefined}
+          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores, lang }) : undefined}
         />
 
         {/* 8. Big Five */}
@@ -1199,7 +1213,7 @@ export default function AssessmentTileGrid({
           visual={bigFiveScores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy, lineHeight: 1.2 }}>Results saved</p></div> : <EmptyTileVisual />}
           done={!!bigFiveScores}
           href="/resources/big-five"
-          onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores }) : undefined}
+          onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores, lang }) : undefined}
         />
 
       </div>
