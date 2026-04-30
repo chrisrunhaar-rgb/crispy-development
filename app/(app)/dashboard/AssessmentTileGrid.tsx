@@ -1188,6 +1188,165 @@ function CompactTile({
   return content;
 }
 
+function WheelLifeTile({
+  visual,
+  done,
+  lang,
+  wheelReflections,
+  onOpenScores,
+}: {
+  visual: React.ReactNode;
+  done: boolean;
+  lang: "en" | "id" | "nl";
+  wheelReflections: Record<string, { gratitude: string; action: string }> | null;
+  onOpenScores?: () => void;
+}) {
+  const [flipped, setFlipped] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  const title = lang === "id" ? "Roda Kehidupan" : lang === "nl" ? "Levensrad" : "Wheel of Life";
+  const actionLabel = lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps";
+
+  const segmentsWithActions = done
+    ? WHEEL_SEGMENTS.filter(seg => wheelReflections?.[seg.key]?.action)
+    : [];
+
+  const TILE_H = 185;
+
+  const faceBase: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    borderRadius: 12,
+    overflow: "hidden",
+    WebkitBackfaceVisibility: "hidden",
+    backfaceVisibility: "hidden",
+  };
+
+  return (
+    <div style={{ height: TILE_H, perspective: "800px" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{
+        width: "100%",
+        height: "100%",
+        position: "relative",
+        transformStyle: "preserve-3d",
+        transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        transition: "transform 0.35s ease",
+      }}>
+
+        {/* ── FRONT ── */}
+        <div
+          style={{
+            ...faceBase,
+            background: done ? "white" : offWhite,
+            border: `1px solid oklch(${done ? "88%" : "91%"} 0.006 80)`,
+            boxShadow: done && hovered ? "0 8px 24px oklch(22% 0.10 260 / 0.12)" : "0 1px 4px oklch(0% 0 0 / 0.04)",
+            transform: done && hovered && !flipped ? "translateY(-2px)" : "none",
+            transition: "box-shadow 0.2s ease, transform 0.2s ease",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "0.5rem",
+            padding: "0.875rem",
+            cursor: done ? "pointer" : "default",
+          }}
+          onClick={done ? onOpenScores : undefined}
+        >
+          {done && hovered && !flipped && (
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: orange, borderRadius: "12px 12px 0 0" }} />
+          )}
+
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: done ? navy : "oklch(58% 0.008 260)", textAlign: "center", lineHeight: 1.3, alignSelf: "flex-start", width: "100%", margin: 0 }}>
+            {title}
+          </p>
+
+          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {visual}
+          </div>
+
+          {done ? (
+            <button
+              onClick={e => { e.stopPropagation(); setFlipped(true); }}
+              style={{
+                alignSelf: "stretch",
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.58rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                background: "oklch(94% 0.008 260)",
+                color: "oklch(38% 0.008 260)",
+                border: "1px solid oklch(84% 0.008 260)",
+                padding: "0.35rem 0.75rem",
+                cursor: "pointer",
+                borderRadius: 4,
+              }}
+            >
+              {actionLabel} ↩
+            </button>
+          ) : (
+            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }} onClick={e => e.stopPropagation()}>
+              Take test →
+            </Link>
+          )}
+        </div>
+
+        {/* ── BACK ── */}
+        <div style={{
+          ...faceBase,
+          transform: "rotateY(180deg)",
+          background: navy,
+          display: "flex",
+          flexDirection: "column",
+          padding: "0.875rem",
+          gap: "0.375rem",
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem", flexShrink: 0 }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, margin: 0 }}>
+              {actionLabel}
+            </p>
+            <button
+              onClick={() => setFlipped(false)}
+              style={{ background: "none", border: "none", color: offWhite, cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.125rem", opacity: 0.7 }}
+            >
+              ↩
+            </button>
+          </div>
+
+          {segmentsWithActions.length === 0 ? (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(65% 0.04 260)", lineHeight: 1.5, flex: 1, margin: 0 }}>
+              {lang === "id" ? "Belum ada langkah aksi. Isi di halaman Roda Kehidupan." : lang === "nl" ? "Nog geen actiestappen. Vul ze in op het Levenswiel." : "No action steps yet. Fill them in on the Wheel of Life page."}
+            </p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1, overflowY: "auto" }}>
+              {segmentsWithActions.map(seg => (
+                <div key={seg.key} style={{ display: "flex", gap: "0.35rem", alignItems: "flex-start" }}>
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: seg.color, flexShrink: 0, marginTop: 4 }} />
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: offWhite, lineHeight: 1.4, margin: 0, flex: 1 }}>
+                    {wheelReflections![seg.key].action}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <Link
+            href="/resources/wheel-of-life"
+            style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, color: orange, textDecoration: "none", alignSelf: "flex-end", flexShrink: 0 }}
+            onClick={e => e.stopPropagation()}
+          >
+            {lang === "id" ? "Edit →" : lang === "nl" ? "Bewerken →" : "Edit →"}
+          </Link>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 function EmptyTileVisual() {
   return (
     <svg width="48" height="48" viewBox="0 0 48 48">
@@ -1314,35 +1473,12 @@ export default function AssessmentTileGrid({
         />
 
         {/* 2. Wheel of Life */}
-        <CompactTile
-          title={getTitle("wheel", lang)}
+        <WheelLifeTile
           visual={wheelVisual}
           done={!!wheelOfLifeScores}
-          href="/resources/wheel-of-life"
-          onClick={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
-          extraButton={
-            wheelOfLifeScores ? (
-              <button
-                onClick={() => setModal({ type: "wheelActionSteps", reflections: wheelReflections ?? {}, lang })}
-                style={{
-                  width: "100%",
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.58rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  background: "oklch(94% 0.008 260)",
-                  color: "oklch(38% 0.008 260)",
-                  border: "1px solid oklch(84% 0.008 260)",
-                  padding: "0.35rem 0.75rem",
-                  cursor: "pointer",
-                  borderRadius: 4,
-                }}
-              >
-                {lang === "id" ? "Langkah Aksi →" : lang === "nl" ? "Actiestappen →" : "Action Steps →"}
-              </button>
-            ) : undefined
-          }
+          lang={lang}
+          wheelReflections={wheelReflections}
+          onOpenScores={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
         />
 
         {/* 3. Three Thinking Styles */}
