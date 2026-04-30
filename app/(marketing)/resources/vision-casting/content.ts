@@ -521,7 +521,7 @@ export const resourceCards: Array<{
     meta: "Andy Stanley · 1999, revised 2014",
     description:
       "Built around the story of Nehemiah. Stanley's 20-point building blocks framework traces how God-given vision moves from a concern in one person's heart to a project that reshapes a community. The primary anchor for this module.",
-    href: "https://www.amazon.com/Visioneering-Gods-Blueprint-Discovering-Maintaining/dp/1601428367",
+    href: "https://www.amazon.com/Visioneering-Discovering-Maintaining-Personal-Vision/dp/159052456X/ref=sr_1_2?dib=eyJ2IjoiMSJ9._zK7bMTYhObZQuxDv3CfZqumvf3SxEpib3zPAJzTFWKMv76OmC9qGdLea4lN-2fDqiDMiL-qvj2e-NmmGXu7hze5WNL8l19HtGDwNdzcDPaA57_vN0rwa1IL9MRxKm59QOpAGeab44DT44zsmFci0YYq6hxGL4-GYrTXfaF3AZsGejtl7rx011WAwS5C_f9ZFTHcDOyJb7BoJcIsxeH4ZHhI506OxtGC16Tolz_gJRc._99mNf46DQxHdo_Y6Zze6bVmhQf0ABsJu2-spvxizFs&dib_tag=se&keywords=visioneering&qid=1777518683&sr=8-2",
   },
   {
     type: "book",
