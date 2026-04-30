@@ -763,6 +763,12 @@ const MBTI_TEMPERAMENT_LABEL: Record<string, string> = {
   ISTJ:"Sentinel",ISFJ:"Sentinel",ESTJ:"Sentinel",ESFJ:"Sentinel",
   ISTP:"Explorer",ISFP:"Explorer",ESTP:"Explorer",ESFP:"Explorer",
 };
+const MBTI_TEMP_COLOR: Record<string, string> = {
+  INTJ:"oklch(50% 0.20 285)",INTP:"oklch(50% 0.20 285)",ENTJ:"oklch(50% 0.20 285)",ENTP:"oklch(50% 0.20 285)",
+  INFJ:"oklch(48% 0.20 145)",INFP:"oklch(48% 0.20 145)",ENFJ:"oklch(48% 0.20 145)",ENFP:"oklch(48% 0.20 145)",
+  ISTJ:"oklch(48% 0.20 225)",ISFJ:"oklch(48% 0.20 225)",ESTJ:"oklch(48% 0.20 225)",ESFJ:"oklch(48% 0.20 225)",
+  ISTP:"oklch(55% 0.22 70)",ISFP:"oklch(55% 0.22 70)",ESTP:"oklch(55% 0.22 70)",ESFP:"oklch(55% 0.22 70)",
+};
 
 function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
   const { mbtiType, scores } = data;
@@ -1165,7 +1171,13 @@ export default function AssessmentTileGrid({
         {/* 6. Myers-Briggs */}
         <CompactTile
           title={getTitle("mbti", lang)}
-          visual={mbtiScores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: navy }}>{mbtiType}</p></div> : <EmptyTileVisual />}
+          visual={mbtiType && mbtiScores ? (
+            <div style={{ width: 180, background: navy, padding: "10px 14px", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: MBTI_TEMP_COLOR[mbtiType] ?? orange }} />
+              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.06em", lineHeight: 1 }}>{mbtiType}</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, color: "oklch(68% 0.04 260)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType] ?? ""}</div>
+            </div>
+          ) : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
           href="/resources/myers-briggs"
           onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores }) : undefined}
