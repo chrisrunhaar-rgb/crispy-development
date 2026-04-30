@@ -285,6 +285,28 @@ export async function markResourceRead(slug: string): Promise<void> {
   revalidatePath("/dashboard");
 }
 
+// Save Wheel of Life reflections (gratitude + action per segment)
+export async function saveWheelReflections(
+  reflections: Record<string, { gratitude: string; action: string }>
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase.auth.updateUser({
+    data: {
+      wheel_reflections: reflections,
+      wheel_reflections_saved_at: new Date().toISOString(),
+    },
+  });
+
+  if (!error) {
+    revalidatePath("/dashboard");
+    revalidatePath("/resources/wheel-of-life");
+  }
+  return { error: error?.message ?? null };
+}
+
 // Save Wheel of Life scores to user profile
 export async function saveWheelScores(scores: Record<string, number>): Promise<{ error: string | null }> {
   const supabase = await createClient();

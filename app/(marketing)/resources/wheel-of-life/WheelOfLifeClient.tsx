@@ -3,7 +3,7 @@
 import { useState, useTransition, useRef, useCallback } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import { saveResourceToDashboard, saveWheelScores } from "../actions";
+import { saveResourceToDashboard, saveWheelScores, saveWheelReflections } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
@@ -229,10 +229,12 @@ export default function WheelOfLifeClient({
   userPathway,
   isSaved,
   savedScores,
+  savedReflections,
 }: {
   userPathway: string | null;
   isSaved: boolean;
   savedScores?: Record<string, number> | null;
+  savedReflections?: Record<string, { gratitude: string; action: string }> | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
@@ -242,6 +244,13 @@ export default function WheelOfLifeClient({
   const [expandedSegment, setExpandedSegment] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isSavingScores, startSavingScores] = useTransition();
+  const [isSavingReflections, startSavingReflections] = useTransition();
+  const [reflections, setReflections] = useState<Record<string, { gratitude: string; action: string }>>(
+    savedReflections ?? Object.fromEntries(SEGMENTS.map(s => [s.key, { gratitude: "", action: "" }]))
+  );
+  const [reflectionsSaved, setReflectionsSaved] = useState(
+    !!(savedReflections && Object.values(savedReflections).some(r => r.gratitude || r.action))
+  );
   const svgRef = useRef<SVGSVGElement>(null);
 
   const t = (en: string, id: string, nl: string) => tr(en, id, nl, lang);
@@ -257,7 +266,20 @@ export default function WheelOfLifeClient({
     startSavingScores(async () => {
       await saveWheelScores(scores);
       setScoresSaved(true);
+      setReflectionsSaved(false);
     });
+  }
+
+  function handleSaveReflections() {
+    startSavingReflections(async () => {
+      await saveWheelReflections(reflections);
+      setReflectionsSaved(true);
+    });
+  }
+
+  function handleReflectionChange(key: string, field: "gratitude" | "action", value: string) {
+    setReflections(prev => ({ ...prev, [key]: { ...prev[key], [field]: value } }));
+    setReflectionsSaved(false);
   }
 
   const handleDownload = useCallback(() => {
@@ -693,6 +715,130 @@ export default function WheelOfLifeClient({
           </div>
         </div>
       </section>
+
+      {/* REFLECTION SECTION — shows after wheel scores saved */}
+      {scoresSaved && (
+        <section style={{ background: "white", padding: "72px 24px" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto" }}>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
+              {t("Step 05 · Action Plan", "Langkah 05 · Rencana Aksi", "Stap 05 · Actieplan")}
+            </p>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+              {t("Your Personal Action Plan", "Rencana Aksi Pribadi Anda", "Uw Persoonlijk Actieplan")}
+            </h2>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65, maxWidth: 600 }}>
+              {t(
+                "For each area of your life, reflect on what you're grateful for and name the one action that will lead to God-honoring results.",
+                "Untuk setiap area hidupmu, renungkan apa yang kamu syukuri dan tentukan satu tindakan yang akan menghasilkan hasil yang memuliakan Tuhan.",
+                "Reflecteer voor elk levensgebied op wat u dankbaar voor bent en benoem de ene actie die tot God-erende resultaten leidt."
+              )}
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {SEGMENTS.map((seg, i) => {
+                const reflection = reflections[seg.key] ?? { gratitude: "", action: "" };
+                const detail = SEGMENT_DETAILS[i];
+                const score = scores[seg.key] ?? 5;
+                return (
+                  <div key={seg.key} style={{ background: "oklch(97.5% 0.005 260)", borderRadius: 12, padding: "24px", border: `1px solid oklch(91% 0.006 260)` }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
+                      <span style={{ width: 10, height: 10, borderRadius: "50%", background: seg.color, flexShrink: 0 }} />
+                      <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: seg.color }}>
+                        {t(seg.titleEn, seg.titleId, seg.titleNl)}
+                      </span>
+                      <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: seg.color, marginLeft: "auto" }}>
+                        {score}/10
+                      </span>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
+                      <div>
+                        <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(42% 0.06 260)", marginBottom: 8 }}>
+                          {t("What are you thankful for in this area?", "Apa yang kamu syukuri di area ini?", "Waar bent u dankbaar voor op dit gebied?")}
+                        </label>
+                        <textarea
+                          value={reflection.gratitude}
+                          onChange={e => handleReflectionChange(seg.key, "gratitude", e.target.value)}
+                          rows={3}
+                          placeholder={t("Start with thanksgiving…", "Mulailah dengan syukur…", "Begin met dankbaarheid…")}
+                          style={{
+                            width: "100%",
+                            fontFamily: "Montserrat, sans-serif",
+                            fontSize: 13,
+                            lineHeight: 1.6,
+                            color: "oklch(28% 0.06 260)",
+                            background: "white",
+                            border: `1px solid ${seg.color}44`,
+                            borderRadius: 8,
+                            padding: "10px 14px",
+                            resize: "vertical",
+                            outline: "none",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(42% 0.06 260)", marginBottom: 8 }}>
+                          {t("What action will lead to God-honoring results?", "Tindakan apa yang akan menghasilkan hasil memuliakan Tuhan?", "Welke actie leidt tot God-erende resultaten?")}
+                        </label>
+                        <textarea
+                          value={reflection.action}
+                          onChange={e => handleReflectionChange(seg.key, "action", e.target.value)}
+                          rows={3}
+                          placeholder={t("One concrete step…", "Satu langkah konkret…", "Één concrete stap…")}
+                          style={{
+                            width: "100%",
+                            fontFamily: "Montserrat, sans-serif",
+                            fontSize: 13,
+                            lineHeight: 1.6,
+                            color: "oklch(28% 0.06 260)",
+                            background: "white",
+                            border: `1px solid ${seg.color}44`,
+                            borderRadius: 8,
+                            padding: "10px 14px",
+                            resize: "vertical",
+                            outline: "none",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ marginTop: 32, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              {!reflectionsSaved ? (
+                <button
+                  onClick={handleSaveReflections}
+                  disabled={isSavingReflections}
+                  style={{
+                    background: isSavingReflections ? "oklch(40% 0.10 260)" : "oklch(65% 0.15 45)",
+                    color: isSavingReflections ? "white" : "oklch(15% 0.05 45)",
+                    padding: "12px 28px",
+                    borderRadius: 8,
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 700,
+                    fontSize: 13,
+                    border: "none",
+                    cursor: isSavingReflections ? "wait" : "pointer",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {isSavingReflections
+                    ? t("Saving…", "Menyimpan…", "Opslaan…")
+                    : t("Save to Dashboard →", "Simpan ke Dashboard →", "Opslaan in Dashboard →")}
+                </button>
+              ) : (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(38% 0.14 145)", fontSize: 14, fontWeight: 700, fontFamily: "Montserrat, sans-serif" }}>
+                  ✓ {t("Action plan saved", "Rencana aksi tersimpan", "Actieplan opgeslagen")}
+                </span>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

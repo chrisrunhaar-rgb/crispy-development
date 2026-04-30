@@ -421,6 +421,7 @@ type EnneagramTypeData = {
 type ModalData =
   | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" | "nl" }
   | { type: "wheel"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "wheelActionSteps"; reflections: Record<string, { gratitude: string; action: string }>; lang: "en" | "id" | "nl" }
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" | "nl" }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
@@ -451,6 +452,7 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
       >
         {data.type === "disc" && <DiscModal data={data} onClose={onClose} />}
         {data.type === "wheel" && <WheelModal data={data} onClose={onClose} />}
+        {data.type === "wheelActionSteps" && <WheelActionStepsModal data={data} onClose={onClose} />}
         {data.type === "thinking" && <ThinkingModal data={data} onClose={onClose} />}
         {data.type === "karunia" && <KaruniaModal data={data} onClose={onClose} />}
         {data.type === "enneagram" && <EnneagramModal data={data} onClose={onClose} />}
@@ -599,6 +601,68 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {lang === "id" ? "Perbarui skor →" : lang === "nl" ? "Scores bijwerken →" : "Update scores →"}
+        </Link>
+        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+        </button>
+      </div>
+    </>
+  );
+}
+
+function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { type: "wheelActionSteps" }>; onClose: () => void }) {
+  const { reflections, lang } = data;
+  const hasAny = WHEEL_SEGMENTS.some(seg => reflections[seg.key]?.gratitude || reflections[seg.key]?.action);
+
+  return (
+    <>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+        Wheel of Life
+      </p>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.25rem" }}>
+        {lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps"}
+      </h3>
+
+      {!hasAny ? (
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "1.5rem" }}>
+          {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : lang === "nl" ? "Nog geen actiestappen opgeslagen. Bezoek het Levenswiel om ze toe te voegen." : "No action steps saved yet. Visit the Wheel of Life to add them."}
+        </p>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+          {WHEEL_SEGMENTS.map(seg => {
+            const r = reflections[seg.key];
+            if (!r?.gratitude && !r?.action) return null;
+            return (
+              <div key={seg.key} style={{ borderLeft: `3px solid ${seg.color}`, paddingLeft: "0.875rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.5rem" }}>
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: seg.color, flexShrink: 0 }} />
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: seg.color }}>{seg.label}</span>
+                </div>
+                {r.gratitude && (
+                  <div style={{ marginBottom: r.action ? "0.5rem" : 0 }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
+                      {lang === "id" ? "Syukur" : lang === "nl" ? "Dankbaarheid" : "Thankful for"}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: "oklch(38% 0.008 260)", margin: 0 }}>{r.gratitude}</p>
+                  </div>
+                )}
+                {r.action && (
+                  <div>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
+                      {lang === "id" ? "Tindakan" : lang === "nl" ? "Actie" : "God-honoring action"}
+                    </p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: navy, margin: 0, fontWeight: 600 }}>{r.action}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+        <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          {lang === "id" ? "Edit langkah aksi →" : lang === "nl" ? "Actiestappen bewerken →" : "Edit action steps →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -1031,12 +1095,14 @@ function CompactTile({
   done,
   href,
   onClick,
+  extraButton,
 }: {
   title: string;
   visual: React.ReactNode;
   done: boolean;
   href?: string;
   onClick?: () => void;
+  extraButton?: React.ReactNode;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -1111,6 +1177,11 @@ function CompactTile({
           Take test →
         </Link>
       )}
+      {extraButton && (
+        <div style={{ alignSelf: "stretch" }} onClick={e => e.stopPropagation()}>
+          {extraButton}
+        </div>
+      )}
     </div>
   );
 
@@ -1135,6 +1206,7 @@ export default function AssessmentTileGrid({
   discResult = null,
   discScores = null,
   wheelOfLifeScores = null,
+  wheelReflections = null,
   thinkingStyleResult = null,
   thinkingStyleScores = null,
   karuniaTopGifts = null,
@@ -1151,6 +1223,7 @@ export default function AssessmentTileGrid({
   discResult?: string | null;
   discScores?: { D: number; I: number; S: number; C: number } | null;
   wheelOfLifeScores?: Record<string, number> | null;
+  wheelReflections?: Record<string, { gratitude: string; action: string }> | null;
   thinkingStyleResult?: string | null;
   thinkingStyleScores?: { C: number; H: number; I: number } | null;
   karuniaTopGifts?: string[] | null;
@@ -1247,6 +1320,29 @@ export default function AssessmentTileGrid({
           done={!!wheelOfLifeScores}
           href="/resources/wheel-of-life"
           onClick={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
+          extraButton={
+            wheelReflections && Object.values(wheelReflections).some(r => r.gratitude || r.action) ? (
+              <button
+                onClick={() => setModal({ type: "wheelActionSteps", reflections: wheelReflections, lang })}
+                style={{
+                  width: "100%",
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.58rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  background: "oklch(94% 0.008 260)",
+                  color: "oklch(38% 0.008 260)",
+                  border: "1px solid oklch(84% 0.008 260)",
+                  padding: "0.35rem 0.75rem",
+                  cursor: "pointer",
+                  borderRadius: 4,
+                }}
+              >
+                {lang === "id" ? "Langkah Aksi →" : lang === "nl" ? "Actiestappen →" : "Action Steps →"}
+              </button>
+            ) : undefined
+          }
         />
 
         {/* 3. Three Thinking Styles */}
