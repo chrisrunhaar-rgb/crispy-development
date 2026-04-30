@@ -379,7 +379,7 @@ type ModalData =
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number } }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "mbti"; mbtiType: string; scores: Record<string, number> }
+  | { type: "mbti"; mbtiType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "bigfive"; scores: Record<string, number> }
   | { type: "16personalities"; personalityType: string; scores: Record<string, number> };
 
@@ -757,11 +757,11 @@ const MBTI_DASH_DIMS = [
   { label: "Judgement",        poleAKey: "TF_T", poleA: "T", labelA: "Thinking",      poleBKey: "TF_F", poleB: "F", labelB: "Feeling",      color: "oklch(50% 0.18 215)" },
   { label: "Orientation",      poleAKey: "JP_J", poleA: "J", labelA: "Judging",       poleBKey: "JP_P", poleB: "P", labelB: "Perceiving",   color: "oklch(50% 0.20 25)" },
 ];
-const MBTI_TEMPERAMENT_LABEL: Record<string, string> = {
-  INTJ:"Analyst",INTP:"Analyst",ENTJ:"Analyst",ENTP:"Analyst",
-  INFJ:"Diplomat",INFP:"Diplomat",ENFJ:"Diplomat",ENFP:"Diplomat",
-  ISTJ:"Sentinel",ISFJ:"Sentinel",ESTJ:"Sentinel",ESFJ:"Sentinel",
-  ISTP:"Explorer",ISFP:"Explorer",ESTP:"Explorer",ESFP:"Explorer",
+const MBTI_TEMPERAMENT_LABEL: Record<string, { en: string; id: string; nl: string }> = {
+  INTJ:{en:"Analyst",id:"Analis",nl:"Analist"},INTP:{en:"Analyst",id:"Analis",nl:"Analist"},ENTJ:{en:"Analyst",id:"Analis",nl:"Analist"},ENTP:{en:"Analyst",id:"Analis",nl:"Analist"},
+  INFJ:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},INFP:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},ENFJ:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},ENFP:{en:"Diplomat",id:"Diplomat",nl:"Diplomaat"},
+  ISTJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ISFJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ESTJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},ESFJ:{en:"Sentinel",id:"Pengawal",nl:"Wachter"},
+  ISTP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ISFP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ESTP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},ESFP:{en:"Explorer",id:"Penjelajah",nl:"Verkenner"},
 };
 const MBTI_TEMP_COLOR: Record<string, string> = {
   INTJ:"oklch(50% 0.20 285)",INTP:"oklch(50% 0.20 285)",ENTJ:"oklch(50% 0.20 285)",ENTP:"oklch(50% 0.20 285)",
@@ -771,8 +771,10 @@ const MBTI_TEMP_COLOR: Record<string, string> = {
 };
 
 function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
-  const { mbtiType, scores } = data;
-  const temperament = MBTI_TEMPERAMENT_LABEL[mbtiType] ?? "Myers-Briggs Type";
+  const { mbtiType, scores, lang } = data;
+  const temperament = MBTI_TEMPERAMENT_LABEL[mbtiType]?.[lang] ?? "Myers-Briggs Type";
+  const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →";
+  const learnLabel = lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more";
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
@@ -810,13 +812,13 @@ function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" 
       </div>
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/myers-briggs#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake assessment →
+          {retakeLabel}
         </Link>
         <Link href="/resources/myers-briggs" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          Learn more
+          {learnLabel}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          Close
+          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
         </button>
       </div>
     </>
@@ -1174,12 +1176,12 @@ export default function AssessmentTileGrid({
           visual={mbtiType && mbtiScores ? (
             <div style={{ width: 180, padding: "10px 14px" }}>
               <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2.25rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.04em", lineHeight: 1 }}>{mbtiType}</div>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType] ?? ""}</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType]?.[lang] ?? ""}</div>
             </div>
           ) : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
           href="/resources/myers-briggs"
-          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores }) : undefined}
+          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores, lang }) : undefined}
         />
 
         {/* 7. 16 Personalities */}
