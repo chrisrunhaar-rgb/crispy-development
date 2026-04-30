@@ -120,48 +120,6 @@ const VERSES = {
   },
 };
 
-const ADJECTIVES: Array<{ key: string; en: string; id: string; nl: string }> = [
-  { key: "empathetic",      en: "Empathetic",      id: "Empatik",             nl: "Empathisch" },
-  { key: "decisive",        en: "Decisive",        id: "Tegas",               nl: "Besluitvaardig" },
-  { key: "visionary",       en: "Visionary",       id: "Visioner",            nl: "Visionair" },
-  { key: "adaptable",       en: "Adaptable",       id: "Adaptif",             nl: "Aanpasbaar" },
-  { key: "calm",            en: "Calm",            id: "Tenang",              nl: "Kalm" },
-  { key: "patient",         en: "Patient",         id: "Sabar",               nl: "Geduldig" },
-  { key: "generous",        en: "Generous",        id: "Murah hati",          nl: "Vrijgevig" },
-  { key: "reliable",        en: "Reliable",        id: "Dapat diandalkan",    nl: "Betrouwbaar" },
-  { key: "principled",      en: "Principled",      id: "Berprinsip",          nl: "Principieel" },
-  { key: "collaborative",   en: "Collaborative",   id: "Kolaboratif",         nl: "Samenwerkend" },
-  { key: "courageous",      en: "Courageous",      id: "Berani",              nl: "Moedig" },
-  { key: "humble",          en: "Humble",          id: "Rendah hati",         nl: "Bescheiden" },
-  { key: "strategic",       en: "Strategic",       id: "Strategis",           nl: "Strategisch" },
-  { key: "transparent",     en: "Transparent",     id: "Transparan",          nl: "Transparant" },
-  { key: "curious",         en: "Curious",         id: "Penasaran",           nl: "Nieuwsgierig" },
-  { key: "resilient",       en: "Resilient",       id: "Tangguh",             nl: "Veerkrachtig" },
-  { key: "organised",       en: "Organised",       id: "Terorganisir",        nl: "Georganiseerd" },
-  { key: "passionate",      en: "Passionate",      id: "Bersemangat",         nl: "Gepassioneerd" },
-  { key: "creative",        en: "Creative",        id: "Kreatif",             nl: "Creatief" },
-  { key: "relational",      en: "Relational",      id: "Relasional",          nl: "Relationeel" },
-  { key: "practical",       en: "Practical",       id: "Praktis",             nl: "Praktisch" },
-  { key: "driven",          en: "Driven",          id: "Tekun",               nl: "Gedreven" },
-  { key: "flexible",        en: "Flexible",        id: "Fleksibel",           nl: "Flexibel" },
-  { key: "persistent",      en: "Persistent",      id: "Gigih",               nl: "Volhardend" },
-  { key: "diplomatic",      en: "Diplomatic",      id: "Diplomatis",          nl: "Diplomatiek" },
-  { key: "perfectionistic", en: "Perfectionistic", id: "Perfeksionis",        nl: "Perfectionistisch" },
-  { key: "controlling",     en: "Controlling",     id: "Suka mengontrol",     nl: "Controlerend" },
-  { key: "competitive",     en: "Competitive",     id: "Kompetitif",          nl: "Competitief" },
-  { key: "independent",     en: "Independent",     id: "Mandiri",             nl: "Onafhankelijk" },
-  { key: "reserved",        en: "Reserved",        id: "Tertutup",            nl: "Terughoudend" },
-  { key: "risk-averse",     en: "Risk-averse",     id: "Menghindari risiko",  nl: "Risicomijdend" },
-  { key: "idealistic",      en: "Idealistic",      id: "Idealis",             nl: "Idealistisch" },
-  { key: "ambitious",       en: "Ambitious",       id: "Ambisius",            nl: "Ambitieus" },
-  { key: "intense",         en: "Intense",         id: "Intens",              nl: "Intens" },
-  { key: "cautious",        en: "Cautious",        id: "Berhati-hati",        nl: "Voorzichtig" },
-  { key: "analytical",      en: "Analytical",      id: "Analitis",            nl: "Analytisch" },
-  { key: "structured",      en: "Structured",      id: "Terstruktur",         nl: "Gestructureerd" },
-  { key: "intuitive",       en: "Intuitive",       id: "Intuitif",            nl: "Intuïtief" },
-  { key: "entrepreneurial", en: "Entrepreneurial", id: "Wirausahawan",        nl: "Ondernemend" },
-  { key: "direct",          en: "Direct",          id: "Blak-blakan",         nl: "Rechtdoorzee" },
-];
 
 const BIBLICAL_ANCHORS: Record<string, {
   en_title: string; id_title: string; nl_title: string;
@@ -210,7 +168,6 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
   const [isPending, startTransition] = useTransition();
   const [activePane, setActivePane] = useState<string | null>(null);
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [selectedAdjectives, setSelectedAdjectives] = useState<Set<string>>(new Set());
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
   const showSave = userPathway !== null;
   const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
@@ -223,19 +180,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
     });
   }
 
-  function toggleAdjective(key: string) {
-    setSelectedAdjectives(prev => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      return next;
-    });
-  }
-
   const selected = activePane ? PANES.find(p => p.key === activePane) ?? null : null;
-
-  const hasSelections = selectedAdjectives.size > 0;
-  const openRowH = hasSelections ? Math.max(80, Math.round((selectedAdjectives.size / ADJECTIVES.length) * 360)) : 180;
-  const hiddenRowH = hasSelections ? Math.max(80, Math.round(((ADJECTIVES.length - selectedAdjectives.size) / ADJECTIVES.length) * 360)) : 180;
 
   return (
     <>
@@ -281,14 +226,14 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
           <div style={{ marginBottom: "0.5rem" }}>
             {/* Top axis labels */}
             <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
-              <div style={{ width: "clamp(60px, 8vw, 100px)" }} />
-              <div style={{ padding: "0 1rem 0.5rem", textAlign: "center" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(45% 0.05 260)" }}>
+              <div style={{ width: "clamp(72px, 9vw, 110px)" }} />
+              <div style={{ padding: "0 1rem 0.75rem", textAlign: "center", borderBottom: "2px solid oklch(85% 0.012 260)" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)" }}>
                   {t("Known to yourself", "Diketahui diri sendiri", "Bekend aan jezelf")}
                 </span>
               </div>
-              <div style={{ padding: "0 1rem 0.5rem", textAlign: "center" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(45% 0.05 260)" }}>
+              <div style={{ padding: "0 1rem 0.75rem", textAlign: "center", borderBottom: "2px solid oklch(85% 0.012 260)" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)" }}>
                   {t("Unknown to yourself", "Tidak diketahui diri sendiri", "Onbekend aan jezelf")}
                 </span>
               </div>
@@ -298,8 +243,8 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
             {[0, 1].map(row => (
               <div key={row} style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
                 {/* Left axis label */}
-                <div style={{ width: "clamp(60px, 8vw, 100px)", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: "0.75rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.05 260)", writingMode: "vertical-rl", transform: "rotate(180deg)", whiteSpace: "nowrap" }}>
+                <div style={{ width: "clamp(72px, 9vw, 110px)", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: "0.875rem", borderRight: "2px solid oklch(85% 0.012 260)" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)", writingMode: "vertical-rl", transform: "rotate(180deg)", whiteSpace: "nowrap" }}>
                     {row === 0
                       ? t("Known to others", "Diketahui orang lain", "Bekend aan anderen")
                       : t("Unknown to others", "Tidak diketahui orang lain", "Onbekend aan anderen")}
@@ -320,12 +265,13 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
                         border: `2px solid ${isActive ? pane.colorBorder : "oklch(88% 0.008 80)"}`,
                         cursor: "pointer",
                         padding: "clamp(1.5rem, 4vw, 2.5rem)",
-                        textAlign: "left",
-                        minHeight: pane.row === 0 ? openRowH : hiddenRowH,
+                        textAlign: "center",
+                        minHeight: "clamp(140px, 20vw, 200px)",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "flex-end",
-                        transition: "all 0.15s ease, min-height 0.4s ease",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        transition: "all 0.15s ease",
                         position: "relative",
                       }}
                     >
@@ -349,74 +295,6 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(60% 0.04 260)", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic" }}>
               {t("Select any quadrant to explore it.", "Pilih kuadran mana pun untuk menjelajahinya.", "Selecteer een kwadrant om het te verkennen.")}
             </p>
-          )}
-        </div>
-      </section>
-
-      {/* ── SELF-DISCLOSURE EXERCISE ── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
-        <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("Exercise · The Open Pane", "Latihan · Pane Terbuka", "Oefening · Het Open Venster")}
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
-            {t("What would you own?", "Apa yang akan Anda akui?", "Wat zou jij erkennen?")}
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", maxWidth: "62ch", marginBottom: "2rem" }}>
-            {t(
-              "Select the adjectives that honestly describe your leadership — the ones you'd be willing to name with your team. Your Open pane expands above as you choose. What you leave unselected forms your Hidden pane: things you know about yourself but haven't yet shared.",
-              "Pilih kata sifat yang jujur menggambarkan kepemimpinan Anda — yang bersedia Anda sebut bersama tim Anda. Pane Terbuka Anda meluas di atas seiring pilihan Anda. Yang tidak Anda pilih membentuk pane Tersembunyi: hal yang Anda ketahui tentang diri sendiri tetapi belum Anda bagikan.",
-              "Selecteer de bijvoeglijke naamwoorden die uw leiderschap eerlijk beschrijven — de woorden die u bereid bent te benoemen bij uw team. Uw Open venster breidt zich hierboven uit terwijl u kiest. Wat u niet selecteert, vormt uw Verborgen venster: dingen die u over uzelf weet maar nog niet hebt gedeeld.",
-            )}
-          </p>
-
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "2rem" }}>
-            {ADJECTIVES.map(adj => {
-              const isSelected = selectedAdjectives.has(adj.key);
-              const label = lang === "en" ? adj.en : lang === "id" ? adj.id : adj.nl;
-              return (
-                <button
-                  key={adj.key}
-                  onClick={() => toggleAdjective(adj.key)}
-                  style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.8rem",
-                    fontWeight: isSelected ? 700 : 500,
-                    padding: "0.375rem 0.875rem",
-                    border: `1.5px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(78% 0.04 260)"}`,
-                    background: isSelected ? "oklch(65% 0.15 45 / 0.14)" : "oklch(97% 0.005 80)",
-                    color: isSelected ? "oklch(40% 0.12 45)" : "oklch(40% 0.05 260)",
-                    cursor: "pointer",
-                    borderRadius: "3px",
-                    transition: "all 0.12s ease",
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-
-          {hasSelections && (
-            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(48% 0.08 260)", margin: 0 }}>
-                <strong style={{ color: "oklch(40% 0.12 45)" }}>{selectedAdjectives.size}</strong>
-                {" / "}{ADJECTIVES.length}
-                {" — "}
-                {t("your Open pane is expanding above.", "pane Terbuka Anda meluas di atas.", "uw Open venster breidt zich hierboven uit.")}
-              </p>
-              {showSave && (
-                saved ? (
-                  <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                    ✓ {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
-                  </Link>
-                ) : (
-                  <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.5rem 1.125rem", cursor: isPending ? "wait" : "pointer" }}>
-                    {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
-                  </button>
-                )
-              )}
-            </div>
           )}
         </div>
       </section>
