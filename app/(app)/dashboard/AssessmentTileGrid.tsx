@@ -1211,7 +1211,7 @@ function WheelLifeTile({
     ? WHEEL_SEGMENTS.filter(seg => wheelReflections?.[seg.key]?.action)
     : [];
 
-  const TILE_H = 185;
+  const TILE_H = 165;
 
   const faceBase: React.CSSProperties = {
     position: "absolute",
@@ -1267,30 +1267,35 @@ function WheelLifeTile({
             {visual}
           </div>
 
-          {done ? (
-            <button
-              onClick={e => { e.stopPropagation(); setFlipped(true); }}
-              style={{
-                alignSelf: "stretch",
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.58rem",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                background: "oklch(94% 0.008 260)",
-                color: "oklch(38% 0.008 260)",
-                border: "1px solid oklch(84% 0.008 260)",
-                padding: "0.35rem 0.75rem",
-                cursor: "pointer",
-                borderRadius: 4,
-              }}
-            >
-              {actionLabel} ↩
-            </button>
-          ) : (
+          {!done && (
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }} onClick={e => e.stopPropagation()}>
               Take test →
             </Link>
+          )}
+
+          {/* Tiny flip icon — bottom-right corner */}
+          {done && (
+            <button
+              onClick={e => { e.stopPropagation(); setFlipped(true); }}
+              title={actionLabel}
+              style={{
+                position: "absolute",
+                bottom: "0.5rem",
+                right: "0.5rem",
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                opacity: hovered ? 0.7 : 0.3,
+                transition: "opacity 0.15s",
+                lineHeight: 1,
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 8a6 6 0 1 1 1.5 4" stroke={navy} strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M2 12V8h4" stroke={navy} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           )}
         </div>
 
