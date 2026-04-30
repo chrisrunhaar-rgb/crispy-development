@@ -377,6 +377,9 @@ const TRAITS = [
     crossCultural: "In collectivist or tradition-respecting cultures, high Openness needs to be balanced with respect for what has worked. In innovation-driven cultures, lower Openness can be misread as resistance to change. In either context, frame your approach in terms of team benefit, not preference.",
     crossCultural_id: "Dalam budaya kolektivis atau yang menghormati tradisi, Keterbukaan tinggi perlu diimbangi dengan rasa hormat terhadap apa yang telah berhasil. Dalam budaya yang berorientasi inovasi, Keterbukaan rendah bisa disalahartikan sebagai penolakan terhadap perubahan. Dalam konteks apa pun, bingkai pendekatan Anda dalam hal manfaat bagi tim, bukan preferensi pribadi.",
     crossCultural_nl: "In collectivistische of traditiegerichte culturen moet hoge Openheid in balans worden gebracht met respect voor wat heeft gewerkt. In innovatiegerichte culturen kan lagere Openheid worden uitgelegd als weerstand tegen verandering. In beide contexten: presenteer je aanpak in termen van teamvoordeel, niet persoonlijke voorkeur.",
+    biblicalFigure: "Abraham",
+    biblicalRef: "Genesis 12:1–4",
+    biblicalReflection: "Abraham left Ur for an unknown land — pure Openness. Willing to risk the new, follow vision into uncertainty, build a future he could not yet see. His shadow: vision sometimes outran wisdom. Openness is faith that can become naiveté if not tempered by counsel and patience.",
   },
   {
     key: "C",
@@ -415,6 +418,9 @@ const TRAITS = [
     crossCultural: "In monochronic (time-structured) cultures, low Conscientiousness can be seen as unreliable. In polychronic cultures, high Conscientiousness can come across as rigid or controlling. The most effective leaders adapt their discipline to what their team's context requires.",
     crossCultural_id: "Dalam budaya monochronic (terstruktur oleh waktu), Kehati-hatian rendah dapat dilihat sebagai tidak dapat diandalkan. Dalam budaya polychronic, Kehati-hatian tinggi dapat terkesan kaku atau suka mengontrol. Pemimpin yang paling efektif menyesuaikan kedisiplinan mereka dengan apa yang dibutuhkan konteks tim mereka.",
     crossCultural_nl: "In monochronische (tijdgestructureerde) culturen kan lage Zorgvuldigheid worden gezien als onbetrouwbaar. In polychronische culturen kan hoge Zorgvuldigheid overkomen als rigide of controlerend. De meest effectieve leiders passen hun discipline aan op wat de context van hun team vereist.",
+    biblicalFigure: "Daniel",
+    biblicalRef: "Daniel 1 & 6",
+    biblicalReflection: "Daniel prayed three times a day, kept his integrity in food and worship, and served three foreign reigns faithfully in the smallest detail. His shadow: discipline can lock out grace if it becomes its own measure of righteousness. Daniel offered his discipline upward as worship, not as moral leverage.",
   },
   {
     key: "E",
@@ -453,6 +459,9 @@ const TRAITS = [
     crossCultural: "In collectivist or low-context cultures, extraversion is often more valued than in reflective, high-context cultures. Across all cultures, the key is adaptability — reading what the room needs and adjusting your presence accordingly.",
     crossCultural_id: "Dalam budaya kolektivis atau low-context, ekstraversi sering lebih dihargai daripada dalam budaya reflektif dan high-context. Di semua budaya, kuncinya adalah kemampuan beradaptasi — membaca apa yang dibutuhkan situasi dan menyesuaikan kehadiran Anda.",
     crossCultural_nl: "In collectivistische of lage-contextculturen wordt extraversie vaak meer gewaardeerd dan in reflectieve, hoge-contextculturen. In alle culturen is het sleutelwoord aanpassingsvermogen — lees wat de ruimte nodig heeft en pas je aanwezigheid daarop aan.",
+    biblicalFigure: "Peter",
+    biblicalRef: "Matthew 16; Acts 2",
+    biblicalReflection: "Peter was first to speak, first to walk on water, first to deny. His Extraversion built the early church through bold initiation and visible courage. His shadow: words sometimes outran readiness. High-E leaders learn from Peter — initiation needs reflection, or it cracks under pressure.",
   },
   {
     key: "A",
@@ -491,6 +500,9 @@ const TRAITS = [
     crossCultural: "High Agreeableness aligns naturally with collectivist, face-saving cultures. Low Agreeableness is more valued in individualistic, direct cultures. In cross-cultural teams, the key is reading which form of directness is helpful and which is simply rude.",
     crossCultural_id: "Keramahan tinggi secara alami selaras dengan budaya kolektivis yang menjaga muka. Keramahan rendah lebih dihargai dalam budaya individualistis yang langsung. Dalam tim lintas budaya, kuncinya adalah membaca bentuk keterusterangan mana yang membantu dan mana yang sekadar kasar.",
     crossCultural_nl: "Hoge Vriendelijkheid sluit van nature aan bij collectivistische, gezichtbesparende culturen. Lage Vriendelijkheid wordt meer gewaardeerd in individualistische, directe culturen. In interculturele teams is het de kunst om te lezen welke vorm van directheid helpend is en welke simpelweg bot.",
+    biblicalFigure: "Barnabas",
+    biblicalRef: "Acts 4:36; 9:27; 15:36–39",
+    biblicalReflection: "Son of Encouragement. Barnabas vouched for Saul when no one would, mentored John Mark when Paul wrote him off, and held the early team together. His shadow: Agreeableness can avoid the hard call. Warmth without truth becomes sentimentality.",
   },
   {
     key: "N",
@@ -529,6 +541,9 @@ const TRAITS = [
     crossCultural: "Emotional expression is profoundly shaped by cultural norms. In many cultures, visible emotional stability signals strength; in others, it signals coldness. High emotional sensitivity, when managed well, often reads as genuine care in relational cultures.",
     crossCultural_id: "Ekspresi emosi sangat dipengaruhi oleh norma budaya. Di banyak budaya, stabilitas emosional yang terlihat menandakan kekuatan; di budaya lain, itu menandakan dingin. Sensitivitas emosional yang tinggi, bila dikelola dengan baik, sering kali dibaca sebagai kepedulian yang tulus dalam budaya relasional.",
     crossCultural_nl: "Emotionele expressie wordt diepgaand gevormd door culturele normen. In veel culturen signaleert zichtbare emotionele stabiliteit kracht; in andere signaleert het koudheid. Hoge emotionele gevoeligheid, goed gemanaged, wordt in relationele culturen vaak gelezen als oprechte betrokkenheid.",
+    biblicalFigure: "Joseph",
+    biblicalRef: "Genesis 37–50",
+    biblicalReflection: "Joseph was sold by his brothers, falsely accused, imprisoned, then elevated to rule Egypt. Through every reversal he kept his centre. High emotional stability is the gift that lets a leader carry weight without becoming the weight. The shadow risk: stability becomes detachment. Joseph wept openly when reunited with his brothers — stability with feeling intact.",
   },
 ];
 
@@ -543,8 +558,12 @@ const UI = {
     heroDesc: "The most scientifically validated personality framework in the world — five dimensions that predict how you lead, collaborate, adapt, and grow across every culture.",
     startBtn: "Start Assessment →",
     whatIsTitle: "What is the Big Five?",
-    whatIsP1: "The Big Five — also known as the OCEAN model — emerged from decades of research across cultures, languages, and demographics. Unlike personality typologies that force you into one of sixteen boxes, the Big Five measures five continuous dimensions. You receive a unique score on each, creating a personality profile that is genuinely yours.",
-    whatIsP2: "It is the framework most widely used in cross-cultural leadership research, making it especially relevant if you lead across national or organisational cultures. Understanding your profile helps you lead with greater self-awareness — and understand the people on your team with greater depth.",
+    whatIsP1: "The Big Five — also known as the OCEAN model — emerged not from one theorist's idea but from decades of cross-cultural research. When researchers analysed which words humans use to describe each other across many languages, the same five clusters kept appearing. The Big Five is the structure of personality that the data itself produced.",
+    whatIsP2: "Unlike DISC or Myers-Briggs, the Big Five does not put you in a box. You receive a unique score on each of the five traits along a continuum. Your profile is the unique shape that emerges from your five scores combined — the OCEAN pentagon that is genuinely yours.",
+    whatIsP3: "It is the framework most widely used in cross-cultural leadership research, with the five traits replicating across more than fifty countries. A Javanese team member's high Conscientiousness means roughly the same thing as a Dutch team member's high Conscientiousness. This shared baseline is rare in personality psychology and unusually useful for international teams.",
+    crossCulturalCaveatTitle: "Cross-Cultural Caveat",
+    crossCulturalCaveat: "Big Five is the most cross-culturally validated personality framework in the world — validated in more than fifty countries. Two caveats remain. First, most validation samples are still drawn from WEIRD populations (Western, Educated, Industrialised, Rich, Democratic). Second, trait labels carry cultural weight — 'Agreeableness' reads differently in honour cultures versus consensus cultures. Read your scores as a starting point for self-awareness, not as a verdict.",
+    biblicalAnchorLabel: "Biblical Reflection",
     fiveDimTitle: "The Five Dimensions",
     fiveDimSub: "Each dimension exists on a spectrum — neither end is superior. Effective leaders understand where they sit and what that means for how they lead.",
     howToTitle: "How to take this assessment",
@@ -579,8 +598,12 @@ const UI = {
     heroDesc: "Kerangka kepribadian yang paling tervalidasi secara ilmiah di dunia — lima dimensi yang memprediksi cara Anda memimpin, berkolaborasi, beradaptasi, dan berkembang di setiap budaya.",
     startBtn: "Mulai Tes →",
     whatIsTitle: "Apa itu Big Five?",
-    whatIsP1: "Big Five — juga dikenal sebagai model OCEAN — muncul dari dekade penelitian lintas budaya, bahasa, dan demografi. Tidak seperti tipologi kepribadian yang memaksa Anda masuk ke salah satu dari enam belas kotak, Big Five mengukur lima dimensi kontinu. Anda menerima skor unik pada masing-masing, menciptakan profil kepribadian yang benar-benar milik Anda.",
-    whatIsP2: "Ini adalah kerangka yang paling banyak digunakan dalam penelitian kepemimpinan lintas budaya, sehingga sangat relevan jika Anda memimpin lintas budaya nasional atau organisasi. Memahami profil Anda membantu Anda memimpin dengan kesadaran diri yang lebih besar — dan memahami orang-orang dalam tim Anda dengan kedalaman yang lebih besar.",
+    whatIsP1: "Big Five — juga dikenal sebagai model OCEAN — muncul bukan dari ide satu teoris, tetapi dari dekade penelitian lintas budaya. Ketika para peneliti menganalisis kata-kata yang digunakan manusia untuk mendeskripsikan satu sama lain di berbagai bahasa, lima kelompok yang sama selalu muncul. Big Five adalah struktur kepribadian yang dihasilkan oleh data itu sendiri.",
+    whatIsP2: "Tidak seperti DISC atau Myers-Briggs, Big Five tidak menempatkan Anda dalam kotak. Anda menerima skor unik pada masing-masing dari lima sifat sepanjang kontinum. Profil Anda adalah bentuk unik yang muncul dari kombinasi lima skor Anda — pentagon OCEAN yang benar-benar milik Anda.",
+    whatIsP3: "Ini adalah kerangka yang paling banyak digunakan dalam penelitian kepemimpinan lintas budaya, dengan lima sifat yang mereplikasi di lebih dari lima puluh negara. Artinya, Kesadaran tinggi anggota tim dari Jawa berarti hal yang kurang lebih sama dengan Kesadaran tinggi anggota tim dari Belanda.",
+    crossCulturalCaveatTitle: "Catatan Lintas Budaya",
+    crossCulturalCaveat: "Big Five adalah kerangka kepribadian yang paling tervalidasi secara lintas budaya di dunia — telah divalidasi di lebih dari lima puluh negara. Dua catatan tetap perlu diperhatikan. Pertama, sebagian besar sampel validasi masih berasal dari populasi WEIRD (Western, Educated, Industrialised, Rich, Democratic). Kedua, label sifat membawa bobot budaya — 'Keramahan' dibaca berbeda dalam budaya kehormatan versus budaya konsensus. Baca skor Anda sebagai titik awal kesadaran diri, bukan sebagai keputusan final.",
+    biblicalAnchorLabel: "Refleksi Alkitab",
     fiveDimTitle: "Lima Dimensi",
     fiveDimSub: "Setiap dimensi ada pada spektrum — tidak ada ujung yang lebih unggul. Pemimpin yang efektif memahami di mana mereka berada dan apa artinya bagi cara mereka memimpin.",
     howToTitle: "Cara mengambil penilaian ini",
@@ -615,8 +638,12 @@ const UI = {
     heroDesc: "Het meest wetenschappelijk gevalideerde persoonlijkheidsmodel ter wereld — vijf dimensies die voorspellen hoe je leidt, samenwerkt, je aanpast en groeit in elke cultuur.",
     startBtn: "Start de test →",
     whatIsTitle: "Wat is de Big Five?",
-    whatIsP1: "De Big Five — ook bekend als het OCEAN-model — is voortgekomen uit decennia onderzoek over culturen, talen en demografieën heen. Anders dan persoonlijkheidstypologieën die je in een van zestien hokjes dwingen, meet de Big Five vijf continue dimensies. Je krijgt een unieke score op elk, wat een persoonlijkheidsprofiel oplevert dat echt van jou is.",
-    whatIsP2: "Het is het meest gebruikte model in intercultureel leiderschapsonderzoek, waardoor het extra relevant is als je leidt over nationale of organisatorische culturen heen. Inzicht in je profiel helpt je te leiden met meer zelfbewustzijn — en de mensen in je team met meer diepgang te begrijpen.",
+    whatIsP1: "De Big Five — ook bekend als het OCEAN-model — is niet voortgekomen uit het idee van één theoreticus, maar uit decennia cross-cultureel onderzoek. Toen onderzoekers analyseerden welke woorden mensen in verschillende talen gebruiken om elkaar te beschrijven, kwamen steeds dezelfde vijf clusters naar voren. De Big Five is de persoonlijkheidsstructuur die de data zelf heeft voortgebracht.",
+    whatIsP2: "In tegenstelling tot DISC of Myers-Briggs stopt de Big Five je niet in een hokje. Je krijgt een unieke score op elk van de vijf eigenschappen langs een continuüm. Je profiel is de unieke vorm die ontstaat uit de combinatie van je vijf scores — de OCEAN-pentagon die echt van jou is.",
+    whatIsP3: "Het is het meest gebruikte model in intercultureel leiderschapsonderzoek, waarbij de vijf eigenschappen repliceren in meer dan vijftig landen. De hoge Zorgvuldigheid van een Javaans teamlid betekent ongeveer hetzelfde als de hoge Zorgvuldigheid van een Nederlands teamlid.",
+    crossCulturalCaveatTitle: "Interculturele Kanttekening",
+    crossCulturalCaveat: "Big Five is het meest cross-cultureel gevalideerde persoonlijkheidsmodel ter wereld — gevalideerd in meer dan vijftig landen. Twee voorbehouden blijven gelden. Ten eerste zijn de meeste validatiesteekproeven nog steeds afkomstig uit WEIRD-populaties (Western, Educated, Industrialised, Rich, Democratic). Ten tweede dragen traitlabels cultureel gewicht — 'Vriendelijkheid' wordt anders gelezen in eer-culturen versus consensusculturen. Lees je scores als een startpunt voor zelfbewustzijn, niet als een oordeel.",
+    biblicalAnchorLabel: "Bijbelse Reflectie",
     fiveDimTitle: "De Vijf Dimensies",
     fiveDimSub: "Elke dimensie bestaat op een spectrum — geen van beide uiteinden is beter. Effectieve leiders begrijpen waar ze staan en wat dat betekent voor hoe ze leiden.",
     howToTitle: "Hoe je deze test invult",
@@ -646,6 +673,58 @@ const UI = {
 };
 
 type Lang = "en" | "id" | "nl";
+
+// ── OCEAN RADAR SVG ───────────────────────────────────────────────────────────
+
+function OceanRadarSVG({ pcts, size = 160, showLabels = false }: {
+  pcts: { O: number; C: number; E: number; A: number; ES: number };
+  size?: number;
+  showLabels?: boolean;
+}) {
+  const cx = size / 2, cy = size / 2;
+  const r = (size / 2) * 0.70;
+  const TRAIT_ORDER = ["O", "C", "E", "A", "ES"] as const;
+  const COLORS: Record<string, string> = {
+    O: "oklch(52% 0.22 280)", C: "oklch(50% 0.18 215)", E: "oklch(60% 0.20 52)",
+    A: "oklch(52% 0.18 155)", ES: "oklch(50% 0.20 310)",
+  };
+  function angle(i: number) { return -Math.PI / 2 + (i * 2 * Math.PI) / 5; }
+  function pt(i: number, pct: number): [number, number] {
+    const d = (pct / 100) * r;
+    return [cx + d * Math.cos(angle(i)), cy + d * Math.sin(angle(i))];
+  }
+  function polyPts(pct: number) { return TRAIT_ORDER.map((_, i) => pt(i, pct).join(",")).join(" "); }
+  const userPts = TRAIT_ORDER.map((t, i) => pt(i, pcts[t]));
+  const userPoly = userPts.map(p => p.join(",")).join(" ");
+  const labelRadius = r + (showLabels ? 16 : 0);
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {[25, 50, 75, 100].map(p => (
+        <polygon key={p} points={polyPts(p)} fill="none" stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />
+      ))}
+      {TRAIT_ORDER.map((_, i) => {
+        const [x2, y2] = pt(i, 100);
+        return <line key={i} x1={cx} y1={cy} x2={x2} y2={y2} stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />;
+      })}
+      <polygon points={userPoly} fill="oklch(52% 0.22 280 / 0.14)" stroke="oklch(52% 0.22 280)" strokeWidth={1.5} />
+      {userPts.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={3} fill={COLORS[TRAIT_ORDER[i]]} />
+      ))}
+      {showLabels && TRAIT_ORDER.map((t, i) => {
+        const ang = angle(i);
+        const lx = cx + labelRadius * Math.cos(ang);
+        const ly = cy + labelRadius * Math.sin(ang);
+        const anchor = Math.cos(ang) > 0.2 ? "start" : Math.cos(ang) < -0.2 ? "end" : "middle";
+        return (
+          <text key={t} x={lx} y={ly + 4} textAnchor={anchor}
+            style={{ fontFamily: "var(--font-montserrat)", fontSize: "9px", fontWeight: 700, fill: COLORS[t], letterSpacing: "0.04em" }}>
+            {t}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
 
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
@@ -784,9 +863,16 @@ export default function BigFiveClient({
             <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
               {t.whatIsP1}
             </p>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)" }}>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
               {t.whatIsP2}
             </p>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)" }}>
+              {t.whatIsP3}
+            </p>
+            <div style={{ background: "oklch(94% 0.06 52)", borderLeft: "3px solid oklch(65% 0.15 52)", borderRadius: "0 8px 8px 0", padding: "16px 20px", marginTop: 20 }}>
+              <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(45% 0.14 52)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>{t.crossCulturalCaveatTitle}</p>
+              <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, lineHeight: 1.7, color: "oklch(30% 0.08 52)", margin: 0 }}>{t.crossCulturalCaveat}</p>
+            </div>
           </section>
 
           {/* The 5 traits */}
@@ -810,6 +896,14 @@ export default function BigFiveClient({
                         <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: trait.color, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>{tTrait(trait, "subtitle")}</span>
                       </div>
                       <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 280)", margin: 0 }}>{tTrait(trait, "overview")}</p>
+                      <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 700, color: trait.color, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                          {lang === "id" ? "Refleksi Alkitab" : lang === "nl" ? "Bijbelse Reflectie" : "Biblical Reflection"}
+                        </span>
+                        <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "oklch(45% 0.08 280)", fontStyle: "italic" }}>
+                          {(trait as any).biblicalFigure} — {(trait as any).biblicalRef}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -957,6 +1051,23 @@ export default function BigFiveClient({
         </div>
       </div>
 
+      {/* Pentagon profile */}
+      <div style={{ background: "white", borderTop: "3px solid oklch(88% 0.006 260)", padding: "40px 24px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.06 280)", margin: 0 }}>
+            {lang === "id" ? "Bentuk Profil OCEAN Anda" : lang === "nl" ? "Jouw OCEAN-profielvorm" : "Your OCEAN Profile Shape"}
+          </p>
+          <OceanRadarSVG
+            pcts={{ O: pcts.O, C: pcts.C, E: pcts.E, A: pcts.A, ES: stabilityPct }}
+            size={220}
+            showLabels={true}
+          />
+          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "oklch(50% 0.06 280)", textAlign: "center", maxWidth: 380 }}>
+            {lang === "id" ? "Pentagon unik Anda — bentuk yang terbentuk dari lima skor Anda" : lang === "nl" ? "Jouw unieke pentagon — de vorm van jouw vijf scores samen" : "Your unique pentagon — the shape formed by your five scores combined"}
+          </p>
+        </div>
+      </div>
+
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "48px 24px" }}>
 
         {/* Score bars */}
@@ -1038,6 +1149,17 @@ export default function BigFiveClient({
                     <div style={{ marginTop: 16, background: "oklch(97% 0.015 280)", borderRadius: 10, padding: "16px 20px" }}>
                       <p style={{ fontSize: 13, fontWeight: 600, color: "oklch(45% 0.06 280)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>{t.crossCulturalAwareness}</p>
                       <p style={{ fontSize: 15, lineHeight: 1.65, color: "oklch(32% 0.06 280)", margin: 0 }}>{crossCultural}</p>
+                    </div>
+                    <div style={{ marginTop: 16, background: "oklch(97% 0.02 280)", borderRadius: 10, padding: "16px 20px", borderLeft: "3px solid oklch(65% 0.06 280)" }}>
+                      <p style={{ fontSize: 13, fontWeight: 600, color: "oklch(45% 0.06 280)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 4 }}>
+                        {t.biblicalAnchorLabel} — {(trait as any).biblicalFigure}
+                      </p>
+                      <p style={{ fontSize: 11, color: "oklch(55% 0.06 280)", fontStyle: "italic", marginBottom: 8 }}>
+                        {(trait as any).biblicalRef}
+                      </p>
+                      <p style={{ fontSize: 15, lineHeight: 1.65, color: "oklch(32% 0.06 280)", margin: 0 }}>
+                        {(trait as any).biblicalReflection}
+                      </p>
                     </div>
                   </div>
                 </div>

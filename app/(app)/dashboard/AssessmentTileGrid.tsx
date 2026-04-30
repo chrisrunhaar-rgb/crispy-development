@@ -165,6 +165,51 @@ const DISC_NAMES: Record<string, string> = {
   D: "Dominant", I: "Influential", S: "Steady", C: "Conscientious",
 };
 
+function OceanRadarSVG({ scores, size = 160 }: { scores: Record<string, number>; size?: number }) {
+  // scores are raw accumulated values (10-50 per trait), keys: O, C, E, A, N
+  function calcPct(raw: number) { return Math.round(((raw - 10) / 40) * 100); }
+  const pcts = {
+    O: calcPct(scores.O ?? 30),
+    C: calcPct(scores.C ?? 30),
+    E: calcPct(scores.E ?? 30),
+    A: calcPct(scores.A ?? 30),
+    ES: 100 - calcPct(scores.N ?? 30), // inverted
+  };
+  const TRAIT_ORDER = ["O", "C", "E", "A", "ES"] as const;
+  const COLORS: Record<string, string> = {
+    O: "oklch(52% 0.22 280)",
+    C: "oklch(50% 0.18 215)",
+    E: "oklch(60% 0.20 52)",
+    A: "oklch(52% 0.18 155)",
+    ES: "oklch(50% 0.20 310)",
+  };
+  const cx = size / 2, cy = size / 2;
+  const r = (size / 2) * 0.70;
+  function ang(i: number) { return -Math.PI / 2 + (i * 2 * Math.PI) / 5; }
+  function pt(i: number, pct: number): [number, number] {
+    const d = (pct / 100) * r;
+    return [cx + d * Math.cos(ang(i)), cy + d * Math.sin(ang(i))];
+  }
+  const userPts = TRAIT_ORDER.map((t, i) => pt(i, pcts[t]));
+  const userPoly = userPts.map(p => p.join(",")).join(" ");
+  function gridPoly(pct: number) { return TRAIT_ORDER.map((_, i) => pt(i, pct).join(",")).join(" "); }
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {[25, 50, 75, 100].map(p => (
+        <polygon key={p} points={gridPoly(p)} fill="none" stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />
+      ))}
+      {TRAIT_ORDER.map((_, i) => {
+        const [x2, y2] = pt(i, 100);
+        return <line key={i} x1={cx} y1={cy} x2={x2} y2={y2} stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />;
+      })}
+      <polygon points={userPoly} fill="oklch(52% 0.22 280 / 0.14)" stroke="oklch(52% 0.22 280)" strokeWidth={1.5} />
+      {userPts.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={3} fill={COLORS[TRAIT_ORDER[i]]} />
+      ))}
+    </svg>
+  );
+}
+
 function discPolarXY(cx: number, cy: number, r: number, deg: number) {
   const rad = (deg - 90) * (Math.PI / 180);
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
@@ -841,34 +886,80 @@ function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" 
 
 function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "bigfive" }>; onClose: () => void }) {
   const { scores, lang } = data;
-  const OCEAN_LABELS = { O: "Openness", C: "Conscientiousness", E: "Extraversion", A: "Agreeableness", N: "Neuroticism" };
+
+  function calcPct(raw: number) { return Math.round(((raw - 10) / 40) * 100); }
+
+  const pcts = {
+    O: calcPct(scores.O ?? 30),
+    C: calcPct(scores.C ?? 30),
+    E: calcPct(scores.E ?? 30),
+    A: calcPct(scores.A ?? 30),
+    ES: 100 - calcPct(scores.N ?? 30),
+  };
+
+  const TRAIT_INFO = [
+    { key: "O", label: lang === "id" ? "Keterbukaan" : lang === "nl" ? "Openheid" : "Openness", color: "oklch(52% 0.22 280)" },
+    { key: "C", label: lang === "id" ? "Kehati-hatian" : lang === "nl" ? "Zorgvuldigheid" : "Conscientiousness", color: "oklch(50% 0.18 215)" },
+    { key: "E", label: lang === "id" ? "Ekstraversi" : lang === "nl" ? "Extraversie" : "Extraversion", color: "oklch(60% 0.20 52)" },
+    { key: "A", label: lang === "id" ? "Keramahan" : lang === "nl" ? "Vriendelijkheid" : "Agreeableness", color: "oklch(52% 0.18 155)" },
+    { key: "ES", label: lang === "id" ? "Stabilitas Emosional" : lang === "nl" ? "Emotionele Stabiliteit" : "Emotional Stability", color: "oklch(50% 0.20 310)" },
+  ];
+
+  // Find dominant trait (highest pct)
+  const dominant = TRAIT_INFO.reduce((best, t) =>
+    (pcts[t.key as keyof typeof pcts] ?? 0) > (pcts[best.key as keyof typeof pcts] ?? 0) ? t : best
+  );
+
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        The Big Five
+        {lang === "id" ? "Profil Kepribadian Big Five" : lang === "nl" ? "Big Five Persoonlijkheidsprofiel" : "Big Five Personality Profile"}
       </p>
       <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
         OCEAN Profile
       </h3>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        {Object.entries(OCEAN_LABELS).map(([key, label]) => {
-          const score = scores[key] ?? 0;
-          return (
-            <div key={key}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{label}</span>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
+
+      {/* Pentagon + bars side by side */}
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+        <div style={{ flexShrink: 0 }}>
+          <OceanRadarSVG scores={scores} size={160} />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", flex: 1 }}>
+          {TRAIT_INFO.map(t => {
+            const pct = pcts[t.key as keyof typeof pcts] ?? 0;
+            return (
+              <div key={t.key}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <div style={{ width: 9, height: 9, borderRadius: "50%", background: t.color, flexShrink: 0 }} />
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(42% 0.008 260)" }}>{t.label}</span>
+                  </div>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: navy }}>{pct}%</span>
+                </div>
+                <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
+                  <div style={{ height: "100%", width: `${pct}%`, background: t.color, borderRadius: 2 }} />
+                </div>
               </div>
-              <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-                <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+
+      {/* Dominant trait chip */}
+      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+        <div style={{ padding: "0.5rem 0.875rem", background: `${dominant.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: dominant.color, fontWeight: 700 }}>
+            {lang === "id" ? "Sifat paling menonjol" : lang === "nl" ? "Meest dominant" : "Most distinctive"}
+          </span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: dominant.color }}>
+            {dominant.label} ({pcts[dominant.key as keyof typeof pcts]}%)
+          </span>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -1210,7 +1301,9 @@ export default function AssessmentTileGrid({
         {/* 8. Big Five */}
         <CompactTile
           title={getTitle("bigfive", lang)}
-          visual={bigFiveScores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy, lineHeight: 1.2 }}>Results saved</p></div> : <EmptyTileVisual />}
+          visual={bigFiveScores
+            ? <OceanRadarSVG scores={bigFiveScores} size={90} />
+            : <EmptyTileVisual />}
           done={!!bigFiveScores}
           href="/resources/big-five"
           onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores, lang }) : undefined}
