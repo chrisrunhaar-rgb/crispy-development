@@ -424,7 +424,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   const [showResults, setShowResults] = useState(karuniaTopGifts !== null);
   const [resultScores, setResultScores] = useState<Record<string, number> | null>(karuniaScores);
   const [resultTopGifts, setResultTopGifts] = useState<string[]>(karuniaTopGifts ?? []);
-  const [saved, setSaved] = useState(isSaved);
+  const [saved, setSaved] = useState(!!(karuniaTopGifts && karuniaTopGifts.length > 0));
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [expandedGift, setExpandedGift] = useState<string | null>(null);
