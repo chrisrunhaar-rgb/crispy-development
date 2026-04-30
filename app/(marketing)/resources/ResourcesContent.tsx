@@ -3,10 +3,8 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
-import { TOPICS, RESOURCES } from "@/lib/resources-data";
+import { RESOURCES, Resource } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "./actions";
-
-type View = "category" | "list";
 
 interface Props {
   userId: string | null;
@@ -14,6 +12,7 @@ interface Props {
   isTeamLeader: boolean;
   savedResources?: string[];
   moduleStatuses?: Record<string, string>;
+  moduleCategories?: Record<string, string>;
 }
 
 const FORMAT_COLORS: Record<string, string> = {
@@ -23,26 +22,283 @@ const FORMAT_COLORS: Record<string, string> = {
   Guide: "oklch(65% 0.15 45)",
 };
 
-// Returns the effective access level for a resource based on DB status.
-// Falls back to static gated field if no DB record exists.
-function getModuleAccess(slug: string | null, gated: boolean, moduleStatuses: Record<string, string>): "development" | "live_free" | "live_paid" {
+const SECTION_ORDER = [
+  { key: "assessments", label: "Assessments" },
+  { key: "cross-cultural", label: "Cross-Cultural" },
+  { key: "leadership", label: "Leadership" },
+  { key: "team-facilitation", label: "Team & Facilitation" },
+  { key: "personal-development", label: "Personal Development" },
+  { key: "thinking-tools", label: "Thinking Tools" },
+  { key: "faith-calling", label: "Faith & Calling" },
+  { key: "self-care", label: "Self-Care & Resilience" },
+];
+
+function getModuleAccess(
+  slug: string | null,
+  gated: boolean,
+  moduleStatuses: Record<string, string>
+): "development" | "live_free" | "live_paid" {
   if (!slug) return "development";
   const status = moduleStatuses[slug];
   if (status === "live_free") return "live_free";
   if (status === "live_paid") return "live_paid";
   if (status === "development") return "development";
-  // No DB record — fall back to static gated
   return gated ? "live_paid" : "live_free";
 }
 
-export default function ResourcesContent({ userId, pathway, isTeamLeader, savedResources = [], moduleStatuses = {} }: Props) {
+function getLibraryCategory(
+  resource: Resource,
+  moduleCategories: Record<string, string>
+): string {
+  if (resource.slug && moduleCategories[resource.slug]) {
+    return moduleCategories[resource.slug];
+  }
+  if (resource.format === "Assessment") return "assessments";
+  return resource.topics[0] ?? "personal-development";
+}
+
+function ResourceTile({
+  resource,
+  userId,
+  moduleStatuses,
+  localSaved,
+  pendingSlug,
+  onAddToDashboard,
+  lang,
+  localTitle,
+  localDescription,
+}: {
+  resource: Resource;
+  userId: string | null;
+  moduleStatuses: Record<string, string>;
+  localSaved: Set<string>;
+  pendingSlug: string | null;
+  onAddToDashboard: (slug: string, e: React.MouseEvent) => void;
+  lang: string;
+  localTitle: (r: Resource) => string;
+  localDescription: (r: Resource) => string;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
+  const isClickable =
+    !!resource.slug && (access === "live_free" || access === "live_paid");
+
+  const borderColor =
+    access === "live_free"
+      ? "#059669"
+      : access === "live_paid"
+      ? "#E07540"
+      : "#D1D5DB";
+
+  const badgeLabel =
+    access === "live_free"
+      ? "FREE"
+      : access === "live_paid"
+      ? "MEMBERS ONLY"
+      : "COMING SOON";
+
+  const badgeStyle: React.CSSProperties =
+    access === "live_free"
+      ? { color: "#059669", background: "#D1FAE5" }
+      : access === "live_paid"
+      ? { color: "#E07540", background: "#FEF3EC" }
+      : { color: "#9CA3AF", background: "#F3F4F6" };
+
+  const tileStyle: React.CSSProperties = {
+    border: "1px solid oklch(88% 0.008 80)",
+    borderLeft: `3px solid ${borderColor}`,
+    padding: "1rem 1.125rem",
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "220px",
+    background:
+      access === "development"
+        ? "oklch(96% 0.003 260)"
+        : "oklch(99.5% 0.002 80)",
+    opacity: access === "development" ? 0.7 : 1,
+    transition: "box-shadow 0.12s, transform 0.12s",
+    cursor: isClickable ? "pointer" : "default",
+    textDecoration: "none",
+    boxShadow:
+      hovered && isClickable
+        ? "0 2px 8px oklch(0% 0 0 / 0.08)"
+        : "none",
+    transform:
+      hovered && isClickable ? "translateY(-1px)" : "none",
+  };
+
+  const inner = (
+    <div
+      style={tileStyle}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Status badge */}
+      <div>
+        <span
+          style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.55rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "2px 6px",
+            borderRadius: 3,
+            ...badgeStyle,
+          }}
+        >
+          {badgeLabel}
+        </span>
+      </div>
+
+      {/* Title */}
+      <p
+        style={{
+          fontFamily: "var(--font-montserrat)",
+          fontWeight: 700,
+          fontSize: "0.9375rem",
+          color: "oklch(22% 0.005 260)",
+          marginTop: "0.5rem",
+          marginBottom: 0,
+          lineHeight: 1.25,
+        }}
+      >
+        {localTitle(resource)}
+      </p>
+
+      {/* Description — 2-line clamp */}
+      <p
+        style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.8125rem",
+          color: "oklch(52% 0.008 260)",
+          lineHeight: 1.6,
+          marginTop: "0.375rem",
+          marginBottom: 0,
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {localDescription(resource)}
+      </p>
+
+      {/* Bottom row */}
+      <div
+        style={{
+          marginTop: "auto",
+          paddingTop: "0.75rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+        }}
+      >
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+          {/* Format badge */}
+          <span
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.6rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
+              padding: "2px 7px",
+              borderRadius: 3,
+              background: "oklch(93% 0.005 80)",
+            }}
+          >
+            {resource.format}
+          </span>
+
+          {/* Time */}
+          <span
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.65rem",
+              color: "oklch(55% 0.008 260)",
+              fontWeight: 600,
+            }}
+          >
+            {resource.time}
+          </span>
+        </div>
+
+        {/* Save to dashboard */}
+        {isClickable && userId && resource.slug && (
+          localSaved.has(resource.slug) ? (
+            <span
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.62rem",
+                fontWeight: 700,
+                color: "oklch(55% 0.15 145)",
+              }}
+            >
+              {lang === "id" ? "✓ Tersimpan" : lang === "nl" ? "✓ Opgeslagen" : "✓ Saved"}
+            </span>
+          ) : (
+            <button
+              onClick={(e) => onAddToDashboard(resource.slug!, e)}
+              disabled={pendingSlug === resource.slug}
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.62rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                background: "transparent",
+                color: "oklch(30% 0.12 260)",
+                border: "1px solid oklch(30% 0.12 260)",
+                padding: "0.25rem 0.625rem",
+                cursor: pendingSlug === resource.slug ? "wait" : "pointer",
+                opacity: pendingSlug === resource.slug ? 0.5 : 1,
+                alignSelf: "flex-start",
+              }}
+            >
+              {pendingSlug === resource.slug
+                ? "…"
+                : lang === "id"
+                ? "Simpan ke Dashboard"
+                : lang === "nl"
+                ? "Opslaan in Dashboard"
+                : "Save to Dashboard"}
+            </button>
+          )
+        )}
+      </div>
+    </div>
+  );
+
+  if (isClickable) {
+    return (
+      <Link
+        href={`/resources/${resource.slug}`}
+        style={{ textDecoration: "none", display: "block" }}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return <div>{inner}</div>;
+}
+
+export default function ResourcesContent({
+  userId,
+  pathway,
+  isTeamLeader,
+  savedResources = [],
+  moduleStatuses = {},
+  moduleCategories = {},
+}: Props) {
   const { t, lang } = useLanguage();
   const r = t.resources;
-  const [view, setView] = useState<View>("list");
-  const [localSaved, setLocalSaved] = useState<Set<string>>(new Set(savedResources));
+  const [localSaved, setLocalSaved] = useState<Set<string>>(
+    new Set(savedResources)
+  );
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
-  const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [, startTransition] = useTransition();
 
   function handleAddToDashboard(slug: string, e: React.MouseEvent) {
@@ -52,117 +308,74 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
     setPendingSlug(slug);
     startTransition(async () => {
       await saveResourceToDashboard(slug);
-      setLocalSaved(prev => new Set([...prev, slug]));
+      setLocalSaved((prev) => new Set([...prev, slug]));
       setPendingSlug(null);
     });
   }
 
-  function localTitle(resource: typeof RESOURCES[0]) {
+  function localTitle(resource: Resource) {
     if (lang === "id" && resource.titleId) return resource.titleId;
     if (lang === "nl" && resource.titleNl) return resource.titleNl;
     return resource.title;
   }
-  function localDescription(resource: typeof RESOURCES[0]) {
+
+  function localDescription(resource: Resource) {
     if (lang === "id" && resource.descriptionId) return resource.descriptionId;
     if (lang === "nl" && resource.descriptionNl) return resource.descriptionNl;
     return resource.description;
   }
 
-  const sortedResources = [...RESOURCES].sort((a, b) =>
-    localTitle(a).localeCompare(localTitle(b))
-  );
-
-  const filteredResources = sortedResources.filter(r => {
-    if (activeLanguage && !r.languages.includes(activeLanguage as "en" | "id" | "nl")) return false;
-    if (activeCategory && !r.topics.includes(activeCategory)) return false;
-    return true;
-  });
-
-  const freeCount = filteredResources.filter(r => {
-    const access = getModuleAccess(r.slug, r.gated, moduleStatuses);
-    return access === "live_free";
-  }).length;
-  const lockedCount = filteredResources.filter(r => {
-    const access = getModuleAccess(r.slug, r.gated, moduleStatuses);
-    return access === "live_paid";
-  }).length;
-
-  const hasActiveFilters = activeLanguage !== null || activeCategory !== null;
-
-  const filterPillBase: React.CSSProperties = {
-    fontFamily: "var(--font-montserrat)",
-    fontSize: "0.65rem",
-    fontWeight: 700,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-    padding: "0.3rem 0.75rem",
-    border: "1px solid oklch(82% 0.008 80)",
-    cursor: "pointer",
-    transition: "all 0.12s",
-    background: "white",
-    color: "oklch(45% 0.008 260)",
-  };
-
-  const filterPillActive: React.CSSProperties = {
-    ...filterPillBase,
-    background: "oklch(65% 0.15 45)",
-    color: "white",
-    border: "1px solid oklch(65% 0.15 45)",
-  };
-
-  const toggleBtnBase: React.CSSProperties = {
-    fontFamily: "var(--font-montserrat)",
-    fontSize: "0.75rem",
-    fontWeight: 700,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-    padding: "0.5rem 1.25rem",
-    border: "1px solid oklch(82% 0.008 80)",
-    cursor: "pointer",
-    transition: "all 0.15s",
-  };
-
   return (
     <>
       {/* ── HEADER ── */}
-      <section style={{ borderBottom: "1px solid oklch(88% 0.008 80)", paddingTop: "clamp(3rem, 5vw, 5rem)", paddingBottom: "clamp(2rem, 4vw, 3.5rem)", background: "oklch(97% 0.005 80)" }}>
+      <section
+        style={{
+          borderBottom: "1px solid oklch(88% 0.008 80)",
+          paddingTop: "clamp(3rem, 5vw, 5rem)",
+          paddingBottom: "clamp(2rem, 4vw, 3.5rem)",
+          background: "oklch(97% 0.005 80)",
+        }}
+      >
         <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>{r.label}</p>
+          <p
+            className="t-label"
+            style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}
+          >
+            {r.label}
+          </p>
           <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "500px" }}>
-            {r.h1.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
+            {r.h1.split("\n").map((line, i) => (
+              <span key={i}>
+                {line}
+                {i === 0 && <br />}
+              </span>
+            ))}
           </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(52% 0.008 260)", maxWidth: "52ch", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.9375rem",
+              color: "oklch(52% 0.008 260)",
+              maxWidth: "52ch",
+              lineHeight: 1.7,
+              marginBottom: "1.75rem",
+            }}
+          >
             {r.tagline}
           </p>
 
-          {/* View toggle */}
-          <div style={{ display: "flex", gap: 0 }}>
-            <button
-              onClick={() => setView("list")}
-              style={{
-                ...toggleBtnBase,
-                background: view === "list" ? "oklch(30% 0.12 260)" : "white",
-                color: view === "list" ? "white" : "oklch(45% 0.008 260)",
-                borderRight: "none",
-              }}
-            >
-              A–Z List
-            </button>
-            <button
-              onClick={() => setView("category")}
-              style={{
-                ...toggleBtnBase,
-                background: view === "category" ? "oklch(30% 0.12 260)" : "white",
-                color: view === "category" ? "white" : "oklch(45% 0.008 260)",
-              }}
-            >
-              By Category
-            </button>
-          </div>
-
           {isTeamLeader && pathway === "team" && (
             <div style={{ marginTop: "1.25rem" }}>
-              <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
+              <Link
+                href="/dashboard"
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  color: "oklch(30% 0.12 260)",
+                  textDecoration: "none",
+                }}
+              >
                 ← Team Dashboard
               </Link>
             </div>
@@ -170,358 +383,151 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
         </div>
       </section>
 
-      {/* ── CATEGORY VIEW ── */}
-      {view === "category" && (
-        <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-          <div className="container-wide">
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.008 260)", marginBottom: "1.5rem" }}>
-              {TOPICS.length} categories
-            </p>
-            <div style={{ border: "1px solid oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-              {TOPICS.map(topic => {
-                const topicResources = RESOURCES.filter(res => res.topics.includes(topic.slug));
-                const count = topicResources.length;
-                const freeCount = topicResources.filter(res => {
-                  const a = getModuleAccess(res.slug, res.gated, moduleStatuses);
-                  return a === "live_free";
-                }).length;
-                const lockedCount = topicResources.filter(res => {
-                  const a = getModuleAccess(res.slug, res.gated, moduleStatuses);
-                  return a === "live_paid";
-                }).length;
-                return (
-                  <Link key={topic.slug} href={`/resources/topic/${topic.slug}`} style={{ textDecoration: "none", display: "block" }}>
-                    <div
-                      style={{
-                        background: "oklch(99% 0.002 80)",
-                        padding: "clamp(1rem, 3vw, 1.375rem) clamp(1rem, 4vw, 2rem)",
-                        display: "grid",
-                        gridTemplateColumns: "auto 1fr auto",
-                        gap: "1.125rem",
-                        alignItems: "center",
-                        transition: "background 0.12s",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.background = "oklch(65% 0.15 45 / 0.06)")}
-                      onMouseLeave={e => (e.currentTarget.style.background = "oklch(99% 0.002 80)")}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="oklch(65% 0.15 45)"
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        style={{ width: "1.375rem", height: "1.375rem", flexShrink: 0 }}
-                      >
-                        <path d={topic.icon} />
-                      </svg>
-                      <div style={{ minWidth: 0 }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "clamp(0.875rem, 2vw, 0.9375rem)", color: "oklch(22% 0.005 260)", marginBottom: "0.25rem", lineHeight: 1.2 }}>
-                          {topic.title}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)", lineHeight: 1.5, marginBottom: "0.5rem", maxWidth: "60ch" }}>
-                          {topic.description}
-                        </p>
-                        <div style={{ display: "flex", gap: "0.625rem", alignItems: "center" }}>
-                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(42% 0.008 260)" }}>
-                            {count} {count === 1 ? "resource" : "resources"}
-                          </span>
-                          {!userId && lockedCount > 0 && (
-                            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(62% 0.008 260)" }}>
-                              · {freeCount} free
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <span style={{ fontSize: "1rem", color: "oklch(65% 0.008 260)", flexShrink: 0 }}>→</span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+      {/* ── SECTIONS ── */}
+      <section
+        style={{
+          paddingBlock: "clamp(2.5rem, 5vw, 5rem)",
+          background: "oklch(97% 0.005 80)",
+        }}
+      >
+        <div className="container-wide">
+          {SECTION_ORDER.map((section) => {
+            const sectionResources = RESOURCES.filter(
+              (res) => getLibraryCategory(res, moduleCategories) === section.key
+            );
+            if (sectionResources.length === 0) return null;
 
-            {!userId && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(58% 0.008 260)", marginTop: "1.75rem", lineHeight: 1.6 }}>
-                🔓 Free modules are open to everyone.{" "}
-                🔒 Full library access — <strong style={{ color: "oklch(42% 0.008 260)" }}>Coming Soon</strong>.
-              </p>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* ── LIST VIEW ── */}
-      {view === "list" && (
-        <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-          <div className="container-wide">
-
-            {/* Filter row */}
-            <div style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {/* Language filters */}
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginRight: "0.25rem" }}>
-                  Language
-                </span>
-                {[{ key: "en", label: "English" }, { key: "id", label: "Indonesian" }, { key: "nl", label: "Dutch" }].map(lang => (
-                  <button
-                    key={lang.key}
-                    onClick={() => setActiveLanguage(activeLanguage === lang.key ? null : lang.key)}
-                    style={activeLanguage === lang.key ? filterPillActive : filterPillBase}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Category filters */}
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginRight: "0.25rem" }}>
-                  Category
-                </span>
-                {TOPICS.map(topic => (
-                  <button
-                    key={topic.slug}
-                    onClick={() => setActiveCategory(activeCategory === topic.slug ? null : topic.slug)}
-                    style={activeCategory === topic.slug ? filterPillActive : filterPillBase}
-                  >
-                    {topic.title}
-                  </button>
-                ))}
-                {hasActiveFilters && (
-                  <button
-                    onClick={() => { setActiveLanguage(null); setActiveCategory(null); }}
-                    style={{ ...filterPillBase, color: "oklch(55% 0.14 25)", border: "1px solid oklch(82% 0.04 25)" }}
-                  >
-                    Clear filters ×
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.008 260)", marginBottom: "1.5rem" }}>
-              {filteredResources.length}{hasActiveFilters ? ` of ${sortedResources.length}` : ""} resources — A to Z
-              {!userId && lockedCount > 0 && (
-                <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0, marginLeft: "0.75rem", color: "oklch(62% 0.008 260)" }}>
-                  · {freeCount} free · {lockedCount} require an account
-                </span>
-              )}
-            </p>
-            {filteredResources.length === 0 && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(55% 0.008 260)", padding: "2rem 0" }}>
-                No resources match those filters.{" "}
-                <button onClick={() => { setActiveLanguage(null); setActiveCategory(null); }} style={{ background: "none", border: "none", cursor: "pointer", color: "oklch(30% 0.12 260)", fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, padding: 0, textDecoration: "underline" }}>
-                  Clear filters
-                </button>
-              </p>
-            )}
-            <div style={{ border: "1px solid oklch(88% 0.008 80)", display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
-              {filteredResources.map((resource) => {
-                const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
-                const isDevelopment = access === "development";
-                const isAccessible = access === "live_free" || (access === "live_paid" && !!userId);
-                const hasPage = !!resource.slug;
-                const isClickable = hasPage && (isAccessible || isDevelopment);
-
-                const cardInner = (
-                  <div
+            return (
+              <section key={section.key} style={{ marginBottom: "3.5rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: "0.75rem",
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  <h2
                     style={{
-                      background: isDevelopment ? "oklch(95% 0.003 260)" : isAccessible ? "oklch(99% 0.002 80)" : "oklch(98% 0.003 80)",
-                      padding: "clamp(1rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem)",
-                      display: "grid",
-                      gridTemplateColumns: "1fr auto",
-                      gap: "1rem",
-                      alignItems: "start",
-                      opacity: isDevelopment ? 0.6 : hasPage ? 1 : 0.65,
-                      cursor: isClickable ? "pointer" : "default",
-                      transition: "background 0.12s",
+                      fontFamily: "var(--font-montserrat)",
+                      fontWeight: 700,
+                      fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                      color: "oklch(22% 0.005 260)",
+                      margin: 0,
                     }}
-                    onMouseEnter={isClickable ? (e) => (e.currentTarget.style.background = "oklch(30% 0.12 260 / 0.04)") : undefined}
-                    onMouseLeave={isClickable ? (e) => (e.currentTarget.style.background = isAccessible ? "oklch(99% 0.002 80)" : "oklch(98% 0.003 80)") : undefined}
                   >
-                    <div style={{ minWidth: 0 }}>
-                      {/* Title row */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap", marginBottom: "0.375rem" }}>
-                        {isDevelopment && (
-                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", background: "oklch(90% 0.006 260)", padding: "2px 6px", borderRadius: 3 }}>
-                            Coming soon
-                          </span>
-                        )}
-                        {!isDevelopment && !isAccessible && (
-                          <svg viewBox="0 0 24 24" fill="none" stroke="oklch(58% 0.008 260)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ width: "0.875rem", height: "0.875rem", flexShrink: 0 }}>
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                          </svg>
-                        )}
-                        <h3 style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontWeight: 700,
-                          fontSize: "clamp(0.9rem, 2vw, 1rem)",
-                          color: isAccessible ? "oklch(22% 0.005 260)" : "oklch(52% 0.005 260)",
-                          margin: 0,
-                          lineHeight: 1.25,
-                        }}>
-                          {localTitle(resource)}
-                        </h3>
-                      </div>
-
-                      {/* Description */}
-                      <p style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.8125rem",
-                        color: isAccessible ? "oklch(48% 0.008 260)" : "oklch(62% 0.005 260)",
-                        lineHeight: 1.6,
-                        margin: "0 0 0.75rem",
-                        maxWidth: "68ch",
-                      }}>
-                        {localDescription(resource)}
-                      </p>
-
-                      {/* Meta row */}
-                      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-                        {/* Format badge */}
-                        <span style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontSize: "0.6rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.08em",
-                          textTransform: "uppercase",
-                          color: isAccessible ? (FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)") : "oklch(62% 0.005 260)",
-                          background: isAccessible ? `${FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)"} / 0.1` : "oklch(92% 0.003 80)",
-                          padding: "2px 7px",
-                          borderRadius: 3,
-                        }}>
-                          {resource.format}
-                        </span>
-
-                        {/* Time */}
-                        <span style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontSize: "0.65rem",
-                          color: isAccessible ? "oklch(55% 0.008 260)" : "oklch(68% 0.005 260)",
-                          fontWeight: 600,
-                        }}>
-                          {resource.time}
-                        </span>
-
-                        {/* Languages */}
-                        <span style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontSize: "0.65rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.06em",
-                          color: isAccessible ? "oklch(52% 0.08 260)" : "oklch(65% 0.005 260)",
-                          background: "oklch(92% 0.005 260)",
-                          padding: "2px 7px",
-                          borderRadius: 3,
-                        }}>
-                          {resource.languages.map(l => l.toUpperCase()).join(" · ")}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Right column */}
-                    <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.5rem", paddingTop: "0.125rem" }}>
-                      {/* Signed-in user: save to dashboard */}
-                      {isClickable && userId && (
-                        localSaved.has(resource.slug!) ? (
-                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(55% 0.15 145)", whiteSpace: "nowrap" }}>
-                            {lang === "id" ? "✓ Tersimpan" : lang === "nl" ? "✓ Opgeslagen" : "✓ Saved"}
-                          </span>
-                        ) : (
-                          <button
-                            onClick={(e) => handleAddToDashboard(resource.slug!, e)}
-                            disabled={pendingSlug === resource.slug}
-                            style={{
-                              fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700,
-                              letterSpacing: "0.06em", textTransform: "uppercase",
-                              background: "transparent", color: "oklch(30% 0.12 260)",
-                              border: "1px solid oklch(30% 0.12 260)", padding: "0.25rem 0.625rem",
-                              cursor: pendingSlug === resource.slug ? "wait" : "pointer",
-                              whiteSpace: "nowrap", opacity: pendingSlug === resource.slug ? 0.5 : 1,
-                            }}
-                          >
-                            {pendingSlug === resource.slug ? "…" : lang === "id" ? "Simpan ke Dashboard" : lang === "nl" ? "Opslaan in Dashboard" : "Save to Dashboard"}
-                          </button>
-                        )
-                      )}
-                      {/* Not signed in, gated resource: members-only indicator */}
-                      {!userId && resource.gated && hasPage && (
-                        <span
-                          style={{
-                            fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700,
-                            letterSpacing: "0.06em", textTransform: "uppercase",
-                            color: "oklch(58% 0.008 260)",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          🔒 Members only
-                        </span>
-                      )}
-                      {/* Arrow for accessible resources */}
-                      {isClickable ? (
-                        <span style={{ fontSize: "1rem", color: "oklch(65% 0.008 260)" }}>→</span>
-                      ) : !hasPage ? (
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(68% 0.008 260)" }}>
-                          Soon
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-                );
-
-                // Accessible resources with a page → link
-                if (isClickable) {
-                  return (
-                    <Link key={resource.id} href={`/resources/${resource.slug}`} style={{ textDecoration: "none", display: "block" }}>
-                      {cardInner}
-                    </Link>
-                  );
-                }
-                // No page yet → plain div
-                return <div key={resource.id}>{cardInner}</div>;
-              })}
-            </div>
-
-            {!userId && lockedCount > 0 && (
-              <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", marginTop: "1.75rem", padding: "1rem 1.25rem", background: "oklch(65% 0.15 45 / 0.07)", borderLeft: "3px solid oklch(65% 0.15 45)" }}>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(28% 0.008 260)", marginBottom: "0.25rem" }}>
-                    {lockedCount} resources are members-only
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(52% 0.008 260)" }}>
-                    Full library access launches soon. The 4 free modules are open to everyone — no account needed.
-                  </p>
+                    {section.label}
+                  </h2>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "oklch(58% 0.008 260)",
+                    }}
+                  >
+                    {sectionResources.length}{" "}
+                    {sectionResources.length === 1 ? "resource" : "resources"}
+                  </span>
                 </div>
-                <span style={{
-                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
-                  letterSpacing: "0.06em", textTransform: "uppercase",
-                  color: "oklch(65% 0.15 45)",
-                  whiteSpace: "nowrap", flexShrink: 0,
-                }}>
-                  Coming Soon
-                </span>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+                    gap: "1.25rem",
+                  }}
+                >
+                  {sectionResources.map((resource) => (
+                    <ResourceTile
+                      key={resource.id}
+                      resource={resource}
+                      userId={userId}
+                      moduleStatuses={moduleStatuses}
+                      localSaved={localSaved}
+                      pendingSlug={pendingSlug}
+                      onAddToDashboard={handleAddToDashboard}
+                      lang={lang}
+                      localTitle={localTitle}
+                      localDescription={localDescription}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      </section>
 
       {/* ── COMING SOON CTA ── */}
       {!userId && (
-        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
-          <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 7rem)", bottom: "clamp(4rem, 7vw, 7rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
+        <section
+          style={{
+            paddingBlock: "clamp(4rem, 7vw, 7rem)",
+            background: "oklch(30% 0.12 260)",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              left: "clamp(1.5rem, 5vw, 4rem)",
+              top: "clamp(4rem, 7vw, 7rem)",
+              bottom: "clamp(4rem, 7vw, 7rem)",
+              width: "3px",
+              background: "oklch(65% 0.15 45)",
+            }}
+          />
           <div className="container-wide">
             <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Full Library Access</p>
-              <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
+              <p
+                className="t-label"
+                style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}
+              >
+                Full Library Access
+              </p>
+              <h2
+                className="t-section"
+                style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}
+              >
                 Membership launching soon
               </h2>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
-                The full library — 30+ resources, assessments, and team tools — will be available with a membership plan. The 4 free modules are open now.
+              <p
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.9375rem",
+                  lineHeight: 1.7,
+                  color: "oklch(72% 0.04 260)",
+                  marginBottom: "2rem",
+                  maxWidth: "44ch",
+                }}
+              >
+                The full library — 30+ resources, assessments, and team tools —
+                will be available with a membership plan. The 4 free modules are
+                open now.
               </p>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.625rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.5rem 1rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.625rem",
+                  background: "oklch(65% 0.15 45 / 0.15)",
+                  border: "1px solid oklch(65% 0.15 45 / 0.4)",
+                  padding: "0.5rem 1rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "oklch(65% 0.15 45)",
+                  }}
+                >
                   Coming Soon
                 </span>
               </div>
@@ -530,89 +536,5 @@ export default function ResourcesContent({ userId, pathway, isTeamLeader, savedR
         </section>
       )}
     </>
-  );
-}
-
-function TopicTile({
-  title,
-  description,
-  icon,
-  count,
-  freeCount,
-  userId,
-}: {
-  title: string;
-  description: string;
-  icon: string;
-  count: number;
-  freeCount: number;
-  userId: string | null;
-}) {
-  const lockedCount = count - freeCount;
-
-  return (
-    <div
-      style={{
-        background: "oklch(99% 0.002 80)",
-        padding: "clamp(1rem, 3vw, 1.75rem)",
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.75rem",
-        cursor: "pointer",
-        transition: "background 0.15s",
-        minHeight: "clamp(130px, 18vw, 175px)",
-      }}
-      onMouseEnter={e => (e.currentTarget.style.background = "oklch(30% 0.12 260 / 0.04)")}
-      onMouseLeave={e => (e.currentTarget.style.background = "oklch(99% 0.002 80)")}
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="oklch(65% 0.15 45)"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{ width: "clamp(1.125rem, 3vw, 1.5rem)", height: "clamp(1.125rem, 3vw, 1.5rem)", flexShrink: 0 }}
-      >
-        <path d={icon} />
-      </svg>
-
-      <div>
-        <p style={{
-          fontFamily: "var(--font-montserrat)",
-          fontWeight: 700,
-          fontSize: "clamp(0.8125rem, 2vw, 0.9375rem)",
-          color: "oklch(22% 0.005 260)",
-          lineHeight: 1.2,
-          marginBottom: "0.3rem",
-        }}>
-          {title}
-        </p>
-        <p style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "0.7rem",
-          color: "oklch(58% 0.008 260)",
-          lineHeight: 1.4,
-          display: "-webkit-box",
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical" as const,
-          overflow: "hidden",
-        }}>
-          {description}
-        </p>
-      </div>
-
-      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(42% 0.008 260)" }}>
-          {count} {count === 1 ? "resource" : "resources"}
-        </span>
-        {!userId && lockedCount > 0 && (
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(62% 0.008 260)" }}>
-            · {freeCount} free
-          </span>
-        )}
-        <span style={{ marginLeft: "auto", fontSize: "0.75rem", color: "oklch(65% 0.008 260)" }}>→</span>
-      </div>
-    </div>
   );
 }

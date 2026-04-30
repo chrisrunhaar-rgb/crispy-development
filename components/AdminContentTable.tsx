@@ -15,6 +15,7 @@ interface ContentModule {
   reads?: number;
   saves?: number;
   status?: string;
+  library_category?: string;
 }
 
 type SortColumn = 'title' | 'category' | 'created' | 'updated' | 'languages' | 'reads' | 'saves';
@@ -25,6 +26,7 @@ interface AdminContentTableProps {
   onArchiveMultiple?: (slugs: string[]) => Promise<void>;
   onExport?: (modules: ContentModule[]) => void;
   onStatusChange?: (slug: string, status: string) => Promise<void>;
+  onCategoryChange?: (slug: string, category: string) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
 }
@@ -49,6 +51,7 @@ export default function AdminContentTable({
   onArchiveMultiple,
   onExport,
   onStatusChange,
+  onCategoryChange,
   showSearch = true,
   showFilters = true,
 }: AdminContentTableProps) {
@@ -415,6 +418,9 @@ export default function AdminContentTable({
                 <th style={{ width: '18%' }}>
                   Status
                 </th>
+                <th style={{ width: '13%' }}>
+                  Lib Cat
+                </th>
                 <th style={{ width: '8%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
                   Reads <SortIcon column="reads" />
                 </th>
@@ -509,6 +515,31 @@ export default function AdminContentTable({
                     ) : (
                       <span style={{ fontSize: '0.75rem', color: '#6B7280' }}>{module.status ?? 'development'}</span>
                     )}
+                  </td>
+                  <td data-label="Lib Cat" style={{ verticalAlign: 'middle' }}>
+                    <select
+                      value={module.library_category ?? ""}
+                      onChange={e => onCategoryChange && onCategoryChange(module.slug, e.target.value)}
+                      style={{
+                        fontFamily: 'var(--font-montserrat)',
+                        fontSize: '0.75rem',
+                        border: '1px solid #E5E7EB',
+                        padding: '2px 4px',
+                        background: 'white',
+                        cursor: onCategoryChange ? 'pointer' : 'default',
+                      }}
+                      aria-label={`Library category for ${module.title}`}
+                    >
+                      <option value="">— unset —</option>
+                      <option value="assessments">Assessments</option>
+                      <option value="cross-cultural">Cross-Cultural</option>
+                      <option value="leadership">Leadership</option>
+                      <option value="team-facilitation">Team &amp; Facilitation</option>
+                      <option value="personal-development">Personal Dev</option>
+                      <option value="thinking-tools">Thinking Tools</option>
+                      <option value="faith-calling">Faith &amp; Calling</option>
+                      <option value="self-care">Self-Care</option>
+                    </select>
                   </td>
                   <td data-label="Reads" style={{ textAlign: 'center' }}>
                     <span style={{ fontWeight: '500', color: (module.reads ?? 0) > 0 ? '#1F2937' : '#9CA3AF' }}>

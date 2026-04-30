@@ -20,11 +20,13 @@ export default async function ResourcesPage() {
   const admin = createAdminClient();
   const { data: statusRows } = await admin
     .from("module_status")
-    .select("slug, status");
+    .select("slug, status, library_category");
 
   const moduleStatuses: Record<string, string> = {};
+  const moduleCategories: Record<string, string> = {};
   for (const row of statusRows ?? []) {
     moduleStatuses[row.slug] = row.status;
+    if (row.library_category) moduleCategories[row.slug] = row.library_category;
   }
 
   return (
@@ -34,6 +36,7 @@ export default async function ResourcesPage() {
       isTeamLeader={isTeamLeader}
       savedResources={savedResources}
       moduleStatuses={moduleStatuses}
+      moduleCategories={moduleCategories}
     />
   );
 }
