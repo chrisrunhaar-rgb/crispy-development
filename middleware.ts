@@ -73,11 +73,27 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Gate individual resource pages — only 4 are free
-  const FREE_RESOURCE_SLUGS = ["comfort-zone", "six-thinking-hats", "three-thinking-styles", "leadership-altitudes"];
+  // Gate paid resource pages — free resources are open to all
+  // Slugs where gated: false in resources-data.ts (+ new assessments)
+  const FREE_RESOURCE_SLUGS = new Set([
+    "cultural-intelligence", "power-distance", "intercultural-communication",
+    "time-and-culture", "giving-feedback-across-cultures", "building-trust-across-cultures",
+    "ladder-of-inference", "understanding-high-context",
+    "leadership-altitudes", "servant-leadership", "vision-casting", "managing-up",
+    "raising-next-generation", "storytelling-leadership",
+    "team-health", "six-thinking-hats", "debriefing-reflection",
+    "escaping-the-comfort-zone", "emotional-intelligence", "johari-window",
+    "decision-making", "cognitive-biases",
+    "disc", "three-thinking-styles", "big-five", "myers-briggs",
+    "sabbath-leadership",
+    "enneagram", "16-personalities", "wheel-of-life", "karunia-rohani",
+    // multi-part resources
+    "zoom-training", "zoom-training-id", "teams-training", "teams-training-id",
+    "enneagram", "16-personalities", "wheel-of-life",
+  ]);
   if (!user && request.nextUrl.pathname.startsWith("/resources/")) {
     const slug = request.nextUrl.pathname.split("/resources/")[1]?.split("/")[0];
-    if (slug && !FREE_RESOURCE_SLUGS.includes(slug) && slug !== "topic") {
+    if (slug && !FREE_RESOURCE_SLUGS.has(slug) && slug !== "topic") {
       const signupUrl = request.nextUrl.clone();
       signupUrl.pathname = "/signup";
       signupUrl.searchParams.set("redirectTo", request.nextUrl.pathname);

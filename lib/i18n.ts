@@ -174,7 +174,7 @@ export const translations = {
     resources: {
       label: "Resources",
       h1: "Cross-cultural leadership\nresources.",
-      tagline: "Eight practical resources for leaders navigating life and ministry across cultures. Three are free — no sign-up required.",
+      tagline: "Guides, assessments, and worksheets for Christian leaders navigating life and ministry across cultures. Many are free — no account required.",
       freeLabel: "Free Resources",
       memberLabel: "Member Resources",
       membersOnly: "Members only",
@@ -392,7 +392,7 @@ export const translations = {
     resources: {
       label: "Sumber Daya",
       h1: "Sumber daya kepemimpinan\nlintas budaya.",
-      tagline: "Delapan sumber daya praktis bagi pemimpin yang menavigasi kehidupan dan pelayanan lintas budaya. Tiga tersedia gratis — tanpa perlu mendaftar.",
+      tagline: "Panduan, penilaian, dan lembar kerja bagi pemimpin Kristen yang menavigasi kehidupan dan pelayanan lintas budaya. Banyak yang gratis — tanpa perlu mendaftar.",
       freeLabel: "Sumber Daya Gratis",
       memberLabel: "Sumber Daya Anggota",
       membersOnly: "Khusus Anggota",
@@ -610,7 +610,7 @@ export const translations = {
     resources: {
       label: "Materialen",
       h1: "Cross-culturele leiderschaps-\nmaterialen.",
-      tagline: "Acht praktische materialen voor leiders die het leven en de missie over culturen heen navigeren. Drie zijn gratis — geen account nodig.",
+      tagline: "Gidsen, assessments en werkbladen voor christelijke leiders die het leven en de missie over culturen heen navigeren. Veel zijn gratis — geen account nodig.",
       freeLabel: "Gratis Materialen",
       memberLabel: "Ledenmaterialen",
       membersOnly: "Alleen voor leden",

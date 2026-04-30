@@ -258,6 +258,23 @@ body {
   padding-inline: clamp(1.5rem, 5vw, 4rem);
 }
 
+/* ── LIBRARY GRID ── */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 1023px) {
+  .resource-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 639px) {
+  .resource-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ── DIVIDER ── */
 .divider {
   height: 1px;

@@ -330,20 +330,30 @@ export default function ResourcesContent({
       {/* ── HEADER ── */}
       <section
         style={{
-          borderBottom: "1px solid oklch(88% 0.008 80)",
           paddingTop: "clamp(3rem, 5vw, 5rem)",
-          paddingBottom: "clamp(2rem, 4vw, 3.5rem)",
-          background: "oklch(97% 0.005 80)",
+          paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
+          background: "oklch(30% 0.12 260)",
+          position: "relative",
         }}
       >
-        <div className="container-wide">
+        <div
+          style={{
+            position: "absolute",
+            left: "clamp(1.5rem, 5vw, 4rem)",
+            top: "clamp(3rem, 5vw, 5rem)",
+            bottom: "clamp(2.5rem, 4vw, 4rem)",
+            width: "3px",
+            background: "oklch(65% 0.15 45)",
+          }}
+        />
+        <div className="container-wide" style={{ paddingLeft: "calc(clamp(1.5rem, 5vw, 4rem) + 1.75rem)" }}>
           <p
             className="t-label"
             style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}
           >
             {r.label}
           </p>
-          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "500px" }}>
+          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
             {r.h1.split("\n").map((line, i) => (
               <span key={i}>
                 {line}
@@ -355,10 +365,9 @@ export default function ResourcesContent({
             style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.9375rem",
-              color: "oklch(52% 0.008 260)",
+              color: "oklch(72% 0.04 260)",
               maxWidth: "52ch",
               lineHeight: 1.7,
-              marginBottom: "1.75rem",
             }}
           >
             {r.tagline}
@@ -372,7 +381,7 @@ export default function ResourcesContent({
                   fontFamily: "var(--font-montserrat)",
                   fontSize: "0.8125rem",
                   fontWeight: 700,
-                  color: "oklch(30% 0.12 260)",
+                  color: "oklch(65% 0.15 45)",
                   textDecoration: "none",
                 }}
               >
@@ -432,14 +441,7 @@ export default function ResourcesContent({
                     {sectionResources.length === 1 ? "resource" : "resources"}
                   </span>
                 </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                      "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
-                    gap: "1.25rem",
-                  }}
-                >
+                <div className="resource-grid">
                   {sectionResources.map((resource) => (
                     <ResourceTile
                       key={resource.id}

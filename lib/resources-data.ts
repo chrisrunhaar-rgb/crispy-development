@@ -323,7 +323,7 @@ export const RESOURCES: Resource[] = [
     descriptionId: "Cara mendiagnosis kesehatan tim sebelum masalah menjadi krisis. Tanda-tanda disfungsi, penanda kesehatan, dan langkah praktis menuju budaya tim yang lebih kuat.",
     descriptionNl: "Hoe de gezondheid van je team te diagnosticeren voordat problemen crises worden. Tekenen van disfunctie, markers van gezondheid, en praktische stappen naar een sterkere teamcultuur.",
     time: "14 min",
-    format: "Assessment",
+    format: "Guide",
     languages: ["en", "id", "nl"],
     gated: false,
     topics: ["team-facilitation"],
