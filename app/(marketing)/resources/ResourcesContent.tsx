@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "./actions";
@@ -334,8 +335,10 @@ export default function ResourcesContent({
           paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
           background: "oklch(30% 0.12 260)",
           position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* Vertical orange accent bar */}
         <div
           style={{
             position: "absolute",
@@ -346,13 +349,47 @@ export default function ResourcesContent({
             background: "oklch(65% 0.15 45)",
           }}
         />
+
+        {/* Decorative compass rose — large, right-side, faint */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            right: "clamp(-2rem, 2vw, 2rem)",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "clamp(160px, 30vw, 320px)",
+            height: "clamp(160px, 30vw, 320px)",
+            opacity: 0.08,
+            pointerEvents: "none",
+          }}
+        >
+          <Image
+            src="/logo-icon.png"
+            alt=""
+            fill
+            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+          />
+        </div>
+
         <div className="container-wide" style={{ paddingLeft: "calc(clamp(1.5rem, 5vw, 4rem) + 1.75rem)" }}>
-          <p
-            className="t-label"
-            style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}
-          >
-            {r.label}
-          </p>
+          {/* Logo + label row */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
+            <Image
+              src="/logo-icon.png"
+              alt="Crispy Development"
+              width={22}
+              height={22}
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }}
+            />
+            <p
+              className="t-label"
+              style={{ color: "oklch(65% 0.15 45)", margin: 0 }}
+            >
+              {r.label}
+            </p>
+          </div>
+
           <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
             {r.h1.split("\n").map((line, i) => (
               <span key={i}>
