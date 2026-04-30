@@ -120,6 +120,87 @@ const VERSES = {
   },
 };
 
+const ADJECTIVES: Array<{ key: string; en: string; id: string; nl: string }> = [
+  { key: "empathetic",      en: "Empathetic",      id: "Empatik",             nl: "Empathisch" },
+  { key: "decisive",        en: "Decisive",        id: "Tegas",               nl: "Besluitvaardig" },
+  { key: "visionary",       en: "Visionary",       id: "Visioner",            nl: "Visionair" },
+  { key: "adaptable",       en: "Adaptable",       id: "Adaptif",             nl: "Aanpasbaar" },
+  { key: "calm",            en: "Calm",            id: "Tenang",              nl: "Kalm" },
+  { key: "patient",         en: "Patient",         id: "Sabar",               nl: "Geduldig" },
+  { key: "generous",        en: "Generous",        id: "Murah hati",          nl: "Vrijgevig" },
+  { key: "reliable",        en: "Reliable",        id: "Dapat diandalkan",    nl: "Betrouwbaar" },
+  { key: "principled",      en: "Principled",      id: "Berprinsip",          nl: "Principieel" },
+  { key: "collaborative",   en: "Collaborative",   id: "Kolaboratif",         nl: "Samenwerkend" },
+  { key: "courageous",      en: "Courageous",      id: "Berani",              nl: "Moedig" },
+  { key: "humble",          en: "Humble",          id: "Rendah hati",         nl: "Bescheiden" },
+  { key: "strategic",       en: "Strategic",       id: "Strategis",           nl: "Strategisch" },
+  { key: "transparent",     en: "Transparent",     id: "Transparan",          nl: "Transparant" },
+  { key: "curious",         en: "Curious",         id: "Penasaran",           nl: "Nieuwsgierig" },
+  { key: "resilient",       en: "Resilient",       id: "Tangguh",             nl: "Veerkrachtig" },
+  { key: "organised",       en: "Organised",       id: "Terorganisir",        nl: "Georganiseerd" },
+  { key: "passionate",      en: "Passionate",      id: "Bersemangat",         nl: "Gepassioneerd" },
+  { key: "creative",        en: "Creative",        id: "Kreatif",             nl: "Creatief" },
+  { key: "relational",      en: "Relational",      id: "Relasional",          nl: "Relationeel" },
+  { key: "practical",       en: "Practical",       id: "Praktis",             nl: "Praktisch" },
+  { key: "driven",          en: "Driven",          id: "Tekun",               nl: "Gedreven" },
+  { key: "flexible",        en: "Flexible",        id: "Fleksibel",           nl: "Flexibel" },
+  { key: "persistent",      en: "Persistent",      id: "Gigih",               nl: "Volhardend" },
+  { key: "diplomatic",      en: "Diplomatic",      id: "Diplomatis",          nl: "Diplomatiek" },
+  { key: "perfectionistic", en: "Perfectionistic", id: "Perfeksionis",        nl: "Perfectionistisch" },
+  { key: "controlling",     en: "Controlling",     id: "Suka mengontrol",     nl: "Controlerend" },
+  { key: "competitive",     en: "Competitive",     id: "Kompetitif",          nl: "Competitief" },
+  { key: "independent",     en: "Independent",     id: "Mandiri",             nl: "Onafhankelijk" },
+  { key: "reserved",        en: "Reserved",        id: "Tertutup",            nl: "Terughoudend" },
+  { key: "risk-averse",     en: "Risk-averse",     id: "Menghindari risiko",  nl: "Risicomijdend" },
+  { key: "idealistic",      en: "Idealistic",      id: "Idealis",             nl: "Idealistisch" },
+  { key: "ambitious",       en: "Ambitious",       id: "Ambisius",            nl: "Ambitieus" },
+  { key: "intense",         en: "Intense",         id: "Intens",              nl: "Intens" },
+  { key: "cautious",        en: "Cautious",        id: "Berhati-hati",        nl: "Voorzichtig" },
+  { key: "analytical",      en: "Analytical",      id: "Analitis",            nl: "Analytisch" },
+  { key: "structured",      en: "Structured",      id: "Terstruktur",         nl: "Gestructureerd" },
+  { key: "intuitive",       en: "Intuitive",       id: "Intuitif",            nl: "Intuïtief" },
+  { key: "entrepreneurial", en: "Entrepreneurial", id: "Wirausahawan",        nl: "Ondernemend" },
+  { key: "direct",          en: "Direct",          id: "Blak-blakan",         nl: "Rechtdoorzee" },
+];
+
+const BIBLICAL_ANCHORS: Record<string, {
+  en_title: string; id_title: string; nl_title: string;
+  en_text: string; id_text: string; nl_text: string;
+}> = {
+  open: {
+    en_title: "Paul — the Open leader",
+    id_title: "Paulus — pemimpin yang Terbuka",
+    nl_title: "Paulus — de Open leider",
+    en_text: "Paul was one of the most self-disclosing leaders in the New Testament. He named his weakness openly — a 'thorn in the flesh' he could not remove. He called himself 'the chief of sinners'. He wrote about his inner conflict with unflinching honesty. This was not self-pity. It was deliberate openness — turning vulnerability into a doorway for others. His Arena was large, not because he had nothing to hide, but because he believed that honesty disarms shame and builds trust in ways that polished leadership never can.",
+    id_text: "Paulus adalah salah satu pemimpin yang paling terbuka dalam Perjanjian Baru. Ia menyebutkan kelemahannya secara terbuka — 'duri dalam daging' yang tidak bisa dihilangkan. Ia menyebut dirinya 'yang paling utama di antara orang-orang berdosa'. Ia menulis tentang konflik batinnya dengan kejujuran yang tak tergoyahkan. Ini bukan ratapan diri. Ini adalah keterbukaan yang disengaja — mengubah kelemahannya menjadi pintu bagi orang lain. Arenanya besar, bukan karena tidak ada yang disembunyikan, tetapi karena ia percaya bahwa kejujuran melucuti rasa malu dan membangun kepercayaan dengan cara yang tidak bisa dilakukan kepemimpinan yang sempurna.",
+    nl_text: "Paulus was een van de meest zelfonthullende leiders in het Nieuwe Testament. Hij noemde zijn zwakheid openlijk — een 'doorn in het vlees' die hij niet kon verwijderen. Hij noemde zichzelf 'de voornaamste der zondaren'. Hij schreef over zijn innerlijk conflict met meedogenloze eerlijkheid. Dit was geen zelfmedelijden. Het was bewuste openheid — zijn kwetsbaarheid omzetten in een deur voor anderen. Zijn Arena was groot, niet omdat hij niets te verbergen had, maar omdat hij geloofde dat eerlijkheid schaamte ontwapent en vertrouwen opbouwt op manieren die gepolijst leiderschap nooit kan.",
+  },
+  blind: {
+    en_title: "David & Nathan — the gift of the mirror",
+    id_title: "Daud & Natan — anugerah cermin",
+    nl_title: "David & Nathan — het geschenk van de spiegel",
+    en_text: "David was a king who could not see what everyone else could. His affair with Bathsheba, the arranged death of Uriah — he had rationalised it all. It took a prophet with a story about a stolen lamb to break through. When Nathan said 'You are the man,' David did not defend himself. He did not deflect, manage the narrative, or remove Nathan from his inner circle. He said simply: 'I have sinned against the Lord.' The blind spot was exposed. The response made all the difference. The leader who cannot receive the mirror is the leader who cannot grow.",
+    id_text: "Daud adalah raja yang tidak dapat melihat apa yang dapat dilihat semua orang. Perselingkuhannya dengan Batsyeba, kematian Uria yang direncanakan — ia telah merasionalisasi semuanya. Diperlukan seorang nabi dengan cerita tentang seekor domba yang dicuri untuk menembus pertahanannya. Ketika Natan berkata 'Engkaulah orang itu,' Daud tidak membela diri. Ia tidak mengalihkan, mengelola narasi, atau mengeluarkan Natan dari lingkaran dalamnya. Ia berkata dengan sederhana: 'Aku telah berdosa kepada TUHAN.' Titik butanya terungkap. Responnya membuat semua perbedaan. Pemimpin yang tidak dapat menerima cermin adalah pemimpin yang tidak dapat bertumbuh.",
+    nl_text: "David was een koning die niet kon zien wat iedereen anders kon. Zijn affaire met Batseba, de geregelde dood van Uria — hij had het allemaal gerationaliseerd. Er was een profeet nodig met een verhaal over een gestolen lam om door te breken. Toen Nathan zei 'U bent die man,' verdedigde David zichzelf niet. Hij week niet uit, beheerde het verhaal niet, of verwijderde Nathan niet uit zijn innerlijke kring. Hij zei eenvoudig: 'Ik heb gezondigd tegen de HEER.' De blinde vlek was onthuld. De reactie maakte alle verschil. De leider die de spiegel niet kan ontvangen is de leider die niet kan groeien.",
+  },
+  hidden: {
+    en_title: "Peter at the fire — restored, not exposed",
+    id_title: "Petrus di perapian — dipulihkan, bukan dipermalukan",
+    nl_title: "Petrus bij het vuur — hersteld, niet ontmaskerd",
+    en_text: "Peter's denial was the most public failure of the inner circle. Three times, beside a fire, he said he did not know Jesus. He hid — not just his fear, but his love, his commitment, his identity. When Jesus restored him at the lakeside, he did not do it before the crowd. He asked three quiet questions, one for each denial. Not to expose Peter, but to heal him. The pattern matters: what is Hidden should not be forced into the open. It surfaces best in safety, in genuine relationship, when the one asking truly wants your flourishing.",
+    id_text: "Penyangkalan Petrus adalah kegagalan paling publik dari lingkaran dalam. Tiga kali, di samping api, ia berkata tidak mengenal Yesus. Ia menyembunyikan — bukan hanya ketakutannya, tetapi juga kasihnya, komitmennya, identitasnya. Ketika Yesus memulihkannya di tepi danau, Ia tidak melakukannya di depan orang banyak. Ia mengajukan tiga pertanyaan yang tenang, satu untuk setiap penyangkalan. Bukan untuk mempermalukan Petrus, tetapi untuk menyembuhkannya. Polanya penting: apa yang Tersembunyi tidak boleh dipaksakan ke permukaan. Ia paling baik muncul dalam keamanan, dalam hubungan yang tulus, ketika orang yang bertanya benar-benar menginginkan kemakmuran Anda.",
+    nl_text: "Petrus' verloochening was het meest publieke falen van de innerlijke kring. Drie keer, bij een vuur, zei hij Jezus niet te kennen. Hij verborg — niet alleen zijn angst, maar ook zijn liefde, zijn toewijding, zijn identiteit. Toen Jezus hem herstelde aan het meer, deed hij dat niet voor de menigte. Hij stelde drie stille vragen, één voor elke verloochening. Niet om Petrus te ontmaskeren, maar om hem te genezen. Het patroon is belangrijk: wat Verborgen is moet niet worden gedwongen naar buiten. Het komt het beste naar boven in veiligheid, in echte relatie, wanneer de vragende persoon oprecht jouw bloei wil.",
+  },
+  unknown: {
+    en_title: "Abraham leaving Ur — faith into the Unknown",
+    id_title: "Abraham meninggalkan Ur — iman menuju yang Tidak Diketahui",
+    nl_title: "Abraham verlaat Ur — geloof in het Onbekende",
+    en_text: "Abraham left Ur without knowing where he was going. Hebrews 11 is explicit: 'He went out, not knowing where he was going.' The Unknown was not a problem to solve before departure — it was the terrain of faith itself. Every leader has a pane of self that has not yet been tested, gifts not yet summoned, strengths not yet called upon. Cross-cultural displacement is one of God's most reliable tools for shrinking the Unknown: it strips the familiar scaffolding and shows you who you are underneath. What God calls you into will always exceed what you can map in advance.",
+    id_text: "Abraham meninggalkan Ur tanpa mengetahui ke mana ia pergi. Ibrani 11 dengan jelas menyatakannya: 'Ia pergi, dan ia tidak tahu ke mana ia pergi.' Yang Tidak Diketahui bukanlah masalah yang harus diselesaikan sebelum berangkat — itu adalah medan iman itu sendiri. Setiap pemimpin memiliki aspek diri yang belum pernah diuji, karunia yang belum dipanggil, kekuatan yang belum digunakan. Perpindahan lintas budaya adalah salah satu alat Allah yang paling andal untuk menyusutkan yang Tidak Diketahui: ia melepas perancah yang familiar dan menunjukkan siapa Anda sebenarnya di dalamnya. Apa yang Allah panggil Anda ke dalamnya akan selalu melampaui apa yang dapat Anda petakan sebelumnya.",
+    nl_text: "Abraham verliet Ur zonder te weten waar hij heen ging. Hebreeën 11 is expliciet: 'Hij ging weg, zonder te weten waar hij heen ging.' Het Onbekende was geen probleem om op te lossen vóór vertrek — het was het terrein van het geloof zelf. Elke leider heeft een deel van zichzelf dat nog niet getest is, gaven die nog niet zijn opgeroepen, krachten die nog niet zijn aangesproken. Interculturele verplaatsing is een van Gods meest betrouwbare instrumenten om het Onbekende te verkleinen: het verwijdert de vertrouwde steigers en laat zien wie je daaronder bent. Waartoe God je roept zal altijd verder gaan dan wat je van tevoren kunt in kaart brengen.",
+  },
+};
+
 type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function JohariWindowClient({ userPathway, isSaved: initialSaved }: Props) {
@@ -129,6 +210,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
   const [isPending, startTransition] = useTransition();
   const [activePane, setActivePane] = useState<string | null>(null);
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [selectedAdjectives, setSelectedAdjectives] = useState<Set<string>>(new Set());
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
   const showSave = userPathway !== null;
   const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
@@ -141,7 +223,19 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
     });
   }
 
+  function toggleAdjective(key: string) {
+    setSelectedAdjectives(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+  }
+
   const selected = activePane ? PANES.find(p => p.key === activePane) ?? null : null;
+
+  const hasSelections = selectedAdjectives.size > 0;
+  const openRowH = hasSelections ? Math.max(80, Math.round((selectedAdjectives.size / ADJECTIVES.length) * 360)) : 180;
+  const hiddenRowH = hasSelections ? Math.max(80, Math.round(((ADJECTIVES.length - selectedAdjectives.size) / ADJECTIVES.length) * 360)) : 180;
 
   return (
     <>
@@ -227,11 +321,11 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
                         cursor: "pointer",
                         padding: "clamp(1.5rem, 4vw, 2.5rem)",
                         textAlign: "left",
-                        minHeight: "clamp(120px, 18vw, 180px)",
+                        minHeight: pane.row === 0 ? openRowH : hiddenRowH,
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "flex-end",
-                        transition: "all 0.15s ease",
+                        transition: "all 0.15s ease, min-height 0.4s ease",
                         position: "relative",
                       }}
                     >
@@ -255,6 +349,74 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(60% 0.04 260)", textAlign: "center", marginTop: "1.5rem", fontStyle: "italic" }}>
               {t("Select any quadrant to explore it.", "Pilih kuadran mana pun untuk menjelajahinya.", "Selecteer een kwadrant om het te verkennen.")}
             </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── SELF-DISCLOSURE EXERCISE ── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
+        <div className="container-wide">
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
+            {t("Exercise · The Open Pane", "Latihan · Pane Terbuka", "Oefening · Het Open Venster")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
+            {t("What would you own?", "Apa yang akan Anda akui?", "Wat zou jij erkennen?")}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", maxWidth: "62ch", marginBottom: "2rem" }}>
+            {t(
+              "Select the adjectives that honestly describe your leadership — the ones you'd be willing to name with your team. Your Open pane expands above as you choose. What you leave unselected forms your Hidden pane: things you know about yourself but haven't yet shared.",
+              "Pilih kata sifat yang jujur menggambarkan kepemimpinan Anda — yang bersedia Anda sebut bersama tim Anda. Pane Terbuka Anda meluas di atas seiring pilihan Anda. Yang tidak Anda pilih membentuk pane Tersembunyi: hal yang Anda ketahui tentang diri sendiri tetapi belum Anda bagikan.",
+              "Selecteer de bijvoeglijke naamwoorden die uw leiderschap eerlijk beschrijven — de woorden die u bereid bent te benoemen bij uw team. Uw Open venster breidt zich hierboven uit terwijl u kiest. Wat u niet selecteert, vormt uw Verborgen venster: dingen die u over uzelf weet maar nog niet hebt gedeeld.",
+            )}
+          </p>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "2rem" }}>
+            {ADJECTIVES.map(adj => {
+              const isSelected = selectedAdjectives.has(adj.key);
+              const label = lang === "en" ? adj.en : lang === "id" ? adj.id : adj.nl;
+              return (
+                <button
+                  key={adj.key}
+                  onClick={() => toggleAdjective(adj.key)}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.8rem",
+                    fontWeight: isSelected ? 700 : 500,
+                    padding: "0.375rem 0.875rem",
+                    border: `1.5px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(78% 0.04 260)"}`,
+                    background: isSelected ? "oklch(65% 0.15 45 / 0.14)" : "oklch(97% 0.005 80)",
+                    color: isSelected ? "oklch(40% 0.12 45)" : "oklch(40% 0.05 260)",
+                    cursor: "pointer",
+                    borderRadius: "3px",
+                    transition: "all 0.12s ease",
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          {hasSelections && (
+            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(48% 0.08 260)", margin: 0 }}>
+                <strong style={{ color: "oklch(40% 0.12 45)" }}>{selectedAdjectives.size}</strong>
+                {" / "}{ADJECTIVES.length}
+                {" — "}
+                {t("your Open pane is expanding above.", "pane Terbuka Anda meluas di atas.", "uw Open venster breidt zich hierboven uit.")}
+              </p>
+              {showSave && (
+                saved ? (
+                  <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
+                    ✓ {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
+                  </Link>
+                ) : (
+                  <button onClick={handleSave} disabled={isPending} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", background: isPending ? "oklch(40% 0.10 260)" : "oklch(30% 0.12 260)", border: "none", padding: "0.5rem 1.125rem", cursor: isPending ? "wait" : "pointer" }}>
+                    {isPending ? t("Saving…", "Menyimpan…", "Opslaan…") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                  </button>
+                )
+              )}
+            </div>
           )}
         </div>
       </section>
@@ -303,6 +465,19 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Biblical Anchor */}
+            <div style={{ marginTop: "2.5rem", borderTop: `2px solid ${selected.color}30`, paddingTop: "2rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: selected.color, marginBottom: "0.5rem" }}>
+                {t("Biblical Anchor", "Jangkar Alkitab", "Bijbels Anker")}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(38% 0.05 260)", marginBottom: "1rem" }}>
+                {lang === "en" ? BIBLICAL_ANCHORS[selected.key].en_title : lang === "id" ? BIBLICAL_ANCHORS[selected.key].id_title : BIBLICAL_ANCHORS[selected.key].nl_title}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.075rem", fontStyle: "italic", lineHeight: 1.72, color: "oklch(32% 0.08 260)", maxWidth: "72ch", margin: 0 }}>
+                {lang === "en" ? BIBLICAL_ANCHORS[selected.key].en_text : lang === "id" ? BIBLICAL_ANCHORS[selected.key].id_text : BIBLICAL_ANCHORS[selected.key].nl_text}
+              </p>
             </div>
           </div>
         </section>
