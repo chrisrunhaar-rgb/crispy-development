@@ -10,6 +10,16 @@ type Lang = "en" | "id" | "nl";
 const tFn = (en: string, id: string, nl: string, lang: Lang) =>
   lang === "en" ? en : lang === "id" ? id : nl;
 
+type SectionProps = {
+  lang: Lang;
+  t: (en: string, id: string, nl: string) => string;
+  orange: string;
+  navy: string;
+  offWhite: string;
+  lightGray: string;
+  bodyText: string;
+};
+
 // ─── Country PD Scores ────────────────────────────────────────────────────────
 const pdScores = [
   { country_en: "Malaysia", country_id: "Malaysia", country_nl: "Maleisië", score: 104, level: "high" },
@@ -187,6 +197,260 @@ const reflectionQuestions = [
     en: "In what ways might your current leadership style be creating confusion or anxiety in your team — without you realising it?",
     id: "Dengan cara apa gaya kepemimpinan Anda saat ini mungkin menciptakan kebingungan atau kecemasan dalam tim Anda — tanpa Anda sadari?",
     nl: "Op welke manieren kan je huidige leiderschapsstijl verwarring of angst in je team creëren — zonder dat je het beseft?",
+  },
+];
+
+// ─── Hofstede Limitation Cards (Section A) ────────────────────────────────────
+const hofstedeLimitations = [
+  {
+    number: "1",
+    title: { en: "The IBM study", id: "Studi IBM", nl: "Het IBM-onderzoek" },
+    body: {
+      en: "Hofstede's data comes from IBM employees surveyed between 1967 and 1973. The sample was large — 117,000 people across 50+ countries — but drawn entirely from a single multinational corporation. IBM employees may not represent their broader home cultures. Brendan McSweeney's 2002 critique in Human Relations remains one of the strongest: the sample was structurally biased and some countries had fewer than 200 respondents.",
+      id: "Data Hofstede berasal dari karyawan IBM yang disurvei antara tahun 1967 dan 1973. Sampelnya besar — 117.000 orang di lebih dari 50 negara — tetapi semuanya diambil dari satu perusahaan multinasional. Karyawan IBM mungkin tidak mewakili budaya asal mereka secara lebih luas. Kritik Brendan McSweeney tahun 2002 dalam Human Relations tetap menjadi salah satu yang paling kuat: sampelnya bias secara struktural dan beberapa negara memiliki kurang dari 200 responden.",
+      nl: "Hofstede's data is afkomstig van IBM-medewerkers die werden ondervraagd tussen 1967 en 1973. De steekproef was groot — 117.000 mensen in meer dan 50 landen — maar volledig afkomstig van één multinational. IBM-medewerkers vertegenwoordigen mogelijk niet hun bredere thuisculturen. Brendan McSweeney's kritiek uit 2002 in Human Relations blijft een van de sterkste: de steekproef was structureel bevooroordeeld en sommige landen hadden minder dan 200 respondenten.",
+    },
+  },
+  {
+    number: "2",
+    title: { en: "Scores change", id: "Skor berubah", nl: "Scores veranderen" },
+    body: {
+      en: "Hofstede's core data is over fifty years old. Power Distance scores drift as cultures develop economically and politically. South Korea, for example, has shown declining PD over recent decades as democratic institutions have strengthened and younger generations have entered leadership roles. The bar chart above is a useful baseline — not a current reading.",
+      id: "Data inti Hofstede sudah lebih dari lima puluh tahun. Skor Jarak Kekuasaan bergeser seiring berkembangnya budaya secara ekonomi dan politik. Korea Selatan, misalnya, telah menunjukkan penurunan PD selama beberapa dekade terakhir seiring menguatnya institusi demokratis dan masuknya generasi muda ke peran kepemimpinan. Bagan batang di atas adalah dasar yang berguna — bukan pembacaan terkini.",
+      nl: "Hofstede's kerndata is meer dan vijftig jaar oud. PDI-scores verschuiven naarmate culturen zich economisch en politiek ontwikkelen. Zuid-Korea heeft de afgelopen decennia bijvoorbeeld een dalende PD laten zien, doordat democratische instellingen zijn versterkt en jongere generaties leiderschapsrollen zijn gaan vervullen. De bovenstaande staafdiagram is een nuttige uitgangswaarde — geen actuele meting.",
+    },
+  },
+  {
+    number: "3",
+    title: { en: "Within-country variation", id: "Variasi dalam negara", nl: "Variatie binnen landen" },
+    body: {
+      en: "A young, university-educated professional in Jakarta may operate at a much lower personal PD than the Indonesian national average. A traditional farmer in rural Friesland may operate at higher PD than the Dutch national average. The PDI chart is a starting hypothesis about an individual — not a verdict.",
+      id: "Seorang profesional muda berpendidikan universitas di Jakarta mungkin beroperasi pada PD pribadi yang jauh lebih rendah dari rata-rata nasional Indonesia. Seorang petani tradisional di pedesaan mungkin beroperasi pada PD yang lebih tinggi dari rata-rata nasional. Bagan PDI adalah hipotesis awal tentang seseorang — bukan vonis.",
+      nl: "Een jonge, universitair opgeleide professional in Jakarta kan op een veel lager persoonlijk PD-niveau opereren dan het Indonesisch nationaal gemiddelde. Een traditionele boer op het platteland kan op een hoger PD-niveau opereren dan het Nederlands nationaal gemiddelde. De PDI-grafiek is een beginshypothese over een individu — geen eindoordeel.",
+    },
+  },
+];
+
+// ─── GLOBE Power Distance Scores (Section B) ──────────────────────────────────
+// Source: House et al., The GLOBE Study of 62 Societies (2004). Scale 1–7.
+const globeScores = [
+  { country: { en: "Philippines", id: "Filipina", nl: "Filipijnen" }, asIs: 5.44, shouldBe: 2.64 },
+  { country: { en: "South Korea", id: "Korea Selatan", nl: "Zuid-Korea" }, asIs: 5.61, shouldBe: 2.55 },
+  { country: { en: "Indonesia", id: "Indonesia", nl: "Indonesië" }, asIs: 5.18, shouldBe: 2.49 },
+  { country: { en: "Australia", id: "Australia", nl: "Australië" }, asIs: 4.74, shouldBe: 2.49 },
+  { country: { en: "United States", id: "Amerika Serikat", nl: "Verenigde Staten" }, asIs: 4.88, shouldBe: 2.85 },
+  { country: { en: "Netherlands", id: "Belanda", nl: "Nederland" }, asIs: 4.11, shouldBe: 2.76 },
+];
+
+// ─── Adjacent Frameworks (Section B) ─────────────────────────────────────────
+const meyerFramework = {
+  title: { en: "Erin Meyer: Leading vs Deciding Are Not the Same", id: "Erin Meyer: Memimpin vs Memutuskan Itu Berbeda", nl: "Erin Meyer: Leiden en Beslissen zijn niet hetzelfde" },
+  label: { en: "The Culture Map", id: "Peta Budaya", nl: "De Cultuurkaart" },
+  body: {
+    en: "Erin Meyer's framework maps cultural difference along eight scales. Two are most relevant here. The Leading scale runs from egalitarian to hierarchical — built directly on Hofstede's PDI and GLOBE data. The Deciding scale runs from consensual to top-down. They are not the same thing, and many cultures fall in unexpected combinations. Germans are more hierarchical than Americans on the Leading scale — but more consensual on the Deciding scale. Japan is famously hierarchical and deeply consensual at the same time: the ringi system requires consensus-building at lower levels before proposals ever reach senior leaders. This second-axis nuance is often exactly what cross-cultural leaders are missing.",
+    id: "Kerangka kerja Erin Meyer memetakan perbedaan budaya di sepanjang delapan skala. Dua yang paling relevan di sini. Skala Memimpin membentang dari egaliter hingga hierarkis — dibangun langsung berdasarkan PDI Hofstede dan data GLOBE. Skala Memutuskan membentang dari konsensual hingga top-down. Keduanya bukan hal yang sama, dan banyak budaya jatuh dalam kombinasi yang tak terduga. Jerman lebih hierarkis dari Amerika pada skala Memimpin — tetapi lebih konsensual pada skala Memutuskan. Jepang secara terkenal hierarkis sekaligus sangat konsensual: sistem ringi mengharuskan pembangunan konsensus di tingkat bawah sebelum usulan mencapai pemimpin senior.",
+    nl: "Erin Meyers raamwerk brengt culturele verschillen in kaart langs acht schalen. Twee zijn hier het meest relevant. De Leading-schaal loopt van egalitair naar hiërarchisch — direct gebouwd op Hofstede's PDI en GLOBE-data. De Deciding-schaal loopt van consensueel naar top-down. Ze zijn niet hetzelfde, en veel culturen vallen in onverwachte combinaties. Duitsers zijn hiërarchischer dan Amerikanen op de Leading-schaal — maar meer consensueel op de Deciding-schaal. Japan is beroemd hiërarchisch en tegelijkertijd diep consensueel: het ringi-systeem vereist consensusvorming op lagere niveaus voordat voorstellen ooit bij senior leiders terechtkomen.",
+  },
+  implication: {
+    en: "Before assuming a high-PD team wants top-down decisions, check where they sit on the Deciding scale. A leader can be high-PD without being top-down on decisions — or low-PD without being consensual. The combination may surprise you.",
+    id: "Sebelum mengasumsikan tim PD tinggi menginginkan keputusan top-down, periksa posisi mereka pada skala Memutuskan. Seorang pemimpin bisa PD tinggi tanpa bersifat top-down dalam keputusan — atau PD rendah tanpa konsensual. Kombinasinya mungkin mengejutkan Anda.",
+    nl: "Controleer, voordat je aanneemt dat een hoge-PD-team top-down beslissingen wil, waar ze staan op de Deciding-schaal. Een leider kan hoge-PD zijn zonder top-down in beslissingen te zijn — of lage-PD zonder consensueel te zijn. De combinatie kan je verrassen.",
+  },
+};
+
+const hallFramework = {
+  title: { en: "Edward Hall: Why Direct Communication Backfires", id: "Edward Hall: Mengapa Komunikasi Langsung Bisa Berbalik Merugikan", nl: "Edward Hall: Waarom directe communicatie averechts werkt" },
+  label: { en: "High-Context Communication", id: "Komunikasi Konteks Tinggi", nl: "Hoge-Contextcommunicatie" },
+  body: {
+    en: "Edward Hall's framework (Beyond Culture, 1976) addresses communication rather than authority directly — but the two interact powerfully. Most high-PD cultures are also high-context: critical information is communicated indirectly, through tone, timing, who is in the room, and what is deliberately left unsaid. A leader who tries to flatten power distance through direct, low-context communication often makes the situation worse. The team perceives the leader as either incompetent — does she really not know what is going on? — or as forcing them into a communication style that feels disrespectful in their tradition. Direct communication without relational authority is not humility. It is confusion.",
+    id: "Kerangka kerja Edward Hall (Beyond Culture, 1976) membahas komunikasi daripada otoritas secara langsung — tetapi keduanya berinteraksi dengan kuat. Sebagian besar budaya PD tinggi juga merupakan budaya konteks tinggi: informasi penting dikomunikasikan secara tidak langsung, melalui nada, waktu, siapa yang ada di ruangan, dan apa yang sengaja tidak diucapkan. Seorang pemimpin yang mencoba meratakan jarak kekuasaan melalui komunikasi langsung dan konteks rendah sering memperburuk situasi. Tim menganggap pemimpin itu tidak kompeten — apakah dia benar-benar tidak tahu apa yang terjadi? — atau memaksakan gaya komunikasi yang terasa tidak hormat dalam tradisi mereka.",
+    nl: "Edward Halls raamwerk (Beyond Culture, 1976) richt zich op communicatie in plaats van autoriteit direct — maar de twee werken krachtig op elkaar in. De meeste hoge-PD-culturen zijn ook hoge-contextculturen: kritieke informatie wordt indirect gecommuniceerd, via toon, timing, wie er in de kamer is, en wat bewust onuitgesproken wordt gelaten. Een leider die probeert de machtafstand te verkleinen via directe, lage-contextcommunicatie maakt de situatie vaak erger. Het team ervaart de leider als incompetent — weet zij echt niet wat er speelt? — of als iemand die hen dwingt tot een communicatiestijl die in hun traditie respectloos aanvoelt.",
+  },
+  implication: {
+    en: "In high-PD and high-context cultures, how you say something — and what you leave unsaid — carries as much information as the words themselves. Building relational authority before attempting to flatten hierarchy is not optional. It is the prerequisite.",
+    id: "Dalam budaya PD tinggi dan konteks tinggi, bagaimana Anda mengatakan sesuatu — dan apa yang Anda tinggalkan tanpa diucapkan — membawa informasi sebanyak kata-kata itu sendiri. Membangun otoritas relasional sebelum mencoba meratakan hierarki bukanlah pilihan. Itu adalah prasyarat.",
+    nl: "In hoge-PD- en hoge-contextculturen draagt hoe je iets zegt — en wat je onuitgesproken laat — evenveel informatie als de woorden zelf. Relationeel gezag opbouwen voordat je probeert de hiërarchie af te vlakken is niet optioneel. Het is de voorwaarde.",
+  },
+};
+
+// ─── Research Insight Cards (Section C) ──────────────────────────────────────
+const insightCards = [
+  {
+    id: "innovation",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.2 6L15 17H9l-.8-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z" />
+      </svg>
+    ),
+    title: { en: "Innovation", id: "Inovasi", nl: "Innovatie" },
+    body: {
+      en: "Lower power distance correlates with higher organisational innovation. The leading explanation: in low-PD organisations, junior employees challenge ideas more freely, surfacing problems and improvements that high-PD organisations only discover through failure. Innovation initiatives that work in low-PD home offices often struggle in high-PD field contexts — not because the team is less creative, but because the structure does not reward speaking up.",
+      id: "Jarak kekuasaan yang lebih rendah berkorelasi dengan inovasi organisasi yang lebih tinggi. Penjelasan utamanya: dalam organisasi PD rendah, karyawan junior lebih bebas menantang ide, mengangkat masalah dan perbaikan yang hanya ditemukan organisasi PD tinggi melalui kegagalan. Inisiatif inovasi yang berhasil di kantor pusat PD rendah sering kali kesulitan dalam konteks lapangan PD tinggi — bukan karena tim kurang kreatif, tetapi karena strukturnya tidak mendorong orang untuk berbicara.",
+      nl: "Lagere machtafstand correleert met hogere organisatorische innovatie. De meest gangbare verklaring: in lage-PD-organisaties dagen junior medewerkers ideeën vrijer uit, waardoor ze problemen en verbeteringen naar boven brengen die hoge-PD-organisaties pas bij mislukking ontdekken. Innovatie-initiatieven die werken in lage-PD-hoofdkantoren hebben het vaak moeilijk in hoge-PD-veldcontexten — niet omdat het team minder creatief is, maar omdat de structuur het uiten van meningen niet beloont.",
+    },
+    implication: {
+      en: "The fix is structural, not motivational. Build channels that make speaking up safe before assuming your team has nothing to say.",
+      id: "Solusinya bersifat struktural, bukan motivasional. Bangun saluran yang membuat berbicara aman sebelum mengasumsikan tim Anda tidak memiliki apapun untuk dikatakan.",
+      nl: "De oplossing is structureel, niet motivationeel. Bouw kanalen die het uiten van meningen veilig maken voordat je ervan uitgaat dat je team niets te zeggen heeft.",
+    },
+  },
+  {
+    id: "decision-quality",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="5" /><path d="M12 3v1M12 20v1M4.2 6.2l.7.7M19.1 6.2l-.7.7M3 12h1M20 12h1M4.9 17.8l.7-.7M19.1 17.8l-.7-.7" />
+      </svg>
+    ),
+    title: { en: "Decision Quality", id: "Kualitas Keputusan", nl: "Besluitkwaliteit" },
+    body: {
+      en: "High-PD organisations are faster to decide but slower to surface problems. Low-PD organisations are slower to decide but more likely to catch errors before implementation. Neither is universally better — the right balance depends on the cost of failure. For high-stakes, low-reversal decisions — strategic, financial, medical, safety — low-PD input structures generally produce better outcomes.",
+      id: "Organisasi PD tinggi lebih cepat mengambil keputusan tetapi lebih lambat mengangkat masalah. Organisasi PD rendah lebih lambat mengambil keputusan tetapi lebih mungkin menangkap kesalahan sebelum implementasi. Tidak ada yang secara universal lebih baik — keseimbangan yang tepat bergantung pada biaya kegagalan. Untuk keputusan berisiko tinggi dan sulit dibalik — strategis, finansial, medis, keselamatan — struktur masukan PD rendah umumnya menghasilkan hasil yang lebih baik.",
+      nl: "Hoge-PD-organisaties beslissen sneller maar brengen problemen trager naar boven. Lage-PD-organisaties beslissen trager maar vangen fouten vaker op vóór de implementatie. Geen van beide is universeel beter — de juiste balans hangt af van de kosten van mislukking. Voor beslissingen met hoge inzet en lage omkeerbaarheid — strategisch, financieel, medisch, veiligheid — leveren lage-PD-inbrengstructuren doorgaans betere resultaten.",
+    },
+    implication: {
+      en: "Know the cost of being wrong before you choose your decision process. Speed is not always the asset it appears to be.",
+      id: "Ketahui biaya dari kesalahan sebelum Anda memilih proses pengambilan keputusan. Kecepatan tidak selalu menjadi aset seperti yang terlihat.",
+      nl: "Ken de kosten van een verkeerde beslissing voordat je je besluitvormingsproces kiest. Snelheid is niet altijd het voordeel dat het lijkt.",
+    },
+  },
+  {
+    id: "ethics",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" />
+      </svg>
+    ),
+    title: { en: "Ethics & Accountability", id: "Etika & Akuntabilitas", nl: "Ethiek & Verantwoording" },
+    body: {
+      en: "Higher power distance correlates with higher tolerance of corruption in cross-national studies (Husted 1999; Park 2003). This does not mean high-PD cultures are made of more corrupt people — it means high-PD structures provide less institutional friction against corruption when it occurs. For Christian organisations: safeguarding policies that depend on a junior worker reporting a senior leader's misconduct will fail predictably in high-PD environments unless the reporting channel is specifically designed to bypass the normal hierarchy.",
+      id: "Jarak kekuasaan yang lebih tinggi berkorelasi dengan toleransi korupsi yang lebih tinggi dalam studi lintas negara (Husted 1999; Park 2003). Ini bukan berarti budaya PD tinggi terdiri dari orang-orang yang lebih korup — ini berarti struktur PD tinggi memberikan gesekan institusional yang lebih sedikit terhadap korupsi ketika itu terjadi. Untuk organisasi Kristen: kebijakan perlindungan yang bergantung pada pekerja junior yang melaporkan pelanggaran pemimpin senior akan gagal secara dapat diprediksi di lingkungan PD tinggi kecuali saluran pelaporan dirancang khusus untuk melewati hierarki normal.",
+      nl: "Hogere machtafstand correleert met hogere tolerantie voor corruptie in landenvergelijkende studies (Husted 1999; Park 2003). Dit betekent niet dat hoge-PD-culturen uit meer corrupte mensen bestaan — het betekent dat hoge-PD-structuren minder institutionele weerstand bieden tegen corruptie als die zich voordoet. Voor christelijke organisaties: beschermingsbeleid dat afhankelijk is van een junior medewerker die wangedrag van een senior leider meldt, zal voorspelbaar mislukken in hoge-PD-omgevingen, tenzij het meldkanaal specifiek is ontworpen om de normale hiërarchie te omzeilen.",
+    },
+    implication: {
+      en: "Design safeguarding systems that structurally bypass hierarchy — not ones that rely on personal courage to challenge authority.",
+      id: "Rancang sistem perlindungan yang secara struktural melewati hierarki — bukan yang bergantung pada keberanian pribadi untuk menantang otoritas.",
+      nl: "Ontwerp beschermingssystemen die de hiërarchie structureel omzeilen — niet systemen die vertrouwen op persoonlijke moed om autoriteit uit te dagen.",
+    },
+  },
+  {
+    id: "leadership-effectiveness",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+      </svg>
+    ),
+    title: { en: "Leadership Effectiveness", id: "Efektivitas Kepemimpinan", nl: "Leiderschapseffectiviteit" },
+    body: {
+      en: "GLOBE research found that culturally-endorsed leadership styles vary dramatically across PD levels. In high-PD cultures, leaders are expected to be decisive, paternal, and visibly authoritative. In low-PD cultures, they are expected to be participative, accessible, and humble. The same leader can be highly effective in one context and ineffective in another — without changing their underlying behaviour. Only the cultural fit changes.",
+      id: "Penelitian GLOBE menemukan bahwa gaya kepemimpinan yang didukung secara budaya bervariasi secara dramatis di berbagai tingkat PD. Dalam budaya PD tinggi, pemimpin diharapkan tegas, kebapakan, dan terlihat berwibawa. Dalam budaya PD rendah, mereka diharapkan partisipatif, mudah diakses, dan rendah hati. Pemimpin yang sama bisa sangat efektif dalam satu konteks dan tidak efektif dalam konteks lain — tanpa mengubah perilaku dasarnya. Hanya kesesuaian budaya yang berubah.",
+      nl: "GLOBE-onderzoek toonde aan dat cultureel gesteunde leiderschapsstijlen sterk variëren per PD-niveau. In hoge-PD-culturen worden leiders verwacht besluitvaardig, vaderlijk en zichtbaar gezaghebbend te zijn. In lage-PD-culturen worden ze verwacht participatief, toegankelijk en bescheiden te zijn. Dezelfde leider kan in de ene context zeer effectief zijn en in de andere ineffectief — zonder dat het onderliggende gedrag verandert. Alleen de culturele fit verandert.",
+    },
+    implication: {
+      en: "If you feel you are doing the same thing you always did and getting a different reception — you probably are. The context changed, not you. Diagnose the cultural fit before diagnosing yourself.",
+      id: "Jika Anda merasa melakukan hal yang sama seperti biasa tetapi mendapat respons yang berbeda — kemungkinan besar memang begitu. Konteksnya yang berubah, bukan Anda. Diagnosis kesesuaian budaya sebelum mendiagnosis diri sendiri.",
+      nl: "Als je het gevoel hebt dat je hetzelfde doet als altijd maar een andere ontvangst krijgt — klopt dat waarschijnlijk. De context is veranderd, niet jij. Diagnosticeer de culturele fit voordat je jezelf diagnosticeert.",
+    },
+  },
+];
+
+// ─── Book Cards (Section E) ───────────────────────────────────────────────────
+const books = [
+  {
+    title: "Playing God: Redeeming the Gift of Power",
+    author: "Andy Crouch",
+    year: "2013",
+    publisher: "IVP Books",
+    hook: {
+      en: "Power is a gift from God — created good, profoundly corrupted, and entirely redeemable.",
+      id: "Kekuasaan adalah karunia dari Allah — diciptakan baik, sangat rusak, dan sepenuhnya dapat ditebus.",
+      nl: "Macht is een gave van God — goed geschapen, diep gecorrumpeerd, en volledig te verlossen.",
+    },
+    description: {
+      en: "Crouch argues that the work of Christian leadership is to redeem power — not reject it. He distinguishes power-over (coercive) from power-for (creative, generative). For a cross-cultural leader operating in a high-PD context, this framework lets you hold real authority without flinching — because authority itself is not the problem. Its direction is.",
+      id: "Crouch berpendapat bahwa pekerjaan kepemimpinan Kristen adalah menebus kekuasaan — bukan menolaknya. Ia membedakan kekuasaan-atas (koersif) dari kekuasaan-untuk (kreatif, generatif). Bagi pemimpin lintas budaya yang beroperasi dalam konteks PD tinggi, kerangka ini memungkinkan Anda memegang otoritas nyata tanpa ragu — karena otoritas itu sendiri bukan masalahnya. Arahnyalah yang menjadi masalah.",
+      nl: "Crouch betoogt dat het werk van christelijk leiderschap is om macht te verlossen — niet te verwerpen. Hij maakt onderscheid tussen macht-over (dwangmatig) en macht-voor (creatief, generatief). Voor een interculturele leider in een hoge-PD-context laat dit kader je echte autoriteit vasthouden zonder te aarzelen — want autoriteit zelf is niet het probleem. De richting ervan is het.",
+    },
+    why: {
+      en: "The most thorough Christian theology of power written this century.",
+      id: "Teologi Kristen tentang kekuasaan yang paling komprehensif yang ditulis abad ini.",
+      nl: "De meest grondige christelijke theologie van macht die deze eeuw is geschreven.",
+    },
+  },
+  {
+    title: "In the Name of Jesus: Reflections on Christian Leadership",
+    author: "Henri Nouwen",
+    year: "1989",
+    publisher: "Crossroad Publishing",
+    hook: {
+      en: "The three temptations of Christian leadership are relevance, popularity, and power.",
+      id: "Tiga godaan kepemimpinan Kristen adalah relevansi, popularitas, dan kekuasaan.",
+      nl: "De drie verleidingen van christelijk leiderschap zijn relevantie, populariteit en macht.",
+    },
+    description: {
+      en: "Nouwen wrote this short book after leaving Harvard Divinity School to live with people with intellectual disabilities at L'Arche Daybreak. He argues that the leader's task is to descend — into prayer, ministry-as-vulnerability, and theological reflection. One hundred pages. One of the most quoted leadership texts of the last forty years.",
+      id: "Nouwen menulis buku pendek ini setelah meninggalkan Harvard Divinity School untuk tinggal bersama orang-orang dengan disabilitas intelektual di L'Arche Daybreak. Ia berpendapat bahwa tugas pemimpin adalah turun — ke dalam doa, pelayanan-sebagai-kerentanan, dan refleksi teologis. Seratus halaman. Salah satu teks kepemimpinan yang paling banyak dikutip selama empat puluh tahun terakhir.",
+      nl: "Nouwen schreef dit korte boek nadat hij Harvard Divinity School had verlaten om te leven met mensen met een verstandelijke beperking bij L'Arche Daybreak. Hij betoogt dat de taak van de leider is om te dalen — in gebed, bediening-als-kwetsbaarheid, en theologische reflectie. Honderd pagina's. Een van de meest geciteerde leiderschapsteksten van de afgelopen veertig jaar.",
+    },
+    why: {
+      en: "Read it twice.",
+      id: "Baca dua kali.",
+      nl: "Lees het twee keer.",
+    },
+  },
+  {
+    title: "Money, Sex, and Power",
+    author: "Richard Foster",
+    year: "1985",
+    publisher: "HarperOne",
+    hook: {
+      en: "Three forces shape every Christian leader's life — and power is the one we talk about least.",
+      id: "Tiga kekuatan membentuk kehidupan setiap pemimpin Kristen — dan kekuasaan adalah yang paling jarang kita bicarakan.",
+      nl: "Drie krachten bepalen het leven van elke christelijke leider — en macht is degene waarover we het minst spreken.",
+    },
+    description: {
+      en: "Foster distinguishes manipulative power from ministering power and offers concrete spiritual disciplines that protect a leader from drift toward control. His chapter on power is direct, scriptural, and practical. A classic that holds up.",
+      id: "Foster membedakan kekuasaan manipulatif dari kekuasaan melayani dan menawarkan disiplin rohani konkret yang melindungi pemimpin dari pergeseran menuju kontrol. Bab tentang kekuasaannya langsung, berdasarkan Alkitab, dan praktis. Sebuah klasik yang tetap relevan.",
+      nl: "Foster maakt onderscheid tussen manipulatieve macht en dienende macht en biedt concrete geestelijke disciplines die een leider beschermen tegen wegdrijven richting controle. Zijn hoofdstuk over macht is direct, schriftuurlijk en praktisch. Een klassieker die standhoudt.",
+    },
+    why: {
+      en: "Especially for leaders who feel uncomfortable with their own authority.",
+      id: "Terutama bagi pemimpin yang merasa tidak nyaman dengan otoritas mereka sendiri.",
+      nl: "Vooral voor leiders die zich ongemakkelijk voelen bij hun eigen autoriteit.",
+    },
+  },
+];
+
+// ─── Reading List (Section F) ─────────────────────────────────────────────────
+const readingList = [
+  {
+    title: "Cultures and Organizations: Software of the Mind",
+    authoryear: "Hofstede, Hofstede & Minkov — 3rd ed., 2010",
+    description: {
+      en: "The accessible single volume covering all six Hofstede dimensions.",
+      id: "Volume tunggal yang mudah dipahami yang mencakup semua enam dimensi Hofstede.",
+      nl: "Het toegankelijke standaardwerk dat alle zes Hofstede-dimensies behandelt.",
+    },
+    url: null,
+  },
+  {
+    title: "The Culture Map",
+    authoryear: "Erin Meyer — 2014",
+    description: {
+      en: "The most practitioner-friendly framework for cross-cultural leadership — pairs well with Hofstede.",
+      id: "Kerangka paling ramah bagi praktisi untuk kepemimpinan lintas budaya — sangat cocok dipadukan dengan Hofstede.",
+      nl: "Het meest praktijkgerichte kader voor intercultureel leiderschap — past goed bij Hofstede.",
+    },
+    url: null,
+  },
+  {
+    title: "The GLOBE Study of 62 Societies",
+    authoryear: "House et al. — 2004",
+    description: {
+      en: "The full GLOBE research results, including the As Is vs Should Be findings across 62 cultures.",
+      id: "Hasil penelitian GLOBE lengkap, termasuk temuan As Is vs Should Be di 62 budaya.",
+      nl: "De volledige GLOBE-onderzoeksresultaten, inclusief de As Is vs Should Be-bevindingen in 62 culturen.",
+    },
+    url: "https://globeproject.com",
   },
 ];
 
@@ -394,6 +658,259 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
         <p style={{ fontSize: 12, color: "oklch(60% 0.04 260)", fontStyle: "italic", marginBottom: 0 }}>
           {t("Source: Hofstede Insights. Scale 0–104.", "Sumber: Hofstede Insights. Skala 0–104.", "Bron: Hofstede Insights. Schaal 0–104.")}
         </p>
+
+        {/* ─── SECTION A: Going Deeper — Full Hofstede Picture ─────────────── */}
+        <div style={{ height: 1, background: "oklch(90% 0.01 80)", margin: "52px 0 52px" }} />
+
+        <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+          {t("The Framework — Deeper", "Kerangka Kerja — Lebih Dalam", "Het Kader — Dieper")}
+        </p>
+
+        <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+          {t("Going Deeper: The Full Hofstede Picture", "Lebih Dalam: Gambaran Lengkap Hofstede", "Dieper gaan: Het volledige Hofstede-beeld")}
+        </h2>
+
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+          {t(
+            "Power Distance is the most cited of Hofstede's dimensions — but it is one of six. Knowing the others matters because they interact. The six dimensions are: Power Distance (PDI), Individualism vs Collectivism (IDV), Masculinity vs Femininity (MAS), Uncertainty Avoidance (UAI), Long-Term vs Short-Term Orientation (LTO), and Indulgence vs Restraint (IVR).",
+            "Jarak Kekuasaan adalah dimensi Hofstede yang paling banyak dikutip — tetapi hanya satu dari enam. Mengetahui yang lain penting karena mereka saling berinteraksi. Keenam dimensinya adalah: Jarak Kekuasaan (PDI), Individualisme vs Kolektivisme (IDV), Maskulinitas vs Feminitas (MAS), Penghindaran Ketidakpastian (UAI), Orientasi Jangka Panjang vs Jangka Pendek (LTO), dan Indulgensi vs Pengekangan (IVR).",
+            "Machtafstand is de meest geciteerde dimensie van Hofstede — maar het is er slechts één van zes. De andere kennen is belangrijk omdat ze met elkaar wisselwerken. De zes dimensies zijn: Machtafstand (PDI), Individualisme vs Collectivisme (IDV), Masculiniteit vs Femininiteit (MAS), Onzekerheidsvermijding (UAI), Lange- vs Kortetermijnoriëntatie (LTO), en Inschikkelijkheid vs Beheersing (IVR)."
+          )}
+        </p>
+
+        <div style={{ background: "oklch(97% 0.012 45)", borderLeft: `4px solid ${orange}`, borderRadius: "0 8px 8px 0", padding: "24px 28px", marginBottom: 40 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("Key Insight", "Wawasan Utama", "Kernbevinding")}
+          </p>
+          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, margin: 0 }}>
+            {t(
+              "For cross-cultural Christian leaders, the most important pairing is Power Distance plus Individualism. Most Asian, sub-Saharan African, Latin American, and Middle Eastern cultures cluster high-PD and collectivist. Most Northern European, North American, Australian, and New Zealand cultures cluster low-PD and individualist. The compound effect explains why a Western leader moving into an Indonesian or Philippine team is rarely struggling with one dimension — it is high PD plus high collectivism together that shapes what the team expects from authority.",
+              "Bagi pemimpin Kristen lintas budaya, pasangan terpenting adalah Jarak Kekuasaan ditambah Individualisme. Sebagian besar budaya Asia, Afrika Sub-Sahara, Amerika Latin, dan Timur Tengah terkelompok tinggi-PD dan kolektivis. Sebagian besar budaya Eropa Utara, Amerika Utara, Australia, dan Selandia Baru terkelompok rendah-PD dan individualis. Efek gabungan inilah yang menjelaskan mengapa pemimpin Barat yang masuk ke tim Indonesia atau Filipina jarang berjuang dengan satu dimensi saja — justru PD tinggi ditambah kolektivisme tinggi bersama-sama yang membentuk apa yang diharapkan tim dari otoritas.",
+              "Voor interculturele christelijke leiders is de belangrijkste combinatie Machtafstand plus Individualisme. De meeste Aziatische, sub-Saharaanse Afrikaanse, Latijns-Amerikaanse en Midden-Oosterse culturen clusteren hoge PD en collectivistisch. De meeste Noord-Europese, Noord-Amerikaanse, Australische en Nieuw-Zeelandse culturen clusteren lage PD en individualistisch. Het samengestelde effect verklaart waarom een westerse leider die een Indonesisch of Filipijns team binnenstapt zelden met één dimensie worstelt — het is hoge PD plus hoog collectivisme sámen dat bepaalt wat het team van autoriteit verwacht."
+            )}
+          </p>
+        </div>
+
+        <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
+          {t("What Hofstede Doesn't Capture", "Apa yang Tidak Ditangkap Hofstede", "Wat Hofstede niet vastlegt")}
+        </p>
+
+        <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, marginBottom: 28 }}>
+          {t(
+            "Hofstede's framework remains the most widely used in cross-cultural research — and one of the most critiqued. Three limitations matter most for practitioners.",
+            "Kerangka kerja Hofstede tetap menjadi yang paling banyak digunakan dalam penelitian lintas budaya — dan salah satu yang paling banyak dikritik. Tiga keterbatasan paling penting bagi para praktisi.",
+            "Hofstede's raamwerk blijft het meest gebruikte in intercultureel onderzoek — en een van de meest bekritiseerde. Drie beperkingen zijn het meest relevant voor beoefenaars."
+          )}
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginBottom: 48 }}>
+          {hofstedeLimitations.map((item) => (
+            <div key={item.number} style={{ background: lightGray, borderRadius: 10, padding: "24px 22px", borderTop: `3px solid ${orange}`, display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 28, fontWeight: 700, color: orange, lineHeight: 1, flexShrink: 0 }}>
+                  {item.number}
+                </span>
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: navy, margin: 0, lineHeight: 1.3 }}>
+                  {item.title[lang]}
+                </p>
+              </div>
+              <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.8, margin: 0 }}>
+                {item.body[lang]}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ textAlign: "center", marginBottom: 8 }}>
+          <a
+            href="https://www.hofstede-insights.com/country-comparison/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-block", padding: "14px 32px", border: `2px solid ${orange}`, color: navy, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}
+          >
+            {t("Compare your countries → Hofstede Insights", "Bandingkan negara Anda → Hofstede Insights", "Vergelijk jouw landen → Hofstede Insights")}
+          </a>
+        </div>
+        <p style={{ textAlign: "center", fontSize: 13, color: "oklch(55% 0.04 260)", lineHeight: 1.6, marginBottom: 0 }}>
+          {t(
+            "Enter your home country and your team's countries to see all six dimensions side by side.",
+            "Masukkan negara asal Anda dan negara-negara tim Anda untuk melihat semua enam dimensi berdampingan.",
+            "Voer jouw thuisland en de landen van je team in om alle zes dimensies naast elkaar te zien."
+          )}
+        </p>
+      </div>
+
+      {/* ─── SECTION B: Beyond Hofstede — Three Adjacent Frameworks ─────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("Adjacent Frameworks", "Kerangka Kerja Terkait", "Aangrenzende kaders")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 20, lineHeight: 1.2 }}>
+            {t("Beyond Hofstede: Three Frameworks That Go Further", "Melampaui Hofstede: Tiga Kerangka yang Lebih Jauh", "Voorbij Hofstede: Drie kaders die verder gaan")}
+          </h2>
+          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 52 }}>
+            {t(
+              "Hofstede gave cross-cultural research its vocabulary. These three frameworks extend it — each adding a layer that changes how you read the same situation.",
+              "Hofstede memberikan kosakata pada penelitian lintas budaya. Ketiga kerangka ini memperluas — masing-masing menambahkan lapisan yang mengubah cara Anda membaca situasi yang sama.",
+              "Hofstede gaf intercultureel onderzoek zijn vocabulaire. Deze drie kaders breiden het uit — elk voegt een laag toe die verandert hoe je dezelfde situatie leest."
+            )}
+          </p>
+
+          {/* Framework 1: GLOBE */}
+          <div style={{ marginBottom: 60 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>1</span>
+              </div>
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
+                  {t("The GLOBE Study", "Studi GLOBE", "De GLOBE-studie")}
+                </p>
+                <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800, color: navy, margin: 0, lineHeight: 1.2 }}>
+                  {t("GLOBE Study — What People Actually Want", "Studi GLOBE — Apa yang Sebenarnya Diinginkan Orang", "GLOBE-studie — Wat mensen echt willen")}
+                </h3>
+              </div>
+            </div>
+
+            <div style={{ background: navy, borderRadius: 10, padding: "30px 34px", marginBottom: 28, position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, right: 0, width: 100, height: 100, borderRadius: "0 10px 0 100px", background: "oklch(30% 0.12 260)", opacity: 0.5 }} />
+              <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2.6vw, 24px)", color: offWhite, lineHeight: 1.6, fontStyle: "italic", margin: "0 0 16px", position: "relative" }}>
+                {t(
+                  '"The GLOBE study found that in almost every culture, people\'s preferred power distance is lower than the power distance they actually experience. High-PD cultures are not cultures that want to stay there — they are cultures currently operating in a way their own members would moderate if they could."',
+                  '"Studi GLOBE menemukan bahwa di hampir setiap budaya, jarak kekuasaan yang diinginkan orang lebih rendah dari jarak kekuasaan yang sebenarnya mereka alami. Budaya PD tinggi bukanlah budaya yang ingin tetap di sana — mereka adalah budaya yang saat ini beroperasi dengan cara yang akan dimoderasi oleh anggotanya sendiri jika mereka bisa."',
+                  '"De GLOBE-studie ontdekte dat in bijna elke cultuur de gewenste machtafstand van mensen lager is dan de machtafstand die ze daadwerkelijk ervaren. Hoge-PD-culturen zijn geen culturen die er willen blijven — het zijn culturen die momenteel op een manier functioneren die hun eigen leden zouden matigen als ze konden."'
+                )}
+              </p>
+              <p style={{ color: orange, fontSize: 13, fontWeight: 600, margin: 0, position: "relative" }}>
+                — {t("House et al., GLOBE Study (2004)", "House dkk., Studi GLOBE (2004)", "House e.a., GLOBE-studie (2004)")}
+              </p>
+            </div>
+
+            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {t(
+                "Robert House and over 200 researchers studied 17,300 mid-level managers across 62 societies between 1991 and 2007. GLOBE made a crucial distinction: “As Is” scores — how things actually are — vs “Should Be” scores — how people believe things should be. For Power Distance specifically, the gap between As Is and Should Be is one of the most striking findings in cross-cultural research. It means the gap between what is and what people would prefer is often exactly where change is possible.",
+                "Robert House dan lebih dari 200 peneliti mempelajari 17.300 manajer tingkat menengah di 62 masyarakat antara tahun 1991 dan 2007. GLOBE membuat perbedaan penting: skor ‘Kondisi Nyata’ — bagaimana keadaan sebenarnya — vs skor ‘Kondisi Ideal’ — bagaimana orang percaya keadaan seharusnya. Khusus untuk Jarak Kekuasaan, kesenjangan antara Kondisi Nyata dan Kondisi Ideal adalah salah satu temuan paling mencolok dalam penelitian lintas budaya.",
+                "Robert House en meer dan 200 onderzoekers bestudeerden 17.300 middelmanagers in 62 samenlevingen tussen 1991 en 2007. GLOBE maakte een cruciaal onderscheid: ‘Huidig’-scores — hoe dingen werkelijk zijn — vs ‘Gewenst’-scores — hoe mensen denken dat dingen zouden moeten zijn. Voor Machtafstand specifiek is de kloof tussen Huidig en Gewenst een van de meest opvallende bevindingen in intercultureel onderzoek."
+              )}
+            </p>
+
+            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20, marginBottom: 36 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+              </p>
+              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
+                {t(
+                  "When a cross-cultural leader works to lower power distance in a high-PD team, they are not imposing a foreign value. They may be moving the team closer to what the team itself would prefer — if the data from 62 societies is any guide.",
+                  "Ketika pemimpin lintas budaya bekerja untuk menurunkan jarak kekuasaan dalam tim PD tinggi, mereka tidak memaksakan nilai asing. Mereka mungkin menggerakkan tim lebih dekat ke apa yang diinginkan tim itu sendiri — jika data dari 62 masyarakat menjadi panduan.",
+                  "Wanneer een interculturele leider werkt aan het verlagen van machtafstand in een hoge-PD-team, leggen ze geen vreemde waarde op. Ze bewegen het team mogelijk dichter naar wat het team zelf zou prefereren — als de data van 62 samenlevingen enige leidraad biedt."
+                )}
+              </p>
+            </div>
+
+            {/* GLOBE Bar Chart */}
+            <div style={{ background: offWhite, borderRadius: 12, padding: "28px 28px 24px", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.08)" }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.3 }}>
+                {lang === "en" ? "GLOBE Power Distance: What Is vs What People Prefer" : lang === "id" ? "Jarak Kekuasaan GLOBE: Realitas vs Preferensi" : "GLOBE Machtafstand: Realiteit vs Voorkeur"}
+              </p>
+              <div style={{ display: "flex", gap: 20, marginBottom: 24, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: orange, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
+                    {lang === "en" ? "As Is (current)" : lang === "id" ? "Kondisi Nyata" : "Huidig"}
+                  </span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 14, height: 14, borderRadius: 3, background: "oklch(42% 0.10 260)", flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
+                    {lang === "en" ? "Should Be (preferred)" : lang === "id" ? "Kondisi Ideal" : "Gewenst"}
+                  </span>
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {globeScores.map((c) => (
+                  <div key={c.country.en}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: navy, marginBottom: 5 }}>{c.country[lang]}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 5 }}>
+                      <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
+                        <div style={{ width: `${(c.asIs / 7) * 100}%`, height: "100%", background: orange, borderRadius: 4 }} />
+                      </div>
+                      <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.asIs.toFixed(2)}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
+                        <div style={{ width: `${(c.shouldBe / 7) * 100}%`, height: "100%", background: "oklch(42% 0.10 260)", borderRadius: 4 }} />
+                      </div>
+                      <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.shouldBe.toFixed(2)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, paddingRight: 42 }}>
+                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                  <span key={n} style={{ fontSize: 10, color: "oklch(60% 0.04 260)" }}>{n}</span>
+                ))}
+              </div>
+              <p style={{ fontSize: 11, color: "oklch(60% 0.04 260)", fontStyle: "italic", marginTop: 16, marginBottom: 0 }}>
+                {t(
+                  "Source: House et al., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Scale 1–7.",
+                  "Sumber: House dkk., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Skala 1–7.",
+                  "Bron: House e.a., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Schaal 1–7."
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Framework 2: Erin Meyer */}
+          <div style={{ marginBottom: 60 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>2</span>
+              </div>
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
+                  {meyerFramework.label[lang]}
+                </p>
+                <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800, color: navy, margin: 0, lineHeight: 1.2 }}>
+                  {meyerFramework.title[lang]}
+                </h3>
+              </div>
+            </div>
+            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{meyerFramework.body[lang]}</p>
+            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+              </p>
+              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{meyerFramework.implication[lang]}</p>
+            </div>
+          </div>
+
+          {/* Framework 3: Edward Hall */}
+          <div style={{ marginBottom: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>3</span>
+              </div>
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
+                  {hallFramework.label[lang]}
+                </p>
+                <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800, color: navy, margin: 0, lineHeight: 1.2 }}>
+                  {hallFramework.title[lang]}
+                </h3>
+              </div>
+            </div>
+            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{hallFramework.body[lang]}</p>
+            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+              </p>
+              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{hallFramework.implication[lang]}</p>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       {/* ─── SECTION 3: FRICTION POINTS — ACCORDION ────────────────────────── */}
@@ -463,6 +980,42 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
         </div>
       </div>
 
+      {/* ─── SECTION C: What Power Distance Actually Predicts ────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("Research Findings", "Temuan Penelitian", "Onderzoeksresultaten")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            {t("What Power Distance Actually Predicts", "Apa yang Sebenarnya Diprediksi Jarak Kekuasaan", "Wat Machtafstand Werkelijk Voorspelt")}
+          </h2>
+
+          <style>{`
+            @media (max-width: 600px) {
+              .pd-insight-grid { grid-template-columns: 1fr !important; }
+            }
+          `}</style>
+
+          <div className="pd-insight-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20 }}>
+            {insightCards.map((card) => (
+              <div key={card.id} style={{ background: offWhite, borderRadius: 10, padding: 28, boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.08)" }}>
+                <div style={{ color: orange, marginBottom: 16 }}>{card.icon}</div>
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navy, marginBottom: 12, lineHeight: 1.3 }}>
+                  {card.title[lang]}
+                </p>
+                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.85, marginBottom: 16 }}>{card.body[lang]}</p>
+                <div style={{ borderTop: "1px solid oklch(90% 0.01 80)", paddingTop: 14 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>
+                    {t("For cross-cultural leaders:", "Bagi pemimpin lintas budaya:", "Voor interculturele leiders:")}
+                  </p>
+                  <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>{card.implication[lang]}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ─── SECTION 4: FAITH ANCHOR ────────────────────────────────────────── */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
@@ -511,6 +1064,109 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             "Dit geeft interculturele leiders iets wat noch hoge PD noch lage PD-cultuur alleen kan bieden: een model waar autoriteit echt, zichtbaar en veilig is — en waar die autoriteit volledig wordt ingezet ten dienste van anderen. Je hoeft niet te kiezen tussen helder leiden en diep dienen. Jezus deed beide."
           )}
         </p>
+
+        {/* ─── SECTION D: Philippians 2 — Kenosis ─────────────────────────── */}
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 32, marginTop: 32 }}>
+          {t(
+            "The most theologically rich New Testament text on power and leadership goes further still. Writing to the church in Philippi — a congregation struggling with internal status divisions — Paul invokes what scholars believe is an early Christian hymn about the nature of Christ's authority.",
+            "Teks Perjanjian Baru yang paling kaya secara teologis tentang kekuasaan dan kepemimpinan melangkah lebih jauh lagi. Saat menulis kepada jemaat di Filipi — sebuah jemaat yang bergumul dengan perpecahan status internal — Paulus mengutip apa yang diyakini para ahli sebagai himne Kristen awal tentang hakikat otoritas Kristus.",
+            "De theologisch rijkste nieuwtestamentische tekst over macht en leiderschap gaat nog verder. Schrijvend aan de gemeente in Filippi — een gemeente die worstelde met interne statusverschillen — beroept Paulus zich op wat geleerden beschouwen als een vroeg-christelijke hymne over de aard van Christus' gezag."
+          )}
+        </p>
+
+        <div style={{ background: navy, borderRadius: 12, padding: "40px 44px", marginBottom: 40, position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: -20, left: -20, width: 120, height: 120, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.4 }} />
+          <div style={{ position: "absolute", bottom: -30, right: -10, width: 160, height: 160, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.3 }} />
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20, position: "relative" }}>
+            {t("Scripture", "Kitab Suci", "Schriftuur")}
+          </p>
+          <blockquote style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", color: offWhite, lineHeight: 1.65, fontStyle: "italic", margin: "0 0 20px", position: "relative" }}>
+            {t(
+              "“In your relationships with one another, have the same mindset as Christ Jesus: who, being in very nature God, did not consider equality with God something to be used to his own advantage; rather, he made himself nothing by taking the very nature of a servant, being made in human likeness.”",
+              "“Hendaklah kamu dalam hidupmu bersama, menaruh pikiran dan perasaan yang terdapat juga dalam Kristus Yesus, yang walaupun dalam rupa Allah, tidak menganggap kesetaraan dengan Allah itu sebagai milik yang harus dipertahankan, melainkan telah mengosongkan diri-Nya sendiri, dan mengambil rupa seorang hamba, dan menjadi sama dengan manusia.”",
+              "“Laat die gezindheid bij u zijn die ook in Christus Jezus was: die, hoewel hij de gestalte van God had, het er niet voor hield gelijk te zijn aan God iets om vast te houden, maar zichzelf ontledigd heeft door de gestalte van een slaaf aan te nemen en aan de mensen gelijk te worden.”"
+            )}
+          </blockquote>
+          <p style={{ color: orange, fontSize: 14, fontWeight: 600, margin: 0, position: "relative" }}>
+            {t("Philippians 2:5–7 (NIV)", "Filipi 2:5–7", "Filippenzen 2:5–7")}
+          </p>
+        </div>
+
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+          {t(
+            "The Greek term used here is kenosis — self-emptying. But notice what Paul does not say: that Christ stopped being God. He remained fully who he was — and redirected all that authority toward the service of others. This is the move a cross-cultural leader is being asked to make. Not to abandon authority, but to hold it differently.",
+            "Istilah Yunani yang digunakan di sini adalah kenosis — pengosongan diri. Tetapi perhatikan apa yang tidak dikatakan Paulus: bahwa Kristus berhenti menjadi Allah. Dia tetap sepenuhnya siapa Dia — dan mengarahkan seluruh otoritas itu untuk melayani orang lain. Inilah langkah yang diminta dari seorang pemimpin lintas budaya. Bukan untuk meninggalkan otoritas, tetapi untuk memegangnya secara berbeda.",
+            "De Griekse term die hier wordt gebruikt is kenosis — zelfontlediging. Maar let op wat Paulus niet zegt: dat Christus ophield God te zijn. Hij bleef volledig wie hij was — en richtte al die autoriteit op de dienst aan anderen. Dit is de stap die een interculturele leider wordt gevraagd te maken. Niet om autoriteit op te geven, maar om die anders te dragen."
+          )}
+        </p>
+
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+          {t(
+            "This matters because the well-meaning Western leader who tries to flatten power distance by making themselves invisible as a leader usually creates anxiety in a high-PD team, not empowerment. The team needs a visible leader. Kenosis is not self-erasure — it is self-giving. The difference shapes everything about how authority is used.",
+            "Ini penting karena pemimpin Barat yang bermaksud baik yang mencoba meratakan jarak kekuasaan dengan membuat dirinya tidak terlihat sebagai pemimpin biasanya menciptakan kecemasan dalam tim PD tinggi, bukan pemberdayaan. Tim membutuhkan pemimpin yang terlihat. Kenosis bukan penghapusan diri — melainkan pemberian diri. Perbedaan ini membentuk segalanya tentang bagaimana otoritas digunakan.",
+            "Dit is belangrijk omdat de goedbedoelende westerse leider die machtafstand probeert te verkleinen door zichzelf als leider onzichtbaar te maken, gewoonlijk angst creëert in een hoge-PD-team, geen empowerment. Het team heeft een zichtbare leider nodig. Kenosis is geen zelfverwijdering — het is zelfgave. Het verschil bepaalt alles over hoe autoriteit wordt gebruikt."
+          )}
+        </p>
+
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85 }}>
+          {t(
+            "Paul addressed Philippians 2 specifically to a church struggling with internal status divisions. The hymn was not written as a meditation on individual spirituality — it was written to address how power moves within a community. The cross-cultural leader who has Philippians 2 in their bones has a far richer frame for power than someone who only has Matthew 20.",
+            "Paulus menulis Filipi 2 khusus kepada sebuah jemaat yang bergumul dengan perpecahan status internal. Himne ini tidak ditulis sebagai meditasi tentang spiritualitas individu — melainkan ditulis untuk mengatasi bagaimana kekuasaan bergerak dalam sebuah komunitas. Pemimpin lintas budaya yang menghayati Filipi 2 memiliki kerangka yang jauh lebih kaya untuk kekuasaan daripada seseorang yang hanya memiliki Matius 20.",
+            "Paulus richtte Filippenzen 2 specifiek aan een gemeente die worstelde met interne statusverdeeldheid. De hymne was niet geschreven als een meditatie over individuele spiritualiteit — ze was geschreven om aan te pakken hoe macht beweegt binnen een gemeenschap. De interculturele leider die Filippenzen 2 in de botten heeft, beschikt over een veel rijker kader voor macht dan iemand die alleen Mattheüs 20 heeft."
+          )}
+        </p>
+      </div>
+
+      {/* ─── SECTION E: Voices Worth Hearing ────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("Christian Writers on Power", "Penulis Kristen tentang Kekuasaan", "Christelijke Schrijvers over Macht")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 20, lineHeight: 1.2 }}>
+            Voices Worth Hearing
+          </h2>
+          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
+            {t(
+              "Three contemporary Christian writers have gone further than most on the theology and practice of power. Each offers something a cross-cultural leader can carry.",
+              "Tiga penulis Kristen kontemporer telah melangkah lebih jauh dari kebanyakan orang dalam teologi dan praktik kekuasaan. Masing-masing menawarkan sesuatu yang dapat dibawa oleh pemimpin lintas budaya.",
+              "Drie hedendaagse christelijke schrijvers zijn verder gegaan dan de meeste anderen in de theologie en praktijk van macht. Elk biedt iets dat een interculturele leider mee kan nemen."
+            )}
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+            {books.map((book, i) => (
+              <div key={i} style={{ background: offWhite, borderRadius: 10, padding: 28, boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", borderLeft: `4px solid ${orange}` }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "flex-start", marginBottom: 16 }}>
+                  <div style={{ flex: "1 1 220px", minWidth: 200 }}>
+                    <h3 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2.4vw, 22px)", fontWeight: 700, color: navy, margin: "0 0 8px", lineHeight: 1.3 }}>
+                      {book.title}
+                    </h3>
+                    <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.13em", textTransform: "uppercase", margin: 0 }}>
+                      {book.author} · {book.year} · {book.publisher}
+                    </p>
+                  </div>
+                  <div style={{ flex: "2 1 280px" }}>
+                    <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2vw, 20px)", color: navy, fontStyle: "italic", lineHeight: 1.5, margin: 0 }}>
+                      &ldquo;{book.hook[lang]}&rdquo;
+                    </p>
+                  </div>
+                </div>
+                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+                  {book.description[lang]}
+                </p>
+                <div style={{ background: lightGray, borderRadius: 6, padding: "12px 16px", display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.12em", margin: "2px 0 0", flexShrink: 0 }}>
+                    {t("Why read this", "Mengapa membaca ini", "Waarom dit lezen")}
+                  </p>
+                  <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>
+                    {book.why[lang]}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ─── IMAGE 2 ─────────────────────────────────────────────────────────── */}
@@ -627,6 +1283,124 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
               </p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ─── SECTION F: Go Deeper — External Resources ───────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("External Resources", "Sumber Daya Eksternal", "Externe Bronnen")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 56, lineHeight: 1.2 }}>
+            Go Deeper
+          </h2>
+
+          {/* Watch */}
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Watch", "Tonton", "Bekijk")}
+          </p>
+          <div style={{ background: offWhite, borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", marginBottom: 56 }}>
+            <a
+              href="https://www.youtube.com/watch?v=DqAJclwfyCw"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden" }}
+              aria-label="Watch Power Distance — Geert Hofstede on YouTube"
+            >
+              <Image
+                src="https://img.youtube.com/vi/DqAJclwfyCw/maxresdefault.jpg"
+                alt="Power Distance — Geert Hofstede YouTube thumbnail"
+                width={1280}
+                height={720}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                unoptimized
+              />
+              <div style={{ position: "absolute", inset: 0, background: "oklch(10% 0.06 260 / 0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: 68, height: 68, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px oklch(10% 0.06 260 / 0.5)" }}>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </div>
+              </div>
+            </a>
+            <div style={{ padding: "20px 24px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 10 }}>
+                <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navy, margin: 0, flex: 1, lineHeight: 1.3 }}>
+                  Power Distance — Geert Hofstede
+                </h3>
+                <span style={{ background: orange, color: offWhite, fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, flexShrink: 0, letterSpacing: "0.05em", marginTop: 2 }}>
+                  ~10 min
+                </span>
+              </div>
+              <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
+                {t(
+                  "Hofstede explains Power Distance in his own words — the primary source. Recorded in 2014. Part of his ten-video series on all six cultural dimensions.",
+                  "Hofstede menjelaskan Jarak Kekuasaan dengan kata-katanya sendiri — sumber utama. Direkam pada tahun 2014. Bagian dari seri sepuluh video tentang semua enam dimensi budaya.",
+                  "Hofstede legt Machtafstand in eigen woorden uit — de primaire bron. Opgenomen in 2014. Onderdeel van zijn reeks van tien video's over alle zes culturele dimensies."
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Try It */}
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Try It", "Coba", "Probeer Het")}
+          </p>
+          <div style={{ background: navy, borderRadius: 10, padding: "36px 40px", marginBottom: 56, position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.4 }} />
+            <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 20, fontWeight: 800, color: offWhite, margin: "0 0 12px", position: "relative", lineHeight: 1.3 }}>
+              Hofstede Insights — Country Comparison
+            </h3>
+            <p style={{ fontSize: 15, color: "oklch(80% 0.04 260)", lineHeight: 1.8, marginBottom: 28, position: "relative", maxWidth: 520 }}>
+              {t(
+                "Enter your home country and your team's countries to see all six Hofstede dimensions side by side. The most useful single tool for a cross-cultural leader doing PD analysis.",
+                "Masukkan negara asal Anda dan negara-negara tim Anda untuk melihat semua enam dimensi Hofstede berdampingan. Alat tunggal paling berguna bagi pemimpin lintas budaya yang melakukan analisis PD.",
+                "Voer je eigen land en de landen van je team in om alle zes Hofstede-dimensies naast elkaar te zien. Het meest nuttige enkelvoudige hulpmiddel voor een interculturele leider die PD-analyse doet."
+              )}
+            </p>
+            <a
+              href="https://www.hofstede-insights.com/country-comparison/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-block", padding: "14px 28px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", position: "relative", letterSpacing: "0.02em" }}
+            >
+              {t("Open Comparison Tool →", "Buka Alat Perbandingan →", "Open Vergelijkingstool →")}
+            </a>
+          </div>
+
+          {/* Read Further */}
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
+            {t("Read Further", "Bacaan Lanjutan", "Verder Lezen")}
+          </p>
+          <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, marginBottom: 32 }}>
+            {t(
+              "The works below are the primary sources behind this module. Crispy Leaders makes them accessible — these take you to the original.",
+              "Karya-karya di bawah ini adalah sumber utama di balik modul ini. Crispy Leaders membuatnya mudah diakses — karya-karya ini membawa Anda ke sumber aslinya.",
+              "De onderstaande werken zijn de primaire bronnen achter deze module. Crispy Leaders maakt ze toegankelijk — deze brengen je naar het origineel."
+            )}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {readingList.map((item, i) => (
+              <div key={i} style={{ padding: "24px 0", borderBottom: i < readingList.length - 1 ? "1px solid oklch(88% 0.01 80)" : "none" }}>
+                {item.url ? (
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                    <h4 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2.2vw, 21px)", fontWeight: 700, color: navy, margin: "0 0 6px", lineHeight: 1.3, textDecoration: "underline", textDecorationColor: "oklch(50% 0.08 260 / 0.3)", textUnderlineOffset: 3 }}>
+                      {item.title}
+                    </h4>
+                  </a>
+                ) : (
+                  <h4 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2.2vw, 21px)", fontWeight: 700, color: navy, margin: "0 0 6px", lineHeight: 1.3 }}>
+                    {item.title}
+                  </h4>
+                )}
+                <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", margin: "0 0 10px" }}>
+                  {item.authoryear}
+                </p>
+                <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
+                  {item.description[lang]}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
