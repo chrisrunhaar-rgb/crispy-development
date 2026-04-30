@@ -1,7 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
@@ -21,17 +20,6 @@ type SectionProps = {
 };
 
 // ─── Country PD Scores ────────────────────────────────────────────────────────
-const pdScores = [
-  { country_en: "Malaysia", country_id: "Malaysia", country_nl: "Maleisië", score: 104, level: "high" },
-  { country_en: "Philippines", country_id: "Filipina", country_nl: "Filipijnen", score: 94, level: "high" },
-  { country_en: "Indonesia", country_id: "Indonesia", country_nl: "Indonesië", score: 78, level: "high" },
-  { country_en: "South Korea", country_id: "Korea Selatan", country_nl: "Zuid-Korea", score: 60, level: "medium" },
-  { country_en: "United States", country_id: "Amerika Serikat", country_nl: "Verenigde Staten", score: 40, level: "low" },
-  { country_en: "Netherlands", country_id: "Belanda", country_nl: "Nederland", score: 38, level: "low" },
-  { country_en: "Australia", country_id: "Australia", country_nl: "Australië", score: 36, level: "low" },
-  { country_en: "Denmark", country_id: "Denmark", country_nl: "Denemarken", score: 18, level: "low" },
-];
-
 // ─── Friction Points (accordion) ─────────────────────────────────────────────
 const frictionPoints = [
   {
@@ -485,34 +473,6 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
           <p style={{ color: orange, fontSize: 13, fontWeight: 600, margin: 0, position: "relative" }}>— Geert Hofstede</p>
         </div>
 
-        {/* PD Score bar chart */}
-        <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20 }}>
-          {t("Power Distance Index by Country", "Indeks Jarak Kekuasaan per Negara", "Machtafstandsindex per Land")}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
-          {pdScores.map((c) => (
-            <div key={c.country_en} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div style={{ width: 120, fontSize: 13, fontWeight: 600, color: navy, flexShrink: 0 }}>
-                {lang === "en" ? c.country_en : lang === "id" ? c.country_id : c.country_nl}
-              </div>
-              <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 22 }}>
-                <div style={{
-                  width: `${c.score}%`,
-                  maxWidth: "100%",
-                  height: "100%",
-                  background: c.level === "high" ? orange : c.level === "medium" ? "oklch(55% 0.12 45)" : "oklch(50% 0.10 260)",
-                  borderRadius: 4,
-                  transition: "width 0.3s ease",
-                }} />
-              </div>
-              <div style={{ width: 36, fontSize: 13, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.score}</div>
-            </div>
-          ))}
-        </div>
-        <p style={{ fontSize: 12, color: "oklch(60% 0.04 260)", fontStyle: "italic", marginBottom: 0 }}>
-          {t("Source: Hofstede Insights. Scale 0–104.", "Sumber: Hofstede Insights. Skala 0–104.", "Bron: Hofstede Insights. Schaal 0–104.")}
-        </p>
-
         {/* ─── SECTION A: Going Deeper — Full Hofstede Picture ─────────────── */}
         <div style={{ height: 1, background: "oklch(90% 0.01 80)", margin: "52px 0 52px" }} />
 
@@ -575,21 +535,105 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
           ))}
         </div>
 
-        <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <a
-            href="https://www.hofstede-insights.com/country-comparison-tool"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: "inline-block", padding: "14px 32px", border: `2px solid ${orange}`, color: navy, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}
-          >
-            {t("Compare your countries → Hofstede Insights", "Bandingkan negara Anda → Hofstede Insights", "Vergelijk jouw landen → Hofstede Insights")}
-          </a>
-        </div>
-        <p style={{ textAlign: "center", fontSize: 13, color: "oklch(55% 0.04 260)", lineHeight: 1.6, marginBottom: 0 }}>
+        {/* ─── Country Comparison Tool ──────────────────────────────────────── */}
+        <div style={{ height: 1, background: "oklch(90% 0.01 80)", margin: "52px 0 48px" }} />
+
+        <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 16, lineHeight: 1.2 }}>
+          {t("Country Comparison Tool", "Alat Perbandingan Negara", "Landenvergelijkingstool")}
+        </h2>
+        <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 32, maxWidth: 600 }}>
           {t(
-            "Enter your home country and your team's countries to see all six dimensions side by side.",
-            "Masukkan negara asal Anda dan negara-negara tim Anda untuk melihat semua enam dimensi berdampingan.",
-            "Voer jouw thuisland en de landen van je team in om alle zes dimensies naast elkaar te zien."
+            "Select two countries to see all six Hofstede dimensions side by side. Navy bars = Country A, orange bars = Country B.",
+            "Pilih dua negara untuk melihat semua enam dimensi Hofstede secara berdampingan. Batang biru = Negara A, batang oranye = Negara B.",
+            "Selecteer twee landen om alle zes Hofstede-dimensies naast elkaar te zien. Blauwe balken = Land A, oranje balken = Land B."
+          )}
+        </p>
+
+        {/* Selectors */}
+        <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap" }}>
+          <div style={{ flex: 1, minWidth: 180 }}>
+            <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: navy, marginBottom: 8 }}>
+              {t("Country A", "Negara A", "Land A")}
+            </label>
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: navy, pointerEvents: "none" }} />
+              <select
+                value={countryA}
+                onChange={e => setCountryA(e.target.value)}
+                style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
+              >
+                {countryData.map(c => (
+                  <option key={c.country_code} value={c.country_code}>
+                    {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 180 }}>
+            <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
+              {t("Country B", "Negara B", "Land B")}
+            </label>
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: orange, pointerEvents: "none" }} />
+              <select
+                value={countryB}
+                onChange={e => setCountryB(e.target.value)}
+                style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
+              >
+                {countryData.map(c => (
+                  <option key={c.country_code} value={c.country_code}>
+                    {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Dimension bars */}
+        {(() => {
+          const a = countryData.find(c => c.country_code === countryA);
+          const b = countryData.find(c => c.country_code === countryB);
+          if (!a || !b) return null;
+          return (
+            <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 16 }}>
+              {DIMENSIONS.map(dim => {
+                const scoreA = a[dim.key] as number;
+                const scoreB = b[dim.key] as number;
+                const label = dim[lang as "en" | "id" | "nl"];
+                return (
+                  <div key={dim.key}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                      <div>
+                        <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: navy, letterSpacing: "0.06em" }}>{label}</span>
+                        <span style={{ fontSize: 12, color: bodyText, marginLeft: 8 }}>{dim.full_en}</span>
+                      </div>
+                      <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700 }}>
+                        <span style={{ color: navy }}>{scoreA}</span>
+                        <span style={{ color: "oklch(70% 0.02 260)", margin: "0 6px" }}>/</span>
+                        <span style={{ color: orange }}>{scoreB}</span>
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                      <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${(scoreA / 120) * 100}%`, background: navy, borderRadius: 5, transition: "width 0.35s ease" }} />
+                      </div>
+                      <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${(scoreB / 120) * 100}%`, background: orange, borderRadius: 5, transition: "width 0.35s ease" }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
+        <p style={{ fontSize: 12, color: "oklch(60% 0.03 260)", lineHeight: 1.6, marginBottom: 0 }}>
+          {t(
+            "Data from Hofstede Insights. Scores compiled from published research across 80 countries.",
+            "Data dari Hofstede Insights. Skor dikompilasi dari penelitian yang diterbitkan di 80 negara.",
+            "Data van Hofstede Insights. Scores samengesteld uit gepubliceerd onderzoek in 80 landen."
           )}
         </p>
       </div>
@@ -1086,138 +1130,6 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             </div>
           </div>
 
-          {/* Country Comparison Tool */}
-          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Country Comparison", "Perbandingan Negara", "Landenvergelijking")}
-          </p>
-          <div style={{ background: offWhite, borderRadius: 10, padding: "32px", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", marginBottom: 16 }}>
-            <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 28, maxWidth: 560 }}>
-              {t(
-                "Select two countries to compare all six Hofstede dimensions side by side. Navy bars = Country A, orange bars = Country B. Scores run 0–120.",
-                "Pilih dua negara untuk membandingkan semua enam dimensi Hofstede secara berdampingan. Batang biru = Negara A, batang oranye = Negara B. Skor berkisar 0–120.",
-                "Selecteer twee landen om alle zes Hofstede-dimensies naast elkaar te vergelijken. Blauwe balken = Land A, oranje balken = Land B. Scores lopen van 0–120."
-              )}
-            </p>
-
-            {/* Selectors */}
-            <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap" }}>
-              <div style={{ flex: 1, minWidth: 180 }}>
-                <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: navy, marginBottom: 8 }}>
-                  {t("Country A", "Negara A", "Land A")}
-                </label>
-                <div style={{ position: "relative" }}>
-                  <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: navy, pointerEvents: "none" }} />
-                  <select
-                    value={countryA}
-                    onChange={e => setCountryA(e.target.value)}
-                    style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
-                  >
-                    {countryData.map(c => (
-                      <option key={c.country_code} value={c.country_code}>
-                        {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div style={{ flex: 1, minWidth: 180 }}>
-                <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
-                  {t("Country B", "Negara B", "Land B")}
-                </label>
-                <div style={{ position: "relative" }}>
-                  <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: orange, pointerEvents: "none" }} />
-                  <select
-                    value={countryB}
-                    onChange={e => setCountryB(e.target.value)}
-                    style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
-                  >
-                    {countryData.map(c => (
-                      <option key={c.country_code} value={c.country_code}>
-                        {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Dimension bars */}
-            {(() => {
-              const a = countryData.find(c => c.country_code === countryA);
-              const b = countryData.find(c => c.country_code === countryB);
-              if (!a || !b) return null;
-              return (
-                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  {DIMENSIONS.map(dim => {
-                    const scoreA = a[dim.key] as number;
-                    const scoreB = b[dim.key] as number;
-                    const label = dim[lang as "en" | "id" | "nl"];
-                    return (
-                      <div key={dim.key}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                          <div>
-                            <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: navy, letterSpacing: "0.06em" }}>{label}</span>
-                            <span style={{ fontSize: 12, color: bodyText, marginLeft: 8 }}>{dim.full_en}</span>
-                          </div>
-                          <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: bodyText }}>
-                            <span style={{ color: navy }}>{scoreA}</span>
-                            <span style={{ color: "oklch(70% 0.02 260)", margin: "0 6px" }}>/</span>
-                            <span style={{ color: orange }}>{scoreB}</span>
-                          </span>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                          <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${(scoreA / 120) * 100}%`, background: navy, borderRadius: 5, transition: "width 0.35s ease" }} />
-                          </div>
-                          <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${(scoreB / 120) * 100}%`, background: orange, borderRadius: 5, transition: "width 0.35s ease" }} />
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })()}
-          </div>
-          <p style={{ fontSize: 12, color: "oklch(60% 0.03 260)", lineHeight: 1.6, marginBottom: 0 }}>
-            {t(
-              "Data from Hofstede Insights. Scores compiled from published research across 80 countries. Power Distance (PDI) is the primary dimension covered in this module.",
-              "Data dari Hofstede Insights. Skor dikompilasi dari penelitian yang diterbitkan di 80 negara. Jarak Kekuasaan (PDI) adalah dimensi utama yang dibahas dalam modul ini.",
-              "Data van Hofstede Insights. Scores samengesteld uit gepubliceerd onderzoek in 80 landen. Machtafstand (PDI) is de primaire dimensie in deze module."
-            )}
-          </p>
-        </div>
-      </div>
-
-      {/* ─── CTA FOOTER ─────────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "72px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orange }} />
-        <div style={{ position: "relative", maxWidth: 600, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 800, color: offWhite, marginBottom: 16, lineHeight: 1.2 }}>
-            {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
-          </h2>
-          <p style={{ color: "oklch(75% 0.04 260)", fontSize: 16, lineHeight: 1.75, marginBottom: 32 }}>
-            {t(
-              "Explore more resources to deepen your cross-cultural leadership.",
-              "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
-              "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
-            )}
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/resources"
-              style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}
-            >
-              {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
-            </Link>
-            <Link
-              href="/resources/intercultural-communication"
-              style={{ display: "inline-block", padding: "14px 32px", border: "1px solid oklch(45% 0.05 260)", color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, textDecoration: "none" }}
-            >
-              {t("Intercultural Communication →", "Komunikasi Antarbudaya →", "Interculturele Communicatie →")}
-            </Link>
-          </div>
         </div>
       </div>
 
