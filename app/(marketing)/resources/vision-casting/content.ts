@@ -529,7 +529,7 @@ export const resourceCards: Array<{
     meta: "Bill Hybels · 2002, updated 2009",
     description:
       "A classic on vision casting in the church context. Hybels is especially strong on the discipline of repeating vision and the difference between casting vision and announcing strategy.",
-    href: "https://www.amazon.com/Courageous-Leadership-Bill-Hybels/dp/0310257875",
+    href: "https://www.amazon.com/Courageous-Leadership-Field-Tested-Strategy-Leader/dp/0310495954/ref=sr_1_1?crid=1MB4ZG285HDBK&dib=eyJ2IjoiMSJ9.ZkFk4mUvlZcikFw_c0kX25WMHL6by1t6paCZPLywSLTYb4McfNS58soAX-H0xfaD_TY5NB9KHrou5-0mP6R_r7zTlYASg9iVs20zeQNnnJv7-Q9hOSUX0kpHxI1uCTy0dWAa01DDa_mbsmf7FsCYCJ_jQGD2pPrx2c7WCRxdr5dAdyK4JLvoSwJlkjJt_VQpPFE7fpdapW-gSLksnud5fY4xVMP2nWj70L86wtmieTs.e7qZPHnZfTs6hec5nbtBPPQyxUrQrGErJWKT8_AIgUw&dib_tag=se&keywords=courageous+leadership&qid=1777518762&s=books&sprefix=courageous+leadership%2Cstripbooks-intl-ship%2C311&sr=1-1",
   },
   {
     type: "book",
