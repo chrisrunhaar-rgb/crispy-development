@@ -228,14 +228,20 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
             <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
               <div style={{ width: "clamp(72px, 9vw, 110px)" }} />
               <div style={{ padding: "0 1rem 0.75rem", textAlign: "center", borderBottom: "2px solid oklch(85% 0.012 260)" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)" }}>
-                  {t("Known to yourself", "Diketahui diri sendiri", "Bekend aan jezelf")}
-                </span>
+                <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(48% 0.18 145)" }}>
+                  {t("Known", "Diketahui", "Bekend")}
+                </div>
+                <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(50% 0.06 260)" }}>
+                  {t("to yourself", "diri sendiri", "aan jezelf")}
+                </div>
               </div>
               <div style={{ padding: "0 1rem 0.75rem", textAlign: "center", borderBottom: "2px solid oklch(85% 0.012 260)" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)" }}>
-                  {t("Unknown to yourself", "Tidak diketahui diri sendiri", "Onbekend aan jezelf")}
-                </span>
+                <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(62% 0.17 50)" }}>
+                  {t("Unknown", "Tidak diketahui", "Onbekend")}
+                </div>
+                <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(50% 0.06 260)" }}>
+                  {t("to yourself", "diri sendiri", "aan jezelf")}
+                </div>
               </div>
             </div>
 
@@ -244,10 +250,13 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
               <div key={row} style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0, marginBottom: "2px" }}>
                 {/* Left axis label */}
                 <div style={{ width: "clamp(72px, 9vw, 110px)", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: "0.875rem", borderRight: "2px solid oklch(85% 0.012 260)" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(32% 0.08 260)", writingMode: "vertical-rl", transform: "rotate(180deg)", whiteSpace: "nowrap" }}>
-                    {row === 0
-                      ? t("Known to others", "Diketahui orang lain", "Bekend aan anderen")
-                      : t("Unknown to others", "Tidak diketahui orang lain", "Onbekend aan anderen")}
+                  <span style={{ fontFamily: "var(--font-montserrat)", letterSpacing: "0.08em", textTransform: "uppercase", writingMode: "vertical-rl", transform: "rotate(180deg)", whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25em" }}>
+                    <span style={{ fontSize: "0.85rem", fontWeight: 900, color: row === 0 ? "oklch(48% 0.18 145)" : "oklch(62% 0.17 50)" }}>
+                      {row === 0 ? t("Known", "Diketahui", "Bekend") : t("Unknown", "Tidak diketahui", "Onbekend")}
+                    </span>
+                    <span style={{ fontSize: "0.56rem", fontWeight: 600, color: "oklch(50% 0.06 260)" }}>
+                      {t("to others", "orang lain", "aan anderen")}
+                    </span>
                   </span>
                 </div>
 
