@@ -1172,10 +1172,9 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={getTitle("mbti", lang)}
           visual={mbtiType && mbtiScores ? (
-            <div style={{ width: 180, background: navy, padding: "10px 14px", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: MBTI_TEMP_COLOR[mbtiType] ?? orange }} />
-              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.06em", lineHeight: 1 }}>{mbtiType}</div>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, color: "oklch(68% 0.04 260)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType] ?? ""}</div>
+            <div style={{ width: 180, padding: "10px 14px" }}>
+              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2.25rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.04em", lineHeight: 1 }}>{mbtiType}</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TEMPERAMENT_LABEL[mbtiType] ?? ""}</div>
             </div>
           ) : <EmptyTileVisual />}
           done={!!(mbtiType && mbtiScores)}
