@@ -537,7 +537,7 @@ export const resourceCards: Array<{
     meta: "Will Mancini & Warren Bird · 2016",
     description:
       "Twelve recurring patterns in how God-given vision shapes itself in different ministry contexts. Useful for teams that need language to articulate what they are already sensing.",
-    href: "https://www.amazon.com/God-Dreams-Templates-Finding-Focusing/dp/1433643766",
+    href: "https://www.amazon.com/God-Dreams-Templates-Finding-Focusing/dp/B0DHPHJ1QZ/ref=sr_1_2?crid=3PJU25VO325GY&dib=eyJ2IjoiMSJ9.vypjJhwoy8FZWxHkZhDJwb7i1JXMPLPMQdbReExbB5TbemOOEpQDdjfEoBCDLu-_KzLMZl7klM57vkhJND-hnqgKPgobDMhaNS7M7PZqHYBDmFyAhUlfldM4RiOb-Vfmzhs8yTI223fGCV6yko8SwT3oKfVzw0d9MRO0mXAy_-iPiBmtz9kWZvzVauIbxTHftiPeccQqSsmo3p1fM6Bv9hmb__dnX_LpBAnKUQawlFc.EWvy8KTvPvms50MoEFuhsuXzjcbbbkVcgeTynHxrrKg&dib_tag=se&keywords=god+dreams&qid=1777518841&s=books&sprefix=god+dream%2Cstripbooks-intl-ship%2C328&sr=1-2",
   },
   {
     type: "video",
