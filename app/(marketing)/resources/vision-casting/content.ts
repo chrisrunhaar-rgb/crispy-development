@@ -545,7 +545,7 @@ export const resourceCards: Array<{
     meta: "Andy Stanley",
     description:
       "Stanley's own teaching on the Visioneering framework. Worth watching as a companion to the book — he tells the Nehemiah story in a way that is hard to forget.",
-    href: "#",
+    href: "https://www.youtube.com/watch?v=eK_pMaDqy64",
   },
   {
     type: "video",

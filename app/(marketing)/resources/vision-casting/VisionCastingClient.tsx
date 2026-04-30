@@ -1169,6 +1169,55 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             {t(ui.sectionTitles.resources)}
           </h2>
 
+          {/* Featured video — Andy Stanley Visioneering */}
+          <div style={{ maxWidth: 720, margin: "0 auto 64px" }}>
+            <p style={{
+              fontFamily: montserrat,
+              fontSize: 11,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.14em",
+              color: orange,
+              marginBottom: 14,
+              textAlign: "center",
+            }}>
+              {lang === "en" ? "Watch" : lang === "id" ? "Tonton" : "Bekijk"}
+            </p>
+            <p style={{
+              fontFamily: cormorant,
+              fontSize: "clamp(18px, 2.5vw, 24px)",
+              fontWeight: 600,
+              color: offWhite,
+              textAlign: "center",
+              marginBottom: 24,
+              lineHeight: 1.3,
+            }}>
+              Andy Stanley — Visioneering
+            </p>
+            <div style={{
+              position: "relative",
+              paddingBottom: "56.25%",
+              height: 0,
+              borderRadius: 12,
+              overflow: "hidden",
+            }}>
+              <iframe
+                src="https://www.youtube.com/embed/eK_pMaDqy64"
+                title="Andy Stanley — Visioneering"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                }}
+              />
+            </div>
+          </div>
+
           <div className="vc-resources-grid">
             {resourceCards.map((card, i) => {
               const isExternal = card.href !== "#" && card.href.startsWith("http");
