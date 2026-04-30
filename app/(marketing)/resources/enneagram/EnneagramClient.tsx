@@ -338,6 +338,17 @@ const UI: Record<string, T3> = {
   yourTypeBadge:         { en: "Your Type",              id: "Tipe Anda",             nl: "Uw Type" },
   motivation:            { en: "Motivation: ",           id: "Motivasi: ",            nl: "Motivatie: " },
   aboutAssessment:       { en: "About This Assessment",  id: "Tentang Penilaian Ini", nl: "Over Deze Beoordeling" },
+  triadsTitle:           { en: "The Three Triads", id: "Tiga Triad", nl: "De Drie Triaden" },
+  caveatTitle:           { en: "A Note Before You Begin", id: "Catatan Sebelum Memulai", nl: "Een Opmerking Voordat U Begint" },
+  caveatBody:            {
+    en: "The Enneagram has roots in pre-Christian wisdom traditions, and some evangelical voices are cautious about its use. The version developed by Riso, Hudson, Rohr and others is a psychological framework — not a spiritual practice. Used as a tool for self-knowledge, it is theologically neutral. Hold it as a mirror, not a master. Read your result as a hypothesis about your motivations, not a verdict on your soul.",
+    id: "Enneagram berakar pada tradisi kebijaksanaan pra-Kristen, dan beberapa suara evangelikal berhati-hati tentang penggunaannya. Versi yang dikembangkan oleh Riso, Hudson, Rohr dan lainnya adalah kerangka psikologis — bukan praktik spiritual. Digunakan sebagai alat untuk pengetahuan diri, ini secara teologis netral. Jadikanlah sebagai cermin, bukan tuan. Bacalah hasil Anda sebagai hipotesis tentang motivasi Anda, bukan vonis atas jiwa Anda.",
+    nl: "Het Enneagram heeft wortels in pre-christelijke wijsheidstradities en sommige evangelische stemmen zijn voorzichtig met het gebruik ervan. De versie ontwikkeld door Riso, Hudson, Rohr en anderen is een psychologisch kader — geen spirituele praktijk. Gebruikt als zelfkennisinstrument is het theologisch neutraal. Houd het als een spiegel, niet als een meester. Lees uw resultaat als een hypothese over uw motivaties, niet als een oordeel over uw ziel.",
+  },
+  howToReadTitle:        { en: "How to Read Your Result", id: "Cara Membaca Hasil Anda", nl: "Hoe uw Resultaat te Lezen" },
+  howToRead1:            { en: "Your type is your most active pattern, not a fixed label. Every person carries some of every type — one is simply dominant.", id: "Tipe Anda adalah pola yang paling aktif, bukan label tetap. Setiap orang memiliki semua tipe — satu hanya lebih dominan.", nl: "Uw type is uw meest actieve patroon, niet een vast label. Iedereen draagt iets van elk type — één is eenvoudigweg dominant." },
+  howToRead2:            { en: "Look at your wing — the adjacent type you also carry strongly. A 1w9 leads very differently from a 1w2.", id: "Perhatikan wing Anda — tipe yang berdekatan yang juga Anda miliki kuat. 1w9 memimpin sangat berbeda dari 1w2.", nl: "Kijk naar uw vleugel — het aangrenzende type dat u ook sterk draagt. Een 1w9 leidt heel anders dan een 1w2." },
+  howToRead3:            { en: "The Enneagram describes movement. Under stress you move toward one type; in growth, toward another. Your result names both directions.", id: "Enneagram menggambarkan gerakan. Di bawah tekanan Anda bergerak menuju satu tipe; dalam pertumbuhan, menuju tipe lain. Hasil Anda menyebutkan kedua arah.", nl: "Het Enneagram beschrijft beweging. Onder stress beweegt u naar één type; in groei naar een ander. Uw resultaat benoemt beide richtingen." },
   whatIsEnneagram:       { en: "What is the Enneagram?", id: "Apa itu Enneagram?",    nl: "Wat is het Enneagram?" },
   enneagramP1:           {
     en: "The Enneagram is one of the most powerful personality frameworks available for leadership development. Unlike tools that simply describe surface behaviour, the Enneagram reveals the why behind how you act — your core motivations, deepest fears, and most consistent patterns.",
@@ -1110,7 +1121,7 @@ export default function EnneagramClient({
         <div style={{ maxWidth: "760px", margin: "0 auto", padding: "3rem 2rem" }}>
 
           {/* Result Type Tile */}
-          <div style={{ marginBottom: "3rem" }}>
+          <div style={{ marginBottom: "1.5rem" }}>
             <div style={{ height: "280px" }}>
               <TypeCard
                 type={primaryType}
@@ -1119,6 +1130,35 @@ export default function EnneagramClient({
                 onClick={() => setResultFlipped(!resultFlipped)}
               />
             </div>
+          </div>
+
+          {/* Save result — prominent placement directly below the type card */}
+          <div style={{ marginBottom: "3rem" }}>
+            {!resultSaved ? (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "0.5rem" }}>
+                <button
+                  type="button"
+                  onClick={handleSaveResult}
+                  disabled={isPending}
+                  style={{
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", fontWeight: 800,
+                    letterSpacing: "0.08em", textTransform: "uppercase",
+                    background: primaryType.color, color: "white",
+                    border: "none", padding: "1rem 2.25rem", cursor: "pointer",
+                    opacity: isPending ? 0.5 : 1,
+                  }}
+                >
+                  {isPending ? t(UI.saving) : t(UI.saveMyResult)}
+                </button>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.006 260)", lineHeight: 1.5, margin: 0 }}>
+                  {lang === "en" ? "Save your type to your dashboard to compare with your team." : lang === "id" ? "Simpan tipe Anda ke dashboard untuk dibandingkan dengan tim Anda." : "Sla uw type op in uw dashboard om het met uw team te vergelijken."}
+                </p>
+              </div>
+            ) : (
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(48% 0.14 145)", margin: 0 }}>
+                {t(UI.resultSaved)}
+              </p>
+            )}
           </div>
 
           {/* Primary type overview */}
@@ -1285,6 +1325,109 @@ export default function EnneagramClient({
               </p>
             </div>
             <img src="/enneagram-types/overview.png" alt="Enneagram Overview" loading="lazy" style={{ width: "100%", maxWidth: "600px", marginTop: "2rem", borderRadius: "0.5rem" }} />
+          </div>
+
+          {/* Three Triads */}
+          <div style={{ marginBottom: "3rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+              {t(UI.triadsTitle)}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {/* Gut / Body Triad */}
+              <div style={{ background: "oklch(97% 0.015 25)", padding: "1.5rem", borderLeft: "4px solid oklch(55% 0.18 25)" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(52% 0.18 25)", marginBottom: "0.375rem" }}>
+                  {lang === "en" ? "Gut / Body Triad — Types 8, 9, 1" : lang === "id" ? "Triad Gut / Tubuh — Tipe 8, 9, 1" : "Gut / Lichaamstriade — Types 8, 9, 1"}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.006 260)", lineHeight: 1.7, marginBottom: "0.75rem" }}>
+                  {lang === "en"
+                    ? "These three types lead from instinct and a gut-level sense of justice. They are action-oriented and deeply aware of power, fairness, and autonomy. When healthy, they act decisively and protect others. Under stress, their power turns inward as resentment, withdrawal, or control."
+                    : lang === "id"
+                    ? "Tiga tipe ini memimpin dari insting dan rasa keadilan yang mendalam. Mereka berorientasi tindakan dan sangat sadar akan kekuasaan, keadilan, dan otonomi. Dalam kondisi sehat, mereka bertindak tegas dan melindungi orang lain. Di bawah tekanan, kekuatan mereka berbalik ke dalam sebagai kemarahan, penarikan diri, atau kontrol."
+                    : "Deze drie typen leiden vanuit instinct en een diep gevoel van rechtvaardigheid. Ze zijn actiegericht en sterk bewust van macht, eerlijkheid en autonomie. In gezonde staat handelen ze besluitvaardig en beschermen anderen. Onder druk keert hun kracht naar binnen als wrok, terugtrekking of controle."}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontStyle: "italic", fontSize: "0.82rem", color: "oklch(42% 0.006 260)", lineHeight: 1.65 }}>
+                  {lang === "en"
+                    ? "Biblical anchor: Moses — his gut energy confronted Pharaoh, struck the rock, and led a stiff-necked people through forty years of wilderness. His strength was God-given. His shadow was the same energy turned inward — the slow burn that cost him the Promised Land."
+                    : lang === "id"
+                    ? "Jangkar alkitabiah: Musa — energinya menghadapi Firaun, memukul batu karang, dan memimpin umat yang keras kepala selama empat puluh tahun di padang gurun. Kekuatannya diberikan Tuhan. Bayangannya adalah energi yang sama yang berbalik ke dalam — bara yang perlahan yang menghalanginya memasuki Tanah Perjanjian."
+                    : "Bijbels anker: Mozes — zijn instinctieve energie confronteerde Farao, sloeg de rots en leidde een hardnekkig volk door veertig jaar woestijn. Zijn kracht was door God gegeven. Zijn schaduw was diezelfde energie naar binnen gericht — de sluimerende frustratie die hem het Beloofde Land kostte."}
+                </p>
+              </div>
+
+              {/* Heart / Image Triad */}
+              <div style={{ background: "oklch(97% 0.015 60)", padding: "1.5rem", borderLeft: "4px solid oklch(60% 0.18 60)" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(55% 0.18 60)", marginBottom: "0.375rem" }}>
+                  {lang === "en" ? "Heart / Image Triad — Types 2, 3, 4" : lang === "id" ? "Triad Hati / Citra — Tipe 2, 3, 4" : "Hart / Beeldtriade — Types 2, 3, 4"}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.006 260)", lineHeight: 1.7, marginBottom: "0.75rem" }}>
+                  {lang === "en"
+                    ? "These three types lead from emotion and a deep need to be loved, valued, and seen. They are relational and image-aware, shaped by questions of identity and worth. When healthy, they bring warmth, depth, and authentic connection. Under stress, they perform, manipulate, or withdraw into longing."
+                    : lang === "id"
+                    ? "Tiga tipe ini memimpin dari emosi dan kebutuhan mendalam untuk dicintai, dihargai, dan dilihat. Mereka relasional dan sadar citra, dibentuk oleh pertanyaan identitas dan nilai diri. Dalam kondisi sehat, mereka membawa kehangatan, kedalaman, dan koneksi yang autentik. Di bawah tekanan, mereka berpura-pura, memanipulasi, atau menarik diri ke dalam kerinduan."
+                    : "Deze drie typen leiden vanuit emotie en een diep verlangen naar liefde, waardering en erkenning. Ze zijn relationeel en beeldgericht, gevormd door vragen van identiteit en eigenwaarde. In gezonde staat brengen ze warmte, diepgang en authentieke verbinding. Onder druk presteren ze, manipuleren ze of trekken ze zich terug in verlangen."}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontStyle: "italic", fontSize: "0.82rem", color: "oklch(42% 0.006 260)", lineHeight: 1.65 }}>
+                  {lang === "en"
+                    ? "Biblical anchor: David — he sang the psalms, danced before the ark, wept openly, and built his identity around being a man after God's own heart. His heart energy made him Israel's most beloved king. Its shadow took him into Bathsheba and the long damage of an image he could not let fall."
+                    : lang === "id"
+                    ? "Jangkar alkitabiah: Daud — ia menyanyikan mazmur, menari di hadapan tabut, menangis terbuka, dan membangun identitasnya sebagai orang yang berkenan di hati Tuhan. Energi hatinya menjadikannya raja Israel yang paling dicintai. Bayangannya membawanya ke Batsyeba dan kerusakan panjang dari citra yang tidak bisa ia biarkan jatuh."
+                    : "Bijbels anker: David — hij zong de psalmen, danste voor de ark, huilde openlijk en bouwde zijn identiteit op als een man naar Gods hart. Zijn hartenergie maakte hem Israëls meest geliefde koning. De schaduw ervan leidde hem naar Bathseba en de lange schade van een imago dat hij niet kon laten vallen."}
+                </p>
+              </div>
+
+              {/* Head / Thinking Triad */}
+              <div style={{ background: "oklch(97% 0.01 220)", padding: "1.5rem", borderLeft: "4px solid oklch(52% 0.16 220)" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(48% 0.16 220)", marginBottom: "0.375rem" }}>
+                  {lang === "en" ? "Head / Thinking Triad — Types 5, 6, 7" : lang === "id" ? "Triad Kepala / Pemikiran — Tipe 5, 6, 7" : "Hoofd / Denktriade — Types 5, 6, 7"}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.006 260)", lineHeight: 1.7, marginBottom: "0.75rem" }}>
+                  {lang === "en"
+                    ? "These three types lead from analysis and a deep need for security and understanding. They are planners and thinkers, shaped by fear and the quest for certainty. When healthy, they bring wisdom, foresight, and genuine insight. Under stress, they over-analyse, isolate, or escape into distraction."
+                    : lang === "id"
+                    ? "Tiga tipe ini memimpin dari analisis dan kebutuhan mendalam akan keamanan dan pemahaman. Mereka adalah perencana dan pemikir, dibentuk oleh ketakutan dan pencarian kepastian. Dalam kondisi sehat, mereka membawa kebijaksanaan, pandangan ke depan, dan wawasan yang tulus. Di bawah tekanan, mereka terlalu menganalisis, mengisolasi diri, atau melarikan diri ke dalam distraksi."
+                    : "Deze drie typen leiden vanuit analyse en een diep verlangen naar veiligheid en begrip. Ze zijn planners en denkers, gevormd door angst en de zoektocht naar zekerheid. In gezonde staat brengen ze wijsheid, vooruitziendheid en echte inzichten. Onder druk overanalyseren ze, isoleren ze zichzelf of vluchten ze in afleiding."}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontStyle: "italic", fontSize: "0.82rem", color: "oklch(42% 0.006 260)", lineHeight: 1.65 }}>
+                  {lang === "en"
+                    ? "Biblical anchor: Solomon — he asked God for wisdom and received understanding wider than the sand of the sea. He observed, analysed, named patterns, and wrote Ecclesiastes. His head energy gave the world Proverbs. Its shadow drove him into intellectual and political compromise that fractured the kingdom."
+                    : lang === "id"
+                    ? "Jangkar alkitabiah: Salomo — ia meminta hikmat kepada Tuhan dan menerima pemahaman yang lebih luas dari pasir di laut. Ia mengamati, menganalisis, menamai pola, dan menulis Pengkhotbah. Energi kepalanya memberikan dunia Amsal. Bayangannya mendorongnya ke dalam kompromi intelektual dan politik yang memecah kerajaan."
+                    : "Bijbels anker: Salomo — hij vroeg God om wijsheid en ontving begrip wijder dan het zand der zee. Hij observeerde, analyseerde, benoemde patronen en schreef Prediker. Zijn hoofdenergie gaf de wereld Spreuken. De schaduw ervan dreef hem naar intellectuele en politieke compromissen die het koninkrijk versplinterden."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Cross-cultural caveat */}
+          <div style={{ background: "oklch(96% 0.025 75)", padding: "1.5rem 1.75rem", marginBottom: "3rem", borderLeft: "4px solid oklch(65% 0.15 75)", outline: "1px solid oklch(88% 0.02 75)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(55% 0.15 75)", marginBottom: "0.625rem" }}>
+              {t(UI.caveatTitle)}
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.006 260)", lineHeight: 1.75 }}>
+              {t(UI.caveatBody)}
+            </p>
+          </div>
+
+          {/* How to read your result */}
+          <div style={{ marginBottom: "3rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+              {t(UI.howToReadTitle)}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+              {([UI.howToRead1, UI.howToRead2, UI.howToRead3] as T3[]).map((tip, i) => (
+                <div key={i} style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                  <span style={{
+                    flexShrink: 0, width: "28px", height: "28px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: "oklch(17% 0.12 260)", color: "white",
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700,
+                  }}>{i + 1}</span>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.006 260)", lineHeight: 1.7, margin: 0 }}>
+                    {t(tip)}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* The 9 types with card flip */}

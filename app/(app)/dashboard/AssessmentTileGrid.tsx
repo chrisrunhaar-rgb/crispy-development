@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import TypeCard from "../../../app/(marketing)/resources/enneagram/TypeCard";
+import { KaruniaRing, GIFT_CATEGORIES } from "@/components/charts/KaruniaRing";
 
 // ── Brand tokens ─────────────────────────────────────────────────────────────
 const navy     = "oklch(22% 0.10 260)";
@@ -420,7 +421,7 @@ type EnneagramTypeData = {
 
 type ModalData =
   | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" | "nl" }
-  | { type: "wheel"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "wheel"; scores: Record<string, number>; reflections: Record<string, { gratitude: string; action: string }> | null; lang: "en" | "id" | "nl" }
   | { type: "wheelActionSteps"; reflections: Record<string, { gratitude: string; action: string }>; lang: "en" | "id" | "nl" }
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" | "nl" }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
@@ -547,66 +548,167 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 }
 
 function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel" }>; onClose: () => void }) {
-  const { scores, lang } = data;
+  const { scores, reflections, lang } = data;
+  const [flipped, setFlipped] = useState(false);
+
   const values = Object.values(scores);
   const avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1);
   const sorted = WHEEL_SEGMENTS.slice().sort((a, b) => (scores[a.key] ?? 0) - (scores[b.key] ?? 0));
   const lowest = sorted[0];
   const highest = sorted[sorted.length - 1];
 
+  const hasReflections = reflections && WHEEL_SEGMENTS.some(seg => reflections[seg.key]?.gratitude || reflections[seg.key]?.action);
+  const actionLabel = lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps";
+
   return (
-    <>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        Life Balance Assessment
-      </p>
-      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "0.375rem" }}>
-        Wheel of Life
-      </h3>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(50% 0.008 260)", marginBottom: "1.25rem" }}>
-        Average score: <strong style={{ color: navy }}>{avg} / 10</strong>
-      </p>
+    <div style={{ perspective: "1000px", minHeight: 0 }}>
+      <div style={{
+        transformStyle: "preserve-3d",
+        transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        transition: "transform 0.4s ease",
+        position: "relative",
+      }}>
 
-      {/* Spider web */}
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
-        <WheelSpiderSVG scores={scores} size={220} showLabels />
-      </div>
+        {/* ── FRONT: scores ── */}
+        <div style={{ WebkitBackfaceVisibility: "hidden", backfaceVisibility: "hidden" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
+            Life Balance Assessment
+          </p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.375rem" }}>
+            <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, margin: 0 }}>
+              Wheel of Life
+            </h3>
+            {hasReflections && (
+              <button
+                onClick={() => setFlipped(true)}
+                title={actionLabel}
+                style={{ background: "none", border: `1px solid oklch(88% 0.006 80)`, borderRadius: 6, padding: "0.3rem 0.625rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.35rem", flexShrink: 0 }}
+              >
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <path d="M2 8a6 6 0 1 1 1.5 4" stroke={navy} strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M2 12V8h4" stroke={navy} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>{actionLabel}</span>
+              </button>
+            )}
+          </div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(50% 0.008 260)", marginBottom: "1.25rem" }}>
+            Average score: <strong style={{ color: navy }}>{avg} / 10</strong>
+          </p>
 
-      {/* Score bars */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem 1rem", marginBottom: "1.5rem" }}>
-        {WHEEL_SEGMENTS.map(seg => (
-          <div key={seg.key}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: seg.color, fontWeight: 600 }}>{seg.label}</span>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: navy }}>{scores[seg.key] ?? 0}</span>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
+            <WheelSpiderSVG scores={scores} size={220} showLabels />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem 1rem", marginBottom: "1.5rem" }}>
+            {WHEEL_SEGMENTS.map(seg => (
+              <div key={seg.key}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: seg.color, fontWeight: 600 }}>{seg.label}</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: navy }}>{scores[seg.key] ?? 0}</span>
+                </div>
+                <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
+                  <div style={{ height: "100%", width: `${((scores[seg.key] ?? 0) / 10) * 100}%`, background: seg.color, borderRadius: 2 }} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+            <div style={{ padding: "0.5rem 0.875rem", background: `${lowest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>{lang === "id" ? "Area fokus" : lang === "nl" ? "Aandachtsgebied" : "Focus area"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color }}>{lowest.label} ({scores[lowest.key]})</span>
             </div>
-            <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
-              <div style={{ height: "100%", width: `${((scores[seg.key] ?? 0) / 10) * 100}%`, background: seg.color, borderRadius: 2 }} />
+            <div style={{ padding: "0.5rem 0.875rem", background: `${highest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>{lang === "id" ? "Terkuat" : lang === "nl" ? "Sterkste" : "Strongest"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color }}>{highest.label} ({scores[highest.key]})</span>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Insight chips */}
-      <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-        <div style={{ padding: "0.5rem 0.875rem", background: `${lowest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>{lang === "id" ? "Area fokus" : lang === "nl" ? "Aandachtsgebied" : "Focus area"}</span>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color }}>{lowest.label} ({scores[lowest.key]})</span>
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+              {lang === "id" ? "Perbarui skor →" : lang === "nl" ? "Scores bijwerken →" : "Update scores →"}
+            </Link>
+            <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+              {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+            </button>
+          </div>
         </div>
-        <div style={{ padding: "0.5rem 0.875rem", background: `${highest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>{lang === "id" ? "Terkuat" : lang === "nl" ? "Sterkste" : "Strongest"}</span>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color }}>{highest.label} ({scores[highest.key]})</span>
-        </div>
-      </div>
 
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-        <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Perbarui skor →" : lang === "nl" ? "Scores bijwerken →" : "Update scores →"}
-        </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
-        </button>
+        {/* ── BACK: action steps ── */}
+        <div style={{
+          WebkitBackfaceVisibility: "hidden",
+          backfaceVisibility: "hidden",
+          transform: "rotateY(180deg)",
+          position: "absolute",
+          inset: 0,
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: "0 0 0.25rem" }}>
+                Wheel of Life
+              </p>
+              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, margin: 0 }}>
+                {actionLabel}
+              </h3>
+            </div>
+            <button
+              onClick={() => setFlipped(false)}
+              style={{ background: "none", border: `1px solid oklch(88% 0.006 80)`, borderRadius: 6, padding: "0.3rem 0.625rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.35rem", flexShrink: 0 }}
+            >
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>↩ {lang === "id" ? "Skor" : lang === "nl" ? "Scores" : "Scores"}</span>
+            </button>
+          </div>
+
+          {!hasReflections ? (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "1.5rem" }}>
+              {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : lang === "nl" ? "Nog geen actiestappen opgeslagen. Bezoek het Levenswiel om ze toe te voegen." : "No action steps saved yet. Visit the Wheel of Life to add them."}
+            </p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+              {WHEEL_SEGMENTS.map(seg => {
+                const r = reflections![seg.key];
+                if (!r?.gratitude && !r?.action) return null;
+                return (
+                  <div key={seg.key} style={{ borderLeft: `3px solid ${seg.color}`, paddingLeft: "0.875rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.5rem" }}>
+                      <span style={{ width: 7, height: 7, borderRadius: "50%", background: seg.color, flexShrink: 0 }} />
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: seg.color }}>{seg.label}</span>
+                    </div>
+                    {r.gratitude && (
+                      <div style={{ marginBottom: r.action ? "0.5rem" : 0 }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
+                          {lang === "id" ? "Syukur" : lang === "nl" ? "Dankbaarheid" : "Thankful for"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: "oklch(38% 0.008 260)", margin: 0 }}>{r.gratitude}</p>
+                      </div>
+                    )}
+                    {r.action && (
+                      <div>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
+                          {lang === "id" ? "Tindakan" : lang === "nl" ? "Actie" : "God-honoring action"}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: navy, margin: 0, fontWeight: 600 }}>{r.action}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+              {lang === "id" ? "Edit langkah aksi →" : lang === "nl" ? "Actiestappen bewerken →" : "Edit action steps →"}
+            </Link>
+            <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+              {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+            </button>
+          </div>
+        </div>
+
       </div>
-    </>
+    </div>
   );
 }
 
@@ -748,43 +850,78 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "karunia" }>; onClose: () => void }) {
   const { topGifts, scores, lang } = data;
   const title = lang === "id" ? "Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts";
-  const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw →" : "Retake quiz →";
 
   const sortedGifts = Object.entries(scores)
     .sort(([, a], [, b]) => b - a)
-    .slice(0, 8);
+    .slice(0, 5);
+
+  const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →";
+  const learnLabel = lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more";
 
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
         Spiritual Assessment
       </p>
-      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "0.5rem" }}>
+      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.25rem" }}>
         {title}
       </h3>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "oklch(52% 0.008 260)", marginBottom: "1.5rem" }}>
-        Top gifts identified
-      </p>
 
-      {/* Top 3 highlight */}
-      <div style={{ display: "flex", gap: "0.625rem", marginBottom: "1.25rem" }}>
-        {topGifts.slice(0, 3).map((gift, i) => (
-          <div key={gift} style={{
-            flex: 1, padding: "0.75rem 0.5rem", background: i === 0 ? navy : "oklch(94% 0.006 260)",
-            borderRadius: 10, textAlign: "center",
-          }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.1rem", fontWeight: 800, color: i === 0 ? orange : navy, marginBottom: "0.25rem" }}>{i + 1}</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, color: i === 0 ? "oklch(85% 0.01 80)" : "oklch(42% 0.008 260)", lineHeight: 1.3 }}>
-              {karuniaLabel(gift, lang)}
-            </p>
+      {/* Ring + top gifts side by side */}
+      <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginBottom: "1.5rem" }}>
+        <KaruniaRing scores={scores} lang={lang as "en" | "id" | "nl"} size={120} showLegend={false} />
+
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {topGifts.slice(0, 3).map((gift, i) => (
+            <div key={gift} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.72rem",
+                fontWeight: 800,
+                color: i === 0 ? orange : "oklch(62% 0.008 260)",
+                minWidth: "1rem",
+              }}>
+                {i + 1}.
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.75rem",
+                fontWeight: i === 0 ? 700 : 500,
+                color: i === 0 ? navy : "oklch(42% 0.008 260)",
+                lineHeight: 1.3,
+              }}>
+                {karuniaLabel(gift, lang)}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.65rem",
+                color: "oklch(58% 0.008 260)",
+                marginLeft: "auto",
+              }}>
+                {scores[gift] ?? 0}/12
+              </span>
+            </div>
+          ))}
+
+          {/* Category legend */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem 0.625rem", marginTop: "0.25rem" }}>
+            {GIFT_CATEGORIES.map(cat => (
+              <div key={cat.key} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(50% 0.008 260)" }}>
+                  {cat.label[lang as "en" | "id" | "nl"]}
+                </span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
-      {/* Score bars */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+      {/* Score bars — top 5 */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginBottom: "1.5rem" }}>
         {sortedGifts.map(([key, score], i) => {
           const maxScore = sortedGifts[0][1] || 1;
+          const catColor = GIFT_CATEGORIES.find(c => (c.gifts as readonly string[]).includes(key))?.color ?? orange;
           return (
             <div key={key}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
@@ -794,16 +931,25 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: navy }}>{score}</span>
               </div>
               <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
-                <div style={{ height: "100%", width: `${(score / maxScore) * 100}%`, background: i < 3 ? orange : "oklch(70% 0.08 45)", borderRadius: 2 }} />
+                <div style={{ height: "100%", width: `${(score / maxScore) * 100}%`, background: i < 3 ? catColor : "oklch(78% 0.04 45)", borderRadius: 2 }} />
               </div>
             </div>
           );
         })}
       </div>
 
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-        <Link href="/resources/karunia-rohani" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+        <Link
+          href="/resources/karunia-rohani#quiz-section"
+          style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}
+        >
           {retakeLabel}
+        </Link>
+        <Link
+          href="/resources/karunia-rohani"
+          style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}
+        >
+          {learnLabel}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -848,8 +994,11 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          {lang === "id" ? "Lebih lanjut →" : lang === "nl" ? "Meer info →" : "More info →"}
+        </Link>
+        <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
@@ -1483,7 +1632,7 @@ export default function AssessmentTileGrid({
           done={!!wheelOfLifeScores}
           lang={lang}
           wheelReflections={wheelReflections}
-          onOpenScores={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
+          onOpenScores={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, reflections: wheelReflections, lang }) : undefined}
         />
 
         {/* 3. Three Thinking Styles */}
