@@ -17,6 +17,9 @@ export default async function ResourcePage(props: any) {
   const { data: { user } } = await supabase.auth.getUser();
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
+  const isLoggedIn = !!user;
+  const karuniaTopGifts = (user?.user_metadata?.karunia_top_gifts ?? null) as string[] | null;
+  const karuniaScores = (user?.user_metadata?.karunia_scores ?? null) as Record<string, number> | null;
 
   const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
 
@@ -56,7 +59,12 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <KaruniaClient {...props} isSaved={isSaved} />
+      <KaruniaClient
+        isSaved={isSaved}
+        isLoggedIn={isLoggedIn}
+        karuniaTopGifts={karuniaTopGifts}
+        karuniaScores={karuniaScores}
+      />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

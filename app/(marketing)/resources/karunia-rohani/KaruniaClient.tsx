@@ -1,11 +1,12 @@
 ﻿"use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveKaruniaResult } from "../actions";
 import VerseChip from "@/components/VerseChip";
 import { VERSES } from "@/lib/verses";
 import LangToggle from "@/components/LangToggle";
+import { KaruniaRing, GIFT_CATEGORIES } from "@/components/charts/KaruniaRing";
 
 type Lang = "en" | "id" | "nl";
 
@@ -426,6 +427,14 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   const [saved, setSaved] = useState(isSaved);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [expandedGift, setExpandedGift] = useState<string | null>(null);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hash === "#quiz-section") {
+      setShowQuiz(true);
+    }
+  }, []);
 
   const pageStart = page * PAGE_SIZE + 1;
   const pageEnd = Math.min(pageStart + PAGE_SIZE - 1, TOTAL_QUESTIONS);
@@ -440,6 +449,15 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
     document.body.scrollTop = 0;
   }
 
+  function scrollToQuiz() {
+    const el = document.getElementById("quiz-section");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      scrollTop();
+    }
+  }
+
   function handleAnswer(qNum: number, val: number) {
     setAnswers(prev => ({ ...prev, [qNum]: val }));
   }
@@ -447,7 +465,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   function handleNext() {
     if (page < TOTAL_PAGES - 1) {
       setPage(p => p + 1);
-      scrollTop();
+      scrollToQuiz();
     } else if (allAnswered) {
       const scores = computeScores(answers);
       const topGifts = getTopGifts(scores);
@@ -466,6 +484,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
     setResultTopGifts([]);
     setSaved(false);
     setSaveError(null);
+    setShowQuiz(true);
     scrollTop();
   }
 
@@ -560,6 +579,44 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             </div>
           </div>
 
+          {/* ── 4-CATEGORY RING ── */}
+          <div style={{ background: "white", padding: "3rem 1.5rem 2rem" }} className="no-print">
+            <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+              <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", marginBottom: "1.75rem" }}>
+                {lang === "id" ? "Distribusi Karunia" : lang === "nl" ? "Gavenverdeling" : "Gift Distribution"}
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0", marginBottom: "1rem" }}>
+                <KaruniaRing scores={resultScores} lang={lang} size={220} showLegend={true} />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.75rem", marginTop: "1.5rem" }}>
+                {GIFT_CATEGORIES.map(cat => {
+                  const total = cat.gifts.reduce((sum, g) => sum + (resultScores[g] ?? 0), 0);
+                  const pct = Math.round((total / cat.maxScore) * 100);
+                  return (
+                    <div key={cat.key} style={{
+                      background: "oklch(97% 0.005 80)",
+                      padding: "0.875rem 1rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                    }}>
+                      <div style={{ width: 10, height: 10, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(22% 0.008 260)", margin: "0 0 0.2rem" }}>
+                          {cat.label[lang]}
+                        </p>
+                        <div style={{ height: 3, background: "oklch(88% 0.006 260)" }}>
+                          <div style={{ height: "100%", width: `${pct}%`, background: cat.color, transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }} />
+                        </div>
+                      </div>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: cat.color }}>{pct}%</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
           {/* ── TOP 3 + ALL GIFTS ── */}
           <div style={{ background: BG_LIGHT, padding: "3rem 1.5rem" }} className="no-print">
             <div style={{ maxWidth: "720px", margin: "0 auto" }}>
@@ -605,7 +662,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                         <p style={{ fontSize: "0.8125rem", lineHeight: 1.65, color: "oklch(38% 0.008 260)", marginBottom: "0.75rem" }}>
                           {lang === "id" ? gift.longDesc : lang === "nl" ? gift.longDescNl : gift.longDescEn}
                         </p>
-                        <p style={{ fontSize: "0.8125rem", fontStyle: "italic", color: PRIMARY, margin: 0, lineHeight: 1.6, borderLeft: `3px solid ${PRIMARY}`, paddingLeft: "0.75rem" }}>
+                        <p style={{ fontSize: "0.8125rem", fontStyle: "italic", color: PRIMARY, margin: 0, lineHeight: 1.6, background: "oklch(96% 0.03 45)", padding: "0.5rem 0.75rem", borderRadius: "0.25rem" }}>
                           {lang === "id" ? gift.realLife : lang === "nl" ? gift.realLifeNl : gift.realLifeEn}
                         </p>
                       </div>
@@ -614,27 +671,68 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 })}
               </div>
 
-              {/* All gifts bar chart */}
+              {/* All gifts expandable tiles */}
               <div style={{ marginBottom: "2.5rem" }}>
-                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(52% 0.008 260)", textTransform: "uppercase", marginBottom: "1.25rem" }}>
+                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(52% 0.008 260)", textTransform: "uppercase", marginBottom: "1rem" }}>
                   {lang === "id" ? "Semua Karunia" : lang === "nl" ? "Alle Gaven" : "All Gifts"}
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
                   {sortedAll.map(([key, score]) => {
                     const gift = GIFTS[key];
                     if (!gift) return null;
+                    const isOpen = expandedGift === key;
+                    const catColor = GIFT_CATEGORIES.find(c => (c.gifts as readonly string[]).includes(key))?.color ?? PRIMARY;
                     const pct = Math.round((score / 12) * 100);
                     return (
                       <div key={key}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.25rem" }}>
-                          <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "oklch(32% 0.008 260)" }}>
+                        <button
+                          onClick={() => setExpandedGift(isOpen ? null : key)}
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.75rem",
+                            padding: "0.8rem 1rem",
+                            background: isOpen ? "white" : "oklch(97% 0.005 80)",
+                            border: `1px solid ${isOpen ? BORDER : "transparent"}`,
+                            borderBottom: isOpen ? "none" : `1px solid transparent`,
+                            cursor: "pointer",
+                            textAlign: "left" as const,
+                            fontFamily: "var(--font-montserrat)",
+                          }}
+                        >
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: catColor, flexShrink: 0 }} />
+                          <span style={{ flex: 1, fontSize: "0.8rem", fontWeight: isOpen ? 700 : 500, color: "oklch(22% 0.008 260)" }}>
                             {lang === "id" ? gift.label : lang === "nl" ? gift.nl : gift.en}
                           </span>
-                          <span style={{ fontSize: "0.78rem", fontWeight: 700, color: PRIMARY }}>{score}/12</span>
-                        </div>
-                        <div style={{ height: "5px", background: BORDER, overflow: "hidden" }}>
-                          <div style={{ height: "100%", width: `${pct}%`, background: PRIMARY, transition: "width 0.5s ease" }} />
-                        </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexShrink: 0 }}>
+                            <div style={{ width: 52, height: 3, background: "oklch(88% 0.006 260)" }}>
+                              <div style={{ height: "100%", width: `${pct}%`, background: catColor }} />
+                            </div>
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: catColor, minWidth: "2.25rem", textAlign: "right" as const }}>
+                              {score}/12
+                            </span>
+                          </div>
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="oklch(62% 0.008 260)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                            style={{ flexShrink: 0, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </button>
+                        {isOpen && (
+                          <div style={{
+                            padding: "1.125rem 1rem 1.25rem 1.625rem",
+                            background: "white",
+                            border: `1px solid ${BORDER}`,
+                            borderTop: "none",
+                          }}>
+                            <p style={{ fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, margin: "0 0 0.75rem" }}>
+                              {lang === "id" ? gift.longDesc : lang === "nl" ? gift.longDescNl : gift.longDescEn}
+                            </p>
+                            <p style={{ fontSize: "0.8125rem", fontStyle: "italic", color: "oklch(50% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                              {lang === "id" ? gift.realLife : lang === "nl" ? gift.realLifeNl : gift.realLifeEn}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -758,9 +856,11 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               const score = resultScores[key] ?? 0;
               if (!gift) return null;
               return (
-                <div key={key} style={{ borderLeft: `3px solid ${idx === 0 ? "#c27a2e" : "#ddd"}`, paddingLeft: "1rem", marginBottom: "1.25rem" }}>
+                <div key={key} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start", marginBottom: "1.25rem" }}>
+                  <div style={{ flexShrink: 0, width: "1.5rem", height: "1.5rem", borderRadius: "50%", background: idx === 0 ? "#c27a2e" : "#ddd", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", fontWeight: 800, color: idx === 0 ? "white" : "#888", marginTop: "0.1rem" }}>{idx + 1}</div>
+                  <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 800, fontSize: "1rem", color: "#1a1a2e", margin: "0 0 0.2rem" }}>
-                    {idx + 1}. {lang === "id" ? gift.label : lang === "nl" ? gift.nl : gift.en}
+                    {lang === "id" ? gift.label : lang === "nl" ? gift.nl : gift.en}
                     <span style={{ fontWeight: 500, fontSize: "0.78rem", color: "#c27a2e", marginLeft: "0.5rem" }}>{score}/12</span>
                   </p>
                   <p style={{ fontSize: "0.78rem", color: "#444", lineHeight: 1.6, margin: "0 0 0.4rem" }}>
@@ -769,6 +869,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                   <p style={{ fontSize: "0.75rem", fontStyle: "italic", color: "#888", margin: 0 }}>
                     {lang === "id" ? gift.realLife : lang === "nl" ? gift.realLifeNl : gift.realLifeEn}
                   </p>
+                  </div>
                 </div>
               );
             })}
@@ -798,7 +899,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   const progressPct = Math.round((Object.keys(answers).length / TOTAL_QUESTIONS) * 100);
   const isQuizStarted = Object.keys(answers).length > 0 || page > 0;
 
-  return (
+  if (!showQuiz) return (
     <div style={{ fontFamily: "var(--font-montserrat)" }}>
       <LangToggle />
       {/* ── HERO ── */}
@@ -850,96 +951,375 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
         </div>
       </div>
 
-      {!isQuizStarted && (
-        <div style={{ background: "white", padding: "4rem 1.5rem" }}>
-          <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-            {/* Biblical foundation */}
-            <div style={{ marginBottom: "3.5rem" }}>
-              <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", marginBottom: "0.75rem" }}>
-                {lang === "id" ? "Dasar Alkitab" : lang === "nl" ? "Bijbelse Grondslag" : "Biblical Foundation"}
+      {/* ── SECTION 1: GIFT FRAMEWORK + RING ── */}
+      <div style={{ background: "white", padding: "4rem 1.5rem" }}>
+        <div style={{ maxWidth: "780px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase" as const, marginBottom: "0.625rem", margin: "0 0 0.625rem" }}>
+            {lang === "id" ? "Kerangka Karunia" : lang === "nl" ? "Gavenframework" : "The Gift Framework"}
+          </p>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, color: "oklch(18% 0.05 260)", lineHeight: 1.1, marginBottom: "2.5rem" }}>
+            {lang === "id" ? "19 karunia. Empat keluarga." : lang === "nl" ? "19 gaven. Vier families." : "19 gifts. Four families."}
+          </h2>
+
+          <div style={{ display: "flex", gap: "3rem", alignItems: "flex-start", flexWrap: "wrap" }}>
+            <div style={{ flexShrink: 0, display: "flex", justifyContent: "center" }}>
+              <KaruniaRing illustrative lang={lang} size={196} showLegend={false} />
+            </div>
+
+            <div style={{ flex: 1, minWidth: "240px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: "0.875rem" }}>
+              {[
+                {
+                  cat: GIFT_CATEGORIES[0],
+                  desc: {
+                    en: "Care, presence, and practical love. The backbone of any cross-cultural team.",
+                    id: "Kepedulian, kehadiran, dan kasih praktis. Tulang punggung setiap tim lintas budaya.",
+                    nl: "Zorg, aanwezigheid en praktische liefde. De ruggengraat van elk intercultureel team.",
+                  },
+                },
+                {
+                  cat: GIFT_CATEGORIES[1],
+                  desc: {
+                    en: "The gifts of the Word — teaching, encouraging, wisdom, and knowledge.",
+                    id: "Karunia Firman — mengajar, mendorong, hikmat, dan pengetahuan.",
+                    nl: "De gaven van het Woord — onderwijzen, aanmoedigen, wijsheid en kennis.",
+                  },
+                },
+                {
+                  cat: GIFT_CATEGORIES[2],
+                  desc: {
+                    en: "The Spirit's direct activity — faith, healing, prophecy, miracles, tongues.",
+                    id: "Aktivitas langsung Roh — iman, penyembuhan, nubuat, mukjizat, bahasa roh.",
+                    nl: "De directe activiteit van de Geest — geloof, genezing, profetie, wonderen, tongen.",
+                  },
+                },
+                {
+                  cat: GIFT_CATEGORIES[3],
+                  desc: {
+                    en: "Gifts of direction and structure — apostleship, evangelism, shepherding, leadership.",
+                    id: "Karunia arah dan struktur — kerasulan, penginjilan, penggembalaan, kepemimpinan.",
+                    nl: "Gaven van richting en structuur — apostolaat, evangelisatie, herderschap, leiderschap.",
+                  },
+                },
+              ].map(({ cat, desc }) => (
+                <div key={cat.key} style={{ padding: "1rem 1.125rem", background: "oklch(97% 0.005 80)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.5rem" }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 800, color: cat.color, letterSpacing: "0.07em", textTransform: "uppercase" as const, margin: 0 }}>
+                      {cat.label[lang]}
+                    </p>
+                  </div>
+                  <p style={{ fontSize: "0.8125rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                    {desc[lang]}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── SECTION 2: COMPANION PIECE ── */}
+      <div style={{ background: BG_LIGHT, padding: "4rem 1.5rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
+            {lang === "id" ? "Tentang Penilaian Ini" : lang === "nl" ? "Over Deze Assessment" : "About This Assessment"}
+          </p>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.5rem, 3.5vw, 2rem)", fontWeight: 600, color: "oklch(18% 0.05 260)", lineHeight: 1.15, marginBottom: "2.5rem" }}>
+            {lang === "id"
+              ? "Karunia rohani bukan bakat alami. Ini adalah kemampuan yang diberikan oleh Roh Kudus."
+              : lang === "nl"
+              ? "Geestelijke gaven zijn geen natuurlijke talenten. Het zijn door de Geest gegeven vermogens."
+              : "Spiritual gifts are not natural talents. They are Spirit-given capacities for the body."}
+          </h2>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+            {/* What this assessment does */}
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
+                {lang === "id" ? "Apa yang diukur?" : lang === "nl" ? "Wat meet dit?" : "What does this measure?"}
               </p>
-              <h2 style={{ fontSize: "clamp(1.25rem, 3vw, 1.75rem)", fontWeight: 800, color: "oklch(18% 0.05 260)", lineHeight: 1.2, marginBottom: "1.25rem" }}>
+              <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: "0 0 0.875rem" }}>
                 {lang === "id"
-                  ? "Setiap orang percaya memiliki karunia. Kebanyakan belum pernah menemukannya."
-                  : lang === "nl" ? "Elke gelovige heeft een gave. De meesten hebben hem nooit ontdekt."
-                  : "Every believer has a gift. Most have never discovered it."}
-              </h2>
-              <p style={{ fontSize: "0.9375rem", color: "oklch(38% 0.008 260)", lineHeight: 1.8, marginBottom: "1.25rem" }}>
-                {lang === "id"
-                  ? "Perjanjian Baru mengajarkan dengan jelas bahwa setiap pengikut Kristus telah diberikan setidaknya satu karunia rohani — kemampuan yang diberdayakan oleh Roh, dirancang bukan untuk keuntungan pribadi, tetapi untuk membangun Tubuh Kristus dan memajukan Kerajaan-Nya."
-                  : lang === "nl" ? "Het Nieuwe Testament leert duidelijk dat elke volgeling van Christus ten minste één geestelijke gave heeft ontvangen — een door de Geest gegeven vermogen, ontworpen niet voor persoonlijk gewin, maar om het Lichaam van Christus op te bouwen en Zijn Koninkrijk vooruit te brengen."
-                  : "The New Testament teaches clearly that every follower of Christ has been given at least one spiritual gift — a Spirit-empowered ability designed not for personal gain, but to build up the Body of Christ and advance His Kingdom."}
+                  ? "Penilaian ini membantu kamu menemukan karunia rohani yang Allah berikan kepadamu untuk melayani Tubuh Kristus. Didasarkan pada tiga bagian utama Perjanjian Baru — Roma 12, 1 Korintus 12, dan Efesus 4 — tes ini mensurvei rasa panggilan, keyakinan, dan pengalamanmu di seluruh 19 karunia yang diakui."
+                  : lang === "nl"
+                  ? "Deze assessment helpt je de geestelijke gaven te ontdekken die God jou heeft gegeven om het Lichaam van Christus te dienen. Gebaseerd op drie primaire nieuwtestamentische passages — Romeinen 12, 1 Korinthiërs 12 en Efeziërs 4 — inventariseert de test jouw gevoel van roeping, overtuiging en recente ervaring in 19 erkende gaven."
+                  : "This assessment helps you discover the spiritual gifts God has given you for serving the body of Christ. Based on three primary New Testament passages — Romans 12, 1 Corinthians 12, and Ephesians 4 — the test surveys your sense of calling, conviction, and recent experience across 19 recognised gifts."}
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "1.25rem" }}>
-                {[
-                  VERSES.find(v => v.ref === "1 Corinthians 12 (key verses)")!,
-                  VERSES.find(v => v.ref === "Romans 12:6–8")!,
-                  VERSES.find(v => v.ref === "Ephesians 4:11–12")!,
-                ].map(verse => verse && (
-                  <VerseChip key={verse.ref} verse={verse} lang={lang} variant="tile" />
-                ))}
-              </div>
-              <p style={{ fontSize: "0.9375rem", color: "oklch(38% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
+              <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
                 {lang === "id"
-                  ? "Namun kebanyakan orang percaya melayani dari kebiasaan atau kewajiban, bukan dari kesadaran mendalam tentang bagaimana Allah secara unik merancang mereka. Penilaian ini membantumu mengidentifikasi bagaimana Allah telah merancangmu untuk melayani — sehingga kamu bisa memimpin dan memberi dengan lebih jelas, sukacita, dan berbuah."
-                  : lang === "nl" ? "Toch dienen de meeste gelovigen vanuit gewoonte of plicht, in plaats van vanuit een diep besef van hoe God hen uniek heeft bedraad. Deze assessment helpt je te identificeren hoe God je heeft ontworpen om te dienen — zodat je kunt leiden en geven met meer helderheid, vreugde en vrucht."
-                  : "Yet most believers serve from habit or obligation rather than from a deep awareness of how God has uniquely wired them. This assessment helps you identify how God has designed you to serve — so you can lead and give with greater clarity, joy, and fruitfulness."}
+                  ? "Karunia rohani berbeda dari bakat alami. Bakat alami adalah bagian dari cara Allah menciptakanmu; karunia rohani diberikan oleh Roh Kudus secara khusus untuk membangun Tubuh Kristus. Beberapa karunia tumpang tindih dengan kemampuan alami — seorang pengajar yang berbakat mungkin selalu menyukai menjelaskan sesuatu — tetapi karunia rohani adalah kemampuan yang diberdayakan Roh untuk menggunakan kemampuan itu bagi Kerajaan."
+                  : lang === "nl"
+                  ? "Geestelijke gaven zijn anders dan natuurlijke talenten. Een natuurlijk talent is onderdeel van hoe God je heeft gemaakt; een geestelijke gave wordt door de Heilige Geest specifiek gegeven om het Lichaam van Christus op te bouwen. Sommige gaven overlappen met natuurlijke bekwaamheid — een begaafde leraar vond uitleggen misschien altijd al leuk — maar de geestelijke gave is het door de Geest aangedreven vermogen om die bekwaamheid voor het Koninkrijk te gebruiken."
+                  : "Spiritual gifts are not natural talents. A natural talent is part of how God made you; a spiritual gift is given by the Holy Spirit specifically for building up the body of Christ. Some gifts overlap with natural ability — a gifted teacher may have always loved explaining things — but the spiritual gift is the Spirit-empowered capacity to use that ability for the Kingdom."}
               </p>
             </div>
 
-            {/* 19 gifts overview */}
+            {/* Verses */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+              {[
+                VERSES.find(v => v.ref === "1 Corinthians 12 (key verses)"),
+                VERSES.find(v => v.ref === "Romans 12:6–8"),
+                VERSES.find(v => v.ref === "Ephesians 4:11–12"),
+              ].map(verse => verse && (
+                <VerseChip key={verse.ref} verse={verse} lang={lang} variant="tile" />
+              ))}
+            </div>
+
+            {/* Cross-cultural teams */}
             <div>
-              <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", marginBottom: "1.5rem" }}>
-                {lang === "id" ? "19 Karunia yang Diukur" : lang === "nl" ? "19 Gaven Beoordeeld" : "19 Gifts Assessed"}
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
+                {lang === "id" ? "Mengapa ini penting untuk tim lintas budaya?" : lang === "nl" ? "Waarom is dit belangrijk voor interculturele teams?" : "Why does this matter for cross-cultural teams?"}
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem" }}>
-                {GIFT_OVERVIEW_ORDER.map(key => {
-                  const gift = GIFTS[key];
-                  const icon = GIFT_ICONS[key];
-                  if (!gift) return null;
-                  return (
-                    <div key={key} style={{ border: `1px solid ${BORDER}`, padding: "1.125rem 1.25rem", background: BG_LIGHT, display: "flex", gap: "1rem", alignItems: "flex-start" }}>
-                      <div style={{ width: "2rem", height: "2rem", color: PRIMARY, flexShrink: 0 }}>
-                        {icon}
-                      </div>
-                      <div>
-                        <p style={{ fontWeight: 800, fontSize: "0.875rem", color: "oklch(18% 0.05 260)", marginBottom: "0.25rem" }}>
-                          {lang === "id" ? gift.label : lang === "nl" ? gift.nl : gift.en}
-                        </p>
-                        <p style={{ fontSize: "0.8125rem", color: "oklch(45% 0.008 260)", lineHeight: 1.65, margin: "0 0 0.4rem" }}>
-                          {lang === "id" ? gift.desc : lang === "nl" ? gift.descNl : gift.descEn}
-                        </p>
-                        <p style={{ fontSize: "0.75rem", fontStyle: "italic", color: "oklch(55% 0.008 260)", margin: 0, lineHeight: 1.55 }}>
-                          {lang === "id" ? gift.realLife : lang === "nl" ? gift.realLifeNl : gift.realLifeEn}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+              <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: "0 0 0.875rem" }}>
+                {lang === "id"
+                  ? "Tim lintas budaya yang mengetahui karunia rohani setiap anggota membuat penugasan yang lebih baik. Rekan dengan karunia belas kasihan diminta mendampingi keluarga yang berduka. Rekan dengan karunia administrasi diminta merencanakan retreat tim. Rekan dengan karunia iman diminta memimpin di musim ketika anggaran tampak mustahil."
+                  : lang === "nl"
+                  ? "Interculturele teams die de geestelijke gaven van elk teamlid kennen, maken betere toewijzingen. De teamgenoot met de gave van barmhartigheid wordt gevraagd om bij de rouwende familie te zijn. De teamgenoot met de gave van bestuur wordt gevraagd om de teamretraite te plannen. De teamgenoot met de gave van geloof wordt gevraagd te leiden in seizoenen waarin het budget onmogelijk lijkt."
+                  : "Cross-cultural teams that know each member's spiritual gifts make better assignments. The mercy-gifted teammate is asked to walk with the grieving family. The administration-gifted teammate is asked to plan the team retreat. The faith-gifted teammate is asked to lead in seasons when the budget looks impossible."}
+              </p>
+              <p style={{ fontSize: "0.9375rem", color: "oklch(35% 0.008 260)", lineHeight: 1.8, margin: 0 }}>
+                {lang === "id"
+                  ? "Tim lintas budaya juga melihat karunia yang berbeda muncul dalam konteks yang berbeda. Rekan tanpa sejarah penginjilan mungkin menemukan karunia itu di budaya baru. Tes ini menunjukkan apa yang saat ini aktif — bukan apa yang aktif dulu."
+                  : lang === "nl"
+                  ? "Interculturele teams zien ook verschillende gaven opkomen in verschillende contexten. Een teamgenoot zonder geschiedenis van evangelisatie kan de gave ontdekken in een nieuwe cultuur. De test laat zien wat nu operationeel is — niet wat vroeger operationeel was."
+                  : "Cross-cultural teams also see different gifts emerge in different contexts. A teammate with no history of evangelism may discover the gift in a new culture. The test surfaces what is operative now, not what was operative then."}
+              </p>
+            </div>
+
+            {/* How to read results */}
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.75rem" }}>
+                {lang === "id" ? "Cara membaca hasilmu" : lang === "nl" ? "Hoe lees je jouw resultaten" : "How to read your results"}
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+                {(lang === "id" ? [
+                  "Baca tiga karunia teratasmu sebagai karunia yang saat ini digunakan Roh melaluimu. Mereka mungkin berubah di berbagai musim kehidupan dan pelayanan.",
+                  "Skor rendah pada suatu karunia bukan penilaian terhadap kerohanian kamu — itu hanya berarti karunia itu bukan instrumen utamamu.",
+                  "Beberapa karunia (terutama Bahasa Roh, Penyembuhan, Mukjizat, dan Nubuat) datang dengan keberagaman teologis di gereja yang lebih luas. Baca skor tersebut dengan hati-hati, dalam percakapan dengan tradisi gereja lokalmu.",
+                ] : lang === "nl" ? [
+                  "Lees je top drie gaven als de gaven die de Geest nu door jou gebruikt. Ze kunnen verschuiven over seizoenen van leven en bediening.",
+                  "Een lage score op een gave is geen oordeel over jouw geestelijkheid — het betekent simpelweg dat die gave niet jouw primaire instrument is.",
+                  "Sommige gaven (met name Tongen, Genezing, Wonderen en Profetie) gaan gepaard met theologische diversiteit in de bredere kerk. Lees die scores zorgvuldig, in gesprek met jouw plaatselijke kerktraditie.",
+                ] : [
+                  "Read your top three gifts as the gifts the Spirit is currently using through you. They may shift across seasons of life and ministry.",
+                  "A low score on a gift is not a verdict on your spirituality — it simply means that gift is not your primary instrument.",
+                  "Some gifts (especially Tongues, Healing, Miracles, and Prophecy) come with theological diversity in the wider church. Read those scores with care, in conversation with your local church tradition.",
+                ]).map((point, i) => (
+                  <div key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, color: PRIMARY, flexShrink: 0, marginTop: "0.15rem" }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p style={{ fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.7, margin: 0 }}>
+                      {point}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* ── QUESTIONS ── */}
-      <div style={{ background: BG_LIGHT, padding: "3rem 1.5rem" }}>
+      {/* ── SECTION 3: BIBLICAL ANCHORS ── */}
+      <div style={{ background: "white", padding: "4rem 1.5rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-          <div style={{ marginBottom: "2rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-              <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "oklch(52% 0.008 260)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                {lang === "id" ? `Pernyataan ${pageStart}–${pageEnd} dari ${TOTAL_QUESTIONS}` : lang === "nl" ? `Uitspraken ${pageStart}–${pageEnd} van ${TOTAL_QUESTIONS}` : `Statements ${pageStart}–${pageEnd} of ${TOTAL_QUESTIONS}`}
-              </span>
-              <span style={{ fontSize: "0.72rem", fontWeight: 700, color: PRIMARY }}>
-                {progressPct}%
-              </span>
-            </div>
-            <div style={{ height: "4px", background: BORDER, overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${progressPct}%`, background: PRIMARY, transition: "width 0.3s ease" }} />
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
+            {lang === "id" ? "Tokoh Alkitab" : lang === "nl" ? "Bijbelse Voorbeelden" : "Scripture in Focus"}
+          </p>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.5rem, 3.5vw, 2rem)", fontWeight: 600, color: "oklch(18% 0.05 260)", lineHeight: 1.15, marginBottom: "2.5rem" }}>
+            {lang === "id"
+              ? "Satu tokoh Alkitab. Satu kategori karunia. Empat model."
+              : lang === "nl"
+              ? "Eén bijbelse figuur. Eén gave-categorie. Vier modellen."
+              : "One biblical figure. One gift category. Four models."}
+          </h2>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.25rem" }}>
+            {[
+              {
+                cat: GIFT_CATEGORIES[0],
+                figure: "Tabitha",
+                ref: { en: "Acts 9", id: "Kisah 9", nl: "Handelingen 9" },
+                reflection: {
+                  en: "Tabitha is the Bible's clearest portrait of the serving gifts. Acts 9 calls her a disciple full of good works and acts of charity. She made garments for the widows of Joppa — practical, repeated, unseen service that built the church through the everyday. When she died, the widows showed Peter the clothes she had made. Her gift was visible only in what she had given. Serving-gift leaders learn from Tabitha: the work that no one applauds is often the work that holds the church together.",
+                  id: "Tabitha adalah gambaran paling jelas dalam Alkitab tentang karunia melayani. Kisah Para Rasul 9 menyebutnya seorang murid yang penuh dengan perbuatan baik dan pemberian sedekah. Ia membuat pakaian untuk para janda di Yopa — pelayanan praktis, berulang, dan tersembunyi yang membangun gereja melalui hal-hal sehari-hari. Ketika ia meninggal, para janda menunjukkan kepada Petrus pakaian yang telah dibuatnya. Karunianya terlihat hanya dari apa yang telah ia berikan. Pemimpin dengan karunia melayani belajar dari Tabitha: pekerjaan yang tidak ada yang tepuktangani sering kali adalah pekerjaan yang menjaga gereja tetap bersatu.",
+                  nl: "Tabitha is het duidelijkste portret in de Bijbel van de dienende gaven. Handelingen 9 noemt haar een discipel vol goede werken en liefdadigheid. Ze maakte kleding voor de weduwen van Joppe — praktische, herhaalde, onzichtbare dienst die de gemeente opbouwde via het alledaagse. Toen ze stierf, lieten de weduwen Petrus de kleding zien die ze had gemaakt. Haar gave was alleen zichtbaar in wat ze had gegeven. Leiders met dienende gaven leren van Tabitha: het werk dat niemand applaudisseert, is vaak het werk dat de gemeente bijeenhoudt.",
+                },
+              },
+              {
+                cat: GIFT_CATEGORIES[1],
+                figure: "Apollos",
+                ref: { en: "Acts 18", id: "Kisah 18", nl: "Handelingen 18" },
+                reflection: {
+                  en: "Apollos arrived in Ephesus an eloquent man, mighty in the Scriptures (Acts 18). Priscilla and Aquila took him aside and explained the way of God more accurately — and his gift grew through correction. He went on to water what Paul had planted in Corinth, refuting the Jews publicly with the Scriptures. Speaking-gift leaders learn from Apollos: eloquence is a real gift, but it is shaped by submission to those who know more, not by self-assurance.",
+                  id: "Apolos tiba di Efesus sebagai seorang yang fasih berbicara, mahir dalam Kitab Suci (Kisah Para Rasul 18). Priskila dan Akwila membawanya ke samping dan menjelaskan jalan Allah dengan lebih tepat — dan karunianya bertumbuh melalui koreksi. Ia kemudian menyirami apa yang Paulus telah tanam di Korintus, menyangkal orang-orang Yahudi di muka umum dengan Kitab Suci. Pemimpin dengan karunia berbicara belajar dari Apolos: kefasihan adalah karunia nyata, tetapi ia dibentuk oleh ketundukan kepada mereka yang lebih tahu, bukan oleh kepercayaan diri sendiri.",
+                  nl: "Apollos arriveerde in Efeze als een welsprekend man, bedreven in de Schriften (Handelingen 18). Priscilla en Aquila namen hem apart en legden hem de weg van God nauwkeuriger uit — en zijn gave groeide door correctie. Hij ging vervolgens begieten wat Paulus had geplant in Korinthe, en weerlegde de Joden publiekelijk met de Schriften. Leiders met sprekende gaven leren van Apollos: welsprekendheid is een echte gave, maar ze wordt gevormd door onderwerping aan degenen die meer weten, niet door zelfverzekerdheid.",
+                },
+              },
+              {
+                cat: GIFT_CATEGORIES[2],
+                figure: lang === "id" ? "Filipus" : "Philip",
+                ref: { en: "Acts 8", id: "Kisah 8", nl: "Handelingen 8" },
+                reflection: {
+                  en: "Philip went down to Samaria and proclaimed Christ — and Acts 8 records that signs followed: unclean spirits cast out, paralytics and the lame healed, great joy in the city. The same Philip later ran beside the Ethiopian eunuch's chariot, opened the Scriptures to him, and was caught up by the Spirit and found at Azotus. The manifestation gifts in his life served the gospel, not his reputation. Manifestation-gift leaders learn from Philip: the sign points, then steps aside.",
+                  id: "Filipus pergi ke Samaria dan memberitakan Kristus — dan Kisah Para Rasul 8 mencatat bahwa tanda-tanda mengikutinya: roh-roh jahat diusir keluar, orang-orang lumpuh dan pincang disembuhkan, sukacita besar di kota itu. Filipus yang sama kemudian berlari di samping kereta sida-sida dari Etiopia, membuka Kitab Suci baginya, dan diangkat oleh Roh dan ditemukan di Azotus. Karunia manifestasi dalam hidupnya melayani Injil, bukan reputasinya. Pemimpin dengan karunia manifestasi belajar dari Filipus: tanda menunjuk, lalu menyingkir.",
+                  nl: "Filippus ging naar Samaria en verkondigde Christus — en Handelingen 8 registreert dat tekenen volgden: onreine geesten werden uitgedreven, verlamden en kreupelen werden genezen, grote blijdschap in de stad. Dezelfde Filippus liep later naast de wagen van de Ethiopische kamerling, opende de Schriften voor hem, en werd door de Geest weggevoerd en gevonden in Azotos. De manifestatiegaven in zijn leven dienden het evangelie, niet zijn reputatie. Leiders met manifestatiegaven leren van Filippus: het teken wijst, daarna treedt het opzij.",
+                },
+              },
+              {
+                cat: GIFT_CATEGORIES[3],
+                figure: lang === "id" ? "Nehemia" : lang === "nl" ? "Nehemia" : "Nehemiah",
+                ref: { en: "Nehemiah 1–6", id: "Nehemia 1–6", nl: "Nehemia 1–6" },
+                reflection: {
+                  en: "Nehemiah is the leading-gift anchor. He cast vision (rebuild the wall), administrated work crews by family group, mobilised resources from the king of Persia, taught the people their covenant alongside Ezra, shepherded morale through opposition, and stayed long enough to see the work consolidated. His gift mix covers leadership and administration in equal measure. Leading-gift leaders learn from Nehemiah: vision without administration is wishful, administration without vision is bureaucracy.",
+                  id: "Nehemia adalah jangkar karunia memimpin. Ia menyampaikan visi (membangun kembali tembok), mengadministrasikan tim kerja per kelompok keluarga, memobilisasi sumber daya dari raja Persia, mengajarkan perjanjian kepada umat bersama Ezra, memimpin semangat di tengah tentangan, dan tinggal cukup lama untuk melihat pekerjaan terkonsolidasi. Perpaduan karunianya mencakup kepemimpinan dan administrasi secara setara. Pemimpin dengan karunia memimpin belajar dari Nehemia: visi tanpa administrasi hanya angan-angan, administrasi tanpa visi adalah birokrasi.",
+                  nl: "Nehemia is het ankerpunt van de leiderschapsgaven. Hij formuleerde de visie (herbouw de muur), administreerde werkploegen per familiegroep, mobiliseerde middelen van de koning van Perzië, leerde het volk hun verbond samen met Ezra, stuurde het moreel door tegenstand, en bleef lang genoeg om het werk geconsolideerd te zien. Zijn gavencombinatie omvat leiderschap en administratie in gelijke mate. Leiders met leiderschapsgaven leren van Nehemia: visie zonder administratie is wensdenken, administratie zonder visie is bureaucratie.",
+                },
+              },
+            ].map(({ cat, figure, ref, reflection }) => (
+              <div key={cat.key} style={{ background: "oklch(97% 0.005 80)", padding: "1.5rem 1.5rem 1.25rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.875rem" }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 800, color: cat.color, letterSpacing: "0.09em", textTransform: "uppercase" as const, margin: 0 }}>
+                    {cat.label[lang]}
+                  </p>
+                </div>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.375rem", fontWeight: 700, color: "oklch(18% 0.05 260)", lineHeight: 1.1, margin: "0 0 0.5rem" }}>
+                  {figure}
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 600, color: "oklch(62% 0.008 260)", margin: "0 0 0.875rem" }}>
+                  {ref[lang]}
+                </p>
+                <p style={{ fontSize: "0.8125rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
+                  {reflection[lang]}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── SECTION 4: THEOLOGICAL CAVEAT ── */}
+      <div style={{ background: "oklch(96% 0.07 80)", padding: "3rem 1.5rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(55% 0.14 70)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "0.125rem" }}>
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 800, letterSpacing: "0.08em", color: "oklch(42% 0.12 70)", textTransform: "uppercase" as const, margin: "0 0 0.625rem" }}>
+                {lang === "id" ? "Catatan Teologis" : lang === "nl" ? "Theologische Kanttekening" : "Theological Note"}
+              </p>
+              <p style={{ fontSize: "0.9rem", color: "oklch(32% 0.10 70)", lineHeight: 1.75, margin: 0 }}>
+                {lang === "id"
+                  ? "Orang Kristen memiliki pandangan berbeda tentang apakah semua karunia dalam 1 Korintus 12 masih beroperasi dengan cara yang sama hari ini. Tradisi sesionis percaya bahwa karunia tanda berhenti bersama usia apostolik. Tradisi kontinuasionis percaya semua karunia terus berlanjut. Modul ini tidak memihak. Ia mensurvei karunia seperti yang tercantum dalam Kitab Suci dan melaporkan karunia yang kamu rasakan paling aktif dalam hidupmu dan pelayananmu. Bacalah hasilmu dalam percakapan dengan tradisi gereja lokalmu."
+                  : lang === "nl"
+                  ? "Christenen hebben verschillende opvattingen over of alle gaven uit 1 Korinthiërs 12 vandaag nog op dezelfde manier functioneren. Cessationistische tradities geloven dat de tekengaven ophielden met het apostolische tijdperk. Continuationistische tradities geloven dat alle gaven doorgaan. Deze module neemt geen standpunt in. Ze inventariseert de gaven zoals vermeld in de Schrift en rapporteert de gaven die je het meest actief voelt in je eigen leven en bediening. Lees je resultaten in gesprek met de traditie van jouw plaatselijke kerk."
+                  : "Christians hold different views on whether all the gifts in 1 Corinthians 12 still operate in the same way today. Cessationist traditions believe the sign gifts ceased with the apostolic age. Continuationist traditions believe all the gifts continue. This module does not take a side. It surveys the gifts as listed in Scripture and reports the gifts you sense most active in your own life and ministry. Hold your results in conversation with your local church tradition."}
+              </p>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div style={{ background: "white", border: `1px solid ${BORDER}`, padding: "0.875rem 1.25rem", marginBottom: "2rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
+      {/* ── SECTION 5: CTA ── */}
+      <div style={{ background: BG_DARK, padding: "4rem 1.5rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" as const }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, color: "white", lineHeight: 1.15, marginBottom: "0.875rem" }}>
+            {lang === "id"
+              ? "Siap menemukan karuniamu?"
+              : lang === "nl"
+              ? "Klaar om jouw gaven te ontdekken?"
+              : "Ready to discover your gifts?"}
+          </h2>
+          <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, marginBottom: "2rem" }}>
+            {lang === "id"
+              ? "76 pernyataan. Sekitar 20 menit. Hasilmu disimpan ke dashboard untuk referensi tim."
+              : lang === "nl"
+              ? "76 uitspraken. Circa 20 minuten. Je resultaten worden opgeslagen in het dashboard voor teamreferentie."
+              : "76 statements. Around 20 minutes. Your results are saved to your dashboard for team reference."}
+          </p>
+          <button
+            onClick={() => { setShowQuiz(true); scrollTop(); }}
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.875rem",
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase" as const,
+              color: BG_DARK,
+              background: PRIMARY,
+              padding: "0.875rem 2rem",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            {lang === "id" ? "Ikuti Tes →" : lang === "nl" ? "Doe de Test →" : "Take the Test →"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── QUIZ VIEW ──────────────────────────────────────────────────────────────
+  return (
+    <div style={{ fontFamily: "var(--font-montserrat)", minHeight: "100vh", background: BG_LIGHT }}>
+
+      {/* Quiz header */}
+      <div style={{ background: "white", borderBottom: `1px solid ${BORDER}`, padding: "0.875rem 1.5rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
+          <button
+            onClick={() => { setShowQuiz(false); scrollTop(); }}
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase" as const,
+              color: "oklch(52% 0.008 260)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.375rem",
+              padding: 0,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            {lang === "id" ? "Kembali ke Materi" : lang === "nl" ? "Terug naar Inhoud" : "Back to Learning"}
+          </button>
+          <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", color: PRIMARY, textTransform: "uppercase" as const, margin: 0 }}>
+            {lang === "id" ? "Tes Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven Test" : "Spiritual Gifts Test"}
+          </p>
+          <KaruniaLangToggle />
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div style={{ background: "white", padding: "1rem 1.5rem 0" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+            <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "oklch(52% 0.008 260)", letterSpacing: "0.06em", textTransform: "uppercase" as const }}>
+              {lang === "id" ? `Pernyataan ${pageStart}–${pageEnd} dari ${TOTAL_QUESTIONS}` : lang === "nl" ? `Uitspraken ${pageStart}–${pageEnd} van ${TOTAL_QUESTIONS}` : `Statements ${pageStart}–${pageEnd} of ${TOTAL_QUESTIONS}`}
+            </span>
+            <span style={{ fontSize: "0.72rem", fontWeight: 700, color: PRIMARY }}>
+              {progressPct}%
+            </span>
+          </div>
+          <div style={{ height: "4px", background: BORDER }}>
+            <div style={{ height: "100%", width: `${progressPct}%`, background: PRIMARY, transition: "width 0.3s ease" }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Questions */}
+      <div style={{ padding: "2rem 1.5rem" }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+
+          <div style={{ background: "white", border: `1px solid ${BORDER}`, padding: "0.875rem 1.25rem", marginBottom: "1.75rem", display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
             {ratingLabels.map((label, i) => (
               <span key={i} style={{ fontSize: "0.72rem", color: "oklch(52% 0.008 260)", fontWeight: 600 }}>
                 <span style={{ fontWeight: 800, color: PRIMARY }}>{i}</span> = {label}
@@ -947,7 +1327,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
             ))}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "2.5rem" }}>
             {pageQuestions.map(qNum => {
               const selected = answers[qNum];
               const q = QUESTIONS[qNum - 1];
@@ -1000,7 +1380,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                   fontSize: "0.78rem",
                   fontWeight: 700,
                   letterSpacing: "0.06em",
-                  textTransform: "uppercase",
+                  textTransform: "uppercase" as const,
                   background: "transparent",
                   color: PRIMARY,
                   border: `1px solid ${PRIMARY}`,
@@ -1022,7 +1402,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 fontSize: "0.78rem",
                 fontWeight: 700,
                 letterSpacing: "0.06em",
-                textTransform: "uppercase",
+                textTransform: "uppercase" as const,
                 background: allPageAnswered ? PRIMARY : "oklch(82% 0.04 80)",
                 color: "white",
                 border: "none",
@@ -1038,7 +1418,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
           </div>
 
           {!allPageAnswered && (
-            <p style={{ fontSize: "0.72rem", color: "oklch(62% 0.008 260)", marginTop: "0.875rem", textAlign: "right" }}>
+            <p style={{ fontSize: "0.72rem", color: "oklch(62% 0.008 260)", marginTop: "0.875rem", textAlign: "right" as const }}>
               {lang === "id"
                 ? "Jawab semua pernyataan di halaman ini untuk melanjutkan."
                 : lang === "nl" ? "Beantwoord alle uitspraken op deze pagina om verder te gaan."
