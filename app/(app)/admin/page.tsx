@@ -35,7 +35,6 @@ const CONTENT_MODULES: ContentGroup[] = [
       { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
       { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
       { slug: "enneagram", title: "Enneagram", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "myers-briggs", title: "Myers-Briggs", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
       { slug: "big-five", title: "Big Five", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
       { slug: "16-personalities", title: "16 Personalities", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
     ],

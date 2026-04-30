@@ -8,7 +8,7 @@ const RESOURCE_MAPPINGS = {
   'three-thinking-styles': 'three-thinking-styles',
   'karunia-rohani': 'karunia-rohani',
   'enneagram': 'enneagram',
-  'myers-briggs': 'myers-briggs',
+
   'big-five': 'big-five',
   '16-personalities': '16-personalities',
   'cultural-intelligence': 'cultural-intelligence',

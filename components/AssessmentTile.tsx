@@ -5,7 +5,7 @@ import { DISCChart } from './charts/DISCChart';
 import { WheelOfLifeChart } from './charts/WheelOfLifeChart';
 import { ThinkingStylesChart } from './charts/ThinkingStylesChart';
 import { EnneagramBadge } from './charts/EnneagramBadge';
-import { MyersBriggsBadge } from './charts/MyersBriggsBadge';
+
 import { PersonalitiesBadge } from './charts/PersonalitiesBadge';
 import { BigFiveChart } from './charts/BigFiveChart';
 import { SpiritualGiftsBadge } from './charts/SpiritualGiftsBadge';
@@ -26,7 +26,7 @@ const chartComponents: Record<AssessmentType, React.ComponentType<{result: any}>
   'wheel-of-life': WheelOfLifeChart,
   'thinking-styles': ThinkingStylesChart,
   'enneagram': EnneagramBadge,
-  'myers-briggs': MyersBriggsBadge,
+
   '16-personalities': PersonalitiesBadge,
   'big-five': BigFiveChart,
   'spiritual-gifts': SpiritualGiftsBadge,

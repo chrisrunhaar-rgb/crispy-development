@@ -8,7 +8,7 @@ const ASSESSMENTS = [
   { id: "karunia-rohani", label: "Karunia Rohani", description: "Spiritual gifts assessment (EN/ID)", live: true },
   { id: "three-thinking-styles", label: "Three Thinking Styles", description: "How your team thinks & solves problems", live: true },
   { id: "wheel-of-life", label: "Wheel of Life", description: "Holistic life balance assessment", live: true },
-  { id: "myers-briggs", label: "Myers-Briggs (MBTI)", description: "Personality type framework", live: true },
+
   { id: "16-personalities", label: "16 Personalities", description: "In-depth personality profiles", live: true },
   { id: "enneagram", label: "Enneagram", description: "Core motivations & growth paths", live: true },
   { id: "big-five", label: "Big Five (OCEAN)", description: "Five-factor personality traits", live: true },

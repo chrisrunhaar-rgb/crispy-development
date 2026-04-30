@@ -178,16 +178,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     contentUrl: "/team/three-thinking-styles",
     insertAfter: 4,
   },
-  "myers-briggs": {
-    title: "Myers-Briggs (MBTI)",
-    description: "Explore personality types and how your team members are energised, perceive the world, and make decisions.",
-    type: "assessment",
-    icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
-    collectsData: true,
-    dataLabel: "MBTI Type",
-    contentUrl: "/team/myers-briggs",
-    insertAfter: 4,
-  },
+
   "16-personalities": {
     title: "16 Personalities",
     description: "In-depth personality profiles that reveal how your team members think, feel, and interact in work and relationships.",

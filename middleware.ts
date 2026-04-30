@@ -84,7 +84,7 @@ export async function middleware(request: NextRequest) {
     "team-health", "six-thinking-hats", "debriefing-reflection",
     "escaping-the-comfort-zone", "emotional-intelligence", "johari-window",
     "decision-making", "cognitive-biases",
-    "disc", "three-thinking-styles", "big-five", "myers-briggs",
+    "disc", "three-thinking-styles", "big-five",
     "sabbath-leadership",
     "enneagram", "16-personalities", "wheel-of-life", "karunia-rohani",
     // multi-part resources

@@ -1098,31 +1098,247 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
   );
 }
 
+// ── 16 Personalities type data for dashboard ─────────────────────────────────
+const P16_COLORS: Record<string, string> = {
+  INTJ: "oklch(48% 0.20 260)", INTP: "oklch(48% 0.18 240)",
+  ENTJ: "oklch(50% 0.22 25)",  ENTP: "oklch(58% 0.20 45)",
+  INFJ: "oklch(48% 0.22 295)", INFP: "oklch(52% 0.18 10)",
+  ENFJ: "oklch(52% 0.18 155)", ENFP: "oklch(60% 0.18 65)",
+  ISTJ: "oklch(45% 0.14 215)", ISFJ: "oklch(50% 0.16 185)",
+  ESTJ: "oklch(48% 0.18 195)", ESFJ: "oklch(55% 0.18 35)",
+  ISTP: "oklch(50% 0.15 145)", ISFP: "oklch(55% 0.18 150)",
+  ESTP: "oklch(58% 0.20 55)",  ESFP: "oklch(62% 0.20 48)",
+};
+const P16_SUBTITLES: Record<string, string> = {
+  INTJ: "The Architect",   INTP: "The Logician",
+  ENTJ: "The Commander",  ENTP: "The Debater",
+  INFJ: "The Advocate",   INFP: "The Mediator",
+  ENFJ: "The Protagonist", ENFP: "The Campaigner",
+  ISTJ: "The Logistician", ISFJ: "The Protector",
+  ESTJ: "The Executive",  ESFJ: "The Consul",
+  ISTP: "The Virtuoso",   ISFP: "The Adventurer",
+  ESTP: "The Entrepreneur", ESFP: "The Entertainer",
+};
+const P16_SHORT: Record<string, string> = {
+  INTJ: "Independent, strategic thinkers who see five steps ahead. Excellent strategists — invite them into pastoral conversations, don't assume they'll step forward.",
+  INTP: "Curious, precise, and analytical. Strong at systems thinking, slower to commit. Pair with action-oriented teammates to translate insight into execution.",
+  ENTJ: "Decisive, organised, results-driven. Rise to leadership quickly. Need to slow down and listen before deciding for everyone.",
+  ENTP: "Energetic, idea-rich, challenge-loving. Best paired with someone who turns ideas into plans. Can wear out teammates who need stability.",
+  INFJ: "Quiet, principled, deeply purposeful. Often the conscience of the team. Guard against burnout from carrying others' burdens silently.",
+  INFP: "Gentle, values-driven, creative. Rarely volunteer their inner world — invite it. When given room, they bring depth others cannot.",
+  ENFJ: "Warm, persuasive, people-focused. Skilled at calling out the best in others. Remember not everyone wants to be developed all the time.",
+  ENFP: "Enthusiastic, imaginative, relational. Need help finishing what they start — pair well with a Judger who carries projects across the line.",
+  ISTJ: "Reliable, thorough, loyal to systems. The backbone of many ministry teams — finances, logistics, follow-through. Tell them the why, not just the what.",
+  ISFJ: "Quiet servants who notice what others miss. Often the unseen carers. Need to be invited into the spotlight, not assumed to be content in the shadows.",
+  ESTJ: "Organised, direct, accountable. Make plans happen and hold others to commitments. Soften delivery in high-context cultures.",
+  ESFJ: "Warm, sociable, devoted to group wellbeing. The team's host and connector. Can take criticism personally — need reassurance more than rebuke.",
+  ISTP: "Practical, calm under pressure, competent. Fixes what's broken. Draw them into the relational layer — they won't push their way in.",
+  ISFP: "Quiet, kind, aesthetically sensitive. Leads through example. Need to be asked — they rarely volunteer their thoughts.",
+  ESTP: "Action-focused, bold, energising. Excellent in pioneer settings. Need to plan past the next twenty-four hours when others depend on them.",
+  ESFP: "Warm, spontaneous, present-focused. Lifts the room when it's heavy. Need help with long-term follow-through on quiet commitments.",
+};
+const P16_DICHOTOMY_LABELS: Record<string, string> = {
+  EI_A: "E — Extraversion", EI_B: "I — Introversion",
+  SN_A: "S — Sensing",      SN_B: "N — Intuition",
+  TF_A: "T — Thinking",     TF_B: "F — Feeling",
+  JP_A: "J — Judging",      JP_B: "P — Perceiving",
+};
+
+function Personalities16Tile({
+  personalityType,
+  scores,
+  lang,
+  done,
+}: {
+  personalityType: string | null;
+  scores: Record<string, number> | null;
+  lang: "en" | "id" | "nl";
+  done: boolean;
+}) {
+  const [flipped, setFlipped] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const TILE_H = 165;
+  const typeColor = personalityType ? (P16_COLORS[personalityType] ?? navy) : navy;
+  const subtitle = personalityType ? (P16_SUBTITLES[personalityType] ?? "") : "";
+  const shortOverview = personalityType ? (P16_SHORT[personalityType] ?? "") : "";
+
+  const faceBase: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    borderRadius: 12,
+    padding: "0.875rem",
+    display: "flex",
+    flexDirection: "column",
+    backfaceVisibility: "hidden",
+    WebkitBackfaceVisibility: "hidden",
+  };
+
+  if (!done) {
+    return (
+      <div style={{
+        background: offWhite, border: "1px solid oklch(91% 0.006 80)", borderRadius: 12,
+        padding: "0.875rem", display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "space-between", gap: "0.5rem", minHeight: TILE_H,
+      }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(58% 0.008 260)", width: "100%" }}>
+          {lang === "id" ? "16 Kepribadian" : lang === "nl" ? "16 Persoonlijkheden" : "16 Personalities"}
+        </p>
+        <EmptyTileVisual />
+        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }}>
+          Take test →
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{ position: "relative", height: TILE_H, perspective: "800px" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{
+        position: "absolute", inset: 0,
+        transformStyle: "preserve-3d",
+        transition: "transform 0.45s cubic-bezier(0.4,0.2,0.2,1)",
+        transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+      }}>
+
+        {/* FRONT */}
+        <div style={{
+          ...faceBase,
+          background: "white",
+          border: `1px solid oklch(88% 0.006 80)`,
+          borderTop: `3px solid ${typeColor}`,
+          boxShadow: hovered ? "0 8px 24px oklch(22% 0.10 260 / 0.12)" : "0 1px 4px oklch(0% 0 0 / 0.04)",
+          transform: "rotateY(0deg)",
+          cursor: "pointer",
+          justifyContent: "space-between",
+        }} onClick={() => setFlipped(true)}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: navy, width: "100%" }}>
+            {lang === "id" ? "16 Kepribadian" : lang === "nl" ? "16 Persoonlijkheden" : "16 Personalities"}
+          </p>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.25rem" }}>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.75rem", fontWeight: 900, color: typeColor, lineHeight: 1 }}>
+              {personalityType}
+            </span>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 500, color: "oklch(48% 0.008 260)" }}>
+              {subtitle}
+            </span>
+          </div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "oklch(62% 0.008 260)", alignSelf: "flex-end" }}>
+            Tap for details →
+          </p>
+        </div>
+
+        {/* BACK */}
+        <div style={{
+          ...faceBase,
+          background: offWhite,
+          border: `1px solid oklch(88% 0.006 80)`,
+          transform: "rotateY(180deg)",
+          justifyContent: "space-between",
+          overflow: "hidden",
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: typeColor, marginBottom: "0.2rem" }}>
+                {personalityType}
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, color: navy }}>
+                {subtitle}
+              </p>
+            </div>
+            <button onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
+              style={{ background: "none", border: "none", fontSize: "0.7rem", color: "oklch(55% 0.008 260)", cursor: "pointer", padding: "0 0.25rem", lineHeight: 1 }}>
+              ×
+            </button>
+          </div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", lineHeight: 1.55, color: "oklch(38% 0.008 260)", flex: 1, marginBlock: "0.5rem", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical" }}>
+            {shortOverview}
+          </p>
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <Link href="/resources/16-personalities"
+              style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.35rem 0.75rem", borderRadius: 5, textDecoration: "none", whiteSpace: "nowrap" }}>
+              {lang === "id" ? "Modul →" : lang === "nl" ? "Module →" : "More info →"}
+            </Link>
+            <Link href="/resources/16-personalities"
+              style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: "oklch(48% 0.008 260)", textDecoration: "none", whiteSpace: "nowrap" }}>
+              {lang === "id" ? "Ulangi →" : lang === "nl" ? "Opnieuw →" : "Retake →"}
+            </Link>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type: "16personalities" }>; onClose: () => void }) {
   const { personalityType, scores, lang } = data;
+  const typeColor = P16_COLORS[personalityType] ?? navy;
+  const subtitle = P16_SUBTITLES[personalityType] ?? "";
+  const shortOverview = P16_SHORT[personalityType] ?? "";
+
+  const DICHOTOMY_PAIRS = [
+    { a: "EI_A", b: "EI_B", label: lang === "id" ? "Energi" : lang === "nl" ? "Energie" : "Energy" },
+    { a: "SN_A", b: "SN_B", label: lang === "id" ? "Informasi" : lang === "nl" ? "Informatie" : "Information" },
+    { a: "TF_A", b: "TF_B", label: lang === "id" ? "Keputusan" : lang === "nl" ? "Besluiten" : "Decisions" },
+    { a: "JP_A", b: "JP_B", label: lang === "id" ? "Struktur" : lang === "nl" ? "Structuur" : "Structure" },
+  ];
+
   return (
     <>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        Personality Type
-      </p>
-      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
-        {personalityType}
-      </h3>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        {Object.entries(scores).map(([key, score]) => (
-          <div key={key}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)" }}>{key}</span>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, color: navy }}>{score.toFixed(1)}</span>
-            </div>
-            <div style={{ height: 6, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
-              <div style={{ height: "100%", width: `${(score / 100) * 100}%`, background: orange, borderRadius: 3 }} />
-            </div>
-          </div>
-        ))}
+      {/* Header with type color */}
+      <div style={{ background: typeColor, borderRadius: 10, padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(85% 0.05 260)", marginBottom: "0.4rem" }}>
+          16 Personalities
+        </p>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "2rem", color: "white", lineHeight: 1 }}>{personalityType}</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.85rem", color: "oklch(88% 0.05 260)" }}>{subtitle}</span>
+        </div>
       </div>
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+
+      {/* Short overview */}
+      {shortOverview && (
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)", marginBottom: "1.25rem", padding: "0.875rem", background: "oklch(95% 0.006 260)", borderRadius: 8, borderLeft: `3px solid ${typeColor}` }}>
+          {shortOverview}
+        </p>
+      )}
+
+      {/* Dimension profile bars */}
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.625rem" }}>
+        {lang === "id" ? "Profil Dimensi" : lang === "nl" ? "Dimensieprofiel" : "Dimension Profile"}
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.25rem" }}>
+        {DICHOTOMY_PAIRS.map(({ a, b, label }) => {
+          const scoreA = scores[a] ?? 0;
+          const scoreB = scores[b] ?? 0;
+          const total = scoreA + scoreB || 1;
+          const pctA = Math.round((scoreA / total) * 100);
+          const dominantKey = pctA >= 50 ? a : b;
+          const dominantPct = pctA >= 50 ? pctA : 100 - pctA;
+          const dominantLabel = P16_DICHOTOMY_LABELS[dominantKey] ?? dominantKey;
+          return (
+            <div key={label}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(42% 0.008 260)" }}>{label}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} — {dominantPct}%</span>
+              </div>
+              <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+                <div style={{ height: "100%", width: `${pctA}%`, background: typeColor, borderRadius: 3 }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          {lang === "id" ? "Modul lengkap →" : lang === "nl" ? "Volledige module →" : "Full module →"}
+        </Link>
+        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
@@ -1633,12 +1849,11 @@ export default function AssessmentTileGrid({
 
 
         {/* 7. 16 Personalities */}
-        <CompactTile
-          title={getTitle("16personalities", lang)}
-          visual={personalities16Scores ? <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: navy }}>{personalities16Type}</p></div> : <EmptyTileVisual />}
+        <Personalities16Tile
+          personalityType={personalities16Type}
+          scores={personalities16Scores}
+          lang={lang as "en" | "id" | "nl"}
           done={!!(personalities16Type && personalities16Scores)}
-          href="/resources/16-personalities"
-          onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores, lang }) : undefined}
         />
 
         {/* 8. Big Five */}

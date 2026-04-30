@@ -9,7 +9,7 @@ export type AssessmentType =
   | 'wheel-of-life'
   | 'thinking-styles'
   | 'enneagram'
-  | 'myers-briggs'
+
   | '16-personalities'
   | 'big-five'
   | 'spiritual-gifts';
@@ -150,33 +150,6 @@ const ASSESSMENTS: Assessment[] = [
           <li>• To be valued and appreciated</li>
           <li>• To help others succeed</li>
         </ul>
-      </div>
-    </div>
-  },
-  {
-    id: 'myers-briggs',
-    title: 'Myers-Briggs',
-    description: 'Personality type and preferences',
-    result: { type: 'ESTJ' },
-    detailContent: <div className="space-y-4">
-      <p className="text-charcoal-600">You are an ESTJ—The Logistician. You are practical, fact-oriented, and value loyalty and tradition.</p>
-      <div className="grid grid-cols-2 gap-3 mt-4">
-        <div className="bg-mb-e-light p-3 rounded border border-mb-e text-center">
-          <div className="text-sm font-bold text-mb-e">Extraverted</div>
-          <p className="text-xs text-charcoal-600 mt-1">Outward focus</p>
-        </div>
-        <div className="bg-mb-s-light p-3 rounded border border-mb-s text-center">
-          <div className="text-sm font-bold text-mb-s">Sensing</div>
-          <p className="text-xs text-charcoal-600 mt-1">Practical</p>
-        </div>
-        <div className="bg-mb-t-light p-3 rounded border border-mb-t text-center">
-          <div className="text-sm font-bold text-mb-t">Thinking</div>
-          <p className="text-xs text-charcoal-600 mt-1">Logic-based</p>
-        </div>
-        <div className="bg-mb-j-light p-3 rounded border border-mb-j text-center">
-          <div className="text-sm font-bold text-mb-j">Judging</div>
-          <p className="text-xs text-charcoal-600 mt-1">Organized</p>
-        </div>
       </div>
     </div>
   },

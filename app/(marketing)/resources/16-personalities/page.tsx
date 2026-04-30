@@ -17,6 +17,8 @@ export default async function ResourcePage(props: any) {
   const { data: { user } } = await supabase.auth.getUser();
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
+  const savedType = (user?.user_metadata?.personalities16_type ?? null) as string | null;
+  const savedScores = (user?.user_metadata?.personalities16_scores ?? null) as Record<string, number> | null;
 
   const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
 
@@ -56,7 +58,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <Personalities16Client {...props} isSaved={isSaved} />
+      <Personalities16Client {...props} isSaved={isSaved} savedType={savedType} savedScores={savedScores} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

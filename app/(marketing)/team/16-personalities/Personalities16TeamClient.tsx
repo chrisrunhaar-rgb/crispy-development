@@ -1102,15 +1102,6 @@ export default function Personalities16TeamClient({ user }: { user: User | null 
             }}>
               Back to Team Pathway →
             </Link>
-            <Link href="/team/myers-briggs" style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem",
-              letterSpacing: "0.06em", textDecoration: "none",
-              padding: "0.75rem 1.75rem",
-              background: "transparent", color: "oklch(78% 0.04 260)",
-              border: "1.5px solid oklch(42% 0.008 260)",
-            }}>
-              Try Myers-Briggs →
-            </Link>
           </div>
         </div>
       </section>

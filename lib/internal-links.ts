@@ -39,11 +39,7 @@ export const internalLinkMap: Record<string, LinkedResource[]> = {
     { slug: 'identity-under-pressure', title: 'Identity Under Pressure', reason: 'Stay grounded under stress' },
     { slug: 'overcoming-procrastination', title: 'Overcoming Procrastination', reason: 'Address your type\'s growth challenges' },
   ],
-  'myers-briggs': [
-    { slug: 'decision-making', title: 'Decision Making', reason: 'Understand how your type makes decisions' },
-    { slug: 'cognitive-biases', title: 'Cognitive Biases', reason: 'Avoid bias patterns in your thinking' },
-    { slug: 'ladder-of-inference', title: 'Ladder of Inference', reason: 'Improve your reasoning process' },
-  ],
+
   'big-five': [
     { slug: 'emotional-intelligence', title: 'Emotional Intelligence', reason: 'Connect your personality to emotional skills' },
     { slug: 'managing-up', title: 'Managing Up', reason: 'Use your traits to manage relationships upward' },

@@ -1,18 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
-// 60 questions, 15 per dichotomy.
-// `d` = dichotomy key (EI, SN, TF, JP)
-// `dir` = which pole a "5" (Strongly Agree) scores for (A or B)
-//   EI: A = Extravert, B = Introvert
-//   SN: A = Sensing, B = Intuition
-//   TF: A = Thinking, B = Feeling
-//   JP: A = Judging, B = Perceiving
-
 const QUESTIONS: { text: string; d: string; dir: "A" | "B" }[] = [
   // E/I — Energy Direction
   { text: "I feel energised after spending time with a large group of people.", d: "EI", dir: "A" },
@@ -80,7 +72,6 @@ const QUESTIONS: { text: string; d: string; dir: "A" | "B" }[] = [
   { text: "I resist being boxed in — I like to respond to what emerges rather than pre-plan everything.", d: "JP", dir: "B" },
 ];
 
-// Round-robin: EI1, SN1, TF1, JP1, EI2, SN2, ...
 const QUESTION_ORDER: number[] = [];
 const byDichotomy: Record<string, number[]> = { EI: [], SN: [], TF: [], JP: [] };
 QUESTIONS.forEach((q, i) => byDichotomy[q.d].push(i));
@@ -279,13 +270,64 @@ const TYPE_DATA: Record<string, {
   },
 };
 
+// ── SHORT PROFILES (from Word doc) ────────────────────────────────────────────
+const SHORT_PROFILES: Record<string, string> = {
+  INTJ: "Independent, strategic, long-range thinkers. Often the quiet visionary who sees five steps ahead. Need space to think and dislike being rushed. Can come across as cool or distant. On a ministry team they make excellent strategists, but should be invited — not assumed — into pastoral conversations.",
+  INTP: "Curious, theoretical, and precise. Want to understand how a system works before they act in it. Strong at analysis, slower to commit. Can over-analyse and under-execute if not paired with action-oriented teammates.",
+  ENTJ: "Decisive, organised, and results-driven. Naturally direct people and resources toward a goal. Often rise to formal leadership quickly. Need to slow down and listen before deciding for everyone, especially in cultures where directness reads as harshness.",
+  ENTP: "Energetic, idea-rich, and quick to challenge assumptions. Love brainstorming and re-thinking the way things are done. Can wear out teammates who need stability. Best when paired with someone who turns their ideas into plans.",
+  INFJ: "Quiet, principled, and deeply concerned with meaning and purpose. Often the conscience of the team. Read people well and feel things deeply. Need to guard against burnout from carrying others' burdens silently.",
+  INFP: "Gentle, values-driven, and creative. Hold a strong inner sense of what is right and true. Need encouragement to share their inner world with the team — they will rarely volunteer it. When given room, they bring depth that others cannot.",
+  ENFJ: "Warm, persuasive, and people-focused. Skilled at drawing the best out of others and rallying a group around a vision. Need to remember that not every teammate wants to be developed all the time — sometimes people just want to do their job.",
+  ENFP: "Enthusiastic, imaginative, and relational. Quick to inspire and slow to be discouraged. Bring colour and life to a team. Need help finishing what they start; pair well with a Judger who can carry projects across the line.",
+  ISTJ: "Reliable, thorough, and loyal to systems and standards. The backbone of many ministry teams — finances, logistics, follow-through. Can resist change even when it is needed; benefit from being told the why, not just the what.",
+  ISFJ: "Quiet servants who notice what others miss and care for people behind the scenes. Often the unseen carers of the team. Need to be invited into the spotlight, not assumed to be content in the shadows. Their faithfulness is easy to take for granted.",
+  ESTJ: "Organised, direct, and accountable. Make plans happen and hold others to commitments. Strong operational leaders. Need to soften their delivery in cultures that value indirectness, where bluntness can damage relationships before it builds them.",
+  ESFJ: "Warm, sociable, and devoted to the wellbeing of the group. Often the host of the team — the one who remembers birthdays, organises meals, and notices who is missing. Can take criticism personally; need reassurance more than rebuke.",
+  ISTP: "Practical, hands-on, and calm under pressure. The fixer of broken things, both physical and operational. Lead by competence rather than words. Need to be drawn into the relational layer of team life — they will not push their way in.",
+  ISFP: "Quiet, kind, and aesthetically sensitive. Lead through example more than through speech. Hold strong personal values but rarely impose them. Need to be asked, because they will not always volunteer their thoughts.",
+  ESTP: "Action-focused, bold, and energising. Thrive in crisis and get bored in routine. Often excellent in pioneer settings or rapid-response situations. Need to learn to plan past the next twenty-four hours, especially when others depend on them.",
+  ESFP: "Warm, spontaneous, and present-focused. Bring life and joy to the team and lift the room when it is heavy. Need help thinking long-term and following through on quiet commitments that no one is watching.",
+};
+
+// ── TYPE GROUPS ───────────────────────────────────────────────────────────────
+const TYPE_GROUPS = [
+  {
+    label: "Analyst Types",
+    desc: "Intuitive Thinkers",
+    types: ["INTJ", "INTP", "ENTJ", "ENTP"],
+    color: "oklch(48% 0.20 255)",
+    bg: "oklch(96% 0.03 255)",
+  },
+  {
+    label: "Diplomat Types",
+    desc: "Intuitive Feelers",
+    types: ["INFJ", "INFP", "ENFJ", "ENFP"],
+    color: "oklch(48% 0.20 295)",
+    bg: "oklch(96% 0.03 295)",
+  },
+  {
+    label: "Sentinel Types",
+    desc: "Sensing Judgers",
+    types: ["ISTJ", "ISFJ", "ESTJ", "ESFJ"],
+    color: "oklch(45% 0.16 200)",
+    bg: "oklch(96% 0.02 200)",
+  },
+  {
+    label: "Explorer Types",
+    desc: "Sensing Perceivers",
+    types: ["ISTP", "ISFP", "ESTP", "ESFP"],
+    color: "oklch(50% 0.16 145)",
+    bg: "oklch(96% 0.03 145)",
+  },
+];
+
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
 type QuizState = "idle" | "active" | "done";
 
 function computeType(scores: Record<string, number>): { type: string; pcts: Record<string, number> } {
-  // scores = { EI_A: n, EI_B: n, SN_A: n, SN_B: n, TF_A: n, TF_B: n, JP_A: n, JP_B: n }
-  const total = 15 * 5; // 15 questions, max 5 each
+  const total = 15 * 5;
   const ePct = Math.round((scores.EI_A ?? 0) / total * 100);
   const iPct = 100 - ePct;
   const sPct = Math.round((scores.SN_A ?? 0) / total * 100);
@@ -329,6 +371,7 @@ export default function Personalities16Client({
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedType);
   const [isPending, startTransition] = useTransition();
+  const [selectedType, setSelectedType] = useState<string | null>(null);
 
   function startQuiz() {
     setCurrentIdx(0);
@@ -373,34 +416,150 @@ export default function Personalities16Client({
     });
   }
 
+  // ── TYPE MODAL ─────────────────────────────────────────────────────────────
+  const modalData = selectedType ? TYPE_DATA[selectedType] : null;
+
+  const TypeModal = () => {
+    if (!modalData || !selectedType) return null;
+    return (
+      <div
+        onClick={() => setSelectedType(null)}
+        style={{
+          position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.75)",
+          zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center",
+          padding: "16px", overflowY: "auto",
+        }}
+      >
+        <div
+          onClick={e => e.stopPropagation()}
+          style={{
+            background: "white", borderRadius: 20, maxWidth: 640, width: "100%",
+            maxHeight: "90vh", overflowY: "auto",
+            boxShadow: "0 24px 80px oklch(10% 0.10 260 / 0.30)",
+          }}
+        >
+          {/* Modal header */}
+          <div style={{ background: modalData.bg, borderRadius: "20px 20px 0 0", padding: "32px 32px 28px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(44px, 8vw, 64px)", fontWeight: 700, color: modalData.colorLight, lineHeight: 1 }}>
+                  {selectedType}
+                </span>
+                <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "white", marginTop: 6 }}>
+                  {modalData.subtitle}
+                </div>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, color: "oklch(78% 0.07 260)", marginTop: 4 }}>
+                  {modalData.tagline}
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedType(null)}
+                style={{
+                  background: "oklch(100% 0 0 / 0.12)", border: "none", color: "white",
+                  borderRadius: 8, width: 36, height: 36, cursor: "pointer",
+                  fontFamily: "'Outfit', sans-serif", fontSize: 18, lineHeight: 1,
+                  flexShrink: 0, marginLeft: 16,
+                }}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
+          {/* Modal body */}
+          <div style={{ padding: "28px 32px 32px", display: "grid", gap: 20 }}>
+
+            {/* Ministry team profile */}
+            <div style={{ background: "oklch(97% 0.02 260)", borderRadius: 12, padding: "18px 20px", borderLeft: `4px solid ${modalData.color}` }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: modalData.color, marginBottom: 8 }}>
+                On a Ministry Team
+              </p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
+                {SHORT_PROFILES[selectedType]}
+              </p>
+            </div>
+
+            {/* Overview */}
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
+              {modalData.overview}
+            </p>
+
+            {/* Strengths & Blindspots */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              {[
+                { title: "Strengths", items: modalData.strengths, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
+                { title: "Blindspots", items: modalData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
+              ].map(section => (
+                <div key={section.title} style={{ background: "white", borderRadius: 12, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
+                  <div style={{ padding: "12px 16px", background: section.bg }}>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: section.color }}>{section.title}</span>
+                  </div>
+                  <ul style={{ margin: 0, padding: "12px 16px", listStyle: "none", display: "grid", gap: 8 }}>
+                    {section.items.map(item => (
+                      <li key={item} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                        <div style={{ width: 5, height: 5, borderRadius: "50%", background: section.color, marginTop: 6, flexShrink: 0 }} />
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, lineHeight: 1.6, color: "oklch(28% 0.06 260)" }}>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Leadership, Communication, Cross-cultural */}
+            {[
+              { title: "Leadership Style", content: modalData.leadership },
+              { title: "Communication", content: modalData.communication },
+              { title: "Cross-Cultural Awareness", content: modalData.crossCultural },
+            ].map(section => (
+              <div key={section.title} style={{ background: "oklch(98% 0.006 260)", borderRadius: 12, padding: "16px 20px", border: "1px solid oklch(92% 0.04 260)" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(40% 0.06 260)", marginBottom: 8 }}>{section.title}</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(30% 0.06 260)", margin: 0 }}>{section.content}</p>
+              </div>
+            ))}
+
+            <button
+              onClick={() => setSelectedType(null)}
+              style={{ padding: "12px 24px", background: modalData.color, color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer", alignSelf: "flex-start" }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ── IDLE ───────────────────────────────────────────────────────────────────
   if (quizState === "idle") {
     return (
       <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+        <TypeModal />
         <LangToggle />
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
           .p16-btn { transition: all 0.18s ease; cursor: pointer; }
           .p16-btn:hover { transform: translateY(-1px); }
-          .type-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 24px oklch(48% 0.20 260 / 0.15); }
-          .type-chip { transition: all 0.18s ease; cursor: default; }
+          .type-chip { transition: all 0.18s ease; cursor: pointer; }
+          .type-chip:hover { transform: translateY(-3px); box-shadow: 0 8px 28px oklch(48% 0.20 260 / 0.15); }
         `}</style>
 
-        <div style={{ background: "oklch(20% 0.18 260)", color: "white", padding: "72px 24px 64px" }}>
+        {/* ── HERO HEADER — Crispy Navy ── */}
+        <div style={{ background: "#1B3A6B", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            <p style={{ color: "#E07540", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
               Personal Development · Assessment
             </p>
-            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
               16 Personalities
             </h1>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 17, fontWeight: 400, lineHeight: 1.7, color: "oklch(82% 0.07 260)", maxWidth: 580 }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 400, lineHeight: 1.7, color: "oklch(85% 0.05 240)", maxWidth: 580 }}>
               One of the world's most widely used personality frameworks — discover your four-letter type and understand how your natural wiring shapes how you lead, think, and relate.
             </p>
             <button
               onClick={startQuiz}
               className="p16-btn"
-              style={{ marginTop: 36, padding: "14px 36px", background: "oklch(62% 0.22 260)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 16, fontWeight: 600 }}
+              style={{ marginTop: 36, padding: "14px 36px", background: "#E07540", color: "white", border: "none", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 600 }}
             >
               Start Assessment →
             </button>
@@ -408,62 +567,200 @@ export default function Personalities16Client({
         </div>
 
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "56px 24px" }}>
+
+          {/* What is the framework */}
           <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
               What is the 16 Personalities Framework?
             </h2>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
-              The 16 Personalities framework is based on four key dimensions of personality — how you direct your energy, process information, make decisions, and organise your life. By identifying your preference on each dimension, you arrive at a four-letter type — one of sixteen distinct profiles, each with its own characteristic strengths, blindspots, and leadership style.
+              The 16 Personalities framework gives every member of your team a four-letter shorthand that captures how they are naturally wired. It does not measure how skilled you are, how mature you are in faith, or how effective you are as a leader. It maps your defaults: where your energy comes from, how you take in information, how you weigh decisions, and how you prefer to organise the world around you.
+            </p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
+              Each of these four areas sits on a spectrum. You always have access to both ends. The letter simply names which side feels easier and more natural when you are not consciously stretching.
             </p>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)" }}>
-              This framework has been widely applied in teams, organisations, and cross-cultural contexts. It is particularly useful for understanding communication differences, leadership dynamics, and team composition.
+              This kind of self-knowledge is not new in Christian leadership. Paul wrote that the body of Christ is made up of many parts, each shaped differently and each needed (1 Corinthians 12). The 16 Personalities framework gives you a modern vocabulary for that ancient truth — helping your team move past the quiet assumption that everyone should think, decide, and lead the way the most visible person in the room does.
             </p>
           </section>
 
+          {/* Why this helps Christian ministry teams */}
+          <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
+            <div style={{ background: "#1B3A6B", padding: "20px 28px" }}>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 600, color: "white", margin: 0 }}>
+                Why this helps Christian ministry teams
+              </h2>
+            </div>
+            <div style={{ padding: "24px 28px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 24 }}>
+                In cross-cultural Christian work, teams are often small, the work is intense, and personalities can rub against each other in ways that feel spiritual but are actually structural. Without language to name these differences, teams can spiritualise them — labelling someone "unsubmissive" when they are simply processing differently. The 16 Personalities framework gives ministry teams four practical gains:
+              </p>
+              {[
+                {
+                  title: "Lowers the temperature of conflict",
+                  body: "When a teammate's frustrating habit can be named as a type-preference rather than a character flaw, it becomes much easier to address without judgement. The conversation moves from \"you are wrong\" to \"we are wired differently — how do we work with that?\"",
+                  color: "#E07540",
+                },
+                {
+                  title: "Sharpens role fit",
+                  body: "Every ministry team has visible front-line work and quieter back-line work. Knowing each person's type makes it easier to match the right people to the right roles. A team that knows itself stops asking its quiet researcher to host the welcome event.",
+                  color: "oklch(48% 0.20 255)",
+                },
+                {
+                  title: "Strengthens cross-cultural sensitivity",
+                  body: "Cross-cultural teams already navigate many layers of difference. Adding a personality layer reminds the team that not all difference is cultural. Some of the friction you feel with a teammate from another country may be the same friction you would feel with someone from your own country who shared their type.",
+                  color: "oklch(48% 0.20 295)",
+                },
+                {
+                  title: "Helps leaders steward themselves",
+                  body: "Long-term cross-cultural ministry asks people to give continually. Knowing your own type shows you which contexts drain you fastest, which decisions are likely to be hardest, and where your blind spots most often sit. This is good stewardship of the person God has called and shaped.",
+                  color: "oklch(45% 0.16 200)",
+                },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, padding: "16px 0", borderBottom: i < 3 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
+                  <div style={{ width: 4, borderRadius: 4, background: item.color, flexShrink: 0, marginTop: 2 }} />
+                  <div>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* The Four Dimensions */}
           <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
               The Four Dimensions
             </h2>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 24 }}>
-              Each dimension is a spectrum — your type reflects your natural preference, not your only capability.
+              Each dimension is a spectrum. Your type reflects your natural preference, not your only capability.
             </p>
-            <div style={{ display: "grid", gap: 14 }}>
+            <div style={{ display: "grid", gap: 16 }}>
               {[
-                ["E — Extraversion", "I — Introversion", "Where do you direct your energy?", "oklch(62% 0.18 52)"],
-                ["S — Sensing", "N — Intuition", "How do you gather and process information?", "oklch(55% 0.22 280)"],
-                ["T — Thinking", "F — Feeling", "How do you make decisions?", "oklch(52% 0.18 215)"],
-                ["J — Judging", "P — Perceiving", "How do you organise your life and work?", "oklch(52% 0.20 25)"],
-              ].map(([a, b, desc, col]) => (
-                <div key={a} style={{ background: "white", borderRadius: 12, padding: "20px 24px", border: "1px solid oklch(90% 0.04 260)", display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-                  <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
-                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 18, fontWeight: 700, color: col as string }}>{a}</span>
-                    <span style={{ color: "oklch(70% 0.05 260)", fontSize: 14 }}>vs</span>
-                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 18, fontWeight: 700, color: "oklch(45% 0.08 260)" }}>{b}</span>
+                {
+                  a: "E — Extraversion", b: "I — Introversion",
+                  question: "Where do you direct your energy?",
+                  body: "Extraverts are energised by being around people, talking ideas out loud, and engaging with the outside world. Introverts are energised by quiet, by inward reflection, and by depth over breadth in their relationships. Both can lead well. The Bible holds both Peter, who spoke first and thought later, and Mary, who treasured things up and pondered them in her heart.",
+                  color: "oklch(62% 0.18 52)",
+                },
+                {
+                  a: "S — Sensing", b: "N — Intuition",
+                  question: "How do you gather information?",
+                  body: "Sensors trust what is concrete, observable, and proven. They notice details, remember specifics, and prefer to build on what is already working. Intuitives trust patterns, possibilities, and what could be. Ministry teams need both: Sensors keep the work grounded and accurate; Intuitives keep it adapting and moving forward.",
+                  color: "oklch(55% 0.22 280)",
+                },
+                {
+                  a: "T — Thinking", b: "F — Feeling",
+                  question: "How do you make decisions?",
+                  body: "Thinkers decide based on logic, fairness, and the principle of the matter. Feelers decide based on people, values, and the impact on relationships. Neither is more compassionate or more biblical than the other — Scripture honours both clear truth and tender care. A team made up only of Thinkers can become cold; only of Feelers can avoid hard calls.",
+                  color: "oklch(52% 0.18 215)",
+                },
+                {
+                  a: "J — Judging", b: "P — Perceiving",
+                  question: "How do you organise your life and work?",
+                  body: "Judgers prefer plans, deadlines, and closed loops. They like things decided. Perceivers prefer flexibility, options open, and decisions delayed until the last responsible moment. Judgers help a team finish; Perceivers help a team adapt. In a fast-changing field setting, both are needed — the team that only plans cannot pivot, and the team that only pivots never ships.",
+                  color: "oklch(52% 0.20 25)",
+                },
+              ].map(dim => (
+                <div key={dim.a} style={{ background: "white", borderRadius: 14, padding: "22px 24px", border: "1px solid oklch(90% 0.04 260)" }}>
+                  <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 17, fontWeight: 700, color: dim.color }}>{dim.a}</span>
+                    <span style={{ color: "oklch(70% 0.05 260)", fontSize: 13 }}>vs</span>
+                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 17, fontWeight: 700, color: "oklch(45% 0.08 260)" }}>{dim.b}</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, color: "oklch(50% 0.06 260)", marginLeft: 4 }}>— {dim.question}</span>
                   </div>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, color: "oklch(40% 0.06 260)" }}>{desc}</span>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{dim.body}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* All 16 types preview */}
-          <section style={{ marginBottom: 48 }}>
+          {/* The 16 Types — grouped, clickable */}
+          <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
               The 16 Types
             </h2>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 24 }}>
-              Each type has its own distinct profile. Yours will be revealed after completing the assessment.
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 28 }}>
+              Tap any type to explore its full profile. Your own type will be revealed after completing the assessment.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12 }}>
-              {Object.values(TYPE_DATA).map(t => (
-                <div key={t.name} className="type-chip" style={{ background: "white", borderRadius: 12, padding: "16px", border: `1px solid ${t.colorVeryLight}`, textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 700, color: t.color, marginBottom: 4 }}>{t.name}</div>
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 500, color: "oklch(45% 0.06 260)" }}>{t.subtitle}</div>
+            <div style={{ display: "grid", gap: 24 }}>
+              {TYPE_GROUPS.map(group => (
+                <div key={group.label}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: group.color, flexShrink: 0 }} />
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: group.color }}>{group.label}</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, color: "oklch(55% 0.06 260)" }}>({group.desc})</span>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))", gap: 10 }}>
+                    {group.types.map(typeName => {
+                      const t = TYPE_DATA[typeName];
+                      return (
+                        <div
+                          key={typeName}
+                          className="type-chip"
+                          onClick={() => setSelectedType(typeName)}
+                          style={{
+                            background: "white", borderRadius: 12, padding: "16px",
+                            border: `1px solid ${t.colorVeryLight}`,
+                            textAlign: "center",
+                            borderTop: `3px solid ${t.color}`,
+                          }}
+                        >
+                          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 700, color: t.color, marginBottom: 4 }}>{typeName}</div>
+                          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", marginBottom: 6 }}>{t.subtitle}</div>
+                          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 10, color: group.color, fontWeight: 600, letterSpacing: "0.04em" }}>Tap to explore →</div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
+          {/* How to use this well as a team */}
+          <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
+            <div style={{ background: "oklch(96% 0.04 260)", padding: "20px 28px", borderBottom: "1px solid oklch(90% 0.04 260)" }}>
+              <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", margin: 0 }}>
+                How to use this well as a team
+              </h2>
+            </div>
+            <div style={{ padding: "24px 28px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 20 }}>
+                No four-letter type captures the full image of God in a person. Use this framework as a doorway into conversation, not a label that closes one. Three practices help most:
+              </p>
+              {[
+                {
+                  title: "Share your type, but talk about it",
+                  body: "A list of four-letter codes pinned to a wall does little. A team meeting where each person describes what is true and not-quite-true about their profile, and what they need from teammates because of it, does a great deal.",
+                },
+                {
+                  title: "Re-take it after big life seasons",
+                  body: "Type preferences usually stay stable, but how strongly someone holds a preference can shift after seasons of stretching, suffering, or growth. A re-take every few years can surface useful conversation.",
+                },
+                {
+                  title: "Use it for service, not for excuse",
+                  body: "\"I'm an Introvert, so I won't do hospitality\" is a misuse of the framework. \"I'm an Introvert, so I host best in small groups and need quiet time afterwards\" is the kind of self-knowledge that makes a team stronger. The goal is to serve more wisely, not to opt out.",
+                },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, padding: "14px 0", borderBottom: i < 2 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 700, color: "#E07540", lineHeight: 1, flexShrink: 0, width: 24, textAlign: "center" }}>
+                    {i + 1}
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
+                  </div>
+                </div>
+              ))}
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", marginTop: 20, marginBottom: 0, fontStyle: "italic" }}>
+                Used in this spirit, the 16 Personalities framework becomes one more way your team learns to love one another well — recognising the different ways God has wired each member, and building a culture where every type is needed, named, and welcome.
+              </p>
+            </div>
+          </section>
+
+          {/* How to take this assessment */}
           <section style={{ background: "white", borderRadius: 16, padding: "32px 36px", border: "1px solid oklch(90% 0.04 260)" }}>
             <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
               How to take this assessment
@@ -475,7 +772,7 @@ export default function Personalities16Client({
               ["Takes about 10 minutes", "Find a quiet moment. Rushed answers produce less accurate results."],
             ].map(([label, desc]) => (
               <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid oklch(95% 0.03 260)" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "oklch(55% 0.22 280)", marginTop: 8, flexShrink: 0 }} />
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#E07540", marginTop: 8, flexShrink: 0 }} />
                 <div>
                   <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 260)" }}>{label} — </span>
                   <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(38% 0.06 260)" }}>{desc}</span>
@@ -485,7 +782,7 @@ export default function Personalities16Client({
             <button
               onClick={startQuiz}
               className="p16-btn"
-              style={{ marginTop: 28, padding: "13px 32px", background: "oklch(20% 0.18 260)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600 }}
+              style={{ marginTop: 28, padding: "13px 32px", background: "#1B3A6B", color: "white", border: "none", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 600 }}
             >
               Start Assessment
             </button>
@@ -573,13 +870,46 @@ export default function Personalities16Client({
               <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, color: "oklch(80% 0.08 260)", marginTop: 6 }}>{typeData.tagline}</div>
             </div>
           </div>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 260)", maxWidth: 580 }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 260)", maxWidth: 580, marginBottom: 28 }}>
             {typeData.overview}
           </p>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+            {!resultSaved ? (
+              <button onClick={handleSave} disabled={isPending}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  background: "transparent", color: "oklch(85% 0.05 260)",
+                  padding: "11px 24px", borderRadius: 6, fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 600, fontSize: 14, border: "1px solid oklch(55% 0.06 260)",
+                  cursor: isPending ? "wait" : "pointer",
+                }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                {isPending ? "Saving…" : "Save to Dashboard"}
+              </button>
+            ) : (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(72% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
+                ✓ Saved to dashboard
+              </span>
+            )}
+            <button onClick={startQuiz}
+              style={{ background: "transparent", color: "oklch(78% 0.05 260)", border: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 500, cursor: "pointer", padding: "11px 4px" }}>
+              Retake →
+            </button>
+          </div>
         </div>
       </div>
 
       <div style={{ maxWidth: 760, margin: "0 auto", padding: "48px 24px" }}>
+
+        {/* Ministry team insight */}
+        <section style={{ marginBottom: 36, background: "white", borderRadius: 16, padding: "24px 28px", border: `2px solid ${typeData.color}`, borderLeft: `6px solid ${typeData.color}` }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: typeData.color, marginBottom: 10 }}>
+            On a Ministry Team
+          </p>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.8, color: "oklch(28% 0.06 260)", margin: 0 }}>
+            {SHORT_PROFILES[type] ?? ""}
+          </p>
+        </section>
 
         {/* Dichotomy bars */}
         <section style={{ marginBottom: 48 }}>
@@ -599,7 +929,7 @@ export default function Personalities16Client({
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: d.color, minWidth: 16 }}>{d.keyA}</span>
                     <div style={{ flex: 1, height: 8, background: "oklch(93% 0.03 260)", borderRadius: 8, overflow: "hidden" }}>
-                      <div className="bar16" style={{ height: "100%", width: `${pctA}%`, background: `linear-gradient(90deg, ${d.color}88, ${d.color})`, borderRadius: 8 }} />
+                      <div className="bar16" style={{ height: "100%", width: `${pctA}%`, background: `linear-gradient(90deg, ${typeData.color}88, ${typeData.color})`, borderRadius: 8 }} />
                     </div>
                     <span style={{ fontSize: 13, fontWeight: 600, color: "oklch(55% 0.06 260)", minWidth: 16 }}>{d.keyB}</span>
                   </div>
@@ -648,19 +978,26 @@ export default function Personalities16Client({
         ))}
 
         {/* Save / Retake */}
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16 }}>
-          {!resultSaved && (
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 16, alignItems: "center" }}>
+          {!resultSaved ? (
             <button onClick={handleSave} disabled={isPending}
-              style={{ padding: "13px 28px", background: typeData.color, color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: isPending ? 0.7 : 1 }}>
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "transparent", color: "oklch(35% 0.08 260)",
+                padding: "13px 28px", borderRadius: 6, fontFamily: "'Montserrat', sans-serif",
+                fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)",
+                cursor: isPending ? "wait" : "pointer",
+              }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {isPending ? "Saving…" : "Save to Dashboard"}
             </button>
-          )}
-          {resultSaved && (
-            <div style={{ padding: "13px 20px", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600 }}>
+          ) : (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(38% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
               ✓ Saved to your dashboard
-            </div>
+            </span>
           )}
-          <button onClick={startQuiz} style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 260)", border: "2px solid oklch(85% 0.05 260)", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+          <button onClick={startQuiz}
+            style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 260)", border: "2px solid oklch(85% 0.05 260)", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
             Retake Assessment
           </button>
         </div>

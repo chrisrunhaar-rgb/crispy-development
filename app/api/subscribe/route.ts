@@ -8,7 +8,9 @@ export async function POST(req: NextRequest) {
   }
 
   const apiKey = process.env.MAILCHIMP_API_KEY;
-  const listId = process.env.MAILCHIMP_LIST_ID;
+  const listId = lang === "id"
+    ? process.env.MAILCHIMP_LIST_ID_ID
+    : process.env.MAILCHIMP_LIST_ID_EN;
   const server = process.env.MAILCHIMP_SERVER_PREFIX;
 
   if (!apiKey || !listId || !server) {

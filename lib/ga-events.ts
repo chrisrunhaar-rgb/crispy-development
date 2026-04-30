@@ -7,7 +7,7 @@
 
 export type AssessmentType =
   | 'disc' | 'wheel-of-life' | 'three-thinking-styles' | 'karunia-rohani'
-  | 'enneagram' | 'myers-briggs' | 'big-five' | '16-personalities'
+  | 'enneagram' | 'big-five' | '16-personalities'
   | 'thinking-style' | 'comm-style' | 'trust' | 'contribution-zone'
   | 'conflict-style';
 

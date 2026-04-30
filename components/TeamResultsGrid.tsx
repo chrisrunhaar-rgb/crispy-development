@@ -79,7 +79,7 @@ const ALL_RESULT_TYPES: Record<string, { label: string; href: string; assessment
   wheel_of_life:     { label: "Wheel of Life",      href: "/team/wheel-of-life",       assessmentId: "wheel-of-life" },
   thinking_style:    { label: "Thinking Style",     href: "/team/three-thinking-styles", assessmentId: "three-thinking-styles" },
   enneagram:         { label: "Enneagram",          href: "/team/enneagram",           assessmentId: "enneagram" },
-  mbti:              { label: "MBTI",               href: "/team/myers-briggs",        assessmentId: "myers-briggs" },
+
   personalities16:   { label: "16 Personalities",  href: "/team/16-personalities",    assessmentId: "16-personalities" },
   big_five:          { label: "Big Five",           href: "/team/big-five",            assessmentId: "big-five" },
   karunia:           { label: "Karunia Rohani",     href: "/team/karunia-rohani",      assessmentId: "karunia-rohani" },
@@ -204,7 +204,6 @@ export default function TeamResultsGrid({
                           }
                           case "enneagram":
                             return <Pill label={`Type ${r.result_key}`} color="oklch(42% 0.14 260)" />;
-                          case "mbti":
                           case "personalities16":
                             return <Pill label={r.result_key} color="oklch(42% 0.14 200)" />;
                           case "big_five":

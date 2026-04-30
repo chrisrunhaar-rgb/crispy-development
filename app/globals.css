@@ -58,16 +58,6 @@
   --color-enneagram-3: #EAB308;
   --color-enneagram-3-light: #FEF9C310;
 
-  /* Myers-Briggs Colors */
-  --color-mb-e: #DC2626;
-  --color-mb-e-light: #FEE2E210;
-  --color-mb-s: #F59E0B;
-  --color-mb-s-light: #FEF3C710;
-  --color-mb-t: #3B82F6;
-  --color-mb-t-light: #EFF6FF10;
-  --color-mb-j: #10B981;
-  --color-mb-j-light: #F0FDF410;
-
   /* 16 Personalities Color */
   --color-personalities: #3B82F6;
   --color-personalities-light: #EFF6FF10;
