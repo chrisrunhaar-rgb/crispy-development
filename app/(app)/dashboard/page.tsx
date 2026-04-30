@@ -89,8 +89,9 @@ export default async function DashboardPage({
     ...(metadata.karunia_completed_at ? ["karunia-rohani"] : []),
     ...(metadata.enneagram_completed_at ? ["enneagram"] : []),
     ...(metadata.big_five_completed_at ? ["big-five"] : []),
-    ...(metadata.mbti_completed_at ? ["myers-briggs"] : []),
+
     ...(metadata.personalities16_completed_at ? ["16-personalities"] : []),
+    ...(metadata.fivela_completed_at ? ["5languages"] : []),
   ]);
   const thinkingStyleResult = (metadata.thinking_style_result ?? null) as string | null;
   const thinkingStyleScores = (metadata.thinking_style_scores ?? null) as { C: number; H: number; I: number } | null;
@@ -103,10 +104,13 @@ export default async function DashboardPage({
   const enneagramType = (metadata.enneagram_type ?? null) as number | null;
   const enneagramScores = (metadata.enneagram_scores ?? null) as Record<string, number> | null;
   const bigFiveScores = (metadata.big_five_scores ?? null) as Record<string, number> | null;
-  const mbtiType = (metadata.mbti_type ?? null) as string | null;
-  const mbtiScores = (metadata.mbti_scores ?? null) as Record<string, number> | null;
+
   const personalities16Type = (metadata.personalities16_type ?? null) as string | null;
   const personalities16Scores = (metadata.personalities16_scores ?? null) as Record<string, number> | null;
+  const fivelaReceivingResult = (metadata.fivela_receiving_result ?? null) as string | null;
+  const fivelaGivingResult = (metadata.fivela_giving_result ?? null) as string | null;
+  const fivelaReceivingScores = (metadata.fivela_receiving_scores ?? null) as { A: number; B: number; C: number; D: number; E: number } | null;
+  const fivelaGivingScores = (metadata.fivela_giving_scores ?? null) as { A: number; B: number; C: number; D: number; E: number } | null;
   const peerGroupId = metadata.peer_group_id as string | undefined;
   const userTimezone = metadata.timezone as string | undefined;
   const commStyle = (metadata.comm_style ?? null) as string | null;
@@ -700,7 +704,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} mbtiType={mbtiType} mbtiScores={mbtiScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
           </>
         )}
 
@@ -872,7 +876,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, mbtiType = null, mbtiScores = null, personalities16Type = null, personalities16Scores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null,personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -891,10 +895,13 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   enneagramType?: number | null;
   enneagramScores?: Record<string, number> | null;
   bigFiveScores?: Record<string, number> | null;
-  mbtiType?: string | null;
-  mbtiScores?: Record<string, number> | null;
+
   personalities16Type?: string | null;
   personalities16Scores?: Record<string, number> | null;
+  fivelaReceivingResult?: string | null;
+  fivelaGivingResult?: string | null;
+  fivelaReceivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
+  fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   commStyle?: string | null;
   commStyleScores?: Record<string, number> | null;
   trustAvg?: number | null;
@@ -997,10 +1004,13 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             enneagramType={enneagramType}
             enneagramScores={enneagramScores}
             bigFiveScores={bigFiveScores}
-            mbtiType={mbtiType}
-            mbtiScores={mbtiScores}
+
             personalities16Type={personalities16Type}
             personalities16Scores={personalities16Scores}
+            fivelaReceivingResult={fivelaReceivingResult}
+            fivelaGivingResult={fivelaGivingResult}
+            fivelaReceivingScores={fivelaReceivingScores}
+            fivelaGivingScores={fivelaGivingScores}
             languagePreference={languagePreference}
           />
         </div>
@@ -1352,7 +1362,7 @@ const TEAM_ASSESSMENTS = [
   { id: "karunia-rohani", label: "Karunia Rohani", href: "/resources/karunia-rohani" },
   { id: "three-thinking-styles", label: "Three Thinking Styles", href: "/resources/three-thinking-styles" },
   { id: "wheel-of-life", label: "Wheel of Life", href: "/resources/wheel-of-life" },
-  { id: "myers-briggs", label: "Myers-Briggs (MBTI)", href: "/resources/myers-briggs" },
+
   { id: "16-personalities", label: "16 Personalities", href: "/resources/16-personalities" },
   { id: "enneagram", label: "Enneagram", href: "/resources/enneagram" },
   { id: "big-five", label: "Big Five (OCEAN)", href: "/resources/big-five" },

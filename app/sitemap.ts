@@ -3,7 +3,7 @@ import { resourceMetadata } from "@/config/seo-metadata";
 
 const ASSESSMENT_SLUGS = new Set([
   "disc", "wheel-of-life", "three-thinking-styles", "karunia-rohani",
-  "enneagram", "myers-briggs", "big-five", "16-personalities",
+  "enneagram", "big-five", "16-personalities", "5languages",
 ]);
 
 export default function sitemap(): MetadataRoute.Sitemap {

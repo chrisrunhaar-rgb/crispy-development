@@ -37,10 +37,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     title: "Enneagram Personality System — Crispy Development",
     description: "Explore the nine personality types. Understand your core motivations, fears, and growth paths through the Enneagram.",
   },
-  "myers-briggs": {
-    title: "Myers-Briggs Personality Type (MBTI) — Crispy Development",
-    description: "Discover your MBTI type. Learn about your preferences and strengths across four personality dimensions.",
-  },
+
   "big-five": {
     title: "Big Five Personality Assessment — Crispy Development",
     description: "Assess your traits in openness, conscientiousness, extraversion, agreeableness, and neuroticism. Understand your personality dimensions.",
@@ -48,6 +45,10 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   "16-personalities": {
     title: "16 Personalities Assessment — Crispy Development",
     description: "Identify your 16 Personality type. Explore how your preferences shape your behavior, relationships, and leadership style.",
+  },
+  "5languages": {
+    title: "5 Languages of Appreciation — Crispy Development",
+    description: "Discover how you give and receive care in your ministry team. Two parallel tests reveal your receiving and giving languages — and the gap between them.",
   },
 
   // Cross-Cultural Leadership

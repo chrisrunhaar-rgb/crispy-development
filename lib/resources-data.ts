@@ -586,6 +586,17 @@ export const RESOURCES: Resource[] = [
     topics: ["leadership", "cross-cultural", "personal-development"],
   },
   {
+    id: "5languages",
+    slug: "5languages",
+    title: "5 Languages of Appreciation",
+    description: "Discover how you give and receive care in your ministry team. Two parallel tests reveal your receiving and giving languages — and the gap between them.",
+    time: "25–30 min",
+    format: "Assessment",
+    languages: ["en"],
+    gated: false,
+    topics: ["leadership", "team-facilitation", "cross-cultural"],
+  },
+  {
     id: "three-thinking-styles",
     slug: "three-thinking-styles",
     title: "Three Thinking Styles",
@@ -615,21 +626,7 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["personal-development", "leadership", "cross-cultural"],
   },
-  {
-    id: "myers-briggs",
-    slug: "myers-briggs",
-    title: "Myers-Briggs Type Indicator (MBTI)",
-    titleId: "Myers-Briggs Type Indicator (MBTI)",
-    titleNl: "Myers-Briggs Type Indicator (MBTI)",
-    description: "One of the most widely used personality frameworks in the world — rooted in Jungian psychology. Discover your type and what it means for how you lead, decide, and relate.",
-    descriptionId: "Salah satu kerangka kepribadian yang paling banyak digunakan di dunia — berakar pada psikologi Jung. Temukan tipe Anda dan artinya bagi cara Anda memimpin, memutuskan, dan berhubungan.",
-    descriptionNl: "Een van de meest gebruikte persoonlijkheidsraamwerken ter wereld — geworteld in de Jungiaanse psychologie. Ontdek je type en wat het betekent voor hoe je leidt, beslist en relateert.",
-    time: "8–10 min",
-    format: "Assessment",
-    languages: ["en", "id", "nl"],
-    gated: false,
-    topics: ["personal-development", "leadership", "cross-cultural"],
-  },
+
   // ── FAITH & CALLING ────────────────────────────────────────────────────────
   {
     id: "sabbath-leadership",

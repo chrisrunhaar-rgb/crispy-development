@@ -426,7 +426,7 @@ type ModalData =
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" | "nl" }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "mbti"; mbtiType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+
   | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
   | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" };
 
@@ -457,7 +457,7 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
         {data.type === "thinking" && <ThinkingModal data={data} onClose={onClose} />}
         {data.type === "karunia" && <KaruniaModal data={data} onClose={onClose} />}
         {data.type === "enneagram" && <EnneagramModal data={data} onClose={onClose} />}
-        {data.type === "mbti" && <MBTIModal data={data} onClose={onClose} />}
+
         {data.type === "bigfive" && <BigFiveModal data={data} onClose={onClose} />}
         {data.type === "16personalities" && <PersonalitiesModal data={data} onClose={onClose} />}
       </div>
@@ -1009,93 +1009,6 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
   );
 }
 
-type L3 = { en: string; id: string; nl: string };
-const MBTI_DASH_DIMS: { label: L3; poleAKey: string; poleA: string; labelA: L3; poleBKey: string; poleB: string; labelB: L3; color: string }[] = [
-  { label:{en:"Energy Direction",id:"Arah Energi",nl:"Energierichting"}, poleAKey:"EI_E", poleA:"E", labelA:{en:"Extraversion",id:"Ekstraversi",nl:"Extraversie"}, poleBKey:"EI_I", poleB:"I", labelB:{en:"Introversion",id:"Introversi",nl:"Introversie"}, color:"oklch(60% 0.18 52)" },
-  { label:{en:"Perception",id:"Persepsi",nl:"Waarneming"},               poleAKey:"SN_S", poleA:"S", labelA:{en:"Sensing",id:"Penginderaan",nl:"Zintuiglijk"},      poleBKey:"SN_N", poleB:"N", labelB:{en:"Intuition",id:"Intuisi",nl:"Intuïtie"},           color:"oklch(52% 0.22 280)" },
-  { label:{en:"Judgement",id:"Penilaian",nl:"Beoordeling"},              poleAKey:"TF_T", poleA:"T", labelA:{en:"Thinking",id:"Berpikir",nl:"Denken"},              poleBKey:"TF_F", poleB:"F", labelB:{en:"Feeling",id:"Merasakan",nl:"Voelen"},             color:"oklch(50% 0.18 215)" },
-  { label:{en:"Orientation",id:"Orientasi",nl:"Oriëntatie"},             poleAKey:"JP_J", poleA:"J", labelA:{en:"Judging",id:"Menilai",nl:"Beoordelend"},           poleBKey:"JP_P", poleB:"P", labelB:{en:"Perceiving",id:"Mempersepsi",nl:"Waarnemen"},    color:"oklch(50% 0.20 25)" },
-];
-const MBTI_TYPE_SUBTITLE: Record<string, L3> = {
-  INTJ:{en:"The Mastermind",   id:"Sang Arsitek Agung", nl:"De Strateeg"},
-  INTP:{en:"The Architect",    id:"Sang Pemikir",       nl:"De Denker"},
-  ENTJ:{en:"The Commander",    id:"Sang Komandan",      nl:"De Commandant"},
-  ENTP:{en:"The Visionary",    id:"Sang Visioner",      nl:"De Visionair"},
-  INFJ:{en:"The Counsellor",   id:"Sang Penasehat",     nl:"De Raadgever"},
-  INFP:{en:"The Healer",       id:"Sang Penyembuh",     nl:"De Idealist"},
-  ENFJ:{en:"The Teacher",      id:"Sang Guru",          nl:"De Mentor"},
-  ENFP:{en:"The Champion",     id:"Sang Juara",         nl:"De Inspirator"},
-  ISTJ:{en:"The Inspector",    id:"Sang Pemeriksa",     nl:"De Bewaker"},
-  ISFJ:{en:"The Nurturer",     id:"Sang Pelindung",     nl:"De Beschermer"},
-  ESTJ:{en:"The Supervisor",   id:"Sang Pengawas",      nl:"De Organisator"},
-  ESFJ:{en:"The Provider",     id:"Sang Penyedia",      nl:"De Verzorger"},
-  ISTP:{en:"The Craftsman",    id:"Sang Pengrajin",     nl:"De Vakman"},
-  ISFP:{en:"The Composer",     id:"Sang Petualang",     nl:"De Kunstenaar"},
-  ESTP:{en:"The Promoter",     id:"Sang Pengusaha",     nl:"De Ondernemer"},
-  ESFP:{en:"The Performer",    id:"Sang Penghibur",     nl:"De Entertainer"},
-};
-const MBTI_TEMP_COLOR: Record<string, string> = {
-  INTJ:"oklch(50% 0.20 285)",INTP:"oklch(50% 0.20 285)",ENTJ:"oklch(50% 0.20 285)",ENTP:"oklch(50% 0.20 285)",
-  INFJ:"oklch(48% 0.20 145)",INFP:"oklch(48% 0.20 145)",ENFJ:"oklch(48% 0.20 145)",ENFP:"oklch(48% 0.20 145)",
-  ISTJ:"oklch(48% 0.20 225)",ISFJ:"oklch(48% 0.20 225)",ESTJ:"oklch(48% 0.20 225)",ESFJ:"oklch(48% 0.20 225)",
-  ISTP:"oklch(55% 0.22 70)",ISFP:"oklch(55% 0.22 70)",ESTP:"oklch(55% 0.22 70)",ESFP:"oklch(55% 0.22 70)",
-};
-
-function MBTIModal({ data, onClose }: { data: Extract<ModalData, { type: "mbti" }>; onClose: () => void }) {
-  const { mbtiType, scores, lang } = data;
-  const subtitle = MBTI_TYPE_SUBTITLE[mbtiType]?.[lang] ?? mbtiType;
-  const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →";
-  const learnLabel = lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more";
-  return (
-    <>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        {lang === "id" ? "Tipe Myers-Briggs" : lang === "nl" ? "Myers-Briggs Type" : "Myers-Briggs Type"}
-      </p>
-      <div style={{ marginBottom: "1.5rem" }}>
-        <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 700, fontSize: "2.25rem", color: MBTI_TEMP_COLOR[mbtiType] ?? navy, letterSpacing: "0.06em", lineHeight: 1, margin: 0 }}>{mbtiType}</h3>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(42% 0.008 260)", marginTop: 4 }}>{subtitle}</p>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.5rem" }}>
-        {MBTI_DASH_DIMS.map(d => {
-          const scoreA = scores[d.poleAKey] ?? 0;
-          const scoreB = scores[d.poleBKey] ?? 0;
-          const total = scoreA + scoreB || 10;
-          const pctA = Math.round((scoreA / total) * 100);
-          const pctB = 100 - pctA;
-          const aIsDom = pctA >= 50;
-          const dominantLabel = (aIsDom ? d.labelA : d.labelB)[lang];
-          const dominantPct = aIsDom ? pctA : pctB;
-          return (
-            <div key={d.label.en}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 600, color: "oklch(45% 0.008 260)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{d.label[lang]}</span>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: 700, color: d.color }}>{dominantLabel} {dominantPct}%</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 13, fontWeight: 700, color: aIsDom ? d.color : "oklch(72% 0.008 260)", minWidth: 12 }}>{d.poleA}</span>
-                <div style={{ flex: 1, height: 6, background: "oklch(90% 0.004 260)", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", height: "100%", width: `${dominantPct}%`, background: d.color, left: aIsDom ? 0 : "auto", right: aIsDom ? "auto" : 0 }} />
-                </div>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 13, fontWeight: 700, color: aIsDom ? "oklch(72% 0.008 260)" : d.color, minWidth: 12 }}>{d.poleB}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-        <Link href="/resources/myers-briggs#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {retakeLabel}
-        </Link>
-        <Link href="/resources/myers-briggs" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {learnLabel}
-        </Link>
-        <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
-        </button>
-      </div>
-    </>
-  );
-}
 
 function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "bigfive" }>; onClose: () => void }) {
   const { scores, lang } = data;
@@ -1227,7 +1140,7 @@ const ASSESSMENT_TITLES: Record<string, Record<"en" | "id" | "nl", string>> = {
   wheel: { en: "Wheel of Life", id: "Roda Kehidupan", nl: "Levensrad" },
   thinking: { en: "Thinking Styles", id: "Gaya Berpikir", nl: "Denkstijlen" },
   enneagram: { en: "Enneagram", id: "Enneagram", nl: "Enneagram" },
-  mbti: { en: "Myers-Briggs", id: "Myers-Briggs", nl: "Myers-Briggs" },
+
   "16personalities": { en: "16 Personalities", id: "16 Kepribadian", nl: "16 Persoonlijkheden" },
   bigfive: { en: "Big Five", id: "Big Five", nl: "Big Five" },
 };
@@ -1527,10 +1440,13 @@ export default function AssessmentTileGrid({
   enneagramType = null,
   enneagramScores = null,
   bigFiveScores = null,
-  mbtiType = null,
-  mbtiScores = null,
+
   personalities16Type = null,
   personalities16Scores = null,
+  fivelaReceivingResult = null,
+  fivelaGivingResult = null,
+  fivelaReceivingScores = null,
+  fivelaGivingScores = null,
   languagePreference = "en",
 }: {
   discResult?: string | null;
@@ -1544,10 +1460,13 @@ export default function AssessmentTileGrid({
   enneagramType?: number | null;
   enneagramScores?: Record<string, number> | null;
   bigFiveScores?: Record<string, number> | null;
-  mbtiType?: string | null;
-  mbtiScores?: Record<string, number> | null;
+
   personalities16Type?: string | null;
   personalities16Scores?: Record<string, number> | null;
+  fivelaReceivingResult?: string | null;
+  fivelaGivingResult?: string | null;
+  fivelaReceivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
+  fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   languagePreference?: "en" | "id" | "nl";
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
@@ -1602,6 +1521,54 @@ export default function AssessmentTileGrid({
           </p>
         )}
       </div>
+    </div>
+  ) : <EmptyTileVisual />;
+
+  const FIVELA_COLORS: Record<string, string> = {
+    A: "oklch(72% 0.18 85)",
+    B: "oklch(62% 0.14 235)",
+    C: "oklch(52% 0.14 150)",
+    D: "oklch(68% 0.15 10)",
+    E: "oklch(70% 0.16 65)",
+  };
+  const FIVELA_NAMES: Record<string, string> = {
+    A: "Words",
+    B: "Quality Time",
+    C: "Service",
+    D: "Gifts",
+    E: "Touch",
+  };
+
+  const fivelaVisual = fivelaReceivingResult && fivelaGivingResult && fivelaReceivingScores && fivelaGivingScores ? (
+    <div style={{ width: 170, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      {(["receiving", "giving"] as const).map(role => {
+        const primary = role === "receiving" ? fivelaReceivingResult : fivelaGivingResult;
+        const scores = role === "receiving" ? fivelaReceivingScores : fivelaGivingScores;
+        return (
+          <div key={role}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginBottom: "0.2rem" }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: FIVELA_COLORS[primary] ?? navy, flexShrink: 0 }} />
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, color: navy, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                {role === "receiving" ? "Receive" : "Give"}: {FIVELA_NAMES[primary] ?? primary}
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: "2px" }}>
+              {(["A", "B", "C", "D", "E"] as const).map(key => {
+                const val = scores[key] ?? 0;
+                const isPrimary = key === primary;
+                return (
+                  <div key={key} style={{ flex: 1, height: 18, background: "oklch(90% 0.004 260)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${Math.min(val, 100)}%`, background: FIVELA_COLORS[key], opacity: isPrimary ? 1 : 0.45, transition: "height 0.3s ease" }} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", color: fivelaReceivingResult === fivelaGivingResult ? "oklch(52% 0.14 150)" : "oklch(62% 0.14 235)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: "0.1rem" }}>
+        {fivelaReceivingResult === fivelaGivingResult ? "Match" : "Mismatch"}
+      </p>
     </div>
   ) : <EmptyTileVisual />;
 
@@ -1664,19 +1631,6 @@ export default function AssessmentTileGrid({
           onClick={enneagramType && enneagramScores && ENNEAGRAM_TYPES[enneagramType] ? () => setModal({ type: "enneagram", typeData: ENNEAGRAM_TYPES[enneagramType], scores: enneagramScores, lang: lang as "en" | "id" | "nl" }) : undefined}
         />
 
-        {/* 6. Myers-Briggs */}
-        <CompactTile
-          title={getTitle("mbti", lang)}
-          visual={mbtiType && mbtiScores ? (
-            <div style={{ width: 180, padding: "10px 14px" }}>
-              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "2.25rem", fontWeight: 700, color: MBTI_TEMP_COLOR[mbtiType] ?? orange, letterSpacing: "0.04em", lineHeight: 1 }}>{mbtiType}</div>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(42% 0.008 260)", marginTop: 5 }}>{MBTI_TYPE_SUBTITLE[mbtiType]?.[lang] ?? ""}</div>
-            </div>
-          ) : <EmptyTileVisual />}
-          done={!!(mbtiType && mbtiScores)}
-          href="/resources/myers-briggs"
-          onClick={mbtiType && mbtiScores ? () => setModal({ type: "mbti", mbtiType, scores: mbtiScores, lang }) : undefined}
-        />
 
         {/* 7. 16 Personalities */}
         <CompactTile
@@ -1696,6 +1650,14 @@ export default function AssessmentTileGrid({
           done={!!bigFiveScores}
           href="/resources/big-five"
           onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores, lang }) : undefined}
+        />
+
+        {/* 9. 5 Languages of Appreciation */}
+        <CompactTile
+          title="5 Languages of Appreciation"
+          visual={fivelaVisual}
+          done={!!(fivelaReceivingResult && fivelaGivingResult)}
+          href="/resources/5languages"
         />
 
       </div>

@@ -226,24 +226,29 @@ export async function save16PersonalitiesResult(
   return { error: error?.message ?? null };
 }
 
-// Save Myers-Briggs (MBTI) result
-export async function saveMBTIResult(
-  type: string,
-  scores: Record<string, number>
+
+// Save 5 Languages of Appreciation result
+export async function saveFiveLanguagesResult(
+  receivingPrimary: string,
+  givingPrimary: string,
+  receivingScores: { A: number; B: number; C: number; D: number; E: number },
+  givingScores: { A: number; B: number; C: number; D: number; E: number }
 ): Promise<{ error: string | null }> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   const { error } = await supabase.auth.updateUser({
     data: {
-      mbti_type: type,
-      mbti_scores: scores,
-      mbti_completed_at: new Date().toISOString(),
+      fivela_receiving_result: receivingPrimary,
+      fivela_giving_result: givingPrimary,
+      fivela_receiving_scores: receivingScores,
+      fivela_giving_scores: givingScores,
+      fivela_completed_at: new Date().toISOString(),
     },
   });
   if (!error) {
     revalidatePath("/dashboard");
-    revalidatePath("/resources/myers-briggs");
+    revalidatePath("/resources/5languages");
   }
   return { error: error?.message ?? null };
 }
