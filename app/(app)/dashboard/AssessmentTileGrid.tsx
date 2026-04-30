@@ -922,7 +922,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
       {/* Pentagon + bars side by side */}
       <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
         <div style={{ flexShrink: 0 }}>
-          <OceanRadarSVG scores={scores} size={160} />
+          <OceanRadarSVG scores={scores} size={200} />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", flex: 1 }}>
           {TRAIT_INFO.map(t => {
@@ -958,8 +958,11 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
       </div>
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-        <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+        <Link href="/resources/big-five#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →"}
+        </Link>
+        <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}

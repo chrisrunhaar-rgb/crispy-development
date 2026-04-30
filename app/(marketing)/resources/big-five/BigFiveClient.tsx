@@ -696,7 +696,10 @@ function OceanRadarSVG({ pcts, size = 160, showLabels = false }: {
   function polyPts(pct: number) { return TRAIT_ORDER.map((_, i) => pt(i, pct).join(",")).join(" "); }
   const userPts = TRAIT_ORDER.map((t, i) => pt(i, pcts[t]));
   const userPoly = userPts.map(p => p.join(",")).join(" ");
-  const labelRadius = r + (showLabels ? 16 : 0);
+  const labelGap = showLabels ? Math.max(16, size * 0.05) : 0;
+  const labelRadius = r + labelGap;
+  const dotR = Math.max(3, size * 0.009);
+  const labelFontSize = Math.max(9, Math.round(size * 0.03)) + "px";
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
       {[25, 50, 75, 100].map(p => (
@@ -708,7 +711,7 @@ function OceanRadarSVG({ pcts, size = 160, showLabels = false }: {
       })}
       <polygon points={userPoly} fill="oklch(52% 0.22 280 / 0.14)" stroke="oklch(52% 0.22 280)" strokeWidth={1.5} />
       {userPts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={3} fill={COLORS[TRAIT_ORDER[i]]} />
+        <circle key={i} cx={x} cy={y} r={dotR} fill={COLORS[TRAIT_ORDER[i]]} />
       ))}
       {showLabels && TRAIT_ORDER.map((t, i) => {
         const ang = angle(i);
@@ -717,7 +720,7 @@ function OceanRadarSVG({ pcts, size = 160, showLabels = false }: {
         const anchor = Math.cos(ang) > 0.2 ? "start" : Math.cos(ang) < -0.2 ? "end" : "middle";
         return (
           <text key={t} x={lx} y={ly + 4} textAnchor={anchor}
-            style={{ fontFamily: "var(--font-montserrat)", fontSize: "9px", fontWeight: 700, fill: COLORS[t], letterSpacing: "0.04em" }}>
+            style={{ fontFamily: "var(--font-montserrat)", fontSize: labelFontSize, fontWeight: 700, fill: COLORS[t], letterSpacing: "0.04em" }}>
             {t}
           </text>
         );
@@ -1059,7 +1062,7 @@ export default function BigFiveClient({
           </p>
           <OceanRadarSVG
             pcts={{ O: pcts.O, C: pcts.C, E: pcts.E, A: pcts.A, ES: stabilityPct }}
-            size={220}
+            size={440}
             showLabels={true}
           />
           <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "oklch(50% 0.06 280)", textAlign: "center", maxWidth: 380 }}>
