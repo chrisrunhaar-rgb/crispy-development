@@ -18,6 +18,11 @@ export default async function ResourcePage(props: any) {
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
 
+  const { data: countryData } = await supabase
+    .from("country_hofstede_scores")
+    .select("*")
+    .order("country_en");
+
   const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
 
   return (
@@ -56,7 +61,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <PowerDistanceClient {...props} isSaved={isSaved} />
+      <PowerDistanceClient {...props} isSaved={isSaved} countryData={countryData ?? []} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

@@ -283,49 +283,39 @@ const insightCards = [
   },
 ];
 
-// ─── Reading List (Section F) ─────────────────────────────────────────────────
-const readingList = [
-  {
-    title: "Cultures and Organizations: Software of the Mind",
-    authoryear: "Hofstede, Hofstede & Minkov — 3rd ed., 2010",
-    description: {
-      en: "The accessible single volume covering all six Hofstede dimensions.",
-      id: "Volume tunggal yang mudah dipahami yang mencakup semua enam dimensi Hofstede.",
-      nl: "Het toegankelijke standaardwerk dat alle zes Hofstede-dimensies behandelt.",
-    },
-    url: null,
-  },
-  {
-    title: "The Culture Map",
-    authoryear: "Erin Meyer — 2014",
-    description: {
-      en: "The most practitioner-friendly framework for cross-cultural leadership — pairs well with Hofstede.",
-      id: "Kerangka paling ramah bagi praktisi untuk kepemimpinan lintas budaya — sangat cocok dipadukan dengan Hofstede.",
-      nl: "Het meest praktijkgerichte kader voor intercultureel leiderschap — past goed bij Hofstede.",
-    },
-    url: null,
-  },
-  {
-    title: "The GLOBE Study of 62 Societies",
-    authoryear: "House et al. — 2004",
-    description: {
-      en: "The full GLOBE research results, including the As Is vs Should Be findings across 62 cultures.",
-      id: "Hasil penelitian GLOBE lengkap, termasuk temuan As Is vs Should Be di 62 budaya.",
-      nl: "De volledige GLOBE-onderzoeksresultaten, inclusief de As Is vs Should Be-bevindingen in 62 culturen.",
-    },
-    url: "https://globeproject.com",
-  },
+type CountryScore = {
+  country_code: string;
+  country_en: string;
+  country_id: string;
+  country_nl: string;
+  pdi: number;
+  idv: number;
+  mas: number;
+  uai: number;
+  lto: number;
+  ivr: number;
+};
+
+const DIMENSIONS: { key: keyof CountryScore; en: string; id: string; nl: string; full_en: string }[] = [
+  { key: "pdi", en: "PDI", id: "PDI", nl: "PDI", full_en: "Power Distance" },
+  { key: "idv", en: "IDV", id: "IDV", nl: "IDV", full_en: "Individualism" },
+  { key: "mas", en: "MAS", id: "MAS", nl: "MAS", full_en: "Masculinity" },
+  { key: "uai", en: "UAI", id: "UAI", nl: "OVO", full_en: "Uncertainty Avoidance" },
+  { key: "lto", en: "LTO", id: "LTO", nl: "LTO", full_en: "Long-Term Orientation" },
+  { key: "ivr", en: "IVR", id: "IVR", nl: "IND", full_en: "Indulgence" },
 ];
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: string | null; isSaved: boolean; countryData: CountryScore[] };
 
-export default function PowerDistanceClient({ userPathway, isSaved: initialSaved }: Props) {
+export default function PowerDistanceClient({ userPathway, isSaved: initialSaved, countryData }: Props) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openPoint, setOpenPoint] = useState<number | null>(null);
   const [openFramework, setOpenFramework] = useState<number | null>(null);
+  const [countryA, setCountryA] = useState("NL");
+  const [countryB, setCountryB] = useState("ID");
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   function handleSave() {
@@ -1059,7 +1049,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("External Resources", "Sumber Daya Eksternal", "Externe Bronnen")}
+            {t("Tools & Resources", "Alat & Sumber Daya", "Tools & Bronnen")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 56, lineHeight: 1.2 }}>
             Go Deeper
@@ -1096,66 +1086,107 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             </div>
           </div>
 
-          {/* Try It */}
+          {/* Country Comparison Tool */}
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Try It", "Coba", "Probeer Het")}
+            {t("Country Comparison", "Perbandingan Negara", "Landenvergelijking")}
           </p>
-          <div style={{ background: navy, borderRadius: 10, padding: "36px 40px", marginBottom: 56, position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.4 }} />
-            <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 20, fontWeight: 800, color: offWhite, margin: "0 0 12px", position: "relative", lineHeight: 1.3 }}>
-              Hofstede Insights — Country Comparison
-            </h3>
-            <p style={{ fontSize: 15, color: "oklch(80% 0.04 260)", lineHeight: 1.8, marginBottom: 28, position: "relative", maxWidth: 520 }}>
+          <div style={{ background: offWhite, borderRadius: 10, padding: "32px", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", marginBottom: 16 }}>
+            <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 28, maxWidth: 560 }}>
               {t(
-                "Enter your home country and your team's countries to see all six Hofstede dimensions side by side. The most useful single tool for a cross-cultural leader doing PD analysis.",
-                "Masukkan negara asal Anda dan negara-negara tim Anda untuk melihat semua enam dimensi Hofstede berdampingan. Alat tunggal paling berguna bagi pemimpin lintas budaya yang melakukan analisis PD.",
-                "Voer je eigen land en de landen van je team in om alle zes Hofstede-dimensies naast elkaar te zien. Het meest nuttige enkelvoudige hulpmiddel voor een interculturele leider die PD-analyse doet."
+                "Select two countries to compare all six Hofstede dimensions side by side. Navy bars = Country A, orange bars = Country B. Scores run 0–120.",
+                "Pilih dua negara untuk membandingkan semua enam dimensi Hofstede secara berdampingan. Batang biru = Negara A, batang oranye = Negara B. Skor berkisar 0–120.",
+                "Selecteer twee landen om alle zes Hofstede-dimensies naast elkaar te vergelijken. Blauwe balken = Land A, oranje balken = Land B. Scores lopen van 0–120."
               )}
             </p>
-            <a
-              href="https://www.hofstede-insights.com/country-comparison-tool"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "inline-block", padding: "14px 28px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", position: "relative", letterSpacing: "0.02em" }}
-            >
-              {t("Open Comparison Tool →", "Buka Alat Perbandingan →", "Open Vergelijkingstool →")}
-            </a>
-          </div>
 
-          {/* Read Further */}
-          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Read Further", "Bacaan Lanjutan", "Verder Lezen")}
-          </p>
-          <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, marginBottom: 32 }}>
+            {/* Selectors */}
+            <div style={{ display: "flex", gap: 16, marginBottom: 36, flexWrap: "wrap" }}>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: navy, marginBottom: 8 }}>
+                  {t("Country A", "Negara A", "Land A")}
+                </label>
+                <div style={{ position: "relative" }}>
+                  <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: navy, pointerEvents: "none" }} />
+                  <select
+                    value={countryA}
+                    onChange={e => setCountryA(e.target.value)}
+                    style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
+                  >
+                    {countryData.map(c => (
+                      <option key={c.country_code} value={c.country_code}>
+                        {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 180 }}>
+                <label style={{ display: "block", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
+                  {t("Country B", "Negara B", "Land B")}
+                </label>
+                <div style={{ position: "relative" }}>
+                  <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 12, height: 12, borderRadius: 2, background: orange, pointerEvents: "none" }} />
+                  <select
+                    value={countryB}
+                    onChange={e => setCountryB(e.target.value)}
+                    style={{ width: "100%", padding: "10px 12px 10px 32px", border: "1.5px solid oklch(85% 0.01 260)", borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: navy, background: "white", appearance: "none", cursor: "pointer" }}
+                  >
+                    {countryData.map(c => (
+                      <option key={c.country_code} value={c.country_code}>
+                        {lang === "id" ? c.country_id : lang === "nl" ? c.country_nl : c.country_en}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Dimension bars */}
+            {(() => {
+              const a = countryData.find(c => c.country_code === countryA);
+              const b = countryData.find(c => c.country_code === countryB);
+              if (!a || !b) return null;
+              return (
+                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  {DIMENSIONS.map(dim => {
+                    const scoreA = a[dim.key] as number;
+                    const scoreB = b[dim.key] as number;
+                    const label = dim[lang as "en" | "id" | "nl"];
+                    return (
+                      <div key={dim.key}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                          <div>
+                            <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: navy, letterSpacing: "0.06em" }}>{label}</span>
+                            <span style={{ fontSize: 12, color: bodyText, marginLeft: 8 }}>{dim.full_en}</span>
+                          </div>
+                          <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: bodyText }}>
+                            <span style={{ color: navy }}>{scoreA}</span>
+                            <span style={{ color: "oklch(70% 0.02 260)", margin: "0 6px" }}>/</span>
+                            <span style={{ color: orange }}>{scoreB}</span>
+                          </span>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                          <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${(scoreA / 120) * 100}%`, background: navy, borderRadius: 5, transition: "width 0.35s ease" }} />
+                          </div>
+                          <div style={{ height: 10, borderRadius: 5, background: "oklch(92% 0.008 260)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${(scoreB / 120) * 100}%`, background: orange, borderRadius: 5, transition: "width 0.35s ease" }} />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+          <p style={{ fontSize: 12, color: "oklch(60% 0.03 260)", lineHeight: 1.6, marginBottom: 0 }}>
             {t(
-              "The works below are the primary sources behind this module. Crispy Leaders makes them accessible — these take you to the original.",
-              "Karya-karya di bawah ini adalah sumber utama di balik modul ini. Crispy Leaders membuatnya mudah diakses — karya-karya ini membawa Anda ke sumber aslinya.",
-              "De onderstaande werken zijn de primaire bronnen achter deze module. Crispy Leaders maakt ze toegankelijk — deze brengen je naar het origineel."
+              "Data from Hofstede Insights. Scores compiled from published research across 80 countries. Power Distance (PDI) is the primary dimension covered in this module.",
+              "Data dari Hofstede Insights. Skor dikompilasi dari penelitian yang diterbitkan di 80 negara. Jarak Kekuasaan (PDI) adalah dimensi utama yang dibahas dalam modul ini.",
+              "Data van Hofstede Insights. Scores samengesteld uit gepubliceerd onderzoek in 80 landen. Machtafstand (PDI) is de primaire dimensie in deze module."
             )}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {readingList.map((item, i) => (
-              <div key={i} style={{ padding: "24px 0", borderBottom: i < readingList.length - 1 ? "1px solid oklch(88% 0.01 80)" : "none" }}>
-                {item.url ? (
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                    <h4 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2.2vw, 21px)", fontWeight: 700, color: navy, margin: "0 0 6px", lineHeight: 1.3, textDecoration: "underline", textDecorationColor: "oklch(50% 0.08 260 / 0.3)", textUnderlineOffset: 3 }}>
-                      {item.title}
-                    </h4>
-                  </a>
-                ) : (
-                  <h4 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2.2vw, 21px)", fontWeight: 700, color: navy, margin: "0 0 6px", lineHeight: 1.3 }}>
-                    {item.title}
-                  </h4>
-                )}
-                <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", margin: "0 0 10px" }}>
-                  {item.authoryear}
-                </p>
-                <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                  {item.description[lang]}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
