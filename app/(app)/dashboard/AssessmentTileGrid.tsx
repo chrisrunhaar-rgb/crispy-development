@@ -1321,9 +1321,9 @@ export default function AssessmentTileGrid({
           href="/resources/wheel-of-life"
           onClick={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, lang }) : undefined}
           extraButton={
-            wheelReflections && Object.values(wheelReflections).some(r => r.gratitude || r.action) ? (
+            wheelOfLifeScores ? (
               <button
-                onClick={() => setModal({ type: "wheelActionSteps", reflections: wheelReflections, lang })}
+                onClick={() => setModal({ type: "wheelActionSteps", reflections: wheelReflections ?? {}, lang })}
                 style={{
                   width: "100%",
                   fontFamily: "var(--font-montserrat)",
