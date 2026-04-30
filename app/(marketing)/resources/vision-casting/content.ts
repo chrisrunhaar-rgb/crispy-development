@@ -547,38 +547,6 @@ export const resourceCards: Array<{
       "Stanley's own teaching on the Visioneering framework. Worth watching as a companion to the book — he tells the Nehemiah story in a way that is hard to forget.",
     href: "https://www.youtube.com/watch?v=eK_pMaDqy64",
   },
-  {
-    type: "video",
-    title: "Pellegrino Riccardi — Cross-Cultural Communication",
-    meta: "TEDxBergen",
-    description:
-      "Used across Crispy Leaders modules. Riccardi explores the cultural assumptions that shape how we lead and listen — directly relevant to the Others channel of the Vision Compass.",
-    href: "#",
-  },
-  {
-    type: "module",
-    title: "Influential Leadership Framework",
-    meta: "Crispy Leaders",
-    description:
-      "How to mobilise people once the vision is clear. The natural next step after you have discerned what God is calling you toward.",
-    href: "/resources/influential-leadership-framework",
-  },
-  {
-    type: "module",
-    title: "Storytelling for Leaders",
-    meta: "Crispy Leaders",
-    description:
-      "The craft of vision spoken as story. How to move from bullet-point vision statements to narrative that sticks.",
-    href: "/resources/storytelling-leadership",
-  },
-  {
-    type: "module",
-    title: "Servant Leadership",
-    meta: "Crispy Leaders",
-    description:
-      "The heart posture that protects a leader's vision from becoming personal ambition. A necessary companion to vision casting.",
-    href: "/resources/servant-leadership",
-  },
 ];
 
 // ---------------------------------------------------------------------------
