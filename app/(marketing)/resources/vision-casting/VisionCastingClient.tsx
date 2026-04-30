@@ -1,196 +1,1311 @@
-﻿"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
+import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import {
+  Lang,
+  ChannelId,
+  pageHero,
+  compassIntro,
+  channels,
+  fiveTestsIntro,
+  fiveTests,
+  auditResultTemplate,
+  facilitationToolsIntro,
+  facilitationTools,
+  resourceCards,
+  cta,
+  ui,
+} from "./content";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+// ─── Types & Helpers ──────────────────────────────────────────────────────────
 
-const visionElements = [
-  { number: "1", en_title: "Direction — Where are we going?", id_title: "Arah — Ke mana kita pergi?", nl_title: "Richting — Waar gaan we naartoe?", en_desc: "A compelling vision names a specific destination. Vague aspirations ('we want to grow') are not vision — they are wishful thinking. Powerful vision is specific enough that you would know when you arrived and know if you have drifted.", id_desc: "Visi yang menarik menyebutkan tujuan yang spesifik. Aspirasi yang samar ('kita ingin tumbuh') bukan visi — itu adalah angan-angan. Visi yang kuat cukup spesifik sehingga Anda tahu kapan Anda tiba dan tahu apakah Anda telah menyimpang.", nl_desc: "Een overtuigende visie noemt een specifieke bestemming. Vage aspiraties ('we willen groeien') zijn geen visie — het is wensdenken. Krachtige visie is specifiek genoeg dat je zou weten wanneer je bent aangekomen." },
-  { number: "2", en_title: "Motivation — Why does it matter?", id_title: "Motivasi — Mengapa itu penting?", nl_title: "Motivatie — Waarom doet het ertoe?", en_desc: "Vision must answer the question every person silently asks: 'Why should I give my life to this?' The motivation must be bigger than the organisation — it must connect to something that transcends survival and comfort. For Kingdom leaders, this is usually the deepest Why of all.", id_desc: "Visi harus menjawab pertanyaan yang diam-diam ditanyakan setiap orang: 'Mengapa saya harus memberikan hidup saya untuk ini?' Motivasinya harus lebih besar dari organisasi.", nl_desc: "Visie moet de vraag beantwoorden die iedereen stilzwijgend stelt: 'Waarom zou ik mijn leven hieraan geven?' De motivatie moet groter zijn dan de organisatie — het moet verbinden met iets dat overleven en comfort overstijgt." },
-  { number: "3", en_title: "Values — How will we travel?", id_title: "Nilai-nilai — Bagaimana kita bepergian?", nl_title: "Waarden — Hoe zullen we reizen?", en_desc: "Vision without values is just ambition. The values define the road rules — what we will and will not do to get there. In cross-cultural teams, values must be named explicitly because they are not shared by default. The journey is as important as the destination.", id_desc: "Visi tanpa nilai hanyalah ambisi. Nilai-nilai mendefinisikan aturan jalan — apa yang akan dan tidak akan kita lakukan untuk mencapainya. Dalam tim lintas budaya, nilai-nilai harus disebutkan secara eksplisit karena tidak dibagikan secara default.", nl_desc: "Visie zonder waarden is slechts ambitie. De waarden definiëren de verkeersregels — wat we wel en niet zullen doen om er te komen. In interculturele teams moeten waarden expliciet worden benoemd." },
-  { number: "4", en_title: "Impact — Who benefits?", id_title: "Dampak — Siapa yang diuntungkan?", nl_title: "Impact — Wie profiteert?", en_desc: "Name the specific people who will be different because this vision is realised. Not just the organisation's members — but the communities, peoples, or generations who will be affected. This moves vision from inward to outward, from self-serving to sacrificial.", id_desc: "Sebutkan orang-orang spesifik yang akan berbeda karena visi ini terwujud. Bukan hanya anggota organisasi — tetapi komunitas, masyarakat, atau generasi yang akan terpengaruh.", nl_desc: "Benoem de specifieke mensen die anders zullen zijn omdat deze visie is gerealiseerd. Niet alleen de leden van de organisatie — maar de gemeenschappen, volkeren of generaties die worden beïnvloed." },
-];
-
-const communicationPrinciples = [
-  { number: "1", en_title: "Repeat more than you think necessary", id_title: "Ulangi lebih dari yang Anda pikir perlu", nl_title: "Herhaal vaker dan je nodig denkt", en_desc: "Research suggests leaders need to communicate a vision seven to ten times before it begins to settle. Most leaders say the vision twice and wonder why no one is aligned. You have to say it until you are tired of saying it — and then keep saying it.", id_desc: "Penelitian menunjukkan pemimpin perlu mengkomunikasikan visi tujuh hingga sepuluh kali sebelum mulai menetap. Sebagian besar pemimpin mengatakan visi dua kali dan bertanya-tanya mengapa tidak ada yang selaras.", nl_desc: "Onderzoek suggereert dat leiders een visie zeven tot tien keer moeten communiceren voordat ze begint te landen. De meeste leiders zeggen de visie twee keer en vragen zich af waarom niemand op één lijn zit." },
-  { number: "2", en_title: "Use story, not slides", id_title: "Gunakan cerita, bukan slide", nl_title: "Gebruik verhalen, geen slides", en_desc: "A vision presented as a list of bullet points will not move people. A vision told as a story — vivid, specific, emotionally true — creates longing and momentum. The most powerful vision moments in history were speeches, not spreadsheets.", id_desc: "Visi yang disajikan sebagai daftar poin tidak akan menggerakkan orang. Visi yang diceritakan sebagai cerita — hidup, spesifik, benar secara emosional — menciptakan kerinduan dan momentum.", nl_desc: "Een visie gepresenteerd als een lijst met bullet points zal mensen niet bewegen. Een visie verteld als verhaal — levendig, specifiek, emotioneel waar — creëert verlangen en momentum." },
-  { number: "3", en_title: "Invite people in, don't announce to them", id_title: "Undang orang masuk, jangan umumkan kepada mereka", nl_title: "Nodig mensen uit, kondig niet aan", en_desc: "Announcement creates distance; invitation creates ownership. Share the vision and say: 'Here is where I believe we are called to go. I need to know if you see it too.' When people choose the vision rather than receive it, they own it.", id_desc: "Pengumuman menciptakan jarak; undangan menciptakan kepemilikan. Bagikan visi dan katakan: 'Inilah di mana saya percaya kita dipanggil untuk pergi. Saya perlu tahu apakah Anda juga melihatnya.'", nl_desc: "Aankondiging creëert afstand; uitnodiging creëert eigenaarschap. Deel de visie en zeg: 'Hier geloof ik dat we geroepen zijn naartoe te gaan. Ik moet weten of jij het ook ziet.'" },
-];
-
-const crossCulturalChallenges = [
-  { en: "In high power-distance cultures, vision may be received as instruction rather than invitation — and followed without genuine buy-in.", id: "Dalam budaya jarak kekuasaan tinggi, visi mungkin diterima sebagai instruksi daripada undangan — dan diikuti tanpa dukungan yang tulus.", nl: "In hoge machtafstandsculturen kan visie als instructie worden ontvangen in plaats van uitnodiging — en gevolgd worden zonder echte instemming." },
-  { en: "Collective cultures may resist individual-hero language — frame the vision as 'what we will do together', not 'where I am leading you'.", id: "Budaya kolektif mungkin menolak bahasa pahlawan individual — bingkai visi sebagai 'apa yang akan kita lakukan bersama', bukan 'di mana saya memimpin Anda'.", nl: "Collectivistische culturen kunnen individuele-held-taal weerstaan — kader de visie als 'wat we samen zullen doen', niet 'waar ik je naartoe leid'." },
-  { en: "Short-term thinking cultures may struggle with 10-year horizons — break the vision into nearer-term waypoints that feel achievable.", id: "Budaya pemikiran jangka pendek mungkin kesulitan dengan cakrawala 10 tahun — pecah visi menjadi titik-titik jalan jangka pendek yang terasa dapat dicapai.", nl: "Culturen met korte-termijndenken kunnen moeite hebben met 10-jaars horizons — splits de visie op in kortere-termijn waypoints die haalbaar aanvoelen." },
-];
-
-const reflectionQuestions = [
-  { roman: "I", en: "Can you articulate your current vision in one clear, compelling sentence? If not, who else can?", id: "Dapatkah Anda mengartikulasikan visi Anda saat ini dalam satu kalimat yang jelas dan menarik? Jika tidak, siapa lagi yang bisa?", nl: "Kun je je huidige visie in één duidelijke, overtuigende zin verwoorden? Zo niet, wie kan dat dan?" },
-  { roman: "II", en: "How many times have you communicated the vision this month? Is it enough?", id: "Berapa kali Anda mengkomunikasikan visi bulan ini? Apakah itu cukup?", nl: "Hoeveel keer heb je de visie deze maand gecommuniceerd? Is het genoeg?" },
-  { roman: "III", en: "Does your vision connect to something that matters beyond your organisation? Does it have a Kingdom dimension?", id: "Apakah visi Anda terhubung dengan sesuatu yang penting di luar organisasi Anda? Apakah memiliki dimensi Kerajaan?", nl: "Verbindt je visie met iets dat verder reikt dan je organisatie? Heeft het een Koninkrijksdimensie?" },
-  { roman: "IV", en: "How has your cross-cultural context shaped or complicated your vision? What adjustments have you made?", id: "Bagaimana konteks lintas budaya Anda telah membentuk atau memperumit visi Anda? Penyesuaian apa yang telah Anda buat?", nl: "Hoe heeft jouw interculturele context je visie gevormd of gecompliceerd? Welke aanpassingen heb je gemaakt?" },
-  { roman: "V", en: "Who in your team most owns the vision? Who seems least connected to it? What accounts for the difference?", id: "Siapa dalam tim Anda yang paling memiliki visi? Siapa yang tampaknya paling tidak terhubung dengannya? Apa yang menyebabkan perbedaan tersebut?", nl: "Wie in je team bezit de visie het meest? Wie lijkt er het minst mee verbonden? Wat verklaart het verschil?" },
-  { roman: "VI", en: "How does Habakkuk 2:2 ('Write the vision clearly so that the one who reads it can run') shape how you communicate yours?", id: "Bagaimana Habakuk 2:2 ('Tuliskan visi dengan jelas sehingga orang yang membacanya dapat berlari') membentuk cara Anda mengkomunikasikan visi Anda?", nl: "Hoe vormt Habakuk 2:2 ('Schrijf het visioen duidelijk op zodat degene die het leest kan rennen') hoe jij de jouwe communiceert?" },
-];
+type LangCode = "en" | "id" | "nl";
 
 type Props = { userPathway: string | null; isSaved: boolean };
 
+// ─── Flip Card Data ───────────────────────────────────────────────────────────
+
+type FlipCard = {
+  title: { en: string; id: string; nl: string };
+  back: { en: string; id: string; nl: string };
+};
+
+const FLIP_CARDS: FlipCard[] = [
+  {
+    title: {
+      en: "What Vision Actually Is",
+      id: "Apa Sebenarnya Visi Itu",
+      nl: "Wat Visie Werkelijk Is",
+    },
+    back: {
+      en: "Vision is a clear mental picture of what could be, fuelled by the conviction that it should be. It is not a goal, not a strategy, and not a mission statement. Vision is a living picture that moves people toward a preferred future. Without it, leaders manage — with it, they mobilise.",
+      id: "Visi adalah gambaran mental yang jelas tentang apa yang bisa ada, didorong oleh keyakinan bahwa itu seharusnya ada. Ini bukan tujuan, bukan strategi, dan bukan pernyataan misi. Visi adalah gambaran hidup yang menggerakkan orang menuju masa depan yang lebih baik.",
+      nl: "Visie is een helder mentaal beeld van wat zou kunnen zijn, gevoed door de overtuiging dat het zo moet zijn. Het is geen doel, geen strategie en geen missieverklaring. Visie is een levend beeld dat mensen beweegt naar een gewenste toekomst.",
+    },
+  },
+  {
+    title: {
+      en: "The Four Channels",
+      id: "Empat Saluran",
+      nl: "De Vier Kanalen",
+    },
+    back: {
+      en: "God speaks vision through four channels: Passion (what you cannot put down), Dreams (what stirs your imagination), Revelation (what God speaks directly), and Others (what your team sees that you cannot). Most leaders only use one or two. The strongest visions draw from all four.",
+      id: "Allah berbicara visi melalui empat saluran: Gairah (yang tidak bisa Anda tinggalkan), Mimpi (yang menggerakkan imajinasi Anda), Wahyu (apa yang Allah ucapkan langsung), dan Sesama (apa yang tim Anda lihat yang tidak bisa Anda lihat). Visi terkuat menggali dari keempat-empatnya.",
+      nl: "God spreekt visie door vier kanalen: Passie (wat je niet kunt neerleggen), Dromen (wat je verbeelding beweegt), Openbaring (wat God rechtstreeks spreekt), en Anderen (wat je team ziet dat jij niet ziet). De sterkste visies putten uit alle vier.",
+    },
+  },
+  {
+    title: {
+      en: "Vision and the Great Commission",
+      id: "Visi dan Amanat Agung",
+      nl: "Visie en de Grote Opdracht",
+    },
+    back: {
+      en: "For a cross-cultural Christian leader, every team vision sits inside the Great Commission — Jesus' ongoing call to make disciples of every nation. Your specific vision is a small piece of God's larger vision for the world. Knowing this is the difference between leading a project and stewarding a calling.",
+      id: "Bagi seorang pemimpin Kristen lintas budaya, setiap visi tim berada di dalam Amanat Agung — panggilan Yesus yang terus-menerus untuk menjadikan semua bangsa murid-Nya. Visi spesifik Anda adalah bagian kecil dari visi Allah yang lebih besar untuk dunia.",
+      nl: "Voor een interculturele christelijke leider ligt elke teamvisie binnen de Grote Opdracht — Jezus' voortdurende roep om van alle volken discipelen te maken. Jouw specifieke visie is een klein stukje van Gods grotere visie voor de wereld.",
+    },
+  },
+  {
+    title: {
+      en: "How to Test a Vision",
+      id: "Cara Menguji Visi",
+      nl: "Hoe Visie te Testen",
+    },
+    back: {
+      en: "Not every strong feeling is God-given vision. Five tests help distinguish a God-originated vision from a good idea or personal ambition: Time (does it survive months of prayer?), Scripture (does it align with God's character?), Community (have trusted people confirmed it?), Sacrifice (are you willing to pay the cost?), and Fruit (what is it producing?).",
+      id: "Tidak setiap perasaan kuat adalah visi yang diberikan Allah. Lima pengujian membantu membedakan visi yang berasal dari Allah: Waktu, Kitab Suci, Komunitas, Pengorbanan, dan Buah.",
+      nl: "Niet elk sterk gevoel is door God gegeven visie. Vijf testen helpen onderscheid te maken: Tijd, Schrift, Gemeenschap, Opoffering en Vrucht.",
+    },
+  },
+  {
+    title: {
+      en: "How Team Leaders Cast Vision",
+      id: "Cara Pemimpin Tim Menebar Visi",
+      nl: "Hoe Teamleiders Visie Uitdragen",
+    },
+    back: {
+      en: "Vision must be repeated seven to ten times before it settles. Use story, not slides. Invite people in — don't announce to them. In cross-cultural teams, vision must be framed collectively ('what we will do together'), not as a hero-leader announcement. The vision that emerges from the team together is almost always larger than the one you started with.",
+      id: "Visi harus diulangi tujuh hingga sepuluh kali sebelum menetap. Gunakan cerita, bukan slide. Undang orang masuk — jangan umumkan kepada mereka. Dalam tim lintas budaya, visi harus dibingkai secara kolektif.",
+      nl: "Visie moet zeven tot tien keer worden herhaald voordat het landt. Gebruik verhalen, geen slides. Nodig mensen uit — kondig niet aan. In interculturele teams moet visie collectief worden geframed: 'wat we samen zullen doen'.",
+    },
+  },
+];
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export default function VisionCastingClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as LangCode;
+
+  // Helper
+  const t = (field: Lang): string => field[lang];
+
+  // ─── Save to Dashboard ───────────────────────────────────────────
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   function handleSave() {
     if (saved) return;
+    setSaved(true); // optimistic
     startTransition(async () => {
       await saveResourceToDashboard("vision-casting");
-      setSaved(true);
     });
   }
 
+  // ─── Flip Cards ─────────────────────────────────────────────────
+  const [activeFlipCard, setActiveFlipCard] = useState<number | null>(null);
+
+  function handleFlipCard(index: number) {
+    setActiveFlipCard((prev) => (prev === index ? null : index));
+  }
+
+  // ─── Vision Compass ─────────────────────────────────────────────
+  const [activeChannel, setActiveChannel] = useState<ChannelId>("passion");
+
+  const activeChannelData = channels.find((c) => c.id === activeChannel) ?? channels[0];
+
+  // ─── Discernment Audit ──────────────────────────────────────────
+  const [visionInput, setVisionInput] = useState("");
+  const [responses, setResponses] = useState<Record<string, "yes" | "not-yet" | "unsure" | null>>(
+    Object.fromEntries(fiveTests.map((ft) => [ft.id, null]))
+  );
+  const [auditSaved, setAuditSaved] = useState(false);
+  const [auditPending, startAuditTransition] = useTransition();
+
+  const allAnswered = fiveTests.every((ft) => responses[ft.id] !== null);
+  const showResult = allAnswered;
+
+  function handleResponse(testId: string, value: "yes" | "not-yet" | "unsure") {
+    setResponses((prev) => ({ ...prev, [testId]: value }));
+  }
+
+  function handleSaveAudit() {
+    if (auditSaved) return;
+    setAuditSaved(true);
+    startAuditTransition(async () => {
+      await saveResourceToDashboard("vision-casting-audit");
+    });
+  }
+
+  // Compute result
+  const strongTests = fiveTests.filter((ft) => responses[ft.id] === "yes");
+  const watchTests = fiveTests.filter(
+    (ft) => responses[ft.id] === "not-yet" || responses[ft.id] === "unsure"
+  );
+
+  function getAuditResult(): string {
+    if (strongTests.length === 5) {
+      return t(auditResultTemplate.allClear);
+    }
+    const strongNames = strongTests.map((ft) => t(ft.title)).join(", ");
+    const watchNames = watchTests.map((ft) => t(ft.title)).join(", ");
+    let result = "";
+    if (strongTests.length > 0) {
+      result += t(auditResultTemplate.strongSigns).replace("{tests}", strongNames) + " ";
+    }
+    if (watchTests.length > 0) {
+      result += t(auditResultTemplate.areasToWatch).replace("{tests}", watchNames);
+    }
+    return result.trim();
+  }
+
+  const threeMonthNote: Lang = {
+    en: "Return to this audit in three months. Vision is tested by time.",
+    id: "Kembali ke audit ini dalam tiga bulan. Visi diuji oleh waktu.",
+    nl: "Keer over drie maanden terug naar deze audit. Visie wordt getoetst door de tijd.",
+  };
+
+  // ─── Style constants ─────────────────────────────────────────────
   const navy = "oklch(22% 0.10 260)";
+  const orange = "oklch(65% 0.15 45)";
   const offWhite = "oklch(97% 0.005 80)";
   const lightGray = "oklch(95% 0.008 80)";
-  const orange = "oklch(65% 0.15 45)";
-  const bodyText = "oklch(38% 0.05 260)";
+  const charcoal = "oklch(38% 0.05 260)";
+
+  const cormorant = "Cormorant Garamond, Georgia, serif";
+  const montserrat = "Montserrat, sans-serif";
+
+  // Direction button positions relative to compass container
+  // Container is 360px wide, 340px tall on desktop
+  const directionButtonStyle = (dir: "N" | "S" | "E" | "W", isActive: boolean, accentColor: string): React.CSSProperties => {
+    const base: React.CSSProperties = {
+      position: "absolute",
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      fontFamily: montserrat,
+      fontSize: 11,
+      fontWeight: 700,
+      textTransform: "uppercase" as const,
+      letterSpacing: "0.08em",
+      color: isActive ? accentColor : charcoal,
+      padding: "6px 10px",
+      borderRadius: 4,
+      transition: "color 0.2s ease",
+      whiteSpace: "nowrap" as const,
+    };
+    if (dir === "N") return { ...base, top: 0, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "S") return { ...base, bottom: 0, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "E") return { ...base, right: 0, top: "50%", transform: "translateY(-50%)" };
+    // W
+    return { ...base, left: 0, top: "50%", transform: "translateY(-50%)" };
+  };
+
+  // Compass glow positions
+  const glowStyle = (dir: "N" | "S" | "E" | "W", accentColor: string): React.CSSProperties => {
+    const base: React.CSSProperties = {
+      position: "absolute",
+      width: 100,
+      height: 100,
+      borderRadius: "50%",
+      background: accentColor,
+      opacity: 0.2,
+      pointerEvents: "none",
+      transition: "opacity 0.3s ease",
+    };
+    if (dir === "N") return { ...base, top: 20, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "S") return { ...base, bottom: 20, left: "50%", transform: "translateX(-50%)" };
+    if (dir === "E") return { ...base, right: 20, top: "50%", transform: "translateY(-50%)" };
+    return { ...base, left: 20, top: "50%", transform: "translateY(-50%)" };
+  };
+
+  // Resource type label
+  function getTypeLabel(type: "book" | "video" | "module"): string {
+    if (type === "book") return t(ui.labels.book);
+    if (type === "video") return t(ui.labels.video);
+    return t(ui.labels.module);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // RENDER
+  // ─────────────────────────────────────────────────────────────────────────────
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
-      <LangToggle />
+    <div style={{ fontFamily: montserrat, background: offWhite, minHeight: "100vh" }}>
 
+      {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
-        <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
+        <LangToggle />
+
+        <p style={{
+          color: orange,
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          marginBottom: 20,
+          marginTop: 24,
+          fontFamily: montserrat,
+        }}>
+          {t(pageHero.tag)}
         </p>
-        <h1 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 800, color: offWhite, margin: "0 auto 20px", maxWidth: 760, lineHeight: 1.15 }}>
-          {t("Vision Casting", "Menebar Visi", "Vision Casting")}
+
+        <h1 style={{
+          fontFamily: cormorant,
+          fontSize: "clamp(40px, 6vw, 72px)",
+          fontWeight: 600,
+          color: offWhite,
+          margin: "0 auto 24px",
+          maxWidth: 800,
+          lineHeight: 1.08,
+        }}>
+          {t(pageHero.title)}
         </h1>
-        <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(85% 0.03 80)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6, fontStyle: "italic" }}>
-          {t(
-            '"Where there is no vision, the people perish." — Proverbs 29:18',
-            '"Di mana tidak ada visi, rakyat akan binasa." — Amsal 29:18',
-            '"Waar geen visie is, vergaat het volk." — Spreuken 29:18'
-          )}
+
+        <p style={{
+          fontFamily: cormorant,
+          fontSize: "clamp(18px, 2.5vw, 24px)",
+          fontStyle: "italic",
+          color: "oklch(80% 0.02 80)",
+          maxWidth: 600,
+          margin: "0 auto 16px",
+          lineHeight: 1.55,
+        }}>
+          {t(pageHero.scripture)}
+          <span style={{ display: "block", marginTop: 6, fontSize: "clamp(10px, 1.2vw, 12px)", fontStyle: "normal", color: orange, fontFamily: montserrat, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            {t(pageHero.scriptureRef)}
+          </span>
         </p>
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", borderRadius: 6, border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, background: saved ? "oklch(55% 0.08 260)" : orange, color: offWhite }}>
-            {saved ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+
+        <p style={{
+          fontFamily: cormorant,
+          fontSize: "clamp(20px, 2.8vw, 28px)",
+          fontStyle: "italic",
+          color: "oklch(92% 0.01 80)",
+          maxWidth: 680,
+          margin: "0 auto 40px",
+          lineHeight: 1.45,
+        }}>
+          {t(pageHero.caption)}
+        </p>
+
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
+          <button
+            onClick={handleSave}
+            disabled={saved || isPending}
+            style={{
+              padding: "13px 28px",
+              borderRadius: 6,
+              border: "none",
+              cursor: saved ? "default" : "pointer",
+              fontFamily: montserrat,
+              fontSize: 14,
+              fontWeight: 700,
+              background: saved ? "oklch(45% 0.06 260)" : orange,
+              color: offWhite,
+              letterSpacing: "0.04em",
+              transition: "background 0.2s ease",
+            }}>
+            {saved ? t(ui.buttons.savedToDashboard) : t(ui.buttons.saveToDashboard)}
           </button>
+
+          <span style={{
+            color: "oklch(65% 0.03 260)",
+            fontSize: 13,
+            fontFamily: montserrat,
+            fontWeight: 500,
+          }}>
+            8 min read
+          </span>
         </div>
       </div>
 
-      <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
-        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
-          {t(
-            "Vision is not a statement on a wall — it is a living, spoken, repeated picture of a preferred future that moves people toward something greater than the status quo. Leaders without vision manage; leaders with vision mobilise.",
-            "Visi bukan pernyataan di dinding — itu adalah gambaran hidup, lisan, berulang dari masa depan yang lebih baik yang menggerakkan orang menuju sesuatu yang lebih besar dari status quo. Pemimpin tanpa visi mengelola; pemimpin dengan visi memobilisasi.",
-            "Visie is geen statement op een muur — het is een levend, gesproken, herhaald beeld van een gewenste toekomst die mensen beweegt naar iets groter dan de status quo. Leiders zonder visie beheren; leiders met visie mobiliseren."
-          )}
-        </p>
-        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75 }}>
-          {t(
-            "In cross-cultural contexts, vision casting is both more important and more complex. You are trying to move people from multiple cultural backgrounds toward a shared future — which means the vision must be large enough to be compelling, specific enough to be actionable, and culturally wise enough to be owned by all.",
-            "Dalam konteks lintas budaya, penebaran visi lebih penting dan lebih kompleks. Anda mencoba menggerakkan orang-orang dari berbagai latar belakang budaya menuju masa depan bersama — yang berarti visi harus cukup besar untuk menarik, cukup spesifik untuk dapat ditindaklanjuti, dan cukup bijak secara budaya untuk dimiliki semua.",
-            "In interculturele contexten is vision casting zowel belangrijker als complexer. Je probeert mensen vanuit meerdere culturele achtergronden naar een gedeelde toekomst te bewegen — wat betekent dat de visie groot genoeg moet zijn om overtuigend te zijn, specifiek genoeg om uitvoerbaar te zijn, en cultureel wijs genoeg om door allen te worden bezeten."
-          )}
-        </p>
+      {/* ── SECTION 2: INTRO + FLIP CARDS ──────────────────────────── */}
+      <div style={{ background: offWhite, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontSize: 16, color: charcoal, lineHeight: 1.8, marginBottom: 20, fontFamily: montserrat }}>
+            {t(pageHero.intro1)}
+          </p>
+          <p style={{ fontSize: 16, color: charcoal, lineHeight: 1.8, marginBottom: 64, fontFamily: montserrat }}>
+            {t(pageHero.intro2)}
+          </p>
+
+          <h2 style={{
+            fontFamily: cormorant,
+            fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 600,
+            color: navy,
+            marginBottom: 12,
+            textAlign: "center",
+            lineHeight: 1.15,
+          }}>
+            {lang === "en" ? "Five Things Worth Knowing" : lang === "id" ? "Lima Hal yang Perlu Diketahui" : "Vijf Dingen om te Weten"}
+          </h2>
+          <p style={{ textAlign: "center", color: charcoal, fontSize: 14, fontFamily: montserrat, marginBottom: 48, lineHeight: 1.6 }}>
+            {lang === "en" ? "Click any card to reveal what's on the back." : lang === "id" ? "Klik kartu mana saja untuk melihat isinya." : "Klik op een kaart om de achterkant te zien."}
+          </p>
+
+          {/* Flip cards grid: 2+3 on desktop, 1-col on mobile */}
+          <style>{`
+            .vc-flip-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 24px;
+            }
+            .vc-flip-grid .vc-flip-card:last-child {
+              grid-column: 1 / -1;
+            }
+            @media (max-width: 640px) {
+              .vc-flip-grid {
+                grid-template-columns: 1fr;
+              }
+              .vc-flip-grid .vc-flip-card:last-child {
+                grid-column: 1;
+              }
+            }
+            .vc-compass-layout {
+              display: flex;
+              flex-direction: row;
+              gap: 48px;
+              align-items: flex-start;
+            }
+            @media (max-width: 700px) {
+              .vc-compass-layout {
+                flex-direction: column;
+                align-items: center;
+              }
+            }
+            .vc-resources-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 20px;
+            }
+            @media (max-width: 900px) {
+              .vc-resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+              }
+            }
+            @media (max-width: 560px) {
+              .vc-resources-grid {
+                grid-template-columns: 1fr;
+              }
+            }
+            .vc-tools-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 24px;
+            }
+            @media (max-width: 640px) {
+              .vc-tools-grid {
+                grid-template-columns: 1fr;
+              }
+            }
+          `}</style>
+
+          <div className="vc-flip-grid">
+            {FLIP_CARDS.map((card, index) => {
+              const isActive = activeFlipCard === index;
+              return (
+                <div
+                  key={index}
+                  className="vc-flip-card"
+                  onClick={() => handleFlipCard(index)}
+                  style={{
+                    perspective: "1000px",
+                    cursor: "pointer",
+                    minHeight: 200,
+                  }}
+                >
+                  <div style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    minHeight: 200,
+                    transition: "transform 0.45s ease",
+                    transformStyle: "preserve-3d",
+                    transform: isActive ? "rotateY(180deg)" : "rotateY(0deg)",
+                  }}>
+                    {/* FRONT */}
+                    <div style={{
+                      position: "absolute",
+                      top: 0, left: 0, right: 0, bottom: 0,
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      background: navy,
+                      borderRadius: 12,
+                      padding: "32px 28px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                    }}>
+                      <div style={{
+                        fontFamily: cormorant,
+                        fontSize: "clamp(52px, 8vw, 72px)",
+                        fontWeight: 600,
+                        color: orange,
+                        lineHeight: 1,
+                        marginBottom: 12,
+                      }}>
+                        {index + 1}
+                      </div>
+                      <h3 style={{
+                        fontFamily: cormorant,
+                        fontSize: "clamp(20px, 2.5vw, 26px)",
+                        fontWeight: 600,
+                        color: offWhite,
+                        margin: 0,
+                        lineHeight: 1.2,
+                      }}>
+                        {card.title[lang]}
+                      </h3>
+                      <p style={{
+                        fontFamily: montserrat,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: "oklch(60% 0.05 260)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginTop: 16,
+                        marginBottom: 0,
+                      }}>
+                        {lang === "en" ? "Click to read →" : lang === "id" ? "Klik untuk baca →" : "Klik om te lezen →"}
+                      </p>
+                    </div>
+
+                    {/* BACK */}
+                    <div style={{
+                      position: "absolute",
+                      top: 0, left: 0, right: 0, bottom: 0,
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                      background: offWhite,
+                      border: `1px solid oklch(88% 0.01 80)`,
+                      borderRadius: 12,
+                      padding: "28px 28px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}>
+                      <h4 style={{
+                        fontFamily: montserrat,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        color: orange,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginBottom: 12,
+                        marginTop: 0,
+                      }}>
+                        {card.title[lang]}
+                      </h4>
+                      <p style={{
+                        fontFamily: montserrat,
+                        fontSize: 14,
+                        color: charcoal,
+                        lineHeight: 1.75,
+                        margin: 0,
+                      }}>
+                        {card.back[lang]}
+                      </p>
+                      <p style={{
+                        fontFamily: montserrat,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: "oklch(65% 0.05 260)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginTop: 16,
+                        marginBottom: 0,
+                      }}>
+                        {lang === "en" ? "← Click to flip back" : lang === "id" ? "← Klik untuk balik" : "← Klik om terug te draaien"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 48, textAlign: "center" }}>
-            {t("4 Elements of a Compelling Vision", "4 Elemen Visi yang Menarik", "4 Elementen van een Overtuigende Visie")}
+      {/* ── SECTION 3: VISION COMPASS ──────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <h2 style={{
+            fontFamily: cormorant,
+            fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 600,
+            color: navy,
+            textAlign: "center",
+            marginBottom: 16,
+            lineHeight: 1.15,
+          }}>
+            {t(ui.sectionTitles.visionCompass)}
           </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            {visionElements.map((el) => (
-              <div key={el.number} style={{ background: offWhite, borderRadius: 12, padding: "32px 36px", display: "flex", gap: 28, alignItems: "flex-start" }}>
-                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 52, fontWeight: 700, color: orange, lineHeight: 1, minWidth: 40, flexShrink: 0 }}>{el.number}</div>
-                <div>
-                  <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 700, color: navy, marginBottom: 10 }}>
-                    {lang === "en" ? el.en_title : lang === "id" ? el.id_title : el.nl_title}
-                  </h3>
-                  <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                    {lang === "en" ? el.en_desc : lang === "id" ? el.id_desc : el.nl_desc}
-                  </p>
+          <p style={{
+            textAlign: "center",
+            color: charcoal,
+            fontSize: 16,
+            fontFamily: montserrat,
+            lineHeight: 1.75,
+            maxWidth: 640,
+            margin: "0 auto 56px",
+          }}>
+            {t(compassIntro)}
+          </p>
+
+          <div className="vc-compass-layout">
+            {/* LEFT: Compass interaction zone */}
+            <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
+              {/* Compass container — positioned for directional buttons + logo */}
+              <div style={{
+                position: "relative",
+                width: 340,
+                height: 340,
+              }}>
+                {/* Direction buttons */}
+                {channels.map((ch) => {
+                  const isActive = activeChannel === ch.id;
+                  return (
+                    <button
+                      key={ch.id}
+                      onClick={() => setActiveChannel(ch.id)}
+                      style={directionButtonStyle(ch.direction, isActive, ch.colorAccent)}
+                      aria-pressed={isActive}
+                    >
+                      {ch.direction} — {t(ch.label)}
+                    </button>
+                  );
+                })}
+
+                {/* Logo image centered in container */}
+                <div style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 200,
+                  height: 200,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                  {/* Glow effect behind logo for active channel */}
+                  {channels.map((ch) => (
+                    <div
+                      key={ch.id}
+                      style={{
+                        ...glowStyle(ch.direction, ch.colorAccent),
+                        opacity: activeChannel === ch.id ? 0.22 : 0,
+                        transition: "opacity 0.3s ease",
+                      }}
+                    />
+                  ))}
+
+                  <Image
+                    src="/logo-icon.png"
+                    width={200}
+                    height={200}
+                    alt="Vision Compass"
+                    style={{ position: "relative", zIndex: 1 }}
+                  />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 40, textAlign: "center" }}>
-          {t("3 Communication Principles", "3 Prinsip Komunikasi", "3 Communicatieprincipes")}
-        </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {communicationPrinciples.map((p) => (
-            <div key={p.number} style={{ background: lightGray, borderRadius: 12, padding: "28px 32px", display: "flex", gap: 24, alignItems: "flex-start" }}>
-              <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 52, fontWeight: 700, color: orange, lineHeight: 1, minWidth: 36, flexShrink: 0 }}>{p.number}</div>
-              <div>
-                <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navy, marginBottom: 8 }}>
-                  {lang === "en" ? p.en_title : lang === "id" ? p.id_title : p.nl_title}
-                </h3>
-                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                  {lang === "en" ? p.en_desc : lang === "id" ? p.id_desc : p.nl_desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 24, fontWeight: 800, color: navy, marginBottom: 24, textAlign: "center" }}>
-            {t("Cross-Cultural Vision Challenges", "Tantangan Visi Lintas Budaya", "Interculturele Visie-uitdagingen")}
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {crossCulturalChallenges.map((c, i) => (
-              <div key={i} style={{ background: offWhite, borderRadius: 8, padding: "18px 22px", display: "flex", gap: 14, alignItems: "flex-start" }}>
-                <div style={{ color: navy, fontSize: 18, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>→</div>
-                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.7, margin: 0 }}>
-                  {lang === "en" ? c.en : lang === "id" ? c.id : c.nl}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: navy, marginBottom: 40, textAlign: "center" }}>
-          {t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen")}
-        </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          {reflectionQuestions.map((q) => (
-            <div key={q.roman} style={{ background: lightGray, borderRadius: 10, padding: "24px 28px", display: "flex", gap: 20, alignItems: "flex-start" }}>
-              <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 700, color: orange, minWidth: 28, flexShrink: 0 }}>{q.roman}</div>
-              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
+              <p style={{
+                textAlign: "center",
+                color: charcoal,
+                fontSize: 12,
+                fontFamily: montserrat,
+                marginTop: 16,
+                lineHeight: 1.5,
+                maxWidth: 260,
+              }}>
+                {lang === "en" ? "Select a direction to explore that channel" : lang === "id" ? "Pilih arah untuk menjelajahi saluran tersebut" : "Kies een richting om dat kanaal te verkennen"}
               </p>
             </div>
-          ))}
+
+            {/* RIGHT: Active channel panel */}
+            <div
+              key={activeChannel}
+              style={{
+                flex: 1,
+                minWidth: 0,
+                animation: "fadeIn 0.3s ease",
+              }}
+            >
+              <style>{`
+                @keyframes fadeIn {
+                  from { opacity: 0; transform: translateY(6px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+              `}</style>
+
+              {/* Channel label */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 6 }}>
+                <span style={{
+                  fontFamily: montserrat,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.12em",
+                  color: activeChannelData.colorAccent,
+                }}>
+                  {activeChannelData.direction}
+                </span>
+                <h3 style={{
+                  fontFamily: cormorant,
+                  fontSize: "clamp(24px, 3vw, 36px)",
+                  fontWeight: 600,
+                  color: navy,
+                  margin: 0,
+                  lineHeight: 1.1,
+                }}>
+                  {t(activeChannelData.label)}
+                </h3>
+              </div>
+
+              <p style={{
+                fontFamily: cormorant,
+                fontSize: 18,
+                fontStyle: "italic",
+                color: activeChannelData.colorAccent,
+                marginBottom: 20,
+                marginTop: 0,
+                lineHeight: 1.4,
+              }}>
+                {t(activeChannelData.tagline)}
+              </p>
+
+              <p style={{
+                fontFamily: montserrat,
+                fontSize: 15,
+                color: charcoal,
+                lineHeight: 1.8,
+                marginBottom: 28,
+              }}>
+                {t(activeChannelData.body)}
+              </p>
+
+              {/* Biblical Anchor */}
+              <div style={{
+                borderLeft: `3px solid ${activeChannelData.colorAccent}`,
+                paddingLeft: 20,
+                marginBottom: 24,
+              }}>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.14em",
+                  color: charcoal,
+                  marginBottom: 4,
+                  marginTop: 0,
+                }}>
+                  {t(ui.labels.biblicalAnchor)}
+                </p>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: orange,
+                  marginBottom: 10,
+                  marginTop: 0,
+                }}>
+                  {t(activeChannelData.biblicalAnchorTitle)}
+                </p>
+                <p style={{
+                  fontFamily: cormorant,
+                  fontSize: 17,
+                  fontStyle: "italic",
+                  color: charcoal,
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}>
+                  {t(activeChannelData.biblicalFigure)}
+                </p>
+              </div>
+
+              {/* Diagnostic Question */}
+              <div style={{
+                background: offWhite,
+                borderRadius: 8,
+                padding: "16px 20px",
+                marginBottom: 16,
+              }}>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.14em",
+                  color: charcoal,
+                  marginBottom: 8,
+                  marginTop: 0,
+                }}>
+                  {t(ui.labels.diagnosticQuestion)}
+                </p>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: navy,
+                  lineHeight: 1.55,
+                  margin: 0,
+                }}>
+                  {t(activeChannelData.diagnosticQuestion)}
+                </p>
+              </div>
+
+              {/* First Step */}
+              <div style={{
+                background: offWhite,
+                borderRadius: 8,
+                padding: "16px 20px",
+              }}>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.14em",
+                  color: charcoal,
+                  marginBottom: 8,
+                  marginTop: 0,
+                }}>
+                  {t(ui.labels.firstStep)}
+                </p>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 14,
+                  color: charcoal,
+                  lineHeight: 1.75,
+                  margin: 0,
+                }}>
+                  {t(activeChannelData.firstStepPractice)}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: offWhite, marginBottom: 16 }}>
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
-        </h2>
-        <p style={{ color: "oklch(80% 0.03 80)", fontSize: 16, lineHeight: 1.75, maxWidth: 540, margin: "0 auto 32px" }}>
-          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
-        </p>
-        <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-          {t("← Content Library", "← Perpustakaan Konten", "← Contentbibliotheek")}
-        </Link>
+      {/* ── SECTION 4: DISCERNMENT AUDIT ───────────────────────────── */}
+      <div style={{ background: offWhite, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <h2 style={{
+            fontFamily: cormorant,
+            fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 600,
+            color: navy,
+            textAlign: "center",
+            marginBottom: 16,
+            lineHeight: 1.15,
+          }}>
+            {t(ui.sectionTitles.fiveTests)}
+          </h2>
+          <p style={{
+            textAlign: "center",
+            color: charcoal,
+            fontSize: 16,
+            fontFamily: montserrat,
+            lineHeight: 1.75,
+            maxWidth: 640,
+            margin: "0 auto 48px",
+          }}>
+            {t(fiveTestsIntro)}
+          </p>
+
+          {/* Vision Input */}
+          <div style={{ marginBottom: 48 }}>
+            <label style={{
+              display: "block",
+              fontFamily: montserrat,
+              fontSize: 14,
+              fontWeight: 700,
+              color: navy,
+              marginBottom: 10,
+              lineHeight: 1.5,
+            }}>
+              {lang === "en"
+                ? "Write down the vision you are currently sensing:"
+                : lang === "id"
+                ? "Tuliskan visi yang sedang Anda rasakan saat ini:"
+                : "Schrijf de visie op die u momenteel ervaart:"}
+            </label>
+            <textarea
+              value={visionInput}
+              onChange={(e) => setVisionInput(e.target.value.slice(0, 500))}
+              rows={4}
+              placeholder={
+                lang === "en"
+                  ? "Describe the vision, concern, or calling you are testing…"
+                  : lang === "id"
+                  ? "Jelaskan visi, kekhawatiran, atau panggilan yang Anda uji…"
+                  : "Beschrijf de visie, bezorgdheid of roeping die u test…"
+              }
+              style={{
+                width: "100%",
+                padding: "14px 16px",
+                borderRadius: 8,
+                border: `2px solid oklch(85% 0.015 260)`,
+                fontFamily: montserrat,
+                fontSize: 15,
+                color: charcoal,
+                lineHeight: 1.65,
+                resize: "vertical",
+                outline: "none",
+                boxSizing: "border-box",
+                background: "white",
+                transition: "border-color 0.2s ease",
+              }}
+              onFocus={(e) => { e.target.style.borderColor = navy; }}
+              onBlur={(e) => { e.target.style.borderColor = "oklch(85% 0.015 260)"; }}
+            />
+            <p style={{
+              fontFamily: montserrat,
+              fontSize: 12,
+              color: "oklch(60% 0.03 260)",
+              textAlign: "right",
+              marginTop: 4,
+            }}>
+              {visionInput.length}/500
+            </p>
+          </div>
+
+          {/* Five Tests */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+            {fiveTests.map((test) => {
+              const response = responses[test.id];
+              return (
+                <div key={test.id} style={{
+                  background: "white",
+                  borderRadius: 12,
+                  padding: "28px 32px",
+                  border: `1px solid oklch(90% 0.01 80)`,
+                }}>
+                  <p style={{
+                    fontFamily: montserrat,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.12em",
+                    color: orange,
+                    marginBottom: 6,
+                    marginTop: 0,
+                  }}>
+                    {t(test.title)}
+                  </p>
+                  <p style={{
+                    fontFamily: montserrat,
+                    fontSize: 17,
+                    fontWeight: 600,
+                    color: navy,
+                    lineHeight: 1.45,
+                    marginBottom: 10,
+                    marginTop: 0,
+                  }}>
+                    {t(test.question)}
+                  </p>
+                  <p style={{
+                    fontFamily: montserrat,
+                    fontSize: 13,
+                    color: charcoal,
+                    fontStyle: "italic",
+                    lineHeight: 1.7,
+                    marginBottom: 20,
+                    marginTop: 0,
+                  }}>
+                    {t(test.helpText)}
+                  </p>
+
+                  {/* Response pills */}
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                    {(["yes", "not-yet", "unsure"] as const).map((val) => {
+                      const isSelected = response === val;
+                      const label =
+                        val === "yes"
+                          ? t(ui.labels.yes)
+                          : val === "not-yet"
+                          ? lang === "en" ? "Not yet" : lang === "id" ? "Belum" : "Nog niet"
+                          : t(ui.labels.unsure);
+                      return (
+                        <button
+                          key={val}
+                          onClick={() => handleResponse(test.id, val)}
+                          style={{
+                            padding: "9px 20px",
+                            borderRadius: 24,
+                            border: "none",
+                            cursor: "pointer",
+                            fontFamily: montserrat,
+                            fontSize: 13,
+                            fontWeight: 700,
+                            letterSpacing: "0.04em",
+                            background: isSelected ? orange : lightGray,
+                            color: isSelected ? offWhite : charcoal,
+                            transition: "background 0.15s ease, color 0.15s ease",
+                          }}>
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Result */}
+          {showResult && (
+            <div style={{
+              marginTop: 48,
+              background: "oklch(28% 0.09 260)",
+              borderRadius: 12,
+              padding: "36px 36px",
+            }}>
+              <p style={{
+                fontFamily: montserrat,
+                fontSize: 10,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.16em",
+                color: orange,
+                marginBottom: 16,
+                marginTop: 0,
+              }}>
+                {t(ui.labels.yourResults)}
+              </p>
+              <p style={{
+                fontFamily: cormorant,
+                fontSize: "clamp(17px, 2.2vw, 22px)",
+                color: offWhite,
+                lineHeight: 1.7,
+                margin: "0 0 20px",
+              }}>
+                {getAuditResult()}
+              </p>
+              <p style={{
+                fontFamily: cormorant,
+                fontSize: 16,
+                fontStyle: "italic",
+                color: "oklch(70% 0.03 80)",
+                lineHeight: 1.6,
+                margin: "0 0 28px",
+              }}>
+                {t(threeMonthNote)}
+              </p>
+
+              <button
+                onClick={handleSaveAudit}
+                disabled={auditSaved || auditPending}
+                style={{
+                  padding: "12px 24px",
+                  borderRadius: 6,
+                  border: "none",
+                  cursor: auditSaved ? "default" : "pointer",
+                  fontFamily: montserrat,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  background: auditSaved ? "oklch(45% 0.06 260)" : orange,
+                  color: offWhite,
+                  letterSpacing: "0.04em",
+                }}>
+                {auditSaved ? t(ui.buttons.savedToDashboard) : t(ui.buttons.saveToDashboard)}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* ── SECTION 5: FACILITATION TOOLS ──────────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <h2 style={{
+            fontFamily: cormorant,
+            fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 600,
+            color: navy,
+            textAlign: "center",
+            marginBottom: 16,
+            lineHeight: 1.15,
+          }}>
+            {t(ui.sectionTitles.facilitationTools)}
+          </h2>
+          <p style={{
+            textAlign: "center",
+            color: charcoal,
+            fontSize: 16,
+            fontFamily: montserrat,
+            lineHeight: 1.75,
+            maxWidth: 640,
+            margin: "0 auto 48px",
+          }}>
+            {t(facilitationToolsIntro)}
+          </p>
+
+          <div className="vc-tools-grid">
+            {facilitationTools.map((tool) => (
+              <div key={tool.id} style={{
+                background: offWhite,
+                borderRadius: 12,
+                padding: "28px 28px",
+              }}>
+                <div style={{
+                  fontFamily: cormorant,
+                  fontSize: 52,
+                  fontWeight: 600,
+                  color: orange,
+                  lineHeight: 1,
+                  marginBottom: 12,
+                }}>
+                  {tool.number}
+                </div>
+                <h3 style={{
+                  fontFamily: montserrat,
+                  fontSize: 18,
+                  fontWeight: 700,
+                  color: navy,
+                  marginBottom: 16,
+                  marginTop: 0,
+                  lineHeight: 1.3,
+                }}>
+                  {t(tool.title)}
+                </h3>
+
+                {/* Purpose tag */}
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                  <span style={{
+                    fontFamily: montserrat,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: orange,
+                    background: "oklch(97% 0.02 45)",
+                    padding: "3px 10px",
+                    borderRadius: 12,
+                  }}>
+                    {t(ui.labels.purpose)}: {t(tool.purpose)}
+                  </span>
+                </div>
+
+                {/* Duration tag */}
+                <div style={{ marginBottom: 20 }}>
+                  <span style={{
+                    fontFamily: montserrat,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: charcoal,
+                    background: "oklch(90% 0.005 80)",
+                    padding: "3px 10px",
+                    borderRadius: 12,
+                  }}>
+                    {t(ui.labels.duration)}: {t(tool.duration)}
+                  </span>
+                </div>
+
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: navy,
+                  marginBottom: 8,
+                  marginTop: 0,
+                }}>
+                  {t(ui.labels.howItWorks)}
+                </p>
+                <p style={{
+                  fontFamily: montserrat,
+                  fontSize: 14,
+                  color: charcoal,
+                  lineHeight: 1.75,
+                  margin: 0,
+                }}>
+                  {t(tool.instructions)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── SECTION 6: RESOURCES ───────────────────────────────────── */}
+      <div style={{ background: navy, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <h2 style={{
+            fontFamily: cormorant,
+            fontSize: "clamp(28px, 4vw, 44px)",
+            fontWeight: 600,
+            color: offWhite,
+            textAlign: "center",
+            marginBottom: 48,
+            lineHeight: 1.15,
+          }}>
+            {t(ui.sectionTitles.resources)}
+          </h2>
+
+          <div className="vc-resources-grid">
+            {resourceCards.map((card, i) => {
+              const isExternal = card.href !== "#" && card.href.startsWith("http");
+              const hasLink = card.href !== "#";
+
+              const cardInner = (
+                <div style={{
+                  background: "oklch(28% 0.09 260)",
+                  borderRadius: 12,
+                  padding: "24px 24px",
+                  height: "100%",
+                  boxSizing: "border-box",
+                  transition: hasLink ? "background 0.2s ease" : undefined,
+                  cursor: hasLink ? "pointer" : "default",
+                }}>
+                  <span style={{
+                    fontFamily: montserrat,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    color: orange,
+                    display: "block",
+                    marginBottom: 10,
+                  }}>
+                    {getTypeLabel(card.type)}
+                  </span>
+                  <h4 style={{
+                    fontFamily: montserrat,
+                    fontSize: 16,
+                    fontWeight: 700,
+                    color: offWhite,
+                    marginBottom: 6,
+                    marginTop: 0,
+                    lineHeight: 1.35,
+                  }}>
+                    {card.title}
+                  </h4>
+                  <p style={{
+                    fontFamily: montserrat,
+                    fontSize: 13,
+                    color: orange,
+                    marginBottom: 12,
+                    marginTop: 0,
+                    lineHeight: 1.4,
+                  }}>
+                    {card.meta}
+                  </p>
+                  <p style={{
+                    fontFamily: montserrat,
+                    fontSize: 14,
+                    color: "oklch(85% 0.01 80)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}>
+                    {card.description}
+                  </p>
+                  {!hasLink && (
+                    <p style={{
+                      fontFamily: montserrat,
+                      fontSize: 12,
+                      color: "oklch(55% 0.04 260)",
+                      marginTop: 12,
+                      marginBottom: 0,
+                      fontStyle: "italic",
+                    }}>
+                      {lang === "en" ? "(link coming soon)" : lang === "id" ? "(tautan segera hadir)" : "(link binnenkort beschikbaar)"}
+                    </p>
+                  )}
+                </div>
+              );
+
+              if (isExternal) {
+                return (
+                  <a key={i} href={card.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                    {cardInner}
+                  </a>
+                );
+              }
+              if (hasLink) {
+                return (
+                  <Link key={i} href={card.href} style={{ textDecoration: "none" }}>
+                    {cardInner}
+                  </Link>
+                );
+              }
+              return <div key={i}>{cardInner}</div>;
+            })}
+          </div>
+
+          {/* CTA */}
+          <div style={{
+            textAlign: "center",
+            marginTop: 64,
+            paddingTop: 56,
+            borderTop: `1px solid oklch(32% 0.08 260)`,
+          }}>
+            <h3 style={{
+              fontFamily: cormorant,
+              fontSize: "clamp(24px, 3.5vw, 38px)",
+              fontWeight: 600,
+              color: offWhite,
+              marginBottom: 16,
+              lineHeight: 1.2,
+            }}>
+              {t(cta.heading)}
+            </h3>
+            <p style={{
+              fontFamily: montserrat,
+              fontSize: 16,
+              color: "oklch(82% 0.01 80)",
+              lineHeight: 1.75,
+              maxWidth: 560,
+              margin: "0 auto 32px",
+            }}>
+              {t(cta.body)}
+            </p>
+            <Link
+              href="/resources"
+              style={{
+                display: "inline-block",
+                padding: "14px 32px",
+                background: orange,
+                color: offWhite,
+                borderRadius: 6,
+                fontFamily: montserrat,
+                fontSize: 15,
+                fontWeight: 700,
+                textDecoration: "none",
+                letterSpacing: "0.04em",
+              }}>
+              {t(cta.buttonLabel)}
+            </Link>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
