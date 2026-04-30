@@ -96,76 +96,6 @@ const frictionPoints = [
   },
 ];
 
-// ─── Development Levels ───────────────────────────────────────────────────────
-const developmentLevels = [
-  {
-    level: "01",
-    en_label: "Beginner",
-    id_label: "Pemula",
-    nl_label: "Beginner",
-    en_subtitle: "Know your own default first",
-    id_subtitle: "Kenali default Anda sendiri terlebih dahulu",
-    nl_subtitle: "Ken eerst je eigen standaard",
-    color: "#4A90D9",
-    actions: [
-      {
-        en: "Reflect honestly: on a scale of 1–10, how comfortable are you being challenged by someone who reports to you? How do you react when a junior team member disagrees with you publicly? Your gut reaction reveals your PD default.",
-        id: "Renungkan dengan jujur: pada skala 1–10, seberapa nyaman Anda ditantang oleh seseorang yang melapor kepada Anda? Bagaimana reaksi Anda ketika anggota tim junior tidak setuju dengan Anda di depan umum? Reaksi naluri Anda mengungkapkan default PD Anda.",
-        nl: "Reflecteer eerlijk: op een schaal van 1–10, hoe comfortabel voel je je als iemand die aan jou rapporteert jou uitdaagt? Hoe reageer je als een junior teamlid het publiekelijk oneens is met jou? Je instinctieve reactie onthult je PD-standaard.",
-      },
-      {
-        en: "Look up Hofstede's Power Distance Index for your own country and the countries of your team members. Compare the gaps. A 40-point gap (say, Dutch leader with an Indonesian team) is not just cultural flavour — it is a structural communication challenge that needs deliberate bridging.",
-        id: "Cari Indeks Jarak Kekuasaan Hofstede untuk negara Anda sendiri dan negara-negara anggota tim Anda. Bandingkan kesenjangan. Kesenjangan 40 poin (misalnya, pemimpin Belanda dengan tim Indonesia) bukan hanya cita rasa budaya — ini adalah tantangan komunikasi struktural yang membutuhkan jembatan yang disengaja.",
-        nl: "Zoek de Power Distance Index van Hofstede op voor jouw eigen land en de landen van je teamleden. Vergelijk de verschillen. Een kloof van 40 punten (bijv. Nederlandse leider met een Indonesisch team) is niet alleen culturele kleur — het is een structurele communicatie-uitdaging die bewuste overbrugging vereist.",
-      },
-    ],
-  },
-  {
-    level: "02",
-    en_label: "Practitioner",
-    id_label: "Praktisi",
-    nl_label: "Practitioner",
-    en_subtitle: "Adjust two specific behaviors this month",
-    id_subtitle: "Sesuaikan dua perilaku spesifik bulan ini",
-    nl_subtitle: "Pas deze maand twee specifieke gedragingen aan",
-    color: "#E07540",
-    actions: [
-      {
-        en: "Change how you open meetings. Stop starting with your own view. Instead, open with a question — narrow enough to answer: 'What is one thing that worried you about this project this week?' Narrower questions in high PD contexts get more honest answers than open invitations.",
-        id: "Ubah cara Anda membuka rapat. Berhenti memulai dengan pandangan Anda sendiri. Sebaliknya, buka dengan pertanyaan — cukup sempit untuk dijawab: 'Apa satu hal yang membuat Anda khawatir tentang proyek ini minggu ini?' Pertanyaan yang lebih sempit dalam konteks PD tinggi mendapat jawaban yang lebih jujur daripada undangan terbuka.",
-        nl: "Verander hoe je vergaderingen opent. Stop met beginnen met je eigen mening. Open in plaats daarvan met een vraag — specifiek genoeg om te beantwoorden: 'Wat is één ding dat je deze week zorgen baarde over dit project?' Specifieke vragen in hoge PD-contexten krijgen eerlijkere antwoorden dan open uitnodigingen.",
-      },
-      {
-        en: "Build in a private feedback step after every major group decision. A simple message the day after: 'Now that we've decided X — is there anything you wanted to say but didn't get the chance?' You will be surprised what surfaces when the group pressure is gone.",
-        id: "Bangun langkah umpan balik pribadi setelah setiap keputusan kelompok besar. Pesan sederhana keesokan harinya: 'Sekarang setelah kita memutuskan X — apakah ada sesuatu yang ingin Anda katakan tetapi tidak mendapat kesempatan?' Anda akan terkejut dengan apa yang muncul ketika tekanan kelompok hilang.",
-        nl: "Bouw een privé-feedbackstap in na elke grote groepsbeslissing. Een eenvoudig bericht de dag erna: 'Nu we X hebben besloten — is er iets wat je wilde zeggen maar niet de kans had?' Je zult verrast zijn wat er naar boven komt als de groepsdruk weg is.",
-      },
-    ],
-  },
-  {
-    level: "03",
-    en_label: "Advanced",
-    id_label: "Lanjutan",
-    nl_label: "Gevorderd",
-    en_subtitle: "Build team culture that bridges the gap",
-    id_subtitle: "Bangun budaya tim yang menjembatani kesenjangan",
-    nl_subtitle: "Bouw een teamcultuur die de kloof overbrugt",
-    color: "#1B3A6B",
-    actions: [
-      {
-        en: "Name the tension explicitly with your team. Say it out loud: 'I know some of you come from cultures where the leader decides and everyone follows. I know some of you come from cultures where everyone's opinion is expected. In this team, we are trying to build something in between — where the leader leads clearly and every voice still counts. That takes practice from all of us.' Naming it takes away much of its power to divide.",
-        id: "Sebutkan ketegangan ini secara eksplisit dengan tim Anda. Katakan dengan lantang: 'Saya tahu beberapa dari Anda berasal dari budaya di mana pemimpin memutuskan dan semua orang mengikuti. Saya tahu beberapa dari Anda berasal dari budaya di mana pendapat semua orang diharapkan. Dalam tim ini, kita mencoba membangun sesuatu di tengah-tengah.' Menyebutkannya menghilangkan banyak kekuatannya untuk memecah belah.",
-        nl: "Benoem de spanning expliciet met je team. Zeg het hardop: 'Ik weet dat sommigen van jullie komen uit culturen waar de leider beslist en iedereen volgt. Ik weet dat sommigen komen uit culturen waar ieders mening wordt verwacht. In dit team proberen we iets daartussenin te bouwen.' Het benoemen neemt veel van zijn vermogen weg om te verdelen.",
-      },
-      {
-        en: "Give your team members from high PD cultures a specific, honoured role in shaping decisions — not just implementing them. This is not about reducing your authority; it is about creating a pathway for their wisdom to reach you. A senior local leader who is asked for their input before a decision is made will carry that decision very differently than one who is told after the fact.",
-        id: "Berikan anggota tim Anda dari budaya PD tinggi peran yang spesifik dan dihormati dalam membentuk keputusan — bukan hanya melaksanakannya. Ini bukan tentang mengurangi otoritas Anda; ini tentang menciptakan jalur bagi kebijaksanaan mereka untuk mencapai Anda. Pemimpin lokal senior yang dimintai masukan sebelum keputusan dibuat akan membawa keputusan itu dengan sangat berbeda daripada yang diberi tahu setelah kenyataan.",
-        nl: "Geef je teamleden uit hoge PD-culturen een specifieke, geëerde rol in het vormgeven van beslissingen — niet alleen in het uitvoeren ervan. Dit gaat niet over het verminderen van je gezag; het gaat over het creëren van een pad voor hun wijsheid om jou te bereiken. Een senior lokale leider die om input wordt gevraagd vóór een beslissing wordt genomen, zal die beslissing heel anders dragen dan iemand die achteraf wordt verteld.",
-      },
-    ],
-  },
-];
-
 // ─── Reflection Questions ─────────────────────────────────────────────────────
 const reflectionQuestions = [
   {
@@ -353,73 +283,6 @@ const insightCards = [
   },
 ];
 
-// ─── Book Cards (Section E) ───────────────────────────────────────────────────
-const books = [
-  {
-    title: "Playing God: Redeeming the Gift of Power",
-    author: "Andy Crouch",
-    year: "2013",
-    publisher: "IVP Books",
-    hook: {
-      en: "Power is a gift from God — created good, profoundly corrupted, and entirely redeemable.",
-      id: "Kekuasaan adalah karunia dari Allah — diciptakan baik, sangat rusak, dan sepenuhnya dapat ditebus.",
-      nl: "Macht is een gave van God — goed geschapen, diep gecorrumpeerd, en volledig te verlossen.",
-    },
-    description: {
-      en: "Crouch argues that the work of Christian leadership is to redeem power — not reject it. He distinguishes power-over (coercive) from power-for (creative, generative). For a cross-cultural leader operating in a high-PD context, this framework lets you hold real authority without flinching — because authority itself is not the problem. Its direction is.",
-      id: "Crouch berpendapat bahwa pekerjaan kepemimpinan Kristen adalah menebus kekuasaan — bukan menolaknya. Ia membedakan kekuasaan-atas (koersif) dari kekuasaan-untuk (kreatif, generatif). Bagi pemimpin lintas budaya yang beroperasi dalam konteks PD tinggi, kerangka ini memungkinkan Anda memegang otoritas nyata tanpa ragu — karena otoritas itu sendiri bukan masalahnya. Arahnyalah yang menjadi masalah.",
-      nl: "Crouch betoogt dat het werk van christelijk leiderschap is om macht te verlossen — niet te verwerpen. Hij maakt onderscheid tussen macht-over (dwangmatig) en macht-voor (creatief, generatief). Voor een interculturele leider in een hoge-PD-context laat dit kader je echte autoriteit vasthouden zonder te aarzelen — want autoriteit zelf is niet het probleem. De richting ervan is het.",
-    },
-    why: {
-      en: "The most thorough Christian theology of power written this century.",
-      id: "Teologi Kristen tentang kekuasaan yang paling komprehensif yang ditulis abad ini.",
-      nl: "De meest grondige christelijke theologie van macht die deze eeuw is geschreven.",
-    },
-  },
-  {
-    title: "In the Name of Jesus: Reflections on Christian Leadership",
-    author: "Henri Nouwen",
-    year: "1989",
-    publisher: "Crossroad Publishing",
-    hook: {
-      en: "The three temptations of Christian leadership are relevance, popularity, and power.",
-      id: "Tiga godaan kepemimpinan Kristen adalah relevansi, popularitas, dan kekuasaan.",
-      nl: "De drie verleidingen van christelijk leiderschap zijn relevantie, populariteit en macht.",
-    },
-    description: {
-      en: "Nouwen wrote this short book after leaving Harvard Divinity School to live with people with intellectual disabilities at L'Arche Daybreak. He argues that the leader's task is to descend — into prayer, ministry-as-vulnerability, and theological reflection. One hundred pages. One of the most quoted leadership texts of the last forty years.",
-      id: "Nouwen menulis buku pendek ini setelah meninggalkan Harvard Divinity School untuk tinggal bersama orang-orang dengan disabilitas intelektual di L'Arche Daybreak. Ia berpendapat bahwa tugas pemimpin adalah turun — ke dalam doa, pelayanan-sebagai-kerentanan, dan refleksi teologis. Seratus halaman. Salah satu teks kepemimpinan yang paling banyak dikutip selama empat puluh tahun terakhir.",
-      nl: "Nouwen schreef dit korte boek nadat hij Harvard Divinity School had verlaten om te leven met mensen met een verstandelijke beperking bij L'Arche Daybreak. Hij betoogt dat de taak van de leider is om te dalen — in gebed, bediening-als-kwetsbaarheid, en theologische reflectie. Honderd pagina's. Een van de meest geciteerde leiderschapsteksten van de afgelopen veertig jaar.",
-    },
-    why: {
-      en: "Read it twice.",
-      id: "Baca dua kali.",
-      nl: "Lees het twee keer.",
-    },
-  },
-  {
-    title: "Money, Sex, and Power",
-    author: "Richard Foster",
-    year: "1985",
-    publisher: "HarperOne",
-    hook: {
-      en: "Three forces shape every Christian leader's life — and power is the one we talk about least.",
-      id: "Tiga kekuatan membentuk kehidupan setiap pemimpin Kristen — dan kekuasaan adalah yang paling jarang kita bicarakan.",
-      nl: "Drie krachten bepalen het leven van elke christelijke leider — en macht is degene waarover we het minst spreken.",
-    },
-    description: {
-      en: "Foster distinguishes manipulative power from ministering power and offers concrete spiritual disciplines that protect a leader from drift toward control. His chapter on power is direct, scriptural, and practical. A classic that holds up.",
-      id: "Foster membedakan kekuasaan manipulatif dari kekuasaan melayani dan menawarkan disiplin rohani konkret yang melindungi pemimpin dari pergeseran menuju kontrol. Bab tentang kekuasaannya langsung, berdasarkan Alkitab, dan praktis. Sebuah klasik yang tetap relevan.",
-      nl: "Foster maakt onderscheid tussen manipulatieve macht en dienende macht en biedt concrete geestelijke disciplines die een leider beschermen tegen wegdrijven richting controle. Zijn hoofdstuk over macht is direct, schriftuurlijk en praktisch. Een klassieker die standhoudt.",
-    },
-    why: {
-      en: "Especially for leaders who feel uncomfortable with their own authority.",
-      id: "Terutama bagi pemimpin yang merasa tidak nyaman dengan otoritas mereka sendiri.",
-      nl: "Vooral voor leiders die zich ongemakkelijk voelen bij hun eigen autoriteit.",
-    },
-  },
-];
-
 // ─── Reading List (Section F) ─────────────────────────────────────────────────
 const readingList = [
   {
@@ -462,6 +325,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openPoint, setOpenPoint] = useState<number | null>(null);
+  const [openFramework, setOpenFramework] = useState<number | null>(null);
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   function handleSave() {
@@ -723,7 +587,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
 
         <div style={{ textAlign: "center", marginBottom: 8 }}>
           <a
-            href="https://www.hofstede-insights.com/country-comparison/"
+            href="https://www.hofstede-insights.com/country-comparison-tool"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "inline-block", padding: "14px 32px", border: `2px solid ${orange}`, color: navy, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}
@@ -759,12 +623,15 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
           </p>
 
           {/* Framework 1: GLOBE */}
-          <div style={{ marginBottom: 60 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+          <div style={{ marginBottom: 4 }}>
+            <button
+              onClick={() => setOpenFramework(openFramework === 0 ? null : 0)}
+              style={{ width: "100%", background: "none", border: "none", padding: "20px 0", display: "flex", alignItems: "center", gap: 14, cursor: "pointer", textAlign: "left" }}
+            >
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>1</span>
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
                   {t("The GLOBE Study", "Studi GLOBE", "De GLOBE-studie")}
                 </p>
@@ -772,103 +639,111 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
                   {t("GLOBE Study — What People Actually Want", "Studi GLOBE — Apa yang Sebenarnya Diinginkan Orang", "GLOBE-studie — Wat mensen echt willen")}
                 </h3>
               </div>
-            </div>
+              <span style={{ color: openFramework === 0 ? orange : "oklch(65% 0.04 260)", fontSize: 22, fontWeight: 300, transform: openFramework === 0 ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s ease, color 0.15s ease", flexShrink: 0 }}>+</span>
+            </button>
 
-            <div style={{ background: navy, borderRadius: 10, padding: "30px 34px", marginBottom: 28, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, right: 0, width: 100, height: 100, borderRadius: "0 10px 0 100px", background: "oklch(30% 0.12 260)", opacity: 0.5 }} />
-              <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2.6vw, 24px)", color: offWhite, lineHeight: 1.6, fontStyle: "italic", margin: "0 0 16px", position: "relative" }}>
-                {t(
-                  '"The GLOBE study found that in almost every culture, people\'s preferred power distance is lower than the power distance they actually experience. High-PD cultures are not cultures that want to stay there — they are cultures currently operating in a way their own members would moderate if they could."',
-                  '"Studi GLOBE menemukan bahwa di hampir setiap budaya, jarak kekuasaan yang diinginkan orang lebih rendah dari jarak kekuasaan yang sebenarnya mereka alami. Budaya PD tinggi bukanlah budaya yang ingin tetap di sana — mereka adalah budaya yang saat ini beroperasi dengan cara yang akan dimoderasi oleh anggotanya sendiri jika mereka bisa."',
-                  '"De GLOBE-studie ontdekte dat in bijna elke cultuur de gewenste machtafstand van mensen lager is dan de machtafstand die ze daadwerkelijk ervaren. Hoge-PD-culturen zijn geen culturen die er willen blijven — het zijn culturen die momenteel op een manier functioneren die hun eigen leden zouden matigen als ze konden."'
-                )}
-              </p>
-              <p style={{ color: orange, fontSize: 13, fontWeight: 600, margin: 0, position: "relative" }}>
-                — {t("House et al., GLOBE Study (2004)", "House dkk., Studi GLOBE (2004)", "House e.a., GLOBE-studie (2004)")}
-              </p>
-            </div>
-
-            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
-              {t(
-                "Robert House and over 200 researchers studied 17,300 mid-level managers across 62 societies between 1991 and 2007. GLOBE made a crucial distinction: “As Is” scores — how things actually are — vs “Should Be” scores — how people believe things should be. For Power Distance specifically, the gap between As Is and Should Be is one of the most striking findings in cross-cultural research. It means the gap between what is and what people would prefer is often exactly where change is possible.",
-                "Robert House dan lebih dari 200 peneliti mempelajari 17.300 manajer tingkat menengah di 62 masyarakat antara tahun 1991 dan 2007. GLOBE membuat perbedaan penting: skor ‘Kondisi Nyata’ — bagaimana keadaan sebenarnya — vs skor ‘Kondisi Ideal’ — bagaimana orang percaya keadaan seharusnya. Khusus untuk Jarak Kekuasaan, kesenjangan antara Kondisi Nyata dan Kondisi Ideal adalah salah satu temuan paling mencolok dalam penelitian lintas budaya.",
-                "Robert House en meer dan 200 onderzoekers bestudeerden 17.300 middelmanagers in 62 samenlevingen tussen 1991 en 2007. GLOBE maakte een cruciaal onderscheid: ‘Huidig’-scores — hoe dingen werkelijk zijn — vs ‘Gewenst’-scores — hoe mensen denken dat dingen zouden moeten zijn. Voor Machtafstand specifiek is de kloof tussen Huidig en Gewenst een van de meest opvallende bevindingen in intercultureel onderzoek."
-              )}
-            </p>
-
-            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20, marginBottom: 36 }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
-              </p>
-              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                {t(
-                  "When a cross-cultural leader works to lower power distance in a high-PD team, they are not imposing a foreign value. They may be moving the team closer to what the team itself would prefer — if the data from 62 societies is any guide.",
-                  "Ketika pemimpin lintas budaya bekerja untuk menurunkan jarak kekuasaan dalam tim PD tinggi, mereka tidak memaksakan nilai asing. Mereka mungkin menggerakkan tim lebih dekat ke apa yang diinginkan tim itu sendiri — jika data dari 62 masyarakat menjadi panduan.",
-                  "Wanneer een interculturele leider werkt aan het verlagen van machtafstand in een hoge-PD-team, leggen ze geen vreemde waarde op. Ze bewegen het team mogelijk dichter naar wat het team zelf zou prefereren — als de data van 62 samenlevingen enige leidraad biedt."
-                )}
-              </p>
-            </div>
-
-            {/* GLOBE Bar Chart */}
-            <div style={{ background: offWhite, borderRadius: 12, padding: "28px 28px 24px", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.08)" }}>
-              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.3 }}>
-                {lang === "en" ? "GLOBE Power Distance: What Is vs What People Prefer" : lang === "id" ? "Jarak Kekuasaan GLOBE: Realitas vs Preferensi" : "GLOBE Machtafstand: Realiteit vs Voorkeur"}
-              </p>
-              <div style={{ display: "flex", gap: 20, marginBottom: 24, flexWrap: "wrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 14, height: 14, borderRadius: 3, background: orange, flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
-                    {lang === "en" ? "As Is (current)" : lang === "id" ? "Kondisi Nyata" : "Huidig"}
-                  </span>
+            {openFramework === 0 && (
+              <div style={{ paddingBottom: 28 }}>
+                <div style={{ background: navy, borderRadius: 10, padding: "30px 34px", marginBottom: 28, position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", top: 0, right: 0, width: 100, height: 100, borderRadius: "0 10px 0 100px", background: "oklch(30% 0.12 260)", opacity: 0.5 }} />
+                  <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2.6vw, 24px)", color: offWhite, lineHeight: 1.6, fontStyle: "italic", margin: "0 0 16px", position: "relative" }}>
+                    {t(
+                      '"The GLOBE study found that in almost every culture, people\'s preferred power distance is lower than the power distance they actually experience. High-PD cultures are not cultures that want to stay there — they are cultures currently operating in a way their own members would moderate if they could."',
+                      '"Studi GLOBE menemukan bahwa di hampir setiap budaya, jarak kekuasaan yang diinginkan orang lebih rendah dari jarak kekuasaan yang sebenarnya mereka alami. Budaya PD tinggi bukanlah budaya yang ingin tetap di sana — mereka adalah budaya yang saat ini beroperasi dengan cara yang akan dimoderasi oleh anggotanya sendiri jika mereka bisa."',
+                      '"De GLOBE-studie ontdekte dat in bijna elke cultuur de gewenste machtafstand van mensen lager is dan de machtafstand die ze daadwerkelijk ervaren. Hoge-PD-culturen zijn geen culturen die er willen blijven — het zijn culturen die momenteel op een manier functioneren die hun eigen leden zouden matigen als ze konden."'
+                    )}
+                  </p>
+                  <p style={{ color: orange, fontSize: 13, fontWeight: 600, margin: 0, position: "relative" }}>
+                    — {t("House et al., GLOBE Study (2004)", "House dkk., Studi GLOBE (2004)", "House e.a., GLOBE-studie (2004)")}
+                  </p>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 14, height: 14, borderRadius: 3, background: "oklch(42% 0.10 260)", flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
-                    {lang === "en" ? "Should Be (preferred)" : lang === "id" ? "Kondisi Ideal" : "Gewenst"}
-                  </span>
+
+                <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+                  {t(
+                    'Robert House and over 200 researchers studied 17,300 mid-level managers across 62 societies between 1991 and 2007. GLOBE made a crucial distinction: "As Is" scores — how things actually are — vs "Should Be" scores — how people believe things should be. For Power Distance specifically, the gap between As Is and Should Be is one of the most striking findings in cross-cultural research. It means the gap between what is and what people would prefer is often exactly where change is possible.',
+                    "Robert House dan lebih dari 200 peneliti mempelajari 17.300 manajer tingkat menengah di 62 masyarakat antara tahun 1991 dan 2007. GLOBE membuat perbedaan penting: skor 'Kondisi Nyata' — bagaimana keadaan sebenarnya — vs skor 'Kondisi Ideal' — bagaimana orang percaya keadaan seharusnya. Khusus untuk Jarak Kekuasaan, kesenjangan antara Kondisi Nyata dan Kondisi Ideal adalah salah satu temuan paling mencolok dalam penelitian lintas budaya.",
+                    "Robert House en meer dan 200 onderzoekers bestudeerden 17.300 middelmanagers in 62 samenlevingen tussen 1991 en 2007. GLOBE maakte een cruciaal onderscheid: 'Huidig'-scores — hoe dingen werkelijk zijn — vs 'Gewenst'-scores — hoe mensen denken dat dingen zouden moeten zijn. Voor Machtafstand specifiek is de kloof tussen Huidig en Gewenst een van de meest opvallende bevindingen in intercultureel onderzoek."
+                  )}
+                </p>
+
+                <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20, marginBottom: 36 }}>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                    {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+                  </p>
+                  <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
+                    {t(
+                      "When a cross-cultural leader works to lower power distance in a high-PD team, they are not imposing a foreign value. They may be moving the team closer to what the team itself would prefer — if the data from 62 societies is any guide.",
+                      "Ketika pemimpin lintas budaya bekerja untuk menurunkan jarak kekuasaan dalam tim PD tinggi, mereka tidak memaksakan nilai asing. Mereka mungkin menggerakkan tim lebih dekat ke apa yang diinginkan tim itu sendiri — jika data dari 62 masyarakat menjadi panduan.",
+                      "Wanneer een interculturele leider werkt aan het verlagen van machtafstand in een hoge-PD-team, leggen ze geen vreemde waarde op. Ze bewegen het team mogelijk dichter naar wat het team zelf zou prefereren — als de data van 62 samenlevingen enige leidraad biedt."
+                    )}
+                  </p>
                 </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {globeScores.map((c) => (
-                  <div key={c.country.en}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: navy, marginBottom: 5 }}>{c.country[lang]}</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 5 }}>
-                      <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
-                        <div style={{ width: `${(c.asIs / 7) * 100}%`, height: "100%", background: orange, borderRadius: 4 }} />
-                      </div>
-                      <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.asIs.toFixed(2)}</span>
+
+                {/* GLOBE Bar Chart */}
+                <div style={{ background: offWhite, borderRadius: 12, padding: "28px 28px 24px", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.08)" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.3 }}>
+                    {lang === "en" ? "GLOBE Power Distance: What Is vs What People Prefer" : lang === "id" ? "Jarak Kekuasaan GLOBE: Realitas vs Preferensi" : "GLOBE Machtafstand: Realiteit vs Voorkeur"}
+                  </p>
+                  <div style={{ display: "flex", gap: 20, marginBottom: 24, flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 14, height: 14, borderRadius: 3, background: orange, flexShrink: 0 }} />
+                      <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
+                        {lang === "en" ? "As Is (current)" : lang === "id" ? "Kondisi Nyata" : "Huidig"}
+                      </span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
-                        <div style={{ width: `${(c.shouldBe / 7) * 100}%`, height: "100%", background: "oklch(42% 0.10 260)", borderRadius: 4 }} />
-                      </div>
-                      <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.shouldBe.toFixed(2)}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 14, height: 14, borderRadius: 3, background: "oklch(42% 0.10 260)", flexShrink: 0 }} />
+                      <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
+                        {lang === "en" ? "Should Be (preferred)" : lang === "id" ? "Kondisi Ideal" : "Gewenst"}
+                      </span>
                     </div>
                   </div>
-                ))}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                    {globeScores.map((c) => (
+                      <div key={c.country.en}>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: navy, marginBottom: 5 }}>{c.country[lang]}</div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 5 }}>
+                          <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
+                            <div style={{ width: `${(c.asIs / 7) * 100}%`, height: "100%", background: orange, borderRadius: 4 }} />
+                          </div>
+                          <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.asIs.toFixed(2)}</span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <div style={{ flex: 1, background: "oklch(92% 0.01 80)", borderRadius: 4, overflow: "hidden", height: 18 }}>
+                            <div style={{ width: `${(c.shouldBe / 7) * 100}%`, height: "100%", background: "oklch(42% 0.10 260)", borderRadius: 4 }} />
+                          </div>
+                          <span style={{ width: 32, fontSize: 12, fontWeight: 700, color: bodyText, textAlign: "right", flexShrink: 0 }}>{c.shouldBe.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, paddingRight: 42 }}>
+                    {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                      <span key={n} style={{ fontSize: 10, color: "oklch(60% 0.04 260)" }}>{n}</span>
+                    ))}
+                  </div>
+                  <p style={{ fontSize: 11, color: "oklch(60% 0.04 260)", fontStyle: "italic", marginTop: 16, marginBottom: 0 }}>
+                    {t(
+                      "Source: House et al., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Scale 1–7.",
+                      "Sumber: House dkk., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Skala 1–7.",
+                      "Bron: House e.a., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Schaal 1–7."
+                    )}
+                  </p>
+                </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, paddingRight: 42 }}>
-                {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                  <span key={n} style={{ fontSize: 10, color: "oklch(60% 0.04 260)" }}>{n}</span>
-                ))}
-              </div>
-              <p style={{ fontSize: 11, color: "oklch(60% 0.04 260)", fontStyle: "italic", marginTop: 16, marginBottom: 0 }}>
-                {t(
-                  "Source: House et al., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Scale 1–7.",
-                  "Sumber: House dkk., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Skala 1–7.",
-                  "Bron: House e.a., Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (2004). Schaal 1–7."
-                )}
-              </p>
-            </div>
+            )}
           </div>
 
           {/* Framework 2: Erin Meyer */}
-          <div style={{ marginBottom: 60 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+          <div style={{ marginBottom: 4 }}>
+            <button
+              onClick={() => setOpenFramework(openFramework === 1 ? null : 1)}
+              style={{ width: "100%", background: "none", border: "none", padding: "20px 0", display: "flex", alignItems: "center", gap: 14, cursor: "pointer", textAlign: "left" }}
+            >
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>2</span>
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
                   {meyerFramework.label[lang]}
                 </p>
@@ -876,23 +751,31 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
                   {meyerFramework.title[lang]}
                 </h3>
               </div>
-            </div>
-            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{meyerFramework.body[lang]}</p>
-            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
-              </p>
-              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{meyerFramework.implication[lang]}</p>
-            </div>
+              <span style={{ color: openFramework === 1 ? orange : "oklch(65% 0.04 260)", fontSize: 22, fontWeight: 300, transform: openFramework === 1 ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s ease, color 0.15s ease", flexShrink: 0 }}>+</span>
+            </button>
+            {openFramework === 1 && (
+              <div style={{ paddingBottom: 28 }}>
+                <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{meyerFramework.body[lang]}</p>
+                <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                    {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+                  </p>
+                  <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{meyerFramework.implication[lang]}</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Framework 3: Edward Hall */}
           <div style={{ marginBottom: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+            <button
+              onClick={() => setOpenFramework(openFramework === 2 ? null : 2)}
+              style={{ width: "100%", background: "none", border: "none", padding: "20px 0", display: "flex", alignItems: "center", gap: 14, cursor: "pointer", textAlign: "left" }}
+            >
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <span style={{ color: offWhite, fontSize: 15, fontWeight: 800 }}>3</span>
               </div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.13em", textTransform: "uppercase", margin: "0 0 2px" }}>
                   {hallFramework.label[lang]}
                 </p>
@@ -900,14 +783,19 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
                   {hallFramework.title[lang]}
                 </h3>
               </div>
-            </div>
-            <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{hallFramework.body[lang]}</p>
-            <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
-              </p>
-              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{hallFramework.implication[lang]}</p>
-            </div>
+              <span style={{ color: openFramework === 2 ? orange : "oklch(65% 0.04 260)", fontSize: 22, fontWeight: 300, transform: openFramework === 2 ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s ease, color 0.15s ease", flexShrink: 0 }}>+</span>
+            </button>
+            {openFramework === 2 && (
+              <div style={{ paddingBottom: 28 }}>
+                <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>{hallFramework.body[lang]}</p>
+                <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
+                    {t("Practical Implication", "Implikasi Praktis", "Praktische implicatie")}
+                  </p>
+                  <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>{hallFramework.implication[lang]}</p>
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
@@ -1082,9 +970,9 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
           </p>
           <blockquote style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", color: offWhite, lineHeight: 1.65, fontStyle: "italic", margin: "0 0 20px", position: "relative" }}>
             {t(
-              "“In your relationships with one another, have the same mindset as Christ Jesus: who, being in very nature God, did not consider equality with God something to be used to his own advantage; rather, he made himself nothing by taking the very nature of a servant, being made in human likeness.”",
-              "“Hendaklah kamu dalam hidupmu bersama, menaruh pikiran dan perasaan yang terdapat juga dalam Kristus Yesus, yang walaupun dalam rupa Allah, tidak menganggap kesetaraan dengan Allah itu sebagai milik yang harus dipertahankan, melainkan telah mengosongkan diri-Nya sendiri, dan mengambil rupa seorang hamba, dan menjadi sama dengan manusia.”",
-              "“Laat die gezindheid bij u zijn die ook in Christus Jezus was: die, hoewel hij de gestalte van God had, het er niet voor hield gelijk te zijn aan God iets om vast te houden, maar zichzelf ontledigd heeft door de gestalte van een slaaf aan te nemen en aan de mensen gelijk te worden.”"
+              '"In your relationships with one another, have the same mindset as Christ Jesus: who, being in very nature God, did not consider equality with God something to be used to his own advantage; rather, he made himself nothing by taking the very nature of a servant, being made in human likeness."',
+              '"Hendaklah kamu dalam hidupmu bersama, menaruh pikiran dan perasaan yang terdapat juga dalam Kristus Yesus, yang walaupun dalam rupa Allah, tidak menganggap kesetaraan dengan Allah itu sebagai milik yang harus dipertahankan, melainkan telah mengosongkan diri-Nya sendiri, dan mengambil rupa seorang hamba, dan menjadi sama dengan manusia."',
+              '"Laat die gezindheid bij u zijn die ook in Christus Jezus was: die, hoewel hij de gestalte van God had, het er niet voor hield gelijk te zijn aan God iets om vast te houden, maar zichzelf ontledigd heeft door de gestalte van een slaaf aan te nemen en aan de mensen gelijk te worden."'
             )}
           </blockquote>
           <p style={{ color: orange, fontSize: 14, fontWeight: 600, margin: 0, position: "relative" }}>
@@ -1117,58 +1005,6 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
         </p>
       </div>
 
-      {/* ─── SECTION E: Voices Worth Hearing ────────────────────────────────── */}
-      <div style={{ background: offWhite, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("Christian Writers on Power", "Penulis Kristen tentang Kekuasaan", "Christelijke Schrijvers over Macht")}
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 20, lineHeight: 1.2 }}>
-            Voices Worth Hearing
-          </h2>
-          <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
-            {t(
-              "Three contemporary Christian writers have gone further than most on the theology and practice of power. Each offers something a cross-cultural leader can carry.",
-              "Tiga penulis Kristen kontemporer telah melangkah lebih jauh dari kebanyakan orang dalam teologi dan praktik kekuasaan. Masing-masing menawarkan sesuatu yang dapat dibawa oleh pemimpin lintas budaya.",
-              "Drie hedendaagse christelijke schrijvers zijn verder gegaan dan de meeste anderen in de theologie en praktijk van macht. Elk biedt iets dat een interculturele leider mee kan nemen."
-            )}
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-            {books.map((book, i) => (
-              <div key={i} style={{ background: offWhite, borderRadius: 10, padding: 28, boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", borderLeft: `4px solid ${orange}` }}>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "flex-start", marginBottom: 16 }}>
-                  <div style={{ flex: "1 1 220px", minWidth: 200 }}>
-                    <h3 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(18px, 2.4vw, 22px)", fontWeight: 700, color: navy, margin: "0 0 8px", lineHeight: 1.3 }}>
-                      {book.title}
-                    </h3>
-                    <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.13em", textTransform: "uppercase", margin: 0 }}>
-                      {book.author} · {book.year} · {book.publisher}
-                    </p>
-                  </div>
-                  <div style={{ flex: "2 1 280px" }}>
-                    <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2vw, 20px)", color: navy, fontStyle: "italic", lineHeight: 1.5, margin: 0 }}>
-                      &ldquo;{book.hook[lang]}&rdquo;
-                    </p>
-                  </div>
-                </div>
-                <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
-                  {book.description[lang]}
-                </p>
-                <div style={{ background: lightGray, borderRadius: 6, padding: "12px 16px", display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.12em", margin: "2px 0 0", flexShrink: 0 }}>
-                    {t("Why read this", "Mengapa membaca ini", "Waarom dit lezen")}
-                  </p>
-                  <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>
-                    {book.why[lang]}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ─── IMAGE 2 ─────────────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px 64px" }}>
         <div style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 8px 40px oklch(20% 0.08 260 / 0.15)" }}>
@@ -1187,73 +1023,6 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             "Echte autoriteit hoeft zichzelf niet te beschermen — ze kan het zich veroorloven om laag te gaan."
           )}
         </p>
-      </div>
-
-      {/* ─── SECTION 5: DEVELOPMENT PATH ────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("Development Path", "Jalur Pengembangan", "Ontwikkelingspad")}
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.2 }}>
-            {t("How to Bridge the Gap", "Cara Menjembatani Kesenjangan", "Hoe de Kloof te Overbruggen")}
-          </h2>
-          <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
-            {t(
-              "This is not about choosing a side. It is about building awareness, adjusting behavior, and creating team culture that works across the gap.",
-              "Ini bukan tentang memilih sisi. Ini tentang membangun kesadaran, menyesuaikan perilaku, dan menciptakan budaya tim yang bekerja melampaui kesenjangan.",
-              "Dit gaat niet over het kiezen van een kant. Het gaat over het opbouwen van bewustzijn, het aanpassen van gedrag, en het creëren van een teamcultuur die werkt over de kloof heen."
-            )}
-          </p>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 48, overflow: "hidden", borderRadius: 8 }}>
-            {developmentLevels.map((level, i) => (
-              <div key={level.level} style={{ flex: 1, background: level.color, padding: "12px 16px", textAlign: "center", position: "relative" }}>
-                <p style={{ color: "white", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 2px", opacity: 0.8 }}>
-                  {t("Level", "Tingkat", "Niveau")} {level.level}
-                </p>
-                <p style={{ color: "white", fontSize: 14, fontWeight: 700, margin: 0 }}>
-                  {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
-                </p>
-                {i < developmentLevels.length - 1 && (
-                  <div style={{ position: "absolute", right: -12, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, background: level.color, clipPath: "polygon(0 0, 100% 50%, 0 100%)", zIndex: 1 }} />
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-            {developmentLevels.map((level) => (
-              <div key={level.level} style={{ background: offWhite, borderRadius: 12, overflow: "hidden", borderTop: `4px solid ${level.color}` }}>
-                <div style={{ padding: "28px 32px 0" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 8 }}>
-                    <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 40, fontWeight: 700, color: level.color, lineHeight: 1 }}>{level.level}</span>
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navy, margin: 0 }}>
-                        {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
-                      </p>
-                      <p style={{ fontSize: 13, color: bodyText, margin: 0, fontStyle: "italic" }}>
-                        {lang === "en" ? level.en_subtitle : lang === "id" ? level.id_subtitle : level.nl_subtitle}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div style={{ padding: "20px 32px 28px", display: "flex", flexDirection: "column", gap: 16 }}>
-                  {level.actions.map((action, ai) => (
-                    <div key={ai} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: level.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
-                        <span style={{ color: "white", fontSize: 13, fontWeight: 700 }}>{ai + 1}</span>
-                      </div>
-                      <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                        {lang === "en" ? action.en : lang === "id" ? action.id : action.nl}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* ─── SECTION 6: REFLECTION QUESTIONS ───────────────────────────────── */}
@@ -1301,27 +1070,13 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             {t("Watch", "Tonton", "Bekijk")}
           </p>
           <div style={{ background: offWhite, borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 16px oklch(20% 0.08 260 / 0.10)", marginBottom: 56 }}>
-            <a
-              href="https://www.youtube.com/watch?v=DqAJclwfyCw"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "block", position: "relative", aspectRatio: "16/9", overflow: "hidden" }}
-              aria-label="Watch Power Distance — Geert Hofstede on YouTube"
-            >
-              <Image
-                src="https://img.youtube.com/vi/DqAJclwfyCw/maxresdefault.jpg"
-                alt="Power Distance — Geert Hofstede YouTube thumbnail"
-                width={1280}
-                height={720}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                unoptimized
-              />
-              <div style={{ position: "absolute", inset: 0, background: "oklch(10% 0.06 260 / 0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ width: 68, height: 68, borderRadius: "50%", background: orange, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px oklch(10% 0.06 260 / 0.5)" }}>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-                </div>
-              </div>
-            </a>
+            <iframe
+              src="https://www.youtube.com/embed/DqAJclwfyCw"
+              title="Power Distance — Geert Hofstede"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ width: "100%", aspectRatio: "16/9", display: "block", border: "none" }}
+            />
             <div style={{ padding: "20px 24px 24px" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 10 }}>
                 <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navy, margin: 0, flex: 1, lineHeight: 1.3 }}>
@@ -1358,7 +1113,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
               )}
             </p>
             <a
-              href="https://www.hofstede-insights.com/country-comparison/"
+              href="https://www.hofstede-insights.com/country-comparison-tool"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", padding: "14px 28px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", position: "relative", letterSpacing: "0.02em" }}
