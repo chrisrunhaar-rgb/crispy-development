@@ -229,15 +229,7 @@ function LanguageBar({
       boxShadow: isPrimary ? `0 0 12px ${lang.color}40` : "none",
       transition: "all 0.2s ease",
     }}>
-      {/* Color dot */}
-      <div style={{
-        width: "10px",
-        height: "10px",
-        borderRadius: "50%",
-        background: lang.color,
-        flexShrink: 0,
-      }} />
-      {/* Label */}
+      <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: lang.color, flexShrink: 0 }} />
       <div style={{ flex: "0 0 160px", minWidth: 0 }}>
         <span style={{
           fontSize: "13px",
@@ -249,62 +241,10 @@ function LanguageBar({
           display: "block",
         }}>{lang.name}</span>
       </div>
-      {/* Bar track */}
-      <div style={{
-        flex: 1,
-        height: "8px",
-        background: "oklch(90% 0.01 260)",
-        borderRadius: "4px",
-        overflow: "hidden",
-      }}>
-        <div style={{
-          height: "100%",
-          width: `${pct}%`,
-          background: lang.color,
-          borderRadius: "4px",
-          transition: "width 0.6s ease",
-        }} />
+      <div style={{ flex: 1, height: "8px", background: "oklch(90% 0.01 260)", borderRadius: "4px", overflow: "hidden" }}>
+        <div style={{ height: "100%", width: `${pct}%`, background: lang.color, borderRadius: "4px", transition: "width 0.6s ease" }} />
       </div>
-      {/* Score */}
-      <span style={{
-        fontSize: "13px",
-        fontWeight: 700,
-        color: "oklch(22% 0.10 260)",
-        flex: "0 0 32px",
-        textAlign: "right",
-      }}>{score}/16</span>
-    </div>
-  );
-}
-
-// ── EMPTY BAR PREVIEW ─────────────────────────────────────────────────────────
-
-function EmptyBarChart({ label }: { label: string }) {
-  return (
-    <div style={{
-      background: "oklch(97% 0.005 80)",
-      border: "1px solid oklch(90% 0.01 80)",
-      borderRadius: "12px",
-      padding: "1.5rem",
-    }}>
-      <p style={{
-        fontSize: "12px",
-        fontWeight: 700,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase",
-        color: "oklch(55% 0.06 260)",
-        marginBottom: "1rem",
-      }}>{label}</p>
-      {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => (
-        <div key={k} style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-          <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: LANG_DATA[k].color, flexShrink: 0 }} />
-          <div style={{ flex: "0 0 160px" }}>
-            <span style={{ fontSize: "13px", color: "oklch(60% 0.06 260)" }}>{LANG_DATA[k].name}</span>
-          </div>
-          <div style={{ flex: 1, height: "8px", background: "oklch(92% 0.01 260)", borderRadius: "4px" }} />
-          <span style={{ fontSize: "13px", color: "oklch(70% 0.04 260)", flex: "0 0 32px", textAlign: "right" }}>—</span>
-        </div>
-      ))}
+      <span style={{ fontSize: "13px", fontWeight: 700, color: "oklch(22% 0.10 260)", flex: "0 0 32px", textAlign: "right" }}>{score}/16</span>
     </div>
   );
 }
@@ -333,8 +273,9 @@ export default function FiveLanguagesClient({
   const [resultSaved, setResultSaved] = useState(isSaved);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, startSaving] = useTransition();
+  const [flippedLang, setFlippedLang] = useState<ScoreKey | null>(null);
+  const [openAccordion, setOpenAccordion] = useState<ScoreKey | null>(null);
 
-  // Use prop scores when showing previously saved results
   const displayReceiving: Scores = quizState === "done" && receivingResult && receivingScores
     ? receivingScores
     : receivingScoresState;
@@ -346,8 +287,6 @@ export default function FiveLanguagesClient({
   const gPrimary = getPrimary(displayGiving);
   const rFlat = isFlat(displayReceiving);
   const gFlat = isFlat(displayGiving);
-
-  // For transition screen — receiving primary from live state
   const transitionPrimary = getPrimary(receivingScoresState);
 
   function handleAnswer(key: ScoreKey, test: "receiving" | "giving") {
@@ -403,7 +342,6 @@ export default function FiveLanguagesClient({
     setResultSaved(false);
   }
 
-  // Overall progress: test1 pairs are 1-40, test2 pairs are 41-80
   const overallProgress = quizState === "intro"
     ? 0
     : quizState === "test1"
@@ -418,6 +356,14 @@ export default function FiveLanguagesClient({
   if (quizState === "intro") {
     return (
       <div>
+        <style>{`
+          @keyframes langFlipIn {
+            from { opacity: 0; transform: scaleX(0.88); }
+            to { opacity: 1; transform: scaleX(1); }
+          }
+          .lang-flip-content { animation: langFlipIn 0.22s ease; }
+        `}</style>
+
         {/* Hero */}
         <section style={{
           background: "oklch(22% 0.10 260)",
@@ -428,14 +374,7 @@ export default function FiveLanguagesClient({
         }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide" style={{ position: "relative" }}>
-            <p style={{
-              color: "oklch(65% 0.15 45)",
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: 20,
-            }}>
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
               Leadership · Assessment
             </p>
             <h1 style={{
@@ -456,7 +395,13 @@ export default function FiveLanguagesClient({
               maxWidth: "56ch",
               marginBottom: "2rem",
             }}>
-              Two tests. 80 forced choices. One insight: how you receive care, and how you give it — and the gap between the two.
+              The first two-way 5 Languages test for teams — discover whether you receive care through{" "}
+              <span style={{ color: LANG_DATA.A.color, fontWeight: 600 }}>Words of Affirmation</span>,{" "}
+              <span style={{ color: LANG_DATA.B.color, fontWeight: 600 }}>Quality Time</span>,{" "}
+              <span style={{ color: LANG_DATA.C.color, fontWeight: 600 }}>Acts of Service</span>,{" "}
+              <span style={{ color: LANG_DATA.D.color, fontWeight: 600 }}>Tangible Gifts</span>, or{" "}
+              <span style={{ color: LANG_DATA.E.color, fontWeight: 600 }}>Appropriate Touch</span>{" "}
+              — and whether you give it in the same language.
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => (
@@ -477,7 +422,7 @@ export default function FiveLanguagesClient({
           </div>
         </section>
 
-        {/* About section — light background, fully visible content */}
+        {/* About section */}
         <section style={{ background: "white", padding: "clamp(2rem, 4vw, 3.5rem) 0", borderTop: "1px solid oklch(91% 0.006 80)" }}>
           <div className="container-wide">
             <h2 style={{
@@ -487,65 +432,85 @@ export default function FiveLanguagesClient({
               About this assessment
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, maxWidth: 680, marginBottom: "2.5rem" }}>
-              Most personality frameworks tell you who you are. This one tells you something different — how you give and receive care. Gary Chapman&apos;s original 5 Love Languages adapted for ministry teams across cultures, with one key addition: a second test for how you give.
+              This is the first 5 Languages test designed to measure both sides of care. Chapman&apos;s original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives.
             </p>
 
-            {/* 4 info cards — visible content, no flip */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem", marginBottom: "2.5rem" }}>
-              {[
-                {
-                  title: "Why two tests?",
-                  body: "Chapman's original test measures only receiving — what makes you feel loved. For team leaders, that is not enough. You need to know both: how you receive care so your team knows what you need, and how you give care so you can check whether you're loving people in their language or only in your own.",
-                },
-                {
-                  title: "The Golden Rule gap",
-                  body: "The most common pattern: leaders give in their own receiving language. A leader whose language is Words pours out written affirmation to a teammate whose language is Acts of Service — the teammate never feels seen. This is not malice. It is the Golden Rule misapplied: doing unto others as you would have them do unto you assumes the other person wants what you want.",
-                },
-                {
-                  title: "How to read your results",
-                  body: "Three patterns: Match (receiving = giving) — you give what you most need, which is your strength and your blind spot. Two Languages (receiving ≠ giving) — you have fluency in two languages, but your team may be guessing what you need. Broad (no clear primary) — your sensitivity is wide; name your top two and tell your team.",
-                },
-                {
-                  title: "Three practices",
-                  body: "Tell your team both your receiving and giving languages out loud — naming the gap is the highest-leverage move you can make. Ask each team member their receiving language and keep the list. Audit your giving once a quarter: for each person, have I expressed care in their language, or only in mine?",
-                },
-              ].map(({ title, body }) => (
-                <div key={title} style={{
-                  background: "oklch(97% 0.005 80)",
-                  border: "1px solid oklch(90% 0.006 80)",
-                  borderRadius: 12,
-                  padding: "1.25rem 1.5rem",
-                }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(22% 0.10 260)", marginBottom: "0.6rem" }}>{title}</p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>{body}</p>
-                </div>
-              ))}
+            {/* Tile grid: keep "Why two tests?", replace others with prose */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+              <div style={{
+                background: "oklch(97% 0.005 80)",
+                border: "1px solid oklch(90% 0.006 80)",
+                borderRadius: 12,
+                padding: "1.25rem 1.5rem",
+              }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(22% 0.10 260)", marginBottom: "0.6rem" }}>Why two tests?</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>
+                  This is the first 5 Languages test that measures both giving and receiving. Chapman&apos;s original only asks what makes you feel loved. That is not enough for team leaders. You need to know both: how you receive care, so your team knows what you need — and how you give it, so you can check whether you are loving people in their language or only your own.
+                </p>
+              </div>
             </div>
 
-            {/* 5 language preview cards */}
-            <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
+              Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud.
+            </p>
+
+            {/* 5 language flip tiles */}
+            <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
               The five languages
             </h3>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(55% 0.008 260)", marginBottom: "1rem" }}>
+              Tap any card to read the biblical story.
+            </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "2.5rem" }}>
-              {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => (
-                <div key={k} style={{
-                  background: LANG_DATA[k].colorLight,
-                  border: `1.5px solid ${LANG_DATA[k].color}40`,
-                  borderRadius: 12,
-                  padding: "1rem 1.25rem",
-                  borderTop: `4px solid ${LANG_DATA[k].color}`,
-                }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.85rem", color: LANG_DATA[k].color, marginBottom: "0.5rem" }}>
-                    {LANG_DATA[k].name}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)" }}>
-                    {LANG_DATA[k].desc}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: LANG_DATA[k].color, marginTop: "0.75rem", fontStyle: "italic" }}>
-                    {LANG_DATA[k].biblicalAnchor}
-                  </p>
-                </div>
-              ))}
+              {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
+                const isFlipped = flippedLang === k;
+                return (
+                  <div
+                    key={k}
+                    onClick={() => setFlippedLang(isFlipped ? null : k)}
+                    style={{
+                      background: isFlipped ? LANG_DATA[k].color : LANG_DATA[k].colorLight,
+                      border: `1.5px solid ${LANG_DATA[k].color}50`,
+                      borderRadius: 12,
+                      padding: "1rem 1.25rem",
+                      borderTop: `4px solid ${LANG_DATA[k].color}`,
+                      cursor: "pointer",
+                      transition: "background 0.25s ease",
+                    }}
+                  >
+                    <div className="lang-flip-content" key={isFlipped ? `${k}-back` : `${k}-front`}>
+                      {isFlipped ? (
+                        <>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.78rem", color: "oklch(14% 0.07 260)", marginBottom: "0.6rem" }}>
+                            {LANG_DATA[k].biblicalAnchor}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.7, color: "oklch(14% 0.07 260)" }}>
+                            {LANG_DATA[k].biblical}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(14% 0.07 260)", marginTop: "0.75rem", textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.65 }}>
+                            ← tap to close
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.85rem", color: LANG_DATA[k].color, marginBottom: "0.5rem" }}>
+                            {LANG_DATA[k].name}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)" }}>
+                            {LANG_DATA[k].desc}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: LANG_DATA[k].color, marginTop: "0.75rem", fontStyle: "italic" }}>
+                            {LANG_DATA[k].biblicalAnchor}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: LANG_DATA[k].color, marginTop: "0.4rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                            Tap for biblical story →
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Cross-cultural note */}
@@ -556,12 +521,80 @@ export default function FiveLanguagesClient({
               </p>
             </div>
 
-            {/* Empty chart previews */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2.5rem" }}>
-              <EmptyBarChart label="Your Receiving Language" />
-              <EmptyBarChart label="Your Giving Language" />
+            {/* Want to go deeper? accordion */}
+            <div style={{ marginBottom: "2.5rem" }}>
+              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.4rem" }}>
+                Want to go deeper?
+              </h3>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(50% 0.008 260)", marginBottom: "1rem", lineHeight: 1.6 }}>
+                Full profiles for all five languages — with cross-cultural notes and biblical grounding.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
+                  const lang = LANG_DATA[k];
+                  const isOpen = openAccordion === k;
+                  return (
+                    <div key={k} style={{ border: `1px solid ${lang.color}35`, borderRadius: "10px", overflow: "hidden" }}>
+                      <button
+                        type="button"
+                        onClick={() => setOpenAccordion(isOpen ? null : k)}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          background: isOpen ? lang.color : "white",
+                          border: "none",
+                          padding: "0.875rem 1.25rem",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.875rem", color: isOpen ? "oklch(14% 0.07 260)" : lang.color }}>
+                          {lang.name}
+                        </span>
+                        <span style={{ color: isOpen ? "oklch(14% 0.07 260)" : lang.color, fontSize: "0.85rem", fontWeight: 700 }}>
+                          {isOpen ? "▲" : "▼"}
+                        </span>
+                      </button>
+                      {isOpen && (
+                        <div style={{ padding: "1.25rem 1.5rem", background: "white", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(22% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
+                            {lang.desc}
+                          </p>
+                          <div>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
+                              What this does NOT mean
+                            </p>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                              {lang.notMeans}
+                            </p>
+                          </div>
+                          <div>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
+                              Cross-cultural note
+                            </p>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
+                              {lang.crossCultural}
+                            </p>
+                          </div>
+                          <div style={{ background: lang.colorLight, borderRadius: "8px", padding: "1rem 1.1rem", borderLeft: `3px solid ${lang.color}` }}>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>
+                              Biblical anchor · {lang.biblicalAnchor}
+                            </p>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(25% 0.08 260)", lineHeight: 1.7, margin: 0 }}>
+                              {lang.biblical}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
+            {/* Begin button */}
             <div style={{ textAlign: "center" }}>
               <button
                 type="button"
@@ -584,7 +617,7 @@ export default function FiveLanguagesClient({
                 Begin Test 1 — Receiving
               </button>
               <p style={{ marginTop: "0.75rem", fontSize: "13px", color: "oklch(55% 0.05 260)", fontFamily: "var(--font-montserrat)" }}>
-                Test 1 of 2 · 40 forced-choice pairs · ~8 minutes
+                Test 1 of 2 · 40 pairs · ~8 minutes
               </p>
             </div>
           </div>
@@ -597,9 +630,30 @@ export default function FiveLanguagesClient({
   if (quizState === "test1") {
     const pair = RECEIVING_PAIRS[currentPair];
     return (
-      <div style={{ background: "oklch(14% 0.07 260)", minHeight: "100vh" }}>
+      <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
+        <style>{`
+          .test-pair-btn {
+            width: 100%;
+            text-align: left;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            background: white;
+            border: 1px solid oklch(88% 0.008 80);
+            border-radius: 12px;
+            color: oklch(22% 0.10 260);
+            font-size: clamp(14px, 1.5vw, 16px);
+            line-height: 1.65;
+            cursor: pointer;
+            transition: border-color 0.15s ease, background 0.15s ease;
+            font-family: inherit;
+          }
+          .test-pair-btn:hover {
+            border-color: oklch(65% 0.15 45);
+            background: oklch(98.5% 0.004 80);
+          }
+        `}</style>
+
         {/* Progress bar */}
-        <div style={{ height: "3px", background: "oklch(25% 0.07 260)" }}>
+        <div style={{ height: "3px", background: "oklch(91% 0.006 80)" }}>
           <div style={{
             height: "100%",
             width: `${(overallProgress / 80) * 100}%`,
@@ -609,24 +663,15 @@ export default function FiveLanguagesClient({
         </div>
 
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
-          {/* Header */}
           <div style={{ marginBottom: "2rem" }}>
-            <p style={{
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "0.5rem",
-            }}>
+            <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
               Test 1 — How you receive care
             </p>
-            <p style={{ fontSize: "14px", color: "oklch(60% 0.05 260)" }}>
+            <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
               Pair {currentPair + 1} of 40 &nbsp;·&nbsp; Choose the statement that feels most true for you
             </p>
           </div>
 
-          {/* Pair cards */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {[
               { key: pair.a, text: pair.textA },
@@ -635,28 +680,8 @@ export default function FiveLanguagesClient({
               <button
                 type="button"
                 key={key}
+                className="test-pair-btn"
                 onClick={() => handleAnswer(key as ScoreKey, "receiving")}
-                style={{
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "clamp(1rem, 2vw, 1.5rem)",
-                  background: "oklch(22% 0.10 260)",
-                  border: "1px solid oklch(32% 0.08 260)",
-                  borderRadius: "12px",
-                  color: "oklch(92% 0.01 80)",
-                  fontSize: "clamp(14px, 1.5vw, 16px)",
-                  lineHeight: 1.65,
-                  cursor: "pointer",
-                  transition: "border-color 0.15s ease, background 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = LANG_DATA[key as ScoreKey].color;
-                  e.currentTarget.style.background = "oklch(26% 0.09 260)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "oklch(32% 0.08 260)";
-                  e.currentTarget.style.background = "oklch(22% 0.10 260)";
-                }}
               >
                 {text}
               </button>
@@ -671,26 +696,13 @@ export default function FiveLanguagesClient({
   if (quizState === "transition") {
     return (
       <div style={{
-        background: "oklch(14% 0.07 260)",
+        background: "oklch(97% 0.005 80)",
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}>
         <div style={{ maxWidth: "520px", padding: "2rem", textAlign: "center" }}>
-          <div style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            background: `${LANG_DATA[transitionPrimary].color}20`,
-            border: `2px solid ${LANG_DATA[transitionPrimary].color}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto 1.5rem",
-          }}>
-            <span style={{ fontSize: "24px", fontWeight: 800, color: LANG_DATA[transitionPrimary].color }}>1</span>
-          </div>
           <p style={{
             fontSize: "12px",
             fontWeight: 700,
@@ -703,15 +715,25 @@ export default function FiveLanguagesClient({
             fontFamily: "Cormorant Garamond, serif",
             fontSize: "clamp(28px, 4vw, 40px)",
             fontWeight: 600,
-            color: "oklch(97% 0.005 80)",
+            color: "oklch(22% 0.10 260)",
+            marginBottom: "0.5rem",
+            lineHeight: 1.2,
+          }}>
+            Your receiving language is:
+          </h2>
+          <h2 style={{
+            fontFamily: "Cormorant Garamond, serif",
+            fontSize: "clamp(28px, 4vw, 40px)",
+            fontWeight: 600,
+            color: LANG_DATA[transitionPrimary].color,
             marginBottom: "1rem",
             lineHeight: 1.2,
           }}>
-            {LANG_DATA[transitionPrimary].name} is leading
+            {LANG_DATA[transitionPrimary].name}
           </h2>
           <p style={{
             fontSize: "16px",
-            color: "oklch(72% 0.05 260)",
+            color: "oklch(48% 0.008 260)",
             lineHeight: 1.65,
             marginBottom: "2rem",
           }}>
@@ -747,9 +769,30 @@ export default function FiveLanguagesClient({
     const pair = GIVING_PAIRS[currentPair];
     const showHonestyBanner = currentPair === 14;
     return (
-      <div style={{ background: "oklch(14% 0.07 260)", minHeight: "100vh" }}>
+      <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
+        <style>{`
+          .test-pair-btn {
+            width: 100%;
+            text-align: left;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            background: white;
+            border: 1px solid oklch(88% 0.008 80);
+            border-radius: 12px;
+            color: oklch(22% 0.10 260);
+            font-size: clamp(14px, 1.5vw, 16px);
+            line-height: 1.65;
+            cursor: pointer;
+            transition: border-color 0.15s ease, background 0.15s ease;
+            font-family: inherit;
+          }
+          .test-pair-btn:hover {
+            border-color: oklch(65% 0.15 45);
+            background: oklch(98.5% 0.004 80);
+          }
+        `}</style>
+
         {/* Progress bar */}
-        <div style={{ height: "3px", background: "oklch(25% 0.07 260)" }}>
+        <div style={{ height: "3px", background: "oklch(91% 0.006 80)" }}>
           <div style={{
             height: "100%",
             width: `${(overallProgress / 80) * 100}%`,
@@ -759,40 +802,30 @@ export default function FiveLanguagesClient({
         </div>
 
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
-          {/* Header */}
           <div style={{ marginBottom: "2rem" }}>
-            <p style={{
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "0.5rem",
-            }}>
+            <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
               Test 2 — How you give care
             </p>
-            <p style={{ fontSize: "14px", color: "oklch(60% 0.05 260)" }}>
+            <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
               Pair {currentPair + 41} of 80 &nbsp;·&nbsp; Choose what you actually do, not what you wish you did
             </p>
           </div>
 
-          {/* Honesty banner at pair 15 (index 14) */}
           {showHonestyBanner && (
             <div style={{
-              background: "oklch(30% 0.09 50)",
-              border: "1px solid oklch(65% 0.15 45)",
+              background: "oklch(96% 0.02 85)",
+              border: "1px solid oklch(88% 0.08 85)",
               borderRadius: "8px",
               padding: "0.875rem 1rem",
               marginBottom: "1.5rem",
               fontSize: "14px",
-              color: "oklch(90% 0.05 80)",
+              color: "oklch(35% 0.08 260)",
               lineHeight: 1.55,
             }}>
               Halfway through. Are you choosing what you <em>actually do</em> — or what you wish you did? Adjust if needed.
             </div>
           )}
 
-          {/* Pair cards */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {[
               { key: pair.a, text: pair.textA },
@@ -801,28 +834,8 @@ export default function FiveLanguagesClient({
               <button
                 type="button"
                 key={key}
+                className="test-pair-btn"
                 onClick={() => handleAnswer(key as ScoreKey, "giving")}
-                style={{
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "clamp(1rem, 2vw, 1.5rem)",
-                  background: "oklch(22% 0.10 260)",
-                  border: "1px solid oklch(32% 0.08 260)",
-                  borderRadius: "12px",
-                  color: "oklch(92% 0.01 80)",
-                  fontSize: "clamp(14px, 1.5vw, 16px)",
-                  lineHeight: 1.65,
-                  cursor: "pointer",
-                  transition: "border-color 0.15s ease, background 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = LANG_DATA[key as ScoreKey].color;
-                  e.currentTarget.style.background = "oklch(26% 0.09 260)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "oklch(32% 0.08 260)";
-                  e.currentTarget.style.background = "oklch(22% 0.10 260)";
-                }}
               >
                 {text}
               </button>
@@ -850,18 +863,10 @@ export default function FiveLanguagesClient({
       }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{
-            color: "oklch(65% 0.15 45)",
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            marginBottom: 20,
-          }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             Your Results · 5 Languages of Appreciation
           </p>
 
-          {/* Pattern badge */}
           <div style={{ marginBottom: "1.5rem" }}>
             <span style={{
               display: "inline-block",
@@ -879,38 +884,17 @@ export default function FiveLanguagesClient({
             </span>
           </div>
 
-          <div style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "2rem",
-            alignItems: "flex-start",
-          }}>
-            {/* Receiving primary */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem", alignItems: "flex-start" }}>
             <div>
               <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Receiving</p>
-              <h2 style={{
-                fontFamily: "Cormorant Garamond, serif",
-                fontSize: "clamp(28px, 4vw, 44px)",
-                fontWeight: 600,
-                color: rLang.color,
-                lineHeight: 1.1,
-                marginBottom: "0.25rem",
-              }}>
+              <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: rLang.color, lineHeight: 1.1, marginBottom: "0.25rem" }}>
                 {rLang.name}
               </h2>
               <p style={{ fontSize: "12px", color: "oklch(55% 0.05 260)" }}>{rLang.biblicalAnchor}</p>
             </div>
-            {/* Giving primary */}
             <div>
               <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Giving</p>
-              <h2 style={{
-                fontFamily: "Cormorant Garamond, serif",
-                fontSize: "clamp(28px, 4vw, 44px)",
-                fontWeight: 600,
-                color: gLang.color,
-                lineHeight: 1.1,
-                marginBottom: "0.25rem",
-              }}>
+              <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: gLang.color, lineHeight: 1.1, marginBottom: "0.25rem" }}>
                 {gLang.name}
               </h2>
               <p style={{ fontSize: "12px", color: "oklch(55% 0.05 260)" }}>{gLang.biblicalAnchor}</p>
@@ -922,32 +906,12 @@ export default function FiveLanguagesClient({
       {/* Interpretation + action */}
       <section style={{ background: "oklch(97% 0.005 80)", padding: "clamp(2rem, 3.5vw, 3rem) 0" }}>
         <div className="container-wide" style={{ maxWidth: "760px" }}>
-          <p style={{
-            fontSize: "clamp(16px, 1.7vw, 19px)",
-            color: "oklch(22% 0.10 260)",
-            lineHeight: 1.7,
-            marginBottom: "1.5rem",
-          }}>
+          <p style={{ fontSize: "clamp(16px, 1.7vw, 19px)", color: "oklch(22% 0.10 260)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
             {interpretation.text}
           </p>
-          <div style={{
-            background: "oklch(22% 0.10 260)",
-            borderRadius: "10px",
-            padding: "1.25rem 1.5rem",
-          }}>
-            <p style={{
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "0.5rem",
-            }}>Practical step</p>
-            <p style={{
-              fontSize: "15px",
-              color: "oklch(88% 0.02 80)",
-              lineHeight: 1.65,
-            }}>
+          <div style={{ background: "oklch(22% 0.10 260)", borderRadius: "10px", padding: "1.25rem 1.5rem" }}>
+            <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Practical step</p>
+            <p style={{ fontSize: "15px", color: "oklch(88% 0.02 80)", lineHeight: 1.65 }}>
               {interpretation.action}
             </p>
           </div>
@@ -957,25 +921,9 @@ export default function FiveLanguagesClient({
       {/* Dual bar charts */}
       <section style={{ background: "oklch(14% 0.07 260)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
         <div className="container-wide">
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}>
-            {/* Receiving chart */}
-            <div style={{
-              background: "oklch(97% 0.005 80)",
-              borderRadius: "12px",
-              padding: "1.5rem",
-            }}>
-              <p style={{
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "oklch(55% 0.06 260)",
-                marginBottom: "1.25rem",
-              }}>Your Receiving Language</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+            <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>Your Receiving Language</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayReceiving) as [ScoreKey, number][])
                   .sort((a, b) => b[1] - a[1])
@@ -984,20 +932,8 @@ export default function FiveLanguagesClient({
                   ))}
               </div>
             </div>
-            {/* Giving chart */}
-            <div style={{
-              background: "oklch(97% 0.005 80)",
-              borderRadius: "12px",
-              padding: "1.5rem",
-            }}>
-              <p style={{
-                fontSize: "12px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "oklch(55% 0.06 260)",
-                marginBottom: "1.25rem",
-              }}>Your Giving Language</p>
+            <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>Your Giving Language</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayGiving) as [ScoreKey, number][])
                   .sort((a, b) => b[1] - a[1])
@@ -1010,55 +946,25 @@ export default function FiveLanguagesClient({
         </div>
       </section>
 
-      {/* Language profiles */}
+      {/* Language profiles — receiving + giving primaries only */}
       <section style={{ background: "oklch(97% 0.005 80)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
         <div className="container-wide">
-          <h2 style={{
-            fontFamily: "Cormorant Garamond, serif",
-            fontSize: "clamp(26px, 3.5vw, 36px)",
-            fontWeight: 600,
-            color: "oklch(22% 0.10 260)",
-            marginBottom: "0.5rem",
-          }}>Your two languages</h2>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(26px, 3.5vw, 36px)", fontWeight: 600, color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
+            Your two languages
+          </h2>
           <p style={{ fontSize: "15px", color: "oklch(45% 0.06 260)", marginBottom: "2rem", lineHeight: 1.6 }}>
             Profiles for your receiving and giving primaries.
           </p>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1.5rem",
-          }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
             {[
               { role: "Receiving", key: rPrimary, lang: rLang },
               ...(rPrimary !== gPrimary ? [{ role: "Giving", key: gPrimary, lang: gLang }] : []),
             ].map(({ role, key, lang }) => (
-              <div key={`${role}-${key}`} style={{
-                border: `1px solid ${lang.color}40`,
-                borderRadius: "14px",
-                overflow: "hidden",
-              }}>
-                <div style={{
-                  background: lang.color,
-                  padding: "1rem 1.5rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}>
-                  <span style={{
-                    fontFamily: "var(--font-montserrat, sans-serif)",
-                    fontWeight: 800,
-                    fontSize: "16px",
-                    color: "oklch(14% 0.07 260)",
-                  }}>{lang.name}</span>
-                  <span style={{
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "oklch(14% 0.07 260)",
-                    opacity: 0.7,
-                  }}>{role}</span>
+              <div key={`${role}-${key}`} style={{ border: `1px solid ${lang.color}40`, borderRadius: "14px", overflow: "hidden" }}>
+                <div style={{ background: lang.color, padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat, sans-serif)", fontWeight: 800, fontSize: "16px", color: "oklch(14% 0.07 260)" }}>{lang.name}</span>
+                  <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(14% 0.07 260)", opacity: 0.7 }}>{role}</span>
                 </div>
                 <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                   <p style={{ fontSize: "15px", color: "oklch(22% 0.10 260)", lineHeight: 1.7 }}>{lang.desc}</p>
@@ -1070,12 +976,7 @@ export default function FiveLanguagesClient({
                     <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>Cross-cultural</p>
                     <p style={{ fontSize: "14px", color: "oklch(35% 0.07 260)", lineHeight: 1.65 }}>{lang.crossCultural}</p>
                   </div>
-                  <div style={{
-                    background: lang.colorLight,
-                    borderRadius: "8px",
-                    padding: "1rem",
-                    borderLeft: `3px solid ${lang.color}`,
-                  }}>
+                  <div style={{ background: lang.colorLight, borderRadius: "8px", padding: "1rem", borderLeft: `3px solid ${lang.color}` }}>
                     <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.5rem" }}>Biblical anchor · {lang.biblicalAnchor}</p>
                     <p style={{ fontSize: "14px", color: "oklch(25% 0.08 260)", lineHeight: 1.7 }}>{lang.biblical}</p>
                   </div>
@@ -1117,11 +1018,7 @@ export default function FiveLanguagesClient({
               )}
             </div>
           ) : (
-            <span style={{
-              fontSize: "14px",
-              color: "oklch(65% 0.12 150)",
-              fontWeight: 600,
-            }}>
+            <span style={{ fontSize: "14px", color: "oklch(65% 0.12 150)", fontWeight: 600 }}>
               Saved to your dashboard
             </span>
           )}
@@ -1150,127 +1047,6 @@ export default function FiveLanguagesClient({
           >
             Retake
           </button>
-        </div>
-      </section>
-
-      {/* Full 5 languages reference */}
-      <section style={{ background: "oklch(96% 0.005 80)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
-        <div className="container-wide">
-          <h2 style={{
-            fontFamily: "var(--font-montserrat)",
-            fontWeight: 800,
-            fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)",
-            color: "oklch(22% 0.10 260)",
-            marginBottom: "0.5rem",
-          }}>
-            The Five Languages
-          </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(45% 0.008 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: "2rem" }}>
-            Full profiles for all five languages — with cross-cultural notes and biblical grounding.
-          </p>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "1.5rem" }}>
-            {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
-              const lang = LANG_DATA[k];
-              const isReceiving = k === rPrimary;
-              const isGiving = k === gPrimary;
-              return (
-                <div key={k} style={{
-                  background: "white",
-                  border: `1px solid ${lang.color}30`,
-                  borderRadius: "14px",
-                  overflow: "hidden",
-                  borderTop: `4px solid ${lang.color}`,
-                }}>
-                  {/* Card header */}
-                  <div style={{ padding: "1.25rem 1.5rem 1rem", borderBottom: `1px solid ${lang.color}15` }}>
-                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.75rem", flexWrap: "wrap" }}>
-                      <h3 style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontWeight: 800,
-                        fontSize: "1rem",
-                        color: lang.color,
-                        margin: 0,
-                      }}>
-                        {lang.name}
-                      </h3>
-                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                        {isReceiving && (
-                          <span style={{
-                            fontSize: "10px",
-                            fontWeight: 700,
-                            letterSpacing: "0.07em",
-                            textTransform: "uppercase",
-                            padding: "3px 8px",
-                            borderRadius: "20px",
-                            background: `${lang.color}18`,
-                            color: lang.color,
-                            border: `1px solid ${lang.color}50`,
-                          }}>
-                            Your receiving language
-                          </span>
-                        )}
-                        {isGiving && (
-                          <span style={{
-                            fontSize: "10px",
-                            fontWeight: 700,
-                            letterSpacing: "0.07em",
-                            textTransform: "uppercase",
-                            padding: "3px 8px",
-                            borderRadius: "20px",
-                            background: `${lang.color}18`,
-                            color: lang.color,
-                            border: `1px solid ${lang.color}50`,
-                          }}>
-                            Your giving language
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Card body */}
-                  <div style={{ padding: "1.25rem 1.5rem", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(22% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
-                      {lang.desc}
-                    </p>
-
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
-                        What this does NOT mean
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                        {lang.notMeans}
-                      </p>
-                    </div>
-
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
-                        Cross-cultural note
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                        {lang.crossCultural}
-                      </p>
-                    </div>
-
-                    <div style={{
-                      background: lang.colorLight,
-                      borderRadius: "8px",
-                      padding: "1rem 1.1rem",
-                      borderLeft: `3px solid ${lang.color}`,
-                    }}>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>
-                        Biblical anchor · {lang.biblicalAnchor}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(25% 0.08 260)", lineHeight: 1.7, margin: 0 }}>
-                        {lang.biblical}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </section>
     </div>
