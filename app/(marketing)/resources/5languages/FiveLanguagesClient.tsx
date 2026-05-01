@@ -419,22 +419,7 @@ export default function FiveLanguagesClient({
               This is the first 5 Languages test designed to measure both sides of care. Chapman&apos;s original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives.
             </p>
 
-            {/* Tile grid: keep "Why two tests?", replace others with prose */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
-              <div style={{
-                background: "oklch(97% 0.005 80)",
-                border: "1px solid oklch(90% 0.006 80)",
-                borderRadius: 12,
-                padding: "1.25rem 1.5rem",
-              }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", color: "oklch(22% 0.10 260)", marginBottom: "0.6rem" }}>Why two tests?</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>
-                  This is the first 5 Languages test that measures both giving and receiving. Chapman&apos;s original only asks what makes you feel loved. That is not enough for team leaders. You need to know both: how you receive care, so your team knows what you need — and how you give it, so you can check whether you are loving people in their language or only your own.
-                </p>
-              </div>
-            </div>
-
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
+<p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
               Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud.
             </p>
 
