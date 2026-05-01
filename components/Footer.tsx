@@ -17,12 +17,19 @@ function IgIcon() {
 export default function Footer() {
   const { t } = useLanguage();
   return (
-    <footer style={{ borderTop: "1px solid oklch(88% 0.008 80)", background: "oklch(97% 0.005 80)", paddingBlock: "3rem 2rem" }}>
+    <footer style={{ borderTop: "1px solid oklch(88% 0.008 80)", background: "oklch(97% 0.005 80)", paddingBlock: "clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem)" }}>
+      <style>{`
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
+        @media (max-width: 600px) {
+          .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem 1rem; margin-bottom: 2rem; }
+          .footer-brand { grid-column: 1 / -1; margin-bottom: 0.25rem; }
+        }
+      `}</style>
       <div className="container-wide">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2.5rem", marginBottom: "3rem" }}>
+        <div className="footer-grid">
 
           {/* Brand column */}
-          <div style={{ gridColumn: "span 1" }}>
+          <div className="footer-brand">
             <div style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.625rem" }}>
               <Image src="/logo-icon.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0 }} />
               <div>
@@ -74,7 +81,7 @@ export default function Footer() {
               <Link href="/contact" className="footer-link">{t.footer.contact}</Link>
             </div>
           </div>
-        </div>
+        </div>{/* /footer-grid */}
 
         {/* Bottom bar */}
         <div style={{ borderTop: "1px solid oklch(88% 0.008 80)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
