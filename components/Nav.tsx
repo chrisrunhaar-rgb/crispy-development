@@ -19,7 +19,9 @@ const LANGUAGES: { code: Lang; flag: string; label: string; available: boolean }
 export default function Nav({ initialFirstName = null }: { initialFirstName?: string | null }) {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [avatarOpen, setAvatarOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
   const { lang, setLang, t } = useLanguage();
   const [firstName, setFirstName] = useState<string | null>(initialFirstName);
 
@@ -27,6 +29,9 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
     function handleClick(e: MouseEvent) {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
         setLangOpen(false);
+      }
+      if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
+        setAvatarOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClick);
@@ -51,6 +56,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
   }, []);
 
   const currentLang = LANGUAGES.find(l => l.code === lang) ?? LANGUAGES[0];
+  const initials = firstName ? firstName[0].toUpperCase() : "?";
 
   return (
     <header style={{
@@ -84,92 +90,140 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <Link href="/resources" className="nav-link">{t.nav.resources}</Link>
           </nav>
 
-          {/* CTA + language dropdown + mobile toggle */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            {/* Language dropdown */}
-            <div ref={langRef} style={{ position: "relative" }}>
-              <button
-                onClick={() => setLangOpen(!langOpen)}
-                style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: "oklch(42% 0.008 260)",
-                  background: "none",
-                  border: "1px solid oklch(82% 0.008 80)",
-                  padding: "0.3rem 0.6rem",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  transition: "border-color 0.15s",
-                }}
-                aria-label="Select language"
-              >
-                <span style={{ fontSize: "1rem", lineHeight: 1 }}>{currentLang.flag}</span>
-                <span>{currentLang.code.toUpperCase()}</span>
-                <span style={{ fontSize: "0.5rem", opacity: 0.5, marginLeft: "0.1rem" }}>▼</span>
-              </button>
-              {langOpen && (
-                <div style={{
-                  position: "absolute",
-                  top: "calc(100% + 6px)",
-                  right: 0,
-                  background: "oklch(99% 0.002 80)",
-                  border: "1px solid oklch(88% 0.008 80)",
-                  boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)",
-                  minWidth: "160px",
-                  zIndex: 100,
-                }}>
-                  {LANGUAGES.map(l => (
-                    <button
-                      key={l.code}
-                      onClick={() => { if (l.available) { setLang(l.code); setLangOpen(false); } }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.625rem",
-                        width: "100%",
-                        padding: "0.625rem 0.875rem",
-                        background: l.code === lang ? "oklch(95% 0.006 80)" : "none",
-                        border: "none",
-                        cursor: l.available ? "pointer" : "default",
-                        opacity: l.available ? 1 : 0.45,
-                        fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.8rem",
-                        fontWeight: l.code === lang ? 700 : 500,
-                        color: "oklch(30% 0.12 260)",
-                        textAlign: "left",
-                        borderBottom: "1px solid oklch(92% 0.004 80)",
-                      }}
-                    >
-                      <span style={{ fontSize: "1rem" }}>{l.flag}</span>
-                      <span style={{ flex: 1 }}>{l.label}</span>
-                      {!l.available && <span style={{ fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.1)", padding: "0.1rem 0.35rem" }}>SOON</span>}
-                      {l.code === lang && <span style={{ fontSize: "0.65rem", color: "oklch(65% 0.15 45)", fontWeight: 700 }}>✓</span>}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          {/* Right section */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
 
             {firstName ? (
-              <Link href="/dashboard" className="t-label hidden-mobile" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none", fontSize: "0.7rem" }}>
-                {firstName}
-              </Link>
+              /* Logged in: Dashboard button + avatar */
+              <>
+                <Link href="/dashboard" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
+                  My Dashboard
+                </Link>
+
+                {/* Profile avatar with dropdown */}
+                <div ref={avatarRef} style={{ position: "relative" }} className="hidden-mobile">
+                  <button
+                    onClick={() => setAvatarOpen(o => !o)}
+                    style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                    aria-label="Profile menu"
+                  >
+                    <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(97% 0.005 80)", letterSpacing: "0.02em" }}>{initials}</span>
+                    </div>
+                  </button>
+
+                  {avatarOpen && (
+                    <div style={{ position: "absolute", right: 0, top: "calc(100% + 0.625rem)", background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", minWidth: "210px", zIndex: 100, boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)" }}>
+                      {/* Name */}
+                      <div style={{ padding: "0.75rem 1rem", borderBottom: "1px solid oklch(92% 0.006 80)" }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(22% 0.005 260)", margin: 0 }}>{firstName}</p>
+                      </div>
+
+                      {/* Language */}
+                      <div style={{ padding: "0.75rem 1rem" }}>
+                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Site Language</p>
+                        <div style={{ display: "flex", gap: "0.375rem" }}>
+                          {LANGUAGES.filter(l => l.available).map(l => (
+                            <button
+                              key={l.code}
+                              onClick={() => { setLang(l.code); setAvatarOpen(false); }}
+                              style={{
+                                fontFamily: "var(--font-montserrat)",
+                                fontSize: "0.65rem",
+                                fontWeight: 700,
+                                padding: "0.25rem 0.5rem",
+                                background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
+                                color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                                border: "none",
+                                cursor: "pointer",
+                                borderRadius: "3px",
+                              }}
+                            >
+                              {l.code.toUpperCase()}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
             ) : (
-              <Link href="/login" className="t-label hidden-mobile" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none", fontSize: "0.7rem" }}>
-                {t.nav.login}
-              </Link>
-            )}
-            {firstName ? (
-              <Link href="/dashboard" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
-                My Dashboard
-              </Link>
-            ) : (
-              <Link href="/signup" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
-                {t.nav.cta}
-              </Link>
+              /* Not logged in: lang dropdown + login + signup */
+              <>
+                <div ref={langRef} style={{ position: "relative" }} className="hidden-mobile">
+                  <button
+                    onClick={() => setLangOpen(!langOpen)}
+                    style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.72rem",
+                      fontWeight: 600,
+                      color: "oklch(42% 0.008 260)",
+                      background: "none",
+                      border: "1px solid oklch(82% 0.008 80)",
+                      padding: "0.3rem 0.6rem",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.375rem",
+                      transition: "border-color 0.15s",
+                    }}
+                    aria-label="Select language"
+                  >
+                    <span style={{ fontSize: "1rem", lineHeight: 1 }}>{currentLang.flag}</span>
+                    <span>{currentLang.code.toUpperCase()}</span>
+                    <span style={{ fontSize: "0.5rem", opacity: 0.5, marginLeft: "0.1rem" }}>▼</span>
+                  </button>
+                  {langOpen && (
+                    <div style={{
+                      position: "absolute",
+                      top: "calc(100% + 6px)",
+                      right: 0,
+                      background: "oklch(99% 0.002 80)",
+                      border: "1px solid oklch(88% 0.008 80)",
+                      boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)",
+                      minWidth: "160px",
+                      zIndex: 100,
+                    }}>
+                      {LANGUAGES.map(l => (
+                        <button
+                          key={l.code}
+                          onClick={() => { if (l.available) { setLang(l.code); setLangOpen(false); } }}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.625rem",
+                            width: "100%",
+                            padding: "0.625rem 0.875rem",
+                            background: l.code === lang ? "oklch(95% 0.006 80)" : "none",
+                            border: "none",
+                            cursor: l.available ? "pointer" : "default",
+                            opacity: l.available ? 1 : 0.45,
+                            fontFamily: "var(--font-montserrat)",
+                            fontSize: "0.8rem",
+                            fontWeight: l.code === lang ? 700 : 500,
+                            color: "oklch(30% 0.12 260)",
+                            textAlign: "left",
+                            borderBottom: "1px solid oklch(92% 0.004 80)",
+                          }}
+                        >
+                          <span style={{ fontSize: "1rem" }}>{l.flag}</span>
+                          <span style={{ flex: 1 }}>{l.label}</span>
+                          {!l.available && <span style={{ fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.1)", padding: "0.1rem 0.35rem" }}>SOON</span>}
+                          {l.code === lang && <span style={{ fontSize: "0.65rem", color: "oklch(65% 0.15 45)", fontWeight: 700 }}>✓</span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <Link href="/login" className="t-label hidden-mobile" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none", fontSize: "0.7rem" }}>
+                  {t.nav.login}
+                </Link>
+                <Link href="/signup" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
+                  {t.nav.cta}
+                </Link>
+              </>
             )}
 
             {/* Hamburger */}
@@ -202,23 +256,46 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               {t.nav.resources}
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.75rem 0" }} />
-            {firstName ? (
-              <Link href="/dashboard" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
-                {firstName}
-              </Link>
-            ) : (
-              <Link href="/login" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
-                {t.nav.login}
-              </Link>
-            )}
+
+            {/* Language toggle in mobile menu */}
+            <div style={{ paddingBottom: "0.75rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Language</p>
+              <div style={{ display: "flex", gap: "0.375rem" }}>
+                {LANGUAGES.filter(l => l.available).map(l => (
+                  <button
+                    key={l.code}
+                    onClick={() => { setLang(l.code); setOpen(false); }}
+                    style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      padding: "0.3rem 0.625rem",
+                      background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
+                      color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                      border: "none",
+                      cursor: "pointer",
+                      borderRadius: "3px",
+                    }}
+                  >
+                    {l.code.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {firstName ? (
               <Link href="/dashboard" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
                 My Dashboard
               </Link>
             ) : (
-              <Link href="/signup" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
-                {t.nav.cta}
-              </Link>
+              <>
+                <Link href="/login" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
+                  {t.nav.login}
+                </Link>
+                <Link href="/signup" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
+                  {t.nav.cta}
+                </Link>
+              </>
             )}
           </nav>
         )}

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
-import type { GeoInfo } from "@/lib/geo";
 
 const personalFeatureKeys = [
   "Curated Leadership Content",
@@ -60,73 +59,7 @@ const featureTitles: Record<string, Record<string, string>> = {
   },
 };
 
-const pricingLabels: Record<string, Record<string, string>> = {
-  en: {
-    "Membership Pricing": "Membership Pricing",
-    "Launching soon": "Launching soon",
-    "plan_description": "12 months of unlimited access — resources, assessments, and peer groups in one plan.",
-    "Free": "Free",
-    "Always free": "Always free · no account needed",
-    "Personal": "Personal",
-    "Peer Groups FREE": "+ Peer Groups FREE",
-    "months_access": "12 months unlimited access to:",
-    "resources": "30+ leadership resources — browse all →",
-    "assessments": "8 assessments — see all →",
-    "journey": "Personal leadership journey",
-    "tracking": "Progress tracking",
-    "monthly": "New content added monthly",
-    "gift": "🎁 Peer Groups — free gift",
-    "Coming Soon": "Coming Soon",
-    "Start free": "Start free →",
-    "browsing": "You're browsing from {region}",
-    "regional": "regional pricing will apply when plans launch. Prices will be lower than the USD rates shown.",
-    "pricing_note": "USD pricing shown · Regional rates for SE Asia, South Asia & Africa · See Team plan →",
-  },
-  id: {
-    "Membership Pricing": "Harga Keanggotaan",
-    "Launching soon": "Akan Segera Diluncurkan",
-    "plan_description": "12 bulan akses tanpa batas — sumber daya, penilaian, dan kelompok sejawat dalam satu paket.",
-    "Free": "Gratis",
-    "Always free": "Selalu gratis · tidak perlu akun",
-    "Personal": "Pribadi",
-    "Peer Groups FREE": "+ Kelompok Sejawat GRATIS",
-    "months_access": "Akses 12 bulan tanpa batas ke:",
-    "resources": "30+ sumber daya kepemimpinan — jelajahi semua →",
-    "assessments": "8 penilaian — lihat semua →",
-    "journey": "Perjalanan kepemimpinan pribadi",
-    "tracking": "Pelacakan kemajuan",
-    "monthly": "Konten baru ditambahkan setiap bulan",
-    "gift": "🎁 Kelompok Sejawat — hadiah gratis",
-    "Coming Soon": "Segera Hadir",
-    "Start free": "Mulai gratis →",
-    "browsing": "Anda menjelajahi dari {region}",
-    "regional": "harga regional akan berlaku saat paket diluncurkan. Harganya akan lebih rendah dari tarif USD yang ditampilkan.",
-    "pricing_note": "Harga USD ditampilkan · Tarif regional untuk Asia Tenggara, Asia Selatan & Afrika · Lihat paket Tim →",
-  },
-  nl: {
-    "Membership Pricing": "Lidmaatschapsprijzen",
-    "Launching soon": "Binnenkort beschikbaar",
-    "plan_description": "12 maanden onbeperkte toegang — materialen, beoordelingen en peergroepen in één plan.",
-    "Free": "Gratis",
-    "Always free": "Altijd gratis · geen account nodig",
-    "Personal": "Persoonlijk",
-    "Peer Groups FREE": "+ Peergroepen GRATIS",
-    "months_access": "12 maanden onbeperkte toegang tot:",
-    "resources": "30+ leiderschapsmaterialen — bekijk alles →",
-    "assessments": "8 beoordelingen — zie alles →",
-    "journey": "Persoonlijke leiderschapsreis",
-    "tracking": "Voortgangsbewaking",
-    "monthly": "Nieuwe content maandelijks",
-    "gift": "🎁 Peergroepen — gratis cadeau",
-    "Coming Soon": "Binnenkort beschikbaar",
-    "Start free": "Gratis starten →",
-    "browsing": "Je blader vanuit {region}",
-    "regional": "regionale prijsstelling zal van toepassing zijn bij lancering van plannen. Prijzen zullen lager zijn dan de weergegeven USD-tarieven.",
-    "pricing_note": "USD-prijzen weergegeven · Regionale tarieven voor Zuidoost-Azië, Zuid-Azië en Afrika · Zie Teamplan →",
-  },
-};
-
-export default function PersonalContent({ ctaHref = "/signup?pathway=personal", geo }: { ctaHref?: string; geo?: GeoInfo }) {
+export default function PersonalContent({ ctaHref = "/membership" }: { ctaHref?: string }) {
   const { t, lang } = useLanguage();
   const p = t.personal;
   const langKey = lang in personalFeatureDescriptions ? lang : "en";
@@ -191,120 +124,23 @@ export default function PersonalContent({ ctaHref = "/signup?pathway=personal", 
 
       <div className="divider" />
 
-      {/* ── PRICING COMING SOON ── */}
+      {/* ── APPLY CTA ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <div style={{ marginBottom: "3rem" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.35)", padding: "0.375rem 0.875rem", marginBottom: "1.25rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>{pricingLabels[langKey]["Membership Pricing"]}</span>
-            </div>
-            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>{pricingLabels[langKey]["Launching soon"]}</h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "48ch" }}>
-              {pricingLabels[langKey]["plan_description"]}
-            </p>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)", maxWidth: "680px" }}>
-            {/* FREE */}
-            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>{pricingLabels[langKey]["Free"]}</p>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$0</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>{pricingLabels[langKey]["Always free"]}</p>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {lang === "id" ? [
-                  "4 modul kepemimpinan inti",
-                  "Tiga Gaya Berpikir",
-                  "Altitud Kepemimpinan",
-                  "Zona Kenyamanan + Enam Topi Berpikir",
-                  "1 penilaian gratis — Karunia Roh"
-                ] : lang === "nl" ? [
-                  "4 kernleiderschapsmodules",
-                  "Drie Denkstijlen",
-                  "Leiderschapsaltitudes",
-                  "Comfortzone + Zes Denkhoeden",
-                  "1 gratis beoordeling — Geestelijke Gaven"
-                ] : [
-                  "4 core leadership modules",
-                  "Three Thinking Styles",
-                  "Leadership Altitudes",
-                  "Comfort Zone + Six Thinking Hats",
-                  "1 free assessment — Spiritual Giftings"
-                ].map(f => (
-                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(97% 0.005 80)", textDecoration: "none", border: "1px solid oklch(55% 0.008 260)", padding: "0.5rem 1rem", textAlign: "center" }}>
-                {pricingLabels[langKey]["Start free"]}
-              </Link>
-            </div>
-
-            {/* PERSONAL */}
-            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>{pricingLabels[langKey]["Personal"]}</p>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.4)", padding: "0.1rem 0.4rem" }}>{pricingLabels[langKey]["Peer Groups FREE"]}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>{pricingLabels[langKey]["months_access"]}</p>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  {lang === "id" ? "30+ sumber daya kepemimpinan — " : lang === "nl" ? "30+ leiderschapsmaterialen — " : "30+ leadership resources — "}<Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>{lang === "id" ? "jelajahi semua →" : lang === "nl" ? "bekijk alles →" : "browse all →"}</Link>
-                </li>
-                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  {lang === "id" ? "8 penilaian — " : lang === "nl" ? "8 beoordelingen — " : "8 assessments — "}<Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>{lang === "id" ? "lihat semua →" : lang === "nl" ? "zie alles →" : "see all →"}</Link>
-                </li>
-                {(lang === "id" ? [
-                  "Perjalanan kepemimpinan pribadi",
-                  "Pelacakan kemajuan",
-                  "Konten baru ditambahkan setiap bulan",
-                  "🎁 Kelompok Sejawat — hadiah gratis"
-                ] : lang === "nl" ? [
-                  "Persoonlijke leiderschapsreis",
-                  "Voortgangsbewaking",
-                  "Nieuwe content maandelijks",
-                  "🎁 Peergroepen — gratis cadeau"
-                ] : [
-                  "Personal leadership journey",
-                  "Progress tracking",
-                  "New content added monthly",
-                  "🎁 Peer Groups — free gift"
-                ]).map(f => (
-                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", padding: "0.5rem 1rem", border: "1px solid oklch(65% 0.15 45 / 0.4)", textAlign: "center" }}>
-                {pricingLabels[langKey]["Coming Soon"]}
-              </div>
-            </div>
-          </div>
-
-          {geo?.hasRegionalPricing && (
-            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginTop: "1.5rem", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.625rem 1rem" }}>
-              <span style={{ fontSize: "0.85rem" }}>📍</span>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(82% 0.04 45)", lineHeight: 1.5, margin: 0 }}>
-                <strong>{lang === "id" ? `Anda menjelajahi dari ${geo.regionLabel}` : lang === "nl" ? `Je blader vanuit ${geo.regionLabel}` : `You're browsing from ${geo.regionLabel}`}</strong> — {lang === "id" ? "harga regional akan berlaku saat paket diluncurkan. Harganya akan lebih rendah dari tarif USD yang ditampilkan." : lang === "nl" ? "regionale prijsstelling zal van toepassing zijn bij lancering van plannen. Prijzen zullen lager zijn dan de weergegeven USD-tarieven." : "regional pricing will apply when plans launch. Prices will be lower than the USD rates shown."}
-              </p>
-            </div>
-          )}
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "0.875rem" }}>
-            {lang === "id" ? "Harga USD ditampilkan · Tarif regional untuk Asia Tenggara, Asia Selatan & Afrika · " : lang === "nl" ? "USD-prijzen weergegeven · Regionale tarieven voor Zuidoost-Azië, Zuid-Azië en Afrika · " : "USD pricing shown · Regional rates for SE Asia, South Asia & Africa · "}<Link href="/team" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none" }}>{lang === "id" ? "Lihat paket Tim →" : lang === "nl" ? "Zie Teamplan →" : "See Team plan →"}</Link>
+          <div style={{ width: "3px", height: "40px", background: "oklch(65% 0.15 45)", marginBottom: "2rem" }} />
+          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "480px" }}>
+            {lang === "id" ? "Bergabunglah dengan komunitas." : lang === "nl" ? "Word lid van de gemeenschap." : "Join the community."}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
+            {lang === "id"
+              ? "Platform ini gratis selama fase awal. Kami meninjau setiap aplikasi secara pribadi — tidak semua orang akan diterima."
+              : lang === "nl"
+              ? "Dit platform is gratis in de beginfase. We bekijken elke aanvraag persoonlijk — niet iedereen wordt geaccepteerd."
+              : "This platform is free during the early phase. We review every application personally — not everyone will be accepted."}
           </p>
+          <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
+            {p.ctaPrimary2} →
+          </Link>
         </div>
       </section>
     </>

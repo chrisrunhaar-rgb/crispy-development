@@ -242,6 +242,65 @@ export async function adminBulkDeleteMembers(userIds: string[]): Promise<{ succe
   }
 }
 
+export async function approveMembershipApplication(formData: FormData): Promise<{ error?: string }> {
+  await assertAdmin();
+  const applicationId = formData.get("applicationId") as string;
+  const adminClient = createAdminClient();
+
+  await adminClient
+    .from("membership_applications")
+    .update({ status: "approved", reviewed_at: new Date().toISOString() })
+    .eq("id", applicationId);
+
+  revalidatePath("/admin");
+  return {};
+}
+
+export async function rejectMembershipApplication(formData: FormData) {
+  await assertAdmin();
+  const applicationId = formData.get("applicationId") as string;
+  const adminClient = createAdminClient();
+
+  await adminClient
+    .from("membership_applications")
+    .update({ status: "rejected", reviewed_at: new Date().toISOString() })
+    .eq("id", applicationId);
+
+  revalidatePath("/admin");
+}
+
+export async function generateMemberInvite(formData: FormData): Promise<{ error?: string; url?: string }> {
+  await assertAdmin();
+  const email = (formData.get("email") as string | null)?.trim() ?? "";
+  const personalNote = (formData.get("personal_note") as string | null)?.trim() ?? "";
+  const pathway = (formData.get("pathway") as string | null) === "team" ? "team" : "personal";
+
+  const adminClient = createAdminClient();
+  const { data, error } = await adminClient
+    .from("member_invites")
+    .insert({
+      email: email || null,
+      personal_note: personalNote || null,
+      pathway,
+    })
+    .select("token")
+    .single();
+
+  if (error || !data) return { error: "Failed to generate invite." };
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
+  revalidatePath("/admin");
+  return { url: `${siteUrl}/join/${data.token}` };
+}
+
+export async function revokeMemberInvite(formData: FormData) {
+  await assertAdmin();
+  const inviteId = formData.get("inviteId") as string;
+  const adminClient = createAdminClient();
+  await adminClient.from("member_invites").delete().eq("id", inviteId);
+  revalidatePath("/admin");
+}
+
 export async function markContactMessageRead(formData: FormData) {
   await assertAdmin();
   const id = formData.get("id") as string;

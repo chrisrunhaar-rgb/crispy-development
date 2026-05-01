@@ -10,18 +10,22 @@ export async function signIn(formData: FormData) {
   const password = formData.get("password") as string;
   const redirectTo = (formData.get("redirectTo") as string) || "/dashboard";
   const inviteToken = (formData.get("inviteToken") as string | null) ?? "";
+  const memberInviteToken = (formData.get("memberInviteToken") as string | null) ?? "";
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { error: error.message };
 
-  // Accept invite if token provided
   if (inviteToken && data.user) {
     const { acceptInvite } = await import("@/app/(app)/dashboard/actions");
     await acceptInvite(inviteToken, data.user.id);
   }
+  if (memberInviteToken && data.user) {
+    const { acceptMemberInvite } = await import("@/app/(app)/dashboard/actions");
+    await acceptMemberInvite(memberInviteToken, data.user.id);
+  }
 
   revalidatePath("/", "layout");
-  redirect(inviteToken ? "/dashboard?joined=1" : redirectTo);
+  redirect(inviteToken || memberInviteToken ? "/dashboard?joined=1" : redirectTo);
 }
 
 export async function signUp(formData: FormData) {
@@ -32,30 +36,34 @@ export async function signUp(formData: FormData) {
   const lastName = formData.get("lastName") as string;
   const pathway = (formData.get("pathway") as string) || "personal";
   const inviteToken = (formData.get("inviteToken") as string | null) ?? "";
+  const memberInviteToken = (formData.get("memberInviteToken") as string | null) ?? "";
   const marketingConsent = formData.get("marketingConsent") === "true";
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
+  const callbackExtra = inviteToken ? `?invite=${inviteToken}` : memberInviteToken ? `?member_invite=${memberInviteToken}` : "";
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${siteUrl}/auth/callback${inviteToken ? `?invite=${inviteToken}` : ""}`,
+      emailRedirectTo: `${siteUrl}/auth/callback${callbackExtra}`,
       data: { first_name: firstName, last_name: lastName, pathway, marketing_consent: marketingConsent },
     },
   });
 
   if (error) return { error: error.message };
 
-  // If email confirmation is required, session will be null
   if (!data.session) {
-    redirect(`/signup/confirm${inviteToken ? `?invite=${inviteToken}` : ""}`);
+    redirect(`/signup/confirm${callbackExtra}`);
   }
 
-  // If invite token present, accept it now
   if (inviteToken && data.user) {
     const { acceptInvite } = await import("@/app/(app)/dashboard/actions");
     await acceptInvite(inviteToken, data.user.id);
+  }
+  if (memberInviteToken && data.user) {
+    const { acceptMemberInvite } = await import("@/app/(app)/dashboard/actions");
+    await acceptMemberInvite(memberInviteToken, data.user.id);
   }
 
   revalidatePath("/", "layout");

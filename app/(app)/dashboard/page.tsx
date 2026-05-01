@@ -4,14 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { trackDashboardAccess, trackAdminAction } from "@/lib/ga-events";
 import AccountMenu from "@/components/AccountMenu";
-import PwaInstall from "@/components/PwaInstall";
 import ContactCoach from "@/components/ContactCoach";
 import AddTeamContentForm from "@/components/AddTeamContentForm";
-import PushNotificationToggle from "@/components/PushNotificationToggle";
 import SendNotificationForm from "@/components/SendNotificationForm";
 import InviteButton from "@/components/InviteButton";
 import TeamLanguageSelector from "@/components/TeamLanguageSelector";
-import PersonalLanguageSelector from "@/components/PersonalLanguageSelector";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
@@ -23,6 +20,7 @@ import TimezoneDetector from "@/components/TimezoneDetector";
 import TeamAssessmentSelector from "./TeamAssessmentSelector";
 import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
 import { type FeedbackEntry } from "@/components/StepFeedback";
+import DashboardTour from "./DashboardTour";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -42,13 +40,13 @@ type Module = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string }>;
+  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string; tour?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { tab, joined, join, member, leader, initiator } = await searchParams;
+  const { tab, joined, join, member, leader, initiator, tour } = await searchParams;
 
   // Admin mode: check if current user is admin and a target user param exists
   const isAdmin = user.email === "chris.runhaar@world-outreach.com";
@@ -177,6 +175,11 @@ export default async function DashboardPage({
         .maybeSingle();
       memberOfTeam = mt ? { ...mt, selected_assessments: mt.selected_assessments ?? [], finalized_steps: mt.finalized_steps ?? [] } : null;
     }
+  }
+
+  // First-time onboarding — redirect new members before any heavy fetching
+  if (!user.user_metadata?.onboarding_complete && !viewingAsAdmin) {
+    redirect("/welcome");
   }
 
   const isTeamLeader = (pathway === "team" || isLeaderByMeta) && teamApplicationStatus === "approved";
@@ -556,6 +559,7 @@ export default async function DashboardPage({
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
       <TimezoneDetector savedTimezone={userTimezone} />
+      <DashboardTour show={tour === "1"} />
 
       {/* Admin viewing banner */}
       {viewingAsAdmin && (
@@ -568,7 +572,7 @@ export default async function DashboardPage({
       )}
 
       {/* ── DASHBOARD HEADER ── */}
-      <div style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative" }}>
+      <div id="tour-header" style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative" }}>
         {/* Hero watermark logo — left side */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -580,7 +584,7 @@ export default async function DashboardPage({
         <div className="container-wide">
 
           {/* Top row: title + utilities */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", paddingBottom: "1.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "nowrap", gap: "1rem", paddingBottom: "1.5rem" }}>
             <div style={{ display: "flex", alignItems: "flex-start", gap: "1.25rem" }}>
               {/* CD logo mark */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -598,21 +602,19 @@ export default async function DashboardPage({
                 </h1>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "0.875rem", alignItems: "center", flexWrap: "wrap" }}>
-              <PersonalLanguageSelector currentLanguage={languagePreference} compact />
-              <PushNotificationToggle />
-              <PwaInstall />
+            <div style={{ flexShrink: 0 }}>
               <AccountMenu
                 firstName={user.user_metadata?.first_name ?? firstName}
                 lastName={user.user_metadata?.last_name}
                 email={user.email ?? ""}
+                currentLanguage={languagePreference}
               />
             </div>
           </div>
 
           {/* 3-Tab switcher — pill capsule */}
           <div style={{ paddingBottom: "1.75rem", display: "flex", justifyContent: "center" }}>
-            <div style={{
+            <div id="tour-tabs" style={{
               display: "inline-flex",
               background: "oklch(18% 0.09 260)",
               borderRadius: 100,
@@ -921,7 +923,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "3rem", alignItems: "start" }}>
 
       {/* Left: saved resource list */}
-      <div>
+      <div id="tour-journey">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", gap: "1rem", flexWrap: "wrap" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
             My Personal Development Journey
@@ -974,7 +976,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
 
         {/* Progress stat */}
-        <div className="stat-block">
+        <div id="tour-progress" className="stat-block">
           <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>My Progress</p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
             {completed}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/{total}</span>
@@ -990,8 +992,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
         </div>
 
         {/* ── Assessment tile grid (2 × 4) ── */}
-        <div>
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>My Assessments</p>
+        <div id="tour-assessments">
+          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>My Assessment Results</p>
           <AssessmentTileGrid
             discResult={discResult}
             discScores={discScores}

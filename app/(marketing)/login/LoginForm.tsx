@@ -21,11 +21,13 @@ function LoginFormInner() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/dashboard";
   const inviteToken = searchParams.get("invite") || "";
+  const memberInviteToken = searchParams.get("member_invite") || "";
 
   return (
     <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
       <input type="hidden" name="redirectTo" value={redirectTo} />
       {inviteToken && <input type="hidden" name="inviteToken" value={inviteToken} />}
+      {memberInviteToken && <input type="hidden" name="memberInviteToken" value={memberInviteToken} />}
 
       {state.error && (
         <div style={{

@@ -63,6 +63,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  // Protect /account/* and /welcome — require auth
+  if (!user && (request.nextUrl.pathname.startsWith("/account") || request.nextUrl.pathname === "/welcome")) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    return NextResponse.redirect(loginUrl);
+  }
+
   // Protect /admin — only Chris's admin account (world-outreach.com)
   const ADMIN_USER_ID = "c8526fd3-ab76-4514-ad0c-2310e37c5053";
   if (request.nextUrl.pathname.startsWith("/admin")) {
@@ -105,5 +112,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/apply/:path*", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+"],
+  matcher: ["/dashboard/:path*", "/community/:path*", "/community", "/login", "/signup", "/apply/:path*", "/peer-groups/apply", "/admin", "/admin/:path*", "/resources/:path+", "/account/:path*", "/welcome"],
 };

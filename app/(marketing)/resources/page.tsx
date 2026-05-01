@@ -7,7 +7,7 @@ import { generateBreadcrumbSchema } from "@/lib/seo-utils";
 
 export const metadata = {
   title: "Resources — Crispy Development",
-  description: "Free and premium leadership resources for Christian leaders, expat professionals, and multicultural team managers.",
+  description: "Free and premium leadership resources for Christian leaders, expat professionals, and multicultural team leaders.",
 };
 
 export default async function ResourcesPage() {

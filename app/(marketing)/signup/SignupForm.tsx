@@ -8,7 +8,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
 
-export default function SignupForm({ defaultPathway = "personal", inviteToken = "" }: { defaultPathway?: Pathway; inviteToken?: string }) {
+export default function SignupForm({ defaultPathway = "personal", inviteToken = "", memberInviteToken = "" }: { defaultPathway?: Pathway; inviteToken?: string; memberInviteToken?: string }) {
   const [pathway, setPathway] = useState<Pathway>(defaultPathway);
   const { t } = useLanguage();
   const s = t.signup;
@@ -33,7 +33,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
       <div style={{ width: "100%", maxWidth: "520px" }}>
 
         {/* ── COMING SOON BANNER ── always visible */}
-        <div style={{ marginBottom: inviteToken ? "2.5rem" : 0, background: "oklch(22% 0.10 260)", padding: "clamp(1.75rem, 4vw, 2.5rem)", position: "relative", overflow: "hidden" }}>
+        <div style={{ marginBottom: (inviteToken || memberInviteToken) ? "2.5rem" : 0, background: "oklch(22% 0.10 260)", padding: "clamp(1.75rem, 4vw, 2.5rem)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
           <div style={{ position: "absolute", bottom: "-40px", right: "-40px", width: "160px", height: "160px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)", pointerEvents: "none" }}>
             <div style={{ position: "absolute", top: "30px", left: "30px", right: "30px", bottom: "30px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.1)" }} />
@@ -55,7 +55,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
         </div>
 
         {/* ── FORM — only shown when a valid invite token is present ── */}
-        {inviteToken && (
+        {(inviteToken || memberInviteToken) && (
           <>
             {/* Header */}
             <div style={{ marginBottom: "2.5rem" }}>
@@ -107,6 +107,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
             <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <input type="hidden" name="pathway" value={pathway} />
               <input type="hidden" name="inviteToken" value={inviteToken} />
+              <input type="hidden" name="memberInviteToken" value={memberInviteToken} />
 
               {state.error && (
                 <div style={{

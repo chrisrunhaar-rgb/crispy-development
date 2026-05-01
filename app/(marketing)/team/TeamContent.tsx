@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
-import type { GeoInfo } from "@/lib/geo";
 
 const teamFeatureDescriptions: Record<string, { title: string; description: string }[]> = {
   en: [
@@ -31,109 +30,7 @@ const teamFeatureDescriptions: Record<string, { title: string; description: stri
   ],
 };
 
-const teamPricingLabels: Record<string, Record<string, string>> = {
-  en: {
-    "Team Pricing": "Team Pricing",
-    "Launching soon": "Launching soon",
-    "plan_description": "One Team plan. Leader + 8 members. All with full Personal access. Annual — that's it.",
-    "Team Dashboard": "Team Dashboard",
-    "Your Team Name": "Your Team Name",
-    "Members": "Members",
-    "Content items": "Content items",
-    "Personal": "Personal",
-    "Per person": "Per person — included in Team",
-    "Personal journey": "Personal journey + tracking",
-    "Peer free": "🎁 Peer Groups free",
-    "See Personal": "See Personal →",
-    "Team": "Team",
-    "worth": "Leader + 8 members — worth $1,192 separately",
-    "Full access": "Full Personal access for all 9",
-    "Dashboard": "Full Team Dashboard",
-    "Chat": "Team Coach support via Chat",
-    "Roadmap": "Tailored roadmap — cross-cultural teams",
-    "EN ID": "EN + ID fully supported",
-    "Coming soon": "Coming soon",
-    "Coaching": "Coaching",
-    "Add-on": "Add-on",
-    "Requires": "Requires Personal or Team · EN · ID · NL",
-    "sessions": "4 personal development sessions",
-    "plan": "Personal development plan",
-    "Chris": "1-on-1 with Chris",
-    "cultural": "Cultural context coaching",
-    "Application": "Application-based — limited spots",
-    "pricing_note": "USD pricing shown · Regional rates for SE Asia, South Asia & Africa · Annual plans only",
-    "browsing": "You're browsing from {region}",
-    "regional": "regional pricing will apply when plans launch. Prices will be lower than the USD rates shown.",
-  },
-  id: {
-    "Team Pricing": "Harga Tim",
-    "Launching soon": "Akan Segera Diluncurkan",
-    "plan_description": "Satu paket Tim. Pemimpin + 8 anggota. Semua dengan akses Pribadi penuh. Tahunan — itu saja.",
-    "Team Dashboard": "Dasbor Tim",
-    "Your Team Name": "Nama Tim Anda",
-    "Members": "Anggota",
-    "Content items": "Item konten",
-    "Personal": "Pribadi",
-    "Per person": "Per orang — termasuk dalam Tim",
-    "Personal journey": "Perjalanan pribadi + pelacakan",
-    "Peer free": "🎁 Kelompok Sejawat gratis",
-    "See Personal": "Lihat Pribadi →",
-    "Team": "Tim",
-    "worth": "Pemimpin + 8 anggota — senilai $1.192 secara terpisah",
-    "Full access": "Akses Pribadi penuh untuk semua 9",
-    "Dashboard": "Dasbor Tim Lengkap",
-    "Chat": "Dukungan Pelatih Tim via Chat",
-    "Roadmap": "Roadmap yang disesuaikan — tim lintas budaya",
-    "EN ID": "EN + ID sepenuhnya didukung",
-    "Coming soon": "Segera Hadir",
-    "Coaching": "Pelatihan",
-    "Add-on": "Add-on",
-    "Requires": "Memerlukan Pribadi atau Tim · EN · ID · NL",
-    "sessions": "4 sesi pengembangan pribadi",
-    "plan": "Rencana pengembangan pribadi",
-    "Chris": "Satu-satu dengan Chris",
-    "cultural": "Pelatihan konteks budaya",
-    "Application": "Berbasis aplikasi — tempat terbatas",
-    "pricing_note": "Harga USD ditampilkan · Tarif regional untuk Asia Tenggara, Asia Selatan & Afrika · Paket tahunan saja",
-    "browsing": "Anda menjelajahi dari {region}",
-    "regional": "harga regional akan berlaku saat paket diluncurkan. Harganya akan lebih rendah dari tarif USD yang ditampilkan.",
-  },
-  nl: {
-    "Team Pricing": "Teamprijs",
-    "Launching soon": "Binnenkort beschikbaar",
-    "plan_description": "Één Teamplan. Leider + 8 leden. Allemaal met volledige Persoonlijke toegang. Jaarlijks — dat is alles.",
-    "Team Dashboard": "Teamdashboard",
-    "Your Team Name": "Jouw Teamnaam",
-    "Members": "Leden",
-    "Content items": "Content-items",
-    "Personal": "Persoonlijk",
-    "Per person": "Per persoon — inbegrepen in Team",
-    "Personal journey": "Persoonlijke reis + tracking",
-    "Peer free": "🎁 Peergroepen gratis",
-    "See Personal": "Zie Persoonlijk →",
-    "Team": "Team",
-    "worth": "Leider + 8 leden — waard $1.192 afzonderlijk",
-    "Full access": "Volledige Persoonlijke toegang voor alle 9",
-    "Dashboard": "Volledig Teamdashboard",
-    "Chat": "Teamcoach-ondersteuning via Chat",
-    "Roadmap": "Op maat gesneden roadmap — cross-culturele teams",
-    "EN ID": "EN + ID volledig ondersteund",
-    "Coming soon": "Binnenkort beschikbaar",
-    "Coaching": "Coaching",
-    "Add-on": "Add-on",
-    "Requires": "Vereist Persoonlijk of Team · EN · ID · NL",
-    "sessions": "4 persoonlijke ontwikkelingssessies",
-    "plan": "Persoonlijk ontwikkelingsplan",
-    "Chris": "One-on-one met Chris",
-    "cultural": "Culturele contextcoaching",
-    "Application": "Op aanvraag gebaseerd — beperkte plaatsen",
-    "pricing_note": "USD-prijzen weergegeven · Regionale tarieven voor Zuidoost-Azië, Zuid-Azië en Afrika · Alleen jaarplannen",
-    "browsing": "Je blader vanuit {region}",
-    "regional": "regionale prijsstelling zal van toepassing zijn bij lancering van plannen. Prijzen zullen lager zijn dan de weergegeven USD-tarieven.",
-  },
-};
-
-export default function TeamContent({ ctaHref = "/signup?pathway=personal", geo }: { ctaHref?: string; geo?: GeoInfo }) {
+export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: string }) {
   const { t, lang } = useLanguage();
   const p = t.team;
   const langKey = lang in teamFeatureDescriptions ? lang : "en";
@@ -244,163 +141,23 @@ export default function TeamContent({ ctaHref = "/signup?pathway=personal", geo 
         </div>
       </section>
 
-      {/* ── PRICING COMING SOON ── */}
+      {/* ── APPLY CTA ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
-          <div style={{ marginBottom: "3rem" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.35)", padding: "0.375rem 0.875rem", marginBottom: "1.25rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>{teamPricingLabels[langKey]["Team Pricing"]}</span>
-            </div>
-            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>{teamPricingLabels[langKey]["Launching soon"]}</h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch" }}>
-              {teamPricingLabels[langKey]["plan_description"]}
-            </p>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)" }}>
-
-            {/* PERSONAL (for reference) */}
-            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: 0 }}>{teamPricingLabels[langKey]["Personal"]}</p>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.1rem 0.4rem" }}>{lang === "id" ? "+ Sejawat Gratis" : lang === "nl" ? "+ Peer Gratis" : "+ Peer Free"}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$149</span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>{teamPricingLabels[langKey]["Per person"]}</p>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  {lang === "id" ? "30+ sumber daya — " : lang === "nl" ? "30+ materialen — " : "30+ resources — "}<Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>{lang === "id" ? "jelajahi semua →" : lang === "nl" ? "bekijk alles →" : "browse all →"}</Link>
-                </li>
-                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                  <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>
-                  {lang === "id" ? "8 penilaian — " : lang === "nl" ? "8 beoordelingen — " : "8 assessments — "}<Link href="/resources" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 700 }}>{lang === "id" ? "lihat semua →" : lang === "nl" ? "zie alles →" : "see all →"}</Link>
-                </li>
-                {(lang === "id" ? [
-                  "Perjalanan pribadi + pelacakan",
-                  "🎁 Kelompok Sejawat gratis"
-                ] : lang === "nl" ? [
-                  "Persoonlijke reis + tracking",
-                  "🎁 Peergroepen gratis"
-                ] : [
-                  "Personal journey + tracking",
-                  "🎁 Peer Groups free"
-                ]).map(f => (
-                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/personal" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.04 260)", textDecoration: "none", border: "1px solid oklch(42% 0.06 260)", padding: "0.5rem 1rem", textAlign: "center" }}>
-                {lang === "id" ? "Lihat Pribadi →" : lang === "nl" ? "Zie Persoonlijk →" : "See Personal →"}
-              </Link>
-            </div>
-
-            {/* TEAM */}
-            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>{teamPricingLabels[langKey]["Team"]}</p>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$497</span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>{teamPricingLabels[langKey]["worth"]}</p>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {(lang === "id" ? [
-                  "Akses Pribadi penuh untuk semua 9",
-                  "Dasbor Tim Lengkap",
-                  "Dukungan Pelatih Tim via Chat",
-                  "Roadmap yang disesuaikan — tim lintas budaya",
-                  "EN + ID sepenuhnya didukung"
-                ] : lang === "nl" ? [
-                  "Volledige Persoonlijke toegang voor alle 9",
-                  "Volledig Teamdashboard",
-                  "Teamcoach-ondersteuning via Chat",
-                  "Op maat gesneden roadmap — cross-culturele teams",
-                  "EN + ID volledig ondersteund"
-                ] : [
-                  "Full Personal access for all 9",
-                  "Full Team Dashboard",
-                  "Team Coach support via Chat",
-                  "Tailored roadmap — cross-cultural teams",
-                  "EN + ID fully supported"
-                ]).map(f => (
-                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
-                  </li>
-                ))}
-                <li style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(58% 0.006 260)", alignItems: "flex-start", fontStyle: "italic" }}>
-                  <span style={{ color: "oklch(52% 0.008 260)", fontWeight: 700, flexShrink: 0 }}>+</span>{lang === "id" ? "NL, FR, ZH segera hadir" : lang === "nl" ? "NL, FR, ZH binnenkort beschikbaar" : "NL, FR, ZH coming soon"}
-                </li>
-              </ul>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", padding: "0.5rem 1rem", border: "1px solid oklch(65% 0.15 45 / 0.4)", textAlign: "center" }}>
-                {teamPricingLabels[langKey]["Coming soon"]}
-              </div>
-            </div>
-
-            {/* COACHING ADD-ON */}
-            <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", margin: 0 }}>{lang === "id" ? "Pelatihan" : lang === "nl" ? "Coaching" : "Coaching"}</p>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", background: "oklch(36% 0.06 260)", border: "1px solid oklch(45% 0.06 260)", padding: "0.1rem 0.4rem" }}>{lang === "id" ? "Tambahan" : lang === "nl" ? "Add-on" : "Add-on"}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>$297</span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>/yr</span>
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(62% 0.006 260)" }}>{teamPricingLabels[langKey]["Requires"]}</p>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1 }}>
-                {(lang === "id" ? [
-                  "4 sesi pengembangan pribadi",
-                  "Rencana pengembangan pribadi",
-                  "Satu-satu dengan Chris",
-                  "Pelatihan konteks budaya",
-                  "Berbasis aplikasi — tempat terbatas"
-                ] : lang === "nl" ? [
-                  "4 persoonlijke ontwikkelingssessies",
-                  "Persoonlijk ontwikkelingsplan",
-                  "One-on-one met Chris",
-                  "Culturele contextcoaching",
-                  "Op aanvraag gebaseerd — beperkte plaatsen"
-                ] : [
-                  "4 personal development sessions",
-                  "Personal development plan",
-                  "1-on-1 with Chris",
-                  "Cultural context coaching",
-                  "Application-based — limited spots"
-                ]).map(f => (
-                  <li key={f} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", alignItems: "flex-start" }}>
-                    <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0 }}>✓</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", padding: "0.5rem 1rem", border: "1px solid oklch(42% 0.06 260)", textAlign: "center" }}>
-                {lang === "id" ? "Segera Hadir" : lang === "nl" ? "Binnenkort beschikbaar" : "Coming Soon"}
-              </div>
-            </div>
-
-          </div>
-
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", marginTop: "1.5rem" }}>
-            {lang === "id" ? "Harga USD ditampilkan · Tarif regional untuk Asia Tenggara, Asia Selatan & Afrika · Paket tahunan saja" : lang === "nl" ? "USD-prijzen weergegeven · Regionale tarieven voor Zuidoost-Azië, Zuid-Azië en Afrika · Alleen jaarplannen" : "USD pricing shown · Regional rates for SE Asia, South Asia & Africa · Annual plans only"}
+          <div style={{ width: "3px", height: "40px", background: "oklch(65% 0.15 45)", marginBottom: "2rem" }} />
+          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "480px" }}>
+            {lang === "id" ? "Ajukan akses tim." : lang === "nl" ? "Vraag teamtoegang aan." : "Apply for team access."}
+          </h2>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
+            {lang === "id"
+              ? "Platform ini gratis selama fase awal. Kami meninjau setiap aplikasi secara pribadi — tidak semua orang akan diterima."
+              : lang === "nl"
+              ? "Dit platform is gratis in de beginfase. We bekijken elke aanvraag persoonlijk — niet iedereen wordt geaccepteerd."
+              : "This platform is free during the early phase. We review every application personally — not everyone will be accepted."}
           </p>
-          {geo?.hasRegionalPricing && (
-            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginTop: "1.75rem", background: "oklch(65% 0.15 45 / 0.12)", border: "1px solid oklch(65% 0.15 45 / 0.3)", padding: "0.625rem 1rem" }}>
-              <span style={{ fontSize: "0.85rem" }}>📍</span>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(82% 0.04 45)", lineHeight: 1.5, margin: 0 }}>
-                <strong>{lang === "id" ? `Anda menjelajahi dari ${geo.regionLabel}` : lang === "nl" ? `Je blader vanuit ${geo.regionLabel}` : `You're browsing from ${geo.regionLabel}`}</strong> — {lang === "id" ? "harga regional akan berlaku saat paket diluncurkan. Harganya akan lebih rendah dari tarif USD yang ditampilkan." : lang === "nl" ? "regionale prijsstelling zal van toepassing zijn bij lancering van plannen. Prijzen zullen lager zijn dan de weergegeven USD-tarieven." : "regional pricing will apply when plans launch. Prices will be lower than the USD rates shown."}
-              </p>
-            </div>
-          )}
+          <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
+            {p.ctaPrimary2} →
+          </Link>
         </div>
       </section>
     </>

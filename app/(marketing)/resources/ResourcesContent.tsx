@@ -226,48 +226,6 @@ function ResourceTile({
           </span>
         </div>
 
-        {/* Save to dashboard */}
-        {isClickable && userId && resource.slug && (
-          localSaved.has(resource.slug) ? (
-            <span
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.62rem",
-                fontWeight: 700,
-                color: "oklch(55% 0.15 145)",
-              }}
-            >
-              {lang === "id" ? "✓ Tersimpan" : lang === "nl" ? "✓ Opgeslagen" : "✓ Saved"}
-            </span>
-          ) : (
-            <button
-              onClick={(e) => onAddToDashboard(resource.slug!, e)}
-              disabled={pendingSlug === resource.slug}
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.62rem",
-                fontWeight: 700,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                background: "transparent",
-                color: "oklch(30% 0.12 260)",
-                border: "1px solid oklch(30% 0.12 260)",
-                padding: "0.25rem 0.625rem",
-                cursor: pendingSlug === resource.slug ? "wait" : "pointer",
-                opacity: pendingSlug === resource.slug ? 0.5 : 1,
-                alignSelf: "flex-start",
-              }}
-            >
-              {pendingSlug === resource.slug
-                ? "…"
-                : lang === "id"
-                ? "Simpan ke Dashboard"
-                : lang === "nl"
-                ? "Opslaan in Dashboard"
-                : "Save to Dashboard"}
-            </button>
-          )
-        )}
       </div>
     </div>
   );
@@ -301,6 +259,16 @@ export default function ResourcesContent({
   );
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [, startTransition] = useTransition();
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+
+  function toggleSection(key: string) {
+    setOpenSections(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
 
   function handleAddToDashboard(slug: string, e: React.MouseEvent) {
     e.preventDefault();
@@ -430,146 +398,107 @@ export default function ResourcesContent({
       </section>
 
       {/* ── SECTIONS ── */}
-      <section
-        style={{
-          paddingBlock: "clamp(2.5rem, 5vw, 5rem)",
-          background: "oklch(97% 0.005 80)",
-        }}
-      >
+      <section style={{ paddingBlock: "clamp(2rem, 4vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
           {SECTION_ORDER.map((section) => {
             const sectionResources = RESOURCES.filter(
               (res) => getLibraryCategory(res, moduleCategories) === section.key
             );
             if (sectionResources.length === 0) return null;
+            const isOpen = openSections.has(section.key);
 
             return (
-              <section key={section.key} style={{ marginBottom: "3.5rem" }}>
-                <div
+              <div key={section.key} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
+                {/* Accordion header */}
+                <button
+                  onClick={() => toggleSection(section.key)}
                   style={{
+                    width: "100%",
                     display: "flex",
-                    alignItems: "baseline",
-                    gap: "0.75rem",
-                    marginBottom: "1.25rem",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "1.25rem 0",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    gap: "1rem",
                   }}
                 >
-                  <h2
-                    style={{
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem" }}>
+                    <span style={{
                       fontFamily: "var(--font-montserrat)",
                       fontWeight: 700,
-                      fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+                      fontSize: "clamp(0.95rem, 2.5vw, 1.125rem)",
                       color: "oklch(22% 0.005 260)",
-                      margin: 0,
-                    }}
-                  >
-                    {section.label}
-                  </h2>
-                  <span
-                    style={{
+                    }}>
+                      {section.label}
+                    </span>
+                    <span style={{
                       fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.7rem",
+                      fontSize: "0.68rem",
                       fontWeight: 700,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      color: "oklch(58% 0.008 260)",
-                    }}
-                  >
-                    {sectionResources.length}{" "}
-                    {sectionResources.length === 1 ? "resource" : "resources"}
-                  </span>
-                </div>
-                <div className="resource-grid">
-                  {sectionResources.map((resource) => (
-                    <ResourceTile
-                      key={resource.id}
-                      resource={resource}
-                      userId={userId}
-                      moduleStatuses={moduleStatuses}
-                      localSaved={localSaved}
-                      pendingSlug={pendingSlug}
-                      onAddToDashboard={handleAddToDashboard}
-                      lang={lang}
-                      localTitle={localTitle}
-                      localDescription={localDescription}
-                    />
-                  ))}
-                </div>
-              </section>
+                      color: "oklch(62% 0.008 260)",
+                    }}>
+                      {sectionResources.length} {sectionResources.length === 1 ? "resource" : "resources"}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.75rem",
+                    color: "oklch(55% 0.008 260)",
+                    flexShrink: 0,
+                    transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.2s ease",
+                    display: "inline-block",
+                  }}>▼</span>
+                </button>
+
+                {/* Tiles — shown when open */}
+                {isOpen && (
+                  <div style={{ paddingBottom: "1.75rem" }}>
+                    <div className="resource-grid">
+                      {sectionResources.map((resource) => (
+                        <ResourceTile
+                          key={resource.id}
+                          resource={resource}
+                          userId={userId}
+                          moduleStatuses={moduleStatuses}
+                          localSaved={localSaved}
+                          pendingSlug={pendingSlug}
+                          onAddToDashboard={handleAddToDashboard}
+                          lang={lang}
+                          localTitle={localTitle}
+                          localDescription={localDescription}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
       </section>
 
-      {/* ── COMING SOON CTA ── */}
+      {/* ── MEMBERSHIP CTA ── */}
       {!userId && (
-        <section
-          style={{
-            paddingBlock: "clamp(4rem, 7vw, 7rem)",
-            background: "oklch(30% 0.12 260)",
-            position: "relative",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: "clamp(1.5rem, 5vw, 4rem)",
-              top: "clamp(4rem, 7vw, 7rem)",
-              bottom: "clamp(4rem, 7vw, 7rem)",
-              width: "3px",
-              background: "oklch(65% 0.15 45)",
-            }}
-          />
+        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
+          <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: 0, bottom: 0, width: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide">
             <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
-              <p
-                className="t-label"
-                style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}
-              >
-                Full Library Access
-              </p>
-              <h2
-                className="t-section"
-                style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}
-              >
-                Membership launching soon
+              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Membership</p>
+              <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
+                Get access to the full library.
               </h2>
-              <p
-                style={{
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.9375rem",
-                  lineHeight: 1.7,
-                  color: "oklch(72% 0.04 260)",
-                  marginBottom: "2rem",
-                  maxWidth: "44ch",
-                }}
-              >
-                The full library — 30+ resources, assessments, and team tools —
-                will be available with a membership plan. The 4 free modules are
-                open now.
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
+                30+ resources, 8 assessments, and team tools — all for Christian cross-cultural leaders. Free during the early phase. Apply to join.
               </p>
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.625rem",
-                  background: "oklch(65% 0.15 45 / 0.15)",
-                  border: "1px solid oklch(65% 0.15 45 / 0.4)",
-                  padding: "0.5rem 1rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "oklch(65% 0.15 45)",
-                  }}
-                >
-                  Coming Soon
-                </span>
-              </div>
+              <Link href="/membership" className="btn-primary" style={{ display: "inline-flex" }}>
+                Apply for membership →
+              </Link>
             </div>
           </div>
         </section>

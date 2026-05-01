@@ -11,6 +11,7 @@ import MembersTab from "./MembersTab";
 import ContentTab from "./ContentTab";
 import TeamLeadersTab from "./TeamLeadersTab";
 import PeerInitiatorsTab from "./PeerInitiatorsTab";
+import MembershipTab from "./MembershipTab";
 
 export const metadata = {
   title: "Community Dashboard — Crispy Development",
@@ -110,7 +111,7 @@ export default async function AdminPage({
   if (!user || user.email !== "chris.runhaar@world-outreach.com") redirect("/");
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : "members";
+  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : tab === "membership" ? "membership" : "members";
 
   const admin = createAdminClient();
 
@@ -277,16 +278,33 @@ export default async function AdminPage({
     }
   }
 
+  // ── Membership tab ──
+  type MembershipApp = { id: string; created_at: string; name: string; email: string; organization: string | null; role: string | null; location_cultures: string | null; faith_share: string | null; leadership_challenge: string | null; referral_source: string | null; status: string; reviewed_at: string | null };
+  type MemberInvite = { id: string; token: string; email: string | null; personal_note: string | null; created_at: string; expires_at: string; used_at: string | null };
+  let membershipApplications: MembershipApp[] = [];
+  let memberInvites: MemberInvite[] = [];
+
+  if (activeTab === "membership") {
+    const [apps, inv] = await Promise.all([
+      admin.from("membership_applications").select("*").order("created_at", { ascending: false }),
+      admin.from("member_invites").select("*").order("created_at", { ascending: false }),
+    ]);
+    membershipApplications = (apps.data ?? []) as MembershipApp[];
+    memberInvites = (inv.data ?? []) as MemberInvite[];
+  }
+
   // ── Stats ──
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: newMessagesCount } = await admin.from("coach_messages").select("id", { count: "exact", head: true }).eq("status", "new");
   const { count: unreadContactCount } = await admin.from("contact_messages").select("id", { count: "exact", head: true }).eq("read", false);
+  const { count: pendingMembershipCount } = await admin.from("membership_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
 
   const memberCount = allUsers.length;
 
   const TABS = [
     { key: "members", label: "Members" },
+    { key: "membership", label: "Membership", badge: pendingMembershipCount ?? 0 },
     { key: "leaders", label: "Team Leaders", badge: pendingTeamCount ?? 0 },
     { key: "peers", label: "Peer Initiators", badge: pendingPeerCount ?? 0 },
     { key: "content", label: "Content" },
@@ -367,6 +385,15 @@ export default async function AdminPage({
             users={allUsers}
             progressCounts={progressCounts}
             membersList={membersList}
+          />
+        )}
+
+        {/* ── MEMBERSHIP TAB ── */}
+        {activeTab === "membership" && (
+          <MembershipTab
+            applications={membershipApplications}
+            invites={memberInvites}
+            siteUrl={process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com"}
           />
         )}
 

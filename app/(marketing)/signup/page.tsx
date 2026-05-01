@@ -7,13 +7,14 @@ export const metadata = {
 export default async function SignupPage({
   searchParams,
 }: {
-  searchParams: Promise<{ pathway?: string; invite?: string }>;
+  searchParams: Promise<{ pathway?: string; invite?: string; member_invite?: string }>;
 }) {
-  const { pathway, invite } = await searchParams;
+  const { pathway, invite, member_invite } = await searchParams;
   return (
     <SignupForm
       defaultPathway={pathway === "team" ? "team" : "personal"}
       inviteToken={invite ?? ""}
+      memberInviteToken={member_invite ?? ""}
     />
   );
 }

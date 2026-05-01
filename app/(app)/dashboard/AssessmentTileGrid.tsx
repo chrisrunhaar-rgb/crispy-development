@@ -627,9 +627,12 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-              {lang === "id" ? "Perbarui skor →" : lang === "nl" ? "Scores bijwerken →" : "Update scores →"}
+              {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake →"}
+            </Link>
+            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+              {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
             </Link>
             <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
               {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -837,9 +840,12 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
         </p>
       )}
 
-      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+        </Link>
+        <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -998,10 +1004,10 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Lebih lanjut →" : lang === "nl" ? "Meer info →" : "More info →"}
-        </Link>
-        <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+        </Link>
+        <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -1209,11 +1215,11 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
       </div>
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
-        <Link href="/resources/16-personalities?view=module" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Modul lengkap →" : lang === "nl" ? "Volledige module →" : "Full module →"}
-        </Link>
-        <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: navy, background: "none", border: `1px solid ${navy}`, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", opacity: 0.65 }}>
+        <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
           {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+        </Link>
+        <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
@@ -1344,11 +1350,14 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
       </div>
 
       {/* Buttons */}
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <a href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: navy, textDecoration: "none", padding: "0.5rem 1rem", border: `1.5px solid ${navy}40`, borderRadius: 6 }}>
-          Full results & retake →
-        </a>
-        <button type="button" onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(55% 0.008 260)", background: "none", border: "none", cursor: "pointer", padding: "0.5rem 0.5rem" }}>
+      <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
+        <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
+          Retake →
+        </Link>
+        <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
+          Learn more
+        </Link>
+        <button type="button" onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", cursor: "pointer", padding: "0.6rem 0.75rem" }}>
           Close
         </button>
       </div>

@@ -19,6 +19,9 @@ export default function PrivacyPage() {
           <ul>
             <li>Your name and email address when you subscribe to our newsletter or sign-up forms</li>
             <li>Any information you share when contacting us by email</li>
+            <li>Membership application data: your name, email address, organisation, role, location, and any information you voluntarily share about your leadership context and background</li>
+            <li>Account credentials (email and password) when you create a member account</li>
+            <li><strong>Special category data:</strong> Your membership application may include information about your faith and religious beliefs (e.g. "Are you a follower of Jesus?"). This is special category data under GDPR Article 9. We collect this only with your explicit consent, indicated by checking the consent box on the application form. We use it solely to assess your application and personalise your membership experience.</li>
           </ul>
           <p style={{ marginTop: "1rem" }}><strong>b. Information collected automatically</strong></p>
           <ul>
@@ -62,9 +65,11 @@ export default function PrivacyPage() {
               <tbody>
                 {[
                   ["Mailchimp (Intuit Inc.)", "Email newsletter delivery and subscriber list management"],
+                  ["Supabase Inc.", "Member authentication, account management, and database storage for membership applications and platform data"],
+                  ["Vercel Inc.", "Website hosting and deployment — crispyleaders.com"],
+                  ["Google Analytics 4", "Anonymous website usage analytics (see Section 2b for details and opt-out)"],
+                  ["Vercel Analytics", "Privacy-first, cookieless site analytics for performance monitoring"],
                   ["Meta / Instagram", "Social media presence"],
-                  ["Website hosting provider", "Hosting crispyleaders.com"],
-                  ["Community platform (TBD)", "If a community platform is introduced, it will be listed here"],
                 ].map(([processor, purpose], i) => (
                   <tr key={i} style={{ borderBottom: "1px solid oklch(88% 0.008 80)" }}>
                     <td style={{ padding: "0.75rem", color: "oklch(22% 0.005 260)", fontWeight: 600 }}>{processor}</td>
@@ -91,8 +96,14 @@ export default function PrivacyPage() {
           <p style={{ marginTop: "1rem" }}><strong>California residents (CCPA):</strong> You have the right to know what we collect, request deletion, and opt out of any sale. We do not sell personal information.</p>
         </LegalSection>
 
-        <LegalSection heading="8. Cookies">
-          <p>Our website may use basic session cookies necessary for the site to function. As of April 2026, no third-party analytics or advertising cookies are deployed. If we introduce analytics tools in the future, we will update this policy and implement an appropriate consent mechanism before doing so.</p>
+        <LegalSection heading="8. Cookies and Analytics">
+          <p>Our website uses the following cookies and analytics technologies:</p>
+          <ul style={{ marginTop: "1rem" }}>
+            <li><strong>Session cookies:</strong> Basic cookies required for authentication and site functionality (e.g. keeping you logged in).</li>
+            <li><strong>Google Analytics 4:</strong> We use GA4 to collect anonymised usage data — pages visited, approximate location (country/city), and device type. This may set cookies in your browser. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" style={{ color: "oklch(30% 0.12 260)" }}>Google Analytics opt-out browser add-on</a>.</li>
+            <li><strong>Vercel Analytics:</strong> A cookieless, privacy-first analytics tool used for performance monitoring. It does not identify you personally and does not set cookies.</li>
+          </ul>
+          <p style={{ marginTop: "1rem" }}>We do not use advertising cookies or third-party tracking pixels.</p>
         </LegalSection>
 
         <LegalSection heading="9. Data Retention">
