@@ -403,22 +403,6 @@ export default function FiveLanguagesClient({
               <span style={{ color: LANG_DATA.E.color, fontWeight: 600 }}>Appropriate Touch</span>{" "}
               — and whether you give it in the same language.
             </p>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => (
-                <span key={k} style={{
-                  display: "inline-block",
-                  padding: "4px 12px",
-                  borderRadius: "20px",
-                  background: `${LANG_DATA[k].color}25`,
-                  border: `1px solid ${LANG_DATA[k].color}60`,
-                  color: LANG_DATA[k].color,
-                  fontSize: "12px",
-                  fontWeight: 600,
-                }}>
-                  {LANG_DATA[k].name}
-                </span>
-              ))}
-            </div>
           </div>
         </section>
 
