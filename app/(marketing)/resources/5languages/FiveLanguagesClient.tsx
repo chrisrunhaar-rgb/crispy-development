@@ -615,9 +615,12 @@ export default function FiveLanguagesClient({
             transition: border-color 0.15s ease, background 0.15s ease;
             font-family: inherit;
           }
-          .test-pair-btn:hover {
-            border-color: oklch(65% 0.15 45);
-            background: oklch(98.5% 0.004 80);
+          .test-pair-btn:focus { outline: none; }
+          @media (hover: hover) {
+            .test-pair-btn:hover {
+              border-color: oklch(65% 0.15 45);
+              background: oklch(98.5% 0.004 80);
+            }
           }
         `}</style>
 
@@ -754,9 +757,12 @@ export default function FiveLanguagesClient({
             transition: border-color 0.15s ease, background 0.15s ease;
             font-family: inherit;
           }
-          .test-pair-btn:hover {
-            border-color: oklch(65% 0.15 45);
-            background: oklch(98.5% 0.004 80);
+          .test-pair-btn:focus { outline: none; }
+          @media (hover: hover) {
+            .test-pair-btn:hover {
+              border-color: oklch(65% 0.15 45);
+              background: oklch(98.5% 0.004 80);
+            }
           }
         `}</style>
 
