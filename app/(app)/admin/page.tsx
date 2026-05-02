@@ -121,7 +121,7 @@ export default async function AdminPage({
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
   type UserRow = { id: string; email?: string; created_at: string; last_sign_in_at: string | null; user_metadata: Record<string, unknown> };
-  const allUsers: UserRow[] = (allAuthUsers ?? []).filter(u => u.email !== "chris.runhaar@gmail.com").map(u => ({
+  const allUsers: UserRow[] = (allAuthUsers ?? []).filter(u => u.email && u.email !== "chris.runhaar@gmail.com").map(u => ({
     id: u.id,
     email: u.email,
     created_at: u.created_at,
