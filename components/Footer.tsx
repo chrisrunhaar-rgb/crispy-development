@@ -92,10 +92,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {t.footer.copyright}
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(65% 0.006 260)", textAlign: "center" }}>
-            Crispy Leaders is a programme of{" "}
-            <a href="https://www.crispydevelopment.com" target="_blank" rel="noopener noreferrer" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none" }}>
-              Crispy Development
-            </a>
+            Crispy Leaders is a programme of Crispy Development
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", letterSpacing: "0.06em", color: "oklch(72% 0.006 260)" }}>
             crispyleaders.com
