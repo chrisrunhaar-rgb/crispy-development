@@ -67,7 +67,7 @@ function ApplicationRow({ app, siteUrl }: { app: Application; siteUrl: string })
   async function handleGenerateAndCopy() {
     const fd = new FormData();
     fd.append("email", app.email);
-    fd.append("personal_note", `Hi ${app.name.split(" ")[0]}, welcome to Crispy Development!`);
+    fd.append("recipientName", app.name.split(" ")[0]);
     fd.append("pathway", pathway);
     const result = await generateMemberInvite(fd);
     if (result.url) {
@@ -189,10 +189,11 @@ export default function MembershipTab({
   invites: MemberInvite[];
   siteUrl: string;
 }) {
+  const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteNote, setInviteNote] = useState("");
   const [invitePathway, setInvitePathway] = useState<"personal" | "team">("personal");
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
+  const [inviteEmailSent, setInviteEmailSent] = useState(false);
   const [copied, setCopied] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [genError, setGenError] = useState<string | null>(null);
@@ -207,17 +208,19 @@ export default function MembershipTab({
     setGenerating(true);
     setGenError(null);
     setGeneratedUrl(null);
+    setInviteEmailSent(false);
     const fd = new FormData();
+    fd.append("recipientName", inviteName);
     fd.append("email", inviteEmail);
-    fd.append("personal_note", inviteNote);
     fd.append("pathway", invitePathway);
     const result = await generateMemberInvite(fd);
     setGenerating(false);
     if (result.error) { setGenError(result.error); return; }
     if (result.url) {
       setGeneratedUrl(result.url);
+      setInviteEmailSent(result.emailSent ?? false);
+      setInviteName("");
       setInviteEmail("");
-      setInviteNote("");
     }
   }
 
@@ -261,18 +264,15 @@ export default function MembershipTab({
       <section style={{ marginBottom: "3rem" }}>
         <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: navy, marginBottom: "1.25rem" }}>Send Invite</h2>
         <form onSubmit={handleGenerate} style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", maxWidth: "520px" }}>
-          <div style={{ marginBottom: "1rem" }}>
-            <label style={labelStyle}>Email (optional)</label>
-            <input type="email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} placeholder="person@example.com" style={inputStyle} />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <label style={labelStyle}>Personal note (optional — shown on invite page)</label>
-            <textarea
-              value={inviteNote}
-              onChange={e => setInviteNote(e.target.value)}
-              rows={2}
-              style={{ ...inputStyle, resize: "vertical" as const }}
-            />
+          <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+            <div style={{ flex: "1 1 140px" }}>
+              <label style={labelStyle}>First name (optional)</label>
+              <input type="text" value={inviteName} onChange={e => setInviteName(e.target.value)} placeholder="First name" style={inputStyle} />
+            </div>
+            <div style={{ flex: "2 1 200px" }}>
+              <label style={labelStyle}>Email</label>
+              <input type="email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} placeholder="person@example.com" required style={inputStyle} />
+            </div>
           </div>
           <div style={{ marginBottom: "1.25rem" }}>
             <label style={labelStyle}>Access type</label>
@@ -303,13 +303,15 @@ export default function MembershipTab({
             disabled={generating}
             style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", background: generating ? "oklch(52% 0.008 260)" : navy, border: "none", padding: "0.625rem 1.25rem", cursor: generating ? "not-allowed" : "pointer" }}
           >
-            {generating ? "Generating…" : "Generate Invite Link"}
+            {generating ? "Sending…" : "Send Invite →"}
           </button>
           {genError && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(45% 0.12 25)", marginTop: "0.75rem" }}>{genError}</p>}
 
           {generatedUrl && (
             <div style={{ marginTop: "1.25rem", padding: "1rem", background: "oklch(94% 0.012 150)", border: "1px solid oklch(75% 0.08 150)" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(42% 0.14 150)", marginBottom: "0.5rem" }}>Invite link ready</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(42% 0.14 150)", marginBottom: "0.5rem" }}>
+                {inviteEmailSent ? "Invite sent by email" : "Invite link ready"}
+              </p>
               <code style={{ fontFamily: "monospace", fontSize: "0.75rem", color: navy, display: "block", marginBottom: "0.75rem", wordBreak: "break-all" as const }}>{generatedUrl}</code>
               <button
                 type="button"

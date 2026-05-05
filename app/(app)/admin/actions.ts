@@ -269,10 +269,10 @@ export async function rejectMembershipApplication(formData: FormData) {
   revalidatePath("/admin");
 }
 
-export async function generateMemberInvite(formData: FormData): Promise<{ error?: string; url?: string }> {
+export async function generateMemberInvite(formData: FormData): Promise<{ error?: string; url?: string; emailSent?: boolean }> {
   await assertAdmin();
   const email = (formData.get("email") as string | null)?.trim() ?? "";
-  const personalNote = (formData.get("personal_note") as string | null)?.trim() ?? "";
+  const recipientName = (formData.get("recipientName") as string | null)?.trim() ?? "";
   const pathway = (formData.get("pathway") as string | null) === "team" ? "team" : "personal";
 
   const adminClient = createAdminClient();
@@ -280,7 +280,6 @@ export async function generateMemberInvite(formData: FormData): Promise<{ error?
     .from("member_invites")
     .insert({
       email: email || null,
-      personal_note: personalNote || null,
       pathway,
     })
     .select("token")
@@ -288,9 +287,32 @@ export async function generateMemberInvite(formData: FormData): Promise<{ error?
 
   if (error || !data) return { error: "Failed to generate invite." };
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
+  const inviteUrl = `${siteUrl}/join/${data.token}`;
+
+  let emailSent = false;
+  if (email) {
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      const greeting = recipientName ? `Hi ${recipientName},` : "Hi there,";
+      const pathwayLabel = pathway === "team" ? "a team leader" : "a community member";
+      const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">You're Invited</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Join Crispy Leaders.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">${greeting}</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">You have been personally invited to join Crispy Leaders as ${pathwayLabel}. Click the button below to create your account and get started.</p><a href="${inviteUrl}" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Accept Invitation &rarr;</a><p style="font-size:12px;line-height:1.6;color:#9b9b9b;margin:0 0 24px 0;">This invitation expires in 7 days. If you were not expecting this, you can safely ignore it.</p><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "Crispy Leaders <noreply@crispyleaders.com>",
+          to: email,
+          subject: "You're invited to join Crispy Leaders",
+          html,
+        }),
+      });
+      if (res.ok) emailSent = true;
+    }
+  }
+
   revalidatePath("/admin");
-  return { url: `${siteUrl}/join/${data.token}` };
+  return { url: inviteUrl, emailSent };
 }
 
 export async function revokeMemberInvite(formData: FormData) {
