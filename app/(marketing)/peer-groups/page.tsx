@@ -25,7 +25,7 @@ export default async function PeerGroupsPage() {
     createClient(),
   ]);
   const { data: { user } } = await supabase.auth.getUser();
-  const ctaHref = user ? "/peer-groups/apply" : "/signup?pathway=personal";
   const isMember = user?.user_metadata?.is_member === true;
+  const ctaHref = isMember ? "/peer-groups/apply" : "/membership";
   return <PeerGroupsContent groups={groups} ctaHref={ctaHref} isMember={isMember} />;
 }

@@ -64,7 +64,7 @@ export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=p
                 {groups.length} group{groups.length !== 1 ? "s" : ""} forming.
               </h2>
             </div>
-            <Link href="/peer-groups/apply" className="btn-primary">{p.initiateCta} →</Link>
+            <Link href={isMember ? "/peer-groups/apply" : "/membership"} className="btn-primary">{p.initiateCta} →</Link>
           </div>
 
           {groups.length === 0 ? (
@@ -75,7 +75,7 @@ export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=p
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.008 260)", marginBottom: "2rem", maxWidth: "42ch", margin: "0 auto 2rem" }}>
                 {p.groupsEmpty}
               </p>
-              <Link href="/peer-groups/apply" className="btn-outline-navy">{p.initiateCta}</Link>
+              <Link href={isMember ? "/peer-groups/apply" : "/membership"} className="btn-outline-navy">{p.initiateCta}</Link>
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1.5rem" }}>
