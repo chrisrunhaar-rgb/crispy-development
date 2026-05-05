@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function signIn(formData: FormData) {
   const supabase = await createClient();
@@ -226,12 +227,21 @@ export async function sendMagicLink(formData: FormData): Promise<{ error?: strin
   const email = (formData.get("email") as string | null)?.trim() ?? "";
   if (!email) return { error: "Please enter your email address." };
 
+  // Verify user exists before sending OTP — Supabase silently drops OTP for non-existent users
+  // when shouldCreateUser is false, so we check explicitly to give a useful error message
+  const admin = createAdminClient();
+  const { data: { users } } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  const userExists = users.some(u => u.email?.toLowerCase() === email.toLowerCase());
+  if (!userExists) {
+    return { error: "No account found for that email. You need an invite to join Crispy Leaders." };
+  }
+
   const supabase = await createClient();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
 
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: `${siteUrl}/auth/callback` },
+    options: { emailRedirectTo: `${siteUrl}/auth/callback`, shouldCreateUser: false },
   });
 
   if (error) return { error: error.message };

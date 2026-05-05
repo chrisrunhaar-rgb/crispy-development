@@ -20,16 +20,55 @@ export async function approveApplication(formData: FormData) {
 
   const adminClient = createAdminClient();
 
+  // Fetch application details for team name + notification email
+  const { data: app } = await adminClient
+    .from("team_applications")
+    .select("first_name, last_name, organisation, user_email")
+    .eq("id", applicationId)
+    .single();
+
   // Update application status
   await adminClient
     .from("team_applications")
     .update({ status: "approved", reviewed_at: new Date().toISOString() })
     .eq("id", applicationId);
 
+  // Create a teams record (idempotent — skip if already exists)
+  const teamName = app?.first_name
+    ? `${app.first_name}'s Team`
+    : app?.organisation ?? "My Team";
+  const { data: existingTeam } = await adminClient
+    .from("teams")
+    .select("id")
+    .eq("leader_user_id", userId)
+    .maybeSingle();
+  if (!existingTeam) {
+    await adminClient.from("teams").insert({ leader_user_id: userId, name: teamName, language: "en" });
+  }
+
   // Update user metadata to grant team leader access
   await adminClient.auth.admin.updateUserById(userId, {
     user_metadata: { pathway: "team" },
   });
+
+  // Send approval notification email
+  const userEmail = app?.user_email;
+  const resendKey = process.env.RESEND_API_KEY;
+  if (userEmail && resendKey) {
+    const firstName = app?.first_name ?? "there";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
+    const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Welcome to Crispy Leaders, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your application to join Crispy Leaders as a team leader has been approved. Log in to your dashboard to get started — your team is ready and waiting.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: "Crispy Leaders <noreply@crispyleaders.com>",
+        to: userEmail,
+        subject: "You're approved — welcome to Crispy Leaders",
+        html,
+      }),
+    });
+  }
 
   revalidatePath("/admin");
 }
@@ -57,7 +96,7 @@ export async function approvePeerApplication(formData: FormData) {
   // Fetch application details to create the group
   const { data: app } = await adminClient
     .from("peer_group_applications")
-    .select("region, timezone, pathway, first_name, last_name")
+    .select("region, timezone, pathway, first_name, last_name, user_email")
     .eq("id", applicationId)
     .single();
 
@@ -97,6 +136,25 @@ export async function approvePeerApplication(formData: FormData) {
   await adminClient.auth.admin.updateUserById(userId, {
     user_metadata: { pathway: "peer", peer_group_id: newGroup?.id ?? null },
   });
+
+  // Send approval notification email
+  const userEmail = app?.user_email;
+  const resendKey = process.env.RESEND_API_KEY;
+  if (userEmail && resendKey) {
+    const firstName = app?.first_name ?? "there";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
+    const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:40px 24px;background:#ffffff;"><div style="width:3px;height:36px;background:#E07540;margin-bottom:24px;"></div><p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#E07540;margin:0 0 12px 0;">Application Approved</p><h1 style="font-size:24px;font-weight:800;color:#1B3A6B;line-height:1.15;margin:0 0 16px 0;">Your peer group is ready, ${firstName}.</h1><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 8px 0;">Hi ${firstName},</p><p style="font-size:15px;line-height:1.75;color:#555555;margin:0 0 32px 0;">Your peer group application has been approved and your group has been created. Log in to your dashboard to get started and invite others to join.</p><a href="${siteUrl}/dashboard" style="display:inline-block;background:#1B3A6B;color:#ffffff;font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:14px 28px;margin-bottom:32px;">Go to Your Dashboard &rarr;</a><p style="font-size:12px;color:#9b9b9b;margin:0 0 20px 0;">With you on the journey,<br/><strong style="color:#1B3A6B;">The Crispy Leaders Team</strong></p><div style="border-top:1px solid #e8e4df;padding-top:24px;margin-top:8px;"><img src="https://www.crispyleaders.com/logo-icon-dark-badge.png" alt="Crispy Leaders" width="48" height="48" style="display:block;margin-bottom:8px;" /><p style="font-size:12px;color:#9b9b9b;margin:0;">crispyleaders.com</p></div></div>`;
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: "Crispy Leaders <noreply@crispyleaders.com>",
+        to: userEmail,
+        subject: "Your peer group has been approved — Crispy Leaders",
+        html,
+      }),
+    });
+  }
 
   revalidatePath("/admin");
 }

@@ -73,7 +73,7 @@ export default async function MemberInvitePage({
           lineHeight: 1.1,
           marginBottom: "1.25rem",
         }}>
-          Welcome to Crispy Development.
+          Welcome to Crispy Leaders.
         </h1>
 
         <p style={{
