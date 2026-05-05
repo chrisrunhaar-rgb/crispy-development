@@ -14,6 +14,7 @@ const LogoRevealPlayer = dynamic(
 export default function HomeContent() {
   const { t } = useLanguage();
   const h = t.home;
+  const [activeTile, setActiveTile] = useState<number | null>(null);
 
   const freeModules = [
     { slug: "three-thinking-styles",  label: "Framework",  title: "Three Thinking Styles",       hook: "Discover why smart people reach opposite conclusions.",         bg: "oklch(22% 0.10 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
@@ -75,45 +76,83 @@ export default function HomeContent() {
             <h2 className="t-section">{h.pathwaysHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}</h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)", alignItems: "stretch" }}>
+          {/* 3 square tiles */}
+          {(() => {
+            const pathways = [
+              { href: "/personal", image: "/pathway-team.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
+              { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
+              { href: "/peer-groups", image: "/pathway-peer.jpg", imagePosition: "center 30%", badgeLabel: h.peerBadge, heading: h.peerHeading, body: h.peerBody, features: h.peerFeatures, ctaLabel: h.peerCta },
+            ];
+            const active = activeTile !== null ? pathways[activeTile] : null;
+            return (
+              <>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2px", background: "oklch(88% 0.008 80)" }}>
+                  {pathways.map((p, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActiveTile(activeTile === i ? null : i)}
+                      style={{
+                        position: "relative",
+                        height: "clamp(140px, 22vw, 300px)",
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        border: "none",
+                        padding: 0,
+                        display: "block",
+                        width: "100%",
+                        background: "oklch(22% 0.10 260)",
+                      }}
+                    >
+                      <Image
+                        src={p.image}
+                        alt={p.heading}
+                        fill
+                        style={{ objectFit: "cover", objectPosition: p.imagePosition, transition: "transform 0.4s ease", transform: activeTile === i ? "scale(1.04)" : "scale(1)" }}
+                      />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 25%, oklch(22% 0.10 260 / 0.55) 55%, oklch(22% 0.10 260 / 0.92) 100%)" }} />
+                      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(0.75rem, 2vw, 1.25rem)", textAlign: "left" }}>
+                        <p style={{ fontFamily: "var(--font-kalam)", fontWeight: 700, fontSize: "clamp(0.85rem, 1.8vw, 1.2rem)", color: "oklch(65% 0.15 45)", margin: "0 0 0.2rem", lineHeight: 1 }}>
+                          {p.badgeLabel}
+                        </p>
+                        <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(0.8rem, 1.6vw, 1.1rem)", color: "oklch(97% 0.005 80)", margin: 0, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+                          {p.heading}
+                        </h3>
+                      </div>
+                      {/* Active indicator */}
+                      {activeTile === i && (
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+                      )}
+                    </button>
+                  ))}
+                </div>
 
-            {/* Personal */}
-            <PathwayCard
-              href="/personal"
-              image="/pathway-team.jpg"
-              imagePosition="center 30%"
-              badgeLabel={h.personalBadge}
-              heading={h.personalHeading}
-              body={h.personalBody}
-              features={h.personalFeatures}
-              ctaLabel={h.personalCta}
-            />
-
-            {/* Team */}
-            <PathwayCard
-              href="/team"
-              image="/pathway-personal.jpg"
-              imagePosition="center 25%"
-              badgeLabel={h.teamBadge}
-              heading={h.teamHeading}
-              body={h.teamBody}
-              features={h.teamFeatures}
-              ctaLabel={h.teamCta}
-            />
-
-            {/* Peer Group */}
-            <PathwayCard
-              href="/peer-groups"
-              image="/pathway-peer.jpg"
-              imagePosition="center 30%"
-              badgeLabel={h.peerBadge}
-              heading={h.peerHeading}
-              body={h.peerBody}
-              features={h.peerFeatures}
-              ctaLabel={h.peerCta}
-            />
-
-          </div>
+                {/* Detail panel */}
+                {active && (
+                  <div style={{ background: "oklch(22% 0.10 260)", borderTop: "3px solid oklch(65% 0.15 45)", padding: "clamp(1.5rem, 4vw, 2.5rem)" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "2rem", alignItems: "start" }}>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", margin: 0 }}>
+                        {active.body}
+                      </p>
+                      <div>
+                        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.5rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                          {active.features.slice(0, 3).map((item: string) => (
+                            <li key={item} style={{ display: "flex", gap: "0.625rem", fontSize: "0.8125rem", color: "oklch(62% 0.008 260)", alignItems: "flex-start" }}>
+                              <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: "0.1em" }}>✓</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        <Link href={active.href} className="btn-primary" style={{ fontSize: "0.8rem" }}>
+                          {active.ctaLabel} →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </section>
 
@@ -251,103 +290,3 @@ export default function HomeContent() {
   );
 }
 
-// ── PathwayCard ──────────────────────────────────────────────────────────────
-
-function PathwayCard({
-  href, image, imagePosition, badgeLabel, heading, body, features, ctaLabel,
-}: {
-  href: string; image: string; imagePosition: string;
-  badgeLabel: string; heading: string; body: string;
-  features: readonly string[]; ctaLabel: string;
-}) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <div style={{ background: "oklch(22% 0.10 260)", display: "flex", flexDirection: "column" }}>
-      {/* Image with text overlay */}
-      <div style={{ position: "relative", height: "clamp(280px, 28vw, 360px)", overflow: "hidden", flexShrink: 0 }}>
-        <Image
-          src={image}
-          alt={heading}
-          fill
-          style={{ objectFit: "cover", objectPosition: imagePosition, transition: "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}
-        />
-        {/* Strong overlay: transparent top → navy bottom */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, transparent 20%, oklch(22% 0.10 260 / 0.65) 55%, oklch(22% 0.10 260) 85%)",
-        }} />
-        {/* Text sitting on gradient */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "clamp(1.25rem, 3vw, 1.75rem)" }}>
-          <p style={{
-            fontFamily: "var(--font-kalam)",
-            fontWeight: 700,
-            fontSize: "clamp(1.25rem, 2vw + 0.5rem, 1.625rem)",
-            color: "oklch(65% 0.15 45)",
-            margin: "0 0 0.375rem",
-            lineHeight: 1,
-            letterSpacing: "0.01em",
-          }}>
-            {badgeLabel}
-          </p>
-          <h3 style={{
-            fontFamily: "var(--font-montserrat)",
-            fontWeight: 800,
-            fontSize: "clamp(1.1rem, 2vw + 0.25rem, 1.5rem)",
-            color: "oklch(97% 0.005 80)",
-            lineHeight: 1.15,
-            margin: 0,
-            letterSpacing: "-0.02em",
-          }}>
-            {heading}
-          </h3>
-        </div>
-      </div>
-
-      {/* Card body */}
-      <div style={{ padding: "clamp(1.25rem, 3vw, 1.75rem)", display: "flex", flexDirection: "column", gap: "1.25rem", flex: 1 }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", margin: 0 }}>
-          {body}
-        </p>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          {features.slice(0, 3).map((item: string) => (
-            <li key={item} style={{ display: "flex", gap: "0.625rem", fontSize: "0.8125rem", color: "oklch(62% 0.008 260)", alignItems: "flex-start" }}>
-              <span style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: "0.1em" }}>✓</span>
-              {item}
-            </li>
-          ))}
-        </ul>
-
-        {/* Footstep CTA */}
-        <div style={{ marginTop: "auto", paddingTop: "0.5rem" }}>
-          <Link
-            href={href}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 700,
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              padding: "0.625rem 1.75rem",
-              borderRadius: "999px",
-              border: "1px solid",
-              borderColor: hovered ? "oklch(65% 0.15 45)" : "oklch(45% 0.08 260)",
-              background: hovered ? "oklch(65% 0.15 45)" : "transparent",
-              color: hovered ? "oklch(97% 0.005 80)" : "oklch(72% 0.04 260)",
-              transition: "all 0.2s ease",
-              minWidth: "10rem",
-            }}
-          >
-            {hovered ? "Start Your Pathway →" : ctaLabel}
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
