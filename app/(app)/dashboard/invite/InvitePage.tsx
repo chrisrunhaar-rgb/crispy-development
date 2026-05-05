@@ -96,25 +96,34 @@ export default function InvitePage({
               Invitation sent successfully.
             </p>
           ) : (
-            <form action={emailAction} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-              <input
-                className="form-input"
-                type="email"
-                name="email"
-                placeholder="member@example.com"
-                required
-                style={{ flex: 1, minWidth: "220px" }}
-              />
+            <form action={emailAction} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="recipientName"
+                  placeholder="First name"
+                  style={{ flex: "1 1 140px" }}
+                />
+                <input
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="member@example.com"
+                  required
+                  style={{ flex: "2 1 200px" }}
+                />
+              </div>
               <button
                 type="submit"
                 className="btn-primary"
                 disabled={emailPending}
-                style={{ fontSize: "0.85rem", opacity: emailPending ? 0.7 : 1, whiteSpace: "nowrap" }}
+                style={{ fontSize: "0.85rem", opacity: emailPending ? 0.7 : 1, alignSelf: "flex-start" }}
               >
                 {emailPending ? "Sending…" : "Send Invite →"}
               </button>
               {emailState.error && (
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.12 25)", width: "100%", margin: 0 }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.12 25)", margin: 0 }}>
                   {emailState.error}
                 </p>
               )}
