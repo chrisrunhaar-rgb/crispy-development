@@ -33,7 +33,7 @@ const kalam = Kalam({
 });
 
 export const metadata: Metadata = {
-  title: "Crispy Development — Raising leaders who cross cultures.",
+  title: "Crispy Leaders — Raising leaders who cross cultures.",
   description:
     "Resources, tools, and community for Christian leaders, expat professionals, and multicultural team managers.",
   icons: {
@@ -42,17 +42,17 @@ export const metadata: Metadata = {
     shortcut: "/logo-icon.png",
   },
   openGraph: {
-    title: "Crispy Development",
+    title: "Crispy Leaders",
     description: "Raising leaders who cross cultures.",
     url: "https://crispyleaders.com",
-    siteName: "Crispy Development",
+    siteName: "Crispy Leaders",
     locale: "en_US",
     type: "website",
-    images: [{ url: "https://crispyleaders.com/logo-full.png", width: 1200, alt: "Crispy Development" }],
+    images: [{ url: "https://crispyleaders.com/logo-full.png", width: 1200, alt: "Crispy Leaders" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crispy Development",
+    title: "Crispy Leaders",
     description: "Raising leaders who cross cultures.",
     images: ["https://crispyleaders.com/logo-full.png"],
   },
@@ -79,7 +79,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "Crispy Development",
+              name: "Crispy Leaders",
               url: "https://crispyleaders.com",
               logo: "https://crispyleaders.com/logo-full.png",
               description: "Resources, tools, and community for Christian leaders, expat professionals, and multicultural team managers.",
@@ -94,7 +94,7 @@ export default function RootLayout({
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "Customer Support",
-                email: "chris@crispydevelopment.com",
+                email: "hello@crispyleaders.com",
               },
             }),
           }}
