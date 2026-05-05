@@ -35,7 +35,7 @@ const kalam = Kalam({
 export const metadata: Metadata = {
   title: "Crispy Leaders — Raising leaders who cross cultures.",
   description:
-    "Resources, tools, and community for Christian leaders, expat professionals, and multicultural team managers.",
+    "Personal development pathways for Individual leaders and teams navigating life and leadership across cultures.",
   icons: {
     icon: "/logo-icon.png",
     apple: "/logo-icon.png",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Crispy Leaders",
-    description: "Raising leaders who cross cultures.",
+    description: "Personal development pathways for Individual leaders and teams navigating life and leadership across cultures.",
     url: "https://crispyleaders.com",
     siteName: "Crispy Leaders",
     locale: "en_US",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Crispy Leaders",
-    description: "Raising leaders who cross cultures.",
+    description: "Personal development pathways for Individual leaders and teams navigating life and leadership across cultures.",
     images: ["https://crispyleaders.com/logo-full.png"],
   },
 };
