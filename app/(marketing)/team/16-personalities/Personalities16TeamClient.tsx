@@ -1038,7 +1038,7 @@ export default function Personalities16TeamClient({ user }: { user: User | null 
                   )}
 
                   {!user && (
-                    <Link href="/signup" style={{
+                    <Link href="/membership" style={{
                       fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem",
                       letterSpacing: "0.06em", textDecoration: "none",
                       padding: "0.7rem 1.5rem",

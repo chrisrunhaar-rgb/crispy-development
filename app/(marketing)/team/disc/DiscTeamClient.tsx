@@ -1215,7 +1215,7 @@ export default function DiscTeamClient({ user }: { user: User | null }) {
                     )}
 
                     {!user && (
-                      <Link href="/signup" style={{
+                      <Link href="/membership" style={{
                         fontFamily: "var(--font-montserrat)",
                         fontWeight: 700,
                         fontSize: "0.78rem",

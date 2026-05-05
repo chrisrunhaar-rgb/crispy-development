@@ -988,7 +988,7 @@ export default function CommunicationCultureClient({ user }: { user: User | null
               Back to Team Pathway →
             </Link>
             {!user && (
-              <Link href="/signup" style={{
+              <Link href="/membership" style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem",
                 letterSpacing: "0.06em", textDecoration: "none",
                 padding: "0.75rem 1.75rem",

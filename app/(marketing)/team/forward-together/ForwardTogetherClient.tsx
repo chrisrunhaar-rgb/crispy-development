@@ -1159,7 +1159,7 @@ export default function ForwardTogetherClient({ user }: Props) {
               </Link>
             ) : (
               <Link
-                href="/signup?pathway=team"
+                href="/membership"
                 style={{
                   padding: "13px 30px",
                   background: warmAccent,

@@ -529,7 +529,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 </button>
               ) : (
                 <Link
-                  href="/signup"
+                  href="/membership"
                   style={{
                     fontFamily: "var(--font-montserrat)",
                     fontSize: "0.78rem",

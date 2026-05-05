@@ -220,7 +220,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                 <Link href="/login" className="t-label hidden-mobile" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none", fontSize: "0.7rem" }}>
                   {t.nav.login}
                 </Link>
-                <Link href="/signup" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
+                <Link href="/membership" className="btn-primary hidden-mobile" style={{ padding: "0.5rem 1.25rem", fontSize: "0.75rem" }}>
                   {t.nav.cta}
                 </Link>
               </>
@@ -292,7 +292,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                 <Link href="/login" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
                   {t.nav.login}
                 </Link>
-                <Link href="/signup" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
+                <Link href="/membership" className="btn-primary" style={{ marginTop: "0.5rem", justifyContent: "center" }} onClick={() => setOpen(false)}>
                   {t.nav.cta}
                 </Link>
               </>

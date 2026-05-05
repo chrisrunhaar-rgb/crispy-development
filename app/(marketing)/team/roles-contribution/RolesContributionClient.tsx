@@ -1049,7 +1049,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
 
             {!user && (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(62% 0.04 260)", marginTop: "1rem" }}>
-                <Link href="/signup" style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, textDecoration: "none" }}>
+                <Link href="/membership" style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, textDecoration: "none" }}>
                   Sign up
                 </Link>
                 {" "}to save your contribution zone and return to it later.

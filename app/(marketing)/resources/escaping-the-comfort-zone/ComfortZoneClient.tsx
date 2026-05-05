@@ -391,7 +391,7 @@ export default function ComfortZoneClient({
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!showAddToDashboard ? (
-                <Link href="/signup" className="btn-primary">{t("Join the Community →", "Bergabung →", "Word lid →", lang)}</Link>
+                <Link href="/membership" className="btn-primary">{t("Join the Community →", "Bergabung →", "Word lid →", lang)}</Link>
               ) : saved ? (
                 <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard →", "Ke Dashboard →", "Naar Dashboard →", lang)}</Link>
               ) : (

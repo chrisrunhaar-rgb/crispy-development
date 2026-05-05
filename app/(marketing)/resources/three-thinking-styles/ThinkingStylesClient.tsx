@@ -978,7 +978,7 @@ export default function ThinkingStylesClient({
                       {tr("Retake Quiz", "Ulangi Kuis", "Quiz opnieuw doen")}
                     </button>
                     {!showAddToDashboard ? (
-                      <Link href="/signup" className="btn-primary" style={{ textDecoration: "none" }}>
+                      <Link href="/membership" className="btn-primary" style={{ textDecoration: "none" }}>
                         {tr("Join the Community →", "Bergabung dengan Komunitas →", "Sluit je aan →")}
                       </Link>
                     ) : (
@@ -1013,7 +1013,7 @@ export default function ThinkingStylesClient({
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!showAddToDashboard ? (
-                <Link href="/signup" className="btn-primary">
+                <Link href="/membership" className="btn-primary">
                   {tr("Join the Community →", "Bergabung →", "Sluit je aan →")}
                 </Link>
               ) : saved ? (

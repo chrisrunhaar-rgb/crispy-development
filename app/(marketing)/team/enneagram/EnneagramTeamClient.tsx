@@ -878,7 +878,7 @@ export default function EnneagramTeamClient({ user }: { user: User | null }) {
                 Sign in to save your Enneagram type to your team dashboard.
               </p>
               <Link
-                href="/signup"
+                href="/membership"
                 style={{
                   fontFamily: "var(--font-montserrat)",
                   fontWeight: 700,

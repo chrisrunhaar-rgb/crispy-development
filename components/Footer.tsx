@@ -69,7 +69,7 @@ export default function Footer() {
           <div>
             <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.account}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              <Link href="/signup" className="footer-link">{t.footer.getStarted}</Link>
+              <Link href="/membership" className="footer-link">{t.footer.getStarted}</Link>
               <Link href="/login" className="footer-link">{t.footer.login}</Link>
               <Link href="/dashboard" className="footer-link">{t.footer.dashboard}</Link>
             </div>

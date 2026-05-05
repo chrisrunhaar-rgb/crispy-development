@@ -1031,7 +1031,7 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
                   </p>
                   <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                     <Link
-                      href="/signup?pathway=team"
+                      href="/membership"
                       style={{
                         padding: "0.7rem 1.5rem",
                         background: "oklch(65% 0.15 45)",

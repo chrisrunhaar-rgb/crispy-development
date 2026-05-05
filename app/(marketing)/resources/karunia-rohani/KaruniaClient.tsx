@@ -490,7 +490,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
 
   function handleSave() {
     if (!isLoggedIn) {
-      window.location.href = "/signup?redirect=/resources/karunia-rohani";
+      window.location.href = "/membership";
       return;
     }
     if (!resultScores || resultTopGifts.length === 0) return;

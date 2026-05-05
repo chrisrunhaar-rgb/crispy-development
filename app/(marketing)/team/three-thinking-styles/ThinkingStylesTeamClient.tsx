@@ -1473,7 +1473,7 @@ export default function ThinkingStylesTeamClient({ user }: { user: User | null }
 
                 {!user && (
                   <Link
-                    href="/signup"
+                    href="/membership"
                     style={{
                       fontFamily: "var(--font-montserrat)",
                       fontWeight: 700,

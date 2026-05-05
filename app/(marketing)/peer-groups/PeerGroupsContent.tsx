@@ -14,7 +14,7 @@ type Group = {
   is_open: boolean;
 };
 
-export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=personal", isMember = false }: { groups: Group[]; ctaHref?: string; isMember?: boolean }) {
+export default function PeerGroupsContent({ groups, ctaHref = "/membership", isMember = false }: { groups: Group[]; ctaHref?: string; isMember?: boolean }) {
   const { t } = useLanguage();
   const p = t.peer;
 

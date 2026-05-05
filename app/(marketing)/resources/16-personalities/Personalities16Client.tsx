@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
@@ -361,11 +362,15 @@ export default function Personalities16Client({
   savedType: string | null;
   savedScores: Record<string, number> | null;
 }) {
-  const initialState: QuizState = savedType && savedScores ? "done" : "idle";
+  const searchParams = useSearchParams();
+  const isRetake = searchParams.get("retake") === "1";
+  const isViewModule = searchParams.get("view") === "module";
+  const initialState: QuizState = isRetake ? "active" : (isViewModule || !savedType || !savedScores) ? "idle" : "done";
   const [quizState, setQuizState] = useState<QuizState>(initialState);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const blankScores = { EI_A: 0, EI_B: 0, SN_A: 0, SN_B: 0, TF_A: 0, TF_B: 0, JP_A: 0, JP_B: 0 };
   const [scores, setScores] = useState<Record<string, number>>(
-    savedScores ?? { EI_A: 0, EI_B: 0, SN_A: 0, SN_B: 0, TF_A: 0, TF_B: 0, JP_A: 0, JP_B: 0 }
+    isRetake ? blankScores : (savedScores ?? blankScores)
   );
   const [answerHistory, setAnswerHistory] = useState<{ qIdx: number; value: number; key: string }[]>([]);
   const [isSaved, setIsSaved] = useState(isSavedProp);

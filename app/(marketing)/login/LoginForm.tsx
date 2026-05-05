@@ -151,7 +151,7 @@ export default function LoginForm() {
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.008 260)" }}>
             {l.noAccount}{" "}
-            <Link href="/signup" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>
+            <Link href="/membership" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>
               {l.signupLink}
             </Link>
           </p>

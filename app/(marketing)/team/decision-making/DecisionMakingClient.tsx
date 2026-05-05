@@ -865,7 +865,7 @@ export default function DecisionMakingClient({ user }: { user: User | null }) {
             </Link>
             {!user && (
               <Link
-                href="/signup?pathway=team"
+                href="/membership"
                 style={{
                   padding: "0.9rem 1.75rem",
                   background: "none",

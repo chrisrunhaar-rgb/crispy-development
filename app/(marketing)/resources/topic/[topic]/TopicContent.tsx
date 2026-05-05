@@ -329,7 +329,7 @@ function ResourceRow({
             </Link>
           )}
           {!userId && resource.gated && (
-            <Link href="/signup?pathway=personal" style={{
+            <Link href="/membership" style={{
               ...btnBase,
               background: "transparent",
               border: "1px solid oklch(65% 0.15 45)",

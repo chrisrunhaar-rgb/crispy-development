@@ -545,7 +545,7 @@ export default function TimeAndCultureClient({ userPathway, isSaved: initialSave
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!userPathway ? (
-                <Link href="/signup" className="btn-primary">{t("Join the Community →", "Bergabung →", "Word lid →")}</Link>
+                <Link href="/membership" className="btn-primary">{t("Join the Community →", "Bergabung →", "Word lid →")}</Link>
               ) : saved ? (
                 <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard →", "Ke Dashboard →", "Naar Dashboard →")}</Link>
               ) : (
