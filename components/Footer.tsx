@@ -49,6 +49,9 @@ export default function Footer() {
                 <IgIcon />
                 @crispy.dev_ind
               </a>
+              <a href="mailto:hello@crispyleaders.com" style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", textDecoration: "none" }} className="footer-link">
+                hello@crispyleaders.com
+              </a>
             </div>
           </div>
 

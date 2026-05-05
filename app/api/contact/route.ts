@@ -26,6 +26,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to send message." }, { status: 500 });
     }
 
+    // Notify hello@crispyleaders.com via Resend
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Crispy Leaders <noreply@crispyleaders.com>",
+          to: "hello@crispyleaders.com",
+          reply_to: email.trim(),
+          subject: `New message from ${name.trim()}`,
+          html: `<p><strong>Name:</strong> ${name.trim()}</p><p><strong>Email:</strong> ${email.trim()}</p><p><strong>Message:</strong></p><p>${message.trim().replace(/\n/g, "<br>")}</p>`,
+        }),
+      });
+    }
+
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("contact route error:", err);
