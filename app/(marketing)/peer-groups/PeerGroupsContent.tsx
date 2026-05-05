@@ -14,7 +14,7 @@ type Group = {
   is_open: boolean;
 };
 
-export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=personal" }: { groups: Group[]; ctaHref?: string }) {
+export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=personal", isMember = false }: { groups: Group[]; ctaHref?: string; isMember?: boolean }) {
   const { t } = useLanguage();
   const p = t.peer;
 
@@ -50,7 +50,7 @@ export default function PeerGroupsContent({ groups, ctaHref = "/signup?pathway=p
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
             {p.mapBody}
           </p>
-          <WorldMap groups={groups} />
+          <WorldMap groups={groups} isMember={isMember} />
         </div>
       </section>
 
