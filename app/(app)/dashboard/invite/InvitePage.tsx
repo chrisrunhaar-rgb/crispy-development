@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useActionState } from "react";
-import { generateInviteLink, deleteInviteLink } from "@/app/(app)/dashboard/actions";
+import { generateInviteLink, deleteInviteLink, sendEmailInvite } from "@/app/(app)/dashboard/actions";
 
 type Invite = {
   id: string;
@@ -28,6 +28,13 @@ export default function InvitePage({
       return result ?? { error: null };
     },
     { error: null }
+  );
+  const [emailState, emailAction, emailPending] = useActionState(
+    async (_prev: { error?: string; sent?: boolean }, formData: FormData) => {
+      const result = await sendEmailInvite(formData);
+      return result ?? {};
+    },
+    {}
   );
 
   function inviteUrl(token: string) {
@@ -79,10 +86,49 @@ export default function InvitePage({
 
       <div className="container-wide" style={{ paddingBlock: "3rem", maxWidth: "680px" }}>
 
+        {/* Email invite */}
+        <div style={{ marginBottom: "3rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "1rem" }}>
+            Send Invite by Email
+          </p>
+          {emailState.sent ? (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(40% 0.12 145)", padding: "1rem", background: "oklch(95% 0.03 145)", border: "1px solid oklch(80% 0.06 145)" }}>
+              Invitation sent successfully.
+            </p>
+          ) : (
+            <form action={emailAction} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              <input
+                className="form-input"
+                type="email"
+                name="email"
+                placeholder="member@example.com"
+                required
+                style={{ flex: 1, minWidth: "220px" }}
+              />
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={emailPending}
+                style={{ fontSize: "0.85rem", opacity: emailPending ? 0.7 : 1, whiteSpace: "nowrap" }}
+              >
+                {emailPending ? "Sending…" : "Send Invite →"}
+              </button>
+              {emailState.error && (
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(45% 0.12 25)", width: "100%", margin: 0 }}>
+                  {emailState.error}
+                </p>
+              )}
+            </form>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div style={{ height: "1px", background: "oklch(88% 0.008 80)", marginBottom: "3rem" }} />
+
         {/* Explanation */}
         <div style={{ marginBottom: "2.5rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(42% 0.008 260)", maxWidth: "52ch" }}>
-            Generate an invite link and share it with your team members. Each link is valid for 7 days and can only be used once.
+            Or generate a link and share it yourself. Each link is valid for 7 days and can only be used once.
           </p>
         </div>
 
