@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { signIn } from "@/app/auth/actions";
+import { signIn, sendMagicLink } from "@/app/auth/actions";
 import { useSearchParams } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -85,6 +85,50 @@ function LoginFormInner() {
   );
 }
 
+function MagicLinkForm() {
+  const { t } = useLanguage();
+  const l = t.login;
+  const [state, formAction, pending] = useActionState(
+    async (_prev: { error?: string; sent?: boolean }, formData: FormData) => {
+      const result = await sendMagicLink(formData);
+      return result ?? {};
+    },
+    {}
+  );
+
+  if (state.sent) {
+    return (
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(40% 0.12 145)", textAlign: "center", padding: "1rem", background: "oklch(95% 0.03 145)", border: "1px solid oklch(80% 0.06 145)" }}>
+        {l.magicLinkSent}
+      </p>
+    );
+  }
+
+  return (
+    <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      {state.error && (
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(35% 0.1 25)" }}>{state.error}</p>
+      )}
+      <input
+        className="form-input"
+        type="email"
+        name="email"
+        placeholder="you@example.com"
+        autoComplete="email"
+        required
+      />
+      <button
+        type="submit"
+        className="btn-secondary"
+        disabled={pending}
+        style={{ width: "100%", justifyContent: "center", opacity: pending ? 0.7 : 1 }}
+      >
+        {pending ? "…" : l.magicLinkCta}
+      </button>
+    </form>
+  );
+}
+
 export default function LoginForm() {
   const { t } = useLanguage();
   const l = t.login;
@@ -117,9 +161,13 @@ export default function LoginForm() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBlock: "1.75rem" }}>
           <div style={{ flex: 1, height: "1px", background: "oklch(88% 0.008 80)" }} />
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.006 260)", fontWeight: 300 }}>or</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(62% 0.006 260)", fontWeight: 300 }}>{l.magicLinkOr}</span>
           <div style={{ flex: 1, height: "1px", background: "oklch(88% 0.008 80)" }} />
         </div>
+
+        <MagicLinkForm />
+
+        <div style={{ height: "1.5rem" }} />
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", textAlign: "center", lineHeight: 1.6 }}>
           By logging in you agree to our{" "}

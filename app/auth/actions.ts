@@ -222,6 +222,22 @@ export async function submitPeerGroupApplication(formData: FormData) {
   return { success: true };
 }
 
+export async function sendMagicLink(formData: FormData): Promise<{ error?: string; sent?: boolean }> {
+  const email = (formData.get("email") as string | null)?.trim() ?? "";
+  if (!email) return { error: "Please enter your email address." };
+
+  const supabase = await createClient();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.crispyleaders.com";
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: `${siteUrl}/auth/callback` },
+  });
+
+  if (error) return { error: error.message };
+  return { sent: true };
+}
+
 export async function requestPasswordReset(formData: FormData): Promise<{ error?: string; sent?: boolean }> {
   const email = (formData.get("email") as string | null)?.trim() ?? "";
   if (!email) return { error: "Please enter your email address." };

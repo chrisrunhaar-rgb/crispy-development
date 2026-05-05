@@ -194,6 +194,9 @@ export const translations = {
       cta: "Log In →",
       noAccount: "Don't have an account?",
       signupLink: "Get started →",
+      magicLinkOr: "or sign in with a Magic Link",
+      magicLinkCta: "Send Magic Link →",
+      magicLinkSent: "Magic Link sent — check your inbox.",
     },
     signup: {
       label: "Create account",
@@ -412,6 +415,9 @@ export const translations = {
       cta: "Masuk →",
       noAccount: "Belum punya akun?",
       signupLink: "Mulai di sini →",
+      magicLinkOr: "atau masuk dengan Magic Link",
+      magicLinkCta: "Kirim Magic Link →",
+      magicLinkSent: "Magic Link terkirim — periksa kotak masuk Anda.",
     },
     signup: {
       label: "Buat akun",
@@ -630,6 +636,9 @@ export const translations = {
       cta: "Inloggen →",
       noAccount: "Nog geen account?",
       signupLink: "Begin hier →",
+      magicLinkOr: "of log in met een Magic Link",
+      magicLinkCta: "Stuur Magic Link →",
+      magicLinkSent: "Magic Link verstuurd — check je inbox.",
     },
     signup: {
       label: "Account aanmaken",
