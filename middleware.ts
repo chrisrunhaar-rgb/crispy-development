@@ -92,6 +92,7 @@ export async function middleware(request: NextRequest) {
     "escaping-the-comfort-zone", "emotional-intelligence", "johari-window",
     "decision-making", "cognitive-biases",
     "disc", "three-thinking-styles", "big-five",
+    "5languages",
     "sabbath-leadership",
     "enneagram", "16-personalities", "wheel-of-life", "karunia-rohani",
     // multi-part resources
@@ -100,7 +101,7 @@ export async function middleware(request: NextRequest) {
   ]);
   if (!user && request.nextUrl.pathname.startsWith("/resources/")) {
     const slug = request.nextUrl.pathname.split("/resources/")[1]?.split("/")[0];
-    if (slug && !FREE_RESOURCE_SLUGS.has(slug) && slug !== "topic") {
+    if (slug && !FREE_RESOURCE_SLUGS.has(slug) && slug !== "topic" && !slug.includes(".")) {
       const signupUrl = request.nextUrl.clone();
       signupUrl.pathname = "/signup";
       signupUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
