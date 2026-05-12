@@ -556,6 +556,35 @@ export default async function DashboardPage({
 
   const tabLabel = currentTab === "team" ? "Team Dashboard" : currentTab === "peer" ? "Peer Group" : "Personal Dashboard";
 
+  // ── Course progress for personal tab ──
+  type CourseProgress = { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null };
+  let courseProgress: CourseProgress[] = [];
+  if (currentTab === "personal" || !currentTab) {
+    const { data: courses } = await supabase
+      .from("courses")
+      .select("id, slug, title")
+      .order("order_index");
+    if (courses && courses.length > 0) {
+      const { data: chapters } = await supabase
+        .from("course_chapters")
+        .select("id, slug, course_id, order_index")
+        .in("course_id", courses.map((c: { id: string }) => c.id))
+        .order("order_index");
+      const progressClient = viewingAsAdmin ? admin : supabase;
+      const { data: prog } = await progressClient
+        .from("course_progress")
+        .select("chapter_id")
+        .eq("user_id", viewingUserId);
+      const completedSet = new Set((prog ?? []).map((p: { chapter_id: string }) => p.chapter_id));
+      courseProgress = (courses as { id: string; slug: string; title: string }[]).map((course) => {
+        const chs = (chapters ?? []).filter((ch: { course_id: string }) => ch.course_id === course.id);
+        const completed = chs.filter((ch: { id: string }) => completedSet.has(ch.id)).length;
+        const firstIncomplete = chs.find((ch: { id: string }) => !completedSet.has(ch.id)) as { slug: string } | undefined;
+        return { courseId: course.id, slug: course.slug, title: course.title, completed, total: chs.length, firstIncompleteSlug: firstIncomplete?.slug ?? null };
+      });
+    }
+  }
+
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
       <TimezoneDetector savedTimezone={userTimezone} />
@@ -707,6 +736,7 @@ export default async function DashboardPage({
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
             <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
+            {courseProgress.length > 0 && <MyCourses courses={courseProgress} />}
           </>
         )}
 
@@ -1399,6 +1429,126 @@ function TeamApplicationPending({ firstName }: { firstName: string }) {
         </p>
       </div>
     </div>
+  );
+}
+
+// ── My Courses section ──────────────────────────────────────────────────────
+
+function MyCourses({ courses }: {
+  courses: { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null }[];
+}) {
+  const anyStarted = courses.some(c => c.completed > 0);
+  return (
+    <div style={{ marginTop: "3rem", paddingTop: "2.5rem", borderTop: "1px solid oklch(85% 0.008 80)" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", gap: "1rem", flexWrap: "wrap" }}>
+        <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
+          My Courses
+        </h2>
+        <Link href="/courses" style={{
+          fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+          letterSpacing: "0.08em", color: "oklch(30% 0.12 260)", textDecoration: "none",
+          border: "1px solid oklch(30% 0.12 260)", padding: "0.35rem 0.875rem",
+          whiteSpace: "nowrap",
+        }}>
+          All Courses →
+        </Link>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        {courses.map((course) => {
+          const pct = course.total > 0 ? Math.round((course.completed / course.total) * 100) : 0;
+          const done = course.completed === course.total && course.total > 0;
+          const startSlug = course.firstIncompleteSlug ?? null;
+          const href = startSlug
+            ? `/courses/${course.slug}/${startSlug}`
+            : `/courses/${course.slug}`;
+
+          return (
+            <Link
+              key={course.courseId}
+              href={href}
+              style={{
+                display: "block",
+                textDecoration: "none",
+                background: "oklch(100% 0 0)",
+                border: "1px solid oklch(88% 0.008 80)",
+                padding: "1rem 1.25rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                {/* Progress ring */}
+                <MiniRing pct={pct} done={done} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.875rem",
+                    color: "oklch(22% 0.10 260)", marginBottom: "0.375rem",
+                  }}>
+                    {course.title}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <div style={{
+                      flex: 1, height: "4px",
+                      background: "oklch(90% 0.006 80)",
+                      borderRadius: "2px", overflow: "hidden",
+                    }}>
+                      <div style={{
+                        width: `${pct}%`,
+                        height: "100%",
+                        background: done ? "oklch(45% 0.10 155)" : "oklch(65% 0.15 45)",
+                        borderRadius: "2px",
+                        transition: "width 0.3s ease",
+                      }} />
+                    </div>
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
+                      color: "oklch(55% 0.008 260)", whiteSpace: "nowrap",
+                    }}>
+                      {course.completed}/{course.total} chapters
+                    </span>
+                  </div>
+                </div>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.72rem",
+                  color: done ? "oklch(45% 0.10 155)" : "oklch(65% 0.15 45)",
+                  whiteSpace: "nowrap", flexShrink: 0,
+                }}>
+                  {done ? "Complete ✓" : course.completed > 0 ? "Continue →" : "Start →"}
+                </span>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {!anyStarted && (
+        <p style={{
+          fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6,
+          color: "oklch(55% 0.008 260)", marginTop: "0.75rem",
+        }}>
+          Free courses to help you work better across cultures. Start anytime.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function MiniRing({ pct, done }: { pct: number; done: boolean }) {
+  const r = 12;
+  const circ = 2 * Math.PI * r;
+  const dash = (pct / 100) * circ;
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+      <circle cx="16" cy="16" r={r} fill="none" stroke="oklch(90% 0.008 80)" strokeWidth="2.5" />
+      <circle
+        cx="16" cy="16" r={r}
+        fill="none"
+        stroke={done ? "oklch(45% 0.10 155)" : "oklch(65% 0.15 45)"}
+        strokeWidth="2.5"
+        strokeDasharray={`${dash} ${circ}`}
+        strokeLinecap="round"
+        transform="rotate(-90 16 16)"
+      />
+    </svg>
   );
 }
 

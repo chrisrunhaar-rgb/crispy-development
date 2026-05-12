@@ -11,6 +11,7 @@ type Chapter = {
   subtitle: string | null;
   order_index: number;
   content_html: string | null;
+  content_html_id: string | null;
   course_id: string;
 };
 
@@ -36,17 +37,21 @@ export async function generateMetadata({
 
 export default async function ChapterPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string; "chapter-slug": string }>;
+  searchParams: Promise<{ lang?: string }>;
 }) {
   const { slug, "chapter-slug": chapterSlug } = await params;
+  const { lang } = await searchParams;
+  const isId = lang === "id";
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   // Fetch all chapters for this course (to build prev/next)
   const { data: courseData } = await supabase
     .from("courses")
-    .select("id, title, slug, course_chapters(id, slug, title, subtitle, order_index, content_html, course_id)")
+    .select("id, title, slug, course_chapters(id, slug, title, subtitle, order_index, content_html, content_html_id, course_id)")
     .eq("slug", slug)
     .order("order_index", { referencedTable: "course_chapters" })
     .single() as { data: { id: string; title: string; slug: string; course_chapters: Chapter[] } | null };
@@ -73,8 +78,9 @@ export default async function ChapterPage({
     isCompleted = !!prog;
   }
 
-  const prevHref = prev ? `/courses/${slug}/${prev.slug}` : null;
-  const nextHref = next ? `/courses/${slug}/${next.slug}` : null;
+  const langSuffix = isId ? "?lang=id" : "";
+  const prevHref = prev ? `/courses/${slug}/${prev.slug}${langSuffix}` : null;
+  const nextHref = next ? `/courses/${slug}/${next.slug}${langSuffix}` : null;
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
@@ -121,6 +127,36 @@ export default async function ChapterPage({
               {chapter.subtitle}
             </p>
           )}
+
+          {/* Language toggle */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "1rem" }}>
+            <Link
+              href={`/courses/${slug}/${chapterSlug}`}
+              style={{
+                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
+                letterSpacing: "0.1em", padding: "0.2rem 0.6rem",
+                background: !isId ? "oklch(65% 0.15 45)" : "oklch(35% 0.06 260)",
+                color: "oklch(97% 0.005 80)",
+                textDecoration: "none",
+              }}
+            >
+              EN
+            </Link>
+            {chapter.content_html_id ? (
+              <Link
+                href={`/courses/${slug}/${chapterSlug}?lang=id`}
+                style={{
+                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
+                  letterSpacing: "0.1em", padding: "0.2rem 0.6rem",
+                  background: isId ? "oklch(65% 0.15 45)" : "oklch(35% 0.06 260)",
+                  color: "oklch(97% 0.005 80)",
+                  textDecoration: "none",
+                }}
+              >
+                ID
+              </Link>
+            ) : null}
+          </div>
 
           {/* Progress indicator */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "1.25rem" }}>
@@ -256,19 +292,16 @@ export default async function ChapterPage({
             .chapter-content tr:nth-child(even) td { background: oklch(97% 0.003 80); }
           `}</style>
 
-          {chapter.content_html ? (
-            <div
-              className="chapter-content"
-              dangerouslySetInnerHTML={{ __html: chapter.content_html }}
-            />
-          ) : (
-            <p style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem",
-              color: "oklch(58% 0.008 260)",
-            }}>
-              Content coming soon.
-            </p>
-          )}
+          {(() => {
+            const content = isId ? (chapter.content_html_id ?? chapter.content_html) : chapter.content_html;
+            return content ? (
+              <div className="chapter-content" dangerouslySetInnerHTML={{ __html: content }} />
+            ) : (
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(58% 0.008 260)" }}>
+                Content coming soon.
+              </p>
+            );
+          })()}
         </div>
       </section>
 
