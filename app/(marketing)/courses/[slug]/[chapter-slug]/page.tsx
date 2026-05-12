@@ -307,6 +307,30 @@ export default async function ChapterPage({
               line-height: 1.55;
             }
             .chapter-content tr:nth-child(even) td { background: oklch(97% 0.003 80); }
+            .chapter-content figure.chapter-screenshot {
+              margin: 1.5rem 0;
+              border: 1px solid oklch(88% 0.008 80);
+              border-radius: 0;
+              overflow: hidden;
+            }
+            .chapter-content figure.chapter-screenshot img {
+              width: 100%;
+              height: auto;
+              display: block;
+            }
+            .chapter-content figure.chapter-screenshot figcaption {
+              font-family: var(--font-montserrat);
+              font-size: 0.72rem;
+              font-style: italic;
+              color: oklch(52% 0.008 260);
+              background: oklch(97% 0.003 80);
+              border-top: 1px solid oklch(88% 0.008 80);
+              padding: 0.5rem 0.75rem;
+            }
+            .chapter-content a {
+              color: oklch(48% 0.12 260);
+              text-underline-offset: 2px;
+            }
           `}</style>
 
           {(() => {
