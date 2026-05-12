@@ -3,6 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ChapterActions from "./ChapterActions";
+import ChapterQuiz from "./ChapterQuiz";
+
+type QuizQuestion = {
+  id: string;
+  question: string;
+  options: string[];
+  correct_answer: string;
+  order_index: number;
+};
 
 type Chapter = {
   id: string;
@@ -77,6 +86,14 @@ export default async function ChapterPage({
       .single();
     isCompleted = !!prog;
   }
+
+  // Fetch quiz questions
+  const { data: quizData } = await supabase
+    .from("course_quiz_questions")
+    .select("id, question, options, correct_answer, order_index")
+    .eq("chapter_id", chapter.id)
+    .order("order_index") as { data: QuizQuestion[] | null };
+  const quizQuestions = quizData ?? [];
 
   const langSuffix = isId ? "?lang=id" : "";
   const prevHref = prev ? `/courses/${slug}/${prev.slug}${langSuffix}` : null;
@@ -304,6 +321,9 @@ export default async function ChapterPage({
           })()}
         </div>
       </section>
+
+      {/* ── CHAPTER QUIZ ── */}
+      {quizQuestions.length > 0 && <ChapterQuiz questions={quizQuestions} />}
 
       {/* ── STICKY BOTTOM ACTIONS ── */}
       <ChapterActions
