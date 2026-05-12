@@ -88,6 +88,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <Link href="/team" className="nav-link">{t.nav.team}</Link>
             <Link href="/peer-groups" className="nav-link">Peer Groups</Link>
             <Link href="/resources" className="nav-link">{t.nav.resources}</Link>
+            <Link href="/courses" className="nav-link">Courses</Link>
           </nav>
 
           {/* Right section */}
@@ -254,6 +255,9 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             </Link>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
               {t.nav.resources}
+            </Link>
+            <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
+              Courses
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.75rem 0" }} />
 
