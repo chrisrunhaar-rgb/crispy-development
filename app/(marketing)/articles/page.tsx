@@ -5,6 +5,46 @@ export const metadata: Metadata = {
   description: "Articles from the web worth reading — handpicked for cross-cultural leaders navigating life and work across cultures.",
 };
 
+type Article = {
+  image: string;
+  source: string;
+  title: string;
+  summary: string;
+  author: string;
+  date: string;
+  url: string;
+};
+
+const articles: Article[] = [
+  {
+    image: "/article-hbr-global-teams.jpg",
+    source: "Harvard Business Review",
+    title: "Leading Global Teams Effectively",
+    summary: "Western managers leading global teams often fall into a trap — their training assumes autonomy and egalitarianism, but 70% of the world's workforce is collectivist and hierarchical. David Livermore shows why cultural intelligence is the core skill for leading across this gap, with practical examples from global organisations.",
+    author: "David Livermore",
+    date: "May 2025",
+    url: "https://hbr.org/2025/05/leading-global-teams-effectively",
+  },
+  {
+    image: "/article-tgc-cultural-realities.jpg",
+    source: "The Gospel Coalition Africa",
+    title: "Don't Ignore Cultural Realities When Doing Ministry Together",
+    summary: "Cross-cultural ministry partnerships between Africans and foreigners bring real rewards — and real friction. Written by African and Western voices together, this piece offers honest, practical guidance on navigating cultural differences, building genuine partnership, and approaching collaboration with humility on both sides.",
+    author: "Jonny Kabiswa Kyazze & Anthony Sytsma",
+    date: "April 2026",
+    url: "https://africa.thegospelcoalition.org/article/dont-ignore-cultural-realities-when-doing-ministry-together/",
+  },
+  {
+    image: "/article-global-integration-leadership.webp",
+    source: "Global Integration",
+    title: "Global Leadership: Balancing Control and Empowerment in Complex Teams",
+    summary: "Global leadership is undermined by five structural barriers — distance, culture, time zones, technology, and organisational boundaries. This piece explores why authority-based leadership fails in global teams, and what effective leaders do differently: influence over control, clarity over proximity, trust over hierarchy.",
+    author: "Kevan Hall",
+    date: "March 2026",
+    url: "https://www.global-integration.com/insights/global-leadership-balancing-control-and-empowerment-in-complex-teams/",
+  },
+];
+
 export default function ArticlesPage() {
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
@@ -29,18 +69,122 @@ export default function ArticlesPage() {
         </div>
       </section>
 
-      {/* ── PLACEHOLDER ── */}
-      <section style={{ padding: "clamp(4rem, 8vw, 7rem) 0" }}>
-        <div className="container-wide" style={{ maxWidth: "720px" }}>
-          <p style={{
-            fontFamily: "var(--font-cormorant)", fontStyle: "italic",
-            fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)", lineHeight: 1.6,
-            color: "oklch(52% 0.008 260)",
-          }}>
-            Articles coming soon. Check back here for a growing collection of links to great writing on cross-cultural leadership.
-          </p>
+      {/* ── ARTICLES ── */}
+      <section style={{ padding: "clamp(3rem, 6vw, 5rem) 0" }}>
+        <div className="container-wide">
+          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+            {articles.map((article, i) => (
+              <a
+                key={i}
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="article-card"
+                style={{ textDecoration: "none", display: "block" }}
+              >
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(0, 2fr) minmax(0, 3fr)",
+                  gap: 0,
+                  background: "oklch(100% 0 0)",
+                  border: "1px solid oklch(88% 0.008 80)",
+                  overflow: "hidden",
+                  transition: "box-shadow 0.15s, border-color 0.15s",
+                }}
+                  className="article-card-inner"
+                >
+                  {/* Image */}
+                  <div style={{
+                    aspectRatio: "16/10",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                  }}>
+                    <img
+                      src={article.image}
+                      alt=""
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.3s" }}
+                      className="article-card-img"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: "2rem 2.25rem", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <span style={{
+                        fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.58rem",
+                        letterSpacing: "0.14em", textTransform: "uppercase",
+                        color: "oklch(65% 0.15 45)", display: "block", marginBottom: "0.75rem",
+                      }}>
+                        {article.source}
+                      </span>
+
+                      <h2 style={{
+                        fontFamily: "var(--font-cormorant)", fontWeight: 600,
+                        fontSize: "clamp(1.35rem, 2.2vw, 1.75rem)", lineHeight: 1.2,
+                        color: "oklch(22% 0.10 260)", marginBottom: "1rem",
+                      }}
+                        className="article-card-title"
+                      >
+                        {article.title}
+                      </h2>
+
+                      <p style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7,
+                        color: "oklch(45% 0.007 260)",
+                      }}>
+                        {article.summary}
+                      </p>
+                    </div>
+
+                    <div style={{
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      paddingTop: "1.25rem", marginTop: "1.5rem",
+                      borderTop: "1px solid oklch(90% 0.006 80)",
+                    }}>
+                      <div>
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(38% 0.008 260)", display: "block" }}>
+                          {article.author}
+                        </span>
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "oklch(58% 0.006 260)" }}>
+                          {article.date}
+                        </span>
+                      </div>
+                      <span className="article-card-cta" style={{
+                        fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem",
+                        letterSpacing: "0.04em", color: "oklch(65% 0.15 45)",
+                        transition: "color 0.15s",
+                      }}>
+                        Read article →
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
+
+      <style>{`
+        .article-card-inner:hover {
+          border-color: oklch(65% 0.15 45);
+          box-shadow: 0 4px 24px oklch(22% 0.10 260 / 0.08);
+        }
+        .article-card:hover .article-card-title {
+          color: oklch(42% 0.12 260);
+        }
+        .article-card:hover .article-card-cta {
+          color: oklch(55% 0.13 45);
+        }
+        .article-card:hover .article-card-img {
+          transform: scale(1.03);
+        }
+        @media (max-width: 640px) {
+          .article-card-inner {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
