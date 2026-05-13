@@ -17,13 +17,13 @@ type Article = {
 
 const articles: Article[] = [
   {
-    image: "/article-hbr-global-teams.jpg",
-    source: "Harvard Business Review",
-    title: "Leading Global Teams Effectively",
-    summary: "Western managers leading global teams often fall into a trap — their training assumes autonomy and egalitarianism, but 70% of the world's workforce is collectivist and hierarchical. David Livermore shows why cultural intelligence is the core skill for leading across this gap, with practical examples from global organisations.",
-    author: "David Livermore",
-    date: "May 2025",
-    url: "https://hbr.org/2025/05/leading-global-teams-effectively",
+    image: "/article-hcamag-cultural-awareness.png",
+    source: "Human Resources Director Asia",
+    title: "Cultural Awareness: The Key to Managing Global Workplaces",
+    summary: "A new global report reveals striking differences in how employees approach work across cultures — from Japan's long hours to Finland's work-life balance. Expert Michele Haugh argues cultural awareness must be taught, modelled, and practised consistently: when leaders learn the cultural rhythms that matter to their people, it shifts conversations from assumptions to curiosity.",
+    author: "Dexter Tilo",
+    date: "May 2026",
+    url: "https://www.hcamag.com/asia/news/general/cultural-awareness-the-key-to-managing-global-workplaces/574686",
   },
   {
     image: "/article-tgc-cultural-realities.jpg",
