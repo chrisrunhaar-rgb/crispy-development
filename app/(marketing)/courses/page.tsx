@@ -121,7 +121,7 @@ export default async function CoursesPage() {
               fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
               color: "oklch(55% 0.008 260)",
             }}>
-              Free to access
+              Account required
             </span>
           </div>
         </div>
@@ -154,29 +154,15 @@ export default async function CoursesPage() {
                     transition: "border-color 0.15s, box-shadow 0.15s",
                   }}
                 >
-                  {/* Top row: free badge + progress */}
+                  {/* Top row: members only badge + progress */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
-                    {course.is_free ? (
-                      <span style={{
-                        fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
-                        letterSpacing: "0.18em", textTransform: "uppercase",
-                        color: "oklch(45% 0.10 155)",
-                        background: "oklch(92% 0.04 155)",
-                        padding: "0.2rem 0.6rem",
-                      }}>
-                        Free
-                      </span>
-                    ) : (
-                      <span style={{
-                        fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
-                        letterSpacing: "0.18em", textTransform: "uppercase",
-                        color: "oklch(65% 0.15 45)",
-                        background: "oklch(95% 0.04 45)",
-                        padding: "0.2rem 0.6rem",
-                      }}>
-                        Premium
-                      </span>
-                    )}
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
+                      letterSpacing: "0.1em", textTransform: "uppercase",
+                      color: "oklch(55% 0.008 260)",
+                    }}>
+                      Members only
+                    </span>
                     {user && chapterCount > 0 && (
                       <ProgressRing pct={pct} completed={completed} total={chapterCount} />
                     )}
@@ -216,7 +202,7 @@ export default async function CoursesPage() {
                         transition: "color 0.15s",
                       }}
                     >
-                      {user && completed > 0 ? "Continue →" : "Start course →"}
+                      {!user ? "Sign in to access →" : completed > 0 ? "Continue →" : "Start course →"}
                     </span>
                   </div>
                 </Link>
