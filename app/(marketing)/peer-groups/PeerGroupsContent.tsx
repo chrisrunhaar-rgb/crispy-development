@@ -44,8 +44,9 @@ export default function PeerGroupsContent({ groups, ctaHref = "/membership", isM
       </section>
 
       {/* ── WORLD MAP ── */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "clamp(4rem, 6vw, 6rem)" }}>
-        <div className="container-wide">
+      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "clamp(4rem, 6vw, 6rem)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/bg-globe.jpg')", backgroundSize: "cover", backgroundPosition: "center center", opacity: 0.15, pointerEvents: "none" }} />
+        <div className="container-wide" style={{ position: "relative" }}>
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>{p.mapLabel}</p>
           <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>{p.mapHeading}</h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
