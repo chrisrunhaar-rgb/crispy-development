@@ -31,95 +31,23 @@ export default function InsightsPage() {
       `}</style>
 
       {/* ── PAGE HEADER ── */}
-      <section style={{
-        background: "oklch(97% 0.005 80)",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
+      <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-bytes.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", opacity: 0.22, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
 
-        <div className="container-wide" style={{
-          position: "relative",
-          paddingTop: "clamp(3.5rem, 7vw, 6rem)",
-          paddingBottom: "clamp(2.5rem, 5vw, 4rem)",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.75rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <div style={{
-                background: "oklch(65% 0.15 45)",
-                padding: "0.28rem 0.75rem",
-                display: "inline-flex", alignItems: "center",
-              }}>
-                <span style={{
-                  fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem",
-                  letterSpacing: "0.3em", textTransform: "uppercase",
-                  color: "oklch(97% 0.005 80)",
-                }}>
-                  Bytes
-                </span>
-              </div>
-              <span style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
-                letterSpacing: "0.16em", textTransform: "uppercase",
-                color: "oklch(55% 0.008 260)",
-              }}>
-                Crispy Development
-              </span>
-            </div>
-            <div style={{ display: "flex", gap: "0.25rem" }}>
-              <span style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
-                letterSpacing: "0.12em", color: "oklch(22% 0.10 260)",
-                padding: "0.25rem 0.5rem",
-              }}>EN</span>
-              <Link href="/insights/id" style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
-                letterSpacing: "0.12em", color: "oklch(58% 0.008 260)",
-                padding: "0.25rem 0.5rem", textDecoration: "none",
-              }}>ID</Link>
-            </div>
+        <div className="container-wide" style={{ position: "relative" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
+            <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>Leadership Bytes</p>
           </div>
 
-          <h1 style={{
-            fontFamily: "var(--font-cormorant)", fontWeight: 600,
-            fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)", lineHeight: 1.05,
-            color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
-            letterSpacing: "-0.01em",
-          }}>
-            Leadership<br />Bytes
+          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
+            Leadership<br />Bytes.
           </h1>
 
-          <p style={{
-            fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
-            color: "oklch(45% 0.008 260)", maxWidth: "500px",
-          }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7 }}>
             Short, practical reads on cross-cultural leadership. Timely topics, real examples, linked to the deeper resources.
           </p>
-        </div>
-
-        <div style={{
-          background: "oklch(94% 0.006 80)",
-          borderTop: "1px solid oklch(88% 0.008 80)",
-        }}>
-          <div className="container-wide" style={{
-            display: "flex", alignItems: "center", gap: "1.25rem",
-            paddingTop: "0.8rem", paddingBottom: "0.8rem",
-          }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
-              letterSpacing: "0.16em", textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-            }}>
-              {insights.length} articles
-            </span>
-            <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-              color: "oklch(55% 0.008 260)",
-            }}>
-              Updated regularly
-            </span>
-          </div>
         </div>
       </section>
 

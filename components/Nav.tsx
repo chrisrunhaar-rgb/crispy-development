@@ -20,8 +20,12 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
+  const [pathwaysOpen, setPathwaysOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
+  const pathwaysRef = useRef<HTMLDivElement>(null);
+  const resourcesRef = useRef<HTMLDivElement>(null);
   const { lang, setLang, t } = useLanguage();
   const [firstName, setFirstName] = useState<string | null>(initialFirstName);
 
@@ -32,6 +36,12 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
       }
       if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
         setAvatarOpen(false);
+      }
+      if (pathwaysRef.current && !pathwaysRef.current.contains(e.target as Node)) {
+        setPathwaysOpen(false);
+      }
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target as Node)) {
+        setResourcesOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClick);
@@ -83,12 +93,59 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
           </Link>
 
           {/* Desktop nav */}
-          <nav style={{ display: "flex", alignItems: "center", gap: "2.5rem" }} className="hidden-mobile">
-            <Link href="/personal" className="nav-link">{t.nav.personal}</Link>
-            <Link href="/team" className="nav-link">{t.nav.team}</Link>
-            <Link href="/peer-groups" className="nav-link">Peer Groups</Link>
-            <Link href="/resources" className="nav-link">{t.nav.resources}</Link>
-            <Link href="/courses" className="nav-link">Courses</Link>
+          <nav style={{ display: "flex", alignItems: "center", gap: "2rem" }} className="hidden-mobile">
+
+            {/* Pathways dropdown */}
+            <div ref={pathwaysRef} style={{ position: "relative" }}>
+              <button
+                onClick={() => { setPathwaysOpen(o => !o); setResourcesOpen(false); }}
+                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)" }}
+                className="nav-link"
+              >
+                Pathways
+                <span style={{ fontSize: "0.45rem", opacity: 0.5 }}>▼</span>
+              </button>
+              {pathwaysOpen && (
+                <div style={{ position: "absolute", top: "calc(100% + 10px)", left: 0, background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)", minWidth: "180px", zIndex: 100 }}>
+                  {[
+                    { label: "Personal", href: "/personal" },
+                    { label: "Team", href: "/team" },
+                    { label: "Peer Groups", href: "/peer-groups" },
+                  ].map(item => (
+                    <Link key={item.href} href={item.href} onClick={() => setPathwaysOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Resources dropdown */}
+            <div ref={resourcesRef} style={{ position: "relative" }}>
+              <button
+                onClick={() => { setResourcesOpen(o => !o); setPathwaysOpen(false); }}
+                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)" }}
+                className="nav-link"
+              >
+                Resources
+                <span style={{ fontSize: "0.45rem", opacity: 0.5 }}>▼</span>
+              </button>
+              {resourcesOpen && (
+                <div style={{ position: "absolute", top: "calc(100% + 10px)", left: 0, background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)", minWidth: "180px", zIndex: 100 }}>
+                  {[
+                    { label: "Content Library", href: "/resources" },
+                    { label: "Courses", href: "/courses" },
+                    { label: "Articles", href: "/articles" },
+                    { label: "Leadership Bytes", href: "/insights" },
+                  ].map(item => (
+                    <Link key={item.href} href={item.href} onClick={() => setResourcesOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </nav>
 
           {/* Right section */}
@@ -244,20 +301,29 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
         {/* Mobile menu */}
         {open && (
           <nav style={{ paddingTop: "1.5rem", paddingBottom: "1rem", display: "flex", flexDirection: "column", gap: "0.25rem", borderTop: "1px solid oklch(88% 0.008 80)", marginTop: "1rem" }}>
-            <Link href="/personal" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
-              {t.nav.personalFull}
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Pathways</p>
+            <Link href="/personal" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              Personal
             </Link>
-            <Link href="/team" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
-              {t.nav.teamFull}
+            <Link href="/team" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              Team
             </Link>
-            <Link href="/peer-groups" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
+            <Link href="/peer-groups" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Peer Groups
             </Link>
-            <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
-              {t.nav.resources}
+            <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Resources</p>
+            <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              Content Library
             </Link>
-            <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 0" }}>
+            <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Courses
+            </Link>
+            <Link href="/articles" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              Articles
+            </Link>
+            <Link href="/insights" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              Leadership Bytes
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.75rem 0" }} />
 

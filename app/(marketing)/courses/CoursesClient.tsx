@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function CoursesClient({ courses, progressMap, isLoggedIn }: Props) {
-  const { lang, setLang } = useLanguage();
+  const { lang } = useLanguage();
   const isId = lang === "id";
 
   return (
@@ -32,40 +32,16 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>
-          <span className="pathway-badge" style={{ background: "oklch(97% 0.005 80 / 0.12)", color: "oklch(88% 0.008 80)", marginBottom: "1.5rem", display: "inline-flex" }}>
-            {isId ? "Kursus" : "Courses"} · Crispy Development
-          </span>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.75rem" }}>
-            <button
-              onClick={() => setLang("en")}
-              style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
-                letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
-                padding: "0.25rem 0.6rem",
-                background: !isId ? "oklch(65% 0.15 45)" : "transparent",
-                color: "oklch(97% 0.005 80)",
-                border: "1px solid oklch(65% 0.15 45 / 0.6)",
-              }}
-            >EN</button>
-            <button
-              onClick={() => setLang("id")}
-              style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
-                letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
-                padding: "0.25rem 0.6rem",
-                background: isId ? "oklch(65% 0.15 45)" : "transparent",
-                color: "oklch(97% 0.005 80)",
-                border: "1px solid oklch(65% 0.15 45 / 0.6)",
-              }}
-            >ID</button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
+            <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>Courses</p>
           </div>
 
-          <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "16ch" }}>
-            {isId ? <>Kursus<br />Praktis</> : <>Practical<br />Courses</>}
+          <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
+            {isId ? <>Kursus<br />Praktis.</> : <>Practical<br />Courses.</>}
           </h1>
 
-          <p className="t-tagline" style={{ color: "oklch(78% 0.04 260)", maxWidth: "52ch" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7 }}>
             {isId
               ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
               : "Free, hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
