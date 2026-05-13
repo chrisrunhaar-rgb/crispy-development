@@ -27,41 +27,25 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       {/* ── PAGE HEADER ── */}
-      <section style={{ position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "5px", background: "oklch(65% 0.15 45)" }} />
-        <div className="container-wide" style={{
-          paddingTop: "clamp(3.5rem, 7vw, 6rem)",
-          paddingBottom: "clamp(2.5rem, 5vw, 4rem)",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.75rem" }}>
-            <div style={{ background: "oklch(65% 0.15 45)", padding: "0.28rem 0.75rem", display: "inline-flex", alignItems: "center" }}>
-              <span style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem",
-                letterSpacing: "0.3em", textTransform: "uppercase",
-                color: "oklch(97% 0.005 80)",
-              }}>
-                Courses
-              </span>
-            </div>
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.63rem",
-              letterSpacing: "0.16em", textTransform: "uppercase",
-              color: "oklch(55% 0.008 260)",
-            }}>
-              Crispy Development
-            </span>
-          </div>
+      <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-courses.jpg')", backgroundSize: "cover", backgroundPosition: "center 35%", opacity: 0.22, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
 
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
+        <div className="container-wide" style={{ position: "relative" }}>
+          <span className="pathway-badge" style={{ background: "oklch(97% 0.005 80 / 0.12)", color: "oklch(88% 0.008 80)", marginBottom: "1.5rem", display: "inline-flex" }}>
+            {isId ? "Kursus" : "Courses"} · Crispy Development
+          </span>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.75rem" }}>
             <button
               onClick={() => setLang("en")}
               style={{
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
                 letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
                 padding: "0.25rem 0.6rem",
-                background: !isId ? "oklch(22% 0.10 260)" : "transparent",
-                color: !isId ? "oklch(97% 0.005 80)" : "oklch(55% 0.008 260)",
-                border: "1px solid oklch(22% 0.10 260)",
+                background: !isId ? "oklch(65% 0.15 45)" : "transparent",
+                color: "oklch(97% 0.005 80)",
+                border: "1px solid oklch(65% 0.15 45 / 0.6)",
               }}
             >EN</button>
             <button
@@ -70,58 +54,38 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
                 fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
                 letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
                 padding: "0.25rem 0.6rem",
-                background: isId ? "oklch(22% 0.10 260)" : "transparent",
-                color: isId ? "oklch(97% 0.005 80)" : "oklch(55% 0.008 260)",
-                border: "1px solid oklch(22% 0.10 260)",
+                background: isId ? "oklch(65% 0.15 45)" : "transparent",
+                color: "oklch(97% 0.005 80)",
+                border: "1px solid oklch(65% 0.15 45 / 0.6)",
               }}
             >ID</button>
           </div>
 
-          <h1 style={{
-            fontFamily: "var(--font-cormorant)", fontWeight: 600,
-            fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)", lineHeight: 1.05,
-            color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
-            letterSpacing: "-0.01em",
-          }}>
+          <h1 className="t-hero" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "16ch" }}>
             {isId ? <>Kursus<br />Praktis</> : <>Practical<br />Courses</>}
           </h1>
 
-          <p style={{
-            fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
-            color: "oklch(45% 0.008 260)", maxWidth: "500px",
-          }}>
+          <p className="t-tagline" style={{ color: "oklch(78% 0.04 260)", maxWidth: "52ch" }}>
             {isId
               ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
               : "Free, hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
             }
           </p>
         </div>
-
-        <div style={{
-          background: "oklch(94% 0.006 80)",
-          borderTop: "1px solid oklch(88% 0.008 80)",
-        }}>
-          <div className="container-wide" style={{
-            display: "flex", alignItems: "center", gap: "1.25rem",
-            paddingTop: "0.8rem", paddingBottom: "0.8rem",
-          }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
-              letterSpacing: "0.16em", textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-            }}>
-              {courses.length} {isId ? "kursus" : "courses"}
-            </span>
-            <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-              color: "oklch(55% 0.008 260)",
-            }}>
-              {isId ? "Perlu akun" : "Account required"}
-            </span>
-          </div>
-        </div>
       </section>
+
+      {/* Courses meta bar */}
+      <div style={{ background: "oklch(94% 0.006 80)", borderTop: "1px solid oklch(88% 0.008 80)" }}>
+        <div className="container-wide" style={{ display: "flex", alignItems: "center", gap: "1.25rem", paddingTop: "0.8rem", paddingBottom: "0.8rem" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
+            {courses.length} {isId ? "kursus" : "courses"}
+          </span>
+          <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(55% 0.008 260)" }}>
+            {isId ? "Perlu akun" : "Account required"}
+          </span>
+        </div>
+      </div>
 
       {/* ── COURSE CARDS ── */}
       <section style={{ padding: "clamp(3rem, 6vw, 5rem) 0" }}>

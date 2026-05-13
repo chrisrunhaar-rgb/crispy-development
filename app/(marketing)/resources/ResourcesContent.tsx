@@ -299,48 +299,18 @@ export default function ResourcesContent({
       {/* ── HEADER ── */}
       <section
         style={{
-          paddingTop: "clamp(3rem, 5vw, 5rem)",
-          paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
+          paddingTop: "clamp(4rem, 7vw, 7rem)",
+          paddingBottom: "clamp(4rem, 7vw, 7rem)",
           background: "oklch(30% 0.12 260)",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Vertical orange accent bar */}
-        <div
-          style={{
-            position: "absolute",
-            left: "clamp(1.5rem, 5vw, 4rem)",
-            top: "clamp(3rem, 5vw, 5rem)",
-            bottom: "clamp(2.5rem, 4vw, 4rem)",
-            width: "3px",
-            background: "oklch(65% 0.15 45)",
-          }}
-        />
+        {/* Photo background */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-library.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", opacity: 0.22, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
 
-        {/* Decorative compass rose — large, right-side, faint */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            right: "clamp(-2rem, 2vw, 2rem)",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "clamp(160px, 30vw, 320px)",
-            height: "clamp(160px, 30vw, 320px)",
-            opacity: 0.08,
-            pointerEvents: "none",
-          }}
-        >
-          <Image
-            src="/logo-icon.png"
-            alt=""
-            fill
-            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
-          />
-        </div>
-
-        <div className="container-wide" style={{ paddingLeft: "calc(clamp(1.5rem, 5vw, 4rem) + 1.75rem)" }}>
+        <div className="container-wide" style={{ position: "relative" }}>
           {/* Logo + label row */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
             <Image
