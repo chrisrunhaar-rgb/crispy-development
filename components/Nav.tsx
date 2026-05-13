@@ -135,7 +135,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                   {[
                     { label: "Content Library", href: "/resources" },
                     { label: "Courses", href: "/courses" },
-                    { label: "Articles", href: "/articles" },
+                    { label: "Worth Reading", href: "/articles" },
                     { label: "Leadership Bytes", href: "/insights" },
                   ].map(item => (
                     <Link key={item.href} href={item.href} onClick={() => setResourcesOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
@@ -320,7 +320,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               Courses
             </Link>
             <Link href="/articles" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Articles
+              Worth Reading
             </Link>
             <Link href="/insights" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Leadership Bytes

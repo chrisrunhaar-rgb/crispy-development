@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Articles | Crispy Development",
-  description: "Curated articles on cross-cultural leadership, faith, and organizational development — selected for leaders navigating life and work across cultures.",
+  title: "Worth Reading | Crispy Development",
+  description: "Articles from the web worth reading — handpicked for cross-cultural leaders navigating life and work across cultures.",
 };
 
 export default function ArticlesPage() {
@@ -16,15 +16,15 @@ export default function ArticlesPage() {
         <div className="container-wide" style={{ position: "relative" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
             <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>Articles</p>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>From the Web</p>
           </div>
 
           <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
-            Curated<br />Reading.
+            Worth<br />Reading.
           </h1>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7 }}>
-            The best writing on cross-cultural leadership, faith in the workplace, and leading across difference — handpicked from across the web.
+            The best writing on cross-cultural leadership, faith in the workplace, and leading across difference — handpicked from the web.
           </p>
         </div>
       </section>
