@@ -11,13 +11,21 @@ type CourseRow = {
   id: string;
   slug: string;
   title: string;
+  title_id: string | null;
   description: string | null;
+  description_id: string | null;
   is_free: boolean;
   order_index: number;
   course_chapters: { count: number }[];
 };
 
-export default async function CoursesPage() {
+export default async function CoursesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}) {
+  const { lang } = await searchParams;
+  const isId = lang === "id";
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -84,20 +92,42 @@ export default async function CoursesPage() {
             </span>
           </div>
 
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            <Link href="/courses" style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
+              letterSpacing: "0.12em", textTransform: "uppercase", textDecoration: "none",
+              padding: "0.25rem 0.6rem",
+              background: !isId ? "oklch(22% 0.10 260)" : "transparent",
+              color: !isId ? "oklch(97% 0.005 80)" : "oklch(55% 0.008 260)",
+              border: "1px solid oklch(22% 0.10 260)",
+            }}>EN</Link>
+            <Link href="/courses?lang=id" style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.65rem",
+              letterSpacing: "0.12em", textTransform: "uppercase", textDecoration: "none",
+              padding: "0.25rem 0.6rem",
+              background: isId ? "oklch(22% 0.10 260)" : "transparent",
+              color: isId ? "oklch(97% 0.005 80)" : "oklch(55% 0.008 260)",
+              border: "1px solid oklch(22% 0.10 260)",
+            }}>ID</Link>
+          </div>
+
           <h1 style={{
             fontFamily: "var(--font-cormorant)", fontWeight: 600,
             fontSize: "clamp(2.6rem, 5.5vw, 4.5rem)", lineHeight: 1.05,
             color: "oklch(22% 0.10 260)", marginBottom: "1.5rem",
             letterSpacing: "-0.01em",
           }}>
-            Practical<br />Courses
+            {isId ? <>Kursus<br />Praktis</> : <>Practical<br />Courses</>}
           </h1>
 
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "1rem", lineHeight: 1.7,
             color: "oklch(45% 0.008 260)", maxWidth: "500px",
           }}>
-            Free, hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace.
+            {isId
+              ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
+              : "Free, hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
+            }
           </p>
         </div>
 
@@ -114,14 +144,14 @@ export default async function CoursesPage() {
               letterSpacing: "0.16em", textTransform: "uppercase",
               color: "oklch(65% 0.15 45)",
             }}>
-              {courseList.length} courses
+              {courseList.length} {isId ? "kursus" : "courses"}
             </span>
             <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(72% 0.006 260)", display: "inline-block" }} />
             <span style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
               color: "oklch(55% 0.008 260)",
             }}>
-              Account required
+              {isId ? "Perlu akun" : "Account required"}
             </span>
           </div>
         </div>
@@ -139,11 +169,14 @@ export default async function CoursesPage() {
               const chapterCount = course.course_chapters?.[0]?.count ?? 0;
               const completed = progressMap[course.id] ?? 0;
               const pct = chapterCount > 0 ? Math.round((completed / chapterCount) * 100) : 0;
+              const displayTitle = isId && course.title_id ? course.title_id : course.title;
+              const displayDesc = isId && course.description_id ? course.description_id : course.description;
+              const langSuffix = isId ? "?lang=id" : "";
 
               return (
                 <Link
                   key={course.id}
-                  href={`/courses/${course.slug}`}
+                  href={`/courses/${course.slug}${langSuffix}`}
                   className="course-card"
                   style={{
                     display: "block",
@@ -161,7 +194,7 @@ export default async function CoursesPage() {
                       letterSpacing: "0.1em", textTransform: "uppercase",
                       color: "oklch(55% 0.008 260)",
                     }}>
-                      Members only
+                      {isId ? "Khusus anggota" : "Members only"}
                     </span>
                     {user && chapterCount > 0 && (
                       <ProgressRing pct={pct} completed={completed} total={chapterCount} />
@@ -173,14 +206,14 @@ export default async function CoursesPage() {
                     fontSize: "clamp(1.5rem, 2.8vw, 1.9rem)", lineHeight: 1.15,
                     color: "oklch(22% 0.10 260)", marginBottom: "0.875rem",
                   }}>
-                    {course.title}
+                    {displayTitle}
                   </h2>
 
                   <p style={{
                     fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.65,
                     color: "oklch(48% 0.007 260)", marginBottom: "1.5rem",
                   }}>
-                    {course.description}
+                    {displayDesc}
                   </p>
 
                   <div style={{
@@ -192,7 +225,7 @@ export default async function CoursesPage() {
                       fontFamily: "var(--font-montserrat)", fontSize: "0.72rem",
                       color: "oklch(58% 0.006 260)",
                     }}>
-                      {chapterCount} chapters
+                      {chapterCount} {isId ? "bagian" : "chapters"}
                     </span>
                     <span
                       className="course-card-cta"
@@ -202,7 +235,12 @@ export default async function CoursesPage() {
                         transition: "color 0.15s",
                       }}
                     >
-                      {!user ? "Sign in to access →" : completed > 0 ? "Continue →" : "Start course →"}
+                      {!user
+                        ? (isId ? "Masuk untuk akses →" : "Sign in to access →")
+                        : completed > 0
+                          ? (isId ? "Lanjutkan →" : "Continue →")
+                          : (isId ? "Mulai kursus →" : "Start course →")
+                      }
                     </span>
                   </div>
                 </Link>
