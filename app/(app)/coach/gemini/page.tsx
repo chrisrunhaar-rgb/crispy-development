@@ -38,5 +38,15 @@ export default async function GeminiCoachPage() {
     action_steps: [],
   });
 
-  return <GeminiSessionClient sessionId={session.id} />;
+  const { data: profile } = await supabase
+    .from("wp_worker_profiles")
+    .select("selected_coach")
+    .eq("user_id", user.id)
+    .single();
+
+  const COACH_VOICES: Record<string, string> = { Tara: "Kore", Ethan: "Charon" };
+  const coachName = profile?.selected_coach ?? "Tara";
+  const coachVoice = COACH_VOICES[coachName] ?? "Kore";
+
+  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} />;
 }

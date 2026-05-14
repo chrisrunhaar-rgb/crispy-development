@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { GoogleGenAI, Modality, Type, StartSensitivity, EndSensitivity } from "@google/genai";
-import type { LiveServerMessage, Session } from "@google/genai";
+import type { LiveServerMessage, Session, LiveConnectConfig } from "@google/genai";
 import Image from "next/image";
 
 type WhiteboardState = {
@@ -29,14 +29,14 @@ const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COM
 const GEMINI_MODEL = "gemini-2.5-flash-native-audio-latest";
 const WARMUP_AT_SECONDS = 780;
 
-const COACH_IMAGES: Record<string, string> = {
-  Tara: "/images/coaches/tara.png",
-  Ethan: "/images/coaches/ethan.png",
+const COACH_PORTRAITS: Record<string, string> = {
+  Tara: "/images/coaches/tara-portrait.jpg",
+  Ethan: "/images/coaches/ethan-portrait.jpg",
 };
 
-const COACH_SESSION_IMAGES: Record<string, string> = {
-  Tara: "/images/coaches/tara-session.png",
-  Ethan: "/images/coaches/ethan-session.png",
+const COACH_ROOM_IMAGES: Record<string, string> = {
+  Tara: "/images/coaches/tara-room.jpg",
+  Ethan: "/images/coaches/ethan-room.jpg",
 };
 
 const PHASE_MIN_SECONDS: Partial<Record<Phase, number>> = {
@@ -174,7 +174,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
     };
   }
 
-  const buildLiveConfig = useCallback((systemPrompt: string, voice: string) => ({
+  const buildLiveConfig = useCallback((systemPrompt: string, voice: string): LiveConnectConfig => ({
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
@@ -480,29 +480,46 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
   };
 
   const phaseIndex = PHASE_ORDER.indexOf(phase);
-  const coachImage = COACH_IMAGES[coachName] ?? COACH_IMAGES.Tara;
-  const coachSessionImage = COACH_SESSION_IMAGES[coachName] ?? COACH_SESSION_IMAGES.Tara;
+  const coachPortrait = COACH_PORTRAITS[coachName] ?? COACH_PORTRAITS.Tara;
+  const coachRoomImage = COACH_ROOM_IMAGES[coachName] ?? COACH_ROOM_IMAGES.Tara;
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", background: "oklch(18% 0.08 260)" }}>
+    <div style={{ position: "relative", display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19" }}>
 
-      {/* Top banner */}
+      {/* Room background */}
+      <Image
+        src={coachRoomImage}
+        alt=""
+        fill
+        priority
+        style={{ objectFit: "cover", objectPosition: "left center", zIndex: 0 }}
+      />
+
+      {/* Gradient overlay — darken left for readability, fade right */}
       <div style={{
+        position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+        background: "linear-gradient(to right, rgba(6,10,20,0.72) 0%, rgba(6,10,20,0.45) 50%, rgba(6,10,20,0.18) 100%)",
+      }} />
+
+      {/* Top header — frosted glass */}
+      <div style={{
+        position: "relative", zIndex: 10, flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0.875rem 1.5rem",
-        borderBottom: "1px solid oklch(28% 0.06 260)",
-        background: "oklch(14% 0.06 260)",
-        gap: "1rem", flexShrink: 0,
+        background: "rgba(6,10,20,0.6)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        gap: "1rem",
       }}>
         {/* Coach identity */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-          <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", border: "2px solid oklch(45% 0.08 150)", flexShrink: 0 }}>
-            <Image src={coachImage} alt={coachName} width={36} height={36} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+          <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", border: "2px solid rgba(255,255,255,0.2)", flexShrink: 0 }}>
+            <Image src={coachPortrait} alt={coachName} width={36} height={36} style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
           </div>
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", lineHeight: 1 }}>{coachName}</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(55% 0.008 260)", marginTop: "0.2rem", letterSpacing: "0.06em" }}>WayPoint</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "rgba(255,255,255,0.38)", marginTop: "0.2rem", letterSpacing: "0.06em" }}>WayPoint</p>
           </div>
         </div>
 
@@ -510,216 +527,171 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
         <div style={{ display: "flex", gap: "0.375rem", alignItems: "center" }}>
           {PHASE_ORDER.filter(p => p !== "COMPLETE").map((p, i) => (
             <div key={p} style={{
-              height: "3px",
+              height: "3px", borderRadius: "2px",
               width: i < phaseIndex ? "24px" : i === phaseIndex ? "32px" : "16px",
-              background: i < phaseIndex ? "oklch(60% 0.15 150)" : i === phaseIndex ? "oklch(90% 0.005 80)" : "oklch(32% 0.06 260)",
+              background: i < phaseIndex ? "oklch(60% 0.15 150)" : i === phaseIndex ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.14)",
               transition: "all 0.4s ease",
             }} />
           ))}
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(58% 0.008 260)", marginLeft: "0.375rem" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", marginLeft: "0.375rem" }}>
             {PHASE_LABELS[phase]}
           </span>
         </div>
 
         {/* Timer */}
-        <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "oklch(48% 0.008 260)", minWidth: "48px", textAlign: "right" }}>
+        <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", minWidth: "48px", textAlign: "right" }}>
           {status === "active" ? formatTime(elapsedSeconds) : ""}
         </div>
       </div>
 
-      {/* Body — mic left, whiteboard right */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", flex: 1, overflow: "hidden" }}>
+      {/* Body */}
+      <div style={{ position: "relative", zIndex: 5, flex: 1, display: "grid", gridTemplateColumns: "1fr 360px", overflow: "hidden" }}>
 
-        {/* Left — voice interface with blended coach figure */}
-        <div style={{
-          position: "relative",
-          overflow: "hidden",
-          display: "flex", flexDirection: "column",
-          alignItems: "center",
-        }}>
-          {/* Coach seated figure — blends into dark background via screen */}
+        {/* Left — voice interface */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem" }}>
+
+          {/* Mic orb */}
           <div style={{
-            position: "absolute", bottom: 0, left: "50%",
-            transform: "translateX(-50%)",
-            width: "100%", maxWidth: "420px",
-            height: "90%",
-            pointerEvents: "none",
+            width: "140px", height: "140px", borderRadius: "50%",
+            background: status === "active"
+              ? (isAiSpeaking
+                ? "radial-gradient(circle, rgba(100,200,140,0.38) 0%, rgba(100,200,140,0.06) 70%)"
+                : "radial-gradient(circle, rgba(60,140,100,0.32) 0%, rgba(60,140,100,0.04) 70%)")
+              : "radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "background 0.5s ease",
+            animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : "none",
           }}>
-            <Image
-              src={coachSessionImage}
-              alt={coachName}
-              fill
-              style={{
-                objectFit: "contain",
-                objectPosition: "bottom center",
-                mixBlendMode: "screen",
-                opacity: status === "active" ? (isAiSpeaking ? 1 : 0.82) : 0.55,
-                transition: "opacity 0.6s ease",
-              }}
-            />
-          </div>
-
-          {/* Overlay gradient — fade coach at top so orb reads clearly */}
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0,
-            height: "45%",
-            background: "linear-gradient(to bottom, oklch(18% 0.08 260) 0%, transparent 100%)",
-            pointerEvents: "none",
-            zIndex: 1,
-          }} />
-
-          {/* Orb + controls — float above the figure */}
-          <div style={{
-            position: "relative", zIndex: 2,
-            display: "flex", flexDirection: "column",
-            alignItems: "center", justifyContent: "flex-start",
-            paddingTop: "2.5rem", gap: "1.25rem",
-            width: "100%",
-          }}>
-            {/* Mic orb */}
             <div style={{
-              width: "140px", height: "140px", borderRadius: "50%",
+              width: "64px", height: "64px", borderRadius: "50%",
               background: status === "active"
-                ? (isAiSpeaking
-                  ? "radial-gradient(circle, oklch(60% 0.18 150 / 0.35) 0%, oklch(60% 0.18 150 / 0.05) 70%)"
-                  : "radial-gradient(circle, oklch(42% 0.10 150 / 0.3) 0%, oklch(42% 0.10 150 / 0.04) 70%)")
-                : "radial-gradient(circle, oklch(28% 0.07 260 / 0.4) 0%, transparent 70%)",
+                ? (isAiSpeaking ? "oklch(58% 0.18 150)" : isMuted ? "oklch(52% 0.15 25)" : "oklch(42% 0.12 150)")
+                : "rgba(255,255,255,0.12)",
+              backdropFilter: "blur(4px)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "background 0.5s ease",
-              animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : "none",
+              transition: "background 0.3s ease",
             }}>
-              <div style={{
-                width: "64px", height: "64px", borderRadius: "50%",
-                background: status === "active"
-                  ? (isAiSpeaking ? "oklch(58% 0.18 150)" : isMuted ? "oklch(52% 0.15 25)" : "oklch(42% 0.12 150)")
-                  : "oklch(32% 0.08 260)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "background 0.3s ease",
-              }}>
-                {status === "idle" || status === "error" ? <MicIcon color="oklch(65% 0.008 260)" /> :
-                 status === "connecting" ? <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "oklch(65% 0.008 260)", letterSpacing: "0.05em" }}>...</span> :
-                 isAiSpeaking ? <WaveIcon color="white" /> :
-                 isMuted ? <MicOffIcon color="white" /> :
-                 <MicIcon color="white" />}
-              </div>
+              {status === "idle" || status === "error" ? <MicIcon color="rgba(255,255,255,0.55)" /> :
+               status === "connecting" ? <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "rgba(255,255,255,0.55)", letterSpacing: "0.05em" }}>...</span> :
+               isAiSpeaking ? <WaveIcon color="white" /> :
+               isMuted ? <MicOffIcon color="white" /> :
+               <MicIcon color="white" />}
             </div>
-
-            {/* Status text */}
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(72% 0.008 260)", textAlign: "center", maxWidth: "240px" }}>
-              {status === "idle" && "Ready when you are."}
-              {status === "connecting" && (errorMsg ?? "Connecting…")}
-              {status === "active" && (isAiSpeaking ? `${coachName} is speaking…` : isMuted ? "Microphone paused." : "Listening…")}
-              {status === "complete" && "Session complete."}
-              {status === "error" && "Connection failed."}
-            </p>
-
-            {status === "active" && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(42% 0.008 260)", textAlign: "center" }}>
-                {isMuted ? "Tap Resume to continue" : "Speak naturally"}
-              </p>
-            )}
-
-            {/* Controls */}
-            <div style={{ display: "flex", gap: "0.875rem" }}>
-              {status === "idle" && (
-                <button onClick={startSession} style={btnStyle("primary")}>Start Session</button>
-              )}
-              {status === "active" && (
-                <>
-                  <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>
-                    {isMuted ? "Resume" : "Pause"}
-                  </button>
-                  <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
-                </>
-              )}
-              {status === "complete" && (
-                <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>
-              )}
-              {status === "error" && (
-                <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>
-              )}
-            </div>
-
-            {status === "error" && errorMsg && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(62% 0.18 25)", textAlign: "center", maxWidth: "280px" }}>
-                {errorMsg}
-              </p>
-            )}
           </div>
 
-          <style>{`
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); opacity: 1; }
-              50% { transform: scale(1.05); opacity: 0.88; }
-            }
-          `}</style>
+          {/* Status text */}
+          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
+            {status === "idle" && "Ready when you are."}
+            {status === "connecting" && (errorMsg ?? "Connecting…")}
+            {status === "active" && (isAiSpeaking ? `${coachName} is speaking…` : isMuted ? "Microphone paused." : "Listening…")}
+            {status === "complete" && "Session complete."}
+            {status === "error" && "Connection failed."}
+          </p>
+
+          {status === "active" && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.32)", textAlign: "center" }}>
+              {isMuted ? "Tap Resume to continue" : "Speak naturally"}
+            </p>
+          )}
+
+          {/* Controls */}
+          <div style={{ display: "flex", gap: "0.875rem" }}>
+            {status === "idle" && <button onClick={startSession} style={btnStyle("primary")}>Start Session</button>}
+            {status === "active" && (
+              <>
+                <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>{isMuted ? "Resume" : "Pause"}</button>
+                <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
+              </>
+            )}
+            {status === "complete" && <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>}
+            {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>}
+          </div>
+
+          {status === "error" && errorMsg && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(62% 0.18 25)", textAlign: "center", maxWidth: "280px" }}>
+              {errorMsg}
+            </p>
+          )}
         </div>
 
-        {/* Right — lined paper whiteboard */}
-        <div style={{
-          background: "oklch(99% 0.008 80)",
-          borderLeft: "1px solid oklch(88% 0.008 80)",
-          display: "flex", flexDirection: "column",
-          overflow: "hidden",
-          position: "relative",
-        }}>
-          {/* Lined paper rules */}
-          <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-            {Array.from({ length: 40 }, (_, i) => (
-              <div key={i} style={{
-                position: "absolute", left: 0, right: 0,
-                top: `${44 + i * 32}px`,
-                height: "1px",
-                background: "oklch(86% 0.012 220 / 0.6)",
-              }} />
-            ))}
-            {/* Red margin line */}
-            <div style={{
-              position: "absolute", top: 0, bottom: 0, left: "52px",
-              width: "1px",
-              background: "oklch(72% 0.18 15 / 0.3)",
-            }} />
-          </div>
+        {/* Right — floating paper notepad */}
+        <div style={{ padding: "18px 22px 22px 10px", display: "flex" }}>
+          <div className="notepad-paper">
 
-          {/* Header */}
-          <div style={{
-            padding: "0.875rem 1.25rem 0.875rem 4rem",
-            borderBottom: "2px solid oklch(80% 0.012 220 / 0.6)",
-            position: "relative",
-            flexShrink: 0,
-          }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)" }}>
-              Session notes
-            </p>
-          </div>
+            {/* Binding strip */}
+            <div className="notepad-binding">
+              {Array.from({ length: 9 }, (_, i) => <div key={i} className="notepad-hole" />)}
+            </div>
 
-          {/* Content */}
-          <div style={{ flex: 1, overflowY: "auto", padding: "1rem 1.25rem 1.5rem 4rem", position: "relative" }}>
-            {!hasWhiteboardContent && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(72% 0.008 260)", fontStyle: "italic", paddingTop: "0.5rem" }}>
-                Your notes will appear here as the conversation unfolds.
+            {/* Label */}
+            <div style={{ padding: "0.8rem 1.25rem 0.55rem 1.25rem", flexShrink: 0 }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(80,72,60,0.45)", margin: 0 }}>
+                Session Notes
               </p>
-            )}
+            </div>
 
-            {whiteboard.focus_today && (
-              <WBEntry label="Focus" value={whiteboard.focus_today} />
-            )}
-            {whiteboard.key_insights.map((ins, i) => (
-              <WBEntry key={i} label={i === 0 ? "Insights" : undefined} value={`• ${ins}`} indent />
-            ))}
-            {whiteboard.values_named.map((v, i) => (
-              <WBEntry key={i} label={i === 0 ? "Values" : undefined} value={`• ${v}`} indent />
-            ))}
-            {whiteboard.action_steps.map((step, i) => (
-              <WBEntry key={i} label={i === 0 ? "Action steps" : undefined} value={`${i + 1}. ${step}`} indent />
-            ))}
-            {whiteboard.carrying_forward && (
-              <WBEntry label="Carrying forward" value={`"${whiteboard.carrying_forward}"`} italic />
-            )}
+            {/* Notes */}
+            <div style={{ flex: 1, overflowY: "auto", padding: "0.25rem 1.25rem 1.75rem 1.25rem" }}>
+              {!hasWhiteboardContent && (
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", marginTop: "0.5rem" }}>
+                  Your notes will appear here as the conversation unfolds.
+                </p>
+              )}
+              {whiteboard.focus_today && <WBEntry label="Focus" value={whiteboard.focus_today} />}
+              {whiteboard.key_insights.map((ins, i) => (
+                <WBEntry key={i} label={i === 0 ? "Insights" : undefined} value={`• ${ins}`} indent />
+              ))}
+              {whiteboard.values_named.map((v, i) => (
+                <WBEntry key={i} label={i === 0 ? "Values" : undefined} value={`• ${v}`} indent />
+              ))}
+              {whiteboard.action_steps.map((step, i) => (
+                <WBEntry key={i} label={i === 0 ? "Actions" : undefined} value={`${i + 1}. ${step}`} indent />
+              ))}
+              {whiteboard.carrying_forward && (
+                <WBEntry label="Carrying forward" value={`"${whiteboard.carrying_forward}"`} italic />
+              )}
+            </div>
+
           </div>
         </div>
 
       </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.05); opacity: 0.88; }
+        }
+        .notepad-paper {
+          flex: 1;
+          background: #F8F5EF;
+          border-radius: 2px 2px 4px 4px;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          box-shadow:
+            5px 4px 0 0 #EAE6DE,
+            10px 8px 0 0 #E0DDD5,
+            0 20px 60px rgba(0,0,0,0.38),
+            0 4px 16px rgba(0,0,0,0.22);
+        }
+        .notepad-binding {
+          height: 22px;
+          background: linear-gradient(to bottom, #181818, #262626);
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          padding: 0 20px;
+          flex-shrink: 0;
+        }
+        .notepad-hole {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 38% 32%, #2e2e2e, #060606);
+          box-shadow: inset 0 1px 3px rgba(0,0,0,0.95);
+        }
+      `}</style>
     </div>
   );
 }
@@ -728,13 +700,13 @@ function WBEntry({ label, value, indent, italic }: { label?: string; value: stri
   return (
     <div style={{ marginBottom: "0.5rem" }}>
       {label && (
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.15 150)", marginBottom: "0.2rem", marginTop: "1rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(60,110,70,0.7)", marginBottom: "0.2rem", marginTop: "1rem", margin: "1rem 0 0.2rem 0" }}>
           {label}
         </p>
       )}
       <p style={{
         fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem",
-        color: "oklch(28% 0.008 260)", lineHeight: 1.65,
+        color: "rgba(40,35,28,0.82)", lineHeight: 1.65,
         paddingLeft: indent ? "0.5rem" : 0,
         fontStyle: italic ? "italic" : "normal",
         margin: 0,
@@ -749,10 +721,11 @@ function btnStyle(variant: "primary" | "secondary" | "ghost"): React.CSSProperti
   return {
     fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
     letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.8rem 1.75rem",
-    border: variant === "secondary" || variant === "ghost" ? "1px solid oklch(45% 0.008 260)" : "none",
+    border: variant === "secondary" || variant === "ghost" ? "1px solid rgba(255,255,255,0.3)" : "none",
     cursor: "pointer",
-    background: variant === "primary" ? "oklch(52% 0.18 150)" : "transparent",
-    color: variant === "primary" ? "white" : "oklch(60% 0.008 260)",
+    background: variant === "primary" ? "oklch(52% 0.18 150)" : "rgba(255,255,255,0.08)",
+    color: variant === "primary" ? "white" : "rgba(255,255,255,0.65)",
+    backdropFilter: "blur(8px)",
     display: "inline-block",
   };
 }

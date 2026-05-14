@@ -9,8 +9,8 @@ export const metadata = {
 };
 
 const COACH_IMAGES: Record<string, string> = {
-  Tara: "/images/coaches/tara.png",
-  Ethan: "/images/coaches/ethan.png",
+  Tara: "/images/coaches/tara-portrait.jpg",
+  Ethan: "/images/coaches/ethan-portrait.jpg",
 };
 
 function formatDuration(seconds: number | null) {
