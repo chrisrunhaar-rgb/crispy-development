@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { GoogleGenAI, Modality, Type } from "@google/genai";
+import { GoogleGenAI, Modality, Type, StartSensitivity, EndSensitivity } from "@google/genai";
 import type { LiveServerMessage, Session } from "@google/genai";
 import Image from "next/image";
 
@@ -178,6 +178,15 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
+    realtimeInputConfig: {
+      automaticActivityDetection: {
+        disabled: false,
+        startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
+        endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_HIGH,
+        prefixPaddingMs: 20,
+        silenceDurationMs: 500,
+      },
+    },
     tools: [{
       functionDeclarations: [
         {
@@ -264,7 +273,9 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
 
         return { id: call.id ?? "", name: call.name ?? "", response: { result: "ok" } };
       });
-      sessionRef.current?.sendToolResponse({ functionResponses: responses });
+      if (!sessionClosedRef.current) {
+        sessionRef.current?.sendToolResponse({ functionResponses: responses });
+      }
     }
   }, [sessionId, updateWhiteboardLocal, handleSessionComplete]);
 
@@ -389,7 +400,8 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
           onclose: (e: CloseEvent) => {
             if (sessionClosedRef.current) return;
             const isGoAway = e.reason.includes("GoAway") || e.reason.includes("session durat");
-            if (isGoAway) {
+            const isRecoverable = isGoAway || e.code === 1008;
+            if (isRecoverable) {
               if (switchToWarmup()) {
                 setErrorMsg(null);
               } else {
