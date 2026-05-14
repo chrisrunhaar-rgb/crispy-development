@@ -10,7 +10,7 @@ export type SessionRecord = {
   }> | null;
 };
 export type UserRecord = {
-  user_metadata?: { first_name?: string; last_name?: string };
+  user_metadata?: { first_name?: string; last_name?: string; language_preference?: string };
   email?: string;
 };
 
@@ -30,7 +30,7 @@ export function buildWorkerContext(
   const LANGUAGE_NAMES: Record<string, string> = {
     en: "English", nl: "Dutch", de: "German", fr: "French", es: "Spanish", id: "Indonesian (Bahasa Indonesia)",
   };
-  const preferredLang = profile?.preferred_language as string | null ?? "en";
+  const preferredLang = user.user_metadata?.language_preference ?? "en";
   const languageInstruction = preferredLang && preferredLang !== "en"
     ? `\n## SESSION LANGUAGE\nConduct this session in ${LANGUAGE_NAMES[preferredLang] ?? preferredLang}. All your responses, questions, and reflections must be in ${LANGUAGE_NAMES[preferredLang] ?? preferredLang}. If the coachee switches languages mid-session, follow their lead.\n`
     : "";

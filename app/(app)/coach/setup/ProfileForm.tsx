@@ -14,7 +14,6 @@ type Props = {
     host_culture?: string | null;
     months_in_context?: number | null;
     role?: string | null;
-    preferred_language?: string | null;
     notes?: string | null;
     selected_coach?: string | null;
   } | null;
@@ -46,7 +45,6 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
     host_culture: existing?.host_culture ?? "",
     months_in_context: existing?.months_in_context?.toString() ?? "",
     role: existing?.role ?? "",
-    preferred_language: existing?.preferred_language ?? "en",
     notes: existing?.notes ?? "",
     selected_coach: existing?.selected_coach ?? "Tara",
   });
@@ -71,7 +69,6 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         host_culture: form.host_culture || null,
         months_in_context: form.months_in_context ? parseInt(form.months_in_context) : null,
         role: form.role || null,
-        preferred_language: form.preferred_language || "en",
         notes: form.notes || null,
         selected_coach: form.selected_coach,
         onboarding_complete: true,
@@ -124,17 +121,6 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
 
         <Field label="Months in this cross-cultural context" hint="Roughly — even an estimate helps">
           <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} placeholder="e.g. 18" />
-        </Field>
-
-        <Field label="Preferred language" hint="Language for coaching sessions">
-          <select style={inputStyle} value={form.preferred_language} onChange={set("preferred_language")}>
-            <option value="en">English</option>
-            <option value="nl">Dutch</option>
-            <option value="de">German</option>
-            <option value="fr">French</option>
-            <option value="es">Spanish</option>
-            <option value="id">Indonesian</option>
-          </select>
         </Field>
 
         <Field label="Anything else your coach should know?" hint="Current season, specific challenges, what you hope to get from coaching">
