@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
@@ -417,7 +418,10 @@ export default function Personalities16Client({
         setIsSaved(true);
       }
       const result = await save16PersonalitiesResult(type, scores);
-      if (!result.error) setResultSaved(true);
+      if (!result.error) {
+        setResultSaved(true);
+        trackAssessmentCompletion('16-personalities');
+      }
     });
   }
 

@@ -26,7 +26,8 @@ export async function signIn(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect(inviteToken || memberInviteToken ? "/dashboard?joined=1" : redirectTo);
+  const loginDest = inviteToken || memberInviteToken ? "/dashboard?joined=1" : redirectTo;
+  redirect(loginDest.includes("?") ? `${loginDest}&ga=login` : `${loginDest}?ga=login`);
 }
 
 export async function signUp(formData: FormData) {
@@ -42,12 +43,15 @@ export async function signUp(formData: FormData) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
   const callbackExtra = inviteToken ? `?invite=${inviteToken}` : memberInviteToken ? `?member_invite=${memberInviteToken}` : "";
+  const emailCallback = callbackExtra
+    ? `${siteUrl}/auth/callback${callbackExtra}&type=signup`
+    : `${siteUrl}/auth/callback?type=signup`;
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${siteUrl}/auth/callback${callbackExtra}`,
+      emailRedirectTo: emailCallback,
       data: { first_name: firstName, last_name: lastName, pathway, marketing_consent: marketingConsent },
     },
   });
@@ -68,7 +72,7 @@ export async function signUp(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/dashboard?ga=signup");
 }
 
 export async function signOut() {

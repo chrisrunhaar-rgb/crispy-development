@@ -9,6 +9,7 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/dashboard";
   const invite = searchParams.get("invite") ?? "";
   const memberInvite = searchParams.get("member_invite") ?? "";
+  const type = searchParams.get("type") ?? "";
 
   if (code) {
     const cookieStore = await cookies();
@@ -29,15 +30,17 @@ export async function GET(request: Request) {
 
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      const gaSignup = type === "signup" ? "&ga=signup" : "";
       if (invite && data.user) {
         await acceptInvite(invite, data.user.id);
-        return NextResponse.redirect(`${origin}/dashboard?joined=1`);
+        return NextResponse.redirect(`${origin}/dashboard?joined=1${gaSignup}`);
       }
       if (memberInvite && data.user) {
         await acceptMemberInvite(memberInvite, data.user.id);
-        return NextResponse.redirect(`${origin}/dashboard?joined=1`);
+        return NextResponse.redirect(`${origin}/dashboard?joined=1${gaSignup}`);
       }
-      return NextResponse.redirect(`${origin}${next}`);
+      const gaSuffix = type === "signup" ? (next.includes("?") ? "&ga=signup" : "?ga=signup") : "";
+      return NextResponse.redirect(`${origin}${next}${gaSuffix}`);
     }
   }
 

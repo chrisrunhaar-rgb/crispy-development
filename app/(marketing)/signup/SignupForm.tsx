@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { signUp } from "@/app/auth/actions";
 import { useLanguage } from "@/lib/LanguageContext";
+import { trackPathwayStarted } from "@/lib/ga-events";
 
 type Pathway = "personal" | "team";
 const initialState = { error: "" };
@@ -80,7 +81,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                     key={p}
                     className={`pathway-option${pathway === p ? " selected" : ""}`}
                     style={{ cursor: "pointer" }}
-                    onClick={() => setPathway(p)}
+                    onClick={() => { setPathway(p); trackPathwayStarted(p); }}
                   >
                     <input
                       type="radio"

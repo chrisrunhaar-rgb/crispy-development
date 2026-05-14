@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveKaruniaResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import VerseChip from "@/components/VerseChip";
 import { VERSES } from "@/lib/verses";
 import LangToggle from "@/components/LangToggle";
@@ -500,6 +501,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
         setSaveError(error);
       } else {
         setSaved(true);
+        trackAssessmentCompletion('karunia-rohani');
       }
     });
   }

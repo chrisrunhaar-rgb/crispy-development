@@ -7,7 +7,7 @@
 
 export type AssessmentType =
   | 'disc' | 'wheel-of-life' | 'three-thinking-styles' | 'karunia-rohani'
-  | 'enneagram' | 'big-five' | '16-personalities'
+  | 'enneagram' | 'big-five' | '16-personalities' | '5languages'
   | 'thinking-style' | 'comm-style' | 'trust' | 'contribution-zone'
   | 'conflict-style';
 
@@ -105,6 +105,16 @@ export function trackLogin() {
 
   window.gtag?.('event', 'login', {
     method: 'email',
+    timestamp: new Date().toISOString(),
+  });
+}
+
+// Track pathway selection on signup form
+export function trackPathwayStarted(pathway: string) {
+  if (typeof window === 'undefined') return;
+
+  window.gtag?.('event', 'pathway_started', {
+    pathway: pathway,
     timestamp: new Date().toISOString(),
   });
 }

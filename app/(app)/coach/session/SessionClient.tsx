@@ -197,6 +197,9 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
       const dc = pc.createDataChannel("oai-events");
       dcRef.current = dc;
       dc.onmessage = handleDataChannelMessage;
+      dc.onopen = () => {
+        dc.send(JSON.stringify({ type: "response.create" }));
+      };
 
       // Create offer
       const offer = await pc.createOffer();

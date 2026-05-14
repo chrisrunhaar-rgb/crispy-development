@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import EnneagramTypesGrid from "./EnneagramTypesGrid";
 import TypeCard from "./TypeCard";
 import LangToggle from "@/components/LangToggle";
@@ -975,6 +976,7 @@ export default function EnneagramClient({
     startTransition(async () => {
       await saveEnneagramResult(primaryType.number, scores);
       setResultSaved(true);
+      trackAssessmentCompletion('enneagram');
     });
   }
 

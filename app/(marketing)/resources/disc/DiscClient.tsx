@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 
 // ── ASSESSMENT DATA ─────────────────────────────────────────────────────────────────
@@ -628,6 +629,7 @@ export default function DiscClient({
     startTransition(async () => {
       await saveDISCResult(resultKey, { D: pD, I: pI, S: pS, C: pC });
       setResultSaved(true);
+      trackAssessmentCompletion('disc');
     });
   }
 

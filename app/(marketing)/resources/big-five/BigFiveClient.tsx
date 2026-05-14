@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveBigFiveResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
@@ -809,7 +810,10 @@ export default function BigFiveClient({
         setIsSaved(true);
       }
       const result = await saveBigFiveResult(scores);
-      if (!result.error) setResultSaved(true);
+      if (!result.error) {
+        setResultSaved(true);
+        trackAssessmentCompletion('big-five');
+      }
     });
   }
 

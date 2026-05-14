@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard, saveThinkingStyleResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 
 // ── QUIZ DATA ─────────────────────────────────────────────────────────────────
@@ -335,6 +336,7 @@ export default function ThinkingStylesClient({
     startTransition(async () => {
       await saveThinkingStyleResult(resultKey, { C: pC, H: pH, I: pI });
       setResultSaved(true);
+      trackAssessmentCompletion('three-thinking-styles');
     });
   }
 

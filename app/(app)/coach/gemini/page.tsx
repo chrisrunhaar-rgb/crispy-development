@@ -1,32 +1,16 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import GeminiSessionClient from "../gemini/GeminiSessionClient";
+import GeminiSessionClient from "./GeminiSessionClient";
 
 export const metadata = {
-  title: "Coaching Session — WayPoint",
+  title: "Coaching Session (Gemini) — WayPoint",
 };
 
-const COACH_VOICES: Record<string, string> = {
-  Tara: "Kore",
-  Ethan: "Charon",
-};
-
-export default async function CoachSessionPage() {
+export default async function GeminiCoachPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login?next=/coach/session");
-
-  const { data: profile } = await supabase
-    .from("wp_worker_profiles")
-    .select("selected_coach, onboarding_complete")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!profile?.onboarding_complete) redirect("/coach/setup");
-
-  const coachName = profile.selected_coach ?? "Tara";
-  const coachVoice = COACH_VOICES[coachName] ?? "Kore";
+  if (!user) redirect("/login?next=/coach/gemini");
 
   const admin = createAdminClient();
 
@@ -54,5 +38,5 @@ export default async function CoachSessionPage() {
     action_steps: [],
   });
 
-  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} />;
+  return <GeminiSessionClient sessionId={session.id} />;
 }

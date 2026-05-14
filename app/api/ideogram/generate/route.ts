@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${ideogramApiKey}`,
+        "Api-Key": ideogramApiKey,
       },
       body: JSON.stringify({
         image_request: {

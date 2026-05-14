@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveFiveLanguagesResult } from "../actions";
+import { trackAssessmentCompletion } from "@/lib/ga-events";
 
 // ── TYPES ─────────────────────────────────────────────────────────────────────
 
@@ -330,6 +331,7 @@ export default function FiveLanguagesClient({
         await saveResourceToDashboard("5languages");
         setResultSaved(true);
         setSaveError(null);
+        trackAssessmentCompletion('5languages');
       }
     });
   }

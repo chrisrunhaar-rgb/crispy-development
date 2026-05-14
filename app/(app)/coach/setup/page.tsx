@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "./ProfileForm";
 
@@ -17,35 +18,34 @@ export default async function CoachSetupPage() {
     .eq("user_id", user.id)
     .single();
 
-  const firstName = user.user_metadata?.first_name ?? user.email?.split("@")[0] ?? "there";
+  const isFirstTime = !profile?.onboarding_complete;
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
 
-      <div style={{ background: "oklch(30% 0.12 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
+      <div style={{ background: "oklch(18% 0.08 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(14% 0.06 260)" }}>
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint</p>
-            <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
-              {profile ? "Your Profile" : `Welcome, ${firstName}`}
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
+              WayPoint
+            </p>
+            <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "white" }}>
+              {isFirstTime ? "Set up your profile" : "Your profile"}
             </h1>
           </div>
+          {!isFirstTime && (
+            <Link href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(72% 0.008 260)", textDecoration: "none" }}>
+              ← Back to WayPoint
+            </Link>
+          )}
         </div>
       </div>
 
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
-        <div style={{ maxWidth: "560px", margin: "0 auto" }}>
-
-          {!profile && (
-            <div style={{ background: "oklch(30% 0.12 260 / 0.06)", border: "1px solid oklch(30% 0.12 260 / 0.15)", padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(30% 0.12 260)", lineHeight: 1.6 }}>
-                WayPoint uses your context to personalise every session. This takes 2 minutes. You can update it any time.
-              </p>
-            </div>
-          )}
-
+        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <ProfileForm
             userId={user.id}
+            isFirstTime={isFirstTime}
             existing={profile ?? null}
           />
         </div>
