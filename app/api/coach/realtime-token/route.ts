@@ -2,6 +2,7 @@
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST() {
+  try {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -10,20 +11,22 @@ export async function POST() {
   if (!apiKey) return NextResponse.json({ error: "OpenAI not configured" }, { status: 500 });
 
   // Fetch coachee profile for context injection
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from("wp_worker_profiles")
     .select("*")
     .eq("user_id", user.id)
     .single();
+  if (profileError && profileError.code !== "PGRST116") console.error("Profile fetch error:", profileError);
 
   // Fetch last 3 session whiteboards for context
-  const { data: recentSessions } = await supabase
+  const { data: recentSessions, error: sessionsError } = await supabase
     .from("wp_sessions")
     .select("session_number, started_at, wp_whiteboards(focus_today, key_insights, action_steps, carrying_forward)")
     .eq("user_id", user.id)
     .eq("status", "completed")
     .order("started_at", { ascending: false })
     .limit(3);
+  if (sessionsError) console.error("Sessions fetch error:", sessionsError);
 
   const workerContext = buildWorkerContext(profile, recentSessions ?? [], user);
 
@@ -34,7 +37,7 @@ export async function POST() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "gpt-4o-realtime-preview-2024-12-17",
+      model: "gpt-4o-realtime-preview",
       voice: "alloy",
       instructions: workerContext,
       input_audio_transcription: { model: "whisper-1" },
@@ -92,6 +95,11 @@ export async function POST() {
 
   const session = await r.json();
   return NextResponse.json({ client_secret: session.client_secret });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("realtime-token error:", msg, err);
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
 }
 
 function buildWorkerContext(
