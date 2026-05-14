@@ -77,7 +77,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
     });
 
     setSaving(false);
-    router.push(isFirstTime ? "/coach/session" : "/coach");
+    router.push("/coach");
   }
 
   return (

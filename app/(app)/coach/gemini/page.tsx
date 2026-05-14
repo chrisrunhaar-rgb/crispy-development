@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import GeminiSessionClient from "./GeminiSessionClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Coaching Session (Gemini) — WayPoint",
 };

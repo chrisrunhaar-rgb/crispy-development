@@ -1,0 +1,126 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+type Props = {
+  trialExhausted: boolean;
+  trialRemainingMinutes: number;
+};
+
+export default function SessionTypeSelector({ trialExhausted, trialRemainingMinutes }: Props) {
+  const [selected, setSelected] = useState<"deep" | "quick">("deep");
+  const [starting, setStarting] = useState(false);
+  const router = useRouter();
+
+  function handleStart() {
+    setStarting(true);
+    router.push(`/coach/session?type=${selected}`);
+  }
+
+  if (trialExhausted) {
+    return (
+      <div style={{
+        background: "oklch(22% 0.06 260)",
+        border: "1px solid oklch(35% 0.06 260)",
+        padding: "1rem 1.25rem",
+        marginBottom: "1rem",
+      }}>
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.775rem",
+          color: "oklch(72% 0.008 260)",
+          lineHeight: 1.6,
+          margin: 0,
+        }}>
+          You&apos;ve used your 120-minute free trial. Contact us to continue coaching.
+        </p>
+      </div>
+    );
+  }
+
+  const canStart = trialRemainingMinutes >= (selected === "deep" ? 5 : 1);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+
+      {/* Selection tiles */}
+      <div style={{ display: "flex", gap: "0.75rem" }}>
+        {(["deep", "quick"] as const).map(type => {
+          const isSelected = selected === type;
+          return (
+            <button
+              key={type}
+              type="button"
+              onClick={() => setSelected(type)}
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                padding: "0.875rem 1rem",
+                background: isSelected ? "oklch(28% 0.10 260)" : "oklch(22% 0.06 260)",
+                border: `2px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(32% 0.06 260)"}`,
+                cursor: "pointer",
+                textAlign: "left",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <span style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+                color: isSelected ? "oklch(65% 0.15 45)" : "oklch(72% 0.008 260)",
+                marginBottom: "0.2rem",
+              }}>
+                {isSelected && (
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <circle cx="5" cy="5" r="4" fill="oklch(65% 0.15 45)" />
+                  </svg>
+                )}
+                {type === "deep" ? "Deep" : "Quick"}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.65rem",
+                color: "oklch(55% 0.008 260)",
+                lineHeight: 1.4,
+              }}>
+                {type === "deep" ? "~40 min · complex topics" : "~10 min · single focus"}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Start button */}
+      <button
+        type="button"
+        disabled={starting || !canStart}
+        onClick={handleStart}
+        style={{
+          width: "100%",
+          background: starting || !canStart ? "oklch(40% 0.06 260)" : "oklch(65% 0.15 45)",
+          color: "white",
+          fontFamily: "var(--font-montserrat)",
+          fontWeight: 700,
+          fontSize: "0.8rem",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          padding: "0.9rem",
+          border: "none",
+          cursor: starting || !canStart ? "not-allowed" : "pointer",
+          transition: "background 0.15s ease",
+        }}
+      >
+        {starting ? "Starting…" : `Start ${selected} session →`}
+      </button>
+
+    </div>
+  );
+}

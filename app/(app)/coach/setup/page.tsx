@@ -3,6 +3,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import SetupFlow from "./SetupFlow";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Set Up Your Profile — WayPoint",
 };

@@ -480,22 +480,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
   return (
-    <div style={{ position: "relative", display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19" }}>
-
-      {/* Room background */}
-      <Image
-        src={coachRoomImage}
-        alt=""
-        fill
-        priority
-        style={{ objectFit: "cover", objectPosition: "left center", zIndex: 0 }}
-      />
-
-      {/* Gradient overlay — darken left for readability, fade right */}
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-        background: "linear-gradient(to right, rgba(6,10,20,0.72) 0%, rgba(6,10,20,0.45) 50%, rgba(6,10,20,0.18) 100%)",
-      }} />
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19" }}>
 
       {/* Top header — frosted glass */}
       <div style={{
@@ -540,7 +525,24 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       <div className="session-main-layout" style={{ position: "relative", zIndex: 5, flex: 1, display: "flex", flexDirection: "row", overflow: "hidden" }}>
 
         {/* Left — voice interface */}
-        <div className="session-voice-column" style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem" }}>
+        <div className="session-voice-column" style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem", overflow: "hidden" }}>
+
+          {/* Room background — scoped inside voice column so mobile 50dvh clips it */}
+          <Image
+            src={coachRoomImage}
+            alt=""
+            fill
+            priority
+            style={{ objectFit: "cover", objectPosition: "left center", zIndex: 0 }}
+          />
+          {/* Gradient overlay */}
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+            background: "linear-gradient(to right, rgba(6,10,20,0.72) 0%, rgba(6,10,20,0.45) 50%, rgba(6,10,20,0.18) 100%)",
+          }} />
+
+          {/* Voice content — above image/overlay */}
+          <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem" }}>
 
           {/* Mic orb */}
           <div style={{
@@ -604,6 +606,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               {errorMsg}
             </p>
           )}
+          </div>{/* end voice content wrapper */}
         </div>
 
         {/* Right — ring binder notepad */}

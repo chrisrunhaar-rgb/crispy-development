@@ -50,13 +50,14 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
             WayPoint
           </p>
           <h1 style={{
-            fontFamily: "var(--font-montserrat)",
-            fontWeight: 800,
-            fontSize: "2rem",
+            fontFamily: "var(--font-cormorant)",
+            fontStyle: "italic",
+            fontWeight: 600,
+            fontSize: "2.25rem",
             color: "white",
             lineHeight: 1.15,
           }}>
-            Before your first session
+            Welcome to WayPoint.
           </h1>
         </div>
       </div>

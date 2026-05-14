@@ -3,6 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import SessionTypeSelector from "./SessionTypeSelector";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "WayPoint — AI Coaching",
@@ -185,63 +188,10 @@ export default async function CoachPage({
                 </p>
               </div>
 
-              {trialExhausted ? (
-                <div style={{ background: "oklch(22% 0.06 260)", border: "1px solid oklch(35% 0.06 260)", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(72% 0.008 260)", lineHeight: 1.6, margin: 0 }}>
-                    You&apos;ve used your free trial. Contact us to continue coaching.
-                  </p>
-                </div>
-              ) : (
-                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-                  <Link
-                    href="/coach/session?type=deep"
-                    style={{
-                      flex: 1,
-                      minWidth: "140px",
-                      display: "block",
-                      background: "oklch(65% 0.15 45)",
-                      color: "white",
-                      fontFamily: "var(--font-montserrat)",
-                      fontWeight: 700,
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      textDecoration: "none",
-                      padding: "0.875rem 1rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    Deep session
-                    <span style={{ display: "block", fontWeight: 400, fontSize: "0.65rem", letterSpacing: "0.02em", textTransform: "none", opacity: 0.85, marginTop: "0.15rem" }}>
-                      ~40 min · complex topics
-                    </span>
-                  </Link>
-                  <Link
-                    href="/coach/session?type=quick"
-                    style={{
-                      flex: 1,
-                      minWidth: "140px",
-                      display: "block",
-                      background: "oklch(35% 0.08 260)",
-                      color: "white",
-                      fontFamily: "var(--font-montserrat)",
-                      fontWeight: 700,
-                      fontSize: "0.75rem",
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      textDecoration: "none",
-                      padding: "0.875rem 1rem",
-                      textAlign: "center",
-                      border: "1px solid oklch(45% 0.08 260)",
-                    }}
-                  >
-                    Quick session
-                    <span style={{ display: "block", fontWeight: 400, fontSize: "0.65rem", letterSpacing: "0.02em", textTransform: "none", opacity: 0.85, marginTop: "0.15rem" }}>
-                      ~10 min · focused topic
-                    </span>
-                  </Link>
-                </div>
-              )}
+              <SessionTypeSelector
+                trialExhausted={trialExhausted}
+                trialRemainingMinutes={trialRemainingMinutes}
+              />
 
               <Link href="/coach/setup" style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
