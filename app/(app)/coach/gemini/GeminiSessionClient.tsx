@@ -94,6 +94,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const transcriptRef = useRef<string[]>([]);
   const aiRef = useRef<GoogleGenAI | null>(null);
   const systemPromptRef = useRef<string>("");
+  const reconnectContextRef = useRef<string | null>(null);
 
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
@@ -406,6 +407,19 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               if (switchToWarmup()) {
                 setErrorMsg(null);
               } else {
+                const wb = whiteboardRef.current;
+                const currentPhase = phaseRef.current;
+                const recentTranscript = transcriptRef.current.slice(-20).join(" ... ");
+                reconnectContextRef.current = [
+                  `SESSION RECONNECTED — continue seamlessly, do not re-introduce yourself.`,
+                  `Current phase: ${currentPhase}.`,
+                  wb.focus_today ? `Focus today: ${wb.focus_today}.` : "",
+                  wb.key_insights.length ? `Key insights so far: ${wb.key_insights.join("; ")}.` : "",
+                  wb.values_named.length ? `Values named: ${wb.values_named.join("; ")}.` : "",
+                  wb.action_steps.length ? `Action steps so far: ${wb.action_steps.join("; ")}.` : "",
+                  recentTranscript ? `Recent conversation: ${recentTranscript}` : "",
+                  `Pick up naturally from the ${currentPhase} phase.`,
+                ].filter(Boolean).join(" ");
                 setStatus("connecting");
                 setErrorMsg("Reconnecting…");
                 stopAudio();
@@ -425,8 +439,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
       sessionRef.current = geminiSession;
 
+      const resumeCtx = reconnectContextRef.current;
+      reconnectContextRef.current = null;
       setTimeout(() => {
-        sessionRef.current?.sendRealtimeInput({ text: "Begin the session." });
+        sessionRef.current?.sendRealtimeInput({ text: resumeCtx ?? "Begin the session." });
       }, 800);
 
       worklet.port.onmessage = (e: MessageEvent<ArrayBuffer>) => {
