@@ -97,7 +97,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
 
           <InfoCard label="What is WayPoint?">
-            WayPoint is a private coaching space — available whenever you need it. Your coach is an AI companion trained in professional coaching methods for people navigating cross-cultural life and work. It&rsquo;s not a chatbot. It listens, asks good questions, and helps you find your own clarity.
+            WayPoint is a private coaching space — available whenever you need it. Your coach is an AI companion trained in professional coaching methods for people navigating cross-cultural life and work. It&rsquo;s not a chatbot. It listens, asks good questions, and helps you find your own clarity. For Christian workers, it understands the place of spirituality and the influence of the Holy Spirit in your context.
           </InfoCard>
 
           <InfoCard label="What happens in a session?">
