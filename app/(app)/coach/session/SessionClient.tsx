@@ -196,7 +196,7 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
 
-      const sdpRes = await fetch("https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-12-17", {
+      const sdpRes = await fetch("https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${client_secret.value}`,
@@ -205,7 +205,10 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
         body: offer.sdp,
       });
 
-      if (!sdpRes.ok) throw new Error("WebRTC connection failed");
+      if (!sdpRes.ok) {
+        const errText = await sdpRes.text().catch(() => "");
+        throw new Error(`WebRTC ${sdpRes.status}: ${errText.slice(0, 200)}`);
+      }
       const answerSdp = await sdpRes.text();
       await pc.setRemoteDescription({ type: "answer", sdp: answerSdp });
 
