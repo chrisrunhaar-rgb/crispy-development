@@ -336,7 +336,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       }
       const { apiKey, systemPrompt } = await tokenRes.json() as { apiKey: string; systemPrompt: string };
       systemPromptRef.current = systemPrompt;
-      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1beta" } });
+      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });
       aiRef.current = ai;
 
       let stream: MediaStream;
