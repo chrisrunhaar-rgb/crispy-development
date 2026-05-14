@@ -163,7 +163,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     src.start(startAt);
     playTimeRef.current = startAt + buffer.duration;
     src.onended = () => {
-      if (playTimeRef.current <= playCtx.currentTime + 0.05) {
+      if (playTimeRef.current <= playCtx.currentTime + 0.15) {
         isAiSpeakingRef.current = false;
         setIsAiSpeaking(false);
       }
@@ -428,6 +428,12 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       }, 800);
 
       worklet.port.onmessage = (e: MessageEvent<ArrayBuffer>) => {
+        // Safety valve: if isAiSpeaking is stuck (AI audio ended 2s+ ago), reset it
+        const playCtx2 = playContextRef.current;
+        if (isAiSpeakingRef.current && playCtx2 && playCtx2.currentTime > playTimeRef.current + 2.0) {
+          isAiSpeakingRef.current = false;
+          setIsAiSpeaking(false);
+        }
         if (isMutedRef.current || isAiSpeakingRef.current) return;
         const int16 = new Int16Array(e.data);
         const uint8 = new Uint8Array(int16.buffer);
