@@ -21,6 +21,7 @@ import TeamAssessmentSelector from "./TeamAssessmentSelector";
 import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
 import { type FeedbackEntry } from "@/components/StepFeedback";
 import DashboardTour from "./DashboardTour";
+import GaEventTracker from "@/components/GaEventTracker";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -40,13 +41,13 @@ type Module = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string; tour?: string }>;
+  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string; tour?: string; ga?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { tab, joined, join, member, leader, initiator, tour } = await searchParams;
+  const { tab, joined, join, member, leader, initiator, tour, ga } = await searchParams;
 
   // Admin mode: check if current user is admin and a target user param exists
   const isAdmin = user.email === "chris.runhaar@world-outreach.com";
@@ -589,6 +590,7 @@ export default async function DashboardPage({
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
       <TimezoneDetector savedTimezone={userTimezone} />
       <DashboardTour show={tour === "1"} />
+      <GaEventTracker gaEvent={ga} pathway={pathway} />
 
       {/* Admin viewing banner */}
       {viewingAsAdmin && (
