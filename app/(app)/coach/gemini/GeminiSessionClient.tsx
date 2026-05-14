@@ -34,12 +34,19 @@ const COACH_ROOM_IMAGES: Record<string, string> = {
   Ethan: "/images/coaches/ethan-room.jpg",
 };
 
-const PHASE_MIN_SECONDS: Partial<Record<Phase, number>> = {
+const PHASE_MIN_SECONDS_DEEP: Partial<Record<Phase, number>> = {
   LAND: 30,
   SEEK: 60,
   EXPLORE: 120,
   COMMIT: 60,
   CARRY: 30,
+};
+
+const PHASE_MIN_SECONDS_QUICK: Partial<Record<Phase, number>> = {
+  LAND: 60,
+  EXPLORE: 300,  // 5 min minimum — quick session core work
+  COMMIT: 120,   // 2 min minimum
+  CARRY: 60,
 };
 
 type Props = {
@@ -246,7 +253,8 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         if (call.name === "advance_phase") {
           const newPhase = args.phase as Phase;
           const currentPhase = phaseRef.current;
-          const minSeconds = PHASE_MIN_SECONDS[currentPhase] ?? 0;
+          const phaseMinSeconds = sessionType === "quick" ? PHASE_MIN_SECONDS_QUICK : PHASE_MIN_SECONDS_DEEP;
+          const minSeconds = phaseMinSeconds[currentPhase] ?? 0;
           const secondsInPhase = (Date.now() - phaseStartTimeRef.current) / 1000;
 
           if (secondsInPhase < minSeconds) {
@@ -274,7 +282,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         sessionRef.current?.sendToolResponse({ functionResponses: responses });
       }
     }
-  }, [sessionId, updateWhiteboardLocal, handleSessionComplete]);
+  }, [sessionId, sessionType, updateWhiteboardLocal, handleSessionComplete]);
 
   const scheduleWarmup = useCallback(() => {
     if (warmupTimerRef.current) clearTimeout(warmupTimerRef.current);

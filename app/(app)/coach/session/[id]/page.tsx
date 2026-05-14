@@ -129,22 +129,17 @@ export default async function PastSessionPage({
             hasLeader={hasLeader}
           />
 
-          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)", display: "flex", justifyContent: "center" }}>
+          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
             <Link
-              href="/coach/session"
+              href="/coach"
               style={{
                 fontFamily: "var(--font-montserrat)",
-                fontWeight: 700,
                 fontSize: "0.8rem",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
+                color: "oklch(55% 0.008 260)",
                 textDecoration: "none",
-                padding: "0.875rem 2rem",
-                background: "oklch(65% 0.15 45)",
-                color: "white",
               }}
             >
-              Start New Session
+              ← Back to WayPoint
             </Link>
           </div>
         </div>
