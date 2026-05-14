@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import ProfileForm from "./ProfileForm";
+import SetupFlow from "./SetupFlow";
 
 export const metadata = {
   title: "Set Up Your Profile — WayPoint",
@@ -14,11 +14,24 @@ export default async function CoachSetupPage() {
 
   const { data: profile } = await supabase
     .from("wp_worker_profiles")
-    .select("*")
+    .select("*, terms_accepted_at")
     .eq("user_id", user.id)
     .single();
 
   const isFirstTime = !profile?.onboarding_complete;
+  const showIntroFirst = isFirstTime && !profile?.terms_accepted_at;
+
+  // When showing intro first, SetupFlow handles the full-page layout
+  if (showIntroFirst) {
+    return (
+      <SetupFlow
+        userId={user.id}
+        isFirstTime={isFirstTime}
+        existing={profile ?? null}
+        showIntroFirst={showIntroFirst}
+      />
+    );
+  }
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
@@ -43,10 +56,11 @@ export default async function CoachSetupPage() {
 
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <ProfileForm
+          <SetupFlow
             userId={user.id}
             isFirstTime={isFirstTime}
             existing={profile ?? null}
+            showIntroFirst={false}
           />
         </div>
       </div>

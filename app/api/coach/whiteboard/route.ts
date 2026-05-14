@@ -22,6 +22,17 @@ export async function PATCH(req: NextRequest) {
 
   if (!wb) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
+  // Verify session is in progress before allowing whiteboard updates
+  const { data: session } = await supabase
+    .from("wp_sessions")
+    .select("status")
+    .eq("id", session_id)
+    .single();
+
+  if (session?.status !== "in_progress") {
+    return NextResponse.json({ error: "Session not in progress" }, { status: 409 });
+  }
+
   let update: Record<string, unknown> = { updated_at: new Date().toISOString() };
 
   switch (section) {
