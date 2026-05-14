@@ -7,8 +7,9 @@ const rateLimitMap = new Map<string, number[]>();
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(() => ({})) as { coachName?: string };
+    const body = await req.json().catch(() => ({})) as { coachName?: string; sessionType?: string };
     const coachName = typeof body.coachName === "string" && body.coachName.trim() ? body.coachName.trim() : "Tara";
+    const sessionType = body.sessionType === "quick" ? "quick" as const : "deep" as const;
 
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
       .limit(3);
     if (sessionsError) console.error("Sessions fetch error:", sessionsError);
 
-    const systemPrompt = buildWorkerContext(profile, recentSessions ?? [], user, coachName);
+    const systemPrompt = buildWorkerContext(profile, recentSessions ?? [], user, coachName, sessionType);
 
     return NextResponse.json({ apiKey, systemPrompt });
   } catch (err) {

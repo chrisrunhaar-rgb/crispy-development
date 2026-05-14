@@ -12,7 +12,16 @@ const COACH_VOICES: Record<string, string> = {
   Ethan: "Charon",
 };
 
-export default async function CoachSessionPage() {
+const TRIAL_LIMIT_SECONDS = 7200; // 120 minutes
+
+export default async function CoachSessionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>;
+}) {
+  const params = await searchParams;
+  const sessionType = params.type === "quick" ? "quick" : "deep";
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/coach/session");
@@ -25,10 +34,24 @@ export default async function CoachSessionPage() {
 
   if (!profile?.onboarding_complete) redirect("/coach/setup");
 
+  const admin = createAdminClient();
+
+  // Trial check — sum all completed session durations
+  const { data: completedForTrial } = await admin
+    .from("wp_sessions")
+    .select("duration_seconds")
+    .eq("user_id", user.id)
+    .eq("status", "completed");
+
+  const totalUsedSeconds = (completedForTrial ?? []).reduce(
+    (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
+    0
+  );
+
+  if (totalUsedSeconds >= TRIAL_LIMIT_SECONDS) redirect("/coach?trial=exhausted");
+
   const coachName = profile.selected_coach ?? "Tara";
   const coachVoice = COACH_VOICES[coachName] ?? "Kore";
-
-  const admin = createAdminClient();
 
   const { count } = await admin
     .from("wp_sessions")
@@ -40,7 +63,7 @@ export default async function CoachSessionPage() {
 
   const { data: session, error } = await admin
     .from("wp_sessions")
-    .insert({ user_id: user.id, session_number: sessionNumber, phase: "LAND" })
+    .insert({ user_id: user.id, session_number: sessionNumber, phase: "LAND", session_type: sessionType })
     .select()
     .single();
 
@@ -54,5 +77,5 @@ export default async function CoachSessionPage() {
     action_steps: [],
   });
 
-  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} />;
+  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} sessionType={sessionType} />;
 }

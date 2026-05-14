@@ -8,6 +8,8 @@ export const metadata = {
   title: "WayPoint — AI Coaching",
 };
 
+const TRIAL_LIMIT_SECONDS = 7200; // 120 minutes
+
 const COACH_IMAGES: Record<string, string> = {
   Tara: "/images/coaches/tara-portrait.jpg",
   Ethan: "/images/coaches/ethan-portrait.jpg",
@@ -29,7 +31,14 @@ function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 }
 
-export default async function CoachPage() {
+export default async function CoachPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ trial?: string }>;
+}) {
+  const params = await searchParams;
+  const trialExhaustedParam = params.trial === "exhausted";
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/coach");
@@ -59,6 +68,22 @@ export default async function CoachPage() {
     .select("*", { count: "exact", head: true })
     .eq("leader_user_id", user.id);
   const isLeader = (leaderCount ?? 0) > 0;
+
+  // Trial calculation — all completed sessions
+  const { data: trialData } = await supabase
+    .from("wp_sessions")
+    .select("duration_seconds")
+    .eq("user_id", user.id)
+    .eq("status", "completed");
+
+  const totalUsedSeconds = (trialData ?? []).reduce(
+    (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
+    0
+  );
+  const trialUsedMinutes = Math.round(totalUsedSeconds / 60);
+  const trialRemainingMinutes = Math.max(0, 120 - trialUsedMinutes);
+  const trialExhausted = totalUsedSeconds >= TRIAL_LIMIT_SECONDS || trialExhaustedParam;
+  const trialPct = Math.min(100, Math.round((totalUsedSeconds / TRIAL_LIMIT_SECONDS) * 100));
 
   const { data: sessions } = await supabase
     .from("wp_sessions")
@@ -130,38 +155,101 @@ export default async function CoachPage() {
               <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", fontStyle: "italic", color: "white", marginBottom: "0.5rem", lineHeight: 1.2 }}>
                 {coachName}
               </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(65% 0.008 260)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(65% 0.008 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
                 {sessionCount === 0
                   ? "Ready for your first session. Speak naturally — your notes build themselves as you talk."
                   : `Session ${sessionCount + 1} ready. ${coachName} remembers your previous sessions.`}
               </p>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-                <Link
-                  href="/coach/session"
-                  style={{
-                    display: "inline-block",
-                    background: "oklch(65% 0.15 45)",
-                    color: "white",
-                    fontFamily: "var(--font-montserrat)",
-                    fontWeight: 700,
-                    fontSize: "0.8rem",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    textDecoration: "none",
-                    padding: "0.875rem 1.75rem",
-                  }}
-                >
-                  {sessionCount === 0 ? "Start your first session" : "Start new session"}
-                </Link>
-                <Link href="/coach/setup" style={{
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-                  color: "oklch(55% 0.008 260)", textDecoration: "none",
-                  letterSpacing: "0.06em",
-                }}>
-                  Coaching preferences
-                </Link>
+              {/* Trial meter */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.4rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: trialExhausted ? "oklch(65% 0.15 30)" : "oklch(65% 0.008 260)" }}>
+                    Free trial
+                  </span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: trialExhausted ? "oklch(65% 0.15 30)" : "oklch(65% 0.15 45)" }}>
+                    {trialExhausted ? "Trial complete" : `${trialRemainingMinutes} min remaining`}
+                  </span>
+                </div>
+                <div style={{ height: "4px", background: "oklch(30% 0.06 260)", borderRadius: "2px", overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%",
+                    width: `${trialPct}%`,
+                    background: trialExhausted ? "oklch(55% 0.15 30)" : "oklch(65% 0.15 45)",
+                    transition: "width 0.3s ease",
+                    borderRadius: "2px",
+                  }} />
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)", marginTop: "0.3rem" }}>
+                  {trialUsedMinutes} of 120 minutes used
+                </p>
               </div>
+
+              {trialExhausted ? (
+                <div style={{ background: "oklch(22% 0.06 260)", border: "1px solid oklch(35% 0.06 260)", padding: "1rem 1.25rem", marginBottom: "1rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(72% 0.008 260)", lineHeight: 1.6, margin: 0 }}>
+                    You&apos;ve used your free trial. Contact us to continue coaching.
+                  </p>
+                </div>
+              ) : (
+                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                  <Link
+                    href="/coach/session?type=deep"
+                    style={{
+                      flex: 1,
+                      minWidth: "140px",
+                      display: "block",
+                      background: "oklch(65% 0.15 45)",
+                      color: "white",
+                      fontFamily: "var(--font-montserrat)",
+                      fontWeight: 700,
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      padding: "0.875rem 1rem",
+                      textAlign: "center",
+                    }}
+                  >
+                    Deep session
+                    <span style={{ display: "block", fontWeight: 400, fontSize: "0.65rem", letterSpacing: "0.02em", textTransform: "none", opacity: 0.85, marginTop: "0.15rem" }}>
+                      ~40 min · complex topics
+                    </span>
+                  </Link>
+                  <Link
+                    href="/coach/session?type=quick"
+                    style={{
+                      flex: 1,
+                      minWidth: "140px",
+                      display: "block",
+                      background: "oklch(35% 0.08 260)",
+                      color: "white",
+                      fontFamily: "var(--font-montserrat)",
+                      fontWeight: 700,
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      padding: "0.875rem 1rem",
+                      textAlign: "center",
+                      border: "1px solid oklch(45% 0.08 260)",
+                    }}
+                  >
+                    Quick session
+                    <span style={{ display: "block", fontWeight: 400, fontSize: "0.65rem", letterSpacing: "0.02em", textTransform: "none", opacity: 0.85, marginTop: "0.15rem" }}>
+                      ~10 min · focused topic
+                    </span>
+                  </Link>
+                </div>
+              )}
+
+              <Link href="/coach/setup" style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
+                color: "oklch(55% 0.008 260)", textDecoration: "none",
+                letterSpacing: "0.06em",
+              }}>
+                Coaching preferences
+              </Link>
             </div>
           </div>
 

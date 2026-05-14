@@ -46,9 +46,10 @@ type Props = {
   sessionId: string;
   coachName: string;
   coachVoice: string;
+  sessionType?: "deep" | "quick";
 };
 
-export default function GeminiSessionClient({ sessionId, coachName, coachVoice }: Props) {
+export default function GeminiSessionClient({ sessionId, coachName, coachVoice, sessionType = "deep" }: Props) {
   const [status, setStatus] = useState<"idle" | "connecting" | "active" | "complete" | "error">("idle");
   const [phase, setPhase] = useState<Phase>("LAND");
   const [whiteboard, setWhiteboard] = useState<WhiteboardState>({
@@ -331,7 +332,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       const tokenRes = await fetch("/api/coach/gemini-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ coachName }),
+        body: JSON.stringify({ coachName, sessionType }),
       });
       if (!tokenRes.ok) {
         const body = await tokenRes.json().catch(() => ({})) as { error?: string };
@@ -712,12 +713,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
           .session-voice-column {
             flex: none !important;
             width: 100% !important;
-            min-height: 45vh;
+            height: 50dvh !important;
+            min-height: unset !important;
           }
           .session-notepad-column {
             flex: 1 !important;
             width: 100% !important;
-            min-height: 50vh;
+            min-height: unset !important;
+            overflow-y: auto !important;
           }
         }
       `}</style>
