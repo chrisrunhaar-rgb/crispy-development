@@ -50,7 +50,7 @@ export async function POST() {
         type: "server_vad",
         threshold: 0.5,
         prefix_padding_ms: 300,
-        silence_duration_ms: 800,
+        silence_duration_ms: 500,
       },
       tools: [
         {
@@ -190,6 +190,8 @@ Start with a brief, warm introduction — never a script. Something like: "Good 
 **"I don't have much time today"**: Acknowledge it and adjust expectations. "Okay — let's use the time we have well. What would make even 20 minutes worth it for you?" Then move to SEEK immediately.
 
 **When to stay in LAND longer:** If the person sounds heavy, fragile, or distracted — slow down. Don't rush to SEEK. A person who hasn't landed yet can't focus. Stay until you sense they're present.
+
+**CRITICAL — Never assume the coaching topic from LAND:** Whatever topic surfaces in LAND (stress, travel, family, work) is NOT automatically the coaching focus. The coachee may have mentioned it in passing while settling. Always move explicitly to SEEK and ask "What would you like to focus on today?" before coaching anything. LAND is for arriving, not for setting the agenda.
 
 **When NOT to rush:** Never open with "Great to chat with you today!" or any hollow formality. This is a real conversation, not a customer service call.
 

@@ -34,13 +34,16 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
     carrying_forward: null,
   });
   const [isAiSpeaking, setIsAiSpeaking] = useState(false);
+  const [isAiThinking, setIsAiThinking] = useState(false);
   const [isMicActive, setIsMicActive] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   const pcRef = useRef<RTCPeerConnection | null>(null);
   const dcRef = useRef<RTCDataChannel | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sessionClosedRef = useRef(false);
@@ -80,9 +83,11 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
 
     const type = msg.type as string;
 
-    // Track AI speech state
-    if (type === "response.audio.delta") setIsAiSpeaking(true);
+    // Track AI thinking + speech state
+    if (type === "response.created" || type === "response.output_item.added") { setIsAiThinking(true); setIsAiSpeaking(false); }
+    if (type === "response.audio.delta") { setIsAiThinking(false); setIsAiSpeaking(true); }
     if (type === "response.audio.done") setIsAiSpeaking(false);
+    if (type === "response.done") { setIsAiThinking(false); setIsAiSpeaking(false); }
 
     // Handle function calls from the model
     if (type === "response.function_call_arguments.done") {
@@ -173,6 +178,7 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
         throw micErr;
       }
       setIsMicActive(true);
+      streamRef.current = stream;
 
       // Setup WebRTC
       const pc = new RTCPeerConnection();
@@ -225,6 +231,13 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
       setIsMicActive(false);
     }
   }, [handleDataChannelMessage]);
+
+  const toggleMute = useCallback(() => {
+    if (!streamRef.current) return;
+    const newMuted = !isMuted;
+    streamRef.current.getAudioTracks().forEach(t => { t.enabled = !newMuted; });
+    setIsMuted(newMuted);
+  }, [isMuted]);
 
   const endSession = useCallback(() => {
     if (dcRef.current?.readyState === "open") {
@@ -335,13 +348,15 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
           background: status === "active"
             ? (isAiSpeaking
               ? "radial-gradient(circle, oklch(65% 0.15 45 / 0.3) 0%, oklch(65% 0.15 45 / 0.05) 70%)"
+              : isAiThinking
+              ? "radial-gradient(circle, oklch(55% 0.12 200 / 0.25) 0%, oklch(55% 0.12 200 / 0.05) 70%)"
               : "radial-gradient(circle, oklch(50% 0.10 260 / 0.3) 0%, oklch(50% 0.10 260 / 0.05) 70%)")
             : "radial-gradient(circle, oklch(35% 0.08 260 / 0.4) 0%, transparent 70%)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           transition: "background 0.5s ease",
-          animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : "none",
+          animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : isAiThinking ? "throb 1.2s ease-in-out infinite" : "none",
           marginBottom: "2.5rem",
           position: "relative",
         }}>
@@ -350,7 +365,7 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
             height: "80px",
             borderRadius: "50%",
             background: status === "active"
-              ? (isAiSpeaking ? "oklch(65% 0.15 45)" : "oklch(55% 0.10 260)")
+              ? (isAiSpeaking ? "oklch(65% 0.15 45)" : isAiThinking ? "oklch(50% 0.12 200)" : isMuted ? "oklch(55% 0.15 25)" : "oklch(55% 0.10 260)")
               : "oklch(40% 0.08 260)",
             display: "flex",
             alignItems: "center",
@@ -363,6 +378,10 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(75% 0.008 260)", letterSpacing: "0.05em" }}>...</span>
             ) : isAiSpeaking ? (
               <WaveIcon color="white" />
+            ) : isAiThinking ? (
+              <ThinkingIcon color="white" />
+            ) : isMuted ? (
+              <MicOffIcon color="white" />
             ) : (
               <MicIcon color="white" />
             )}
@@ -380,14 +399,14 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
         }}>
           {status === "idle" && "Ready when you are."}
           {status === "connecting" && "Connecting…"}
-          {status === "active" && (isAiSpeaking ? "WayPoint is speaking…" : "Listening…")}
+          {status === "active" && (isAiSpeaking ? "WayPoint is speaking…" : isAiThinking ? "WayPoint is thinking…" : isMuted ? "Microphone paused." : "Listening…")}
           {status === "complete" && "Session complete."}
           {status === "error" && "Connection failed."}
         </p>
 
         {isMicActive && status === "active" && (
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(50% 0.008 260)", marginBottom: "2rem" }}>
-            Microphone active · Speak naturally
+            {isMuted ? "Mic paused — tap Pause to resume" : "Microphone active · Speak naturally"}
           </p>
         )}
 
@@ -399,9 +418,14 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
             </button>
           )}
           {status === "active" && (
-            <button onClick={endSession} style={btnStyle("secondary")}>
-              End Session
-            </button>
+            <>
+              <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>
+                {isMuted ? "Resume" : "Pause"}
+              </button>
+              <button onClick={endSession} style={btnStyle("secondary")}>
+                End Session
+              </button>
+            </>
           )}
           {status === "complete" && (
             <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>
@@ -425,6 +449,10 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
           @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.06); opacity: 0.85; }
+          }
+          @keyframes throb {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.03); opacity: 1; }
           }
         `}</style>
       </div>
@@ -561,7 +589,7 @@ const wbTextStyle: React.CSSProperties = {
   margin: 0,
 };
 
-function btnStyle(variant: "primary" | "secondary"): React.CSSProperties {
+function btnStyle(variant: "primary" | "secondary" | "ghost"): React.CSSProperties {
   return {
     fontFamily: "var(--font-montserrat)",
     fontWeight: 700,
@@ -569,13 +597,10 @@ function btnStyle(variant: "primary" | "secondary"): React.CSSProperties {
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     padding: "0.875rem 2rem",
-    border: "none",
+    border: variant === "secondary" || variant === "ghost" ? "1px solid oklch(50% 0.008 260)" : "none",
     cursor: "pointer",
     background: variant === "primary" ? "oklch(65% 0.15 45)" : "transparent",
     color: variant === "primary" ? "white" : "oklch(65% 0.008 260)",
-    borderWidth: variant === "secondary" ? "1px" : "0",
-    borderStyle: "solid",
-    borderColor: "oklch(50% 0.008 260)",
     display: "inline-block",
   };
 }
@@ -585,6 +610,31 @@ function MicIcon({ color }: { color: string }) {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
       <path d="M19 10v2a7 7 0 01-14 0v-2" />
+      <line x1="12" y1="19" x2="12" y2="23" />
+      <line x1="8" y1="23" x2="16" y2="23" />
+    </svg>
+  );
+}
+
+function ThinkingIcon({ color }: { color: string }) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      {[0, 1, 2].map(i => (
+        <circle key={i} cx={6 + i * 6} cy="12" r="2.5" fill={color}>
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" repeatCount="indefinite" begin={`${i * 0.3}s`} />
+          <animate attributeName="cy" values="12;10;12" dur="1.2s" repeatCount="indefinite" begin={`${i * 0.3}s`} />
+        </circle>
+      ))}
+    </svg>
+  );
+}
+
+function MicOffIcon({ color }: { color: string }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="1" y1="1" x2="23" y2="23" />
+      <path d="M9 9v3a3 3 0 005.12 2.12M15 9.34V4a3 3 0 00-5.94-.6" />
+      <path d="M17 16.95A7 7 0 015 12v-2m14 0v2a7 7 0 01-.11 1.23" />
       <line x1="12" y1="19" x2="12" y2="23" />
       <line x1="8" y1="23" x2="16" y2="23" />
     </svg>
