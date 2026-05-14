@@ -12,6 +12,7 @@ type Props = {
     name?: string | null;
     organisation?: string | null;
     location?: string | null;
+    home_culture?: string | null;
     host_culture?: string | null;
     months_in_context?: number | null;
     role?: string | null;
@@ -42,6 +43,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
     name: existing?.name ?? "",
     organisation: existing?.organisation ?? "",
     location: existing?.location ?? "",
+    home_culture: existing?.home_culture ?? "",
     host_culture: existing?.host_culture ?? "",
     months_in_context: existing?.months_in_context?.toString() ?? "",
     role: existing?.role ?? "",
@@ -65,6 +67,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         name: form.name || null,
         organisation: form.organisation || null,
         location: form.location || null,
+        home_culture: form.home_culture || null,
         host_culture: form.host_culture || null,
         months_in_context: form.months_in_context ? parseInt(form.months_in_context) : null,
         role: form.role || null,
@@ -113,10 +116,14 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           <Field label="Current location" hint="Country or city">
             <input style={inputStyle} value={form.location} onChange={set("location")} placeholder="e.g. Nairobi, Kenya" />
           </Field>
-          <Field label="Host culture" hint="Culture you work within">
-            <input style={inputStyle} value={form.host_culture} onChange={set("host_culture")} placeholder="e.g. Swahili East African" />
+          <Field label="Home culture" hint="Your own cultural background">
+            <input style={inputStyle} value={form.home_culture} onChange={set("home_culture")} placeholder="e.g. Dutch" />
           </Field>
         </div>
+
+        <Field label="Host culture" hint="The culture you currently work within">
+          <input style={inputStyle} value={form.host_culture} onChange={set("host_culture")} placeholder="e.g. Swahili East African" />
+        </Field>
 
         <Field label="Months in this cross-cultural context" hint="Roughly — even an estimate helps">
           <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} placeholder="e.g. 18" />

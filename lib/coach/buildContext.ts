@@ -340,7 +340,8 @@ Privacy → "Your transcript is private to you. Leaders can only see session not
 Name: ${name}${profile ? [
     profile.organisation ? `\nOrganisation: ${profile.organisation}` : "",
     profile.location ? `\nLocation: ${profile.location}` : "",
-    profile.host_culture ? `\nHost culture: ${profile.host_culture}` : "",
+    profile.home_culture ? `\nHome culture (their own background): ${profile.home_culture}` : "",
+    profile.host_culture ? `\nHost culture (they work within): ${profile.host_culture}` : "",
     profile.months_in_context ? `\nTime in cross-cultural context: ${profile.months_in_context} months` : "",
     profile.role ? `\nRole: ${profile.role}` : "",
     profile.notes ? `\nContext notes: ${profile.notes}` : "",
