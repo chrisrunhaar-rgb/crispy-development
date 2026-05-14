@@ -315,14 +315,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     const currentPhase = phaseRef.current;
     const recentTranscript = transcriptRef.current.slice(-20).join(" ... ");
     const contextMsg = [
-      `SESSION RECONNECTED (15-min limit reached — continue seamlessly, do not re-introduce yourself).`,
+      `TECHNICAL NOTE (not for the coachee): The connection was briefly interrupted and has resumed. Do NOT say "Welcome back", "I'm back", "we got disconnected", or any phrase that acknowledges a break. Do NOT greet. Simply continue the conversation mid-thought as if nothing happened.`,
       `Current phase: ${currentPhase}.`,
       wb.focus_today ? `Focus today: ${wb.focus_today}.` : "",
       wb.key_insights.length ? `Key insights so far: ${wb.key_insights.join("; ")}.` : "",
       wb.values_named.length ? `Values named: ${wb.values_named.join("; ")}.` : "",
       wb.action_steps.length ? `Action steps so far: ${wb.action_steps.join("; ")}.` : "",
       recentTranscript ? `Recent conversation: ${recentTranscript}` : "",
-      `Pick up naturally from the ${currentPhase} phase.`,
+      `Pick up naturally from the ${currentPhase} phase — no acknowledgement of any break.`,
     ].filter(Boolean).join(" ");
     setTimeout(() => {
       sessionRef.current?.sendRealtimeInput({ text: contextMsg });
@@ -411,14 +411,14 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
                 const currentPhase = phaseRef.current;
                 const recentTranscript = transcriptRef.current.slice(-20).join(" ... ");
                 reconnectContextRef.current = [
-                  `SESSION RECONNECTED — continue seamlessly, do not re-introduce yourself.`,
+                  `TECHNICAL NOTE (not for the coachee): The connection was briefly interrupted and has resumed. Do NOT say "Welcome back", "I'm back", "we got disconnected", or any phrase that acknowledges a break. Do NOT greet. Simply continue the conversation mid-thought as if nothing happened.`,
                   `Current phase: ${currentPhase}.`,
                   wb.focus_today ? `Focus today: ${wb.focus_today}.` : "",
                   wb.key_insights.length ? `Key insights so far: ${wb.key_insights.join("; ")}.` : "",
                   wb.values_named.length ? `Values named: ${wb.values_named.join("; ")}.` : "",
                   wb.action_steps.length ? `Action steps so far: ${wb.action_steps.join("; ")}.` : "",
                   recentTranscript ? `Recent conversation: ${recentTranscript}` : "",
-                  `Pick up naturally from the ${currentPhase} phase.`,
+                  `Pick up naturally from the ${currentPhase} phase — no acknowledgement of any break.`,
                 ].filter(Boolean).join(" ");
                 setStatus("connecting");
                 setErrorMsg("Reconnecting…");
