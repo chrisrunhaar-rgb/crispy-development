@@ -159,7 +159,19 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
       const { client_secret } = await tokenRes.json();
 
       // Get mic
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (micErr) {
+        const name = micErr instanceof Error ? micErr.name : "";
+        if (name === "NotFoundError" || name === "DevicesNotFoundError") {
+          throw new Error("No microphone found. Please connect a mic or allow access in browser settings.");
+        }
+        if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+          throw new Error("Microphone access denied. Please allow microphone access in your browser settings.");
+        }
+        throw micErr;
+      }
       setIsMicActive(true);
 
       // Setup WebRTC
