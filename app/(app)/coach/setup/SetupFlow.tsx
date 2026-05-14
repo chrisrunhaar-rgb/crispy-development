@@ -101,7 +101,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
           </InfoCard>
 
           <InfoCard label="What happens in a session?">
-            Sessions are voice-based — you speak, your coach responds. As you talk, notes build automatically: your focus, insights, values, and action steps. After each session, your notes are saved and your coach remembers them for next time.
+            Sessions are voice-based — you speak, your coach responds. As you talk, notes build automatically: your focus, insights, values, and action steps. After each session, your notes are saved to your dashboard and your coach remembers them for next time.
           </InfoCard>
 
           <InfoCard label="What WayPoint is not">
