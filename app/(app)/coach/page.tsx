@@ -122,7 +122,7 @@ export default async function CoachPage() {
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(65% 0.008 260)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
                 {sessionCount === 0
-                  ? "Ready for your first session. Speak naturally — your whiteboard builds itself as you talk."
+                  ? "Ready for your first session. Speak naturally — your notes build themselves as you talk."
                   : `Session ${sessionCount + 1} ready. ${coachName} remembers your previous sessions.`}
               </p>
 
@@ -149,7 +149,7 @@ export default async function CoachPage() {
                   color: "oklch(55% 0.008 260)", textDecoration: "none",
                   letterSpacing: "0.06em",
                 }}>
-                  Change coach
+                  Coaching preferences
                 </Link>
               </div>
             </div>

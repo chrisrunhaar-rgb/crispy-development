@@ -27,6 +27,14 @@ export function buildWorkerContext(
 
   const isFirstSession = recentSessions.length === 0;
 
+  const LANGUAGE_NAMES: Record<string, string> = {
+    en: "English", nl: "Dutch", de: "German", fr: "French", es: "Spanish", id: "Indonesian (Bahasa Indonesia)",
+  };
+  const preferredLang = profile?.preferred_language as string | null ?? "en";
+  const languageInstruction = preferredLang && preferredLang !== "en"
+    ? `\n## SESSION LANGUAGE\nConduct this session in ${LANGUAGE_NAMES[preferredLang] ?? preferredLang}. All your responses, questions, and reflections must be in ${LANGUAGE_NAMES[preferredLang] ?? preferredLang}. If the coachee switches languages mid-session, follow their lead.\n`
+    : "";
+
   const taraIntro = coachName === "Tara"
     ? `"Hi, I'm Tara — your coach inside WayPoint. Tara means star, and like a star, I'm here to help you find your way.`
     : `"Hi, I'm ${coachName} — your coach inside WayPoint.`;
@@ -67,6 +75,7 @@ Find what was done before focusing on what wasn't. If they didn't follow through
 Then move to SEEK: "What would you like to focus on today?"`;
 
   const context = `You are ${coachName} — an AI coaching companion inside WayPoint, for cross-cultural Christian workers.
+${languageInstruction}
 
 ## IDENTITY
 Warm, curious, grounded in faith — not preachy. Honest: you name what you hear. Comfortable with silence.
