@@ -13,7 +13,7 @@ export default function CoachPrivacyPage() {
           <div>
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint</p>
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
-              Confidentiality Policy
+              What stays private in WayPoint
             </h1>
           </div>
           <Link href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
@@ -25,32 +25,36 @@ export default function CoachPrivacyPage() {
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
 
-          <Section label="What is private">
-            <Body>Your full conversation with WayPoint — everything you say, every question asked — is completely private. No one else has access to your transcript. Not your leader. Not Crispy Development. Not your organisation.</Body>
-            <Body>Your whiteboard belongs to you. The insights, values, action steps, and focus themes you build during a session are yours by default.</Body>
+          <Section label="Your session transcripts are fully private.">
+            <Body>Everything you say during a coaching session is captured as a live transcript. That transcript is never shared with your leader, your organisation, or anyone else — including us (Crispy Development). We do not read your session content.</Body>
           </Section>
 
-          <Section label="What you can share">
-            <Body>After each completed session, you can choose to share your whiteboard summary with your assigned leader. This is always your choice — it is never automatic.</Body>
-            <Body>When you share a whiteboard, your leader can see: what you focused on, your key insights, named values, action steps, and what you carried forward. They cannot see the conversation that produced it.</Body>
+          <Section label="Your session notes are yours to share — or not.">
+            <Body>After each session, WayPoint generates notes from your conversation: themes explored, insights, actions you named, values surfaced. These notes live in your private dashboard. If your organisation uses WayPoint with a leader assigned to you, your leader can only see your session notes if you choose to share them. You control that switch. Transcripts remain private regardless.</Body>
           </Section>
 
-          <Section label="What your leader can see">
-            <Body>Your leader can only see whiteboards from sessions you have explicitly chosen to share. If you share nothing, they see nothing — only that you have an account.</Body>
-            <Body>Leaders never have access to transcripts, audio, or the content of your coaching conversation. WayPoint is designed so the coaching relationship stays between you and the conversation.</Body>
+          <Section label="Your voice is processed by Google.">
+            <Body>WayPoint uses Google&apos;s Gemini Live API to power the voice coaching experience. This means your voice input is transmitted to and processed by Google&apos;s servers. Google processes this data in line with their API terms. We do not store your raw audio. The text transcript generated from your session is stored in our secure database, hosted in a trusted cloud environment.</Body>
           </Section>
 
-          <Section label="What Crispy Development sees">
-            <Body>Crispy Development may access anonymised usage data — session counts, timing, technical logs — to improve the platform. We do not read session content or whiteboards.</Body>
+          <Section label="Crispy Development does not read your sessions.">
+            <Body>We are the operator of WayPoint. We store your session notes and account data to make the product work. We do not access, review, or analyse your individual session content. We may review anonymised, aggregated data (e.g. how many sessions happened this week) for product development only.</Body>
           </Section>
 
-          <Section label="When confidentiality may not apply">
-            <Body>In cases involving imminent risk of harm to yourself or others, or where a safeguarding concern is raised, we encourage you to speak with a qualified person (counsellor, pastor, safeguarding officer) who can respond appropriately. WayPoint is not equipped to handle clinical crisis situations.</Body>
-            <Body>WayPoint may be required to respond to a lawful legal request. This is rare and would apply only in serious circumstances.</Body>
+          <Section label="Your rights.">
+            <Body>You have the right to: request a copy of all data we hold about you; ask us to delete your account and all associated data; withdraw your consent at any time by closing your account. To exercise any of these rights, contact: hello@crispyleaders.com</Body>
           </Section>
 
-          <Section label="Your data">
-            <Body>Session data is stored securely and associated only with your account. You may request deletion of your data by contacting Crispy Development directly.</Body>
+          <Section label="When we might be required to act.">
+            <Body>WayPoint is not a crisis service. If you share something that suggests immediate danger to yourself or others, we strongly encourage you to contact a trusted person, your pastor, or a crisis helpline in your country. In rare situations, we may be legally compelled by a court order to disclose data.</Body>
+          </Section>
+
+          <Section label="This is not a substitute for professional support.">
+            <Body>WayPoint is a coaching tool, not a mental health or counselling service. It does not replace professional care, pastoral support, or human community. If you are struggling, please reach out to a person who knows and loves you.</Body>
+          </Section>
+
+          <Section label="Governing law.">
+            <Body>This policy is governed by Dutch law and the General Data Protection Regulation (GDPR). If you have a complaint, you have the right to contact the Dutch Data Protection Authority (Autoriteit Persoonsgegevens) at autoriteitpersoonsgegevens.nl. Last updated: May 2026. Operated by Crispy Development.</Body>
           </Section>
 
           <div style={{ paddingTop: "1rem" }}>

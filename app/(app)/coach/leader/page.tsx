@@ -26,10 +26,10 @@ export default async function LeaderDashboardPage() {
       <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ textAlign: "center", padding: "2rem" }}>
           <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(52% 0.008 260)", marginBottom: "0.75rem" }}>
-            No workers assigned yet.
+            No users assigned yet.
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(60% 0.008 260)" }}>
-            Ask your admin to assign workers to your leader view.
+            Ask your admin to assign users to your leader view.
           </p>
           <Link href="/coach" style={{ display: "inline-block", marginTop: "1.5rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>
             ← Back to Coach
@@ -67,7 +67,7 @@ export default async function LeaderDashboardPage() {
           <div>
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint · Leader View</p>
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
-              {firstName}&rsquo;s Workers
+              {firstName}&rsquo;s Users
             </h1>
           </div>
           <Link href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
@@ -81,7 +81,7 @@ export default async function LeaderDashboardPage() {
         {/* Stats row */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", background: "oklch(88% 0.008 80)", marginBottom: "2.5rem" }}>
           {[
-            { label: "Workers", value: workerIds.length },
+            { label: "Users", value: workerIds.length },
             { label: "Total Sessions", value: totalSessions ?? 0 },
             { label: "Sessions This Month", value: sessionsThisMonth ?? 0 },
           ].map(({ label, value }) => (
@@ -93,7 +93,7 @@ export default async function LeaderDashboardPage() {
         </div>
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(70% 0.008 260)", marginBottom: "1.5rem", fontStyle: "italic" }}>
-          You see session frequency and themes only. Transcripts are private to each worker.
+          You see session frequency and themes only. Transcripts are private to each user.
         </p>
 
         <LeaderDashboardClient />

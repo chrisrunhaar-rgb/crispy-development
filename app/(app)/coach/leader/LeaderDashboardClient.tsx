@@ -31,7 +31,7 @@ export default function LeaderDashboardClient() {
   if (loading) {
     return (
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(60% 0.008 260)" }}>
-        Loading workers…
+        Loading users…
       </p>
     );
   }
@@ -39,7 +39,7 @@ export default function LeaderDashboardClient() {
   if (workers.length === 0) {
     return (
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(60% 0.008 260)" }}>
-        No workers loaded.
+        No users loaded.
       </p>
     );
   }

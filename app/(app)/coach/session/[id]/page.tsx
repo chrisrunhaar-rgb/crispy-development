@@ -53,7 +53,7 @@ export default async function PastSessionPage({
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint · Session {session.session_number ?? "—"}</p>
-            <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
+            <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>
               {dateStr}
             </h1>
             {mins && (
@@ -73,7 +73,7 @@ export default async function PastSessionPage({
 
           {!wb ? (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(55% 0.008 260)" }}>
-              No whiteboard saved for this session.
+              No notes from this session yet.
             </p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
@@ -140,8 +140,8 @@ export default async function PastSessionPage({
                 textTransform: "uppercase",
                 textDecoration: "none",
                 padding: "0.875rem 2rem",
-                background: "oklch(30% 0.12 260)",
-                color: "oklch(97% 0.005 80)",
+                background: "oklch(65% 0.15 45)",
+                color: "white",
               }}
             >
               Start New Session
@@ -155,7 +155,7 @@ export default async function PastSessionPage({
 
 function WhiteboardCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
+    <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", borderLeft: "3px solid oklch(65% 0.15 45)", padding: "2rem", paddingLeft: "1.75rem" }}>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
         {label}
       </p>
