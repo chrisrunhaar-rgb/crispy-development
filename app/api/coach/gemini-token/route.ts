@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { buildWorkerContext } from "@/lib/coach/buildContext";
 
-// In-memory per-user rate limit: max 5 calls per 60 minutes
+// In-memory per-user rate limit: max 20 calls per 60 minutes
 const rateLimitMap = new Map<string, number[]>();
 
 export async function POST(req: Request) {
@@ -15,10 +15,10 @@ export async function POST(req: Request) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // Rate limit check: max 5 calls per user per 60 minutes
+    // Rate limit check: max 20 calls per user per 60 minutes
     const now = Date.now();
     const windowMs = 3600000; // 60 minutes
-    const maxCalls = 5;
+    const maxCalls = 20;
     const userId = user.id;
     const timestamps = (rateLimitMap.get(userId) ?? []).filter(t => now - t < windowMs);
     if (timestamps.length >= maxCalls) {
