@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { buildWorkerContext } from "@/lib/coach/buildContext";
+import { GoogleGenAI } from "@google/genai";
 
 // In-memory per-user rate limit: max 20 calls per 60 minutes
 const rateLimitMap = new Map<string, number[]>();
@@ -48,7 +49,12 @@ export async function POST(req: Request) {
 
     const systemPrompt = buildWorkerContext(profile, recentSessions ?? [], user, coachName, sessionType);
 
-    return NextResponse.json({ apiKey, systemPrompt });
+    // Create short-lived ephemeral token — never expose raw API key to browser
+    const serverAi = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });
+    const expireTime = new Date(Date.now() + 20 * 60 * 1000).toISOString();
+    const token = await serverAi.authTokens.create({ config: { uses: 2, expireTime } });
+
+    return NextResponse.json({ ephemeralToken: token.name, systemPrompt });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error("gemini-token error:", msg);

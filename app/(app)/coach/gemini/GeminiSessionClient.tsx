@@ -345,9 +345,9 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         const body = await tokenRes.json().catch(() => ({})) as { error?: string };
         throw new Error(body.error ?? `Token error ${tokenRes.status}`);
       }
-      const { apiKey, systemPrompt } = await tokenRes.json() as { apiKey: string; systemPrompt: string };
+      const { ephemeralToken, systemPrompt } = await tokenRes.json() as { ephemeralToken: string; systemPrompt: string };
       systemPromptRef.current = systemPrompt;
-      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });
+      const ai = new GoogleGenAI({ apiKey: ephemeralToken, httpOptions: { apiVersion: "v1alpha" } });
       aiRef.current = ai;
 
       let stream: MediaStream;
