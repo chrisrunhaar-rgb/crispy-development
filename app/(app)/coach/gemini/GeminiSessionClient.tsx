@@ -26,7 +26,7 @@ const PHASE_LABELS: Record<Phase, string> = {
 
 const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
 
-const GEMINI_MODEL = "gemini-2.5-flash-native-audio-latest";
+const GEMINI_MODEL = "gemini-2.0-flash-live-001";
 const WARMUP_AT_SECONDS = 780;
 
 const COACH_IMAGES: Record<string, string> = {
@@ -336,7 +336,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       }
       const { apiKey, systemPrompt } = await tokenRes.json() as { apiKey: string; systemPrompt: string };
       systemPromptRef.current = systemPrompt;
-      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });
+      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1beta" } });
       aiRef.current = ai;
 
       let stream: MediaStream;
