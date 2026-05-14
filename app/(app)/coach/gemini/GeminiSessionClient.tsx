@@ -509,8 +509,8 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
         {/* Coach identity */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
           <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", lineHeight: 1 }}>{coachName}</p>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.95rem", color: "rgba(255,255,255,0.65)", marginTop: "0.2rem" }}>Session with {coachName}</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", lineHeight: 1, marginBottom: "0.3rem" }}>WayPoint</p>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.4rem", color: "oklch(65% 0.15 45)", lineHeight: 1 }}>Coaching Session with {coachName}</p>
           </div>
         </div>
 
@@ -606,7 +606,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
         </div>
 
         {/* Right — ring binder notepad */}
-        <div className="session-notepad-column" style={{ width: "360px", flexShrink: 0, padding: "18px 22px 22px 10px", display: "flex" }}>
+        <div className="session-notepad-column" style={{ width: "440px", flexShrink: 0, padding: "18px 22px 22px 10px", display: "flex" }}>
           {/* Ring binder outer wrapper */}
           <div style={{
             display: "flex", flexDirection: "row",
@@ -752,7 +752,7 @@ function btnStyle(variant: "primary" | "secondary" | "ghost"): React.CSSProperti
     letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.8rem 1.75rem",
     border: variant === "secondary" || variant === "ghost" ? "1px solid rgba(255,255,255,0.3)" : "none",
     cursor: "pointer",
-    background: variant === "primary" ? "oklch(52% 0.18 150)" : "rgba(255,255,255,0.08)",
+    background: variant === "primary" ? "oklch(65% 0.15 45)" : "rgba(255,255,255,0.08)",
     color: variant === "primary" ? "white" : "rgba(255,255,255,0.65)",
     backdropFilter: "blur(8px)",
     display: "inline-block",
