@@ -23,13 +23,13 @@ type Props = {
 const COACHES = [
   {
     name: "Tara",
-    image: "/images/coaches/tara.png",
+    image: "/images/coaches/tara-portrait.jpg",
     voice: "Female",
     description: "Warm, intuitive, draws you out gently.",
   },
   {
     name: "Ethan",
-    image: "/images/coaches/ethan.png",
+    image: "/images/coaches/ethan-portrait.jpg",
     voice: "Male",
     description: "Calm, grounded, holds space with steadiness.",
   },
@@ -174,7 +174,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
               }}
             >
               <div style={{
-                width: "96px", height: "96px", borderRadius: "50%",
+                width: "140px", height: "140px", borderRadius: "50%",
                 overflow: "hidden", marginBottom: "1rem",
                 border: `3px solid ${selected ? "oklch(45% 0.12 260)" : "oklch(88% 0.008 80)"}`,
                 flexShrink: 0,
@@ -182,9 +182,9 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
                 <Image
                   src={coach.image}
                   alt={coach.name}
-                  width={96}
-                  height={96}
-                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                  width={140}
+                  height={140}
+                  style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }}
                 />
               </div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.008 260)", marginBottom: "0.25rem" }}>
