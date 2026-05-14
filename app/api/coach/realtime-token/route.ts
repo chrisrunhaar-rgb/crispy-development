@@ -10,7 +10,7 @@ export async function POST() {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   console.log("realtime-token: step 3 - check key");
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = (process.env.OPENAI_API_KEY ?? "").replace(/^﻿/, "");
   if (!apiKey) return NextResponse.json({ error: "OpenAI not configured" }, { status: 500 });
 
   // Fetch coachee profile for context injection
