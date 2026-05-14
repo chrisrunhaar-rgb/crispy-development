@@ -396,8 +396,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           onclose: (e: CloseEvent) => {
             if (sessionClosedRef.current) return;
             const isGoAway = e.reason.includes("GoAway") || e.reason.includes("session durat");
-            const isRecoverable = isGoAway || e.code === 1008;
-            if (isRecoverable) {
+            if (isGoAway) {
               if (switchToWarmup()) {
                 setErrorMsg(null);
               } else {
@@ -410,6 +409,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
                 setTimeout(() => startSession(), 1000);
               }
             } else {
+              sessionClosedRef.current = true;
               setStatus("error");
               setErrorMsg(`Connection closed (code ${e.code}${e.reason ? `: ${e.reason}` : ""}).`);
             }
