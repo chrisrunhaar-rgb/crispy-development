@@ -175,7 +175,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
   }
 
   const buildLiveConfig = useCallback((systemPrompt: string, voice: string) => ({
-    responseModalities: [Modality.AUDIO, Modality.TEXT],
+    responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
     tools: [{
@@ -217,10 +217,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
           setIsAiSpeaking(true);
           playPcmChunk(inlineData.data as string);
         }
-        if (part.text) {
-          transcriptRef.current.push(part.text);
-          if (transcriptRef.current.length > 40) transcriptRef.current.shift();
-        }
+        if (part.text) transcriptRef.current.push(part.text);
       }
     }
     if (message.serverContent?.interrupted) {
