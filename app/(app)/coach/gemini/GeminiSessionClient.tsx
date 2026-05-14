@@ -29,11 +29,6 @@ const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COM
 const GEMINI_MODEL = "gemini-2.5-flash-native-audio-latest";
 const WARMUP_AT_SECONDS = 780;
 
-const COACH_PORTRAITS: Record<string, string> = {
-  Tara: "/images/coaches/tara-portrait.jpg",
-  Ethan: "/images/coaches/ethan-portrait.jpg",
-};
-
 const COACH_ROOM_IMAGES: Record<string, string> = {
   Tara: "/images/coaches/tara-room.jpg",
   Ethan: "/images/coaches/ethan-room.jpg",
@@ -480,7 +475,6 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
   };
 
   const phaseIndex = PHASE_ORDER.indexOf(phase);
-  const coachPortrait = COACH_PORTRAITS[coachName] ?? COACH_PORTRAITS.Tara;
   const coachRoomImage = COACH_ROOM_IMAGES[coachName] ?? COACH_ROOM_IMAGES.Tara;
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
@@ -514,12 +508,9 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       }}>
         {/* Coach identity */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-          <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", border: "2px solid rgba(255,255,255,0.2)", flexShrink: 0 }}>
-            <Image src={coachPortrait} alt={coachName} width={36} height={36} style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
-          </div>
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", lineHeight: 1 }}>{coachName}</p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "rgba(255,255,255,0.38)", marginTop: "0.2rem", letterSpacing: "0.06em" }}>WayPoint</p>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.95rem", color: "rgba(255,255,255,0.65)", marginTop: "0.2rem" }}>Session with {coachName}</p>
           </div>
         </div>
 
@@ -545,10 +536,10 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       </div>
 
       {/* Body */}
-      <div style={{ position: "relative", zIndex: 5, flex: 1, display: "grid", gridTemplateColumns: "1fr 360px", overflow: "hidden" }}>
+      <div className="session-main-layout" style={{ position: "relative", zIndex: 5, flex: 1, display: "flex", flexDirection: "row", overflow: "hidden" }}>
 
         {/* Left — voice interface */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem" }}>
+        <div className="session-voice-column" style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem" }}>
 
           {/* Mic orb */}
           <div style={{
@@ -573,7 +564,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
             }}>
               {status === "idle" || status === "error" ? <MicIcon color="rgba(255,255,255,0.55)" /> :
                status === "connecting" ? <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "rgba(255,255,255,0.55)", letterSpacing: "0.05em" }}>...</span> :
-               isAiSpeaking ? <WaveIcon color="white" /> :
+               isAiSpeaking ? <WaveIcon color="white" speaking={true} /> :
                isMuted ? <MicOffIcon color="white" /> :
                <MicIcon color="white" />}
             </div>
@@ -603,7 +594,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
                 <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
               </>
             )}
-            {status === "complete" && <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>}
+            {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>}
             {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>}
           </div>
 
@@ -614,44 +605,91 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
           )}
         </div>
 
-        {/* Right — floating paper notepad */}
-        <div style={{ padding: "18px 22px 22px 10px", display: "flex" }}>
-          <div className="notepad-paper">
+        {/* Right — ring binder notepad */}
+        <div className="session-notepad-column" style={{ width: "360px", flexShrink: 0, padding: "18px 22px 22px 10px", display: "flex" }}>
+          {/* Ring binder outer wrapper */}
+          <div style={{
+            display: "flex", flexDirection: "row",
+            height: "100%", flex: 1,
+            borderRadius: "2px 2px 4px 4px",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.25)",
+            overflow: "hidden",
+          }}>
 
-            {/* Binding strip */}
-            <div className="notepad-binding">
-              {Array.from({ length: 9 }, (_, i) => <div key={i} className="notepad-hole" />)}
+            {/* Left spine */}
+            <div style={{
+              width: "44px", flexShrink: 0,
+              background: "linear-gradient(to right, #090909, #181818 40%, #111)",
+              display: "flex", flexDirection: "column", alignItems: "center",
+              paddingBlock: "20px",
+              justifyContent: "space-around",
+              gap: 0,
+              borderRadius: "2px 0 0 4px",
+            }}>
+              {Array.from({ length: 6 }, (_, i) => (
+                <div key={i} style={{
+                  width: "22px", height: "22px",
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle at 40% 35%, #d4d4d4, #888 45%, #444 75%, #222)",
+                  border: "2px solid #333",
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.15)",
+                  position: "relative",
+                }}>
+                  <div style={{
+                    position: "absolute", top: "50%", left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "9px", height: "9px", borderRadius: "50%",
+                    background: "#050505",
+                    boxShadow: "inset 0 1px 3px rgba(0,0,0,0.9)",
+                  }} />
+                </div>
+              ))}
             </div>
 
-            {/* Label */}
-            <div style={{ padding: "0.8rem 1.25rem 0.55rem 1.25rem", flexShrink: 0 }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(80,72,60,0.45)", margin: 0 }}>
-                Session Notes
-              </p>
-            </div>
+            {/* Paper area */}
+            <div style={{
+              flex: 1, display: "flex", flexDirection: "column",
+              overflow: "hidden", background: "white",
+            }}>
 
-            {/* Notes */}
-            <div style={{ flex: 1, overflowY: "auto", padding: "0.25rem 1.25rem 1.75rem 1.25rem" }}>
-              {!hasWhiteboardContent && (
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", marginTop: "0.5rem" }}>
-                  Your notes will appear here as the conversation unfolds.
+              {/* Notepad label area */}
+              <div style={{ padding: "1rem 1.25rem 0.5rem", borderBottom: "1px solid rgba(0,0,0,0.06)", flexShrink: 0 }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(80,72,60,0.45)", margin: 0 }}>
+                  Session Notes
                 </p>
-              )}
-              {whiteboard.focus_today && <WBEntry label="Focus" value={whiteboard.focus_today} />}
-              {whiteboard.key_insights.map((ins, i) => (
-                <WBEntry key={i} label={i === 0 ? "Insights" : undefined} value={`• ${ins}`} indent />
-              ))}
-              {whiteboard.values_named.map((v, i) => (
-                <WBEntry key={i} label={i === 0 ? "Values" : undefined} value={`• ${v}`} indent />
-              ))}
-              {whiteboard.action_steps.map((step, i) => (
-                <WBEntry key={i} label={i === 0 ? "Actions" : undefined} value={`${i + 1}. ${step}`} indent />
-              ))}
-              {whiteboard.carrying_forward && (
-                <WBEntry label="Carrying forward" value={`"${whiteboard.carrying_forward}"`} italic />
-              )}
-            </div>
+              </div>
 
+              {/* Scrollable notes content */}
+              <div style={{
+                flex: 1, overflowY: "auto",
+                padding: "0.75rem 1.25rem",
+                lineHeight: "28px",
+                fontSize: "0.8125rem",
+                fontFamily: "var(--font-montserrat)",
+                backgroundImage: "repeating-linear-gradient(to bottom, transparent 0px, transparent 27px, rgba(180, 205, 235, 0.45) 27px, rgba(180, 205, 235, 0.45) 28px)",
+                backgroundSize: "100% 28px",
+              }}>
+                {!hasWhiteboardContent && (
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", marginTop: "0.5rem" }}>
+                    Your notes will appear here as the conversation unfolds.
+                  </p>
+                )}
+                {whiteboard.focus_today && <WBEntry label="Focus" value={whiteboard.focus_today} />}
+                {whiteboard.key_insights.map((ins, i) => (
+                  <WBEntry key={i} label={i === 0 ? "Insights" : undefined} value={`• ${ins}`} indent />
+                ))}
+                {whiteboard.values_named.map((v, i) => (
+                  <WBEntry key={i} label={i === 0 ? "Values" : undefined} value={`• ${v}`} indent />
+                ))}
+                {whiteboard.action_steps.map((step, i) => (
+                  <WBEntry key={i} label={i === 0 ? "Actions" : undefined} value={`${i + 1}. ${step}`} indent />
+                ))}
+                {whiteboard.carrying_forward && (
+                  <WBEntry label="Carrying forward" value={`"${whiteboard.carrying_forward}"`} italic />
+                )}
+              </div>
+
+            </div>
           </div>
         </div>
 
@@ -662,34 +700,25 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.05); opacity: 0.88; }
         }
-        .notepad-paper {
-          flex: 1;
-          background: #F8F5EF;
-          border-radius: 2px 2px 4px 4px;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          box-shadow:
-            5px 4px 0 0 #EAE6DE,
-            10px 8px 0 0 #E0DDD5,
-            0 20px 60px rgba(0,0,0,0.38),
-            0 4px 16px rgba(0,0,0,0.22);
-        }
-        .notepad-binding {
-          height: 22px;
-          background: linear-gradient(to bottom, #181818, #262626);
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          padding: 0 20px;
-          flex-shrink: 0;
-        }
-        .notepad-hole {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: radial-gradient(circle at 38% 32%, #2e2e2e, #060606);
-          box-shadow: inset 0 1px 3px rgba(0,0,0,0.95);
+        @keyframes waveBar1 { 0%,100%{height:4px} 50%{height:18px} }
+        @keyframes waveBar2 { 0%,100%{height:8px} 50%{height:22px} }
+        @keyframes waveBar3 { 0%,100%{height:14px} 50%{height:10px} }
+        @keyframes waveBar4 { 0%,100%{height:6px} 50%{height:20px} }
+        @keyframes waveBar5 { 0%,100%{height:10px} 50%{height:5px} }
+        @media (max-width: 768px) {
+          .session-main-layout {
+            flex-direction: column !important;
+          }
+          .session-voice-column {
+            flex: none !important;
+            width: 100% !important;
+            min-height: 45vh;
+          }
+          .session-notepad-column {
+            flex: 1 !important;
+            width: 100% !important;
+            min-height: 50vh;
+          }
         }
       `}</style>
     </div>
@@ -753,29 +782,19 @@ function MicOffIcon({ color }: { color: string }) {
   );
 }
 
-function WaveIcon({ color }: { color: string }) {
+function WaveIcon({ color, speaking }: { color: string; speaking?: boolean }) {
   return (
-    <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
-      <rect x="0" y="6" width="3" height="4" rx="1.5" fill={color} opacity="0.6">
-        <animate attributeName="height" values="4;10;4" dur="1s" repeatCount="indefinite" begin="0s" />
-        <animate attributeName="y" values="6;3;6" dur="1s" repeatCount="indefinite" begin="0s" />
-      </rect>
-      <rect x="5" y="4" width="3" height="8" rx="1.5" fill={color}>
-        <animate attributeName="height" values="8;14;8" dur="1s" repeatCount="indefinite" begin="0.15s" />
-        <animate attributeName="y" values="4;1;4" dur="1s" repeatCount="indefinite" begin="0.15s" />
-      </rect>
-      <rect x="10" y="2" width="3" height="12" rx="1.5" fill={color}>
-        <animate attributeName="height" values="12;6;12" dur="1s" repeatCount="indefinite" begin="0.3s" />
-        <animate attributeName="y" values="2;5;2" dur="1s" repeatCount="indefinite" begin="0.3s" />
-      </rect>
-      <rect x="15" y="4" width="3" height="8" rx="1.5" fill={color}>
-        <animate attributeName="height" values="8;14;8" dur="1s" repeatCount="indefinite" begin="0.45s" />
-        <animate attributeName="y" values="4;1;4" dur="1s" repeatCount="indefinite" begin="0.45s" />
-      </rect>
-      <rect x="20" y="6" width="3" height="4" rx="1.5" fill={color} opacity="0.6">
-        <animate attributeName="height" values="4;10;4" dur="1s" repeatCount="indefinite" begin="0.6s" />
-        <animate attributeName="y" values="6;3;6" dur="1s" repeatCount="indefinite" begin="0.6s" />
-      </rect>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ alignSelf: "center" }}>
+      <rect x="1" y="10" width="3" height="4" rx="1.5" fill={color} opacity="0.6"
+        style={speaking ? { animation: "waveBar1 0.6s ease-in-out infinite" } : undefined} />
+      <rect x="6" y="8" width="3" height="8" rx="1.5" fill={color}
+        style={speaking ? { animation: "waveBar2 0.6s ease-in-out infinite 0.1s" } : undefined} />
+      <rect x="11" y="5" width="3" height="14" rx="1.5" fill={color}
+        style={speaking ? { animation: "waveBar3 0.6s ease-in-out infinite 0.2s" } : undefined} />
+      <rect x="16" y="8" width="3" height="8" rx="1.5" fill={color}
+        style={speaking ? { animation: "waveBar4 0.6s ease-in-out infinite 0.15s" } : undefined} />
+      <rect x="21" y="10" width="3" height="4" rx="1.5" fill={color} opacity="0.6"
+        style={speaking ? { animation: "waveBar5 0.6s ease-in-out infinite 0.05s" } : undefined} />
     </svg>
   );
 }
