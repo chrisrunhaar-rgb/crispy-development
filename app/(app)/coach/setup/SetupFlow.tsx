@@ -121,7 +121,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
 
           <InfoCard label="Your voice is processed by Google">
-            WayPoint uses Google&rsquo;s Gemini Live AI for voice sessions. Your voice is transmitted to and processed by Google&rsquo;s servers in real time. By using WayPoint, Google&rsquo;s terms of use also apply to your use of the AI features. We do not store your raw audio.
+            During a session, your voice is streamed live to Google&rsquo;s Gemini AI — this is how your coach hears and understands you in real time. Google processes the audio on their servers; we do not store your raw voice recordings. What we do store are the notes and transcript generated from your session, which remain private to you. Because Google&rsquo;s infrastructure powers the voice feature, their terms of use apply alongside ours.
           </InfoCard>
 
           <InfoCard label="Your transcripts are private to you">
