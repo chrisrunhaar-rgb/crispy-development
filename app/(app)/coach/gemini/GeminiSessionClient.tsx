@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { GoogleGenAI, Modality, Type, StartSensitivity, EndSensitivity } from "@google/genai";
+import { GoogleGenAI, Modality, Type, ThinkingLevel, StartSensitivity, EndSensitivity } from "@google/genai";
 import type { LiveServerMessage, Session, LiveConnectConfig } from "@google/genai";
 import Image from "next/image";
 
@@ -26,7 +26,7 @@ const PHASE_LABELS: Record<Phase, string> = {
 
 const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
 
-const GEMINI_MODEL = "gemini-2.0-flash-live-001";
+const GEMINI_MODEL = "gemini-3.1-flash-live-preview";
 const WARMUP_AT_SECONDS = 780;
 
 const COACH_ROOM_IMAGES: Record<string, string> = {
@@ -174,6 +174,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
+    generationConfig: { thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL } },
     realtimeInputConfig: {
       automaticActivityDetection: {
         disabled: false,
@@ -315,10 +316,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       `Pick up naturally from the ${currentPhase} phase.`,
     ].filter(Boolean).join(" ");
     setTimeout(() => {
-      sessionRef.current?.sendClientContent({
-        turns: [{ role: "user", parts: [{ text: contextMsg }] }],
-        turnComplete: true,
-      });
+      sessionRef.current?.sendRealtimeInput({ text: contextMsg });
     }, 300);
     scheduleWarmup();
     return true;
@@ -340,7 +338,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       }
       const { apiKey, systemPrompt } = await tokenRes.json() as { apiKey: string; systemPrompt: string };
       systemPromptRef.current = systemPrompt;
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: "v1alpha" } });
       aiRef.current = ai;
 
       let stream: MediaStream;
@@ -420,10 +418,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
       sessionRef.current = geminiSession;
 
       setTimeout(() => {
-        sessionRef.current?.sendClientContent({
-          turns: [{ role: "user", parts: [{ text: "Begin the session." }] }],
-          turnComplete: true,
-        });
+        sessionRef.current?.sendRealtimeInput({ text: "Begin the session." });
       }, 800);
 
       worklet.port.onmessage = (e: MessageEvent<ArrayBuffer>) => {
@@ -458,9 +453,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   }, []);
 
   const endSession = useCallback(() => {
-    sessionRef.current?.sendClientContent({
-      turns: [{ role: "user", parts: [{ text: "Let's close the session now." }] }],
-    });
+    sessionRef.current?.sendRealtimeInput({ text: "Let's close the session now." });
     setTimeout(() => handleSessionComplete(), 3000);
   }, [handleSessionComplete]);
 
