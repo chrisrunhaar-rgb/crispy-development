@@ -61,9 +61,21 @@ function AppBottomNav() {
                 textDecoration: "none",
                 color: active ? "oklch(65% 0.15 45)" : "oklch(60% 0.04 260)",
                 transition: "color 0.15s",
-                position: "relative",
               }}
             >
+              {badge && (
+                <span style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.45rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  color: "oklch(65% 0.15 45)",
+                  lineHeight: 1,
+                  marginBottom: "-2px",
+                }}>
+                  {badge}
+                </span>
+              )}
               <Icon active={active} />
               <span style={{
                 fontFamily: "var(--font-montserrat)",
@@ -74,24 +86,6 @@ function AppBottomNav() {
               }}>
                 {label}
               </span>
-              {badge && (
-                <span style={{
-                  position: "absolute",
-                  top: "0.5rem",
-                  right: "calc(50% - 22px)",
-                  background: "oklch(65% 0.15 45)",
-                  color: "white",
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.38rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  padding: "0.1rem 0.3rem",
-                  borderRadius: "2px",
-                  lineHeight: 1.4,
-                }}>
-                  {badge}
-                </span>
-              )}
             </Link>
           );
         })}
