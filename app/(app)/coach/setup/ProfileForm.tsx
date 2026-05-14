@@ -83,7 +83,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="off">
 
       {isFirstTime && (
         <div style={{ marginBottom: "3rem" }}>

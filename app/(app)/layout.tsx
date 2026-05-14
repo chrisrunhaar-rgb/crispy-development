@@ -24,9 +24,9 @@ function AppBottomNav() {
   const pathname = usePathname();
 
   const items = [
-    { href: "/dashboard", label: "Home", icon: HomeIcon },
-    { href: "/resources", label: "Library", icon: ResourcesIcon },
-    { href: "/coach", label: "Coach", icon: CoachIcon },
+    { href: "/dashboard", label: "Home", icon: HomeIcon, badge: null },
+    { href: "/resources", label: "Library", icon: ResourcesIcon, badge: null },
+    { href: "/coach", label: "Coach", icon: CoachIcon, badge: "BETA" },
   ];
 
   return (
@@ -39,41 +39,63 @@ function AppBottomNav() {
         background: "oklch(30% 0.12 260)",
         borderTop: "1px solid oklch(97% 0.005 80 / 0.1)",
         display: "flex",
+        justifyContent: "center",
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
         zIndex: 100,
       }}
     >
-      {items.map(({ href, label, icon: Icon }) => {
-        const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
-        return (
-          <Link
-            key={href}
-            href={href}
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "0.25rem",
-              padding: "0.75rem 0.5rem",
-              textDecoration: "none",
-              color: active ? "oklch(65% 0.15 45)" : "oklch(60% 0.04 260)",
-              transition: "color 0.15s",
-            }}
-          >
-            <Icon active={active} />
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.6rem",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}>
-              {label}
-            </span>
-          </Link>
-        );
-      })}
+      <div style={{ display: "flex", width: "100%", maxWidth: "400px" }}>
+        {items.map(({ href, label, icon: Icon, badge }) => {
+          const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
+          return (
+            <Link
+              key={href}
+              href={href}
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.25rem",
+                padding: "0.75rem 0.5rem",
+                textDecoration: "none",
+                color: active ? "oklch(65% 0.15 45)" : "oklch(60% 0.04 260)",
+                transition: "color 0.15s",
+                position: "relative",
+              }}
+            >
+              <Icon active={active} />
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.6rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+              }}>
+                {label}
+              </span>
+              {badge && (
+                <span style={{
+                  position: "absolute",
+                  top: "0.5rem",
+                  right: "calc(50% - 22px)",
+                  background: "oklch(65% 0.15 45)",
+                  color: "white",
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.38rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  padding: "0.1rem 0.3rem",
+                  borderRadius: "2px",
+                  lineHeight: 1.4,
+                }}>
+                  {badge}
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }

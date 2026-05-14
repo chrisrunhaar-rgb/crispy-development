@@ -4,6 +4,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import SessionTypeSelector from "./SessionTypeSelector";
+import SessionNotebook from "./SessionNotebook";
 
 export const dynamic = "force-dynamic";
 
@@ -18,21 +19,6 @@ const COACH_IMAGES: Record<string, string> = {
   Ethan: "/images/coaches/ethan-portrait.jpg",
 };
 
-function formatDuration(seconds: number | null) {
-  if (!seconds) return null;
-  const m = Math.round(seconds / 60);
-  return `${m} min`;
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    weekday: "long", day: "numeric", month: "long", year: "numeric",
-  });
-}
-
-function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-}
 
 export default async function CoachPage({
   searchParams,
@@ -202,23 +188,9 @@ export default async function CoachPage({
             </div>
           </div>
 
-          {/* Past sessions — notation paper cards */}
+          {/* Past sessions — notebook */}
           {completedSessions.length > 0 && (
-            <div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(50% 0.008 260)", marginBottom: "1.5rem" }}>
-                Previous sessions
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                {completedSessions.map(session => {
-                  const wb = Array.isArray(session.wp_whiteboards) ? session.wp_whiteboards[0] : session.wp_whiteboards;
-                  return (
-                    <Link key={session.id} href={`/coach/session/${session.id}`} style={{ textDecoration: "none" }}>
-                      <NotationCard session={session} wb={wb} />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
+            <SessionNotebook sessions={completedSessions} />
           )}
 
         </div>
@@ -227,134 +199,6 @@ export default async function CoachPage({
   );
 }
 
-type WB = {
-  focus_today?: string | null;
-  key_insights?: string[] | null;
-  values_named?: string[] | null;
-  action_steps?: string[] | null;
-  carrying_forward?: string | null;
-} | null;
-
-type Session = {
-  id: string;
-  session_number: number | null;
-  started_at: string;
-  duration_seconds: number | null;
-  wp_whiteboards: WB | WB[];
-};
-
-function NotationCard({ session, wb }: { session: Session; wb: WB }) {
-  const dur = formatDuration(session.duration_seconds);
-  const hasContent = wb && (wb.focus_today || (wb.key_insights?.length ?? 0) > 0 || (wb.action_steps?.length ?? 0) > 0 || wb.carrying_forward);
-
-  return (
-    <div style={{
-      position: "relative",
-      background: "oklch(99% 0.003 80)",
-      border: "1px solid oklch(85% 0.008 80)",
-      boxShadow: "0 2px 8px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04)",
-    }}>
-      {/* Paperclip */}
-      <div style={{
-        position: "absolute", top: "-14px", left: "32px",
-        width: "28px", height: "28px",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        zIndex: 1,
-      }}>
-        <PaperclipIcon />
-      </div>
-
-      {/* Lined paper effect — horizontal rules */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-        {Array.from({ length: 20 }, (_, i) => (
-          <div key={i} style={{
-            position: "absolute", left: 0, right: 0,
-            top: `${52 + i * 28}px`,
-            height: "1px",
-            background: "oklch(88% 0.008 220 / 0.5)",
-          }} />
-        ))}
-        {/* Left margin line */}
-        <div style={{
-          position: "absolute", top: 0, bottom: 0, left: "56px",
-          width: "1px", background: "oklch(80% 0.06 15 / 0.25)",
-        }} />
-      </div>
-
-      <div style={{ padding: "2rem 1.75rem 1.75rem 4rem", position: "relative" }}>
-        {/* Date stamp */}
-        <div style={{ marginBottom: "1.25rem" }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.008 260)" }}>
-            Session {session.session_number ?? "—"}{dur ? ` · ${dur}` : ""}
-          </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(55% 0.008 260)", marginTop: "0.15rem" }}>
-            {formatDate(session.started_at)} · {formatTime(session.started_at)}
-          </p>
-        </div>
-
-        {hasContent ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {wb?.focus_today && (
-              <NoteSection label="Focus">
-                <p style={noteText}>{wb.focus_today}</p>
-              </NoteSection>
-            )}
-            {(wb?.key_insights?.length ?? 0) > 0 && (
-              <NoteSection label="Key insights">
-                {wb!.key_insights!.map((ins, i) => <p key={i} style={noteText}>• {ins}</p>)}
-              </NoteSection>
-            )}
-            {(wb?.action_steps?.length ?? 0) > 0 && (
-              <NoteSection label="Action steps">
-                {wb!.action_steps!.map((step, i) => <p key={i} style={noteText}>{i + 1}. {step}</p>)}
-              </NoteSection>
-            )}
-            {wb?.carrying_forward && (
-              <NoteSection label="Carried forward">
-                <p style={{ ...noteText, fontStyle: "italic" }}>&ldquo;{wb.carrying_forward}&rdquo;</p>
-              </NoteSection>
-            )}
-          </div>
-        ) : (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(65% 0.008 260)", fontStyle: "italic" }}>
-            No notes from this session yet.
-          </p>
-        )}
-
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(65% 0.15 45)", fontWeight: 600, marginTop: "1.25rem", letterSpacing: "0.06em" }}>
-          View full session →
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function NoteSection({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(60% 0.12 150)", marginBottom: "0.3rem" }}>
-        {label}
-      </p>
-      {children}
-    </div>
-  );
-}
-
-function PaperclipIcon() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 8L12 16C10.9 17.1 10.9 18.9 12 20C13.1 21.1 14.9 21.1 16 20L22 14C24.2 11.8 24.2 8.2 22 6C19.8 3.8 16.2 3.8 14 6L6 14C2.7 17.3 2.7 22.7 6 26C9.3 29.3 14.7 29.3 18 26L24 20" stroke="oklch(55% 0.06 260)" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-const noteText: React.CSSProperties = {
-  fontFamily: "var(--font-montserrat)",
-  fontSize: "0.8125rem",
-  color: "oklch(28% 0.008 260)",
-  lineHeight: 1.65,
-  margin: 0,
-};
 
 const headerLink: React.CSSProperties = {
   fontFamily: "var(--font-montserrat)",
