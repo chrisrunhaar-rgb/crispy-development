@@ -689,7 +689,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               {/* Scrollable notes content */}
               <div style={{
                 flex: 1, overflowY: "auto",
-                padding: "0.75rem 1.25rem",
+                padding: "0 1.25rem 1.75rem",
                 lineHeight: "28px",
                 fontSize: "0.8125rem",
                 fontFamily: "var(--font-montserrat)",
@@ -697,7 +697,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
                 backgroundSize: "100% 28px",
               }}>
                 {!hasWhiteboardContent && (
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", marginTop: "0.5rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", margin: "28px 0 0" }}>
                     Your notes will appear here as the conversation unfolds.
                   </p>
                 )}
@@ -756,15 +756,15 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
 function WBEntry({ label, value, indent, italic }: { label?: string; value: string; indent?: boolean; italic?: boolean }) {
   return (
-    <div style={{ marginBottom: "0.5rem" }}>
+    <div style={{ marginBottom: 0 }}>
       {label && (
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(60,110,70,0.7)", marginBottom: "0.2rem", marginTop: "1rem", margin: "1rem 0 0.2rem 0" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(60,110,70,0.7)", margin: "28px 0 0" }}>
           {label}
         </p>
       )}
       <p style={{
         fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem",
-        color: "rgba(40,35,28,0.82)", lineHeight: 1.65,
+        color: "rgba(40,35,28,0.82)", lineHeight: "28px",
         paddingLeft: indent ? "0.5rem" : 0,
         fontStyle: italic ? "italic" : "normal",
         margin: 0,
