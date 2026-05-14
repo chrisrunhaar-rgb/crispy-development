@@ -26,7 +26,7 @@ const PHASE_LABELS: Record<Phase, string> = {
 
 const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
 
-const GEMINI_MODEL = "gemini-2.0-flash-live-001";
+const GEMINI_MODEL = "gemini-2.5-flash-native-audio-latest";
 const WARMUP_AT_SECONDS = 780;
 
 const COACH_ROOM_IMAGES: Record<string, string> = {
@@ -174,6 +174,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
+    generationConfig: { thinkingConfig: { thinkingBudget: 0 } },
     realtimeInputConfig: {
       automaticActivityDetection: {
         disabled: false,
