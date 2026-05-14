@@ -3,10 +3,13 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function POST() {
   try {
+  console.log("realtime-token: step 1 - init");
   const supabase = await createClient();
+  console.log("realtime-token: step 2 - getUser");
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  console.log("realtime-token: step 3 - check key");
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return NextResponse.json({ error: "OpenAI not configured" }, { status: 500 });
 
@@ -28,8 +31,10 @@ export async function POST() {
     .limit(3);
   if (sessionsError) console.error("Sessions fetch error:", sessionsError);
 
+  console.log("realtime-token: step 6 - build context");
   const workerContext = buildWorkerContext(profile, recentSessions ?? [], user);
 
+  console.log("realtime-token: step 7 - fetch OpenAI, context length:", workerContext.length);
   const r = await fetch("https://api.openai.com/v1/realtime/sessions", {
     method: "POST",
     headers: {
@@ -88,12 +93,16 @@ export async function POST() {
     }),
   });
 
+  console.log("realtime-token: step 8 - OpenAI response status:", r.status);
   if (!r.ok) {
     const err = await r.text();
-    return NextResponse.json({ error: err }, { status: r.status });
+    console.error("realtime-token: OpenAI error:", err);
+    return NextResponse.json({ error: `OpenAI ${r.status}: ${err}` }, { status: r.status });
   }
 
+  console.log("realtime-token: step 9 - parse session");
   const session = await r.json();
+  console.log("realtime-token: step 10 - done, has client_secret:", !!session.client_secret);
   return NextResponse.json({ client_secret: session.client_secret });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

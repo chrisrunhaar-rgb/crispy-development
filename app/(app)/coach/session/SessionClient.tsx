@@ -152,7 +152,10 @@ export default function SessionClient({ sessionId }: { sessionId: string }) {
     try {
       // Get ephemeral token
       const tokenRes = await fetch("/api/coach/realtime-token", { method: "POST" });
-      if (!tokenRes.ok) throw new Error("Could not connect to WayPoint");
+      if (!tokenRes.ok) {
+        const body = await tokenRes.json().catch(() => ({})) as { error?: string };
+        throw new Error(body.error ?? `Token error ${tokenRes.status}`);
+      }
       const { client_secret } = await tokenRes.json();
 
       // Get mic
