@@ -37,7 +37,6 @@ const COACHES = [
 export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
-  const [agreed, setAgreed] = useState(false);
   const [form, setForm] = useState({
     name: existing?.name ?? "",
     organisation: existing?.organisation ?? "",
@@ -55,7 +54,6 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (isFirstTime && !agreed) return;
     setSaving(true);
 
     await fetch("/api/coach/profile", {
@@ -194,36 +192,12 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         })}
       </div>
 
-      {/* Confidentiality (first time only) */}
-      {isFirstTime && (
-        <div style={{ background: "oklch(97% 0.005 260)", border: "1px solid oklch(88% 0.008 80)", padding: "1.5rem", marginBottom: "2rem" }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.008 260)", marginBottom: "0.75rem" }}>
-            Confidentiality
-          </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, marginBottom: "1rem" }}>
-            Your coaching sessions and transcripts are private to you. If a leader is assigned to you, they can only see the whiteboard themes you choose to share — never the full conversation. You are always in control of what is visible.
-          </p>
-          <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={e => setAgreed(e.target.checked)}
-              style={{ marginTop: "2px", accentColor: "oklch(45% 0.12 260)", width: "16px", height: "16px", flexShrink: 0 }}
-              required
-            />
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(35% 0.008 260)", lineHeight: 1.6 }}>
-              I understand that my sessions are confidential and I agree to use WayPoint as a coaching tool, not a substitute for professional mental health support.
-            </span>
-          </label>
-        </div>
-      )}
-
       <button
         type="submit"
-        disabled={saving || (isFirstTime && !agreed)}
+        disabled={saving}
         style={{
           width: "100%",
-          background: saving || (isFirstTime && !agreed) ? "oklch(70% 0.05 260)" : "oklch(30% 0.12 260)",
+          background: saving ? "oklch(70% 0.05 260)" : "oklch(30% 0.12 260)",
           color: "white",
           fontFamily: "var(--font-montserrat)",
           fontWeight: 700,
@@ -232,7 +206,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           textTransform: "uppercase",
           padding: "1.125rem",
           border: "none",
-          cursor: saving || (isFirstTime && !agreed) ? "not-allowed" : "pointer",
+          cursor: saving ? "not-allowed" : "pointer",
           transition: "background 0.2s",
         }}
       >

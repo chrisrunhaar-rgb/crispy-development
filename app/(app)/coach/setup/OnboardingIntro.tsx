@@ -135,7 +135,20 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
                 color: "oklch(30% 0.008 260)",
                 lineHeight: 1.7,
               }}>
-                I understand that WayPoint is a coaching tool, not a mental health service. I agree that my voice will be processed by Google&rsquo;s AI to enable the coaching experience. I have read the{" "}
+                I understand that WayPoint is a coaching tool, not a mental health service, and I agree to the{" "}
+                <Link
+                  href="/coach/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "oklch(45% 0.12 260)",
+                    textDecoration: "underline",
+                    textUnderlineOffset: "2px",
+                  }}
+                >
+                  terms of use
+                </Link>
+                {" "}and{" "}
                 <Link
                   href="/coach/privacy"
                   target="_blank"
@@ -148,7 +161,7 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
                 >
                   confidentiality policy
                 </Link>
-                .
+                . I agree that my voice will be processed by Google&rsquo;s AI to enable the coaching experience.
               </span>
             </label>
           </div>

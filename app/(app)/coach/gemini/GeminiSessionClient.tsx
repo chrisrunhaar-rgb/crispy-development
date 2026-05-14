@@ -174,6 +174,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     responseModalities: [Modality.AUDIO],
     speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
     systemInstruction: systemPrompt,
+    thinkingConfig: { thinkingBudget: 0 },
     realtimeInputConfig: {
       automaticActivityDetection: {
         disabled: false,
