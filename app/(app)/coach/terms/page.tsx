@@ -42,7 +42,7 @@ export default function CoachTermsPage() {
           </Section>
 
           <Section label="Voice processing and AI">
-            <Body>WayPoint uses Google&apos;s Gemini Live API to power voice sessions. Your voice input is transmitted to and processed by Google&apos;s servers in real time. By using WayPoint, you consent to this processing. We do not store your raw audio. Session transcripts and notes generated from your session are stored securely in our database. See the confidentiality policy for full detail on what is stored and who can see it.</Body>
+            <Body>WayPoint uses Google&apos;s Gemini Live API to power voice sessions. Your voice input is transmitted to and processed by Google&apos;s servers in real time. By using WayPoint, Google&apos;s terms of use also apply to your use of the AI-powered voice features — you can find them at google.com/terms. We do not store your raw audio. Session transcripts and notes generated from your session are stored securely in our database. See the confidentiality policy for full detail on what is stored and who can see it.</Body>
           </Section>
 
           <Section label="Trial and access">
