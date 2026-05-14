@@ -291,7 +291,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
 
         <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2.5rem", textAlign: "center" }}>
           <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.625rem", color: "oklch(28% 0.008 260)", marginBottom: "1rem", lineHeight: 1.4 }}>
-            &ldquo;{form.selected_coach} is ready for you.&rdquo;
+            &ldquo;{form.selected_coach}{" "}is ready for you.&rdquo;
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(50% 0.008 260)", lineHeight: 1.7 }}>
             Speak naturally. Your notes will build as you go. Everything stays private to you.
