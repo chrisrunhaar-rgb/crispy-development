@@ -34,6 +34,11 @@ const COACH_IMAGES: Record<string, string> = {
   Ethan: "/images/coaches/ethan.png",
 };
 
+const COACH_SESSION_IMAGES: Record<string, string> = {
+  Tara: "/images/coaches/tara-session.png",
+  Ethan: "/images/coaches/ethan-session.png",
+};
+
 const PHASE_MIN_SECONDS: Partial<Record<Phase, number>> = {
   LAND: 30,
   SEEK: 60,
@@ -467,6 +472,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
 
   const phaseIndex = PHASE_ORDER.indexOf(phase);
   const coachImage = COACH_IMAGES[coachName] ?? COACH_IMAGES.Tara;
+  const coachSessionImage = COACH_SESSION_IMAGES[coachName] ?? COACH_SESSION_IMAGES.Tara;
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
   return (
@@ -515,64 +521,83 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
       {/* Body — mic left, whiteboard right */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", flex: 1, overflow: "hidden" }}>
 
-        {/* Left — voice interface */}
+        {/* Left — voice interface with blended coach figure */}
         <div style={{
-          display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center",
-          padding: "2.5rem", gap: "2rem",
           position: "relative",
+          overflow: "hidden",
+          display: "flex", flexDirection: "column",
+          alignItems: "center",
         }}>
-          {/* Coach portrait circle — floating beside mic */}
+          {/* Coach seated figure — blends into dark background via screen */}
           <div style={{
-            display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem",
+            position: "absolute", bottom: 0, left: "50%",
+            transform: "translateX(-50%)",
+            width: "100%", maxWidth: "420px",
+            height: "90%",
+            pointerEvents: "none",
           }}>
-            {/* Portrait + orb cluster */}
-            <div style={{ position: "relative", marginBottom: "1rem" }}>
-              {/* Coach portrait */}
-              <div style={{
-                position: "absolute", top: "50%", left: "-90px",
-                transform: "translateY(-50%)",
-                width: "72px", height: "72px", borderRadius: "50%",
-                overflow: "hidden",
-                border: `2px solid ${isAiSpeaking ? "oklch(60% 0.18 150)" : "oklch(35% 0.06 260)"}`,
-                transition: "border-color 0.5s ease",
-                boxShadow: isAiSpeaking ? "0 0 20px oklch(60% 0.18 150 / 0.3)" : "none",
-              }}>
-                <Image src={coachImage} alt={coachName} width={72} height={72} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-              </div>
+            <Image
+              src={coachSessionImage}
+              alt={coachName}
+              fill
+              style={{
+                objectFit: "contain",
+                objectPosition: "bottom center",
+                mixBlendMode: "screen",
+                opacity: status === "active" ? (isAiSpeaking ? 1 : 0.82) : 0.55,
+                transition: "opacity 0.6s ease",
+              }}
+            />
+          </div>
 
-              {/* Mic orb */}
+          {/* Overlay gradient — fade coach at top so orb reads clearly */}
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0,
+            height: "45%",
+            background: "linear-gradient(to bottom, oklch(18% 0.08 260) 0%, transparent 100%)",
+            pointerEvents: "none",
+            zIndex: 1,
+          }} />
+
+          {/* Orb + controls — float above the figure */}
+          <div style={{
+            position: "relative", zIndex: 2,
+            display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "flex-start",
+            paddingTop: "2.5rem", gap: "1.25rem",
+            width: "100%",
+          }}>
+            {/* Mic orb */}
+            <div style={{
+              width: "140px", height: "140px", borderRadius: "50%",
+              background: status === "active"
+                ? (isAiSpeaking
+                  ? "radial-gradient(circle, oklch(60% 0.18 150 / 0.35) 0%, oklch(60% 0.18 150 / 0.05) 70%)"
+                  : "radial-gradient(circle, oklch(42% 0.10 150 / 0.3) 0%, oklch(42% 0.10 150 / 0.04) 70%)")
+                : "radial-gradient(circle, oklch(28% 0.07 260 / 0.4) 0%, transparent 70%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "background 0.5s ease",
+              animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : "none",
+            }}>
               <div style={{
-                width: "160px", height: "160px", borderRadius: "50%",
+                width: "64px", height: "64px", borderRadius: "50%",
                 background: status === "active"
-                  ? (isAiSpeaking
-                    ? "radial-gradient(circle, oklch(60% 0.18 150 / 0.3) 0%, oklch(60% 0.18 150 / 0.05) 70%)"
-                    : "radial-gradient(circle, oklch(42% 0.10 150 / 0.25) 0%, oklch(42% 0.10 150 / 0.04) 70%)")
-                  : "radial-gradient(circle, oklch(28% 0.07 260 / 0.4) 0%, transparent 70%)",
+                  ? (isAiSpeaking ? "oklch(58% 0.18 150)" : isMuted ? "oklch(52% 0.15 25)" : "oklch(42% 0.12 150)")
+                  : "oklch(32% 0.08 260)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                transition: "background 0.5s ease",
-                animation: isAiSpeaking ? "pulse 1.8s ease-in-out infinite" : "none",
+                transition: "background 0.3s ease",
               }}>
-                <div style={{
-                  width: "72px", height: "72px", borderRadius: "50%",
-                  background: status === "active"
-                    ? (isAiSpeaking ? "oklch(58% 0.18 150)" : isMuted ? "oklch(52% 0.15 25)" : "oklch(42% 0.12 150)")
-                    : "oklch(32% 0.08 260)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transition: "background 0.3s ease",
-                }}>
-                  {status === "idle" || status === "error" ? <MicIcon color="oklch(65% 0.008 260)" /> :
-                   status === "connecting" ? <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "oklch(65% 0.008 260)", letterSpacing: "0.05em" }}>...</span> :
-                   isAiSpeaking ? <WaveIcon color="white" /> :
-                   isMuted ? <MicOffIcon color="white" /> :
-                   <MicIcon color="white" />}
-                </div>
+                {status === "idle" || status === "error" ? <MicIcon color="oklch(65% 0.008 260)" /> :
+                 status === "connecting" ? <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", color: "oklch(65% 0.008 260)", letterSpacing: "0.05em" }}>...</span> :
+                 isAiSpeaking ? <WaveIcon color="white" /> :
+                 isMuted ? <MicOffIcon color="white" /> :
+                 <MicIcon color="white" />}
               </div>
             </div>
 
             {/* Status text */}
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(72% 0.008 260)", textAlign: "center" }}>
-              {status === "idle" && `Ready when you are.`}
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "oklch(72% 0.008 260)", textAlign: "center", maxWidth: "240px" }}>
+              {status === "idle" && "Ready when you are."}
               {status === "connecting" && (errorMsg ?? "Connecting…")}
               {status === "active" && (isAiSpeaking ? `${coachName} is speaking…` : isMuted ? "Microphone paused." : "Listening…")}
               {status === "complete" && "Session complete."}
@@ -580,38 +605,38 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice }
             </p>
 
             {status === "active" && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(40% 0.008 260)", textAlign: "center" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(42% 0.008 260)", textAlign: "center" }}>
                 {isMuted ? "Tap Resume to continue" : "Speak naturally"}
               </p>
             )}
-          </div>
 
-          {/* Controls */}
-          <div style={{ display: "flex", gap: "0.875rem" }}>
-            {status === "idle" && (
-              <button onClick={startSession} style={btnStyle("primary")}>Start Session</button>
-            )}
-            {status === "active" && (
-              <>
-                <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>
-                  {isMuted ? "Resume" : "Pause"}
-                </button>
-                <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
-              </>
-            )}
-            {status === "complete" && (
-              <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>
-            )}
-            {status === "error" && (
-              <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>
+            {/* Controls */}
+            <div style={{ display: "flex", gap: "0.875rem" }}>
+              {status === "idle" && (
+                <button onClick={startSession} style={btnStyle("primary")}>Start Session</button>
+              )}
+              {status === "active" && (
+                <>
+                  <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>
+                    {isMuted ? "Resume" : "Pause"}
+                  </button>
+                  <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
+                </>
+              )}
+              {status === "complete" && (
+                <a href="/coach" style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>
+              )}
+              {status === "error" && (
+                <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>
+              )}
+            </div>
+
+            {status === "error" && errorMsg && (
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(62% 0.18 25)", textAlign: "center", maxWidth: "280px" }}>
+                {errorMsg}
+              </p>
             )}
           </div>
-
-          {status === "error" && errorMsg && (
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(62% 0.18 25)", textAlign: "center", maxWidth: "280px" }}>
-              {errorMsg}
-            </p>
-          )}
 
           <style>{`
             @keyframes pulse {
