@@ -34,16 +34,6 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
 
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
-      <div style={{ background: "oklch(18% 0.08 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(14% 0.06 260)" }}>
-        <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
-            WayPoint
-          </p>
-          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "white" }}>
-            Set up your profile
-          </h1>
-        </div>
-      </div>
       <div className="container-wide" style={{ paddingBlock: "3rem" }}>
         <div style={{ maxWidth: "600px", margin: "0 auto" }}>
           <ProfileForm

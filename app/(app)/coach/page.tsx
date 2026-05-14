@@ -124,8 +124,7 @@ export default async function CoachPage({
           <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
             {isLeader && <Link href="/coach/leader" style={headerLink}>Leader view</Link>}
             {isAdmin && <Link href="/coach/admin" style={headerLink}>Admin</Link>}
-            <Link href="/coach/privacy" style={headerLink}>Confidentiality</Link>
-            <Link href="/dashboard" style={headerLink}>← Dashboard</Link>
+            <Link href="/dashboard" style={headerLink}>← Crispy Leaders</Link>
           </div>
         </div>
       </div>

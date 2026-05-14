@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   userId: string;
@@ -134,7 +135,10 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
       {/* Section: Choose your coach */}
       <SectionHeading>Choose your coach</SectionHeading>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(55% 0.008 260)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-        Both coaches use the same coaching approach and framework. The only difference is the voice.
+        Both coaches use the same coaching approach and framework. The only difference is the voice.{" "}
+        <Link href="/coach/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "oklch(45% 0.12 260)", textDecoration: "underline", textUnderlineOffset: "2px" }}>
+          Confidentiality policy →
+        </Link>
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
