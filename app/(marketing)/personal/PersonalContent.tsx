@@ -76,7 +76,7 @@ export default function PersonalContent({ ctaHref = "/membership" }: { ctaHref?:
             <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>{p.label}</p>
           </div>
-          <h1 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "560px" }}>
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(3rem, 6vw, 5.5rem)", lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "560px" }}>
             {p.h1}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7, marginBottom: "2.5rem" }}>
@@ -100,7 +100,7 @@ export default function PersonalContent({ ctaHref = "/membership" }: { ctaHref?:
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "52ch" }}>
                 {p.memberDesc}
               </p>
-              <p className="t-tagline" style={{ color: "oklch(52% 0.008 260)", marginTop: "1.5rem", fontStyle: "italic" }}>
+              <p className="t-tagline" style={{ color: "oklch(52% 0.008 260)", marginTop: "1.5rem" }}>
                 {p.ctaQuote}
               </p>
             </div>

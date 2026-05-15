@@ -9,6 +9,7 @@ import AdminLeaderRow from "./AdminLeaderRow";
 import AdminSidebar from "@/components/AdminSidebar";
 import MembersTab from "./MembersTab";
 import ContentTab from "./ContentTab";
+import { RESOURCES } from "@/lib/resources-data";
 import TeamLeadersTab from "./TeamLeadersTab";
 import PeerInitiatorsTab from "./PeerInitiatorsTab";
 import MembershipTab from "./MembershipTab";
@@ -24,83 +25,6 @@ const ASSESSMENT_KEYS = [
   "karunia_completed_at",
 ];
 
-type ContentModule = { slug: string; title: string; created: string; updated: string; languages: string[] };
-type ContentGroup = { category: string; modules: ContentModule[] };
-
-const CONTENT_MODULES: ContentGroup[] = [
-  {
-    category: "Assessments",
-    modules: [
-      { slug: "disc", title: "DISC Profile", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "5languages", title: "5 Languages of Appreciation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "wheel-of-life", title: "Wheel of Life", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "enneagram", title: "Enneagram", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "big-five", title: "Big Five", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "16-personalities", title: "16 Personalities", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-    ],
-  },
-  {
-    category: "Cross-Cultural Leadership",
-    modules: [
-      { slug: "cultural-intelligence", title: "Cultural Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "power-distance", title: "Power Distance", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "time-and-culture", title: "Time & Culture", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "intercultural-communication", title: "Intercultural Communication", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "conflict-resolution", title: "Conflict Resolution", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-    ],
-  },
-  {
-    category: "Thinking & Decisions",
-    modules: [
-      { slug: "six-thinking-hats", title: "Six Thinking Hats", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "cognitive-biases", title: "Cognitive Biases", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "decision-making", title: "Decision Making", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "ladder-of-inference", title: "Ladder of Inference", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "johari-window", title: "Johari Window", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-    ],
-  },
-  {
-    category: "Leadership",
-    modules: [
-      { slug: "leadership-altitudes", title: "Leadership Altitudes", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "servant-leadership", title: "Servant Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "vision-casting", title: "Vision Casting", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "managing-up", title: "Managing Up", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "storytelling-leadership", title: "Storytelling for Leaders", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "smart-goals", title: "SMART Goals", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "above-below-the-line", title: "Above & Below the Line", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "red-light-green-light", title: "Red Light Green Light", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "raising-next-generation", title: "Raising the Next Generation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "team-health", title: "Team Health", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-    ],
-  },
-  {
-    category: "Personal Growth",
-    modules: [
-      { slug: "emotional-intelligence", title: "Emotional Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "overcoming-procrastination", title: "Overcoming Procrastination", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "sabbath-leadership", title: "Sabbath Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "leaders-are-readers", title: "Leaders Are Readers", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "attention-retention", title: "Attention & Retention", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-      { slug: "debriefing-reflection", title: "Debriefing & Reflection", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
-    ],
-  },
-  {
-    category: "Training",
-    modules: [
-      { slug: "zoom-training", title: "Zoom Training (EN)", created: "2026-04-21", updated: "2026-04-21", languages: ["EN"] },
-      { slug: "zoom-training-id", title: "Zoom Training (ID)", created: "2026-04-21", updated: "2026-04-21", languages: ["ID"] },
-      { slug: "teams-training", title: "Teams Training (EN)", created: "2026-04-21", updated: "2026-04-21", languages: ["EN"] },
-      { slug: "teams-training-id", title: "Teams Training (ID)", created: "2026-04-21", updated: "2026-04-21", languages: ["ID"] },
-    ],
-  },
-];
 
 export default async function AdminPage({
   searchParams,
@@ -640,16 +564,16 @@ export default async function AdminPage({
         {/* â”€â”€ CONTENT TAB â”€â”€ */}
         {activeTab === "content" && (
           <ContentTab
-            modules={CONTENT_MODULES.flatMap(group =>
-              group.modules.map(mod => ({
-                ...mod,
-                category: group.category,
-                created_at: mod.created,
-                updated_at: mod.updated,
-                reads: contentReadCounts.get(mod.slug) ?? 0,
-                saves: contentSaveCounts.get(mod.slug) ?? 0,
-              }))
-            )}
+            modules={RESOURCES.map(r => ({
+              slug: r.slug ?? r.id,
+              title: r.title,
+              category: r.format,
+              created_at: "2026-04-21",
+              updated_at: "2026-04-21",
+              languages: r.languages.map(l => l.toUpperCase()),
+              reads: contentReadCounts.get(r.slug ?? r.id) ?? 0,
+              saves: contentSaveCounts.get(r.slug ?? r.id) ?? 0,
+            }))}
             moduleStatuses={moduleStatuses}
             moduleCats={moduleCats}
           />

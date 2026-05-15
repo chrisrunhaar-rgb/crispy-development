@@ -1,7 +1,7 @@
 import SignupForm from "./SignupForm";
 
 export const metadata = {
-  title: "Get Started — Crispy Development",
+  title: "Create Account — Crispy Development",
 };
 
 export default async function SignupPage({

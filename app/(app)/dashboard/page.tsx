@@ -1240,7 +1240,7 @@ function TeamApplicationPending({ firstName }: { firstName: string }) {
       <div>
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.2rem" }}>Team Application Under Review</p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(38% 0.008 260)" }}>
-          Thanks {firstName} — Chris reviews every application personally. You&apos;ll hear back by email.
+          Thanks {firstName} — every application is reviewed personally. You&apos;ll hear back by email.
         </p>
       </div>
     </div>

@@ -130,7 +130,7 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
       <section style={{ background: "oklch(97% 0.005 80)", paddingBlock: "clamp(4.5rem, 8vw, 8rem)" }}>
         <div className="container-wide">
           <div style={{ marginBottom: "clamp(2.5rem, 5vw, 4rem)", maxWidth: "540px" }}>
-            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1, color: "oklch(22% 0.10 260)", marginBottom: "1.25rem" }}>
+            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1, color: "oklch(22% 0.10 260)", marginBottom: "1.25rem" }}>
               {t.sectionH2}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)" }}>
@@ -194,7 +194,7 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
               {t.ctaLabel}
             </p>
 
-            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(2.8rem, 6vw, 5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "1.75rem" }}>
+            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2.8rem, 6vw, 5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "1.75rem" }}>
               {isLoggedIn
                 ? t.ctaH2User
                 : t.ctaH2NonUser.split("\n").map((line, i, arr) => (

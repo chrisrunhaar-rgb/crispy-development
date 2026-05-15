@@ -265,6 +265,16 @@ body {
   }
 }
 
+/* ── FORM GRID ── */
+.form-grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── DIVIDER ── */
 .divider {
   height: 1px;

@@ -7,7 +7,7 @@ const COPY = {
   en: {
     label: "Get in touch",
     h1: "Contact",
-    intro: "Questions about our programmes, partnerships, or anything else — we'd love to hear from you.",
+    intro: "Questions about our programs, partnerships, or anything else — we'd love to hear from you.",
     nameLabel: "Name",
     namePlaceholder: "Your name",
     emailLabel: "Email",

@@ -48,7 +48,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
             <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>{p.label}</p>
           </div>
-          <h1 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "560px" }}>
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(3rem, 6vw, 5.5rem)", lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "560px" }}>
             {p.h1}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7, marginBottom: "2.5rem" }}>
@@ -91,7 +91,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
                 {p.previewHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
               </h2>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "48ch", marginBottom: "2rem" }}>
-                {p.tagline}
+                {(p as typeof p & { previewBody?: string }).previewBody ?? p.tagline}
               </p>
               <Link href={ctaHref} className="btn-primary">
                 {p.ctaPrimary2} →

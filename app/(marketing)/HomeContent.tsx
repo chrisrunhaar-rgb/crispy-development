@@ -20,7 +20,7 @@ export default function HomeContent() {
     { slug: "three-thinking-styles",  label: "Framework",  title: "Three Thinking Styles",       hook: "Discover why smart people reach opposite conclusions.",         bg: "oklch(22% 0.10 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
     { slug: "leadership-altitudes",   label: "Model",      title: "Leadership Altitudes",         hook: "Know when to zoom in and when to fly high.",                  bg: "oklch(97% 0.005 80)", text: "oklch(22% 0.10 260)", accent: "oklch(65% 0.15 45)" },
     { slug: "escaping-the-comfort-zone", label: "Challenge",  title: "Escaping the Comfort Zone",    hook: "The zone that feels safe is the one holding you back.",        bg: "oklch(30% 0.12 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
-    { slug: "karunia-rohani",         label: "Assessment", title: "Spiritual Giftings",            hook: "Find out how God has wired you to serve.",                    bg: "oklch(97% 0.005 80)", text: "oklch(22% 0.10 260)", accent: "oklch(65% 0.15 45)" },
+    { slug: "karunia-rohani",         label: "Assessment", title: "Spiritual Gifts",               hook: "Find out how God has wired you to serve.",                    bg: "oklch(97% 0.005 80)", text: "oklch(22% 0.10 260)", accent: "oklch(65% 0.15 45)" },
   ];
 
   const mockItems = [
@@ -180,7 +180,7 @@ export default function HomeContent() {
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(97% 0.005 80)" }}>Welcome back.</p>
                   </div>
                   <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem", color: "white" }}>CR</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem", color: "white" }}>JD</span>
                   </div>
                 </div>
                 {/* Tab switcher */}

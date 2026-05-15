@@ -296,7 +296,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
               className="show-mobile"
-              style={{ background: "none", border: "none", cursor: "pointer", padding: "0.5rem", flexDirection: "column", gap: "5px", display: "none" }}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: "0.5rem", flexDirection: "column", gap: "5px" }}
             >
               <span style={{ display: "block", width: "22px", height: "1.5px", background: "oklch(30% 0.12 260)", transition: "all 0.2s", transform: open ? "rotate(45deg) translate(4.5px, 4.5px)" : "none" }} />
               <span style={{ display: "block", width: "22px", height: "1.5px", background: "oklch(30% 0.12 260)", opacity: open ? 0 : 1 }} />

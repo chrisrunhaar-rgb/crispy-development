@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import CoursesClient from "./CoursesClient";
 
 export const metadata: Metadata = {
-  title: "Courses | Crispy Development",
+  title: "Courses — Crispy Development",
   description: "Free, practical courses for cross-cultural leaders. Master the digital tools your team uses every day.",
 };
 

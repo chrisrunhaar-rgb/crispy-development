@@ -10,7 +10,7 @@ const orange = "oklch(65% 0.15 45)";
 
 const COPY = {
   en: {
-    heading: "Apply to join",
+    heading: "Apply to join Crispy Leaders",
     subheading: "This platform is for Christian leaders navigating life and leadership across cultures. We review every application personally — not everyone will be accepted.",
     langLabel: "Preferred language",
     nameLabel: "Full Name *",
