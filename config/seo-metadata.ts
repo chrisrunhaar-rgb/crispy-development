@@ -18,8 +18,8 @@
 export const resourceMetadata: Record<string, { title: string; description: string }> = {
   // Assessments
   disc: {
-    title: "DISC Personality Profile — Crispy Development",
-    description: "Understand your behavioral style with the DISC assessment. Learn how you lead, communicate, and collaborate across cultures.",
+    title: "DISC Personality Profile Assessment — Crispy Development",
+    description: "Take the free DISC personality test and discover your leadership style. Learn how D, I, S, and C types lead differently across cultures — with a cross-cultural lens.",
   },
   "wheel-of-life": {
     title: "Wheel of Life Assessment — Crispy Development",

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "./actions";
+import { trackResourceSaved } from "@/lib/ga-events";
 
 interface Props {
   userId: string | null;
@@ -277,6 +278,7 @@ export default function ResourcesContent({
     setPendingSlug(slug);
     startTransition(async () => {
       await saveResourceToDashboard(slug);
+      trackResourceSaved(slug, true);
       setLocalSaved((prev) => new Set([...prev, slug]));
       setPendingSlug(null);
     });

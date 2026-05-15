@@ -556,6 +556,7 @@ export default function DiscClient({
   const [scenarioSelections, setScenarioSelections] = useState<Record<number, string | null>>({});
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
   const [noHover, setNoHover] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   useEffect(() => {
     if (!noHover) return;
     const t = setTimeout(() => setNoHover(false), 120);
@@ -1667,6 +1668,89 @@ export default function DiscClient({
                 {tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")}
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(99% 0.002 80)", borderTop: "1px solid oklch(90% 0.005 80)" }}>
+        <div className="container-wide" style={{ maxWidth: "820px" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            FAQ
+          </p>
+          <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2rem, 4vw, 3rem)", color: "oklch(22% 0.005 260)", lineHeight: 1.1, marginBottom: "3rem" }}>
+            Common questions about DISC
+          </h2>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+            {[
+              {
+                q: "What is the DISC personality assessment?",
+                a: "DISC is a behavioural assessment tool that categorises leadership and communication styles into four types: Dominance (D), Influence (I), Steadiness (S), and Conscientiousness (C). Developed in 1928, DISC helps leaders understand how they naturally approach tasks, relationships, and decision-making — and how their default style lands with others.",
+              },
+              {
+                q: "How long does the DISC assessment take?",
+                a: "The DISC assessment takes about 10–12 minutes. You'll answer 24 scenario-based questions and receive a personalised result showing your score breakdown across all four DISC styles — plus a combined profile if two styles are closely matched.",
+              },
+              {
+                q: "What do the four DISC types mean?",
+                a: "D (Dominance) types are direct, results-driven, and decisive — they push for progress and act fast. I (Influence) types are enthusiastic, relational, and persuasive — they energise teams and build connections. S (Steadiness) types are patient, loyal, and supportive — they create stability and ensure no one is left behind. C (Conscientiousness) types are analytical, precise, and quality-focused — they catch what others miss. Most people lead with one primary style and balance it with a secondary.",
+              },
+              {
+                q: "Is DISC accurate for cross-cultural leadership?",
+                a: "DISC is a useful starting point, but it was developed in the United States in 1928 and reflects mainstream American behavioural norms. Cross-cultural validity varies significantly — a high-D leader in one cultural context may behave very differently from a high-D leader in another. Use DISC to start team conversations, then let your team's actual cultural backgrounds fill in the nuance.",
+              },
+              {
+                q: "Can I use DISC with my team?",
+                a: "Yes — DISC is most powerful as a shared team vocabulary. When a whole team knows their styles, communication improves, roles can be assigned more intentionally, and conflicts are easier to name without personal judgement. The resources on this page include specific guidance on using DISC in cross-cultural team settings.",
+              },
+              {
+                q: "What is the difference between DISC and Myers-Briggs (MBTI)?",
+                a: "DISC focuses on observable behaviour — how you act in specific workplace situations. Myers-Briggs (MBTI) focuses on personality preferences — how you think and perceive the world. DISC is more directly actionable for communication and leadership dynamics; MBTI goes deeper into how people process information. Both offer value, and neither is a complete picture of a person.",
+              },
+            ].map((faq, i) => (
+              <div
+                key={i}
+                style={{
+                  borderTop: i === 0 ? "1px solid oklch(85% 0.005 80)" : "none",
+                  borderBottom: "1px solid oklch(85% 0.005 80)",
+                }}
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  style={{
+                    width: "100%", textAlign: "left", background: "none", border: "none",
+                    padding: "1.5rem 0", cursor: "pointer",
+                    display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+                    gap: "1.5rem",
+                  }}
+                  aria-expanded={openFaq === i}
+                >
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: "oklch(22% 0.005 260)", lineHeight: 1.5 }}>
+                    {faq.q}
+                  </span>
+                  <span style={{
+                    flexShrink: 0, width: "1.25rem", height: "1.25rem",
+                    border: "1.5px solid oklch(65% 0.15 45)", borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "oklch(65% 0.15 45)", fontSize: "1rem", lineHeight: 1,
+                    transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)",
+                    transition: "transform 0.2s ease",
+                    marginTop: "0.125rem",
+                  }}>
+                    +
+                  </span>
+                </button>
+                {openFaq === i && (
+                  <p style={{
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8,
+                    color: "oklch(38% 0.008 260)", paddingBottom: "1.75rem", margin: 0, maxWidth: "66ch",
+                  }}>
+                    {faq.a}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>

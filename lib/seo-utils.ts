@@ -58,6 +58,21 @@ export function generateResourceBreadcrumbSchema(slug: string) {
   ]);
 }
 
+export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 export function generateResourceMetadata(slug: string): Metadata {
   const meta = getResourceMetadata(slug);
   const url = generateCanonicalUrl(`/resources/${slug}`);

@@ -1,7 +1,7 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
-import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
+import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata, generateFAQSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import DiscClient from "./DiscClient";
@@ -9,6 +9,33 @@ import DiscClient from "./DiscClient";
 export const dynamic = "force-dynamic";
 
 const RESOURCE_SLUG = "disc";
+
+const DISC_FAQS = [
+  {
+    question: "What is the DISC personality assessment?",
+    answer: "DISC is a behavioural assessment tool that categorises leadership and communication styles into four types: Dominance (D), Influence (I), Steadiness (S), and Conscientiousness (C). Developed in 1928, DISC helps leaders understand how they naturally approach tasks, relationships, and decision-making — and how their default style lands with others.",
+  },
+  {
+    question: "How long does the DISC assessment take?",
+    answer: "The DISC assessment takes about 10–12 minutes. You'll answer 24 scenario-based questions and receive a personalised result showing your score breakdown across all four DISC styles — plus a combined profile if two styles are closely matched.",
+  },
+  {
+    question: "What do the four DISC types mean?",
+    answer: "D (Dominance) types are direct, results-driven, and decisive. I (Influence) types are enthusiastic, relational, and persuasive. S (Steadiness) types are patient, loyal, and supportive. C (Conscientiousness) types are analytical, precise, and quality-focused. Most people lead with one primary style and balance it with a secondary.",
+  },
+  {
+    question: "Is DISC accurate for cross-cultural leadership?",
+    answer: "DISC is a useful starting point, but it was developed in the United States in 1928 and reflects mainstream American behavioural norms. Cross-cultural validity varies significantly. Use DISC to start team conversations, then let your team's actual cultural backgrounds fill in the nuance.",
+  },
+  {
+    question: "Can I use DISC with my team?",
+    answer: "Yes — DISC is most powerful as a shared team vocabulary. When a whole team knows their styles, communication improves, roles can be assigned more intentionally, and conflicts are easier to name without personal judgement.",
+  },
+  {
+    question: "What is the difference between DISC and Myers-Briggs (MBTI)?",
+    answer: "DISC focuses on observable behaviour — how you act in specific workplace situations. Myers-Briggs focuses on personality preferences — how you think and perceive the world. DISC is more directly actionable for communication and leadership dynamics.",
+  },
+];
 
 export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 
@@ -36,6 +63,13 @@ export default async function ResourcePage(props: any) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(generateResourceArticleSchema(RESOURCE_SLUG)),
+        }}
+      />
+      <Script
+        id={`faq-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateFAQSchema(DISC_FAQS)),
         }}
       />
       <Script
