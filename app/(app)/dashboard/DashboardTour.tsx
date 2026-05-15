@@ -20,8 +20,8 @@ const STEPS: TourStep[] = [
   },
   {
     targetId: "tour-tabs",
-    title: "Personal · Team · Peer",
-    body: "Switch between pathways as you grow. Team and Peer Group tabs unlock when you apply or are invited.",
+    title: "Personal · Team",
+    body: "Switch between pathways as you grow. The Team tab unlocks when you apply or are invited.",
   },
   {
     targetId: "tour-journey",

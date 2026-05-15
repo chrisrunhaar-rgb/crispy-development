@@ -19,7 +19,7 @@ export default function TermsPage() {
             <li>Free leadership resources and downloadable content focused on cross-cultural Christian leadership</li>
             <li>An email newsletter delivering content, reflections, and updates</li>
             <li>A membership platform for Christian leaders navigating cross-cultural life and leadership, accessible by application and available to approved members only</li>
-            <li>Community engagement and peer group facilitation via the platform and social media</li>
+            <li>Community engagement via the platform and social media</li>
             <li>Coaching and leadership development content (specific paid programmes will be covered under separate terms when launched)</li>
           </ul>
         </LegalSection>

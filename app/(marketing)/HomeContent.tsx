@@ -253,7 +253,7 @@ export default function HomeContent() {
               {
                 num: "03",
                 title: h.reason3Title ?? "A community that understands",
-                body: h.reason3Body ?? "Peer groups with other leaders navigating the same complexity — different countries, same calling. The kind of connection that's hard to find anywhere else.",
+                body: h.reason3Body ?? "A platform built specifically for leaders navigating cross-cultural life — a growing library of content, frameworks, and tools built around the realities you actually face.",
               },
               {
                 num: "04",

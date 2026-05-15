@@ -111,7 +111,7 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
   }, []);
 
   function next() {
-    if (step < (TOTAL - 1) as Step) {
+    if (step < (TOTAL - 1)) {
       setStep((s) => (s + 1) as Step);
     }
   }
