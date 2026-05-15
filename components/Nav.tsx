@@ -119,6 +119,15 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               )}
             </div>
 
+            {/* WayPoint link */}
+            <Link
+              href="/waypoint"
+              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)", textDecoration: "none" }}
+              className="nav-link"
+            >
+              WayPoint Coaching
+            </Link>
+
             {/* Resources dropdown */}
             <div ref={resourcesRef} style={{ position: "relative" }}>
               <button
@@ -305,6 +314,10 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             </Link>
             <Link href="/team" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Team
+            </Link>
+            <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
+            <Link href="/waypoint" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(65% 0.15 45)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
+              WayPoint Coaching
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Resources</p>
