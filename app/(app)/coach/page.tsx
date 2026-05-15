@@ -12,8 +12,6 @@ export const metadata = {
   title: "WayPoint — AI Coaching",
 };
 
-const TRIAL_LIMIT_SECONDS = 7200; // 120 minutes
-
 const COACH_IMAGES: Record<string, string> = {
   Tara: "/images/coaches/tara-portrait.jpg",
   Ethan: "/images/coaches/ethan-portrait.jpg",
@@ -47,10 +45,13 @@ export default async function CoachPage({
   const admin = createAdminClient();
   const { data: membership } = await admin
     .from("memberships")
-    .select("is_admin")
+    .select("is_admin, coach_access, coach_minutes_granted")
     .eq("user_id", user.id)
     .single();
   const isAdmin = membership?.is_admin === true;
+  const hasCoachAccess = membership?.coach_access === true || isAdmin;
+  if (!hasCoachAccess) redirect("/dashboard");
+  const coachLimitSeconds = (membership?.coach_minutes_granted ?? 120) * 60;
 
   const { count: leaderCount } = await supabase
     .from("wp_leader_assignments")
@@ -69,10 +70,11 @@ export default async function CoachPage({
     (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
     0
   );
+  const grantedMinutes = membership?.coach_minutes_granted ?? 120;
   const trialUsedMinutes = Math.round(totalUsedSeconds / 60);
-  const trialRemainingMinutes = Math.max(0, 120 - trialUsedMinutes);
-  const trialExhausted = totalUsedSeconds >= TRIAL_LIMIT_SECONDS || trialExhaustedParam;
-  const trialPct = Math.min(100, Math.round((totalUsedSeconds / TRIAL_LIMIT_SECONDS) * 100));
+  const trialRemainingMinutes = Math.max(0, grantedMinutes - trialUsedMinutes);
+  const trialExhausted = totalUsedSeconds >= coachLimitSeconds || trialExhaustedParam;
+  const trialPct = Math.min(100, Math.round((totalUsedSeconds / coachLimitSeconds) * 100));
 
   const { data: sessions } = await supabase
     .from("wp_sessions")
@@ -169,7 +171,7 @@ export default async function CoachPage({
                   }} />
                 </div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)", marginTop: "0.3rem" }}>
-                  {trialUsedMinutes} of 120 minutes used
+                  {trialUsedMinutes} of {grantedMinutes} minutes used
                 </p>
               </div>
 

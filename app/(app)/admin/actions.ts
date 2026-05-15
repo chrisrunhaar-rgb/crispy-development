@@ -327,11 +327,31 @@ export async function rejectMembershipApplication(formData: FormData) {
   revalidatePath("/admin");
 }
 
+export async function updateMemberCoachAccess(
+  userId: string,
+  coachAccess: boolean,
+  minutes: number
+): Promise<{ error?: string }> {
+  await assertAdmin();
+  const adminClient = createAdminClient();
+  const { error } = await adminClient
+    .from("memberships")
+    .upsert(
+      { user_id: userId, coach_access: coachAccess, coach_minutes_granted: minutes },
+      { onConflict: "user_id" }
+    );
+  if (error) return { error: error.message };
+  revalidatePath("/admin");
+  return {};
+}
+
 export async function generateMemberInvite(formData: FormData): Promise<{ error?: string; url?: string; emailSent?: boolean }> {
   await assertAdmin();
   const email = (formData.get("email") as string | null)?.trim() ?? "";
   const recipientName = (formData.get("recipientName") as string | null)?.trim() ?? "";
   const pathway = (formData.get("pathway") as string | null) === "team" ? "team" : "personal";
+  const coachAccess = (formData.get("coachAccess") as string | null) !== "false";
+  const coachMinutes = Math.max(1, parseInt((formData.get("coachMinutes") as string | null) ?? "120", 10) || 120);
 
   const adminClient = createAdminClient();
   const { data, error } = await adminClient
@@ -339,6 +359,8 @@ export async function generateMemberInvite(formData: FormData): Promise<{ error?
     .insert({
       email: email || null,
       pathway,
+      coach_access: coachAccess,
+      coach_minutes: coachMinutes,
     })
     .select("token")
     .single();

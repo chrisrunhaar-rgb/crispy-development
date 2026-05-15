@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import AdminMembersTable from '@/components/AdminMembersTable';
 import AdminBroadcastForm from './AdminBroadcastForm';
+import WaypointAccessSection from './WaypointAccessSection';
 import { ToastContainer } from '@/components/Toast';
 import { useToast } from '@/hooks/useToast';
 import { exportMembersAsCSV } from '@/lib/admin-export';
@@ -43,12 +44,14 @@ interface MembersTabProps {
   users: UserData[];
   progressCounts: Map<string, number>;
   membersList: Array<{ id: string; name: string; email: string }>;
+  coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number }>;
 }
 
 export default function MembersTab({
   users,
   progressCounts,
   membersList,
+  coachData,
 }: MembersTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
   const [tableMembers, setTableMembers] = useState<Member[]>(() => {
@@ -124,6 +127,19 @@ export default function MembersTab({
           testCount={ASSESSMENT_KEYS.length}
         />
       </section>
+
+      <WaypointAccessSection
+        members={users.map(u => {
+          const cd = coachData.get(u.id);
+          return {
+            id: u.id,
+            email: u.email ?? "",
+            name: `${u.user_metadata?.first_name ?? ""} ${u.user_metadata?.last_name ?? ""}`.trim(),
+            coach_access: cd?.coach_access ?? false,
+            coach_minutes_granted: cd?.coach_minutes_granted ?? 120,
+          };
+        })}
+      />
 
       <section>
         <h2 style={sectionHeading}>Send Notification</h2>

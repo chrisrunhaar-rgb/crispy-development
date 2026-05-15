@@ -268,7 +268,7 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
 
   const { data: invite } = await admin
     .from("member_invites")
-    .select("id, expires_at, used_at, pathway")
+    .select("id, expires_at, used_at, pathway, coach_access, coach_minutes")
     .eq("token", token)
     .maybeSingle();
 
@@ -284,6 +284,17 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
     .from("member_invites")
     .update({ used_at: new Date().toISOString(), used_by_user_id: userId })
     .eq("id", invite.id);
+
+  await admin
+    .from("memberships")
+    .upsert(
+      {
+        user_id: userId,
+        coach_access: invite.coach_access ?? true,
+        coach_minutes_granted: invite.coach_minutes ?? 120,
+      },
+      { onConflict: "user_id" }
+    );
 
   return { error: null };
 }

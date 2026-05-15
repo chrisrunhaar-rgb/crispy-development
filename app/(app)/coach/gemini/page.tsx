@@ -9,8 +9,6 @@ export const metadata = {
   title: "Coaching Session (Gemini) — WayPoint",
 };
 
-const TRIAL_LIMIT_SECONDS = 7200; // 120 minutes
-
 export default async function GeminiCoachPage({
   searchParams,
 }: {
@@ -33,6 +31,16 @@ export default async function GeminiCoachPage({
 
   const admin = createAdminClient();
 
+  const { data: membership } = await admin
+    .from("memberships")
+    .select("coach_access, coach_minutes_granted")
+    .eq("user_id", user.id)
+    .single();
+
+  if (!membership?.coach_access) redirect("/dashboard");
+
+  const trialLimitSeconds = (membership.coach_minutes_granted ?? 120) * 60;
+
   // Mark stale in_progress sessions (older than 3 hours) as abandoned
   await admin
     .from("wp_sessions")
@@ -53,7 +61,7 @@ export default async function GeminiCoachPage({
     0
   );
 
-  if (totalUsedSeconds >= TRIAL_LIMIT_SECONDS) redirect("/coach?trial=exhausted");
+  if (totalUsedSeconds >= trialLimitSeconds) redirect("/coach?trial=exhausted");
 
   const { count } = await admin
     .from("wp_sessions")

@@ -135,14 +135,19 @@ export default async function AdminPage({
 
   // ── Members tab ──
   let progressCounts = new Map<string, number>();
+  type CoachEntry = { coach_access: boolean; coach_minutes_granted: number };
+  let coachData = new Map<string, CoachEntry>();
 
   if (activeTab === "members") {
-    const { data: progressRows } = await admin
-      .from("user_progress")
-      .select("user_id")
-      .eq("status", "completed");
-    (progressRows ?? []).forEach((r: { user_id: string }) => {
+    const [progressResult, membershipResult] = await Promise.all([
+      admin.from("user_progress").select("user_id").eq("status", "completed"),
+      admin.from("memberships").select("user_id, coach_access, coach_minutes_granted"),
+    ]);
+    (progressResult.data ?? []).forEach((r: { user_id: string }) => {
       progressCounts.set(r.user_id, (progressCounts.get(r.user_id) ?? 0) + 1);
+    });
+    (membershipResult.data ?? []).forEach((m: { user_id: string; coach_access: boolean; coach_minutes_granted: number }) => {
+      coachData.set(m.user_id, { coach_access: m.coach_access, coach_minutes_granted: m.coach_minutes_granted });
     });
   }
 
@@ -280,7 +285,7 @@ export default async function AdminPage({
 
   // ── Membership tab ──
   type MembershipApp = { id: string; created_at: string; name: string; email: string; organization: string | null; role: string | null; location_cultures: string | null; faith_share: string | null; leadership_challenge: string | null; referral_source: string | null; status: string; reviewed_at: string | null };
-  type MemberInvite = { id: string; token: string; email: string | null; personal_note: string | null; created_at: string; expires_at: string; used_at: string | null };
+  type MemberInvite = { id: string; token: string; email: string | null; personal_note: string | null; pathway: string; created_at: string; expires_at: string; used_at: string | null };
   let membershipApplications: MembershipApp[] = [];
   let memberInvites: MemberInvite[] = [];
 
@@ -385,6 +390,7 @@ export default async function AdminPage({
             users={allUsers}
             progressCounts={progressCounts}
             membersList={membersList}
+            coachData={coachData}
           />
         )}
 

@@ -14,8 +14,6 @@ const COACH_VOICES: Record<string, string> = {
   Ethan: "Charon",
 };
 
-const TRIAL_LIMIT_SECONDS = 7200; // 120 minutes
-
 export default async function CoachSessionPage({
   searchParams,
 }: {
@@ -38,6 +36,16 @@ export default async function CoachSessionPage({
 
   const admin = createAdminClient();
 
+  const { data: membership } = await admin
+    .from("memberships")
+    .select("coach_access, coach_minutes_granted")
+    .eq("user_id", user.id)
+    .single();
+
+  if (!membership?.coach_access) redirect("/dashboard");
+
+  const trialLimitSeconds = (membership.coach_minutes_granted ?? 120) * 60;
+
   // Trial check — sum all completed session durations
   const { data: completedForTrial } = await admin
     .from("wp_sessions")
@@ -50,7 +58,7 @@ export default async function CoachSessionPage({
     0
   );
 
-  if (totalUsedSeconds >= TRIAL_LIMIT_SECONDS) redirect("/coach?trial=exhausted");
+  if (totalUsedSeconds >= trialLimitSeconds) redirect("/coach?trial=exhausted");
 
   const coachName = profile.selected_coach ?? "Tara";
   const coachVoice = COACH_VOICES[coachName] ?? "Kore";
