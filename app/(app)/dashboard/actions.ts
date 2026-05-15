@@ -263,6 +263,34 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
   return { error: null };
 }
 
+async function notifyMemberJoined(
+  email: string | null,
+  userId: string,
+  pathway: string,
+  coachAccess: boolean,
+  coachMinutes: number,
+  admin: ReturnType<typeof createAdminClient>
+) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return;
+  try {
+    const { data: { user: u } } = await admin.auth.admin.getUserById(userId);
+    const name = u?.user_metadata?.first_name
+      ? `${u.user_metadata.first_name} ${u.user_metadata.last_name ?? ""}`.trim()
+      : null;
+    const displayEmail = email ?? u?.email ?? userId;
+    const coachLine = coachAccess ? `Yes — ${coachMinutes} min` : "No";
+    const text = `🎉 New member joined\n\nName: ${name ?? "(no name yet)"}\nEmail: ${displayEmail}\nPathway: ${pathway === "team" ? "Team Leader" : "Personal"}\nCoach: ${coachLine}`;
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: "8799746124", text }),
+    });
+  } catch {
+    // non-blocking
+  }
+}
+
 export async function acceptMemberInvite(token: string, userId: string): Promise<{ error: string | null }> {
   const admin = createAdminClient();
 
@@ -285,16 +313,17 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
     .update({ used_at: new Date().toISOString(), used_by_user_id: userId })
     .eq("id", invite.id);
 
+  const coachAccess = invite.coach_access ?? true;
+  const coachMinutes = invite.coach_minutes ?? 120;
+
   await admin
     .from("memberships")
     .upsert(
-      {
-        user_id: userId,
-        coach_access: invite.coach_access ?? true,
-        coach_minutes_granted: invite.coach_minutes ?? 120,
-      },
+      { user_id: userId, coach_access: coachAccess, coach_minutes_granted: coachMinutes },
       { onConflict: "user_id" }
     );
+
+  await notifyMemberJoined(invite.email, userId, invite.pathway ?? "personal", coachAccess, coachMinutes, admin);
 
   return { error: null };
 }
