@@ -14,7 +14,7 @@ import PeerInitiatorsTab from "./PeerInitiatorsTab";
 import MembershipTab from "./MembershipTab";
 
 export const metadata = {
-  title: "Community Dashboard — Crispy Development",
+  title: "Community Dashboard â€” Crispy Development",
 };
 
 const ASSESSMENT_KEYS = [
@@ -31,63 +31,63 @@ const CONTENT_MODULES: ContentGroup[] = [
   {
     category: "Assessments",
     modules: [
-      { slug: "disc", title: "DISC Profile", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "wheel-of-life", title: "Wheel of Life", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "enneagram", title: "Enneagram", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "big-five", title: "Big Five", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "16-personalities", title: "16 Personalities", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "disc", title: "DISC Profile", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "wheel-of-life", title: "Wheel of Life", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "enneagram", title: "Enneagram", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "big-five", title: "Big Five", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "16-personalities", title: "16 Personalities", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
     ],
   },
   {
     category: "Cross-Cultural Leadership",
     modules: [
-      { slug: "cultural-intelligence", title: "Cultural Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "power-distance", title: "Power Distance", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "time-and-culture", title: "Time & Culture", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "intercultural-communication", title: "Intercultural Communication", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "conflict-resolution", title: "Conflict Resolution", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "cultural-intelligence", title: "Cultural Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "power-distance", title: "Power Distance", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "time-and-culture", title: "Time & Culture", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "intercultural-communication", title: "Intercultural Communication", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "building-trust-across-cultures", title: "Building Trust Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "giving-feedback-across-cultures", title: "Giving Feedback Across Cultures", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "conflict-resolution", title: "Conflict Resolution", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
     ],
   },
   {
     category: "Thinking & Decisions",
     modules: [
-      { slug: "six-thinking-hats", title: "Six Thinking Hats", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "cognitive-biases", title: "Cognitive Biases", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "decision-making", title: "Decision Making", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "ladder-of-inference", title: "Ladder of Inference", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "johari-window", title: "Johari Window", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "six-thinking-hats", title: "Six Thinking Hats", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "cognitive-biases", title: "Cognitive Biases", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "fixed-growth-mindset", title: "Fixed vs Growth Mindset", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "decision-making", title: "Decision Making", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "ladder-of-inference", title: "Ladder of Inference", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "johari-window", title: "Johari Window", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
     ],
   },
   {
     category: "Leadership",
     modules: [
-      { slug: "leadership-altitudes", title: "Leadership Altitudes", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "servant-leadership", title: "Servant Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "vision-casting", title: "Vision Casting", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "managing-up", title: "Managing Up", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "storytelling-leadership", title: "Storytelling for Leaders", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "smart-goals", title: "SMART Goals", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "above-below-the-line", title: "Above & Below the Line", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "red-light-green-light", title: "Red Light Green Light", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "raising-next-generation", title: "Raising the Next Generation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "team-health", title: "Team Health", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "leadership-altitudes", title: "Leadership Altitudes", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "servant-leadership", title: "Servant Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "vision-casting", title: "Vision Casting", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "managing-up", title: "Managing Up", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "storytelling-leadership", title: "Storytelling for Leaders", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "smart-goals", title: "SMART Goals", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "above-below-the-line", title: "Above & Below the Line", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "red-light-green-light", title: "Red Light Green Light", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "raising-next-generation", title: "Raising the Next Generation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "team-health", title: "Team Health", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
     ],
   },
   {
     category: "Personal Growth",
     modules: [
-      { slug: "emotional-intelligence", title: "Emotional Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "overcoming-procrastination", title: "Overcoming Procrastination", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "sabbath-leadership", title: "Sabbath Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "leaders-are-readers", title: "Leaders Are Readers", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "attention-retention", title: "Attention & Retention", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
-      { slug: "debriefing-reflection", title: "Debriefing & Reflection", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID", "NL"] },
+      { slug: "emotional-intelligence", title: "Emotional Intelligence", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "overcoming-procrastination", title: "Overcoming Procrastination", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "escaping-the-comfort-zone", title: "Escaping the Comfort Zone", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "sabbath-leadership", title: "Sabbath Leadership", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "leaders-are-readers", title: "Leaders Are Readers", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "attention-retention", title: "Attention & Retention", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "debriefing-reflection", title: "Debriefing & Reflection", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
     ],
   },
   {
@@ -115,7 +115,7 @@ export default async function AdminPage({
 
   const admin = createAdminClient();
 
-  // ── Always fetch all users ──
+  // â”€â”€ Always fetch all users â”€â”€
   const { data: { users: allAuthUsers } } = await admin.auth.admin.listUsers({ perPage: 200 });
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -133,7 +133,7 @@ export default async function AdminPage({
     u.last_sign_in_at && new Date(u.last_sign_in_at) >= thirtyDaysAgo
   ).length;
 
-  // ── Members tab ──
+  // â”€â”€ Members tab â”€â”€
   let progressCounts = new Map<string, number>();
   type CoachEntry = { coach_access: boolean; coach_minutes_granted: number };
   let coachData = new Map<string, CoachEntry>();
@@ -151,7 +151,7 @@ export default async function AdminPage({
     });
   }
 
-  // ── Leaders tab ──
+  // â”€â”€ Leaders tab â”€â”€
   type CoachMsgRow = { id: string; message: string; subject: string | null; reply: string | null; replied_at: string | null; created_at: string; status: string; user_id: string };
   type TeamMemberRow = { name: string; email: string; completed: number };
   let pendingTeam: Record<string, unknown>[] = [];
@@ -209,7 +209,7 @@ export default async function AdminPage({
     });
   }
 
-  // ── Peers tab ──
+  // â”€â”€ Peers tab â”€â”€
   let pendingPeers: Record<string, unknown>[] = [];
   let approvedInitiators: Record<string, unknown>[] = [];
   let peerMessages: Record<string, unknown>[] = [];
@@ -247,7 +247,7 @@ export default async function AdminPage({
     }
   }
 
-  // ── Messages tab ──
+  // â”€â”€ Messages tab â”€â”€
   type ContactMessage = { id: string; name: string; email: string; message: string; read: boolean; created_at: string };
   let contactMessages: ContactMessage[] = [];
   if (activeTab === "messages") {
@@ -255,7 +255,7 @@ export default async function AdminPage({
     contactMessages = (data ?? []) as ContactMessage[];
   }
 
-  // ── Content tab ──
+  // â”€â”€ Content tab â”€â”€
   const contentSaveCounts = new Map<string, number>();
   const contentReadCounts = new Map<string, number>();
   const moduleStatuses: Record<string, string> = {};
@@ -283,7 +283,7 @@ export default async function AdminPage({
     }
   }
 
-  // ── Membership tab ──
+  // â”€â”€ Membership tab â”€â”€
   type MembershipApp = { id: string; created_at: string; name: string; email: string; organization: string | null; role: string | null; location_cultures: string | null; faith_share: string | null; leadership_challenge: string | null; referral_source: string | null; status: string; reviewed_at: string | null };
   type MemberInvite = { id: string; token: string; email: string | null; personal_note: string | null; pathway: string; created_at: string; expires_at: string; used_at: string | null };
   let membershipApplications: MembershipApp[] = [];
@@ -298,7 +298,7 @@ export default async function AdminPage({
     memberInvites = (inv.data ?? []) as MemberInvite[];
   }
 
-  // ── Stats ──
+  // â”€â”€ Stats â”€â”€
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: newMessagesCount } = await admin.from("coach_messages").select("id", { count: "exact", head: true }).eq("status", "new");
@@ -384,7 +384,7 @@ export default async function AdminPage({
 
       <div className="container-wide" style={{ paddingBlock: "3rem", display: "flex", flexDirection: "column", gap: "3rem" }}>
 
-        {/* ── MEMBERS TAB ── */}
+        {/* â”€â”€ MEMBERS TAB â”€â”€ */}
         {activeTab === "members" && (
           <MembersTab
             users={allUsers}
@@ -394,7 +394,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* ── MEMBERSHIP TAB ── */}
+        {/* â”€â”€ MEMBERSHIP TAB â”€â”€ */}
         {activeTab === "membership" && (
           <MembershipTab
             applications={membershipApplications}
@@ -403,7 +403,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* ── LEADERS TAB ── */}
+        {/* â”€â”€ LEADERS TAB â”€â”€ */}
         {activeTab === "leaders" && (
           <TeamLeadersTab
             pendingApplications={pendingTeam.map(app => ({
@@ -434,7 +434,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* ── PEERS TAB ── */}
+        {/* â”€â”€ PEERS TAB â”€â”€ */}
         {activeTab === "peers" && (
           <>
             <PeerInitiatorsTab
@@ -570,7 +570,7 @@ export default async function AdminPage({
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
                         <div>
                           <p style={nameStyle}>{msg.first_name as string} {msg.last_name as string}</p>
-                          <p style={metaStyle}>{msg.user_email as string} · {formatDate(msg.created_at as string)}</p>
+                          <p style={metaStyle}>{msg.user_email as string} Â· {formatDate(msg.created_at as string)}</p>
                         </div>
                         {msg.status === "new" && <span style={newBadge}>New</span>}
                       </div>
@@ -586,7 +586,7 @@ export default async function AdminPage({
                           </form>
                         )}
                         {msg.status === "replied" && (
-                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.14 145)", fontWeight: 700 }}>✓ Replied</span>
+                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.14 145)", fontWeight: 700 }}>âœ“ Replied</span>
                         )}
                       </div>
                       <AdminReplyForm
@@ -602,7 +602,7 @@ export default async function AdminPage({
           </>
         )}
 
-        {/* ── MESSAGES TAB ── */}
+        {/* â”€â”€ MESSAGES TAB â”€â”€ */}
         {activeTab === "messages" && (
           <section>
             <h2 style={sectionHeading}>Contact Messages ({contactMessages.length})</h2>
@@ -616,7 +616,7 @@ export default async function AdminPage({
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
                       <div>
                         <p style={nameStyle}>{msg.name}</p>
-                        <p style={metaStyle}><a href={`mailto:${msg.email}`} style={{ color: "inherit", textDecoration: "none" }}>{msg.email}</a> · {formatDate(msg.created_at)}</p>
+                        <p style={metaStyle}><a href={`mailto:${msg.email}`} style={{ color: "inherit", textDecoration: "none" }}>{msg.email}</a> Â· {formatDate(msg.created_at)}</p>
                       </div>
                       {!msg.read && <span style={newBadge}>Unread</span>}
                     </div>
@@ -636,7 +636,7 @@ export default async function AdminPage({
           </section>
         )}
 
-        {/* ── CONTENT TAB ── */}
+        {/* â”€â”€ CONTENT TAB â”€â”€ */}
         {activeTab === "content" && (
           <ContentTab
             modules={CONTENT_MODULES.flatMap(group =>
@@ -687,7 +687,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function formatDate(iso: string | null) {
-  if (!iso) return "—";
+  if (!iso) return "â€”";
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
