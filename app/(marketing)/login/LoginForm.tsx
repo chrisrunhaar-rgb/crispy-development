@@ -130,7 +130,7 @@ function MagicLinkForm() {
 }
 
 export default function LoginForm() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const l = t.login;
 
   return (
@@ -170,10 +170,19 @@ export default function LoginForm() {
         <div style={{ height: "1.5rem" }} />
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", textAlign: "center", lineHeight: 1.6 }}>
-          By logging in you agree to our{" "}
-          <Link href="/terms" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Terms of Service</Link>
-          {" "}and{" "}
-          <Link href="/privacy" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Privacy Policy</Link>.
+          {lang === "id" ? (
+            <>Dengan masuk, Anda menyetujui{" "}
+              <Link href="/terms" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Syarat Layanan</Link>
+              {" "}dan{" "}
+              <Link href="/privacy" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Kebijakan Privasi</Link> kami.
+            </>
+          ) : (
+            <>By logging in you agree to our{" "}
+              <Link href="/terms" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Terms of Service</Link>
+              {" "}and{" "}
+              <Link href="/privacy" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>Privacy Policy</Link>.
+            </>
+          )}
         </p>
       </div>
     </div>

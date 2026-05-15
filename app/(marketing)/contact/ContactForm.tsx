@@ -1,6 +1,42 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+
+const COPY = {
+  en: {
+    label: "Get in touch",
+    h1: "Contact",
+    intro: "Questions about our programmes, partnerships, or anything else — we'd love to hear from you.",
+    nameLabel: "Name",
+    namePlaceholder: "Your name",
+    emailLabel: "Email",
+    emailPlaceholder: "your@email.com",
+    messageLabel: "Message",
+    messagePlaceholder: "How can we help?",
+    submit: "Send Message",
+    sending: "Sending…",
+    sentTitle: "Message sent",
+    sentBody: "Thanks for reaching out. We'll get back to you shortly.",
+    errorFallback: "Something went wrong.",
+  },
+  id: {
+    label: "Hubungi kami",
+    h1: "Kontak",
+    intro: "Pertanyaan tentang program kami, kemitraan, atau hal lainnya — kami senang mendengar dari Anda.",
+    nameLabel: "Nama",
+    namePlaceholder: "Nama Anda",
+    emailLabel: "Email",
+    emailPlaceholder: "email@anda.com",
+    messageLabel: "Pesan",
+    messagePlaceholder: "Bagaimana kami bisa membantu?",
+    submit: "Kirim Pesan",
+    sending: "Mengirim…",
+    sentTitle: "Pesan terkirim",
+    sentBody: "Terima kasih telah menghubungi kami. Kami akan segera membalas.",
+    errorFallback: "Terjadi kesalahan.",
+  },
+};
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
@@ -15,6 +51,9 @@ const inputStyle: React.CSSProperties = {
 };
 
 export default function ContactForm() {
+  const { lang } = useLanguage();
+  const c = lang === "id" ? COPY.id : COPY.en;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -37,7 +76,7 @@ export default function ContactForm() {
       setStatus("sent");
     } else {
       setStatus("error");
-      setErrorMsg(data.error ?? "Something went wrong.");
+      setErrorMsg(data.error ?? c.errorFallback);
     }
   }
 
@@ -54,65 +93,65 @@ export default function ContactForm() {
       <div style={{ width: "100%", maxWidth: "520px" }}>
 
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>
-          Get in touch
+          {c.label}
         </p>
         <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
-          Contact
+          {c.h1}
         </h1>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "2.5rem", maxWidth: "40ch" }}>
-          Questions about our programmes, partnerships, or anything else — we&apos;d love to hear from you.
+          {c.intro}
         </p>
 
         {status === "sent" ? (
           <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2rem" }}>
             <div style={{ width: "2.5rem", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1rem" }} />
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9rem", color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
-              Message sent
+              {c.sentTitle}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65 }}>
-              Thanks for reaching out. We&apos;ll get back to you shortly.
+              {c.sentBody}
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <div>
               <label style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", display: "block", marginBottom: "0.4rem" }}>
-                Name
+                {c.nameLabel}
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                placeholder="Your name"
+                placeholder={c.namePlaceholder}
                 style={inputStyle}
               />
             </div>
 
             <div>
               <label style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", display: "block", marginBottom: "0.4rem" }}>
-                Email
+                {c.emailLabel}
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                placeholder="your@email.com"
+                placeholder={c.emailPlaceholder}
                 style={inputStyle}
               />
             </div>
 
             <div>
               <label style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", display: "block", marginBottom: "0.4rem" }}>
-                Message
+                {c.messageLabel}
               </label>
               <textarea
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 required
                 rows={5}
-                placeholder="How can we help?"
+                placeholder={c.messagePlaceholder}
                 style={{ ...inputStyle, resize: "vertical" }}
               />
             </div>
@@ -141,7 +180,7 @@ export default function ContactForm() {
                 alignSelf: "flex-start",
               }}
             >
-              {status === "sending" ? "Sending…" : "Send Message"}
+              {status === "sending" ? c.sending : c.submit}
             </button>
           </form>
         )}
