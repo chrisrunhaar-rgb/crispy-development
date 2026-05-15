@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { submitMembershipApplication } from "./actions";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -64,7 +65,8 @@ export default function MembershipForm() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const [lang, setLang] = useState<"en" | "id">("en");
+  const { lang: siteLang } = useLanguage();
+  const [lang, setLang] = useState<"en" | "id">(siteLang === "id" ? "id" : "en");
 
   const c = COPY[lang];
 

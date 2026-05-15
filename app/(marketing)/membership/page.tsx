@@ -1,5 +1,6 @@
 import Image from "next/image";
 import MembershipForm from "./MembershipForm";
+import MembershipHeading from "./MembershipHeading";
 
 export const metadata = {
   title: "Apply for Membership — Crispy Development",
@@ -33,20 +34,7 @@ export default function MembershipPage() {
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>Membership</p>
           </div>
 
-          <h1 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "520px" }}>
-            Apply to join
-          </h1>
-
-          <p style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.9375rem",
-            lineHeight: 1.7,
-            color: "oklch(72% 0.04 260)",
-            maxWidth: "50ch",
-          }}>
-            This platform is for Christian leaders navigating life and leadership across cultures.
-            We review every application personally — not everyone will be accepted.
-          </p>
+          <MembershipHeading />
         </div>
       </div>
 
