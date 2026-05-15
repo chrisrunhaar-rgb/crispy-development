@@ -274,8 +274,8 @@ export default function MembershipTab({
               <input type="text" value={inviteName} onChange={e => setInviteName(e.target.value)} placeholder="First name" style={inputStyle} />
             </div>
             <div style={{ flex: "2 1 200px" }}>
-              <label style={labelStyle}>Email</label>
-              <input type="email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} placeholder="person@example.com" required style={inputStyle} />
+              <label style={labelStyle}>Email (optional — leave blank for link only)</label>
+              <input type="email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} placeholder="person@example.com" style={inputStyle} />
             </div>
           </div>
           <div style={{ marginBottom: "1.25rem" }}>
@@ -344,7 +344,7 @@ export default function MembershipTab({
             disabled={generating}
             style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", background: generating ? "oklch(52% 0.008 260)" : navy, border: "none", padding: "0.625rem 1.25rem", cursor: generating ? "not-allowed" : "pointer" }}
           >
-            {generating ? "Sending…" : "Send Invite →"}
+            {generating ? "Generating…" : inviteEmail ? "Send Invite →" : "Generate Link →"}
           </button>
           {genError && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(45% 0.12 25)", marginTop: "0.75rem" }}>{genError}</p>}
 

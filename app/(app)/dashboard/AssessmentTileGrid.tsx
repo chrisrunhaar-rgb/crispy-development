@@ -5,20 +5,20 @@ import Link from "next/link";
 import TypeCard from "../../../app/(marketing)/resources/enneagram/TypeCard";
 import { KaruniaRing, GIFT_CATEGORIES } from "@/components/charts/KaruniaRing";
 
-// ── Brand tokens ─────────────────────────────────────────────────────────────
+// â”€â”€ Brand tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
 const offWhite = "oklch(97% 0.005 80)";
 
-// ── Enneagram Types ───────────────────────────────────────────────────────────
+// â”€â”€ Enneagram Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
   1: {
     number: 1,
     name: { en: "The Reformer", id: "Si Perfeksionis", nl: "De Hervormer" },
-    tagline: { en: "The Principled Idealist", id: "Si Idealis Berprinsip", nl: "De Principiële Idealist" },
+    tagline: { en: "The Principled Idealist", id: "Si Idealis Berprinsip", nl: "De PrincipiÃ«le Idealist" },
     color: "oklch(55% 0.12 260)",
     colorLight: "oklch(88% 0.02 260)",
-    overview: { en: "Type 1s are driven by a strong inner sense of right and wrong. They are conscientious, focused on improvement, and hold themselves and others to high standards.", id: "Tipe 1 didorong oleh rasa kuat tentang benar dan salah. Mereka teliti, fokus pada peningkatan, dan memegang standar tinggi untuk diri sendiri dan orang lain.", nl: "Type 1 wordt gedreven door een sterk gevoel van goed en fout. Ze zijn consciëntieus, gericht op verbetering, en houden zichzelf en anderen aan hoge normen." },
+    overview: { en: "Type 1s are driven by a strong inner sense of right and wrong. They are conscientious, focused on improvement, and hold themselves and others to high standards.", id: "Tipe 1 didorong oleh rasa kuat tentang benar dan salah. Mereka teliti, fokus pada peningkatan, dan memegang standar tinggi untuk diri sendiri dan orang lain.", nl: "Type 1 wordt gedreven door een sterk gevoel van goed en fout. Ze zijn consciÃ«ntieus, gericht op verbetering, en houden zichzelf en anderen aan hoge normen." },
     motivation: { en: "To be right, to improve themselves and the world, and to do things correctly.", id: "Menjadi benar, meningkatkan diri dan dunia, dan melakukan segala sesuatu dengan benar.", nl: "Om gelijk te hebben, zichzelf en de wereld te verbeteren, en dingen goed te doen." },
     fear: { en: "Being wrong, incompetent, or not doing enough to make things better.", id: "Menjadi salah, tidak kompeten, atau tidak melakukan cukup untuk membuat hal-hal lebih baik.", nl: "Fout zijn, incompetent zijn, of niet genoeg doen om dingen beter te maken." },
     strengths: { en: ["Principled", "Responsible", "Improvement-focused"], id: ["Berprinsip", "Bertanggung jawab", "Fokus pada peningkatan"], nl: ["Principieel", "Verantwoord", "Gericht op verbetering"] },
@@ -46,13 +46,13 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     tagline: { en: "The Goal-Oriented Performer", id: "Si Pemain yang Berorientasi pada Tujuan", nl: "De Doelgerichte Performer" },
     color: "oklch(65% 0.25 40)",
     colorLight: "oklch(92% 0.03 40)",
-    overview: { en: "Type 3s are driven to succeed, excel, and be recognized for their accomplishments. They are energetic, efficient, and focused on results. They adapt easily to different environments.", id: "Tipe 3 didorong untuk sukses, unggul, dan diakui atas pencapaian mereka. Mereka energik, efisien, dan fokus pada hasil. Mereka mudah beradaptasi dengan lingkungan yang berbeda.", nl: "Type 3 wordt aangedreven om succesvol te zijn, uit te blinken en erkend te worden voor hun prestaties. Ze zijn energiek, efficiënt en gericht op resultaten. Ze passen zich gemakkelijk aan verschillende omgevingen aan." },
+    overview: { en: "Type 3s are driven to succeed, excel, and be recognized for their accomplishments. They are energetic, efficient, and focused on results. They adapt easily to different environments.", id: "Tipe 3 didorong untuk sukses, unggul, dan diakui atas pencapaian mereka. Mereka energik, efisien, dan fokus pada hasil. Mereka mudah beradaptasi dengan lingkungan yang berbeda.", nl: "Type 3 wordt aangedreven om succesvol te zijn, uit te blinken en erkend te worden voor hun prestaties. Ze zijn energiek, efficiÃ«nt en gericht op resultaten. Ze passen zich gemakkelijk aan verschillende omgevingen aan." },
     motivation: { en: "To succeed, be recognized, and be valued for their achievements and effectiveness.", id: "Untuk sukses, diakui, dan dihargai atas prestasi dan efektivitas mereka.", nl: "Om succesvol te zijn, erkend te worden en gewaardeerd te worden voor hun prestaties en effectiviteit." },
     fear: { en: "Being worthless, ineffective, or unsuccessful; failure and being exposed as incompetent.", id: "Tidak berharga, tidak efektif, atau tidak berhasil; kegagalan dan terbukti tidak kompeten.", nl: "Waardeloos zijn, ineffectief zijn, of niet succesvol zijn; falen en als incompetent worden ontmaskerd." },
-    strengths: { en: ["Ambitious", "Efficient", "Adaptable"], id: ["Ambisius", "Efisien", "Dapat beradaptasi"], nl: ["Ambitieus", "Efficiënt", "Aanpasbaar"] },
+    strengths: { en: ["Ambitious", "Efficient", "Adaptable"], id: ["Ambisius", "Efisien", "Dapat beradaptasi"], nl: ["Ambitieus", "EfficiÃ«nt", "Aanpasbaar"] },
     blindspots: { en: ["Workaholic", "Image-focused", "Disconnected from emotions"], id: ["Workaholik", "Fokus pada citra", "Terputus dari emosi"], nl: ["Workaholic", "Gericht op imago", "Losgekoppeld van emoties"] },
     communication: { en: "Remember that your worth isn't tied to your accomplishments. Take time to connect with your authentic self and deeper relationships.", id: "Ingat bahwa nilai Anda tidak terikat pada pencapaian Anda. Ambil waktu untuk terhubung dengan diri autentik Anda dan hubungan yang lebih dalam.", nl: "Onthoud dat je waarde niet gekoppeld is aan je prestaties. Neem tijd om verbinding te maken met je authentieke zelf en diepere relaties." },
-    crossCultural: { en: "Your drive for results is valuable, but different cultures define success differently. Build relationships before pushing for outcomes.", id: "Dorongan Anda untuk hasil berharga, tetapi budaya yang berbeda mendefinisikan kesuksesan secara berbeda. Bangun hubungan sebelum mendorong hasil.", nl: "Je drang om resultaten te behalen is waardevol, maar verschillende culturen definiëren succes anders. Bouw relaties op voordat je naar resultaten streeft." },
+    crossCultural: { en: "Your drive for results is valuable, but different cultures define success differently. Build relationships before pushing for outcomes.", id: "Dorongan Anda untuk hasil berharga, tetapi budaya yang berbeda mendefinisikan kesuksesan secara berbeda. Bangun hubungan sebelum mendorong hasil.", nl: "Je drang om resultaten te behalen is waardevol, maar verschillende culturen definiÃ«ren succes anders. Bouw relaties op voordat je naar resultaten streeft." },
   },
   4: {
     number: 4,
@@ -66,7 +66,7 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     strengths: { en: ["Creative", "Self-aware", "Emotionally expressive"], id: ["Kreatif", "Sadar diri", "Pengekspresi emosi"], nl: ["Creatief", "Zelfbewust", "Emotioneel expressief"] },
     blindspots: { en: ["Overly moody", "Self-absorbed", "Emotionally volatile"], id: ["Terlalu murung", "Berpusat pada diri", "Emosional bergejolak"], nl: ["Te humeurig", "Zelfzuchtig", "Emotioneel volatiel"] },
     communication: { en: "Your emotional depth is a gift, but try to move beyond self-focus to understand others. Find healthy outlets for your intensity.", id: "Kedalaman emosional Anda adalah hadiah, tetapi cobalah bergerak melampaui fokus diri untuk memahami orang lain. Temukan saluran sehat untuk intensitas Anda.", nl: "Je emotionele diepte is een gift, maar probeer voorbij zelfgerichtheid te gaan om anderen te begrijpen. Vind gezonde uitwegen voor je intensiteit." },
-    crossCultural: { en: "Your authenticity is respected, but cultural norms around emotional expression vary. Honor both your needs and cultural context.", id: "Autentisitas Anda dihormati, tetapi norma budaya seputar ekspresi emosional bervariasi. Hormati kebutuhan Anda dan konteks budaya.", nl: "Je authenticiteit wordt gerespecteerd, maar culturele normen rond emotionele expressie variëren. Respect je behoeften en culturele context." },
+    crossCultural: { en: "Your authenticity is respected, but cultural norms around emotional expression vary. Honor both your needs and cultural context.", id: "Autentisitas Anda dihormati, tetapi norma budaya seputar ekspresi emosional bervariasi. Hormati kebutuhan Anda dan konteks budaya.", nl: "Je authenticiteit wordt gerespecteerd, maar culturele normen rond emotionele expressie variÃ«ren. Respect je behoeften en culturele context." },
   },
   5: {
     number: 5,
@@ -75,12 +75,12 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     color: "oklch(50% 0.15 260)",
     colorLight: "oklch(88% 0.03 260)",
     overview: { en: "Type 5s are curious, analytical, and driven by a need to understand how things work. They are independent thinkers who value knowledge and expertise.", id: "Tipe 5 penasaran, analitis, dan didorong oleh kebutuhan untuk memahami cara kerja hal-hal. Mereka adalah pemikir independen yang menghargai pengetahuan dan keahlian.", nl: "Type 5 is nieuwsgierig, analytisch, en gedreven door de behoefte om te begrijpen hoe dingen werken. Ze zijn onafhankelijke denkers die kennis en expertise waarderen." },
-    motivation: { en: "To gain knowledge and understanding, to be competent and independent, and to explore ideas deeply.", id: "Untuk mendapatkan pengetahuan dan pemahaman, menjadi kompeten dan mandiri, dan mengeksplorasi ide secara mendalam.", nl: "Om kennis en begrip te verwerven, competent en onafhankelijk te zijn, en ideeën diep te verkennen." },
+    motivation: { en: "To gain knowledge and understanding, to be competent and independent, and to explore ideas deeply.", id: "Untuk mendapatkan pengetahuan dan pemahaman, menjadi kompeten dan mandiri, dan mengeksplorasi ide secara mendalam.", nl: "Om kennis en begrip te verwerven, competent en onafhankelijk te zijn, en ideeÃ«n diep te verkennen." },
     fear: { en: "Being incompetent or useless; lacking knowledge or understanding; being perceived as ignorant.", id: "Menjadi tidak kompeten atau tidak berguna; kekurangan pengetahuan atau pemahaman; dianggap bodoh.", nl: "Incompetent of nutteloos zijn; gebrek aan kennis of begrip; als ignorant worden beschouwd." },
-    strengths: { en: ["Analytical", "Independent", "Knowledge-focused"], id: ["Analitis", "Independen", "Fokus pengetahuan"], nl: ["Analytisch", "Onafhankelijk", "Kennisgeoriënteerd"] },
-    blindspots: { en: ["Detached", "Isolated", "Overcomplicated thinking"], id: ["Terlepas", "Terisolasi", "Pemikiran rumit"], nl: ["Losgelaten", "Geïsoleerd", "Overcomplicated denken"] },
+    strengths: { en: ["Analytical", "Independent", "Knowledge-focused"], id: ["Analitis", "Independen", "Fokus pengetahuan"], nl: ["Analytisch", "Onafhankelijk", "KennisgeoriÃ«nteerd"] },
+    blindspots: { en: ["Detached", "Isolated", "Overcomplicated thinking"], id: ["Terlepas", "Terisolasi", "Pemikiran rumit"], nl: ["Losgelaten", "GeÃ¯soleerd", "Overcomplicated denken"] },
     communication: { en: "Balance your need for knowledge with connection. Share what you know in accessible ways. Engage emotionally even when uncomfortable.", id: "Seimbangkan kebutuhan Anda akan pengetahuan dengan koneksi. Bagikan apa yang Anda tahu dengan cara yang dapat diakses. Terlibat secara emosional bahkan saat tidak nyaman.", nl: "Balanceer je behoefte aan kennis met verbinding. Deel wat je weet op begrijpelijke manieren. Betrek je emotioneel, zelfs als het ongemakkelijk is." },
-    crossCultural: { en: "Your analytical skills are valuable across cultures. However, remember that knowledge is interpreted differently in different contexts. Be humble.", id: "Keterampilan analitis Anda berharga di berbagai budaya. Namun, ingat bahwa pengetahuan ditafsirkan secara berbeda dalam konteks yang berbeda. Jadilah rendah hati.", nl: "Je analytische vaardigheden zijn waardevol in verschillende culturen. Onthoud echter dat kennis in verschillende contexten anders wordt geïnterpreteerd. Wees bescheiden." },
+    crossCultural: { en: "Your analytical skills are valuable across cultures. However, remember that knowledge is interpreted differently in different contexts. Be humble.", id: "Keterampilan analitis Anda berharga di berbagai budaya. Namun, ingat bahwa pengetahuan ditafsirkan secara berbeda dalam konteks yang berbeda. Jadilah rendah hati.", nl: "Je analytische vaardigheden zijn waardevol in verschillende culturen. Onthoud echter dat kennis in verschillende contexten anders wordt geÃ¯nterpreteerd. Wees bescheiden." },
   },
   6: {
     number: 6,
@@ -89,7 +89,7 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     color: "oklch(55% 0.18 45)",
     colorLight: "oklch(90% 0.02 45)",
     overview: { en: "Type 6s are loyal, responsible, and driven by a need for security and trust. They are team players who value belonging and are naturally cautious.", id: "Tipe 6 setia, bertanggung jawab, dan didorong oleh kebutuhan akan keamanan dan kepercayaan. Mereka adalah pemain tim yang menghargai rasa memiliki dan secara alami berhati-hati.", nl: "Type 6 is loyal, verantwoord, en gedreven door de behoefte naar veiligheid en vertrouwen. Ze zijn teamspelers die samenhorig waarderen en van nature voorzichtig zijn." },
-    motivation: { en: "To be secure, to belong to a trusted group, to be dependable, and to prepare for potential risks.", id: "Untuk aman, menjadi bagian dari kelompok terpercaya, dapat diandalkan, dan mempersiapkan risiko potensial.", nl: "Om veilig te zijn, tot een vertrouwde groep te behoren, betrouwbaar te zijn en op potentiële risico's voor te bereiden." },
+    motivation: { en: "To be secure, to belong to a trusted group, to be dependable, and to prepare for potential risks.", id: "Untuk aman, menjadi bagian dari kelompok terpercaya, dapat diandalkan, dan mempersiapkan risiko potensial.", nl: "Om veilig te zijn, tot een vertrouwde groep te behoren, betrouwbaar te zijn en op potentiÃ«le risico's voor te bereiden." },
     fear: { en: "Being without support, betrayed, or facing danger without adequate protection or guidance.", id: "Tanpa dukungan, dikhianati, atau menghadapi bahaya tanpa perlindungan atau panduan yang memadai.", nl: "Zonder ondersteuning zijn, verraden worden, of gevaar onder ogen zien zonder adequate bescherming of begeleiding." },
     strengths: { en: ["Loyal", "Responsible", "Team-oriented"], id: ["Setia", "Bertanggung jawab", "Berorientasi tim"], nl: ["Loyal", "Verantwoord", "Teamgericht"] },
     blindspots: { en: ["Anxious", "Suspicious", "Overly cautious"], id: ["Cemas", "Curiga", "Terlalu berhati-hati"], nl: ["Bezorgd", "Achterdochtig", "Te voorzichtig"] },
@@ -122,7 +122,7 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     strengths: { en: ["Strong", "Direct", "Protective"], id: ["Kuat", "Langsung", "Melindungi"], nl: ["Sterk", "Direct", "Beschermend"] },
     blindspots: { en: ["Domineering", "Aggressive", "Insensitive"], id: ["Dominan", "Agresif", "Tidak sensitif"], nl: ["Overheersend", "Agressief", "Ongevoelig"] },
     communication: { en: "Soften your approach with those you care about. Vulnerability is strength, not weakness. Let people help you sometimes.", id: "Lunak pendekatan Anda dengan mereka yang Anda sayangi. Kerentanan adalah kekuatan, bukan kelemahan. Biarkan orang membantu Anda kadang-kadang.", nl: "Verzacht je benadering met degenen van wie je houdt. Kwetsbaarheid is kracht, niet zwakte. Laat mensen je soms helpen." },
-    crossCultural: { en: "Your directness can be misinterpreted as rudeness in some cultures. Adapt your communication while maintaining your authenticity.", id: "Ketegasan Anda dapat disalahartikan sebagai kasar dalam beberapa budaya. Sesuaikan komunikasi Anda sambil mempertahankan autentisitas Anda.", nl: "Je directheid kan in sommige culturen als onbeschoftheid worden geïnterpreteerd. Pas je communicatie aan terwijl je je authenticiteit bewaart." },
+    crossCultural: { en: "Your directness can be misinterpreted as rudeness in some cultures. Adapt your communication while maintaining your authenticity.", id: "Ketegasan Anda dapat disalahartikan sebagai kasar dalam beberapa budaya. Sesuaikan komunikasi Anda sambil mempertahankan autentisitas Anda.", nl: "Je directheid kan in sommige culturen als onbeschoftheid worden geÃ¯nterpreteerd. Pas je communicatie aan terwijl je je authenticiteit bewaart." },
   },
   9: {
     number: 9,
@@ -130,7 +130,7 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
     tagline: { en: "The Harmonious Mediator", id: "Si Mediator Harmonis", nl: "De Harmonieuze Bemiddelaar" },
     color: "oklch(55% 0.12 140)",
     colorLight: "oklch(88% 0.02 140)",
-    overview: { en: "Type 9s are easygoing, accommodating, and driven by a need for peace and harmony. They are natural mediators who seek to avoid conflict and create unity.", id: "Tipe 9 santai, akomodasi, dan didorong oleh kebutuhan untuk perdamaian dan harmoni. Mereka adalah mediator alami yang berusaha menghindari konflik dan menciptakan kesatuan.", nl: "Type 9 is relaxed, invoerend, en gedreven door de behoefte naar vrede en harmonie. Ze zijn natuurlijke bemiddelaars die conflict vermijden en eenheid creëren." },
+    overview: { en: "Type 9s are easygoing, accommodating, and driven by a need for peace and harmony. They are natural mediators who seek to avoid conflict and create unity.", id: "Tipe 9 santai, akomodasi, dan didorong oleh kebutuhan untuk perdamaian dan harmoni. Mereka adalah mediator alami yang berusaha menghindari konflik dan menciptakan kesatuan.", nl: "Type 9 is relaxed, invoerend, en gedreven door de behoefte naar vrede en harmonie. Ze zijn natuurlijke bemiddelaars die conflict vermijden en eenheid creÃ«ren." },
     motivation: { en: "To maintain peace, avoid conflict, and ensure everyone feels heard and included.", id: "Untuk mempertahankan perdamaian, menghindari konflik, dan memastikan semua orang merasa didengar dan disertakan.", nl: "Om vrede te handhaven, conflict te vermijden, en iedereen gehoord en inbegrepen te voelen." },
     fear: { en: "Conflict, disruption, disconnection, or being forced to take sides.", id: "Konflik, gangguan, putus hubungan, atau dipaksa memilih pihak.", nl: "Conflict, verstoring, verbreking, of gedwongen worden om partij te kiezen." },
     strengths: { en: ["Peaceful", "Empathetic", "Inclusive"], id: ["Damai", "Empatik", "Inklusif"], nl: ["Vreedzaam", "Empathisch", "Inclusief"] },
@@ -141,7 +141,7 @@ const ENNEAGRAM_TYPES: Record<number, EnneagramTypeData> = {
 };
 
 
-// ── DISC ─────────────────────────────────────────────────────────────────────
+// â”€â”€ DISC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DISC_SLICES = [
   { key: "D", label: "Dominance",        fill: "#C44A2A" },
   { key: "I", label: "Influence",         fill: "#C48A1A" },
@@ -150,16 +150,16 @@ const DISC_SLICES = [
 ] as const;
 
 const DISC_RESULT_TEXT: Record<string, string> = {
-  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you — not just past them.",
+  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you â€” not just past them.",
   I:  "You lead with energy and relationships. Your greatest strength is inspiring others and creating momentum. Growth edge: follow through on commitments and develop your eye for detail.",
   S:  "You lead with patience and loyalty. Your greatest strength is creating environments where people feel safe and valued. Growth edge: practise taking initiative and speaking your concerns earlier.",
   C:  "You lead with precision and expertise. Your greatest strength is bringing rigour and quality to everything. Growth edge: learn to act with less-than-perfect information and share your insights more openly.",
-  DI: "You combine boldness with people-energy — driving results while keeping others inspired. A powerful combination in leading diverse teams.",
-  DS: "You balance directness with steadiness — goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
-  DC: "You combine drive with precision — results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
-  IS: "You blend enthusiasm with warmth — inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
-  IC: "You combine persuasion with precision — engaging communicator and careful thinker. Balance spontaneity with follow-through.",
-  SC: "You bring steadiness and rigour together — reliable, patient, and quality-driven. A trusted anchor for any team.",
+  DI: "You combine boldness with people-energy â€” driving results while keeping others inspired. A powerful combination in leading diverse teams.",
+  DS: "You balance directness with steadiness â€” goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
+  DC: "You combine drive with precision â€” results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
+  IS: "You blend enthusiasm with warmth â€” inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
+  IC: "You combine persuasion with precision â€” engaging communicator and careful thinker. Balance spontaneity with follow-through.",
+  SC: "You bring steadiness and rigour together â€” reliable, patient, and quality-driven. A trusted anchor for any team.",
 };
 
 const DISC_NAMES: Record<string, string> = {
@@ -252,7 +252,7 @@ function DiscPieSVG({ scores, size, showCenter = true }: {
   );
 }
 
-// ── Wheel of Life ─────────────────────────────────────────────────────────────
+// â”€â”€ Wheel of Life â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const WHEEL_SEGMENTS = [
   { key: "family",     label: "Family",      color: "#3b5fa0" },
   { key: "finance",    label: "Finance",     color: "#c4762a" },
@@ -344,7 +344,7 @@ function WheelSpiderSVG({ scores, size, showLabels = false }: {
   );
 }
 
-// ── Thinking Styles bar SVG ───────────────────────────────────────────────────
+// â”€â”€ Thinking Styles bar SVG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function ThinkingBarsSVG({ scores, size }: { scores: { C: number; H: number; I: number }; size: number }) {
   const bars = [
     { key: "C" as const, label: "C", color: "oklch(48% 0.18 250)" },
@@ -368,7 +368,7 @@ function ThinkingBarsSVG({ scores, size }: { scores: { C: number; H: number; I: 
   );
 }
 
-// ── Spiritual Gifts mini visual ───────────────────────────────────────────────
+// â”€â”€ Spiritual Gifts mini visual â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const KARUNIA_LABELS_ID: Record<string, string> = {
   melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan",
   bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan",
@@ -387,22 +387,13 @@ const KARUNIA_LABELS_EN: Record<string, string> = {
   memimpin: "Leadership", administrasi: "Administration", mukjizat: "Miracles",
   tafsir_bahasa_roh: "Interpretation",
 };
-const KARUNIA_LABELS_NL: Record<string, string> = {
-  melayani: "Dienstbetoon", murah_hati: "Barmhartigheid", keramahan: "Gastvrijheid",
-  bahasa_roh: "Tongen", menyembuhkan: "Genezing", menguatkan: "Bemoediging",
-  memberi: "Vrijgevigheid", hikmat: "Wijsheid", pengetahuan: "Kennis",
-  iman: "Geloof", kerasulan: "Apostelschap", penginjilan: "Evangelisatie",
-  bernubuat: "Profetie", mengajar: "Onderwijs", gembala: "Herderschap",
-  memimpin: "Leiderschap", administrasi: "Bestuur", mukjizat: "Wonderen",
-  tafsir_bahasa_roh: "Uitleg",
-};
+
 function karuniaLabel(key: string, lang: string): string {
   if (lang === "id") return KARUNIA_LABELS_ID[key] ?? key;
-  if (lang === "nl") return KARUNIA_LABELS_NL[key] ?? key;
   return KARUNIA_LABELS_EN[key] ?? key;
 }
 
-// ── Modal overlay ─────────────────────────────────────────────────────────────
+// â”€â”€ Modal overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 type T3 = { en: string; id: string; nl: string };
 type EnneagramTypeData = {
   number: number;
@@ -420,15 +411,15 @@ type EnneagramTypeData = {
 };
 
 type ModalData =
-  | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" | "nl" }
-  | { type: "wheel"; scores: Record<string, number>; reflections: Record<string, { gratitude: string; action: string }> | null; lang: "en" | "id" | "nl" }
-  | { type: "wheelActionSteps"; reflections: Record<string, { gratitude: string; action: string }>; lang: "en" | "id" | "nl" }
-  | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" | "nl" }
-  | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" }
+  | { type: "wheel"; scores: Record<string, number>; reflections: Record<string, { gratitude: string; action: string }> | null; lang: "en" | "id" }
+  | { type: "wheelActionSteps"; reflections: Record<string, { gratitude: string; action: string }>; lang: "en" | "id" }
+  | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" }
+  | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" }
+  | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" }
 
-  | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" | "nl" }
-  | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" | "nl" }
+  | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" }
+  | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" }
   | { type: "fivela"; receivingResult: string; givingResult: string; receivingScores: { A: number; B: number; C: number; D: number; E: number }; givingScores: { A: number; B: number; C: number; D: number; E: number } };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
@@ -469,7 +460,7 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
 
 function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" }>; onClose: () => void }) {
   const { result, scores, lang } = data;
-  const resultLabel = result.split("").map(k => DISC_NAMES[k] ?? k).join(" · ");
+  const resultLabel = result.split("").map(k => DISC_NAMES[k] ?? k).join(" Â· ");
   const description = DISC_RESULT_TEXT[result] ?? null;
 
   let angle = 0;
@@ -536,13 +527,13 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/disc#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →"}
+          {lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’"}
         </Link>
         <Link href="/resources/disc" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+          {lang === "id" ? "Pelajari lebih" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -560,7 +551,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
   const highest = sorted[sorted.length - 1];
 
   const hasReflections = reflections && WHEEL_SEGMENTS.some(seg => reflections[seg.key]?.gratitude || reflections[seg.key]?.action);
-  const actionLabel = lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps";
+  const actionLabel = lang === "id" ? "Langkah Aksi" : "Action Steps";
 
   return (
     <div style={{ perspective: "1000px", minHeight: 0 }}>
@@ -571,7 +562,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
         position: "relative",
       }}>
 
-        {/* ── FRONT: scores ── */}
+        {/* â”€â”€ FRONT: scores â”€â”€ */}
         <div style={{ WebkitBackfaceVisibility: "hidden", backfaceVisibility: "hidden" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
             Life Balance Assessment
@@ -618,29 +609,29 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
 
           <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
             <div style={{ padding: "0.5rem 0.875rem", background: `${lowest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>{lang === "id" ? "Area fokus" : lang === "nl" ? "Aandachtsgebied" : "Focus area"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color, fontWeight: 700 }}>{lang === "id" ? "Area fokus" : "Focus area"}</span>
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: lowest.color }}>{lowest.label} ({scores[lowest.key]})</span>
             </div>
             <div style={{ padding: "0.5rem 0.875rem", background: `${highest.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>{lang === "id" ? "Terkuat" : lang === "nl" ? "Sterkste" : "Strongest"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color, fontWeight: 700 }}>{lang === "id" ? "Terkuat" : "Strongest"}</span>
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: highest.color }}>{highest.label} ({scores[highest.key]})</span>
             </div>
           </div>
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-              {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake →"}
+              {lang === "id" ? "Ulangi tes â†’" : "Retake â†’"}
             </Link>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-              {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+              {lang === "id" ? "Pelajari lebih" : "Learn more"}
             </Link>
             <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-              {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+              {lang === "id" ? "Tutup" : "Close"}
             </button>
           </div>
         </div>
 
-        {/* ── BACK: action steps ── */}
+        {/* â”€â”€ BACK: action steps â”€â”€ */}
         <div style={{
           WebkitBackfaceVisibility: "hidden",
           backfaceVisibility: "hidden",
@@ -661,13 +652,13 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
               onClick={() => setFlipped(false)}
               style={{ background: "none", border: `1px solid oklch(88% 0.006 80)`, borderRadius: 6, padding: "0.3rem 0.625rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.35rem", flexShrink: 0 }}
             >
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>↩ {lang === "id" ? "Skor" : lang === "nl" ? "Scores" : "Scores"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>â†© {lang === "id" ? "Skor" : "Scores"}</span>
             </button>
           </div>
 
           {!hasReflections ? (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "1.5rem" }}>
-              {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : lang === "nl" ? "Nog geen actiestappen opgeslagen. Bezoek het Levenswiel om ze toe te voegen." : "No action steps saved yet. Visit the Wheel of Life to add them."}
+              {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : "No action steps saved yet. Visit the Wheel of Life to add them."}
             </p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
@@ -683,7 +674,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
                     {r.gratitude && (
                       <div style={{ marginBottom: r.action ? "0.5rem" : 0 }}>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
-                          {lang === "id" ? "Syukur" : lang === "nl" ? "Dankbaarheid" : "Thankful for"}
+                          {lang === "id" ? "Syukur" : "Thankful for"}
                         </p>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: "oklch(38% 0.008 260)", margin: 0 }}>{r.gratitude}</p>
                       </div>
@@ -691,7 +682,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
                     {r.action && (
                       <div>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
-                          {lang === "id" ? "Tindakan" : lang === "nl" ? "Actie" : "God-honoring action"}
+                          {lang === "id" ? "Tindakan" : "God-honoring action"}
                         </p>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: navy, margin: 0, fontWeight: 600 }}>{r.action}</p>
                       </div>
@@ -704,10 +695,10 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-              {lang === "id" ? "Edit langkah aksi →" : lang === "nl" ? "Actiestappen bewerken →" : "Edit action steps →"}
+              {lang === "id" ? "Edit langkah aksi â†’" : "Edit action steps â†’"}
             </Link>
             <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-              {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+              {lang === "id" ? "Tutup" : "Close"}
             </button>
           </div>
         </div>
@@ -727,12 +718,12 @@ function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { t
         Wheel of Life
       </p>
       <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.25rem" }}>
-        {lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps"}
+        {lang === "id" ? "Langkah Aksi" : "Action Steps"}
       </h3>
 
       {!hasAny ? (
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "1.5rem" }}>
-          {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : lang === "nl" ? "Nog geen actiestappen opgeslagen. Bezoek het Levenswiel om ze toe te voegen." : "No action steps saved yet. Visit the Wheel of Life to add them."}
+          {lang === "id" ? "Belum ada langkah aksi tersimpan. Kunjungi Roda Kehidupan untuk menambahkannya." : "No action steps saved yet. Visit the Wheel of Life to add them."}
         </p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
@@ -748,7 +739,7 @@ function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { t
                 {r.gratitude && (
                   <div style={{ marginBottom: r.action ? "0.5rem" : 0 }}>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
-                      {lang === "id" ? "Syukur" : lang === "nl" ? "Dankbaarheid" : "Thankful for"}
+                      {lang === "id" ? "Syukur" : "Thankful for"}
                     </p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: "oklch(38% 0.008 260)", margin: 0 }}>{r.gratitude}</p>
                   </div>
@@ -756,7 +747,7 @@ function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { t
                 {r.action && (
                   <div>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "oklch(55% 0.008 260)", margin: "0 0 0.2rem" }}>
-                      {lang === "id" ? "Tindakan" : lang === "nl" ? "Actie" : "God-honoring action"}
+                      {lang === "id" ? "Tindakan" : "God-honoring action"}
                     </p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6, color: navy, margin: 0, fontWeight: 600 }}>{r.action}</p>
                   </div>
@@ -769,10 +760,10 @@ function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { t
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Edit langkah aksi →" : lang === "nl" ? "Actiestappen bewerken →" : "Edit action steps →"}
+          {lang === "id" ? "Edit langkah aksi â†’" : "Edit action steps â†’"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -789,9 +780,9 @@ const THINKING_STYLE_DESCRIPTIONS: Record<string, string> = {
   C:  "You lead with structure and analytical thinking. You see patterns, build frameworks, and solve problems systematically.",
   H:  "You lead with big-picture vision. You connect ideas across contexts and see how everything fits together.",
   I:  "You lead with instinct and insight. You read people and situations quickly, often knowing before you can explain why.",
-  CH: "You blend structured thinking with broad vision — analytical yet able to see beyond the immediate.",
-  CI: "You combine logical precision with sharp intuition — rigorous in your analysis but also attuned to what data can't capture.",
-  HI: "You hold the big picture while staying tuned into people — visionary and relationally perceptive.",
+  CH: "You blend structured thinking with broad vision â€” analytical yet able to see beyond the immediate.",
+  CI: "You combine logical precision with sharp intuition â€” rigorous in your analysis but also attuned to what data can't capture.",
+  HI: "You hold the big picture while staying tuned into people â€” visionary and relationally perceptive.",
   CHI: "You draw on all three dimensions. Your challenge is choosing which lens to lead with in each context.",
 };
 
@@ -842,13 +833,13 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
         </Link>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+          {lang === "id" ? "Pelajari lebih" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -857,14 +848,14 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 
 function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "karunia" }>; onClose: () => void }) {
   const { topGifts, scores, lang } = data;
-  const title = lang === "id" ? "Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts";
+  const title = lang === "id" ? "Karunia Rohani" : "Spiritual Gifts";
 
   const sortedGifts = Object.entries(scores)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
 
-  const retakeLabel = lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →";
-  const learnLabel = lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more";
+  const retakeLabel = lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’";
+  const learnLabel = lang === "id" ? "Pelajari lebih" : "Learn more";
 
   return (
     <>
@@ -877,7 +868,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
 
       {/* Ring + top gifts side by side */}
       <div style={{ display: "flex", gap: "1.25rem", alignItems: "center", marginBottom: "1.5rem" }}>
-        <KaruniaRing scores={scores} lang={lang as "en" | "id" | "nl"} size={120} showLegend={false} />
+        <KaruniaRing scores={scores} lang={lang as "en" | "id"} size={120} showLegend={false} />
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {topGifts.slice(0, 3).map((gift, i) => (
@@ -917,7 +908,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
               <div key={cat.key} style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(50% 0.008 260)" }}>
-                  {cat.label[lang as "en" | "id" | "nl"]}
+                  {cat.label[lang as "en" | "id"]}
                 </span>
               </div>
             ))}
@@ -925,7 +916,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
         </div>
       </div>
 
-      {/* Score bars — top 5 */}
+      {/* Score bars â€” top 5 */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginBottom: "1.5rem" }}>
         {sortedGifts.map(([key, score], i) => {
           const maxScore = sortedGifts[0][1] || 1;
@@ -960,7 +951,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
           {learnLabel}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -981,7 +972,7 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
       <div style={{ height: "320px", marginBottom: "1.5rem" }}>
         <TypeCard
           type={typeData}
-          lang={lang as "en" | "id" | "nl"}
+          lang={lang as "en" | "id"}
           isFlipped={flipped}
           onClick={() => setFlipped(!flipped)}
         />
@@ -1004,13 +995,13 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
         </Link>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+          {lang === "id" ? "Pelajari lebih" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -1032,11 +1023,11 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
   };
 
   const TRAIT_INFO = [
-    { key: "O", label: lang === "id" ? "Keterbukaan" : lang === "nl" ? "Openheid" : "Openness", color: "oklch(52% 0.22 280)" },
-    { key: "C", label: lang === "id" ? "Kehati-hatian" : lang === "nl" ? "Zorgvuldigheid" : "Conscientiousness", color: "oklch(50% 0.18 215)" },
-    { key: "E", label: lang === "id" ? "Ekstraversi" : lang === "nl" ? "Extraversie" : "Extraversion", color: "oklch(60% 0.20 52)" },
-    { key: "A", label: lang === "id" ? "Keramahan" : lang === "nl" ? "Vriendelijkheid" : "Agreeableness", color: "oklch(52% 0.18 155)" },
-    { key: "ES", label: lang === "id" ? "Stabilitas Emosional" : lang === "nl" ? "Emotionele Stabiliteit" : "Emotional Stability", color: "oklch(50% 0.20 310)" },
+    { key: "O", label: lang === "id" ? "Keterbukaan" : "Openness", color: "oklch(52% 0.22 280)" },
+    { key: "C", label: lang === "id" ? "Kehati-hatian" : "Conscientiousness", color: "oklch(50% 0.18 215)" },
+    { key: "E", label: lang === "id" ? "Ekstraversi" : "Extraversion", color: "oklch(60% 0.20 52)" },
+    { key: "A", label: lang === "id" ? "Keramahan" : "Agreeableness", color: "oklch(52% 0.18 155)" },
+    { key: "ES", label: lang === "id" ? "Stabilitas Emosional" : "Emotional Stability", color: "oklch(50% 0.20 310)" },
   ];
 
   // Find dominant trait (highest pct)
@@ -1047,7 +1038,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
   return (
     <>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>
-        {lang === "id" ? "Profil Kepribadian Big Five" : lang === "nl" ? "Big Five Persoonlijkheidsprofiel" : "Big Five Personality Profile"}
+        {lang === "id" ? "Profil Kepribadian Big Five" : "Big Five Personality Profile"}
       </p>
       <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, marginBottom: "1.5rem" }}>
         OCEAN Profile
@@ -1083,7 +1074,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
       <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
         <div style={{ padding: "0.5rem 0.875rem", background: `${dominant.color}18`, borderRadius: 20, display: "flex", gap: "0.4rem", alignItems: "center" }}>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: dominant.color, fontWeight: 700 }}>
-            {lang === "id" ? "Sifat paling menonjol" : lang === "nl" ? "Meest dominant" : "Most distinctive"}
+            {lang === "id" ? "Sifat paling menonjol" : "Most distinctive"}
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: dominant.color }}>
             {dominant.label} ({pcts[dominant.key as keyof typeof pcts]}%)
@@ -1093,20 +1084,20 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/big-five?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake assessment →"}
+          {lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’"}
         </Link>
         <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+          {lang === "id" ? "Pelajari lebih" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
   );
 }
 
-// ── 16 Personalities type data for dashboard ─────────────────────────────────
+// â”€â”€ 16 Personalities type data for dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const P16_COLORS: Record<string, string> = {
   INTJ: "oklch(48% 0.20 260)", INTP: "oklch(48% 0.18 240)",
   ENTJ: "oklch(50% 0.22 25)",  ENTP: "oklch(58% 0.20 45)",
@@ -1128,28 +1119,28 @@ const P16_SUBTITLES: Record<string, string> = {
   ESTP: "The Entrepreneur", ESFP: "The Entertainer",
 };
 const P16_SHORT: Record<string, string> = {
-  INTJ: "Independent, strategic thinkers who see five steps ahead. Excellent strategists — invite them into pastoral conversations, don't assume they'll step forward.",
+  INTJ: "Independent, strategic thinkers who see five steps ahead. Excellent strategists â€” invite them into pastoral conversations, don't assume they'll step forward.",
   INTP: "Curious, precise, and analytical. Strong at systems thinking, slower to commit. Pair with action-oriented teammates to translate insight into execution.",
   ENTJ: "Decisive, organised, results-driven. Rise to leadership quickly. Need to slow down and listen before deciding for everyone.",
   ENTP: "Energetic, idea-rich, challenge-loving. Best paired with someone who turns ideas into plans. Can wear out teammates who need stability.",
   INFJ: "Quiet, principled, deeply purposeful. Often the conscience of the team. Guard against burnout from carrying others' burdens silently.",
-  INFP: "Gentle, values-driven, creative. Rarely volunteer their inner world — invite it. When given room, they bring depth others cannot.",
+  INFP: "Gentle, values-driven, creative. Rarely volunteer their inner world â€” invite it. When given room, they bring depth others cannot.",
   ENFJ: "Warm, persuasive, people-focused. Skilled at calling out the best in others. Remember not everyone wants to be developed all the time.",
-  ENFP: "Enthusiastic, imaginative, relational. Need help finishing what they start — pair well with a Judger who carries projects across the line.",
-  ISTJ: "Reliable, thorough, loyal to systems. The backbone of many ministry teams — finances, logistics, follow-through. Tell them the why, not just the what.",
+  ENFP: "Enthusiastic, imaginative, relational. Need help finishing what they start â€” pair well with a Judger who carries projects across the line.",
+  ISTJ: "Reliable, thorough, loyal to systems. The backbone of many ministry teams â€” finances, logistics, follow-through. Tell them the why, not just the what.",
   ISFJ: "Quiet servants who notice what others miss. Often the unseen carers. Need to be invited into the spotlight, not assumed to be content in the shadows.",
   ESTJ: "Organised, direct, accountable. Make plans happen and hold others to commitments. Soften delivery in high-context cultures.",
-  ESFJ: "Warm, sociable, devoted to group wellbeing. The team's host and connector. Can take criticism personally — need reassurance more than rebuke.",
-  ISTP: "Practical, calm under pressure, competent. Fixes what's broken. Draw them into the relational layer — they won't push their way in.",
-  ISFP: "Quiet, kind, aesthetically sensitive. Leads through example. Need to be asked — they rarely volunteer their thoughts.",
+  ESFJ: "Warm, sociable, devoted to group wellbeing. The team's host and connector. Can take criticism personally â€” need reassurance more than rebuke.",
+  ISTP: "Practical, calm under pressure, competent. Fixes what's broken. Draw them into the relational layer â€” they won't push their way in.",
+  ISFP: "Quiet, kind, aesthetically sensitive. Leads through example. Need to be asked â€” they rarely volunteer their thoughts.",
   ESTP: "Action-focused, bold, energising. Excellent in pioneer settings. Need to plan past the next twenty-four hours when others depend on them.",
   ESFP: "Warm, spontaneous, present-focused. Lifts the room when it's heavy. Need help with long-term follow-through on quiet commitments.",
 };
 const P16_DICHOTOMY_LABELS: Record<string, string> = {
-  EI_A: "E — Extraversion", EI_B: "I — Introversion",
-  SN_A: "S — Sensing",      SN_B: "N — Intuition",
-  TF_A: "T — Thinking",     TF_B: "F — Feeling",
-  JP_A: "J — Judging",      JP_B: "P — Perceiving",
+  EI_A: "E â€” Extraversion", EI_B: "I â€” Introversion",
+  SN_A: "S â€” Sensing",      SN_B: "N â€” Intuition",
+  TF_A: "T â€” Thinking",     TF_B: "F â€” Feeling",
+  JP_A: "J â€” Judging",      JP_B: "P â€” Perceiving",
 };
 
 
@@ -1161,10 +1152,10 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
   const shortOverview = P16_SHORT[personalityType] ?? "";
 
   const DICHOTOMY_PAIRS = [
-    { a: "EI_A", b: "EI_B", label: lang === "id" ? "Energi" : lang === "nl" ? "Energie" : "Energy" },
-    { a: "SN_A", b: "SN_B", label: lang === "id" ? "Informasi" : lang === "nl" ? "Informatie" : "Information" },
-    { a: "TF_A", b: "TF_B", label: lang === "id" ? "Keputusan" : lang === "nl" ? "Besluiten" : "Decisions" },
-    { a: "JP_A", b: "JP_B", label: lang === "id" ? "Struktur" : lang === "nl" ? "Structuur" : "Structure" },
+    { a: "EI_A", b: "EI_B", label: lang === "id" ? "Energi" : "Energy" },
+    { a: "SN_A", b: "SN_B", label: lang === "id" ? "Informasi" : "Information" },
+    { a: "TF_A", b: "TF_B", label: lang === "id" ? "Keputusan" : "Decisions" },
+    { a: "JP_A", b: "JP_B", label: lang === "id" ? "Struktur" : "Structure" },
   ];
 
   return (
@@ -1189,7 +1180,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
 
       {/* Dimension profile bars */}
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.625rem" }}>
-        {lang === "id" ? "Profil Dimensi" : lang === "nl" ? "Dimensieprofiel" : "Dimension Profile"}
+        {lang === "id" ? "Profil Dimensi" : "Dimension Profile"}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.25rem" }}>
         {DICHOTOMY_PAIRS.map(({ a, b, label }) => {
@@ -1204,7 +1195,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
             <div key={label}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(42% 0.008 260)" }}>{label}</span>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} — {dominantPct}%</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} â€” {dominantPct}%</span>
               </div>
               <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
                 <div style={{ height: "100%", width: `${dominantPct}%`, background: typeColor, borderRadius: 3 }} />
@@ -1216,13 +1207,13 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : lang === "nl" ? "Opnieuw doen →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
         </Link>
         <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
-          {lang === "id" ? "Pelajari lebih" : lang === "nl" ? "Meer info" : "Learn more"}
+          {lang === "id" ? "Pelajari lebih" : "Learn more"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
-          {lang === "id" ? "Tutup" : lang === "nl" ? "Sluiten" : "Close"}
+          {lang === "id" ? "Tutup" : "Close"}
         </button>
       </div>
     </>
@@ -1246,9 +1237,9 @@ const FIVELA_MODAL_NAMES: Record<string, string> = {
 const FIVELA_MODAL_DESC: Record<string, string> = {
   A: "You feel cared for when people speak specific, genuine appreciation. A well-timed sentence can carry you through a hard season.",
   B: "You feel cared for when someone gives you their full, unhurried attention. Presence is the currency.",
-  C: "You feel cared for when someone does something practical to help you — without being asked.",
-  D: "You feel cared for when someone brings you something chosen specifically for you. The value is not the price — it is the evidence that someone thought of you.",
-  E: "You feel cared for when someone offers appropriate physical warmth — a firm handshake, a hand on the shoulder, a warm greeting.",
+  C: "You feel cared for when someone does something practical to help you â€” without being asked.",
+  D: "You feel cared for when someone brings you something chosen specifically for you. The value is not the price â€” it is the evidence that someone thought of you.",
+  E: "You feel cared for when someone offers appropriate physical warmth â€” a firm handshake, a hand on the shoulder, a warm greeting.",
 };
 
 function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "fivela" }>; onClose: () => void }) {
@@ -1257,8 +1248,8 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
   const interpretLabel = isMatch ? "Same Language" : "Two Languages";
   const interpretColor = isMatch ? "oklch(52% 0.14 150)" : "oklch(62% 0.14 235)";
   const interpretText = isMatch
-    ? "Your receiving and giving languages match. You give what you most need, which is your strength — and your blind spot. Ask your team members their receiving language so you don't assume they want what you want."
-    : "Your receiving and giving languages differ — the most insightful pattern. You carry fluency in two languages. Your risk: your team may be giving back in your giving language, not your receiving one. Tell them both out loud.";
+    ? "Your receiving and giving languages match. You give what you most need, which is your strength â€” and your blind spot. Ask your team members their receiving language so you don't assume they want what you want."
+    : "Your receiving and giving languages differ â€” the most insightful pattern. You carry fluency in two languages. Your risk: your team may be giving back in your giving language, not your receiving one. Tell them both out loud.";
 
   function MiniBarChart({ scores, primary, label }: { scores: { A: number; B: number; C: number; D: number; E: number }; primary: string; label: string }) {
     const max = Math.max(...Object.values(scores));
@@ -1305,12 +1296,12 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
           </span>
           {!isMatch && (
             <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8rem", color: "rgba(255,255,255,0.8)" }}>
-              → {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}
+              â†’ {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}
             </span>
           )}
         </div>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "rgba(255,255,255,0.85)", marginTop: "0.35rem" }}>
-          Receive · {isMatch ? "Same giving language" : `Give: ${FIVELA_MODAL_NAMES[givingResult] ?? givingResult}`}
+          Receive Â· {isMatch ? "Same giving language" : `Give: ${FIVELA_MODAL_NAMES[givingResult] ?? givingResult}`}
         </p>
       </div>
 
@@ -1352,7 +1343,7 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
       {/* Buttons */}
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none" }}>
-          Retake →
+          Retake â†’
         </Link>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 6, textDecoration: "none", display: "inline-block" }}>
           Learn more
@@ -1365,23 +1356,22 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
   );
 }
 
-// ── Assessment title translations ──────────────────────────────────────────
+// â”€â”€ Assessment title translations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const ASSESSMENT_TITLES: Record<string, Record<"en" | "id" | "nl", string>> = {
-  disc: { en: "DISC Profile", id: "Profil DISC", nl: "DISC-profiel" },
-  wheel: { en: "Wheel of Life", id: "Roda Kehidupan", nl: "Levensrad" },
-  thinking: { en: "Thinking Styles", id: "Gaya Berpikir", nl: "Denkstijlen" },
-  enneagram: { en: "Enneagram", id: "Enneagram", nl: "Enneagram" },
-
-  "16personalities": { en: "16 Personalities", id: "16 Kepribadian", nl: "16 Persoonlijkheden" },
-  bigfive: { en: "Big Five", id: "Big Five", nl: "Big Five" },
+const ASSESSMENT_TITLES: Record<string, Record<"en" | "id", string>> = {
+  disc: { en: "DISC Profile", id: "Profil DISC" },
+  wheel: { en: "Wheel of Life", id: "Roda Kehidupan" },
+  thinking: { en: "Thinking Styles", id: "Gaya Berpikir" },
+  enneagram: { en: "Enneagram", id: "Enneagram" },
+  "16personalities": { en: "16 Personalities", id: "16 Kepribadian" },
+  bigfive: { en: "Big Five", id: "Big Five" },
 };
 
-function getTitle(key: string, lang: "en" | "id" | "nl"): string {
+function getTitle(key: string, lang: "en" | "id"): string {
   return ASSESSMENT_TITLES[key]?.[lang] || ASSESSMENT_TITLES[key]?.en || key;
 }
 
-// ── Tile components ───────────────────────────────────────────────────────────
+// â”€â”€ Tile components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function CompactTile({
   title,
@@ -1468,7 +1458,7 @@ function CompactTile({
           }}
           onClick={e => e.stopPropagation()}
         >
-          Take test →
+          Take test â†’
         </Link>
       )}
       {extraButton && (
@@ -1491,15 +1481,15 @@ function WheelLifeTile({
 }: {
   visual: React.ReactNode;
   done: boolean;
-  lang: "en" | "id" | "nl";
+  lang: "en" | "id";
   wheelReflections: Record<string, { gratitude: string; action: string }> | null;
   onOpenScores?: () => void;
 }) {
   const [flipped, setFlipped] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  const title = lang === "id" ? "Roda Kehidupan" : lang === "nl" ? "Levensrad" : "Wheel of Life";
-  const actionLabel = lang === "id" ? "Langkah Aksi" : lang === "nl" ? "Actiestappen" : "Action Steps";
+  const title = lang === "id" ? "Roda Kehidupan" : "Wheel of Life";
+  const actionLabel = lang === "id" ? "Langkah Aksi" : "Action Steps";
 
   const segmentsWithActions = done
     ? WHEEL_SEGMENTS.filter(seg => wheelReflections?.[seg.key]?.action)
@@ -1530,7 +1520,7 @@ function WheelLifeTile({
         transition: "transform 0.35s ease",
       }}>
 
-        {/* ── FRONT ── */}
+        {/* â”€â”€ FRONT â”€â”€ */}
         <div
           style={{
             ...faceBase,
@@ -1563,11 +1553,11 @@ function WheelLifeTile({
 
           {!done && (
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }} onClick={e => e.stopPropagation()}>
-              Take test →
+              Take test â†’
             </Link>
           )}
 
-          {/* Tiny flip icon — bottom-right corner */}
+          {/* Tiny flip icon â€” bottom-right corner */}
           {done && (
             <button
               onClick={e => { e.stopPropagation(); setFlipped(true); }}
@@ -1593,7 +1583,7 @@ function WheelLifeTile({
           )}
         </div>
 
-        {/* ── BACK ── */}
+        {/* â”€â”€ BACK â”€â”€ */}
         <div style={{
           ...faceBase,
           transform: "rotateY(180deg)",
@@ -1611,13 +1601,13 @@ function WheelLifeTile({
               onClick={() => setFlipped(false)}
               style={{ background: "none", border: "none", color: offWhite, cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.125rem", opacity: 0.7 }}
             >
-              ↩
+              â†©
             </button>
           </div>
 
           {segmentsWithActions.length === 0 ? (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(65% 0.04 260)", lineHeight: 1.5, flex: 1, margin: 0 }}>
-              {lang === "id" ? "Belum ada langkah aksi. Isi di halaman Roda Kehidupan." : lang === "nl" ? "Nog geen actiestappen. Vul ze in op het Levenswiel." : "No action steps yet. Fill them in on the Wheel of Life page."}
+              {lang === "id" ? "Belum ada langkah aksi. Isi di halaman Roda Kehidupan." : "No action steps yet. Fill them in on the Wheel of Life page."}
             </p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1, overflowY: "auto" }}>
@@ -1637,7 +1627,7 @@ function WheelLifeTile({
             style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, color: orange, textDecoration: "none", alignSelf: "flex-end", flexShrink: 0 }}
             onClick={e => e.stopPropagation()}
           >
-            {lang === "id" ? "Edit →" : lang === "nl" ? "Bewerken →" : "Edit →"}
+            {lang === "id" ? "Edit â†’" : "Edit â†’"}
           </Link>
         </div>
 
@@ -1659,7 +1649,7 @@ function EmptyTileVisual() {
   );
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// â”€â”€ Main export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function AssessmentTileGrid({
   discResult = null,
   discScores = null,
@@ -1699,15 +1689,15 @@ export default function AssessmentTileGrid({
   fivelaGivingResult?: string | null;
   fivelaReceivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
-  languagePreference?: "en" | "id" | "nl";
+  languagePreference?: "en" | "id";
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
   const [enneagramFlipped, setEnneagramFlipped] = useState(false);
   const lang = languagePreference;
 
-  const karuniaTitle = lang === "id" ? "Karunia Rohani" : lang === "nl" ? "Geestelijke Gaven" : "Spiritual Gifts";
+  const karuniaTitle = lang === "id" ? "Karunia Rohani" : "Spiritual Gifts";
 
-  // ── Compact visuals ──────────────────────────────────────────────────────────
+  // â”€â”€ Compact visuals â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const discVisual = discScores ? (
     <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -1887,10 +1877,10 @@ export default function AssessmentTileGrid({
         {/* 5. Enneagram */}
         <CompactTile
           title={getTitle("enneagram", lang)}
-          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 180, height: 110, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id" | "nl"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div> : <EmptyTileVisual />}
+          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 180, height: 110, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div> : <EmptyTileVisual />}
           done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
-          onClick={enneagramType && enneagramScores && ENNEAGRAM_TYPES[enneagramType] ? () => setModal({ type: "enneagram", typeData: ENNEAGRAM_TYPES[enneagramType], scores: enneagramScores, lang: lang as "en" | "id" | "nl" }) : undefined}
+          onClick={enneagramType && enneagramScores && ENNEAGRAM_TYPES[enneagramType] ? () => setModal({ type: "enneagram", typeData: ENNEAGRAM_TYPES[enneagramType], scores: enneagramScores, lang: lang as "en" | "id" }) : undefined}
         />
 
 

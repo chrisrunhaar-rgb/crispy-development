@@ -9,7 +9,7 @@ interface Props {
   firstName: string;
   lastName?: string;
   email: string;
-  currentLanguage?: "en" | "id" | "nl";
+  currentLanguage?: "en" | "id";
 }
 
 export default function AccountMenu({ firstName, lastName, email, currentLanguage = "en" }: Props) {

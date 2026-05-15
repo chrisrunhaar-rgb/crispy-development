@@ -69,7 +69,7 @@ function SkipBtn({ onClick, label = "Skip for now →" }: { onClick: () => void;
 export default function WelcomeClient({ firstName, currentLanguage, preview = false }: { firstName: string; currentLanguage: string; preview?: boolean }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>(0);
-  const [lang, setLang] = useState<"en" | "id" | "nl">(currentLanguage as "en" | "id" | "nl");
+  const [lang, setLang] = useState<"en" | "id">(currentLanguage as "en" | "id");
 
   // Password step state
   const [pwError, setPwError] = useState<string | null>(null);
@@ -250,8 +250,8 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
               This sets how module titles and content are displayed throughout the platform.
             </p>
             <div style={{ display: "flex", gap: "0.75rem", marginBottom: "2rem", flexWrap: "wrap" }}>
-              {(["en", "id", "nl"] as const).map((l) => {
-                const label = l === "en" ? "English" : l === "id" ? "Indonesia" : "Nederlands";
+              {(["en", "id"] as const).map((l) => {
+                const label = l === "en" ? "English" : "Indonesia";
                 return (
                   <button
                     key={l}

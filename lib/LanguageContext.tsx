@@ -18,7 +18,7 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
-  const VALID_LANGS: Lang[] = ["en", "id", "nl", "es", "fr", "pt"];
+  const VALID_LANGS: Lang[] = ["en", "id", "es", "fr", "pt"];
 
   useEffect(() => {
     const stored = localStorage.getItem("crispy-lang") as Lang | null;

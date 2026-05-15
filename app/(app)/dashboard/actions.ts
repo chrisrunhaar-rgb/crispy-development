@@ -11,7 +11,7 @@ export async function setPersonalLanguage(formData: FormData) {
   if (!user) throw new Error("Unauthorized");
 
   const language = formData.get("language") as string;
-  if (!["en", "id", "nl"].includes(language)) throw new Error("Invalid language");
+  if (!["en", "id"].includes(language)) throw new Error("Invalid language");
 
   const admin = createAdminClient();
   await admin.auth.admin.updateUserById(user.id, {
@@ -27,7 +27,7 @@ export async function setTeamLanguage(formData: FormData) {
   if (!user) throw new Error("Unauthorized");
 
   const language = formData.get("language") as string;
-  if (!["en", "id", "nl"].includes(language)) throw new Error("Invalid language");
+  if (!["en", "id"].includes(language)) throw new Error("Invalid language");
 
   await admin
     .from("teams")
@@ -296,7 +296,7 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
 
   const { data: invite } = await admin
     .from("member_invites")
-    .select("id, expires_at, used_at, pathway, coach_access, coach_minutes")
+    .select("id, expires_at, used_at, pathway, coach_access, coach_minutes, email")
     .eq("token", token)
     .maybeSingle();
 

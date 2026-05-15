@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect, useTransition } from 'react';
 import { BulkActionsBar } from './BulkActionsBar';
 import { exportSingleRow } from '@/lib/admin-export';
 
@@ -18,6 +18,8 @@ interface Member {
   peer?: boolean;
   tests?: number;
   timezone?: string | null;
+  coach_access?: boolean;
+  coach_minutes_granted?: number;
 }
 
 type SortColumn = 'name' | 'pathway' | 'team' | 'peer' | 'modules' | 'tests' | 'timezone' | 'lastLogin' | 'joined';
@@ -29,6 +31,7 @@ interface AdminMembersTableProps {
   onDelete?: (memberId: string) => void;
   onDeleteMultiple?: (memberIds: string[]) => Promise<void>;
   onExport?: (members: Member[]) => void;
+  onCoachAccessChange?: (memberId: string, access: boolean, minutes: number) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
   testCount?: number;
@@ -101,12 +104,115 @@ function formatDate(iso: string | null | undefined): string {
   });
 }
 
+function WaypointCell({
+  memberId,
+  initialAccess,
+  initialMinutes,
+  onSave,
+}: {
+  memberId: string;
+  initialAccess: boolean;
+  initialMinutes: number;
+  onSave?: (memberId: string, access: boolean, minutes: number) => Promise<void>;
+}) {
+  const [access, setAccess] = useState(initialAccess);
+  const [minutes, setMinutes] = useState(initialMinutes);
+  const [saved, setSaved] = useState(false);
+  const [, startTransition] = useTransition();
+
+  const isDirty = access !== initialAccess || minutes !== initialMinutes;
+
+  function handleSave() {
+    if (!onSave) return;
+    startTransition(async () => {
+      await onSave(memberId, access, minutes);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    });
+  }
+
+  const navy = 'oklch(30% 0.12 260)';
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexWrap: 'nowrap' }}>
+      {/* ON/OFF toggles */}
+      <div style={{ display: 'flex', gap: '2px', flexShrink: 0 }}>
+        {([true, false] as const).map(val => (
+          <button
+            key={String(val)}
+            type="button"
+            onClick={() => setAccess(val)}
+            style={{
+              fontFamily: 'var(--font-montserrat)',
+              fontSize: '0.6rem',
+              fontWeight: 700,
+              padding: '0.2rem 0.45rem',
+              border: `1px solid ${access === val ? (val ? 'oklch(52% 0.14 150)' : 'oklch(58% 0.008 260)') : 'oklch(82% 0.008 80)'}`,
+              background: access === val ? (val ? 'oklch(52% 0.14 150)' : 'oklch(55% 0.008 260)') : 'transparent',
+              color: access === val ? 'white' : 'oklch(55% 0.008 260)',
+              cursor: 'pointer',
+              lineHeight: 1,
+            }}
+          >
+            {val ? 'ON' : 'OFF'}
+          </button>
+        ))}
+      </div>
+
+      {/* Minutes input — only when ON */}
+      {access && (
+        <input
+          type="number"
+          min={1}
+          max={9999}
+          value={minutes}
+          onChange={e => setMinutes(Math.max(1, parseInt(e.target.value) || 120))}
+          style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '0.75rem',
+            width: '52px',
+            border: '1px solid oklch(82% 0.008 80)',
+            padding: '0.2rem 0.35rem',
+            background: 'white',
+            color: navy,
+          }}
+          title="Minutes granted"
+        />
+      )}
+
+      {/* Save button */}
+      {onSave && (
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={!isDirty && !saved}
+          style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '0.6rem',
+            fontWeight: 700,
+            padding: '0.2rem 0.5rem',
+            border: 'none',
+            background: saved ? 'oklch(52% 0.14 150)' : isDirty ? navy : 'oklch(88% 0.008 80)',
+            color: isDirty || saved ? 'white' : 'oklch(62% 0.008 260)',
+            cursor: isDirty ? 'pointer' : 'default',
+            flexShrink: 0,
+            lineHeight: 1,
+          }}
+        >
+          {saved ? '✓' : 'Save'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function AdminMembersTable({
   members,
   onEdit,
   onDelete,
   onDeleteMultiple,
   onExport,
+  onCoachAccessChange,
   showSearch = true,
   showFilters = true,
   testCount = 4,
@@ -463,6 +569,9 @@ export default function AdminMembersTable({
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('joined')}>
                   Joined <SortIcon column="joined" />
                 </th>
+                <th style={{ width: '14%' }}>
+                  WayPoint
+                </th>
                 <th style={{ width: '8%', textAlign: 'center' }}>
                   View
                 </th>
@@ -562,6 +671,14 @@ export default function AdminMembersTable({
                       <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>
                         {formatDate(member.created_at)}
                       </span>
+                    </td>
+                    <td data-label="WayPoint" style={{ verticalAlign: 'middle' }}>
+                      <WaypointCell
+                        memberId={member.id}
+                        initialAccess={member.coach_access ?? false}
+                        initialMinutes={member.coach_minutes_granted ?? 120}
+                        onSave={onCoachAccessChange}
+                      />
                     </td>
                     <td style={{ width: '8%', textAlign: 'center' }}>
                       <a

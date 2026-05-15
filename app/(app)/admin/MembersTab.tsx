@@ -3,11 +3,10 @@
 import React, { useState } from 'react';
 import AdminMembersTable from '@/components/AdminMembersTable';
 import AdminBroadcastForm from './AdminBroadcastForm';
-import WaypointAccessSection from './WaypointAccessSection';
 import { ToastContainer } from '@/components/Toast';
 import { useToast } from '@/hooks/useToast';
 import { exportMembersAsCSV } from '@/lib/admin-export';
-import { adminBulkDeleteMembers } from './actions';
+import { adminBulkDeleteMembers, updateMemberCoachAccess } from './actions';
 
 const ASSESSMENT_KEYS = [
   'disc_completed_at',
@@ -38,6 +37,8 @@ interface Member {
   peer?: boolean;
   tests?: number;
   timezone?: string | null;
+  coach_access?: boolean;
+  coach_minutes_granted?: number;
 }
 
 interface MembersTabProps {
@@ -63,6 +64,7 @@ export default function MembersTab({
       const hasPeer = pathway === 'peer' || !!u.user_metadata?.peer_group_id;
       const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
 
+      const cd = coachData.get(u.id);
       return {
         id: u.id,
         email: u.email ?? '',
@@ -77,6 +79,8 @@ export default function MembersTab({
         peer: hasPeer,
         tests: testsDone,
         timezone: u.user_metadata?.timezone as string | null ?? null,
+        coach_access: cd?.coach_access ?? false,
+        coach_minutes_granted: cd?.coach_minutes_granted ?? 120,
       };
     });
   });
@@ -98,6 +102,17 @@ export default function MembersTab({
   const handleExport = (members: Member[]) => {
     exportMembersAsCSV(members);
     success(`Exported ${members.length} member(s) to CSV`);
+  };
+
+  const handleCoachAccessChange = async (memberId: string, access: boolean, minutes: number) => {
+    const result = await updateMemberCoachAccess(memberId, access, minutes);
+    if (result.error) {
+      error(result.error);
+    } else {
+      setTableMembers(prev =>
+        prev.map(m => m.id === memberId ? { ...m, coach_access: access, coach_minutes_granted: minutes } : m)
+      );
+    }
   };
 
   const sectionHeading: React.CSSProperties = {
@@ -122,24 +137,12 @@ export default function MembersTab({
           members={tableMembers}
           onDeleteMultiple={handleDeleteMultiple}
           onExport={handleExport}
+          onCoachAccessChange={handleCoachAccessChange}
           showSearch={true}
           showFilters={true}
           testCount={ASSESSMENT_KEYS.length}
         />
       </section>
-
-      <WaypointAccessSection
-        members={users.map(u => {
-          const cd = coachData.get(u.id);
-          return {
-            id: u.id,
-            email: u.email ?? "",
-            name: `${u.user_metadata?.first_name ?? ""} ${u.user_metadata?.last_name ?? ""}`.trim(),
-            coach_access: cd?.coach_access ?? false,
-            coach_minutes_granted: cd?.coach_minutes_granted ?? 120,
-          };
-        })}
-      />
 
       <section>
         <h2 style={sectionHeading}>Send Notification</h2>

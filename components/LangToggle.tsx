@@ -2,19 +2,18 @@
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
-type SupportedLang = "en" | "id" | "nl";
+type SupportedLang = "en" | "id";
 
 const BACK_LABEL: Record<SupportedLang, string> = {
   en: "All Resources",
   id: "Semua Sumber Daya",
-  nl: "Alle Bronnen",
 };
 
 interface LangToggleProps {
   langs?: SupportedLang[];
 }
 
-export default function LangToggle({ langs = ["en", "id", "nl"] }: LangToggleProps) {
+export default function LangToggle({ langs = ["en", "id"] }: LangToggleProps) {
   const { lang: ctxLang, setLang } = useLanguage();
   const lang = (langs.includes(ctxLang as SupportedLang) ? ctxLang : langs[0]) as SupportedLang;
 

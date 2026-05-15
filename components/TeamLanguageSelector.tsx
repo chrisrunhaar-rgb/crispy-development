@@ -6,10 +6,9 @@ import { setTeamLanguage } from "@/app/(app)/dashboard/actions";
 const LANGS = [
   { code: "en", label: "EN", full: "English" },
   { code: "id", label: "ID", full: "Indonesian" },
-  { code: "nl", label: "NL", full: "Dutch" },
 ] as const;
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 export default function TeamLanguageSelector({ currentLanguage }: { currentLanguage: Lang }) {
   const [isPending, startTransition] = useTransition();

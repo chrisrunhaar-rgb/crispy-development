@@ -7,7 +7,7 @@ export async function markOnboardingComplete(): Promise<void> {
   await supabase.auth.updateUser({ data: { onboarding_complete: true } });
 }
 
-export async function setWelcomeLanguage(lang: "en" | "id" | "nl"): Promise<void> {
+export async function setWelcomeLanguage(lang: "en" | "id"): Promise<void> {
   const supabase = await createClient();
   await supabase.auth.updateUser({ data: { language_preference: lang } });
 }

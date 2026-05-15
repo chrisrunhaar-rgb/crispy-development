@@ -120,7 +120,7 @@ export default async function DashboardPage({
   const contributionScores = (metadata.contribution_scores ?? null) as Record<string, number> | null;
   const conflictStyle = (metadata.conflict_style ?? null) as string | null;
   const conflictScores = (metadata.conflict_scores ?? null) as Record<string, number> | null;
-  const languagePreference = ((metadata.language_preference ?? "en") as "en" | "id" | "nl");
+  const languagePreference = ((metadata.language_preference ?? "en") as "en" | "id");
 
   const admin = createAdminClient();
 
@@ -944,7 +944,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   contributionScores?: Record<string, number> | null;
   conflictStyle?: string | null;
   conflictScores?: Record<string, number> | null;
-  languagePreference?: "en" | "id" | "nl";
+  languagePreference?: "en" | "id";
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -984,7 +984,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             {savedItems.map(slug => {
               const meta = RESOURCE_META[slug];
               const displayTitle = languagePreference === "id" && meta.titleId ? meta.titleId
-                : languagePreference === "nl" && meta.titleNl ? meta.titleNl
                 : meta.title;
               return (
                 <ResourceCard
@@ -1249,7 +1248,7 @@ function TeamLeaderDashboard({
 
       {/* Top bar: language selector */}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <TeamLanguageSelector currentLanguage={(language as "en" | "id" | "nl") || "en"} />
+        <TeamLanguageSelector currentLanguage={(language as "en" | "id") || "en"} />
       </div>
 
       {/* THE TEAM roster */}
@@ -1259,7 +1258,7 @@ function TeamLeaderDashboard({
         leaderName={leaderName}
         members={rosterMembers}
         isLeader={true}
-        language={(language as "en" | "id" | "nl") || "en"}
+        language={(language as "en" | "id") || "en"}
       />
 
       {/* Assessment selector */}
