@@ -26,11 +26,11 @@ export default function CoachPrivacyPage() {
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "2rem" }}>
 
           <Section label="Your session transcripts are fully private.">
-            <Body>Everything you say during a coaching session is captured as a live transcript. That transcript is never shared with your leader, your organisation, or anyone else — including us (Crispy Development). We do not read your session content.</Body>
+            <Body>Everything you say during a coaching session is captured as a live transcript. That transcript is never shared with your organisation or anyone else — including us (Crispy Development). We do not read your session content.</Body>
           </Section>
 
-          <Section label="Your session notes are yours to share — or not.">
-            <Body>After each session, WayPoint generates notes from your conversation: themes explored, insights, actions you named, values surfaced. These notes live in your private dashboard. If your organisation uses WayPoint with a leader assigned to you, your leader can only see your session notes if you choose to share them. You control that switch. Transcripts remain private regardless.</Body>
+          <Section label="Your session notes belong to you.">
+            <Body>After each session, WayPoint generates notes from your conversation: themes explored, insights, actions you named, values surfaced. These notes live in your private dashboard and are visible only to you.</Body>
           </Section>
 
           <Section label="Your voice is processed by Google.">

@@ -53,12 +53,6 @@ export default async function CoachPage({
   if (!hasCoachAccess) redirect("/dashboard");
   const coachLimitSeconds = (membership?.coach_minutes_granted ?? 120) * 60;
 
-  const { count: leaderCount } = await supabase
-    .from("wp_leader_assignments")
-    .select("*", { count: "exact", head: true })
-    .eq("leader_user_id", user.id);
-  const isLeader = (leaderCount ?? 0) > 0;
-
   // Trial calculation — all completed sessions
   const { data: trialData } = await supabase
     .from("wp_sessions")
@@ -110,7 +104,6 @@ export default async function CoachPage({
             </span>
           </div>
           <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-            {isLeader && <Link href="/coach/leader" style={headerLink}>Leader view</Link>}
             {isAdmin && <Link href="/coach/admin" style={headerLink}>Admin</Link>}
             <Link href="/dashboard" style={headerLink}>← Crispy Leaders</Link>
           </div>

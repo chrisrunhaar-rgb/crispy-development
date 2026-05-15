@@ -125,7 +125,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
           </InfoCard>
 
           <InfoCard label="Your transcripts are private to you">
-            Everything you say in a session is private to you. If a leader is assigned to you, they can only see session notes you choose to share — never the full conversation. You are always in control.
+            Everything you say in a session is private to you. Your transcripts and notes are never shared with your organisation or anyone else. You are always in control.
           </InfoCard>
 
           <InfoCard label="We do not read your sessions">

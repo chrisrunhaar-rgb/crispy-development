@@ -1,8 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import ShareToggle from "./ShareToggle";
-
 export const metadata = {
   title: "Session — WayPoint",
 };
@@ -26,14 +24,7 @@ export default async function PastSessionPage({
 
   if (!session) notFound();
 
-  // Check if this worker has a leader assigned
-  const { count: leaderCount } = await supabase
-    .from("wp_leader_assignments")
-    .select("*", { count: "exact", head: true })
-    .eq("worker_user_id", user.id);
-  const hasLeader = (leaderCount ?? 0) > 0;
-
-  const wb = Array.isArray(session.wp_whiteboards)
+  const wb =Array.isArray(session.wp_whiteboards)
     ? session.wp_whiteboards[0]
     : session.wp_whiteboards;
 
@@ -122,12 +113,6 @@ export default async function PastSessionPage({
               )}
             </div>
           )}
-
-          <ShareToggle
-            sessionId={session.id}
-            initialShared={session.shared_with_leader ?? false}
-            hasLeader={hasLeader}
-          />
 
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
             <Link

@@ -632,15 +632,9 @@ export default function AdminMembersTable({
                       </div>
                     </td>
                     <td data-label="Pathway">
-                      {member.pathway && (
-                        <span className={`ds-badge ${getPathwayColor(member.pathway)}`}>
-                          {member.pathway === 'personal' && '🧑'}
-                          {member.pathway === 'team' && '👥'}
-                          {member.pathway === 'peer' && '🤝'}
-                          {' '}
-                          {member.pathway.charAt(0).toUpperCase() + member.pathway.slice(1)}
-                        </span>
-                      )}
+                      <span style={{ fontSize: '0.875rem', color: '#374151' }}>
+                        {member.pathway ? member.pathway.charAt(0).toUpperCase() + member.pathway.slice(1) : '—'}
+                      </span>
                     </td>
                     <td data-label="Team" style={{ textAlign: 'center' }}>
                       <span style={{ fontWeight: '500', color: member.team ? '#10B981' : '#9CA3AF' }}>

@@ -100,7 +100,7 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
           <section>
             <SectionLabel>Your privacy</SectionLabel>
             <p style={bodyText}>
-              Your session transcripts are private to you. If a leader is assigned to you in WayPoint, they can only see session notes you choose to share — never the full conversation. You are always in control.
+              Your session transcripts and notes are private to you. They are never shared with your organisation or anyone else. You are always in control.
             </p>
           </section>
 
