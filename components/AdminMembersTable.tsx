@@ -525,8 +525,8 @@ export default function AdminMembersTable({
           No members match your search or filters.
         </div>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
-          <table className="ds-table">
+        <div style={{ width: '100%' }}>
+          <table className="ds-table" style={{ width: '100%', tableLayout: 'auto' }}>
             <thead className="ds-table-header">
               <tr>
                 <th style={{ width: '3%', textAlign: 'center' }}>

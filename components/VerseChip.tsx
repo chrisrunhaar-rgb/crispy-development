@@ -5,7 +5,7 @@ import type { VerseEntry } from "@/lib/verses";
 
 interface Props {
   verse: VerseEntry;
-  lang?: "en" | "id" | "nl";
+  lang?: "en" | "id";
   variant?: "chip" | "tile";
   // chip: small inline orange link → popover
   // tile: full card that flips and dims the page

@@ -84,7 +84,7 @@ const TOPIC_COURSE_URL: Record<string, { en: string; id: string }> = {
   "Teams Course": { en: "/resources/teams-training", id: "/resources/teams-training-id" },
 };
 
-const LANG_LABELS: Record<string, string> = { en: "English", id: "Bahasa Indonesia", nl: "Nederlands" };
+const LANG_LABELS: Record<string, string> = { en: "English", id: "Bahasa Indonesia" };
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -369,7 +369,7 @@ function InitiatedGroupCard({ group, initiatorName, totalModules }: { group: Ini
             <div>
               <label style={labelStyle}>Language</label>
               <div style={{ display: "flex", gap: "0.375rem" }}>
-                {(["en", "id", "nl"] as const).map(lang => (
+                {(["en", "id"] as const).map(lang => (
                   <button
                     key={lang}
                     onClick={() => handleLangChange(lang)}
@@ -433,7 +433,7 @@ function InitiatedGroupCard({ group, initiatorName, totalModules }: { group: Ini
                 groupName={localName}
                 topic={localTopic}
                 initiatorName={initiatorName}
-                language={(localLang as "en" | "id" | "nl") || "en"}
+                language={(localLang as "en" | "id") || "en"}
               />
             ) : (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(65% 0.15 45)", fontWeight: 600, lineHeight: 1.5 }}>

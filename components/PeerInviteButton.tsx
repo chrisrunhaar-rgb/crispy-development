@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 const SHARE_COPY: Record<Lang, (initiatorName: string, topic: string | null, groupName: string) => { title: string; text: string }> = {
   en: (initiatorName, topic, groupName) => ({
@@ -16,12 +16,6 @@ const SHARE_COPY: Record<Lang, (initiatorName: string, topic: string | null, gro
     text: topic
       ? `${initiatorName} mengundangmu untuk bergabung dengan grup peer dengan topik: ${topic}. Daftarkan dirimu di Crispy Leaders HUB untuk melihat apa yang sudah disiapkan.`
       : `${initiatorName} mengundangmu bergabung dengan grup peer di Crispy Leaders. Tempatmu sudah siap.`,
-  }),
-  nl: (initiatorName, topic, groupName) => ({
-    title: `Sluit je aan bij ${groupName} op Crispy Leaders`,
-    text: topic
-      ? `${initiatorName} nodigt je uit voor een peer group met het onderwerp: ${topic}. Meld je aan bij de Crispy Leaders HUB om te zien wat er klaarstaat.`
-      : `${initiatorName} nodigt je uit voor een peer group op Crispy Leaders. Jouw plek is klaar.`,
   }),
 };
 

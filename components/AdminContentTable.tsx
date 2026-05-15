@@ -559,6 +559,8 @@ export default function AdminContentTable({
                   <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
                     <Link
                       href={`/resources/${module.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       title={`View ${module.title}`}
                       aria-label={`View ${module.title}`}
                       style={{

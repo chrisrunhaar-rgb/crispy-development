@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 export const GIFT_CATEGORIES = [
   {
@@ -11,7 +11,7 @@ export const GIFT_CATEGORIES = [
     maxScore: 48,
     color: "oklch(62% 0.18 12)",
     trackColor: "oklch(93% 0.05 12)",
-    label: { en: "Serving", id: "Melayani", nl: "Dienst" },
+    label: { en: "Serving", id: "Melayani" },
     startDeg: -88,
     endDeg: -2,
   },
@@ -21,7 +21,7 @@ export const GIFT_CATEGORIES = [
     maxScore: 48,
     color: "oklch(38% 0.18 255)",
     trackColor: "oklch(90% 0.05 255)",
-    label: { en: "Speaking", id: "Berbicara", nl: "Spreken" },
+    label: { en: "Speaking", id: "Berbicara" },
     startDeg: 2,
     endDeg: 88,
   },
@@ -31,7 +31,7 @@ export const GIFT_CATEGORIES = [
     maxScore: 72,
     color: "oklch(68% 0.17 78)",
     trackColor: "oklch(94% 0.05 78)",
-    label: { en: "Manifestation", id: "Manifestasi", nl: "Manifestatie" },
+    label: { en: "Manifestation", id: "Manifestasi" },
     startDeg: 92,
     endDeg: 178,
   },
@@ -41,7 +41,7 @@ export const GIFT_CATEGORIES = [
     maxScore: 60,
     color: "oklch(42% 0.22 305)",
     trackColor: "oklch(91% 0.05 305)",
-    label: { en: "Leading", id: "Memimpin", nl: "Leidinggeven" },
+    label: { en: "Leading", id: "Memimpin" },
     startDeg: 182,
     endDeg: 268,
   },
@@ -125,8 +125,6 @@ export function KaruniaRing({
         aria-label={
           lang === "id"
             ? "Distribusi karunia rohani berdasarkan kategori"
-            : lang === "nl"
-            ? "Verdeling geestelijke gaven per categorie"
             : "Spiritual gifts distribution by category"
         }
       >
@@ -210,7 +208,7 @@ export function KaruniaRing({
                 letterSpacing: "0.07em",
               }}
             >
-              {lang === "id" ? "TERKUAT" : lang === "nl" ? "STERKST" : "STRONGEST"}
+              {lang === "id" ? "TERKUAT" : "STRONGEST"}
             </text>
           </>
         )}

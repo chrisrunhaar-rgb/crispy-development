@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/client";
 const LANGUAGES: { code: Lang; flag: string; label: string; available: boolean }[] = [
   { code: "en", flag: "🌐", label: "English", available: true },
   { code: "id", flag: "🇮🇩", label: "Indonesia", available: true },
-  { code: "nl", flag: "🇳🇱", label: "Nederlands", available: true },
+  { code: "nl", flag: "🇳🇱", label: "Nederlands", available: false },
   { code: "es", flag: "🇪🇸", label: "Español", available: false },
   { code: "fr", flag: "🇫🇷", label: "Français", available: false },
   { code: "pt", flag: "🇵🇹", label: "Português", available: false },

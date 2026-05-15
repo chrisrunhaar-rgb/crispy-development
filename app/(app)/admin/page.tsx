@@ -32,6 +32,7 @@ const CONTENT_MODULES: ContentGroup[] = [
     category: "Assessments",
     modules: [
       { slug: "disc", title: "DISC Profile", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
+      { slug: "5languages", title: "5 Languages of Appreciation", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
       { slug: "wheel-of-life", title: "Wheel of Life", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
       { slug: "three-thinking-styles", title: "Three Thinking Styles", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },
       { slug: "karunia-rohani", title: "Karunia Rohani", created: "2026-04-21", updated: "2026-04-21", languages: ["EN", "ID"] },

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { generateInviteAndGetUrl } from "@/app/(app)/dashboard/actions";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 const SHARE_COPY: Record<Lang, (teamName: string) => { title: string; text: string }> = {
   en: (teamName) => ({
@@ -13,10 +13,6 @@ const SHARE_COPY: Record<Lang, (teamName: string) => { title: string; text: stri
   id: (teamName) => ({
     title: `Bergabunglah dengan ${teamName} di Crispy Development`,
     text: `Pemimpinmu sudah menyiapkan tempat untukmu.\n\n${teamName} sedang membangun sesuatu — Crispy Development adalah tempat pemimpin lintas budaya bertumbuh. Timmu sudah menunggu.`,
-  }),
-  nl: (teamName) => ({
-    title: `Sluit je aan bij ${teamName} op Crispy Development`,
-    text: `Je leider heeft een plek voor jou.\n\n${teamName} bouwt aan iets — Crispy Development is het platform voor interculturele leiders. Je team staat klaar.`,
   }),
 };
 
