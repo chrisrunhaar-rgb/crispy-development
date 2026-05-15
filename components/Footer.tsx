@@ -62,6 +62,8 @@ export default function Footer() {
               <Link href="/personal" className="footer-link">{t.footer.personal}</Link>
               <Link href="/team" className="footer-link">{t.footer.team}</Link>
               <Link href="/resources" className="footer-link">{t.footer.freeResources}</Link>
+              <Link href="/waypoint" className="footer-link">WayPoint</Link>
+              <Link href="/courses" className="footer-link">Courses</Link>
             </div>
           </div>
 
@@ -92,7 +94,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {t.footer.copyright}
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(65% 0.006 260)", textAlign: "center" }}>
-            Crispy Leaders is a programme of Crispy Development
+            Crispy Leaders is a program of Crispy Development
           </span>
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", letterSpacing: "0.06em", color: "oklch(72% 0.006 260)" }}>
             crispyleaders.com

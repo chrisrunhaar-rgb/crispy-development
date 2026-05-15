@@ -41,7 +41,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
       {/* ── HERO ── */}
       <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
         {/* Photo background */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-personal.jpg')", backgroundSize: "cover", backgroundPosition: "center 30%", opacity: 0.22, pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-team.jpg')", backgroundSize: "cover", backgroundPosition: "center 30%", opacity: 0.22, pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
@@ -131,7 +131,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>{p.featuresLabel}</p>
           <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "3rem", maxWidth: "420px" }}>
-            {p.howHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
+            {(p.featuresHeading ?? p.howHeading).split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem 3rem" }}>
             {features.map(f => (
@@ -153,10 +153,8 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
             {lang === "id"
-              ? "Platform ini gratis selama fase awal. Kami meninjau setiap aplikasi secara pribadi — tidak semua orang akan diterima."
-              : lang === "nl"
-              ? "Dit platform is gratis in de beginfase. We bekijken elke aanvraag persoonlijk — niet iedereen wordt geaccepteerd."
-              : "This platform is free during the early phase. We review every application personally — not everyone will be accepted."}
+              ? "Kami meninjau setiap lamaran secara pribadi. Tidak semua orang akan diterima."
+              : "We review every application personally. Not everyone will be accepted."}
           </p>
           <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
             {p.ctaPrimary2} →

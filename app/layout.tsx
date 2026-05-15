@@ -20,7 +20,7 @@ const montserrat = Montserrat({
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-cormorant-var",
-  weight: ["300", "400"],
+  weight: ["300", "400", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -89,7 +89,8 @@ export default function RootLayout({
                 name: "Chris Runhaar",
               },
               sameAs: [
-                "https://www.instagram.com/crispydevelopment/",
+                "https://www.instagram.com/crispy.dev_/",
+                "https://www.instagram.com/crispy.dev_ind/",
               ],
               contactPoint: {
                 "@type": "ContactPoint",

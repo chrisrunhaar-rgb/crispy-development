@@ -34,13 +34,13 @@ const translations = {
     ctaH2User: "Ready to think out loud?",
     ctaBodyNonUser: "WayPoint is part of the Crispy Leaders platform. Apply for membership — every application is reviewed personally.",
     ctaBodyUser: "WayPoint is available in your dashboard.",
-    ctaExploreButton: "Explore for free",
+    ctaExploreButton: "Browse free resources",
   },
   id: {
     heroLabel: "WayPoint Coach",
     heroBadge: "Beta",
     heroH1Line1: "Ruang yang hanya milikmu",
-    heroH1Line2: "untuk berpikir keras.",
+    heroH1Line2: "untuk berpikir dengan bebas.",
     heroTagline: "Percakapan coaching suara AI — kapan pun kamu butuhkan. Bukan untuk memberi saran. Tapi untuk mengajukan pertanyaan yang tepat — dan membantu kamu menemukan kejernihan sendiri.",
     heroCtaNonUser: "Tersedia untuk anggota Crispy Leaders",
     heroCtaUser: "Tersedia di dashboard kamu",
@@ -63,10 +63,10 @@ const translations = {
     replacementNote: "WayPoint bukan pengganti pendampingan pastoral, komunitas manusia, atau dukungan profesional. Ini adalah alat berpikir — dan itulah yang membuatnya berharga.",
     ctaLabel: "Keanggotaan",
     ctaH2NonUser: "Akses WayPoint\nmelalui keanggotaan.",
-    ctaH2User: "Siap berpikir keras?",
+    ctaH2User: "Siap berpikir dengan bebas?",
     ctaBodyNonUser: "WayPoint adalah bagian dari platform Crispy Leaders. Daftar keanggotaan — setiap pendaftaran ditinjau secara personal.",
     ctaBodyUser: "WayPoint tersedia di dashboard kamu.",
-    ctaExploreButton: "Jelajahi gratis",
+    ctaExploreButton: "Jelajahi sumber daya gratis",
   },
 };
 
@@ -101,7 +101,7 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
               </span>
             </div>
 
-            <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(3.2rem, 7vw, 6.5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "2rem" }}>
+            <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(3.2rem, 7vw, 6.5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "2rem" }}>
               {t.heroH1Line1}<br />{t.heroH1Line2}
             </h1>
 

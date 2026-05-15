@@ -86,24 +86,24 @@ function ResourceTile({
 
   const borderColor =
     access === "live_free"
-      ? "#059669"
+      ? "oklch(55% 0.15 150)"
       : access === "live_paid"
-      ? "#E07540"
-      : "#D1D5DB";
+      ? "oklch(65% 0.15 45)"
+      : "oklch(82% 0.005 260)";
 
   const badgeLabel =
     access === "live_free"
-      ? "FREE"
+      ? lang === "id" ? "GRATIS" : "FREE"
       : access === "live_paid"
-      ? "MEMBERS ONLY"
-      : "COMING SOON";
+      ? lang === "id" ? "KHUSUS ANGGOTA" : "MEMBERS ONLY"
+      : lang === "id" ? "SEGERA HADIR" : "COMING SOON";
 
   const badgeStyle: React.CSSProperties =
     access === "live_free"
-      ? { color: "#059669", background: "#D1FAE5" }
+      ? { color: "oklch(38% 0.14 150)", background: "oklch(93% 0.05 150)" }
       : access === "live_paid"
-      ? { color: "#E07540", background: "#FEF3EC" }
-      : { color: "#9CA3AF", background: "#F3F4F6" };
+      ? { color: "oklch(45% 0.14 45)", background: "oklch(95% 0.04 60)" }
+      : { color: "oklch(52% 0.008 260)", background: "oklch(94% 0.004 260)" };
 
   const tileStyle: React.CSSProperties = {
     border: "1px solid oklch(88% 0.008 80)",
@@ -459,15 +459,17 @@ export default function ResourcesContent({
           <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: 0, bottom: 0, width: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide">
             <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Membership</p>
+              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>{r.label}</p>
               <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-                Get access to the full library.
+                {lang === "id" ? "Akses perpustakaan lengkap." : "Get access to the full library."}
               </h2>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
-                30+ resources, 8 assessments, and team tools — all for Christian cross-cultural leaders. Free during the early phase. Apply to join.
+                {lang === "id"
+                  ? "Sumber daya kepemimpinan lintas budaya, penilaian, dan alat tim — untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
+                  : "Leadership resources, assessments, and team tools — all for Christian cross-cultural leaders. Apply to join."}
               </p>
               <Link href="/membership" className="btn-primary" style={{ display: "inline-flex" }}>
-                Apply for membership →
+                {lang === "id" ? "Daftar keanggotaan →" : "Apply for membership →"}
               </Link>
             </div>
           </div>

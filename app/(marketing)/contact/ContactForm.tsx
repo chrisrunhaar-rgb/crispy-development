@@ -73,6 +73,9 @@ export default function ContactForm() {
     const data = await res.json();
 
     if (res.ok) {
+      if (typeof window !== "undefined") {
+        window.gtag?.("event", "contact_form_submitted");
+      }
       setStatus("sent");
     } else {
       setStatus("error");

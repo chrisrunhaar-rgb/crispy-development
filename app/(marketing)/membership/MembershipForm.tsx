@@ -109,6 +109,9 @@ export default function MembershipForm() {
       if (result.error) {
         setError(result.error);
       } else {
+        if (typeof window !== "undefined") {
+          window.gtag?.("event", "membership_application_submitted");
+        }
         router.push("/membership/received");
       }
     });
@@ -139,7 +142,7 @@ export default function MembershipForm() {
                 transition: "all 0.15s",
               }}
             >
-              {l === "en" ? "English" : "Indonesia"}
+              {l === "en" ? "English" : "Bahasa Indonesia"}
             </button>
           ))}
         </div>

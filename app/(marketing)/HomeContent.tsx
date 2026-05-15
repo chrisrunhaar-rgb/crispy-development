@@ -58,12 +58,15 @@ export default function HomeContent() {
             <p className="t-label animate-fade-up" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.75rem", fontSize: "0.8rem" }}>
               {h.label}
             </p>
-            <h1 className="t-hero animate-fade-up animate-delay-1" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
+            <h1 className="t-hero animate-fade-up animate-delay-1" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
               {h.h1a}<br />{h.h1b}
             </h1>
             <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
               {h.tagline}
             </p>
+            <Link href="/membership" className="btn-primary animate-fade-up animate-delay-3" style={{ fontSize: "0.875rem" }}>
+              {h.heroCta ?? "Apply for membership →"}
+            </Link>
           </div>
         </div>
       </section>
@@ -79,13 +82,13 @@ export default function HomeContent() {
           {/* 2 square tiles */}
           {(() => {
             const pathways = [
-              { href: "/personal", image: "/pathway-team.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
-              { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
+              { href: "/personal", image: "/pathway-personal.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
+              { href: "/team", image: "/pathway-team.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
             ];
             const active = activeTile !== null ? pathways[activeTile] : null;
             return (
               <>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2px", background: "oklch(88% 0.008 80)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "2px", background: "oklch(88% 0.008 80)" }}>
                   {pathways.map((p, i) => (
                     <button
                       key={i}
@@ -253,7 +256,7 @@ export default function HomeContent() {
               {
                 num: "03",
                 title: h.reason3Title ?? "A community that understands",
-                body: h.reason3Body ?? "A platform built specifically for leaders navigating cross-cultural life — a growing library of content, frameworks, and tools built around the realities you actually face.",
+                body: h.reason3Body ?? "Others here have navigated the same tensions. The same expectations, the same re-entry fog, the same question of whether your context is real leadership. This is a room that already knows.",
               },
               {
                 num: "04",

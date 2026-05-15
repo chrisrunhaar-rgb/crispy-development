@@ -44,7 +44,7 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7 }}>
             {isId
               ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
-              : "Free, hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
+              : "Hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
             }
           </p>
         </div>
