@@ -76,12 +76,11 @@ export default function HomeContent() {
             <h2 className="t-section">{h.pathwaysHeading.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}</h2>
           </div>
 
-          {/* 3 square tiles */}
+          {/* 2 square tiles */}
           {(() => {
             const pathways = [
               { href: "/personal", image: "/pathway-team.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
               { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
-              { href: "/peer-groups", image: "/pathway-peer.jpg", imagePosition: "center 30%", badgeLabel: h.peerBadge, heading: h.peerHeading, body: h.peerBody, features: h.peerFeatures, ctaLabel: h.peerCta },
             ];
             const active = activeTile !== null ? pathways[activeTile] : null;
             return (
@@ -183,7 +182,7 @@ export default function HomeContent() {
                 </div>
                 {/* Tab switcher */}
                 <div style={{ background: "oklch(28% 0.11 260)", padding: "0.5rem 1.25rem", display: "flex", gap: "0.25rem" }}>
-                  {["Personal", "Team", "Peer Group"].map((tab, i) => (
+                  {["Personal", "Team"].map((tab, i) => (
                     <span key={tab} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.3rem 0.75rem", borderRadius: 100, background: i === 0 ? "oklch(65% 0.15 45)" : "transparent", color: i === 0 ? "white" : "oklch(52% 0.008 260)", whiteSpace: "nowrap" }}>
                       {tab}
                     </span>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -15,7 +15,6 @@ import AssessmentTileGrid from "./AssessmentTileGrid";
 import TeamJourney from "@/components/TeamJourney";
 import TeamCommsSection from "@/components/TeamCommsSection";
 import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
-import PeerGroupsSection, { type InitiatedGroup, type JoinedGroup, type PeerMember, type PeerBroadcast } from "@/components/PeerGroupsSection";
 import TimezoneDetector from "@/components/TimezoneDetector";
 import TeamAssessmentSelector from "./TeamAssessmentSelector";
 import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
@@ -41,13 +40,13 @@ type Module = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; joined?: string; join?: string; member?: string; leader?: string; initiator?: string; tour?: string; ga?: string }>;
+  searchParams: Promise<{ tab?: string; joined?: string; member?: string; leader?: string; initiator?: string; tour?: string; ga?: string }>;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { tab, joined, join, member, leader, initiator, tour, ga } = await searchParams;
+  const { tab, joined, member, leader, initiator, tour, ga } = await searchParams;
 
   // Admin mode: check if current user is admin and a target user param exists
   const isAdmin = user.email === "chris.runhaar@world-outreach.com";
@@ -110,7 +109,6 @@ export default async function DashboardPage({
   const fivelaGivingResult = (metadata.fivela_giving_result ?? null) as string | null;
   const fivelaReceivingScores = (metadata.fivela_receiving_scores ?? null) as { A: number; B: number; C: number; D: number; E: number } | null;
   const fivelaGivingScores = (metadata.fivela_giving_scores ?? null) as { A: number; B: number; C: number; D: number; E: number } | null;
-  const peerGroupId = metadata.peer_group_id as string | undefined;
   const userTimezone = metadata.timezone as string | undefined;
   const commStyle = (metadata.comm_style ?? null) as string | null;
   const commStyleScores = (metadata.comm_style_scores ?? null) as Record<string, number> | null;
@@ -186,173 +184,9 @@ export default async function DashboardPage({
   const isTeamLeader = (pathway === "team" || isLeaderByMeta) && teamApplicationStatus === "approved";
   const hasTeam = isTeamLeader || !!memberOfTeam;
 
-  // ── Peer group data (new system) ──
-  let initiatedGroups: InitiatedGroup[] = [];
-  let joinedGroups: JoinedGroup[] = [];
-  let joinGroup: { id: string; name: string; current_topic: string | null } | null = null;
-
-  // Fetch initiated groups
-  const { data: initiatedRows } = await admin
-    .from("peer_groups")
-    .select("id, name, region, timezone, is_open, current_topic, language")
-    .eq("initiator_user_id", viewingUserId)
-    .order("created_at", { ascending: true });
-
-  if (initiatedRows && initiatedRows.length > 0) {
-    type PeerGroupRow = { id: string; name: string; region: string; timezone: string; is_open: boolean; current_topic: string | null; language: string };
-    type PeerMemberRow = { group_id: string; user_id: string; status: string; questionnaire_answers: { location: string; experience: string; contribution: string } | null };
-    type PeerBroadcastRow = { id: string; group_id: string; message: string; sent_at: string };
-
-    const initiatedGroupIds = initiatedRows.map((g: PeerGroupRow) => g.id);
-    const [{ data: allPeerMembers }, { data: allPeerBroadcasts }] = await Promise.all([
-      admin.from("peer_group_members").select("group_id, user_id, status, questionnaire_answers").in("group_id", initiatedGroupIds),
-      admin.from("peer_broadcasts").select("id, group_id, message, sent_at").in("group_id", initiatedGroupIds).order("sent_at", { ascending: false }),
-    ]);
-
-    const peerMemberIds = [...new Set((allPeerMembers ?? []).map((m: PeerMemberRow) => m.user_id))];
-    const peerProfileMap = new Map<string, { id: string; email: string | null; first_name: string | null; last_name: string | null }>();
-    if (peerMemberIds.length > 0) {
-      const { data: peerProfiles } = await admin.from("profiles").select("id, email, first_name, last_name").in("id", peerMemberIds);
-      (peerProfiles ?? []).forEach((p: { id: string; email: string | null; first_name: string | null; last_name: string | null }) => peerProfileMap.set(p.id, p));
-    }
-
-    const peerProgressMap = new Map<string, number>();
-    {
-      const allPeerProgressIds = [...peerMemberIds, viewingUserId];
-      const { data: peerProgressRows } = await admin
-        .from("user_progress")
-        .select("user_id")
-        .in("user_id", allPeerProgressIds)
-        .eq("status", "completed");
-      (peerProgressRows ?? []).forEach((p: { user_id: string }) => {
-        peerProgressMap.set(p.user_id, (peerProgressMap.get(p.user_id) ?? 0) + 1);
-      });
-    }
-
-    const initiatorFullName = `${metadata.first_name ?? ""} ${metadata.last_name ?? ""}`.trim() || firstName;
-
-    initiatedGroups = (initiatedRows as PeerGroupRow[]).map(g => ({
-      ...g,
-      members: [
-        {
-          id: viewingUserId,
-          name: initiatorFullName,
-          email: viewingAsAdmin ? viewedUserName.split(" - ")[1]?.trim() || "" : (user.email ?? ""),
-          status: "active" as const,
-          questionnaireAnswers: null,
-          completedModules: peerProgressMap.get(viewingUserId) ?? 0,
-          isInitiator: true,
-        } satisfies PeerMember,
-        ...((allPeerMembers ?? []) as PeerMemberRow[])
-          .filter(m => m.group_id === g.id)
-          .map(m => {
-            const p = peerProfileMap.get(m.user_id);
-            return {
-              id: m.user_id,
-              name: p ? `${p.first_name ?? ""} ${p.last_name ?? ""}`.trim() || (p.email ?? "Member") : "Member",
-              email: p?.email ?? "",
-              status: (m.status === "pending" ? "pending" : "active") as "pending" | "active",
-              questionnaireAnswers: m.questionnaire_answers,
-              completedModules: peerProgressMap.get(m.user_id) ?? 0,
-            } satisfies PeerMember;
-          }),
-      ],
-      broadcasts: ((allPeerBroadcasts ?? []) as PeerBroadcastRow[])
-        .filter(b => b.group_id === g.id)
-        .map(b => ({ id: b.id, message: b.message, sent_at: b.sent_at }) satisfies PeerBroadcast),
-    }));
-  }
-
-  // Fetch joined groups (active member, not initiator)
-  const { data: joinedMemberRows } = await admin
-    .from("peer_group_members")
-    .select("group_id, status")
-    .eq("user_id", viewingUserId)
-    .eq("status", "active");
-  const initiatedGroupIdSet = new Set((initiatedRows ?? []).map((g: { id: string }) => g.id));
-  const joinedGroupIds = (joinedMemberRows ?? [])
-    .map((m: { group_id: string }) => m.group_id)
-    .filter((id: string) => !initiatedGroupIdSet.has(id));
-
-  if (joinedGroupIds.length > 0) {
-    type PeerGroupRow2 = { id: string; name: string; region: string; timezone: string; is_open: boolean; current_topic: string | null; language: string };
-    type PeerMemberRow2 = { group_id: string; user_id: string; status: string };
-
-    const [{ data: joinedGroupRows }, { data: joinedMembersAll }] = await Promise.all([
-      admin.from("peer_groups").select("id, name, region, timezone, is_open, current_topic, language").in("id", joinedGroupIds),
-      admin.from("peer_group_members").select("group_id, user_id, status").in("group_id", joinedGroupIds).eq("status", "active"),
-    ]);
-
-    const joinedMemberProfileIds = [...new Set((joinedMembersAll ?? []).map((m: PeerMemberRow2) => m.user_id))];
-    const joinedProfileMap = new Map<string, { id: string; email: string | null; first_name: string | null; last_name: string | null }>();
-    if (joinedMemberProfileIds.length > 0) {
-      const { data: joinedProfiles } = await admin.from("profiles").select("id, email, first_name, last_name").in("id", joinedMemberProfileIds);
-      (joinedProfiles ?? []).forEach((p: { id: string; email: string | null; first_name: string | null; last_name: string | null }) => joinedProfileMap.set(p.id, p));
-    }
-
-    const joinedProgressMap = new Map<string, number>();
-    if (joinedMemberProfileIds.length > 0) {
-      const { data: joinedProgressRows } = await admin
-        .from("user_progress")
-        .select("user_id")
-        .in("user_id", joinedMemberProfileIds)
-        .eq("status", "completed");
-      (joinedProgressRows ?? []).forEach((p: { user_id: string }) => {
-        joinedProgressMap.set(p.user_id, (joinedProgressMap.get(p.user_id) ?? 0) + 1);
-      });
-    }
-
-    const initiatorIds = new Set<string>();
-    // For each joined group, find who initiated it (initiator_user_id)
-    const { data: joinedGroupInitiators } = await admin
-      .from("peer_groups")
-      .select("id, initiator_user_id")
-      .in("id", joinedGroupIds);
-    const groupInitiatorMap = new Map<string, string>();
-    (joinedGroupInitiators ?? []).forEach((g: { id: string; initiator_user_id: string }) => {
-      groupInitiatorMap.set(g.id, g.initiator_user_id);
-      initiatorIds.add(g.initiator_user_id);
-    });
-
-    joinedGroups = ((joinedGroupRows ?? []) as PeerGroupRow2[]).map(g => ({
-      ...g,
-      members: ((joinedMembersAll ?? []) as PeerMemberRow2[])
-        .filter(m => m.group_id === g.id)
-        .map(m => {
-          const p = joinedProfileMap.get(m.user_id);
-          return {
-            id: m.user_id,
-            name: p ? `${p.first_name ?? ""} ${p.last_name ?? ""}`.trim() || (p.email ?? "Member") : "Member",
-            email: p?.email ?? "",
-            status: "active" as const,
-            questionnaireAnswers: null,
-            completedModules: joinedProgressMap.get(m.user_id) ?? 0,
-            isInitiator: groupInitiatorMap.get(g.id) === m.user_id,
-          } satisfies PeerMember;
-        }),
-    }));
-  }
-
-  // If join param is present in URL, fetch that group's info
-  if (join) {
-    const { data: joinGroupRow } = await admin
-      .from("peer_groups")
-      .select("id, name, current_topic, is_open")
-      .eq("id", join)
-      .maybeSingle();
-    if (joinGroupRow?.is_open) {
-      joinGroup = { id: joinGroupRow.id, name: joinGroupRow.name, current_topic: joinGroupRow.current_topic };
-    }
-  }
-
-  const hasInitiatedGroups = initiatedGroups.length > 0;
-  const hasJoinedGroups = joinedGroups.length > 0;
-  const hasPeer = (pathway === "peer" && !!peerGroupId) || hasInitiatedGroups || hasJoinedGroups || !!joinGroup;
-
   // Determine active tab — personal is always the safe default
   const currentTab =
     tab === "team" && hasTeam ? "team"
-    : (tab === "peer" || !!joinGroup) && hasPeer ? "peer"
     : "personal";
 
   // ── Modules + progress + messages — all independent, fired in parallel ──
@@ -552,10 +386,8 @@ export default async function DashboardPage({
   }
 
   const leaderMessages = userMessages.filter(m => m.message_type !== "peer");
-  const peerMessages = userMessages.filter(m => m.message_type === "peer");
 
-
-  const tabLabel = currentTab === "team" ? "Team Dashboard" : currentTab === "peer" ? "Peer Group" : "Personal Dashboard";
+  const tabLabel = currentTab === "team" ? "Team Dashboard" : "Personal Dashboard";
 
   // ── Course progress for personal tab ──
   type CourseProgress = { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null };
@@ -653,8 +485,8 @@ export default async function DashboardPage({
               gap: "2px",
               boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)",
             }}>
-              {(["personal", "team", "peer"] as const).map((t) => {
-                const labels = { personal: "Personal", team: "Team", peer: "Peer Group" };
+              {(["personal", "team"] as const).map((t) => {
+                const labels = { personal: "Personal", team: "Team" };
                 const icons = {
                   personal: (
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
@@ -671,16 +503,9 @@ export default async function DashboardPage({
                       <path d="M5.5 9.5C5.5 11.985 6.515 14 8 14s2.5-2.015 2.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
                   ),
-                  peer: (
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-                      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
-                      <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  ),
                 };
                 const active = currentTab === t;
-                const enabled = t === "personal" || (t === "team" && hasTeam) || (t === "peer" && hasPeer);
+                const enabled = t === "personal" || (t === "team" && hasTeam);
                 const href = t === "personal" ? "/dashboard" : `/dashboard?tab=${t}`;
 
                 const pillStyle: React.CSSProperties = {
@@ -777,17 +602,6 @@ export default async function DashboardPage({
           />
         )}
 
-        {currentTab === "peer" && (
-          <PeerGroupsSection
-            initiatedGroups={initiatedGroups}
-            joinedGroups={joinedGroups}
-            coachMessages={peerMessages}
-            initiatorName={firstName}
-            joinGroup={joinGroup}
-            userTimezone={userTimezone ?? null}
-            totalModules={modules.length}
-          />
-        )}
       </div>
     </div>
   );

@@ -110,7 +110,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                   {[
                     { label: "Personal", href: "/personal" },
                     { label: "Team", href: "/team" },
-                    { label: "Peer Groups", href: "/peer-groups" },
                   ].map(item => (
                     <Link key={item.href} href={item.href} onClick={() => setPathwaysOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
                       {item.label}
@@ -136,7 +135,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                     { label: "Content Library", href: "/resources" },
                     { label: "Courses", href: "/courses" },
                     { label: "Worth Reading", href: "/articles" },
-                    { label: "Leadership Bytes", href: "/insights" },
                   ].map(item => (
                     <Link key={item.href} href={item.href} onClick={() => setResourcesOpen(false)} style={{ display: "block", fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8125rem", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.625rem 1rem", borderBottom: "1px solid oklch(92% 0.004 80)" }}>
                       {item.label}
@@ -308,9 +306,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <Link href="/team" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Team
             </Link>
-            <Link href="/peer-groups" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Peer Groups
-            </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Resources</p>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
@@ -321,9 +316,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             </Link>
             <Link href="/articles" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Worth Reading
-            </Link>
-            <Link href="/insights" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Leadership Bytes
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.75rem 0" }} />
 
