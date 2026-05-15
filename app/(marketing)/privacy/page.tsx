@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <div className="container-text">
         <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>Legal</p>
         <h1 className="t-section" style={{ marginBottom: "0.5rem" }}>Privacy Policy</h1>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", marginBottom: "3rem" }}>Last updated: April 2026</p>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", marginBottom: "3rem" }}>Last updated: May 2026</p>
 
         <LegalSection heading="1. Who We Are">
           <p>Crispy Development is a cross-cultural Christian leadership resource and coaching platform operated by Chris Runhaar, based in Southeast Asia.</p>
@@ -25,7 +25,8 @@ export default function PrivacyPage() {
           </ul>
           <p style={{ marginTop: "1rem" }}><strong>b. Information collected automatically</strong></p>
           <ul>
-            <li>We use Google Analytics 4 to collect basic usage data when you visit our website — including pages visited, time of visit, approximate location (country/city), device type, and referring website. This data is anonymous and aggregated; Google Analytics does not identify you personally. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" style={{ color: "oklch(30% 0.12 260)" }}>Google Analytics opt-out browser add-on</a>.</li>
+            <li>We use Google Analytics 4 (GA4) to collect basic usage data — including pages visited, time of visit, approximate location (country/city), device type, and referring website. GA4 uses cookies to collect this data. <strong>We only activate GA4 after you give explicit consent</strong> via the cookie banner shown on your first visit. You may decline or withdraw consent at any time by clearing your browser&apos;s local storage for this site. You can also opt out permanently via the <a href="https://tools.google.com/dlpage/gaoptout" style={{ color: "oklch(30% 0.12 260)" }}>Google Analytics opt-out browser add-on</a>.</li>
+            <li>We also use Vercel Analytics, a cookieless tool that collects anonymous traffic data (page views, performance metrics) without storing any personal data or requiring consent.</li>
           </ul>
           <p style={{ marginTop: "1rem" }}><strong>c. Social media interactions</strong></p>
           <ul>
@@ -47,8 +48,8 @@ export default function PrivacyPage() {
         <LegalSection heading="4. Legal Basis for Processing (GDPR)">
           <p>If you are located in the EU or EEA, we process your personal data on the following legal bases under GDPR Article 6:</p>
           <ul style={{ marginTop: "1rem" }}>
-            <li><strong>Consent (Art. 6(1)(a)):</strong> When you subscribe to our newsletter, you give explicit consent. You may withdraw this at any time by clicking the unsubscribe link or emailing <a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a>.</li>
-            <li><strong>Legitimate interests (Art. 6(1)(f)):</strong> For basic website administration and responding to direct enquiries, where our legitimate interest does not override your fundamental rights.</li>
+            <li><strong>Consent (Art. 6(1)(a)):</strong> When you subscribe to our newsletter, you give explicit consent. You may withdraw this at any time by clicking the unsubscribe link or emailing <a href="mailto:chris@crispydevelopment.com" style={{ color: "oklch(30% 0.12 260)" }}>chris@crispydevelopment.com</a>. Google Analytics 4 is also activated only on the basis of your explicit consent via the cookie banner.</li>
+            <li><strong>Legitimate interests (Art. 6(1)(f)):</strong> For basic website administration and responding to direct enquiries, where our legitimate interest does not override your fundamental rights. Vercel Analytics (cookieless) operates under this basis as it collects no personal data.</li>
           </ul>
         </LegalSection>
 
