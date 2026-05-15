@@ -71,8 +71,8 @@ const translations = {
 };
 
 export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const { language } = useLanguage();
-  const t = language === "id" ? translations.id : translations.en;
+  const { lang } = useLanguage();
+  const t = lang === "id" ? translations.id : translations.en;
 
   return (
     <>
