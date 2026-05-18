@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { trackResourceViewed, trackResourceSaved } from "@/lib/ga-events";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -19,7 +20,7 @@ const navy        = "oklch(22% 0.10 260)";
 const navyDeep    = "oklch(18% 0.10 260)";
 const amber       = "oklch(65% 0.15 45)";
 const amberDim    = "oklch(65% 0.15 45 / 0.12)";
-const offWhite    = "oklch(97% 0.005 80)";
+const offWhite    = "oklch(96% 0.005 80)";
 const lightGray   = "oklch(95% 0.008 80)";
 const mutedGray   = "oklch(93% 0.008 80)";
 const bodyText    = "oklch(38% 0.05 260)";
@@ -388,16 +389,27 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
+  useEffect(() => {
+    trackResourceViewed("healthy-conflict", "cross-cultural-leadership");
+  }, []);
+
   function handleSave() {
     if (saved || isPending) return;
     startTransition(async () => {
       await saveResourceToDashboard("healthy-conflict");
       setSaved(true);
+      trackResourceSaved("healthy-conflict", true);
     });
   }
 
   function toggleCard(index: number) {
-    setExpandedCards((prev) => ({ ...prev, [index]: !prev[index] }));
+    setExpandedCards((prev) => {
+      const next = { ...prev, [index]: !prev[index] };
+      if (next[index]) {
+        window.gtag?.("event", "concept_card_opened", { resource: "healthy-conflict", card: index + 1 });
+      }
+      return next;
+    });
   }
 
   // ── RESPONSIVE CONTRAST CARD GRID ─────────────────────────────────────────
@@ -672,7 +684,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                     <div style={{
                       width: 4,
                       height: 4,
-                      borderRadius: "50%",
+                      borderRadius: 0,
                       background: subText,
                       flexShrink: 0,
                       marginTop: 7,
@@ -716,7 +728,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                     <div style={{
                       width: 4,
                       height: 4,
-                      borderRadius: "50%",
+                      borderRadius: 0,
                       background: amber,
                       flexShrink: 0,
                       marginTop: 7,
@@ -745,9 +757,9 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
-              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-              fontSize: "clamp(18px, 2.2vw, 24px)",
-              fontWeight: 800,
+              fontFamily: serif,
+              fontSize: "clamp(22px, 2.8vw, 30px)",
+              fontWeight: 600,
               color: section.dark ? offWhite : navy,
               marginBottom: 24,
             }}>
@@ -1080,7 +1092,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       </section>
 
       {/* ── 9. FAITH ANCHOR ──────────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+      <div style={{ background: lightGray, padding: "clamp(64px, 9vw, 88px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -1095,10 +1107,10 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           </p>
 
           <h2 style={{
-            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-            fontSize: "clamp(20px, 2.8vw, 28px)",
-            fontWeight: 800,
-            color: offWhite,
+            fontFamily: serif,
+            fontSize: "clamp(22px, 2.8vw, 32px)",
+            fontWeight: 600,
+            color: navy,
             marginBottom: 36,
           }}>
             {t("Sharpened by Honest Contact", "Diasah oleh Kontak yang Jujur")} {/* TODO: ID translation */}
@@ -1108,7 +1120,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
             <p key={pi} style={{
               fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
               fontSize: 15,
-              color: para.elevated ? "oklch(88% 0.02 80)" : dimOnNavy,
+              color: para.elevated ? navy : bodyText,
               lineHeight: 1.85,
               marginBottom: pi < FAITH_ANCHOR_PARAGRAPHS.length - 1 ? 20 : 0,
             }}>
