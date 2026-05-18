@@ -829,7 +829,7 @@ export default function BigFiveClient({
   // ── IDLE STATE ──────────────────────────────────────────────────────────────
   if (quizState === "idle") {
     return (
-      <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Literata', Georgia, serif" }}>
+      <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "Cormorant Garamond, Georgia, serif" }}>
         <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
@@ -840,22 +840,22 @@ export default function BigFiveClient({
         `}</style>
 
         {/* Hero */}
-        <div style={{ background: "oklch(22% 0.16 280)", color: "white", padding: "72px 24px 64px" }}>
+        <div style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
               {lang === "en" ? "Personal Development · Assessment" : lang === "id" ? "Pengembangan Pribadi · Penilaian" : "Persoonlijke Ontwikkeling · Beoordeling"}
             </p>
-            <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
+            <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20, color: "oklch(97% 0.005 80)" }}>
               {t.heroTitle1}<br />
-              <em style={{ fontStyle: "italic", fontWeight: 400, color: "oklch(78% 0.14 280)" }}>{t.heroTitleItalic}</em>
+              <em style={{ fontStyle: "italic", fontWeight: 400, color: "oklch(82% 0.025 80)" }}>{t.heroTitleItalic}</em>
             </h1>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 18, fontWeight: 400, lineHeight: 1.65, color: "oklch(82% 0.06 280)", maxWidth: 600 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 18, fontWeight: 400, lineHeight: 1.65, color: "oklch(82% 0.025 80)", maxWidth: 600 }}>
               {t.heroDesc}
             </p>
             <button
               onClick={startQuiz}
               className="ocean-btn"
-              style={{ marginTop: 36, padding: "14px 36px", background: "oklch(65% 0.22 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Barlow', sans-serif", fontSize: 16, fontWeight: 600, letterSpacing: "0.02em" }}
+              style={{ marginTop: 36, padding: "14px 36px", background: "oklch(65% 0.22 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, fontWeight: 600, letterSpacing: "0.02em" }}
             >
               {t.startBtn}
             </button>
@@ -866,30 +866,30 @@ export default function BigFiveClient({
 
           {/* What is Big Five */}
           <section style={{ marginBottom: 56 }}>
-            <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 16 }}>
               {t.whatIsTitle}
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
               {t.whatIsP1}
             </p>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)", marginBottom: 16 }}>
               {t.whatIsP2}
             </p>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.05 280)" }}>
               {t.whatIsP3}
             </p>
             <div style={{ background: "oklch(94% 0.06 52)", borderLeft: "3px solid oklch(65% 0.15 52)", borderRadius: "0 8px 8px 0", padding: "16px 20px", marginTop: 20 }}>
-              <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(45% 0.14 52)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>{t.crossCulturalCaveatTitle}</p>
-              <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, lineHeight: 1.7, color: "oklch(30% 0.08 52)", margin: 0 }}>{t.crossCulturalCaveat}</p>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(45% 0.14 52)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>{t.crossCulturalCaveatTitle}</p>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.7, color: "oklch(30% 0.08 52)", margin: 0 }}>{t.crossCulturalCaveat}</p>
             </div>
           </section>
 
           {/* The 5 traits */}
           <section style={{ marginBottom: 56 }}>
-            <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 8 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 8 }}>
               {t.fiveDimTitle}
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, color: "oklch(45% 0.06 280)", marginBottom: 28 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(45% 0.06 280)", marginBottom: 28 }}>
               {t.fiveDimSub}
             </p>
             <div style={{ display: "grid", gap: 16 }}>
@@ -901,15 +901,15 @@ export default function BigFiveClient({
                     </div>
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                        <span style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 20, fontWeight: 500, color: "oklch(18% 0.10 280)" }}>{tTrait(trait, "name")}</span>
-                        <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 12, color: trait.color, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>{tTrait(trait, "subtitle")}</span>
+                        <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, fontWeight: 500, color: "oklch(18% 0.10 280)" }}>{tTrait(trait, "name")}</span>
+                        <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, color: trait.color, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>{tTrait(trait, "subtitle")}</span>
                       </div>
-                      <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 280)", margin: 0 }}>{tTrait(trait, "overview")}</p>
+                      <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 280)", margin: 0 }}>{tTrait(trait, "overview")}</p>
                       <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, fontWeight: 700, color: trait.color, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                        <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: trait.color, letterSpacing: "0.06em", textTransform: "uppercase" }}>
                           {lang === "id" ? "Refleksi Alkitab" : lang === "nl" ? "Bijbelse Reflectie" : "Biblical Reflection"}
                         </span>
-                        <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "oklch(45% 0.08 280)", fontStyle: "italic" }}>
+                        <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, color: "oklch(45% 0.08 280)", fontStyle: "italic" }}>
                           {(trait as any).biblicalFigure} — {(trait as any).biblicalRef}
                         </span>
                       </div>
@@ -922,7 +922,7 @@ export default function BigFiveClient({
 
           {/* How to take */}
           <section style={{ background: "white", borderRadius: 16, padding: "32px 36px", border: "1px solid oklch(90% 0.05 280)" }}>
-            <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 22, fontWeight: 500, color: "oklch(22% 0.16 280)", marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 500, color: "oklch(22% 0.16 280)", marginBottom: 16 }}>
               {t.howToTitle}
             </h2>
             <div style={{ display: "grid", gap: 10 }}>
@@ -930,8 +930,8 @@ export default function BigFiveClient({
                 <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid oklch(95% 0.03 280)" }}>
                   <div style={{ width: 6, height: 6, borderRadius: "50%", background: "oklch(52% 0.22 280)", marginTop: 8, flexShrink: 0 }} />
                   <div>
-                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 280)" }}>{label} — </span>
-                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, color: "oklch(38% 0.06 280)" }}>{desc}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 280)" }}>{label} — </span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(38% 0.06 280)" }}>{desc}</span>
                   </div>
                 </div>
               ))}
@@ -939,7 +939,7 @@ export default function BigFiveClient({
             <button
               onClick={startQuiz}
               className="ocean-btn"
-              style={{ marginTop: 28, padding: "13px 32px", background: "oklch(22% 0.16 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Barlow', sans-serif", fontSize: 15, fontWeight: 600 }}
+              style={{ marginTop: 28, padding: "13px 32px", background: "oklch(22% 0.16 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600 }}
             >
               {t.beginBtn}
             </button>
@@ -959,7 +959,7 @@ export default function BigFiveClient({
     const qText = lang === "id" ? q.text_id : lang === "nl" ? q.text_nl : q.text;
 
     return (
-      <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Barlow', sans-serif" }}>
+      <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
         <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
@@ -987,7 +987,7 @@ export default function BigFiveClient({
 
           {/* Question */}
           <div style={{ background: "white", borderRadius: 20, padding: "40px", border: "1px solid oklch(92% 0.04 280)", marginBottom: 32, minHeight: 180, display: "flex", alignItems: "center" }}>
-            <p style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(18px, 2.5vw, 22px)", lineHeight: 1.55, color: "oklch(18% 0.10 280)", margin: 0, fontWeight: 400 }}>
+            <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 22px)", lineHeight: 1.55, color: "oklch(18% 0.10 280)", margin: 0, fontWeight: 400 }}>
               {qText}
             </p>
           </div>
@@ -1003,7 +1003,7 @@ export default function BigFiveClient({
                 onClick={() => handleAnswer(i + 1)}
                 style={{ "--trait-color": trait.color, "--trait-vl": trait.colorVeryLight, textAlign: "center", flexDirection: "column", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 } as React.CSSProperties}
               >
-                <span style={{ fontFamily: "'Literata', serif", fontSize: 22, fontWeight: 300, color: trait.colorLight }}>
+                <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 300, color: trait.colorLight }}>
                   {i + 1}
                 </span>
                 <span style={{ fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 280)", lineHeight: 1.3 }}>
@@ -1015,7 +1015,7 @@ export default function BigFiveClient({
 
           <button
             onClick={handleBack}
-            style={{ background: "transparent", border: "none", color: "oklch(55% 0.08 280)", fontFamily: "'Barlow', sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}
+            style={{ background: "transparent", border: "none", color: "oklch(55% 0.08 280)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}
           >
             {t.backBtn}
           </button>
@@ -1040,7 +1040,7 @@ export default function BigFiveClient({
   })).sort((a, b) => b.displayPct - a.displayPct);
 
   return (
-    <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "'Barlow', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "oklch(98% 0.008 280)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
       <LangToggle />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Barlow:wght@400;500;600&display=swap');
@@ -1051,10 +1051,10 @@ export default function BigFiveClient({
       {/* Header */}
       <div style={{ background: "oklch(22% 0.16 280)", color: "white", padding: "56px 24px 48px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <h1 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 16 }}>
+          <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 16 }}>
             {t.resultsTitle}
           </h1>
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, color: "oklch(78% 0.06 280)", lineHeight: 1.6, maxWidth: 560 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(78% 0.06 280)", lineHeight: 1.6, maxWidth: 560 }}>
             {t.resultsDesc}
           </p>
         </div>
@@ -1063,7 +1063,7 @@ export default function BigFiveClient({
       {/* Pentagon profile */}
       <div style={{ background: "white", borderTop: "3px solid oklch(88% 0.006 260)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.06 280)", margin: 0 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(45% 0.06 280)", margin: 0 }}>
             {lang === "id" ? "Bentuk Profil OCEAN Anda" : lang === "nl" ? "Jouw OCEAN-profielvorm" : "Your OCEAN Profile Shape"}
           </p>
           <OceanRadarSVG
@@ -1071,7 +1071,7 @@ export default function BigFiveClient({
             size={440}
             showLabels={true}
           />
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "oklch(50% 0.06 280)", textAlign: "center", maxWidth: 380 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, color: "oklch(50% 0.06 280)", textAlign: "center", maxWidth: 380 }}>
             {lang === "id" ? "Pentagon unik Anda — bentuk yang terbentuk dari lima skor Anda" : lang === "nl" ? "Jouw unieke pentagon — de vorm van jouw vijf scores samen" : "Your unique pentagon — the shape formed by your five scores combined"}
           </p>
         </div>
@@ -1081,7 +1081,7 @@ export default function BigFiveClient({
 
         {/* Score bars */}
         <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 24 }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 24 }}>
             {t.yourFiveDim}
           </h2>
           <div style={{ display: "grid", gap: 20 }}>
@@ -1099,7 +1099,7 @@ export default function BigFiveClient({
                         {trait.key}
                       </div>
                       <div>
-                        <div style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 17, fontWeight: 500, color: "oklch(20% 0.10 280)" }}>{label}</div>
+                        <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 17, fontWeight: 500, color: "oklch(20% 0.10 280)" }}>{label}</div>
                         <div style={{ fontSize: 12, color: "oklch(50% 0.08 280)" }}>{tTrait(trait, "subtitle")}</div>
                       </div>
                     </div>
@@ -1125,7 +1125,7 @@ export default function BigFiveClient({
 
         {/* Per-trait insights */}
         <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 24 }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 24 }}>
             {t.whatScoresMean}
           </h2>
           <div style={{ display: "grid", gap: 20 }}>
@@ -1145,8 +1145,8 @@ export default function BigFiveClient({
                   <div style={{ padding: "20px 24px", background: trait.colorVeryLight, borderBottom: `1px solid oklch(88% 0.04 280)` }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       <div style={{ width: 10, height: 10, borderRadius: "50%", background: trait.color }} />
-                      <span style={{ fontFamily: "'Literata', Georgia, serif", fontSize: 18, fontWeight: 500, color: "oklch(18% 0.12 280)" }}>{label}</span>
-                      <span style={{ marginLeft: "auto", fontFamily: "'Barlow', sans-serif", fontSize: 14, fontWeight: 600, color: trait.color }}>{displayPct}% — {pctLabel(displayPct)}</span>
+                      <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 18, fontWeight: 500, color: "oklch(18% 0.12 280)" }}>{label}</span>
+                      <span style={{ marginLeft: "auto", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: trait.color }}>{displayPct}% — {pctLabel(displayPct)}</span>
                     </div>
                   </div>
                   <div style={{ padding: "24px" }}>
@@ -1179,13 +1179,13 @@ export default function BigFiveClient({
 
         {/* Your Dominant Strength */}
         <section style={{ background: "oklch(22% 0.16 280)", borderRadius: 20, padding: "36px 40px", color: "white", marginBottom: 40 }}>
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(70% 0.12 280)", marginBottom: 12 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(70% 0.12 280)", marginBottom: 12 }}>
             {t.mostDistinctive}
           </p>
-          <h2 style={{ fontFamily: "'Literata', Georgia, serif", fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 300, marginBottom: 16, letterSpacing: "-0.01em" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 300, marginBottom: 16, letterSpacing: "-0.01em" }}>
             {tTrait(ranked[0], "name")}
           </h2>
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 280)", maxWidth: 540 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 280)", maxWidth: 540 }}>
             {ranked[0].displayPct >= 50
               ? (ranked[0].key === "N" ? tTrait(ranked[0], "lowDescription") : tTrait(ranked[0], "highDescription"))
               : (ranked[0].key === "N" ? tTrait(ranked[0], "highDescription") : tTrait(ranked[0], "lowDescription"))}
@@ -1198,19 +1198,19 @@ export default function BigFiveClient({
             <button
               onClick={handleSave}
               disabled={isPending}
-              style={{ padding: "13px 28px", background: "oklch(52% 0.22 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "'Barlow', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: isPending ? 0.7 : 1 }}
+              style={{ padding: "13px 28px", background: "oklch(52% 0.22 280)", color: "white", border: "none", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: isPending ? 0.7 : 1 }}
             >
               {isPending ? t.saving : t.saveDashboard}
             </button>
           )}
           {resultSaved && (
-            <div style={{ padding: "13px 20px", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", borderRadius: 8, fontFamily: "'Barlow', sans-serif", fontSize: 15, fontWeight: 600 }}>
+            <div style={{ padding: "13px 20px", background: "oklch(92% 0.05 155)", color: "oklch(35% 0.14 155)", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600 }}>
               {t.savedDashboard}
             </div>
           )}
           <button
             onClick={startQuiz}
-            style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 280)", border: "2px solid oklch(85% 0.05 280)", borderRadius: 8, fontFamily: "'Barlow', sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer" }}
+            style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 280)", border: "2px solid oklch(85% 0.05 280)", borderRadius: 8, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer" }}
           >
             {t.retake}
           </button>

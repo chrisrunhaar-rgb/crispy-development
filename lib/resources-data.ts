@@ -737,6 +737,20 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["personal-development", "faith-calling", "self-care"],
   },
+  // ── TEAM & FACILITATION (continued) ───────────────────────────────────────
+  {
+    id: "healthy-conflict",
+    slug: "healthy-conflict",
+    title: "Creating Healthy Conflict",
+    titleId: "Menciptakan Konflik yang Sehat",
+    description: "Conflict avoidance is the instinct. But conflict is the solution. Learn how to create the conditions for productive, trust-building conflict in multicultural teams.",
+    descriptionId: "Menghindari konflik adalah naluri. Tapi konflik adalah solusinya. Pelajari cara menciptakan kondisi untuk konflik yang produktif dan membangun kepercayaan dalam tim multikultural.",
+    time: "12–14 min",
+    format: "Guide",
+    languages: ["en", "id"],
+    gated: false,
+    topics: ["team-facilitation", "cross-cultural"],
+  },
   // ── ASSESSMENTS (added) ──────────────────────────────────────────────────────
   {
     id: "enneagram",

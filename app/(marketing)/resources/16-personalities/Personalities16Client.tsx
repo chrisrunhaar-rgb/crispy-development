@@ -451,13 +451,13 @@ export default function Personalities16Client({
           <div style={{ background: modalData.bg, borderRadius: "20px 20px 0 0", padding: "32px 32px 28px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(44px, 8vw, 64px)", fontWeight: 700, color: modalData.colorLight, lineHeight: 1 }}>
+                <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(44px, 8vw, 64px)", fontWeight: 700, color: modalData.colorLight, lineHeight: 1 }}>
                   {selectedType}
                 </span>
-                <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "white", marginTop: 6 }}>
+                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "white", marginTop: 6 }}>
                   {modalData.subtitle}
                 </div>
-                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, color: "oklch(78% 0.07 260)", marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: "oklch(78% 0.07 260)", marginTop: 4 }}>
                   {modalData.tagline}
                 </div>
               </div>
@@ -465,8 +465,8 @@ export default function Personalities16Client({
                 onClick={() => setSelectedType(null)}
                 style={{
                   background: "oklch(100% 0 0 / 0.12)", border: "none", color: "white",
-                  borderRadius: 8, width: 36, height: 36, cursor: "pointer",
-                  fontFamily: "'Outfit', sans-serif", fontSize: 18, lineHeight: 1,
+                  borderRadius: 0, width: 36, height: 36, cursor: "pointer",
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 18, lineHeight: 1,
                   flexShrink: 0, marginLeft: 16,
                 }}
               >
@@ -480,16 +480,16 @@ export default function Personalities16Client({
 
             {/* Ministry team profile */}
             <div style={{ background: "oklch(97% 0.02 260)", borderRadius: 12, padding: "18px 20px", borderLeft: `4px solid ${modalData.color}` }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: modalData.color, marginBottom: 8 }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: modalData.color, marginBottom: 8 }}>
                 On a Ministry Team
               </p>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
                 {SHORT_PROFILES[selectedType]}
               </p>
             </div>
 
             {/* Overview */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
               {modalData.overview}
             </p>
 
@@ -501,13 +501,13 @@ export default function Personalities16Client({
               ].map(section => (
                 <div key={section.title} style={{ background: "white", borderRadius: 12, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
                   <div style={{ padding: "12px 16px", background: section.bg }}>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: section.color }}>{section.title}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: section.color }}>{section.title}</span>
                   </div>
                   <ul style={{ margin: 0, padding: "12px 16px", listStyle: "none", display: "grid", gap: 8 }}>
                     {section.items.map(item => (
                       <li key={item} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
                         <div style={{ width: 5, height: 5, borderRadius: "50%", background: section.color, marginTop: 6, flexShrink: 0 }} />
-                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, lineHeight: 1.6, color: "oklch(28% 0.06 260)" }}>{item}</span>
+                        <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, lineHeight: 1.6, color: "oklch(28% 0.06 260)" }}>{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -522,14 +522,14 @@ export default function Personalities16Client({
               { title: "Cross-Cultural Awareness", content: modalData.crossCultural },
             ].map(section => (
               <div key={section.title} style={{ background: "oklch(98% 0.006 260)", borderRadius: 12, padding: "16px 20px", border: "1px solid oklch(92% 0.04 260)" }}>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(40% 0.06 260)", marginBottom: 8 }}>{section.title}</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(30% 0.06 260)", margin: 0 }}>{section.content}</p>
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(40% 0.06 260)", marginBottom: 8 }}>{section.title}</p>
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(30% 0.06 260)", margin: 0 }}>{section.content}</p>
               </div>
             ))}
 
             <button
               onClick={() => setSelectedType(null)}
-              style={{ padding: "12px 24px", background: modalData.color, color: "white", border: "none", borderRadius: 8, fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer", alignSelf: "flex-start" }}
+              style={{ padding: "12px 24px", background: modalData.color, color: "white", border: "none", borderRadius: 0, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer", alignSelf: "flex-start" }}
             >
               Close
             </button>
@@ -542,7 +542,7 @@ export default function Personalities16Client({
   // ── IDLE ───────────────────────────────────────────────────────────────────
   if (quizState === "idle") {
     return (
-      <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
         <TypeModal />
         <LangToggle />
         <style>{`
@@ -554,9 +554,9 @@ export default function Personalities16Client({
         `}</style>
 
         {/* ── HERO HEADER — Crispy Navy ── */}
-        <div style={{ background: "#1B3A6B", color: "white", padding: "72px 24px 64px" }}>
+        <div style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
-            <p style={{ color: "#E07540", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
               Personal Development · Assessment
             </p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
@@ -568,7 +568,7 @@ export default function Personalities16Client({
             <button
               onClick={startQuiz}
               className="p16-btn"
-              style={{ marginTop: 36, padding: "14px 36px", background: "#E07540", color: "white", border: "none", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 600 }}
+              style={{ marginTop: 36, padding: "14px 36px", background: "oklch(65% 0.15 45)", color: "white", border: "none", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 600 }}
             >
               Start Assessment →
             </button>
@@ -579,36 +579,36 @@ export default function Personalities16Client({
 
           {/* What is the framework */}
           <section style={{ marginBottom: 52 }}>
-            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
               What is the 16 Personalities Framework?
             </h2>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
               The 16 Personalities framework gives every member of your team a four-letter shorthand that captures how they are naturally wired. It does not measure how skilled you are, how mature you are in faith, or how effective you are as a leader. It maps your defaults: where your energy comes from, how you take in information, how you weigh decisions, and how you prefer to organise the world around you.
             </p>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
               Each of these four areas sits on a spectrum. You always have access to both ends. The letter simply names which side feels easier and more natural when you are not consciously stretching.
             </p>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)" }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)" }}>
               This kind of self-knowledge is not new in Christian leadership. Paul wrote that the body of Christ is made up of many parts, each shaped differently and each needed (1 Corinthians 12). The 16 Personalities framework gives you a modern vocabulary for that ancient truth — helping your team move past the quiet assumption that everyone should think, decide, and lead the way the most visible person in the room does.
             </p>
           </section>
 
           {/* Why this helps Christian ministry teams */}
           <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
-            <div style={{ background: "#1B3A6B", padding: "20px 28px" }}>
+            <div style={{ background: "oklch(22% 0.10 260)", padding: "20px 28px" }}>
               <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 600, color: "white", margin: 0 }}>
                 Why this helps Christian ministry teams
               </h2>
             </div>
             <div style={{ padding: "24px 28px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 24 }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 24 }}>
                 In cross-cultural Christian work, teams are often small, the work is intense, and personalities can rub against each other in ways that feel spiritual but are actually structural. Without language to name these differences, teams can spiritualise them — labelling someone "unsubmissive" when they are simply processing differently. The 16 Personalities framework gives ministry teams four practical gains:
               </p>
               {[
                 {
                   title: "Lowers the temperature of conflict",
                   body: "When a teammate's frustrating habit can be named as a type-preference rather than a character flaw, it becomes much easier to address without judgement. The conversation moves from \"you are wrong\" to \"we are wired differently — how do we work with that?\"",
-                  color: "#E07540",
+                  color: "oklch(65% 0.15 45)",
                 },
                 {
                   title: "Sharpens role fit",
@@ -629,8 +629,8 @@ export default function Personalities16Client({
                 <div key={i} style={{ display: "flex", gap: 16, padding: "16px 0", borderBottom: i < 3 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
                   <div style={{ width: 4, borderRadius: 4, background: item.color, flexShrink: 0, marginTop: 2 }} />
                   <div>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
+                    <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
+                    <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
                   </div>
                 </div>
               ))}
@@ -639,10 +639,10 @@ export default function Personalities16Client({
 
           {/* The Four Dimensions */}
           <section style={{ marginBottom: 52 }}>
-            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
               The Four Dimensions
             </h2>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 24 }}>
               Each dimension is a spectrum. Your type reflects your natural preference, not your only capability.
             </p>
             <div style={{ display: "grid", gap: 16 }}>
@@ -674,12 +674,12 @@ export default function Personalities16Client({
               ].map(dim => (
                 <div key={dim.a} style={{ background: "white", borderRadius: 14, padding: "22px 24px", border: "1px solid oklch(90% 0.04 260)" }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6, flexWrap: "wrap" }}>
-                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 17, fontWeight: 700, color: dim.color }}>{dim.a}</span>
+                    <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 17, fontWeight: 700, color: dim.color }}>{dim.a}</span>
                     <span style={{ color: "oklch(70% 0.05 260)", fontSize: 13 }}>vs</span>
-                    <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 17, fontWeight: 700, color: "oklch(45% 0.08 260)" }}>{dim.b}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, color: "oklch(50% 0.06 260)", marginLeft: 4 }}>— {dim.question}</span>
+                    <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 17, fontWeight: 700, color: "oklch(45% 0.08 260)" }}>{dim.b}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, color: "oklch(50% 0.06 260)", marginLeft: 4 }}>— {dim.question}</span>
                   </div>
-                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{dim.body}</p>
+                  <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{dim.body}</p>
                 </div>
               ))}
             </div>
@@ -687,10 +687,10 @@ export default function Personalities16Client({
 
           {/* The 16 Types — grouped, clickable */}
           <section style={{ marginBottom: 52 }}>
-            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
               The 16 Types
             </h2>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 28 }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 28 }}>
               Tap any type to explore its full profile. Your own type will be revealed after completing the assessment.
             </p>
             <div style={{ display: "grid", gap: 24 }}>
@@ -698,8 +698,8 @@ export default function Personalities16Client({
                 <div key={group.label}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                     <div style={{ width: 10, height: 10, borderRadius: "50%", background: group.color, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: group.color }}>{group.label}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, color: "oklch(55% 0.06 260)" }}>({group.desc})</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: group.color }}>{group.label}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, color: "oklch(55% 0.06 260)" }}>({group.desc})</span>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))", gap: 10 }}>
                     {group.types.map(typeName => {
@@ -716,9 +716,9 @@ export default function Personalities16Client({
                             borderTop: `3px solid ${t.color}`,
                           }}
                         >
-                          <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 700, color: t.color, marginBottom: 4 }}>{typeName}</div>
-                          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", marginBottom: 6 }}>{t.subtitle}</div>
-                          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 10, color: group.color, fontWeight: 600, letterSpacing: "0.04em" }}>Tap to explore →</div>
+                          <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 700, color: t.color, marginBottom: 4 }}>{typeName}</div>
+                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", marginBottom: 6 }}>{t.subtitle}</div>
+                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, color: group.color, fontWeight: 600, letterSpacing: "0.04em" }}>Tap to explore →</div>
                         </div>
                       );
                     })}
@@ -731,12 +731,12 @@ export default function Personalities16Client({
           {/* How to use this well as a team */}
           <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
             <div style={{ background: "oklch(96% 0.04 260)", padding: "20px 28px", borderBottom: "1px solid oklch(90% 0.04 260)" }}>
-              <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", margin: 0 }}>
+              <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", margin: 0 }}>
                 How to use this well as a team
               </h2>
             </div>
             <div style={{ padding: "24px 28px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 20 }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 20 }}>
                 No four-letter type captures the full image of God in a person. Use this framework as a doorway into conversation, not a label that closes one. Three practices help most:
               </p>
               {[
@@ -754,16 +754,16 @@ export default function Personalities16Client({
                 },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 16, padding: "14px 0", borderBottom: i < 2 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 700, color: "#E07540", lineHeight: 1, flexShrink: 0, width: 24, textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, width: 24, textAlign: "center" }}>
                     {i + 1}
                   </div>
                   <div>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
+                    <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(20% 0.10 260)", marginBottom: 6 }}>{item.title}</p>
+                    <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", margin: 0 }}>{item.body}</p>
                   </div>
                 </div>
               ))}
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", marginTop: 20, marginBottom: 0, fontStyle: "italic" }}>
+              <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", marginTop: 20, marginBottom: 0, fontStyle: "italic" }}>
                 Used in this spirit, the 16 Personalities framework becomes one more way your team learns to love one another well — recognising the different ways God has wired each member, and building a culture where every type is needed, named, and welcome.
               </p>
             </div>
@@ -771,7 +771,7 @@ export default function Personalities16Client({
 
           {/* How to take this assessment */}
           <section style={{ background: "white", borderRadius: 16, padding: "32px 36px", border: "1px solid oklch(90% 0.04 260)" }}>
-            <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
               How to take this assessment
             </h2>
             {[
@@ -781,17 +781,17 @@ export default function Personalities16Client({
               ["Takes about 10 minutes", "Find a quiet moment. Rushed answers produce less accurate results."],
             ].map(([label, desc]) => (
               <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid oklch(95% 0.03 260)" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#E07540", marginTop: 8, flexShrink: 0 }} />
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "oklch(65% 0.15 45)", marginTop: 8, flexShrink: 0 }} />
                 <div>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 260)" }}>{label} — </span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, color: "oklch(38% 0.06 260)" }}>{desc}</span>
+                  <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 260)" }}>{label} — </span>
+                  <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(38% 0.06 260)" }}>{desc}</span>
                 </div>
               </div>
             ))}
             <button
               onClick={startQuiz}
               className="p16-btn"
-              style={{ marginTop: 28, padding: "13px 32px", background: "#1B3A6B", color: "white", border: "none", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 600 }}
+              style={{ marginTop: 28, padding: "13px 32px", background: "oklch(22% 0.10 260)", color: "white", border: "none", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 600 }}
             >
               Start Assessment
             </button>
@@ -811,7 +811,7 @@ export default function Personalities16Client({
     const progress = (currentIdx / QUESTION_ORDER.length) * 100;
 
     return (
-      <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+      <div id="quiz-section" style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
         <LangToggle />
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=Outfit:wght@400;500;600&display=swap');
@@ -829,7 +829,7 @@ export default function Personalities16Client({
             </div>
           </div>
           <div style={{ background: "white", borderRadius: 20, padding: "40px", border: "1px solid oklch(92% 0.04 260)", marginBottom: 32, minHeight: 180, display: "flex", alignItems: "center" }}>
-            <p style={{ fontFamily: "'Libre Baskerville', Georgia, serif", fontSize: "clamp(17px, 2.5vw, 21px)", lineHeight: 1.6, color: "oklch(18% 0.10 260)", margin: 0, fontWeight: 400 }}>
+            <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(17px, 2.5vw, 21px)", lineHeight: 1.6, color: "oklch(18% 0.10 260)", margin: 0, fontWeight: 400 }}>
               {q.text}
             </p>
           </div>
@@ -841,12 +841,12 @@ export default function Personalities16Client({
                 onClick={() => handleAnswer(i + 1)}
                 style={{ "--dcolor": dichotomy.color, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8 } as React.CSSProperties}
               >
-                <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 22, fontWeight: 400, color: "oklch(55% 0.10 260)" }}>{i + 1}</span>
+                <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "oklch(55% 0.10 260)" }}>{i + 1}</span>
                 <span style={{ fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", lineHeight: 1.3 }}>{label}</span>
               </button>
             ))}
           </div>
-          <button onClick={handleBack} style={{ background: "transparent", border: "none", color: "oklch(55% 0.08 260)", fontFamily: "'Outfit', sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}>
+          <button onClick={handleBack} style={{ background: "transparent", border: "none", color: "oklch(55% 0.08 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}>
             ← Back
           </button>
         </div>
@@ -859,7 +859,7 @@ export default function Personalities16Client({
   const typeData = TYPE_DATA[type] ?? TYPE_DATA.ENFP;
 
   return (
-    <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "'Outfit', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
       <LangToggle />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
@@ -869,17 +869,17 @@ export default function Personalities16Client({
       {/* Hero */}
       <div style={{ background: typeData.bg, color: "white", padding: "56px 24px 48px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(72% 0.10 260)", marginBottom: 12 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(72% 0.10 260)", marginBottom: 12 }}>
             Your 16 Personalities Type
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
-            <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 700, color: typeData.colorLight, lineHeight: 1 }}>{type}</span>
+            <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 700, color: typeData.colorLight, lineHeight: 1 }}>{type}</span>
             <div>
-              <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle}</div>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, color: "oklch(80% 0.08 260)", marginTop: 6 }}>{typeData.tagline}</div>
+              <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle}</div>
+              <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, color: "oklch(80% 0.08 260)", marginTop: 6 }}>{typeData.tagline}</div>
             </div>
           </div>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 260)", maxWidth: 580, marginBottom: 28 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 260)", maxWidth: 580, marginBottom: 28 }}>
             {typeData.overview}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
@@ -912,17 +912,17 @@ export default function Personalities16Client({
 
         {/* Ministry team insight */}
         <section style={{ marginBottom: 36, background: "white", borderRadius: 16, padding: "24px 28px", border: `2px solid ${typeData.color}`, borderLeft: `6px solid ${typeData.color}` }}>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: typeData.color, marginBottom: 10 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: typeData.color, marginBottom: 10 }}>
             On a Ministry Team
           </p>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.8, color: "oklch(28% 0.06 260)", margin: 0 }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.8, color: "oklch(28% 0.06 260)", margin: 0 }}>
             {SHORT_PROFILES[type] ?? ""}
           </p>
         </section>
 
         {/* Dichotomy bars */}
         <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 24, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 24 }}>Your Dimension Profile</h2>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 24 }}>Your Dimension Profile</h2>
           <div style={{ display: "grid", gap: 20 }}>
             {DICHOTOMY_LABELS.map(d => {
               const pctA = pcts[d.keyA] ?? 50;
@@ -932,8 +932,8 @@ export default function Personalities16Client({
               return (
                 <div key={d.label} style={{ background: "white", borderRadius: 14, padding: "22px 26px", border: "1px solid oklch(92% 0.04 260)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(40% 0.06 260)" }}>{d.label}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, fontWeight: 600, color: d.color }}>{dominant} — {dominantPct}%</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(40% 0.06 260)" }}>{d.label}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: d.color }}>{dominant} — {dominantPct}%</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: d.color, minWidth: 16 }}>{d.keyA}</span>
@@ -960,13 +960,13 @@ export default function Personalities16Client({
           ].map(section => (
             <div key={section.title} style={{ background: "white", borderRadius: 16, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
               <div style={{ padding: "16px 20px", background: section.bg }}>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: section.color }}>{section.title}</span>
+                <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: section.color }}>{section.title}</span>
               </div>
               <ul style={{ margin: 0, padding: "16px 20px", listStyle: "none", display: "grid", gap: 10 }}>
                 {section.items.map(item => (
                   <li key={item} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <div style={{ width: 6, height: 6, borderRadius: "50%", background: section.color, marginTop: 7, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 14, lineHeight: 1.6, color: "oklch(28% 0.06 260)" }}>{item}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.6, color: "oklch(28% 0.06 260)" }}>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -981,8 +981,8 @@ export default function Personalities16Client({
           { title: "Cross-Cultural Awareness", content: typeData.crossCultural },
         ].map(section => (
           <section key={section.title} style={{ marginBottom: 20, background: "white", borderRadius: 16, padding: "24px 28px", border: "1px solid oklch(92% 0.04 260)" }}>
-            <h3 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 18, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 12 }}>{section.title}</h3>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", margin: 0 }}>{section.content}</p>
+            <h3 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 18, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 12 }}>{section.title}</h3>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", margin: 0 }}>{section.content}</p>
           </section>
         ))}
 
@@ -1006,7 +1006,7 @@ export default function Personalities16Client({
             </span>
           )}
           <button onClick={startQuiz}
-            style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 260)", border: "2px solid oklch(85% 0.05 260)", borderRadius: 8, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+            style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 260)", border: "2px solid oklch(85% 0.05 260)", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
             Retake Assessment
           </button>
         </div>

@@ -243,6 +243,11 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     description: "Kuasai pelatihan Microsoft Teams. Strategi untuk fasilitasi virtual yang efektif dan keterlibatan tim.",
   },
 
+  "healthy-conflict": {
+    title: "Creating Healthy Conflict — An Underrated Leadership Skill — Crispy Development",
+    description: "Conflict avoidance is the instinct. But conflict is the solution. Learn how to create productive, trust-building conflict in multicultural teams.",
+  },
+
   // Fallback
   resources: {
     title: "Leadership Resources & Assessments — Crispy Development",

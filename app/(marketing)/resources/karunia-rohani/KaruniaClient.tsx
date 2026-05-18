@@ -567,7 +567,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
                 </p>
                 <KaruniaLangToggle />
               </div>
-              <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "white", lineHeight: 1.15, marginBottom: "1rem" }}>
+              <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.08, marginBottom: "1rem" }}>
                 {lang === "id" ? "Karunia Rohani Kamu" : "Your Spiritual Gifts"}
               </h1>
               <p style={{ fontSize: "0.9375rem", color: "oklch(78% 0.008 80)", lineHeight: 1.7, margin: 0 }}>

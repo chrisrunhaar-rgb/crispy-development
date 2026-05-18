@@ -73,7 +73,7 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
   const bodyText = "oklch(38% 0.05 260)";
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       <div style={{ background: navy, padding: "80px 24px 72px" }}>

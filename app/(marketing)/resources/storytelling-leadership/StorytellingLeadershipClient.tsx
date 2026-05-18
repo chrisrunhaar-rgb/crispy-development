@@ -129,20 +129,22 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
       {/* Language toggle */}
 
       {/* Hero */}
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "80px 24px 56px" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
-          {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
-        </p>
-        <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(44px, 6vw, 72px)", fontWeight: 600, color: navy, lineHeight: 1.08, margin: "0 0 24px" }}>
-          {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}
-        </h1>
-        <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, color: bodyText, lineHeight: 1.75, fontStyle: "italic", maxWidth: 580, margin: 0 }}>
-          {t(
-            "Not a framework. Not a slide. A story — told well — can do what no memo, policy, or presentation ever could.",
-            "Bukan kerangka kerja. Bukan slide. Sebuah cerita — yang diceritakan dengan baik — dapat melakukan apa yang tidak bisa dilakukan memo, kebijakan, atau presentasi mana pun.",
-            "Geen framework. Geen slide. Een verhaal — goed verteld — kan doen wat geen memo, beleid of presentatie ooit kon."
-          )}
-        </p>
+      <div style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 56px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
+          </p>
+          <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.08, margin: "0 0 24px" }}>
+            {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}
+          </h1>
+          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, color: "oklch(82% 0.025 80)", lineHeight: 1.75, fontStyle: "italic", maxWidth: 580, margin: 0 }}>
+            {t(
+              "Not a framework. Not a slide. A story — told well — can do what no memo, policy, or presentation ever could.",
+              "Bukan kerangka kerja. Bukan slide. Sebuah cerita — yang diceritakan dengan baik — dapat melakukan apa yang tidak bisa dilakukan memo, kebijakan, atau presentasi mana pun.",
+              "Geen framework. Geen slide. Een verhaal — goed verteld — kan doen wat geen memo, beleid of presentatie ooit kon."
+            )}
+          </p>
+        </div>
       </div>
 
       {/* Story preface */}

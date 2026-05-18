@@ -1002,7 +1002,7 @@ export default function EnneagramClient({
 
       {/* ── HERO ── */}
       <div style={{
-        background: quizState === "done" ? primaryType.bg : "oklch(17% 0.12 260)",
+        background: quizState === "done" ? primaryType.bg : "oklch(22% 0.10 260)",
         padding: "4rem 2rem 3.5rem",
         transition: "background 0.6s ease",
       }}>
