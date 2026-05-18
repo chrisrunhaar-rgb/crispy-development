@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 const RESOURCE_SLUG = "5languages";
 
 export const metadata: Metadata = {
-  title: "5 Languages of Appreciation — Asesmen Bahasa Indonesia | Crispy Development",
+  title: "5 Bahasa Penghargaan — Asesmen Bahasa Indonesia | Crispy Development",
   description: "Temukan bahasa kepedulianmu — cara kamu menerima dan memberikan apresiasi dalam tim lintas budaya. Asesmen dua arah pertama berbasis 5 Languages untuk pemimpin.",
   alternates: {
     canonical: "/resources/5languages/id",
@@ -61,7 +61,7 @@ export default async function ResourcePageID(props: any) {
             items={[
               { label: "Home", href: "/" },
               { label: "Resources", href: "/resources" },
-              { label: "5 Languages of Appreciation (Bahasa Indonesia)" },
+              { label: "5 Bahasa Penghargaan" },
             ]}
           />
         </div>

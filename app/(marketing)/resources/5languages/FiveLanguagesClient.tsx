@@ -562,7 +562,7 @@ export default function FiveLanguagesClient({
               marginBottom: "1rem",
               maxWidth: "20ch",
             }}>
-              5 Languages of Appreciation
+              {lang === "id" ? "5 Bahasa Penghargaan" : "5 Languages of Appreciation"}
             </h1>
             <p style={{
               color: "oklch(75% 0.05 260)",
@@ -1075,7 +1075,7 @@ export default function FiveLanguagesClient({
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {lang === "id" ? "Hasil Tes Kamu · 5 Languages of Appreciation" : "Your Results · 5 Languages of Appreciation"}
+            {lang === "id" ? "Hasil Tes Kamu · 5 Bahasa Penghargaan" : "Your Results · 5 Languages of Appreciation"}
           </p>
 
           <div style={{ marginBottom: "1.5rem" }}>
