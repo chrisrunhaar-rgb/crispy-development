@@ -248,8 +248,8 @@ const FIELD_STORY_PARAGRAPHS = [
     climax: false,
   },
   {
-    en: "A colleague named Chris sat down with both of them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"",
-    id: "A colleague named Chris sat down with both of them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"", // TODO: ID translation
+    en: "One day, a third person who knew them both well sat down with them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"",
+    id: "One day, a third person who knew them both well sat down with them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"", // TODO: ID translation
     climax: true,
   },
   {
@@ -499,6 +499,19 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
               "Underneath that silence is usually a conversation that never happened. A disagreement that no one named. A frustration that went underground instead of onto the table.", // TODO: ID translation
             )}
           </p>
+
+          <img
+            src="/images/resources/healthy-conflict/conflict-table.jpg"
+            alt="Two pairs of hands at a table — the setting of honest conversation"
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              margin: "8px 0 28px",
+              borderLeft: `4px solid ${amber}`,
+            }}
+          />
+
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
             fontSize: "clamp(15px, 1.6vw, 17px)",
@@ -712,6 +725,9 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         <div key={si}>
           {si === 1 && (
             <div style={{ height: 3, background: amber, maxWidth: 120, margin: "0 auto" }} />
+          )}
+          {si === 2 && (
+            <div style={{ height: 8, background: navy }} />
           )}
         <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -1187,7 +1203,113 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         </div>
       </div>
 
-      {/* ── 12. CTA FOOTER ───────────────────────────────────────────────────── */}
+      {/* ── 12. FURTHER READING ──────────────────────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: amber,
+            marginBottom: 8,
+          }}>
+            {t("Further Reading", "Bacaan Lebih Lanjut")}
+          </p>
+          <p style={{
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 13,
+            color: subText,
+            lineHeight: 1.6,
+            marginBottom: 28,
+          }}>
+            {t(
+              "Sources and recommended books that inform this module.",
+              "Sumber dan buku yang menjadi dasar modul ini.",
+            )}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            {[
+              {
+                author: "Patrick Lencioni",
+                title: "The Five Dysfunctions of a Team",
+                year: "2002",
+                note: t(
+                  "Identifies fear of conflict as the second of five dysfunctions that undermine team performance. The most accessible treatment of why productive conflict is missing in most organisations.",
+                  "Mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang merusak kinerja tim.",
+                ),
+              },
+              {
+                author: "Erin Meyer",
+                title: "The Culture Map",
+                year: "2014",
+                note: t(
+                  "Chapter 7 maps how cultures differ on disagreeing — from direct confrontation norms (Netherlands, France, Israel) to strong avoidance cultures (Japan, Indonesia, Thailand). Essential reading for cross-cultural leaders.",
+                  "Bab 7 memetakan bagaimana budaya berbeda dalam hal ketidaksetujuan — dari budaya konfrontasi langsung hingga budaya penghindaran.",
+                ),
+              },
+              {
+                author: "Peter Scazzero",
+                title: "The Emotionally Healthy Leader",
+                year: "2015",
+                note: t(
+                  "Addresses the unique dynamics of conflict avoidance in faith-based organisations, where spiritual language is often used to suppress legitimate disagreement.",
+                  "Membahas dinamika unik penghindaran konflik dalam organisasi berbasis iman.",
+                ),
+              },
+              {
+                author: "Speed Leas",
+                title: "Moving Your Church Through Conflict",
+                year: "1985",
+                note: t(
+                  "A practitioner's map of five levels of conflict in Christian community — from healthy problem-solving through intractable war. A foundational text for ministry leaders navigating team tension.",
+                  "Peta praktisi dari lima tingkat konflik dalam komunitas Kristen.",
+                ),
+              },
+            ].map((ref, ri) => (
+              <div key={ri} style={{
+                display: "flex",
+                gap: 16,
+                alignItems: "flex-start",
+                padding: "20px 20px",
+                background: offWhite,
+              }}>
+                <div style={{
+                  width: 3,
+                  alignSelf: "stretch",
+                  background: amber,
+                  flexShrink: 0,
+                }} />
+                <div>
+                  <p style={{
+                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: bodyText,
+                    lineHeight: 1.5,
+                    margin: "0 0 2px",
+                  }}>
+                    {ref.author} — <em>{ref.title}</em> ({ref.year})
+                  </p>
+                  <p style={{
+                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                    fontSize: 13,
+                    fontWeight: 400,
+                    color: subText,
+                    lineHeight: 1.65,
+                    margin: 0,
+                  }}>
+                    {ref.note}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── 13. CTA FOOTER ───────────────────────────────────────────────────── */}
       <div style={{
         background: navy,
         padding: "clamp(56px, 8vw, 80px) 24px",
