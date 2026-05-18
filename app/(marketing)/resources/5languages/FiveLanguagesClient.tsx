@@ -10,7 +10,7 @@ type ScoreKey = "A" | "B" | "C" | "D" | "E";
 type Scores = { A: number; B: number; C: number; D: number; E: number };
 type Pair = { a: ScoreKey; b: ScoreKey; textA: string; textB: string };
 
-// ── LANGUAGE DATA ─────────────────────────────────────────────────────────────
+// ── LANGUAGE DATA (English) ───────────────────────────────────────────────────
 
 const LANG_DATA: Record<ScoreKey, {
   name: string;
@@ -74,7 +74,71 @@ const LANG_DATA: Record<ScoreKey, {
   },
 };
 
-// ── RECEIVING PAIRS (Test 1) ───────────────────────────────────────────────────
+// ── LANGUAGE DATA (Indonesian) ────────────────────────────────────────────────
+
+const LANG_DATA_ID: Record<ScoreKey, {
+  name: string;
+  color: string;
+  colorLight: string;
+  desc: string;
+  notMeans: string;
+  crossCultural: string;
+  biblical: string;
+  biblicalAnchor: string;
+}> = {
+  A: {
+    name: "Kata-Kata Penghargaan",
+    color: "oklch(72% 0.18 85)",
+    colorLight: "oklch(96% 0.03 85)",
+    desc: "Kamu merasa dihargai ketika orang-orang mengucapkan apresiasi yang spesifik dan tulus. Sebuah kalimat yang tepat waktu bisa memampukan kamu melewati musim yang berat. Pujian yang kabur kurang bermakna dibanding kata-kata spesifik yang menunjukkan seseorang benar-benar melihat pekerjaanmu.",
+    notMeans: "Ini bukan berarti kamu butuh pujian terus-menerus. Kamu menginginkan kejujuran — kata-kata yang benar, spesifik, dan disampaikan di saat yang tepat.",
+    crossCultural: "Kata-Kata Penghargaan mudah diterima dalam budaya low-context, tapi bisa terasa performatif dalam budaya Asia high-context di mana komunikasi tidak langsung adalah norma. Pelajari kosakata apresiasi lokal.",
+    biblical: "Barnabas artinya 'Anak Penghiburan.' Ia membela Saulus ketika tidak ada yang mempercayainya (Kisah Para Rasul 9:27), melihat potensi dalam Yohanes Markus ketika Paulus menolaknya (Kisah Para Rasul 15:36–39), dan membangun kepercayaan diri jemaat di seluruh gereja mula-mula (Kisah Para Rasul 11:23). Bahasa kasih utamanya adalah kata-kata — diucapkan di saat yang paling dibutuhkan, menyebut apa yang orang lain belum bisa lihat. Pemimpin Kata-Kata Penghargaan belajar dari Barnabas: sebuah kalimat yang disampaikan dengan baik pada saat yang tepat bisa mengubah seluruh arah hidup seseorang.",
+    biblicalAnchor: "Barnabas — Kisah Para Rasul 9:27",
+  },
+  B: {
+    name: "Waktu Berkualitas",
+    color: "oklch(62% 0.14 235)",
+    colorLight: "oklch(95% 0.02 235)",
+    desc: "Kamu merasa dihargai ketika seseorang memberikanmu perhatian penuh yang tidak terburu-buru. Satu jam yang terganggu nilainya lebih rendah dari tiga puluh menit yang fokus. Kehadiran adalah mata uangnya — ada bersamamu tanpa mengecek ponsel, tanpa rapat berikutnya yang sudah menarik perhatian.",
+    notMeans: "Ini bukan berarti kamu butuh waktu tanpa batas bersama orang-orang. Kamu butuh perhatian penuh selama waktu yang diberikan — kualitas di atas kuantitas.",
+    crossCultural: "Waktu Berkualitas tampak berbeda di tempat di mana waktu itu sendiri terstruktur berbeda. Makan malam panjang yang santai adalah bentuk kasih yang dalam di Indonesia, di mana pertemuan yang sama mungkin terasa tidak efisien di Jerman. Pelajari apa arti 'tidak terburu-buru' di setiap konteks.",
+    biblical: "Yesus bisa saja melatih kedua belas murid hanya melalui pengajaran, tapi Injil menunjukkan Ia melakukan sesuatu yang berbeda. Ia makan bersama mereka, berjalan bersama mereka di jalan yang panjang, tidur di perahu yang sama, bertanya apa yang sedang mereka perdebatkan, dan menyingkir bersama lingkaran dalam ke gunung-gunung dan taman-taman. Pelatihan terjadi melalui waktu bersama. Pemimpin Waktu Berkualitas belajar dari Yesus: kehadiran adalah kurikulum. Tim yang telah bersama denganmu jauh lebih banyak mengingat daripada tim yang hanya diajar olehmu.",
+    biblicalAnchor: "Yesus bersama Kedua Belas — Markus 3:14",
+  },
+  C: {
+    name: "Tindakan Pelayanan",
+    color: "oklch(52% 0.14 150)",
+    colorLight: "oklch(95% 0.02 150)",
+    desc: "Kamu merasa dihargai ketika seseorang melakukan sesuatu yang praktis untuk membantumu — tanpa diminta. Rekan yang memperhatikan apa yang kamu tanggung dan langsung bertindak tanpa menunggu permintaan berbicara langsung kepadamu. Tindakan itu berkata: Aku melihatmu, dan aku bertindak atasnya.",
+    notMeans: "Ini bukan berarti kamu ingin orang mengerjakan tugasmu. Kamu menginginkan pelayanan yang sukarela dan spesifik — bantuan yang menunjukkan kesadaran akan situasimu yang sebenarnya, bukan sekadar mengambil tugas secara umum.",
+    crossCultural: "Pelayanan yang dilakukan diam-diam berbicara keras di banyak budaya, tapi bisa disalahartikan sebagai melampaui batas dalam budaya lain. Dalam budaya berorientasi otonomi, tanyakan dulu sebelum bertindak. Dalam budaya komunal, bertindak tanpa bertanya seringkali adalah bentuk kasih tertinggi.",
+    biblical: "Kisah Para Rasul 9 menyebut Tabita sebagai seorang murid yang penuh dengan perbuatan baik dan sedekah. Ia membuat jubah-jubah untuk para janda Yopa — pelayanan praktis, berulang, dan tersembunyi yang membangun gereja melalui keseharian. Ketika ia meninggal, para janda menunjukkan kepada Petrus jubah-jubah yang ia buat. Karunianya terlihat hanya dari apa yang telah ia berikan. Pemimpin Tindakan Pelayanan belajar dari Tabita: pekerjaan yang tidak ada yang tepuktangani seringkali adalah pekerjaan yang menopang gereja.",
+    biblicalAnchor: "Tabita (Dorkas) — Kisah Para Rasul 9:36",
+  },
+  D: {
+    name: "Hadiah Konkret",
+    color: "oklch(68% 0.15 10)",
+    colorLight: "oklch(96% 0.02 10)",
+    desc: "Kamu merasa dihargai ketika seseorang membawakan sesuatu yang dipilih khusus untukmu. Nilainya bukan harganya — melainkan bukti bahwa seseorang memikirkanmu ketika kamu tidak ada. Sebuah kenang-kenangan kecil yang dibawa dari perjalanan bisa lebih bermakna dari hadiah mahal yang tidak personal.",
+    notMeans: "Ini bukan berarti kamu materialistis. Kamu membaca hadiah sebagai simbol perhatian. Hadiah yang penuh pertimbangan namun murah harganya dari seseorang yang mengenalmu jauh lebih berharga dari hadiah mahal dari seseorang yang tidak.",
+    crossCultural: "Hadiah Konkret membawa makna kuat dalam banyak budaya Asia, Afrika, dan Amerika Latin, dan bisa terasa transaksional dalam konteks Eropa Utara. Di beberapa budaya, apa yang kamu berikan menandakan nilai hubungannya. Pelajari tata bahasa pemberian hadiah setempat.",
+    biblical: "Maria dari Betani memecahkan buli-buli nard murni — senilai upah setahun — dan menuangkannya ke kaki Yesus (Markus 14:3–9). Para murid menyebutnya pemborosan. Yesus menyebutnya indah: 'Ia telah melakukan suatu perbuatan yang indah padaku — di mana pun Injil diberitakan di seluruh dunia, apa yang dilakukannya ini akan disebut-sebut juga untuk mengenang dia.' Hadiah itu dengan sengaja berlebihan. Pemimpin Hadiah Konkret belajar dari Maria: hadiah yang penuh pertimbangan, diberikan pada saat yang tepat, membawa bobot yang tidak bisa dibawa oleh kata-kata.",
+    biblicalAnchor: "Maria dari Betani — Markus 14:3",
+  },
+  E: {
+    name: "Sentuhan yang Tepat",
+    color: "oklch(70% 0.16 65)",
+    colorLight: "oklch(95% 0.03 65)",
+    desc: "Kamu merasa dihargai ketika seseorang memberikan kehangatan fisik yang tepat — jabatan tangan yang erat, tangan di bahu, salam yang hangat. Kehadiran fisik mengomunikasikan apa yang terkadang tidak bisa diungkapkan oleh kata-kata: bahwa seseorang benar-benar senang kamu ada di sini.",
+    notMeans: "Ini bukan berarti semua kontak fisik itu diterima. 'Tepat' adalah kata kuncinya — bentuknya harus sesuai dengan hubungan, dinamika gender, dan konteks budaya. Substansinya (kehangatan insani) adalah konstan; bentuknya tidak.",
+    crossCultural: "Sentuhan yang Tepat adalah yang paling bervariasi dari kelima bahasa ini di berbagai budaya. Pelukan samping yang normal dalam pelayanan di Filipina tidak tepat di sebagian besar Timur Tengah. Selalu baca konteks budaya sebelum mengekspresikan kehangatan secara fisik. Niat untuk terhubung harus disertai kecerdasan budaya.",
+    biblical: "Injil mencatat Yesus menyentuh banyak orang — orang kusta yang tidak ada yang mau menyentuhnya (Markus 1:41), anak-anak yang para murid coba jauhkan (Markus 10:13–16), usungan anak janda (Lukas 7:14), mata orang-orang buta (Matius 9:29). Dalam budaya dengan kode kemurnian yang ketat, sentuhan itu sekaligus mengejutkan dan pastoral. Pemimpin Sentuhan yang Tepat belajar dari Yesus: kehadiran fisik adalah bagian dari cara kasih Tuhan menjangkau manusia. Dalam pelayanan lintas budaya, bentuk sentuhannya harus beradaptasi — substansinya, bahwa kehangatan insani membawa kasih ilahi, tidak berubah.",
+    biblicalAnchor: "Yesus — Markus 1:41",
+  },
+};
+
+// ── RECEIVING PAIRS (Test 1 — English) ───────────────────────────────────────
 
 const RECEIVING_PAIRS: Pair[] = [
   { a: "A", b: "B", textA: "It means a lot when my team leader publicly recognises my contribution after a long project.", textB: "It means a lot when my team leader sets aside unhurried time to hear how I am really doing." },
@@ -119,7 +183,52 @@ const RECEIVING_PAIRS: Pair[] = [
   { a: "D", b: "E", textA: "A small gift remembered from a previous conversation is the deepest care.", textB: "A warm hug after a long absence is the deepest care." },
 ];
 
-// ── GIVING PAIRS (Test 2) ──────────────────────────────────────────────────────
+// ── RECEIVING PAIRS (Test 1 — Indonesian) ─────────────────────────────────────
+
+const RECEIVING_PAIRS_ID: Pair[] = [
+  { a: "A", b: "B", textA: "Sangat berarti bagiku ketika pemimpin tim secara terbuka mengakui kontribusiku setelah proyek panjang.", textB: "Sangat berarti bagiku ketika pemimpin tim menyisihkan waktu tanpa terburu-buru untuk mendengarkan bagaimana keadaanku yang sebenarnya." },
+  { a: "A", b: "B", textA: "Sebuah catatan terima kasih tulisan tangan dari rekan tim bertahan lama dalam ingatanku selama berminggu-minggu.", textB: "Makan malam tanpa terburu-buru bersama rekan tim bertahan lama dalam ingatanku selama berminggu-minggu." },
+  { a: "A", b: "B", textA: "Aku merasa dihargai ketika seseorang dengan spesifik mengatakan apa yang mereka apresiasi dari pekerjaanku.", textB: "Aku merasa dihargai ketika seseorang memberikanku perhatian penuh tanpa mengecek ponselnya." },
+  { a: "A", b: "B", textA: "Mendengar kolega secara spesifik menyebut apa yang mereka hargai dari pekerjaanku menyegarkan aku.", textB: "Diberi tiga puluh menit tanpa terburu-buru oleh seorang kolega menyegarkan aku." },
+  { a: "A", b: "C", textA: "Kata-kata dorongan dari pemimpin yang dihormati memampukan aku melewati musim-musim yang berat.", textB: "Bantuan praktis dengan beban kerjaku memampukan aku melewati musim-musim yang berat." },
+  { a: "A", b: "C", textA: "Aku merasa diperhatikan ketika pastorlku menyebutku dengan nama dalam doa syukur.", textB: "Aku merasa diperhatikan ketika rekan tim dengan diam-diam mengerjakan tugas yang selama ini aku tunda." },
+  { a: "A", b: "C", textA: "Setelah Minggu yang berat, aku ingin mendengar seseorang berkata, 'Kamu melakukannya dengan baik hari ini.'", textB: "Setelah Minggu yang berat, aku ingin seseorang membawakan secangkir teh tanpa aku memintanya." },
+  { a: "A", b: "C", textA: "Kata-kata terima kasih yang spesifik setelah tugas yang berat paling mengena bagiku.", textB: "Bantuan praktis yang spesifik setelah tugas yang berat paling mengena bagiku." },
+  { a: "A", b: "D", textA: "Pengakuan verbal yang spesifik dari atasanku lebih berarti bagiku dari sebuah bonus.", textB: "Hadiah kecil yang penuh pertimbangan dari atasanku lebih berarti dari bonus yang tidak personal." },
+  { a: "A", b: "D", textA: "Aku menyimpan email-email penuh semangat dalam folder yang aku baca di hari-hari yang berat.", textB: "Aku menyimpan hadiah-hadiah kecil dari rekan tim di mejaku sebagai pengingat bahwa aku dikasihi." },
+  { a: "A", b: "D", textA: "Aku merasa dihargai ketika seseorang meluangkan waktu untuk menulis apa yang mereka apresiasi tentang aku.", textB: "Aku merasa dihargai ketika seseorang membawakan oleh-oleh kecil dari perjalanan mereka." },
+  { a: "A", b: "D", textA: "Aku sangat menghargai catatan-catatan penuh pemikiran dari rekan tim.", textB: "Aku sangat menghargai benda-benda kecil yang penuh pemikiran dari rekan tim." },
+  { a: "A", b: "E", textA: "Kata-kata afirmasi dari seorang pemimpin bertahan lama dalam pikiranku.", textB: "Jabatan tangan yang hangat atau tangan di bahu yang tepat secara budaya dari seorang pemimpin bertahan lama dalam ingatanku." },
+  { a: "A", b: "E", textA: "Ketika aku telah melakukan sesuatu dengan baik, aku ingin hal itu diungkapkan dengan jelas.", textB: "Ketika aku telah melakukan sesuatu dengan baik, aku ingin sebuah tos atau tepukan hangat di bahu." },
+  { a: "A", b: "E", textA: "Aku merasa tersemangati ketika seorang kolega memberi tahu bahwa mereka memperhatikan usahaku.", textB: "Aku merasa tersemangati ketika seorang kolega menyambutku dengan jabatan tangan hangat atau pelukan yang tepat secara budaya." },
+  { a: "A", b: "E", textA: "Pengakuan verbal di depan umum mengangkat semangatku.", textB: "Jabatan tangan yang tulus atau tangan di bahu yang tepat secara budaya mengangkat semangatku." },
+  { a: "B", b: "C", textA: "Waktu berdua dengan rekan tim untuk membicarakan kehidupan mengisi ulang aku.", textB: "Rekan tim yang masuk untuk menanggung tanggung jawabku mengisi ulang aku." },
+  { a: "B", b: "C", textA: "Aku merasa diperhatikan ketika atasanku berjalan santai bersamaku ke rapat berikutnya.", textB: "Aku merasa diperhatikan ketika atasanku mempersiapkan ruang rapat tanpa aku minta." },
+  { a: "B", b: "C", textA: "Percakapan panjang bersama mentorku adalah yang paling aku hargai.", textB: "Ketika mentorku mengambil alih tugas yang berat dari bahuku, aku paling merasa dihargai." },
+  { a: "B", b: "C", textA: "Sore hari berjalan kaki bersama teman sambil membicarakan kehidupan adalah hadiah terbaik.", textB: "Sore hari di mana teman menangani tugas-tugasku sementara aku beristirahat adalah hadiah terbaik." },
+  { a: "B", b: "D", textA: "Satu jam percakapan yang fokus lebih berarti bagiku dari hadiah apapun.", textB: "Hadiah yang dipilih dengan penuh pertimbangan lebih berarti bagiku dari percakapan yang terburu-buru." },
+  { a: "B", b: "D", textA: "Aku merasa dikenal ketika rekan timku mengingat sesuatu yang aku katakan tiga bulan lalu.", textB: "Aku merasa dikenal ketika rekan timku membawa sesuatu yang mereka pikirkan khusus untukku." },
+  { a: "B", b: "D", textA: "Ngopi yang berkualitas mengubah minggu aku.", textB: "Kejutan kecil di mejaku mengubah minggu aku." },
+  { a: "B", b: "D", textA: "Aku merasa diperhatikan ketika rekan tim meluangkan waktu untuk mendengarkan dengan seksama.", textB: "Aku merasa diperhatikan ketika rekan tim memberikan sesuatu yang mereka pilih khusus untukku." },
+  { a: "B", b: "E", textA: "Duduk dengan tenang bersama teman setelah kabar buruk lebih berarti dari kata-kata.", textB: "Lengan di bahuku setelah kabar buruk lebih berarti dari kata-kata." },
+  { a: "B", b: "E", textA: "Percakapan panjang yang santai adalah cara aku merasa dekat dengan tim.", textB: "Salam fisik yang hangat (jabatan tangan, pelukan samping) adalah cara aku merasa dekat dengan tim." },
+  { a: "B", b: "E", textA: "Aku paling merasa dikasihi ketika seseorang memberiku perhatian yang tidak terburu-buru.", textB: "Aku paling merasa dikasihi ketika seseorang menawarkan salam yang hangat atau tangan di bahuku." },
+  { a: "B", b: "E", textA: "Percakapan fokus yang panjang adalah cara aku merasa dekat dengan mentorku.", textB: "Salam hangat atau pelukan yang tepat secara budaya adalah cara aku merasa dekat dengan mentorku." },
+  { a: "C", b: "D", textA: "Bantuan tindakan praktis lebih berarti bagiku dari kebanyakan hadiah.", textB: "Hadiah yang penuh pemikiran lebih berarti bagiku dari kebanyakan tindakan bantuan." },
+  { a: "C", b: "D", textA: "Ketika seseorang membantu tanpa diminta, aku merasa benar-benar dilihat.", textB: "Ketika seseorang memberiku sesuatu yang spesifik sesuai minatku, aku merasa benar-benar dilihat." },
+  { a: "C", b: "D", textA: "Jika aku kelelahan, yang paling aku inginkan adalah seseorang mengambil satu tugas dariku.", textB: "Jika aku kelelahan, yang paling aku inginkan adalah hadiah kecil yang menenangkan." },
+  { a: "C", b: "D", textA: "Ketika aku sakit, yang paling membantu adalah rekan tim yang menanggung pekerjaanku.", textB: "Ketika aku sakit, yang paling membantu adalah hadiah kecil yang menenangkan (makanan, bunga, kartu)." },
+  { a: "C", b: "E", textA: "Bantuan praktis adalah cara paling jelas seseorang menunjukkan kepedulian.", textB: "Kehangatan fisik yang tepat (jabatan tangan, tangan di bahu, pelukan) adalah cara paling jelas seseorang menunjukkan kepedulian." },
+  { a: "C", b: "E", textA: "Aku merasa pastorlku peduli ketika ia datang berkunjung dan membantu persiapan-persiapan praktis.", textB: "Aku merasa pastorlku peduli ketika ia menyambutku dengan hangat, tangan di bahu." },
+  { a: "C", b: "E", textA: "Pelayanan yang dilakukan diam-diam berbicara lebih keras dari gerak-gerik lainnya.", textB: "Salam fisik yang hangat berbicara lebih keras dari kebanyakan kata-kata." },
+  { a: "C", b: "E", textA: "Bantuan praktis yang diam-diam menunjukkan kasih yang nyata kepadaku.", textB: "Salam fisik yang hangat (jabatan tangan, pelukan samping, tangan di bahu) menunjukkan kasih yang nyata kepadaku." },
+  { a: "D", b: "E", textA: "Hadiah kecil yang penuh pemikiran mengatakan banyak hal tentang bagaimana rekan timku melihat aku.", textB: "Salam fisik yang hangat mengatakan banyak hal tentang bagaimana rekan timku melihat aku." },
+  { a: "D", b: "E", textA: "Membawakan aku oleh-oleh kecil dari perjalanan sangat berarti.", textB: "Menyambutku dengan pelukan atau jabatan tangan hangat setelah pulang dari perjalanan sangat berarti." },
+  { a: "D", b: "E", textA: "Menerima hadiah yang penuh pemikiran mengejutkanku dengan sukacita.", textB: "Menerima salam fisik yang hangat mengejutkanku dengan sukacita." },
+  { a: "D", b: "E", textA: "Hadiah kecil yang diingat dari percakapan sebelumnya adalah kepedulian yang paling dalam.", textB: "Pelukan hangat setelah lama tidak bertemu adalah kepedulian yang paling dalam." },
+];
+
+// ── GIVING PAIRS (Test 2 — English) ──────────────────────────────────────────
 
 const GIVING_PAIRS: Pair[] = [
   { a: "A", b: "B", textA: "When a teammate has done well, I send them a specific written affirmation.", textB: "When a teammate has done well, I take them out for an unhurried meal." },
@@ -164,6 +273,51 @@ const GIVING_PAIRS: Pair[] = [
   { a: "D", b: "E", textA: "I love through giving thoughtful gifts.", textB: "I love through physical warmth and welcoming presence." },
 ];
 
+// ── GIVING PAIRS (Test 2 — Indonesian) ───────────────────────────────────────
+
+const GIVING_PAIRS_ID: Pair[] = [
+  { a: "A", b: "B", textA: "Ketika rekan tim telah melakukan sesuatu dengan baik, aku mengirimkan afirmasi tertulis yang spesifik.", textB: "Ketika rekan tim telah melakukan sesuatu dengan baik, aku mengajak mereka makan tanpa terburu-buru." },
+  { a: "A", b: "B", textA: "Naluri pertamaku ketika seseorang putus asa adalah mengucapkan kata-kata semangat.", textB: "Naluri pertamaku ketika seseorang putus asa adalah duduk bersama mereka dan mendengarkan." },
+  { a: "A", b: "B", textA: "Aku menunjukkan apresiasi dengan mengatakan secara spesifik apa yang aku hargai dari seseorang.", textB: "Aku menunjukkan apresiasi dengan meluangkan jadwalku untuk menghabiskan waktu bersama mereka." },
+  { a: "A", b: "B", textA: "Aku check-in dengan rekan tim dengan mengirimkan pesan yang menyemangati.", textB: "Aku check-in dengan rekan tim dengan membuat janji ngopi bersama." },
+  { a: "A", b: "C", textA: "Ketika kolega sedang berjuang, aku menuliskan catatan dorongan yang spesifik untuknya.", textB: "Ketika kolega sedang berjuang, aku mengambil alih satu tugasnya tanpa diminta." },
+  { a: "A", b: "C", textA: "Cara aku berterima kasih kepada seseorang adalah dengan kata-kata.", textB: "Cara aku berterima kasih kepada seseorang adalah dengan tindakan." },
+  { a: "A", b: "C", textA: "Ketika aku ingin mendorong anggota tim junior, aku memberitahu secara spesifik apa yang aku lihat dalam diri mereka.", textB: "Ketika aku ingin mendorong anggota tim junior, aku memudahkan pekerjaan mereka secara praktis." },
+  { a: "A", b: "C", textA: "Aku mengekspresikan apresiasiaku melalui kata-kata yang dipilih dengan hati-hati.", textB: "Aku mengekspresikan apresiasiaku melalui tindakan yang dipilih dengan hati-hati." },
+  { a: "A", b: "D", textA: "Aku mengekspresikan kepedulian melalui kata-kata yang dipilih dengan hati-hati.", textB: "Aku mengekspresikan kepedulian melalui hadiah yang dipilih dengan hati-hati." },
+  { a: "A", b: "D", textA: "Di hari ulang tahun rekan tim, aku menulis pesan yang tulus untuknya.", textB: "Di hari ulang tahun rekan tim, aku membawakan sesuatu yang aku tahu akan ia sukai." },
+  { a: "A", b: "D", textA: "Ketika aku ingin memberkati seseorang, pikiran pertamaku adalah apa yang harus aku katakan.", textB: "Ketika aku ingin memberkati seseorang, pikiran pertamaku adalah apa yang harus aku berikan." },
+  { a: "A", b: "D", textA: "Ketika aku ingin menghormati rekan tim di depan umum, aku berbicara tentang apa yang telah mereka kontribusikan.", textB: "Ketika aku ingin menghormati rekan tim di depan umum, aku memberikan sesuatu yang bermakna kepada mereka." },
+  { a: "A", b: "E", textA: "Aku menyapa rekan tim dengan kehangatan verbal — menyebut namanya, menanyakan keadaannya.", textB: "Aku menyapa rekan tim dengan kehangatan fisik — jabatan tangan, tangan di bahu, pelukan yang tepat secara budaya." },
+  { a: "A", b: "E", textA: "Ketika rekan tim melewati minggu yang berat, aku memberitahunya bahwa aku bangga padanya.", textB: "Ketika rekan tim melewati minggu yang berat, aku menyambutnya dengan gerakan fisik yang hangat." },
+  { a: "A", b: "E", textA: "Setelah percakapan yang bermakna aku mengatakan apa yang aku hargai dari percakapan itu.", textB: "Setelah percakapan yang bermakna aku mengekspresikan kehangatan secara fisik (jabatan tangan, tepukan di punggung)." },
+  { a: "A", b: "E", textA: "Cara alami aku menyapa seseorang yang aku hormati adalah dengan menyebutkan apa yang aku apresiasi dari mereka.", textB: "Cara alami aku menyapa seseorang yang aku hormati adalah dengan jabatan tangan yang hangat atau pelukan yang tepat secara budaya." },
+  { a: "B", b: "C", textA: "Aku menunjukkan kepedulian dengan memberikan perhatian penuh yang tidak terburu-buru kepada seseorang.", textB: "Aku menunjukkan kepedulian dengan diam-diam melakukan sesuatu yang membantu mereka." },
+  { a: "B", b: "C", textA: "Aku memprioritaskan pertemuan panjang yang santai bersama timku.", textB: "Aku memprioritaskan menghilangkan hambatan dari pekerjaan timku." },
+  { a: "B", b: "C", textA: "Ketika rekan tim sedang berjuang, aku meluangkan waktu untuk hadir bersamanya.", textB: "Ketika rekan tim sedang berjuang, aku memudahkan pekerjaannya dengan cara-cara praktis." },
+  { a: "B", b: "C", textA: "Aku adalah orang yang meluangkan waktu untuk anggota tim yang butuh didengarkan.", textB: "Aku adalah orang yang diam-diam menangani apa yang perlu dilakukan." },
+  { a: "B", b: "D", textA: "Ketika aku ingin menghormati seseorang, aku mengosongkan kalenderku untuk mereka.", textB: "Ketika aku ingin menghormati seseorang, aku membawakan hadiah yang penuh pemikiran." },
+  { a: "B", b: "D", textA: "Aku mengekspresikan kepedulian melalui kehadiran yang tidak terburu-buru.", textB: "Aku mengekspresikan kepedulian melalui hadiah yang penuh pemikiran." },
+  { a: "B", b: "D", textA: "Di ulang tahun kerja rekan tim, aku mengajaknya ngopi yang diperpanjang.", textB: "Di ulang tahun kerja rekan tim, aku memberikan sesuatu yang bermakna." },
+  { a: "B", b: "D", textA: "Aku memberitahu rekan tim bahwa aku mengasihi mereka dengan hadir bersama mereka.", textB: "Aku memberitahu rekan tim bahwa aku mengasihi mereka dengan memberikan sesuatu yang bermakna." },
+  { a: "B", b: "E", textA: "Aku duduk bersama orang-orang dalam keheningan mereka.", textB: "Aku menyapa orang-orang dengan kehangatan dalam tubuhku — tangan di bahu, pelukan, jabatan tangan yang erat." },
+  { a: "B", b: "E", textA: "Ketika seseorang berduka, aku duduk dengan tenang bersamanya.", textB: "Ketika seseorang berduka, aku merangkul bahunya." },
+  { a: "B", b: "E", textA: "Aku mengekspresikan persahabatan melalui percakapan yang panjang.", textB: "Aku mengekspresikan persahabatan melalui salam fisik yang hangat." },
+  { a: "B", b: "E", textA: "Aku meluangkan waktu untuk percakapan yang santai.", textB: "Aku meluangkan waktu untuk salam fisik yang hangat." },
+  { a: "C", b: "D", textA: "Aku menunjukkan kasih dengan melakukan sesuatu untuk orang-orang.", textB: "Aku menunjukkan kasih dengan memberikan sesuatu kepada orang-orang." },
+  { a: "C", b: "D", textA: "Ketika aku ingin memberkati seseorang, aku mencari cara praktis untuk membantunya.", textB: "Ketika aku ingin memberkati seseorang, aku mencari hadiah yang bermakna untuk diberikan." },
+  { a: "C", b: "D", textA: "Setelah minggu yang berat bagi rekan tim, aku membawakan makanan yang sudah aku masak.", textB: "Setelah minggu yang berat bagi rekan tim, aku membawakan hadiah kecil yang penuh pemikiran." },
+  { a: "C", b: "D", textA: "Aku mendemonstrasikan kasih dengan melayani.", textB: "Aku mendemonstrasikan kasih dengan memberi." },
+  { a: "C", b: "E", textA: "Aku menunjukkan kepedulian melalui tindakan praktis.", textB: "Aku menunjukkan kepedulian melalui kehadiran fisik yang hangat." },
+  { a: "C", b: "E", textA: "Ketika rekan tim butuh dorongan, aku diam-diam membantu pekerjaannya.", textB: "Ketika rekan tim butuh dorongan, aku menyambutnya dengan gerakan fisik yang hangat." },
+  { a: "C", b: "E", textA: "Aku lebih suka mengekspresikan kasih dengan berbuat.", textB: "Aku lebih suka mengekspresikan kasih dengan hadir secara fisik yang hangat." },
+  { a: "C", b: "E", textA: "Aku menunjukkan kepedulian dengan masuk membantu ketika tidak ada yang meminta.", textB: "Aku menunjukkan kepedulian dengan kehadiran fisik yang hangat dalam salam." },
+  { a: "D", b: "E", textA: "Aku membawa hadiah-hadiah kecil yang penuh pemikiran ketika bertemu rekan tim setelah lama tidak bertemu.", textB: "Aku menyapa rekan tim dengan gerakan fisik yang hangat ketika bertemu setelah lama tidak bertemu." },
+  { a: "D", b: "E", textA: "Aku cenderung menunjukkan kepedulian dengan memberikan sesuatu yang nyata.", textB: "Aku cenderung menunjukkan kepedulian dengan salam fisik yang hangat." },
+  { a: "D", b: "E", textA: "Ketika menghormati seseorang, aku memberikan sesuatu yang spesifik.", textB: "Ketika menghormati seseorang, aku menyambutnya dengan kehangatan fisik yang tepat secara budaya." },
+  { a: "D", b: "E", textA: "Aku mengasihi melalui hadiah yang penuh pemikiran.", textB: "Aku mengasihi melalui kehangatan fisik dan kehadiran yang menyambut." },
+];
+
 // ── SCORING HELPERS ───────────────────────────────────────────────────────────
 
 function getPrimary(scores: Scores): ScoreKey {
@@ -180,25 +334,39 @@ function getInterpretation(
   rPrimary: ScoreKey,
   gPrimary: ScoreKey,
   rFlat: boolean,
-  gFlat: boolean
+  gFlat: boolean,
+  LD: typeof LANG_DATA,
+  lang: "en" | "id"
 ): { label: string; labelColor: string; text: string; action: string } {
   if (rFlat && gFlat) return {
-    label: "Both Broad",
+    label: lang === "id" ? "Keduanya Luas" : "Both Broad",
     labelColor: "oklch(60% 0.08 200)",
-    text: "You scored evenly across multiple languages in both tests. Your sensitivity is broad — no single language dominates. This is rare but legitimate.",
-    action: "Name your top two languages in each test and tell your team that either lands well for you.",
+    text: lang === "id"
+      ? "Kamu mendapat skor merata di berbagai bahasa dalam kedua tes. Kepekaan adalah luas — tidak ada satu bahasa yang mendominasi. Ini jarang tapi sah."
+      : "You scored evenly across multiple languages in both tests. Your sensitivity is broad — no single language dominates. This is rare but legitimate.",
+    action: lang === "id"
+      ? "Sebutkan dua bahasa teratasmu di setiap tes dan beritahu tim bahwa keduanya mendarat baik untukmu."
+      : "Name your top two languages in each test and tell your team that either lands well for you.",
   };
   if (rPrimary === gPrimary) return {
-    label: "Match",
+    label: lang === "id" ? "Cocok" : "Match",
     labelColor: "oklch(52% 0.14 150)",
-    text: "Your receiving and giving primaries match. You give what you most need, and you know how to deliver it. The risk: you may assume others want what you want.",
-    action: "Ask each team member their receiving language. Write it down. Refer to the list before any care moment.",
+    text: lang === "id"
+      ? "Bahasa menerima dan memberimu cocok. Kamu memberikan apa yang paling kamu butuhkan, dan kamu tahu cara menyampaikannya. Risikonya: kamu mungkin mengasumsikan orang lain menginginkan apa yang kamu inginkan."
+      : "Your receiving and giving primaries match. You give what you most need, and you know how to deliver it. The risk: you may assume others want what you want.",
+    action: lang === "id"
+      ? "Tanyakan kepada setiap anggota tim bahasa menerima mereka. Catat. Jadikan referensi sebelum setiap momen kepedulian."
+      : "Ask each team member their receiving language. Write it down. Refer to the list before any care moment.",
   };
   return {
-    label: "Two Languages",
+    label: lang === "id" ? "Dua Bahasa" : "Two Languages",
     labelColor: "oklch(62% 0.14 235)",
-    text: "Your receiving and giving languages differ — the most insightful pattern. You carry natural fluency in two languages: how you are wired to receive care, and how you are wired to give it. The risk: your team may not know what you personally need.",
-    action: `Tell your team both languages out loud: "What makes me feel cared for is ${LANG_DATA[rPrimary].name}. What I most naturally give is ${LANG_DATA[gPrimary].name}."`,
+    text: lang === "id"
+      ? "Bahasa menerima dan memberimu berbeda — pola yang paling mengungkapkan. Kamu membawa kemampuan alami dalam dua bahasa: bagaimana kamu terhubung untuk menerima kepedulian, dan bagaimana kamu terhubung untuk memberikannya. Risikonya: timmu mungkin tidak tahu apa yang kamu butuhkan secara pribadi."
+      : "Your receiving and giving languages differ — the most insightful pattern. You carry natural fluency in two languages: how you are wired to receive care, and how you are wired to give it. The risk: your team may not know what you personally need.",
+    action: lang === "id"
+      ? `Beritahu timmu kedua bahasa dengan lantang: "Apa yang membuat aku merasa diperhatikan adalah ${LD[rPrimary].name}. Yang paling alami aku berikan adalah ${LD[gPrimary].name}."`
+      : `Tell your team both languages out loud: "What makes me feel cared for is ${LD[rPrimary].name}. What I most naturally give is ${LD[gPrimary].name}."`,
   };
 }
 
@@ -209,13 +377,15 @@ function LanguageBar({
   score,
   isPrimary,
   maxScore = 16,
+  LD,
 }: {
   langKey: ScoreKey;
   score: number;
   isPrimary: boolean;
   maxScore?: number;
+  LD: typeof LANG_DATA;
 }) {
-  const lang = LANG_DATA[langKey];
+  const lang = LD[langKey];
   const pct = Math.min((score / maxScore) * 100, 100);
 
   return (
@@ -258,13 +428,19 @@ export default function FiveLanguagesClient({
   givingResult,
   receivingScores,
   givingScores,
+  lang = "en",
 }: {
   isSaved: boolean;
   receivingResult: string | null;
   givingResult: string | null;
   receivingScores: { A: number; B: number; C: number; D: number; E: number } | null;
   givingScores: { A: number; B: number; C: number; D: number; E: number } | null;
+  lang?: "en" | "id";
 }) {
+  const LD = lang === "id" ? LANG_DATA_ID : LANG_DATA;
+  const RP = lang === "id" ? RECEIVING_PAIRS_ID : RECEIVING_PAIRS;
+  const GP = lang === "id" ? GIVING_PAIRS_ID : GIVING_PAIRS;
+
   const [quizState, setQuizState] = useState<"intro" | "test1" | "transition" | "test2" | "done">("intro");
   const [currentPair, setCurrentPair] = useState(0);
   const [receivingScoresState, setReceivingScores] = useState<Scores>({ A: 0, B: 0, C: 0, D: 0, E: 0 });
@@ -324,7 +500,7 @@ export default function FiveLanguagesClient({
       const gPct = toPercents(givingScoresState);
       const result = await saveFiveLanguagesResult(rP, gP, rPct, gPct);
       if (result.error) {
-        setSaveError("Could not save — please try again.");
+        setSaveError(lang === "id" ? "Tidak dapat menyimpan — silakan coba lagi." : "Could not save — please try again.");
       } else {
         await saveResourceToDashboard("5languages");
         setResultSaved(true);
@@ -375,7 +551,7 @@ export default function FiveLanguagesClient({
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide" style={{ position: "relative" }}>
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-              Leadership · Assessment
+              {lang === "id" ? "Kepemimpinan · Asesmen" : "Leadership · Assessment"}
             </p>
             <h1 style={{
               fontFamily: "Cormorant Garamond, serif",
@@ -395,13 +571,22 @@ export default function FiveLanguagesClient({
               maxWidth: "56ch",
               marginBottom: "2rem",
             }}>
-              The first two-way 5 Languages test for teams — discover whether you receive care through{" "}
-              <span style={{ color: LANG_DATA.A.color, fontWeight: 600 }}>Words of Affirmation</span>,{" "}
-              <span style={{ color: LANG_DATA.B.color, fontWeight: 600 }}>Quality Time</span>,{" "}
-              <span style={{ color: LANG_DATA.C.color, fontWeight: 600 }}>Acts of Service</span>,{" "}
-              <span style={{ color: LANG_DATA.D.color, fontWeight: 600 }}>Tangible Gifts</span>, or{" "}
-              <span style={{ color: LANG_DATA.E.color, fontWeight: 600 }}>Appropriate Touch</span>{" "}
-              — and whether you give it in the same language.
+              {lang === "id"
+                ? <>Tes 5 Languages dua arah pertama untuk tim — temukan apakah kamu menerima kepedulian melalui{" "}
+                    <span style={{ color: LD.A.color, fontWeight: 600 }}>Kata-Kata Penghargaan</span>,{" "}
+                    <span style={{ color: LD.B.color, fontWeight: 600 }}>Waktu Berkualitas</span>,{" "}
+                    <span style={{ color: LD.C.color, fontWeight: 600 }}>Tindakan Pelayanan</span>,{" "}
+                    <span style={{ color: LD.D.color, fontWeight: 600 }}>Hadiah Konkret</span>, atau{" "}
+                    <span style={{ color: LD.E.color, fontWeight: 600 }}>Sentuhan yang Tepat</span>{" "}
+                    — dan apakah kamu memberikannya dalam bahasa yang sama.</>
+                : <>The first two-way 5 Languages test for teams — discover whether you receive care through{" "}
+                    <span style={{ color: LD.A.color, fontWeight: 600 }}>Words of Affirmation</span>,{" "}
+                    <span style={{ color: LD.B.color, fontWeight: 600 }}>Quality Time</span>,{" "}
+                    <span style={{ color: LD.C.color, fontWeight: 600 }}>Acts of Service</span>,{" "}
+                    <span style={{ color: LD.D.color, fontWeight: 600 }}>Tangible Gifts</span>, or{" "}
+                    <span style={{ color: LD.E.color, fontWeight: 600 }}>Appropriate Touch</span>{" "}
+                    — and whether you give it in the same language.</>
+              }
             </p>
           </div>
         </section>
@@ -413,22 +598,28 @@ export default function FiveLanguagesClient({
               fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)",
               color: "oklch(22% 0.10 260)", marginBottom: "0.5rem",
             }}>
-              About this assessment
+              {lang === "id" ? "Tentang asesmen ini" : "About this assessment"}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, maxWidth: 680, marginBottom: "2.5rem" }}>
-              This is the first 5 Languages test designed to measure both sides of care. Chapman&apos;s original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives.
+              {lang === "id"
+                ? "Ini adalah tes 5 Languages pertama yang dirancang untuk mengukur kedua sisi kepedulian. Versi asli Chapman hanya menangkap cara kamu menerima. Di sini, kamu menyelesaikan dua tes — satu untuk menerima, satu untuk memberi. Keduanya tidak sama. Untuk tim lintas budaya, mengetahui kesenjangan antara keduanya bukan pilihan: di situlah wawasan kepemimpinan yang nyata berada."
+                : "This is the first 5 Languages test designed to measure both sides of care. Chapman’s original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives."
+              }
             </p>
 
-<p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
-              Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud.
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.75, maxWidth: 720, marginBottom: "2.5rem" }}>
+              {lang === "id"
+                ? "Kebanyakan tim menganggap kepedulian ya kepedulian — bahwa apa yang kamu berikan mendarat sesuai niatmu. Jarang sekali begitu. Aturan Emas meleset: seorang pemimpin yang terhubung untuk Kata-Kata menuangkan afirmasi kepada rekan yang membutuhkan Tindakan Pelayanan, dan keduanya tidak mengerti mengapa tidak berhasil. Hasilmu akan menunjukkan salah satu dari tiga pola — Cocok, Dua Bahasa, atau Luas. Masing-masing memiliki langkah praktis yang berbeda. Langkah paling berdampak adalah yang paling sederhana: beritahu timmu kedua bahasa dengan lantang."
+                : "Most teams assume care is care — that what you give lands the way you intend it. It rarely does. The Golden Rule misfires: a leader wired for Words pours affirmation over a teammate who needs Acts of Service, and neither understands why it is not working. Your results will show one of three patterns — Match, Two Languages, or Broad. Each has a different practical move. The highest-leverage step is the simplest: tell your team both languages out loud."
+              }
             </p>
 
             {/* 5 language flip tiles */}
             <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
-              The five languages
+              {lang === "id" ? "Lima bahasa" : "The five languages"}
             </h3>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(55% 0.008 260)", marginBottom: "1rem" }}>
-              Tap any card to read the biblical story.
+              {lang === "id" ? "Ketuk kartu mana saja untuk membaca kisah Alkitab." : "Tap any card to read the biblical story."}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem", marginBottom: "2.5rem" }}>
               {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
@@ -438,11 +629,11 @@ export default function FiveLanguagesClient({
                     key={k}
                     onClick={() => setFlippedLang(isFlipped ? null : k)}
                     style={{
-                      background: isFlipped ? LANG_DATA[k].color : LANG_DATA[k].colorLight,
-                      border: `1.5px solid ${LANG_DATA[k].color}50`,
+                      background: isFlipped ? LD[k].color : LD[k].colorLight,
+                      border: `1.5px solid ${LD[k].color}50`,
                       borderRadius: 12,
                       padding: "1rem 1.25rem",
-                      borderTop: `4px solid ${LANG_DATA[k].color}`,
+                      borderTop: `4px solid ${LD[k].color}`,
                       cursor: "pointer",
                       transition: "background 0.25s ease",
                     }}
@@ -451,28 +642,28 @@ export default function FiveLanguagesClient({
                       {isFlipped ? (
                         <>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.78rem", color: "oklch(14% 0.07 260)", marginBottom: "0.6rem" }}>
-                            {LANG_DATA[k].biblicalAnchor}
+                            {LD[k].biblicalAnchor}
                           </p>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.7, color: "oklch(14% 0.07 260)" }}>
-                            {LANG_DATA[k].biblical}
+                            {LD[k].biblical}
                           </p>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(14% 0.07 260)", marginTop: "0.75rem", textTransform: "uppercase", letterSpacing: "0.08em", opacity: 0.65 }}>
-                            ← tap to close
+                            {lang === "id" ? "← ketuk untuk menutup" : "← tap to close"}
                           </p>
                         </>
                       ) : (
                         <>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.85rem", color: LANG_DATA[k].color, marginBottom: "0.5rem" }}>
-                            {LANG_DATA[k].name}
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.85rem", color: LD[k].color, marginBottom: "0.5rem" }}>
+                            {LD[k].name}
                           </p>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", lineHeight: 1.65, color: "oklch(35% 0.008 260)" }}>
-                            {LANG_DATA[k].desc}
+                            {LD[k].desc}
                           </p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: LANG_DATA[k].color, marginTop: "0.75rem", fontStyle: "italic" }}>
-                            {LANG_DATA[k].biblicalAnchor}
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: LD[k].color, marginTop: "0.75rem", fontStyle: "italic" }}>
+                            {LD[k].biblicalAnchor}
                           </p>
-                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: LANG_DATA[k].color, marginTop: "0.4rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                            Tap for biblical story →
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: LD[k].color, marginTop: "0.4rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                            {lang === "id" ? "Ketuk untuk kisah Alkitab →" : "Tap for biblical story →"}
                           </p>
                         </>
                       )}
@@ -484,33 +675,41 @@ export default function FiveLanguagesClient({
 
             {/* Cross-cultural note */}
             <div style={{ background: "oklch(96% 0.02 235)", border: "1px solid oklch(85% 0.06 235)", borderRadius: 12, padding: "1.25rem 1.5rem", marginBottom: "2.5rem" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(35% 0.10 235)", marginBottom: "0.5rem" }}>Cross-cultural note</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "oklch(35% 0.10 235)", marginBottom: "0.5rem" }}>
+                {lang === "id" ? "Catatan lintas budaya" : "Cross-cultural note"}
+              </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.7, color: "oklch(38% 0.008 260)" }}>
-                The five languages travel across cultures, but their cultural weight does not. Words of Affirmation can feel performative in high-context Asian cultures. Appropriate Touch is the most variable — a side-hug normal in Filipino ministry is inappropriate in much of the Middle East. The test gives you your language. The cross-cultural work is learning how that language is properly spoken in the cultures around you.
+                {lang === "id"
+                  ? "Kelima bahasa bisa melintas budaya, tapi bobot budayanya tidak. Kata-Kata Penghargaan bisa terasa performatif dalam budaya Asia high-context. Sentuhan yang Tepat adalah yang paling bervariasi — pelukan samping yang normal dalam pelayanan di Filipina tidak tepat di sebagian besar Timur Tengah. Tes ini memberimu bahasamu. Pekerjaan lintas budaya adalah belajar bagaimana bahasa itu diucapkan dengan tepat dalam budaya di sekitarmu."
+                  : "The five languages travel across cultures, but their cultural weight does not. Words of Affirmation can feel performative in high-context Asian cultures. Appropriate Touch is the most variable — a side-hug normal in Filipino ministry is inappropriate in much of the Middle East. The test gives you your language. The cross-cultural work is learning how that language is properly spoken in the cultures around you."
+                }
               </p>
             </div>
 
             {/* Want to go deeper? accordion */}
             <div style={{ marginBottom: "2.5rem" }}>
               <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.4rem" }}>
-                Want to go deeper?
+                {lang === "id" ? "Ingin lebih dalam?" : "Want to go deeper?"}
               </h3>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(50% 0.008 260)", marginBottom: "1rem", lineHeight: 1.6 }}>
-                Full profiles for all five languages — with cross-cultural notes and biblical grounding.
+                {lang === "id"
+                  ? "Profil lengkap untuk kelima bahasa — dengan catatan lintas budaya dan landasan Alkitab."
+                  : "Full profiles for all five languages — with cross-cultural notes and biblical grounding."
+                }
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(["A", "B", "C", "D", "E"] as ScoreKey[]).map((k) => {
-                  const lang = LANG_DATA[k];
+                  const langItem = LD[k];
                   const isOpen = openAccordion === k;
                   return (
-                    <div key={k} style={{ border: `1px solid ${lang.color}35`, borderRadius: "10px", overflow: "hidden" }}>
+                    <div key={k} style={{ border: `1px solid ${langItem.color}35`, borderRadius: "10px", overflow: "hidden" }}>
                       <button
                         type="button"
                         onClick={() => setOpenAccordion(isOpen ? null : k)}
                         style={{
                           width: "100%",
                           textAlign: "left",
-                          background: isOpen ? lang.color : "white",
+                          background: isOpen ? langItem.color : "white",
                           border: "none",
                           padding: "0.875rem 1.25rem",
                           display: "flex",
@@ -519,40 +718,40 @@ export default function FiveLanguagesClient({
                           cursor: "pointer",
                         }}
                       >
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.875rem", color: isOpen ? "oklch(14% 0.07 260)" : lang.color }}>
-                          {lang.name}
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.875rem", color: isOpen ? "oklch(14% 0.07 260)" : langItem.color }}>
+                          {langItem.name}
                         </span>
-                        <span style={{ color: isOpen ? "oklch(14% 0.07 260)" : lang.color, fontSize: "0.85rem", fontWeight: 700 }}>
+                        <span style={{ color: isOpen ? "oklch(14% 0.07 260)" : langItem.color, fontSize: "0.85rem", fontWeight: 700 }}>
                           {isOpen ? "▲" : "▼"}
                         </span>
                       </button>
                       {isOpen && (
                         <div style={{ padding: "1.25rem 1.5rem", background: "white", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
                           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", color: "oklch(22% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
-                            {lang.desc}
+                            {langItem.desc}
                           </p>
                           <div>
-                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
-                              What this does NOT mean
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langItem.color, marginBottom: "0.3rem" }}>
+                              {lang === "id" ? "Bukan berarti" : "What this does NOT mean"}
                             </p>
                             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                              {lang.notMeans}
+                              {langItem.notMeans}
                             </p>
                           </div>
                           <div>
-                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.3rem" }}>
-                              Cross-cultural note
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langItem.color, marginBottom: "0.3rem" }}>
+                              {lang === "id" ? "Catatan lintas budaya" : "Cross-cultural note"}
                             </p>
                             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(38% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                              {lang.crossCultural}
+                              {langItem.crossCultural}
                             </p>
                           </div>
-                          <div style={{ background: lang.colorLight, borderRadius: "8px", padding: "1rem 1.1rem", borderLeft: `3px solid ${lang.color}` }}>
-                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>
-                              Biblical anchor · {lang.biblicalAnchor}
+                          <div style={{ background: langItem.colorLight, borderRadius: "8px", padding: "1rem 1.1rem", borderLeft: `3px solid ${langItem.color}` }}>
+                            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langItem.color, marginBottom: "0.4rem" }}>
+                              {lang === "id" ? "Jangkar Alkitab · " : "Biblical anchor · "}{langItem.biblicalAnchor}
                             </p>
                             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(25% 0.08 260)", lineHeight: 1.7, margin: 0 }}>
-                              {lang.biblical}
+                              {langItem.biblical}
                             </p>
                           </div>
                         </div>
@@ -583,10 +782,10 @@ export default function FiveLanguagesClient({
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
-                Begin Test 1 — Receiving
+                {lang === "id" ? "Mulai Tes 1 — Menerima" : "Begin Test 1 — Receiving"}
               </button>
               <p style={{ marginTop: "0.75rem", fontSize: "13px", color: "oklch(55% 0.05 260)", fontFamily: "var(--font-montserrat)" }}>
-                Test 1 of 2 · 40 pairs · ~8 minutes
+                {lang === "id" ? "Tes 1 dari 2 · 40 pasangan · ~8 menit" : "Test 1 of 2 · 40 pairs · ~8 minutes"}
               </p>
               {receivingResult && givingResult && (
                 <button
@@ -608,7 +807,7 @@ export default function FiveLanguagesClient({
                   onMouseEnter={(e) => (e.currentTarget.style.borderColor = "oklch(55% 0.10 260)")}
                   onMouseLeave={(e) => (e.currentTarget.style.borderColor = "oklch(80% 0.05 260)")}
                 >
-                  View your previous results →
+                  {lang === "id" ? "Lihat hasil tes sebelumnya →" : "View your previous results →"}
                 </button>
               )}
             </div>
@@ -620,7 +819,7 @@ export default function FiveLanguagesClient({
 
   // ── TEST 1 ─────────────────────────────────────────────────────────────────
   if (quizState === "test1") {
-    const pair = RECEIVING_PAIRS[currentPair];
+    const pair = RP[currentPair];
     return (
       <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
         <style>{`
@@ -652,7 +851,7 @@ export default function FiveLanguagesClient({
           <div style={{
             height: "100%",
             width: `${(overallProgress / 80) * 100}%`,
-            background: LANG_DATA[pair.a].color,
+            background: LD[pair.a].color,
             transition: "width 0.3s ease",
           }} />
         </div>
@@ -660,10 +859,13 @@ export default function FiveLanguagesClient({
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
-              Test 1 — How you receive care
+              {lang === "id" ? "Tes 1 — Cara kamu menerima kepedulian" : "Test 1 — How you receive care"}
             </p>
             <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
-              Pair {currentPair + 1} of 40 &nbsp;·&nbsp; Choose the statement that feels most true for you
+              {lang === "id"
+                ? `Pasangan ${currentPair + 1} dari 40  ·  Pilih pernyataan yang paling benar untukmu`
+                : `Pair ${currentPair + 1} of 40  ·  Choose the statement that feels most true for you`
+              }
             </p>
           </div>
 
@@ -705,7 +907,9 @@ export default function FiveLanguagesClient({
             textTransform: "uppercase",
             color: "oklch(65% 0.15 45)",
             marginBottom: "1rem",
-          }}>Test 1 complete</p>
+          }}>
+            {lang === "id" ? "Tes 1 selesai" : "Test 1 complete"}
+          </p>
           <h2 style={{
             fontFamily: "Cormorant Garamond, serif",
             fontSize: "clamp(28px, 4vw, 40px)",
@@ -714,17 +918,17 @@ export default function FiveLanguagesClient({
             marginBottom: "0.5rem",
             lineHeight: 1.2,
           }}>
-            Your receiving language is:
+            {lang === "id" ? "Bahasa menerima kamu adalah:" : "Your receiving language is:"}
           </h2>
           <h2 style={{
             fontFamily: "Cormorant Garamond, serif",
             fontSize: "clamp(28px, 4vw, 40px)",
             fontWeight: 600,
-            color: LANG_DATA[transitionPrimary].color,
+            color: LD[transitionPrimary].color,
             marginBottom: "1rem",
             lineHeight: 1.2,
           }}>
-            {LANG_DATA[transitionPrimary].name}
+            {LD[transitionPrimary].name}
           </h2>
           <p style={{
             fontSize: "16px",
@@ -732,7 +936,10 @@ export default function FiveLanguagesClient({
             lineHeight: 1.65,
             marginBottom: "2rem",
           }}>
-            Now Test 2: how you give care. Answer what you actually do — not what you wish you did.
+            {lang === "id"
+              ? "Sekarang Tes 2: bagaimana kamu memberi kepedulian. Jawab apa yang benar-benar kamu lakukan — bukan yang kamu harapkan."
+              : "Now Test 2: how you give care. Answer what you actually do — not what you wish you did."
+            }
           </p>
           <button
             type="button"
@@ -752,7 +959,7 @@ export default function FiveLanguagesClient({
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            Begin Test 2
+            {lang === "id" ? "Mulai Tes 2" : "Begin Test 2"}
           </button>
         </div>
       </div>
@@ -761,7 +968,7 @@ export default function FiveLanguagesClient({
 
   // ── TEST 2 ─────────────────────────────────────────────────────────────────
   if (quizState === "test2") {
-    const pair = GIVING_PAIRS[currentPair];
+    const pair = GP[currentPair];
     const showHonestyBanner = currentPair === 14;
     return (
       <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
@@ -794,7 +1001,7 @@ export default function FiveLanguagesClient({
           <div style={{
             height: "100%",
             width: `${(overallProgress / 80) * 100}%`,
-            background: LANG_DATA[pair.a].color,
+            background: LD[pair.a].color,
             transition: "width 0.3s ease",
           }} />
         </div>
@@ -802,10 +1009,13 @@ export default function FiveLanguagesClient({
         <div className="container-wide" style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(2rem, 4vw, 4rem) 1.5rem" }}>
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
-              Test 2 — How you give care
+              {lang === "id" ? "Tes 2 — Cara kamu memberi kepedulian" : "Test 2 — How you give care"}
             </p>
             <p style={{ fontSize: "14px", color: "oklch(50% 0.008 260)" }}>
-              Pair {currentPair + 41} of 80 &nbsp;·&nbsp; Choose what you actually do, not what you wish you did
+              {lang === "id"
+                ? `Pasangan ${currentPair + 41} dari 80  ·  Pilih apa yang benar-benar kamu lakukan, bukan yang kamu harapkan`
+                : `Pair ${currentPair + 41} of 80  ·  Choose what you actually do, not what you wish you did`
+              }
             </p>
           </div>
 
@@ -820,7 +1030,10 @@ export default function FiveLanguagesClient({
               color: "oklch(35% 0.08 260)",
               lineHeight: 1.55,
             }}>
-              Halfway through. Are you choosing what you <em>actually do</em> — or what you wish you did? Adjust if needed.
+              {lang === "id"
+                ? <>Setengah jalan. Apakah kamu memilih apa yang benar-benar kamu lakukan — atau apa yang kamu harapkan? Sesuaikan jika perlu.</>
+                : <>Halfway through. Are you choosing what you <em>actually do</em> — or what you wish you did? Adjust if needed.</>
+              }
             </div>
           )}
 
@@ -845,9 +1058,9 @@ export default function FiveLanguagesClient({
   }
 
   // ── DONE ───────────────────────────────────────────────────────────────────
-  const interpretation = getInterpretation(rPrimary, gPrimary, rFlat, gFlat);
-  const rLang = LANG_DATA[rPrimary];
-  const gLang = LANG_DATA[gPrimary];
+  const interpretation = getInterpretation(rPrimary, gPrimary, rFlat, gFlat, LD, lang);
+  const rLang = LD[rPrimary];
+  const gLang = LD[gPrimary];
 
   return (
     <div>
@@ -862,7 +1075,7 @@ export default function FiveLanguagesClient({
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            Your Results · 5 Languages of Appreciation
+            {lang === "id" ? "Hasil Tes Kamu · 5 Languages of Appreciation" : "Your Results · 5 Languages of Appreciation"}
           </p>
 
           <div style={{ marginBottom: "1.5rem" }}>
@@ -884,14 +1097,18 @@ export default function FiveLanguagesClient({
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem", alignItems: "flex-start" }}>
             <div>
-              <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Receiving</p>
+              <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>
+                {lang === "id" ? "Menerima" : "Receiving"}
+              </p>
               <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: rLang.color, lineHeight: 1.1, marginBottom: "0.25rem" }}>
                 {rLang.name}
               </h2>
               <p style={{ fontSize: "12px", color: "oklch(55% 0.05 260)" }}>{rLang.biblicalAnchor}</p>
             </div>
             <div>
-              <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Giving</p>
+              <p style={{ color: "oklch(60% 0.05 260)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.4rem" }}>
+                {lang === "id" ? "Memberi" : "Giving"}
+              </p>
               <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: gLang.color, lineHeight: 1.1, marginBottom: "0.25rem" }}>
                 {gLang.name}
               </h2>
@@ -908,7 +1125,9 @@ export default function FiveLanguagesClient({
             {interpretation.text}
           </p>
           <div style={{ background: "oklch(22% 0.10 260)", borderRadius: "10px", padding: "1.25rem 1.5rem" }}>
-            <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>Practical step</p>
+            <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.5rem" }}>
+              {lang === "id" ? "Langkah praktis" : "Practical step"}
+            </p>
             <p style={{ fontSize: "15px", color: "oklch(88% 0.02 80)", lineHeight: 1.65 }}>
               {interpretation.action}
             </p>
@@ -921,22 +1140,26 @@ export default function FiveLanguagesClient({
         <div className="container-wide">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
             <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
-              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>Your Receiving Language</p>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>
+                {lang === "id" ? "Bahasa Menerima Kamu" : "Your Receiving Language"}
+              </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayReceiving) as [ScoreKey, number][])
                   .sort((a, b) => b[1] - a[1])
                   .map(([k, v]) => (
-                    <LanguageBar key={k} langKey={k} score={v} isPrimary={k === rPrimary} />
+                    <LanguageBar key={k} langKey={k} score={v} isPrimary={k === rPrimary} LD={LD} />
                   ))}
               </div>
             </div>
             <div style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "1.5rem" }}>
-              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>Your Giving Language</p>
+              <p style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(55% 0.06 260)", marginBottom: "1.25rem" }}>
+                {lang === "id" ? "Bahasa Memberi Kamu" : "Your Giving Language"}
+              </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {(Object.entries(displayGiving) as [ScoreKey, number][])
                   .sort((a, b) => b[1] - a[1])
                   .map(([k, v]) => (
-                    <LanguageBar key={k} langKey={k} score={v} isPrimary={k === gPrimary} />
+                    <LanguageBar key={k} langKey={k} score={v} isPrimary={k === gPrimary} LD={LD} />
                   ))}
               </div>
             </div>
@@ -948,35 +1171,41 @@ export default function FiveLanguagesClient({
       <section style={{ background: "oklch(97% 0.005 80)", padding: "clamp(2rem, 4vw, 3.5rem) 0" }}>
         <div className="container-wide">
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(26px, 3.5vw, 36px)", fontWeight: 600, color: "oklch(22% 0.10 260)", marginBottom: "0.5rem" }}>
-            Your two languages
+            {lang === "id" ? "Dua bahasa kamu" : "Your two languages"}
           </h2>
           <p style={{ fontSize: "15px", color: "oklch(45% 0.06 260)", marginBottom: "2rem", lineHeight: 1.6 }}>
-            Profiles for your receiving and giving primaries.
+            {lang === "id" ? "Profil untuk bahasa menerima dan memberi utama kamu." : "Profiles for your receiving and giving primaries."}
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
             {[
-              { role: "Receiving", key: rPrimary, lang: rLang },
-              ...(rPrimary !== gPrimary ? [{ role: "Giving", key: gPrimary, lang: gLang }] : []),
-            ].map(({ role, key, lang }) => (
-              <div key={`${role}-${key}`} style={{ border: `1px solid ${lang.color}40`, borderRadius: "14px", overflow: "hidden" }}>
-                <div style={{ background: lang.color, padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat, sans-serif)", fontWeight: 800, fontSize: "16px", color: "oklch(14% 0.07 260)" }}>{lang.name}</span>
+              { role: lang === "id" ? "Menerima" : "Receiving", key: rPrimary, langProfile: rLang },
+              ...(rPrimary !== gPrimary ? [{ role: lang === "id" ? "Memberi" : "Giving", key: gPrimary, langProfile: gLang }] : []),
+            ].map(({ role, key, langProfile }) => (
+              <div key={`${role}-${key}`} style={{ border: `1px solid ${langProfile.color}40`, borderRadius: "14px", overflow: "hidden" }}>
+                <div style={{ background: langProfile.color, padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat, sans-serif)", fontWeight: 800, fontSize: "16px", color: "oklch(14% 0.07 260)" }}>{langProfile.name}</span>
                   <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(14% 0.07 260)", opacity: 0.7 }}>{role}</span>
                 </div>
                 <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <p style={{ fontSize: "15px", color: "oklch(22% 0.10 260)", lineHeight: 1.7 }}>{lang.desc}</p>
+                  <p style={{ fontSize: "15px", color: "oklch(22% 0.10 260)", lineHeight: 1.7 }}>{langProfile.desc}</p>
                   <div>
-                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>Not means</p>
-                    <p style={{ fontSize: "14px", color: "oklch(35% 0.07 260)", lineHeight: 1.65 }}>{lang.notMeans}</p>
+                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langProfile.color, marginBottom: "0.4rem" }}>
+                      {lang === "id" ? "Bukan berarti" : "Not means"}
+                    </p>
+                    <p style={{ fontSize: "14px", color: "oklch(35% 0.07 260)", lineHeight: 1.65 }}>{langProfile.notMeans}</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.4rem" }}>Cross-cultural</p>
-                    <p style={{ fontSize: "14px", color: "oklch(35% 0.07 260)", lineHeight: 1.65 }}>{lang.crossCultural}</p>
+                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langProfile.color, marginBottom: "0.4rem" }}>
+                      {lang === "id" ? "Lintas budaya" : "Cross-cultural"}
+                    </p>
+                    <p style={{ fontSize: "14px", color: "oklch(35% 0.07 260)", lineHeight: 1.65 }}>{langProfile.crossCultural}</p>
                   </div>
-                  <div style={{ background: lang.colorLight, borderRadius: "8px", padding: "1rem", borderLeft: `3px solid ${lang.color}` }}>
-                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: lang.color, marginBottom: "0.5rem" }}>Biblical anchor · {lang.biblicalAnchor}</p>
-                    <p style={{ fontSize: "14px", color: "oklch(25% 0.08 260)", lineHeight: 1.7 }}>{lang.biblical}</p>
+                  <div style={{ background: langProfile.colorLight, borderRadius: "8px", padding: "1rem", borderLeft: `3px solid ${langProfile.color}` }}>
+                    <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: langProfile.color, marginBottom: "0.5rem" }}>
+                      {lang === "id" ? "Jangkar Alkitab · " : "Biblical anchor · "}{langProfile.biblicalAnchor}
+                    </p>
+                    <p style={{ fontSize: "14px", color: "oklch(25% 0.08 260)", lineHeight: 1.7 }}>{langProfile.biblical}</p>
                   </div>
                 </div>
               </div>
@@ -1007,7 +1236,10 @@ export default function FiveLanguagesClient({
                   transition: "opacity 0.15s ease",
                 }}
               >
-                {isSaving ? "Saving..." : "Save to dashboard"}
+                {isSaving
+                  ? (lang === "id" ? "Menyimpan..." : "Saving...")
+                  : (lang === "id" ? "Simpan hasilmu" : "Save to dashboard")
+                }
               </button>
               {saveError && (
                 <p style={{ color: "oklch(55% 0.20 25)", fontSize: "0.875rem", marginTop: "0.5rem" }}>
@@ -1017,7 +1249,7 @@ export default function FiveLanguagesClient({
             </div>
           ) : (
             <span style={{ fontSize: "14px", color: "oklch(65% 0.12 150)", fontWeight: 600 }}>
-              Saved to your dashboard
+              {lang === "id" ? "Hasil tersimpan" : "Saved to your dashboard"}
             </span>
           )}
           <button
@@ -1043,7 +1275,7 @@ export default function FiveLanguagesClient({
               e.currentTarget.style.color = "oklch(70% 0.05 260)";
             }}
           >
-            Retake
+            {lang === "id" ? "Ulangi tes" : "Retake"}
           </button>
         </div>
       </section>
