@@ -70,7 +70,8 @@ const TEACHING_SECTIONS = [
   },
   {
     title: { en: "What avoidance actually costs", id: "Apa yang sebenarnya hilang dari penghindaran" }, // TODO: ID translation
-    bg: lightGray,
+    bg: navy,
+    dark: true,
     paragraphs: [
       {
         en: "Unaddressed conflict does not disappear. It relocates.",
@@ -741,16 +742,13 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       {/* ── 5. TEACHING — 4 SECTIONS ─────────────────────────────────────────── */}
       {TEACHING_SECTIONS.map((section, si) => (
         <div key={si}>
-          {si === 1 && (
-            <div style={{ height: 3, background: amber, maxWidth: 120, margin: "0 auto" }} />
-          )}
         <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
               fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
               fontSize: "clamp(18px, 2.2vw, 24px)",
               fontWeight: 800,
-              color: navy,
+              color: section.dark ? offWhite : navy,
               marginBottom: 24,
             }}>
               {lang === "id" ? section.title.id : section.title.en}
@@ -762,7 +760,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                   fontFamily: serif,
                   fontSize: "clamp(18px, 2vw, 22px)",
                   fontStyle: "italic",
-                  color: navy,
+                  color: section.dark ? lightOnNavy : navy,
                   borderLeft: `3px solid ${amber}`,
                   paddingLeft: 20,
                   margin: "28px 0",
@@ -775,7 +773,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                   fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
                   fontSize: "clamp(14px, 1.5vw, 16px)",
                   fontWeight: 400,
-                  color: bodyText,
+                  color: section.dark ? dimOnNavy : bodyText,
                   lineHeight: 1.85,
                   marginBottom: 20,
                 }}>
@@ -789,7 +787,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       ))}
 
       {/* ── 6. RESEARCH CALLOUTS ─────────────────────────────────────────────── */}
-      <div style={{ background: navy, padding: "clamp(56px, 8vw, 72px) 24px" }}>
+      <div style={{ background: lightGray, padding: "clamp(56px, 8vw, 72px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -805,7 +803,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {RESEARCH_CALLOUTS.map((item, ri) => (
               <div key={ri} style={{
-                background: "oklch(28% 0.10 260)",
+                background: offWhite,
                 padding: "20px 24px",
                 borderLeft: `3px solid ${amber}`,
               }}>
@@ -823,7 +821,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                 <p style={{
                   fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
                   fontSize: 14,
-                  color: dimOnNavy,
+                  color: bodyText,
                   lineHeight: 1.8,
                   margin: 0,
                 }}>
