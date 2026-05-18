@@ -265,9 +265,7 @@ export default function FiveLanguagesClient({
   receivingScores: { A: number; B: number; C: number; D: number; E: number } | null;
   givingScores: { A: number; B: number; C: number; D: number; E: number } | null;
 }) {
-  const [quizState, setQuizState] = useState<"intro" | "test1" | "transition" | "test2" | "done">(
-    receivingResult && givingResult ? "done" : "intro"
-  );
+  const [quizState, setQuizState] = useState<"intro" | "test1" | "transition" | "test2" | "done">("intro");
   const [currentPair, setCurrentPair] = useState(0);
   const [receivingScoresState, setReceivingScores] = useState<Scores>({ A: 0, B: 0, C: 0, D: 0, E: 0 });
   const [givingScoresState, setGivingScores] = useState<Scores>({ A: 0, B: 0, C: 0, D: 0, E: 0 });
@@ -590,6 +588,29 @@ export default function FiveLanguagesClient({
               <p style={{ marginTop: "0.75rem", fontSize: "13px", color: "oklch(55% 0.05 260)", fontFamily: "var(--font-montserrat)" }}>
                 Test 1 of 2 · 40 pairs · ~8 minutes
               </p>
+              {receivingResult && givingResult && (
+                <button
+                  type="button"
+                  onClick={() => setQuizState("done")}
+                  style={{
+                    marginTop: "1rem",
+                    background: "transparent",
+                    color: "oklch(45% 0.10 260)",
+                    border: "1px solid oklch(80% 0.05 260)",
+                    borderRadius: "8px",
+                    padding: "10px 28px",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "var(--font-montserrat)",
+                    transition: "border-color 0.15s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "oklch(55% 0.10 260)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "oklch(80% 0.05 260)")}
+                >
+                  View your previous results →
+                </button>
+              )}
             </div>
           </div>
         </section>

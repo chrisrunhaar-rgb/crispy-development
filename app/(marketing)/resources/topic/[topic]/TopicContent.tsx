@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Topic, Resource, Lang, LANG_LABELS } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "@/app/(marketing)/resources/actions";
 
-const ALL_LANGS: Lang[] = ["en", "id", "nl"];
+const ALL_LANGS: Lang[] = ["en", "id"];
 
 interface Props {
   topic: Topic;
