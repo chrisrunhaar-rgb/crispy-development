@@ -354,6 +354,24 @@ const KEY_TAKEAWAYS = [
   },
 ];
 
+const RESEARCH_CALLOUTS = [
+  {
+    source: "Google Project Aristotle, 2016",
+    en: "After studying 180 teams over two years, Google's People Operations team found that psychological safety was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree. Teams that could challenge each other openly were consistently the highest performers.",
+    id: "After studying 180 teams over two years, Google's People Operations team found that psychological safety was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree. Teams that could challenge each other openly were consistently the highest performers.", // TODO: ID translation
+  },
+  {
+    source: "Hofstede Insights — Power Distance Index",
+    en: "Geert Hofstede's research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
+    id: "Geert Hofstede's research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.", // TODO: ID translation
+  },
+  {
+    source: "Patrick Lencioni — The Five Dysfunctions of a Team, 2002",
+    en: "Lencioni identified fear of conflict as the second of five dysfunctions that consistently undermine team performance. Teams which avoid genuine debate do not eliminate tension. They redirect it into politics, passive resistance, and quiet resentment. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
+    id: "Lencioni identified fear of conflict as the second of five dysfunctions that consistently undermine team performance. Teams which avoid genuine debate do not eliminate tension. They redirect it into politics, passive resistance, and quiet resentment. The absence of productive conflict is not peace. It is the postponement of a harder conversation.", // TODO: ID translation
+  },
+];
+
 // ── COMPONENT ──────────────────────────────────────────────────────────────────
 
 type Props = { userId: string | null; isSaved: boolean };
@@ -502,7 +520,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
 
           <img
             src="/images/resources/healthy-conflict/conflict-table.jpg"
-            alt="Two pairs of hands at a table — the setting of honest conversation"
+            alt="A team around a conference table — the setting where honest disagreement becomes possible"
             style={{
               width: "100%",
               height: "auto",
@@ -557,7 +575,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       </div>
 
       {/* ── 3. LEARNING OUTCOME ──────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "48px 24px" }}>
+      <div style={{ background: navy, padding: "48px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -598,7 +616,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                   fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
                   fontSize: 14,
                   fontWeight: 500,
-                  color: bodyText,
+                  color: dimOnNavy,
                   lineHeight: 1.65,
                   margin: 0,
                 }}>
@@ -726,9 +744,6 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           {si === 1 && (
             <div style={{ height: 3, background: amber, maxWidth: 120, margin: "0 auto" }} />
           )}
-          {si === 2 && (
-            <div style={{ height: 8, background: navy }} />
-          )}
         <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
@@ -773,7 +788,54 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         </div>
       ))}
 
-      {/* ── 6. CONCEPT CARDS — THE CONFLICT TABLE ────────────────────────────── */}
+      {/* ── 6. RESEARCH CALLOUTS ─────────────────────────────────────────────── */}
+      <div style={{ background: navy, padding: "clamp(56px, 8vw, 72px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: amber,
+            marginBottom: 28,
+          }}>
+            {t("What the Research Shows", "Apa yang Dikatakan Penelitian")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {RESEARCH_CALLOUTS.map((item, ri) => (
+              <div key={ri} style={{
+                background: "oklch(28% 0.10 260)",
+                padding: "20px 24px",
+                borderLeft: `3px solid ${amber}`,
+              }}>
+                <p style={{
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: amber,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: 10,
+                }}>
+                  {item.source}
+                </p>
+                <p style={{
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 14,
+                  color: dimOnNavy,
+                  lineHeight: 1.8,
+                  margin: 0,
+                }}>
+                  {lang === "id" ? item.id : item.en}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── 7. CONCEPT CARDS — THE CONFLICT TABLE ────────────────────────────── */}
       <div style={{ background: navy, padding: "clamp(64px, 9vw, 88px) 24px" }}>
         <div style={{ maxWidth: 840, margin: "0 auto" }}>
           <p style={{
@@ -1256,15 +1318,6 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                 note: t(
                   "Addresses the unique dynamics of conflict avoidance in faith-based organisations, where spiritual language is often used to suppress legitimate disagreement.",
                   "Membahas dinamika unik penghindaran konflik dalam organisasi berbasis iman.",
-                ),
-              },
-              {
-                author: "Speed Leas",
-                title: "Moving Your Church Through Conflict",
-                year: "1985",
-                note: t(
-                  "A practitioner's map of five levels of conflict in Christian community — from healthy problem-solving through intractable war. A foundational text for ministry leaders navigating team tension.",
-                  "Peta praktisi dari lima tingkat konflik dalam komunitas Kristen.",
                 ),
               },
             ].map((ref, ri) => (
