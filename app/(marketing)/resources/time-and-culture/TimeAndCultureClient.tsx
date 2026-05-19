@@ -578,6 +578,7 @@ function OneAtATimeQuiz({
   const [displayed, setDisplayed] = useState(0);
   const keys = ["A", "B", "C", "D"];
   const autoCompleted = useRef(false);
+  const allAnswered = Object.keys(answers).length === questions.length;
 
   useEffect(() => {
     if (allAnswered && !autoCompleted.current) {
@@ -610,7 +611,6 @@ function OneAtATimeQuiz({
     }
   }
 
-  const allAnswered = Object.keys(answers).length === questions.length;
   const progress = Math.round(((displayed + 1) / questions.length) * 100);
 
   return (
