@@ -962,18 +962,18 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       </div>
 
       {/* ─── THE FREEDOM ──────────────────────────────────────────────────── */}
-      <div style={{ background: ORANGE, padding: "64px 24px" }}>
+      <div style={{ background: OFF_WHITE, padding: "96px 24px 64px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: NAVY, marginBottom: 20 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
             The Freedom
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
             Leaders who understand all the dimensions of time are controlled by none of them.
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             Most leaders are controlled by time — not because they are bad at managing it, but because they only know one logic. If you only know Clock Keeper logic, you will be driven by urgency and you will read every deviation as failure. If you only know Relationship Weaver logic, you will be drained by the invisible expectations of colleagues who run on monochronic assumptions and never tell you directly.
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             Understanding multiple logics does not mean adopting them all equally. It means you can see what is happening in the room before it becomes a conflict. You can name it. You can create space for the team to navigate it together. You can stop the fracture before it forms. That is not better time management. That is situational awareness — and situational awareness is what separates a leader who reacts to their team from a leader who reads their team.
           </p>
         </div>
