@@ -1,4 +1,4 @@
-const CACHE = "crispy-v2";
+const CACHE = "crispy-v3";
 const PRECACHE = ["/", "/dashboard", "/personal", "/team", "/resources", "/login", "/signup"];
 
 self.addEventListener("install", (e) => {
