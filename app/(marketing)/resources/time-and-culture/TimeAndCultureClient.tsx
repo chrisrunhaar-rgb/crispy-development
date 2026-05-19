@@ -614,7 +614,7 @@ function OneAtATimeQuiz({
   const progress = Math.round(((displayed + 1) / questions.length) * 100);
 
   return (
-    <div style={{ background: bgColor }}>
+    <div style={{ background: bgColor, paddingBottom: 48 }}>
       {/* Header */}
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "48px 24px 32px" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 22, fontWeight: 800, color: OFF_WHITE, margin: "0 0 10px" }}>
