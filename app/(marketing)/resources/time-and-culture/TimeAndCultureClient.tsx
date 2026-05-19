@@ -27,7 +27,7 @@ const CONCEPT_CARDS = [
   },
   {
     name: "THE RELATIONSHIP WEAVER",
-    term: "Polychronic Time (Edward T. Hall) — also called Event-Oriented Culture (Edwin Eregwa)",
+    term: "Polychronic Time (Edward T. Hall) — also called Event-Oriented Culture",
     belief: '"Time belongs to the person in front of me."',
     bullets: [
       "The meeting ends when the matter is settled relationally, not when the clock reaches the agreed time.",
@@ -51,7 +51,7 @@ const CONCEPT_CARDS = [
   },
   {
     name: "THE COMMUNITY KEEPER",
-    term: "Sasa/Zamani Framework (John Mbiti) — also overlapping with Event-Oriented Culture (Edwin Eregwa)",
+    term: "Sasa/Zamani Framework (John Mbiti)",
     belief: '"Time moves with the people, not the calendar."',
     bullets: [
       "Community presence constitutes the event. 'When does the meeting start?' means: 'When are the people gathered?'",
@@ -1065,7 +1065,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
             "Cultures that organize around events and communal presence may, in their own way, be practicing a rhythm of time that productivity-oriented cultures have largely lost. The willingness to wait for the right moment, the insistence that time belongs to the people and not the schedule, echoes something that runs through the biblical tradition far more than most Western organizational models would suggest."
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT }}>
-            Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including the work of Tim Noble on cross-cultural theology and time.
+            Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including scholarly work on chronos/kairos theology and cross-cultural time frameworks.
           </p>
         </div>
       </div>
@@ -1083,13 +1083,13 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
             There is a verse in Ecclesiastes that most people know and almost nobody fully inhabits.
           </p>
           <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
-            "There is a time for everything, and a season for every activity under the heavens." (Ecclesiastes 3:1)
+            "There is a time for everything, and a season for every activity under the heavens." (Ecclesiastes 3:1, NIV)
           </blockquote>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             We quote it when we need patience. But the verse is doing something more structural than that. It is saying that God did not design a single rhythm for all things. Diversity of timing is built into the created order. The farmer does not plant when the builder builds. The mourner does not sing when the dancer dances. Different purposes require different times, and wisdom is knowing which time you are in. Then there is a verse in Galatians that speaks at a different level.
           </p>
           <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
-            "But when the time had fully come, God sent his Son." (Galatians 4:4)
+            "But when the time had fully come, God sent his Son." (Galatians 4:4, NIV)
           </blockquote>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             Theologians call this kairos. Not chronos, the sequential ticking of clock-time, but kairos, the appointed moment. It was not rushing toward its target. It was not managed into readiness. It arrived when everything that needed to be in place was in place, and not a moment before. These two dimensions of time — chronos and kairos — are not in competition. They are both real. Cross-cultural teams that only know chronos may be missing the dimension of time that is most needed for deep and lasting work.
@@ -1139,6 +1139,28 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
                   </p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── SOURCES ──────────────────────────────────────────────────────── */}
+      <div style={{ background: LIGHT_GRAY, padding: "40px 24px 48px", borderTop: `1px solid oklch(88% 0.008 80)` }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 16 }}>
+            Academic Roots
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {[
+              "Edward T. Hall — The Silent Language (1959); The Dance of Life (1983). Source of monochronic and polychronic time frameworks.",
+              "Richard Lewis — When Cultures Collide (1996). Source of Linear-Active and Reactive time orientations.",
+              "John Mbiti — African Religions and Philosophy (1969). Source of the Sasa/Zamani temporal framework.",
+              "Richard Brislin — Cross-cultural psychology research (2003). Source of clock-time vs. event-time distinction.",
+              "Scripture quotations from the New International Version (NIV). Holy Bible, NIV® © 1973, 1978, 1984, 2011 by Biblica, Inc.®",
+            ].map((source, i) => (
+              <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
+                {source}
+              </p>
             ))}
           </div>
         </div>
