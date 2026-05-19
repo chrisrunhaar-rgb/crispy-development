@@ -400,8 +400,7 @@ function ElapsedTimer() {
   );
 }
 
-function ConceptCard({ card }: { card: typeof CONCEPT_CARDS[0] }) {
-  const [expanded, setExpanded] = useState(false);
+function ConceptCard({ card, expanded, onToggle }: { card: typeof CONCEPT_CARDS[0]; expanded: boolean; onToggle: () => void }) {
   return (
     <div
       style={{
@@ -412,8 +411,9 @@ function ConceptCard({ card }: { card: typeof CONCEPT_CARDS[0] }) {
         cursor: "pointer",
         transition: "box-shadow 0.2s",
         alignSelf: "start",
+        minHeight: 185,
       }}
-      onClick={() => setExpanded((v) => !v)}
+      onClick={onToggle}
     >
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 800, color: ORANGE, margin: "0 0 6px" }}>
         {card.name}
@@ -583,7 +583,7 @@ function OneAtATimeQuiz({
   useEffect(() => {
     if (allAnswered && !autoCompleted.current) {
       autoCompleted.current = true;
-      const t = setTimeout(onComplete, 350);
+      const t = setTimeout(onComplete, 80);
       return () => clearTimeout(t);
     }
   }, [allAnswered, onComplete]);
@@ -678,8 +678,8 @@ function OneAtATimeQuiz({
       </div>
 
       {/* Navigation row */}
-      <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px 24px 48px", display: "flex", alignItems: "center", gap: 12 }}>
-        {displayed > 0 && !allAnswered && (
+      {!allAnswered && displayed > 0 && (
+        <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px 24px 48px" }}>
           <button
             onClick={handleBack}
             style={{
@@ -696,13 +696,8 @@ function OneAtATimeQuiz({
           >
             ← Back
           </button>
-        )}
-        {allAnswered && (
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(65% 0.04 260)", fontStyle: "italic", margin: 0 }}>
-            All questions answered — your result is loading…
-          </p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -715,14 +710,13 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
   const [isPending, startTransition] = useTransition();
 
   // Assessment state
+  type QuizPhase = "part1" | "part1-result" | "part2" | "part2-result";
+  const [quizPhase, setQuizPhase] = useState<QuizPhase>("part1");
   const [part1Answers, setPart1Answers] = useState<Record<number, string>>({});
   const [part2Answers, setPart2Answers] = useState<Record<number, string>>({});
-  const [showPart1Result, setShowPart1Result] = useState(false);
-  const [showPart2, setShowPart2] = useState(false);
-  const [showPart2Result, setShowPart2Result] = useState(false);
-  const [showResults, setShowResults] = useState(false);
   const [showPart1Detail, setShowPart1Detail] = useState(false);
   const [showPart2Detail, setShowPart2Detail] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   function handleSave() {
     if (saved) return;
@@ -732,11 +726,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
     });
   }
 
-  const part1Complete = Object.keys(part1Answers).length === PART1_QUESTIONS.length;
-  const part2Complete = Object.keys(part2Answers).length === PART2_QUESTIONS.length;
-
-  const part1Dominant = part1Complete ? getDominantOrientation(part1Answers) : null;
-  const part2Dominant = part2Complete ? getDominantOrientation(part2Answers) : null;
+  const part1Dominant = Object.keys(part1Answers).length === PART1_QUESTIONS.length ? getDominantOrientation(part1Answers) : null;
+  const part2Dominant = Object.keys(part2Answers).length === PART2_QUESTIONS.length ? getDominantOrientation(part2Answers) : null;
   const gapKey = part1Dominant && part2Dominant ? getGapKey(part1Dominant, part2Dominant) : null;
   const isMatched = part1Dominant === part2Dominant;
 
@@ -767,7 +758,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
           </p>
           <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 8 }}>
             <span style={{ background: "oklch(30% 0.10 260)", color: "oklch(75% 0.04 260)", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 20 }}>
-              25–30 min
+              20 min
             </span>
             <button
               onClick={handleSave}
@@ -822,169 +813,167 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         </div>
       </div>
 
-      {/* ─── PART 1 QUIZ ──────────────────────────────────────────────────── */}
-      <OneAtATimeQuiz
-        questions={PART1_QUESTIONS}
-        answers={part1Answers}
-        onAnswer={(qIdx, val) => setPart1Answers((prev) => ({ ...prev, [qIdx]: val }))}
-        onComplete={() => { setShowPart1Result(true); setShowPart2(true); }}
-        partLabel="How do YOU see time?"
-        partSubtext="Read each scenario. Choose the response that feels most natural to you — not the 'right' answer. Not what you think a good leader would do. What you actually feel."
-        bgColor={NAVY}
-        accentColor={ORANGE}
-      />
+      {/* ─── UNIFIED QUIZ ARENA ───────────────────────────────────────────── */}
+      <div style={{ background: NAVY }}>
+        {quizPhase === "part1" && (
+          <OneAtATimeQuiz
+            questions={PART1_QUESTIONS}
+            answers={part1Answers}
+            onAnswer={(qIdx, val) => setPart1Answers((prev) => ({ ...prev, [qIdx]: val }))}
+            onComplete={() => setQuizPhase("part1-result")}
+            partLabel="How do YOU see time?"
+            partSubtext="Read each scenario. Choose the response that feels most natural to you — not the 'right' answer. Not what you think a good leader would do. What you actually feel."
+            bgColor={NAVY}
+            accentColor={ORANGE}
+          />
+        )}
 
-      {/* ─── PART 1 RESULT REVEAL ─────────────────────────────────────────── */}
-      {showPart1Result && part1Dominant && (
-        <div style={{ background: NAVY, padding: "0 24px 40px" }}>
-          <div style={{ maxWidth: 780, margin: "0 auto" }}>
-            <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                Your Result — Part 1
-              </p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
-                {PART1_TYPE_NAMES[part1Dominant]}
-              </h2>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
-                {PART1_TRANSITIONS[part1Dominant]}
-              </p>
-              <button
-                onClick={() => setShowPart1Detail((v) => !v)}
-                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
-              >
-                {showPart1Detail ? "▲ Less detail" : "▼ Read more about your orientation"}
-              </button>
-              {showPart1Detail && (
-                <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
-                    {RESULT_BLOCKS[part1Dominant].label}
-                  </p>
-                  {RESULT_BLOCKS[part1Dominant].body.split("\n\n").map((para, i) => (
-                    <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ─── PART 2 QUIZ ──────────────────────────────────────────────────── */}
-      {showPart2 && (
-        <>
-          <div style={{ background: NAVY, padding: "0 24px 28px" }}>
+        {quizPhase === "part1-result" && part1Dominant && (
+          <div style={{ padding: "48px 24px" }}>
             <div style={{ maxWidth: 780, margin: "0 auto" }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: ORANGE, margin: 0 }}>
-                Now — what about the culture you work with? Part 2. Same area, 10 questions.
-              </p>
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}`, marginBottom: 32 }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  Your Result — Part 1
+                </p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
+                  {PART1_TYPE_NAMES[part1Dominant]}
+                </h2>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
+                  {PART1_TRANSITIONS[part1Dominant]}
+                </p>
+                <button
+                  onClick={() => setShowPart1Detail((v) => !v)}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
+                >
+                  {showPart1Detail ? "▲ Less detail" : "▼ Read more about your orientation"}
+                </button>
+                {showPart1Detail && (
+                  <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
+                      {RESULT_BLOCKS[part1Dominant].label}
+                    </p>
+                    {RESULT_BLOCKS[part1Dominant].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div style={{ textAlign: "center", paddingBottom: 8 }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: ORANGE, marginBottom: 20 }}>
+                  Now — what about the culture you work with?
+                </p>
+                <button
+                  onClick={() => setQuizPhase("part2")}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: OFF_WHITE, background: ORANGE, border: "none", padding: "14px 36px", borderRadius: 8, cursor: "pointer" }}
+                >
+                  Test Part 2 →
+                </button>
+              </div>
             </div>
           </div>
+        )}
+
+        {quizPhase === "part2" && (
           <OneAtATimeQuiz
             questions={PART2_QUESTIONS}
             answers={part2Answers}
             onAnswer={(qIdx, val) => setPart2Answers((prev) => ({ ...prev, [qIdx]: val }))}
-            onComplete={() => setShowPart2Result(true)}
+            onComplete={() => setQuizPhase("part2-result")}
             partLabel="How does the culture you work with see time?"
             partSubtext="Think of the culture of the team you work with most, or the colleague whose approach to time confuses or frustrates you most. Answer as you observe them — not as you wish they would behave."
-            bgColor="oklch(19% 0.09 260)"
+            bgColor={NAVY}
             accentColor={ORANGE}
           />
-        </>
-      )}
+        )}
 
-      {/* ─── PART 2 RESULT REVEAL + GAP ANALYSIS ─────────────────────────── */}
-      {showPart2Result && part2Dominant && part1Dominant && (
-        <div style={{ background: "oklch(19% 0.09 260)", padding: "0 24px 56px" }}>
-          <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 24, paddingTop: 0 }}>
-            {/* Part 2 inline result card */}
-            <div style={{ background: "oklch(25% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                Your Result — Part 2
-              </p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
-                {PART2_TYPE_NAMES[part2Dominant]}
-              </h2>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
-                {PART2_TRANSITIONS[part2Dominant]}
-              </p>
-              <button
-                onClick={() => setShowPart2Detail((v) => !v)}
-                style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
-              >
-                {showPart2Detail ? "▲ Less detail" : "▼ Read more about this orientation"}
-              </button>
-              {showPart2Detail && (
-                <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
-                    {RESULT_BLOCKS[part2Dominant].label}
-                  </p>
-                  {RESULT_BLOCKS[part2Dominant].body.split("\n\n").map((para, i) => (
-                    <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
-                      {para}
+        {quizPhase === "part2-result" && part2Dominant && part1Dominant && (
+          <div style={{ padding: "48px 24px" }}>
+            <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 24 }}>
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  Your Result — Part 2
+                </p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
+                  {PART2_TYPE_NAMES[part2Dominant]}
+                </h2>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
+                  {PART2_TRANSITIONS[part2Dominant]}
+                </p>
+                <button
+                  onClick={() => setShowPart2Detail((v) => !v)}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
+                >
+                  {showPart2Detail ? "▲ Less detail" : "▼ Read more about this orientation"}
+                </button>
+                {showPart2Detail && (
+                  <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
+                      {RESULT_BLOCKS[part2Dominant].label}
                     </p>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Gap analysis */}
-            <div style={{ background: "oklch(25% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
-              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                Gap Analysis — Part 1 vs Part 2
-              </p>
-
-              {/* Both orientations named */}
-              <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 24 }}>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: OFF_WHITE, background: ORANGE, padding: "5px 14px", borderRadius: 20 }}>
-                  You: {TYPE_SHORT[part1Dominant]}
-                </span>
-                <span style={{ color: "oklch(55% 0.04 260)", fontSize: 20 }}>↔</span>
-                <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, border: `1px solid ${ORANGE}`, padding: "5px 14px", borderRadius: 20 }}>
-                  Culture: {TYPE_SHORT[part2Dominant]}
-                </span>
+                    {RESULT_BLOCKS[part2Dominant].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {isMatched ? (
-                <>
-                  <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
-                    Your orientation and the culture you work with appear to be aligned.
-                  </h3>
-                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
-                    Shared logic can be a real gift. When a team runs on the same orientation, coordination is faster, conflict is rarer, and trust builds quickly. That is worth acknowledging. But alignment within your team is not the same as competence across cultures. The question now is whether you can recognize the other three logics when they appear — in a partner organization, a donor, a local leader, a colleague from a different background. You know your own logic well. The next step is developing fluency in the others: not to adopt them, but to read them without judgment, engage them without friction, and lead across the difference without assuming your logic is the default.
-                  </p>
-                </>
-              ) : gapKey && GAP_BLOCKS[gapKey] ? (
-                <>
-                  <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
-                    {GAP_BLOCKS[gapKey].title}
-                  </h3>
-                  {GAP_BLOCKS[gapKey].body.split("\n\n").map((para, i) => (
-                    <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
-                      {para}
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  Gap Analysis — Part 1 vs Part 2
+                </p>
+                <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 24 }}>
+                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: OFF_WHITE, background: ORANGE, padding: "5px 14px", borderRadius: 20 }}>
+                    You: {TYPE_SHORT[part1Dominant]}
+                  </span>
+                  <span style={{ color: "oklch(55% 0.04 260)", fontSize: 20 }}>↔</span>
+                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, border: `1px solid ${ORANGE}`, padding: "5px 14px", borderRadius: 20 }}>
+                    Culture: {TYPE_SHORT[part2Dominant]}
+                  </span>
+                </div>
+                {isMatched ? (
+                  <>
+                    <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
+                      Your orientation and the culture you work with appear to be aligned.
+                    </h3>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8 }}>
+                      Shared logic can be a real gift. When a team runs on the same orientation, coordination is faster, conflict is rarer, and trust builds quickly. That is worth acknowledging. But alignment within your team is not the same as competence across cultures. The question now is whether you can recognize the other three logics when they appear — in a partner organization, a donor, a local leader, a colleague from a different background. You know your own logic well. The next step is developing fluency in the others: not to adopt them, but to read them without judgment, engage them without friction, and lead across the difference without assuming your logic is the default.
                     </p>
-                  ))}
-                </>
-              ) : null}
+                  </>
+                ) : gapKey && GAP_BLOCKS[gapKey] ? (
+                  <>
+                    <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
+                      {GAP_BLOCKS[gapKey].title}
+                    </h3>
+                    {GAP_BLOCKS[gapKey].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
+                        {para}
+                      </p>
+                    ))}
+                  </>
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* ─── THE FREEDOM ──────────────────────────────────────────────────── */}
-      <div style={{ background: NAVY, padding: "64px 24px" }}>
+      <div style={{ background: ORANGE, padding: "64px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: NAVY, marginBottom: 20 }}>
             The Freedom
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: OFF_WHITE, lineHeight: 1.85, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
             Leaders who understand all the dimensions of time are controlled by none of them.
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: "oklch(75% 0.04 260)", lineHeight: 1.85, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
             Most leaders are controlled by time — not because they are bad at managing it, but because they only know one logic. If you only know Clock Keeper logic, you will be driven by urgency and you will read every deviation as failure. If you only know Relationship Weaver logic, you will be drained by the invisible expectations of colleagues who run on monochronic assumptions and never tell you directly.
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: "oklch(75% 0.04 260)", lineHeight: 1.85, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
             Understanding multiple logics does not mean adopting them all equally. It means you can see what is happening in the room before it becomes a conflict. You can name it. You can create space for the team to navigate it together. You can stop the fracture before it forms. That is not better time management. That is situational awareness — and situational awareness is what separates a leader who reacts to their team from a leader who reads their team.
           </p>
         </div>
@@ -1059,7 +1048,12 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         {/* 2×2 concept card grid */}
         <div className="concept-card-grid" style={{ display: "grid", gap: 20, marginTop: 32 }}>
           {CONCEPT_CARDS.map((card, i) => (
-            <ConceptCard key={i} card={card} />
+            <ConceptCard
+              key={i}
+              card={card}
+              expanded={expandedCard === i}
+              onToggle={() => setExpandedCard(expandedCard === i ? null : i)}
+            />
           ))}
         </div>
       </div>
@@ -1073,22 +1067,6 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT }}>
             Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including the work of Tim Noble on cross-cultural theology and time.
           </p>
-        </div>
-      </div>
-
-      {/* ─── WHEN GRAMMARS COLLIDE ────────────────────────────────────────── */}
-      <div style={{ maxWidth: 780, margin: "0 auto", padding: "64px 24px 48px" }}>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
-          When Logics Collide
-        </p>
-        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
-          So what happens when two of these logics are in the same room and neither person knows they are speaking a different language? Usually: frustration with a bad explanation. The Clock Keeper decides the Relationship Weaver does not take their commitments seriously. The Relationship Weaver decides the Clock Keeper prioritizes systems over people. The Harmony Follower confuses both of them. The Community Keeper gets quietly excluded from high-stakes coordination because the team has stopped trusting their timeline. The three scenarios below are real. You may have lived some version of each one.
-        </p>
-
-        <div style={{ marginTop: 32 }}>
-          {SCENARIO_CARDS.map((card, i) => (
-            <ScenarioCard key={i} card={card} />
-          ))}
         </div>
       </div>
 
