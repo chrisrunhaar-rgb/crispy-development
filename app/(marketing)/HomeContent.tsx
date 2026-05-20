@@ -82,8 +82,8 @@ export default function HomeContent() {
           {/* 2 square tiles */}
           {(() => {
             const pathways = [
-              { href: "/personal", image: "/pathway-personal.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
-              { href: "/team", image: "/pathway-team.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
+              { href: "/personal", image: "/pathway-team.jpg", imagePosition: "center 30%", badgeLabel: h.personalBadge, heading: h.personalHeading, body: h.personalBody, features: h.personalFeatures, ctaLabel: h.personalCta },
+              { href: "/team", image: "/pathway-personal.jpg", imagePosition: "center 25%", badgeLabel: h.teamBadge, heading: h.teamHeading, body: h.teamBody, features: h.teamFeatures, ctaLabel: h.teamCta },
             ];
             const active = activeTile !== null ? pathways[activeTile] : null;
             return (

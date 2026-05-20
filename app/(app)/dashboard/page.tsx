@@ -530,10 +530,10 @@ export default async function DashboardPage({
 
                 if (!enabled) {
                   return (
-                    <span key={t} style={pillStyle}>
+                    <Link key={t} href="/team" style={{ ...pillStyle, cursor: "pointer", color: "oklch(68% 0.06 260)" }}>
                       {icons[t]}
                       {labels[t]}
-                    </span>
+                    </Link>
                   );
                 }
                 return (

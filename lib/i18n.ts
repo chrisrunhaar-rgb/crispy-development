@@ -99,7 +99,7 @@ export const translations = {
       ctaPrimary: "Join the Personal Pathway",
       ctaSecondary: "View Free Resources",
       whatLabel: "What you get",
-      whatHeading: "Everything you need.\nNothing you don't.",
+      whatHeading: "Everything you need in one place.",
       featuresLabel: "Features",
       pricingLabel: "Pricing",
       pricingHeading: "Simple, honest pricing.",

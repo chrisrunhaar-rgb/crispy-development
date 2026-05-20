@@ -7,8 +7,6 @@ const personalFeatureKeys = [
   "Curated Leadership Content",
   "Reflection Tools",
   "Progress Tracking",
-  "Community Access",
-  "8 PDF Resources",
 ] as const;
 
 const personalFeatureDescriptions: Record<string, Record<string, string>> = {
