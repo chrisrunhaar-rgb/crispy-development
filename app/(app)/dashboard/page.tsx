@@ -8,7 +8,6 @@ import ContactCoach from "@/components/ContactCoach";
 import AddTeamContentForm from "@/components/AddTeamContentForm";
 import SendNotificationForm from "@/components/SendNotificationForm";
 import InviteButton from "@/components/InviteButton";
-import TeamLanguageSelector from "@/components/TeamLanguageSelector";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
@@ -1076,11 +1075,6 @@ function TeamLeaderDashboard({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
 
-      {/* Top bar: language selector */}
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <TeamLanguageSelector currentLanguage={(language as "en" | "id") || "en"} />
-      </div>
-
       {/* THE TEAM roster */}
       <TeamRoster
         teamId={teamRecord.id}
@@ -1089,6 +1083,7 @@ function TeamLeaderDashboard({
         members={rosterMembers}
         isLeader={true}
         language={(language as "en" | "id") || "en"}
+        currentLanguage={(language as "en" | "id") || "en"}
       />
 
       {/* Assessment selector */}

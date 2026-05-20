@@ -4,8 +4,9 @@ import { useState, useTransition } from "react";
 import {
   updateTeamMemberProfile,
   removeTeamMember,
+  renameTeam,
 } from "@/app/(app)/dashboard/team-actions";
-import { generateInviteAndGetUrl } from "@/app/(app)/dashboard/actions";
+import { generateInviteAndGetUrl, setTeamLanguage } from "@/app/(app)/dashboard/actions";
 
 export type RosterMember = {
   id: string;
@@ -37,11 +38,12 @@ const SHARE_COPY: Record<Lang, (teamName: string, url: string) => { title: strin
 
 export default function TeamRoster({
   teamId,
-  teamName,
+  teamName: initialTeamName,
   leaderName,
   members: initialMembers,
   isLeader,
   language = "en",
+  currentLanguage,
 }: {
   teamId: string;
   teamName: string;
@@ -49,6 +51,7 @@ export default function TeamRoster({
   members: RosterMember[];
   isLeader: boolean;
   language?: Lang;
+  currentLanguage?: "en" | "id";
 }) {
   const [members, setMembers] = useState<RosterMember[]>(initialMembers);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -58,6 +61,26 @@ export default function TeamRoster({
   const [invitePopup, setInvitePopup] = useState<{ url: string; text: string; whatsapp: string; title: string } | null>(null);
   const [copied, setCopied] = useState<"link" | "text" | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [teamName, setTeamName] = useState(initialTeamName);
+  const [editingName, setEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState(initialTeamName);
+  const [langPending, startLangTransition] = useTransition();
+  const activeLang = currentLanguage ?? "en";
+
+  function handleLangChange(lang: "en" | "id") {
+    if (lang === activeLang || langPending) return;
+    const formData = new FormData();
+    formData.set("language", lang);
+    startLangTransition(() => setTeamLanguage(formData));
+  }
+
+  function saveTeamName() {
+    const trimmed = nameInput.trim();
+    if (!trimmed || trimmed === teamName) { setEditingName(false); return; }
+    setTeamName(trimmed);
+    setEditingName(false);
+    startTransition(() => renameTeam(teamId, trimmed));
+  }
 
   // ── Invite member ──
   async function handleInvite() {
@@ -133,12 +156,10 @@ export default function TeamRoster({
   const totalCount = (leaderName ? 1 : 0) + members.length;
 
   return (
-    <div style={{ border: "1px solid oklch(86% 0.008 80)", overflow: "hidden" }}>
+    <div style={{ border: "1px solid oklch(86% 0.008 80)", overflow: "hidden", borderRadius: "8px" }}>
 
-      {/* ── Navy header: section info + captain card ── */}
+      {/* ── Navy header ── */}
       <div style={{ background: "oklch(30% 0.12 260)" }}>
-
-        {/* Top row: overline, team name, invite button */}
         <div style={{
           display: "flex",
           justifyContent: "space-between",
@@ -147,65 +168,77 @@ export default function TeamRoster({
           padding: "1.75rem 1.75rem 1.25rem",
           flexWrap: "wrap",
         }}>
+          {/* Left: team info */}
           <div>
-            <p style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.72rem",
-              fontWeight: 800,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              marginBottom: "0.625rem",
-            }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
               Your Team
             </p>
-            <h3 style={{
-              fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
-              fontSize: "1.625rem",
-              color: "oklch(97% 0.005 80)",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.1,
-              marginBottom: "0.375rem",
-            }}>
-              {teamName}
-            </h3>
-            <p style={{
-              fontFamily: "var(--font-cormorant)",
-              fontStyle: "italic",
-              fontSize: "0.9rem",
-              color: "oklch(66% 0.04 260)",
-              lineHeight: 1.4,
-            }}>
+            {editingName ? (
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.375rem" }}>
+                <input
+                  autoFocus
+                  value={nameInput}
+                  onChange={e => setNameInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === "Enter") saveTeamName(); if (e.key === "Escape") setEditingName(false); }}
+                  maxLength={80}
+                  style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.2rem", color: "oklch(22% 0.005 260)", background: "oklch(97% 0.005 80)", border: "none", padding: "0.25rem 0.5rem", letterSpacing: "-0.02em", lineHeight: 1.1, outline: "none", width: "220px" }}
+                />
+                <button type="button" onClick={saveTeamName} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.3rem 0.625rem", cursor: "pointer" }}>Save</button>
+                <button type="button" onClick={() => setEditingName(false)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: "transparent", color: "oklch(72% 0.04 260)", border: "1px solid oklch(52% 0.04 260)", padding: "0.3rem 0.5rem", cursor: "pointer" }}>✕</button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.375rem" }}>
+                <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.625rem", color: "oklch(97% 0.005 80)", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                  {teamName}
+                </h3>
+                {isLeader && (
+                  <button type="button" onClick={() => { setNameInput(teamName); setEditingName(true); }} title="Rename team" style={{ background: "none", border: "none", cursor: "pointer", padding: "0.25rem", color: "oklch(60% 0.04 260)", display: "flex", alignItems: "center" }}>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" style={{ width: "12px", height: "12px" }}>
+                      <path d="M11.5 2.5a1.414 1.414 0 012 2L5 13H2v-3L11.5 2.5z" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            )}
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
               {totalCount} {totalCount === 1 ? "person" : "people"}
             </p>
           </div>
 
-          {isLeader && (
-            <button
-              type="button"
-              onClick={handleInvite}
-              disabled={inviteStatus === "loading"}
-              style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.6rem",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                background: inviteStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)",
-                color: "white",
-                border: "none",
-                padding: "0.5rem 1rem",
-                cursor: inviteStatus === "loading" ? "wait" : "pointer",
-                transition: "background 0.15s",
-                flexShrink: 0,
-              }}
-            >
-              {inviteStatus === "loading" ? "Generating…" : "+ Invite Member"}
-            </button>
-          )}
+          {/* Right: language toggle + invite */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.75rem" }}>
+            {isLeader && currentLanguage !== undefined && (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.3rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(66% 0.04 260)" }}>
+                  Team Language
+                </p>
+                <div style={{ display: "flex", gap: "2px" }}>
+                  {(["en", "id"] as const).map(code => (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => handleLangChange(code)}
+                      disabled={langPending}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", padding: "0.3rem 0.6rem", border: "1px solid", borderColor: activeLang === code ? "oklch(65% 0.15 45)" : "oklch(50% 0.04 260)", background: activeLang === code ? "oklch(65% 0.15 45)" : "transparent", color: activeLang === code ? "white" : "oklch(72% 0.04 260)", cursor: langPending ? "default" : activeLang === code ? "default" : "pointer", opacity: langPending ? 0.6 : 1, transition: "all 0.15s" }}
+                    >
+                      {code.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {isLeader && (
+              <button
+                type="button"
+                onClick={handleInvite}
+                disabled={inviteStatus === "loading"}
+                style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: inviteStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: inviteStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
+              >
+                {inviteStatus === "loading" ? "Generating…" : "+ Invite Member"}
+              </button>
+            )}
+          </div>
         </div>
-
       </div>
 
       {/* ── Member rows ── */}

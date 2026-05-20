@@ -405,3 +405,32 @@ export async function submitStepFeedback(
   revalidatePath("/dashboard");
   return { error: null };
 }
+
+export async function renameTeam(
+  teamId: string,
+  newName: string
+): Promise<{ error: string | null }> {
+  const name = newName.trim();
+  if (!name) return { error: "Name cannot be empty" };
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+  const { data: team } = await admin
+    .from("teams")
+    .select("id, leader_user_id")
+    .eq("id", teamId)
+    .maybeSingle();
+  if (!team || team.leader_user_id !== user.id) return { error: "Not authorized" };
+
+  const { error } = await admin
+    .from("teams")
+    .update({ name })
+    .eq("id", teamId);
+  if (error) return { error: error.message };
+
+  revalidatePath("/dashboard");
+  return { error: null };
+}
