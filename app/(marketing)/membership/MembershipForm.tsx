@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { submitMembershipApplication } from "./actions";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -67,6 +67,7 @@ export default function MembershipForm() {
   const [error, setError] = useState<string | null>(null);
   const { lang: siteLang } = useLanguage();
   const [lang, setLang] = useState<"en" | "id">(siteLang === "id" ? "id" : "en");
+  useEffect(() => { setLang(siteLang === "id" ? "id" : "en"); }, [siteLang]);
 
   const c = COPY[lang];
 
