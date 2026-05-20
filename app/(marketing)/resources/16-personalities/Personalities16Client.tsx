@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
+import { useLanguage } from "@/lib/LanguageContext";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 const QUESTIONS: { text: string; d: string; dir: "A" | "B" }[] = [
@@ -324,6 +325,351 @@ const TYPE_GROUPS = [
   },
 ];
 
+// ── INDONESIAN TRANSLATIONS ───────────────────────────────────────────────────
+
+const QUESTIONS_ID: { text: string; d: string; dir: "A" | "B" }[] = [
+  // E/I
+  { text: "Saya merasa berenergi setelah menghabiskan waktu bersama banyak orang.", d: "EI", dir: "A" },
+  { text: "Saya mudah memperkenalkan diri kepada orang asing di acara sosial.", d: "EI", dir: "A" },
+  { text: "Saya berpikir lebih baik saat mendiskusikan sesuatu bersama orang lain.", d: "EI", dir: "A" },
+  { text: "Saya menikmati menjadi pusat perhatian dalam situasi sosial.", d: "EI", dir: "A" },
+  { text: "Saya lebih suka memproses pikiran dengan berbicara daripada merenung dalam keheningan.", d: "EI", dir: "A" },
+  { text: "Setelah seminggu yang panjang, berada bersama teman dan orang-orang memulihkan energi saya.", d: "EI", dir: "A" },
+  { text: "Saya cerewet dan ekspresif — orang-orang bilang mereka selalu tahu apa yang saya pikirkan.", d: "EI", dir: "A" },
+  { text: "Setelah interaksi sosial, saya butuh waktu sendiri yang tenang untuk mengisi ulang energi.", d: "EI", dir: "B" },
+  { text: "Saya lebih suka percakapan mendalam dua orang daripada diskusi kelompok besar.", d: "EI", dir: "B" },
+  { text: "Saya berpikir matang sebelum berbicara dan sering lebih suka mengekspresikan diri secara tertulis.", d: "EI", dir: "B" },
+  { text: "Saya merasa terkuras setelah interaksi sosial yang lama, meskipun berjalan dengan baik.", d: "EI", dir: "B" },
+  { text: "Saya lebih suka mematangkan ide dalam pikiran saya sendiri sebelum mendiskusikannya.", d: "EI", dir: "B" },
+  { text: "Saya memiliki lingkaran teman dekat yang kecil daripada jaringan yang luas.", d: "EI", dir: "B" },
+  { text: "Saya membutuhkan waktu sendiri yang cukup untuk merasa terbaik.", d: "EI", dir: "B" },
+  { text: "Saya mengamati situasi dengan cermat sebelum terlibat.", d: "EI", dir: "B" },
+  // S/N
+  { text: "Saya lebih suka fakta konkret dan detail praktis daripada teori abstrak.", d: "SN", dir: "A" },
+  { text: "Saya mempercayai apa yang dapat saya amati, alami, dan verifikasi di dunia nyata.", d: "SN", dir: "A" },
+  { text: "Saya lebih suka belajar melalui pengalaman langsung daripada konsep teoritis.", d: "SN", dir: "A" },
+  { text: "Saya fokus pada apa yang ada — realitas saat ini — lebih dari apa yang mungkin ada.", d: "SN", dir: "A" },
+  { text: "Saya pandai memperhatikan detail praktis yang sering terlewat oleh orang lain.", d: "SN", dir: "A" },
+  { text: "Saya lebih suka instruksi yang jelas dan bertahap daripada prinsip-prinsip umum.", d: "SN", dir: "A" },
+  { text: "Saya cenderung membangun di atas apa yang sudah berhasil daripada menciptakan dari nol.", d: "SN", dir: "A" },
+  { text: "Saya tertarik menjelajahi pola, kemungkinan, dan potensi masa depan.", d: "SN", dir: "B" },
+  { text: "Saya senang memikirkan ide-ide abstrak dan skenario hipotetis.", d: "SN", dir: "B" },
+  { text: "Saya sering memiliki firasat atau wawasan yang tidak bisa saya jelaskan secara logis.", d: "SN", dir: "B" },
+  { text: "Saya merasa rutinitas dan pengulangan menguras energi — saya butuh hal baru dan tantangan baru.", d: "SN", dir: "B" },
+  { text: "Saya lebih bersemangat dengan kemungkinan masa depan daripada realitas saat ini.", d: "SN", dir: "B" },
+  { text: "Saya senang membaca makna tersirat dan melihat arti yang lebih dalam dalam hal-hal.", d: "SN", dir: "B" },
+  { text: "Saya merasa berenergi dengan pemikiran gambaran besar dan diskusi visioner.", d: "SN", dir: "B" },
+  { text: "Saya sering mempercayai insting saya lebih dari data keras saat membuat keputusan.", d: "SN", dir: "B" },
+  // T/F
+  { text: "Saat membuat keputusan, saya mengutamakan logika dan konsistensi daripada perasaan pribadi.", d: "TF", dir: "A" },
+  { text: "Saya percaya bahwa lebih penting untuk jujur daripada berhati-hati.", d: "TF", dir: "A" },
+  { text: "Saya nyaman menantang penalaran seseorang meskipun menciptakan konflik.", d: "TF", dir: "A" },
+  { text: "Saya membuat keputusan terutama berdasarkan analisis objektif daripada perasaan.", d: "TF", dir: "A" },
+  { text: "Saya menghargai kompetensi dan efektivitas di atas keharmonisan dalam lingkungan kerja.", d: "TF", dir: "A" },
+  { text: "Saya tidak mudah terpengaruh oleh emosi ketika saya yakin fakta menunjukkan arah yang jelas.", d: "TF", dir: "A" },
+  { text: "Saya lebih suka mengkritik ide secara langsung daripada melembutkan umpan balik saya.", d: "TF", dir: "A" },
+  { text: "Saat membuat keputusan, saya sangat dipengaruhi oleh bagaimana keputusan itu akan memengaruhi orang-orang yang terlibat.", d: "TF", dir: "B" },
+  { text: "Saya secara alami merasakan suasana emosional dalam sebuah ruangan dan meresponsnya.", d: "TF", dir: "B" },
+  { text: "Saya merasa sulit membuat keputusan yang saya tahu akan menyakiti seseorang yang saya pedulikan.", d: "TF", dir: "B" },
+  { text: "Saya lebih peduli menjaga keharmonisan daripada memenangkan argumen.", d: "TF", dir: "B" },
+  { text: "Saya memberikan bobot yang besar pada nilai-nilai dan keyakinan pribadi saat mengambil keputusan.", d: "TF", dir: "B" },
+  { text: "Saya sering menyampaikan umpan balik dengan cara yang terlebih dahulu mempertimbangkan perasaan orang lain.", d: "TF", dir: "B" },
+  { text: "Keputusan yang benar secara logis tetapi sangat menyakiti seseorang terasa salah bagi saya.", d: "TF", dir: "B" },
+  { text: "Saya menemukan makna melalui koneksi antarpribadi lebih dari melalui kejelasan intelektual.", d: "TF", dir: "B" },
+  // J/P
+  { text: "Saya lebih suka memiliki rencana yang jelas dan merasa tidak tenang saat sesuatu tidak pasti.", d: "JP", dir: "A" },
+  { text: "Saya suka membuat keputusan dan melangkah maju daripada mempertahankan pilihan yang terbuka.", d: "JP", dir: "A" },
+  { text: "Saya merasa puas ketika menyelesaikan tugas dan menandainya dari daftar saya.", d: "JP", dir: "A" },
+  { text: "Saya mengatur waktu saya dengan cermat dan tidak suka terlambat atau tidak siap.", d: "JP", dir: "A" },
+  { text: "Tenggat waktu memberi saya struktur; saya tidak nyaman meninggalkan sesuatu hingga menit terakhir.", d: "JP", dir: "A" },
+  { text: "Saya lebih suka lingkungan yang terstruktur dan terorganisir daripada yang fleksibel dan spontan.", d: "JP", dir: "A" },
+  { text: "Saya suka menyelesaikan hal-hal penting dan melanjutkan daripada membiarkannya terbuka.", d: "JP", dir: "A" },
+  { text: "Saya lebih suka menjaga pilihan tetap terbuka daripada berkomitmen pada rencana tetap terlalu awal.", d: "JP", dir: "B" },
+  { text: "Saya bekerja dengan baik di bawah tekanan dan sering menghasilkan pekerjaan terbaik mendekati tenggat waktu.", d: "JP", dir: "B" },
+  { text: "Saya merasa rencana dan struktur yang kaku membatasi — saya lebih suka tetap fleksibel.", d: "JP", dir: "B" },
+  { text: "Saya menikmati spontanitas dan nyaman beradaptasi seiring berjalannya waktu.", d: "JP", dir: "B" },
+  { text: "Saya lebih suka mengumpulkan lebih banyak informasi sebelum berkomitmen pada suatu keputusan.", d: "JP", dir: "B" },
+  { text: "Saya nyaman dengan ketidakpastian dan melihatnya sebagai penuh kemungkinan.", d: "JP", dir: "B" },
+  { text: "Saya cenderung memulai beberapa proyek sekaligus dan menikmati variasinya.", d: "JP", dir: "B" },
+  { text: "Saya menolak dikotakkan — saya suka merespons apa yang muncul daripada merencanakan segalanya lebih dulu.", d: "JP", dir: "B" },
+];
+
+const SCALE_LABELS_ID = ["Sangat tidak setuju", "Tidak setuju", "Netral", "Setuju", "Sangat setuju"];
+
+const TYPE_DATA_ID: Record<string, {
+  subtitle: string; tagline: string;
+  overview: string; strengths: string[]; blindspots: string[];
+  communication: string; crossCultural: string; leadership: string;
+}> = {
+  INTJ: {
+    subtitle: "Sang Arsitek", tagline: "Strategis. Mandiri. Visioner jangka panjang.",
+    overview: "INTJ adalah pemikir strategis dan mandiri yang melihat dunia sebagai sistem yang perlu dipahami dan ditingkatkan. Mereka didorong kuat untuk membangun rencana jangka panjang yang berhasil — memadukan visi dengan eksekusi yang tak kenal lelah. Mereka pendiam tetapi tangguh, dan mereka memegang standar tinggi bagi diri sendiri dan semua orang di sekitar mereka.",
+    strengths: ["Pemikiran strategis jangka panjang", "Mandiri dan terarah", "Memegang standar tinggi dan menindaklanjutinya", "Mensintesis informasi kompleks menjadi kerangka yang jelas", "Tegas dan percaya diri dalam keyakinannya"],
+    blindspots: ["Bisa terlihat dingin atau meremehkan perasaan orang lain", "Mungkin kesulitan menyampaikan visi mereka secara mudah dipahami", "Perfeksionisme bisa memperlambat kemajuan", "Bisa meremehkan dinamika relasional demi efisiensi"],
+    communication: "Bersikaplah langsung dan substantif secara intelektual. Hindari basa-basi atau klise yang samar — mereka menghargai kejelasan dan kompetensi. Beri mereka waktu untuk berpikir. Jangan memaksakan pengungkapan emosional; bangun kepercayaan mereka melalui konsistensi dan kedalaman.",
+    crossCultural: "Preferensi INTJ untuk keterusterangan dan efisiensi bisa terasa menyinggung dalam budaya yang bersifat relasional atau high-context. Kecenderungan mereka untuk bekerja secara mandiri bisa disalahartikan sebagai kesombongan atau pengecualian. Area pertumbuhan: berinvestasi dalam kepercayaan relasional sebagai aset strategis, bukan formalitas.",
+    leadership: "INTJ memimpin melalui visi dan strategi. Mereka paling efektif ketika mengkomunikasikan pemikiran jangka panjang mereka secara mudah dipahami dan membangun kepercayaan relasional yang memungkinkan standar tinggi mereka menginspirasi daripada mengintimidasi.",
+  },
+  INTP: {
+    subtitle: "Sang Logisian", tagline: "Analitis. Orisinal. Pemikir ide.",
+    overview: "INTP didorong oleh kebutuhan mendalam untuk memahami cara kerja sesuatu. Mereka adalah pemikir mendalam dan orisinal yang menikmati masalah kompleks dan jarang menerima penjelasan konvensional. Mereka membawa logika ketat dan kreativitas ke semua yang mereka geluti — dan wawasan mereka sering melampaui zamannya.",
+    strengths: ["Pemikiran analitis dan logis yang mendalam", "Sangat orisinal dan kreatif", "Melihat koneksi yang dilewatkan orang lain", "Objektif dan tidak memihak dalam analisis", "Rasa ingin tahu yang tak habis-habisnya dan terarah dalam belajar"],
+    blindspots: ["Bisa tidak tegas — selalu menemukan sudut pandang baru", "Bisa terlihat tidak peduli atau cuek", "Kesulitan menindaklanjuti implementasi", "Komunikasi ide-ide kompleks bisa tidak mudah dipahami"],
+    communication: "Beri mereka ruang untuk berpikir. Jangan memaksakan keputusan cepat. Libatkan ide-ide mereka — mereka merespons keingintahuan intelektual yang tulus. Hindari tergesa-gesa atau terlalu menyederhanakan; mereka memperhatikan dan kehilangan rasa hormat karenanya.",
+    crossCultural: "Preferensi INTP untuk presisi dan perdebatan daripada harmoni bisa mengejutkan dalam budaya high-context atau berorientasi konsensus. Keterusterangan mereka tentang kelemahan ide bisa terasa sebagai kritik pribadi. Area pertumbuhan: membungkus analisis mereka dalam kehangatan relasional.",
+    leadership: "INTP memimpin paling baik dalam peran konsultatif, analitis, atau berorientasi inovasi. Mereka butuh struktur pendukung untuk eksekusi dan mitra terpercaya yang menerjemahkan visi mereka menjadi tindakan. Hadiah kepemimpinan terbesar mereka adalah kualitas pemikiran mereka.",
+  },
+  ENTJ: {
+    subtitle: "Sang Komandan", tagline: "Tegas. Berani. Pemimpin alami.",
+    overview: "ENTJ adalah eksekutif alami — tegas, berani, dan terdorong untuk memimpin. Mereka melihat ketidakefisienan dan langsung ingin memperbaikinya. Mereka adalah pemikir strategis jangka panjang yang memadukan visi dengan energi tak kenal lelah untuk mengeksekusi. Mereka sering menjadi pemimpin paling kuat di ruangan — dan mereka berkembang ketika tantangan sesuai dengan ambisi mereka.",
+    strengths: ["Tegas dan sangat berorientasi tindakan", "Perencanaan strategis jangka panjang yang luar biasa", "Memimpin dengan keyakinan dan kepercayaan diri", "Membangun sistem dan struktur yang menghasilkan hasil", "Menginspirasi tim melalui kepemimpinan yang terlihat dan ambisius"],
+    blindspots: ["Bisa mendominasi dan tidak sabar dengan pemikir yang lebih lambat", "Bisa meremehkan dinamika emosional", "Mendorong terlalu keras — membuat tim kelelahan", "Kesulitan menerima umpan balik atau salah"],
+    communication: "Cocokkan keterusterangan mereka. Bersiaplah, percaya diri, dan kompeten. Datanglah dengan solusi, bukan hanya masalah. Jangan pasif — mereka kehilangan rasa hormat untuk orang yang tidak bisa berdiri sendiri. Sampaikan ketidaksetujuan dengan jelas dan bersiaplah untuk berdebat.",
+    crossCultural: "Keterusterangan dan ketegasan ENTJ bisa mengganggu secara budaya dalam budaya high-context yang mengutamakan menjaga wajah. Kecepatan mereka bisa meninggalkan orang lain. Area pertumbuhan: memperlambat untuk mendengar apa yang tidak dikatakan, dan memimpin melalui pengaruh sebanyak melalui otoritas.",
+    leadership: "ENTJ memimpin melalui kejelasan visi, tindakan tegas, dan standar tinggi. Area pertumbuhan mereka adalah disiplin memimpin orang, bukan hanya mendorong hasil — membangun kepercayaan, bukan hanya kepatuhan.",
+  },
+  ENTP: {
+    subtitle: "Sang Pendebat", tagline: "Inovatif. Energetik. Penuh ide.",
+    overview: "ENTP adalah mesin ide. Mereka menyukai perdebatan, inovasi, dan menantang status quo. Mereka berenergi dengan kompleksitas dan terdorong untuk menemukan solusi kreatif atas masalah sulit. Mereka karismatik, cepat, dan sering menjadi orang yang paling merangsang di ruangan — meskipun tindak lanjut adalah area pertumbuhan yang konsisten.",
+    strengths: ["Sangat kreatif dan produktif dalam menghasilkan ide", "Nyaman menantang asumsi dan status quo", "Pemikir cepat — menghubungkan ide-ide yang berbeda dengan mudah", "Karismatik dan menginspirasi dalam suasana kelompok", "Adaptif dan tangguh dalam lingkungan yang berubah"],
+    blindspots: ["Lebih tertarik memulai daripada menyelesaikan", "Bisa berdebat demi perdebatan, bukan penyelesaian", "Bisa mengabaikan perasaan orang yang terdampak keterusterangannya", "Kesulitan dengan rutinitas, administrasi, dan tindak lanjut"],
+    communication: "Libatkan ide-ide mereka — mereka suka perdebatan yang bagus. Bersikaplah langsung dan berenergi. Bawa mereka masalah yang menantang, bukan tugas rutin. Mereka menghargai kejujuran intelektual; jangan pura-pura setuju jika Anda tidak.",
+    crossCultural: "Kecintaan ENTP pada perdebatan dan tantangan bisa sangat tidak nyaman dalam budaya berorientasi konsensus atau high-power-distance di mana menantang ide = menantang orang. Area pertumbuhan: menyalurkan energi mereka ke eksplorasi kolaboratif daripada pengujian adversarial.",
+    leadership: "ENTP memimpin melalui energi, ide, dan kekuatan visi mereka. Mereka butuh struktur dan orang-orang di sekitar mereka yang mengubah ide menjadi eksekusi. Hadiah kepemimpinan mereka adalah membuat orang percaya bahwa sesuatu bisa berbeda.",
+  },
+  INFJ: {
+    subtitle: "Sang Pembela", tagline: "Berprinsip. Visioner. Penuh kepedulian mendalam.",
+    overview: "INFJ memadukan keyakinan yang dalam, empati, dan visi jangka panjang. Mereka adalah pemimpin langka yang memegang kejelasan prinsip dan kasih sayang yang tulus. Mereka sering digambarkan sebagai visioner yang pendiam — memimpin melalui kedalaman wawasan dan keotentikan kepedulian mereka. Mereka adalah tipe yang paling didorong secara privat dari semua tipe.",
+    strengths: ["Empati dan wawasan mendalam tentang orang", "Berprinsip dan jelas dalam nilai-nilainya", "Pemikiran visioner jangka panjang", "Menahan kompleksitas — perspektif yang bernuansa", "Sangat berkomitmen ketika mereka meyakini sesuatu"],
+    blindspots: ["Bisa sangat privat hingga terisolasi", "Sangat sensitif terhadap konflik dan kritik", "Mungkin memegang standar yang tidak realistis tinggi untuk orang lain", "Kelelahan akibat menyerap beban emosional orang lain"],
+    communication: "Bersikaplah tulus dan berorientasi nilai. Akui wawasan dan kepedulian mereka. Jangan dangkal atau transaksional — mereka langsung melihatnya. Beri mereka waktu dan ruang; mereka memproses secara mendalam dan berbagi ketika mereka percaya.",
+    crossCultural: "Kepedulian dan kedalaman INFJ beresonansi di semua budaya, tetapi idealisme mereka bisa berbenturan dengan budaya pragmatis atau hierarkis di mana hubungan bersifat transaksional. Area pertumbuhan: memegang keyakinan mereka tanpa menjadi kaku atau menarik diri ketika realitas tidak memenuhi visi mereka.",
+    leadership: "INFJ memimpin melalui kekuatan visi dan kedalaman kepedulian mereka. Mereka menginspirasi kesetiaan yang luar biasa. Area pertumbuhan mereka adalah belajar mengekspresikan visi mereka dengan cukup jelas dan percaya diri sehingga orang lain dapat mengikuti tanpa perlu menafsirkan.",
+  },
+  INFP: {
+    subtitle: "Sang Mediator", tagline: "Idealis. Empatik. Terarah dari dalam secara otentik.",
+    overview: "INFP adalah idealis yang pendiam yang memimpin dari nilai-nilai pribadi yang dipegang teguh. Mereka kreatif, empatik, dan sangat peduli tentang orang-orang dan tujuan yang berarti bagi mereka. Mereka tidak tertarik pada sistem atau efisiensi untuk kepentingannya sendiri — mereka didorong oleh makna, keaslian, dan kebebasan untuk berkembang.",
+    strengths: ["Empati mendalam dan kepekaan emosional", "Nilai-nilai pribadi yang kuat dan rasa integritas", "Kreatif dan orisinal dalam berpikir", "Membangun koneksi yang otentik dan bermakna", "Bersemangat tentang tujuan yang sesuai dengan nilai-nilainya"],
+    blindspots: ["Bisa kesulitan dengan konflik dan ketegasan", "Mungkin terlalu idealis — menolak kompromi", "Rentan mengambil kritik secara pribadi", "Bisa lumpuh dalam pengambilan keputusan ketika nilai-nilai bertentangan"],
+    communication: "Ciptakan ruang untuk kedalaman dan keaslian. Akui perasaan sebelum fakta. Jangan meremehkan nilai-nilai mereka — itu adalah inti dari siapa mereka. Beri mereka waktu; mereka bijaksana dan hati-hati dalam komunikasi mereka.",
+    crossCultural: "Individualisme INFP dan fokus pada keaslian pribadi bisa berlawanan budaya dalam konteks kolektivis. Area pertumbuhan: belajar menemukan makna dalam struktur komunal, bukan hanya terlepas darinya.",
+    leadership: "INFP memimpin paling baik ketika peran mereka sangat selaras dengan nilai-nilai mereka. Mereka menginspirasi melalui keaslian dan kepedulian. Area pertumbuhan mereka adalah membangun ketegasan dan struktur yang memungkinkan visi mereka menjadi kenyataan praktis.",
+  },
+  ENFJ: {
+    subtitle: "Sang Protagonis", tagline: "Karismatik. Menginspirasi. Pengembang orang alami.",
+    overview: "ENFJ adalah pemimpin lahir yang menyatukan orang dan memanggil yang terbaik dari semua orang di sekitar mereka. Mereka hangat, visioner, dan sangat berinvestasi dalam pertumbuhan orang-orang yang mereka pimpin. Mereka memiliki kemampuan langka untuk memegang visi jangka panjang dan dinamika manusiawi tim secara bersamaan.",
+    strengths: ["Secara alami menginspirasi dan memotivasi", "Investasi mendalam dalam pertumbuhan dan pengembangan orang lain", "Komunikator yang sangat baik — jelas, hangat, dan visioner", "Membawa harmoni dan arah secara bersamaan", "Melihat potensi dalam diri orang yang dilewatkan orang lain"],
+    blindspots: ["Terlalu banyak memberi demi kebutuhan orang lain", "Bisa terlalu fokus pada konsensus — kesulitan dengan konflik yang diperlukan", "Mengambil kritik atau penolakan secara pribadi", "Bisa mengabaikan kebutuhan dan batasan diri sendiri"],
+    communication: "Bersikaplah hangat, personal, dan berorientasi tujuan. Akui investasi mereka dalam orang. Libatkan visi mereka dengan tulus. Jangan bersikap dingin atau transaksional — itu langsung melepaskan keterlibatan mereka.",
+    crossCultural: "Kehangatan dan fokus relasional ENFJ adalah karunia dalam hampir setiap konteks budaya. Dalam budaya yang lebih individualistis, penekanan mereka pada komunitas dan harmoni bisa diremehkan. Area pertumbuhan: memegang keyakinan mereka ketika biaya relasional tinggi.",
+    leadership: "ENFJ adalah di antara pemimpin orang paling efektif dalam kerangka apapun. Area pertumbuhan mereka adalah belajar memimpin dengan kejelasan dan struktur serta kehangatan — dan menjaga batasan diri sendiri ketika mereka memberi begitu murah hati kepada orang lain.",
+  },
+  ENFP: {
+    subtitle: "Sang Pejuang", tagline: "Antusias. Kreatif. Sangat manusiawi.",
+    overview: "ENFP adalah karismatik, kreatif, dan sangat berenergi oleh kemungkinan. Mereka membawa antusiasme yang menular ke semua yang mereka lakukan dan memiliki karunia langka untuk melihat potensi dalam orang dan ide. Mereka terbaik ketika pekerjaan mereka bermakna, hubungan mereka mendalam, dan dunia mereka penuh kemungkinan.",
+    strengths: ["Benar-benar kreatif dan visioner", "Sangat antusias — menginspirasi semua orang di sekitar mereka", "Sangat empatik dan berorientasi orang", "Adaptif dan berkembang dalam lingkungan yang ambigu", "Menginspirasi orang lain menuju kemungkinan yang belum mereka lihat"],
+    blindspots: ["Bisa memulai lebih banyak dari yang mereka selesaikan", "Mungkin terlalu mempersonalisasi umpan balik atau konflik", "Tidak fokus saat tidak mengerjakan sesuatu yang bermakna", "Bisa menghindari struktur dan disiplin yang diperlukan"],
+    communication: "Cocokkan energi mereka dan libatkan ide-ide mereka. Bersikaplah tulus — mereka dengan cepat membaca ketidakotentikan. Beri mereka kebebasan kreatif dalam parameter yang jelas. Akui orang sebelum tugas.",
+    crossCultural: "Antusiasme dan individualisme ENFP menginspirasi dalam banyak konteks tetapi mungkin membebani atau membingungkan budaya yang lebih tertahan atau terstruktur. Area pertumbuhan: menyalurkan energi ke tindak lanjut yang berkelanjutan dan membangun disiplin yang sesuai dengan visi mereka.",
+    leadership: "ENFP memimpin melalui inspirasi, kreativitas, dan kekuatan hubungan mereka. Area pertumbuhan mereka adalah eksekusi — membangun kebiasaan dan struktur yang menerjemahkan energi luar biasa mereka menjadi hasil yang berkelanjutan.",
+  },
+  ISTJ: {
+    subtitle: "Sang Logistiker", tagline: "Dapat diandalkan. Teliti. Pilar integritas.",
+    overview: "ISTJ adalah di antara pemimpin yang paling dapat diandalkan dalam kerangka apapun. Mereka memimpin melalui konsistensi, persiapan yang teliti, dan komitmen yang tak tergoyahkan untuk melakukan hal yang benar. Mereka dipercaya justru karena mereka dapat dipercaya — mereka mengatakan apa yang akan mereka lakukan dan melakukan apa yang mereka katakan.",
+    strengths: ["Sangat dapat diandalkan dan konsisten", "Teliti dan sangat terorganisir", "Rasa kewajiban dan tanggung jawab yang kuat", "Tenang dan stabil — tidak panik di bawah tekanan", "Menghormati dan menjunjung sistem dan nilai yang sudah ada"],
+    blindspots: ["Bisa menolak perubahan atau metode baru", "Mungkin terlihat tidak fleksibel atau terlalu kaku", "Kesulitan dengan ambiguitas dan improvisasi", "Bisa meremehkan dimensi emosional kepemimpinan"],
+    communication: "Bersikaplah tepat, siap, dan hormat. Hindari ketidakjelasan atau ketidakpastian. Berikan informasi konkret dan harapan yang jelas. Jangan mengejutkan mereka — mereka membangun kepercayaan melalui keandalan dan mengharapkan hal yang sama dari orang lain.",
+    crossCultural: "Penghormatan ISTJ terhadap struktur dan hierarki cocok dengan budaya high-power-distance. Dalam budaya yang lebih adaptif atau informal, mereka mungkin dianggap tidak fleksibel. Area pertumbuhan: menjaga keandalan mereka sambil membangun fleksibilitas dan kenyamanan dengan ambiguitas.",
+    leadership: "ISTJ memimpin melalui keterpercayaan, persiapan, dan eksekusi yang stabil. Mereka membangun tim yang tahu persis apa yang diharapkan dan dapat mengandalkan pemimpin untuk menindaklanjuti. Area pertumbuhan: belajar memimpin melalui pengaruh dan inspirasi, tidak hanya struktur.",
+  },
+  ISFJ: {
+    subtitle: "Sang Pelindung", tagline: "Peduli. Konsisten. Sangat setia.",
+    overview: "ISFJ adalah tulang punggung yang diam dari tim mana pun yang mereka layani. Mereka hangat, teliti, dan sangat setia — mengutamakan kebutuhan orang lain dan kesehatan komunitas daripada pengakuan pribadi. Karunia mereka adalah jenis pelayanan yang konsisten dan penuh perhatian yang menopang organisasi selama beberapa dekade.",
+    strengths: ["Sangat peduli dan penuh perhatian terhadap kebutuhan orang lain", "Sangat dapat diandalkan dan konsisten", "Perhatian teliti terhadap detail", "Membangun komunitas dan rasa memiliki yang tulus", "Setia — muncul ketika dibutuhkan"],
+    blindspots: ["Bisa menekan kebutuhan sendiri untuk menghindari konflik", "Tidak nyaman dengan perubahan — lebih suka apa yang sudah berhasil", "Mungkin kesulitan mendelegasikan atau menetapkan batasan yang tegas", "Bisa merasa tidak dihargai ketika pelayanan tidak diperhatikan"],
+    communication: "Bersikaplah hangat, personal, dan penuh apresiasi. Akui kontribusi mereka secara khusus. Jangan mengabaikan mereka — mereka sering tidak akan mengadvokasi diri sendiri. Ciptakan ruang yang aman bagi mereka untuk berbagi perspektif mereka sendiri.",
+    crossCultural: "Orientasi pelayanan ISFJ dan fokus komunitas diterjemahkan dengan baik di semua budaya kolektivis. Dalam lingkungan yang lebih asertif, pemberian yang diam-diam bisa diremehkan. Area pertumbuhan: mengklaim suara mereka dan mengadvokasi perspektif mereka sendiri sejelas mereka melayani orang lain.",
+    leadership: "ISFJ memimpin melalui kepedulian, keandalan, dan kualitas pelayanan mereka. Mereka membangun kesetiaan yang mendalam dan merupakan perekat tak terlihat dari banyak tim yang sehat. Area pertumbuhan: belajar memimpin dengan otoritas yang tepat — bukan hanya melalui pelayanan.",
+  },
+  ESTJ: {
+    subtitle: "Sang Eksekutif", tagline: "Terorganisir. Langsung. Pembangun sistem yang andal.",
+    overview: "ESTJ adalah administrator dan pengorganisir alami. Mereka membawa harapan yang jelas, kepemimpinan yang tegas, dan eksekusi sistematis ke semua yang mereka jalankan. Mereka langsung, dapat diandalkan, dan terdorong untuk membangun struktur yang berhasil — dan mereka mengharapkan orang-orang di sekitar mereka memenuhi standar yang sama.",
+    strengths: ["Luar biasa dalam mengorganisir orang dan sumber daya", "Komunikasi yang jelas, langsung, dan harapan yang jelas", "Sangat dapat diandalkan — menepati apa yang mereka komitmenkan", "Menciptakan ketertiban dan kejelasan dalam situasi kompleks", "Etos kerja yang kuat dan komitmen terhadap hasil"],
+    blindspots: ["Bisa tidak fleksibel dan menolak pendekatan alternatif", "Mungkin terlihat dominan atau mengendalikan", "Meremehkan dinamika emosional dan kebutuhan relasional", "Bisa kesulitan dengan inovasi atau perubahan pada sistem yang sudah ada"],
+    communication: "Bersikaplah langsung, faktual, dan bisnis. Datanglah dengan informasi yang jelas. Hindari ketidakjelasan. Sampaikan ketidaksetujuan dengan hormat tetapi langsung — mereka merespons pada kejelasan, bukan isyarat.",
+    crossCultural: "Keterusterangan ESTJ dan kejelasan hierarkis cocok dengan banyak budaya yang terstruktur. Dalam konteks yang lebih cair dan relasional, kebutuhan mereka akan ketertiban bisa terasa mengendalikan. Area pertumbuhan: membangun fleksibilitas ke dalam sistem mereka dan menciptakan ruang nyata untuk masukan orang lain.",
+    leadership: "ESTJ memimpin melalui struktur yang jelas, tindakan tegas, dan tindak lanjut yang konsisten. Mereka adalah pemimpin eksekusi yang sangat baik. Area pertumbuhan: memimpin dengan pengaruh serta otoritas — dan menciptakan tim di mana orang benar-benar dikembangkan, bukan sekadar dikelola.",
+  },
+  ESFJ: {
+    subtitle: "Sang Konsul", tagline: "Hangat. Terorganisir. Sangat berorientasi komunitas.",
+    overview: "ESFJ adalah hangat, terorganisir, dan sangat berinvestasi dalam kesejahteraan komunitas yang mereka layani. Mereka memadukan kepedulian tulus terhadap orang dengan organisasi praktis — mereka menjaga tim berfungsi, memastikan semua orang merasa dihargai, dan menjaga tatanan sosial bersama. Mereka sering menjadi orang yang paling dipercaya di ruangan.",
+    strengths: ["Hangat dan benar-benar peduli terhadap orang lain", "Sangat terorganisir dan dapat diandalkan", "Sangat baik dalam membangun komunitas dan rasa memiliki", "Responsif terhadap kebutuhan praktis orang lain", "Tuan rumah alami — menciptakan lingkungan yang aman dan ramah"],
+    blindspots: ["Bisa mengutamakan harmoni daripada kebenaran yang diperlukan", "Rentan terhadap mencari persetujuan dan menyenangkan orang", "Mungkin kesulitan membuat keputusan yang mengecewakan", "Bisa menghindari konfrontasi hingga tingkat yang tidak sehat"],
+    communication: "Bersikaplah hangat, personal, dan penuh apresiasi. Akui hubungan sebelum tugas. Sampaikan rasa syukur yang tulus — itu menginspirasi mereka. Hindari ketidaksopanan atau efisiensi yang dingin.",
+    crossCultural: "Kehangatan dan fokus komunitas ESFJ diterjemahkan dengan baik di semua budaya kolektivis. Dalam konteks yang lebih individualistis, investasi relasional mereka bisa disalahartikan sebagai mengganggu. Area pertumbuhan: belajar memegang keyakinan mereka dengan jelas ketika tekanan relasional adalah untuk berkompromi.",
+    leadership: "ESFJ memimpin melalui kehangatan, keandalan, dan pembangunan komunitas. Mereka menciptakan tim di mana orang benar-benar merasa memiliki. Area pertumbuhan: mengembangkan kapasitas untuk konflik yang produktif — jenis kejujuran yang melayani orang, bahkan ketika itu tidak nyaman.",
+  },
+  ISTP: {
+    subtitle: "Sang Virtuoso", tagline: "Praktis. Observatif. Tenang di bawah tekanan.",
+    overview: "ISTP adalah pemecah masalah praktis yang unggul dalam lingkungan yang hands-on, teknis, dan berisiko tinggi. Mereka tenang, observatif, dan diam-diam kompeten — orang yang Anda inginkan ketika sesuatu salah dan pemikiran yang jernih dibutuhkan. Mereka bekerja terbaik dengan otonomi maksimal dan struktur yang tidak diperlukan minimal.",
+    strengths: ["Pemecahan masalah praktis yang luar biasa", "Tenang dan jernih di bawah tekanan", "Sangat observatif — memperhatikan apa yang orang lain lewatkan", "Efisien — langsung ke apa yang perlu dilakukan", "Adaptif dan penuh sumber daya dalam situasi yang tidak terduga"],
+    blindspots: ["Bisa terlihat secara emosional jauh atau acuh tak acuh", "Kesulitan dengan perencanaan jangka panjang dan komitmen", "Mungkin menolak struktur atau pengawasan", "Jarang mengomunikasikan apa yang mereka pikirkan atau rasakan"],
+    communication: "Bersikaplah langsung dan praktis. Lewati kata pengantar dan langsung ke intinya. Beri mereka ruang dan otonomi — pengawasan membuat mereka frustrasi. Jangan memaksakan berbagi emosional; mereka terlibat melalui tindakan, bukan kata-kata.",
+    crossCultural: "Kompetensi praktis ISTP dihargai dalam hampir setiap konteks. Cadangan emosional mereka bisa disalahartikan sebagai kedinginan atau ketidakterlibatan dalam budaya relasional. Area pertumbuhan: belajar mengekspresikan investasi dalam orang melalui kata-kata serta tindakan.",
+    leadership: "ISTP paling efektif memimpin dalam peran teknis, krisis, atau berorientasi eksekusi. Mereka memimpin melalui contoh — diam-diam melakukan apa yang perlu dilakukan. Area pertumbuhan: mengkomunikasikan visi dan mengembangkan orang, bukan hanya memecahkan masalah.",
+  },
+  ISFP: {
+    subtitle: "Sang Petualang", tagline: "Lembut. Kreatif. Hadir di saat ini.",
+    overview: "ISFP adalah individu yang lembut, kreatif, dan sangat setia yang memimpin dengan keaslian yang tenang. Mereka sangat selaras dengan dunia di sekitar mereka dan membawa keindahan, kepedulian, dan kehadiran yang tulus ke semua yang mereka lakukan. Mereka tidak tertarik pada kekuasaan atau pengakuan — mereka memimpin karena mereka peduli.",
+    strengths: ["Sangat peduli dan penuh perhatian", "Kreatif dan peka secara estetis", "Otentik — tanpa pertunjukan atau kepura-puraan", "Setia dan hadir bersama orang-orang yang mereka pedulikan", "Fleksibel dan terbuka terhadap perspektif orang lain"],
+    blindspots: ["Bisa menghindari konflik hingga tingkat yang tidak sehat", "Mungkin kesulitan menegaskan kebutuhan dan perspektif sendiri", "Rentan terhadap kritik — mengambilnya sangat secara pribadi", "Bisa sangat privat hingga tidak dapat diakses"],
+    communication: "Bersikaplah lembut, personal, dan benar-benar peduli. Ciptakan ruang bagi mereka untuk berbagi dengan kecepatan mereka sendiri. Jangan menekan atau mengepung mereka. Akui kontribusi mereka, terutama yang diam-diam.",
+    crossCultural: "Kelembutan dan kemampuan adaptasi ISFP melayani mereka dengan baik di sebagian besar budaya. Dalam lingkungan yang sangat kompetitif atau asertif, pendekatan yang tenang dapat membuat mereka terlewatkan. Area pertumbuhan: menemukan keberanian untuk terlihat dan didengar, bukan hanya dirasakan.",
+    leadership: "ISFP memimpin melalui keaslian dan kepedulian yang tulus. Mereka menciptakan lingkungan keamanan dan kepercayaan. Area pertumbuhan: belajar menyampaikan visi mereka dengan percaya diri dan memegang otoritas yang tepat tanpa merasa itu mengkompromikan nilai-nilai mereka.",
+  },
+  ESTP: {
+    subtitle: "Sang Wirausahawan", tagline: "Energetik. Observatif. Mengutamakan tindakan.",
+    overview: "ESTP adalah berorientasi tindakan, perseptif, dan berenergi oleh dunia nyata. Mereka membaca situasi dengan cepat, bergerak cepat, dan memiliki kemampuan luar biasa untuk membuat sesuatu terjadi pada saat ini. Mereka sering menjadi pemimpin yang paling terampil secara taktis di ruangan — dan mereka berkembang dalam lingkungan yang menghargai kecepatan dan kemampuan adaptasi.",
+    strengths: ["Pengambilan keputusan yang cepat dan berorientasi tindakan", "Sangat perseptif dalam situasi nyata", "Energetik dan karismatik", "Negosiator dan komunikator yang sangat baik", "Tangguh dan adaptif di bawah tekanan"],
+    blindspots: ["Bisa mengabaikan perencanaan jangka panjang demi tindakan jangka pendek", "Mungkin kesulitan dengan kesabaran strategis", "Bisa terlihat mencari risiko hingga tingkat yang ceroboh", "Mungkin meremehkan dinamika emosional dan relasional"],
+    communication: "Bersikaplah langsung, energetik, dan konkret. Lewati teori dan tunjukkan dalam praktik. Jaga percakapan tetap dinamis dan berorientasi tindakan. Mereka terlibat dengan cepat dan bergerak maju cepat — langsung ke intinya.",
+    crossCultural: "Keberanian dan keterusterangan ESTP dihargai dalam budaya yang berorientasi tindakan tetapi bisa terasa ceroboh atau tidak hormat dalam lingkungan yang lebih deliberatif atau berorientasi konsensus. Area pertumbuhan: membangun kesabaran untuk proses dan kepekaan terhadap menjaga wajah.",
+    leadership: "ESTP memimpin paling baik dalam konteks dunia nyata yang dinamis dan berisiko tinggi. Mereka adalah master taktis. Area pertumbuhan: mengembangkan kesabaran strategis dan kedalaman relasional yang menopang tim dalam jangka panjang.",
+  },
+  ESFP: {
+    subtitle: "Sang Penghibur", tagline: "Spontan. Energetik. Tulus penuh sukacita.",
+    overview: "ESFP adalah hangat, spontan, dan penuh antusiasme yang tulus untuk kehidupan dan orang-orang. Mereka membawa sukacita, energi, dan positivitas yang menular ke setiap lingkungan yang mereka masuki. Mereka dermawan, menyukai kesenangan, dan benar-benar berinvestasi dalam orang-orang di sekitar mereka — mereka membuat orang merasa terlihat dan dihargai dalam sekejap.",
+    strengths: ["Hangat, dermawan, dan benar-benar peduli", "Membawa energi dan sukacita ke budaya tim", "Spontan dan sangat adaptif", "Sangat baik dalam membaca dan merespons orang", "Membuat orang merasa benar-benar disambut dan dihargai"],
+    blindspots: ["Bisa menghindari perencanaan jangka panjang dan keputusan sulit", "Mungkin mengutamakan kesenangan daripada tindak lanjut", "Rentan terhadap gangguan dan bisa kehilangan fokus", "Kesulitan dengan kritik dan konflik"],
+    communication: "Bersikaplah hangat, positif, dan personal. Libatkan energi mereka dengan tulus. Jangan bersikap dingin, berat, atau terlalu serius — mereka melepaskan keterlibatan. Tunjukkan apresiasi secara sering dan spesifik.",
+    crossCultural: "Kehangatan dan ekspresi ESFP adalah karunia dalam budaya relasional. Dalam lingkungan yang lebih tertahan atau terstruktur, spontanitas mereka bisa terlihat tidak profesional. Area pertumbuhan: menyalurkan karunia sosial mereka ke dalam tindak lanjut yang disiplin yang mengubah hubungan menjadi hasil.",
+    leadership: "ESFP memimpin melalui sukacita, energi, dan kekuatan koneksi yang tulus. Mereka menciptakan budaya di mana orang ingin hadir. Area pertumbuhan: mengembangkan disiplin strategis dan kapasitas untuk memimpin melalui kesulitan serta perayaan.",
+  },
+};
+
+const SHORT_PROFILES_ID: Record<string, string> = {
+  INTJ: "Pemikir strategis yang mandiri dan berpandangan jauh. Sering menjadi visioner yang diam yang melihat lima langkah ke depan. Butuh ruang untuk berpikir dan tidak suka terburu-buru. Bisa terlihat dingin atau jauh. Dalam tim pelayanan mereka adalah ahli strategi yang sangat baik, tetapi harus diundang — bukan diasumsikan — dalam percakapan pastoral.",
+  INTP: "Ingin tahu, teoretis, dan presisi. Ingin memahami bagaimana sistem bekerja sebelum bertindak di dalamnya. Kuat dalam analisis, lebih lambat untuk berkomitmen. Bisa terlalu menganalisis dan kurang mengeksekusi jika tidak dipasangkan dengan rekan yang berorientasi tindakan.",
+  ENTJ: "Tegas, terorganisir, dan berorientasi hasil. Secara alami mengarahkan orang dan sumber daya menuju tujuan. Sering cepat naik ke kepemimpinan formal. Perlu memperlambat dan mendengarkan sebelum memutuskan untuk semua orang, terutama dalam budaya di mana keterusterangan terasa keras.",
+  ENTP: "Energetik, kaya ide, dan cepat menantang asumsi. Suka brainstorming dan memikirkan ulang cara hal-hal dilakukan. Bisa melelahkan rekan tim yang membutuhkan stabilitas. Terbaik ketika dipasangkan dengan seseorang yang mengubah ide-ide mereka menjadi rencana.",
+  INFJ: "Pendiam, berprinsip, dan sangat peduli dengan makna dan tujuan. Sering menjadi hati nurani tim. Membaca orang dengan baik dan merasakan hal-hal secara mendalam. Perlu menjaga diri dari kelelahan akibat menanggung beban orang lain secara diam-diam.",
+  INFP: "Lembut, didorong oleh nilai, dan kreatif. Memiliki rasa batin yang kuat tentang apa yang benar dan benar. Butuh dorongan untuk berbagi dunia batin mereka dengan tim — mereka jarang akan menawarkannya. Ketika diberi ruang, mereka membawa kedalaman yang tidak bisa orang lain bawa.",
+  ENFJ: "Hangat, persuasif, dan berorientasi orang. Terampil mengeluarkan yang terbaik dari orang lain dan mengumpulkan kelompok di sekitar visi. Perlu diingat bahwa tidak setiap rekan tim ingin dikembangkan setiap saat — terkadang orang hanya ingin melakukan pekerjaan mereka.",
+  ENFP: "Antusias, imajinatif, dan relasional. Cepat menginspirasi dan lambat untuk berkecil hati. Membawa warna dan kehidupan ke tim. Butuh bantuan menyelesaikan apa yang mereka mulai; cocok dipadukan dengan seorang Penilai yang bisa membawa proyek melewati garis akhir.",
+  ISTJ: "Dapat diandalkan, teliti, dan setia pada sistem dan standar. Tulang punggung banyak tim pelayanan — keuangan, logistik, tindak lanjut. Bisa menolak perubahan bahkan ketika diperlukan; mendapat manfaat dari diberi tahu mengapa, bukan hanya apa.",
+  ISFJ: "Pelayan yang pendiam yang memperhatikan apa yang orang lain lewatkan dan merawat orang di balik layar. Sering menjadi pengasuh yang tidak terlihat dari tim. Perlu diundang ke sorotan, bukan diasumsikan puas berada di bayang-bayang. Kesetiaan mereka mudah dianggap sebagai hal biasa.",
+  ESTJ: "Terorganisir, langsung, dan dapat dipertanggungjawabkan. Membuat rencana terjadi dan memegang orang pada komitmen. Pemimpin operasional yang kuat. Perlu melembutkan cara penyampaian dalam budaya yang menghargai ketidaklangsungan, di mana ketegasan dapat merusak hubungan sebelum membangunnya.",
+  ESFJ: "Hangat, ramah, dan berdedikasi pada kesejahteraan kelompok. Sering menjadi tuan rumah tim — orang yang mengingat ulang tahun, mengorganisir makanan, dan memperhatikan siapa yang hilang. Bisa mengambil kritik secara pribadi; butuh jaminan lebih dari teguran.",
+  ISTP: "Praktis, hands-on, dan tenang di bawah tekanan. Memperbaiki hal-hal yang rusak, baik fisik maupun operasional. Memimpin melalui kompetensi daripada kata-kata. Perlu ditarik ke dalam lapisan relasional kehidupan tim — mereka tidak akan mendorong diri masuk.",
+  ISFP: "Pendiam, baik hati, dan sensitif secara estetis. Memimpin melalui contoh lebih dari melalui ucapan. Memegang nilai-nilai pribadi yang kuat tetapi jarang memaksakan. Perlu ditanya, karena mereka tidak selalu akan menawarkan pikiran mereka.",
+  ESTP: "Berorientasi tindakan, berani, dan menginspirasi. Berkembang dalam krisis dan bosan dalam rutinitas. Sering sangat baik dalam pengaturan perintis atau situasi respons cepat. Perlu belajar merencanakan melampaui dua puluh empat jam ke depan, terutama ketika orang lain bergantung pada mereka.",
+  ESFP: "Hangat, spontan, dan berfokus pada saat ini. Membawa kehidupan dan sukacita ke tim dan mengangkat ruangan ketika berat. Butuh bantuan berpikir jangka panjang dan menindaklanjuti komitmen yang diam-diam yang tidak ada yang mengamati.",
+};
+
+const TYPE_GROUPS_ID = [
+  { label: "Tipe Analis", desc: "Pemikir Intuitif" },
+  { label: "Tipe Diplomat", desc: "Perasa Intuitif" },
+  { label: "Tipe Sentinel", desc: "Penilai Pengindera" },
+  { label: "Tipe Penjelajah", desc: "Pengamat Pengindera" },
+];
+
+const DICHOTOMY_LABELS_ID = [
+  { label: "Energi", descA: "Ekstraversi", descB: "Introversi" },
+  { label: "Informasi", descA: "Penginderaan", descB: "Intuisi" },
+  { label: "Keputusan", descA: "Berpikir", descB: "Merasakan" },
+  { label: "Struktur", descA: "Menilai", descB: "Mengamati" },
+];
+
+const MINISTRY_BENEFITS_ID = [
+  {
+    title: "Menurunkan suhu konflik",
+    body: "Ketika kebiasaan rekan tim yang membuat frustrasi dapat dinamai sebagai preferensi tipe daripada kelemahan karakter, menjadi jauh lebih mudah untuk ditangani tanpa penilaian. Percakapan bergerak dari \"kamu salah\" ke \"kita memiliki kabel yang berbeda — bagaimana kita bekerja dengan itu?\"",
+    color: "oklch(65% 0.15 45)",
+  },
+  {
+    title: "Mempertajam kesesuaian peran",
+    body: "Setiap tim pelayanan memiliki pekerjaan garis depan yang terlihat dan pekerjaan garis belakang yang lebih diam. Mengetahui tipe masing-masing orang memudahkan untuk mencocokkan orang yang tepat dengan peran yang tepat. Tim yang mengenal dirinya sendiri berhenti meminta peneliti yang pendiam untuk menjadi tuan rumah acara sambutan.",
+    color: "oklch(48% 0.20 255)",
+  },
+  {
+    title: "Memperkuat kepekaan lintas budaya",
+    body: "Tim lintas budaya sudah menavigasi banyak lapisan perbedaan. Menambahkan lapisan kepribadian mengingatkan tim bahwa tidak semua perbedaan bersifat budaya. Sebagian dari gesekan yang Anda rasakan dengan rekan tim dari negara lain mungkin adalah gesekan yang sama yang akan Anda rasakan dengan seseorang dari negara Anda sendiri yang memiliki tipe yang sama.",
+    color: "oklch(48% 0.20 295)",
+  },
+  {
+    title: "Membantu pemimpin mengelola diri mereka sendiri",
+    body: "Pelayanan lintas budaya jangka panjang meminta orang untuk terus memberi. Mengetahui tipe Anda sendiri menunjukkan konteks mana yang menguras Anda paling cepat, keputusan mana yang mungkin paling sulit, dan di mana titik buta Anda paling sering berada. Ini adalah pengelolaan yang baik dari pribadi yang telah Allah panggil dan bentuk.",
+    color: "oklch(45% 0.16 200)",
+  },
+];
+
+const DIMENSIONS_ID = [
+  {
+    a: "E — Ekstraversi", b: "I — Introversi",
+    question: "Ke mana Anda mengarahkan energi Anda?",
+    body: "Ekstravert mendapat energi dari berada di sekitar orang, mendiskusikan ide dengan lantang, dan terlibat dengan dunia luar. Introvert mendapat energi dari ketenangan, refleksi batin, dan kedalaman daripada keluasan dalam hubungan mereka. Keduanya bisa memimpin dengan baik. Alkitab menampung keduanya — Petrus, yang berbicara pertama dan berpikir kemudian, dan Maria, yang menyimpan segala sesuatu dan merenungkannya dalam hatinya.",
+    color: "oklch(62% 0.18 52)",
+  },
+  {
+    a: "S — Penginderaan", b: "N — Intuisi",
+    question: "Bagaimana Anda mengumpulkan informasi?",
+    body: "Pengindera mempercayai apa yang konkret, dapat diamati, dan terbukti. Mereka memperhatikan detail, mengingat hal-hal spesifik, dan lebih suka membangun di atas apa yang sudah berhasil. Intuitif mempercayai pola, kemungkinan, dan apa yang bisa ada. Tim pelayanan membutuhkan keduanya: Pengindera menjaga pekerjaan tetap membumi dan akurat; Intuitif menjaga pekerjaan beradaptasi dan bergerak maju.",
+    color: "oklch(55% 0.22 280)",
+  },
+  {
+    a: "T — Berpikir", b: "F — Merasakan",
+    question: "Bagaimana Anda mengambil keputusan?",
+    body: "Pemikir memutuskan berdasarkan logika, keadilan, dan prinsip masalah. Perasa memutuskan berdasarkan orang, nilai, dan dampak pada hubungan. Tidak ada yang lebih penuh kasih atau lebih alkitabiah dari yang lain — Kitab Suci menghormati kebenaran yang jelas dan kepedulian yang lembut. Tim yang hanya terdiri dari Pemikir bisa menjadi dingin; hanya dari Perasa bisa menghindari keputusan sulit.",
+    color: "oklch(52% 0.18 215)",
+  },
+  {
+    a: "J — Menilai", b: "P — Mengamati",
+    question: "Bagaimana Anda mengorganisir kehidupan dan pekerjaan Anda?",
+    body: "Penilai lebih suka rencana, tenggat waktu, dan lingkaran yang tertutup. Mereka suka hal-hal yang sudah diputuskan. Pengamat lebih suka fleksibilitas, pilihan terbuka, dan keputusan yang ditunda hingga momen terakhir yang bertanggung jawab. Penilai membantu tim menyelesaikan; Pengamat membantu tim beradaptasi. Dalam pengaturan lapangan yang berubah cepat, keduanya dibutuhkan — tim yang hanya merencanakan tidak bisa berputar, dan tim yang hanya berputar tidak pernah mengirimkan.",
+    color: "oklch(52% 0.20 25)",
+  },
+];
+
+const PRACTICE_ITEMS_ID = [
+  {
+    title: "Bagikan tipe Anda, tetapi bicarakan",
+    body: "Sebuah daftar kode empat huruf yang ditempel di dinding sedikit berguna. Rapat tim di mana setiap orang mendeskripsikan apa yang benar dan tidak-cukup-benar tentang profil mereka, dan apa yang mereka butuhkan dari rekan tim karenanya, sangat berarti.",
+  },
+  {
+    title: "Ambil ulang setelah musim kehidupan besar",
+    body: "Preferensi tipe biasanya tetap stabil, tetapi seberapa kuat seseorang memegang preferensi bisa bergeser setelah musim peregangan, penderitaan, atau pertumbuhan. Pengambilan ulang setiap beberapa tahun bisa memunculkan percakapan yang berguna.",
+  },
+  {
+    title: "Gunakan untuk melayani, bukan sebagai alasan",
+    body: "\"Saya seorang Introvert, jadi saya tidak akan melakukan keramahan\" adalah penyalahgunaan kerangka. \"Saya seorang Introvert, jadi saya menjamu yang terbaik dalam kelompok kecil dan butuh waktu yang tenang sesudahnya\" adalah jenis pengetahuan diri yang membuat tim lebih kuat. Tujuannya adalah melayani dengan lebih bijak, bukan untuk keluar.",
+  },
+];
+
+const ASSESSMENT_TIPS_ID: [string, string][] = [
+  ["60 pertanyaan", "Nilai setiap pernyataan pada skala 5 poin."],
+  ["Jujur, bukan ideal", "Jawab berdasarkan bagaimana Anda secara alami — bukan siapa yang Anda inginkan."],
+  ["Tidak ada jawaban yang benar", "Setiap tipe memiliki kekuatan kepemimpinan yang nyata."],
+  ["Butuh sekitar 10 menit", "Temukan momen yang tenang. Jawaban yang terburu-buru menghasilkan hasil yang kurang akurat."],
+];
+
+const ACTION_ITEMS_ID = [
+  "Ikuti penilaian 16 Kepribadian minggu ini dan diskusikan hasil empat huruf Anda dengan satu kolega yang mengenal Anda dengan baik. Tanyakan: apakah ini sesuai dengan apa yang Anda lihat pada diri saya?",
+  "Identifikasi satu tempat di mana deskripsi tipe Anda mungkin membaca perilaku budaya sebagai kepribadian. Jika ini menggambarkan Anda sebagai pendiam atau langsung, tanyakan apakah sifat itu adalah temperamen atau pembentukan budaya dalam konteks spesifik Anda.",
+  "Sebelum percakapan tim multikultural Anda berikutnya, singkirkan label tipe dan dekati orang lain dengan keingintahuan segar. Deskripsi kepribadian seharusnya membuka percakapan, bukan menutupnya.",
+];
+
+const SEO_PARAS_ID = [
+  "Sedikit alat dalam dunia pengembangan kepemimpinan yang telah mencapai pengakuan nama Myers-Briggs Type Indicator. Jutaan orang mengikuti beberapa versi penilaian setiap tahun, dan kode tipe empat huruf telah menjadi bagian dari percakapan sehari-hari di tempat kerja, gereja, dan komunitas online secara global. Tetapi bagi pemimpin yang bekerja melampaui batas budaya, pertanyaan yang lebih dalam penting: apa yang sebenarnya diukur oleh kerangka kepribadian yang dikembangkan di Amerika pertengahan abad ke-20 ketika ia pergi ke Nairobi, Jakarta, atau Beirut?",
+  "Asal-usul MBTI berasal dari teori tipe psikologis Carl Jung, yang diartikulasikan dalam karyanya tahun 1921 Tipe Psikologis, dan kemudian diterjemahkan menjadi penilaian praktis oleh Isabel Briggs Myers dan ibunya Katharine Cook Briggs. Tujuan mereka adalah murah hati dan praktis — untuk membantu orang biasa memahami diri mereka sendiri dan bekerja lebih baik dengan orang lain. Penilaian ini mengorganisir kepribadian di empat dikotomi: di mana Anda fokuskan perhatian (Introversi atau Ekstraversi), bagaimana Anda menerima informasi (Penginderaan atau Intuisi), bagaimana Anda membuat keputusan (Berpikir atau Merasakan), dan bagaimana Anda mengorganisir kehidupan Anda (Menilai atau Mengamati). Hasilnya adalah salah satu dari 16 kemungkinan kombinasi tipe, masing-masing membawa deskripsi profil.",
+  "Popularitas MBTI tidak melindunginya dari pengawasan ilmiah. Peneliti yang meninjau data kepribadian selama beberapa dekade telah mengangkat dua kekhawatiran utama: keandalan uji-retest (sebagian besar responden menerima tipe yang berbeda saat diuji ulang beberapa minggu kemudian) dan validitas memaksa sifat manusia yang berkelanjutan ke dalam kategori biner baik/atau. Ilmuwan kepribadian yang bekerja di bidang ini semakin menyukai model dimensional, seperti Big Five, yang memperlakukan sifat sebagai spektrum daripada sakelar. Ini tidak membatalkan percakapan MBTI, tetapi berarti alat tersebut harus dipegang dengan longgar, sebagai peta yang berguna daripada pengukuran yang tepat.",
+  "Keterbatasan lintas budaya MBTI adalah di mana taruhannya meningkat bagi pemimpin internasional. Kerangka ini dibangun pada data yang sebagian besar diambil dari populasi Barat yang berpendidikan, dan deskripsi tipenya membawa asumsi budaya yang tertanam. Pertimbangkan dimensi Introversi/Ekstraversi. Dalam budaya di mana keheningan menandakan rasa hormat, di mana berbicara tanpa undangan dalam suasana kelompok adalah tidak pantas, atau di mana harmoni kolektif mengambil prioritas daripada ekspresi individu, seseorang mungkin secara konsisten muncul sebagai introvert pada penilaian MBTI bukan karena temperamen tetapi karena nilai-nilai budaya yang dipegang teguh. Penelitian David Livermore tentang Kecerdasan Budaya (CQ) secara konsisten menunjukkan bahwa perilaku dan kepribadian disaring melalui pemrograman budaya — memisahkan keduanya membutuhkan kerja interpretatif yang disengaja.",
+  "Dimensi Berpikir/Merasakan menghadirkan tantangan serupa dalam pengaturan lintas budaya. Dalam banyak budaya yang relasional dan high-context, pengambilan keputusan publik menekankan harmoni dan menjaga wajah, yang mungkin dibaca oleh instrumen MBTI sebagai preferensi untuk Merasakan daripada Berpikir. Tetapi seorang pemimpin dari budaya semacam itu mungkin secara pribadi bernalar dengan cara yang sangat analitis sambil secara publik mengekspresikan perhatian relasional — bukan karena Merasakan mendominasi tetapi karena konteks budaya mereka menuntut kepekaan relasional sebagai register yang dapat diterima secara sosial. Mereduksi kompleksitas ini menjadi satu huruf melewatkan nuansa yang dibutuhkan kompetensi lintas budaya.",
+  "Tidak ada yang berarti MBTI harus ditinggalkan dalam konteks multikultural. Digunakan dengan hati-hati, ini masih bisa menghasilkan refleksi dan percakapan yang produktif. Kuncinya adalah memposisikannya sebagai undangan untuk pengungkapan diri daripada putusan yang otoritatif. Ketika tim dari lima negara yang berbeda mengeksplorasi kepribadian bersama menggunakan MBTI, output paling berharga bukan satu set kode empat huruf tetapi percakapan yang diprovokasi oleh kode-kode tersebut: inilah cara saya cenderung mendekati konflik — apakah ini sesuai dengan apa yang Anda amati? Percakapan-percakapan itu, dipandu dengan baik, memunculkan perbedaan yang meningkatkan kolaborasi terlepas dari apakah kategori tipe yang mendasarinya tepat secara budaya.",
+  "Bagi pekerja lintas budaya, satu implikasi praktis adalah menolak menerapkan hasil MBTI dari satu konteks budaya untuk memprediksi perilaku dalam konteks lain. Seseorang yang dinilai sebagai Ekstravert dalam konteks rumah mereka mungkin tampil sangat berbeda saat menavigasi budaya baru di mana gaya ekspresif alami mereka dibaca sebagai tidak pantas atau agresif. Adaptasi adalah keterampilan, bukan pergeseran kepribadian, dan alat penilaian tidak boleh digunakan untuk menandai seseorang sebagai tidak konsisten hanya karena perilaku mereka bergeser di berbagai lingkungan budaya.",
+  "Dari perspektif iman, kerangka kepribadian seperti MBTI paling baik berada dalam teologi penciptaan dan komunitas. Metafora yang diperluas Rasul Paulus tentang tubuh Kristus dalam 1 Korintus 12 menegaskan perbedaan nyata yang diberikan Allah dalam cara orang berfungsi: mata tidak bisa berkata kepada tangan, Aku tidak membutuhkanmu. Memahami bagaimana rekan tim berpikir, memproses, dan memimpin adalah tindakan kepedulian — ini memungkinkan pemimpin menugaskan pekerjaan dengan bijaksana, berkomunikasi dengan cara yang tepat sasaran, dan membangun tim di mana kontribusi yang berbeda benar-benar dihargai.",
+  "Pada saat yang sama, Mazmur 139 menetapkan batas pada apa yang bisa diklaim oleh penilaian mana pun: Engkau membentuk aku dalam kandungan ibuku — aku dijadikan dengan ajaib dan dengan penuh hormat. Tidak ada kode empat huruf yang mengandung misteri penuh seseorang yang diciptakan dalam gambar Allah. Alat kepribadian adalah pelayan yang berguna dan tuan yang buruk. Digunakan dengan kerendahan hati budaya, landasan teologis, dan kemauan untuk memegang hasil dengan longgar, kerangka 16 tipe dapat membantu pemimpin tumbuh dalam kesadaran diri, meningkatkan dinamika tim, dan terlibat dengan lebih bijak di seluruh keragaman tubuh Kristus global yang kompleks dan indah.",
+];
+
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
 type QuizState = "idle" | "active" | "done";
@@ -363,6 +709,7 @@ export default function Personalities16Client({
   savedType: string | null;
   savedScores: Record<string, number> | null;
 }) {
+  const { lang } = useLanguage();
   const searchParams = useSearchParams();
   const isRetake = searchParams.get("retake") === "1";
   const isViewModule = searchParams.get("view") === "module";
@@ -427,9 +774,18 @@ export default function Personalities16Client({
 
   // ── TYPE MODAL ─────────────────────────────────────────────────────────────
   const modalData = selectedType ? TYPE_DATA[selectedType] : null;
+  const modalDataId = selectedType ? TYPE_DATA_ID[selectedType] : null;
 
   const TypeModal = () => {
     if (!modalData || !selectedType) return null;
+    const mSub = lang === "id" ? (modalDataId?.subtitle ?? modalData.subtitle) : modalData.subtitle;
+    const mTag = lang === "id" ? (modalDataId?.tagline ?? modalData.tagline) : modalData.tagline;
+    const mOvr = lang === "id" ? (modalDataId?.overview ?? modalData.overview) : modalData.overview;
+    const mStr = lang === "id" ? (modalDataId?.strengths ?? modalData.strengths) : modalData.strengths;
+    const mBli = lang === "id" ? (modalDataId?.blindspots ?? modalData.blindspots) : modalData.blindspots;
+    const mLdr = lang === "id" ? (modalDataId?.leadership ?? modalData.leadership) : modalData.leadership;
+    const mCom = lang === "id" ? (modalDataId?.communication ?? modalData.communication) : modalData.communication;
+    const mCrs = lang === "id" ? (modalDataId?.crossCultural ?? modalData.crossCultural) : modalData.crossCultural;
     return (
       <div
         onClick={() => setSelectedType(null)}
@@ -455,10 +811,10 @@ export default function Personalities16Client({
                   {selectedType}
                 </span>
                 <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "white", marginTop: 6 }}>
-                  {modalData.subtitle}
+                  {mSub}
                 </div>
                 <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, color: "oklch(78% 0.07 260)", marginTop: 4 }}>
-                  {modalData.tagline}
+                  {mTag}
                 </div>
               </div>
               <button
@@ -481,23 +837,23 @@ export default function Personalities16Client({
             {/* Ministry team profile */}
             <div style={{ background: "oklch(97% 0.02 260)", borderRadius: 12, padding: "18px 20px", borderLeft: `4px solid ${modalData.color}` }}>
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: modalData.color, marginBottom: 8 }}>
-                On a Ministry Team
+                {lang === "id" ? "Dalam Tim Pelayanan" : "On a Ministry Team"}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
-                {SHORT_PROFILES[selectedType]}
+                {lang === "id" ? (SHORT_PROFILES_ID[selectedType] ?? SHORT_PROFILES[selectedType]) : SHORT_PROFILES[selectedType]}
               </p>
             </div>
 
             {/* Overview */}
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(28% 0.06 260)", margin: 0 }}>
-              {modalData.overview}
+              {mOvr}
             </p>
 
             {/* Strengths & Blindspots */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               {[
-                { title: "Strengths", items: modalData.strengths, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
-                { title: "Blindspots", items: modalData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
+                { title: lang === "id" ? "Kekuatan" : "Strengths", items: mStr, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
+                { title: lang === "id" ? "Titik Buta" : "Blindspots", items: mBli, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
               ].map(section => (
                 <div key={section.title} style={{ background: "white", borderRadius: 12, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
                   <div style={{ padding: "12px 16px", background: section.bg }}>
@@ -517,9 +873,9 @@ export default function Personalities16Client({
 
             {/* Leadership, Communication, Cross-cultural */}
             {[
-              { title: "Leadership Style", content: modalData.leadership },
-              { title: "Communication", content: modalData.communication },
-              { title: "Cross-Cultural Awareness", content: modalData.crossCultural },
+              { title: lang === "id" ? "Gaya Kepemimpinan" : "Leadership Style", content: mLdr },
+              { title: lang === "id" ? "Komunikasi" : "Communication", content: mCom },
+              { title: lang === "id" ? "Kesadaran Lintas Budaya" : "Cross-Cultural Awareness", content: mCrs },
             ].map(section => (
               <div key={section.title} style={{ background: "oklch(98% 0.006 260)", borderRadius: 12, padding: "16px 20px", border: "1px solid oklch(92% 0.04 260)" }}>
                 <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(40% 0.06 260)", marginBottom: 8 }}>{section.title}</p>
@@ -531,7 +887,7 @@ export default function Personalities16Client({
               onClick={() => setSelectedType(null)}
               style={{ padding: "12px 24px", background: modalData.color, color: "white", border: "none", borderRadius: 0, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer", alignSelf: "flex-start" }}
             >
-              Close
+              {lang === "id" ? "Tutup" : "Close"}
             </button>
           </div>
         </div>
@@ -557,20 +913,22 @@ export default function Personalities16Client({
         <div style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "72px 24px 64px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto" }}>
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
-              Personal Development · Assessment
+              {lang === "id" ? "Pengembangan Diri · Penilaian" : "Personal Development · Assessment"}
             </p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, marginBottom: 20 }}>
               16 Personalities
             </h1>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 400, lineHeight: 1.7, color: "oklch(85% 0.05 240)", maxWidth: 580 }}>
-              One of the world's most widely used personality frameworks — discover your four-letter type and understand how your natural wiring shapes how you lead, think, and relate.
+              {lang === "id"
+                ? "Salah satu kerangka kepribadian yang paling banyak digunakan di dunia — temukan tipe empat huruf Anda dan pahami bagaimana susunan alami Anda membentuk cara Anda memimpin, berpikir, dan berhubungan."
+                : "One of the world's most widely used personality frameworks — discover your four-letter type and understand how your natural wiring shapes how you lead, think, and relate."}
             </p>
             <button
               onClick={startQuiz}
               className="p16-btn"
               style={{ marginTop: 36, padding: "14px 36px", background: "oklch(65% 0.15 45)", color: "white", border: "none", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 600 }}
             >
-              Start Assessment →
+              {lang === "id" ? "Mulai Penilaian →" : "Start Assessment →"}
             </button>
           </div>
         </div>
@@ -580,16 +938,22 @@ export default function Personalities16Client({
           {/* What is the framework */}
           <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
-              What is the 16 Personalities Framework?
+              {lang === "id" ? "Apa itu Kerangka 16 Kepribadian?" : "What is the 16 Personalities Framework?"}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
-              The 16 Personalities framework gives every member of your team a four-letter shorthand that captures how they are naturally wired. It does not measure how skilled you are, how mature you are in faith, or how effective you are as a leader. It maps your defaults: where your energy comes from, how you take in information, how you weigh decisions, and how you prefer to organise the world around you.
+              {lang === "id"
+                ? "Kerangka 16 Kepribadian memberi setiap anggota tim Anda singkatan empat huruf yang menangkap bagaimana mereka secara alami disusun. Ini tidak mengukur seberapa terampil Anda, seberapa dewasa Anda dalam iman, atau seberapa efektif Anda sebagai pemimpin. Ini memetakan standar Anda: dari mana energi Anda berasal, bagaimana Anda menerima informasi, bagaimana Anda menimbang keputusan, dan bagaimana Anda lebih suka mengorganisir dunia di sekitar Anda."
+                : "The 16 Personalities framework gives every member of your team a four-letter shorthand that captures how they are naturally wired. It does not measure how skilled you are, how mature you are in faith, or how effective you are as a leader. It maps your defaults: where your energy comes from, how you take in information, how you weigh decisions, and how you prefer to organise the world around you."}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 14 }}>
-              Each of these four areas sits on a spectrum. You always have access to both ends. The letter simply names which side feels easier and more natural when you are not consciously stretching.
+              {lang === "id"
+                ? "Masing-masing dari empat area ini berada di spektrum. Anda selalu memiliki akses ke kedua ujung. Huruf tersebut hanya menyebutkan sisi mana yang terasa lebih mudah dan lebih alami ketika Anda tidak secara sadar meregangkan diri."
+                : "Each of these four areas sits on a spectrum. You always have access to both ends. The letter simply names which side feels easier and more natural when you are not consciously stretching."}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.75, color: "oklch(30% 0.06 260)" }}>
-              This kind of self-knowledge is not new in Christian leadership. Paul wrote that the body of Christ is made up of many parts, each shaped differently and each needed (1 Corinthians 12). The 16 Personalities framework gives you a modern vocabulary for that ancient truth — helping your team move past the quiet assumption that everyone should think, decide, and lead the way the most visible person in the room does.
+              {lang === "id"
+                ? "Jenis pengetahuan diri ini tidak baru dalam kepemimpinan Kristen. Paulus menulis bahwa tubuh Kristus terdiri dari banyak bagian, masing-masing dibentuk secara berbeda dan masing-masing dibutuhkan (1 Korintus 12). Kerangka 16 Kepribadian memberi Anda kosakata modern untuk kebenaran kuno tersebut — membantu tim Anda melewati asumsi diam bahwa semua orang harus berpikir, memutuskan, dan memimpin seperti orang yang paling terlihat di ruangan."
+                : "This kind of self-knowledge is not new in Christian leadership. Paul wrote that the body of Christ is made up of many parts, each shaped differently and each needed (1 Corinthians 12). The 16 Personalities framework gives you a modern vocabulary for that ancient truth — helping your team move past the quiet assumption that everyone should think, decide, and lead the way the most visible person in the room does."}
             </p>
           </section>
 
@@ -597,14 +961,16 @@ export default function Personalities16Client({
           <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
             <div style={{ background: "oklch(22% 0.10 260)", padding: "20px 28px" }}>
               <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontWeight: 600, color: "white", margin: 0 }}>
-                Why this helps Christian ministry teams
+                {lang === "id" ? "Mengapa ini membantu tim pelayanan Kristen" : "Why this helps Christian ministry teams"}
               </h2>
             </div>
             <div style={{ padding: "24px 28px" }}>
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 24 }}>
-                In cross-cultural Christian work, teams are often small, the work is intense, and personalities can rub against each other in ways that feel spiritual but are actually structural. Without language to name these differences, teams can spiritualise them — labelling someone "unsubmissive" when they are simply processing differently. The 16 Personalities framework gives ministry teams four practical gains:
+                {lang === "id"
+                  ? "Dalam pekerjaan Kristen lintas budaya, tim sering kecil, pekerjaan intens, dan kepribadian bisa bergesekan dengan cara yang terasa spiritual tetapi sebenarnya struktural. Tanpa bahasa untuk menamai perbedaan-perbedaan ini, tim bisa mengspiritualkannya — melabeli seseorang \"tidak taat\" padahal mereka hanya memproses secara berbeda. Kerangka 16 Kepribadian memberi tim pelayanan empat manfaat praktis:"
+                  : "In cross-cultural Christian work, teams are often small, the work is intense, and personalities can rub against each other in ways that feel spiritual but are actually structural. Without language to name these differences, teams can spiritualise them — labelling someone \"unsubmissive\" when they are simply processing differently. The 16 Personalities framework gives ministry teams four practical gains:"}
               </p>
-              {[
+              {(lang === "id" ? MINISTRY_BENEFITS_ID : [
                 {
                   title: "Lowers the temperature of conflict",
                   body: "When a teammate's frustrating habit can be named as a type-preference rather than a character flaw, it becomes much easier to address without judgement. The conversation moves from \"you are wrong\" to \"we are wired differently — how do we work with that?\"",
@@ -625,7 +991,7 @@ export default function Personalities16Client({
                   body: "Long-term cross-cultural ministry asks people to give continually. Knowing your own type shows you which contexts drain you fastest, which decisions are likely to be hardest, and where your blind spots most often sit. This is good stewardship of the person God has called and shaped.",
                   color: "oklch(45% 0.16 200)",
                 },
-              ].map((item, i) => (
+              ]).map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 16, padding: "16px 0", borderBottom: i < 3 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
                   <div style={{ width: 4, borderRadius: 4, background: item.color, flexShrink: 0, marginTop: 2 }} />
                   <div>
@@ -640,13 +1006,13 @@ export default function Personalities16Client({
           {/* The Four Dimensions */}
           <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
-              The Four Dimensions
+              {lang === "id" ? "Empat Dimensi" : "The Four Dimensions"}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 24 }}>
-              Each dimension is a spectrum. Your type reflects your natural preference, not your only capability.
+              {lang === "id" ? "Setiap dimensi adalah spektrum. Tipe Anda mencerminkan preferensi alami Anda, bukan satu-satunya kemampuan Anda." : "Each dimension is a spectrum. Your type reflects your natural preference, not your only capability."}
             </p>
             <div style={{ display: "grid", gap: 16 }}>
-              {[
+              {(lang === "id" ? DIMENSIONS_ID : [
                 {
                   a: "E — Extraversion", b: "I — Introversion",
                   question: "Where do you direct your energy?",
@@ -671,7 +1037,7 @@ export default function Personalities16Client({
                   body: "Judgers prefer plans, deadlines, and closed loops. They like things decided. Perceivers prefer flexibility, options open, and decisions delayed until the last responsible moment. Judgers help a team finish; Perceivers help a team adapt. In a fast-changing field setting, both are needed — the team that only plans cannot pivot, and the team that only pivots never ships.",
                   color: "oklch(52% 0.20 25)",
                 },
-              ].map(dim => (
+              ]).map(dim => (
                 <div key={dim.a} style={{ background: "white", borderRadius: 14, padding: "22px 24px", border: "1px solid oklch(90% 0.04 260)" }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6, flexWrap: "wrap" }}>
                     <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 17, fontWeight: 700, color: dim.color }}>{dim.a}</span>
@@ -688,18 +1054,20 @@ export default function Personalities16Client({
           {/* The 16 Types — grouped, clickable */}
           <section style={{ marginBottom: 52 }}>
             <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 26, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 8 }}>
-              The 16 Types
+              {lang === "id" ? "16 Tipe" : "The 16 Types"}
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, color: "oklch(45% 0.06 260)", marginBottom: 28 }}>
-              Tap any type to explore its full profile. Your own type will be revealed after completing the assessment.
+              {lang === "id" ? "Ketuk tipe mana pun untuk menjelajahi profil lengkapnya. Tipe Anda sendiri akan terungkap setelah menyelesaikan penilaian." : "Tap any type to explore its full profile. Your own type will be revealed after completing the assessment."}
             </p>
             <div style={{ display: "grid", gap: 24 }}>
-              {TYPE_GROUPS.map(group => (
+              {TYPE_GROUPS.map((group, gIdx) => {
+                const groupId = TYPE_GROUPS_ID[gIdx];
+                return (
                 <div key={group.label}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                     <div style={{ width: 10, height: 10, borderRadius: "50%", background: group.color, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: group.color }}>{group.label}</span>
-                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, color: "oklch(55% 0.06 260)" }}>({group.desc})</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: group.color }}>{lang === "id" ? groupId.label : group.label}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, color: "oklch(55% 0.06 260)" }}>({lang === "id" ? groupId.desc : group.desc})</span>
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))", gap: 10 }}>
                     {group.types.map(typeName => {
@@ -717,14 +1085,15 @@ export default function Personalities16Client({
                           }}
                         >
                           <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 700, color: t.color, marginBottom: 4 }}>{typeName}</div>
-                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", marginBottom: 6 }}>{t.subtitle}</div>
-                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, color: group.color, fontWeight: 600, letterSpacing: "0.04em" }}>Tap to explore →</div>
+                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 500, color: "oklch(45% 0.06 260)", marginBottom: 6 }}>{lang === "id" ? (TYPE_DATA_ID[typeName]?.subtitle ?? t.subtitle) : t.subtitle}</div>
+                          <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, color: group.color, fontWeight: 600, letterSpacing: "0.04em" }}>{lang === "id" ? "Ketuk untuk jelajahi →" : "Tap to explore →"}</div>
                         </div>
                       );
                     })}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </section>
 
@@ -732,14 +1101,16 @@ export default function Personalities16Client({
           <section style={{ marginBottom: 52, background: "white", borderRadius: 16, border: "1px solid oklch(90% 0.04 260)", overflow: "hidden" }}>
             <div style={{ background: "oklch(96% 0.04 260)", padding: "20px 28px", borderBottom: "1px solid oklch(90% 0.04 260)" }}>
               <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", margin: 0 }}>
-                How to use this well as a team
+                {lang === "id" ? "Cara menggunakan ini dengan baik sebagai tim" : "How to use this well as a team"}
               </h2>
             </div>
             <div style={{ padding: "24px 28px" }}>
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: "oklch(30% 0.06 260)", marginBottom: 20 }}>
-                No four-letter type captures the full image of God in a person. Use this framework as a doorway into conversation, not a label that closes one. Three practices help most:
+                {lang === "id"
+                  ? "Tidak ada tipe empat huruf yang menangkap gambar penuh Allah dalam diri seseorang. Gunakan kerangka ini sebagai pintu masuk ke percakapan, bukan label yang menutupnya. Tiga praktik paling membantu:"
+                  : "No four-letter type captures the full image of God in a person. Use this framework as a doorway into conversation, not a label that closes one. Three practices help most:"}
               </p>
-              {[
+              {(lang === "id" ? PRACTICE_ITEMS_ID : [
                 {
                   title: "Share your type, but talk about it",
                   body: "A list of four-letter codes pinned to a wall does little. A team meeting where each person describes what is true and not-quite-true about their profile, and what they need from teammates because of it, does a great deal.",
@@ -752,7 +1123,7 @@ export default function Personalities16Client({
                   title: "Use it for service, not for excuse",
                   body: "\"I'm an Introvert, so I won't do hospitality\" is a misuse of the framework. \"I'm an Introvert, so I host best in small groups and need quiet time afterwards\" is the kind of self-knowledge that makes a team stronger. The goal is to serve more wisely, not to opt out.",
                 },
-              ].map((item, i) => (
+              ]).map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 16, padding: "14px 0", borderBottom: i < 2 ? "1px solid oklch(94% 0.02 260)" : "none" }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, width: 24, textAlign: "center" }}>
                     {i + 1}
@@ -764,7 +1135,9 @@ export default function Personalities16Client({
                 </div>
               ))}
               <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, lineHeight: 1.75, color: "oklch(35% 0.06 260)", marginTop: 20, marginBottom: 0, fontStyle: "italic" }}>
-                Used in this spirit, the 16 Personalities framework becomes one more way your team learns to love one another well — recognising the different ways God has wired each member, and building a culture where every type is needed, named, and welcome.
+                {lang === "id"
+                  ? "Digunakan dalam semangat ini, kerangka 16 Kepribadian menjadi satu lagi cara tim Anda belajar mengasihi satu sama lain dengan baik — mengakui cara berbeda Allah telah memprogram setiap anggota, dan membangun budaya di mana setiap tipe dibutuhkan, diberi nama, dan disambut."
+                  : "Used in this spirit, the 16 Personalities framework becomes one more way your team learns to love one another well — recognising the different ways God has wired each member, and building a culture where every type is needed, named, and welcome."}
               </p>
             </div>
           </section>
@@ -772,14 +1145,14 @@ export default function Personalities16Client({
           {/* How to take this assessment */}
           <section style={{ background: "white", borderRadius: 16, padding: "32px 36px", border: "1px solid oklch(90% 0.04 260)" }}>
             <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 16 }}>
-              How to take this assessment
+              {lang === "id" ? "Cara mengikuti penilaian ini" : "How to take this assessment"}
             </h2>
-            {[
+            {(lang === "id" ? ASSESSMENT_TIPS_ID : [
               ["60 questions", "Rate each statement on a 5-point scale."],
               ["Be honest, not ideal", "Answer based on how you naturally are — not who you aspire to be."],
               ["No right answers", "Every type has genuine strengths in leadership."],
               ["Takes about 10 minutes", "Find a quiet moment. Rushed answers produce less accurate results."],
-            ].map(([label, desc]) => (
+            ] as [string, string][]).map(([label, desc]) => (
               <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "10px 0", borderBottom: "1px solid oklch(95% 0.03 260)" }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "oklch(65% 0.15 45)", marginTop: 8, flexShrink: 0 }} />
                 <div>
@@ -793,10 +1166,64 @@ export default function Personalities16Client({
               className="p16-btn"
               style={{ marginTop: 28, padding: "13px 32px", background: "oklch(22% 0.10 260)", color: "white", border: "none", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 600 }}
             >
-              Start Assessment
+              {lang === "id" ? "Mulai Penilaian" : "Start Assessment"}
             </button>
           </section>
         </div>
+
+        {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────── */}
+        <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+              {lang === "id" ? "Poin Utama" : "Key Takeaway"}
+            </p>
+            <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+              {lang === "id" ? "Tiga hal untuk ditindaklanjuti minggu ini" : "Three things to act on this week"}
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {(lang === "id" ? ACTION_ITEMS_ID : [
+                "Take the 16 Personalities assessment this week and discuss your four-letter result with one colleague who knows you well. Ask: does this match what you see in me?",
+                "Identify one place where your type description might be reading cultural behaviour as personality. If it describes you as reserved or direct, ask whether that trait is temperament or cultural formation in your specific context.",
+                "Before your next multicultural team conversation, set aside type labels and approach the other person with fresh curiosity. Personality descriptions should open conversations, not close them.",
+              ]).map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                  <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── LONG-FORM SEO SECTION ────────────────────────────────────────── */}
+        <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+          <div style={{ maxWidth: 780, margin: "0 auto" }}>
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+              {lang === "id" ? "Latar Belakang" : "Background"}
+            </p>
+            <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+              {lang === "id" ? "Memahami 16 Tipe Kepribadian Lintas Budaya: Yang Perlu Diketahui Pemimpin" : "Understanding 16 Personality Types Across Cultures: What Leaders Need to Know"}
+            </h2>
+            {(lang === "id" ? SEO_PARAS_ID : [
+              "Few tools in the world of leadership development have achieved the name recognition of the Myers-Briggs Type Indicator. Millions of people take some version of the assessment each year, and the four-letter type codes have become part of everyday conversation in workplaces, churches, and online communities globally. But for leaders working across cultural boundaries, a deeper question matters: what does a personality framework developed in mid-20th century America actually measure when it travels to Nairobi, Jakarta, or Beirut?",
+              "The origins of MBTI trace back to Carl Jung's theory of psychological types, articulated in his 1921 work Psychological Types, and later translated into a practical assessment by Isabel Briggs Myers and her mother Katharine Cook Briggs. Their goal was generous and practical — to help ordinary people understand themselves and work better with others. The assessment organizes personality across four dichotomies: where you focus your attention (Introversion or Extraversion), how you take in information (Sensing or Intuition), how you make decisions (Thinking or Feeling), and how you organize your life (Judging or Perceiving). The result is one of 16 possible type combinations, each carrying a profile description.",
+              "The popularity of MBTI has not insulated it from scientific scrutiny. Researchers reviewing decades of personality data have raised two primary concerns: test-retest reliability (a notable portion of respondents receive a different type when retested weeks later) and the validity of forcing continuous human traits into binary either/or categories. Personality scientists working in the field increasingly favor dimensional models, such as the Big Five, that treat traits as spectrums rather than switches. This does not invalidate the MBTI conversation, but it does mean the tool should be held lightly, as a useful map rather than a precise measurement.",
+              "The cross-cultural limitations of MBTI are where the stakes rise for international leaders. The framework was built on data drawn largely from Western, educated populations, and its type descriptions carry embedded cultural assumptions. Consider the Introversion/Extraversion dimension. In cultures where silence signals respect, where speaking without invitation in a group setting is inappropriate, or where collective harmony takes priority over individual expression, a person may consistently present as introverted on an MBTI assessment not because of temperament but because of deeply held cultural values. David Livermore's research on Cultural Intelligence (CQ) consistently shows that behaviour and personality are filtered through cultural programming — separating the two requires intentional interpretive work.",
+              "The Thinking/Feeling dimension presents a similar challenge in cross-cultural settings. In many relational, high-context cultures, public decision-making emphasizes harmony and face-saving, which MBTI instruments may read as a preference for Feeling over Thinking. But a leader from such a culture may privately reason in highly analytical ways while publicly expressing relational attentiveness — not because Feeling dominates but because their cultural context demands relational sensitivity as the socially acceptable register. Reducing this complexity to a single letter misses the nuance that cross-cultural competence requires.",
+              "None of this means MBTI should be abandoned in multicultural contexts. Used carefully, it can still generate productive reflection and conversation. The key is to position it as an invitation to self-disclosure rather than an authoritative verdict. When a team from five different countries explores personality together using MBTI, the most valuable output is not a set of four-letter codes but the conversations those codes provoke: here is how I tend to approach conflict — does that match what you observe? Those conversations, guided well, surface differences that improve collaboration regardless of whether the underlying type categories are culturally precise.",
+              "For cross-cultural workers, one practical implication is to resist applying MBTI results from one cultural context to predict behaviour in another. A person assessed as an Extravert in their home context may present very differently when navigating a new culture where their natural expressive style reads as inappropriate or aggressive. Adaptation is a skill, not a personality shift, and assessment tools should not be used to mark someone as inconsistent simply because their behaviour shifts across cultural environments.",
+              "From a faith perspective, personality frameworks like MBTI sit best within a theology of creation and community. The Apostle Paul's extended metaphor of the body of Christ in 1 Corinthians 12 affirms real, God-given differences in how people function: the eye cannot say to the hand, I have no need of you. Understanding how a teammate thinks, processes, and leads is an act of care — it enables leaders to assign work thoughtfully, communicate in ways that land, and build teams where different contributions are genuinely valued.",
+              "At the same time, Psalm 139 sets a boundary on what any assessment can claim: you knit me together in my mother's womb — I am fearfully and wonderfully made. No four-letter code contains the full mystery of a person made in God's image. Personality tools are useful servants and poor masters. Used with cultural humility, theological grounding, and a willingness to hold results loosely, the 16-type framework can help leaders grow in self-awareness, improve team dynamics, and engage more wisely across the complex, beautiful diversity of the global body of Christ.",
+            ]).map((para, i) => (
+              <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+
       </div>
     );
   }
@@ -808,6 +1235,7 @@ export default function Personalities16Client({
     const dichotomy = DICHOTOMY_LABELS.find(d => d.label === (
       q.d === "EI" ? "Energy" : q.d === "SN" ? "Information" : q.d === "TF" ? "Decisions" : "Structure"
     )) ?? DICHOTOMY_LABELS[0];
+    const dichotomyId = DICHOTOMY_LABELS_ID[DICHOTOMY_LABELS.indexOf(dichotomy)];
     const progress = (currentIdx / QUESTION_ORDER.length) * 100;
 
     return (
@@ -822,7 +1250,7 @@ export default function Personalities16Client({
           <div style={{ marginBottom: 40 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <span style={{ fontSize: 13, color: "oklch(50% 0.06 260)", fontWeight: 500 }}>{currentIdx + 1} / {QUESTION_ORDER.length}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: dichotomy.color }}>{dichotomy.label}: {dichotomy.descA} vs {dichotomy.descB}</span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: dichotomy.color }}>{lang === "id" ? dichotomyId.label : dichotomy.label}: {lang === "id" ? dichotomyId.descA : dichotomy.descA} vs {lang === "id" ? dichotomyId.descB : dichotomy.descB}</span>
             </div>
             <div style={{ height: 4, background: "oklch(90% 0.04 260)", borderRadius: 4, overflow: "hidden" }}>
               <div style={{ height: "100%", width: `${progress}%`, background: dichotomy.color, borderRadius: 4, transition: "width 0.3s ease" }} />
@@ -830,11 +1258,11 @@ export default function Personalities16Client({
           </div>
           <div style={{ background: "white", borderRadius: 20, padding: "40px", border: "1px solid oklch(92% 0.04 260)", marginBottom: 32, minHeight: 180, display: "flex", alignItems: "center" }}>
             <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(17px, 2.5vw, 21px)", lineHeight: 1.6, color: "oklch(18% 0.10 260)", margin: 0, fontWeight: 400 }}>
-              {q.text}
+              {lang === "id" ? QUESTIONS_ID[qIdx].text : q.text}
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginBottom: 32 }}>
-            {SCALE_LABELS.map((label, i) => (
+            {(lang === "id" ? SCALE_LABELS_ID : SCALE_LABELS).map((label, i) => (
               <button
                 key={i}
                 className="scale-btn16"
@@ -847,7 +1275,7 @@ export default function Personalities16Client({
             ))}
           </div>
           <button onClick={handleBack} style={{ background: "transparent", border: "none", color: "oklch(55% 0.08 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, cursor: "pointer", padding: "8px 0" }}>
-            ← Back
+            {lang === "id" ? "← Kembali" : "← Back"}
           </button>
         </div>
       </div>
@@ -857,6 +1285,7 @@ export default function Personalities16Client({
   // ── DONE ───────────────────────────────────────────────────────────────────
   const { type, pcts } = computeType(scores);
   const typeData = TYPE_DATA[type] ?? TYPE_DATA.ENFP;
+  const typeDataId = TYPE_DATA_ID[type] ?? TYPE_DATA_ID.ENFP;
 
   return (
     <div style={{ minHeight: "100vh", background: "oklch(98% 0.006 260)", fontFamily: "var(--font-montserrat), Montserrat, sans-serif" }}>
@@ -870,17 +1299,17 @@ export default function Personalities16Client({
       <div style={{ background: typeData.bg, color: "white", padding: "56px 24px 48px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(72% 0.10 260)", marginBottom: 12 }}>
-            Your 16 Personalities Type
+            {lang === "id" ? "Tipe 16 Kepribadian Anda" : "Your 16 Personalities Type"}
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
             <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(52px, 8vw, 80px)", fontWeight: 700, color: typeData.colorLight, lineHeight: 1 }}>{type}</span>
             <div>
-              <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{typeData.subtitle}</div>
-              <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, color: "oklch(80% 0.08 260)", marginTop: 6 }}>{typeData.tagline}</div>
+              <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 400, lineHeight: 1.2 }}>{lang === "id" ? typeDataId.subtitle : typeData.subtitle}</div>
+              <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, color: "oklch(80% 0.08 260)", marginTop: 6 }}>{lang === "id" ? typeDataId.tagline : typeData.tagline}</div>
             </div>
           </div>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 16, lineHeight: 1.7, color: "oklch(82% 0.06 260)", maxWidth: 580, marginBottom: 28 }}>
-            {typeData.overview}
+            {lang === "id" ? typeDataId.overview : typeData.overview}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
             {!resultSaved ? (
@@ -893,16 +1322,16 @@ export default function Personalities16Client({
                   cursor: isPending ? "wait" : "pointer",
                 }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending ? "Saving…" : "Save to Dashboard"}
+                {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(72% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
-                ✓ Saved to dashboard
+                {lang === "id" ? "✓ Tersimpan di dasbor" : "✓ Saved to dashboard"}
               </span>
             )}
             <button onClick={startQuiz}
               style={{ background: "transparent", color: "oklch(78% 0.05 260)", border: "none", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 500, cursor: "pointer", padding: "11px 4px" }}>
-              Retake →
+              {lang === "id" ? "Ikuti Ulang →" : "Retake →"}
             </button>
           </div>
         </div>
@@ -913,26 +1342,30 @@ export default function Personalities16Client({
         {/* Ministry team insight */}
         <section style={{ marginBottom: 36, background: "white", borderRadius: 16, padding: "24px 28px", border: `2px solid ${typeData.color}`, borderLeft: `6px solid ${typeData.color}` }}>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: typeData.color, marginBottom: 10 }}>
-            On a Ministry Team
+            {lang === "id" ? "Dalam Tim Pelayanan" : "On a Ministry Team"}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, lineHeight: 1.8, color: "oklch(28% 0.06 260)", margin: 0 }}>
-            {SHORT_PROFILES[type] ?? ""}
+            {lang === "id" ? (SHORT_PROFILES_ID[type] ?? SHORT_PROFILES[type] ?? "") : (SHORT_PROFILES[type] ?? "")}
           </p>
         </section>
 
         {/* Dichotomy bars */}
         <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 24 }}>Your Dimension Profile</h2>
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 24 }}>{lang === "id" ? "Profil Dimensi Anda" : "Your Dimension Profile"}</h2>
           <div style={{ display: "grid", gap: 20 }}>
-            {DICHOTOMY_LABELS.map(d => {
+            {DICHOTOMY_LABELS.map((d, dIdx) => {
+              const dId = DICHOTOMY_LABELS_ID[dIdx];
+              const dLabel = lang === "id" ? dId.label : d.label;
+              const dDescA = lang === "id" ? dId.descA : d.descA;
+              const dDescB = lang === "id" ? dId.descB : d.descB;
               const pctA = pcts[d.keyA] ?? 50;
               const pctB = 100 - pctA;
-              const dominant = pctA >= 50 ? d.descA : d.descB;
+              const dominant = pctA >= 50 ? dDescA : dDescB;
               const dominantPct = pctA >= 50 ? pctA : pctB;
               return (
                 <div key={d.label} style={{ background: "white", borderRadius: 14, padding: "22px 26px", border: "1px solid oklch(92% 0.04 260)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(40% 0.06 260)" }}>{d.label}</span>
+                    <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(40% 0.06 260)" }}>{dLabel}</span>
                     <span style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 600, color: d.color }}>{dominant} — {dominantPct}%</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -943,8 +1376,8 @@ export default function Personalities16Client({
                     <span style={{ fontSize: 13, fontWeight: 600, color: "oklch(55% 0.06 260)", minWidth: 16 }}>{d.keyB}</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
-                    <span style={{ fontSize: 11, color: "oklch(55% 0.06 260)" }}>{d.descA} {pctA}%</span>
-                    <span style={{ fontSize: 11, color: "oklch(55% 0.06 260)" }}>{d.descB} {pctB}%</span>
+                    <span style={{ fontSize: 11, color: "oklch(55% 0.06 260)" }}>{dDescA} {pctA}%</span>
+                    <span style={{ fontSize: 11, color: "oklch(55% 0.06 260)" }}>{dDescB} {pctB}%</span>
                   </div>
                 </div>
               );
@@ -955,8 +1388,8 @@ export default function Personalities16Client({
         {/* Strengths & Blindspots */}
         <section style={{ marginBottom: 40, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           {[
-            { title: "Strengths", items: typeData.strengths, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
-            { title: "Blindspots", items: typeData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
+            { title: lang === "id" ? "Kekuatan" : "Strengths", items: lang === "id" ? typeDataId.strengths : typeData.strengths, color: "oklch(52% 0.18 155)", bg: "oklch(96% 0.03 155)" },
+            { title: lang === "id" ? "Titik Buta" : "Blindspots", items: lang === "id" ? typeDataId.blindspots : typeData.blindspots, color: "oklch(52% 0.18 35)", bg: "oklch(97% 0.03 35)" },
           ].map(section => (
             <div key={section.title} style={{ background: "white", borderRadius: 16, overflow: "hidden", border: "1px solid oklch(92% 0.04 260)" }}>
               <div style={{ padding: "16px 20px", background: section.bg }}>
@@ -976,9 +1409,9 @@ export default function Personalities16Client({
 
         {/* Leadership, Communication, Cross-cultural */}
         {[
-          { title: "Leadership Style", content: typeData.leadership },
-          { title: "Communication Insights", content: typeData.communication },
-          { title: "Cross-Cultural Awareness", content: typeData.crossCultural },
+          { title: lang === "id" ? "Gaya Kepemimpinan" : "Leadership Style", content: lang === "id" ? typeDataId.leadership : typeData.leadership },
+          { title: lang === "id" ? "Wawasan Komunikasi" : "Communication Insights", content: lang === "id" ? typeDataId.communication : typeData.communication },
+          { title: lang === "id" ? "Kesadaran Lintas Budaya" : "Cross-Cultural Awareness", content: lang === "id" ? typeDataId.crossCultural : typeData.crossCultural },
         ].map(section => (
           <section key={section.title} style={{ marginBottom: 20, background: "white", borderRadius: 16, padding: "24px 28px", border: "1px solid oklch(92% 0.04 260)" }}>
             <h3 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 18, fontWeight: 400, color: "oklch(20% 0.14 260)", marginBottom: 12 }}>{section.title}</h3>
@@ -998,16 +1431,16 @@ export default function Personalities16Client({
                 cursor: isPending ? "wait" : "pointer",
               }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {isPending ? "Saving…" : "Save to Dashboard"}
+              {isPending ? (lang === "id" ? "Menyimpan…" : "Saving…") : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
             </button>
           ) : (
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(38% 0.14 155)", fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600 }}>
-              ✓ Saved to your dashboard
+              {lang === "id" ? "✓ Tersimpan di dasbor Anda" : "✓ Saved to your dashboard"}
             </span>
           )}
           <button onClick={startQuiz}
             style={{ padding: "13px 28px", background: "white", color: "oklch(35% 0.10 260)", border: "2px solid oklch(85% 0.05 260)", borderRadius: 0, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-            Retake Assessment
+            {lang === "id" ? "Ikuti Ulang Penilaian" : "Retake Assessment"}
           </button>
         </div>
       </div>
