@@ -4,6 +4,7 @@ import { useState, useRef, useTransition } from "react";
 import { useActionState } from "react";
 import { submitCoachMessage } from "@/app/auth/actions";
 import { sendTeamBroadcast } from "@/app/(app)/dashboard/team-actions";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 type CoachMessage = {
   id: string;
@@ -31,11 +32,14 @@ export default function TeamCommsSection({
   teamId,
   coachMessages,
   broadcasts,
+  language = "en",
 }: {
   teamId: string;
   coachMessages: CoachMessage[];
   broadcasts: Broadcast[];
+  language?: TeamLang;
 }) {
+  const ui = TEAM_UI[language];
   // ── Team Broadcast state ──
   const [teamMsg, setTeamMsg] = useState("");
   const [sending, setSending] = useState(false);
@@ -67,7 +71,7 @@ export default function TeamCommsSection({
       const newEntry: Broadcast = { id: Date.now().toString(), message: teamMsg.trim(), sent_at: new Date().toISOString() };
       setSentList(prev => [newEntry, ...prev]);
       setTeamMsg("");
-      setBroadcastResult("Sent ✓");
+      setBroadcastResult(ui.sentConfirm);
       setTimeout(() => setBroadcastResult(null), 2500);
     }
     setSending(false);
@@ -121,7 +125,7 @@ export default function TeamCommsSection({
             color: "oklch(97% 0.003 50 / 0.7)",
             marginBottom: "0.5rem",
           }}>
-            Team Message
+            {ui.teamMessageLabel}
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)",
@@ -131,7 +135,7 @@ export default function TeamCommsSection({
             letterSpacing: "-0.01em",
             lineHeight: 1.2,
           }}>
-            Message Your Team
+            {ui.messageYourTeam}
           </p>
         </div>
 
@@ -141,7 +145,7 @@ export default function TeamCommsSection({
             <textarea
               value={teamMsg}
               onChange={e => setTeamMsg(e.target.value)}
-              placeholder="Send a message to your whole team…"
+              placeholder={ui.messageTeamPlaceholder}
               rows={3}
               maxLength={300}
               className="dashboard-textarea"
@@ -154,7 +158,7 @@ export default function TeamCommsSection({
                 onClick={() => setTeamHistoryOpen(o => !o)}
                 style={historyToggleStyle}
               >
-                {sentList.length > 0 ? `${sentList.length} sent` : "No messages yet"}
+                {sentList.length > 0 ? ui.sentCount(sentList.length) : ui.noMessagesSent}
                 <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>{teamHistoryOpen ? "▲" : "▼"}</span>
               </button>
               <button
@@ -175,7 +179,7 @@ export default function TeamCommsSection({
                   whiteSpace: "nowrap",
                 }}
               >
-                {sending ? "Sending…" : "Send to all Members →"}
+                {sending ? ui.sendingMessage : ui.sendToAll}
               </button>
             </div>
             {broadcastResult && (
@@ -232,7 +236,7 @@ export default function TeamCommsSection({
             marginBottom: "0.5rem",
             opacity: 0.85,
           }}>
-            Direct Line
+            {ui.directLine}
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)",
@@ -242,7 +246,7 @@ export default function TeamCommsSection({
             letterSpacing: "-0.01em",
             lineHeight: 1.2,
           }}>
-            Talk to the Coach
+            {ui.talkToCoach}
           </p>
         </div>
 
@@ -255,7 +259,7 @@ export default function TeamCommsSection({
               required
               rows={3}
               maxLength={2000}
-              placeholder="Ask the coach a question about your team or leadership…"
+              placeholder={ui.askCoachPlaceholder}
               className="dashboard-textarea"
               style={textareaStyle}
             />
@@ -265,7 +269,7 @@ export default function TeamCommsSection({
                 onClick={() => setCoachHistoryOpen(o => !o)}
                 style={historyToggleStyle}
               >
-                {coachMessages.length > 0 ? `${coachMessages.length} message${coachMessages.length !== 1 ? "s" : ""}` : "No messages yet"}
+                {coachMessages.length > 0 ? ui.messageCount(coachMessages.length) : ui.noMessagesSent}
                 <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>{coachHistoryOpen ? "▲" : "▼"}</span>
               </button>
               <button
@@ -286,11 +290,11 @@ export default function TeamCommsSection({
                   whiteSpace: "nowrap",
                 }}
               >
-                {coachPending ? "Sending…" : "Send to Coach →"}
+                {coachPending ? ui.sendingMessage : ui.sendToCoach}
               </button>
             </div>
             {coachState?.success && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(40% 0.14 145)", fontWeight: 500 }}>Sent ✓</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(40% 0.14 145)", fontWeight: 500 }}>{ui.sentConfirm}</p>
             )}
             {coachState?.error && (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(45% 0.18 25)" }}>{coachState.error}</p>
@@ -335,7 +339,7 @@ export default function TeamCommsSection({
                       marginTop: "0.2rem",
                       fontStyle: "italic",
                     }}>
-                      Awaiting reply
+                      {ui.awaitingReply}
                     </p>
                   )}
                 </div>

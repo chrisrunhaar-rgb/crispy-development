@@ -7,6 +7,7 @@ import {
   renameTeam,
 } from "@/app/(app)/dashboard/team-actions";
 import { generateInviteAndGetUrl, setTeamLanguage } from "@/app/(app)/dashboard/actions";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 export type RosterMember = {
   id: string;
@@ -17,6 +18,7 @@ export type RosterMember = {
 };
 
 type Lang = "en" | "id" | "nl";
+function r(lang: Lang): TeamLang { return lang === "id" ? "id" : "en"; }
 
 const SHARE_COPY: Record<Lang, (teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
   en: (teamName, url) => ({
@@ -171,7 +173,7 @@ export default function TeamRoster({
           {/* Left: team info */}
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
-              Your Team
+              {TEAM_UI[r(language)].yourTeam}
             </p>
             {editingName ? (
               <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.375rem" }}>
@@ -201,7 +203,7 @@ export default function TeamRoster({
               </div>
             )}
             <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
-              {totalCount} {totalCount === 1 ? "person" : "people"}
+              {totalCount} {totalCount === 1 ? TEAM_UI[r(language)].person : TEAM_UI[r(language)].people}
             </p>
           </div>
 
@@ -210,7 +212,7 @@ export default function TeamRoster({
             {isLeader && currentLanguage !== undefined && (
               <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.5rem" }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(66% 0.04 260)" }}>
-                  Team Language
+                  {TEAM_UI[r(language)].teamLanguageLabel}
                 </p>
                 <div style={{ display: "flex", gap: "2px" }}>
                   {(["en", "id"] as const).map(code => (
@@ -234,7 +236,7 @@ export default function TeamRoster({
                 disabled={inviteStatus === "loading"}
                 style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: inviteStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: inviteStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
               >
-                {inviteStatus === "loading" ? "Generating…" : "+ Invite Member"}
+                {inviteStatus === "loading" ? TEAM_UI[r(language)].generating : TEAM_UI[r(language)].inviteMember}
               </button>
             )}
           </div>
@@ -255,7 +257,7 @@ export default function TeamRoster({
             lineHeight: 1.4,
             marginBottom: "0.375rem",
           }}>
-            Your team is just you for now.
+            {TEAM_UI[r(language)].teamAlone}
           </p>
           {isLeader && (
             <p style={{
@@ -264,7 +266,7 @@ export default function TeamRoster({
               color: "oklch(58% 0.008 260)",
               lineHeight: 1.5,
             }}>
-              Use + Invite Member above to bring someone in.
+              {TEAM_UI[r(language)].teamAloneHint}
             </p>
           )}
         </div>
@@ -317,7 +319,7 @@ export default function TeamRoster({
                       color: "oklch(65% 0.15 45)",
                       marginTop: "0.15rem",
                     }}>
-                      Team Leader
+                      {TEAM_UI[r(language)].teamLeaderBadge}
                     </p>
                   </div>
                 </div>
@@ -416,7 +418,7 @@ export default function TeamRoster({
                           fontStyle: "italic",
                           marginTop: "0.15rem",
                         }}>
-                          No details yet
+                          {TEAM_UI[r(language)].noDetailsYet}
                         </p>
                       ) : null}
                     </div>
@@ -489,7 +491,7 @@ export default function TeamRoster({
                             color: "oklch(50% 0.008 260)",
                             marginBottom: "0.35rem",
                           }}>
-                            Role / Title
+                            {TEAM_UI[r(language)].roleTitle}
                           </label>
                           <input
                             type="text"
@@ -521,7 +523,7 @@ export default function TeamRoster({
                             color: "oklch(50% 0.008 260)",
                             marginBottom: "0.35rem",
                           }}>
-                            Additional Comment
+                            {TEAM_UI[r(language)].additionalComment}
                           </label>
                           <input
                             type="text"
@@ -562,7 +564,7 @@ export default function TeamRoster({
                             transition: "background 0.15s",
                           }}
                         >
-                          {isPending ? "Saving…" : "Save"}
+                          {isPending ? TEAM_UI[r(language)].saving : TEAM_UI[r(language)].save}
                         </button>
                         <button
                           type="button"
@@ -580,7 +582,7 @@ export default function TeamRoster({
                             cursor: "pointer",
                           }}
                         >
-                          Cancel
+                          {TEAM_UI[r(language)].cancel}
                         </button>
                       </div>
                     </div>
@@ -634,7 +636,7 @@ export default function TeamRoster({
                   color: "oklch(75% 0.06 60)",
                   marginBottom: "0.25rem",
                 }}>
-                  Invite to {teamName}
+                  {TEAM_UI[r(language)].inviteTo(teamName)}
                 </p>
                 <p style={{
                   fontFamily: "var(--font-montserrat)",
@@ -644,7 +646,7 @@ export default function TeamRoster({
                   letterSpacing: "-0.005em",
                   lineHeight: 1.2,
                 }}>
-                  Share this invite link
+                  {TEAM_UI[r(language)].shareInviteLink}
                 </p>
               </div>
               <button
@@ -696,7 +698,7 @@ export default function TeamRoster({
                   textTransform: "uppercase",
                   color: "oklch(54% 0.008 260)",
                 }}>
-                  Share via
+                  {TEAM_UI[r(language)].shareVia}
                 </p>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                   <a
@@ -743,7 +745,7 @@ export default function TeamRoster({
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {copied === "link" ? "Copied ✓" : "Copy Link"}
+                    {copied === "link" ? TEAM_UI[r(language)].copiedLabel : TEAM_UI[r(language)].copyLink}
                   </button>
                   <button
                     type="button"
@@ -763,7 +765,7 @@ export default function TeamRoster({
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {copied === "text" ? "Copied ✓" : "Copy Message"}
+                    {copied === "text" ? TEAM_UI[r(language)].copiedLabel : TEAM_UI[r(language)].copyMessage}
                   </button>
                 </div>
               </div>

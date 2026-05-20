@@ -20,6 +20,7 @@ import { type TeamMemberResult } from "@/components/TeamResultsGrid";
 import { type FeedbackEntry } from "@/components/StepFeedback";
 import DashboardTour from "./DashboardTour";
 import GaEventTracker from "@/components/GaEventTracker";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -1093,15 +1094,18 @@ function TeamLeaderDashboard({
   teamResults: TeamMemberResult[];
   stepFeedback?: Record<number, FeedbackEntry[]>;
 }) {
+  const lang = (language as TeamLang) || "en";
+  const ui = TEAM_UI[lang];
+
   if (!teamRecord) {
     return (
       <div style={{ maxWidth: "480px" }}>
-        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>Team Pathway</p>
+        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>{ui.journeyLabel}</p>
         <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: "oklch(22% 0.005 260)", marginBottom: "0.875rem" }}>
-          Setting up your team...
+          {ui.settingUpTeam}
         </h2>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(48% 0.008 260)", marginBottom: "2rem" }}>
-          Your application has been approved. Your team dashboard will be ready shortly.
+          {ui.applicationApproved}
         </p>
       </div>
     );
@@ -1159,6 +1163,7 @@ function TeamLeaderDashboard({
         teamId={teamRecord.id}
         coachMessages={messages}
         broadcasts={broadcasts}
+        language={lang}
       />
     </div>
   );
@@ -1191,6 +1196,8 @@ function TeamMemberDashboard({
   teamResults?: TeamMemberResult[];
   stepFeedback?: Record<number, FeedbackEntry[]>;
 }) {
+  const lang = (team.language as TeamLang) || "en";
+  const ui = TEAM_UI[lang];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
@@ -1202,18 +1209,15 @@ function TeamMemberDashboard({
           leaderName={leaderName}
           members={roster}
           isLeader={false}
+          language={lang}
         />
       )}
 
       {/* Journey intro for members */}
       <div style={{ background: "oklch(65% 0.15 45 / 0.08)", borderLeft: "3px solid oklch(65% 0.15 45)", padding: "1.125rem 1.5rem" }}>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(30% 0.10 260)", lineHeight: 1.7, margin: 0 }}>
-          {leaderName ? (
-            <><strong>{leaderName}</strong> created this journey for your team.</>
-          ) : (
-            <>Your team leader created this journey for your team.</>
-          )}{" "}
-          Each member works through each step at the same pace. You will receive a notification when the next step is unlocked. Enjoy the journey!
+          {leaderName ? ui.memberIntroWithLeader(leaderName) : ui.memberIntroNoLeader}{" "}
+          {ui.memberIntroContinue}
         </p>
       </div>
 
