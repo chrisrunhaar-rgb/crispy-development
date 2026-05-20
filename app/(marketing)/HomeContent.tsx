@@ -228,6 +228,11 @@ export default function HomeContent() {
                 title: h.reason5Title ?? "Not open to everyone",
                 body: h.reason5Body ?? "Membership is application-based and personally reviewed. That means the community stays focused, the quality stays high, and you know the people around you belong here.",
               },
+              {
+                num: "06",
+                title: h.reason6Title ?? "Built for leaders with a calling",
+                body: h.reason6Body ?? "Cross-cultural leadership often comes with something deeper than a career goal. This platform takes the spiritual dimension seriously — the calling, the doubt, and the resilience that grows from faith under pressure.",
+              },
             ].map(({ num, title, body }) => (
               <div key={num} style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", color: "oklch(65% 0.15 45)" }}>{num}</span>
