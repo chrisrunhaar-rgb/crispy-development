@@ -29,8 +29,8 @@ export const translations = {
     },
     home: {
       label: "Raising leaders who cross cultures",
-      h1a: "Lead across",
-      h1b: "cultures.",
+      h1a: "Crispy Leaders",
+      h1b: "",
       tagline: "Resources, pathways, and community for Christian leaders, expat professionals, and multicultural team leaders — for those who lead where most people stop.",
       ctaPrimary: "Personal Pathway",
       ctaTeam: "Team Pathway",
@@ -232,8 +232,8 @@ export const translations = {
     },
     home: {
       label: "Membentuk pemimpin yang melintas budaya",
-      h1a: "Memimpin lintas",
-      h1b: "budaya.",
+      h1a: "Crispy Leaders",
+      h1b: "",
       tagline: "Sumber daya, jalur, dan komunitas bagi pemimpin Kristen, profesional ekspatriat, dan manajer tim multikultural.",
       ctaPrimary: "Jalur Pribadi",
       ctaTeam: "Jalur Tim",
@@ -436,8 +436,8 @@ export const translations = {
     },
     home: {
       label: "Leiders vormen die culturen oversteken",
-      h1a: "Leiden over",
-      h1b: "culturen heen.",
+      h1a: "Crispy Leaders",
+      h1b: "",
       tagline: "Materialen, trajecten en gemeenschap voor christelijke leiders, expat-professionals en multiculturele teammanagers.",
       ctaPrimary: "Persoonlijk Traject",
       ctaTeam: "Teamtraject",

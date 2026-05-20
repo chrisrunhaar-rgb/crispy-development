@@ -55,12 +55,12 @@ export default function HomeContent() {
           </div>
 
           <div style={{ maxWidth: "640px" }}>
-            <p className="t-label animate-fade-up" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1.75rem", fontSize: "0.8rem" }}>
+            <h1 className="t-hero animate-fade-up" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+              {h.h1a}
+            </h1>
+            <p className="animate-fade-up animate-delay-1" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "clamp(0.85rem, 1.4vw, 0.95rem)", letterSpacing: "0.05em", color: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }}>
               {h.label}
             </p>
-            <h1 className="t-hero animate-fade-up animate-delay-1" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
-              {h.h1a}<br />{h.h1b}
-            </h1>
             <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
               {h.tagline}
             </p>
