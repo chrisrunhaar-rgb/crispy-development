@@ -2,7 +2,12 @@
 
 import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard } from "../actions";
+
+function L<T>(lang: string, en: T, id: T): T {
+  return lang === "id" ? id : en;
+}
 
 // ─── Color constants (BEAU spec) ─────────────────────────────────────────────
 const NAVY = "oklch(22% 0.10 260)";
@@ -63,6 +68,57 @@ const CONCEPT_CARDS = [
   },
 ];
 
+const CONCEPT_CARDS_ID = [
+  {
+    name: "PENJAGA JAM",
+    term: "Waktu Monochronic (Edward T. Hall) — juga disebut Waktu Linear-Aktif (Richard Lewis) dan Waktu Jam (Richard Brislin)",
+    belief: '"Waktu adalah sumber daya. Gunakan dengan baik."',
+    bullets: [
+      "Ketepatan waktu adalah bentuk penghormatan. Terlambat memberi sinyal ada yang tidak beres.",
+      "Tugas diselesaikan satu per satu. Beralih antar tugas di tengah alur terasa mengganggu.",
+      "Agenda diikuti. Pertemuan memiliki waktu mulai, waktu selesai, dan hasil yang diharapkan.",
+    ],
+    blindspot:
+      "Ketika seseorang beroperasi dari logika berbeda, Penjaga Jam membacanya sebagai kelemahan karakter. Keterlambatan terlihat seperti ketidakhormatan. Fleksibilitas terlihat seperti ketidakorganisasian. Penjaga Jam tidak secara alami bertanya: 'Apa arti perilaku mereka dalam sistem mereka sendiri?' Mereka bertanya: 'Mengapa mereka tidak mau bertindak profesional?'",
+  },
+  {
+    name: "PENENUN RELASI",
+    term: "Waktu Polychronic (Edward T. Hall) — juga disebut Budaya Berorientasi Acara",
+    belief: '"Waktu milik orang yang ada di hadapanku."',
+    bullets: [
+      "Pertemuan berakhir ketika masalah terselesaikan secara relasional, bukan ketika jam menunjukkan waktu yang disepakati.",
+      "Beberapa percakapan dan tugas bisa berjalan bersamaan. Ini wajar, bukan kacau.",
+      "Relasi lebih utama dari agenda. Kamu tidak memulai bisnis sebelum memulai koneksi.",
+    ],
+    blindspot:
+      "Penenun Relasi mungkin benar-benar tidak merasakan biaya yang ditimbulkan fleksibilitas relasional kepada rekan yang sudah merencanakan waktu yang disepakati. Kehangatan itu nyata. Gangguan terhadap jadwal orang lain juga nyata.",
+  },
+  {
+    name: "PENGIKUT HARMONI",
+    term: "Waktu Reaktif (Richard Lewis)",
+    belief: '"Waktu itu kontekstual. Baca suasana, bukan jam."',
+    bullets: [
+      "Ketepatan waktu dan kehangatan relasional sama-sama diharapkan, tetapi bobotnya bergeser tergantung pada siapa yang hadir.",
+      "Dengan tokoh senior atau dalam konteks formal: struktur dan ketepatan waktu menjadi prioritas.",
+      "Dengan rekan atau dalam lingkungan informal: relasi dan alur yang lebih diprioritaskan.",
+    ],
+    blindspot:
+      "Fleksibilitas kontekstual ini bisa terlihat tidak konsisten bagi Penjaga Jam (yang melihat Pengikut Harmoni tidak selalu tepat waktu) maupun Penenun Relasi (yang melihat Pengikut Harmoni tidak selalu tersedia untuk koneksi yang lebih lama). Tidak ada pihak yang sepenuhnya mempercayai mereka karena tidak ada yang melihat logika penuhnya.",
+  },
+  {
+    name: "PENJAGA KOMUNITAS",
+    term: "Kerangka Sasa/Zamani (John Mbiti)",
+    belief: '"Waktu bergerak bersama orang-orang, bukan kalender."',
+    bullets: [
+      "Kehadiran komunitas membentuk acara itu sendiri. 'Kapan pertemuan dimulai?' artinya: 'Kapan semua orang sudah berkumpul?'",
+      "Peristiwa masa lalu tetap hadir melalui ingatan dan komunitas. Penjaga Komunitas membawa sejarah secara aktif.",
+      "Waktu tidak langka seperti yang dialami penjaga jam. Kehadiran adalah mata uangnya.",
+    ],
+    blindspot:
+      "Dalam tim internasional atau organisasi, orientasi Penjaga Komunitas sering mendapat penilaian paling keras — bukan karena salah, tetapi karena sebagian besar sistem organisasi dirancang berdasarkan asumsi monochronic. Logika waktu komunitas jarang dijelaskan dan jarang diundang ke dalam percakapan tim.",
+  },
+];
+
 // ─── Scenario cards data ──────────────────────────────────────────────────────
 const SCENARIO_CARDS = [
   {
@@ -88,6 +144,33 @@ const SCENARIO_CARDS = [
     question: "Which time logic is running here?",
     reveal:
       "The Harmony Follower orientation often surfaces in this scenario. For the Harmony Follower, the goal of that first conversation was relational alignment, not operational clarity. Leaving things open was not evasion. It was respect, allowing things to unfold at the right moment, in the right context, when the right people were present. Pinning down specifics too early can feel presumptuous or even disrespectful.\n\nThe Clock Keeper in the room heard the same conversation and walked away expecting operational follow-through. When nothing happened, they read it as broken commitment rather than different logic.\n\nThe fix is not for one side to abandon their orientation. It is to name, before leaving the room: 'Let us confirm one specific next step, so we both know what we are waiting for.' That one sentence bridges the logic gap.",
+  },
+];
+
+const SCENARIO_CARDS_ID = [
+  {
+    title: "Rapat yang Melebihi Waktu",
+    situation:
+      "Rapat dijadwalkan satu jam. Agenda sudah jelas. Enam puluh menit berlalu, topik penting masih belum selesai. Tiga orang di meja mulai mengecek ponsel mereka. Satu orang meraih buku catatan dan mulai menutupnya. Orang lain berkata pelan, 'Mungkin kita perlu segera mengakhiri.' Tapi dua orang lain di meja masih condong ke depan, masih di tengah-tengah pemikiran. Mereka terlihat sedikit heran melihat ada yang akan pergi.\n\nTidak ada yang bersikap kasar. Tapi ruangan sudah terbagi dua.",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
+    reveal:
+      "Dua logika sedang berkonflik. Orang-orang yang meraih tas beroperasi dari logika monochronic, Penjaga Jam: satu jam sudah disepakati, satu jam sudah habis, rapat sudah selesai. Komitmen berikutnya bukan ketidaknyamanan. Itu adalah janji yang sudah mereka buat. Orang-orang yang masih condong ke depan beroperasi dari logika polychronic, Penenun Relasi: masalah belum terselesaikan secara relasional, jadi rapat belum selesai.\n\nTidak ada yang salah. Tapi tanpa bahasa bersama untuk momen ini, Penjaga Jam akan pergi dengan perasaan rapat dikelola dengan buruk, dan Penenun Relasi akan merasa Penjaga Jam lebih peduli jadwal mereka daripada tim. Kedua kesimpulan itu melewatkan penyebab sebenarnya.",
+  },
+  {
+    title: "Tenggat Waktu yang Terlewat",
+    situation:
+      "Anggota tim dari latar belakang budaya berbeda melewatkan tenggat proyek tiga hari. Saat kamu menindaklanjuti, mereka tidak meminta maaf. Mereka tidak terlihat cemas. Mereka merespons dengan hangat dan memberikan kabar terbaru tentang pekerjaan. Mereka tampak benar-benar senang mendengar kabarmu. Tenggat waktu itu sendiri hampir tidak disebutkan.\n\nKamu merasakan lonjakan frustrasi. Tapi di bawah frustrasi itu ada kebingungan. Mengapa mereka tidak menganggap ini serius?",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
+    reveal:
+      "Ini hampir pasti orientasi waktu berdasarkan acara yang sedang bekerja — logika polychronic atau Penjaga Komunitas. Dalam orientasi event-time, tenggat waktu bukan batas keras melainkan cakrawala perkiraan. Yang penting adalah kualitas pekerjaan dan proses relasional untuk mencapainya. Kabar terbaru yang mereka berikan bukan penghindaran. Itu adalah bentuk akuntabilitas mereka: menunjukkan bahwa pekerjaan masih berjalan dan hubungan masih terjaga.\n\nBukan berarti tenggat waktu tidak penting. Penting. Tapi percakapan yang perlu terjadi bukan 'mengapa kamu tidak bertanggung jawab' melainkan 'inilah bagaimana tenggat ini terhubung dengan pekerjaan orang lain, dan inilah biayanya ketika bergeser.' Percakapan itu hanya bisa terjadi setelah kamu berhenti membaca logika mereka melalui logikamu sendiri.",
+  },
+  {
+    title: '"Kita Selesaikan Nanti"',
+    situation:
+      "Di akhir percakapan perencanaan, kedua pihak mengatakan mereka sudah selaras. Proyek akan dilanjutkan. Tanggal mulai: 'suatu waktu bulan depan.' Diskusi anggaran: 'kita urus nanti setelah tahu lebih banyak.' Keputusan tentang siapa yang memimpin: 'kita bisa diskusikan sambil jalan.' Semua orang meninggalkan rapat dengan perasaan positif.\n\nTiga minggu kemudian, tidak ada yang bergerak. Setiap pihak mengira pihak lain yang akan memulai. Tidak ada yang melakukan itu.",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
+    reveal:
+      "Orientasi Pengikut Harmoni sering muncul dalam skenario ini. Bagi Pengikut Harmoni, tujuan percakapan pertama itu adalah keselarasan relasional, bukan kejelasan operasional. Membiarkan hal-hal terbuka bukan penghindaran. Itu adalah penghormatan — membiarkan sesuatu berkembang pada momen yang tepat, dalam konteks yang tepat, ketika orang yang tepat hadir. Menetapkan hal spesifik terlalu cepat bisa terasa terlalu lancang atau bahkan tidak sopan.\n\nPenjaga Jam di ruangan itu mendengar percakapan yang sama dan pergi dengan mengharapkan tindak lanjut operasional. Ketika tidak ada yang terjadi, mereka membacanya sebagai komitmen yang dilanggar alih-alih logika yang berbeda.\n\nSolusinya bukan agar salah satu pihak meninggalkan orientasinya. Solusinya adalah menyebutkan, sebelum meninggalkan ruangan: 'Mari kita konfirmasi satu langkah berikutnya yang spesifik, agar kita berdua tahu apa yang kita tunggu.' Satu kalimat itu menjembatani kesenjangan logika.",
   },
 ];
 
@@ -181,6 +264,99 @@ const PART1_QUESTIONS = [
       "Letting the conversation keep moving. Forcing a decision before the room is ready will produce a weak one.",
       "Checking whether the senior person in the room wants to move toward a decision, and following their lead.",
       "Calling the group to pause and sense together whether the time is right. Some decisions need more communal settling before they are made.",
+    ],
+  },
+];
+
+const PART1_QUESTIONS_ID = [
+  {
+    q: "Seorang rekan tiba 20 menit terlambat ke rapat tim tanpa pesan dan tanpa penjelasan. Kamu merasa:",
+    options: [
+      "Frustrasi. Dua puluh menit bukan margin kecil. Orang lain berhasil tiba tepat waktu, dan ini mengganggu seluruh kelompok. Kamu ingin membicarakannya secara langsung.",
+      "Penasaran, tapi tidak terlalu terganggu. Mungkin ada sesuatu yang terjadi. Kamu akan menanya secara pribadi setelahnya untuk memastikan mereka baik-baik saja.",
+      "Tidak nyaman, tapi responmu tergantung pada siapa yang ada di ruangan. Jika ada pemimpin senior, keterlambatan itu terasa lebih signifikan. Jika itu kelompok rekan, terasa kurang.",
+      "Tidak terlalu terganggu. Mereka sudah di sini sekarang. Kelompok sudah hadir. Rapat bisa dilanjutkan.",
+    ],
+  },
+  {
+    q: "Rapat tim kamu mencapai waktu akhir yang dijadwalkan, tapi diskusi masih berlangsung dan belum terselesaikan. Kamu ingin:",
+    options: [
+      "Mengakhiri tepat waktu. Jika topik butuh lebih banyak waktu, jadwalkan tindak lanjut. Melebihi waktu menciptakan preseden buruk.",
+      "Terus berlanjut. Diskusi masih hidup dan tim masih terlibat. Jam tidak sepenting percakapan.",
+      "Membaca situasi. Apakah orang senior menunjukkan tanda-tanda perlu pergi? Apakah energi masih kuat? Kamu akan tetap atau pergi berdasarkan sinyal-sinyal itu.",
+      "Biarkan berlanjut. Waktu yang tepat untuk mengakhiri adalah ketika kelompok mencapai titik alami, bukan ketika jam berkata demikian.",
+    ],
+  },
+  {
+    q: "Seorang rekan lintas budaya melewatkan tenggat proyek tiga hari dan tidak menyebutnya. Saat kamu menindaklanjuti, mereka merespons dengan hangat dan memberikan kabar terbaru. Kamu:",
+    options: [
+      "Menghargai kabar terbaru tapi merasa perlu membicarakan tenggat yang terlewat secara langsung. Ini memengaruhi bagian lain proyek dan perlu ditanggapi serius.",
+      "Fokus pada hubungan terlebih dahulu. Kamu senang mereka merespons. Kamu menanya tentang pekerjaan dan menyebutkan dampak keterlambatan dengan lembut, tapi tidak memimpin dengan kegagalan.",
+      "Menyesuaikan respons berdasarkan hubungan dan konteks. Dengan rekan dekat, kamu mungkin langsung. Dalam lingkungan formal atau hierarkis, kamu lebih berhati-hati dalam menyampaikannya.",
+      "Menerima kabar terbaru apa adanya. Mereka terlibat dengan pekerjaan. Kamu mempercayai prosesnya akan selesai.",
+    ],
+  },
+  {
+    q: "Tim kamu selalu menghabiskan 10 hingga 15 menit dalam percakapan informal sebelum masuk ke bisnis. Kamu merasa ini:",
+    options: [
+      "Tidak efisien. Kamu menghargai hubungan, tapi waktu terbatas. Pola ini memakan waktu produktif setiap rapat.",
+      "Esensial. Inilah cara tim sebenarnya terikat. Percakapan sebelum rapat ADALAH rapatnya, dalam artian tertentu.",
+      "Baik-baik saja ketika kelompoknya informal, tapi kamu berharap tim bergerak lebih cepat ketika pemimpin senior hadir atau ketika taruhannya tinggi.",
+      "Wajar. Orang perlu tiba tidak hanya secara fisik tapi juga secara relasional. Pemanasan adalah bagian dari cara kelompok berkumpul.",
+    ],
+  },
+  {
+    q: "Ketika kamu setuju untuk bertemu seseorang 'minggu depan', kamu maksudkan:",
+    options: [
+      "Hari dan waktu tertentu yang akan dikonfirmasi dalam 24 jam ke depan.",
+      "Suatu waktu minggu depan, dengan waktu pastinya muncul dari percakapan lebih dekat ke momen itu.",
+      "Apa pun yang cocok untuk orang yang lebih senior atau yang memiliki kendala logistik lebih besar.",
+      "Minggu adalah jendela umum. Kamu akan tahu momen yang tepat ketika itu tiba.",
+    ],
+  },
+  {
+    q: "Kamu sedang fokus bekerja ketika seorang rekan berhenti di mejamu atau meneleponmu dengan pertanyaan pribadi yang tidak terkait tugas saat ini. Kamu:",
+    options: [
+      "Menyelesaikan pikiranmu, lalu memberikan waktu terbatas kepada mereka. Kamu menghargai koneksi, tapi kamu sedang di tengah-tengah sesuatu.",
+      "Meninggalkan tugas segera. Orang di hadapanmu lebih prioritas daripada tugas di hadapanmu.",
+      "Merespons berdasarkan siapa mereka. Untuk rekan senior atau hubungan dekat, kamu memberikan perhatian penuh. Untuk kontak yang lebih peripheral, kamu menanganinya dengan cepat.",
+      "Menyambut gangguan itu. Hubungan tidak berjalan berdasarkan jadwal. Kamu akan kembali ke tugas.",
+    ],
+  },
+  {
+    q: "Rapat dijadwalkan jam 9:00 pagi. Kamu tiba:",
+    options: [
+      "Jam 8:55 pagi. Tepat waktu berarti beberapa menit lebih awal agar rapat bisa dimulai tepat jam 9:00.",
+      "Jam 9:00 hingga 9:10 pagi. Kamu bermaksud hadir jam sembilan, tapi beberapa menit fleksibilitas itu normal.",
+      "Waktu apa pun yang menandakan tingkat penghormatan yang tepat untuk siapa yang mengadakan rapat. Lebih awal untuk pemimpin senior. Lebih fleksibel dengan rekan.",
+      "Ketika kamu sudah siap dan kelompok sedang berkumpul. Kamu tidak memantau waktu kedatangan yang tepat secara ketat.",
+    ],
+  },
+  {
+    q: "Tenggat proyek perlu digeser karena hubungan kemitraan kunci membutuhkan lebih banyak waktu untuk berkembang sebelum keputusan dapat dibuat. Kamu merasa:",
+    options: [
+      "Tidak nyaman. Hubungan itu penting, tapi tenggat ada alasannya. Kamu akan berupaya melindungi garis waktu dan menangani hubungan secara paralel.",
+      "Sepenuhnya tenang. Hubungan adalah fondasi setiap proyek. Mendapatkan hubungan yang benar akan membuat proyek berhasil.",
+      "Bersedia menyesuaikan jika orang-orang yang terlibat setuju dan jika dimensi hubungan benar-benar kritis. Kamu menilai kasus per kasus.",
+      "Tidak heran. Waktu yang tepat untuk keputusan adalah ketika orang-orang benar-benar siap, bukan ketika kalender mengatakan demikian.",
+    ],
+  },
+  {
+    q: "Pemimpin tim kamu jarang mengirim agenda spesifik sebelum rapat. Kamu merasa:",
+    options: [
+      "Frustrasi. Persiapan adalah bagian dari penghormatan. Tanpa agenda, waktumu berisiko.",
+      "Tidak masalah. Agenda bisa membatasi percakapan yang baik. Kamu mempercayai rapat akan berjalan ke mana seharusnya.",
+      "Netral, kecuali rapat melibatkan kepemimpinan senior. Maka kamu mengharapkan lebih banyak struktur.",
+      "Baik-baik saja. Rapat adalah sesuatu yang hidup. Kelompok akan menemukan arahnya.",
+    ],
+  },
+  {
+    q: "Setelah rapat tim yang panjang, keputusan penting masih belum tercapai. Kamu menyarankan:",
+    options: [
+      "Menyebutkan keputusan dengan jelas, berkeliling meja untuk posisi akhir dari setiap orang, dan mencatat hasilnya sebelum siapa pun pergi.",
+      "Membiarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan siap akan menghasilkan keputusan yang lemah.",
+      "Memeriksa apakah orang senior di ruangan ingin bergerak menuju keputusan, dan mengikuti arahan mereka.",
+      "Mengajak kelompok untuk berhenti sejenak dan merasakan bersama apakah waktunya sudah tepat. Beberapa keputusan membutuhkan lebih banyak waktu komunal sebelum dibuat.",
     ],
   },
 ];
@@ -279,6 +455,99 @@ const PART2_QUESTIONS = [
   },
 ];
 
+const PART2_QUESTIONS_ID = [
+  {
+    q: "Rekan kamu tiba 20 menit terlambat ke rapat tim tanpa pesan. Mereka mungkin:",
+    options: [
+      "Tahu mereka terlambat dan merasakan tekanan internal, meski tidak menunjukkannya secara lahiriah.",
+      "Tidak mengalami keterlambatan itu sebagai peristiwa signifikan. Ada sesuatu yang terjadi, mereka sudah di sini, dan rapat bisa dilanjutkan.",
+      "Membaca situasi saat masuk untuk memahami bagaimana kedatangan mereka diterima sebelum merespons.",
+      "Hanya tiba ketika mereka siap. Waktu rapat adalah orientasi umum, bukan batas keras.",
+    ],
+  },
+  {
+    q: "Dalam budaya yang kamu jalani, ketika rapat melebihi waktu yang dijadwalkan, orang biasanya:",
+    options: [
+      "Merasakan tekanan internal untuk segera mengakhiri. Seseorang akan memberi sinyal bahwa waktunya habis. Melebihi waktu terasa seperti pelanggaran.",
+      "Terus berlanjut secara alami. Percakapan lebih penting dari jadwal. Pergi di tengah diskusi terasa tidak sopan.",
+      "Melihat ke siapa pun yang senior di ruangan. Jika orang itu tidak menunjukkan tanda-tanda mengakhiri, orang lain akan tetap. Jika mereka bergerak, kelompok bergerak.",
+      "Mengikuti energi alami kelompok. Ketika pertemuan terasa selesai, itulah akhirnya.",
+    ],
+  },
+  {
+    q: "Jika seorang rekan dari budaya ini melewatkan tenggat dan tidak menyebutnya, ini kemungkinan besar berarti:",
+    options: [
+      "Mereka merasakan sedikit rasa malu dan berharap itu tidak menjadi masalah yang lebih besar.",
+      "Mereka tidak menganggapnya sebagai 'kegagalan' seperti yang kamu lakukan. Pekerjaan masih berjalan dan hubungan masih terjaga.",
+      "Mereka menunggu untuk melihat seberapa penting ini bagimu sebelum memutuskan berapa banyak perhatian yang layak diberikan.",
+      "Ketepatan waktu dalam pengiriman tidak pernah menjadi orientasi utama mereka untuk pekerjaan ini.",
+    ],
+  },
+  {
+    q: "Ketika tim dari budaya ini menghabiskan waktu lama dalam percakapan informal sebelum bisnis, itu karena:",
+    options: [
+      "Mereka bersosial, tapi mereka mungkin juga merasakan sedikit rasa bersalah karena belum memulai.",
+      "Koneksi ADALAH pekerjaannya. Landasan relasional sebelum agenda adalah hal yang tidak bisa ditawar bagi mereka.",
+      "Mereka membaca apakah konteks menuntut formalitas atau kehangatan, dan menyesuaikannya.",
+      "Kelompok sedang berkumpul. Bisnis dimulai ketika kehadiran terasa tepat, bukan ketika jam mengatakan demikian.",
+    ],
+  },
+  {
+    q: "Dalam budaya ini, ketika seseorang setuju untuk bertemu 'minggu depan', mereka maksudkan:",
+    options: [
+      "Jendela spesifik yang akan segera dikonfirmasi. Mereka sudah memikirkannya secara umum.",
+      "Suatu waktu minggu depan, ditentukan oleh apa yang cocok secara relasional dan logistis pada momennya.",
+      "Apa pun yang sesuai mengingat siapa yang mengusulkan pertemuan dan siapa yang memiliki status lebih tinggi.",
+      "Jendela umum. Momen spesifik akan muncul ketika waktunya terasa tepat bagi kedua pihak.",
+    ],
+  },
+  {
+    q: "Ketika seorang rekan dari budaya ini berhenti dari yang sedang mereka lakukan untuk memberikanmu waktu saat kamu datang tak terduga, ini kemungkinan besar karena:",
+    options: [
+      "Mereka merasa tidak bisa menolak, meski itu menghabiskan waktu fokus mereka.",
+      "Bagi mereka, orang yang hadir selalu lebih prioritas dari tugas yang sedang dikerjakan. Inilah cara mereka beroperasi.",
+      "Mereka menilai hubungan dan konteks, dan menyimpulkan bahwa memberikanmu waktu adalah respons yang tepat.",
+      "Gangguan tidak terbaca sebagai gangguan bagi mereka. Percakapan mengalir. Tugas dilanjutkan.",
+    ],
+  },
+  {
+    q: "Ketika seorang rekan dari budaya ini tiba di rapat, mereka cenderung tiba:",
+    options: [
+      "Mendekati atau sedikit sebelum waktu yang disepakati. Ketepatan waktu penting bagi mereka.",
+      "Cukup fleksibel. Beberapa menit terlambat tidak dialami sebagai terlambat.",
+      "Sesuai formalitas acara. Rapat berisiko tinggi: mereka berhati-hati. Pertemuan informal: jauh lebih santai.",
+      "Ketika mereka siap dan ketika kelompok sedang terbentuk. Waktu jam adalah referensi kasar, bukan komitmen.",
+    ],
+  },
+  {
+    q: "Jika tenggat proyek bergeser karena hubungan kunci membutuhkan lebih banyak waktu pengembangan, rekan dari budaya ini akan:",
+    options: [
+      "Merasa sedikit tidak nyaman. Tenggat ada alasannya, dan mereka menganggapnya serius meski mereka menyerahkan keputusan kepada orang lain.",
+      "Merasa sepenuhnya tenang. Dalam pandangan mereka, penyesuaian hubungan ADALAH keputusan manajemen proyek yang tepat.",
+      "Menerimanya jika orang senior menyetujui perpanjangan. Hierarki memediasi keputusan-keputusan ini.",
+      "Tidak heran. Mereka mengharapkan garis waktu akan menemukan bentuk alaminya seiring pekerjaan berkembang.",
+    ],
+  },
+  {
+    q: "Ketika pemimpin tim dari budaya ini tidak mengirim agenda sebelum rapat, itu mungkin karena:",
+    options: [
+      "Mereka lupa, atau mereka memprioritaskan eksekusi daripada persiapan. Mereka mungkin sedikit tidak nyaman jika ditegur.",
+      "Mereka mempercayai percakapan untuk menemukan arahnya. Agenda bisa terasa seperti pra-memutuskan apa yang penting.",
+      "Agenda tergantung pada tingkat formalitas. Mereka menyimpannya untuk lingkungan formal atau berisiko tinggi.",
+      "Rapat adalah pertemuan, bukan rencana. Apa yang dibutuhkan akan muncul dari kelompok.",
+    ],
+  },
+  {
+    q: "Ketika keputusan penting belum tercapai setelah rapat panjang, rekan dari budaya ini cenderung:",
+    options: [
+      "Merasakan sedikit urgensi untuk menamakannya dan menutupnya. Membiarkan keputusan tidak dibuat terasa tidak nyaman.",
+      "Membiarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan siap menghasilkan hasil yang lebih lemah.",
+      "Melihat kepada orang senior untuk sinyal. Jika mereka menunjukkan sudah waktunya memutuskan, kelompok akan bergerak. Jika tidak, kelompok akan menunggu.",
+      "Merasakan bersama apakah waktunya sudah tepat. Beberapa keputusan membutuhkan lebih banyak waktu komunal sebelum dibuat.",
+    ],
+  },
+];
+
 // ─── Result blocks ────────────────────────────────────────────────────────────
 const RESULT_BLOCKS: Record<string, { label: string; body: string }> = {
   A: {
@@ -296,6 +565,25 @@ const RESULT_BLOCKS: Record<string, { label: string; body: string }> = {
   D: {
     label: "YOUR ORIENTATION — THE COMMUNITY KEEPER",
     body: "For you, time is constituted by the people, not the calendar.\n\nYou carry a deep sense that the right time for something is when the people are truly gathered, not just physically present but relationally ready. Community presence is not preparation for the event. It is the event.\n\nYour strength is something most organizational teams desperately lack: a sense of shared presence. You are not transactional about time. You bring people into the moment rather than driving them through an agenda.\n\nYour blind spot, and this is worth naming honestly, is that most organizational systems are designed around monochronic assumptions. The logistical gaps this creates are real. Missed delivery windows, unclear timelines, and decisions deferred without explanation can undermine the relational trust you are trying to build. The work here is not to abandon your logic. It is to translate it, deliberately, for colleagues whose systems depend on knowing what is coming and when.",
+  },
+};
+
+const RESULT_BLOCKS_ID: Record<string, { label: string; body: string }> = {
+  A: {
+    label: "ORIENTASI KAMU — PENJAGA JAM",
+    body: "Kamu melihat waktu sebagai sumber daya. Dan kamu mengelolanya sesuai itu.\n\nBagimu, ketepatan waktu bukan sekadar kebiasaan kepribadian. Itu adalah bentuk penghormatan. Ketika kamu berkomitmen pada waktu, kamu sungguh-sungguh. Dan ketika orang lain tidak, itu langsung teregistrasi — bukan sebagai ketidaknyamanan kecil tapi sebagai sinyal tentang bagaimana mereka menganggap pekerjaan dan orang-orang di sekitarnya.\n\nKekuatanmu di sini nyata. Tim dengan Penjaga Jam bisa menyelesaikan pekerjaan. Tenggat terjaga. Rapat berakhir. Orang tahu apa yang bisa diharapkan darimu, dan seiring waktu itu membangun kepercayaan yang spesifik: kepercayaan keandalan.\n\nTitik butamu adalah ini: kamu terkadang akan membaca logika budaya melalui kerangkamu sendiri dan melihat masalah karakter yang sebenarnya tidak ada. Seseorang yang beroperasi dari orientasi waktu berbeda tidak selalu tidak terorganisir, tidak hormat, atau tidak dapat diandalkan. Mereka mungkin beroperasi dari logika yang sama konsistensinya dengan milikmu, hanya dibangun di sekitar prioritas berbeda. Risikonya adalah mencoret orang-orang yang mampu sebelum kamu memahami apa yang sebenarnya mereka tawarkan.",
+  },
+  B: {
+    label: "ORIENTASI KAMU — PENENUN RELASI",
+    body: "Bagimu, waktu milik orang yang ada di hadapanmu.\n\nKamu tidak ceroboh soal waktu. Kamu sangat peduli. Tapi yang kamu pedulikan adalah orangnya, bukan jadwalnya. Ketika percakapan perlu terus berlanjut, ia berlanjut. Ketika seseorang membutuhkanmu, kamu hadir. Jam adalah panduan kasar, bukan otoritas yang mengatur.\n\nKekuatanmu adalah kualitas kepercayaan relasional yang kamu bangun. Orang merasa benar-benar dilihat olehmu. Pada hari-hari terbaikmu, kamu menciptakan kedalaman dalam tim yang tidak bisa dibuat oleh agenda mana pun. Kedalaman itulah yang membuat kerja keras bisa bertahan.\n\nTitik butamu adalah biaya yang fleksibilitasmu tempatkan kepada rekan yang sudah merencanakan komitmen waktu yang sudah disepakati. Rekan yang mengubah susunan sore hari mereka untuk siap mengikuti panggilan jam 2:00 sore dan kamu tiba jam 2:30 tidak mengalami itu sebagai kehangatan. Mereka mengalaminya sebagai janji yang dilanggar. Seiring waktu, pola ini — bahkan ketika berasal dari kepedulian tulus — bisa mengikis kepercayaan yang justru ingin kamu bangun.",
+  },
+  C: {
+    label: "ORIENTASI KAMU — PENGIKUT HARMONI",
+    body: "Kamu membaca suasana sebelum membaca jam.\n\nHubunganmu dengan waktu itu cair dengan cara yang spesifik: ia bergeser berdasarkan konteks, hubungan, dan hierarki. Dengan pemimpin senior atau dalam situasi berisiko tinggi, kamu cenderung tepat waktu dan terstruktur. Dengan rekan atau dalam pengaturan informal, kamu membolehkan lebih banyak alur.\n\nKekuatanmu adalah kecerdasan sosial yang sebagian besar Penjaga Jam dan Penenun Relasi tidak sepenuhnya miliki. Kamu bisa bergerak antara register. Kamu beradaptasi. Kamu tidak terkunci dalam satu mode, yang membuatmu benar-benar serbaguna dalam lingkungan tim yang kompleks.\n\nTitik butamu adalah bahwa Penjaga Jam maupun Penenun Relasi tidak bisa sepenuhnya membaca logikamu. Penjaga Jam melihat inkonsistensi. Penenun Relasi terkadang merasa kamu tidak selalu tersedia. Aturan tak terucap yang kamu navigasi begitu alami perlu lebih sering diungkapkan daripada yang terasa nyaman — karena rekan setimmu tidak bisa melihat peta yang kamu gunakan.",
+  },
+  D: {
+    label: "ORIENTASI KAMU — PENJAGA KOMUNITAS",
+    body: "Bagimu, waktu dibentuk oleh orang-orang, bukan kalender.\n\nKamu membawa rasa mendalam bahwa waktu yang tepat untuk sesuatu adalah ketika orang-orang benar-benar berkumpul — bukan hanya hadir secara fisik tapi siap secara relasional. Kehadiran komunitas bukan persiapan untuk acara. Itu adalah acaranya.\n\nKekuatanmu adalah sesuatu yang sebagian besar tim organisasi sangat kekurangan: rasa kehadiran bersama. Kamu tidak transaksional soal waktu. Kamu membawa orang ke dalam momen alih-alih mendorong mereka melalui agenda.\n\nTitik butamu — dan ini perlu diungkapkan dengan jujur — adalah bahwa sebagian besar sistem organisasi dirancang berdasarkan asumsi monochronic. Kesenjangan logistis yang ini ciptakan itu nyata. Jendela pengiriman yang terlewat, garis waktu yang tidak jelas, dan keputusan yang ditunda tanpa penjelasan bisa merusak kepercayaan relasional yang kamu coba bangun. Pekerjaan di sini bukan untuk meninggalkan logikamu. Itu adalah untuk menerjemahkannya — dengan disengaja — untuk rekan yang sistemnya bergantung pada mengetahui apa yang akan datang dan kapan.",
   },
 };
 
@@ -328,6 +616,41 @@ const PART2_TYPE_NAMES: Record<string, string> = {
   D: "The culture you work with leans Community Keeper.",
 };
 
+const PART1_TRANSITIONS_ID: Record<string, string> = {
+  A: "Jawaban-jawabanmu secara konsisten menunjuk pada struktur, ketepatan waktu, dan komitmen yang jelas. Dalam modul ini, kami menyebut tipe kamu Penjaga Jam.",
+  B: "Jawaban-jawabanmu secara konsisten menunjuk pada orang, kehadiran, dan kehangatan relasional. Dalam modul ini, kami menyebut tipe kamu Penenun Relasi.",
+  C: "Jawaban-jawabanmu secara konsisten menunjuk pada membaca konteks sebelum membaca jam. Dalam modul ini, kami menyebut tipe kamu Pengikut Harmoni.",
+  D: "Jawaban-jawabanmu secara konsisten menunjuk pada kesiapan komunal di atas waktu kalender. Dalam modul ini, kami menyebut tipe kamu Penjaga Komunitas.",
+};
+
+const PART2_TRANSITIONS_ID: Record<string, string> = {
+  A: "Budaya yang kamu jalani tampaknya condong ke struktur, ketepatan waktu, dan komitmen yang jelas. Dalam modul ini kami menyebut ini Penjaga Jam.",
+  B: "Budaya yang kamu jalani tampaknya condong ke orang, kehadiran, dan kehangatan relasional. Dalam modul ini kami menyebut ini Penenun Relasi.",
+  C: "Budaya yang kamu jalani tampaknya condong ke membaca konteks sebelum membaca jam. Dalam modul ini kami menyebut ini Pengikut Harmoni.",
+  D: "Budaya yang kamu jalani tampaknya condong ke kesiapan komunal di atas waktu kalender. Dalam modul ini kami menyebut ini Penjaga Komunitas.",
+};
+
+const PART1_TYPE_NAMES_ID: Record<string, string> = {
+  A: "Kamu adalah Penjaga Jam.",
+  B: "Kamu adalah Penenun Relasi.",
+  C: "Kamu adalah Pengikut Harmoni.",
+  D: "Kamu adalah Penjaga Komunitas.",
+};
+
+const PART2_TYPE_NAMES_ID: Record<string, string> = {
+  A: "Budaya yang kamu jalani condong ke Penjaga Jam.",
+  B: "Budaya yang kamu jalani condong ke Penenun Relasi.",
+  C: "Budaya yang kamu jalani condong ke Pengikut Harmoni.",
+  D: "Budaya yang kamu jalani condong ke Penjaga Komunitas.",
+};
+
+const TYPE_SHORT_ID: Record<string, string> = {
+  A: "Penjaga Jam",
+  B: "Penenun Relasi",
+  C: "Pengikut Harmoni",
+  D: "Penjaga Komunitas",
+};
+
 // ─── Gap blocks ───────────────────────────────────────────────────────────────
 const GAP_BLOCKS: Record<string, { title: string; body: string }> = {
   "A-B": {
@@ -356,6 +679,33 @@ const GAP_BLOCKS: Record<string, { title: string; body: string }> = {
   },
 };
 
+const GAP_BLOCKS_ID: Record<string, { title: string; body: string }> = {
+  "A-B": {
+    title: "Penjaga Jam bertemu Penenun Relasi",
+    body: "Instingtmu yang paling alami adalah memegang batas waktu yang telah disepakati. Budaya yang kamu jalani paling sering memperlakukan waktu sebagai relasional dan cair.\n\nIni adalah salah satu titik gesekan yang paling umum dalam tim lintas budaya. Ini muncul dalam tenggat yang terlewat, rapat yang melampaui waktu, dan perasaan yang semakin kuat bahwa satu pihak 'tidak mengerti.' Penjaga Jam akhirnya melabeli Penenun Relasi sebagai tidak profesional. Penenun Relasi akhirnya melabeli Penjaga Jam sebagai dingin.\n\nSatu hal yang bisa kamu lakukan: Sebelum rapat atau tenggat berikutnya, sebutkan kesenjangan itu secara eksplisit dan singkat. Bukan sebagai koreksi, tapi sebagai pertanyaan: 'Dalam tim kita, saya perhatikan kita memiliki ritme berbeda seputar waktu. Bisakah kita luangkan lima menit untuk menyepakati apa arti tenggat bagi kita semua, dan apa yang kita lakukan ketika perlu berubah?' Percakapan itu, jika dilakukan sekali, mengubah dinamika selama berbulan-bulan.",
+  },
+  "A-C": {
+    title: "Penjaga Jam bertemu Pengikut Harmoni",
+    body: "Kamu memprioritaskan struktur dan prediktabilitas. Budaya yang kamu jalani membaca situasi dan menyesuaikannya, yang terlihat tidak konsisten bagimu.\n\nPengikut Harmoni tidak bersikap tidak terduga demi kepentingannya sendiri. Mereka membaca konteks. Masalahnya adalah logika kontekstual mereka tidak terlihat olehmu. Kamu melihat seseorang yang tepat waktu untuk beberapa rapat tapi tidak yang lain, formal kadang-kadang dan informal di lain waktu, dan kamu tidak bisa menemukan polanya.\n\nSatu hal yang bisa kamu lakukan: Tanya. Secara langsung dan tanpa kritik: 'Saya perhatikan tim kita cenderung beroperasi berbeda tergantung situasi. Sinyal apa yang memberitahumu kapan kita berada dalam mode terstruktur versus mode fleksibel?' Kamu akan mendapat jawaban yang membuka berbulan-bulan kebingungan yang tidak terucap.",
+  },
+  "A-D": {
+    title: "Penjaga Jam bertemu Penjaga Komunitas",
+    body: "Kamu berorientasi pada jadwal, waktu tertentu, dan jendela pengiriman. Budaya yang kamu jalani berorientasi pada kesiapan komunal, dan 'ketika orang-orang sudah berkumpul' adalah jawaban yang sah untuk 'kapan ini dimulai?'\n\nIni adalah kesenjangan logika paling lebar dalam sebagian besar tim organisasi, dan di sinilah penilaian budaya yang paling keras cenderung terbentuk. Penjaga Jam membaca logika Penjaga Komunitas sebagai ketidakandalan kronis. Penjaga Komunitas membaca urgensi Penjaga Jam sebagai impersonal dan merusak kepercayaan.\n\nSatu hal yang bisa kamu lakukan: Bangun waktu berkumpul komunal sebelum kamu mengharapkan sesuatu yang bisa diserahkan. Jika rapat jam 9:00 pagimu sebenarnya perlu menghasilkan keputusan pada jam 9:45, sisihkan 20 menit berkumpul yang tulus sebelum agenda dimulai. Namakan itu sebagai sesuatu yang disengaja, bukan terbuang. Perhatikan apa yang berubah dalam kualitas yang dihasilkan kelompok.",
+  },
+  "B-C": {
+    title: "Penenun Relasi bertemu Pengikut Harmoni",
+    body: "Kamu memprioritaskan orang di atas jadwal dan mengharapkan kehangatan relasional mengatur bagaimana waktu digunakan. Budaya yang kamu jalani menyesuaikan diri berdasarkan siapa yang ada di ruangan dan apa yang dibutuhkan hierarki.\n\nVariabilitas Pengikut Harmoni bisa terasa seperti inkonsistensi bagi Penenun Relasi. 'Mengapa kamu hangat dengan beberapa orang dan formal dengan orang lain? Apakah kamu tidak autentik?' Tapi Pengikut Harmoni tidak berpura-pura. Mereka membaca konteks, dan dalam logika mereka, itulah hal paling cerdas secara relasional yang bisa kamu lakukan.\n\nSatu hal yang bisa kamu lakukan: Sebelum rapat berisiko tinggi, tanyakan kepada rekan Pengikut Harmoni kamu tentang mode apa yang dituntut rapat itu. Bukan 'bagaimana kamu ingin bertindak' tapi 'siapa yang akan ada di ruangan, dan menurutmu register yang tepat itu apa?' Kalian berdua akan tiba lebih siap, dan mereka akan merasa dihormati alih-alih dikelola.",
+  },
+  "B-D": {
+    title: "Penenun Relasi bertemu Penjaga Komunitas",
+    body: "Kalian berdua memprioritaskan orang di atas jam, tapi dengan cara yang berbeda. Penenun Relasi mengorientasikan waktu di sekitar orang yang ada di hadapannya. Penjaga Komunitas mengorientasikan waktu di sekitar seluruh komunitas yang berkumpul.\n\nKesenjangan ini seringkali yang paling tidak terlihat, karena kedua pihak merasa selaras. Tapi gesekan muncul ketika Penenun Relasi memperlakukan hubungan satu-satu sebagai unit utama, dan Penjaga Komunitas mengharapkan konsensus komunitas yang lebih luas sebelum hal-hal bisa bergerak. Apa yang terasa seperti membangun hubungan bagimu mungkin terasa seperti mengabaikan kelompok bagi mereka.\n\nSatu hal yang bisa kamu lakukan: Ketika bergerak menuju keputusan, tanya: 'Siapa lagi yang perlu menjadi bagian dari percakapan ini sebelum kita bisa berkomitmen?' Bukan sebagai taktik penundaan, tapi sebagai pertanyaan tulus tentang kehadiran siapa yang membuat keputusan itu nyata.",
+  },
+  "C-D": {
+    title: "Pengikut Harmoni bertemu Penjaga Komunitas",
+    body: "Kamu membaca hierarki dan konteks untuk menentukan bagaimana waktu digunakan. Budaya yang kamu jalani membaca kesiapan komunal. Dua logika ini bisa selaras, tapi juga bisa menghasilkan kebingungan yang signifikan tentang siapa yang menetapkan tempo dan mengapa.\n\nPenjaga Komunitas tidak menunggu sinyal senior. Mereka menunggu sinyal komunal. Pengikut Harmoni mengharapkan hierarki untuk mengkalibrasi ruangan. Ketika kalibrasi itu tidak terjadi, kedua belah pihak menunggu pihak lain.\n\nSatu hal yang bisa kamu lakukan: Sebutkan unit pengambilan keputusan secara eksplisit. 'Dalam tim kita, siapa yang perlu hadir sebelum kita bisa bergerak maju dengan ini?' Dapatkan jawabannya di atas meja. Dalam beberapa budaya, jawabannya adalah pemimpin. Dalam budaya lain, itu seluruh kelompok. Membuat itu eksplisit menghilangkan berminggu-minggu penantian diam-diam.",
+  },
+};
+
 // ─── Type name helper ─────────────────────────────────────────────────────────
 const TYPE_SHORT: Record<string, string> = {
   A: "Clock Keeper",
@@ -380,7 +730,7 @@ function getGapKey(o1: string, o2: string): string {
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function ElapsedTimer() {
+function ElapsedTimer({ lang }: { lang: string }) {
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
@@ -391,7 +741,7 @@ function ElapsedTimer() {
   return (
     <div style={{ textAlign: "center", margin: "32px 0" }}>
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 8 }}>
-        Time spent in this module so far
+        {L(lang, "Time spent in this module so far", "Waktu yang dihabiskan dalam modul ini sejauh ini")}
       </p>
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 36, fontWeight: 800, color: ORANGE, margin: 0, letterSpacing: "0.04em" }}>
         {mm}:{ss}
@@ -400,7 +750,7 @@ function ElapsedTimer() {
   );
 }
 
-function ConceptCard({ card, expanded, onToggle }: { card: typeof CONCEPT_CARDS[0]; expanded: boolean; onToggle: () => void }) {
+function ConceptCard({ card, expanded, onToggle, lang }: { card: typeof CONCEPT_CARDS[0]; expanded: boolean; onToggle: () => void; lang: string }) {
   return (
     <div
       style={{
@@ -437,7 +787,7 @@ function ConceptCard({ card, expanded, onToggle }: { card: typeof CONCEPT_CARDS[
           </ul>
           <div style={{ background: "oklch(16% 0.08 260)", borderRadius: 8, padding: "12px 16px" }}>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>
-              Blind Spot
+              {L(lang, "Blind Spot", "Titik Buta")}
             </p>
             <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: 0, fontStyle: "italic" }}>
               {card.blindspot}
@@ -446,13 +796,13 @@ function ConceptCard({ card, expanded, onToggle }: { card: typeof CONCEPT_CARDS[
         </>
       )}
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: ORANGE, margin: "12px 0 0", fontWeight: 600 }}>
-        {expanded ? "Show less ↑" : "Show more ↓"}
+        {expanded ? L(lang, "Show less ↑", "Tampilkan lebih sedikit ↑") : L(lang, "Show more ↓", "Tampilkan lebih banyak ↓")}
       </p>
     </div>
   );
 }
 
-function ScenarioCard({ card }: { card: typeof SCENARIO_CARDS[0] }) {
+function ScenarioCard({ card, lang }: { card: typeof SCENARIO_CARDS[0]; lang: string }) {
   const [revealed, setRevealed] = useState(false);
   return (
     <div style={{ background: OFF_WHITE, borderLeft: `3px solid ${ORANGE}`, borderRadius: "0 8px 8px 0", marginBottom: 24 }}>
@@ -482,7 +832,7 @@ function ScenarioCard({ card }: { card: typeof SCENARIO_CARDS[0] }) {
             cursor: "pointer",
           }}
         >
-          {revealed ? "Hide explanation ↑" : "See what's happening →"}
+          {revealed ? L(lang, "Hide explanation ↑", "Sembunyikan penjelasan ↑") : L(lang, "See what's happening →", "Lihat apa yang terjadi →")}
         </button>
       </div>
       {revealed && (
@@ -498,33 +848,52 @@ function ScenarioCard({ card }: { card: typeof SCENARIO_CARDS[0] }) {
   );
 }
 
-function TeamExercise() {
-  const questions = [
-    {
-      q: "When we set a meeting time, what does that time actually mean?",
-      note: "Listen for the gap between what people say and what you have observed. Some will say 'it means start time' while having a track record of arriving ten minutes late. Some will say 'it is flexible' while feeling genuinely frustrated when others do not arrive on time. The question surfaces the gap between stated norms and lived practice. Do not correct anyone. Just notice what comes up and say: 'Interesting. We seem to have a few different readings of this.'",
-    },
-    {
-      q: "When a deadline moves, what is the first thing you feel?",
-      note: "Clock Keepers will tend toward frustration or concern. Relationship Weavers will tend toward pragmatism or even relief if it means more relational groundwork is possible. Community Keepers may be genuinely neutral. The answers reveal orientation without anyone needing to label themselves. If you get a range of responses, name it: 'It sounds like we feel this differently. That is worth knowing.'",
-    },
-    {
-      q: "Think of a time when a colleague's use of time confused or frustrated you. What did you make of it at the time?",
-      note: "This question surfaces the interpretive step: what people conclude about another person based on their time behavior. Clock Keepers typically conclude something about character or professionalism. Relationship Weavers conclude something about priorities. The value of the question is not in the story the person shares but in the conclusion they drew. After a few responses, you can say: 'What if that behavior made perfect sense inside a different time logic? What would change about how we are reading it?'",
-    },
-  ];
+function TeamExercise({ lang }: { lang: string }) {
+  const questions = L(lang,
+    [
+      {
+        q: "When we set a meeting time, what does that time actually mean?",
+        note: "Listen for the gap between what people say and what you have observed. Some will say 'it means start time' while having a track record of arriving ten minutes late. Some will say 'it is flexible' while feeling genuinely frustrated when others do not arrive on time. The question surfaces the gap between stated norms and lived practice. Do not correct anyone. Just notice what comes up and say: 'Interesting. We seem to have a few different readings of this.'",
+      },
+      {
+        q: "When a deadline moves, what is the first thing you feel?",
+        note: "Clock Keepers will tend toward frustration or concern. Relationship Weavers will tend toward pragmatism or even relief if it means more relational groundwork is possible. Community Keepers may be genuinely neutral. The answers reveal orientation without anyone needing to label themselves. If you get a range of responses, name it: 'It sounds like we feel this differently. That is worth knowing.'",
+      },
+      {
+        q: "Think of a time when a colleague's use of time confused or frustrated you. What did you make of it at the time?",
+        note: "This question surfaces the interpretive step: what people conclude about another person based on their time behavior. Clock Keepers typically conclude something about character or professionalism. Relationship Weavers conclude something about priorities. The value of the question is not in the story the person shares but in the conclusion they drew. After a few responses, you can say: 'What if that behavior made perfect sense inside a different time logic? What would change about how we are reading it?'",
+      },
+    ],
+    [
+      {
+        q: "Ketika kita menetapkan waktu rapat, apa arti waktu itu sebenarnya?",
+        note: "Dengarkan kesenjangan antara apa yang orang katakan dan apa yang telah kamu amati. Beberapa akan mengatakan 'itu artinya waktu mulai' sementara memiliki rekam jejak tiba sepuluh menit terlambat. Beberapa akan mengatakan 'itu fleksibel' sementara benar-benar frustrasi ketika orang lain tidak tiba tepat waktu. Pertanyaan ini memunculkan kesenjangan antara norma yang dinyatakan dan praktik yang dijalani. Jangan koreksi siapa pun. Cukup perhatikan apa yang muncul dan katakan: 'Menarik. Tampaknya kita memiliki beberapa cara membaca yang berbeda tentang ini.'",
+      },
+      {
+        q: "Ketika tenggat bergerak, apa hal pertama yang kamu rasakan?",
+        note: "Penjaga Jam cenderung ke arah frustrasi atau kekhawatiran. Penenun Relasi cenderung ke pragmatisme atau bahkan lega jika itu berarti lebih banyak landasan relasional yang mungkin dilakukan. Penjaga Komunitas mungkin benar-benar netral. Jawaban mengungkapkan orientasi tanpa siapa pun perlu melabeli diri sendiri. Jika kamu mendapat berbagai respons, namakan: 'Tampaknya kita merasakan ini secara berbeda. Itu layak untuk diketahui.'",
+      },
+      {
+        q: "Pikirkan suatu waktu ketika cara rekan menggunakan waktu membingungkan atau membuat kamu frustrasi. Apa yang kamu simpulkan saat itu?",
+        note: "Pertanyaan ini memunculkan langkah interpretatif: apa yang orang simpulkan tentang orang lain berdasarkan perilaku waktu mereka. Penjaga Jam biasanya menyimpulkan sesuatu tentang karakter atau profesionalisme. Penenun Relasi menyimpulkan sesuatu tentang prioritas. Nilai pertanyaan ini bukan pada cerita yang dibagikan orang tapi pada kesimpulan yang mereka tarik. Setelah beberapa respons, kamu bisa berkata: 'Bagaimana jika perilaku itu masuk akal sempurna dalam logika waktu yang berbeda? Apa yang akan berubah tentang cara kita membacanya?'",
+      },
+    ]
+  );
   const [openNote, setOpenNote] = useState<number | null>(null);
 
   return (
     <div style={{ background: LIGHT_GRAY, borderTop: `3px solid ${NAVY}`, borderRadius: "0 0 12px 12px", padding: "2rem" }}>
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 8 }}>
-        Team Exercise
+        {L(lang, "Team Exercise", "Latihan Tim")}
       </p>
       <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 800, color: NAVY, margin: "0 0 8px" }}>
-        Three Questions Your Team Has Never Asked About Time
+        {L(lang, "Three Questions Your Team Has Never Asked About Time", "Tiga Pertanyaan yang Belum Pernah Ditanyakan Tim Kamu tentang Waktu")}
       </h3>
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.75, marginBottom: 24 }}>
-        Format: 10 to 15 minutes at the start or end of a team meeting. How to introduce it: "Before we close today, I want to try something short. Three quick questions about how we experience time as a team. No right answers. I am just curious what we each think."
+        {L(lang,
+          "Format: 10 to 15 minutes at the start or end of a team meeting. How to introduce it: \"Before we close today, I want to try something short. Three quick questions about how we experience time as a team. No right answers. I am just curious what we each think.\"",
+          "Format: 10 hingga 15 menit di awal atau akhir rapat tim. Cara memperkenalkannya: 'Sebelum kita tutup hari ini, saya ingin mencoba sesuatu yang singkat. Tiga pertanyaan cepat tentang bagaimana kita masing-masing merasakan waktu sebagai tim. Tidak ada jawaban yang benar. Saya hanya ingin tahu apa yang kita pikirkan masing-masing.'"
+        )}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {questions.map((item, i) => (
@@ -536,7 +905,7 @@ function TeamExercise() {
               onClick={() => setOpenNote(openNote === i ? null : i)}
               style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: ORANGE, fontWeight: 700, background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
-              {openNote === i ? "Hide facilitation note ↑" : "Facilitation note ↓"}
+              {openNote === i ? L(lang, "Hide facilitation note ↑", "Sembunyikan catatan fasilitasi ↑") : L(lang, "Facilitation note ↓", "Catatan fasilitasi ↓")}
             </button>
             {openNote === i && (
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT, lineHeight: 1.75, margin: "10px 0 0", fontStyle: "italic" }}>
@@ -547,7 +916,10 @@ function TeamExercise() {
         ))}
       </div>
       <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.75, marginTop: 20, fontStyle: "italic" }}>
-        After the three questions (optional closing line): "This is something called time orientation. I am going to learn more about it. If you want to explore it together, I will bring it to a future meeting. But at least now we know this is a real thing we experience differently." That is enough. You have opened the door.
+        {L(lang,
+          "After the three questions (optional closing line): \"This is something called time orientation. I am going to learn more about it. If you want to explore it together, I will bring it to a future meeting. But at least now we know this is a real thing we experience differently.\" That is enough. You have opened the door.",
+          "Setelah tiga pertanyaan (baris penutup opsional): 'Ini disebut orientasi waktu. Saya akan belajar lebih banyak tentang itu. Jika kamu ingin menjelajahinya bersama, saya akan membawanya ke rapat mendatang. Tapi setidaknya sekarang kita tahu ini adalah sesuatu nyata yang kita alami secara berbeda.' Itu cukup. Kamu telah membuka pintu."
+        )}
       </p>
     </div>
   );
@@ -563,6 +935,7 @@ function OneAtATimeQuiz({
   partSubtext,
   bgColor,
   accentColor,
+  lang,
 }: {
   questions: typeof PART1_QUESTIONS;
   answers: Record<number, string>;
@@ -572,6 +945,7 @@ function OneAtATimeQuiz({
   partSubtext: string;
   bgColor: string;
   accentColor: string;
+  lang: string;
 }) {
   const [currentQ, setCurrentQ] = useState(0);
   const [animClass, setAnimClass] = useState<string>("");
@@ -629,10 +1003,10 @@ function OneAtATimeQuiz({
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "oklch(65% 0.04 260)", fontWeight: 600 }}>
-            Question {displayed + 1} of {questions.length}
+            {L(lang, `Question ${displayed + 1} of ${questions.length}`, `Pertanyaan ${displayed + 1} dari ${questions.length}`)}
           </span>
           <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: accentColor, fontWeight: 700 }}>
-            {Object.keys(answers).length} answered
+            {L(lang, `${Object.keys(answers).length} answered`, `${Object.keys(answers).length} dijawab`)}
           </span>
         </div>
         <div style={{ height: 3, background: "oklch(30% 0.06 260)", borderRadius: 2 }}>
@@ -694,7 +1068,7 @@ function OneAtATimeQuiz({
               cursor: "pointer",
             }}
           >
-            ← Back
+            {L(lang, "← Back", "← Kembali")}
           </button>
         </div>
       )}
@@ -706,6 +1080,7 @@ function OneAtATimeQuiz({
 type Props = { isSaved: boolean };
 
 export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
+  const { lang } = useLanguage();
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
 
@@ -725,6 +1100,18 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       setSaved(true);
     });
   }
+
+  const conceptCards = lang === "id" ? CONCEPT_CARDS_ID : CONCEPT_CARDS;
+  const scenarioCards = lang === "id" ? SCENARIO_CARDS_ID : SCENARIO_CARDS;
+  const part1Questions = lang === "id" ? PART1_QUESTIONS_ID : PART1_QUESTIONS;
+  const part2Questions = lang === "id" ? PART2_QUESTIONS_ID : PART2_QUESTIONS;
+  const resultBlocks = lang === "id" ? RESULT_BLOCKS_ID : RESULT_BLOCKS;
+  const p1Transitions = lang === "id" ? PART1_TRANSITIONS_ID : PART1_TRANSITIONS;
+  const p2Transitions = lang === "id" ? PART2_TRANSITIONS_ID : PART2_TRANSITIONS;
+  const p1TypeNames = lang === "id" ? PART1_TYPE_NAMES_ID : PART1_TYPE_NAMES;
+  const p2TypeNames = lang === "id" ? PART2_TYPE_NAMES_ID : PART2_TYPE_NAMES;
+  const typeShort = lang === "id" ? TYPE_SHORT_ID : TYPE_SHORT;
+  const gapBlocks = lang === "id" ? GAP_BLOCKS_ID : GAP_BLOCKS;
 
   const part1Dominant = Object.keys(part1Answers).length === PART1_QUESTIONS.length ? getDominantOrientation(part1Answers) : null;
   const part2Dominant = Object.keys(part2Answers).length === PART2_QUESTIONS.length ? getDominantOrientation(part2Answers) : null;
@@ -748,13 +1135,16 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle at 75% 50%, oklch(30% 0.12 260) 0%, transparent 60%)`, opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-            Cross-Cultural Module
+            {L(lang, "Cross-Cultural Module", "Modul Lintas Budaya")}
           </p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 20px", lineHeight: 1.08 }}>
-            Your Time Is Not My Time
+            {L(lang, "Your Time Is Not My Time", "Waktumu Bukan Waktuku")}
           </h1>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(16px, 2vw, 18px)", color: "oklch(75% 0.04 260)", maxWidth: 560, margin: "0 0 28px", lineHeight: 1.65 }}>
-            Every culture has a relationship with time that feels completely obvious from the inside. That relationship shapes how meetings run, how deadlines are understood, and how trust is built or broken across a team. This module gives you the language to see what's happening — in yourself and in the cultures you work across.
+            {L(lang,
+              "Every culture has a relationship with time that feels completely obvious from the inside. That relationship shapes how meetings run, how deadlines are understood, and how trust is built or broken across a team. This module gives you the language to see what's happening — in yourself and in the cultures you work across.",
+              "Setiap budaya memiliki hubungan dengan waktu yang terasa sepenuhnya jelas dari dalamnya. Hubungan itu membentuk bagaimana rapat berjalan, bagaimana tenggat dipahami, dan bagaimana kepercayaan dibangun atau dihancurkan dalam sebuah tim. Modul ini memberimu bahasa untuk melihat apa yang terjadi — dalam dirimu sendiri dan dalam budaya-budaya yang kamu jalani."
+            )}
           </p>
           <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 8 }}>
             <span style={{ background: "oklch(30% 0.10 260)", color: "oklch(75% 0.04 260)", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 20 }}>
@@ -781,7 +1171,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
                 <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
               </svg>
-              {saved ? "✓ Saved to Dashboard" : isPending ? "Saving…" : "Save to Dashboard"}
+              {saved ? L(lang, "✓ Saved to Dashboard", "✓ Tersimpan di Dasbor") : isPending ? L(lang, "Saving…", "Menyimpan…") : L(lang, "Save to Dashboard", "Simpan ke Dasbor")}
             </button>
           </div>
         </div>
@@ -790,19 +1180,29 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       {/* ─── INTRODUCTION ─────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "64px 24px 0" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
-          Most people move through their teams, partnerships, and workdays operating on a set of assumptions about time that feel so obvious — so self-evident — that they have never once considered those assumptions might be cultural. This module changes that. You will discover your own time orientation, learn the four logics that researchers have mapped across cultures, and then compare your result with how the culture you work with most closely experiences time.
+          {L(lang,
+            "Most people move through their teams, partnerships, and workdays operating on a set of assumptions about time that feel so obvious — so self-evident — that they have never once considered those assumptions might be cultural. This module changes that. You will discover your own time orientation, learn the four logics that researchers have mapped across cultures, and then compare your result with how the culture you work with most closely experiences time.",
+            "Kebanyakan orang bergerak melalui tim, kemitraan, dan hari kerja mereka beroperasi pada sekumpulan asumsi tentang waktu yang terasa begitu jelas — begitu terbukti dengan sendirinya — sehingga mereka tidak pernah sekalipun mempertimbangkan bahwa asumsi tersebut mungkin bersifat budaya. Modul ini mengubah itu. Kamu akan menemukan orientasi waktumu sendiri, mempelajari empat logika yang telah dipetakan peneliti di berbagai budaya, lalu membandingkan hasilmu dengan bagaimana budaya yang paling sering kamu jalani merasakan waktu."
+          )}
         </p>
 
         {/* Learning Outcomes */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 48, background: LIGHT_GRAY, borderRadius: 10, padding: "1.5rem 1.75rem" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: NAVY, margin: "0 0 12px" }}>
-            After this module you will:
+            {L(lang, "After this module you will:", "Setelah modul ini kamu akan:")}
           </p>
-          {[
-            "Recognize your own time orientation before encountering the full framework.",
-            "Identify the four cultural viewpoints on time and their academic roots.",
-            "Shift from assuming one right view of time to holding multiple views with understanding.",
-          ].map((item, i) => (
+          {L(lang,
+            [
+              "Recognize your own time orientation before encountering the full framework.",
+              "Identify the four cultural viewpoints on time and their academic roots.",
+              "Shift from assuming one right view of time to holding multiple views with understanding.",
+            ],
+            [
+              "Kenali orientasi waktumu sendiri sebelum menemukan kerangka penuh.",
+              "Identifikasi empat sudut pandang budaya tentang waktu dan akar akademisnya.",
+              "Beralih dari mengasumsikan satu pandangan waktu yang benar ke memiliki beberapa pandangan dengan pemahaman.",
+            ]
+          ).map((item, i) => (
             <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
               <div style={{ width: 3, height: 18, background: ORANGE, flexShrink: 0, marginTop: 4 }} />
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
@@ -817,14 +1217,18 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: NAVY }}>
         {quizPhase === "part1" && (
           <OneAtATimeQuiz
-            questions={PART1_QUESTIONS}
+            questions={part1Questions}
             answers={part1Answers}
             onAnswer={(qIdx, val) => setPart1Answers((prev) => ({ ...prev, [qIdx]: val }))}
             onComplete={() => setQuizPhase("part1-result")}
-            partLabel="How do YOU see time?"
-            partSubtext="Read each scenario. Choose the response that feels most natural to you — not the 'right' answer. Not what you think a good leader would do. What you actually feel."
+            partLabel={L(lang, "How do YOU see time?", "Bagaimana KAMU melihat waktu?")}
+            partSubtext={L(lang,
+              "Read each scenario. Choose the response that feels most natural to you — not the 'right' answer. Not what you think a good leader would do. What you actually feel.",
+              "Baca setiap skenario. Pilih respons yang paling natural bagimu — bukan jawaban 'yang benar'. Bukan apa yang menurutmu akan dilakukan pemimpin yang baik. Apa yang benar-benar kamu rasakan."
+            )}
             bgColor={NAVY}
             accentColor={ORANGE}
+            lang={lang}
           />
         )}
 
@@ -833,26 +1237,26 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
             <div style={{ maxWidth: 780, margin: "0 auto" }}>
               <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}`, marginBottom: 32 }}>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                  Your Result — Part 1
+                  {L(lang, "Your Result — Part 1", "Hasil Kamu — Bagian 1")}
                 </p>
                 <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
-                  {PART1_TYPE_NAMES[part1Dominant]}
+                  {p1TypeNames[part1Dominant]}
                 </h2>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
-                  {PART1_TRANSITIONS[part1Dominant]}
+                  {p1Transitions[part1Dominant]}
                 </p>
                 <button
                   onClick={() => setShowPart1Detail((v) => !v)}
                   style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
                 >
-                  {showPart1Detail ? "▲ Less detail" : "▼ Read more about your orientation"}
+                  {showPart1Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about your orientation", "▼ Baca lebih lanjut tentang orientasimu")}
                 </button>
                 {showPart1Detail && (
                   <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
                     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
-                      {RESULT_BLOCKS[part1Dominant].label}
+                      {resultBlocks[part1Dominant].label}
                     </p>
-                    {RESULT_BLOCKS[part1Dominant].body.split("\n\n").map((para, i) => (
+                    {resultBlocks[part1Dominant].body.split("\n\n").map((para, i) => (
                       <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
@@ -862,13 +1266,13 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               </div>
               <div style={{ textAlign: "center", paddingBottom: 8 }}>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: ORANGE, marginBottom: 20 }}>
-                  Now — what about the culture you work with?
+                  {L(lang, "Now — what about the culture you work with?", "Sekarang — bagaimana dengan budaya yang kamu jalani?")}
                 </p>
                 <button
                   onClick={() => setQuizPhase("part2")}
                   style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: OFF_WHITE, background: ORANGE, border: "none", padding: "14px 36px", borderRadius: 8, cursor: "pointer" }}
                 >
-                  Test Part 2 →
+                  {L(lang, "Test Part 2 →", "Coba Bagian 2 →")}
                 </button>
               </div>
             </div>
@@ -877,14 +1281,18 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
 
         {quizPhase === "part2" && (
           <OneAtATimeQuiz
-            questions={PART2_QUESTIONS}
+            questions={part2Questions}
             answers={part2Answers}
             onAnswer={(qIdx, val) => setPart2Answers((prev) => ({ ...prev, [qIdx]: val }))}
             onComplete={() => setQuizPhase("part2-result")}
-            partLabel="How does the culture you work with see time?"
-            partSubtext="Think of the culture of the team you work with most, or the colleague whose approach to time confuses or frustrates you most. Answer as you observe them — not as you wish they would behave."
+            partLabel={L(lang, "How does the culture you work with see time?", "Bagaimana budaya yang kamu jalani melihat waktu?")}
+            partSubtext={L(lang,
+              "Think of the culture of the team you work with most, or the colleague whose approach to time confuses or frustrates you most. Answer as you observe them — not as you wish they would behave.",
+              "Pikirkan budaya dari tim yang paling sering kamu jalani, atau rekan yang pendekatannya terhadap waktu paling membingungkan atau membuatmu frustrasi. Jawab sebagaimana kamu mengamati mereka — bukan sebagaimana kamu berharap mereka berperilaku."
+            )}
             bgColor={NAVY}
             accentColor={ORANGE}
+            lang={lang}
           />
         )}
 
@@ -893,26 +1301,26 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
             <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 24 }}>
               <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                  Your Result — Part 2
+                  {L(lang, "Your Result — Part 2", "Hasil Kamu — Bagian 2")}
                 </p>
                 <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
-                  {PART2_TYPE_NAMES[part2Dominant]}
+                  {p2TypeNames[part2Dominant]}
                 </h2>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
-                  {PART2_TRANSITIONS[part2Dominant]}
+                  {p2Transitions[part2Dominant]}
                 </p>
                 <button
                   onClick={() => setShowPart2Detail((v) => !v)}
                   style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
                 >
-                  {showPart2Detail ? "▲ Less detail" : "▼ Read more about this orientation"}
+                  {showPart2Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about this orientation", "▼ Baca lebih lanjut tentang orientasi ini")}
                 </button>
                 {showPart2Detail && (
                   <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
                     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
-                      {RESULT_BLOCKS[part2Dominant].label}
+                      {resultBlocks[part2Dominant].label}
                     </p>
-                    {RESULT_BLOCKS[part2Dominant].body.split("\n\n").map((para, i) => (
+                    {resultBlocks[part2Dominant].body.split("\n\n").map((para, i) => (
                       <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
@@ -923,32 +1331,35 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
 
               <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
                 <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
-                  Gap Analysis — Part 1 vs Part 2
+                  {L(lang, "Gap Analysis — Part 1 vs Part 2", "Analisis Kesenjangan — Bagian 1 vs Bagian 2")}
                 </p>
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 24 }}>
                   <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: OFF_WHITE, background: ORANGE, padding: "5px 14px", borderRadius: 20 }}>
-                    You: {TYPE_SHORT[part1Dominant]}
+                    {L(lang, "You: ", "Kamu: ")}{typeShort[part1Dominant]}
                   </span>
                   <span style={{ color: "oklch(55% 0.04 260)", fontSize: 20 }}>↔</span>
                   <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, border: `1px solid ${ORANGE}`, padding: "5px 14px", borderRadius: 20 }}>
-                    Culture: {TYPE_SHORT[part2Dominant]}
+                    {L(lang, "Culture: ", "Budaya: ")}{typeShort[part2Dominant]}
                   </span>
                 </div>
                 {isMatched ? (
                   <>
                     <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
-                      Your orientation and the culture you work with appear to be aligned.
+                      {L(lang, "Your orientation and the culture you work with appear to be aligned.", "Orientasimu dan budaya yang kamu jalani tampaknya selaras.")}
                     </h3>
                     <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8 }}>
-                      Shared logic can be a real gift. When a team runs on the same orientation, coordination is faster, conflict is rarer, and trust builds quickly. That is worth acknowledging. But alignment within your team is not the same as competence across cultures. The question now is whether you can recognize the other three logics when they appear — in a partner organization, a donor, a local leader, a colleague from a different background. You know your own logic well. The next step is developing fluency in the others: not to adopt them, but to read them without judgment, engage them without friction, and lead across the difference without assuming your logic is the default.
+                      {L(lang,
+                        "Shared logic can be a real gift. When a team runs on the same orientation, coordination is faster, conflict is rarer, and trust builds quickly. That is worth acknowledging. But alignment within your team is not the same as competence across cultures. The question now is whether you can recognize the other three logics when they appear — in a partner organization, a donor, a local leader, a colleague from a different background. You know your own logic well. The next step is developing fluency in the others: not to adopt them, but to read them without judgment, engage them without friction, and lead across the difference without assuming your logic is the default.",
+                        "Logika yang sama bisa menjadi anugerah nyata. Ketika tim berjalan dengan orientasi yang sama, koordinasi lebih cepat, konflik lebih jarang, dan kepercayaan dibangun dengan cepat. Itu layak untuk diakui. Tapi keselarasan di dalam tim kamu tidak sama dengan kompetensi lintas budaya. Pertanyaannya sekarang adalah apakah kamu bisa mengenali tiga logika lainnya ketika mereka muncul — dalam organisasi mitra, donor, pemimpin lokal, rekan dari latar belakang yang berbeda. Kamu mengenal logikamu sendiri dengan baik. Langkah berikutnya adalah mengembangkan kefasihan pada yang lain: bukan untuk mengadopsinya, tapi untuk membacanya tanpa penilaian, terlibat dengannya tanpa gesekan, dan memimpin melewati perbedaan tanpa menganggap logikamu adalah standar bawaan."
+                      )}
                     </p>
                   </>
-                ) : gapKey && GAP_BLOCKS[gapKey] ? (
+                ) : gapKey && gapBlocks[gapKey] ? (
                   <>
                     <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
-                      {GAP_BLOCKS[gapKey].title}
+                      {gapBlocks[gapKey].title}
                     </h3>
-                    {GAP_BLOCKS[gapKey].body.split("\n\n").map((para, i) => (
+                    {gapBlocks[gapKey].body.split("\n\n").map((para, i) => (
                       <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
@@ -965,16 +1376,22 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: OFF_WHITE, padding: "96px 24px 64px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
-            The Freedom
+            {L(lang, "The Freedom", "Kebebasan")}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
-            Leaders who understand all the dimensions of time are controlled by none of them.
+            {L(lang, "Leaders who understand all the dimensions of time are controlled by none of them.", "Para pemimpin yang memahami semua dimensi waktu tidak dikendalikan oleh satu pun dari mereka.")}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            Most leaders are controlled by time — not because they are bad at managing it, but because they only know one logic. If you only know Clock Keeper logic, you will be driven by urgency and you will read every deviation as failure. If you only know Relationship Weaver logic, you will be drained by the invisible expectations of colleagues who run on monochronic assumptions and never tell you directly.
+            {L(lang,
+              "Most leaders are controlled by time — not because they are bad at managing it, but because they only know one logic. If you only know Clock Keeper logic, you will be driven by urgency and you will read every deviation as failure. If you only know Relationship Weaver logic, you will be drained by the invisible expectations of colleagues who run on monochronic assumptions and never tell you directly.",
+              "Sebagian besar pemimpin dikendalikan oleh waktu — bukan karena mereka buruk dalam mengelolanya, tapi karena mereka hanya mengenal satu logika. Jika kamu hanya mengenal logika Penjaga Jam, kamu akan digerakkan oleh urgensi dan kamu akan membaca setiap penyimpangan sebagai kegagalan. Jika kamu hanya mengenal logika Penenun Relasi, kamu akan terkuras oleh ekspektasi tak terlihat dari rekan yang beroperasi dengan asumsi monochronic dan tidak pernah memberitahumu secara langsung."
+            )}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            Understanding multiple logics does not mean adopting them all equally. It means you can see what is happening in the room before it becomes a conflict. You can name it. You can create space for the team to navigate it together. You can stop the fracture before it forms. That is not better time management. That is situational awareness — and situational awareness is what separates a leader who reacts to their team from a leader who reads their team.
+            {L(lang,
+              "Understanding multiple logics does not mean adopting them all equally. It means you can see what is happening in the room before it becomes a conflict. You can name it. You can create space for the team to navigate it together. You can stop the fracture before it forms. That is not better time management. That is situational awareness — and situational awareness is what separates a leader who reacts to their team from a leader who reads their team.",
+              "Memahami beberapa logika tidak berarti mengadopsi semuanya secara setara. Artinya kamu bisa melihat apa yang terjadi di ruangan sebelum menjadi konflik. Kamu bisa menamakannya. Kamu bisa menciptakan ruang bagi tim untuk menavigasinya bersama. Kamu bisa menghentikan perpecahan sebelum terbentuk. Itu bukan manajemen waktu yang lebih baik. Itu adalah kesadaran situasional — dan kesadaran situasional itulah yang memisahkan pemimpin yang bereaksi terhadap timnya dari pemimpin yang membaca timnya."
+            )}
           </p>
         </div>
       </div>
@@ -982,7 +1399,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       {/* ─── THE FEELING ──────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 48px" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "48px 0 20px" }}>
-          The Feeling
+          {L(lang, "The Feeling", "Perasaan")}
         </p>
 
         {/* Watch image */}
@@ -994,16 +1411,25 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
           />
         </div>
 
-        <ElapsedTimer />
+        <ElapsedTimer lang={lang} />
 
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-          Time does not just pass. For many people, time presses. It follows them into meetings, sits with them during conversations, and creates an anxiety so familiar they mistake it for personality. But the experience of being controlled by time is not universal. It is not natural. It is cultural.
+          {L(lang,
+            "Time does not just pass. For many people, time presses. It follows them into meetings, sits with them during conversations, and creates an anxiety so familiar they mistake it for personality. But the experience of being controlled by time is not universal. It is not natural. It is cultural.",
+            "Waktu tidak sekadar berlalu. Bagi banyak orang, waktu menekan. Ia mengikuti mereka ke rapat, duduk bersama mereka selama percakapan, dan menciptakan kecemasan yang begitu familiar sehingga mereka salah mengira itu sebagai kepribadian. Tapi pengalaman dikendalikan oleh waktu tidaklah universal. Ini bukan kodrat. Ini budaya."
+          )}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-          Depending on where you were shaped, time feels entirely different. For the Clock Keeper, it is a resource being spent or wasted. For the Relationship Weaver, it belongs to the person in front of them. For the Harmony Follower, it is a signal to read before moving. For the Community Keeper, it is a communal rhythm that simply is what it is. Each of these produces its own emotional register. And each one, held alone, creates its own vulnerability. The Clock Keeper chases deadlines. The Relationship Weaver is blindsided by logistics. The Harmony Follower stalls when hierarchy is absent. The Community Keeper is quietly excluded from high-stakes coordination because the team has stopped trusting their timeline.
+          {L(lang,
+            "Depending on where you were shaped, time feels entirely different. For the Clock Keeper, it is a resource being spent or wasted. For the Relationship Weaver, it belongs to the person in front of them. For the Harmony Follower, it is a signal to read before moving. For the Community Keeper, it is a communal rhythm that simply is what it is. Each of these produces its own emotional register. And each one, held alone, creates its own vulnerability. The Clock Keeper chases deadlines. The Relationship Weaver is blindsided by logistics. The Harmony Follower stalls when hierarchy is absent. The Community Keeper is quietly excluded from high-stakes coordination because the team has stopped trusting their timeline.",
+            "Tergantung di mana kamu dibentuk, waktu terasa sangat berbeda. Bagi Penjaga Jam, itu adalah sumber daya yang dibelanjakan atau disia-siakan. Bagi Penenun Relasi, itu milik orang yang ada di hadapannya. Bagi Pengikut Harmoni, itu adalah sinyal yang harus dibaca sebelum bergerak. Bagi Penjaga Komunitas, itu adalah ritme komunal yang memang apa adanya. Masing-masing dari ini menghasilkan register emosionalnya sendiri. Dan masing-masing, dipegang sendiri, menciptakan kerentanannya sendiri. Penjaga Jam mengejar tenggat. Penenun Relasi terkejut oleh logistik. Pengikut Harmoni terhenti ketika hierarki tidak hadir. Penjaga Komunitas secara diam-diam dikecualikan dari koordinasi berisiko tinggi karena tim telah berhenti mempercayai garis waktu mereka."
+          )}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-          The leader who understands all four perceptions of time is no longer controlled by the one they inherited. They can see what is happening in the room before it becomes a conflict. They can name it. They can hold the pace that the moment requires rather than the pace their background defaults to. That is not better time management. That is the beginning of real cultural fluency.
+          {L(lang,
+            "The leader who understands all four perceptions of time is no longer controlled by the one they inherited. They can see what is happening in the room before it becomes a conflict. They can name it. They can hold the pace that the moment requires rather than the pace their background defaults to. That is not better time management. That is the beginning of real cultural fluency.",
+            "Pemimpin yang memahami keempat persepsi waktu tidak lagi dikendalikan oleh satu yang mereka warisi. Mereka bisa melihat apa yang terjadi di ruangan sebelum menjadi konflik. Mereka bisa menamakannya. Mereka bisa memegang tempo yang dibutuhkan momen itu alih-alih tempo yang menjadi bawaan latar belakang mereka. Itu bukan manajemen waktu yang lebih baik. Itu adalah awal dari kefasihan budaya yang sesungguhnya."
+          )}
         </p>
       </div>
 
@@ -1011,20 +1437,31 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: LIGHT_GRAY, padding: "0 0 48px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto", padding: "48px 24px 0" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
-            Field Story
+            {L(lang, "Field Story", "Cerita Lapangan")}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 24 }}>
-            You have a time logic. Most people never discover this. They move through their days and their teams and their partnerships operating on assumptions about time that feel so obvious, so self-evident, that they have never once considered those assumptions might be cultural. The moment you step into a cross-cultural team, or lead across organizational lines, these invisible assumptions start to collide — and without the vocabulary to name what is happening, the collision reads as a character problem rather than a logic problem.
+            {L(lang,
+              "You have a time logic. Most people never discover this. They move through their days and their teams and their partnerships operating on assumptions about time that feel so obvious, so self-evident, that they have never once considered those assumptions might be cultural. The moment you step into a cross-cultural team, or lead across organizational lines, these invisible assumptions start to collide — and without the vocabulary to name what is happening, the collision reads as a character problem rather than a logic problem.",
+              "Kamu memiliki logika waktu. Kebanyakan orang tidak pernah menyadari ini. Mereka bergerak melalui hari-hari, tim, dan kemitraan mereka beroperasi pada asumsi tentang waktu yang terasa begitu jelas, begitu terbukti dengan sendirinya, sehingga mereka tidak pernah sekalipun mempertimbangkan bahwa asumsi tersebut mungkin bersifat budaya. Ketika kamu masuk ke tim lintas budaya, atau memimpin melewati batas organisasi, asumsi tak terlihat ini mulai bertabrakan — dan tanpa kosakata untuk menamai apa yang terjadi, tabrakan itu terbaca sebagai masalah karakter, bukan masalah logika."
+            )}
           </p>
 
           {/* Field story block */}
           <div style={{ borderLeft: `4px solid ${NAVY}`, background: OFF_WHITE, padding: "2rem", marginTop: 24, borderRadius: "0 8px 8px 0" }}>
-            {[
-              "An Indonesian team leader was hosting a visiting leader from overseas. He knew the visitor valued punctuality, so the day before the meeting he made a point of addressing his team directly. 'Tomorrow,' he said, 'I need everyone here on time. This matters.'",
-              "His team heard him. They took it seriously. The next morning, people began arriving early. By eight fifty, most of the group was seated and ready. At eight fifty-five, someone suggested they begin. The discussion was already underway when the visiting leader walked in at exactly nine o'clock.",
-              "He stopped in the doorway. The meeting had started without him. He felt the sting of it immediately. After all his travel, after the relationship they had been building, this team had started before he arrived. It felt like a clear signal: he was not the priority.",
-              "But here is what had actually happened. The Indonesian leader had honored his guest's value by rallying his team. The team had honored their leader by arriving early and being ready. The visiting leader had honored the agreed time by arriving at exactly nine. Three different expressions of respect. Three different time logics running in the same room. And no shared language to make sense of any of it. Nobody was wrong. That is the point.",
-            ].map((para, i) => (
+            {L(lang,
+              [
+                "An Indonesian team leader was hosting a visiting leader from overseas. He knew the visitor valued punctuality, so the day before the meeting he made a point of addressing his team directly. 'Tomorrow,' he said, 'I need everyone here on time. This matters.'",
+                "His team heard him. They took it seriously. The next morning, people began arriving early. By eight fifty, most of the group was seated and ready. At eight fifty-five, someone suggested they begin. The discussion was already underway when the visiting leader walked in at exactly nine o'clock.",
+                "He stopped in the doorway. The meeting had started without him. He felt the sting of it immediately. After all his travel, after the relationship they had been building, this team had started before he arrived. It felt like a clear signal: he was not the priority.",
+                "But here is what had actually happened. The Indonesian leader had honored his guest's value by rallying his team. The team had honored their leader by arriving early and being ready. The visiting leader had honored the agreed time by arriving at exactly nine. Three different expressions of respect. Three different time logics running in the same room. And no shared language to make sense of any of it. Nobody was wrong. That is the point.",
+              ],
+              [
+                "Seorang pemimpin tim Indonesia menjamu seorang pemimpin tamu dari luar negeri. Ia tahu tamunya sangat menghargai ketepatan waktu, jadi sehari sebelum pertemuan ia secara khusus berbicara langsung kepada timnya. 'Besok,' katanya, 'saya perlu semua orang di sini tepat waktu. Ini penting.'",
+                "Timnya mendengarnya. Mereka menganggapnya serius. Keesokan paginya, orang-orang mulai tiba lebih awal. Pada jam delapan lima puluh, sebagian besar kelompok sudah duduk dan siap. Pada jam delapan lima puluh lima, seseorang menyarankan mereka mulai. Diskusi sudah berlangsung ketika pemimpin tamu masuk tepat jam sembilan.",
+                "Ia berhenti di depan pintu. Rapat telah dimulai tanpanya. Ia langsung merasakan kepedihan itu. Setelah semua perjalanannya, setelah hubungan yang telah mereka bangun, tim ini memulai sebelum ia tiba. Baginya ini seperti sinyal yang jelas: ia bukan prioritas.",
+                "Tapi inilah yang sebenarnya terjadi. Pemimpin Indonesia menghormati nilai tamunya dengan mengerahkan timnya. Tim menghormati pemimpin mereka dengan tiba lebih awal dan siap. Pemimpin tamu menghormati waktu yang disepakati dengan tiba tepat jam sembilan. Tiga ekspresi penghormatan yang berbeda. Tiga logika waktu yang berbeda berjalan di ruangan yang sama. Dan tidak ada bahasa bersama untuk memahami semua ini. Tidak ada yang salah. Itulah intinya.",
+              ]
+            ).map((para, i) => (
               <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 12, fontStyle: "italic" }}>
                 {para}
               </p>
@@ -1036,23 +1473,30 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       {/* ─── THE FOUR GRAMMARS ────────────────────────────────────────────── */}
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "64px 24px 48px" }}>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
-          The Four Logics
+          {L(lang, "The Four Logics", "Empat Logika")}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-          There are four ways that people around the world primarily relate to time. Researchers have mapped them across cultures, given them names, and traced their consequences through decades of cross-cultural leadership studies. Each one has internal logic. Each one has strengths. Each one has costs — and those costs matter most when it encounters a different logic and nobody names what is happening.
+          {L(lang,
+            "There are four ways that people around the world primarily relate to time. Researchers have mapped them across cultures, given them names, and traced their consequences through decades of cross-cultural leadership studies. Each one has internal logic. Each one has strengths. Each one has costs — and those costs matter most when it encounters a different logic and nobody names what is happening.",
+            "Ada empat cara utama orang di seluruh dunia berhubungan dengan waktu. Para peneliti telah memetakannya di berbagai budaya, memberi mereka nama, dan melacak konsekuensinya melalui puluhan tahun studi kepemimpinan lintas budaya. Masing-masing memiliki logika internal. Masing-masing memiliki kekuatan. Masing-masing memiliki biaya — dan biaya-biaya itu paling penting ketika bertemu logika berbeda dan tidak ada yang menamakannya."
+          )}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
-          Read each one as you would read the internal logic of a language you are learning. You are not going to read these and conclude that one is right and the others are wrong — that reflex is the exact thing this module is here to interrupt. The goal is not to adopt a new logic. The goal is to recognize which one is running in the room.
+          {L(lang,
+            "Read each one as you would read the internal logic of a language you are learning. You are not going to read these and conclude that one is right and the others are wrong — that reflex is the exact thing this module is here to interrupt. The goal is not to adopt a new logic. The goal is to recognize which one is running in the room.",
+            "Baca masing-masing seperti kamu membaca logika internal sebuah bahasa yang sedang kamu pelajari. Kamu tidak akan membaca ini dan menyimpulkan bahwa satu yang benar dan yang lainnya salah — refleks itu adalah hal yang tepat yang ingin diinterupsi modul ini. Tujuannya bukan untuk mengadopsi logika baru. Tujuannya adalah mengenali logika mana yang sedang berjalan di ruangan."
+          )}
         </p>
 
         {/* 2×2 concept card grid */}
         <div className="concept-card-grid" style={{ display: "grid", gap: 20, marginTop: 32 }}>
-          {CONCEPT_CARDS.map((card, i) => (
+          {conceptCards.map((card, i) => (
             <ConceptCard
               key={i}
               card={card}
               expanded={expandedCard === i}
               onToggle={() => setExpandedCard(expandedCard === i ? null : i)}
+              lang={lang}
             />
           ))}
         </div>
@@ -1074,61 +1518,95 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: OFF_WHITE, padding: "64px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
-            Faith Anchor
+            {L(lang, "Faith Anchor", "Jangkar Iman")}
           </p>
           <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 3.5vw, 36px)", fontWeight: 800, color: NAVY, margin: "0 0 32px", lineHeight: 1.2 }}>
-            Two Ways God Relates to Time
+            {L(lang, "Two Ways God Relates to Time", "Dua Cara Allah Berhubungan dengan Waktu")}
           </h2>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            There is a verse in Ecclesiastes that most people know and almost nobody fully inhabits.
+            {L(lang,
+              "There is a verse in Ecclesiastes that most people know and almost nobody fully inhabits.",
+              "Ada sebuah ayat dalam Pengkhotbah yang dikenal banyak orang dan hampir tidak ada yang benar-benar menghidupinya sepenuhnya."
+            )}
           </p>
           <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
-            "There is a time for everything, and a season for every activity under the heavens." (Ecclesiastes 3:1, NIV)
+            {L(lang,
+              '"There is a time for everything, and a season for every activity under the heavens." (Ecclesiastes 3:1, NIV)',
+              '"Ada waktu untuk segala sesuatu, dan ada masa untuk setiap maksud di bawah langit." (Pengkhotbah 3:1, TB)'
+            )}
           </blockquote>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            We quote it when we need patience. But the verse is doing something more structural than that. It is saying that God did not design a single rhythm for all things. Diversity of timing is built into the created order. The farmer does not plant when the builder builds. The mourner does not sing when the dancer dances. Different purposes require different times, and wisdom is knowing which time you are in. Then there is a verse in Galatians that speaks at a different level.
+            {L(lang,
+              "We quote it when we need patience. But the verse is doing something more structural than that. It is saying that God did not design a single rhythm for all things. Diversity of timing is built into the created order. The farmer does not plant when the builder builds. The mourner does not sing when the dancer dances. Different purposes require different times, and wisdom is knowing which time you are in. Then there is a verse in Galatians that speaks at a different level.",
+              "Kita mengutipnya ketika membutuhkan kesabaran. Tapi ayat ini melakukan sesuatu yang lebih struktural dari itu. Ayat ini mengatakan bahwa Allah tidak merancang satu ritme untuk segala sesuatu. Keragaman waktu sudah ada dalam tatanan ciptaan. Petani tidak menanam saat pembangun membangun. Orang yang berduka tidak bernyanyi saat orang menari. Tujuan yang berbeda membutuhkan waktu yang berbeda, dan kebijaksanaan adalah mengetahui waktu mana yang sedang kamu jalani. Kemudian ada sebuah ayat dalam Galatia yang berbicara pada level yang berbeda."
+            )}
           </p>
           <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
-            "But when the time had fully come, God sent his Son." (Galatians 4:4, NIV)
+            {L(lang,
+              '"But when the time had fully come, God sent his Son." (Galatians 4:4, NIV)',
+              '"Tetapi setelah genap waktunya, Allah mengutus Anak-Nya." (Galatia 4:4, TB)'
+            )}
           </blockquote>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            Theologians call this kairos. Not chronos, the sequential ticking of clock-time, but kairos, the appointed moment. It was not rushing toward its target. It was not managed into readiness. It arrived when everything that needed to be in place was in place, and not a moment before. These two dimensions of time — chronos and kairos — are not in competition. They are both real. Cross-cultural teams that only know chronos may be missing the dimension of time that is most needed for deep and lasting work.
+            {L(lang,
+              "Theologians call this kairos. Not chronos, the sequential ticking of clock-time, but kairos, the appointed moment. It was not rushing toward its target. It was not managed into readiness. It arrived when everything that needed to be in place was in place, and not a moment before. These two dimensions of time — chronos and kairos — are not in competition. They are both real. Cross-cultural teams that only know chronos may be missing the dimension of time that is most needed for deep and lasting work.",
+              "Para teolog menyebut ini kairos. Bukan chronos — ketukan berurutan dari waktu jam — tapi kairos, momen yang telah ditetapkan. Itu tidak bergegas menuju targetnya. Itu tidak dikelola menjadi kesiapan. Itu tiba ketika segala sesuatu yang perlu ada sudah ada, dan tidak sedetik sebelumnya. Dua dimensi waktu ini — chronos dan kairos — tidak bersaing. Keduanya nyata. Tim lintas budaya yang hanya mengenal chronos mungkin kehilangan dimensi waktu yang paling dibutuhkan untuk pekerjaan yang dalam dan bertahan lama."
+            )}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
-            Your own time orientation is not wrong. But every orientation, taken alone, is incomplete. The Clock Keeper needs the kairos reminder that not everything that matters can be scheduled. The Community Keeper needs the chronos reminder that other people's commitments are real. The Relationship Weaver needs the Ecclesiastes reminder that seasons end and new ones must begin. The Harmony Follower needs the reminder that some things require a clear decision regardless of who is in the room. The goal is not better time management. The goal is ministry readiness. Our task is not to make things happen on our timeline. It is to stay ready for when God moves.
+            {L(lang,
+              "Your own time orientation is not wrong. But every orientation, taken alone, is incomplete. The Clock Keeper needs the kairos reminder that not everything that matters can be scheduled. The Community Keeper needs the chronos reminder that other people's commitments are real. The Relationship Weaver needs the Ecclesiastes reminder that seasons end and new ones must begin. The Harmony Follower needs the reminder that some things require a clear decision regardless of who is in the room. The goal is not better time management. The goal is ministry readiness. Our task is not to make things happen on our timeline. It is to stay ready for when God moves.",
+              "Orientasi waktumu sendiri tidak salah. Tapi setiap orientasi, diambil sendiri, tidak lengkap. Penjaga Jam membutuhkan pengingat kairos bahwa tidak semua yang penting bisa dijadwalkan. Penjaga Komunitas membutuhkan pengingat chronos bahwa komitmen orang lain itu nyata. Penenun Relasi membutuhkan pengingat Pengkhotbah bahwa musim berakhir dan musim baru harus dimulai. Pengikut Harmoni membutuhkan pengingat bahwa beberapa hal membutuhkan keputusan yang jelas terlepas dari siapa yang ada di ruangan. Tujuannya bukan manajemen waktu yang lebih baik. Tujuannya adalah kesiapan pelayanan. Tugas kita bukan membuat sesuatu terjadi sesuai garis waktu kita. Ini adalah untuk tetap siap ketika Allah bergerak."
+            )}
           </p>
         </div>
       </div>
 
       {/* ─── TEAM EXERCISE ────────────────────────────────────────────────── */}
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 64px" }}>
-        <TeamExercise />
+        <TeamExercise lang={lang} />
       </div>
 
       {/* ─── KEY TAKEAWAY ─────────────────────────────────────────────────── */}
       <div style={{ background: OFF_WHITE, borderTop: `3px solid ${ORANGE}`, padding: "clamp(56px, 7vw, 80px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>
-            Key Takeaway
+            {L(lang, "Key Takeaway", "Poin Utama")}
           </p>
           <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: NAVY, marginBottom: 32 }}>
-            Three things to carry forward
+            {L(lang, "Three things to carry forward", "Tiga hal untuk dibawa maju")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {[
-              {
-                heading: "You have a time logic, and it shapes everything.",
-                body: "Before this module, your experience of time may have felt like common sense. Now you can see it as a cultural orientation, one with real strengths and real blind spots. Naming your own logic is the first act of cross-cultural leadership with time.",
-              },
-              {
-                heading: "Other people's time logics are not problems to fix.",
-                body: "Every orientation in this module has internal logic and real value. The Clock Keeper's reliability matters. The Relationship Weaver's depth matters. The Harmony Follower's contextual intelligence matters. The Community Keeper's presence-based wisdom matters. The work is not to rank these but to recognize them without flinching.",
-              },
-              {
-                heading: "The leader who sees the logic gap forming can stop it before it fractures.",
-                body: "This is the shift this module is building toward: not knowledge, but situational awareness. You now have the language to see the moment forming in a meeting, name what is happening, and create space for the team to navigate it together. That skill, used once, can change the culture of a team. Used consistently, it marks the difference between a team that tolerates difference and a team that draws strength from it.",
-              },
-            ].map((item, i) => (
+            {L(lang,
+              [
+                {
+                  heading: "You have a time logic, and it shapes everything.",
+                  body: "Before this module, your experience of time may have felt like common sense. Now you can see it as a cultural orientation, one with real strengths and real blind spots. Naming your own logic is the first act of cross-cultural leadership with time.",
+                },
+                {
+                  heading: "Other people's time logics are not problems to fix.",
+                  body: "Every orientation in this module has internal logic and real value. The Clock Keeper's reliability matters. The Relationship Weaver's depth matters. The Harmony Follower's contextual intelligence matters. The Community Keeper's presence-based wisdom matters. The work is not to rank these but to recognize them without flinching.",
+                },
+                {
+                  heading: "The leader who sees the logic gap forming can stop it before it fractures.",
+                  body: "This is the shift this module is building toward: not knowledge, but situational awareness. You now have the language to see the moment forming in a meeting, name what is happening, and create space for the team to navigate it together. That skill, used once, can change the culture of a team. Used consistently, it marks the difference between a team that tolerates difference and a team that draws strength from it.",
+                },
+              ],
+              [
+                {
+                  heading: "Kamu memiliki logika waktu, dan itu membentuk segalanya.",
+                  body: "Sebelum modul ini, pengalamanmu tentang waktu mungkin terasa seperti akal sehat. Sekarang kamu bisa melihatnya sebagai orientasi budaya — salah satu dengan kekuatan nyata dan titik buta nyata. Menamai logikamu sendiri adalah tindakan pertama kepemimpinan lintas budaya dengan waktu.",
+                },
+                {
+                  heading: "Logika waktu orang lain bukan masalah yang harus diselesaikan.",
+                  body: "Setiap orientasi dalam modul ini memiliki logika internal dan nilai nyata. Keandalan Penjaga Jam itu penting. Kedalaman Penenun Relasi itu penting. Kecerdasan kontekstual Pengikut Harmoni itu penting. Kebijaksanaan berbasis kehadiran Penjaga Komunitas itu penting. Pekerjaan bukan untuk mengurutkan ini tapi untuk mengenalinya tanpa gemetar.",
+                },
+                {
+                  heading: "Pemimpin yang melihat kesenjangan logika yang terbentuk bisa menghentikannya sebelum retak.",
+                  body: "Inilah pergeseran yang sedang dibangun modul ini: bukan pengetahuan, tapi kesadaran situasional. Kamu sekarang memiliki bahasa untuk melihat momen yang terbentuk dalam rapat, menamai apa yang terjadi, dan menciptakan ruang bagi tim untuk menavigasinya bersama. Keterampilan itu, digunakan sekali, bisa mengubah budaya tim. Digunakan secara konsisten, itu menandai perbedaan antara tim yang menoleransi perbedaan dan tim yang mengambil kekuatan darinya.",
+                },
+              ]
+            ).map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: LIGHT_GRAY, borderLeft: `3px solid ${ORANGE}`, borderRadius: 8 }}>
                 <div style={{ flex: 1 }}>
                   <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 6px" }}>
@@ -1148,7 +1626,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: LIGHT_GRAY, padding: "40px 24px 48px", borderTop: `1px solid oklch(88% 0.008 80)` }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 16 }}>
-            Academic Roots
+            {L(lang, "Academic Roots", "Akar Akademis")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {[
@@ -1205,23 +1683,23 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: ORANGE }} />
         <div style={{ position: "relative", maxWidth: 600, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: OFF_WHITE, marginBottom: 14, lineHeight: 1.2 }}>
-            Keep Growing
+            {L(lang, "Keep Growing", "Terus Bertumbuh")}
           </h2>
           <p style={{ color: "oklch(72% 0.04 260)", fontSize: 15, lineHeight: 1.75, marginBottom: 28, fontFamily: "'Montserrat', sans-serif" }}>
-            Explore more resources to deepen your cross-cultural leadership.
+            {L(lang, "Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber daya untuk memperdalam kepemimpinan lintas budaya kamu.")}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
               href="/resources"
               style={{ display: "inline-block", padding: "13px 28px", background: ORANGE, color: OFF_WHITE, borderRadius: 6, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none" }}
             >
-              Content Library
+              {L(lang, "Content Library", "Perpustakaan Konten")}
             </Link>
             <Link
               href="/resources/cultural-intelligence"
               style={{ display: "inline-block", padding: "13px 28px", border: "1px solid oklch(45% 0.05 260)", color: OFF_WHITE, borderRadius: 6, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, textDecoration: "none" }}
             >
-              Cultural Intelligence →
+              {L(lang, "Cultural Intelligence →", "Kecerdasan Budaya →")}
             </Link>
           </div>
         </div>
