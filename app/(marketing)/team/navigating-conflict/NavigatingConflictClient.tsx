@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -724,8 +724,352 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
         </div>
       </section>
 
+      {/* ── QUIZ ── */}
+      <section style={{ paddingBlock: "clamp(3.5rem, 6vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
+        <div className="container-wide" style={{ maxWidth: "680px" }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.68rem",
+            fontWeight: 800,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "oklch(65% 0.15 45)",
+            marginBottom: "1rem",
+          }}>
+            Conflict Style Assessment
+          </p>
+          <h2 style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+            color: "oklch(22% 0.08 260)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+            marginBottom: "0.75rem",
+          }}>
+            What Is Your Conflict Style?
+          </h2>
+          <p style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "1rem",
+            lineHeight: 1.75,
+            color: "oklch(42% 0.008 260)",
+            marginBottom: "2.5rem",
+          }}>
+            10 questions. Choose the response that feels most natural to you — not the one you think you should choose.
+          </p>
 
-            {/* ── CTA ── */}
+          {!quizComplete ? (
+            <div>
+              {/* Progress bar */}
+              <div style={{ marginBottom: "2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                  <span style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "oklch(55% 0.008 260)",
+                  }}>
+                    Question {currentQ + 1} of {QUESTIONS.length}
+                  </span>
+                  <span style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "oklch(65% 0.15 45)",
+                  }}>
+                    {progressPct}%
+                  </span>
+                </div>
+                <div style={{ height: "4px", background: "oklch(88% 0.008 80)", position: "relative" }}>
+                  <div style={{
+                    height: "100%",
+                    width: `${progressPct}%`,
+                    background: "oklch(65% 0.15 45)",
+                    transition: "width 0.3s ease",
+                  }} />
+                </div>
+              </div>
+
+              {/* Question card */}
+              <div style={{
+                background: "oklch(22% 0.08 260)",
+                padding: "2rem 2rem 1.75rem",
+                marginBottom: "1.5rem",
+              }}>
+                <p style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 700,
+                  fontSize: "clamp(1rem, 2.5vw, 1.125rem)",
+                  lineHeight: 1.6,
+                  color: "oklch(97% 0.005 80)",
+                  margin: 0,
+                }}>
+                  {QUESTIONS[currentQ].q}
+                </p>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {shuffledOptions[currentQ].map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleAnswer(opt.type)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "1.25rem 1.5rem",
+                      background: "oklch(94% 0.007 80)",
+                      border: "1px solid oklch(88% 0.008 80)",
+                      cursor: "pointer",
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.9375rem",
+                      lineHeight: 1.6,
+                      color: "oklch(30% 0.08 260)",
+                      transition: "all 0.15s ease",
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "oklch(22% 0.08 260)";
+                      (e.currentTarget as HTMLButtonElement).style.color = "oklch(97% 0.005 80)";
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = "oklch(65% 0.15 45)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "oklch(94% 0.007 80)";
+                      (e.currentTarget as HTMLButtonElement).style.color = "oklch(30% 0.08 260)";
+                      (e.currentTarget as HTMLButtonElement).style.borderColor = "oklch(88% 0.008 80)";
+                    }}
+                  >
+                    {opt.text}
+                  </button>
+                ))}
+              </div>
+
+              {currentQ > 0 && (
+                <button
+                  onClick={() => setCurrentQ(currentQ - 1)}
+                  style={{
+                    marginTop: "1.25rem",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    color: "oklch(55% 0.008 260)",
+                    textDecoration: "underline",
+                    padding: 0,
+                  }}
+                >
+                  ← Back
+                </button>
+              )}
+            </div>
+          ) : result ? (
+            /* ── RESULT PANEL ── */
+            <div>
+              <div style={{
+                background: "oklch(22% 0.08 260)",
+                padding: "2.5rem",
+                marginBottom: "1.5rem",
+                position: "relative",
+                overflow: "hidden",
+              }}>
+                <div aria-hidden="true" style={{
+                  position: "absolute",
+                  right: "-1rem",
+                  bottom: "-1.5rem",
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 900,
+                  fontSize: "8rem",
+                  color: "oklch(97% 0.005 80 / 0.04)",
+                  lineHeight: 1,
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}>
+                  {result}
+                </div>
+
+                <div style={{ position: "relative" }}>
+                  <div style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    marginBottom: "1.25rem",
+                  }}>
+                    <div style={{
+                      width: "10px",
+                      height: "10px",
+                      background: RESULTS[result].color,
+                      borderRadius: "50%",
+                    }} />
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.68rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.16em",
+                      textTransform: "uppercase",
+                      color: RESULTS[result].color,
+                    }}>
+                      {RESULTS[result].subtitle}
+                    </span>
+                  </div>
+
+                  <h3 style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontWeight: 800,
+                    fontSize: "clamp(1.75rem, 4vw, 2.25rem)",
+                    color: "oklch(97% 0.005 80)",
+                    letterSpacing: "-0.02em",
+                    marginBottom: "1.25rem",
+                    lineHeight: 1.15,
+                  }}>
+                    {RESULTS[result].title}
+                  </h3>
+
+                  <p style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.9375rem",
+                    lineHeight: 1.8,
+                    color: "oklch(78% 0.03 260)",
+                    marginBottom: "1.75rem",
+                  }}>
+                    {RESULTS[result].description}
+                  </p>
+
+                  <div style={{
+                    background: "oklch(30% 0.12 260)",
+                    borderLeft: `3px solid ${RESULTS[result].color}`,
+                    padding: "1.25rem 1.5rem",
+                  }}>
+                    <p style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.875rem",
+                      lineHeight: 1.7,
+                      color: "oklch(72% 0.04 260)",
+                      margin: 0,
+                    }}>
+                      {RESULTS[result].tip}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Save / auth CTA */}
+              {user ? (
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                  {!saved ? (
+                    <button
+                      onClick={handleSave}
+                      disabled={isPending}
+                      style={{
+                        padding: "0.85rem 2rem",
+                        background: "oklch(65% 0.15 45)",
+                        color: "oklch(97% 0.005 80)",
+                        border: "none",
+                        cursor: isPending ? "not-allowed" : "pointer",
+                        fontFamily: "var(--font-montserrat)",
+                        fontWeight: 700,
+                        fontSize: "0.875rem",
+                        letterSpacing: "0.04em",
+                        opacity: isPending ? 0.7 : 1,
+                      }}
+                    >
+                      {isPending ? "Saving…" : "Save to My Dashboard →"}
+                    </button>
+                  ) : (
+                    <p style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.875rem",
+                      fontWeight: 600,
+                      color: "oklch(50% 0.18 145)",
+                    }}>
+                      ✓ Saved to your dashboard
+                    </p>
+                  )}
+                  {saveError && (
+                    <p style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.8rem",
+                      color: "oklch(55% 0.18 15)",
+                    }}>
+                      {saveError}
+                    </p>
+                  )}
+                  <button
+                    onClick={() => { setCurrentQ(0); setAnswers(new Array(QUESTIONS.length).fill(null)); setQuizComplete(false); setResult(null); setSaved(false); setSaveError(null); }}
+                    style={{
+                      padding: "0.85rem 1.5rem",
+                      background: "none",
+                      color: "oklch(42% 0.008 260)",
+                      border: "1px solid oklch(78% 0.008 260)",
+                      cursor: "pointer",
+                      fontFamily: "var(--font-montserrat)",
+                      fontWeight: 600,
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    Retake Quiz
+                  </button>
+                </div>
+              ) : (
+                <div style={{
+                  background: "oklch(94% 0.007 80)",
+                  padding: "1.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.5rem",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                }}>
+                  <p style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.9rem",
+                    color: "oklch(38% 0.008 260)",
+                    margin: 0,
+                  }}>
+                    Create a free account to save your conflict style to your dashboard.
+                  </p>
+                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                    <Link
+                      href="/membership"
+                      style={{
+                        padding: "0.7rem 1.5rem",
+                        background: "oklch(65% 0.15 45)",
+                        color: "oklch(97% 0.005 80)",
+                        textDecoration: "none",
+                        fontFamily: "var(--font-montserrat)",
+                        fontWeight: 700,
+                        fontSize: "0.8rem",
+                        letterSpacing: "0.04em",
+                        display: "inline-flex",
+                      }}
+                    >
+                      Sign Up Free →
+                    </Link>
+                    <button
+                      onClick={() => { setCurrentQ(0); setAnswers(new Array(QUESTIONS.length).fill(null)); setQuizComplete(false); setResult(null); }}
+                      style={{
+                        padding: "0.7rem 1.5rem",
+                        background: "none",
+                        color: "oklch(42% 0.008 260)",
+                        border: "1px solid oklch(78% 0.008 260)",
+                        cursor: "pointer",
+                        fontFamily: "var(--font-montserrat)",
+                        fontWeight: 600,
+                        fontSize: "0.8rem",
+                      }}
+                    >
+                      Retake
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 6rem)", background: "oklch(22% 0.08 260)", position: "relative" }}>
         <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(4rem, 7vw, 6rem)", bottom: "clamp(4rem, 7vw, 6rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ paddingLeft: "3rem" }}>

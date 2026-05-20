@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -717,8 +717,306 @@ export default function TrustSafetyClient({ user }: { user: User | null }) {
         </div>
       </section>
 
+      {/* ── ASSESSMENT ── */}
+      <section style={{ paddingBlock: "clamp(3.5rem, 6vw, 5rem)", background: "oklch(22% 0.08 260)" }}>
+        <div className="container-wide" style={{ maxWidth: "800px" }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.68rem",
+            fontWeight: 800,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "oklch(65% 0.15 45)",
+            marginBottom: "0.875rem",
+          }}>
+            Closing Activity
+          </p>
+          <h2 style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+            color: "oklch(97% 0.005 80)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+            marginBottom: "0.875rem",
+          }}>
+            Team Trust Temperature Check
+          </h2>
+          <p style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.9375rem",
+            lineHeight: 1.7,
+            color: "oklch(72% 0.04 260)",
+            marginBottom: "3rem",
+            maxWidth: "54ch",
+          }}>
+            Rate your team honestly on each dimension. 1 = this is severely lacking. 5 = this is strong and consistent. Your scores will generate a trust profile below.
+          </p>
 
-            {/* ── CTA ── */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {DIMENSIONS.map((dim, i) => {
+              const score = scores[dim.key];
+              return (
+                <div key={dim.key} style={{
+                  background: "oklch(30% 0.12 260)",
+                  padding: "1.75rem",
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem", gap: "1rem", flexWrap: "wrap" }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.375rem" }}>
+                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.7rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.12em" }}>
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", margin: 0 }}>
+                          {dim.label}
+                        </h3>
+                      </div>
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.65, color: "oklch(72% 0.04 260)", margin: 0, fontStyle: "italic" }}>
+                        &ldquo;{dim.description}&rdquo;
+                      </p>
+                    </div>
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontWeight: 800,
+                      fontSize: "2.5rem",
+                      color: "oklch(65% 0.15 45)",
+                      lineHeight: 1,
+                      flexShrink: 0,
+                    }}>
+                      {score}
+                    </span>
+                  </div>
+
+                  {/* Slider track */}
+                  <div style={{ position: "relative", marginBottom: "0.75rem" }}>
+                    <div style={{ height: "4px", background: "oklch(22% 0.08 260)", borderRadius: "2px" }}>
+                      <div style={{
+                        height: "4px",
+                        background: "oklch(65% 0.15 45)",
+                        borderRadius: "2px",
+                        width: `${((score - 1) / 4) * 100}%`,
+                        transition: "width 0.1s ease",
+                      }} />
+                    </div>
+                    <input
+                      type="range"
+                      min={1}
+                      max={5}
+                      step={1}
+                      value={score}
+                      onChange={e => setScores(prev => ({ ...prev, [dim.key]: parseInt(e.target.value) }))}
+                      style={{ position: "absolute", top: "-8px", left: 0, width: "100%", opacity: 0, cursor: "pointer", height: "20px" }}
+                    />
+                  </div>
+
+                  {/* Step buttons */}
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    {[1, 2, 3, 4, 5].map(n => (
+                      <button
+                        key={n}
+                        onClick={() => setScores(prev => ({ ...prev, [dim.key]: n }))}
+                        style={{
+                          flex: 1,
+                          padding: "0.5rem",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          fontFamily: "var(--font-montserrat)",
+                          fontWeight: 700,
+                          fontSize: "0.875rem",
+                          background: n === score ? "oklch(65% 0.15 45)" : "oklch(22% 0.08 260)",
+                          color: n === score ? "white" : "oklch(55% 0.04 260)",
+                          transition: "all 0.12s ease",
+                        }}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.375rem" }}>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(52% 0.04 260)", letterSpacing: "0.06em" }}>Severely lacking</span>
+                    <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(52% 0.04 260)", letterSpacing: "0.06em" }}>Consistently strong</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {!submitted && (
+            <button
+              onClick={handleSubmit}
+              style={{
+                marginTop: "2.5rem",
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 700,
+                fontSize: "0.875rem",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                background: "oklch(65% 0.15 45)",
+                color: "white",
+                border: "none",
+                padding: "1rem 2.5rem",
+                cursor: "pointer",
+                display: "inline-block",
+              }}
+            >
+              See My Trust Profile →
+            </button>
+          )}
+        </div>
+      </section>
+
+      {/* ── RESULT PANEL ── */}
+      {submitted && (
+        <section id="result-panel" style={{ paddingBlock: "clamp(3.5rem, 6vw, 5rem)", background: "oklch(30% 0.12 260)" }}>
+          <div className="container-wide" style={{ maxWidth: "800px" }}>
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.68rem",
+              fontWeight: 800,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "0.875rem",
+            }}>
+              Your Trust Profile
+            </p>
+            <h2 style={{
+              fontFamily: "var(--font-montserrat)",
+              fontWeight: 800,
+              fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+              color: "oklch(97% 0.005 80)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.2,
+              marginBottom: "2.5rem",
+            }}>
+              Here&apos;s what your scores reveal
+            </h2>
+
+            {/* Average badge */}
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "1rem",
+              background: "oklch(22% 0.08 260)",
+              padding: "1.25rem 2rem",
+              marginBottom: "2rem",
+            }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 800,
+                fontSize: "3.5rem",
+                color: "oklch(65% 0.15 45)",
+                lineHeight: 1,
+              }}>
+                {roundedAvg}
+              </span>
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(72% 0.04 260)", margin: "0 0 0.25rem" }}>
+                  Average Score
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(55% 0.04 260)", margin: 0 }}>out of 5.0</p>
+              </div>
+            </div>
+
+            {/* Interpretation */}
+            <div style={{
+              borderLeft: "3px solid oklch(65% 0.15 45)",
+              paddingLeft: "1.5rem",
+              marginBottom: "2.5rem",
+            }}>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "1.0625rem",
+                fontWeight: 600,
+                lineHeight: 1.65,
+                color: "oklch(92% 0.005 80)",
+                margin: 0,
+              }}>
+                {interpretation.text}
+              </p>
+            </div>
+
+            {/* Bar visualization */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "2.5rem" }}>
+              {DIMENSIONS.map(dim => {
+                const score = scores[dim.key];
+                const pct = (score / 5) * 100;
+                return (
+                  <div key={dim.key}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.375rem" }}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.875rem", color: "oklch(82% 0.04 260)" }}>
+                        {dim.label}
+                      </span>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(65% 0.15 45)" }}>
+                        {score}/5
+                      </span>
+                    </div>
+                    <div style={{ height: "8px", background: "oklch(22% 0.08 260)", borderRadius: "4px", overflow: "hidden" }}>
+                      <div style={{
+                        height: "8px",
+                        width: `${pct}%`,
+                        background: score >= 4 ? "oklch(55% 0.18 145)" : score >= 3 ? "oklch(65% 0.15 45)" : "oklch(58% 0.18 20)",
+                        borderRadius: "4px",
+                        transition: "width 0.4s ease",
+                      }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Save button */}
+            {user && !saved && (
+              <div>
+                <button
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontWeight: 700,
+                    fontSize: "0.8125rem",
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    background: "oklch(65% 0.15 45)",
+                    color: "white",
+                    border: "none",
+                    padding: "0.875rem 1.75rem",
+                    cursor: isSaving ? "wait" : "pointer",
+                    opacity: isSaving ? 0.7 : 1,
+                  }}
+                >
+                  {isSaving ? "Saving…" : "Save to Dashboard →"}
+                </button>
+                {saveError && (
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(58% 0.18 20)", marginTop: "0.75rem" }}>
+                    {saveError}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {saved && (
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "oklch(55% 0.18 145)" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem" }}>
+                  ✓ Saved to your dashboard
+                </span>
+              </div>
+            )}
+
+            {!user && (
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(62% 0.04 260)", marginTop: "1rem" }}>
+                <Link href="/membership" style={{ color: "oklch(65% 0.15 45)", fontWeight: 700, textDecoration: "none" }}>
+                  Sign up
+                </Link>
+                {" "}to save your trust profile and track progress over time.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── CTA ── */}
       <section style={{ paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", background: "oklch(22% 0.08 260)", position: "relative" }}>
         <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: "clamp(3.5rem, 6vw, 5.5rem)", bottom: "clamp(3.5rem, 6vw, 5.5rem)", width: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ paddingLeft: "2.5rem", maxWidth: "680px" }}>
