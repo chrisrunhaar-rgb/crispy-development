@@ -83,6 +83,7 @@ const ALL_RESULT_TYPES: Record<string, { label: string; href: string; assessment
   personalities16:   { label: "16 Personalities",  href: "/team/16-personalities",    assessmentId: "16-personalities" },
   big_five:          { label: "Big Five",           href: "/team/big-five",            assessmentId: "big-five" },
   karunia:           { label: "Karunia Rohani",     href: "/team/karunia-rohani",      assessmentId: "karunia-rohani" },
+  "5languages":      { label: "5 Languages",        href: "/team/5languages",           assessmentId: "5languages" },
 };
 
 export default function TeamResultsGrid({
@@ -211,6 +212,11 @@ export default function TeamResultsGrid({
                           case "karunia": {
                             const KARUNIA_LABELS: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", memberi: "Memberi", hikmat: "Hikmat", iman: "Iman", memimpin: "Memimpin", mengajar: "Mengajar", gembala: "Gembala", bernubuat: "Bernubuat" };
                             return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(42% 0.14 145)" }}>{KARUNIA_LABELS[r.result_key] ?? r.result_key}</span>;
+                          }
+                          case "5languages": {
+                            const FIVELA_LABELS: Record<string, string> = { A: "Words", B: "Quality Time", C: "Acts of Service", D: "Tangible Gifts", E: "Physical Touch" };
+                            const [recv] = r.result_key.split("|");
+                            return <Pill label={FIVELA_LABELS[recv] ?? recv} color="oklch(42% 0.14 45)" />;
                           }
                           default:
                             return <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(38% 0.008 260)" }}>{r.result_key}</span>;

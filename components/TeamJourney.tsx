@@ -157,7 +157,18 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     contentUrl: "/team/enneagram",
     insertAfter: 3,
   },
-  // After step 4 "Communication Culture" — behavioural & personality styles shape how teams communicate
+  // After step 4 "Communication Culture" — appreciation languages shape how teams communicate
+  "5languages": {
+    title: "5 Languages of Appreciation",
+    description: "Discover how each team member feels genuinely valued — and how to express appreciation in ways that actually land.",
+    type: "assessment",
+    icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+    collectsData: true,
+    dataLabel: "Appreciation Language",
+    contentUrl: "/team/5languages",
+    insertAfter: 4,
+  },
+  // Behavioural & personality styles shape how teams communicate
   "disc": {
     title: "DISC Profiles",
     description: "Map your team's behavioural styles — who drives, who influences, who supports, who analyses. Use your differences as strengths.",
