@@ -6,6 +6,49 @@ import { unlockNextTeamStep, lockTeamStep, finalizeTeamStep, markTeamStepComplet
 import StepFeedback, { type FeedbackEntry } from "@/components/StepFeedback";
 import type { TeamMemberResult } from "@/components/TeamResultsGrid";
 
+const DISC_SLICES = [
+  { key: "D", fill: "#C44A2A" },
+  { key: "I", fill: "#C48A1A" },
+  { key: "S", fill: "#2E7A40" },
+  { key: "C", fill: "#2B5FAC" },
+] as const;
+
+function discPolarXY(cx: number, cy: number, r: number, deg: number) {
+  const rad = (deg - 90) * (Math.PI / 180);
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function discSlicePath(cx: number, cy: number, r: number, startDeg: number, endDeg: number) {
+  const span = endDeg - startDeg;
+  if (span >= 359.9) return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx - 0.001} ${cy - r} Z`;
+  const s = discPolarXY(cx, cy, r, startDeg);
+  const e = discPolarXY(cx, cy, r, endDeg);
+  const large = span > 180 ? 1 : 0;
+  return `M ${cx} ${cy} L ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)} Z`;
+}
+
+function DiscPieSVG({ scores, size = 72 }: { scores: { D: number; I: number; S: number; C: number }; size?: number }) {
+  const cx = size / 2, cy = size / 2, r = size / 2 - 2, gap = 1.2;
+  let angle = 0;
+  const slices = DISC_SLICES.map(s => {
+    const pct = scores[s.key as keyof typeof scores];
+    const span = (pct / 100) * 360;
+    const start = angle + gap / 2;
+    const end = angle + span - gap / 2;
+    angle += span;
+    return { ...s, pct, start, end };
+  });
+  const innerR = size * 0.22;
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {slices.map(s => (
+        <path key={s.key} d={discSlicePath(cx, cy, r, s.start, s.end)} fill={s.fill} />
+      ))}
+      <circle cx={cx} cy={cy} r={innerR} fill="white" />
+    </svg>
+  );
+}
+
 export type StepCompletion = {
   user_id: string;
   step_number: number;
@@ -929,20 +972,26 @@ export default function TeamJourney({
                             const { label, color } = hasResult
                               ? getResultDisplay(step.resultType!, result!.result_key!)
                               : { label: "", color: "" };
+                            const discScores = (step.resultType === "disc" && result?.scores)
+                              ? result.scores as { D: number; I: number; S: number; C: number }
+                              : null;
                             return (
                               <div key={member.id} style={{
-                                background: "white",
-                                border: `1px solid ${hasResult ? `color-mix(in oklch, ${color} 20%, oklch(90% 0.005 80))` : "oklch(90% 0.005 80)"}`,
-                                padding: "0.875rem 1rem",
+                                background: hasResult ? "white" : "oklch(97% 0.004 80)",
+                                border: `1px solid ${hasResult ? `color-mix(in oklch, ${color} 20%, oklch(88% 0.006 80))` : "oklch(91% 0.006 80)"}`,
+                                borderRadius: 12,
+                                padding: "0.875rem",
                                 display: "flex",
                                 flexDirection: "column",
+                                alignItems: "center",
                                 gap: "0.5rem",
+                                minHeight: 150,
                               }}>
-                                <div>
+                                <div style={{ width: "100%" }}>
                                   <p style={{
                                     fontFamily: "var(--font-montserrat)",
                                     fontWeight: 700,
-                                    fontSize: "0.8rem",
+                                    fontSize: "0.72rem",
                                     color: "oklch(28% 0.005 260)",
                                     lineHeight: 1.25,
                                   }}>
@@ -962,30 +1011,36 @@ export default function TeamJourney({
                                     </p>
                                   )}
                                 </div>
-                                {hasResult ? (
-                                  <span style={{
-                                    fontFamily: "var(--font-montserrat)",
-                                    fontSize: "0.65rem",
-                                    fontWeight: 700,
-                                    letterSpacing: "0.04em",
-                                    color,
-                                    background: `color-mix(in oklch, ${color} 12%, white)`,
-                                    padding: "3px 9px",
-                                    alignSelf: "flex-start",
-                                    whiteSpace: "nowrap",
-                                  }}>
-                                    {label}
-                                  </span>
-                                ) : (
-                                  <span style={{
-                                    fontFamily: "var(--font-montserrat)",
-                                    fontSize: "0.62rem",
-                                    color: "oklch(68% 0.006 260)",
-                                    fontStyle: "italic",
-                                  }}>
-                                    Not done yet
-                                  </span>
-                                )}
+                                <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                  {hasResult ? (
+                                    discScores ? (
+                                      <DiscPieSVG scores={discScores} size={72} />
+                                    ) : (
+                                      <span style={{
+                                        fontFamily: "var(--font-montserrat)",
+                                        fontSize: "0.72rem",
+                                        fontWeight: 700,
+                                        letterSpacing: "0.04em",
+                                        color,
+                                        background: `color-mix(in oklch, ${color} 12%, white)`,
+                                        padding: "4px 10px",
+                                        borderRadius: 4,
+                                        whiteSpace: "nowrap",
+                                      }}>
+                                        {label}
+                                      </span>
+                                    )
+                                  ) : (
+                                    <span style={{
+                                      fontFamily: "var(--font-montserrat)",
+                                      fontSize: "0.62rem",
+                                      color: "oklch(68% 0.006 260)",
+                                      fontStyle: "italic",
+                                    }}>
+                                      Not done yet
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                             );
                           })}
