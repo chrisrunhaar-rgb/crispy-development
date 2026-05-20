@@ -123,6 +123,25 @@ export default function PersonalContent({ ctaHref = "/membership" }: { ctaHref?:
         </div>
       </section>
 
+      {/* ── DASHBOARD PREVIEW ── */}
+<section style={{ paddingBlock: "clamp(3rem, 6vw, 6rem)", background: "oklch(97% 0.005 80)" }}>
+  <div className="container-wide">
+    <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.75rem", textAlign: "center" }}>
+      {lang === "id" ? "Dasbor Anggota" : "Member Dashboard"}
+    </p>
+    <h2 className="t-section" style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+      {lang === "id" ? "Perjalananmu, dalam satu tampilan." : "Your pathway, in one view."}
+    </h2>
+    <div style={{ maxWidth: "860px", margin: "0 auto", borderRadius: "6px", overflow: "hidden", boxShadow: "0 8px 40px oklch(22% 0.05 260 / 0.18)" }}>
+      <img
+        src={lang === "id" ? "/dashboard-id.png" : "/dashboard-en.png"}
+        alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
+        style={{ width: "100%", display: "block" }}
+      />
+    </div>
+  </div>
+</section>
+
       <div className="divider" />
 
       {/* ── APPLY CTA ── */}
