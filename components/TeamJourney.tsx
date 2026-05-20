@@ -49,6 +49,211 @@ function DiscPieSVG({ scores, size = 72 }: { scores: { D: number; I: number; S: 
   );
 }
 
+// ── Wheel of Life spider ──────────────────────────────────────────────────────
+const WHEEL_SEGMENTS = [
+  { key: "family" },     { key: "finance" },    { key: "relaxation" },
+  { key: "ministry" },   { key: "spiritual" },  { key: "community" },
+  { key: "learning" },   { key: "health" },
+];
+function WheelSpiderSVG({ scores, size = 72 }: { scores: Record<string, number>; size?: number }) {
+  const cx = size / 2, cy = size / 2, maxR = size / 2 - 5, N = WHEEL_SEGMENTS.length;
+  function getPoint(i: number, score: number): [number, number] {
+    const angle = (i / N) * 2 * Math.PI - Math.PI / 2;
+    const dist = (score / 10) * maxR;
+    return [cx + dist * Math.cos(angle), cy + dist * Math.sin(angle)];
+  }
+  const scorePoints = WHEEL_SEGMENTS.map((seg, i) => getPoint(i, scores[seg.key] ?? 0));
+  const scorePoly = scorePoints.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
+  const rings = [0.25, 0.5, 0.75, 1.0];
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {rings.map((f, ri) => {
+        const pts = WHEEL_SEGMENTS.map((_, i): [number, number] => {
+          const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+          return [cx + maxR * f * Math.cos(a), cy + maxR * f * Math.sin(a)];
+        });
+        return <polygon key={ri} points={pts.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" ")} fill="none" stroke="oklch(85% 0.006 260)" strokeWidth="0.75" />;
+      })}
+      {WHEEL_SEGMENTS.map((_, i) => {
+        const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+        return <line key={i} x1={cx} y1={cy} x2={(cx + maxR * Math.cos(a)).toFixed(2)} y2={(cy + maxR * Math.sin(a)).toFixed(2)} stroke="oklch(85% 0.006 260)" strokeWidth="0.75" />;
+      })}
+      <polygon points={scorePoly} fill="oklch(42% 0.14 145 / 0.18)" stroke="oklch(42% 0.14 145)" strokeWidth={1.5} />
+    </svg>
+  );
+}
+
+// ── Big Five OCEAN radar ──────────────────────────────────────────────────────
+function OceanRadarSVG({ scores, size = 72 }: { scores: Record<string, number>; size?: number }) {
+  function calcPct(raw: number) { return Math.round(((raw - 10) / 40) * 100); }
+  const pcts = { O: calcPct(scores.O ?? 30), C: calcPct(scores.C ?? 30), E: calcPct(scores.E ?? 30), A: calcPct(scores.A ?? 30), ES: 100 - calcPct(scores.N ?? 30) };
+  const ORDER = ["O", "C", "E", "A", "ES"] as const;
+  const COLORS: Record<string, string> = { O: "oklch(52% 0.22 280)", C: "oklch(50% 0.18 215)", E: "oklch(60% 0.20 52)", A: "oklch(52% 0.18 155)", ES: "oklch(50% 0.20 310)" };
+  const cx = size / 2, cy = size / 2, r = (size / 2) * 0.70;
+  function ang(i: number) { return -Math.PI / 2 + (i * 2 * Math.PI) / 5; }
+  function pt(i: number, pct: number): [number, number] { const d = (pct / 100) * r; return [cx + d * Math.cos(ang(i)), cy + d * Math.sin(ang(i))]; }
+  const userPts = ORDER.map((t, i) => pt(i, pcts[t]));
+  const userPoly = userPts.map(p => p.join(",")).join(" ");
+  function gridPoly(pct: number) { return ORDER.map((_, i) => pt(i, pct).join(",")).join(" "); }
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {[25, 50, 75, 100].map(p => <polygon key={p} points={gridPoly(p)} fill="none" stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />)}
+      {ORDER.map((_, i) => { const [x2, y2] = pt(i, 100); return <line key={i} x1={cx} y1={cy} x2={x2} y2={y2} stroke="oklch(88% 0.006 260)" strokeWidth={0.75} />; })}
+      <polygon points={userPoly} fill="oklch(52% 0.22 280 / 0.14)" stroke="oklch(52% 0.22 280)" strokeWidth={1.5} />
+      {userPts.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={3} fill={COLORS[ORDER[i]]} />)}
+    </svg>
+  );
+}
+
+// ── Shared constants ──────────────────────────────────────────────────────────
+const navy = "oklch(22% 0.10 260)";
+const orange = "oklch(65% 0.15 45)";
+
+const THINKING_STYLE_COLORS: Record<string, string> = {
+  C: "oklch(48% 0.18 250)", H: "oklch(48% 0.18 145)", I: "oklch(48% 0.18 300)",
+};
+const P16_COLORS: Record<string, string> = {
+  INTJ: "oklch(48% 0.20 260)", INTP: "oklch(48% 0.18 240)", ENTJ: "oklch(50% 0.22 25)",  ENTP: "oklch(58% 0.20 45)",
+  INFJ: "oklch(48% 0.22 295)", INFP: "oklch(52% 0.18 10)",  ENFJ: "oklch(52% 0.18 155)", ENFP: "oklch(60% 0.18 65)",
+  ISTJ: "oklch(45% 0.14 215)", ISFJ: "oklch(50% 0.16 185)", ESTJ: "oklch(48% 0.18 195)", ESFJ: "oklch(55% 0.18 35)",
+  ISTP: "oklch(50% 0.15 145)", ISFP: "oklch(55% 0.18 150)", ESTP: "oklch(58% 0.20 55)",  ESFP: "oklch(62% 0.20 48)",
+};
+const ENNEAGRAM_DATA: Record<number, { color: string; name: string }> = {
+  1: { color: "oklch(55% 0.12 260)", name: "Reformer" },
+  2: { color: "oklch(65% 0.20 25)",  name: "Helper" },
+  3: { color: "oklch(65% 0.25 40)",  name: "Achiever" },
+  4: { color: "oklch(55% 0.20 310)", name: "Individualist" },
+  5: { color: "oklch(50% 0.15 260)", name: "Investigator" },
+  6: { color: "oklch(55% 0.18 45)",  name: "Loyalist" },
+  7: { color: "oklch(70% 0.20 80)",  name: "Enthusiast" },
+  8: { color: "oklch(50% 0.25 10)",  name: "Challenger" },
+  9: { color: "oklch(55% 0.12 140)", name: "Peacemaker" },
+};
+const KARUNIA_LABELS_EN: Record<string, string> = {
+  melayani: "Serving", murah_hati: "Mercy", keramahan: "Hospitality",
+  bahasa_roh: "Tongues", menyembuhkan: "Healing", menguatkan: "Exhortation",
+  memberi: "Giving", hikmat: "Wisdom", pengetahuan: "Knowledge",
+  iman: "Faith", kerasulan: "Apostleship", penginjilan: "Evangelism",
+  bernubuat: "Prophecy", mengajar: "Teaching", gembala: "Shepherding",
+  memimpin: "Leadership", administrasi: "Administration", mukjizat: "Miracles",
+  tafsir_bahasa_roh: "Interpretation",
+};
+const FIVELA_COLORS: Record<string, string> = {
+  A: "oklch(72% 0.18 85)", B: "oklch(62% 0.14 235)", C: "oklch(52% 0.14 150)", D: "oklch(68% 0.15 10)", E: "oklch(70% 0.16 65)",
+};
+const FIVELA_NAMES: Record<string, string> = {
+  A: "Words", B: "Quality Time", C: "Service", D: "Gifts", E: "Touch",
+};
+
+function getAssessmentVisual(resultType: string, resultKey: string, scores: Record<string, number>): React.ReactNode {
+  switch (resultType) {
+    case "disc": {
+      const ds = scores as { D: number; I: number; S: number; C: number };
+      return <DiscPieSVG scores={ds} size={72} />;
+    }
+    case "wheel_of_life":
+      return <WheelSpiderSVG scores={scores} size={72} />;
+    case "big_five":
+      return <OceanRadarSVG scores={scores} size={72} />;
+    case "thinking_style":
+      return (
+        <div style={{ width: "100%", paddingInline: "0.25rem" }}>
+          {(["C", "H", "I"] as const).map(k => (
+            <div key={k} style={{ marginBottom: "0.3rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.1rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", color: THINKING_STYLE_COLORS[k], fontWeight: 700 }}>
+                  {k === "C" ? "Conceptual" : k === "H" ? "Holistic" : "Intuitional"}
+                </span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 800, color: navy }}>{scores[k] ?? 0}%</span>
+              </div>
+              <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
+                <div style={{ height: "100%", width: `${scores[k] ?? 0}%`, background: THINKING_STYLE_COLORS[k], borderRadius: 3 }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    case "personalities16": {
+      const typeColor = P16_COLORS[resultKey] ?? navy;
+      return (
+        <div style={{ width: "100%" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", fontWeight: 900, color: typeColor, textAlign: "center", marginBottom: "0.35rem", lineHeight: 1 }}>
+            {resultKey}
+          </p>
+          {(["EI", "SN", "TF", "JP"] as const).map(d => {
+            const scoreA = scores[`${d}_A`] ?? 0;
+            const scoreB = scores[`${d}_B`] ?? 0;
+            const total = scoreA + scoreB || 1;
+            const pctA = Math.round((scoreA / total) * 100);
+            const dominant = pctA >= 50 ? d[0] : d[1];
+            const dominantPct = pctA >= 50 ? pctA : 100 - pctA;
+            return (
+              <div key={d} style={{ marginBottom: "0.25rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.08rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", color: typeColor, fontWeight: 700 }}>{dominant}</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", fontWeight: 800, color: navy }}>{dominantPct}%</span>
+                </div>
+                <div style={{ height: 4, background: "oklch(90% 0.004 260)", borderRadius: 2 }}>
+                  <div style={{ height: "100%", width: `${dominantPct}%`, background: typeColor, borderRadius: 2 }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    case "enneagram": {
+      const typeNum = parseInt(resultKey);
+      const data = ENNEAGRAM_DATA[typeNum];
+      return (
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "2.2rem", fontWeight: 900, color: data?.color ?? navy, lineHeight: 1 }}>
+            {typeNum}
+          </p>
+          {data && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: data.color, fontWeight: 600, marginTop: "0.2rem" }}>
+              {data.name}
+            </p>
+          )}
+        </div>
+      );
+    }
+    case "karunia":
+      return (
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.1rem", fontWeight: 800, color: orange, lineHeight: 1.1, marginBottom: "0.15rem" }}>
+            {KARUNIA_LABELS_EN[resultKey] ?? resultKey}
+          </p>
+        </div>
+      );
+    case "5languages": {
+      const primary = resultKey;
+      return (
+        <div style={{ width: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginBottom: "0.25rem" }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: FIVELA_COLORS[primary] ?? navy, flexShrink: 0 }} />
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, color: navy, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              {FIVELA_NAMES[primary] ?? primary}
+            </span>
+          </div>
+          <div style={{ display: "flex", gap: "2px" }}>
+            {(["A", "B", "C", "D", "E"] as const).map(key => {
+              const val = scores[key] ?? 0;
+              return (
+                <div key={key} style={{ flex: 1, height: 18, background: "oklch(90% 0.004 260)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${Math.min(val, 100)}%`, background: FIVELA_COLORS[key], opacity: key === primary ? 1 : 0.45 }} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+    default:
+      return null;
+  }
+}
+
 export type StepCompletion = {
   user_id: string;
   step_number: number;
@@ -972,8 +1177,8 @@ export default function TeamJourney({
                             const { label, color } = hasResult
                               ? getResultDisplay(step.resultType!, result!.result_key!)
                               : { label: "", color: "" };
-                            const discScores = (step.resultType === "disc" && result?.scores)
-                              ? result.scores as { D: number; I: number; S: number; C: number }
+                            const visual = (hasResult && result?.scores)
+                              ? getAssessmentVisual(step.resultType!, result.result_key!, result.scores)
                               : null;
                             return (
                               <div key={member.id} style={{
@@ -1011,25 +1216,21 @@ export default function TeamJourney({
                                     </p>
                                   )}
                                 </div>
-                                <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                  {hasResult ? (
-                                    discScores ? (
-                                      <DiscPieSVG scores={discScores} size={72} />
-                                    ) : (
-                                      <span style={{
-                                        fontFamily: "var(--font-montserrat)",
-                                        fontSize: "0.72rem",
-                                        fontWeight: 700,
-                                        letterSpacing: "0.04em",
-                                        color,
-                                        background: `color-mix(in oklch, ${color} 12%, white)`,
-                                        padding: "4px 10px",
-                                        borderRadius: 4,
-                                        whiteSpace: "nowrap",
-                                      }}>
-                                        {label}
-                                      </span>
-                                    )
+                                <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+                                  {hasResult && visual ? (
+                                    visual
+                                  ) : hasResult ? (
+                                    <span style={{
+                                      fontFamily: "var(--font-montserrat)",
+                                      fontSize: "0.72rem",
+                                      fontWeight: 700,
+                                      color,
+                                      background: `color-mix(in oklch, ${color} 12%, white)`,
+                                      padding: "4px 10px",
+                                      borderRadius: 4,
+                                    }}>
+                                      {label}
+                                    </span>
                                   ) : (
                                     <span style={{
                                       fontFamily: "var(--font-montserrat)",
