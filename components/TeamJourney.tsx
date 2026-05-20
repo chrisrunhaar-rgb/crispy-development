@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { unlockNextTeamStep, lockTeamStep, finalizeTeamStep, markTeamStepComplete } from "@/app/(app)/dashboard/team-actions";
+import { unlockNextTeamStep, lockTeamStep, finalizeTeamStep } from "@/app/(app)/dashboard/team-actions";
 import StepFeedback, { type FeedbackEntry } from "@/components/StepFeedback";
 import type { TeamMemberResult } from "@/components/TeamResultsGrid";
 
@@ -690,28 +690,6 @@ export default function TeamJourney({
   const [isLockPending, startLockTransition] = useTransition();
   const [isFinalizePending, startFinalizeTransition] = useTransition();
   const [localFinalizedSteps, setLocalFinalizedSteps] = useState<number[]>(finalizedSteps);
-  const [isMarkPending, startMarkTransition] = useTransition();
-
-  // Local set of steps this member has already completed (for optimistic UI)
-  const myCompletedSet = new Set(
-    stepCompletions.filter(sc => sc.user_id === currentUserId).map(sc => sc.step_number)
-  );
-  const [localMyCompleted, setLocalMyCompleted] = useState<Set<number>>(myCompletedSet);
-
-  function handleMarkComplete(stepNumber: number, currentlyDone: boolean) {
-    startMarkTransition(async () => {
-      const result = await markTeamStepComplete(teamId, stepNumber, !currentlyDone);
-      if (!result.error) {
-        setLocalMyCompleted(prev => {
-          const next = new Set(prev);
-          if (currentlyDone) next.delete(stepNumber);
-          else next.add(stepNumber);
-          return next;
-        });
-      }
-    });
-  }
-
   // Build combined display list: leader first, then members
   const displayMembers: (TeamMember & { isLeader?: boolean })[] = [
     ...(leaderUserId && leaderName ? [{ id: leaderUserId, name: leaderName, email: "", isLeader: true }] : []),
@@ -1209,48 +1187,6 @@ export default function TeamJourney({
                       </Link>
                     )}
                   </div>
-
-                  {/* Mark as complete — all participants including leader */}
-                  {currentUserId && (() => {
-                    const iDone = localMyCompleted.has(step.number);
-                    return (
-                      <div>
-                        <button
-                          type="button"
-                          onClick={() => handleMarkComplete(step.number, iDone)}
-                          disabled={isMarkPending}
-                          style={{
-                            fontFamily: "var(--font-montserrat)",
-                            fontSize: "0.68rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.07em",
-                            textTransform: "uppercase",
-                            background: iDone ? "oklch(52% 0.14 145 / 0.1)" : "oklch(65% 0.15 45)",
-                            color: iDone ? "oklch(38% 0.13 145)" : "white",
-                            border: `1.5px solid ${iDone ? "oklch(52% 0.14 145 / 0.4)" : "oklch(65% 0.15 45)"}`,
-                            padding: "0.55rem 1.25rem",
-                            cursor: isMarkPending ? "wait" : "pointer",
-                            opacity: isMarkPending ? 0.55 : 1,
-                            transition: "all 0.15s ease",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.5rem",
-                          }}
-                        >
-                          {iDone ? (
-                            <>
-                              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{ width: "10px", height: "10px" }}>
-                                <path d="M1.5 6l3 3 6-6" />
-                              </svg>
-                              {isMarkPending ? "Saving…" : "Completed — Undo"}
-                            </>
-                          ) : (
-                            isMarkPending ? "Saving…" : "Mark as Complete ✓"
-                          )}
-                        </button>
-                      </div>
-                    );
-                  })()}
 
                   {/* Member results: tiles for assessment steps, list for other steps */}
                   {displayMembers.length > 0 && (

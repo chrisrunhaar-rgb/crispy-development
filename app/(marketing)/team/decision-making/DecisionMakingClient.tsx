@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 // ── SCENARIO DATA ─────────────────────────────────────────────────────────────
 
@@ -846,6 +847,11 @@ export default function DecisionMakingClient({ user }: { user: User | null }) {
           }}>
             Continue the Team Pathway
           </h2>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/decision-making" />
+            </div>
+          )}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link
               href="/team"

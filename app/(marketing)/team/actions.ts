@@ -1,6 +1,7 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { markStepCompleteByContentKey } from "@/app/(app)/dashboard/team-actions";
 
 async function getUserTeamId(supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<string | null> {
   const { data: leadTeam } = await supabase.from("teams").select("id").eq("leader_user_id", userId).maybeSingle();
@@ -29,6 +30,7 @@ export async function saveCommStyleResult(style: string, scores: Record<string, 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "comm_style", style, scores);
+  await markStepCompleteByContentKey("/team/communication-culture");
   revalidatePath("/dashboard");
   return { error: null };
 }
@@ -40,6 +42,7 @@ export async function saveTrustScores(scores: Record<string, number>): Promise<{
   const avg = Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length;
   const roundedAvg = Math.round(avg * 10) / 10;
   await saveTeamResult(supabase, user.id, "trust", String(roundedAvg), scores);
+  await markStepCompleteByContentKey("/team/trust-psychological-safety");
   revalidatePath("/dashboard");
   return { error: null };
 }
@@ -49,6 +52,7 @@ export async function saveContributionZone(zone: string, scores: Record<string, 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "contribution_zone", zone, scores);
+  await markStepCompleteByContentKey("/team/roles-contribution");
   revalidatePath("/dashboard");
   return { error: null };
 }
@@ -58,6 +62,7 @@ export async function saveConflictStyle(style: string, scores: Record<string, nu
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "conflict_style", style, scores);
+  await markStepCompleteByContentKey("/team/navigating-conflict");
   revalidatePath("/dashboard");
   return { error: null };
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 const STAGES = [
   {
@@ -910,6 +911,11 @@ export default function TeamPurposeVisionClient({ user }: { user: User | null })
           }}>
             Continue your team journey on the dashboard — or go back and revisit what you built in Module 1.
           </p>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/team-purpose-vision" />
+            </div>
+          )}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
             <Link
               href="/dashboard?tab=team"

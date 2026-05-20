@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 // ── CARD DATA ─────────────────────────────────────────────────────────────────
 
@@ -633,6 +634,11 @@ export default function KnowEachOtherClient({ user }: { user: User | null }) {
           }}>
             Next up: how your team communicates — and why so much gets lost in translation even when everyone speaks the same language.
           </p>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/know-each-other" />
+            </div>
+          )}
           <Link href="/team/communication-culture" className="btn-primary">
             Module 4: Communication Culture →
           </Link>

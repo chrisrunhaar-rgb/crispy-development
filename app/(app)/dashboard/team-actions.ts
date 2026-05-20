@@ -239,6 +239,66 @@ export async function markTeamStepComplete(
   return { error: null };
 }
 
+// Resolve step number from a contentUrl slug given selected assessments, then mark complete
+const BASE_STEP_URLS = [
+  "/team/team-foundations",
+  "/team/team-purpose-vision",
+  "/team/know-each-other",
+  "/team/communication-culture",
+  "/team/trust-psychological-safety",
+  "/team/roles-contribution",
+  "/team/navigating-conflict",
+  "/team/decision-making",
+  "/team/accountability",
+  "/team/forward-together",
+];
+const ASSESSMENT_INSERT_AFTER: Record<string, { insertAfter: number; url: string; order: number }> = {
+  "5languages":           { insertAfter: 3, url: "/team/5languages",            order: 1 },
+  "wheel-of-life":        { insertAfter: 3, url: "/team/wheel-of-life",         order: 2 },
+  "enneagram":            { insertAfter: 3, url: "/team/enneagram",             order: 3 },
+  "disc":                 { insertAfter: 4, url: "/team/disc",                  order: 1 },
+  "three-thinking-styles":{ insertAfter: 4, url: "/team/three-thinking-styles", order: 2 },
+  "16-personalities":     { insertAfter: 4, url: "/team/16-personalities",      order: 3 },
+  "big-five":             { insertAfter: 4, url: "/team/big-five",              order: 4 },
+  "karunia-rohani":       { insertAfter: 5, url: "/team/karunia-rohani",        order: 1 },
+};
+function resolveStepNumber(selectedAssessments: string[], targetUrl: string): number | null {
+  const urls: string[] = [];
+  BASE_STEP_URLS.forEach((url, idx) => {
+    urls.push(url);
+    const baseNum = idx + 1;
+    selectedAssessments
+      .filter(id => ASSESSMENT_INSERT_AFTER[id]?.insertAfter === baseNum)
+      .sort((a, b) => (ASSESSMENT_INSERT_AFTER[a].order ?? 99) - (ASSESSMENT_INSERT_AFTER[b].order ?? 99))
+      .forEach(id => urls.push(ASSESSMENT_INSERT_AFTER[id].url));
+  });
+  const idx = urls.indexOf(targetUrl);
+  return idx >= 0 ? idx + 1 : null;
+}
+
+export async function markStepCompleteByContentKey(contentUrl: string): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+  const { data: leadTeam } = await admin.from("teams").select("id, selected_assessments").eq("leader_user_id", user.id).maybeSingle();
+  const teamId = leadTeam?.id ?? (await admin.from("team_members").select("team_id, teams(id, selected_assessments)").eq("user_id", user.id).maybeSingle()).data?.team_id;
+  const selectedAssessments: string[] = leadTeam?.selected_assessments ?? (await admin.from("team_members").select("teams(selected_assessments)").eq("user_id", user.id).maybeSingle()).data?.teams?.selected_assessments ?? [];
+
+  if (!teamId) return { error: "Not in a team" };
+
+  const stepNumber = resolveStepNumber(selectedAssessments, contentUrl);
+  if (!stepNumber) return { error: "Step not found" };
+
+  await admin.from("team_step_data").upsert(
+    { team_id: teamId, step_number: stepNumber, user_id: user.id, completed_at: new Date().toISOString() },
+    { onConflict: "team_id,step_number,user_id" }
+  );
+  revalidatePath("/dashboard");
+  return { error: null };
+}
+
 export async function finalizeTeamStep(
   teamId: string,
   stepNumber: number,

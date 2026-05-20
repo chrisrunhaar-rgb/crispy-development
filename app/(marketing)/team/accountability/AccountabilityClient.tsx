@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 type Props = { user: User | null };
 
@@ -1127,6 +1128,11 @@ export default function AccountabilityClient({ user }: Props) {
             reflection, and a declaration — of who your team has become and
             where you're going together.
           </p>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/accountability" />
+            </div>
+          )}
           <div
             style={{
               display: "flex",

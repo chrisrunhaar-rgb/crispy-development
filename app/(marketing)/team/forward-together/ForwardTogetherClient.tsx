@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 type Props = { user: User | null };
 
@@ -1136,6 +1137,11 @@ export default function ForwardTogetherClient({ user }: Props) {
             it again, more deeply. Return to the dashboard to review your team's
             work, revisit modules, and keep building.
           </p>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/forward-together" />
+            </div>
+          )}
           <div
             style={{ display: "flex", gap: "0.875rem", flexWrap: "wrap" }}
           >

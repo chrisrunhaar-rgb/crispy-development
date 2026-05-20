@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
 const REFLECTION_CARDS = [
   {
@@ -868,6 +869,11 @@ export default function TeamFoundationsClient({ user }: { user: User | null }) {
             <li>On a scale of 1–10, how safe does it feel to be honest on this team? What would raise that number?</li>
             <li>What cultural differences do we bring to this team — and how can we make those a strength rather than a source of friction?</li>
           </ol>
+          {user && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <TeamStepCompleteButton contentUrl="/team/team-foundations" />
+            </div>
+          )}
           <Link
             href="/dashboard?tab=team"
             style={{
