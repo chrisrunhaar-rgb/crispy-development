@@ -3,6 +3,22 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+async function saveToTeamIfMember(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  resultType: string,
+  resultKey: string,
+  scores: Record<string, number>
+): Promise<void> {
+  const { data: leadTeam } = await supabase.from("teams").select("id").eq("leader_user_id", userId).maybeSingle();
+  const teamId = leadTeam?.id ?? (await supabase.from("team_members").select("team_id").eq("user_id", userId).maybeSingle()).data?.team_id;
+  if (!teamId) return;
+  await supabase.from("team_member_results").upsert(
+    { team_id: teamId, user_id: userId, result_type: resultType, result_key: resultKey, scores, completed_at: new Date().toISOString() },
+    { onConflict: "team_id,user_id,result_type" }
+  );
+}
+
 // Called directly from client components (returns result)
 export async function saveResourceToDashboard(slug: string): Promise<{ error: string | null; already?: boolean }> {
   const supabase = await createClient();
@@ -112,6 +128,7 @@ export async function saveThinkingStyleResult(
   });
 
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "thinking_style", resultKey, scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/three-thinking-styles");
   }
@@ -134,6 +151,7 @@ export async function saveDISCResult(
     },
   });
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "disc", primaryType, scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/disc");
   }
@@ -156,6 +174,7 @@ export async function saveKaruniaResult(
     },
   });
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "karunia", topGifts[0] ?? "unknown", scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/karunia-rohani");
   }
@@ -178,6 +197,7 @@ export async function saveEnneagramResult(
     },
   });
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "enneagram", String(primaryType), scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/enneagram");
   }
@@ -198,6 +218,8 @@ export async function saveBigFiveResult(
     },
   });
   if (!error) {
+    const topTrait = Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "O";
+    await saveToTeamIfMember(supabase, user.id, "big_five", topTrait, scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/big-five");
   }
@@ -220,6 +242,7 @@ export async function save16PersonalitiesResult(
     },
   });
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "personalities16", type, scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/16-personalities");
   }
@@ -247,6 +270,7 @@ export async function saveFiveLanguagesResult(
     },
   });
   if (!error) {
+    await saveToTeamIfMember(supabase, user.id, "5languages", receivingPrimary, { ...receivingScores });
     revalidatePath("/dashboard");
     revalidatePath("/resources/5languages");
   }
@@ -323,6 +347,9 @@ export async function saveWheelScores(scores: Record<string, number>): Promise<{
   });
 
   if (!error) {
+    const vals = Object.values(scores);
+    const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    await saveToTeamIfMember(supabase, user.id, "wheel_of_life", String(Math.round(avg * 10) / 10), scores);
     revalidatePath("/dashboard");
     revalidatePath("/resources/wheel-of-life");
   }

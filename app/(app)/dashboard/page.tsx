@@ -309,7 +309,51 @@ export default async function DashboardPage({
     mfbRowsForMember = (mfbRows ?? []) as FbRow[];
   }
 
-  // leaderTeamResults populated in team journey Promise.all above
+  // ── Sync personal assessment results into team_member_results (backfill for existing metadata) ──
+  const activeTeamId = isTeamLeader ? teamRecord?.id : memberOfTeam?.id;
+  if (activeTeamId) {
+    const currentResults = isTeamLeader ? leaderTeamResults : memberTeamResults;
+    const alreadySynced = new Set(currentResults.filter(r => r.user_id === user.id).map(r => r.result_type));
+
+    type SyncEntry = { result_type: string; result_key: string; scores: Record<string, number> };
+    const toSync: SyncEntry[] = [];
+    if (discResult && discScores && !alreadySynced.has("disc"))
+      toSync.push({ result_type: "disc", result_key: discResult, scores: discScores });
+    if (enneagramType !== null && enneagramScores && !alreadySynced.has("enneagram"))
+      toSync.push({ result_type: "enneagram", result_key: String(enneagramType), scores: enneagramScores });
+    if (bigFiveScores && !alreadySynced.has("big_five")) {
+      const topTrait = Object.entries(bigFiveScores).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "O";
+      toSync.push({ result_type: "big_five", result_key: topTrait, scores: bigFiveScores });
+    }
+    if (personalities16Type && personalities16Scores && !alreadySynced.has("personalities16"))
+      toSync.push({ result_type: "personalities16", result_key: personalities16Type, scores: personalities16Scores });
+    if (fivelaReceivingResult && fivelaReceivingScores && !alreadySynced.has("5languages"))
+      toSync.push({ result_type: "5languages", result_key: fivelaReceivingResult, scores: fivelaReceivingScores });
+    if (thinkingStyleResult && thinkingStyleScores && !alreadySynced.has("thinking_style"))
+      toSync.push({ result_type: "thinking_style", result_key: thinkingStyleResult, scores: thinkingStyleScores });
+    if (karuniaTopGifts && karuniaScores && !alreadySynced.has("karunia"))
+      toSync.push({ result_type: "karunia", result_key: karuniaTopGifts[0] ?? "unknown", scores: karuniaScores });
+    if (wheelOfLifeScores && !alreadySynced.has("wheel_of_life")) {
+      const vals = Object.values(wheelOfLifeScores);
+      const avg = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+      toSync.push({ result_type: "wheel_of_life", result_key: String(Math.round(avg * 10) / 10), scores: wheelOfLifeScores });
+    }
+
+    if (toSync.length > 0) {
+      const now = new Date().toISOString();
+      await Promise.all(
+        toSync.map(e =>
+          admin.from("team_member_results").upsert(
+            { team_id: activeTeamId, user_id: user.id, result_type: e.result_type, result_key: e.result_key, scores: e.scores, completed_at: now },
+            { onConflict: "team_id,user_id,result_type" }
+          )
+        )
+      );
+      const synced: TeamMemberResult[] = toSync.map(e => ({ user_id: user.id, result_type: e.result_type, result_key: e.result_key, scores: e.scores, completed_at: now }));
+      if (isTeamLeader) leaderTeamResults = [...leaderTeamResults, ...synced];
+      else memberTeamResults = [...memberTeamResults, ...synced];
+    }
+  }
 
   // ── Team member content + roster (invited via link) ──
   let memberTeamContent: Module[] = [];
