@@ -1106,6 +1106,7 @@ function TeamLeaderDashboard({
         finalizedSteps={finalizedSteps}
         selectedAssessments={selectedAssessments}
         stepFeedback={stepFeedback}
+        teamResults={teamResults}
       />
 
       {/* Team Results Grid */}
@@ -1200,6 +1201,7 @@ function TeamMemberDashboard({
         finalizedSteps={team.finalized_steps ?? []}
         selectedAssessments={team.selected_assessments ?? []}
         stepFeedback={stepFeedback}
+        teamResults={teamResults}
       />
 
       {/* Team Results Grid — all members' quiz results */}

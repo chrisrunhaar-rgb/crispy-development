@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { unlockNextTeamStep, lockTeamStep, finalizeTeamStep, markTeamStepComplete } from "@/app/(app)/dashboard/team-actions";
 import StepFeedback, { type FeedbackEntry } from "@/components/StepFeedback";
+import type { TeamMemberResult } from "@/components/TeamResultsGrid";
 
 export type StepCompletion = {
   user_id: string;
@@ -27,6 +28,7 @@ type Step = {
   dataLabel: string | null;
   comingSoon?: boolean;
   contentUrl?: string;
+  resultType?: string;
 };
 
 const BASE_JOURNEY_STEPS: Step[] = [
@@ -146,6 +148,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Life Balance",
     contentUrl: "/team/wheel-of-life",
+    resultType: "wheel_of_life",
     insertAfter: 3,
     order: 2,
   },
@@ -157,6 +160,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Enneagram Type",
     contentUrl: "/team/enneagram",
+    resultType: "enneagram",
     insertAfter: 3,
     order: 3,
   },
@@ -169,6 +173,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Appreciation Language",
     contentUrl: "/team/5languages",
+    resultType: "5languages",
     insertAfter: 3,
     order: 1,
   },
@@ -181,6 +186,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "DISC Type",
     contentUrl: "/team/disc",
+    resultType: "disc",
     insertAfter: 4,
     order: 1,
   },
@@ -192,6 +198,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Thinking Style",
     contentUrl: "/team/three-thinking-styles",
+    resultType: "thinking_style",
     insertAfter: 4,
     order: 2,
   },
@@ -203,6 +210,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Personality",
     contentUrl: "/team/16-personalities",
+    resultType: "personalities16",
     insertAfter: 4,
     order: 3,
   },
@@ -214,6 +222,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "OCEAN Profile",
     contentUrl: "/team/big-five",
+    resultType: "big_five",
     insertAfter: 4,
     order: 4,
   },
@@ -226,6 +235,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Gift Profile",
     contentUrl: "/team/karunia-rohani",
+    resultType: "karunia",
     insertAfter: 5,
     order: 1,
   },
@@ -260,6 +270,38 @@ const TYPE_BADGE: Record<string, { color: string; bg: string }> = {
   workshop:   { color: "oklch(38% 0.12 145)", bg: "oklch(38% 0.12 145 / 0.08)" },
 };
 
+function getResultDisplay(resultType: string, resultKey: string): { label: string; color: string } {
+  switch (resultType) {
+    case "disc": {
+      const colors: Record<string, string> = { D: "oklch(48% 0.18 20)", I: "oklch(48% 0.14 85)", S: "oklch(42% 0.14 145)", C: "oklch(42% 0.18 250)" };
+      return { label: resultKey, color: colors[resultKey[0]] ?? "oklch(42% 0.008 260)" };
+    }
+    case "wheel_of_life":
+      return { label: `${parseFloat(resultKey).toFixed(1)}/5`, color: "oklch(42% 0.14 145)" };
+    case "thinking_style": {
+      const labels: Record<string, string> = { C: "Conceptual", H: "Holistic", I: "Intuitional", CH: "C·H", CI: "C·I", HI: "H·I", CHI: "Balanced" };
+      return { label: labels[resultKey] ?? resultKey, color: "oklch(42% 0.008 260)" };
+    }
+    case "enneagram":
+      return { label: `Type ${resultKey}`, color: "oklch(42% 0.14 260)" };
+    case "personalities16":
+      return { label: resultKey, color: "oklch(42% 0.14 200)" };
+    case "big_five":
+      return { label: resultKey, color: "oklch(42% 0.008 260)" };
+    case "karunia": {
+      const labels: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", memberi: "Memberi", hikmat: "Hikmat", iman: "Iman", memimpin: "Memimpin", mengajar: "Mengajar", gembala: "Gembala", bernubuat: "Bernubuat" };
+      return { label: labels[resultKey] ?? resultKey, color: "oklch(42% 0.14 145)" };
+    }
+    case "5languages": {
+      const labels: Record<string, string> = { A: "Words", B: "Quality Time", C: "Acts of Service", D: "Tangible Gifts", E: "Physical Touch" };
+      const [recv] = resultKey.split("|");
+      return { label: labels[recv] ?? recv, color: "oklch(42% 0.14 45)" };
+    }
+    default:
+      return { label: resultKey, color: "oklch(42% 0.008 260)" };
+  }
+}
+
 export default function TeamJourney({
   teamId,
   teamName,
@@ -273,6 +315,7 @@ export default function TeamJourney({
   finalizedSteps = [],
   selectedAssessments = [],
   stepFeedback = {},
+  teamResults = [],
 }: {
   teamId: string;
   teamName: string;
@@ -286,6 +329,7 @@ export default function TeamJourney({
   finalizedSteps?: number[];
   selectedAssessments?: string[];
   stepFeedback?: Record<number, FeedbackEntry[]>;
+  teamResults?: TeamMemberResult[];
 }) {
   const JOURNEY_STEPS = buildJourneySteps(selectedAssessments);
 
@@ -857,115 +901,205 @@ export default function TeamJourney({
                     );
                   })()}
 
-                  {/* Member results grid — always off-white for readability */}
+                  {/* Member results: tiles for assessment steps, list for other steps */}
                   {displayMembers.length > 0 && (
-                    <div>
-                      <p style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.58rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.13em",
-                        textTransform: "uppercase",
-                        color: "oklch(54% 0.008 260)",
-                        marginBottom: "0.625rem",
-                      }}>
-                        Team Progress
-                      </p>
-
-                      <div style={{
-                        background: "oklch(98.5% 0.003 80)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "1px",
-                        outline: "1px solid oklch(88% 0.006 80)",
-                      }}>
-                        {displayMembers.map(member => {
-                          const done = completedUsers.has(member.id);
-                          const initial = member.name[0]?.toUpperCase() ?? "?";
-                          return (
-                            <div
-                              key={member.id}
-                              style={{
+                    isAssessmentStep && step.resultType ? (
+                      <div>
+                        <p style={{
+                          fontFamily: "var(--font-montserrat)",
+                          fontSize: "0.58rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.13em",
+                          textTransform: "uppercase",
+                          color: "oklch(54% 0.008 260)",
+                          marginBottom: "0.75rem",
+                        }}>
+                          Team Results
+                        </p>
+                        <div style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+                          gap: "0.625rem",
+                        }}>
+                          {displayMembers.map(member => {
+                            const result = teamResults.find(
+                              r => r.user_id === member.id && r.result_type === step.resultType
+                            );
+                            const hasResult = result?.result_key != null;
+                            const { label, color } = hasResult
+                              ? getResultDisplay(step.resultType!, result!.result_key!)
+                              : { label: "", color: "" };
+                            return (
+                              <div key={member.id} style={{
+                                background: "white",
+                                border: `1px solid ${hasResult ? `color-mix(in oklch, ${color} 20%, oklch(90% 0.005 80))` : "oklch(90% 0.005 80)"}`,
+                                padding: "0.875rem 1rem",
                                 display: "flex",
-                                alignItems: "center",
-                                gap: "0.875rem",
-                                padding: "0.625rem 0.875rem",
-                                background: done
-                                  ? "oklch(52% 0.14 145 / 0.07)"
-                                  : "oklch(98.5% 0.003 80)",
-                                transition: "background 0.2s ease",
-                              }}
-                            >
-                              <div style={{
-                                width: "30px",
-                                height: "30px",
-                                flexShrink: 0,
-                                background: done ? "oklch(52% 0.14 145)" : "oklch(86% 0.006 80)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                transition: "background 0.2s ease",
+                                flexDirection: "column",
+                                gap: "0.5rem",
                               }}>
-                                {done ? (
-                                  <svg viewBox="0 0 24 24" fill="none"
-                                    stroke="white" strokeWidth={2.5}
-                                    strokeLinecap="round" strokeLinejoin="round"
-                                    style={{ width: "14px", height: "14px" }}>
-                                    <path d="M5 13l4 4L19 7" />
-                                  </svg>
+                                <div>
+                                  <p style={{
+                                    fontFamily: "var(--font-montserrat)",
+                                    fontWeight: 700,
+                                    fontSize: "0.8rem",
+                                    color: "oklch(28% 0.005 260)",
+                                    lineHeight: 1.25,
+                                  }}>
+                                    {member.name}
+                                  </p>
+                                  {"isLeader" in member && member.isLeader && (
+                                    <p style={{
+                                      fontFamily: "var(--font-montserrat)",
+                                      fontSize: "0.52rem",
+                                      fontWeight: 700,
+                                      letterSpacing: "0.1em",
+                                      textTransform: "uppercase",
+                                      color: "oklch(65% 0.15 45)",
+                                      marginTop: "0.1rem",
+                                    }}>
+                                      Leader
+                                    </p>
+                                  )}
+                                </div>
+                                {hasResult ? (
+                                  <span style={{
+                                    fontFamily: "var(--font-montserrat)",
+                                    fontSize: "0.65rem",
+                                    fontWeight: 700,
+                                    letterSpacing: "0.04em",
+                                    color,
+                                    background: `color-mix(in oklch, ${color} 12%, white)`,
+                                    padding: "3px 9px",
+                                    alignSelf: "flex-start",
+                                    whiteSpace: "nowrap",
+                                  }}>
+                                    {label}
+                                  </span>
                                 ) : (
                                   <span style={{
                                     fontFamily: "var(--font-montserrat)",
-                                    fontSize: "0.72rem",
-                                    fontWeight: 700,
-                                    color: "oklch(52% 0.008 260)",
+                                    fontSize: "0.62rem",
+                                    color: "oklch(68% 0.006 260)",
+                                    fontStyle: "italic",
                                   }}>
-                                    {initial}
+                                    Not done yet
                                   </span>
                                 )}
                               </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <p style={{
+                          fontFamily: "var(--font-montserrat)",
+                          fontSize: "0.58rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.13em",
+                          textTransform: "uppercase",
+                          color: "oklch(54% 0.008 260)",
+                          marginBottom: "0.625rem",
+                        }}>
+                          Team Progress
+                        </p>
 
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <p style={{
-                                  fontFamily: "var(--font-montserrat)",
-                                  fontWeight: 600,
-                                  fontSize: "0.85rem",
-                                  color: done ? "oklch(28% 0.005 260)" : "oklch(38% 0.008 260)",
-                                  transition: "color 0.15s ease",
+                        <div style={{
+                          background: "oklch(98.5% 0.003 80)",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1px",
+                          outline: "1px solid oklch(88% 0.006 80)",
+                        }}>
+                          {displayMembers.map(member => {
+                            const done = completedUsers.has(member.id);
+                            const initial = member.name[0]?.toUpperCase() ?? "?";
+                            return (
+                              <div
+                                key={member.id}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "0.875rem",
+                                  padding: "0.625rem 0.875rem",
+                                  background: done
+                                    ? "oklch(52% 0.14 145 / 0.07)"
+                                    : "oklch(98.5% 0.003 80)",
+                                  transition: "background 0.2s ease",
+                                }}
+                              >
+                                <div style={{
+                                  width: "30px",
+                                  height: "30px",
+                                  flexShrink: 0,
+                                  background: done ? "oklch(52% 0.14 145)" : "oklch(86% 0.006 80)",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  transition: "background 0.2s ease",
                                 }}>
-                                  {member.name}
-                                </p>
-                                {"isLeader" in member && member.isLeader && (
+                                  {done ? (
+                                    <svg viewBox="0 0 24 24" fill="none"
+                                      stroke="white" strokeWidth={2.5}
+                                      strokeLinecap="round" strokeLinejoin="round"
+                                      style={{ width: "14px", height: "14px" }}>
+                                      <path d="M5 13l4 4L19 7" />
+                                    </svg>
+                                  ) : (
+                                    <span style={{
+                                      fontFamily: "var(--font-montserrat)",
+                                      fontSize: "0.72rem",
+                                      fontWeight: 700,
+                                      color: "oklch(52% 0.008 260)",
+                                    }}>
+                                      {initial}
+                                    </span>
+                                  )}
+                                </div>
+
+                                <div style={{ flex: 1, minWidth: 0 }}>
                                   <p style={{
                                     fontFamily: "var(--font-montserrat)",
-                                    fontSize: "0.55rem",
-                                    fontWeight: 700,
-                                    letterSpacing: "0.1em",
-                                    textTransform: "uppercase",
-                                    color: "oklch(65% 0.15 45)",
-                                    marginTop: "0.1rem",
+                                    fontWeight: 600,
+                                    fontSize: "0.85rem",
+                                    color: done ? "oklch(28% 0.005 260)" : "oklch(38% 0.008 260)",
+                                    transition: "color 0.15s ease",
                                   }}>
-                                    Leader
+                                    {member.name}
                                   </p>
-                                )}
-                              </div>
+                                  {"isLeader" in member && member.isLeader && (
+                                    <p style={{
+                                      fontFamily: "var(--font-montserrat)",
+                                      fontSize: "0.55rem",
+                                      fontWeight: 700,
+                                      letterSpacing: "0.1em",
+                                      textTransform: "uppercase",
+                                      color: "oklch(65% 0.15 45)",
+                                      marginTop: "0.1rem",
+                                    }}>
+                                      Leader
+                                    </p>
+                                  )}
+                                </div>
 
-                              <span style={{
-                                fontFamily: "var(--font-montserrat)",
-                                fontSize: "0.58rem",
-                                fontWeight: 700,
-                                letterSpacing: "0.08em",
-                                textTransform: "uppercase",
-                                color: done ? "oklch(42% 0.13 145)" : "oklch(62% 0.008 260)",
-                                transition: "color 0.15s ease",
-                              }}>
-                                {done ? "Completed" : "Pending"}
-                              </span>
-                            </div>
-                          );
-                        })}
+                                <span style={{
+                                  fontFamily: "var(--font-montserrat)",
+                                  fontSize: "0.58rem",
+                                  fontWeight: 700,
+                                  letterSpacing: "0.08em",
+                                  textTransform: "uppercase",
+                                  color: done ? "oklch(42% 0.13 145)" : "oklch(62% 0.008 260)",
+                                  transition: "color 0.15s ease",
+                                }}>
+                                  {done ? "Completed" : "Pending"}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
+                    )
                   )}
 
                   {/* Step reflections — all team members */}
