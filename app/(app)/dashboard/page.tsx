@@ -16,7 +16,7 @@ import TeamCommsSection from "@/components/TeamCommsSection";
 import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
 import TimezoneDetector from "@/components/TimezoneDetector";
 import TeamAssessmentSelector from "./TeamAssessmentSelector";
-import TeamResultsGrid, { type TeamMemberResult, type TeamResultMember } from "@/components/TeamResultsGrid";
+import { type TeamMemberResult } from "@/components/TeamResultsGrid";
 import { type FeedbackEntry } from "@/components/StepFeedback";
 import DashboardTour from "./DashboardTour";
 import GaEventTracker from "@/components/GaEventTracker";
@@ -1153,21 +1153,6 @@ function TeamLeaderDashboard({
         teamResults={teamResults}
       />
 
-      {/* Team Results Grid */}
-      {(() => {
-        const gridMembers: TeamResultMember[] = [
-          { id: leaderId, name: leaderName },
-          ...teamMembers.map(m => ({ id: m.id, name: m.name })),
-        ];
-        return (
-          <TeamResultsGrid
-            members={gridMembers}
-            results={teamResults}
-            selectedAssessments={selectedAssessments}
-          />
-        );
-      })()}
-
       {/* Compact comms section */}
       <TeamCommsSection
         teamId={teamRecord.id}
@@ -1248,14 +1233,6 @@ function TeamMemberDashboard({
         teamResults={teamResults}
       />
 
-      {/* Team Results Grid — all members' quiz results */}
-      {teamResults.length > 0 && (
-        <TeamResultsGrid
-          members={roster.map(m => ({ id: m.id, name: m.name }))}
-          results={teamResults}
-          selectedAssessments={team.selected_assessments}
-        />
-      )}
 
     </div>
   );
