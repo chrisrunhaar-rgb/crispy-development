@@ -208,7 +208,7 @@ export default function TeamRoster({
           {/* Right: language toggle + invite */}
           <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
             {isLeader && currentLanguage !== undefined && (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.3rem" }}>
+              <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.5rem" }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(66% 0.04 260)" }}>
                   Team Language
                 </p>
