@@ -4,6 +4,16 @@ import { useState } from "react";
 import Link from "next/link";
 import { removeResourceFromDashboard, saveResourceNote, saveResourceRating, markResourceRead } from "@/app/(marketing)/resources/actions";
 
+const FORMAT_ID: Record<string, string> = {
+  "Guide": "Panduan",
+  "Assessment": "Penilaian",
+  "Module": "Modul",
+  "Workshop": "Workshop",
+  "Exercise": "Latihan",
+  "Tool": "Alat",
+  "Framework": "Kerangka",
+};
+
 export default function ResourceCard({
   slug,
   title,
@@ -13,6 +23,7 @@ export default function ResourceCard({
   initialNote = "",
   initialRating = 0,
   initialRead = false,
+  lang = "en",
 }: {
   slug: string;
   title: string;
@@ -22,6 +33,7 @@ export default function ResourceCard({
   initialNote?: string;
   initialRating?: number;
   initialRead?: boolean;
+  lang?: "en" | "id";
 }) {
   const [expanded, setExpanded] = useState(false);
   const [note, setNote] = useState(initialNote);
@@ -77,7 +89,7 @@ export default function ResourceCard({
             {title}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(58% 0.008 260)" }}>
-            {format} · {time}
+            {lang === "id" ? (FORMAT_ID[format] ?? format) : format} · {lang === "id" ? time.replace(" min", " mnt") : time}
           </p>
         </div>
         <Link
@@ -85,7 +97,7 @@ export default function ResourceCard({
           onClick={e => e.stopPropagation()}
           style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", color: "oklch(30% 0.12 260)", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
         >
-          Read →
+          {lang === "id" ? "Baca →" : "Read →"}
         </Link>
         <form action={removeResourceFromDashboard.bind(null, slug)} onClick={e => e.stopPropagation()}>
           <button type="submit" title="Remove" style={{ background: "none", border: "none", cursor: "pointer", padding: "0.25rem", color: "oklch(70% 0.008 260)", fontSize: "0.8rem", lineHeight: 1, flexShrink: 0 }}>
@@ -113,7 +125,7 @@ export default function ResourceCard({
           <div>
             {isRead ? (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: "oklch(55% 0.15 145)", display: "flex", alignItems: "center", gap: "0.375rem" }}>
-                ✓ Marked as read
+                {lang === "id" ? "✓ Sudah dibaca" : "✓ Marked as read"}
               </p>
             ) : (
               <button
@@ -126,7 +138,7 @@ export default function ResourceCard({
                   color: "oklch(42% 0.14 145)", padding: "0.4rem 0.875rem", cursor: "pointer",
                 }}
               >
-                Mark as read ✓
+                {lang === "id" ? "Tandai sudah dibaca ✓" : "Mark as read ✓"}
               </button>
             )}
           </div>
@@ -134,13 +146,13 @@ export default function ResourceCard({
           {/* Notes */}
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.5rem" }}>
-              My Notes
+              {lang === "id" ? "Catatan Saya" : "My Notes"}
             </p>
             <textarea
               value={note}
               onChange={e => setNote(e.target.value)}
               onBlur={handleNoteBlur}
-              placeholder="Jot down key takeaways, reflections, or action steps..."
+              placeholder={lang === "id" ? "Catat poin penting, refleksi, atau langkah tindakan..." : "Jot down key takeaways, reflections, or action steps..."}
               rows={3}
               style={{
                 width: "100%", boxSizing: "border-box",
@@ -152,7 +164,7 @@ export default function ResourceCard({
             />
             {noteSaved && (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(55% 0.15 145)", marginTop: "0.25rem" }}>
-                Saved ✓
+                {lang === "id" ? "Tersimpan ✓" : "Saved ✓"}
               </p>
             )}
           </div>
@@ -160,7 +172,7 @@ export default function ResourceCard({
           {/* Impact rating */}
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.5rem" }}>
-              Impact Rating
+              {lang === "id" ? "Penilaian Dampak" : "Impact Rating"}
             </p>
             <div style={{ display: "flex", gap: "0.375rem" }}>
               {[1, 2, 3, 4, 5].map(s => (
@@ -181,7 +193,9 @@ export default function ResourceCard({
               ))}
               {rating > 0 && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", alignSelf: "center", marginLeft: "0.375rem" }}>
-                  {["", "Not helpful", "Somewhat useful", "Good", "Very impactful", "Life-changing"][rating]}
+                  {lang === "id"
+                    ? (["", "Tidak membantu", "Cukup berguna", "Bagus", "Sangat berdampak", "Mengubah hidup"][rating])
+                    : (["", "Not helpful", "Somewhat useful", "Good", "Very impactful", "Life-changing"][rating])}
                 </span>
               )}
             </div>
@@ -200,7 +214,9 @@ export default function ResourceCard({
                 padding: "0.4rem 0.875rem", cursor: "pointer", transition: "color 0.2s",
               }}
             >
-              {copied ? "Copied to clipboard ✓" : "Share with a friend"}
+              {copied
+                ? (lang === "id" ? "Disalin ✓" : "Copied to clipboard ✓")
+                : (lang === "id" ? "Bagikan ke teman" : "Share with a friend")}
             </button>
           </div>
         </div>

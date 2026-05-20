@@ -816,6 +816,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                   initialNote={resourceNotes[slug] ?? ""}
                   initialRating={resourceRatings[slug] ?? 0}
                   initialRead={resourceRead.includes(slug) || completedAssessments.has(slug)}
+                  lang={languagePreference}
                 />
               );
             })}
