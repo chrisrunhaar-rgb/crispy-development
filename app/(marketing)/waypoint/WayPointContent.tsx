@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -77,47 +78,40 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
   return (
     <>
       {/* ── HERO ── */}
-      <section
-        style={{
-          background: "oklch(18% 0.08 260)",
-          paddingTop: "clamp(5rem, 10vw, 10rem)",
-          paddingBottom: "clamp(5rem, 10vw, 10rem)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
+      <section style={{ background: "oklch(35% 0.20 250)", paddingTop: "clamp(4rem, 8vw, 8rem)", paddingBottom: "clamp(4rem, 8vw, 8rem)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.05) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
-        {[600, 480, 360].map((size) => (
-          <div key={size} aria-hidden="true" style={{ position: "absolute", bottom: `-${size / 2 + 40}px`, right: `-${size / 2 + 40}px`, width: `${size}px`, height: `${size}px`, borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)", pointerEvents: "none" }} />
-        ))}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "32px 32px", pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", bottom: "-180px", right: "-180px", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)", pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)" }}>
+            <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.15)" }} />
+          </div>
+        </div>
 
         <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ maxWidth: "640px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.75rem", flexWrap: "wrap" }}>
-              <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>{t.heroLabel}</p>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", background: "oklch(65% 0.15 45 / 0.2)", border: "1px solid oklch(65% 0.15 45 / 0.5)", color: "oklch(65% 0.15 45)", padding: "0.25rem 0.6rem", lineHeight: 1 }}>
-                {t.heroBadge}
-              </span>
-            </div>
+          {/* WayPoint mark — screen blend, same pattern as Crispy homepage compass */}
+          <div aria-hidden="true" style={{ position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)", width: "min(42vw, 420px)", height: "min(42vw, 420px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.55 }}>
+            <Image src="/images/waypoint/waypoint-logo-circle.png" alt="" fill style={{ objectFit: "contain" }} priority />
+          </div>
 
-            <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(3.2rem, 7vw, 6.5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "2rem" }}>
+          <div style={{ maxWidth: "640px" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }}>
+              WayPoint · AI Coaching · Beta
+            </p>
+            <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2.4rem, 5vw + 1rem, 5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>
               {t.heroH1Line1}<br />{t.heroH1Line2}
             </h1>
-
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(0.95rem, 1.8vw, 1.0625rem)", lineHeight: 1.75, color: "oklch(75% 0.04 260)", marginBottom: "2.75rem", maxWidth: "48ch" }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "clamp(1.1rem, 2vw, 1.35rem)", lineHeight: 1.7, color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
               {t.heroTagline}
             </p>
-
             <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
               {isLoggedIn ? (
                 <>
-                  <Link href="/coach" className="btn-primary">{t.heroCtaButtonUser}</Link>
+                  <Link href="/coach" className="btn-primary" style={{ borderRadius: 0, fontSize: "0.875rem" }}>{t.heroCtaButtonUser}</Link>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(52% 0.008 260)", margin: 0 }}>{t.heroCtaUser}</p>
                 </>
               ) : (
                 <>
-                  <Link href="/membership" className="btn-primary">{t.heroCtaButton}</Link>
+                  <Link href="/membership" className="btn-primary" style={{ borderRadius: 0, fontSize: "0.875rem" }}>{t.heroCtaButton}</Link>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(52% 0.008 260)", margin: 0, lineHeight: 1.5 }}>{t.heroCtaNonUser}</p>
                 </>
               )}
@@ -180,12 +174,70 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
         </div>
       </section>
 
+      {/* ── THE MARK ── */}
+      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "clamp(4.5rem, 8vw, 8rem)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.03) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
+
+        <div className="container-wide" style={{ position: "relative" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "clamp(3rem, 6vw, 6rem)", alignItems: "center", maxWidth: "900px" }}>
+
+            {/* Left: logo */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/waypoint/waypoint-logo-circle.png"
+                alt="WayPoint mark"
+                style={{ width: "100%", maxWidth: "360px", height: "auto", display: "block" }}
+              />
+            </div>
+
+            {/* Right: explanations */}
+            <div style={{ borderLeft: "2px solid oklch(65% 0.15 45 / 0.4)", paddingLeft: "clamp(1.5rem, 3vw, 2.5rem)" }}>
+              <div style={{ marginBottom: "2rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
+                  Compass rose
+                </p>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(1.4rem, 2.5vw, 1.75rem)", color: "oklch(97% 0.005 80)", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+                  Orientation.
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(68% 0.02 260)", margin: 0 }}>
+                  Finding your footing in unfamiliar terrain.
+                </p>
+              </div>
+
+              <div style={{ marginBottom: "2.5rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
+                  Location pin
+                </p>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(1.4rem, 2.5vw, 1.75rem)", color: "oklch(97% 0.005 80)", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+                  Destination.
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(68% 0.02 260)", margin: 0 }}>
+                  Knowing where you&apos;re headed.
+                </p>
+              </div>
+
+              <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(1.5rem, 2.8vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "2rem", lineHeight: 1.2 }}>
+                WayPoint helps you find both.
+              </p>
+
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", lineHeight: 1.7, color: "oklch(50% 0.008 260)", margin: 0 }}>
+                WayPoint is a product of{" "}
+                <Link href="/" style={{ color: "oklch(65% 0.15 45)", textDecoration: "none", fontWeight: 600 }}>
+                  Crispy Development
+                </Link>
+                {" "}— built for cross-cultural leaders inside the Crispy Leaders platform.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── MEMBERSHIP CTA ── */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingBlock: "clamp(5rem, 9vw, 9rem)", position: "relative", overflow: "hidden", textAlign: "center" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+      <section style={{ background: "oklch(97% 0.005 80)", paddingBlock: "clamp(5rem, 9vw, 9rem)", position: "relative", overflow: "hidden", textAlign: "center", borderTop: "1px solid oklch(88% 0.008 80)" }}>
         {[560, 480, 400].map((size) => (
-          <div key={size} aria-hidden="true" style={{ position: "absolute", bottom: `-${size / 2 + 20}px`, left: "50%", transform: "translateX(-50%)", width: `${size}px`, height: `${size}px`, borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.06)", pointerEvents: "none" }} />
+          <div key={size} aria-hidden="true" style={{ position: "absolute", bottom: `-${size / 2 + 20}px`, left: "50%", transform: "translateX(-50%)", width: `${size}px`, height: `${size}px`, borderRadius: "50%", border: "1px solid oklch(22% 0.10 260 / 0.05)", pointerEvents: "none" }} />
         ))}
 
         <div className="container-wide" style={{ position: "relative" }}>
@@ -194,7 +246,7 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
               {t.ctaLabel}
             </p>
 
-            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2.8rem, 6vw, 5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", marginBottom: "1.75rem" }}>
+            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2.8rem, 6vw, 5rem)", lineHeight: 1.0, color: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }}>
               {isLoggedIn
                 ? t.ctaH2User
                 : t.ctaH2NonUser.split("\n").map((line, i, arr) => (
@@ -202,16 +254,16 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
                   ))}
             </h2>
 
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", marginBottom: "2.5rem", maxWidth: "44ch", marginLeft: "auto", marginRight: "auto" }}>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2.5rem", maxWidth: "44ch", marginLeft: "auto", marginRight: "auto" }}>
               {isLoggedIn ? t.ctaBodyUser : t.ctaBodyNonUser}
             </p>
 
             {isLoggedIn ? (
-              <Link href="/coach" className="btn-primary">{t.heroCtaButtonUser}</Link>
+              <Link href="/coach" className="btn-primary" style={{ borderRadius: 0 }}>{t.heroCtaButtonUser}</Link>
             ) : (
               <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1rem" }}>
-                <Link href="/membership" className="btn-primary">{t.heroCtaButton}</Link>
-                <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", padding: "0.75rem 1.5rem", border: "1px solid oklch(97% 0.005 80 / 0.22)", color: "oklch(97% 0.005 80)", textDecoration: "none", display: "inline-flex", alignItems: "center", letterSpacing: "0.03em" }}>
+                <Link href="/membership" className="btn-primary" style={{ borderRadius: 0 }}>{t.heroCtaButton}</Link>
+                <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", padding: "0.75rem 1.5rem", border: "1px solid oklch(22% 0.10 260 / 0.25)", color: "oklch(22% 0.10 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", letterSpacing: "0.03em" }}>
                   {t.ctaExploreButton}
                 </Link>
               </div>
