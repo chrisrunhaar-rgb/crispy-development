@@ -317,8 +317,8 @@ function WheelSpiderSVG({ scores, size, showLabels = false }: {
       {/* Score polygon */}
       <polygon
         points={scorePolygon}
-        fill={`${orange}2e`}
-        stroke={orange}
+        fill="oklch(42% 0.14 145 / 0.18)"
+        stroke="oklch(42% 0.14 145)"
         strokeWidth={showLabels ? 1.5 : 1}
       />
 
