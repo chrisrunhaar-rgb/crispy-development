@@ -387,7 +387,9 @@ export default async function DashboardPage({
 
   const leaderMessages = userMessages.filter(m => m.message_type !== "peer");
 
-  const tabLabel = currentTab === "team" ? "Team Dashboard" : "Personal Dashboard";
+  const tabLabel = currentTab === "team"
+    ? (languagePreference === "id" ? "Dasbor Tim" : "Team Dashboard")
+    : (languagePreference === "id" ? "Dasbor Pribadi" : "Personal Dashboard");
 
   // ── Course progress for personal tab ──
   type CourseProgress = { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null };
@@ -461,7 +463,7 @@ export default async function DashboardPage({
                   {tabLabel}
                 </p>
                 <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2 }}>
-                  Welcome back, {firstName}.
+                  {languagePreference === "id" ? `Selamat datang kembali, ${firstName}.` : `Welcome back, ${firstName}.`}
                 </h1>
               </div>
             </div>
@@ -486,7 +488,9 @@ export default async function DashboardPage({
               boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)",
             }}>
               {(["personal", "team"] as const).map((t) => {
-                const labels = { personal: "Personal", team: "Team" };
+                const labels = languagePreference === "id"
+                  ? { personal: "Pribadi", team: "Tim" }
+                  : { personal: "Personal", team: "Team" };
                 const icons = {
                   personal: (
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
@@ -553,17 +557,17 @@ export default async function DashboardPage({
           <div style={{ background: "oklch(65% 0.15 45 / 0.1)", border: "1px solid oklch(65% 0.15 45 / 0.25)", padding: "1rem 1.5rem", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <span style={{ fontSize: "1rem" }}>🎉</span>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(38% 0.008 260)", fontWeight: 600 }}>
-              You&apos;ve joined the team! Your leader&apos;s content will appear in your library below.
+              {languagePreference === "id" ? "Anda telah bergabung dengan tim! Konten pemimpin Anda akan muncul di perpustakaan di bawah." : "You've joined the team! Your leader's content will appear in your library below."}
             </p>
           </div>
         )}
 
         {currentTab === "personal" && (
           <>
-            {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} />}
-            {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt />}
+            {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
+            {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
             <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} commStyle={commStyle} commStyleScores={commStyleScores} trustAvg={trustAvg} trustScores={trustScores} contributionZone={contributionZone} contributionScores={contributionScores} conflictStyle={conflictStyle} conflictScores={conflictScores} languagePreference={languagePreference} />
-            {courseProgress.length > 0 && <MyCourses courses={courseProgress} />}
+            {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
 
@@ -772,7 +776,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
       <div id="tour-journey">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", gap: "1rem", flexWrap: "wrap" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
-            My Personal Development Journey
+            {languagePreference === "id" ? "Perjalanan Pengembangan Pribadi Saya" : "My Personal Development Journey"}
           </h2>
           <Link href="/resources" style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
@@ -780,17 +784,19 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             border: "1px solid oklch(30% 0.12 260)", padding: "0.35rem 0.875rem",
             whiteSpace: "nowrap",
           }}>
-            Browse Library →
+            {languagePreference === "id" ? "Lihat Perpustakaan →" : "Browse Library →"}
           </Link>
         </div>
 
         {savedItems.length === 0 ? (
           <div style={{ paddingBlock: "2rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.008 260)", lineHeight: 1.6 }}>
-              No resources saved yet. Browse the library and tap <strong>Save to Dashboard</strong> on any resource.
+              {languagePreference === "id"
+                ? <span>Belum ada sumber daya yang disimpan. Lihat perpustakaan dan ketuk <strong>Simpan ke Dasbor</strong> pada sumber daya mana pun.</span>
+                : <span>No resources saved yet. Browse the library and tap <strong>Save to Dashboard</strong> on any resource.</span>}
             </p>
             <Link href="/resources" className="btn-primary" style={{ alignSelf: "flex-start", fontSize: "0.78rem", padding: "0.6rem 1.25rem" }}>
-              Go to Library →
+              {languagePreference === "id" ? "Ke Perpustakaan →" : "Go to Library →"}
             </Link>
           </div>
         ) : (
@@ -822,12 +828,12 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
         {/* Progress stat */}
         <div id="tour-progress" className="stat-block">
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>My Progress</p>
+          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.75rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Kemajuan Saya" : "My Progress"}</p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
             {completed}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/{total}</span>
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginTop: "0.375rem" }}>
-            resources completed
+            {languagePreference === "id" ? "sumber daya selesai" : "resources completed"}
           </p>
           {total > 0 && (
             <div style={{ height: "4px", background: "oklch(88% 0.008 80)", marginTop: "1rem" }}>
@@ -838,7 +844,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
         {/* ── Assessment tile grid (2 × 4) ── */}
         <div id="tour-assessments">
-          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>My Assessment Results</p>
+          <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>{languagePreference === "id" ? "Hasil Penilaian Saya" : "My Assessment Results"}</p>
           <AssessmentTileGrid
             discResult={discResult}
             discScores={discScores}
@@ -864,22 +870,24 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
 
         {/* Comm Style result card */}
         {commStyle && commStyleScores && (() => {
-          const COMM_STYLE_LABELS: Record<string, { name: string; color: string; description: string }> = {
-            A: { name: "The Architect", color: "oklch(42% 0.18 250)", description: "Direct, structured, task-focused. You communicate with clarity and precision." },
-            D: { name: "The Diplomat", color: "oklch(42% 0.18 145)", description: "Relational, harmony-seeking, indirect. You build bridges and smooth tensions." },
-            C: { name: "The Connector", color: "oklch(48% 0.18 45)", description: "Warm, energetic, people-first. You inspire and bring people together." },
-            N: { name: "The Analyst", color: "oklch(42% 0.18 300)", description: "Thoughtful, detail-oriented, logical. You communicate through data and precision." },
+          const COMM_STYLE_LABELS: Record<string, { name: string; nameId: string; color: string; description: string; descriptionId: string }> = {
+            A: { name: "The Architect", nameId: "Sang Arsitek", color: "oklch(42% 0.18 250)", description: "Direct, structured, task-focused. You communicate with clarity and precision.", descriptionId: "Langsung, terstruktur, berorientasi tugas. Anda berkomunikasi dengan kejelasan dan presisi." },
+            D: { name: "The Diplomat", nameId: "Sang Diplomat", color: "oklch(42% 0.18 145)", description: "Relational, harmony-seeking, indirect. You build bridges and smooth tensions.", descriptionId: "Relasional, mencari harmoni, tidak langsung. Anda membangun jembatan dan meredakan ketegangan." },
+            C: { name: "The Connector", nameId: "Sang Penghubung", color: "oklch(48% 0.18 45)", description: "Warm, energetic, people-first. You inspire and bring people together.", descriptionId: "Hangat, energetik, mengutamakan orang. Anda menginspirasi dan menyatukan orang." },
+            N: { name: "The Analyst", nameId: "Sang Analis", color: "oklch(42% 0.18 300)", description: "Thoughtful, detail-oriented, logical. You communicate through data and precision.", descriptionId: "Bijaksana, berorientasi detail, logis. Anda berkomunikasi melalui data dan presisi." },
           };
           const meta = COMM_STYLE_LABELS[commStyle] ?? { name: commStyle, color: "oklch(42% 0.008 260)", description: "" };
           return (
             <div className="stat-block">
-              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Communication Style</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{meta.name}</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Gaya Komunikasi Saya" : "My Communication Style"}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{languagePreference === "id" ? meta.nameId : meta.name}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{languagePreference === "id" ? meta.descriptionId : meta.description}</p>
               {commStyleScores && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "0.875rem" }}>
                   {Object.entries(commStyleScores).sort(([,a],[,b]) => b - a).map(([key, pct]) => {
-                    const labels: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+                    const labels: Record<string, string> = languagePreference === "id"
+                      ? { A: "Arsitek", D: "Diplomat", C: "Penghubung", N: "Analis" }
+                      : { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
                     return (
                       <div key={key}>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.15rem" }}>
@@ -894,7 +902,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                   })}
                 </div>
               )}
-              <Link href="/team/communication-culture" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+              <Link href="/team/communication-culture" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>{languagePreference === "id" ? "Ikuti ulang →" : "Retake quiz →"}</Link>
             </div>
           );
         })()}
@@ -902,15 +910,20 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
         {/* Trust Score result card */}
         {trustAvg !== null && (
           <div className="stat-block">
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Trust Score</p>
+            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Skor Kepercayaan Saya" : "My Trust Score"}</p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "2.5rem", color: "oklch(30% 0.12 260)", lineHeight: 1 }}>
               {trustAvg}<span style={{ fontSize: "1.25rem", color: "oklch(72% 0.006 260)", fontWeight: 300 }}>/5</span>
             </p>
             {(() => {
-              const tier = trustAvg >= 4.5 ? { label: "High Trust", color: "oklch(42% 0.14 145)" }
+              const tier = languagePreference === "id"
+                ? (trustAvg >= 4.5 ? { label: "Kepercayaan Tinggi", color: "oklch(42% 0.14 145)" }
+                : trustAvg >= 3.5 ? { label: "Membangun Kepercayaan", color: "oklch(55% 0.14 85)" }
+                : trustAvg >= 2.5 ? { label: "Kepercayaan Rapuh", color: "oklch(55% 0.14 55)" }
+                : { label: "Kritis — Perlu Perhatian", color: "oklch(50% 0.18 20)" })
+                : (trustAvg >= 4.5 ? { label: "High Trust", color: "oklch(42% 0.14 145)" }
                 : trustAvg >= 3.5 ? { label: "Building Trust", color: "oklch(55% 0.14 85)" }
                 : trustAvg >= 2.5 ? { label: "Fragile Trust", color: "oklch(55% 0.14 55)" }
-                : { label: "Critical — Needs Attention", color: "oklch(50% 0.18 20)" };
+                : { label: "Critical — Needs Attention", color: "oklch(50% 0.18 20)" });
               return <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: tier.color, fontWeight: 700, marginTop: "0.375rem", marginBottom: "0.875rem" }}>{tier.label}</p>;
             })()}
             {trustScores && (
@@ -928,24 +941,24 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 ))}
               </div>
             )}
-            <Link href="/team/trust-psychological-safety" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake assessment →</Link>
+            <Link href="/team/trust-psychological-safety" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>{languagePreference === "id" ? "Ikuti ulang →" : "Retake assessment →"}</Link>
           </div>
         )}
 
         {/* Contribution Zone result card */}
         {contributionZone && contributionScores && (() => {
-          const ZONE_META: Record<string, { color: string; description: string }> = {
-            Pioneer: { color: "oklch(48% 0.18 45)", description: "You thrive in new territory — initiating, exploring, and building from scratch." },
-            Builder: { color: "oklch(42% 0.18 250)", description: "You take ideas and turn them into systems — structuring, scaling, and executing." },
-            Sustainer: { color: "oklch(42% 0.14 145)", description: "You keep things running — reliable, relational, and consistent." },
-            Connector: { color: "oklch(48% 0.18 300)", description: "You link people, ideas, and resources — bridging gaps and building community." },
+          const ZONE_META: Record<string, { color: string; description: string; nameId: string; descriptionId: string }> = {
+            Pioneer: { color: "oklch(48% 0.18 45)", description: "You thrive in new territory — initiating, exploring, and building from scratch.", nameId: "Pelopor", descriptionId: "Anda berkembang di wilayah baru — memulai, menjelajah, dan membangun dari awal." },
+            Builder: { color: "oklch(42% 0.18 250)", description: "You take ideas and turn them into systems — structuring, scaling, and executing.", nameId: "Pembangun", descriptionId: "Anda mengambil ide dan mengubahnya menjadi sistem — merancang, mengembangkan, dan melaksanakan." },
+            Sustainer: { color: "oklch(42% 0.14 145)", description: "You keep things running — reliable, relational, and consistent.", nameId: "Pemelihara", descriptionId: "Anda menjaga segalanya berjalan — andal, relasional, dan konsisten." },
+            Connector: { color: "oklch(48% 0.18 300)", description: "You link people, ideas, and resources — bridging gaps and building community.", nameId: "Penghubung", descriptionId: "Anda menghubungkan orang, ide, dan sumber daya — menjembatani kesenjangan dan membangun komunitas." },
           };
           const meta = ZONE_META[contributionZone] ?? { color: "oklch(42% 0.008 260)", description: "" };
           return (
             <div className="stat-block">
-              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Contribution Zone</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{contributionZone}</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Zona Kontribusi Saya" : "My Contribution Zone"}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{languagePreference === "id" ? (meta.nameId ?? contributionZone) : contributionZone}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{languagePreference === "id" ? meta.descriptionId : meta.description}</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem", marginBottom: "0.875rem" }}>
                 {Object.entries(contributionScores).sort(([,a],[,b]) => b - a).map(([zone, score]) => (
                   <div key={zone}>
@@ -959,27 +972,29 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                   </div>
                 ))}
               </div>
-              <Link href="/team/roles-contribution" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+              <Link href="/team/roles-contribution" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>{languagePreference === "id" ? "Ikuti ulang →" : "Retake quiz →"}</Link>
             </div>
           );
         })()}
 
         {/* Conflict Style result card */}
         {conflictStyle && conflictScores && (() => {
-          const CONFLICT_META: Record<string, { name: string; color: string; description: string }> = {
-            A: { name: "Avoider", color: "oklch(42% 0.14 260)", description: "You step back from tension and prefer harmony over direct confrontation." },
-            C: { name: "Collaborator", color: "oklch(42% 0.14 145)", description: "You work through conflict together — honest, patient, and solution-focused." },
-            M: { name: "Mediator", color: "oklch(48% 0.14 45)", description: "You seek middle ground — balancing relationships and outcomes." },
+          const CONFLICT_META: Record<string, { name: string; nameId: string; color: string; description: string; descriptionId: string }> = {
+            A: { name: "Avoider", nameId: "Penghindari", color: "oklch(42% 0.14 260)", description: "You step back from tension and prefer harmony over direct confrontation.", descriptionId: "Anda mundur dari ketegangan dan lebih menyukai harmoni daripada konfrontasi langsung." },
+            C: { name: "Collaborator", nameId: "Kolaborator", color: "oklch(42% 0.14 145)", description: "You work through conflict together — honest, patient, and solution-focused.", descriptionId: "Anda menyelesaikan konflik bersama — jujur, sabar, dan berorientasi solusi." },
+            M: { name: "Mediator", nameId: "Mediator", color: "oklch(48% 0.14 45)", description: "You seek middle ground — balancing relationships and outcomes.", descriptionId: "Anda mencari jalan tengah — menyeimbangkan hubungan dan hasil." },
           };
           const meta = CONFLICT_META[conflictStyle] ?? { name: conflictStyle, color: "oklch(42% 0.008 260)", description: "" };
           return (
             <div className="stat-block">
-              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>My Conflict Style</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{meta.name}</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{meta.description}</p>
+              <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "0.625rem", fontSize: "0.62rem" }}>{languagePreference === "id" ? "Gaya Konflik Saya" : "My Conflict Style"}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: meta.color, marginBottom: "0.5rem" }}>{languagePreference === "id" ? meta.nameId : meta.name}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(42% 0.008 260)", lineHeight: 1.6, marginBottom: "0.875rem" }}>{languagePreference === "id" ? meta.descriptionId : meta.description}</p>
               <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.875rem" }}>
                 {Object.entries(conflictScores).map(([key, score]) => {
-                  const labels: Record<string, string> = { A: "Avoider", C: "Collaborator", M: "Mediator" };
+                  const labels: Record<string, string> = languagePreference === "id"
+                    ? { A: "Penghindari", C: "Kolaborator", M: "Mediator" }
+                    : { A: "Avoider", C: "Collaborator", M: "Mediator" };
                   const isTop = key === conflictStyle;
                   return (
                     <div key={key} style={{ flex: 1, textAlign: "center", padding: "0.5rem", background: isTop ? `${meta.color} / 0.1` : "oklch(95% 0.003 80)", outline: isTop ? `1.5px solid ${meta.color}` : "none" }}>
@@ -989,7 +1004,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                   );
                 })}
               </div>
-              <Link href="/team/navigating-conflict" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>Retake quiz →</Link>
+              <Link href="/team/navigating-conflict" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(30% 0.12 260)", textDecoration: "none" }}>{languagePreference === "id" ? "Ikuti ulang →" : "Retake quiz →"}</Link>
             </div>
           );
         })()}
@@ -1217,30 +1232,30 @@ const TEAM_ASSESSMENTS = [
 
 // ── State components ────────────────────────────────────────────────────────
 
-function TeamApplicationPrompt() {
+function TeamApplicationPrompt({ lang = "en" }: { lang?: "en" | "id" }) {
   return (
     <div style={{ background: "oklch(30% 0.12 260 / 0.06)", border: "1px solid oklch(88% 0.008 80)", padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
       <div>
-        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.25rem" }}>Team Pathway</p>
+        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.25rem" }}>{lang === "id" ? "Jalur Tim" : "Team Pathway"}</p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", color: "oklch(22% 0.005 260)" }}>
-          Ready to lead your team? Apply for Team Leader access.
+          {lang === "id" ? "Siap memimpin tim Anda? Daftar untuk akses Pemimpin Tim." : "Ready to lead your team? Apply for Team Leader access."}
         </p>
       </div>
       <Link href="/apply" className="btn-primary" style={{ fontSize: "0.78rem", padding: "0.6rem 1.25rem", whiteSpace: "nowrap" }}>
-        Apply →
+        {lang === "id" ? "Daftar →" : "Apply →"}
       </Link>
     </div>
   );
 }
 
-function TeamApplicationPending({ firstName }: { firstName: string }) {
+function TeamApplicationPending({ firstName, lang = "en" }: { firstName: string; lang?: "en" | "id" }) {
   return (
     <div style={{ background: "oklch(65% 0.15 45 / 0.08)", border: "1px solid oklch(65% 0.15 45 / 0.2)", padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
       <span style={{ fontSize: "1.1rem" }}>🧭</span>
       <div>
-        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.2rem" }}>Team Application Under Review</p>
+        <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.2rem" }}>{lang === "id" ? "Aplikasi Tim Sedang Ditinjau" : "Team Application Under Review"}</p>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(38% 0.008 260)" }}>
-          Thanks {firstName} — every application is reviewed personally. You&apos;ll hear back by email.
+          {lang === "id" ? `Terima kasih ${firstName} — setiap aplikasi ditinjau secara pribadi. Anda akan menerima kabar melalui email.` : `Thanks ${firstName} — every application is reviewed personally. You'll hear back by email.`}
         </p>
       </div>
     </div>
@@ -1249,15 +1264,16 @@ function TeamApplicationPending({ firstName }: { firstName: string }) {
 
 // ── My Courses section ──────────────────────────────────────────────────────
 
-function MyCourses({ courses }: {
+function MyCourses({ courses, lang = "en" }: {
   courses: { courseId: string; slug: string; title: string; completed: number; total: number; firstIncompleteSlug: string | null }[];
+  lang?: "en" | "id";
 }) {
   const anyStarted = courses.some(c => c.completed > 0);
   return (
     <div style={{ marginTop: "3rem", paddingTop: "2.5rem", borderTop: "1px solid oklch(85% 0.008 80)" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", gap: "1rem", flexWrap: "wrap" }}>
         <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.125rem", color: "oklch(22% 0.005 260)" }}>
-          My Courses
+          {lang === "id" ? "Kursus Saya" : "My Courses"}
         </h2>
         <Link href="/courses" style={{
           fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
@@ -1265,7 +1281,7 @@ function MyCourses({ courses }: {
           border: "1px solid oklch(30% 0.12 260)", padding: "0.35rem 0.875rem",
           whiteSpace: "nowrap",
         }}>
-          All Courses →
+          {lang === "id" ? "Semua Kursus →" : "All Courses →"}
         </Link>
       </div>
 
@@ -1318,7 +1334,7 @@ function MyCourses({ courses }: {
                       fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
                       color: "oklch(55% 0.008 260)", whiteSpace: "nowrap",
                     }}>
-                      {course.completed}/{course.total} chapters
+                      {course.completed}/{course.total} {lang === "id" ? "bab" : "chapters"}
                     </span>
                   </div>
                 </div>
@@ -1327,7 +1343,7 @@ function MyCourses({ courses }: {
                   color: done ? "oklch(45% 0.10 155)" : "oklch(65% 0.15 45)",
                   whiteSpace: "nowrap", flexShrink: 0,
                 }}>
-                  {done ? "Complete ✓" : course.completed > 0 ? "Continue →" : "Start →"}
+                  {done ? (lang === "id" ? "Selesai ✓" : "Complete ✓") : course.completed > 0 ? (lang === "id" ? "Lanjutkan →" : "Continue →") : (lang === "id" ? "Mulai →" : "Start →")}
                 </span>
               </div>
             </Link>
@@ -1340,7 +1356,7 @@ function MyCourses({ courses }: {
           fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", lineHeight: 1.6,
           color: "oklch(55% 0.008 260)", marginTop: "0.75rem",
         }}>
-          Free courses to help you work better across cultures. Start anytime.
+          {lang === "id" ? "Kursus gratis untuk membantu Anda bekerja lebih baik lintas budaya. Mulai kapan saja." : "Free courses to help you work better across cultures. Start anytime."}
         </p>
       )}
     </div>
