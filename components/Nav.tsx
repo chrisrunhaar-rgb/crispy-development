@@ -214,72 +214,29 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                 </div>
               </>
             ) : (
-              /* Not logged in: lang dropdown + login + signup */
+              /* Not logged in: lang toggle + login + signup */
               <>
-                <div ref={langRef} style={{ position: "relative" }} className="hidden-mobile">
-                  <button
-                    onClick={() => setLangOpen(!langOpen)}
-                    style={{
-                      fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.72rem",
-                      fontWeight: 600,
-                      color: "oklch(42% 0.008 260)",
-                      background: "none",
-                      border: "1px solid oklch(82% 0.008 80)",
-                      padding: "0.3rem 0.6rem",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.375rem",
-                      transition: "border-color 0.15s",
-                    }}
-                    aria-label="Select language"
-                  >
-                    <span style={{ fontSize: "1rem", lineHeight: 1 }}>{currentLang.flag}</span>
-                    <span>{currentLang.code.toUpperCase()}</span>
-                    <span style={{ fontSize: "0.5rem", opacity: 0.5, marginLeft: "0.1rem" }}>▼</span>
-                  </button>
-                  {langOpen && (
-                    <div style={{
-                      position: "absolute",
-                      top: "calc(100% + 6px)",
-                      right: 0,
-                      background: "oklch(99% 0.002 80)",
-                      border: "1px solid oklch(88% 0.008 80)",
-                      boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)",
-                      minWidth: "160px",
-                      zIndex: 100,
-                    }}>
-                      {LANGUAGES.map(l => (
-                        <button
-                          key={l.code}
-                          onClick={() => { if (l.available) { setLang(l.code); setLangOpen(false); } }}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.625rem",
-                            width: "100%",
-                            padding: "0.625rem 0.875rem",
-                            background: l.code === lang ? "oklch(95% 0.006 80)" : "none",
-                            border: "none",
-                            cursor: l.available ? "pointer" : "default",
-                            opacity: l.available ? 1 : 0.45,
-                            fontFamily: "var(--font-montserrat)",
-                            fontSize: "0.8rem",
-                            fontWeight: l.code === lang ? 700 : 500,
-                            color: "oklch(30% 0.12 260)",
-                            textAlign: "left",
-                            borderBottom: "1px solid oklch(92% 0.004 80)",
-                          }}
-                        >
-                          <span style={{ fontSize: "1rem" }}>{l.flag}</span>
-                          <span style={{ flex: 1 }}>{l.label}</span>
-                          {!l.available && <span style={{ fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(65% 0.15 45)", background: "oklch(65% 0.15 45 / 0.1)", padding: "0.1rem 0.35rem" }}>SOON</span>}
-                          {l.code === lang && <span style={{ fontSize: "0.65rem", color: "oklch(65% 0.15 45)", fontWeight: 700 }}>✓</span>}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                <div style={{ display: "flex", gap: "2px" }} className="hidden-mobile">
+                  {LANGUAGES.filter(l => l.available).map(l => (
+                    <button
+                      key={l.code}
+                      onClick={() => setLang(l.code)}
+                      style={{
+                        fontFamily: "var(--font-montserrat)",
+                        fontSize: "0.65rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
+                        padding: "0.25rem 0.5rem",
+                        background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
+                        color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                        border: "none",
+                        cursor: "pointer",
+                        borderRadius: "3px",
+                      }}
+                    >
+                      {l.code.toUpperCase()}
+                    </button>
+                  ))}
                 </div>
 
                 <Link href="/login" className="t-label hidden-mobile" style={{ color: "oklch(52% 0.008 260)", textDecoration: "none", fontSize: "0.7rem" }}>
