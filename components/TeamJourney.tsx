@@ -249,6 +249,88 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
         </div>
       );
     }
+    case "comm_style": {
+      const COMM_COLORS: Record<string, string> = { A: "oklch(55% 0.18 250)", D: "oklch(52% 0.16 145)", C: "oklch(62% 0.16 45)", N: "oklch(55% 0.14 300)" };
+      const COMM_NAMES: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      const commColor = COMM_COLORS[resultKey] ?? navy;
+      const maxCommVal = Math.max(...(["A", "D", "C", "N"] as const).map(k => scores[k] ?? 0), 1);
+      return (
+        <div style={{ width: "100%" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 800, color: commColor, textAlign: "center", marginBottom: "0.4rem", lineHeight: 1 }}>
+            {COMM_NAMES[resultKey] ?? resultKey}
+          </p>
+          <div style={{ display: "flex", gap: "3px" }}>
+            {(["A", "D", "C", "N"] as const).map(key => (
+              <div key={key} style={{ flex: 1 }}>
+                <div style={{ height: 22, background: "oklch(90% 0.004 260)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${((scores[key] ?? 0) / maxCommVal) * 100}%`, background: COMM_COLORS[key], opacity: key === resultKey ? 1 : 0.3 }} />
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.38rem", fontWeight: 700, color: COMM_COLORS[key], textAlign: "center", marginTop: "0.1rem" }}>{key}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    case "trust": {
+      const trustScore = parseFloat(resultKey);
+      const trustColor = trustScore >= 4.5 ? "oklch(48% 0.18 145)" : trustScore >= 3.5 ? "oklch(55% 0.16 80)" : trustScore >= 2.5 ? "oklch(55% 0.16 45)" : "oklch(52% 0.18 20)";
+      const trustDims = ["voice", "failure", "difference", "vulnerability", "conflict", "cultural"];
+      return (
+        <div style={{ width: "100%" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.6rem", fontWeight: 900, color: trustColor, textAlign: "center", lineHeight: 1, marginBottom: "0.3rem" }}>
+            {isNaN(trustScore) ? resultKey : trustScore.toFixed(1)}
+            <span style={{ fontSize: "0.55rem", fontWeight: 600, color: "oklch(62% 0.008 260)" }}>/5</span>
+          </p>
+          <div style={{ display: "flex", gap: "2px" }}>
+            {trustDims.map(key => (
+              <div key={key} style={{ flex: 1, height: 16, background: "oklch(90% 0.004 260)", borderRadius: 1, overflow: "hidden", position: "relative" }}>
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${((scores[key] ?? 0) / 5) * 100}%`, background: trustColor }} />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    case "contribution_zone": {
+      const ZONE_COLORS: Record<string, string> = { P: "oklch(52% 0.18 20)", B: "oklch(48% 0.18 230)", C: "oklch(48% 0.18 145)", D: "oklch(50% 0.16 290)" };
+      const ZONE_NAMES: Record<string, string> = { P: "Pioneer", B: "Builder", C: "Connector", D: "Deepener" };
+      const zoneColor = ZONE_COLORS[resultKey] ?? navy;
+      const maxZoneVal = Math.max(...(["P", "B", "C", "D"] as const).map(k => scores[k] ?? 0), 1);
+      return (
+        <div style={{ width: "100%" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: 800, color: zoneColor, textAlign: "center", marginBottom: "0.4rem", lineHeight: 1 }}>
+            {ZONE_NAMES[resultKey] ?? resultKey}
+          </p>
+          <div style={{ display: "flex", gap: "3px" }}>
+            {(["P", "B", "C", "D"] as const).map(key => (
+              <div key={key} style={{ flex: 1 }}>
+                <div style={{ height: 22, background: "oklch(90% 0.004 260)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${((scores[key] ?? 0) / maxZoneVal) * 100}%`, background: ZONE_COLORS[key], opacity: key === resultKey ? 1 : 0.3 }} />
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.38rem", fontWeight: 700, color: ZONE_COLORS[key], textAlign: "center", marginTop: "0.1rem" }}>{key}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    case "conflict_style": {
+      const CONFLICT_COLORS: Record<string, string> = { A: "oklch(55% 0.14 200)", C: "oklch(55% 0.18 45)", M: "oklch(55% 0.15 260)" };
+      const CONFLICT_NAMES: Record<string, string> = { A: "Protector", C: "Confronter", M: "Mediator" };
+      const CONFLICT_SUBS: Record<string, string> = { A: "Avoids conflict", C: "Confronts directly", M: "Mediates between" };
+      const conflictColor = CONFLICT_COLORS[resultKey] ?? navy;
+      return (
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: 800, color: conflictColor, lineHeight: 1, marginBottom: "0.25rem" }}>
+            {CONFLICT_NAMES[resultKey] ?? resultKey}
+          </p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", color: conflictColor, fontWeight: 600, opacity: 0.8 }}>
+            {CONFLICT_SUBS[resultKey] ?? ""}
+          </p>
+        </div>
+      );
+    }
     default:
       return null;
   }
@@ -319,6 +401,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: true,
     dataLabel: "Comm Style",
     contentUrl: "/team/communication-culture",
+    resultType: "comm_style",
   },
   {
     number: 5,
@@ -329,6 +412,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: true,
     dataLabel: "Trust Score",
     contentUrl: "/team/trust-psychological-safety",
+    resultType: "trust",
   },
   {
     number: 6,
@@ -339,6 +423,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: true,
     dataLabel: "Contribution Zone",
     contentUrl: "/team/roles-contribution",
+    resultType: "contribution_zone",
   },
   {
     number: 7,
@@ -349,6 +434,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: true,
     dataLabel: "Conflict Style",
     contentUrl: "/team/navigating-conflict",
+    resultType: "conflict_style",
   },
   {
     number: 8,
@@ -544,6 +630,23 @@ function getResultDisplay(resultType: string, resultKey: string): { label: strin
       const labels: Record<string, string> = { A: "Words", B: "Quality Time", C: "Acts of Service", D: "Tangible Gifts", E: "Physical Touch" };
       const [recv] = resultKey.split("|");
       return { label: labels[recv] ?? recv, color: "oklch(42% 0.14 45)" };
+    }
+    case "comm_style": {
+      const colors: Record<string, string> = { A: "oklch(55% 0.18 250)", D: "oklch(52% 0.16 145)", C: "oklch(62% 0.16 45)", N: "oklch(55% 0.14 300)" };
+      const names: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
+    }
+    case "trust":
+      return { label: `${parseFloat(resultKey).toFixed(1)}/5`, color: "oklch(48% 0.18 145)" };
+    case "contribution_zone": {
+      const colors: Record<string, string> = { P: "oklch(52% 0.18 20)", B: "oklch(48% 0.18 230)", C: "oklch(48% 0.18 145)", D: "oklch(50% 0.16 290)" };
+      const names: Record<string, string> = { P: "Pioneer", B: "Builder", C: "Connector", D: "Deepener" };
+      return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
+    }
+    case "conflict_style": {
+      const colors: Record<string, string> = { A: "oklch(55% 0.14 200)", C: "oklch(55% 0.18 45)", M: "oklch(55% 0.15 260)" };
+      const names: Record<string, string> = { A: "Protector", C: "Confronter", M: "Mediator" };
+      return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
     }
     default:
       return { label: resultKey, color: "oklch(42% 0.008 260)" };
@@ -1151,7 +1254,7 @@ export default function TeamJourney({
 
                   {/* Member results: tiles for assessment steps, list for other steps */}
                   {displayMembers.length > 0 && (
-                    isAssessmentStep && step.resultType ? (
+                    step.resultType ? (
                       <div>
                         <p style={{
                           fontFamily: "var(--font-montserrat)",
