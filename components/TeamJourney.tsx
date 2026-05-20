@@ -133,7 +133,8 @@ const BASE_JOURNEY_STEPS: Step[] = [
 ];
 
 // Assessment add-on steps — each has an insertAfter position (base step number after which it slots in)
-type AssessmentDef = Omit<Step, "number"> & { insertAfter: number };
+// order controls the sequence within a group (lower = earlier)
+type AssessmentDef = Omit<Step, "number"> & { insertAfter: number; order?: number };
 
 const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   // After step 3 "Getting to Know Each Other" — personal insights that deepen first impressions
@@ -146,6 +147,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "Life Balance",
     contentUrl: "/team/wheel-of-life",
     insertAfter: 3,
+    order: 2,
   },
   "enneagram": {
     title: "Enneagram",
@@ -156,8 +158,9 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "Enneagram Type",
     contentUrl: "/team/enneagram",
     insertAfter: 3,
+    order: 3,
   },
-  // After step 4 "Communication Culture" — appreciation languages shape how teams communicate
+  // After step 3 "Getting to Know Each Other" — knowing how people feel valued is core to truly knowing them
   "5languages": {
     title: "5 Languages of Appreciation",
     description: "Discover how each team member feels genuinely valued — and how to express appreciation in ways that actually land.",
@@ -166,9 +169,10 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     collectsData: true,
     dataLabel: "Appreciation Language",
     contentUrl: "/team/5languages",
-    insertAfter: 4,
+    insertAfter: 3,
+    order: 1,
   },
-  // Behavioural & personality styles shape how teams communicate
+  // After step 4 "Communication Culture" — behavioural & personality styles shape how teams communicate
   "disc": {
     title: "DISC Profiles",
     description: "Map your team's behavioural styles — who drives, who influences, who supports, who analyses. Use your differences as strengths.",
@@ -178,6 +182,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "DISC Type",
     contentUrl: "/team/disc",
     insertAfter: 4,
+    order: 1,
   },
   "three-thinking-styles": {
     title: "Three Thinking Styles",
@@ -188,8 +193,8 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "Thinking Style",
     contentUrl: "/team/three-thinking-styles",
     insertAfter: 4,
+    order: 2,
   },
-
   "16-personalities": {
     title: "16 Personalities",
     description: "In-depth personality profiles that reveal how your team members think, feel, and interact in work and relationships.",
@@ -199,6 +204,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "Personality",
     contentUrl: "/team/16-personalities",
     insertAfter: 4,
+    order: 3,
   },
   "big-five": {
     title: "Big Five (OCEAN)",
@@ -209,6 +215,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "OCEAN Profile",
     contentUrl: "/team/big-five",
     insertAfter: 4,
+    order: 4,
   },
   // After step 5 "Trust & Psychological Safety" — spiritual gifts are shared most freely in a safe team
   "karunia-rohani": {
@@ -220,6 +227,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     dataLabel: "Gift Profile",
     contentUrl: "/team/karunia-rohani",
     insertAfter: 5,
+    order: 1,
   },
 };
 
@@ -228,9 +236,10 @@ function buildJourneySteps(selectedAssessments: string[]): Step[] {
 
   for (const baseStep of BASE_JOURNEY_STEPS) {
     steps.push(baseStep);
-    // Insert any selected assessments that belong after this base step
+    // Insert selected assessments after this base step, sorted by defined order
     selectedAssessments
       .filter(id => ASSESSMENT_STEP_DEFS[id]?.insertAfter === baseStep.number)
+      .sort((a, b) => (ASSESSMENT_STEP_DEFS[a].order ?? 99) - (ASSESSMENT_STEP_DEFS[b].order ?? 99))
       .forEach(id => steps.push(ASSESSMENT_STEP_DEFS[id]));
   }
 
