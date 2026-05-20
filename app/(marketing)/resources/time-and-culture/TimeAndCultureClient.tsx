@@ -1092,6 +1092,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
   const [showPart1Detail, setShowPart1Detail] = useState(false);
   const [showPart2Detail, setShowPart2Detail] = useState(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
 
   function handleSave() {
     if (saved) return;
@@ -1506,10 +1507,16 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: LIGHT_GRAY, padding: "56px 24px" }}>
         <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, marginBottom: 16 }}>
-            "Cultures that organize around events and communal presence may, in their own way, be practicing a rhythm of time that productivity-oriented cultures have largely lost. The willingness to wait for the right moment, the insistence that time belongs to the people and not the schedule, echoes something that runs through the biblical tradition far more than most Western organizational models would suggest."
+            {L(lang,
+              "“Cultures that organize around events and communal presence may, in their own way, be practicing a rhythm of time that productivity-oriented cultures have largely lost. The willingness to wait for the right moment, the insistence that time belongs to the people and not the schedule, echoes something that runs through the biblical tradition far more than most Western organizational models would suggest.”",
+              "“Budaya yang mengatur diri di sekitar peristiwa dan kehadiran komunal mungkin, dengan cara mereka sendiri, sedang mempraktikkan ritme waktu yang sebagian besar telah hilang dari budaya berorientasi produktivitas. Kesediaan untuk menunggu momen yang tepat, desakan bahwa waktu milik orang-orang dan bukan jadwal, menggemakan sesuatu yang mengalir melalui tradisi Alkitab jauh lebih dalam daripada yang disarankan oleh sebagian besar model organisasi Barat.”"
+            )}
           </p>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT }}>
-            Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including scholarly work on chronos/kairos theology and cross-cultural time frameworks.
+            {L(lang,
+              "Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including scholarly work on chronos/kairos theology and cross-cultural time frameworks.",
+              "Diparafrasekan dari literatur akademis tentang orientasi temporal dan hermeneutika budaya, termasuk karya ilmiah tentang teologi kronos/kairos dan kerangka waktu lintas budaya."
+            )}
           </p>
         </div>
       </div>
@@ -1648,33 +1655,132 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       <div style={{ background: LIGHT_GRAY, padding: "clamp(64px, 9vw, 88px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>
-            Background
+            {L(lang, "Background", "Latar Belakang")}
           </p>
-          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 32, lineHeight: 1.2 }}>
-            Cultural Time Orientation: Why Every Cross-Cultural Leader Needs a New Vocabulary for Time
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 16, lineHeight: 1.2 }}>
+            {L(lang, "The Research Behind the Framework", "Penelitian di Balik Kerangka Ini")}
           </h2>
-          {[
-            "When a meeting starts late, a deadline moves without discussion, or a colleague seems genuinely unbothered by what you consider a broken commitment, most leaders reach for one of two explanations: the person is unreliable, or the culture is disorganized. Both explanations are wrong. What is actually happening is a collision between two different time orientations - two internally coherent logics for how time works, what it is for, and who it belongs to. Until a leader has language for this, every cross-cultural friction around time gets misread as a character problem.",
-            "The academic foundation for this comes primarily from Edward T. Hall, the American anthropologist whose 1959 book The Silent Language introduced the distinction between monochronic and polychronic time. Hall observed that in monochronic cultures, time is treated as a finite, linear resource that can be allocated, scheduled, and spent. Tasks are completed sequentially. Commitments to a specific time carry the force of a promise. In polychronic cultures, time is experienced as fluid and relational. Multiple things happen simultaneously. The person in front of you takes precedence over the clock. The meeting ends when the matter is resolved relationally, not when the scheduled hour expires. Hall expanded this framework in The Dance of Life (1983), arguing that these orientations are not preferences but deeply encoded cultural grammars - absorbed through childhood, reinforced through community, and largely invisible to the people who hold them.",
-            "Richard Lewis, writing in When Cultures Collide (1996), added a third category that Hall's binary did not fully capture: what Lewis called Reactive time. In reactive cultures, particularly across much of East Asia, punctuality and relational warmth are both valued, but the weight given to each shifts depending on context, hierarchy, and who is present. This is not inconsistency. It is a contextual intelligence that reads the room before deciding which logic applies. A leader who appears punctual with senior figures but relaxed with peers is not being inconsistent. They are operating on a different set of rules, one that is as internally coherent as monochronic scheduling.",
-            "A fourth framework comes from an entirely different intellectual tradition. John Mbiti, the Kenyan theologian and philosopher, mapped temporal experience in many African cultures through his concept of Sasa and Zamani, developed in African Religions and Philosophy (1969). Mbiti argued that in many sub-Saharan African traditions, time is not primarily experienced as a progression toward a future but as a movement from the present moment (Sasa) back into an ever-expanding past (Zamani). Events become real as they are experienced communally. A meeting begins not when the clock says so but when the community is truly gathered. This framework has direct implications for cross-cultural teams: a Community Keeper orientation is not behind schedule. It is operating on a different definition of when something has started.",
-            "Richard Brislin's cross-cultural psychology research introduced the practical distinction between clock-time cultures and event-time cultures. Clock-time cultures plan around fixed time points. Event-time cultures plan around when things are ready. These are not simply different habits. They produce different assumptions about what a deadline means, what it means to be late, and what counts as a completed commitment. This framework is particularly useful for teams in development, NGO, and cross-cultural ministry contexts, where event-time cultures are common and clock-time organizational structures are usually imported from Western models.",
-            "For cross-cultural leaders - whether managing multicultural teams, running partner organizations across cultural lines, or serving as field workers in contexts different from their own - the practical stakes of this are high. The clock-keeper leader who reads a missed deadline as disrespect will damage relationships that event-time colleagues experienced as intact. The relationship-weaver who does not register the cost of their flexibility on monochronic colleagues will erode trust invisibly. Neither party is aware of what is happening. Both conclude, eventually, that the other is simply difficult. Understanding cultural time orientation as a framework, rather than a set of personal habits, is the first step toward stopping that pattern before it sets.",
-            "The Scripture tradition carries its own vocabulary for this. Hebrew and Greek both maintain a distinction between two modes of time that modern organizational culture has largely collapsed into one. Chronos is sequential time: the ticking of minutes, the meeting on the calendar, the deadline in the project plan. Kairos is appointed time: the moment that is qualitatively different from the ones around it, the right time, the season. Ecclesiastes 3:1 operates at the kairos level: 'There is a time for everything, and a season for every activity under the heavens.' This is not a verse about time management. It is a structural claim about the diversity of timing built into creation. Not all things happen on the same rhythm. Wisdom is knowing which season you are in. Paul's statement in Galatians 4:4 is kairos at its most precise: 'But when the time had fully come, God sent his Son.' The Incarnation was not scheduled. It arrived when everything that needed to be in place was in place. Cross-cultural leaders who carry this theological frame are not surrendering to vagueness. They are holding both logics at once - the reliability of chronos and the readiness of kairos - and learning to lead from whichever one the moment requires.",
-          ].map((para, i) => (
-            <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
-              {para}
-            </p>
-          ))}
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
-            There is a cultural humility dimension here that goes beyond competency. A leader who has only ever known monochronic logic does not simply lack a skill. They carry an unexamined assumption that their logic is neutral. It does not feel cultural; it feels like professionalism. That invisibility is exactly where the damage gets done. Cultural intelligence begins with this recognition: my own relationship with time is not default, it is shaped. Understanding that your time orientation is one logic among several is closely related to the broader work of cross-cultural humility explored in the <a href="/resources/cultural-intelligence" style={{ color: ORANGE, textDecoration: "underline" }}>Cultural Intelligence module</a>, which maps how cultural assumptions operate across multiple dimensions of leadership and team behavior.
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 17px)", color: BODY_TEXT, lineHeight: 1.75, marginBottom: 0 }}>
+            {L(lang,
+              "From Edward Hall to John Mbiti — the scholarship and theology behind why the four time types are not just cultural preferences, but deeply encoded ways of experiencing reality.",
+              "Dari Edward Hall hingga John Mbiti — ilmu pengetahuan dan teologi di balik mengapa empat tipe waktu bukan sekadar preferensi budaya, melainkan cara mengalami realitas yang tertanam jauh dalam."
+            )}
           </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
-            The trust dimension is equally important and often overlooked. The way a leader handles time sends a signal about what they value and who they respect. A Clock Keeper who insists on monochronic structures in a polychronic team context is not simply enforcing efficiency. They are communicating, usually without realizing it, that their team members' relational logic does not count. The result is a team that complies on the surface and disengages underneath. The deeper dynamics of how time behavior builds or erodes trust across cultures connect directly to the patterns examined in <a href="/resources/building-trust-across-cultures" style={{ color: ORANGE, textDecoration: "underline" }}>Building Trust Across Cultures</a>, which looks at the relational infrastructure that makes cross-cultural collaboration sustainable over time.
-          </p>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 0 }}>
-            For leaders who want to build teams that actually function across cultural lines, the work is not to impose a single time logic or to abandon accountability. It is to develop what the research calls temporal bilingualism: the ability to recognize which logic is operating in a given moment, name it without judgment, and make conscious choices about how the team will navigate it together. That is not a soft skill. It is one of the most precise forms of situational awareness a cross-cultural leader can develop. And it begins with a simple, honest question: What does time mean to me, and what assumptions have I been making about what it means to everyone else?
-          </p>
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 6,
+              fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen
+              ? L(lang, "Close ↑", "Tutup ↑")
+              : L(lang, "Read the research →", "Baca penelitiannya →")}
+          </button>
+
+          {bgOpen && (
+            <div style={{ marginTop: 40 }}>
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Why Time Looks Like Character", "Mengapa Waktu Terlihat Seperti Karakter")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "When a meeting starts late, a deadline moves without discussion, or a colleague seems genuinely unbothered by what you consider a broken commitment, most leaders reach for one of two explanations: the person is unreliable, or the culture is disorganized. Both explanations are wrong. What is actually happening is a collision between two different time orientations - two internally coherent logics for how time works, what it is for, and who it belongs to. Until a leader has language for this, every cross-cultural friction around time gets misread as a character problem.",
+                  "Ketika sebuah rapat dimulai terlambat, tenggat waktu bergeser tanpa diskusi, atau seorang kolega tampak benar-benar tidak terganggu oleh apa yang Anda anggap sebagai komitmen yang dilanggar, sebagian besar pemimpin mencapai satu dari dua penjelasan: orang itu tidak dapat diandalkan, atau budayanya tidak terorganisir. Kedua penjelasan itu salah. Yang sebenarnya terjadi adalah tabrakan antara dua orientasi waktu yang berbeda - dua logika yang secara internal koheren tentang bagaimana waktu bekerja, untuk apa waktu itu, dan kepada siapa waktu itu dimiliki. Sampai seorang pemimpin memiliki bahasa untuk ini, setiap gesekan lintas budaya seputar waktu akan dibaca sebagai masalah karakter."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Hall: Monochronic and Polychronic Time", "Hall: Waktu Monokronik dan Polikronik")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "The academic foundation for this comes primarily from Edward T. Hall, the American anthropologist whose 1959 book The Silent Language introduced the distinction between monochronic and polychronic time. Hall observed that in monochronic cultures, time is treated as a finite, linear resource that can be allocated, scheduled, and spent. Tasks are completed sequentially. Commitments to a specific time carry the force of a promise. In polychronic cultures, time is experienced as fluid and relational. Multiple things happen simultaneously. The person in front of you takes precedence over the clock. The meeting ends when the matter is resolved relationally, not when the scheduled hour expires. Hall expanded this framework in The Dance of Life (1983), arguing that these orientations are not preferences but deeply encoded cultural grammars - absorbed through childhood, reinforced through community, and largely invisible to the people who hold them.",
+                  "Dasar akademis untuk ini terutama berasal dari Edward T. Hall, antropolog Amerika yang bukunya tahun 1959 The Silent Language memperkenalkan perbedaan antara waktu monokronik dan polikronik. Hall mengamati bahwa dalam budaya monokronik, waktu diperlakukan sebagai sumber daya yang terbatas dan linier yang dapat dialokasikan, dijadwalkan, dan dihabiskan. Tugas diselesaikan secara berurutan. Komitmen pada waktu tertentu membawa kekuatan sebuah janji. Dalam budaya polikronik, waktu dialami sebagai cair dan relasional. Banyak hal terjadi secara bersamaan. Orang di depan Anda lebih diutamakan daripada jam. Rapat berakhir ketika masalah diselesaikan secara relasional, bukan ketika jam yang dijadwalkan berakhir. Hall memperluas kerangka ini dalam The Dance of Life (1983), berargumen bahwa orientasi ini bukan preferensi tetapi tata bahasa budaya yang tertanam dalam - diserap melalui masa kanak-kanak, diperkuat melalui komunitas, dan sebagian besar tidak terlihat oleh orang-orang yang memegangnya."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Lewis: Reactive Time", "Lewis: Waktu Reaktif")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "Richard Lewis, writing in When Cultures Collide (1996), added a third category that Hall’s binary did not fully capture: what Lewis called Reactive time. In reactive cultures, particularly across much of East Asia, punctuality and relational warmth are both valued, but the weight given to each shifts depending on context, hierarchy, and who is present. This is not inconsistency. It is a contextual intelligence that reads the room before deciding which logic applies. A leader who appears punctual with senior figures but relaxed with peers is not being inconsistent. They are operating on a different set of rules, one that is as internally coherent as monochronic scheduling.",
+                  "Richard Lewis, menulis dalam When Cultures Collide (1996), menambahkan kategori ketiga yang tidak sepenuhnya ditangkap oleh biner Hall: apa yang Lewis sebut sebagai waktu Reaktif. Dalam budaya reaktif, terutama di sebagian besar Asia Timur, ketepatan waktu dan kehangatan relasional keduanya dihargai, tetapi bobot yang diberikan pada masing-masing bergeser tergantung pada konteks, hierarki, dan siapa yang hadir. Ini bukan inkonsistensi. Ini adalah kecerdasan kontekstual yang membaca suasana sebelum memutuskan logika mana yang berlaku. Seorang pemimpin yang tampak tepat waktu dengan tokoh senior tetapi santai dengan rekan-rekan tidak sedang inkonsisten. Mereka beroperasi berdasarkan seperangkat aturan yang berbeda, yang sama-sama koheren secara internal seperti penjadwalan monokronik."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Mbiti: Community Time", "Mbiti: Waktu Komunitas")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "A fourth framework comes from an entirely different intellectual tradition. John Mbiti, the Kenyan theologian and philosopher, mapped temporal experience in many African cultures through his concept of Sasa and Zamani, developed in African Religions and Philosophy (1969). Mbiti argued that in many sub-Saharan African traditions, time is not primarily experienced as a progression toward a future but as a movement from the present moment (Sasa) back into an ever-expanding past (Zamani). Events become real as they are experienced communally. A meeting begins not when the clock says so but when the community is truly gathered. This framework has direct implications for cross-cultural teams: a Community Keeper orientation is not behind schedule. It is operating on a different definition of when something has started.",
+                  "Kerangka keempat berasal dari tradisi intelektual yang sama sekali berbeda. John Mbiti, teolog dan filsuf Kenya, memetakan pengalaman temporal dalam banyak budaya Afrika melalui konsepnya Sasa dan Zamani, yang dikembangkan dalam African Religions and Philosophy (1969). Mbiti berargumen bahwa dalam banyak tradisi Afrika sub-Sahara, waktu tidak terutama dialami sebagai perkembangan menuju masa depan tetapi sebagai gerakan dari momen saat ini (Sasa) kembali ke masa lalu yang terus berkembang (Zamani). Peristiwa menjadi nyata saat dialami secara komunal. Sebuah rapat dimulai bukan ketika jam mengatakan demikian tetapi ketika komunitas benar-benar berkumpul. Kerangka ini memiliki implikasi langsung bagi tim lintas budaya: orientasi Penjaga Komunitas tidak ketinggalan jadwal. Ini beroperasi berdasarkan definisi yang berbeda tentang kapan sesuatu telah dimulai."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Brislin: Clock-Time and Event-Time", "Brislin: Waktu Jam dan Waktu Peristiwa")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "Richard Brislin’s cross-cultural psychology research introduced the practical distinction between clock-time cultures and event-time cultures. Clock-time cultures plan around fixed time points. Event-time cultures plan around when things are ready. These are not simply different habits. They produce different assumptions about what a deadline means, what it means to be late, and what counts as a completed commitment. This framework is particularly useful for teams in development, NGO, and cross-cultural ministry contexts, where event-time cultures are common and clock-time organizational structures are usually imported from Western models.",
+                  "Penelitian psikologi lintas budaya Richard Brislin memperkenalkan perbedaan praktis antara budaya waktu-jam dan budaya waktu-peristiwa. Budaya waktu-jam merencanakan di sekitar titik waktu tetap. Budaya waktu-peristiwa merencanakan ketika sesuatu siap. Ini bukan sekadar kebiasaan yang berbeda. Mereka menghasilkan asumsi yang berbeda tentang apa arti tenggat waktu, apa artinya terlambat, dan apa yang dihitung sebagai komitmen yang telah selesai. Kerangka ini sangat berguna untuk tim dalam konteks pembangunan, LSM, dan pelayanan lintas budaya, di mana budaya waktu-peristiwa umum dan struktur organisasi waktu-jam biasanya diimpor dari model Barat."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "What This Means in Practice", "Apa Artinya dalam Praktik")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "For cross-cultural leaders - whether managing multicultural teams, running partner organizations across cultural lines, or serving as field workers in contexts different from their own - the practical stakes of this are high. The clock-keeper leader who reads a missed deadline as disrespect will damage relationships that event-time colleagues experienced as intact. The relationship-weaver who does not register the cost of their flexibility on monochronic colleagues will erode trust invisibly. Neither party is aware of what is happening. Both conclude, eventually, that the other is simply difficult. Understanding cultural time orientation as a framework, rather than a set of personal habits, is the first step toward stopping that pattern before it sets.",
+                  "Bagi pemimpin lintas budaya - baik mengelola tim multikultural, menjalankan organisasi mitra di seluruh garis budaya, atau melayani sebagai pekerja lapangan di konteks yang berbeda dari milik mereka sendiri - taruhan praktisnya tinggi. Pemimpin Penjaga Jam yang membaca tenggat waktu yang terlewat sebagai ketidakhormatan akan merusak hubungan yang kolega waktu-peristiwa alami sebagai utuh. Penenun Relasi yang tidak menyadari biaya fleksibilitasnya terhadap kolega monokronik akan mengikis kepercayaan secara tidak terlihat. Tidak ada pihak yang menyadari apa yang terjadi. Keduanya menyimpulkan, akhirnya, bahwa pihak lain memang sulit. Memahami orientasi waktu budaya sebagai kerangka, bukan serangkaian kebiasaan pribadi, adalah langkah pertama menuju menghentikan pola itu sebelum mengeras."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Chronos and Kairos: A Biblical Vocabulary", "Kronos dan Kairos: Kosakata Alkitab")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  "The Scripture tradition carries its own vocabulary for this. Hebrew and Greek both maintain a distinction between two modes of time that modern organizational culture has largely collapsed into one. Chronos is sequential time: the ticking of minutes, the meeting on the calendar, the deadline in the project plan. Kairos is appointed time: the moment that is qualitatively different from the ones around it, the right time, the season. Ecclesiastes 3:1 operates at the kairos level: ‘There is a time for everything, and a season for every activity under the heavens.’ This is not a verse about time management. It is a structural claim about the diversity of timing built into creation. Not all things happen on the same rhythm. Wisdom is knowing which season you are in. Paul’s statement in Galatians 4:4 is kairos at its most precise: ‘But when the time had fully come, God sent his Son.’ The Incarnation was not scheduled. It arrived when everything that needed to be in place was in place. Cross-cultural leaders who carry this theological frame are not surrendering to vagueness. They are holding both logics at once - the reliability of chronos and the readiness of kairos - and learning to lead from whichever one the moment requires.",
+                  "Tradisi Kitab Suci membawa kosakatanya sendiri untuk ini. Ibrani dan Yunani keduanya mempertahankan perbedaan antara dua mode waktu yang budaya organisasi modern sebagian besar telah runtuhkan menjadi satu. Kronos adalah waktu berurutan: detak menit, rapat di kalender, tenggat waktu dalam rencana proyek. Kairos adalah waktu yang ditunjuk: momen yang secara kualitatif berbeda dari yang ada di sekitarnya, waktu yang tepat, musim. Pengkhotbah 3:1 beroperasi di tingkat kairos: ‘Ada waktu untuk segala sesuatu, dan musim untuk setiap kegiatan di bawah langit.’ Ini bukan ayat tentang manajemen waktu. Ini adalah klaim struktural tentang keragaman waktu yang dibangun ke dalam ciptaan. Tidak semua hal terjadi pada irama yang sama. Kebijaksanaan adalah mengetahui musim mana yang sedang Anda jalani. Pernyataan Paulus dalam Galatia 4:4 adalah kairos pada tingkat yang paling tepat: ‘Tetapi ketika waktu telah genap, Allah mengutus Anak-Nya.’ Inkarnasi tidak dijadwalkan. Itu tiba ketika semua yang perlu ada sudah ada. Pemimpin lintas budaya yang membawa kerangka teologis ini tidak menyerah pada ketidakjelasan. Mereka memegang kedua logika sekaligus - keandalan kronos dan kesiapan kairos - dan belajar memimpin dari mana pun yang saat ini membutuhkan."
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Cultural Humility and Trust", "Kerendahan Hati Budaya dan Kepercayaan")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
+                {L(lang,
+                  <>There is a cultural humility dimension here that goes beyond competency. A leader who has only ever known monochronic logic does not simply lack a skill. They carry an unexamined assumption that their logic is neutral. It does not feel cultural; it feels like professionalism. That invisibility is exactly where the damage gets done. Cultural intelligence begins with this recognition: my own relationship with time is not default, it is shaped. Understanding that your time orientation is one logic among several is closely related to the broader work of cross-cultural humility explored in the <a href="/resources/cultural-intelligence" style={{ color: ORANGE, textDecoration: "underline" }}>Cultural Intelligence module</a>, which maps how cultural assumptions operate across multiple dimensions of leadership and team behavior.</>,
+                  <>Ada dimensi kerendahan hati budaya di sini yang melampaui kompetensi. Seorang pemimpin yang hanya pernah mengenal logika monokronik tidak sekadar kurang memiliki keterampilan. Mereka membawa asumsi yang tidak diperiksa bahwa logika mereka adalah netral. Itu tidak terasa budaya; itu terasa seperti profesionalisme. Ketidakterlihatan itulah tepatnya di mana kerusakan terjadi. Kecerdasan budaya dimulai dengan pengakuan ini: hubungan saya sendiri dengan waktu bukan standar, itu dibentuk. Memahami bahwa orientasi waktu Anda adalah satu logika di antara beberapa berkaitan erat dengan pekerjaan kerendahan hati lintas budaya yang lebih luas yang dieksplorasi dalam <a href="/resources/cultural-intelligence" style={{ color: ORANGE, textDecoration: "underline" }}>modul Kecerdasan Budaya</a>, yang memetakan bagaimana asumsi budaya beroperasi di berbagai dimensi kepemimpinan dan perilaku tim.</>
+                )}
+              </p>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
+                {L(lang,
+                  <>The trust dimension is equally important and often overlooked. The way a leader handles time sends a signal about what they value and who they respect. A Clock Keeper who insists on monochronic structures in a polychronic team context is not simply enforcing efficiency. They are communicating, usually without realizing it, that their team members&apos; relational logic does not count. The result is a team that complies on the surface and disengages underneath. The deeper dynamics of how time behavior builds or erodes trust across cultures connect directly to the patterns examined in <a href="/resources/building-trust-across-cultures" style={{ color: ORANGE, textDecoration: "underline" }}>Building Trust Across Cultures</a>, which looks at the relational infrastructure that makes cross-cultural collaboration sustainable over time.</>,
+                  <>Dimensi kepercayaan sama pentingnya dan sering diabaikan. Cara seorang pemimpin menangani waktu mengirimkan sinyal tentang apa yang mereka hargai dan siapa yang mereka hormati. Seorang Penjaga Jam yang bersikeras pada struktur monokronik dalam konteks tim polikronik tidak hanya menegakkan efisiensi. Mereka berkomunikasi, biasanya tanpa menyadarinya, bahwa logika relasional anggota tim mereka tidak diperhitungkan. Hasilnya adalah tim yang patuh di permukaan dan tidak terlibat di bawahnya. Dinamika lebih dalam tentang bagaimana perilaku waktu membangun atau mengikis kepercayaan lintas budaya terhubung langsung ke pola yang diperiksa dalam <a href="/resources/building-trust-across-cultures" style={{ color: ORANGE, textDecoration: "underline" }}>Membangun Kepercayaan Lintas Budaya</a>, yang melihat infrastruktur relasional yang membuat kolaborasi lintas budaya berkelanjutan dari waktu ke waktu.</>
+                )}
+              </p>
+
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Toward Temporal Bilingualism", "Menuju Dwibahasa Temporal")}
+              </h3>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 0 }}>
+                {L(lang,
+                  "For leaders who want to build teams that actually function across cultural lines, the work is not to impose a single time logic or to abandon accountability. It is to develop what the research calls temporal bilingualism: the ability to recognize which logic is operating in a given moment, name it without judgment, and make conscious choices about how the team will navigate it together. That is not a soft skill. It is one of the most precise forms of situational awareness a cross-cultural leader can develop. And it begins with a simple, honest question: What does time mean to me, and what assumptions have I been making about what it means to everyone else?",
+                  "Bagi pemimpin yang ingin membangun tim yang benar-benar berfungsi lintas garis budaya, pekerjaan ini bukan untuk memaksakan logika waktu tunggal atau meninggalkan akuntabilitas. Ini adalah mengembangkan apa yang penelitian sebut dwibahasa temporal: kemampuan untuk mengenali logika mana yang beroperasi dalam momen tertentu, menamainya tanpa penilaian, dan membuat pilihan sadar tentang bagaimana tim akan menavigasinya bersama. Itu bukan keterampilan lunak. Ini adalah salah satu bentuk kesadaran situasional yang paling tepat yang dapat dikembangkan seorang pemimpin lintas budaya. Dan itu dimulai dengan pertanyaan yang sederhana dan jujur: Apa arti waktu bagi saya, dan asumsi apa yang saya buat tentang apa artinya bagi semua orang lain?"
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
