@@ -103,10 +103,10 @@ export default function TeamCommsSection({
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(86% 0.008 80)" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "0.875rem" }}>
 
       {/* ── Message Your Team ── */}
-      <div style={{ background: "oklch(99% 0.002 80)", overflow: "hidden" }}>
+      <div style={{ background: "oklch(99% 0.002 80)", overflow: "hidden", borderRadius: "8px" }}>
         {/* Column header — orange */}
         <div style={{
           background: "oklch(65% 0.15 45)",
@@ -216,7 +216,7 @@ export default function TeamCommsSection({
       </div>
 
       {/* ── Talk to the Coach ── */}
-      <div style={{ background: "oklch(99% 0.002 80)", overflow: "hidden" }}>
+      <div style={{ background: "oklch(99% 0.002 80)", overflow: "hidden", borderRadius: "8px" }}>
         {/* Column header — navy */}
         <div style={{
           background: "oklch(30% 0.12 260)",
