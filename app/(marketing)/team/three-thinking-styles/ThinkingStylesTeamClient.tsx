@@ -373,7 +373,7 @@ export default function ThinkingStylesTeamClient({ user }: { user: User | null }
         </div>
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.72rem",
@@ -385,7 +385,7 @@ export default function ThinkingStylesTeamClient({ user }: { user: User | null }
               marginBottom: "1.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div
@@ -1047,7 +1047,7 @@ export default function ThinkingStylesTeamClient({ user }: { user: User | null }
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 700,
@@ -1059,7 +1059,7 @@ export default function ThinkingStylesTeamClient({ user }: { user: User | null }
                 color: "oklch(14% 0.08 260)",
               }}
             >
-              Back to Team Pathway →
+              Back to Team Dashboard →
             </Link>
           </div>
         </div>

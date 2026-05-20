@@ -188,7 +188,7 @@ export default function WheelOfLifeTeamClient({ user }: { user: User | null }) {
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -202,7 +202,7 @@ export default function WheelOfLifeTeamClient({ user }: { user: User | null }) {
               marginBottom: "2.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap" }}>
@@ -834,7 +834,7 @@ export default function WheelOfLifeTeamClient({ user }: { user: User | null }) {
             Return to the Team Pathway to continue building the foundations your team needs.
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <Link href="/team" style={{
+            <Link href="/dashboard?tab=team" style={{
               fontFamily: "var(--font-montserrat)",
               fontWeight: 700,
               fontSize: "0.875rem",
@@ -844,7 +844,7 @@ export default function WheelOfLifeTeamClient({ user }: { user: User | null }) {
               background: "oklch(65% 0.15 45)",
               color: "oklch(14% 0.08 260)",
             }}>
-              Back to Team Pathway →
+              Back to Team Dashboard →
             </Link>
           </div>
         </div>

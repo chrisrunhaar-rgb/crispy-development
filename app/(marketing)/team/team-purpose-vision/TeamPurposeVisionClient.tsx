@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
+import { savePurposeVisionResult } from "@/app/(marketing)/team/actions";
 
 const STAGES = [
   {
@@ -282,6 +283,8 @@ const calloutBodyStyle: React.CSSProperties = {
 export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: User | null; lang?: "en" | "id" }) {
   const [currentStage, setCurrentStage] = useState(1);
   const [answers, setAnswers] = useState<string[]>(["", "", "", ""]);
+  const [saved, setSaved] = useState(false);
+  const [isSaving, startSaveTransition] = useTransition();
 
   function updateAnswer(index: number, value: string) {
     setAnswers(prev => {
@@ -341,23 +344,11 @@ export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: U
               marginBottom: "2.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.65rem",
-              fontWeight: 800,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              background: "oklch(65% 0.15 45 / 0.12)",
-              padding: "5px 12px",
-              border: "1px solid oklch(65% 0.15 45 / 0.3)",
-            }}>
-              Module 02
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.65rem",
@@ -837,6 +828,62 @@ export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: U
                   </div>
                 ) : null)}
               </div>
+            </div>
+          )}
+
+          {/* Save to dashboard */}
+          {user && finalAnswer.trim() && (
+            <div style={{
+              background: saved ? "oklch(52% 0.14 145 / 0.08)" : "oklch(95% 0.005 80)",
+              border: `1px solid ${saved ? "oklch(52% 0.14 145 / 0.3)" : "oklch(88% 0.006 80)"}`,
+              padding: "1.25rem 1.5rem",
+              marginBottom: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.875rem",
+                color: "oklch(38% 0.008 260)",
+                margin: 0,
+                flex: 1,
+              }}>
+                {saved
+                  ? (lang === "id" ? "Tersimpan ke dasbor tim Anda." : "Saved to your team dashboard.")
+                  : (lang === "id" ? "Simpan pernyataan tujuan Anda ke dasbor tim." : "Save your purpose statement to the team dashboard.")}
+              </p>
+              <button
+                onClick={() => {
+                  if (saved || isSaving) return;
+                  startSaveTransition(async () => {
+                    const result = await savePurposeVisionResult(answers[3], answers[0], answers[1], answers[2]);
+                    if (!result.error) setSaved(true);
+                  });
+                }}
+                disabled={isSaving || saved}
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.07em",
+                  textTransform: "uppercase",
+                  background: saved ? "oklch(52% 0.14 145)" : "oklch(22% 0.08 260)",
+                  color: "white",
+                  border: "none",
+                  padding: "0.625rem 1.25rem",
+                  cursor: isSaving || saved ? "default" : "pointer",
+                  opacity: isSaving ? 0.6 : 1,
+                  whiteSpace: "nowrap",
+                }}>
+                {isSaving
+                  ? (lang === "id" ? "Menyimpan…" : "Saving…")
+                  : saved
+                  ? (lang === "id" ? "✓ Tersimpan" : "✓ Saved")
+                  : (lang === "id" ? "Simpan ke Dasbor" : "Save to Dashboard")}
+              </button>
             </div>
           )}
 

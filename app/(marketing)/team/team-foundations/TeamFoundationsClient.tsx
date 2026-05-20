@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -95,24 +95,12 @@ export default function TeamFoundationsClient({ user, lang = "en" }: { user: Use
               marginBottom: "2.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           {/* Module badge */}
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.65rem",
-              fontWeight: 800,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              background: "oklch(65% 0.15 45 / 0.12)",
-              padding: "5px 12px",
-              border: "1px solid oklch(65% 0.15 45 / 0.3)",
-            }}>
-              Module 01
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.65rem",

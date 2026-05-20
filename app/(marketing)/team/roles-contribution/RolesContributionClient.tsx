@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -240,7 +240,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -254,23 +254,11 @@ export default function RolesContributionClient({ user }: { user: User | null })
               marginBottom: "2.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.65rem",
-              fontWeight: 800,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              background: "oklch(65% 0.15 45 / 0.12)",
-              padding: "5px 12px",
-              border: "1px solid oklch(65% 0.15 45 / 0.3)",
-            }}>
-              Module 06
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.65rem",
@@ -1122,7 +1110,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 700,
@@ -1136,7 +1124,7 @@ export default function RolesContributionClient({ user }: { user: User | null })
                 display: "inline-block",
               }}
             >
-              Back to Team Pathway →
+              Back to Team Dashboard →
             </Link>
             <Link
               href="/team/trust-psychological-safety"

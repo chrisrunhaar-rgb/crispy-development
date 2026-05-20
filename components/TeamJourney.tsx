@@ -56,6 +56,11 @@ const WHEEL_SEGMENTS = [
   { key: "ministry" },   { key: "spiritual" },  { key: "community" },
   { key: "learning" },   { key: "health" },
 ];
+const WHEEL_LABELS: Record<string, string> = {
+  family: "FAMILY", finance: "FINANCE", relaxation: "REST",
+  ministry: "MINISTRY", spiritual: "SPIRITUAL", community: "COMMUNITY",
+  learning: "LEARNING", health: "HEALTH",
+};
 function WheelSpiderSVG({ scores, size = 72 }: { scores: Record<string, number>; size?: number }) {
   const cx = size / 2, cy = size / 2, maxR = size / 2 - 5, N = WHEEL_SEGMENTS.length;
   function getPoint(i: number, score: number): [number, number] {
@@ -80,6 +85,43 @@ function WheelSpiderSVG({ scores, size = 72 }: { scores: Record<string, number>;
         return <line key={i} x1={cx} y1={cy} x2={(cx + maxR * Math.cos(a)).toFixed(2)} y2={(cy + maxR * Math.sin(a)).toFixed(2)} stroke="oklch(85% 0.006 260)" strokeWidth="0.75" />;
       })}
       <polygon points={scorePoly} fill="oklch(42% 0.14 145 / 0.18)" stroke="oklch(42% 0.14 145)" strokeWidth={1.5} />
+    </svg>
+  );
+}
+
+// ── Wheel of Life — large labeled template (no data) ─────────────────────────
+function WheelTemplateLabeledSVG() {
+  const S = 320, cx = 160, cy = 160, maxR = 95, labelDist = 124, N = WHEEL_SEGMENTS.length;
+  const rings = [0.25, 0.5, 0.75, 1.0];
+  return (
+    <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} style={{ overflow: "visible" }}>
+      {rings.map((f, ri) => {
+        const pts = WHEEL_SEGMENTS.map((_, i): [number, number] => {
+          const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+          return [cx + maxR * f * Math.cos(a), cy + maxR * f * Math.sin(a)];
+        });
+        return <polygon key={ri} points={pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ")} fill="none" stroke="oklch(84% 0.008 260)" strokeWidth="1" />;
+      })}
+      {WHEEL_SEGMENTS.map((_, i) => {
+        const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+        return <line key={i} x1={cx} y1={cy} x2={(cx + maxR * Math.cos(a)).toFixed(1)} y2={(cy + maxR * Math.sin(a)).toFixed(1)} stroke="oklch(84% 0.008 260)" strokeWidth="1" />;
+      })}
+      {WHEEL_SEGMENTS.map((seg, i) => {
+        const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+        const lx = cx + labelDist * Math.cos(a);
+        const ly = cy + labelDist * Math.sin(a);
+        const cosA = Math.cos(a);
+        const textAnchor = cosA < -0.12 ? "end" : cosA > 0.12 ? "start" : "middle";
+        return (
+          <text key={i} x={lx.toFixed(1)} y={ly.toFixed(1)}
+            textAnchor={textAnchor} dominantBaseline="middle"
+            fill="oklch(38% 0.008 260)" fontFamily="var(--font-montserrat)"
+            fontSize="9" fontWeight="700" letterSpacing="0.08em"
+          >
+            {WHEEL_LABELS[seg.key] ?? seg.key.toUpperCase()}
+          </text>
+        );
+      })}
     </svg>
   );
 }
@@ -228,7 +270,7 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
         </div>
       );
     case "5languages": {
-      const primary = resultKey;
+      const primary = resultKey.split("|")[0];
       return (
         <div style={{ width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginBottom: "0.25rem" }}>
@@ -332,6 +374,25 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
         </div>
       );
     }
+    case "purpose_vision": {
+      const text = resultKey;
+      return (
+        <div style={{ textAlign: "center", padding: "0.25rem" }}>
+          <p style={{
+            fontFamily: "var(--font-cormorant)",
+            fontStyle: "italic",
+            fontSize: "0.72rem",
+            color: "oklch(38% 0.008 260)",
+            lineHeight: 1.5,
+            margin: 0,
+            overflow: "hidden",
+            maxHeight: "4.5em",
+          }}>
+            &ldquo;{text}&rdquo;
+          </p>
+        </div>
+      );
+    }
     default:
       return null;
   }
@@ -386,9 +447,11 @@ const BASE_JOURNEY_STEPS: Step[] = [
     description_id: "Perjelas mengapa tim Anda ada dan ke mana kalian melangkah bersama. Visi bersama adalah fondasi segalanya.",
     type: "workshop",
     icon: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
-    collectsData: false,
-    dataLabel: null,
+    collectsData: true,
+    dataLabel: "Purpose Statement",
+    dataLabel_id: "Pernyataan Tujuan",
     contentUrl: "/team/team-purpose-vision",
+    resultType: "purpose_vision",
   },
   {
     number: 3,
@@ -705,6 +768,8 @@ function getResultDisplay(resultType: string, resultKey: string, lang: TeamLang 
       const names = lang === "id" ? id : en;
       return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
     }
+    case "purpose_vision":
+      return { label: resultKey.slice(0, 40) + (resultKey.length > 40 ? "…" : ""), color: "oklch(42% 0.14 145)" };
     default:
       return { label: resultKey, color: "oklch(42% 0.008 260)" };
   }
@@ -1250,8 +1315,89 @@ export default function TeamJourney({
 
                   {/* Member results: tiles for assessment steps, list for other steps */}
                   {displayMembers.length > 0 && (
-                    step.resultType ? (
+                    step.resultType === "5languages" ? (
+                      // ── 5 Languages: dual grids (Receiving + Giving) ──
+                      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                        {(["recv", "giving"] as const).map((mode, modeIdx) => (
+                          <div key={mode}>
+                            <p style={{
+                              fontFamily: "var(--font-montserrat)",
+                              fontSize: "0.58rem",
+                              fontWeight: 700,
+                              letterSpacing: "0.13em",
+                              textTransform: "uppercase",
+                              color: "oklch(54% 0.008 260)",
+                              marginBottom: "0.75rem",
+                            }}>
+                              {mode === "recv" ? (ui.recvLanguage as string) : (ui.givingLanguage as string)}
+                            </p>
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "0.625rem" }}>
+                              {displayMembers.map(member => {
+                                const result = teamResults.find(r => r.user_id === member.id && r.result_type === "5languages");
+                                const hasResult = result?.result_key != null;
+                                const parts = result?.result_key?.split("|") ?? [];
+                                const langKey = parts[modeIdx] ?? parts[0] ?? "";
+                                const tileColor = langKey ? (FIVELA_COLORS[langKey] ?? navy) : "";
+                                const tileName = langKey ? (FIVELA_NAMES[langKey] ?? langKey) : "";
+                                return (
+                                  <div key={member.id} style={{
+                                    background: hasResult ? "white" : "oklch(97% 0.004 80)",
+                                    border: `1px solid ${hasResult && tileColor ? `color-mix(in oklch, ${tileColor} 20%, oklch(88% 0.006 80))` : "oklch(91% 0.006 80)"}`,
+                                    borderRadius: 12,
+                                    padding: "0.875rem",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "0.5rem",
+                                    minHeight: 130,
+                                  }}>
+                                    <div style={{ width: "100%" }}>
+                                      <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", color: "oklch(28% 0.005 260)", lineHeight: 1.25 }}>
+                                        {member.name}
+                                      </p>
+                                      {"isLeader" in member && member.isLeader && (
+                                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginTop: "0.1rem" }}>
+                                          {ui.leader}
+                                        </p>
+                                      )}
+                                    </div>
+                                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+                                      {hasResult && langKey ? (
+                                        <div style={{ width: "100%" }}>
+                                          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginBottom: "0.25rem" }}>
+                                            <div style={{ width: 6, height: 6, borderRadius: "50%", background: tileColor, flexShrink: 0 }} />
+                                            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, color: navy, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                                              {tileName}
+                                            </span>
+                                          </div>
+                                          <div style={{ display: "flex", gap: "2px" }}>
+                                            {(["A", "B", "C", "D", "E"] as const).map(k => (
+                                              <div key={k} style={{ flex: 1, height: 16, background: "oklch(90% 0.004 260)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
+                                                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${Math.min(result?.scores?.[k] ?? 0, 100)}%`, background: FIVELA_COLORS[k], opacity: k === langKey ? 1 : 0.4 }} />
+                                              </div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      ) : (
+                                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(68% 0.006 260)", fontStyle: "italic" }}>
+                                          {ui.notDoneYet}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : step.resultType ? (
                       <div>
+                        {/* Wheel of Life: show labeled reference diagram above tiles */}
+                        {step.resultType === "wheel_of_life" && (
+                          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem", padding: "0.5rem 0" }}>
+                            <WheelTemplateLabeledSVG />
+                          </div>
+                        )}
                         <p style={{
                           fontFamily: "var(--font-montserrat)",
                           fontSize: "0.58rem",

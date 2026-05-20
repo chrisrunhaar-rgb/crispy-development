@@ -652,7 +652,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
               Bagikan hasilmu. Dengarkan hasil orang lain. Biarkan percakapan itu membangun tim yang saling melengkapi.
             </p>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 700,
@@ -665,7 +665,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 display: "inline-block",
               }}
             >
-              Kembali ke Team Pathway →
+              Kembali ke Dasbor Tim →
             </Link>
           </div>
         </section>
@@ -708,7 +708,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
         />
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.72rem",
@@ -720,7 +720,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
               marginBottom: "1.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div

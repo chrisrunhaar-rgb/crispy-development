@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -162,21 +162,15 @@ export default function KnowEachOtherClient({ user, lang = "en" }: { user: User 
           pointerEvents: "none",
         }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <Link href="/team" style={{
+          <Link href="/dashboard?tab=team" style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)",
             textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem",
           }}>
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", letterSpacing: "0.18em",
-              textTransform: "uppercase", color: "oklch(65% 0.15 45)",
-              border: "1.5px solid oklch(65% 0.15 45)", padding: "0.3rem 0.7rem",
-            }}>
-              Module 03
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.65rem", letterSpacing: "0.14em",
               textTransform: "uppercase", color: "oklch(72% 0.04 260)",
@@ -626,7 +620,7 @@ export default function KnowEachOtherClient({ user, lang = "en" }: { user: User 
             fontSize: "clamp(1.5rem, 3vw, 2.25rem)", lineHeight: 1.15,
             color: "oklch(97% 0.005 80)", marginBottom: "1rem",
           }}>
-            Continue the Team Pathway
+            Continue the Journey
           </h2>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7,
@@ -639,8 +633,8 @@ export default function KnowEachOtherClient({ user, lang = "en" }: { user: User 
               <TeamStepCompleteButton contentUrl="/team/know-each-other" lang={lang} />
             </div>
           )}
-          <Link href="/team/communication-culture" className="btn-primary">
-            Module 4: Communication Culture →
+          <Link href="/dashboard?tab=team" className="btn-primary">
+            Back to Team Dashboard →
           </Link>
         </div>
       </section>

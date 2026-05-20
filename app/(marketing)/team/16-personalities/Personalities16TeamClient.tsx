@@ -357,11 +357,11 @@ export default function Personalities16TeamClient({ user }: { user: User | null 
           pointerEvents: "none",
         }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <Link href="/team" style={{
+          <Link href="/dashboard?tab=team" style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)",
             textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem",
           }}>
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
@@ -726,13 +726,13 @@ export default function Personalities16TeamClient({ user }: { user: User | null 
             Have your whole team take this assessment. Map your temperament mix. Use it to name the tensions — and draw on what each type brings. This is not a tool for sorting people. It&rsquo;s a tool for seeing them more clearly.
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <Link href="/team" style={{
+            <Link href="/dashboard?tab=team" style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem",
               letterSpacing: "0.06em", textDecoration: "none",
               padding: "0.75rem 1.75rem",
               background: "oklch(65% 0.15 45)", color: "oklch(14% 0.08 260)",
             }}>
-              Back to Team Pathway →
+              Back to Team Dashboard →
             </Link>
           </div>
         </div>

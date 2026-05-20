@@ -66,3 +66,34 @@ export async function saveConflictStyle(style: string, scores: Record<string, nu
   revalidatePath("/dashboard");
   return { error: null };
 }
+
+export async function savePurposeVisionResult(
+  purposeStatement: string,
+  why: string,
+  what: string,
+  how: string
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+  const scores = { why: 1, what: 1, how: 1 } as Record<string, number>;
+  // Store full texts in a separate jsonb field via scores (adapter) — store as string-keyed dummy scores
+  // Actual text stored as result_key (truncated to 500 chars for DB safety)
+  const teamId = await getUserTeamId(supabase, user.id);
+  if (!teamId) return { error: "No team found" };
+  const resultKey = purposeStatement.trim().slice(0, 500) || "—";
+  await supabase.from("team_member_results").upsert(
+    {
+      team_id: teamId,
+      user_id: user.id,
+      result_type: "purpose_vision",
+      result_key: resultKey,
+      scores,
+      completed_at: new Date().toISOString(),
+    },
+    { onConflict: "team_id,user_id,result_type" }
+  );
+  await markStepCompleteByContentKey("/team/team-purpose-vision");
+  revalidatePath("/dashboard");
+  return { error: null };
+}

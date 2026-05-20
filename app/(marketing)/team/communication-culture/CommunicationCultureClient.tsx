@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -292,21 +292,15 @@ export default function CommunicationCultureClient({ user }: { user: User | null
           pointerEvents: "none",
         }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <Link href="/team" style={{
+          <Link href="/dashboard?tab=team" style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(62% 0.04 260)",
             textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem",
           }}>
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", letterSpacing: "0.18em",
-              textTransform: "uppercase", color: "oklch(65% 0.15 45)",
-              border: "1.5px solid oklch(65% 0.15 45)", padding: "0.3rem 0.7rem",
-            }}>
-              Module 04
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.65rem", letterSpacing: "0.14em",
               textTransform: "uppercase", color: "oklch(72% 0.04 260)",
@@ -979,13 +973,13 @@ export default function CommunicationCultureClient({ user }: { user: User | null
             Understanding how you communicate is step one. The next step is applying it — with your team, in your next meeting, in your next hard conversation.
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <Link href="/team" style={{
+            <Link href="/dashboard?tab=team" style={{
               fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem",
               letterSpacing: "0.06em", textDecoration: "none",
               padding: "0.75rem 1.75rem",
               background: "oklch(65% 0.15 45)", color: "oklch(14% 0.08 260)",
             }}>
-              Back to Team Pathway →
+              Back to Team Dashboard →
             </Link>
             {!user && (
               <Link href="/membership" style={{

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -127,21 +127,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
             >
               09
             </span>
-            <span
-              style={{
-                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                fontWeight: 700,
-                fontSize: "0.65rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: orange,
-                border: `1px solid ${orange}`,
-                padding: "4px 10px",
-                borderRadius: 3,
-              }}
-            >
-              Team Pathway · Module 9
-            </span>
+            
           </div>
           <h1
             style={{
@@ -172,7 +158,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
           </p>
           <div style={{ display: "flex", gap: "0.875rem", flexWrap: "wrap" }}>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 padding: "11px 24px",
                 borderRadius: 5,
@@ -186,7 +172,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
                 display: "inline-block",
               }}
             >
-              ← Back to Team Pathway
+              ← Back to team dashboard
             </Link>
             {user && (
               <Link
@@ -1101,7 +1087,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
               color: orange,
             }}
           >
-            Next Module
+            Continue the Journey
           </p>
           <h2
             style={{
@@ -1142,7 +1128,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
             }}
           >
             <Link
-              href="/team/forward-together"
+              href="/dashboard?tab=team"
               style={{
                 padding: "12px 28px",
                 background: orange,
@@ -1155,10 +1141,10 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
                 display: "inline-block",
               }}
             >
-              Module 10: Forward Together →
+              Back to Team Dashboard →
             </Link>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 padding: "12px 28px",
                 border: `1px solid oklch(45% 0.06 260)`,
@@ -1171,7 +1157,7 @@ export default function AccountabilityClient({ user, lang = "en" }: Props) {
                 display: "inline-block",
               }}
             >
-              Back to Team Pathway
+              Back to Team Dashboard
             </Link>
           </div>
         </div>

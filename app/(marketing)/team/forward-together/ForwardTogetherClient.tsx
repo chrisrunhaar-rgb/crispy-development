@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
@@ -202,21 +202,7 @@ export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
                 gap: "4px",
               }}
             >
-              <span
-                style={{
-                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: warmAccent,
-                  border: `1px solid ${warmAccent}`,
-                  padding: "4px 10px",
-                  borderRadius: 3,
-                }}
-              >
-                Team Pathway · Module 10
-              </span>
+              
               <span
                 style={{
                   fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
@@ -262,7 +248,7 @@ export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
             style={{ display: "flex", gap: "0.875rem", justifyContent: "center", flexWrap: "wrap" }}
           >
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 padding: "11px 24px",
                 borderRadius: 5,
@@ -275,7 +261,7 @@ export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
                 display: "inline-block",
               }}
             >
-              ← Back to Team Pathway
+              ← Back to team dashboard
             </Link>
             {user && (
               <Link
@@ -1182,7 +1168,7 @@ export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
               </Link>
             )}
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 padding: "13px 30px",
                 border: `1px solid oklch(45% 0.06 38)`,

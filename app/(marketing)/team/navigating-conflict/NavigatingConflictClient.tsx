@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
@@ -224,7 +224,7 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
 
         <div className="container-wide" style={{ position: "relative" }}>
           <Link
-            href="/team"
+            href="/dashboard?tab=team"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -238,23 +238,11 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
               marginBottom: "2.5rem",
             }}
           >
-            ← Team Pathway
+            ← Back to team dashboard
           </Link>
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.65rem",
-              fontWeight: 800,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              background: "oklch(65% 0.15 45 / 0.12)",
-              padding: "5px 12px",
-              border: "1px solid oklch(65% 0.15 45 / 0.3)",
-            }}>
-              Module 07
-            </span>
+            
             <span style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.65rem",
@@ -1093,11 +1081,11 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
             lineHeight: 1.2,
             marginBottom: "2rem",
           }}>
-            Continue the Team Pathway
+            Continue the Journey
           </h2>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link
-              href="/team/decision-making"
+              href="/dashboard?tab=team"
               style={{
                 padding: "0.9rem 2rem",
                 background: "oklch(65% 0.15 45)",
@@ -1110,10 +1098,10 @@ export default function NavigatingConflictClient({ user }: { user: User | null }
                 display: "inline-flex",
               }}
             >
-              Module 08: Decision Making →
+              Back to Team Dashboard →
             </Link>
             <Link
-              href="/team"
+              href="/dashboard?tab=team"
               style={{
                 padding: "0.9rem 1.75rem",
                 background: "none",

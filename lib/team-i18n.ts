@@ -44,6 +44,11 @@ export const TEAM_UI = {
     markComplete: "Mark as Complete ✓",
     markedComplete: "Marked as Complete",
     saving: "Saving…",
+    recvLanguage: "Receiving Language",
+    givingLanguage: "Giving Language",
+    purposeVision: "Purpose Statement",
+    savePurposeVision: "Save to Dashboard ✓",
+    purposeVisionSaved: "Saved to Dashboard",
   },
   id: {
     journeyLabel: "Perjalanan",
@@ -88,6 +93,11 @@ export const TEAM_UI = {
     markComplete: "Tandai Selesai ✓",
     markedComplete: "Sudah Selesai",
     saving: "Menyimpan…",
+    recvLanguage: "Bahasa Penerimaan",
+    givingLanguage: "Bahasa Pemberian",
+    purposeVision: "Pernyataan Tujuan",
+    savePurposeVision: "Simpan ke Dasbor ✓",
+    purposeVisionSaved: "Tersimpan di Dasbor",
   },
 } as const;
 
