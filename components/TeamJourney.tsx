@@ -1107,8 +1107,8 @@ export default function TeamJourney({
                     )}
                   </div>
 
-                  {/* Mark as complete — for members only */}
-                  {!isLeader && currentUserId && (() => {
+                  {/* Mark as complete — all participants including leader */}
+                  {currentUserId && (() => {
                     const iDone = localMyCompleted.has(step.number);
                     return (
                       <div>
