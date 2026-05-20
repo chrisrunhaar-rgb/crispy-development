@@ -3,6 +3,8 @@
 import { useState, useTransition } from "react";
 import { saveResourceToDashboard, saveFiveLanguagesResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
+import { useLanguage } from "@/lib/LanguageContext";
+import LangToggle from "@/components/LangToggle";
 
 // ── TYPES ─────────────────────────────────────────────────────────────────────
 
@@ -428,7 +430,7 @@ export default function FiveLanguagesClient({
   givingResult,
   receivingScores,
   givingScores,
-  lang = "en",
+  lang: langProp = "en",
 }: {
   isSaved: boolean;
   receivingResult: string | null;
@@ -437,6 +439,8 @@ export default function FiveLanguagesClient({
   givingScores: { A: number; B: number; C: number; D: number; E: number } | null;
   lang?: "en" | "id";
 }) {
+  const { lang: ctxLang } = useLanguage();
+  const lang: "en" | "id" = langProp === "id" ? "id" : ctxLang === "id" ? "id" : "en";
   const LD = lang === "id" ? LANG_DATA_ID : LANG_DATA;
   const RP = lang === "id" ? RECEIVING_PAIRS_ID : RECEIVING_PAIRS;
   const GP = lang === "id" ? GIVING_PAIRS_ID : GIVING_PAIRS;
@@ -540,6 +544,8 @@ export default function FiveLanguagesClient({
           .lang-flip-content { animation: langFlipIn 0.22s ease; }
         `}</style>
 
+        <LangToggle />
+
         {/* Hero */}
         <section style={{
           background: "oklch(22% 0.10 260)",
@@ -590,6 +596,29 @@ export default function FiveLanguagesClient({
             </p>
           </div>
         </section>
+
+        {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+        <div style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+              {lang === "id" ? "Setelah Modul Ini" : "After This Module"}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                lang === "id" ? "Mengidentifikasi bahasa penghargaan utama Anda untuk memberi dan menerima dari asesmen dua arah." : "Identify your primary giving and receiving appreciation languages from the two-way assessment.",
+                lang === "id" ? "Mengenali bagaimana latar belakang budaya membentuk ekspresi dan penerimaan setiap bahasa penghargaan." : "Recognize how cultural background shapes the expression and reception of each appreciation language.",
+                lang === "id" ? "Menyesuaikan cara Anda menghargai satu anggota tim berdasarkan bahasa utama mereka, bukan bahasa Anda sendiri." : "Adjust how you appreciate one team member based on their primary language, not your own.",
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
+                  <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* About section */}
         <section style={{ background: "white", padding: "clamp(2rem, 4vw, 3.5rem) 0", borderTop: "1px solid oklch(91% 0.006 80)" }}>
@@ -1064,6 +1093,7 @@ export default function FiveLanguagesClient({
 
   return (
     <div>
+      <LangToggle />
       {/* Results hero */}
       <section style={{
         background: "oklch(22% 0.10 260)",
@@ -1279,6 +1309,67 @@ export default function FiveLanguagesClient({
           </button>
         </div>
       </section>
+
+      {/* ─── KEY TAKEAWAY ──────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+            {lang === "id" ? "Poin Utama" : "Key Takeaway"}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+            {lang === "id" ? "Tiga hal yang perlu dilakukan minggu ini" : "Three things to act on this week"}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              lang === "id"
+                ? "Bagikan hasil bahasa memberi dan menerima Anda kepada tim Anda dan ajak mereka untuk berbagi hasil mereka juga."
+                : "Share your giving and receiving language results with your team and invite them to share theirs.",
+              lang === "id"
+                ? "Pilih satu anggota tim minggu ini dan ungkapkan penghargaan dalam bahasa penerima utama mereka — bukan bahasa pemberian default Anda."
+                : "Choose one team member this week and express appreciation in their primary receiving language rather than your own default giving language.",
+              lang === "id"
+                ? "Kenali satu momen dalam bulan lalu ketika Anda bekerja keras untuk menghargai seseorang tetapi tampaknya tidak berhasil. Pertimbangkan ketidakcocokan bahasa yang mungkin terjadi."
+                : "Identify one moment in the past month where you worked hard to appreciate someone but it did not seem to land. Consider which language mismatch may have been at work.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
+      <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Why Love Languages in the Workplace Matter for Cross-Cultural Leaders
+          </h2>
+          {[
+            "Love languages in the workplace began as a practical adaptation of Gary Chapman's landmark work on relational care. When Chapman partnered with organizational consultant Paul White to produce The 5 Languages of Appreciation in the Workplace, they were addressing a problem every leader quietly recognizes: people can work alongside each other for years, receive recognition regularly, and still feel unseen. The issue is rarely a lack of effort. It is usually a mismatch of languages.",
+            "For cross-cultural leaders, field workers, and expat team members, this mismatch runs deeper than most leadership frameworks acknowledge. The five appreciation languages — Words of Affirmation, Quality Time, Acts of Service, Tangible Gifts, and Physical Touch — are not culturally neutral in their expression. The same language can land completely differently depending on the cultural background of the person receiving it, the setting in which it is offered, and the relational history between the people involved.",
+            "Take Words of Affirmation, the most commonly expressed appreciation language in the Chapman and White research. In many North American and Northern European work cultures, verbal praise given in front of a group is understood as an honor. The person being praised is lifted up, and the team shares in the recognition. In many East Asian, Southeast Asian, and Middle Eastern team cultures, the same public moment singles out an individual in a way that creates social discomfort. The person receiving the praise may feel exposed, pressured to deflect, or quietly embarrassed — the opposite of what the leader intended. This is not a problem with the Words of Affirmation language itself. It is a problem of form and setting. A leader who learns to offer specific, private, and well-timed verbal affirmation can work fully within this language and have it land as intended.",
+            "Erin Meyer's research on cultural feedback patterns, documented in The Culture Map, reinforces this. She identifies sharp differences between cultures in how direct praise and critique are offered and received — and how much those norms are embedded in professional identity. Cross-cultural leaders who have absorbed Meyer's framework alongside Chapman and White's will recognize the overlap immediately: the appreciation language is the content, and the cultural communication style governs the delivery.",
+            "Quality Time as an appreciation language looks equally different across contexts. For a field worker on a dispersed team, Quality Time might mean a video call where the team leader is fully present and unhurried — not skimming their email, not cutting the conversation short because the agenda is running over. In a community-oriented culture where work relationships extend naturally into shared meals, rest, and family life, Quality Time might mean being included in the ordinary rhythms of a colleague's life, not just scheduled one-on-one check-ins. A leader attuned to this will not mistake busyness for appreciation.",
+            "Acts of Service — doing something that helps a colleague — is perhaps the most universally practical of the five languages, but even here culture shapes meaning. In high-context team environments where role boundaries are fluid and mutual support is assumed, helping a colleague with a task that sits outside your job description is normal relational behavior. In lower-context, highly individualistic work cultures, the same act can read as overstepping or as an implicit criticism of the colleague's capacity. Knowing which environment you are operating in changes how you offer and receive this language.",
+            "Tangible Gifts, in the workplace context, is not primarily about material value. It is about the signal that someone was thought of. A book brought back from a trip, a regional food item shared at a team gathering, a carefully chosen resource passed along because it fits someone's current challenge — these are meaningful precisely because they say \"I noticed you and I was thinking of you when you weren't around.\" In many gift-giving cultures across Asia, Africa, and the Middle East, the practice of bringing something when you return from travel is deeply embedded in relational protocol. Leaders from low-gift-giving cultures sometimes underestimate how meaningful this language is, or assume that gift-giving is only appropriate at certain formal occasions.",
+            "Physical Touch is the most culturally variable of the five languages and requires the most contextual sensitivity in cross-cultural teams. In professional settings, this language operates within a very narrow register — a handshake, a pat on the back, a brief acknowledgment of physical presence. Many cultures have clear and distinct norms about appropriate touch between colleagues, between genders, and between people of different hierarchical levels. A leader working across cultures needs to read these norms before attempting to express appreciation through physical presence and contact, and to recognize that for some team members this language may not be appropriate to use at all.",
+            "What makes the five languages particularly valuable for cross-cultural teams is not only the categories themselves but the assessment that reveals the gap between giving and receiving. Most leaders default to expressing appreciation in their own primary language — the mode that feels natural to them. The problem is that team members are often receiving care in a language that does not register clearly. A leader whose primary language is Acts of Service will work hard to be genuinely useful to their team, and may be baffled that people still feel undervalued. A team member whose primary language is Quality Time may experience that same leader as always helpful but never quite present.",
+            "The Crispy assessment captures both dimensions: how you prefer to give appreciation, and how you most clearly receive it. For leaders in cross-cultural settings, this two-sided insight is particularly useful because it reveals not only personal preferences but the patterns that are most likely to create connection or confusion across cultural lines. Scripture is not silent on this kind of attentiveness. Paul's prayer that love would abound in knowledge and depth of insight (Philippians 1:9) is a reminder that genuine care requires more than good intentions. It requires learning the other person well enough to reach them.",
+            "For field workers and cross-cultural team leaders, the five languages provide a framework that is neither culturally imperialist nor culturally relativist. It does not say that one mode of appreciation is universal. It says that all people need to feel valued, and that the form that lands best is specific to the person. That specificity — noticing what actually reaches each individual, and adjusting accordingly — is one of the quiet marks of a leader who has learned to serve people rather than just manage them.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
