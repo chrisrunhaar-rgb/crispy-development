@@ -23,46 +23,46 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
   "wheel-of-life": {
     title: "Wheel of Life Assessment — Crispy Development",
-    description: "Assess balance across life domains. Identify strengths and areas for growth in work, relationships, health, and personal development.",
+    description: "The Wheel of Life assessment helps leaders evaluate life balance across key areas. Discover how this tool applies across cultures and to cross-cultural workers in the field.",
   },
   "three-thinking-styles": {
     title: "Three Thinking Styles Assessment — Crispy Development",
-    description: "Discover your primary thinking style. Understand how you process information and make decisions in cross-cultural contexts.",
+    description: "Conceptual, Holistic, or Intuitional? Discover your thinking style with Crispy's proprietary framework for cross-cultural leadership teams. Take the free assessment.",
   },
   "karunia-rohani": {
     title: "Karunia Rohani (Spiritual Gifts) Assessment — Crispy Development",
-    description: "Identify your spiritual gifts. Explore how your unique abilities contribute to community and Kingdom work.",
+    description: "Temukan karunia rohani Anda dengan asesmen berbasis Alkitab ini. Panduan lintas budaya untuk pemimpin Kristen Indonesia tentang karunia spiritual dan pelayanan.",
   },
   enneagram: {
     title: "Enneagram Personality System — Crispy Development",
-    description: "Explore the nine personality types. Understand your core motivations, fears, and growth paths through the Enneagram.",
+    description: "Enneagram for Christian leaders: nine types, core motivations, and how personality patterns differ across cultures. Practical self-awareness for cross-cultural teams.",
   },
 
   "big-five": {
     title: "Big Five Personality Assessment — Crispy Development",
-    description: "Assess your traits in openness, conscientiousness, extraversion, agreeableness, and neuroticism. Understand your personality dimensions.",
+    description: "The Big Five (OCEAN) personality model is the most cross-culturally validated framework for leaders. Learn how it applies across cultures and diverse global teams.",
   },
   "16-personalities": {
     title: "16 Personalities Assessment — Crispy Development",
-    description: "Identify your 16 Personality type. Explore how your preferences shape your behavior, relationships, and leadership style.",
+    description: "Discover how MBTI personality types show up across cultures. A practical, cross-cultural guide to using Myers-Briggs for leaders working in diverse global teams.",
   },
   "5languages": {
     title: "5 Languages of Appreciation — Crispy Development",
-    description: "Discover how you give and receive care in your ministry team. Two parallel tests reveal your receiving and giving languages — and the gap between them.",
+    description: "Discover how love languages in the workplace work across cultures. Free assessment for cross-cultural leaders and field teams — find your giving and receiving language.",
   },
 
   // Cross-Cultural Leadership
   "cultural-intelligence": {
     title: "Cultural Intelligence (CQ) Training — Crispy Development",
-    description: "Develop cultural intelligence. Master the skills to lead effectively across cultures, borders, and diverse teams.",
+    description: "Develop cultural intelligence for cross-cultural leadership. Practical CQ tools for global teams, field workers, and multicultural church leaders.",
   },
   "power-distance": {
     title: "Power Distance in Leadership — Crispy Development",
-    description: "Understand power distance across cultures. Learn how hierarchy expectations affect communication and decision-making.",
+    description: "Power distance in cross-cultural leadership explained. Use Hofstede's PDI scores to navigate high and low power distance teams — practical guidance for field leaders.",
   },
   "time-and-culture": {
     title: "Time and Culture — Crispy Development",
-    description: "Explore how cultures experience time differently. Navigate monochronic and polychronic perspectives in global teams.",
+    description: "Discover your cultural time orientation with this 20-min assessment. Map the four time logics shaping your cross-cultural team — and close the gap.",
   },
   "intercultural-communication": {
     title: "Intercultural Communication Skills — Crispy Development",
@@ -104,7 +104,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
   "johari-window": {
     title: "Johari Window Self-Awareness Tool — Crispy Development",
-    description: "Increase self-awareness. Explore what you know and don't know about yourself through the Johari Window framework.",
+    description: "The Johari Window explained for leaders — including how blind spots work differently in face-saving cultures and what faith says about the Unknown quadrant.",
   },
 
   // Leadership
@@ -118,7 +118,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
   "vision-casting": {
     title: "Vision Casting for Leaders — Crispy Development",
-    description: "Cast compelling vision. Inspire teams with clear direction, purpose, and shared goals.",
+    description: "Learn how to communicate vision as a leader across cultures. Nehemiah's model, cross-cultural framing, and why a single announcement rarely works.",
   },
   "managing-up": {
     title: "Managing Up: Leading Your Leader — Crispy Development",
@@ -245,7 +245,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
 
   "healthy-conflict": {
     title: "Creating Healthy Conflict — An Underrated Leadership Skill — Crispy Development",
-    description: "Conflict avoidance is the instinct. But conflict is the solution. Learn how to create productive, trust-building conflict in multicultural teams.",
+    description: "Healthy conflict in teams is a leadership skill, not a personality trait. Learn how to surface tension in high-context, multicultural teams before it hardens.",
   },
 
   // Fallback
