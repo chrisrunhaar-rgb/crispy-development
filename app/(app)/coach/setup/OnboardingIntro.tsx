@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
   userId: string;
@@ -40,15 +41,13 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
         borderBottom: "1px solid oklch(14% 0.06 260)",
       }}>
         <div className="container-wide">
-          <p style={{
-            fontFamily: "var(--font-cormorant)",
-            fontStyle: "italic",
-            fontSize: "1.0625rem",
-            color: "oklch(65% 0.15 45)",
-            marginBottom: "0.625rem",
-          }}>
-            WayPoint
-          </p>
+          <Image
+            src="/images/waypoint/waypoint-banner-blue.png"
+            alt="WayPoint"
+            height={32}
+            width={0}
+            style={{ width: "auto", height: "32px", marginBottom: "1rem" }}
+          />
           <h1 style={{
             fontFamily: "var(--font-cormorant)",
             fontStyle: "italic",
@@ -72,6 +71,31 @@ export default function OnboardingIntro({ userId, onComplete }: Props) {
             <p style={bodyText}>
               WayPoint is a private coaching space — available whenever you need it. Your coach is an AI companion trained in professional coaching methods for people navigating cross-cultural life and work. It&rsquo;s not a chatbot. It listens, asks good questions, and helps you find your own clarity.
             </p>
+          </section>
+
+          <Divider />
+
+          {/* Section — The mark */}
+          <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem", textAlign: "center" }}>
+            <Image
+              src="/images/waypoint/waypoint-logo-transp.png"
+              alt="WayPoint mark"
+              width={64}
+              height={64}
+              style={{ width: "64px", height: "64px" }}
+            />
+            <div style={{ maxWidth: "400px" }}>
+              <SectionLabel>The mark</SectionLabel>
+              <p style={{ ...bodyText, marginBottom: "0.5rem" }}>
+                The compass rose: orientation. Finding your footing in unfamiliar terrain.
+              </p>
+              <p style={{ ...bodyText, marginBottom: "0.75rem" }}>
+                The location pin: destination. Knowing where you&rsquo;re headed.
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "1.1rem", color: "oklch(30% 0.12 260)", margin: 0 }}>
+                WayPoint helps you find both.
+              </p>
+            </div>
           </section>
 
           <Divider />

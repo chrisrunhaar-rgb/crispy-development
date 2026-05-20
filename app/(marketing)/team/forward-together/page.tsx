@@ -14,5 +14,6 @@ export default async function ForwardTogetherPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  return <ForwardTogetherClient user={user} />;
+  const lang = ((user?.user_metadata?.language_preference ?? "en") as "en" | "id");
+  return <ForwardTogetherClient user={user} lang={lang} />;
 }

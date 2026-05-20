@@ -364,6 +364,7 @@ Name: ${name}${profile ? [
     profile.host_culture ? `\nHost culture (they work within): ${profile.host_culture}` : "",
     profile.months_in_context ? `\nTime in cross-cultural context: ${profile.months_in_context} months` : "",
     profile.role ? `\nRole: ${profile.role}` : "",
+    profile.family_situation ? `\nFamily situation: ${profile.family_situation}` : "",
     profile.notes ? `\nContext notes: ${profile.notes}` : "",
   ].join("") : ""}
 ${recentSessions.length > 0

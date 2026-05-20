@@ -114,7 +114,7 @@ function shuffleArray<T>(arr: T[]): T[] {
 
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
-export default function KnowEachOtherClient({ user }: { user: User | null }) {
+export default function KnowEachOtherClient({ user, lang = "en" }: { user: User | null; lang?: "en" | "id" }) {
   const [activeLevel, setActiveLevel] = useState<Level>("surface");
   const [cardOrder, setCardOrder] = useState<Record<Level, Card[]>>({
     surface: SURFACE_CARDS,
@@ -636,7 +636,7 @@ export default function KnowEachOtherClient({ user }: { user: User | null }) {
           </p>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/know-each-other" />
+              <TeamStepCompleteButton contentUrl="/team/know-each-other" lang={lang} />
             </div>
           )}
           <Link href="/team/communication-culture" className="btn-primary">

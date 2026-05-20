@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata = {
@@ -57,17 +58,7 @@ export default async function SessionCompletePage({
         borderBottom: "1px solid oklch(14% 0.06 260)",
       }}>
         <div className="container-wide">
-          <p style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.6rem",
-            fontWeight: 700,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "oklch(65% 0.15 45)",
-            marginBottom: "0.5rem",
-          }}>
-            WayPoint
-          </p>
+          <Image src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" height={28} width={0} style={{ width: "auto", height: "28px", marginBottom: "0.75rem" }} />
           <h1 style={{
             fontFamily: "var(--font-cormorant)",
             fontStyle: "italic",

@@ -545,6 +545,29 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
         </div>
       </div>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <div style={{ background: navy, padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: montserrat, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+            {t({ en: "After This Module", id: "Setelah Modul Ini", nl: "Na Dit Module" })}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              t({ en: "Describe three or more cultural frameworks for how vision is cast and received across different team cultures.", id: "Menjelaskan tiga atau lebih kerangka budaya tentang bagaimana visi disampaikan dan diterima di berbagai budaya tim.", nl: "Drie of meer culturele kaders beschrijven voor hoe visie wordt gecommuniceerd en ontvangen in verschillende teamculturen." }),
+              t({ en: "Apply Nehemiah's four-part vision sequence to structure a real leadership communication challenge in your context.", id: "Menerapkan urutan visi empat bagian Nehemia untuk menyusun tantangan komunikasi kepemimpinan nyata dalam konteks Anda.", nl: "Nehemia's vierdelige visievolgorde toepassen om een echte leiderschapscommunicatie-uitdaging in jouw context te structureren." }),
+              t({ en: "Identify the gap between how you currently cast vision and how it is actually being received by your team.", id: "Mengidentifikasi kesenjangan antara cara Anda saat ini menyampaikan visi dan bagaimana visi tersebut sebenarnya diterima oleh tim Anda.", nl: "Het verschil identificeren tussen hoe jij nu visie communiceert en hoe die daadwerkelijk wordt ontvangen door jouw team." }),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: orange, flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: montserrat, fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── SECTION 3: VISION COMPASS ──────────────────────────────── */}
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
@@ -1352,6 +1375,60 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
               {t(cta.buttonLabel)}
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px", borderTop: `3px solid ${orange}` }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: montserrat, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
+            Key Takeaway
+          </p>
+          <h2 style={{ fontFamily: montserrat, fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: navy, marginBottom: 36 }}>
+            Three things to act on this week
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              "Map your current vision against Nehemiah's four-part sequence: burden, prayer, private assessment, public declaration. Identify where you are and what the next step is.",
+              "After your next vision communication, ask two or three team members from different cultural backgrounds what they heard — and what they did not hear. The gap is your next leadership task.",
+              "Commit to communicating the same vision at least two more times before expecting anyone to act on it. Vision needs repetition before it becomes direction.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: lightGray }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: orange, flexShrink: 0 }} />
+                <p style={{ fontFamily: montserrat, fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── LONG-FORM SEO SECTION ─────────────────────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "clamp(48px, 7vw, 80px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: montserrat, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: montserrat, fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Communicating Vision Across Cultures: Why the Message Is Not the Whole Job
+          </h2>
+          {[
+            "Vision is the most over-talked and under-examined subject in leadership literature. The shelves are full of frameworks for vision-casting, vision-crafting, vision-sharing, vision-alignment. What most of them assume, without saying so, is that the leader's job is to produce a sufficiently compelling statement and deliver it clearly. After that, people will follow. This assumption holds in some contexts. In many others, particularly cross-cultural ones, it consistently fails — not because the leader lacks vision, but because the communication model they are using was designed for a different audience.",
+            "Vision communicates within a set of cultural assumptions about authority, hope, time, and collective identity. In high-individualism cultures — particularly in North America and parts of Northern Europe — vision is typically framed around personal opportunity and individual contribution. The implicit message is: this is where we are going, and here is what it means for you. In collectivist cultures, which represent the majority of the world's population and the majority of the contexts where cross-cultural workers and global church leaders operate, that frame lands differently. Vision must be communicated in terms of the community: what it means for us, what we are building together, what it asks of us collectively.",
+            "This is not about changing the vision. It is about understanding that the same destination, described through different frames, produces different responses. The leader's task is not to have a better vision. It is to understand who is in the room well enough to communicate it in a way that actually lands.",
+            "Nehemiah is the most detailed study of vision communication in the Hebrew Bible, and the sequence he follows is worth examining carefully. He does not begin with a vision statement. He begins with a report: the wall of Jerusalem is broken down, the gates have been burned, the people are in great trouble and disgrace (1:3). He receives this information and his response is not strategic. He mourns. He fasts. He prays — for days, by his own account, before he takes any action (1:4-11). The burden precedes the blueprint by months.",
+            "His arrival in Jerusalem follows the same pattern. He does not announce the vision on day one. He goes out at night, alone, and walks the rubble (2:11-16). Private observation before public declaration. When he does speak, his four-part statement in 2:17-18 covers present reality, future direction, motivating why, and evidence of God's hand on the work. The response is immediate: 'Let us start rebuilding.'",
+            "What Nehemiah does not do is equally instructive. He does not oversell. He does not minimise the difficulty. He does not appeal to individual benefit. He speaks to collective shame, collective identity, and collective restoration. The vision is not about what this could be for any of them individually — it is about what they owe to something that matters more than any of them individually. That frame works in a collectivist context. It works because it matches the motivational structure of the audience.",
+            "Habakkuk 2:2 describes the capacity to delegate vision in a single phrase: write the vision plainly, 'so that whoever reads it may run.' Vision clear enough to be delegated. Clear enough that people can act on it without waiting to be told. That is the functional test of whether vision has actually been communicated: not whether people can repeat it back, but whether they can act on it independently in a way that aligns with the whole.",
+            "Andy Stanley's observation in Visioneering — that vision begins as a concern — is borne out by Nehemiah's account and by most of the other biblical examples of vision that actually moved people. The burden precedes the blueprint. This matters for leaders today not as a historical observation but as a diagnostic: if the vision you are carrying does not have any weight to it — if it is the product of planning rather than something you cannot stop thinking about — it may be a plan dressed up as a vision. People follow weight more than they follow words, and they can usually tell the difference.",
+            "For cross-cultural leaders and field workers, the cross-cultural application of vision communication demands a longer time horizon and a more relational methodology than most Western leadership training suggests. In high-context cultures, trust precedes message reception. A vision announced before the relational foundation is built lands as noise at best and as presumption at worst. The leader who has been present, who has listened more than they have spoken, who has demonstrated that they understand and care about the community they are leading — that leader can cast vision and be heard.",
+            "Habakkuk 2:3 adds the element that leaders in a hurry resist most: 'For the vision awaits an appointed time; it speaks of the end and will not prove false. Though it linger, wait for it; it will certainly come and will not delay.' The leader's job is to communicate it faithfully, hold it consistently, and trust that the timing belongs to God. That is not passivity. It is the theological discipline of leading in partnership with a God who is not surprised by how slowly things move.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontFamily: montserrat, fontSize: "clamp(14px, 1.5vw, 16px)", color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

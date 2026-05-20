@@ -82,7 +82,7 @@ const MODE_COLORS: Record<Mode, { bg: string; accent: string; light: string }> =
 
 // ── COMPONENT ─────────────────────────────────────────────────────────────────
 
-export default function DecisionMakingClient({ user }: { user: User | null }) {
+export default function DecisionMakingClient({ user, lang = "en" }: { user: User | null; lang?: "en" | "id" }) {
   const [revealed, setRevealed] = useState<Set<number>>(new Set());
 
   function toggleReveal(id: number) {
@@ -849,7 +849,7 @@ export default function DecisionMakingClient({ user }: { user: User | null }) {
           </h2>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/decision-making" />
+              <TeamStepCompleteButton contentUrl="/team/decision-making" lang={lang} />
             </div>
           )}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>

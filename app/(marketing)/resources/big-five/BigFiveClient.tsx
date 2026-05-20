@@ -945,6 +945,68 @@ export default function BigFiveClient({
             </button>
           </section>
         </div>
+
+        {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────── */}
+        <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+              {lang === "id" ? "Poin Utama" : lang === "nl" ? "Belangrijkste Conclusie" : "Key Takeaway"}
+            </p>
+            <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+              {lang === "id" ? "Tiga hal yang bisa kamu terapkan minggu ini" : lang === "nl" ? "Drie dingen om deze week op te handelen" : "Three things to act on this week"}
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {(lang === "id" ? [
+                "Selesaikan asesmen Big Five ini dan identifikasi skor trait mana yang paling mengejutkanmu. Diskusikan dengan satu rekan yang mengenalmu dalam konteks berbeda — pekerjaan, keluarga, atau pelayanan — dan tanya apa yang mereka amati.",
+                "Pilih salah satu traitmu yang skornya lebih rendah dan identifikasi satu situasi konkret minggu ini di mana kamu melihat trait itu bekerja. Beri nama tanpa penghakiman: bukan 'saya buruk di X' tapi 'saya cenderung ke X dalam situasi seperti ini.'",
+                "Bagikan kerangka Big Five dengan timmu dan bandingkan trait mana yang tumpang tindih dan mana yang saling melengkapi. Gunakan untuk percakapan tentang bagaimana kalian membagi pekerjaan, bukan untuk menetapkan identitas tetap.",
+              ] : lang === "nl" ? [
+                "Voltooi deze Big Five-beoordeling en bepaal welk van je vijf trait-scores je het meest verrast. Bespreek het met een collega die je in een andere context kent — werk, gezin of bediening — en vraag wat zij waarnemen.",
+                "Kies een van je lager scorende traits en benoem één concrete situatie deze week waarin je die trait ziet werken. Benoem het zonder oordeel: niet 'ik ben slecht in X' maar 'ik neig naar X in dit soort situaties.'",
+                "Deel het Big Five-kader met je team en vergelijk welke traits overlappen en welke elkaar aanvullen. Gebruik het voor een gesprek over hoe je werk verdeelt, niet om vaste identiteiten toe te wijzen.",
+              ] : [
+                "Take this Big Five assessment and identify which of your five trait scores surprises you most. Discuss it with one colleague who knows you in a different context — work, family, ministry — and ask what they observe.",
+                "Choose one of your lower-scoring traits and name one specific situation this week where you see it play out. Name it without judgment: not 'I am bad at X' but 'I tend toward X in situations like this.'",
+                "Share the Big Five framework with your team and compare which traits overlap and which complement each other. Use it to have a conversation about how you divide work, not to assign fixed identities.",
+              ]).map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                  <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                  <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                    {item}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── LONG-FORM SEO SECTION ────────────────────────────────────────── */}
+        <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+          <div style={{ maxWidth: 780, margin: "0 auto" }}>
+            <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+              {lang === "id" ? "Latar Belakang" : lang === "nl" ? "Achtergrond" : "Background"}
+            </p>
+            <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+              {lang === "id" ? "Big Five: Panduan Lintas Budaya untuk Pemimpin Global" : lang === "nl" ? "De Big Five Persoonlijkheidstrekken: Een Interculturele Gids voor Mondiale Leiders" : "The Big Five Personality Traits Explained: A Cross-Cultural Guide for Global Leaders"}
+            </h2>
+            {[
+              "Among the many personality frameworks available to leaders today, the Big Five — sometimes called OCEAN — stands apart on one significant measure: it is the personality model that has most consistently held up across cultures, languages, and research populations. For leaders working in diverse or international contexts, this matters enormously. A tool that was built and normed on North American college students tells you something quite different from a tool that has been validated in Lagos, Jakarta, São Paulo, and Seoul. The Big Five does not claim cultural neutrality, but it offers a shared dimensional vocabulary that crosses cultural boundaries more reliably than most of its competitors.",
+              "The five dimensions of the Big Five are Openness to Experience, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — forming the acronym OCEAN. The model emerged from decades of factor-analytic research, the landmark contributions coming from Robert McCrae and Paul Costa, whose work through the 1980s and 1990s established the five-factor model as the dominant framework in academic personality psychology. Unlike the Myers-Briggs Type Indicator, which assigns people to discrete types, the Big Five treats each dimension as a continuous spectrum. A person is not an Extravert or an Introvert but scores somewhere along the full range of the Extraversion dimension, with most people clustering near the middle rather than at the extremes.",
+              "Openness to Experience captures intellectual curiosity, aesthetic sensitivity, and comfort with novelty and abstraction. In cross-cultural leadership contexts, Openness matters because it shapes how a leader responds to cultural difference itself. A leader with low Openness working in an unfamiliar cultural environment may unconsciously interpret difference as deficit, while a high Openness leader may romanticize novelty and fail to appreciate what is genuinely valuable in established tradition. Both tendencies carry risk, and self-awareness about where you sit on this dimension is the first step toward managing it well.",
+              "Conscientiousness, the dimension covering self-discipline, goal orientation, organization, and reliability, tends to be among the strongest predictors of professional performance across cultures. However, what Conscientiousness looks like in practice varies. In cultures with strong collective accountability structures, conscientious behaviour may be expressed through relational reliability and community obligation rather than individual task completion. A leader who imports a narrowly individualist interpretation of Conscientiousness into a collectivist context may misjudge who is actually reliable.",
+              "Extraversion covers social energy, assertiveness, and comfort with being the center of attention. Cross-cultural personality research found that Extraversion shows variation in both average levels and in how it is expressed socially. In many East and Southeast Asian contexts, the assertive, high-volume social engagement associated with high Extraversion in North American norms may be read as disrespectful or immature. Cross-cultural workers with high Extraversion often benefit from explicitly learning to modulate their natural social style rather than assuming that what feels natural to them reads positively in a new cultural environment.",
+              "Agreeableness, covering cooperativeness, trust, and relational warmth, is one of the Big Five dimensions that shows the most meaningful cross-cultural variation. In collectivist cultures across sub-Saharan Africa, South and Southeast Asia, the Middle East, and Latin America, relational harmony is a deeply held social value, not simply a personality preference. This means that cultural norms can push self-reported Agreeableness scores upward in ways that reflect social expectation rather than individual temperament alone. A culture that prizes harmony does not mean every person in that culture has high individual Agreeableness, and a leader who treats cultural behavior as personality data will draw inaccurate conclusions.",
+              "Neuroticism, the final dimension, measures emotional reactivity and instability under stress. In cross-cultural contexts, how Neuroticism is expressed and reported depends heavily on cultural norms around emotional expression. Cultures with strong norms of emotional restraint may produce lower self-reported Neuroticism scores not because emotional reactivity is absent but because expressing it is socially discouraged. Leaders interpreting Big Five results across cultures need to hold this interpretive complexity in mind, particularly when working with teams from emotionally reserved cultural backgrounds.",
+              "The stewardship frame is the most theologically grounded way for a leader of faith to approach the Big Five. Paul's instruction in Romans 12 to 'think of yourself with sober judgment, in accordance with the faith God has distributed to each of you' is an invitation to honest self-assessment that is neither self-inflating nor self-deprecating. Knowing that you score low on Agreeableness and high on Neuroticism is not a verdict — it is information that enables wiser stewardship of your leadership. You can staff for your gaps, develop compensating habits, and communicate your patterns to your team so that your natural tendencies build the team rather than erode it.",
+              "Finally, the Big Five is best understood not as a fixed description of who you are but as a snapshot of your tendencies at a given point in your development. Longitudinal personality research shows that traits shift over a lifetime, with Conscientiousness and Agreeableness generally increasing with age and experience, and Neuroticism generally decreasing. This is consistent with a biblical theology of transformation — the ongoing work of the Spirit forming Christlike character over a lifetime. The Big Five is a useful chapter in the larger narrative of a leader who is, as Paul puts it in Philippians 1, confident that he who began a good work in you will carry it on to completion.",
+            ].map((para, i) => (
+              <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+
       </div>
     );
   }

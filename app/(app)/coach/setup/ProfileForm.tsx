@@ -16,6 +16,7 @@ type Props = {
     host_culture?: string | null;
     months_in_context?: number | null;
     role?: string | null;
+    family_situation?: string | null;
     notes?: string | null;
     selected_coach?: string | null;
   } | null;
@@ -47,6 +48,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
     host_culture: existing?.host_culture ?? "",
     months_in_context: existing?.months_in_context?.toString() ?? "",
     role: existing?.role ?? "",
+    family_situation: existing?.family_situation ?? "",
     notes: existing?.notes ?? "",
     selected_coach: existing?.selected_coach ?? "Tara",
   });
@@ -71,6 +73,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         host_culture: form.host_culture || null,
         months_in_context: form.months_in_context ? parseInt(form.months_in_context) : null,
         role: form.role || null,
+        family_situation: form.family_situation || null,
         notes: form.notes || null,
         selected_coach: form.selected_coach,
         onboarding_complete: true,
@@ -125,9 +128,14 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           <input style={inputStyle} value={form.host_culture} onChange={set("host_culture")} placeholder="e.g. Swahili East African" />
         </Field>
 
-        <Field label="Months in this cross-cultural context" hint="Roughly — even an estimate helps">
-          <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} placeholder="e.g. 18" />
-        </Field>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          <Field label="Months in context" hint="Roughly — even an estimate helps">
+            <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} />
+          </Field>
+          <Field label="Family situation" hint="e.g. Married, 2 kids / Single">
+            <input style={inputStyle} value={form.family_situation} onChange={set("family_situation")} />
+          </Field>
+        </div>
 
         <Field label="Anything else your coach should know?" hint="Current season, specific challenges, what you hope to get from coaching">
           <textarea

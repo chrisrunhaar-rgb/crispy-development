@@ -560,6 +560,29 @@ export default function ThinkingStylesClient({
         </div>
       </section>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+            {tr("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              tr("Identify your primary thinking style and describe its natural strengths and frustrations in team settings.", "Mengidentifikasi gaya berpikir utama Anda dan menggambarkan kekuatan serta frustrasi alaminya dalam setting tim.", "Jouw primaire denkstijl identificeren en de natuurlijke sterke punten en frustraties ervan in teamsettings beschrijven."),
+              tr("Distinguish between Conceptual, Holistic, and Intuitional thinking in live team decisions and planning conversations.", "Membedakan antara pemikiran Konseptual, Holistik, dan Intuitif dalam keputusan tim dan percakapan perencanaan secara langsung.", "Onderscheid maken tussen Conceptueel, Holistisch en Intuïtioneel denken in live teambesluiten en planningsgesprekken."),
+              tr("Apply the three-style sequencing model to structure decisions that draw on all three styles rather than defaulting to one.", "Menerapkan model urutan tiga gaya untuk menyusun pengambilan keputusan yang memanfaatkan ketiga gaya daripada hanya mengandalkan satu.", "Het drievoudige stijlvolgorde-model toepassen om besluitvorming te structureren die alle drie de stijlen benut in plaats van op één."),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── STYLE SECTIONS ── */}
       {STYLES.map((style, styleIdx) => (
         <section key={style.key} id={style.key}>
@@ -995,6 +1018,77 @@ export default function ThinkingStylesClient({
           </div>
         </div>
       </section>
+
+      {/* ─── KEY TAKEAWAY ──────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+            {tr("Key Takeaway", "Poin Utama", "Kernpunt")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+            {tr("Three things to act on this week", "Tiga hal yang perlu dilakukan minggu ini", "Drie dingen om deze week op te handelen")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              tr(
+                "Share your thinking style results with your team and map each member's primary style. Post it somewhere visible where it can inform how you plan and decide together.",
+                "Bagikan hasil gaya berpikir Anda dengan tim Anda dan petakan gaya utama setiap anggota. Tempelkan di tempat yang terlihat agar dapat memandu cara Anda merencanakan dan memutuskan bersama.",
+                "Deel je denkstijlresultaten met je team en breng de primaire stijl van elk lid in kaart. Hang het op een zichtbare plek zodat het je gezamenlijke planning en besluitvorming kan sturen."
+              ),
+              tr(
+                "In your next planning session, deliberately sequence the three styles: open with possibility (Conceptual), map the implications (Holistic), and apply the experience filter (Intuitional) before deciding.",
+                "Dalam sesi perencanaan Anda berikutnya, secara sengaja urutkan tiga gaya: mulai dengan kemungkinan (Konseptual), petakan implikasinya (Holistik), dan terapkan filter pengalaman (Intuitif) sebelum memutuskan.",
+                "Volgorde in je volgende planningssessie de drie stijlen bewust: begin met mogelijkheden (Conceptueel), breng de implicaties in kaart (Holistisch) en pas het ervaringsfilter toe (Intuïtief) vóór het nemen van een beslissing."
+              ),
+              tr(
+                "Identify the team member whose thinking style most frustrates you — and name one specific thing they see that you tend to miss. That is the contribution you most need.",
+                "Identifikasi anggota tim yang gaya berpikirnya paling membuat Anda frustrasi — dan sebutkan satu hal spesifik yang mereka lihat yang cenderung Anda lewatkan. Itulah kontribusi yang paling Anda butuhkan.",
+                "Identificeer het teamlid wiens denkstijl jou het meest frustreert — en noem één specifiek ding dat zij zien dat jij vaak mist. Dat is de bijdrage die je het meest nodig hebt."
+              ),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
+      <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {tr("Background", "Latar Belakang", "Achtergrond")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            {tr(
+              "The Three Thinking Styles: Why Conceptual, Holistic, and Intuitional Thinkers See the World Differently",
+              "Tiga Gaya Berpikir: Mengapa Pemikir Konseptual, Holistik, dan Intuitif Melihat Dunia Secara Berbeda",
+              "De Drie Denkstijlen: Waarom Conceptuele, Holistische en Intuïtieve Denkers de Wereld Anders Zien"
+            )}
+          </h2>
+          {[
+            "Thinking styles in leadership teams rarely get the attention they deserve. Most team development conversations focus on personality, communication style, or cultural background. These are important. But underneath those layers sits something more fundamental: the way a person's mind naturally organizes information, generates insight, and reaches conclusions. When thinking styles are mismatched and unnamed, teams experience the friction as personality conflict or cultural difference, when what is actually happening is that people are working from different cognitive grammars.",
+            "Crispy Development's Three Thinking Styles framework identifies three distinct modes of processing: Conceptual, Holistic, and Intuitional. This framework was developed through Chris Runhaar's work in cross-cultural leadership development, shaped by direct observation of how different kinds of thinkers show up in field teams, organizational leadership, and cross-cultural training contexts. It is not derived from existing academic typologies. It describes something that practitioners in complex, multicultural environments recognize immediately once it is named.",
+            "The Conceptual thinker starts with ideas. Not with the task at hand, not with what happened last time, but with the territory of possibility. Given this situation, what are the frameworks that help make sense of it? What is the underlying principle? What would happen if we approached this from a completely different angle? Conceptual thinkers are drawn to the large and the abstract. They find frameworks satisfying in themselves — a good mental model feels like clarity, and they will often stop to name it before moving on. In a planning meeting, they may introduce three different ways of thinking about the problem before the team has agreed on what the problem actually is. This is not because they are disorganized. It is because for a Conceptual thinker, getting the frame right is the first work.",
+            "The frustration that Conceptual thinkers generate in teams is real. To an Intuitional thinker who knows from long field experience what works and what does not, the frameworks can seem like academic scaffolding around conclusions that could be reached more directly. To a Holistic thinker tracking the relationships between moving parts, the Conceptual thinker's big-picture frame can feel disconnected from the actual system they need to navigate. The Conceptual thinker, for their part, can find teams frustrating when they are unwilling to reconsider their assumptions, or when they treat the practical complexity of implementation as a reason not to start a necessary conversation.",
+            "The Holistic thinker sees the system. They are naturally attuned to connections — how this decision affects that relationship, how a change in one part of an organization creates pressure in three other places, how the short-term solution will produce a longer-term problem if a certain assumption turns out to be wrong. Holistic thinkers are often the ones who ask the questions that slow a meeting down: \"But what happens if...?\" \"Have we thought about how this interacts with...?\" They are not being obstructive. They are genuinely tracking a level of complexity that others in the room may not be holding simultaneously.",
+            "In cross-cultural field contexts, the Holistic thinker's capacity to see second-order effects is particularly valuable — and particularly difficult to communicate across thinking-style lines. A community development initiative that looks straightforward to a Conceptual thinker may appear to the Holistic thinker as a set of connected risks: the initiative changes the economic relationships in the community, which affects the social status of certain families, which affects who holds informal authority over the outcome of the program itself. This is not pessimism. It is systems thinking applied to a complex human environment. Teams that do not have Holistic thinkers, or that do not create space for their analysis, often find themselves surprised by consequences that were predictable if someone had been asked to map the system.",
+            "The Intuitional thinker works from a different place entirely. Their primary mode of knowing is not abstract or systemic — it is experiential and relational. They read people. They read rooms. They know from long practice what a particular kind of community or situation requires, and they know it in a way that is often very difficult to articulate in frameworks or diagrams. When asked \"why do you think that?\", an Intuitional thinker may struggle to produce a step-by-step explanation — not because the knowing is shallow, but because it is embodied, built up from hundreds of interactions and observations over time, more like fluency in a language than a set of rules about grammar.",
+            "This makes the Intuitional thinker's contribution easy to undervalue in organizational cultures that reward data and frameworks. Their read on a situation can sound like opinion. Their sense of timing can sound like caution or hesitance. But in cross-cultural field work, the Intuitional thinker's knowledge is often the most accurate map the team has. They know whether the community is actually with the program or just politely cooperating. They sense when a key relationship is under strain before it surfaces in any measurable indicator. Teams that dismiss this input because it is not systematic are dismissing some of the most reliable knowledge available to them.",
+            "The most productive cross-cultural teams tend to contain all three thinking styles, and the most productive teams learn to use them in sequence. Early in a planning or decision-making process, the Conceptual thinker's contribution is most generative: get the frame right, explore the range of possibilities, challenge assumptions before the team commits to a direction. Once a direction is taking shape, the Holistic thinker's contribution becomes critical: map the system, surface the second-order effects, identify the places where the plan is making assumptions that need to be tested. As the team moves toward implementation, the Intuitional thinker's filter is the most valuable: given this specific context, with these specific people, in this particular moment — what is actually going to work?",
+            "The Three Thinking Styles framework gives teams a language for engaging the tension productively. It does not suggest that all thinkers are equal in all situations — the context genuinely shapes which mode is most critical at which point. It does suggest that all three contribute something the others cannot supply on their own, and that the best outcomes come from teams that have learned to recognize what mode is needed, invite the right voice, and trust that the friction between styles is generative rather than destructive.",
+            "Proverbs 15:22 puts it plainly: plans fail without counsel, but they succeed with many advisers. The Three Thinking Styles framework is one way of understanding what that counsel looks like when it is genuinely diverse — not just culturally diverse, but cognitively diverse. The leader who can draw on a Conceptual vision, a Holistic systems analysis, and an Intuitional read of the people and the ground is working with a fuller picture than any single perspective can produce.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
 
       {/* ── CTA ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>

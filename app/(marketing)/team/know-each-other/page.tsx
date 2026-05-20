@@ -12,5 +12,6 @@ export const metadata: Metadata = {
 export default async function KnowEachOtherPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  return <KnowEachOtherClient user={user} />;
+  const lang = ((user?.user_metadata?.language_preference ?? "en") as "en" | "id");
+  return <KnowEachOtherClient user={user} lang={lang} />;
 }

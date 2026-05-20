@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
-type Props = { user: User | null };
+type Props = { user: User | null; lang?: "en" | "id" };
 
 const COMMITMENT_CARDS = [
   {
@@ -40,7 +40,7 @@ const COMMITMENT_CARDS = [
 const TEAM_DECLARATION =
   "As a team, we commit to naming our commitments clearly, flagging early when we can't deliver, and holding each other gently but firmly accountable. We believe that a team that keeps its word is a team worth trusting.";
 
-export default function AccountabilityClient({ user }: Props) {
+export default function AccountabilityClient({ user, lang = "en" }: Props) {
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
   const allAccepted = accepted.size === COMMITMENT_CARDS.length;
 
@@ -1130,7 +1130,7 @@ export default function AccountabilityClient({ user }: Props) {
           </p>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/accountability" />
+              <TeamStepCompleteButton contentUrl="/team/accountability" lang={lang} />
             </div>
           )}
           <div

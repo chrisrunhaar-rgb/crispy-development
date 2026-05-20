@@ -33,7 +33,7 @@ const REFLECTION_CARDS = [
   },
 ];
 
-export default function TeamFoundationsClient({ user }: { user: User | null }) {
+export default function TeamFoundationsClient({ user, lang = "en" }: { user: User | null; lang?: "en" | "id" }) {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   function toggleCard(id: number) {
@@ -871,7 +871,7 @@ export default function TeamFoundationsClient({ user }: { user: User | null }) {
           </ol>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/team-foundations" />
+              <TeamStepCompleteButton contentUrl="/team/team-foundations" lang={lang} />
             </div>
           )}
           <Link

@@ -279,7 +279,7 @@ const calloutBodyStyle: React.CSSProperties = {
   color: "oklch(38% 0.008 260)",
 };
 
-export default function TeamPurposeVisionClient({ user }: { user: User | null }) {
+export default function TeamPurposeVisionClient({ user, lang = "en" }: { user: User | null; lang?: "en" | "id" }) {
   const [currentStage, setCurrentStage] = useState(1);
   const [answers, setAnswers] = useState<string[]>(["", "", "", ""]);
 
@@ -913,7 +913,7 @@ export default function TeamPurposeVisionClient({ user }: { user: User | null })
           </p>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/team-purpose-vision" />
+              <TeamStepCompleteButton contentUrl="/team/team-purpose-vision" lang={lang} />
             </div>
           )}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>

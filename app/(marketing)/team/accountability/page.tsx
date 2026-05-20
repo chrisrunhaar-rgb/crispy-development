@@ -14,5 +14,6 @@ export default async function AccountabilityPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  return <AccountabilityClient user={user} />;
+  const lang = ((user?.user_metadata?.language_preference ?? "en") as "en" | "id");
+  return <AccountabilityClient user={user} lang={lang} />;
 }

@@ -2,10 +2,12 @@
 
 import { useState, useTransition } from "react";
 import { markStepCompleteByContentKey } from "@/app/(app)/dashboard/team-actions";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
-export default function TeamStepCompleteButton({ contentUrl }: { contentUrl: string }) {
+export default function TeamStepCompleteButton({ contentUrl, lang = "en" }: { contentUrl: string; lang?: TeamLang }) {
   const [done, setDone] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const ui = TEAM_UI[lang];
 
   function handleClick() {
     startTransition(async () => {
@@ -42,9 +44,9 @@ export default function TeamStepCompleteButton({ contentUrl }: { contentUrl: str
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{ width: "10px", height: "10px" }}>
             <path d="M1.5 6l3 3 6-6" />
           </svg>
-          Marked as Complete
+          {ui.markedComplete}
         </>
-      ) : isPending ? "Saving…" : "Mark as Complete ✓"}
+      ) : isPending ? ui.saving : ui.markComplete}
     </button>
   );
 }

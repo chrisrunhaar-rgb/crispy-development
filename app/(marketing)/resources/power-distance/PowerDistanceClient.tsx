@@ -430,6 +430,29 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
         </p>
       </div>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <div style={{ background: navy, padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+            {t("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              t("Explain how high and low power distance cultures approach authority, feedback, and decision-making differently.", "Menjelaskan bagaimana budaya jarak kekuasaan tinggi dan rendah mendekati otoritas, umpan balik, dan pengambilan keputusan secara berbeda.", "Uitleggen hoe hoge en lage machtafstandsculturen op een andere manier omgaan met autoriteit, feedback en besluitvorming."),
+              t("Identify the power distance range of your current cross-cultural context using Hofstede's PDI framework.", "Mengidentifikasi rentang jarak kekuasaan dalam konteks lintas budaya Anda saat ini menggunakan kerangka PDI Hofstede.", "De machtafstandsrange van jouw huidige interculturele context identificeren met behulp van Hofstede's PDI-kader."),
+              t("Apply one concrete adaptation to how you lead, give feedback, or make decisions in your current team.", "Menerapkan satu adaptasi konkret pada cara Anda memimpin, memberikan umpan balik, atau membuat keputusan dalam tim Anda saat ini.", "Één concrete aanpassing toepassen op de manier waarop je leidt, feedback geeft of beslissingen neemt in jouw huidige team."),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: orange, flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ─── SECTION 2: WHAT IT IS ───────────────────────────────────────────── */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
@@ -1130,6 +1153,72 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* ─── KEY TAKEAWAY ──────────────────────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px", borderTop: `3px solid ${orange}` }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
+            {t("Key Takeaway", "Poin Utama", "Kernpunt")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: navy, marginBottom: 36 }}>
+            {t("Three things to act on this week", "Tiga hal yang perlu dilakukan minggu ini", "Drie dingen om deze week op te handelen")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              t(
+                "If you are leading a high power distance team: create one new private channel for honest feedback this week — a one-on-one format or written mechanism that does not require public challenge.",
+                "Jika Anda memimpin tim dengan jarak kekuasaan tinggi: buat satu saluran pribadi baru untuk umpan balik jujur minggu ini — format satu-satu atau mekanisme tertulis yang tidak memerlukan tantangan publik.",
+                "Als je leiding geeft aan een team met hoge machtafstand: maak deze week één nieuw privékanaal voor eerlijke feedback — een één-op-éénformaat of schriftelijk mechanisme dat geen publieke uitdaging vereist."
+              ),
+              t(
+                "Before your next team meeting, identify two or three people you will ask specific, bounded questions rather than opening the floor generally.",
+                "Sebelum rapat tim Anda berikutnya, identifikasi dua atau tiga orang yang akan Anda tanyai dengan pertanyaan spesifik dan terbatas daripada membuka lantai secara umum.",
+                "Identificeer voor je volgende teamvergadering twee of drie mensen die je specifieke, begrensde vragen gaat stellen in plaats van het woord algemeen te geven."
+              ),
+              t(
+                "Reflect honestly on how your own cultural background shapes your default expectations about authority — both from leaders above you and from those you lead.",
+                "Renungkan dengan jujur bagaimana latar belakang budaya Anda membentuk ekspektasi default tentang otoritas — baik dari pemimpin di atas Anda maupun dari mereka yang Anda pimpin.",
+                "Reflecteer eerlijk op hoe je eigen culturele achtergrond je standaardverwachtingen over gezag vormt — zowel van leiders boven je als van degenen die je leidt."
+              ),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: lightGray }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: orange, flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: bodyText, lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            {t("Background", "Latar Belakang", "Achtergrond")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Power Distance in Cross-Cultural Leadership: What Hofstede's Research Means for Field Workers and Global Teams
+          </h2>
+          {[
+            "Power distance in cross-cultural leadership is one of the most practically consequential cultural dimensions a leader can understand — and one of the most commonly misread. The concept was introduced by Dutch organizational sociologist Geert Hofstede, whose foundational research across IBM subsidiaries in more than 70 countries produced one of the largest cross-cultural datasets in management history. His first major publication, Culture's Consequences (1980), and the subsequent synthesis in Cultures and Organizations, co-authored with Gert Jan Hofstede and Michael Minkov, gave the world a vocabulary for cultural difference that remains the most widely cited in leadership and organizational research.",
+            "The Power Distance Index (PDI) measures how much inequality between people is expected, accepted, and reinforced in a given culture. A high PDI score does not mean a culture is oppressive. It means that hierarchy is seen as natural, that authority carries social weight, and that the relationship between a person of higher status and a person of lower status is understood as fundamentally different from a relationship between peers. In cultures with high PDI scores — Malaysia at 100, the Philippines at 94, China at 80, Indonesia at 78 — the lines of authority are clear, deference to leaders is normal, and challenging a superior publicly is not just unusual but actively problematic for the challenger. It risks damaging the relationship, disrupting group harmony, and marking the challenger as difficult or disloyal.",
+            "Low PDI cultures present the opposite set of assumptions. In the Netherlands, scoring 38, and Germany at 35, challenging a manager's decision is not only acceptable but often expected as a sign of engagement and professional investment. Hierarchy exists, but it is instrumental — it exists to coordinate work, not to establish social distance. A Dutch team member who does not push back on a decision is often assumed to be disengaged or to have nothing to contribute. The silence that signals respect in Jakarta signals indifference in Amsterdam.",
+            "This divergence is the source of some of the most predictable and painful misunderstandings in cross-cultural leadership. A field leader from a Northern European or North American background, trained in participatory leadership models and accustomed to flat team cultures, arrives in a Southeast Asian or African context and proceeds to lead the way they were taught. They open meetings for input, ask the team to push back on plans, and invite collaborative decision-making. They interpret the team's respectful silence as agreement. Weeks later, the plan fails to be implemented as designed, and the leader is confused. What they missed was that the team had significant concerns, held their own private assessment of the plan's weaknesses, and were waiting for the leader to demonstrate clearer direction — because that is what leaders do.",
+            "Sherwood Lingenfelter's work in Leading Cross-Culturally is particularly useful here. Lingenfelter, writing from decades of experience in cross-cultural mission contexts, argues that the Western leader's drive toward participatory team models is not a neutral organizational preference — it is itself a culturally-shaped assumption about what good leadership looks like. Imposing a participatory model on a high power distance team does not free the team. It disorients them, removes the clarity they expected, and often reads as the leader being uncertain or unprepared. The team members are left without the direction they need while the leader congratulates themselves on being inclusive.",
+            "David Livermore's research on Cultural Intelligence makes a related point: leaders with high CQ — cultural intelligence — do not merely know the PDI scores of the countries they work in. They develop the practical skill of reading specific situations, asking what the cultural norms require here, and adapting their behavior accordingly. That requires more than knowledge. It requires enough personal security to set aside one's own culturally-shaped leadership preferences and try a different form.",
+            "For leaders from low power distance backgrounds who are working in high power distance contexts, several specific adaptations help. The first is to build structured private channels for feedback alongside formal group settings. A one-on-one conversation after a team meeting, a written feedback mechanism, or a trusted senior team member who can consolidate the team's private concerns — these structures allow genuine input to reach the leader without requiring anyone to challenge authority publicly. The second adaptation is to make decisions with clarity. Ambiguity is uncomfortable in any context, but in high power distance cultures it is particularly disorienting because it is the leader's job to know.",
+            "The third adaptation is the hardest: recalibrating one's relationship to one's own authority. A leader who comes from a context where hierarchy is instrumental and informal may genuinely not feel like an authority figure. Their team in a high power distance context, however, relates to the position regardless of the person's personal demeanor. Things the leader says casually — half-formed ideas, observations about what might be done differently — can land as directives and be acted on without the leader realizing it. That is not the team being unthinking. It is the team reading the situation correctly according to their own cultural norms.",
+            "It is also important to avoid the error of romanticizing either end of the spectrum. Low power distance cultures have their own dysfunction: decisions become slow, organizational authority is eroded, and leaders can be undermined by a culture that mistakes challenge for progress. High power distance cultures carry the risk of groupthink, suppressed dissent, and leaders who receive only good news. Neither model is a complete picture of healthy leadership. The goal is not to convert a high power distance team to a low power distance model, but to lead well within the actual culture while gently expanding the team's capacity for constructive feedback over time.",
+            "The biblical witness on authority and leadership does not map neatly onto either end of Hofstede's scale. Scripture holds together genuine authority with radical servanthood. The leader who washes feet (John 13) does not thereby abdicate leadership — Jesus continues to teach, direct, and make critical decisions immediately after. The leader who is called a servant of all (Mark 10:44) is not therefore without standing or weight. The integration of genuine authority with genuine servanthood is the leadership model that transcends cultural categories, even as its expression will be shaped by context. Understanding power distance helps cross-cultural leaders navigate that integration wisely — neither hiding behind hierarchy nor naively dismantling the structures that give their teams clarity and security.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

@@ -12,5 +12,6 @@ export const metadata: Metadata = {
 export default async function TeamPurposeVisionPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  return <TeamPurposeVisionClient user={user} />;
+  const lang = ((user?.user_metadata?.language_preference ?? "en") as "en" | "id");
+  return <TeamPurposeVisionClient user={user} lang={lang} />;
 }

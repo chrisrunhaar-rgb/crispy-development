@@ -86,25 +86,22 @@ export default async function CoachPage({
 
       {/* Header */}
       <div style={{
-        background: "oklch(18% 0.08 260)",
+        background: "#1B3A6B",
         paddingBlock: "0",
       }}>
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBlock: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            <span style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.3rem", fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1 }}>
-              WayPoint
-            </span>
-            <span style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(62% 0.008 260)", marginTop: "0.1rem" }}>
-                AI Coaching
-              </span>
-              <span style={{ background: "oklch(65% 0.15 45)", color: "white", fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", padding: "0.15rem 0.45rem", borderRadius: "2px", marginLeft: "0.5rem", verticalAlign: "middle" }}>
-                BETA
-              </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/waypoint/waypoint-banner-blue.png"
+              alt="WayPoint"
+              style={{ height: "56px", width: "auto" }}
+            />
+            <span style={{ background: "oklch(65% 0.15 45)", color: "white", fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", padding: "0.15rem 0.45rem", borderRadius: "2px" }}>
+              BETA
             </span>
           </div>
           <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-            {isAdmin && <Link href="/coach/admin" style={headerLink}>Admin</Link>}
             <Link href="/dashboard" style={headerLink}>← Crispy Leaders</Link>
           </div>
         </div>
@@ -124,16 +121,16 @@ export default async function CoachPage({
             flexWrap: "wrap",
           }}>
             <div style={{
-              width: "120px", height: "120px", borderRadius: "50%",
+              width: "180px", height: "180px", borderRadius: "50%",
               overflow: "hidden", flexShrink: 0,
               border: "3px solid oklch(45% 0.10 260)",
             }}>
-              <Image src={coachImage} alt={coachName} width={120} height={120} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+              <Image src={coachImage} alt={coachName} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
             </div>
 
             <div style={{ flex: 1, minWidth: "200px" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(55% 0.08 150)", marginBottom: "0.3rem" }}>
-                Your coach
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.3rem" }}>
+                Your AI coach
               </p>
               <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", fontStyle: "italic", color: "white", marginBottom: "0.5rem", lineHeight: 1.2 }}>
                 {coachName}

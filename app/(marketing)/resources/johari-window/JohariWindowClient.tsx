@@ -218,6 +218,29 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
         </div>
       </section>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+            {t("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              t("Describe the four Johari Window quadrants and explain what each reveals about your leadership.", "Menjelaskan empat kuadran Jendela Johari dan apa yang masing-masing ungkapkan tentang kepemimpinan Anda.", "De vier Johari Venster kwadranten beschrijven en uitleggen wat elk onthult over jouw leiderschap."),
+              t("Recognize how Blind Spot dynamics operate differently in face-saving and high-context team cultures.", "Mengenali bagaimana dinamika Titik Buta beroperasi secara berbeda dalam budaya tim yang menjaga muka dan konteks tinggi.", "Herkennen hoe Blinde Vlek-dynamiek anders werkt in gezichtsbewarende en hoge-context teamculturen."),
+              t("Identify one concrete practice for expanding your Open area through structured trust and feedback.", "Mengidentifikasi satu praktik konkret untuk memperluas area Terbuka Anda melalui kepercayaan dan umpan balik yang terstruktur.", "Één concrete praktijk identificeren om jouw Open gebied uit te breiden via gestructureerd vertrouwen en feedback."),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── THE WINDOW ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
@@ -411,6 +434,60 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+            Key Takeaway
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+            Three things to act on this week
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              "Ask one trusted colleague this week for one piece of honest feedback about your leadership — something in your Blind Spot they have noticed but never said directly.",
+              "Identify one thing in your Hidden quadrant that you could choose to share with your team to increase trust and connection. Name it, then decide whether you are ready to disclose it.",
+              "Reflect on your Unknown quadrant: what might God be forming in you right now that has not yet become visible — to you or to others? Sit with that question rather than answering it quickly.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── LONG-FORM SEO SECTION ─────────────────────────────────────────────── */}
+      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
+        <div className="container-wide" style={{ maxWidth: 720 }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.25rem, 2.5vw, 1.7rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.5rem", lineHeight: 1.2 }}>
+            The Johari Window: Self-Awareness, Blind Spots, and What Faith Adds
+          </h2>
+          {[
+            "Joseph Luft and Harry Ingham were psychologists at UCLA when they first presented their model at a group dynamics conference in 1955. The name — Johari — is simply a combination of their first names, Joe and Harry. The framework they produced is, by the standards of its longevity and application, remarkably simple: two axes, four quadrants, one central insight. What you know about yourself and what others know about you do not always match. That gap is where much of the invisible friction in leadership lives.",
+            "The Open quadrant contains what is known to both you and the people around you. This is the foundation of functional working relationships — shared context, clear communication, predictable behaviour. The larger the Open quadrant, the less energy a team spends trying to interpret each other. The Hidden quadrant contains what you know about yourself that others do not: your uncertainties, your private concerns, the parts of your inner world you have not chosen to share. The Blind Spot is what others observe about you that you do not see in yourself: patterns in your communication, emotional reactions, the way your presence changes a room. The Unknown quadrant is what neither you nor the people around you currently know — the deeper material that has not yet surfaced.",
+            "For leaders, the most practically significant quadrant is the Blind Spot. This is not because blind spots are shameful — every leader has them, by definition. It is because your team is already navigating around your blind spots whether you know about them or not. They are adjusting their communication, withholding information, working around patterns that have never been named. The leader's blind spot is, in practice, a tax on the team. The work of shrinking it is not a personal improvement project. It is a service to the people you lead.",
+            "The mechanism for shrinking the Blind Spot is feedback, and this is where the cross-cultural complexity enters. The Johari Window assumes that feedback can move between people, that self-disclosure is possible, that the Open quadrant can grow. All of this is true — but how it works varies significantly across cultures, and a model developed in mid-twentieth century California was not designed with that variation in mind.",
+            "In high-context cultures across East Asia, Southeast Asia, the Middle East, and parts of Africa, the social cost of direct feedback — especially upward, and especially in any setting with witnesses — is high. Telling your leader that they have a communication problem is not just uncomfortable. It risks the relationship, and in some cultural frameworks it violates a fundamental norm about how status and deference operate. This means that in a multicultural team, the leader's Blind Spot may be both larger and more consistently reinforced than in a cultural context where honest upward feedback is more normal.",
+            "This does not make the Johari Window less useful cross-culturally. It makes it more useful — because it provides a shared vocabulary for what is actually happening. A leader who can name the Johari Window framework with their team is creating permission to talk about feedback and self-disclosure as normal team practices, not as confrontational acts. Naming the framework normalises the existence of the gap before asking anyone to fill it.",
+            "What counts as appropriate content for the Hidden quadrant also varies across cultures. In many Western professional contexts, there is a working assumption that leaders share a fair amount of themselves: their reasoning, their uncertainty, sometimes their personal struggles. Vulnerability, in that context, is read as authenticity and can build trust. In other contexts — particularly where professional and personal domains are kept more explicitly separate — the same level of personal disclosure can signal instability rather than authenticity.",
+            "The Unknown quadrant raises a different set of questions — and this is where the Christian tradition has something genuinely distinctive to contribute. If the Unknown contains what is known to neither you nor the people around you, then from a Christian perspective it is not unknown to God. Psalm 139:23-24 is one of the most direct scriptural addresses into this space: 'Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting.' This is not a request for general spiritual health. It is a specific invitation for God to reveal what the psalmist cannot see in themselves — the Unknown quadrant understood as the domain of divine knowledge and ongoing formation.",
+            "The practical implication for Christian leaders is that self-awareness development is not solely a human process. It includes the disciplines of prayer, scripture, honest community, and spiritual direction. Expanding the Open quadrant, in Christian terms, is not a self-improvement strategy. It is participation in the kind of community that God uses to form people. The leader who builds that kind of team — where it is safe to give feedback, where self-disclosure is gradual and genuine, where the Unknown is held with humility — is building something that serves both organisational health and human flourishing.",
+            "Practically: start with your Blind Spot. Identify one person in your team or close circle who you trust to tell you something you might not want to hear. Ask them a specific question — not 'what do you think of my leadership?' but 'is there one thing I do that makes it harder for you to do your best work?' That specificity lowers the social cost of honest response. Then, when the answer comes, receive it without explaining yourself. The goal is to open the quadrant, not to defend its current size.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.8, color: "oklch(38% 0.05 260)", marginBottom: "1.1rem" }}>
+              {para}
+            </p>
+          ))}
         </div>
       </section>
 

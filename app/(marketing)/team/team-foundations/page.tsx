@@ -12,5 +12,6 @@ export const metadata: Metadata = {
 export default async function TeamFoundationsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  return <TeamFoundationsClient user={user} />;
+  const lang = ((user?.user_metadata?.language_preference ?? "en") as "en" | "id");
+  return <TeamFoundationsClient user={user} lang={lang} />;
 }

@@ -158,7 +158,7 @@ export default async function DashboardPage({
 
   // ── Check if user was invited to a team (any pathway) ──
   // Users invited via link keep their original pathway metadata but are in team_members
-  let memberOfTeam: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] } | null = null;
+  let memberOfTeam: { id: string; name: string; language: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] } | null = null;
   if (!isLeaderByMeta) {
     const { data: memberRow } = await admin
       .from("team_members")
@@ -168,10 +168,10 @@ export default async function DashboardPage({
     if (memberRow) {
       const { data: mt } = await admin
         .from("teams")
-        .select("id, name, selected_assessments, current_step, finalized_steps")
+        .select("id, name, language, selected_assessments, current_step, finalized_steps")
         .eq("id", memberRow.team_id)
         .maybeSingle();
-      memberOfTeam = mt ? { ...mt, selected_assessments: mt.selected_assessments ?? [], finalized_steps: mt.finalized_steps ?? [] } : null;
+      memberOfTeam = mt ? { ...mt, language: mt.language ?? "en", selected_assessments: mt.selected_assessments ?? [], finalized_steps: mt.finalized_steps ?? [] } : null;
     }
   }
 
@@ -1151,6 +1151,7 @@ function TeamLeaderDashboard({
         selectedAssessments={selectedAssessments}
         stepFeedback={stepFeedback}
         teamResults={teamResults}
+        language={(language as "en" | "id") || "en"}
       />
 
       {/* Compact comms section */}
@@ -1178,7 +1179,7 @@ function TeamMemberDashboard({
   teamResults = [],
   stepFeedback = {},
 }: {
-  team: { id: string; name: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] };
+  team: { id: string; name: string; language: string; selected_assessments: string[]; current_step: number; finalized_steps: number[] };
   teamContent: Module[];
   allModules: Module[];
   completedIds: Set<string>;
@@ -1231,6 +1232,7 @@ function TeamMemberDashboard({
         selectedAssessments={team.selected_assessments ?? []}
         stepFeedback={stepFeedback}
         teamResults={teamResults}
+        language={(team.language as "en" | "id") || "en"}
       />
 
 

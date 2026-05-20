@@ -1118,6 +1118,29 @@ export default function EnneagramClient({
         </div>
       </div>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+            After This Module
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              "Describe your Enneagram type's core motivation, defining fear, and primary defensive pattern.",
+              "Recognize how your type's characteristic behaviors may be shaped or filtered differently across cultural contexts.",
+              "Use your type's wing and stress line to understand how you shift under pressure or in unfamiliar cross-cultural situations.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── RESULTS ── */}
       {quizState === "done" && (
         <div style={{ maxWidth: "760px", margin: "0 auto", padding: "3rem 2rem" }}>
@@ -1554,6 +1577,60 @@ export default function EnneagramClient({
           )}
         </div>
       )}
+
+      {/* ─── KEY TAKEAWAY ──────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+            Key Takeaway
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+            Three things to act on this week
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              "Read the full description for your Enneagram type — focus especially on the shadow, the core fear, and the stress line rather than only the strengths.",
+              "Identify one moment from the past week where your type's core motivation shaped a decision or reaction. Name it honestly to yourself rather than reframing it positively.",
+              "Share your type with one trusted colleague and ask what they observe in you — including where the description may not fully capture how you show up in your specific cultural context.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
+      <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            Understanding the Enneagram for Christian Leaders: Types, Motivations, and the Cultural Layer
+          </h2>
+          {[
+            "The Enneagram for Christian leaders has become one of the more widely discussed personality frameworks in faith-based and cross-cultural ministry contexts over the past decade. It arrives not as a neutral behavioral tool but as a system that attempts to describe what lies underneath behavior — the motivating fear or desire that shapes how a person engages with work, leadership, relationships, and conflict. That depth is both its appeal and the source of the genuine debate it has generated in some theological circles.",
+            "The nine Enneagram types — Reformer, Helper, Achiever, Individualist, Investigator, Loyalist, Enthusiast, Challenger, Peacemaker — each describe a core concern that a person organizes their life around, often below the level of conscious awareness. A Type 2 (Helper) is not simply someone who likes helping people. The Enneagram's description goes further: the Helper's core fear is that they are unlovable in themselves, and their helpfulness is often a way of securing connection and belonging through being needed. Understanding that layer does not reduce a person to a psychological category. Used well, it invites honest self-reflection: where does this pattern serve me and others, and where does it create problems I have not fully admitted?",
+            "Ian Morgan Cron and Suzanne Stabile, whose book The Road Back to You brought the Enneagram to a wide Christian readership, frame the system explicitly as a tool for self-knowledge in service of spiritual growth. Christopher Heuertz, in The Sacred Enneagram, roots it in contemplative Christian tradition and centers it on the question of what it means to find one's way back to one's true self in God. Both approaches treat the framework as observational rather than prescriptive — a map, not a destination.",
+            "The caution that is worth naming directly for Christian leaders is this: some of the historical and metaphysical claims made about the Enneagram's origins are disputed, and some associated teachers and ideas fall outside mainstream evangelical theology. This is a legitimate concern, and leaders who have reservations about those dimensions should not feel pressured to use the framework. What is less contestable is that the observational descriptions of the nine types have resonance for many people across very different backgrounds — which suggests that whatever its origins, it is touching something real about human patterns of fear, desire, and defense.",
+            "For cross-cultural leadership teams, the Enneagram introduces an additional layer that most resources do not address adequately: the way types express themselves differently across cultural contexts. This matters because the Enneagram was largely developed and popularized in North American and European contexts, which means the typical type descriptions are written with those cultural norms embedded in them. A Type 8 (Challenger) is described as assertive, confrontational, and direct — someone who names the power dynamics in the room and is not afraid of conflict. In a Dutch or German professional culture, this description fits well. Directness is the norm, challenge is accepted as healthy, and power is something to be questioned rather than deferred to.",
+            "In an Indonesian team culture, or a Kenyan organizational context, the same Type 8 energy does not typically present the same way. The cultural norms around deference, face-saving, and relational harmony shape how assertiveness gets expressed. A Type 8 leader in a high-power-distance context may lead with strong personal authority and strategic decisiveness, but rarely through open confrontation in group settings. The core motivation — a drive to protect themselves and others from being controlled, and to engage life with full force — is the same. The behavioral expression is filtered through a different cultural grammar.",
+            "This is not a critique of the Enneagram as a framework. It is an invitation to hold it with appropriate nuance. The current research on whether Enneagram types manifest differently across cultures is limited, and any strong claims in this area should be treated carefully. What is more certain is that cultural context shapes which aspects of a type's description are most visible in public and which are kept more private. Helping a cross-cultural team understand this distinction — between the type's underlying motivation and its culturally-shaped expression — deepens the quality of the self-awareness the tool is meant to produce.",
+            "Practically, the most useful question a cross-cultural leader can ask when introducing the Enneagram to a team is not \"what type are you?\" but \"how do you recognize yourself in this description — and where does it not quite fit?\" That second question opens space for the cultural layer. A Filipino team member may recognize themselves as a Type 9 (Peacemaker) but note that the type's characteristic conflict avoidance looks different in their context than it does in the American description: it is not conflict-avoidance out of discomfort, but relational wisdom about when speaking is helpful and when it is not.",
+            "The Enneagram's value for Christian leaders is not primarily diagnostic. It is that honest reckoning with one's own patterns — the reflexes, the defensive moves, the places where fear rather than faith is driving decisions — is a form of humility that good leadership requires. Paul's language in Romans 12 about not thinking more highly of oneself than one ought to think, with sober judgment, has practical shape. The Enneagram is one tool for developing that sober judgment in a way that is honest about both the gift and the shadow of one's own design.",
+            "For field workers and cross-cultural leaders who carry the particular pressures of adapting constantly to unfamiliar contexts, the Enneagram can also be a useful lens for understanding stress responses. The stress lines of each type describe where a person tends to go under sustained pressure — and those patterns are often the ones that create the most friction in cross-cultural teams, because they operate below awareness and are exaggerated by disorientation. A leader who knows that under stress their Type 3 energy collapses into disengaged Type 9 behaviors can name it when they see it happening, and invite their team to help them course-correct.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

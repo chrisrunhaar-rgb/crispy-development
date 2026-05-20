@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "Terms of Use — WayPoint",
@@ -11,7 +12,7 @@ export default function CoachTermsPage() {
       <div style={{ background: "oklch(30% 0.12 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint</p>
+            <Image src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" height={28} width={0} style={{ width: "auto", height: "28px", marginBottom: "0.5rem" }} />
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "oklch(97% 0.005 80)" }}>
               Terms of Use
             </h1>

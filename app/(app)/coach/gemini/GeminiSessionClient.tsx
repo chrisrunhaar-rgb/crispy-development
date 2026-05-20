@@ -503,22 +503,21 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19", position: "relative" }}>
 
       {/* Top header — frosted glass */}
       <div style={{
         position: "relative", zIndex: 10, flexShrink: 0,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0.875rem 1.5rem",
-        background: "rgba(6,10,20,0.6)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        background: "#1B3A6B",
+        borderBottom: "1px solid rgba(255,255,255,0.12)",
         gap: "1rem",
       }}>
         {/* Coach identity */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
+          <Image src="/images/waypoint/waypoint-logo-blue.png" alt="WayPoint" width={24} height={24} style={{ opacity: 0.9, flexShrink: 0 }} />
           <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", lineHeight: 1, marginBottom: "0.3rem" }}>WayPoint</p>
             <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.4rem", color: "oklch(65% 0.15 45)", lineHeight: 1 }}>Coaching Session with {coachName}</p>
           </div>
         </div>
@@ -538,34 +537,43 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           </span>
         </div>
 
-        {/* Timer */}
-        <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", minWidth: "48px", textAlign: "right" }}>
-          {status === "active" ? formatTime(elapsedSeconds) : ""}
+        {/* Timer + Back */}
+        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", minWidth: "48px", textAlign: "right" }}>
+            {status === "active" ? formatTime(elapsedSeconds) : ""}
+          </div>
+          <a href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em", flexShrink: 0 }}>← Back</a>
         </div>
       </div>
 
       {/* Body */}
-      <div className="session-main-layout" style={{ position: "relative", zIndex: 5, flex: 1, display: "flex", flexDirection: "row", overflow: "hidden" }}>
+      <div className="session-body" style={{ position: "relative", zIndex: 5, flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
 
-        {/* Left — voice interface */}
-        <div className="session-voice-column" style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem", overflow: "hidden" }}>
+        {/* Voice area — photo + controls (flex: 1 on desktop, 50dvh on mobile) */}
+        <div className="session-voice-area" style={{ position: "relative", flex: 1, overflow: "hidden" }}>
 
-          {/* Room background — scoped inside voice column so mobile 50dvh clips it */}
-          <Image
-            src={coachRoomImage}
-            alt=""
-            fill
-            priority
-            style={{ objectFit: "cover", objectPosition: "left center", zIndex: 0 }}
-          />
-          {/* Gradient overlay */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-            background: "linear-gradient(to right, rgba(6,10,20,0.72) 0%, rgba(6,10,20,0.45) 50%, rgba(6,10,20,0.18) 100%)",
-          }} />
+        {/* Room photo */}
+        <Image
+          src={coachRoomImage}
+          alt=""
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center", zIndex: 0 }}
+        />
+        {/* Gradient overlay */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+          background: "linear-gradient(145deg, rgba(6,10,20,0.72) 0%, rgba(6,10,20,0.35) 55%, rgba(6,10,20,0.62) 100%)",
+        }} />
 
-          {/* Voice content — above image/overlay */}
-          <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem" }}>
+        {/* WayPoint mark — hidden on mobile */}
+        <div className="session-waypoint-mark" style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", zIndex: 8, pointerEvents: "none" }}>
+          <Image src="/images/waypoint/waypoint-logo-transp.png" alt="WayPoint" width={280} height={280} style={{ opacity: 0.85 }} />
+        </div>
+
+        {/* Voice controls — centered over room photo */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 6, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem" }}>
 
           {/* Mic orb */}
           <div style={{
@@ -629,11 +637,13 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               {errorMsg}
             </p>
           )}
-          </div>{/* end voice content wrapper */}
+          </div>
         </div>
 
-        {/* Right — ring binder notepad */}
-        <div className="session-notepad-column" style={{ width: "440px", flexShrink: 0, padding: "18px 22px 22px 10px", display: "flex" }}>
+        </div>{/* end session-voice-area */}
+
+        {/* Floating notepad panel */}
+        <div className="session-notepad-panel" style={{ position: "absolute", right: "1.25rem", top: "3rem", width: "400px", height: "calc(100% - 6rem)", display: "flex", zIndex: 8 }}>
           {/* Ring binder outer wrapper */}
           <div style={{
             display: "flex", flexDirection: "row",
@@ -733,20 +743,20 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         @keyframes waveBar4 { 0%,100%{height:6px} 50%{height:20px} }
         @keyframes waveBar5 { 0%,100%{height:10px} 50%{height:5px} }
         @media (max-width: 768px) {
-          .session-main-layout {
-            flex-direction: column !important;
-          }
-          .session-voice-column {
+          .session-voice-area {
             flex: none !important;
+            height: 50dvh !important;
+          }
+          .session-notepad-panel {
+            position: relative !important;
+            right: auto !important;
+            top: auto !important;
             width: 100% !important;
             height: 50dvh !important;
-            min-height: unset !important;
+            padding: 12px 16px 16px 8px !important;
           }
-          .session-notepad-column {
-            flex: 1 !important;
-            width: 100% !important;
-            min-height: unset !important;
-            overflow-y: auto !important;
+          .session-waypoint-mark {
+            display: none !important;
           }
         }
       `}</style>

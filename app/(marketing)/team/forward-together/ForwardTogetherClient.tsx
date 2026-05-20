@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import TeamStepCompleteButton from "@/components/TeamStepCompleteButton";
 
-type Props = { user: User | null };
+type Props = { user: User | null; lang?: "en" | "id" };
 
 const JOURNEY_MODULES = [
   {
@@ -88,7 +88,7 @@ const DECLARATION_STEPS = [
   },
 ];
 
-export default function ForwardTogetherClient({ user }: Props) {
+export default function ForwardTogetherClient({ user, lang = "en" }: Props) {
   const [teamName, setTeamName] = useState("Our Team");
   const [inputs, setInputs] = useState<Record<string, string>>({
     exist: "",
@@ -1139,7 +1139,7 @@ export default function ForwardTogetherClient({ user }: Props) {
           </p>
           {user && (
             <div style={{ marginBottom: "1.5rem" }}>
-              <TeamStepCompleteButton contentUrl="/team/forward-together" />
+              <TeamStepCompleteButton contentUrl="/team/forward-together" lang={lang} />
             </div>
           )}
           <div

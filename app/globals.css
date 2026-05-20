@@ -576,6 +576,25 @@ a:focus-visible {
   .t-hero { letter-spacing: -0.02em; }
 }
 
+/* ── WAYPOINT — welfare flags responsive grid ── */
+.wp-flags-grid {
+  border: 1px solid oklch(88% 0.008 80);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 640px) {
+  .wp-flags-grid {
+    grid-template-columns: 1fr;
+  }
+  .wp-flags-grid > div {
+    border-right: none !important;
+    border-bottom: 1px solid oklch(88% 0.008 80);
+  }
+  .wp-flags-grid > div:last-child {
+    border-bottom: none;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════ */
 /* ADMIN DASHBOARD DESIGN SYSTEM */
 /* ═══════════════════════════════════════════════════════════════════════ */

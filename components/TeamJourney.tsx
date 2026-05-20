@@ -5,6 +5,7 @@ import Link from "next/link";
 import { unlockNextTeamStep, lockTeamStep, finalizeTeamStep } from "@/app/(app)/dashboard/team-actions";
 import StepFeedback, { type FeedbackEntry } from "@/components/StepFeedback";
 import type { TeamMemberResult } from "@/components/TeamResultsGrid";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 const DISC_SLICES = [
   { key: "D", fill: "#C44A2A" },
@@ -351,11 +352,14 @@ export type TeamMember = {
 type Step = {
   number: number;
   title: string;
+  title_id?: string;
   description: string;
+  description_id?: string;
   type: "article" | "assessment" | "workshop";
   icon: string;
   collectsData: boolean;
   dataLabel: string | null;
+  dataLabel_id?: string;
   comingSoon?: boolean;
   contentUrl?: string;
   resultType?: string;
@@ -365,7 +369,9 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 1,
     title: "Team Foundations",
+    title_id: "Fondasi Tim",
     description: "Establish your team's identity, values, and shared expectations for the journey ahead. What kind of team do we want to be?",
+    description_id: "Tetapkan identitas, nilai, dan ekspektasi bersama untuk perjalanan ke depan. Tim seperti apa yang ingin kita bangun?",
     type: "article",
     icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
     collectsData: false,
@@ -375,7 +381,9 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 2,
     title: "Team Purpose & Vision",
+    title_id: "Tujuan & Visi Tim",
     description: "Clarify why your team exists and where you're heading together. A shared vision is the foundation of everything that follows.",
+    description_id: "Perjelas mengapa tim Anda ada dan ke mana kalian melangkah bersama. Visi bersama adalah fondasi segalanya.",
     type: "workshop",
     icon: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
     collectsData: false,
@@ -385,7 +393,9 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 3,
     title: "Getting to Know Each Other",
+    title_id: "Saling Mengenal",
     description: "Every person on your team carries a unique story, background, and context. Make space to truly see one another.",
+    description_id: "Setiap anggota tim membawa cerita, latar belakang, dan konteks yang unik. Beri ruang untuk sungguh-sungguh mengenal satu sama lain.",
     type: "workshop",
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
     collectsData: false,
@@ -395,51 +405,65 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 4,
     title: "Communication Culture",
+    title_id: "Budaya Komunikasi",
     description: "How does your team talk, listen, and disagree? Establish shared norms for healthy, cross-cultural communication.",
+    description_id: "Bagaimana tim Anda berbicara, mendengarkan, dan berselisih? Bangun norma bersama untuk komunikasi lintas budaya yang sehat.",
     type: "article",
     icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
     collectsData: true,
     dataLabel: "Comm Style",
+    dataLabel_id: "Gaya Komunikasi",
     contentUrl: "/team/communication-culture",
     resultType: "comm_style",
   },
   {
     number: 5,
     title: "Trust & Psychological Safety",
+    title_id: "Kepercayaan & Keamanan Psikologis",
     description: "Build the foundation that makes everything else possible. Teams that feel safe take risks, speak up, and grow together.",
+    description_id: "Bangun fondasi yang membuat segalanya menjadi mungkin. Tim yang merasa aman berani mengambil risiko, berbicara jujur, dan bertumbuh bersama.",
     type: "workshop",
     icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
     collectsData: true,
     dataLabel: "Trust Score",
+    dataLabel_id: "Skor Kepercayaan",
     contentUrl: "/team/trust-psychological-safety",
     resultType: "trust",
   },
   {
     number: 6,
     title: "Roles & Contribution",
+    title_id: "Peran & Kontribusi",
     description: "Clarify who does what, why, and how. When roles are clear and gifts are recognised, teams unlock their full potential.",
+    description_id: "Perjelas siapa melakukan apa, mengapa, dan bagaimana. Ketika peran jelas dan karunia diakui, tim mengungkap potensi penuhnya.",
     type: "article",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2",
     collectsData: true,
     dataLabel: "Contribution Zone",
+    dataLabel_id: "Zona Kontribusi",
     contentUrl: "/team/roles-contribution",
     resultType: "contribution_zone",
   },
   {
     number: 7,
     title: "Navigating Conflict",
+    title_id: "Menghadapi Konflik",
     description: "Conflict is inevitable — how you handle it defines your culture. Learn to turn tension into growth rather than fracture.",
+    description_id: "Konflik tidak bisa dihindari — cara Anda menghadapinya mendefinisikan budaya tim. Belajar mengubah ketegangan menjadi pertumbuhan, bukan perpecahan.",
     type: "workshop",
     icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15",
     collectsData: true,
     dataLabel: "Conflict Style",
+    dataLabel_id: "Gaya Konflik",
     contentUrl: "/team/navigating-conflict",
     resultType: "conflict_style",
   },
   {
     number: 8,
     title: "Decision Making Together",
+    title_id: "Mengambil Keputusan Bersama",
     description: "Who decides, and how? Build a shared decision-making culture that honours everyone while keeping the team moving forward.",
+    description_id: "Siapa yang memutuskan, dan bagaimana caranya? Bangun budaya pengambilan keputusan yang menghormati semua orang sambil terus bergerak maju.",
     type: "article",
     icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
     collectsData: false,
@@ -449,7 +473,9 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 9,
     title: "Accountability & Follow-Through",
+    title_id: "Akuntabilitas & Tindak Lanjut",
     description: "Commitments made, commitments kept. Build a culture where people own their responsibilities and support each other to deliver.",
+    description_id: "Janji dibuat, janji ditepati. Bangun budaya di mana setiap orang memiliki tanggung jawabnya dan saling mendukung untuk menuntaskan.",
     type: "workshop",
     icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
     collectsData: false,
@@ -459,7 +485,9 @@ const BASE_JOURNEY_STEPS: Step[] = [
   {
     number: 10,
     title: "Forward Together",
+    title_id: "Melangkah Bersama",
     description: "Celebrate how far you've come and set your next horizon. A healthy team never stops growing — this is where you begin again.",
+    description_id: "Rayakan perjalanan yang telah ditempuh dan tetapkan cakrawala berikutnya. Tim yang sehat tidak berhenti bertumbuh — di sinilah kalian memulai kembali.",
     type: "workshop",
     icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
     collectsData: false,
@@ -476,11 +504,14 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   // After step 3 "Getting to Know Each Other" — personal insights that deepen first impressions
   "wheel-of-life": {
     title: "Wheel of Life",
+    title_id: "Roda Kehidupan",
     description: "See where each team member is thriving and where they need support. Leaders who truly know their people lead them better.",
+    description_id: "Lihat di mana setiap anggota tim sedang berkembang dan di mana mereka membutuhkan dukungan. Pemimpin yang benar-benar mengenal timnya memimpin dengan lebih baik.",
     type: "assessment",
     icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
     collectsData: true,
     dataLabel: "Life Balance",
+    dataLabel_id: "Keseimbangan Hidup",
     contentUrl: "/team/wheel-of-life",
     resultType: "wheel_of_life",
     insertAfter: 3,
@@ -489,10 +520,12 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   "enneagram": {
     title: "Enneagram",
     description: "Understand the core motivations and growth paths of each team member. The Enneagram reveals what drives people at the deepest level.",
+    description_id: "Pahami motivasi inti dan jalur pertumbuhan setiap anggota tim. Enneagram mengungkap apa yang mendorong seseorang di tingkat yang paling dalam.",
     type: "assessment",
     icon: "M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z",
     collectsData: true,
     dataLabel: "Enneagram Type",
+    dataLabel_id: "Tipe Enneagram",
     contentUrl: "/team/enneagram",
     resultType: "enneagram",
     insertAfter: 3,
@@ -501,11 +534,14 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   // After step 3 "Getting to Know Each Other" — knowing how people feel valued is core to truly knowing them
   "5languages": {
     title: "5 Languages of Appreciation",
+    title_id: "5 Bahasa Penghargaan",
     description: "Discover how each team member feels genuinely valued — and how to express appreciation in ways that actually land.",
+    description_id: "Temukan bagaimana setiap anggota tim merasa sungguh-sungguh dihargai — dan cara mengungkapkan penghargaan yang benar-benar sampai ke hati.",
     type: "assessment",
     icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
     collectsData: true,
     dataLabel: "Appreciation Language",
+    dataLabel_id: "Bahasa Penghargaan",
     contentUrl: "/team/5languages",
     resultType: "5languages",
     insertAfter: 3,
@@ -514,7 +550,9 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   // After step 4 "Communication Culture" — behavioural & personality styles shape how teams communicate
   "disc": {
     title: "DISC Profiles",
+    title_id: "Profil DISC",
     description: "Map your team's behavioural styles — who drives, who influences, who supports, who analyses. Use your differences as strengths.",
+    description_id: "Petakan gaya perilaku tim Anda — siapa yang mendorong, siapa yang mempengaruhi, siapa yang mendukung, siapa yang menganalisis. Jadikan perbedaan sebagai kekuatan.",
     type: "assessment",
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
     collectsData: true,
@@ -526,11 +564,14 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   },
   "three-thinking-styles": {
     title: "Three Thinking Styles",
+    title_id: "Tiga Gaya Berpikir",
     description: "Understand how each person processes information and makes decisions — and how your styles complement each other.",
+    description_id: "Pahami bagaimana setiap orang memproses informasi dan mengambil keputusan — dan bagaimana gaya berpikir Anda saling melengkapi.",
     type: "assessment",
     icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
     collectsData: true,
     dataLabel: "Thinking Style",
+    dataLabel_id: "Gaya Berpikir",
     contentUrl: "/team/three-thinking-styles",
     resultType: "thinking_style",
     insertAfter: 4,
@@ -539,10 +580,12 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   "16-personalities": {
     title: "16 Personalities",
     description: "In-depth personality profiles that reveal how your team members think, feel, and interact in work and relationships.",
+    description_id: "Profil kepribadian mendalam yang mengungkap cara anggota tim berpikir, merasakan, dan berinteraksi dalam pekerjaan maupun hubungan.",
     type: "assessment",
     icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
     collectsData: true,
     dataLabel: "Personality",
+    dataLabel_id: "Kepribadian",
     contentUrl: "/team/16-personalities",
     resultType: "personalities16",
     insertAfter: 4,
@@ -551,10 +594,12 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   "big-five": {
     title: "Big Five (OCEAN)",
     description: "The gold standard in personality research — measure Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism across your team.",
+    description_id: "Standar emas dalam riset kepribadian — ukur Keterbukaan, Kehati-hatian, Ekstraversi, Keramahan, dan Neurotisme di seluruh tim Anda.",
     type: "assessment",
     icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
     collectsData: true,
     dataLabel: "OCEAN Profile",
+    dataLabel_id: "Profil OCEAN",
     contentUrl: "/team/big-five",
     resultType: "big_five",
     insertAfter: 4,
@@ -564,10 +609,12 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
   "karunia-rohani": {
     title: "Karunia Rohani",
     description: "Discover each team member's spiritual gifts and how they're uniquely wired to serve and contribute within the team.",
+    description_id: "Temukan karunia rohani setiap anggota tim dan bagaimana mereka secara unik diperlengkapi untuk melayani dan berkontribusi dalam tim.",
     type: "assessment",
     icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
     collectsData: true,
     dataLabel: "Gift Profile",
+    dataLabel_id: "Profil Karunia",
     contentUrl: "/team/karunia-rohani",
     resultType: "karunia",
     insertAfter: 5,
@@ -591,11 +638,14 @@ function buildJourneySteps(selectedAssessments: string[]): Step[] {
   return steps.map((s, i) => ({ ...s, number: i + 1 } as Step));
 }
 
-const TYPE_LABELS: Record<string, string> = {
-  article: "Article",
-  assessment: "Assessment",
-  workshop: "Workshop",
-};
+function getTypeLabel(type: string, lang: TeamLang): string {
+  if (lang === "id") {
+    const id: Record<string, string> = { article: "Artikel", assessment: "Asesmen", workshop: "Lokakarya" };
+    return id[type] ?? type;
+  }
+  const en: Record<string, string> = { article: "Article", assessment: "Assessment", workshop: "Workshop" };
+  return en[type] ?? type;
+}
 
 // Type badge colors — subdued, brand-safe
 const TYPE_BADGE: Record<string, { color: string; bg: string }> = {
@@ -604,7 +654,8 @@ const TYPE_BADGE: Record<string, { color: string; bg: string }> = {
   workshop:   { color: "oklch(38% 0.12 145)", bg: "oklch(38% 0.12 145 / 0.08)" },
 };
 
-function getResultDisplay(resultType: string, resultKey: string): { label: string; color: string } {
+function getResultDisplay(resultType: string, resultKey: string, lang: TeamLang = "en"): { label: string; color: string } {
+  const ui = TEAM_UI[lang];
   switch (resultType) {
     case "disc": {
       const colors: Record<string, string> = { D: "oklch(48% 0.18 20)", I: "oklch(48% 0.14 85)", S: "oklch(42% 0.14 145)", C: "oklch(42% 0.18 250)" };
@@ -613,7 +664,9 @@ function getResultDisplay(resultType: string, resultKey: string): { label: strin
     case "wheel_of_life":
       return { label: `${parseFloat(resultKey).toFixed(1)}/5`, color: "oklch(42% 0.14 145)" };
     case "thinking_style": {
-      const labels: Record<string, string> = { C: "Conceptual", H: "Holistic", I: "Intuitional", CH: "C·H", CI: "C·I", HI: "H·I", CHI: "Balanced" };
+      const en: Record<string, string> = { C: "Conceptual", H: "Holistic", I: "Intuitional", CH: "C·H", CI: "C·I", HI: "H·I", CHI: "Balanced" };
+      const id: Record<string, string> = { C: ui.conceptual as string, H: ui.holistic as string, I: ui.intuitional as string, CH: "C·H", CI: "C·I", HI: "H·I", CHI: ui.balanced as string };
+      const labels = lang === "id" ? id : en;
       return { label: labels[resultKey] ?? resultKey, color: "oklch(42% 0.008 260)" };
     }
     case "enneagram":
@@ -640,12 +693,16 @@ function getResultDisplay(resultType: string, resultKey: string): { label: strin
       return { label: `${parseFloat(resultKey).toFixed(1)}/5`, color: "oklch(48% 0.18 145)" };
     case "contribution_zone": {
       const colors: Record<string, string> = { P: "oklch(52% 0.18 20)", B: "oklch(48% 0.18 230)", C: "oklch(48% 0.18 145)", D: "oklch(50% 0.16 290)" };
-      const names: Record<string, string> = { P: "Pioneer", B: "Builder", C: "Connector", D: "Deepener" };
+      const en: Record<string, string> = { P: "Pioneer", B: "Builder", C: "Connector", D: "Deepener" };
+      const id: Record<string, string> = { P: ui.pioneer as string, B: ui.builder as string, C: ui.connector as string, D: ui.deepener as string };
+      const names = lang === "id" ? id : en;
       return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
     }
     case "conflict_style": {
       const colors: Record<string, string> = { A: "oklch(55% 0.14 200)", C: "oklch(55% 0.18 45)", M: "oklch(55% 0.15 260)" };
-      const names: Record<string, string> = { A: "Protector", C: "Confronter", M: "Mediator" };
+      const en: Record<string, string> = { A: "Protector", C: "Confronter", M: "Mediator" };
+      const id: Record<string, string> = { A: ui.protector as string, C: ui.confronter as string, M: ui.mediator as string };
+      const names = lang === "id" ? id : en;
       return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
     }
     default:
@@ -667,6 +724,7 @@ export default function TeamJourney({
   selectedAssessments = [],
   stepFeedback = {},
   teamResults = [],
+  language = "en",
 }: {
   teamId: string;
   teamName: string;
@@ -681,7 +739,9 @@ export default function TeamJourney({
   selectedAssessments?: string[];
   stepFeedback?: Record<number, FeedbackEntry[]>;
   teamResults?: TeamMemberResult[];
+  language?: TeamLang;
 }) {
+  const ui = TEAM_UI[language];
   const JOURNEY_STEPS = buildJourneySteps(selectedAssessments);
 
   const [expandedStep, setExpandedStep] = useState<number>(currentStep);
@@ -774,7 +834,7 @@ export default function TeamJourney({
               color: "oklch(65% 0.15 45)",
               marginBottom: "0.625rem",
             }}>
-              The Journey
+              {ui.journeyLabel}
             </p>
             <h2 style={{
               fontFamily: "var(--font-montserrat)",
@@ -794,8 +854,8 @@ export default function TeamJourney({
               color: "oklch(66% 0.04 260)",
               lineHeight: 1.5,
             }}>
-              {leaderName && <span>Led by {leaderName} · </span>}
-              {teamMembers.length} {teamMembers.length === 1 ? "member" : "members"} · Step {localCurrentStep} of {JOURNEY_STEPS.length}{selectedAssessments.length > 0 ? ` · ${selectedAssessments.length} assessment${selectedAssessments.length !== 1 ? "s" : ""} added` : ""}
+              {leaderName && <span>{ui.ledBy} {leaderName} · </span>}
+              {teamMembers.length} {teamMembers.length === 1 ? ui.member : ui.members} · {language === "id" ? `Langkah ${localCurrentStep} dari ${JOURNEY_STEPS.length}` : `Step ${localCurrentStep} of ${JOURNEY_STEPS.length}`}{selectedAssessments.length > 0 ? ` · ${selectedAssessments.length} ${selectedAssessments.length !== 1 ? ui.assessmentsAdded : ui.assessmentAdded}` : ""}
             </p>
           </div>
 
@@ -818,7 +878,7 @@ export default function TeamJourney({
               textTransform: "uppercase",
               color: "oklch(50% 0.04 260)",
               marginTop: "0.25rem",
-            }}>Team Progress</p>
+            }}>{ui.teamProgress}</p>
           </div>
         </div>
 
@@ -1017,7 +1077,7 @@ export default function TeamJourney({
                     marginBottom: "0.3rem",
                     transition: "all 0.25s ease",
                   }}>
-                    {step.title}
+                    {language === "id" ? (step.title_id ?? step.title) : step.title}
                   </p>
 
                   <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -1032,7 +1092,7 @@ export default function TeamJourney({
                       padding: "2px 7px",
                       flexShrink: 0,
                     }}>
-                      {TYPE_LABELS[step.type]}
+                      {getTypeLabel(step.type, language)}
                     </span>
 
                     {step.comingSoon && isUnlocked && (
@@ -1047,7 +1107,7 @@ export default function TeamJourney({
                         padding: "2px 7px",
                         flexShrink: 0,
                       }}>
-                        Content soon
+                        {ui.contentSoon}
                       </span>
                     )}
 
@@ -1056,7 +1116,7 @@ export default function TeamJourney({
                         {displayMembers.map(m => (
                           <div
                             key={m.id}
-                            title={`${m.name}: ${completedUsers.has(m.id) ? "Completed" : "Pending"}`}
+                            title={`${m.name}: ${completedUsers.has(m.id) ? ui.completed : ui.pending}`}
                             style={{
                               width: "26px",
                               height: "4px",
@@ -1163,7 +1223,7 @@ export default function TeamJourney({
                       flex: 1,
                       minWidth: "200px",
                     }}>
-                      {step.description}
+                      {language === "id" ? (step.description_id ?? step.description) : step.description}
                     </p>
                     {step.contentUrl && (
                       <Link
@@ -1183,7 +1243,7 @@ export default function TeamJourney({
                           display: "inline-block",
                         }}
                       >
-                        Open Content →
+                        {ui.openContent}
                       </Link>
                     )}
                   </div>
@@ -1201,7 +1261,7 @@ export default function TeamJourney({
                           color: "oklch(54% 0.008 260)",
                           marginBottom: "0.75rem",
                         }}>
-                          Team Results
+                          {ui.teamResults}
                         </p>
                         <div style={{
                           display: "grid",
@@ -1214,7 +1274,7 @@ export default function TeamJourney({
                             );
                             const hasResult = result?.result_key != null;
                             const { label, color } = hasResult
-                              ? getResultDisplay(step.resultType!, result!.result_key!)
+                              ? getResultDisplay(step.resultType!, result!.result_key!, language)
                               : { label: "", color: "" };
                             const visual = (hasResult && result?.scores)
                               ? getAssessmentVisual(step.resultType!, result.result_key!, result.scores)
@@ -1251,7 +1311,7 @@ export default function TeamJourney({
                                       color: "oklch(65% 0.15 45)",
                                       marginTop: "0.1rem",
                                     }}>
-                                      Leader
+                                      {ui.leader}
                                     </p>
                                   )}
                                 </div>
@@ -1277,7 +1337,7 @@ export default function TeamJourney({
                                       color: "oklch(68% 0.006 260)",
                                       fontStyle: "italic",
                                     }}>
-                                      Not done yet
+                                      {ui.notDoneYet}
                                     </span>
                                   )}
                                 </div>
@@ -1297,7 +1357,7 @@ export default function TeamJourney({
                           color: "oklch(54% 0.008 260)",
                           marginBottom: "0.625rem",
                         }}>
-                          Team Progress
+                          {ui.teamProgressSection}
                         </p>
 
                         <div style={{
@@ -1373,7 +1433,7 @@ export default function TeamJourney({
                                       color: "oklch(65% 0.15 45)",
                                       marginTop: "0.1rem",
                                     }}>
-                                      Leader
+                                      {ui.leader}
                                     </p>
                                   )}
                                 </div>
@@ -1387,7 +1447,7 @@ export default function TeamJourney({
                                   color: done ? "oklch(42% 0.13 145)" : "oklch(62% 0.008 260)",
                                   transition: "color 0.15s ease",
                                 }}>
-                                  {done ? "Completed" : "Pending"}
+                                  {done ? ui.completed : ui.pending}
                                 </span>
                               </div>
                             );
@@ -1415,7 +1475,7 @@ export default function TeamJourney({
                         marginBottom: "0.875rem",
                         lineHeight: 1.5,
                       }}>
-                        Unlocking notifies your team and opens the next step.
+                        {ui.unlockNotice}
                       </p>
                       <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", flexWrap: "wrap" }}>
                         <button
@@ -1437,7 +1497,7 @@ export default function TeamJourney({
                             transition: "all 0.15s ease",
                           }}
                         >
-                          {isPending ? "Unlocking…" : `Unlock Step ${localCurrentStep + 1} →`}
+                          {isPending ? ui.unlocking : (ui.unlockStep as (n: number) => string)(localCurrentStep + 1)}
                         </button>
 
                         {!allDone && teamMembers.length > 0 && (
@@ -1447,7 +1507,7 @@ export default function TeamJourney({
                             color: "oklch(58% 0.008 260)",
                             lineHeight: 1.5,
                           }}>
-                            {completedCount}/{teamMembers.length} members done — you can still unlock early
+                            {(ui.membersDoneEarly as (done: number, total: number) => string)(completedCount, teamMembers.length)}
                           </p>
                         )}
                       </div>
@@ -1486,9 +1546,9 @@ export default function TeamJourney({
                                 <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{ width: "10px", height: "10px" }}>
                                   <path d="M1.5 6l3 3 6-6" />
                                 </svg>
-                                Step Finalized — Undo
+                                {ui.stepFinalized}
                               </>
-                            ) : isFinalizePending ? "Finalizing…" : "Finalize Step ✓"}
+                            ) : isFinalizePending ? ui.finalizing : ui.finalizeStep}
                           </button>
                         </div>
                       )}
@@ -1517,7 +1577,7 @@ export default function TeamJourney({
                               textUnderlineOffset: "3px",
                             }}
                           >
-                            {isLockPending ? "Locking…" : `← Lock step ${localCurrentStep} again`}
+                            {isLockPending ? ui.locking : (ui.lockAgain as (n: number) => string)(localCurrentStep)}
                           </button>
                         </div>
                       )}
@@ -1534,7 +1594,7 @@ export default function TeamJourney({
                         color: "oklch(42% 0.12 145)",
                         lineHeight: 1.5,
                       }}>
-                        Your team has completed the full journey. Well done.
+                        {ui.journeyComplete}
                       </p>
                     </div>
                   )}

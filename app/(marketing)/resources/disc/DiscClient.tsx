@@ -830,6 +830,29 @@ export default function DiscClient({
         </div>
       </section>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+            {tr("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              tr("Identify your DISC type and explain how it shapes your default leadership communication and decision style.", "Mengidentifikasi tipe DISC Anda dan menjelaskan bagaimana tipe tersebut membentuk gaya komunikasi dan pengambilan keputusan kepemimpinan default Anda.", "Jouw DISC-type identificeren en uitleggen hoe het jouw standaard leiderschapscommunicatie en besluitvormingsstijl vormt."),
+              tr("Recognize how each of the four DISC types communicates, processes decisions, and responds to stress in team settings.", "Mengenali bagaimana masing-masing dari empat tipe DISC berkomunikasi, memproses keputusan, dan merespons tekanan dalam setting tim.", "Herkennen hoe elk van de vier DISC-typen communiceert, beslissingen verwerkt en reageert op stress in teamsettings."),
+              tr("Apply DISC awareness to one specific collaboration challenge in your current multicultural or cross-cultural team.", "Menerapkan kesadaran DISC pada satu tantangan kolaborasi spesifik dalam tim multikultural atau lintas budaya Anda saat ini.", "DISC-bewustzijn toepassen op één specifieke samenwerkingsuitdaging in jouw huidige multiculturele of interculturele team."),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SECTION 2: ABOUT DISC (FLIP CARDS) ── */}
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
         <div className="container-wide">

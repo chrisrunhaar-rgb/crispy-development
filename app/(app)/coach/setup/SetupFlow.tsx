@@ -32,6 +32,7 @@ type FormData = {
   months_in_context: string;
   notes: string;
   selected_coach: string;
+  family_situation: string;
 };
 
 const COACHES = [
@@ -53,6 +54,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
     months_in_context: existing?.months_in_context?.toString() ?? "",
     notes: existing?.notes ?? "",
     selected_coach: existing?.selected_coach ?? "Tara",
+    family_situation: "",
   });
 
   const set = (k: keyof FormData) =>
@@ -74,6 +76,7 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
         months_in_context: form.months_in_context ? parseInt(form.months_in_context) : null,
         role: form.role || null,
         notes: form.notes || null,
+        family_situation: form.family_situation || null,
         selected_coach: form.selected_coach,
         onboarding_complete: true,
         ...(showIntroFirst ? { terms_accepted_at: new Date().toISOString() } : {}),
@@ -178,40 +181,44 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "2rem" }}>
 
             <Field label="Your name" hint="What your coach will call you">
-              <input style={inputStyle} value={form.name} onChange={set("name")} placeholder="e.g. Sarah" required />
+              <input style={inputStyle} value={form.name} onChange={set("name")} required />
             </Field>
 
             <Field label="Your role" hint="What you do — in your own words">
-              <input style={inputStyle} value={form.role} onChange={set("role")} placeholder="e.g. Church planter, team leader, field worker" required />
+              <input style={inputStyle} value={form.role} onChange={set("role")} />
             </Field>
 
-            <Field label="Organisation" hint="The mission agency or church you serve with">
-              <input style={inputStyle} value={form.organisation} onChange={set("organisation")} placeholder="e.g. World Outreach" />
+            <Field label="Agency" hint="">
+              <input style={inputStyle} value={form.organisation} onChange={set("organisation")} />
             </Field>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
               <Field label="Current location" hint="Country or city">
-                <input style={inputStyle} value={form.location} onChange={set("location")} placeholder="e.g. Nairobi, Kenya" />
+                <input style={inputStyle} value={form.location} onChange={set("location")} />
               </Field>
               <Field label="Home culture" hint="Your own cultural background">
-                <input style={inputStyle} value={form.home_culture} onChange={set("home_culture")} placeholder="e.g. Dutch" />
+                <input style={inputStyle} value={form.home_culture} onChange={set("home_culture")} />
               </Field>
             </div>
 
             <Field label="Host culture" hint="The culture you currently work within">
-              <input style={inputStyle} value={form.host_culture} onChange={set("host_culture")} placeholder="e.g. Swahili East African" />
+              <input style={inputStyle} value={form.host_culture} onChange={set("host_culture")} />
             </Field>
 
-            <Field label="Months in this cross-cultural context" hint="Roughly — even an estimate helps">
-              <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} placeholder="e.g. 18" />
-            </Field>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <Field label="Months in context" hint="Roughly — even an estimate helps">
+                <input style={inputStyle} type="number" min={0} max={600} value={form.months_in_context} onChange={set("months_in_context")} />
+              </Field>
+              <Field label="Family situation" hint="Married, single, kids">
+                <input style={inputStyle} value={form.family_situation} onChange={set("family_situation")} />
+              </Field>
+            </div>
 
-            <Field label="Anything else your coach should know?" hint="Current season, specific challenges, what you hope to get from coaching">
+            <Field label="Current season" hint="Specific challenges, what you hope to get from coaching">
               <textarea
                 style={{ ...inputStyle, minHeight: "96px", resize: "vertical" }}
                 value={form.notes}
                 onChange={set("notes")}
-                placeholder="e.g. In a difficult transition season, team conflict, hoping to find clarity on next steps..."
               />
             </Field>
           </div>
@@ -322,13 +329,12 @@ function Shell({ step, title, subtitle, children }: { step: number; title: strin
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "calc(100dvh - 80px)" }}>
 
-      <div style={{ background: "oklch(18% 0.08 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(14% 0.06 260)" }}>
+      <div style={{ background: "#1B3A6B", paddingBlock: "2rem", borderBottom: "1px solid oklch(14% 0.06 260)" }}>
         <div className="container-wide">
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-            <span style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.0625rem", color: "oklch(65% 0.15 45)" }}>
-              WayPoint
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" style={{ height: "44px", width: "auto" }} />
             <div style={{ display: "flex", gap: "0.375rem", alignItems: "center" }}>
               {[1, 2, 3, 4, 5].map(s => (
                 <div key={s} style={{

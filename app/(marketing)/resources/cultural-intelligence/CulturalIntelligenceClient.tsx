@@ -320,6 +320,29 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         </p>
       </div>
 
+      {/* ── LEARNING OUTCOME ─────────────────────────────────────────────────── */}
+      <div style={{ background: navyOklch, padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orangeOklch, marginBottom: 24 }}>
+            {t("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              t("Define Cultural Intelligence (CQ) and explain how it differs from cultural knowledge or general cross-cultural awareness.", "Mendefinisikan Kecerdasan Budaya (CQ) dan menjelaskan bagaimana perbedaannya dengan pengetahuan budaya atau kesadaran lintas budaya.", "Culturele Intelligentie (CQ) definiëren en uitleggen hoe het verschilt van culturele kennis of algemeen intercultureel bewustzijn."),
+              t("Identify your current CQ level across the four dimensions — Drive, Knowledge, Strategy, and Action.", "Mengidentifikasi tingkat CQ Anda saat ini di empat dimensi — Drive, Pengetahuan, Strategi, dan Tindakan.", "Jouw huidige CQ-niveau identificeren op de vier dimensies — Drive, Kennis, Strategie en Actie."),
+              t("Apply one deliberate CQ practice to a real cross-cultural interaction you face in your current context.", "Menerapkan satu praktik CQ yang disengaja pada interaksi lintas budaya nyata yang Anda hadapi dalam konteks Anda saat ini.", "Één bewuste CQ-praktijk toepassen op een echte interculturele interactie in jouw huidige context."),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{ width: 3, height: 20, background: orangeOklch, flexShrink: 0, marginTop: 3 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(80% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ─── SECTION 2: WHAT CQ ACTUALLY IS ────────────────────────────────── */}
       {/* Format: Two-column concept split with pull-quote */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
@@ -689,6 +712,60 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* ─── KEY TAKEAWAY ──────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: `3px solid ${orangeOklch}` }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orangeOklch, marginBottom: 12 }}>
+            Key Takeaway
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: navyOklch, marginBottom: 36 }}>
+            Three things to act on this week
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              "Take the full CQ assessment and identify which of the four dimensions — metacognitive, cognitive, motivational, or behavioural — you most need to develop right now.",
+              "Choose one cross-cultural interaction this week and approach it with deliberate CQ: plan what you will observe, engage fully, and spend five minutes afterwards naming what you learned.",
+              "Share the four CQ dimensions with your team and ask each person to identify which dimension they are currently being stretched in. Make it a conversation, not an assessment.",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: lightGray }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: orangeOklch, flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: bodyText, lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+            Background
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
+            Cultural Intelligence: What the Research Says and Why It Matters for Global Leaders
+          </h2>
+          {[
+            "Cultural intelligence as a formal construct entered leadership research in 2003, when P. Christopher Earley and Soon Ang published their foundational work through Stanford University Press. Their core argument was that intelligence is context-dependent. A leader can be analytically sharp, emotionally perceptive, and still consistently ineffective when the cultural context shifts significantly from the one they were formed in. CQ was their term for the specific capability that fills that gap.",
+            "The framework Earley and Ang proposed has four dimensions. Metacognitive CQ is the capacity to think about culture in real time — catching your own assumptions, noticing when a situation is not behaving the way you expected, and adjusting your interpretation before you act on it incorrectly. Cognitive CQ is the knowledge dimension: understanding the norms, values, communication patterns, and social structures of cultures different from your own. Motivational CQ is the drive to engage — genuine curiosity and willingness to invest in cross-cultural relationships even when they are slow, ambiguous, or uncomfortable. Behavioural CQ is the ability to actually change what you do: tone, pace, posture, directness, formality, depending on what the situation calls for.",
+            "Most leaders who have lived or worked internationally develop some cognitive CQ over time. They accumulate knowledge. They know, for example, that hierarchy is more explicit in many Asian and Middle Eastern contexts, or that relationship-building precedes task-work in most of sub-Saharan Africa. The harder development, and the one research repeatedly identifies as the missing piece in global ministry leadership specifically, is metacognitive CQ. This is the dimension that requires catching yourself mid-assumption — not after the fact, but in the room, before the damage is done.",
+            "David Livermore, whose work applies CQ research directly to Christian leadership contexts, frames the development challenge in terms that go beyond professional competency. In his view, CQ growth is not a behaviour modification project. It is a matter of inward transformation: becoming the kind of person who can genuinely love across difference. The Great Commandment does not come with a cultural exemption. Loving your neighbour as yourself assumes you first do the work of understanding how your neighbour actually experiences life. That understanding does not happen automatically. It requires the humility to admit that your instincts — even the well-meaning ones — were formed in a particular place, and that formation was not universal.",
+            "This matters enormously for cross-cultural workers, for team leaders managing multicultural staff, and for church leaders serving globally mobile congregations. The relational breakdowns that derail cross-cultural partnerships are rarely caused by malice or incompetence. They are caused by leaders operating from unexamined assumptions: assuming that directness communicates respect (it sometimes communicates disrespect), assuming that silence signals agreement (it often signals discomfort), assuming that enthusiasm inspires (it sometimes signals immaturity or untrustworthiness in cultures where measured speech is a mark of wisdom).",
+            "In cross-cultural mission contexts, research has documented the human and institutional cost of low CQ at scale. Long-term partnerships have collapsed because decisions were made without adequate consultation of local stakeholders — not because the outside leader was unwilling to consult, but because they assumed consultation had happened when it had not, because they were reading relational signals through the wrong cultural lens. Field workers have spent years in communities without gaining the depth of trust needed to do meaningful work, not because they were disliked, but because their behavioural patterns communicated something unintended: impatience, transactionality, or a subtle assumption of authority that was never earned locally.",
+            "The cross-cultural nuance in CQ development is particularly important here. CQ assessment tools can be valuable starting points, but they need to be interpreted carefully. What constitutes adaptive behaviour varies. A behavioural CQ adjustment that is effective in one context — for example, adopting a more indirect communication style — can come across as inauthentic or evasive in a context where directness is expected even between people of different cultural backgrounds. The goal is not cultural mimicry. It is genuine flexibility rooted in respect, and that distinction matters both relationally and ethically.",
+            "From a Christian perspective, there is something theologically significant about the fact that the New Testament church was cross-cultural from its earliest days. Pentecost was not a homogeneous gathering. The Acts 6 conflict that threatened to fracture the Jerusalem church was explicitly cross-cultural — Hellenistic Jews and Hebrew Jews reading the same situation with entirely different eyes. The resolution required structural change, not just better intentions. That pattern — the early church navigating cultural complexity through structural wisdom and Spirit-led discernment — offers a model that predates modern CQ research by two millennia.",
+            "Psalm 86:9 speaks of all nations coming to worship. The New Testament vision in Revelation 7:9 is of every tribe, tongue, and nation gathered before the throne. If that is the telos — the destination of human history as God is directing it — then the work of developing cultural intelligence is not optional enrichment for globally-minded leaders. It is preparation for participation in something God is already doing.",
+            "Practically: a CQ assessment is a useful beginning, not an end. The leaders who develop CQ most effectively pair assessment data with structured reflection on specific cross-cultural experiences, honest feedback from trusted colleagues from other backgrounds, and a long enough time horizon to notice genuine change in their instincts. Start with metacognitive CQ. Before your next cross-cultural meeting, identify one assumption you are carrying into the room and hold it loosely enough to be wrong.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 

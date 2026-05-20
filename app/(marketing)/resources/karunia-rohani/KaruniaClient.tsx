@@ -1207,6 +1207,71 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
       </div>
 
       {/* Ã¢â€â‚¬Ã¢â€â‚¬ SECTION 5: CTA Ã¢â€â‚¬Ã¢â€â‚¬ */}
+      {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: `3px solid ${PRIMARY}` }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: PRIMARY, marginBottom: 12 }}>
+            {lang === "id" ? "Poin Utama" : "Key Takeaway"}
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: BG_DARK, marginBottom: 36 }}>
+            {lang === "id" ? "Tiga hal yang bisa kamu terapkan minggu ini" : "Three things to act on this week"}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {(lang === "id" ? [
+              "Selesaikan asesmen karunia rohani ini dan bagikan hasilmu dengan satu atau dua orang yang mengenalmu dalam konteks pelayanan. Tanya: apakah ini cocok dengan apa yang mereka amati dalam hidupmu?",
+              "Identifikasi satu kegiatan pelayanan konkret di mana kamu merasakan kegembiraan dan aliran terbesar — di situ kemungkinan karuniamu paling aktif. Bagaimana kamu bisa meningkatkan kontribusimu di area itu minggu ini?",
+              "Identifikasi satu area pelayanan yang sering terasa berat atau kosong. Tanya dengan jujur: apakah ini karena karuniamu memang tidak ada di sini, atau karena kamu belum diperlengkapi dengan baik?",
+            ] : [
+              "Complete this spiritual gifts assessment and share your results with one or two people who know you in ministry context. Ask: does this match what they observe in your life and service?",
+              "Identify one concrete ministry activity where you feel the greatest flow and joy — that is likely where your gifts are most active. How can you increase your contribution in that area this week?",
+              "Identify one area of ministry that consistently feels heavy or empty. Ask honestly: is this because your gifts are genuinely absent here, or because you have not yet been well equipped for this area?",
+            ]).map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: BG_LIGHT }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: PRIMARY, flexShrink: 0 }} />
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── LONG-FORM SEO SECTION ──────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: PRIMARY, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            {lang === "id" ? "Latar Belakang" : "Background"}
+          </p>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: BG_DARK, marginBottom: 32, lineHeight: 1.2 }}>
+            {lang === "id"
+              ? "Memahami Karunia Rohani dalam Konteks Lintas Budaya: Panduan bagi Pemimpin Kristen Indonesia"
+              : "Understanding Spiritual Gifts Across Cultures: A Guide for Christian Leaders"}
+          </h2>
+          {(lang === "id" ? [
+            "Setiap orang percaya membawa sesuatu yang unik ke dalam tubuh Kristus. Inilah keyakinan yang mendasari pemahaman Perjanjian Baru tentang karunia rohani, dan inilah pula yang membuat asesmen karunia rohani menjadi alat yang berharga bagi pemimpin Kristen yang ingin melayani dari tempat kekuatan sejati. Namun pemahaman karunia rohani tidak bisa dilepaskan dari konteks budaya tempat ia diekspresikan, dan bagi pemimpin di Indonesia serta Asia Tenggara, ini berarti kita perlu membaca teks Alkitab dengan mata yang terbuka terhadap keragaman cara Roh Kudus bekerja dalam berbagai konteks budaya yang kaya.",
+            "Alkitab tidak memberikan satu daftar tunggal yang komprehensif tentang karunia rohani. Setidaknya ada tiga bagian utama yang membahasnya secara langsung: 1 Korintus 12, Roma 12, dan Efesus 4. Masing-masing daftar ini muncul dalam konteks teologis dan situasional yang berbeda, dan Gordon Fee dalam karya monumentalnya God's Empowering Presence mengingatkan pembaca bahwa daftar-daftar ini bukan katalog sistematis melainkan contoh representatif dari bagaimana Roh Kudus bekerja. Paulus tidak sedang menyusun taksonomi yang lengkap. Ia sedang menunjukkan keragaman dan kesatuan: banyak karunia, satu Roh, satu tubuh, satu misi.",
+            "Konteks budaya secara langsung membentuk bagaimana karunia rohani diekspresikan dan dikenali. Ambil contoh karunia nubuat. Dalam tradisi lisan berkontek-tinggi yang umum di banyak komunitas di Papua, Kalimantan, atau kepulauan Nusa Tenggara, nubuat sering datang dalam bentuk mimpi yang dikomunal-kan, narasi yang dibagikan dalam pertemuan adat, atau perkataan para tetua yang diterima sebagai suara ilahi. Ini berbeda secara bentuk dari nubuat dalam gereja karismatik perkotaan yang lebih terpengaruh oleh model Barat. Keduanya bisa menjadi ekspresi sah dari karunia yang sama; yang berubah adalah kemasannya, bukan esensinya.",
+            "Leslie Newbigin dalam The Gospel in a Pluralist Society menulis bahwa Injil selalu mengambil bentuk dalam konteks budaya tertentu. Tidak ada ekspresi karunia rohani yang budaya-netral. Ini bukan relativisme teologis, ini realisme budaya. Pemimpin lintas budaya yang bijak belajar untuk membedakan antara inti karunia (pembangunan tubuh Kristus melalui Roh) dan kemasan budayanya (cara karunia itu tampak dan dirasakan dalam komunitas tertentu). Kemasan boleh beragam; inti harus dipertahankan.",
+            "Salah satu tantangan terbesar dalam konteks Indonesia adalah importasi perdebatan teologis Barat tentang karunia rohani. Banyak komunitas Kristen di Indonesia sudah hidup dalam keterbukaan terhadap karunia roh jauh sebelum kategori-kategori teologis Barat ini tiba. Wayne Grudem dalam Systematic Theology menekankan bahwa Alkitab tidak memberikan bukti yang cukup kuat untuk posisi sesasionis yang tegas. Pemimpin perlu menempatkan Alkitab di atas tradisi denominasi dan membiarkan komunitas lokal menemukan ekspresi karunia yang otentik.",
+            "Asesmen karunia rohani berfungsi paling baik ketika digunakan sebagai alat refleksi komunal, bukan sebagai tes psikologis individual. Cara terbaik menggunakannya adalah dalam komunitas kecil atau kelompok pemuridan, di mana hasil asesmen dibagikan, direspons oleh orang lain yang mengenal kita, dan diuji terhadap pengalaman pelayanan nyata. Karunia yang sejati diakui oleh komunitas, bukan hanya oleh diri sendiri.",
+            "Bagi para pekerja lintas budaya yang melayani di Indonesia maupun di luar negeri, pemahaman tentang karunia rohani memiliki implikasi strategis yang penting. Terlalu sering, pola pelayanan lintas budaya didominasi oleh karunia dan metode yang dibawa oleh pekerja dari luar, sementara karunia yang sudah ada dalam komunitas lokal kurang dikenali atau tidak diberi ruang untuk berkembang. Pekerja lintas budaya yang efektif bukan yang paling banyak melayani sendiri, melainkan yang paling berhasil memperlengkapi orang lain untuk melayani sesuai karunia mereka.",
+            "Paulus dalam 1 Korintus 12:7 menulis: 'Tetapi kepada tiap-tiap orang dikaruniakan penyataan Roh untuk kepentingan bersama.' Ini adalah pernyataan yang radikal: setiap orang, bukan hanya pemimpin atau pendeta, membawa kontribusi Roh yang dibutuhkan oleh seluruh tubuh. Karunia bukan hierarki prestise. Karunia adalah arsitektur kasih. Dan dalam tubuh yang sehat, setiap bagian mengetahui perannya dan melakukannya dengan sukacita.",
+            "Asesmen karunia rohani, ketika digunakan dengan benar, bukan tentang menemukan identitas diri. Ini tentang menemukan kontribusi diri. Identitas kita sebagai orang percaya tidak ditentukan oleh karunia kita tetapi oleh siapa kita di dalam Kristus. Karunia adalah cara kita mengekspresikan identitas itu dalam pelayanan kepada orang lain. Ketika seorang pemimpin mengetahui karunianya dan melayani dari tempat itu, ia bukan hanya lebih efektif secara operasional; ia juga lebih hidup secara rohani, karena ia sedang melakukan apa yang ia diciptakan dan dimampukan oleh Roh untuk lakukan.",
+          ] : [
+            "Every believer brings something unique to the body of Christ. This conviction underlies the New Testament's understanding of spiritual gifts, and it is what makes spiritual gifts assessment a valuable tool for Christian leaders who want to serve from a place of genuine strength rather than social expectation. But understanding spiritual gifts cannot be separated from the cultural context in which they are expressed — and for leaders in global cross-cultural contexts, this means reading the biblical text with eyes open to the diversity of ways the Holy Spirit works across different cultural settings.",
+            "The Bible does not provide a single comprehensive list of spiritual gifts. At least three major passages address them directly: 1 Corinthians 12, Romans 12, and Ephesians 4. Each list appears in a different theological and situational context, and Gordon Fee's landmark work God's Empowering Presence reminds readers that these lists are not systematic catalogues but representative examples of how the Holy Spirit works. Paul was not constructing a complete taxonomy. He was demonstrating diversity and unity: many gifts, one Spirit, one body, one mission.",
+            "Cultural context directly shapes how spiritual gifts are expressed and recognized. Consider the gift of prophecy. In high-context oral traditions common across many communities in Africa, Asia, and the Pacific Islands, prophecy often comes through communally shared dreams, narratives given in traditional gatherings, or the words of elders received as divine wisdom. This differs in form from prophecy in urban charismatic churches more influenced by Western models, where prophecy tends to be delivered individually and verbally within structured worship formats. Both can be genuine expressions of the same gift; what changes is the cultural packaging, not the spiritual essence.",
+            "For cross-cultural workers, understanding spiritual gifts has important strategic implications. Too often, cross-cultural ministry patterns are dominated by the gifts and methods of outside workers, while gifts already present in the local community go unrecognized or are not given space to develop. Ephesians 4:12 clearly states that the purpose of the gifts is to 'equip the saints for works of service.' The most effective cross-cultural workers are not those who serve the most themselves, but those who most successfully equip others to serve according to their gifts.",
+            "Spiritual gifts assessment works best when used as a tool for communal reflection rather than individual psychological testing. The best way to use it is in small communities or discipleship groups, where assessment results are shared, responded to by others who know us, and tested against actual ministry experience. Genuine gifts are recognized by community, not just by the individual alone. When a leader knows their gifts and serves from that place, they are not only more operationally effective — they are more spiritually alive, because they are doing what they were created and empowered by the Spirit to do.",
+          ]).map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
+
       <div style={{ background: BG_DARK, padding: "4rem 1.5rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" as const }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, color: "white", lineHeight: 1.15, marginBottom: "0.875rem" }}>

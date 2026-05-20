@@ -840,6 +840,106 @@ export default function WheelOfLifeClient({
         </section>
       )}
 
+      {/* ── KEY TAKEAWAY ─────────────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
+            {t("Key Takeaway", "Poin Utama", "Belangrijkste Conclusie")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
+            {t("Three things to act on this week", "Tiga hal yang bisa kamu terapkan minggu ini", "Drie dingen om deze week op te handelen")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[
+              t(
+                "Complete the Wheel of Life today and identify your two lowest-scoring domains. Before doing anything else, spend 10 minutes writing about why those scores are low — circumstances, choices, or life season.",
+                "Selesaikan Roda Kehidupan hari ini dan identifikasi dua domain dengan skor terendah. Sebelum melakukan hal lain, luangkan 10 menit untuk menulis mengapa skor itu rendah — keadaan, pilihan, atau musim hidup.",
+                "Vul vandaag het Wiel van het Leven in en bepaal je twee laagst scorende domeinen. Besteed eerst tien minuten aan het opschrijven waarom die scores laag zijn — omstandigheden, keuzes of levensseasoen."
+              ),
+              t(
+                "If your lowest-scoring domain involves relationships or rest, treat it as a leading indicator: it often degrades before the others follow. What is one small change you could make this week?",
+                "Jika domain dengan skor terendah melibatkan hubungan atau istirahat, anggap itu sebagai indikator awal: area itu sering memburuk sebelum yang lain mengikutinya. Perubahan kecil apa yang bisa kamu lakukan minggu ini?",
+                "Als je laagst scorende domein relaties of rust betreft, behandel het als een vroege indicator: dat gebied verslechtert vaak voordat de andere volgen. Welke kleine verandering kun je deze week maken?"
+              ),
+              t(
+                "Share your Wheel of Life with one trusted person and ask them to reflect back what they observe. Sometimes our self-scores miss what others can see from the outside.",
+                "Bagikan Roda Kehidupanmu dengan seseorang yang kamu percaya dan minta mereka merefleksikan apa yang mereka amati. Terkadang penilaian diri kita melewatkan apa yang bisa dilihat orang lain dari luar.",
+                "Deel je Wiel van het Leven met een vertrouwd persoon en vraag hun te reflecteren op wat zij waarnemen. Soms missen onze eigen scores wat anderen van buitenaf kunnen zien."
+              ),
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: "oklch(65% 0.15 45)", flexShrink: 0 }} />
+                <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 14, fontWeight: 500, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── LONG-FORM SEO SECTION ──────────────────────────────────────────────── */}
+      <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
+            {t("Background", "Latar Belakang", "Achtergrond")}
+          </p>
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
+            {t(
+              "The Wheel of Life Assessment Across Cultures: A Guide for Leaders and Cross-Cultural Workers",
+              "Asesmen Roda Kehidupan Lintas Budaya: Panduan bagi Pemimpin dan Pekerja Lintas Budaya",
+              "Het Wiel van het Leven over Culturen Heen: Een Gids voor Leiders en Interculturele Werkers"
+            )}
+          </h2>
+          {[
+            t(
+              "Most leaders who encounter the Wheel of Life for the first time find it disarmingly simple. You draw a circle, divide it into segments, give each segment a score, and connect the dots. The resulting shape, rarely a perfect circle, tells you something immediately visible about where life feels full and where it feels depleted. That simplicity is its strength. But simplicity also conceals assumptions, and for leaders working across cultures, those assumptions deserve careful examination.",
+              "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Kamu menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama.",
+              "De meeste leiders die voor het eerst het Wiel van het Leven tegenkomen, vinden het verrassend eenvoudig. Je tekent een cirkel, verdeelt hem in segmenten, geeft elk segment een score en verbindt de punten. De resulterende vorm, zelden een perfecte cirkel, vertelt je onmiddellijk waar het leven vol aanvoelt en waar het leeg aanvoelt. Die eenvoud is de kracht. Maar eenvoud verhult ook aannames, en voor leiders die cultuuroverschrijdend werken, verdienen die aannames zorgvuldige aandacht."
+            ),
+            t(
+              "The Wheel of Life is most commonly attributed to Paul Meyer, the founder of the Success Motivation Institute, who introduced it as a coaching tool in the mid-20th century. The standard version divides life into domains such as career, finances, health, family and friends, romance, personal growth, recreation, and spiritual life. Each domain receives a satisfaction score from 0 to 10, and the shape of the completed wheel reveals which areas are receiving abundant attention and which are running on empty. The visual metaphor of the wheel is intentional: a bumpy, uneven wheel does not roll smoothly.",
+              "Roda Kehidupan paling sering dikaitkan dengan Paul Meyer, pendiri Success Motivation Institute, yang memperkenalkannya sebagai alat coaching pada pertengahan abad ke-20. Versi standar membagi kehidupan ke dalam domain-domain seperti karier, keuangan, kesehatan, keluarga dan teman, romansa, pertumbuhan pribadi, rekreasi, dan kehidupan spiritual. Setiap domain mendapat skor kepuasan dari 0 hingga 10, dan bentuk roda yang lengkap mengungkapkan area mana yang mendapat perhatian berlimpah dan mana yang hampir kosong.",
+              "Het Wiel van het Leven wordt het meest toegeschreven aan Paul Meyer, de oprichter van het Success Motivation Institute. De standaardversie verdeelt het leven in domeinen zoals carrière, financiën, gezondheid, familie en vrienden, romantiek, persoonlijke groei, recreatie en spiritueel leven. Elk domein krijgt een tevredenheidsscore van 0 tot 10, en de vorm van het voltooide wiel onthult welke gebieden overvloedige aandacht ontvangen en welke leegloopt."
+            ),
+            t(
+              "This metaphor holds real diagnostic power, and the framework has become one of the most widely used starting-point assessments in personal development coaching worldwide. The problem is not the tool itself but the invisible cultural assumptions it carries. The standard Wheel of Life divides life into segments that reflect an individualist, Western understanding of how life is organized. It assumes that a person experiences career as separate from family, personal growth as distinct from community, and self-care as a domain that can be evaluated independently from relational obligations. In much of the world, these separations feel artificial at best and disrespectful at worst.",
+              "Metafora ini memiliki kekuatan diagnostik yang nyata, dan kerangka ini telah menjadi salah satu asesmen titik awal yang paling banyak digunakan dalam coaching pengembangan pribadi di seluruh dunia. Masalahnya bukan pada alatnya sendiri tetapi pada asumsi budaya tersembunyi yang dibawanya. Roda Kehidupan standar membagi kehidupan menjadi segmen-segmen yang mencerminkan pemahaman individualistis dan Barat tentang bagaimana kehidupan diorganisasikan. Ia mengasumsikan bahwa seseorang mengalami karier sebagai sesuatu yang terpisah dari keluarga. Di banyak bagian dunia, pemisahan-pemisahan ini terasa artifisial atau bahkan tidak menghormati.",
+              "Deze metafoor heeft echte diagnostische kracht, en het kader is uitgegroeid tot een van de meest gebruikte startbeoordelingen in persoonlijk ontwikkelingscoaching wereldwijd. Het probleem is niet het instrument zelf, maar de onzichtbare culturele aannames die het met zich meebrengt. Het standaard Wiel van het Leven verdeelt het leven in segmenten die een individualistisch, westers begrip weerspiegelen van hoe het leven is georganiseerd."
+            ),
+            t(
+              "Cross-cultural workers, including long-term field workers serving in contexts far from their home culture, face a particular version of this challenge. Their lived experience often involves a near-total collapse of the boundaries the standard Wheel assumes. They live at their workplace. Their colleagues are their primary community. Their spiritual practice is expressed through their daily ministry activity. Applying a standard Wheel of Life to this reality and asking someone to score 'work-life balance' may produce a score that means little, because the model assumes a separation that simply does not exist in their daily life.",
+              "Pekerja lintas budaya, termasuk pekerja lapangan jangka panjang yang melayani di konteks jauh dari budaya asal mereka, menghadapi versi khusus dari tantangan ini. Pengalaman hidup mereka sering melibatkan runtuhnya hampir semua batas yang diasumsikan oleh Roda standar. Mereka hidup di tempat kerja mereka. Rekan-rekan mereka adalah komunitas utama mereka. Praktik spiritual mereka diekspresikan melalui aktivitas pelayanan sehari-hari. Menerapkan Roda Kehidupan standar pada realitas ini mungkin menghasilkan skor yang tidak banyak bermakna.",
+              "Interculturele werkers, inclusief langetermijn veldwerkers die dienen in contexten ver van hun thuiscultuur, worden geconfronteerd met een specifieke versie van deze uitdaging. Hun leefervaring omvat vaak een bijna totale ineenstorting van de grenzen die het standaard Wiel aanneemt. Ze wonen op hun werkplek. Hun collega's zijn hun primaire gemeenschap. Het toepassen van een standaard Wiel van het Leven op deze realiteit kan scores opleveren die weinig betekenen."
+            ),
+            t(
+              "The concept of balance itself deserves cultural examination. In the individualist framework underlying the standard Wheel of Life, balance implies a managed equilibrium across all domains, achieved through deliberate personal choices about time and energy allocation. In seasonal, communal, and oral cultures, flourishing is more often understood as rhythmic rather than balanced. Periods of intense communal activity are followed by periods of rest and recovery. The Wheel of Life, applied cross-culturally, works best when it is treated as a diagnostic conversation starter rather than a prescription for equal investment in every domain simultaneously.",
+              "Konsep keseimbangan itu sendiri layak untuk diperiksa secara budaya. Dalam kerangka individualistis yang mendasari Roda Kehidupan standar, keseimbangan menyiratkan ekuilibrium yang dikelola di semua domain. Dalam budaya yang musiman, komunal, dan lisan, kemakmuran lebih sering dipahami sebagai sesuatu yang ritmis daripada seimbang. Periode aktivitas komunal yang intens diikuti oleh periode istirahat dan pemulihan. Roda Kehidupan paling baik diperlakukan sebagai pemicu percakapan diagnostik, bukan resep investasi yang sama di setiap domain sekaligus.",
+              "Het concept van balans zelf verdient cultureel onderzoek. In het individualistische kader dat ten grondslag ligt aan het standaard Wiel van het Leven, impliceert balans een beheerd evenwicht over alle domeinen. In seizoensgebonden, gemeenschappelijke en mondelinge culturen wordt bloei vaker begrepen als ritmisch dan gebalanceerd. Het Wiel van het Leven werkt het beste als het wordt behandeld als een diagnostisch gespreksstarter."
+            ),
+            t(
+              "Richard Foster's Celebration of Discipline, which explores the classical Christian spiritual disciplines as pathways to freedom and wholeness, offers a framework that sits naturally alongside the Wheel of Life for leaders of faith. Foster argues that ordered patterns of life — including the disciplines of study, simplicity, solitude, and rest — are not legalistic impositions but liberating structures that create space for genuine flourishing. The Wheel of Life, completed regularly and reflectively, supports exactly the kind of honest self-examination that Foster commends.",
+              "Buku Richard Foster Celebration of Discipline, yang mengeksplorasi disiplin rohani Kristen klasik sebagai jalan menuju kebebasan dan keutuhan, menawarkan kerangka yang secara alami berdampingan dengan Roda Kehidupan bagi pemimpin iman. Foster berpendapat bahwa pola hidup yang teratur — termasuk disiplin studi, kesederhanaan, kesunyian, dan istirahat — bukanlah pemaksaan legalistis tetapi struktur yang membebaskan dan menciptakan ruang bagi kemakmuran sejati.",
+              "Richard Fosters Celebration of Discipline biedt een kader dat van nature naast het Wiel van het Leven past voor leiders van het geloof. Foster betoogt dat geordende levenspatronen — inclusief de disciplines van studie, eenvoud, eenzaamheid en rust — geen wettische oplegingen zijn maar bevrijdende structuren die ruimte scheppen voor echte bloei."
+            ),
+            t(
+              "Luke 2:52 offers a theological benchmark that the Wheel of Life, rightly adapted, aspires toward: Jesus grew 'in wisdom and stature, and in favor with God and man.' This four-dimensional portrait of human development, covering the intellectual, physical, spiritual, and relational domains, is not a prescription for equal investment in four quadrants simultaneously but a picture of whole-person growth over time. The Wheel of Life, at its best, is an instrument for noticing where growth has stalled, where depletion has set in unnoticed, and where the work of restoration needs to begin.",
+              "Lukas 2:52 menawarkan tolak ukur teologis yang menjadi aspirasi Roda Kehidupan: Yesus bertumbuh 'dalam hikmat dan statur, dan dalam kasih karunia pada Allah dan manusia.' Potret empat dimensi perkembangan manusia ini bukan resep investasi yang sama di empat kuadran sekaligus, melainkan gambaran pertumbuhan manusia seutuhnya dari waktu ke waktu. Roda Kehidupan, pada terbaiknya, adalah instrumen untuk memperhatikan di mana pertumbuhan terhenti dan di mana pemulihan perlu dimulai.",
+              "Lucas 2:52 biedt een theologische maatstaf waarnaar het Wiel van het Leven, goed aangepast, streeft: Jezus groeide 'in wijsheid en gestalte, en in genade bij God en mensen.' Dit vierdimensionale portret van menselijke ontwikkeling is geen recept voor gelijke investering in vier kwadranten tegelijk, maar een beeld van groei als geheel persoon door de tijd heen."
+            ),
+            t(
+              "The deepest theological resource for whole-life assessment is the Hebrew concept of shalom. Shalom is not simply peace in the sense of absence of conflict but comprehensive flourishing — right relationship with God, with others, with oneself, and with creation. The Wheel of Life, for a person of faith, is not primarily a productivity tool or a personal optimization exercise. It is an instrument of honest self-knowledge in the service of shalom, a way of seeing clearly where life is not yet as it was made to be, and of bringing that honesty before God and trusted community with humility, hope, and the confidence that the One who began a good work is faithfully completing it.",
+              "Sumber daya teologis terdalam untuk penilaian kehidupan secara menyeluruh adalah konsep Ibrani tentang shalom. Shalom bukan sekadar kedamaian dalam arti ketiadaan konflik tetapi kemakmuran yang komprehensif — hubungan yang benar dengan Allah, dengan sesama, dengan diri sendiri, dan dengan ciptaan. Roda Kehidupan, bagi orang beriman, bukan terutama alat produktivitas atau latihan optimasi pribadi. Ini adalah instrumen pengenalan diri yang jujur demi shalom, cara melihat dengan jelas di mana hidup belum seperti yang seharusnya.",
+              "De diepste theologische bron voor een beoordeling van het hele leven is het Hebreeuwse begrip shalom. Shalom is niet alleen vrede in de zin van afwezigheid van conflict, maar alomvattend bloei — juiste relatie met God, met anderen, met jezelf en met de schepping. Het Wiel van het Leven is voor een gelovige niet primair een productiviteitsinstrument maar een middel voor eerlijke zelfkennis in dienst van shalom."
+            ),
+          ].map((para, i) => (
+            <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
+              {para}
+            </p>
+          ))}
+        </div>
+      </div>
+
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
