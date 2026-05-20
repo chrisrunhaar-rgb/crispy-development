@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import PushNotificationPrompt from "@/components/PushNotificationPrompt";
 
@@ -26,9 +27,9 @@ function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
   const pathname = usePathname();
 
   const items = [
-    { href: "/dashboard", label: "Home", icon: HomeIcon, badge: null },
-    { href: "/resources", label: "Library", icon: ResourcesIcon, badge: null },
-    ...(hasCoachAccess ? [{ href: "/coach", label: "Coach", icon: CoachIcon, badge: "BETA" as string | null }] : []),
+    { href: "/dashboard", label: "Home", icon: HomeIcon, badge: null, logoSrc: null },
+    { href: "/resources", label: "Library", icon: ResourcesIcon, badge: null, logoSrc: null },
+    ...(hasCoachAccess ? [{ href: "/coach", label: "AI Coach", icon: null, badge: null as string | null, logoSrc: "/images/waypoint/waypoint-logo-blue.png" }] : []),
   ];
 
   return (
@@ -47,7 +48,7 @@ function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
       }}
     >
       <div style={{ display: "flex", width: "100%", maxWidth: "400px" }}>
-        {items.map(({ href, label, icon: Icon, badge }) => {
+        {items.map(({ href, label, icon: Icon, badge, logoSrc }) => {
           const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
           return (
             <Link
@@ -78,16 +79,28 @@ function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
                   {badge}
                 </span>
               )}
-              <Icon active={active} />
-              <span style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.6rem",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-              }}>
-                {label}
-              </span>
+              {logoSrc ? (
+                <Image
+                  src={logoSrc}
+                  alt="WayPoint"
+                  width={20}
+                  height={20}
+                  style={{ opacity: active ? 1 : 0.55, transition: "opacity 0.15s" }}
+                />
+              ) : Icon ? (
+                <Icon active={active} />
+              ) : null}
+              {label && (
+                <span style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.6rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}>
+                  {label}
+                </span>
+              )}
             </Link>
           );
         })}
@@ -114,11 +127,3 @@ function ResourcesIcon({ active }: { active: boolean }) {
   );
 }
 
-function CoachIcon({ active }: { active: boolean }) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.5 : 1.75} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2a7 7 0 017 7c0 3.5-2.5 6.5-5.5 7.4V18h-3v-1.6C7.5 15.5 5 12.5 5 9a7 7 0 017-7z" />
-      <path d="M9 21h6" />
-    </svg>
-  );
-}
