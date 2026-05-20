@@ -12,7 +12,7 @@ const LogoRevealPlayer = dynamic(
 );
 
 export default function HomeContent() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const h = t.home;
   const [activeTile, setActiveTile] = useState<number | null>(null);
 
@@ -171,52 +171,12 @@ export default function HomeContent() {
               <Link href="/resources" className="btn-primary">{h.platformCta} <span style={{ fontSize: "0.9em" }}>→</span></Link>
             </div>
             <div>
-              {/* Dashboard mockup */}
-              <div style={{ background: "oklch(97% 0.005 80)", border: "1px solid oklch(52% 0.008 260 / 0.3)", overflow: "hidden", boxShadow: "0 32px 64px oklch(10% 0.08 260 / 0.5)" }}>
-                {/* Header bar */}
-                <div style={{ background: "oklch(30% 0.12 260)", padding: "0.875rem 1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.2rem" }}>Personal Dashboard</p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(97% 0.005 80)" }}>Welcome back.</p>
-                  </div>
-                  <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.6rem", color: "white" }}>JD</span>
-                  </div>
-                </div>
-                {/* Tab switcher */}
-                <div style={{ background: "oklch(28% 0.11 260)", padding: "0.5rem 1.25rem", display: "flex", gap: "0.25rem" }}>
-                  {["Personal", "Team"].map((tab, i) => (
-                    <span key={tab} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.3rem 0.75rem", borderRadius: 100, background: i === 0 ? "oklch(65% 0.15 45)" : "transparent", color: i === 0 ? "white" : "oklch(52% 0.008 260)", whiteSpace: "nowrap" }}>
-                      {tab}
-                    </span>
-                  ))}
-                </div>
-                {/* Assessment section */}
-                <div style={{ padding: "0.875rem 1.25rem 0.5rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(52% 0.008 260)", marginBottom: "0.625rem" }}>My Assessment Results</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", marginBottom: "0.75rem" }}>
-                    {[
-                      { label: "DISC", color: "#C44A2A", done: true },
-                      { label: "Wheel", color: "#3b5fa0", done: true },
-                      { label: "Thinking", color: "oklch(48% 0.18 300)", done: false },
-                      { label: "Gifts", color: "oklch(65% 0.15 45)", done: false },
-                    ].map((tile) => (
-                      <div key={tile.label} style={{ background: tile.done ? `${tile.color}12` : "oklch(93% 0.005 80)", border: `1px solid ${tile.done ? tile.color + "40" : "oklch(88% 0.008 80)"}`, padding: "0.5rem 0.375rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
-                        <div style={{ width: "22px", height: "22px", borderRadius: "50%", background: tile.done ? tile.color : "oklch(82% 0.006 80)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          {tile.done && <span style={{ fontSize: "0.5rem", color: "white", fontWeight: 700 }}>✓</span>}
-                        </div>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, color: tile.done ? "oklch(28% 0.008 260)" : "oklch(62% 0.006 260)", textAlign: "center", lineHeight: 1.2 }}>{tile.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {/* Journey progress */}
-                <div style={{ padding: "0 1.25rem 0.875rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <div style={{ flex: 1, height: "3px", background: "oklch(88% 0.008 80)" }}>
-                    <div style={{ height: "100%", width: "25%", background: "oklch(65% 0.15 45)" }} />
-                  </div>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, color: "oklch(42% 0.008 260)", whiteSpace: "nowrap" }}>2 / 8 {h.mockupProgress}</span>
-                </div>
+              <div style={{ borderRadius: "6px", overflow: "hidden", boxShadow: "0 32px 64px oklch(10% 0.08 260 / 0.5)" }}>
+                <img
+                  src={lang === "id" ? "/dashboard-id.png" : "/dashboard-en.png"}
+                  alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
+                  style={{ width: "100%", display: "block" }}
+                />
               </div>
             </div>
           </div>
