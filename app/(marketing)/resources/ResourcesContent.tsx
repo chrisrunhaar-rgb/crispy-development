@@ -25,14 +25,14 @@ const FORMAT_COLORS: Record<string, string> = {
 };
 
 const SECTION_ORDER = [
-  { key: "assessments", label: "Assessments" },
-  { key: "cross-cultural", label: "Cross-Cultural" },
-  { key: "leadership", label: "Leadership" },
-  { key: "team-facilitation", label: "Team & Facilitation" },
-  { key: "personal-development", label: "Personal Development" },
-  { key: "thinking-tools", label: "Thinking Tools" },
-  { key: "faith-calling", label: "Faith & Calling" },
-  { key: "self-care", label: "Self-Care & Resilience" },
+  { key: "assessments",        label: "Assessments",          labelId: "Penilaian" },
+  { key: "cross-cultural",     label: "Cross-Cultural",       labelId: "Lintas Budaya" },
+  { key: "leadership",         label: "Leadership",           labelId: "Kepemimpinan" },
+  { key: "team-facilitation",  label: "Team & Facilitation",  labelId: "Tim & Fasilitasi" },
+  { key: "personal-development", label: "Personal Development", labelId: "Pengembangan Diri" },
+  { key: "thinking-tools",     label: "Thinking Tools",       labelId: "Alat Berpikir" },
+  { key: "faith-calling",      label: "Faith & Calling",      labelId: "Iman & Panggilan" },
+  { key: "self-care",          label: "Self-Care & Resilience", labelId: "Perawatan Diri & Ketahanan" },
 ];
 
 function getModuleAccess(
@@ -404,7 +404,7 @@ export default function ResourcesContent({
                       fontSize: "clamp(0.95rem, 2.5vw, 1.125rem)",
                       color: "oklch(22% 0.005 260)",
                     }}>
-                      {section.label}
+                      {lang === "id" ? section.labelId : section.label}
                     </span>
                     <span style={{
                       fontFamily: "var(--font-montserrat)",
@@ -414,7 +414,7 @@ export default function ResourcesContent({
                       textTransform: "uppercase",
                       color: "oklch(62% 0.008 260)",
                     }}>
-                      {sectionResources.length} {sectionResources.length === 1 ? "resource" : "resources"}
+                      {sectionResources.length} {lang === "id" ? "sumber daya" : sectionResources.length === 1 ? "resource" : "resources"}
                     </span>
                   </div>
                   <span style={{
