@@ -12,6 +12,7 @@ const ASSESSMENTS = [
   { id: "16-personalities", label: "16 Personalities", description: "In-depth personality profiles", live: true },
   { id: "enneagram", label: "Enneagram", description: "Core motivations & growth paths", live: true },
   { id: "big-five", label: "Big Five (OCEAN)", description: "Five-factor personality traits", live: true },
+  { id: "5languages", label: "5 Languages of Appreciation", description: "How team members feel valued", live: true },
 ];
 
 export default function TeamAssessmentSelector({
