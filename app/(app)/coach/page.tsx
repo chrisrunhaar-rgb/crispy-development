@@ -40,7 +40,7 @@ export default async function CoachPage({
   const admin = createAdminClient();
   const { data: membership } = await admin
     .from("memberships")
-    .select("is_admin, coach_access, coach_minutes_granted")
+    .select("is_admin, coach_access, coach_minutes_granted, currency")
     .eq("user_id", user.id)
     .single();
 
@@ -76,7 +76,7 @@ export default async function CoachPage({
 
   const completedSessions = sessions ?? [];
   const currency: "idr" | "usd" =
-    user.user_metadata?.language_preference === "id" ? "idr" : "usd";
+    membership?.currency === "idr" ? "idr" : "usd";
 
   return (
     <CoachCarousel
