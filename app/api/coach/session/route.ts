@@ -43,7 +43,7 @@ export async function PATCH(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { session_id, phase, transcript_entry, complete, duration_seconds, shared_with_leader } = body;
+  const { session_id, phase, transcript_entry, complete, duration_seconds } = body;
 
   if (!session_id) return NextResponse.json({ error: "session_id required" }, { status: 400 });
 
@@ -64,7 +64,6 @@ export async function PATCH(req: NextRequest) {
     updates.completed_at = new Date().toISOString();
   }
   if (duration_seconds) updates.duration_seconds = duration_seconds;
-  if (typeof shared_with_leader === "boolean") updates.shared_with_leader = shared_with_leader;
   if (transcript_entry) {
     const existing = (session.transcript as unknown[]) ?? [];
     updates.transcript = [...existing, transcript_entry];
