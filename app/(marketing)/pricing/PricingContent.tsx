@@ -260,22 +260,25 @@ export default function PricingContent({ isIndonesia }: Props) {
     teamPeriod: id
       ? "pembayaran sekali · 8 kursi anggota · seumur hidup"
       : "one-time · 8 member seats · lifetime",
+    teamValue: isIndonesia
+      ? "RP 187k per anggota · hemat 53% dari harga individual"
+      : "$24.88 per member · 49% off individual plans",
     teamFeatures: id
       ? [
-          "Fitur Jalur Pribadi untuk semua 8 anggota",
-          "Dasbor tim + modul perjalanan bersama",
-          "8 token undangan untuk dibagikan pemimpin",
-          "60 menit AI coaching per anggota",
-          "Alat dan panduan khusus pemimpin tim",
-          "Kurikulum konten yang dikurasi pemimpin",
+          "Perjalanan tim yang unik — progres bersama, dipandu pemimpin",
+          "8 penilaian kepemimpinan pribadi — satu per anggota",
+          "Seluruh perpustakaan konten untuk semua 8 anggota",
+          "60 menit WayPoint AI coaching per anggota (8 jam total)",
+          "Dasbor tim + kontrol konten pemimpin",
+          "Alat kepemimpinan lintas budaya khusus pemimpin tim",
         ]
       : [
-          "Personal plan features for all 8 members",
-          "Team dashboard + shared team journey",
-          "8 invite tokens for your members",
-          "60 min AI coaching per member",
-          "Team leader tools and guides",
-          "Leader-curated content curriculum",
+          "Unique team journey — shared, leader-paced progression",
+          "8 personal leadership assessments — one per member",
+          "Full content library for all 8 members",
+          "60 min AI coaching per member (8 hours total)",
+          "Team dashboard + leader content controls",
+          "Cross-cultural leader tools and guides",
         ],
     teamNote: id
       ? `Pemimpin memerlukan Jalur Pribadi${isIndonesia ? " (RP 399.000)" : " ($49)"} — dibeli terpisah. Kursi melekat pada pembelian.`
@@ -589,10 +592,22 @@ export default function PricingContent({ isIndonesia }: Props) {
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               color: "oklch(55% 0.008 260)",
-              margin: "0.875rem 0 2.5rem",
+              margin: "0.875rem 0 0.875rem",
             }}
           >
             {copy.teamPeriod}
+          </p>
+
+          <p
+            style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "oklch(65% 0.15 45)",
+              margin: "0 0 2.5rem",
+            }}
+          >
+            {copy.teamValue}
           </p>
 
           <ul
