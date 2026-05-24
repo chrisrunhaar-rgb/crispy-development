@@ -58,6 +58,7 @@ export default function TeamRoster({
   currentLanguage?: "en" | "id";
 }) {
   const [members, setMembers] = useState<RosterMember[]>(initialMembers);
+  const [membersOpen, setMembersOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editTenure, setEditTenure] = useState("");
@@ -308,6 +309,31 @@ export default function TeamRoster({
         </div>
       ) : (
           <div>
+            {/* Members toggle row */}
+            <button
+              type="button"
+              onClick={() => setMembersOpen(o => !o)}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.75rem 1.5rem",
+                background: "oklch(98% 0.003 80)",
+                border: "none",
+                borderTop: "1px solid oklch(90% 0.006 80)",
+                cursor: "pointer",
+                gap: "0.5rem",
+              }}
+            >
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(38% 0.008 260)", letterSpacing: "0.04em" }}>
+                {totalCount} {language === "id" ? "anggota" : totalCount === 1 ? "member" : "members"}
+              </span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="oklch(52% 0.008 260)" strokeWidth={1.5} strokeLinecap="round" style={{ width: "14px", height: "14px", flexShrink: 0, transform: membersOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                <path d="M3 6l5 5 5-5" />
+              </svg>
+            </button>
+            {membersOpen && (<>
             {/* Leader row — always first, read-only */}
             {leaderName && (
               <div style={{ borderTop: "1px solid oklch(90% 0.006 80)" }}>
@@ -626,6 +652,7 @@ export default function TeamRoster({
                 </div>
               );
             })}
+            </>)}
           </div>
         )}
 

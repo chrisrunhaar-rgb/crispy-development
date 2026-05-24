@@ -25,6 +25,7 @@ export default function TeamAssessmentSelector({
   const [selected, setSelected] = useState<string[]>(initialSelected);
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
+  const [open, setOpen] = useState(false);
 
   function toggle(id: string) {
     const next = selected.includes(id)
@@ -39,88 +40,111 @@ export default function TeamAssessmentSelector({
     });
   }
 
+  const selectedNames = ASSESSMENTS.filter(a => selected.includes(a.id)).map(a => a.label);
+
   return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", flexWrap: "wrap", gap: "0.5rem" }}>
-        <div>
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.25rem" }}>Team Assessments</p>
-          <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.005 260)", margin: 0 }}>
-            Select assessments for your team&apos;s pathway
-          </h3>
+    <div style={{ border: "1px solid oklch(88% 0.008 80)", borderRadius: "8px", overflow: "hidden" }}>
+      {/* Toggle header */}
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "1rem 1.25rem",
+          background: "white",
+          border: "none",
+          cursor: "pointer",
+          textAlign: "left",
+          gap: "0.75rem",
+        }}
+      >
+        <div style={{ minWidth: 0 }}>
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.2rem" }}>Team Assessments</p>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: 600, color: "oklch(38% 0.008 260)", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {selected.length === 0 ? "None selected" : selectedNames.slice(0, 3).join(", ") + (selectedNames.length > 3 ? ` +${selectedNames.length - 3}` : "")}
+          </p>
         </div>
-        {saved && (
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: "oklch(40% 0.15 145)", letterSpacing: "0.04em" }}>
-            ✓ Saved
-          </span>
-        )}
-        {isPending && !saved && (
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(55% 0.008 260)", letterSpacing: "0.04em" }}>
-            Saving…
-          </span>
-        )}
-      </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>
+          {(saved || isPending) && (
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: saved ? "oklch(40% 0.15 145)" : "oklch(55% 0.008 260)" }}>
+              {saved ? "✓ Saved" : "Saving…"}
+            </span>
+          )}
+          <svg viewBox="0 0 16 16" fill="none" stroke="oklch(52% 0.008 260)" strokeWidth={1.5} strokeLinecap="round" style={{ width: "14px", height: "14px", flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+            <path d="M3 6l5 5 5-5" />
+          </svg>
+        </div>
+      </button>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "0.75rem" }}>
-        {ASSESSMENTS.map(a => {
-          const isOn = selected.includes(a.id);
-          return (
-            <button
-              key={a.id}
-              onClick={() => a.live && toggle(a.id)}
-              disabled={!a.live || isPending}
-              style={{
-                textAlign: "left",
-                padding: "1rem 1.125rem",
-                border: isOn && a.live
-                  ? "1.5px solid oklch(65% 0.15 45)"
-                  : "1.5px solid oklch(88% 0.008 80)",
-                background: isOn && a.live
-                  ? "oklch(65% 0.15 45 / 0.07)"
-                  : a.live ? "white" : "oklch(96% 0.003 80)",
-                cursor: a.live ? "pointer" : "default",
-                opacity: a.live ? 1 : 0.55,
-                transition: "border-color 0.15s, background 0.15s",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.35rem" }}>
-                <span style={{
-                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem",
-                  color: isOn && a.live ? "oklch(65% 0.15 45)" : "oklch(22% 0.005 260)",
-                }}>
-                  {a.label}
-                </span>
-                {a.live ? (
-                  <span style={{
-                    width: "16px", height: "16px", flexShrink: 0,
-                    borderRadius: "50%",
-                    border: isOn ? "none" : "1.5px solid oklch(75% 0.008 80)",
-                    background: isOn ? "oklch(65% 0.15 45)" : "transparent",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    {isOn && <span style={{ color: "white", fontSize: "0.6rem", lineHeight: 1 }}>✓</span>}
-                  </span>
-                ) : (
-                  <span style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700,
-                    letterSpacing: "0.08em", color: "oklch(60% 0.008 260)",
-                    background: "oklch(90% 0.005 80)", padding: "0.15rem 0.4rem",
-                    textTransform: "uppercase",
-                  }}>
-                    Soon
-                  </span>
-                )}
-              </div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0, lineHeight: 1.45 }}>
-                {a.description}
-              </p>
-            </button>
-          );
-        })}
-      </div>
-
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(60% 0.008 260)", marginTop: "0.875rem", lineHeight: 1.5 }}>
-        Selected assessments become steps in your team&apos;s journey. Changes apply immediately.
-      </p>
+      {/* Collapsible body */}
+      {open && (
+        <div style={{ borderTop: "1px solid oklch(90% 0.006 80)", padding: "1.25rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "0.75rem" }}>
+            {ASSESSMENTS.map(a => {
+              const isOn = selected.includes(a.id);
+              return (
+                <button
+                  key={a.id}
+                  onClick={() => a.live && toggle(a.id)}
+                  disabled={!a.live || isPending}
+                  style={{
+                    textAlign: "left",
+                    padding: "1rem 1.125rem",
+                    border: isOn && a.live
+                      ? "1.5px solid oklch(65% 0.15 45)"
+                      : "1.5px solid oklch(88% 0.008 80)",
+                    background: isOn && a.live
+                      ? "oklch(65% 0.15 45 / 0.07)"
+                      : a.live ? "white" : "oklch(96% 0.003 80)",
+                    cursor: a.live ? "pointer" : "default",
+                    opacity: a.live ? 1 : 0.55,
+                    transition: "border-color 0.15s, background 0.15s",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.35rem" }}>
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem",
+                      color: isOn && a.live ? "oklch(65% 0.15 45)" : "oklch(22% 0.005 260)",
+                    }}>
+                      {a.label}
+                    </span>
+                    {a.live ? (
+                      <span style={{
+                        width: "16px", height: "16px", flexShrink: 0,
+                        borderRadius: "50%",
+                        border: isOn ? "none" : "1.5px solid oklch(75% 0.008 80)",
+                        background: isOn ? "oklch(65% 0.15 45)" : "transparent",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}>
+                        {isOn && <span style={{ color: "white", fontSize: "0.6rem", lineHeight: 1 }}>✓</span>}
+                      </span>
+                    ) : (
+                      <span style={{
+                        fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700,
+                        letterSpacing: "0.08em", color: "oklch(60% 0.008 260)",
+                        background: "oklch(90% 0.005 80)", padding: "0.15rem 0.4rem",
+                        textTransform: "uppercase",
+                      }}>
+                        Soon
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(52% 0.008 260)", margin: 0, lineHeight: 1.45 }}>
+                    {a.description}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(60% 0.008 260)", marginTop: "0.875rem", lineHeight: 1.5 }}>
+            Selected assessments become steps in your team&apos;s journey. Changes apply immediately.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
