@@ -23,7 +23,7 @@ export default function ClientLayout({
   );
 }
 
-function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
+export function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
   const pathname = usePathname();
 
   const items = [

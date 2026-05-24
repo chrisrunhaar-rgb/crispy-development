@@ -176,6 +176,14 @@ export default async function DashboardPage({
     }
   }
 
+  // ── Coach access check ──
+  const { data: membershipRow } = await admin
+    .from("memberships")
+    .select("coach_access, is_admin")
+    .eq("user_id", viewingUserId)
+    .maybeSingle();
+  const hasCoachAccess = membershipRow?.coach_access === true || membershipRow?.is_admin === true;
+
   // First-time onboarding — redirect new members before any heavy fetching
   if (!user.user_metadata?.onboarding_complete && !viewingAsAdmin) {
     redirect("/welcome");
@@ -521,7 +529,7 @@ export default async function DashboardPage({
             </div>
           </div>
 
-          {/* 3-Tab switcher — pill capsule */}
+          {/* Tab switcher — pill capsule */}
           <div style={{ paddingBottom: "1.75rem", display: "flex", justifyContent: "center" }}>
             <div id="tour-tabs" style={{
               display: "inline-flex",
@@ -591,6 +599,34 @@ export default async function DashboardPage({
                   </Link>
                 );
               })}
+              {hasCoachAccess && (
+                <Link href="/coach" style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontFamily: "var(--font-montserrat)",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "0.5rem 1.125rem",
+                  borderRadius: 100,
+                  border: "none",
+                  whiteSpace: "nowrap",
+                  transition: "background 0.15s ease, color 0.15s ease",
+                  background: "transparent",
+                  color: "oklch(68% 0.06 260)",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                    <rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                    <path d="M2 8.5C2 11.538 4.686 14 8 14s6-2.462 6-5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <line x1="8" y1="14" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                  AI Coach
+                </Link>
+              )}
             </div>
           </div>
         </div>
