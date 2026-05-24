@@ -31,7 +31,7 @@ const VERSES: Record<string, { en_ref: string; id_ref: string; nl_ref: string; e
   "1cor-9-22": {
     en_ref: "1 Corinthians 9:22",
     id_ref: "1 Korintus 9:22",
-    nl_ref: "1 Korintiërs 9:22",
+    nl_ref: "1 Korintiï¿½rs 9:22",
     en: "I have become all things to all people so that by all possible means I might save some.",
     id: "Bagi semua orang aku telah menjadi segalanya, supaya aku sedapat mungkin memenangkan beberapa orang dari antara mereka.",
     nl: "Voor iedereen ben ik alles geworden om door alle mogelijke middelen enigen te redden.",
@@ -39,7 +39,7 @@ const VERSES: Record<string, { en_ref: string; id_ref: string; nl_ref: string; e
 };
 
 // --- Spectrum bar regions -----------------------------------------------------
-// Each dimension has a spectrumRegions array placing world regions on a 0–100 scale
+// Each dimension has a spectrumRegions array placing world regions on a 0ï¿½100 scale
 // 0 = low-context pole, 100 = high-context pole
 
 // --- 5 Communication Dimensions ----------------------------------------------
@@ -62,10 +62,10 @@ const DIMENSIONS = [
       { en_label: "Netherlands", id_label: "Belanda", nl_label: "Nederland", position: 8 },
       { en_label: "Germany", id_label: "Jerman", nl_label: "Duitsland", position: 14 },
       { en_label: "USA", id_label: "Amerika Serikat", nl_label: "VS", position: 22 },
-      { en_label: "Brazil", id_label: "Brasil", nl_label: "Brazilië", position: 48 },
+      { en_label: "Brazil", id_label: "Brasil", nl_label: "Braziliï¿½", position: 48 },
       { en_label: "Nigeria", id_label: "Nigeria", nl_label: "Nigeria", position: 58 },
       { en_label: "Japan", id_label: "Jepang", nl_label: "Japan", position: 78 },
-      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesië", position: 82 },
+      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesiï¿½", position: 82 },
       { en_label: "China", id_label: "Tiongkok", nl_label: "China", position: 88 },
     ],
     en_scenario_low_label: "Dutch project manager (direct)",
@@ -77,12 +77,12 @@ const DIMENSIONS = [
     en_scenario_high_label: "Indonesian team leader (indirect)",
     id_scenario_high_label: "Pemimpin tim Indonesia (tidak langsung)",
     nl_scenario_high_label: "Indonesische teamleider (indirect)",
-    en_scenario_high: "Budi, reviewing the same report, says warmly: \"This is a good effort. I wonder if we could also look at the financial side — I think there may be something worth exploring before the deadline.\" He pauses. He waits. The message is there — for those who know how to listen.",
-    id_scenario_high: "Budi, yang meninjau laporan yang sama, berkata dengan hangat: \"Ini adalah upaya yang bagus. Saya bertanya-tanya apakah kita juga bisa melihat sisi keuangannya — saya pikir mungkin ada sesuatu yang layak dijelajahi sebelum tenggat waktu.\" Dia berhenti. Dia menunggu. Pesannya ada di sana.",
-    nl_scenario_high: "Budi bekijkt hetzelfde rapport en zegt vriendelijk: \"Dit is een goede poging. Ik vraag me af of we ook naar de financiële kant kunnen kijken — ik denk dat er iets de moeite waard kan zijn om te verkennen vóór de deadline.\" Hij pauzeert. Hij wacht. De boodschap is er — voor wie weet te luisteren.",
+    en_scenario_high: "Budi, reviewing the same report, says warmly: \"This is a good effort. I wonder if we could also look at the financial side ï¿½ I think there may be something worth exploring before the deadline.\" He pauses. He waits. The message is there ï¿½ for those who know how to listen.",
+    id_scenario_high: "Budi, yang meninjau laporan yang sama, berkata dengan hangat: \"Ini adalah upaya yang bagus. Saya bertanya-tanya apakah kita juga bisa melihat sisi keuangannya ï¿½ saya pikir mungkin ada sesuatu yang layak dijelajahi sebelum tenggat waktu.\" Dia berhenti. Dia menunggu. Pesannya ada di sana.",
+    nl_scenario_high: "Budi bekijkt hetzelfde rapport en zegt vriendelijk: \"Dit is een goede poging. Ik vraag me af of we ook naar de financiï¿½le kant kunnen kijken ï¿½ ik denk dat er iets de moeite waard kan zijn om te verkennen vï¿½ï¿½r de deadline.\" Hij pauzeert. Hij wacht. De boodschap is er ï¿½ voor wie weet te luisteren.",
     en_practice: "When working with indirect communicators: slow down, ask clarifying questions, leave silence after feedback. The real response may come hours later, privately. Do not mistake quietness for agreement.",
     id_practice: "Saat bekerja dengan komunikator tidak langsung: perlambat, ajukan pertanyaan klarifikasi, biarkan keheningan setelah umpan balik. Respons nyata mungkin datang berjam-jam kemudian, secara pribadi. Jangan salah mengartikan kesunyian sebagai persetujuan.",
-    nl_practice: "Als je met indirecte communicatoren werkt: vertraag, stel verhelderende vragen, laat stilte na feedback. De echte reactie kan uren later komen, privé. Verwis rust niet met instemming.",
+    nl_practice: "Als je met indirecte communicatoren werkt: vertraag, stel verhelderende vragen, laat stilte na feedback. De echte reactie kan uren later komen, privï¿½. Verwis rust niet met instemming.",
     en_bridge: "Ask instead of tell. Replace \"The report needs revision\" with \"What do you think would strengthen section 3?\" You get the same outcome without the cultural collision.",
     id_bridge: "Tanya daripada beritahu. Ganti \"Laporan perlu direvisi\" dengan \"Menurut Anda, apa yang akan memperkuat bagian 3?\" Anda mendapatkan hasil yang sama tanpa benturan budaya.",
     nl_bridge: "Vraag in plaats van zeg. Vervang \"Het rapport moet worden herzien\" door \"Wat denk je dat sectie 3 zou versterken?\" Je krijgt hetzelfde resultaat zonder culturele botsing.",
@@ -102,7 +102,7 @@ const DIMENSIONS = [
     id_subtitle: "Di mana makna sebenarnya berada?",
     nl_subtitle: "Waar leeft de betekenis eigenlijk?",
     spectrum: [
-      { en_label: "Australia", id_label: "Australia", nl_label: "Australië", position: 12 },
+      { en_label: "Australia", id_label: "Australia", nl_label: "Australiï¿½", position: 12 },
       { en_label: "Canada", id_label: "Kanada", nl_label: "Canada", position: 18 },
       { en_label: "France", id_label: "Prancis", nl_label: "Frankrijk", position: 35 },
       { en_label: "India", id_label: "India", nl_label: "India", position: 55 },
@@ -124,10 +124,10 @@ const DIMENSIONS = [
     nl_scenario_high: "Amir knikt door de vergadering heen. Hij zegt \"we zullen zien\" en \"dit is mogelijk.\" Hij noemt dat zijn oom in de sector werkt. Hij schenkt meer thee in. Voor zijn zakenpartners is de betekenis duidelijk: de relatie is warm, de deur staat open, niets wordt geweigerd.",
     en_practice: "In high-context settings, pay attention to what surrounds the words: who is in the room, the order of speaking, the use of stories and analogies. These carry meaning the words alone do not.",
     id_practice: "Dalam konteks tinggi, perhatikan apa yang mengelilingi kata-kata: siapa yang ada di ruangan, urutan berbicara, penggunaan cerita dan analogi. Semua ini membawa makna yang tidak dapat dibawa oleh kata-kata saja.",
-    nl_practice: "Let in hoge-context omgevingen op wat de woorden omringt: wie er in de kamer is, de spreekvolgorde, het gebruik van verhalen en analogieën. Deze dragen betekenis die de woorden alleen niet dragen.",
-    en_bridge: "When you sense implicit meaning, reflect it back: \"It sounds like there may be some hesitation — am I reading that right?\" This lets the person confirm or redirect without losing face.",
-    id_bridge: "Ketika Anda merasakan makna implisit, cerminkan kembali: \"Kedengarannya ada keengganan — apakah saya membaca itu dengan benar?\" Ini memungkinkan orang tersebut mengkonfirmasi atau mengarahkan ulang tanpa kehilangan muka.",
-    nl_bridge: "Als je impliciete betekenis aanvoelt, spiegeel het terug: \"Het klinkt alsof er enige terughoudendheid is — lees ik dat goed?\" Dit laat de persoon bevestigen of bijsturen zonder gezichtsverlies.",
+    nl_practice: "Let in hoge-context omgevingen op wat de woorden omringt: wie er in de kamer is, de spreekvolgorde, het gebruik van verhalen en analogieï¿½n. Deze dragen betekenis die de woorden alleen niet dragen.",
+    en_bridge: "When you sense implicit meaning, reflect it back: \"It sounds like there may be some hesitation ï¿½ am I reading that right?\" This lets the person confirm or redirect without losing face.",
+    id_bridge: "Ketika Anda merasakan makna implisit, cerminkan kembali: \"Kedengarannya ada keengganan ï¿½ apakah saya membaca itu dengan benar?\" Ini memungkinkan orang tersebut mengkonfirmasi atau mengarahkan ulang tanpa kehilangan muka.",
+    nl_bridge: "Als je impliciete betekenis aanvoelt, spiegeel het terug: \"Het klinkt alsof er enige terughoudendheid is ï¿½ lees ik dat goed?\" Dit laat de persoon bevestigen of bijsturen zonder gezichtsverlies.",
   },
   {
     id: "task-relationship",
@@ -148,8 +148,8 @@ const DIMENSIONS = [
       { en_label: "USA", id_label: "Amerika Serikat", nl_label: "VS", position: 24 },
       { en_label: "UK", id_label: "Inggris", nl_label: "VK", position: 30 },
       { en_label: "Mexico", id_label: "Meksiko", nl_label: "Mexico", position: 60 },
-      { en_label: "Saudi Arabia", id_label: "Arab Saudi", nl_label: "Saudi-Arabië", position: 72 },
-      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesië", position: 80 },
+      { en_label: "Saudi Arabia", id_label: "Arab Saudi", nl_label: "Saudi-Arabiï¿½", position: 72 },
+      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesiï¿½", position: 80 },
       { en_label: "China", id_label: "Tiongkok", nl_label: "China", position: 86 },
     ],
     en_scenario_low_label: "First team meeting (task-first)",
@@ -161,15 +161,15 @@ const DIMENSIONS = [
     en_scenario_high_label: "First business meeting (relationship-first)",
     id_scenario_high_label: "Rapat bisnis pertama (hubungan dahulu)",
     nl_scenario_high_label: "Eerste zakelijke vergadering (relatie eerst)",
-    en_scenario_high: "Pak Hendra opens the same meeting: \"Please, sit — have you had breakfast? How was your journey?\" Forty minutes pass. They talk about family, about the city, about a mutual friend. Then, gently, he says: \"Now — shall we talk about working together?\" The relationship IS the work. Without it, nothing signed will hold.",
-    id_scenario_high: "Pak Hendra membuka rapat yang sama: \"Silakan duduk — sudah sarapan? Bagaimana perjalanannya?\" Empat puluh menit berlalu. Mereka berbicara tentang keluarga, kota, dan seorang teman bersama. Kemudian, dengan lembut, dia berkata: \"Nah — apakah kita bisa bicara tentang kerja sama?\" Hubungan ADALAH pekerjaan itu sendiri.",
-    nl_scenario_high: "Pak Hendra opent dezelfde vergadering: \"Kom zitten — heb je al ontbeten? Hoe was de reis?\" Veertig minuten gaan voorbij. Ze praten over familie, de stad, een gemeenschappelijke vriend. Dan zegt hij rustig: \"Nu — zullen we over samenwerken praten?\" De relatie IS het werk. Zonder haar houdt niets dat getekend wordt stand.",
-    en_practice: "In relationship-first cultures, the time spent on connection is not wasted time — it is the investment that makes the task possible. Budget for it. A 20-minute coffee conversation can determine whether a contract succeeds.",
-    id_practice: "Dalam budaya hubungan dahulu, waktu yang dihabiskan untuk koneksi bukan waktu yang terbuang — itu adalah investasi yang membuat tugas menjadi mungkin. Anggarkan waktu untuk itu. Percakapan kopi 20 menit dapat menentukan apakah kontrak berhasil.",
-    nl_practice: "In relatie-eerste culturen is tijd besteed aan verbinding geen verspilde tijd — het is de investering die de taak mogelijk maakt. Plan ervoor. Een gesprekje van 20 minuten bij de koffie kan bepalen of een contract slaagt.",
-    en_bridge: "Start every cross-cultural meeting with genuine personal interest — not a scripted opener, but a real question. \"How has the week been for you?\" costs 90 seconds and opens a relationship account.",
-    id_bridge: "Mulailah setiap rapat lintas budaya dengan ketertarikan pribadi yang tulus — bukan pembuka yang sudah direncanakan, tetapi pertanyaan nyata. \"Bagaimana minggu ini bagi Anda?\" hanya membutuhkan 90 detik dan membuka rekening hubungan.",
-    nl_bridge: "Begin elke interculturele vergadering met oprechte persoonlijke interesse — geen script, maar een echte vraag. \"Hoe was de week voor jou?\" kost 90 seconden en opent een relatierekening.",
+    en_scenario_high: "Pak Hendra opens the same meeting: \"Please, sit ï¿½ have you had breakfast? How was your journey?\" Forty minutes pass. They talk about family, about the city, about a mutual friend. Then, gently, he says: \"Now ï¿½ shall we talk about working together?\" The relationship IS the work. Without it, nothing signed will hold.",
+    id_scenario_high: "Pak Hendra membuka rapat yang sama: \"Silakan duduk ï¿½ sudah sarapan? Bagaimana perjalanannya?\" Empat puluh menit berlalu. Mereka berbicara tentang keluarga, kota, dan seorang teman bersama. Kemudian, dengan lembut, dia berkata: \"Nah ï¿½ apakah kita bisa bicara tentang kerja sama?\" Hubungan ADALAH pekerjaan itu sendiri.",
+    nl_scenario_high: "Pak Hendra opent dezelfde vergadering: \"Kom zitten ï¿½ heb je al ontbeten? Hoe was de reis?\" Veertig minuten gaan voorbij. Ze praten over familie, de stad, een gemeenschappelijke vriend. Dan zegt hij rustig: \"Nu ï¿½ zullen we over samenwerken praten?\" De relatie IS het werk. Zonder haar houdt niets dat getekend wordt stand.",
+    en_practice: "In relationship-first cultures, the time spent on connection is not wasted time ï¿½ it is the investment that makes the task possible. Budget for it. A 20-minute coffee conversation can determine whether a contract succeeds.",
+    id_practice: "Dalam budaya hubungan dahulu, waktu yang dihabiskan untuk koneksi bukan waktu yang terbuang ï¿½ itu adalah investasi yang membuat tugas menjadi mungkin. Anggarkan waktu untuk itu. Percakapan kopi 20 menit dapat menentukan apakah kontrak berhasil.",
+    nl_practice: "In relatie-eerste culturen is tijd besteed aan verbinding geen verspilde tijd ï¿½ het is de investering die de taak mogelijk maakt. Plan ervoor. Een gesprekje van 20 minuten bij de koffie kan bepalen of een contract slaagt.",
+    en_bridge: "Start every cross-cultural meeting with genuine personal interest ï¿½ not a scripted opener, but a real question. \"How has the week been for you?\" costs 90 seconds and opens a relationship account.",
+    id_bridge: "Mulailah setiap rapat lintas budaya dengan ketertarikan pribadi yang tulus ï¿½ bukan pembuka yang sudah direncanakan, tetapi pertanyaan nyata. \"Bagaimana minggu ini bagi Anda?\" hanya membutuhkan 90 detik dan membuka rekening hubungan.",
+    nl_bridge: "Begin elke interculturele vergadering met oprechte persoonlijke interesse ï¿½ geen script, maar een echte vraag. \"Hoe was de week voor jou?\" kost 90 seconden en opent een relatierekening.",
   },
   {
     id: "face-saving",
@@ -182,37 +182,37 @@ const DIMENSIONS = [
     en_title: "Individual vs. Collective Face-Saving",
     id_title: "Menjaga Muka: Individual vs. Kolektif",
     nl_title: "Individueel vs. Collectief Gezichtsbehoud",
-    en_subtitle: "Whose honour is at stake — and who carries the shame?",
-    id_subtitle: "Kehormatan siapa yang dipertaruhkan — dan siapa yang menanggung rasa malu?",
-    nl_subtitle: "Wiens eer staat op het spel — en wie draagt de schaamte?",
+    en_subtitle: "Whose honour is at stake ï¿½ and who carries the shame?",
+    id_subtitle: "Kehormatan siapa yang dipertaruhkan ï¿½ dan siapa yang menanggung rasa malu?",
+    nl_subtitle: "Wiens eer staat op het spel ï¿½ en wie draagt de schaamte?",
     spectrum: [
       { en_label: "Netherlands", id_label: "Belanda", nl_label: "Nederland", position: 7 },
-      { en_label: "Australia", id_label: "Australia", nl_label: "Australië", position: 15 },
+      { en_label: "Australia", id_label: "Australia", nl_label: "Australiï¿½", position: 15 },
       { en_label: "UK", id_label: "Inggris", nl_label: "VK", position: 20 },
-      { en_label: "Brazil", id_label: "Brasil", nl_label: "Brazilië", position: 42 },
+      { en_label: "Brazil", id_label: "Brasil", nl_label: "Braziliï¿½", position: 42 },
       { en_label: "Philippines", id_label: "Filipina", nl_label: "Filipijnen", position: 70 },
-      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesië", position: 78 },
+      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesiï¿½", position: 78 },
       { en_label: "Japan", id_label: "Jepang", nl_label: "Japan", position: 85 },
       { en_label: "China", id_label: "Tiongkok", nl_label: "China", position: 88 },
     ],
     en_scenario_low_label: "Performance correction (low-context)",
     id_scenario_low_label: "Koreksi kinerja (konteks rendah)",
     nl_scenario_low_label: "Prestatiecorrectie (laagcontext)",
-    en_scenario_low: "In a team meeting, the manager says: \"James, I noticed the client report had some errors last week. Can you walk us through what happened?\" Direct, in the room. James explains. The team learns. To the manager, this is transparency and accountability — no blame, just correction.",
-    id_scenario_low: "Dalam rapat tim, manajer berkata: \"James, saya perhatikan laporan klien ada beberapa kesalahan minggu lalu. Bisakah Anda jelaskan apa yang terjadi?\" Langsung, di depan semua orang. James menjelaskan. Tim belajar. Bagi manajer, ini adalah transparansi dan akuntabilitas — tidak ada tuduhan, hanya koreksi.",
+    en_scenario_low: "In a team meeting, the manager says: \"James, I noticed the client report had some errors last week. Can you walk us through what happened?\" Direct, in the room. James explains. The team learns. To the manager, this is transparency and accountability ï¿½ no blame, just correction.",
+    id_scenario_low: "Dalam rapat tim, manajer berkata: \"James, saya perhatikan laporan klien ada beberapa kesalahan minggu lalu. Bisakah Anda jelaskan apa yang terjadi?\" Langsung, di depan semua orang. James menjelaskan. Tim belajar. Bagi manajer, ini adalah transparansi dan akuntabilitas ï¿½ tidak ada tuduhan, hanya koreksi.",
     nl_scenario_low: "In een teamvergadering zegt de manager: \"James, ik merkte dat het klantrapport vorige week enkele fouten bevatte. Kun je ons meenemen in wat er is gebeurd?\" Direct, in de kamer. James legt het uit. Het team leert. Voor de manager is dit transparantie en verantwoording.",
     en_scenario_high_label: "Performance correction (high-context)",
     id_scenario_high_label: "Koreksi kinerja (konteks tinggi)",
     nl_scenario_high_label: "Prestatiecorrectie (hoogcontext)",
-    en_scenario_high: "After the team meeting, the manager asks Siti to stay behind. With the door closed, he says gently: \"I know you've been under a lot of pressure. I want to make sure the next report reflects your best work — can we look at it together?\" The correction happens. But Siti's face is protected. She can correct without shame.",
-    id_scenario_high: "Setelah rapat tim, manajer meminta Siti untuk tinggal. Dengan pintu tertutup, dia berkata dengan lembut: \"Saya tahu kamu sedang dalam banyak tekanan. Saya ingin memastikan laporan berikutnya mencerminkan karya terbaikmu — bisakah kita lihat bersama?\" Koreksi terjadi. Tetapi muka Siti terlindungi.",
-    nl_scenario_high: "Na de teamvergadering vraagt de manager Siti te blijven. Met de deur dicht zegt hij zacht: \"Ik weet dat je onder veel druk staat. Ik wil ervoor zorgen dat het volgende rapport je beste werk weerspiegelt — kunnen we het samen bekijken?\" De correctie gebeurt. Maar Siti's gezicht is beschermd.",
-    en_practice: "Never correct publicly in collective face-saving cultures. Not because it avoids accountability — but because public correction destroys the relationship that makes accountability sustainable. Private correction is not weakness; it is wisdom.",
-    id_practice: "Jangan pernah mengoreksi secara publik dalam budaya penjagaan muka kolektif. Bukan karena menghindari akuntabilitas — tetapi karena koreksi publik menghancurkan hubungan yang membuat akuntabilitas berkelanjutan. Koreksi pribadi bukan kelemahan; itu kebijaksanaan.",
-    nl_practice: "Corrigeer nooit publiekelijk in collectieve gezichtsbesparende culturen. Niet om verantwoording te vermijden — maar omdat publieke correctie de relatie vernietigt die verantwoording duurzaam maakt. Private correctie is geen zwakte; het is wijsheid.",
-    en_bridge: "Before giving feedback, ask yourself: \"Will this protect or expose the person?\" Choose private settings. Frame correction as investment, not accusation. The goal is the relationship AND the standard — not one at the expense of the other.",
-    id_bridge: "Sebelum memberikan umpan balik, tanyakan pada diri sendiri: \"Apakah ini akan melindungi atau mengekspos orang tersebut?\" Pilih pengaturan pribadi. Bingkai koreksi sebagai investasi, bukan tuduhan. Tujuannya adalah hubungan DAN standar — bukan salah satunya dengan mengorbankan yang lain.",
-    nl_bridge: "Vraag jezelf voor feedback geven af: \"Beschermt of blootstelt dit de persoon?\" Kies privéomgevingen. Formuleer correctie als investering, niet als beschuldiging. Het doel is de relatie EN de standaard — niet één ten koste van de ander.",
+    en_scenario_high: "After the team meeting, the manager asks Siti to stay behind. With the door closed, he says gently: \"I know you've been under a lot of pressure. I want to make sure the next report reflects your best work ï¿½ can we look at it together?\" The correction happens. But Siti's face is protected. She can correct without shame.",
+    id_scenario_high: "Setelah rapat tim, manajer meminta Siti untuk tinggal. Dengan pintu tertutup, dia berkata dengan lembut: \"Saya tahu kamu sedang dalam banyak tekanan. Saya ingin memastikan laporan berikutnya mencerminkan karya terbaikmu ï¿½ bisakah kita lihat bersama?\" Koreksi terjadi. Tetapi muka Siti terlindungi.",
+    nl_scenario_high: "Na de teamvergadering vraagt de manager Siti te blijven. Met de deur dicht zegt hij zacht: \"Ik weet dat je onder veel druk staat. Ik wil ervoor zorgen dat het volgende rapport je beste werk weerspiegelt ï¿½ kunnen we het samen bekijken?\" De correctie gebeurt. Maar Siti's gezicht is beschermd.",
+    en_practice: "Never correct publicly in collective face-saving cultures. Not because it avoids accountability ï¿½ but because public correction destroys the relationship that makes accountability sustainable. Private correction is not weakness; it is wisdom.",
+    id_practice: "Jangan pernah mengoreksi secara publik dalam budaya penjagaan muka kolektif. Bukan karena menghindari akuntabilitas ï¿½ tetapi karena koreksi publik menghancurkan hubungan yang membuat akuntabilitas berkelanjutan. Koreksi pribadi bukan kelemahan; itu kebijaksanaan.",
+    nl_practice: "Corrigeer nooit publiekelijk in collectieve gezichtsbesparende culturen. Niet om verantwoording te vermijden ï¿½ maar omdat publieke correctie de relatie vernietigt die verantwoording duurzaam maakt. Private correctie is geen zwakte; het is wijsheid.",
+    en_bridge: "Before giving feedback, ask yourself: \"Will this protect or expose the person?\" Choose private settings. Frame correction as investment, not accusation. The goal is the relationship AND the standard ï¿½ not one at the expense of the other.",
+    id_bridge: "Sebelum memberikan umpan balik, tanyakan pada diri sendiri: \"Apakah ini akan melindungi atau mengekspos orang tersebut?\" Pilih pengaturan pribadi. Bingkai koreksi sebagai investasi, bukan tuduhan. Tujuannya adalah hubungan DAN standar ï¿½ bukan salah satunya dengan mengorbankan yang lain.",
+    nl_bridge: "Vraag jezelf voor feedback geven af: \"Beschermt of blootstelt dit de persoon?\" Kies privï¿½omgevingen. Formuleer correctie als investering, niet als beschuldiging. Het doel is de relatie EN de standaard ï¿½ niet ï¿½ï¿½n ten koste van de ander.",
   },
   {
     id: "time",
@@ -225,9 +225,9 @@ const DIMENSIONS = [
     en_title: "Time as Commodity vs. Time as Relationship",
     id_title: "Waktu sebagai Komoditas vs. Waktu sebagai Hubungan",
     nl_title: "Tijd als Grondstof vs. Tijd als Relatie",
-    en_subtitle: "Is time something you spend — or something you share?",
-    id_subtitle: "Apakah waktu sesuatu yang Anda habiskan — atau sesuatu yang Anda bagikan?",
-    nl_subtitle: "Is tijd iets wat je besteedt — of iets wat je deelt?",
+    en_subtitle: "Is time something you spend ï¿½ or something you share?",
+    id_subtitle: "Apakah waktu sesuatu yang Anda habiskan ï¿½ atau sesuatu yang Anda bagikan?",
+    nl_subtitle: "Is tijd iets wat je besteedt ï¿½ of iets wat je deelt?",
     spectrum: [
       { en_label: "Switzerland", id_label: "Swiss", nl_label: "Zwitserland", position: 5 },
       { en_label: "Germany", id_label: "Jerman", nl_label: "Duitsland", position: 10 },
@@ -236,26 +236,26 @@ const DIMENSIONS = [
       { en_label: "Spain", id_label: "Spanyol", nl_label: "Spanje", position: 55 },
       { en_label: "Kenya", id_label: "Kenya", nl_label: "Kenia", position: 68 },
       { en_label: "Arab world", id_label: "Dunia Arab", nl_label: "Arabische wereld", position: 76 },
-      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesië", position: 82 },
+      { en_label: "Indonesia", id_label: "Indonesia", nl_label: "Indonesiï¿½", position: 82 },
     ],
     en_scenario_low_label: "The 9:00 meeting (monochronic view)",
     id_scenario_low_label: "Rapat jam 9 (pandangan monokronik)",
     nl_scenario_low_label: "De 9:00-vergadering (monochronisch)",
-    en_scenario_low: "Lisa arrives at 8:58. She has a prepared agenda, a timer for each item, and an expectation that the meeting ends at 10:00. When it runs over, she grows visibly uncomfortable. She follows up with action items within the hour. Time is finite and precise — wasting it is a form of disrespect.",
-    id_scenario_low: "Lisa tiba pukul 8:58. Dia memiliki agenda yang disiapkan, timer untuk setiap item, dan harapan bahwa rapat berakhir pukul 10:00. Ketika melebihi waktu, dia tampak tidak nyaman. Dia menindaklanjuti dengan item tindakan dalam satu jam. Waktu terbatas dan tepat — membuangnya adalah bentuk tidak hormat.",
-    nl_scenario_low: "Lisa arriveert om 8:58. Ze heeft een voorbereide agenda, een timer voor elk punt en de verwachting dat de vergadering om 10:00 eindigt. Als het uitloopt, wordt ze zichtbaar ongemakkelijk. Ze stuurt binnen een uur actiepunten op. Tijd is eindig en precies — verspilling is een vorm van onrespect.",
+    en_scenario_low: "Lisa arrives at 8:58. She has a prepared agenda, a timer for each item, and an expectation that the meeting ends at 10:00. When it runs over, she grows visibly uncomfortable. She follows up with action items within the hour. Time is finite and precise ï¿½ wasting it is a form of disrespect.",
+    id_scenario_low: "Lisa tiba pukul 8:58. Dia memiliki agenda yang disiapkan, timer untuk setiap item, dan harapan bahwa rapat berakhir pukul 10:00. Ketika melebihi waktu, dia tampak tidak nyaman. Dia menindaklanjuti dengan item tindakan dalam satu jam. Waktu terbatas dan tepat ï¿½ membuangnya adalah bentuk tidak hormat.",
+    nl_scenario_low: "Lisa arriveert om 8:58. Ze heeft een voorbereide agenda, een timer voor elk punt en de verwachting dat de vergadering om 10:00 eindigt. Als het uitloopt, wordt ze zichtbaar ongemakkelijk. Ze stuurt binnen een uur actiepunten op. Tijd is eindig en precies ï¿½ verspilling is een vorm van onrespect.",
     en_scenario_high_label: "The 9:00 meeting (polychronic view)",
     id_scenario_high_label: "Rapat jam 9 (pandangan polykronik)",
     nl_scenario_high_label: "De 9:00-vergadering (polychronisch)",
-    en_scenario_high: "Rizal arrives at 9:20. Before discussing any agenda item, he asks about a colleague's sick parent. Someone else joins late with food — he welcomes them. The meeting takes three hours. But every relationship in the room is stronger. Tomorrow's collaboration will be easier. Time given to people IS the work.",
-    id_scenario_high: "Rizal tiba pukul 9:20. Sebelum membahas agenda apapun, dia menanyakan tentang orang tua sakit seorang rekan. Seseorang bergabung terlambat dengan makanan — dia menyambut mereka. Rapat berlangsung tiga jam. Tetapi setiap hubungan di ruangan lebih kuat. Kolaborasi hari esok akan lebih mudah. Waktu yang diberikan kepada orang ADALAH pekerjaan itu sendiri.",
-    nl_scenario_high: "Rizal arriveert om 9:20. Voor hij een agendapunt bespreekt, vraagt hij naar de zieke ouder van een collega. Iemand komt laat binnen met eten — hij verwelkomt ze. De vergadering duurt drie uur. Maar elke relatie in de kamer is sterker. De samenwerking van morgen zal makkelijker zijn. Tijd gegeven aan mensen IS het werk.",
-    en_practice: "If you are monochronic working with polychronic colleagues: build buffer into your schedule for relationship time — it is not inefficiency, it is the price of trust. If you are polychronic working with monochronic leaders: give advance notice of delays and honour commitments to time where they matter most.",
-    id_practice: "Jika Anda monokronik yang bekerja dengan rekan polykronik: bangun penyangga dalam jadwal Anda untuk waktu hubungan — itu bukan ketidakefisienan, itu harga kepercayaan. Jika Anda polykronik yang bekerja dengan pemimpin monokronik: berikan pemberitahuan awal tentang keterlambatan.",
-    nl_practice: "Als je monochronisch werkt met polychronische collega's: bouw buffer in je schema voor relatietijd — dat is geen inefficiëntie, dat is de prijs van vertrouwen. Als je polychronisch werkt met monochronische leiders: geef vooraf aan wanneer het uitloopt.",
+    en_scenario_high: "Rizal arrives at 9:20. Before discussing any agenda item, he asks about a colleague's sick parent. Someone else joins late with food ï¿½ he welcomes them. The meeting takes three hours. But every relationship in the room is stronger. Tomorrow's collaboration will be easier. Time given to people IS the work.",
+    id_scenario_high: "Rizal tiba pukul 9:20. Sebelum membahas agenda apapun, dia menanyakan tentang orang tua sakit seorang rekan. Seseorang bergabung terlambat dengan makanan ï¿½ dia menyambut mereka. Rapat berlangsung tiga jam. Tetapi setiap hubungan di ruangan lebih kuat. Kolaborasi hari esok akan lebih mudah. Waktu yang diberikan kepada orang ADALAH pekerjaan itu sendiri.",
+    nl_scenario_high: "Rizal arriveert om 9:20. Voor hij een agendapunt bespreekt, vraagt hij naar de zieke ouder van een collega. Iemand komt laat binnen met eten ï¿½ hij verwelkomt ze. De vergadering duurt drie uur. Maar elke relatie in de kamer is sterker. De samenwerking van morgen zal makkelijker zijn. Tijd gegeven aan mensen IS het werk.",
+    en_practice: "If you are monochronic working with polychronic colleagues: build buffer into your schedule for relationship time ï¿½ it is not inefficiency, it is the price of trust. If you are polychronic working with monochronic leaders: give advance notice of delays and honour commitments to time where they matter most.",
+    id_practice: "Jika Anda monokronik yang bekerja dengan rekan polykronik: bangun penyangga dalam jadwal Anda untuk waktu hubungan ï¿½ itu bukan ketidakefisienan, itu harga kepercayaan. Jika Anda polykronik yang bekerja dengan pemimpin monokronik: berikan pemberitahuan awal tentang keterlambatan.",
+    nl_practice: "Als je monochronisch werkt met polychronische collega's: bouw buffer in je schema voor relatietijd ï¿½ dat is geen inefficiï¿½ntie, dat is de prijs van vertrouwen. Als je polychronisch werkt met monochronische leiders: geef vooraf aan wanneer het uitloopt.",
     en_bridge: "Reframe: time invested in people early saves time lost to misunderstanding, conflict, and rebuilding trust later. The polychronic meeting that runs long is sometimes the most efficient long-term investment.",
     id_bridge: "Ubah kerangka pikir: waktu yang diinvestasikan untuk orang-orang di awal menghemat waktu yang hilang akibat kesalahpahaman, konflik, dan membangun kembali kepercayaan di kemudian hari. Rapat polykronik yang berlangsung lama terkadang merupakan investasi jangka panjang yang paling efisien.",
-    nl_bridge: "Herformuleer: tijd vroeg geïnvesteerd in mensen bespaart tijd die later verloren gaat aan misverstanden, conflicten en vertrouwensherstel. De polychronische vergadering die uitloopt is soms de efficiëntste langetermijninvestering.",
+    nl_bridge: "Herformuleer: tijd vroeg geï¿½nvesteerd in mensen bespaart tijd die later verloren gaat aan misverstanden, conflicten en vertrouwensherstel. De polychronische vergadering die uitloopt is soms de efficiï¿½ntste langetermijninvestering.",
   },
 ];
 
@@ -267,15 +267,15 @@ const ASSESSMENT_QUESTIONS = [
     nl_q: "Wanneer iemand langzaam een direct antwoord geeft, is mijn instinctieve reactie:",
     options: [
       {
-        en: "Frustration — just say what you mean",
-        id: "Frustrasi — katakan saja apa yang Anda maksud",
-        nl: "Frustratie — zeg gewoon wat je bedoelt",
+        en: "Frustration ï¿½ just say what you mean",
+        id: "Frustrasi ï¿½ katakan saja apa yang Anda maksud",
+        nl: "Frustratie ï¿½ zeg gewoon wat je bedoelt",
         style: "low",
       },
       {
-        en: "Curiosity — I try to read between the lines",
-        id: "Rasa ingin tahu — saya mencoba membaca antara baris",
-        nl: "Nieuwsgierigheid — ik probeer tussen de regels te lezen",
+        en: "Curiosity ï¿½ I try to read between the lines",
+        id: "Rasa ingin tahu ï¿½ saya mencoba membaca antara baris",
+        nl: "Nieuwsgierigheid ï¿½ ik probeer tussen de regels te lezen",
         style: "high",
       },
     ],
@@ -305,15 +305,15 @@ const ASSESSMENT_QUESTIONS = [
     nl_q: "Wanneer ik iemands werk moet corrigeren, geef ik er de voorkeur aan:",
     options: [
       {
-        en: "Address it clearly in the team meeting — transparency matters",
-        id: "Membahasnya dengan jelas dalam rapat tim — transparansi penting",
-        nl: "Het duidelijk in de teamvergadering aan te pakken — transparantie telt",
+        en: "Address it clearly in the team meeting ï¿½ transparency matters",
+        id: "Membahasnya dengan jelas dalam rapat tim ï¿½ transparansi penting",
+        nl: "Het duidelijk in de teamvergadering aan te pakken ï¿½ transparantie telt",
         style: "low",
       },
       {
-        en: "Pull the person aside privately — protecting their dignity matters more",
-        id: "Mengajak orang itu berbicara secara pribadi — melindungi martabat mereka lebih penting",
-        nl: "De persoon privé apart te nemen — hun waardigheid beschermen weegt zwaarder",
+        en: "Pull the person aside privately ï¿½ protecting their dignity matters more",
+        id: "Mengajak orang itu berbicara secara pribadi ï¿½ melindungi martabat mereka lebih penting",
+        nl: "De persoon privï¿½ apart te nemen ï¿½ hun waardigheid beschermen weegt zwaarder",
         style: "high",
       },
     ],
@@ -324,15 +324,15 @@ const ASSESSMENT_QUESTIONS = [
     nl_q: "Wanneer een vergadering 30 minuten uitloopt, voel ik me:",
     options: [
       {
-        en: "Anxious — this disrupts the rest of my day",
-        id: "Cemas — ini mengganggu sisa hari saya",
-        nl: "Ongerust — dit verstoort de rest van mijn dag",
+        en: "Anxious ï¿½ this disrupts the rest of my day",
+        id: "Cemas ï¿½ ini mengganggu sisa hari saya",
+        nl: "Ongerust ï¿½ dit verstoort de rest van mijn dag",
         style: "low",
       },
       {
-        en: "Fine — the conversation was clearly worth it",
-        id: "Tidak masalah — percakapannya jelas layak untuk itu",
-        nl: "Oké — het gesprek was duidelijk de moeite waard",
+        en: "Fine ï¿½ the conversation was clearly worth it",
+        id: "Tidak masalah ï¿½ percakapannya jelas layak untuk itu",
+        nl: "Okï¿½ ï¿½ het gesprek was duidelijk de moeite waard",
         style: "high",
       },
     ],
@@ -343,15 +343,15 @@ const ASSESSMENT_QUESTIONS = [
     nl_q: "Wanneer ik een voorstel of overeenkomst schrijf, neiging ik ertoe:",
     options: [
       {
-        en: "Spell out every detail — ambiguity creates problems",
-        id: "Menjelaskan setiap detail — ambiguitas menciptakan masalah",
-        nl: "Elk detail uit te schrijven — ambiguïteit creëert problemen",
+        en: "Spell out every detail ï¿½ ambiguity creates problems",
+        id: "Menjelaskan setiap detail ï¿½ ambiguitas menciptakan masalah",
+        nl: "Elk detail uit te schrijven ï¿½ ambiguï¿½teit creï¿½ert problemen",
         style: "low",
       },
       {
-        en: "Keep it broad — trust fills in the gaps",
-        id: "Membuatnya luas — kepercayaan mengisi kekosongan",
-        nl: "Het ruim te houden — vertrouwen vult de leemten",
+        en: "Keep it broad ï¿½ trust fills in the gaps",
+        id: "Membuatnya luas ï¿½ kepercayaan mengisi kekosongan",
+        nl: "Het ruim te houden ï¿½ vertrouwen vult de leemten",
         style: "high",
       },
     ],
@@ -513,7 +513,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           color: orange,
           marginBottom: 24,
         }}>
-          {t("Cross-Cultural · Article", "Lintas Budaya · Artikel", "Cross-Cultureel · Artikel")}
+          {t("Cross-Cultural ï¿½ Article", "Lintas Budaya ï¿½ Artikel", "Cross-Cultureel ï¿½ Artikel")}
         </div>
         <h1 style={{
           fontFamily: "Cormorant Garamond, Georgia, serif",
@@ -540,9 +540,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           fontStyle: "italic",
         }}>
           {t(
-            "How communication styles shape relationships — and what that means for cross-cultural teams.",
-            "Bagaimana gaya komunikasi membentuk hubungan — dan apa artinya bagi tim lintas budaya.",
-            "Hoe communicatiestijlen relaties vormen — en wat dat betekent voor interculturele teams."
+            "How communication styles shape relationships ï¿½ and what that means for cross-cultural teams.",
+            "Bagaimana gaya komunikasi membentuk hubungan ï¿½ dan apa artinya bagi tim lintas budaya.",
+            "Hoe communicatiestijlen relaties vormen ï¿½ en wat dat betekent voor interculturele teams."
           )}
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap" }}>
@@ -572,9 +572,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
         </p>
         <p style={{ fontSize: 17, lineHeight: 1.8, color: bodyText, marginBottom: 20 }}>
           {t(
-            "The core insight: in high-context cultures, most of the meaning in communication is implicit — carried by relationship, tone, setting, silence, and shared history. In low-context cultures, meaning is explicit — carried in words, stated clearly, and documented in writing.",
-            "Wawasan utama: dalam budaya konteks tinggi, sebagian besar makna dalam komunikasi bersifat implisit — dibawa oleh hubungan, nada, konteks, keheningan, dan sejarah bersama. Dalam budaya konteks rendah, makna bersifat eksplisit — dibawa dalam kata-kata, dinyatakan dengan jelas, dan didokumentasikan secara tertulis.",
-            "De kerngedachte: in hoge-context culturen is het grootste deel van de betekenis in communicatie impliciet — gedragen door relatie, toon, omgeving, stilte en gedeelde geschiedenis. In lage-context culturen is de betekenis expliciet — gedragen in woorden, duidelijk uitgesproken en schriftelijk vastgelegd."
+            "The core insight: in high-context cultures, most of the meaning in communication is implicit ï¿½ carried by relationship, tone, setting, silence, and shared history. In low-context cultures, meaning is explicit ï¿½ carried in words, stated clearly, and documented in writing.",
+            "Wawasan utama: dalam budaya konteks tinggi, sebagian besar makna dalam komunikasi bersifat implisit ï¿½ dibawa oleh hubungan, nada, konteks, keheningan, dan sejarah bersama. Dalam budaya konteks rendah, makna bersifat eksplisit ï¿½ dibawa dalam kata-kata, dinyatakan dengan jelas, dan didokumentasikan secara tertulis.",
+            "De kerngedachte: in hoge-context culturen is het grootste deel van de betekenis in communicatie impliciet ï¿½ gedragen door relatie, toon, omgeving, stilte en gedeelde geschiedenis. In lage-context culturen is de betekenis expliciet ï¿½ gedragen in woorden, duidelijk uitgesproken en schriftelijk vastgelegd."
           )}
         </p>
         <div style={{
@@ -586,9 +586,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
         }}>
           <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, lineHeight: 1.6, color: navy, fontStyle: "italic", margin: 0 }}>
             {t(
-              "\"Neither is superior. Neither is more honest. They are different languages of meaning — and fluency in both is a leadership superpower.\"",
-              "\"Tidak ada yang lebih unggul. Tidak ada yang lebih jujur. Keduanya adalah bahasa makna yang berbeda — dan kelancaran dalam keduanya adalah kekuatan super kepemimpinan.\"",
-              "\"Geen van beide is superieur. Geen van beide is eerlijker. Het zijn verschillende talen van betekenis — en vaardigheid in beide is een leiderschapssuperpower.\""
+              "\"Neither is superior. Neither is more honest. They are different languages of meaning ï¿½ and fluency in both is a leadership superpower.\"",
+              "\"Tidak ada yang lebih unggul. Tidak ada yang lebih jujur. Keduanya adalah bahasa makna yang berbeda ï¿½ dan kelancaran dalam keduanya adalah kekuatan super kepemimpinan.\"",
+              "\"Geen van beide is superieur. Geen van beide is eerlijker. Het zijn verschillende talen van betekenis ï¿½ en vaardigheid in beide is een leiderschapssuperpower.\""
             )}
           </p>
         </div>
@@ -596,7 +596,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           {t(
             "This module explores five dimensions where high-context and low-context approaches create real friction for leaders. For each one, you will see where world regions typically fall on the spectrum, two scenarios showing the same leadership situation handled differently, and a practical bridge for navigating the gap.",
             "Modul ini mengeksplorasi lima dimensi di mana pendekatan konteks tinggi dan konteks rendah menciptakan gesekan nyata bagi para pemimpin. Untuk masing-masing, Anda akan melihat di mana wilayah dunia biasanya jatuh pada spektrum, dua skenario yang menunjukkan situasi kepemimpinan yang sama ditangani secara berbeda, dan jembatan praktis untuk menavigasi kesenjangan.",
-            "Deze module verkent vijf dimensies waar hoge-context en lage-context benaderingen echte wrijving creëren voor leiders. Voor elke dimensie zie je waar wereldregio's doorgaans op het spectrum vallen, twee scenario's die dezelfde leiderschapssituatie anders aanpakken, en een praktische brug om de kloof te overbruggen."
+            "Deze module verkent vijf dimensies waar hoge-context en lage-context benaderingen echte wrijving creï¿½ren voor leiders. Voor elke dimensie zie je waar wereldregio's doorgaans op het spectrum vallen, twee scenario's die dezelfde leiderschapssituatie anders aanpakken, en een praktische brug om de kloof te overbruggen."
           )}
         </p>
       </div>
@@ -699,7 +699,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           {/* Spectrum Bar */}
           <div style={{ marginBottom: 16 }}>
             <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: bodyText, opacity: 0.6, marginBottom: 8 }}>
-              {t("Cultural spectrum — where regions typically fall", "Spektrum budaya — di mana wilayah biasanya berada", "Cultureel spectrum — waar regio's doorgaans vallen")}
+              {t("Cultural spectrum ï¿½ where regions typically fall", "Spektrum budaya ï¿½ di mana wilayah biasanya berada", "Cultureel spectrum ï¿½ waar regio's doorgaans vallen")}
             </p>
             <SpectrumBar items={dim.spectrum} />
           </div>
@@ -881,25 +881,25 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
 
           <p style={{ fontSize: 16, lineHeight: 1.85, color: "oklch(82% 0.02 80)", marginBottom: 24 }}>
             {t(
-              "The Bible is itself a cross-cultural document. It was written in Hebrew, Aramaic, and Greek — three languages that carry different communication logics. The Old Testament is deeply high-context: meaning is embedded in story, symbol, repetition, and communal memory. You cannot understand the Psalms without knowing the history they are mourning. You cannot understand the prophets without knowing the political situation they are speaking into.",
-              "Alkitab sendiri adalah dokumen lintas budaya. Ditulis dalam bahasa Ibrani, Aram, dan Yunani — tiga bahasa yang membawa logika komunikasi yang berbeda. Perjanjian Lama sangat berorientasi konteks tinggi: makna tertanam dalam cerita, simbol, pengulangan, dan memori komunal. Anda tidak dapat memahami Mazmur tanpa mengetahui sejarah yang mereka ratapi.",
-              "De Bijbel is zelf een cross-cultureel document. Het is geschreven in het Hebreeuws, Aramees en Grieks — drie talen die verschillende communicatielogica's dragen. Het Oude Testament is diep hoge-context: betekenis is ingebed in verhaal, symbool, herhaling en gemeenschappelijk geheugen."
+              "The Bible is itself a cross-cultural document. It was written in Hebrew, Aramaic, and Greek ï¿½ three languages that carry different communication logics. The Old Testament is deeply high-context: meaning is embedded in story, symbol, repetition, and communal memory. You cannot understand the Psalms without knowing the history they are mourning. You cannot understand the prophets without knowing the political situation they are speaking into.",
+              "Alkitab sendiri adalah dokumen lintas budaya. Ditulis dalam bahasa Ibrani, Aram, dan Yunani ï¿½ tiga bahasa yang membawa logika komunikasi yang berbeda. Perjanjian Lama sangat berorientasi konteks tinggi: makna tertanam dalam cerita, simbol, pengulangan, dan memori komunal. Anda tidak dapat memahami Mazmur tanpa mengetahui sejarah yang mereka ratapi.",
+              "De Bijbel is zelf een cross-cultureel document. Het is geschreven in het Hebreeuws, Aramees en Grieks ï¿½ drie talen die verschillende communicatielogica's dragen. Het Oude Testament is diep hoge-context: betekenis is ingebed in verhaal, symbool, herhaling en gemeenschappelijk geheugen."
             )}
           </p>
 
           <p style={{ fontSize: 16, lineHeight: 1.85, color: "oklch(82% 0.02 80)", marginBottom: 24 }}>
             {t(
-              "Jesus, when he taught, almost never gave a direct proposition. He told stories. He asked questions. He used silence. He healed people in ways that communicated far more than any speech could. When he said \"I am the bread of life,\" he was speaking into a community whose identity was formed around the wilderness manna and the Passover meal — meanings that would have been obvious to his listeners and invisible to an outsider.",
-              "Yesus, ketika mengajar, hampir tidak pernah memberikan proposisi langsung. Dia bercerita. Dia mengajukan pertanyaan. Dia menggunakan keheningan. Ketika Dia berkata \"Akulah roti kehidupan,\" Dia berbicara kepada komunitas yang identitasnya terbentuk di sekitar manna di padang gurun dan perjamuan Paskah — makna yang sudah jelas bagi pendengarnya.",
-              "Jezus, wanneer hij onderwees, gaf bijna nooit een directe propositie. Hij vertelde verhalen. Hij stelde vragen. Hij gebruikte stilte. Toen hij zei 'Ik ben het brood des levens,' sprak hij in een gemeenschap wier identiteit gevormd was rond het manna in de woestijn en de Pesachmaaltijd — betekenissen die voor zijn toehoorders voor de hand lagen."
+              "Jesus, when he taught, almost never gave a direct proposition. He told stories. He asked questions. He used silence. He healed people in ways that communicated far more than any speech could. When he said \"I am the bread of life,\" he was speaking into a community whose identity was formed around the wilderness manna and the Passover meal ï¿½ meanings that would have been obvious to his listeners and invisible to an outsider.",
+              "Yesus, ketika mengajar, hampir tidak pernah memberikan proposisi langsung. Dia bercerita. Dia mengajukan pertanyaan. Dia menggunakan keheningan. Ketika Dia berkata \"Akulah roti kehidupan,\" Dia berbicara kepada komunitas yang identitasnya terbentuk di sekitar manna di padang gurun dan perjamuan Paskah ï¿½ makna yang sudah jelas bagi pendengarnya.",
+              "Jezus, wanneer hij onderwees, gaf bijna nooit een directe propositie. Hij vertelde verhalen. Hij stelde vragen. Hij gebruikte stilte. Toen hij zei 'Ik ben het brood des levens,' sprak hij in een gemeenschap wier identiteit gevormd was rond het manna in de woestijn en de Pesachmaaltijd ï¿½ betekenissen die voor zijn toehoorders voor de hand lagen."
             )}
           </p>
 
           <p style={{ fontSize: 16, lineHeight: 1.85, color: "oklch(82% 0.02 80)", marginBottom: 36 }}>
             {t(
-              "And yet, when Paul wrote to the Corinthians — a cosmopolitan, Greek-speaking, low-context audience — he argued. He made propositions. He laid out logic. He was the same man, carrying the same gospel, adapting his communication style to the cultural context. Not compromise. Incarnation.",
-              "Namun, ketika Paulus menulis kepada jemaat Korintus — audiens kosmopolitan berbahasa Yunani yang berorientasi konteks rendah — dia berargumentasi. Dia membuat proposisi. Dia menguraikan logika. Dia adalah orang yang sama, membawa injil yang sama, menyesuaikan gaya komunikasinya dengan konteks budaya. Bukan kompromi. Inkarnasi.",
-              "En toch, toen Paulus aan de Korintiërs schreef — een kosmopolitisch, Grieks sprekend, laagcontext publiek — redeneerde hij. Hij maakte proposities. Hij legde logica uit. Dezelfde man, hetzelfde evangelie, zijn communicatiestijl aanpassend aan de culturele context. Geen compromis. Incarnatie."
+              "And yet, when Paul wrote to the Corinthians ï¿½ a cosmopolitan, Greek-speaking, low-context audience ï¿½ he argued. He made propositions. He laid out logic. He was the same man, carrying the same gospel, adapting his communication style to the cultural context. Not compromise. Incarnation.",
+              "Namun, ketika Paulus menulis kepada jemaat Korintus ï¿½ audiens kosmopolitan berbahasa Yunani yang berorientasi konteks rendah ï¿½ dia berargumentasi. Dia membuat proposisi. Dia menguraikan logika. Dia adalah orang yang sama, membawa injil yang sama, menyesuaikan gaya komunikasinya dengan konteks budaya. Bukan kompromi. Inkarnasi.",
+              "En toch, toen Paulus aan de Korintiï¿½rs schreef ï¿½ een kosmopolitisch, Grieks sprekend, laagcontext publiek ï¿½ redeneerde hij. Hij maakte proposities. Hij legde logica uit. Dezelfde man, hetzelfde evangelie, zijn communicatiestijl aanpassend aan de culturele context. Geen compromis. Incarnatie."
             )}
           </p>
 
@@ -934,9 +934,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
               </button>
               <p style={{ margin: "16px 0 0", fontSize: 14, lineHeight: 1.6, color: "oklch(72% 0.03 260)" }}>
                 {t(
-                  "Jesus was calibrating the pace of revelation to the readiness of his audience. High-context communication is often about timing — releasing meaning when it can be received.",
-                  "Yesus menyesuaikan kecepatan pewahyuan dengan kesiapan audiens-Nya. Komunikasi konteks tinggi sering kali tentang waktu — melepaskan makna ketika dapat diterima.",
-                  "Jezus kalibreerde het tempo van openbaring op de bereidheid van zijn publiek. Hoge-context communicatie gaat vaak over timing — betekenis vrijgeven wanneer het ontvangen kan worden."
+                  "Jesus was calibrating the pace of revelation to the readiness of his audience. High-context communication is often about timing ï¿½ releasing meaning when it can be received.",
+                  "Yesus menyesuaikan kecepatan pewahyuan dengan kesiapan audiens-Nya. Komunikasi konteks tinggi sering kali tentang waktu ï¿½ melepaskan makna ketika dapat diterima.",
+                  "Jezus kalibreerde het tempo van openbaring op de bereidheid van zijn publiek. Hoge-context communicatie gaat vaak over timing ï¿½ betekenis vrijgeven wanneer het ontvangen kan worden."
                 )}
               </p>
             </div>
@@ -970,9 +970,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
               </button>
               <p style={{ margin: "16px 0 0", fontSize: 14, lineHeight: 1.6, color: "oklch(72% 0.03 260)" }}>
                 {t(
-                  "Paul's cross-cultural flexibility was not theological compromise — it was communicative wisdom. He adjusted how he communicated, not what. This is the biblical mandate for cultural intelligence.",
-                  "Fleksibilitas lintas budaya Paulus bukan kompromi teologis — itu adalah kebijaksanaan komunikatif. Dia menyesuaikan cara berkomunikasi, bukan apa yang dikomunikasikan. Ini adalah mandat Alkitabiah untuk kecerdasan budaya.",
-                  "Paulus' interculturele flexibiliteit was geen theologisch compromis — het was communicatieve wijsheid. Hij paste aan hoe hij communiceerde, niet wat. Dit is het bijbelse mandaat voor culturele intelligentie."
+                  "Paul's cross-cultural flexibility was not theological compromise ï¿½ it was communicative wisdom. He adjusted how he communicated, not what. This is the biblical mandate for cultural intelligence.",
+                  "Fleksibilitas lintas budaya Paulus bukan kompromi teologis ï¿½ itu adalah kebijaksanaan komunikatif. Dia menyesuaikan cara berkomunikasi, bukan apa yang dikomunikasikan. Ini adalah mandat Alkitabiah untuk kecerdasan budaya.",
+                  "Paulus' interculturele flexibiliteit was geen theologisch compromis ï¿½ het was communicatieve wijsheid. Hij paste aan hoe hij communiceerde, niet wat. Dit is het bijbelse mandaat voor culturele intelligentie."
                 )}
               </p>
             </div>
@@ -988,9 +988,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
             </p>
             <p style={{ margin: 0, fontSize: 16, lineHeight: 1.75, color: "oklch(88% 0.02 80)", fontStyle: "italic" }}>
               {t(
-                "If Jesus and Paul both adapted their communication to their cultural audience — not compromising the message, but honouring the listener — what does that ask of you in the context you are leading in today?",
-                "Jika Yesus dan Paulus keduanya menyesuaikan komunikasi mereka dengan audiens budaya mereka — tidak mengompromikan pesan, tetapi menghormati pendengar — apa yang diminta dari Anda dalam konteks yang Anda pimpin hari ini?",
-                "Als Jezus en Paulus beiden hun communicatie aanpasten aan hun culturele publiek — de boodschap niet compromitterend, maar de luisteraar eerend — wat vraagt dat van jou in de context die je vandaag leidt?"
+                "If Jesus and Paul both adapted their communication to their cultural audience ï¿½ not compromising the message, but honouring the listener ï¿½ what does that ask of you in the context you are leading in today?",
+                "Jika Yesus dan Paulus keduanya menyesuaikan komunikasi mereka dengan audiens budaya mereka ï¿½ tidak mengompromikan pesan, tetapi menghormati pendengar ï¿½ apa yang diminta dari Anda dalam konteks yang Anda pimpin hari ini?",
+                "Als Jezus en Paulus beiden hun communicatie aanpasten aan hun culturele publiek ï¿½ de boodschap niet compromitterend, maar de luisteraar eerend ï¿½ wat vraagt dat van jou in de context die je vandaag leidt?"
               )}
             </p>
           </div>
@@ -1017,9 +1017,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: bodyText }}>
             {t(
-              "These five questions will help you identify whether you lean toward low-context or high-context communication. There is no right answer — only greater self-awareness.",
-              "Lima pertanyaan ini akan membantu Anda mengidentifikasi apakah Anda cenderung ke komunikasi konteks rendah atau konteks tinggi. Tidak ada jawaban yang benar — hanya kesadaran diri yang lebih besar.",
-              "Deze vijf vragen helpen je te identificeren of je neigt naar lage-context of hoge-context communicatie. Er is geen goed antwoord — alleen grotere zelfkennis."
+              "These five questions will help you identify whether you lean toward low-context or high-context communication. There is no right answer ï¿½ only greater self-awareness.",
+              "Lima pertanyaan ini akan membantu Anda mengidentifikasi apakah Anda cenderung ke komunikasi konteks rendah atau konteks tinggi. Tidak ada jawaban yang benar ï¿½ hanya kesadaran diri yang lebih besar.",
+              "Deze vijf vragen helpen je te identificeren of je neigt naar lage-context of hoge-context communicatie. Er is geen goed antwoord ï¿½ alleen grotere zelfkennis."
             )}
           </p>
         </div>
@@ -1120,9 +1120,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
                 </p>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(78% 0.02 80)", margin: 0 }}>
                   {t(
-                    "You default to direct, explicit communication — clarity is your instinct. Your key growth edge is learning to read the room in high-context settings. Slow down, look for what isn't being said, and invest in relationship time before diving into task.",
-                    "Anda menggunakan komunikasi langsung dan eksplisit secara default — kejelasan adalah insting Anda. Kunci pertumbuhan Anda adalah belajar membaca suasana dalam situasi konteks tinggi. Perlambat, cari apa yang tidak dikatakan, dan investasikan waktu untuk hubungan sebelum menyelami tugas.",
-                    "Je gebruikt standaard directe, expliciete communicatie — duidelijkheid is jouw instinct. Jouw groeipunt is leren de ruimte te lezen in hoge-context omgevingen. Vertraag, zoek naar wat er niet gezegd wordt, en investeer in relatietijd voor je in de taak duikt."
+                    "You default to direct, explicit communication ï¿½ clarity is your instinct. Your key growth edge is learning to read the room in high-context settings. Slow down, look for what isn't being said, and invest in relationship time before diving into task.",
+                    "Anda menggunakan komunikasi langsung dan eksplisit secara default ï¿½ kejelasan adalah insting Anda. Kunci pertumbuhan Anda adalah belajar membaca suasana dalam situasi konteks tinggi. Perlambat, cari apa yang tidak dikatakan, dan investasikan waktu untuk hubungan sebelum menyelami tugas.",
+                    "Je gebruikt standaard directe, expliciete communicatie ï¿½ duidelijkheid is jouw instinct. Jouw groeipunt is leren de ruimte te lezen in hoge-context omgevingen. Vertraag, zoek naar wat er niet gezegd wordt, en investeer in relatietijd voor je in de taak duikt."
                   )}
                 </p>
               </>
@@ -1134,9 +1134,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
                 </p>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(78% 0.02 80)", margin: 0 }}>
                   {t(
-                    "You lean toward directness, but you have some instincts for relational sensitivity. In cross-cultural settings, lean into those instincts more — the discomfort of ambiguity is often the entry point for trust.",
-                    "Anda cenderung ke ketegasan, tetapi Anda memiliki beberapa insting untuk sensitivitas relasional. Dalam situasi lintas budaya, lebih andalkan insting tersebut — ketidaknyamanan ambiguitas sering kali menjadi titik masuk kepercayaan.",
-                    "Je neigt naar directheid, maar hebt ook enige instincten voor relationele gevoeligheid. In interculturele situaties, vertrouw die instincten meer — het ongemak van ambiguïteit is vaak het toegangspunt voor vertrouwen."
+                    "You lean toward directness, but you have some instincts for relational sensitivity. In cross-cultural settings, lean into those instincts more ï¿½ the discomfort of ambiguity is often the entry point for trust.",
+                    "Anda cenderung ke ketegasan, tetapi Anda memiliki beberapa insting untuk sensitivitas relasional. Dalam situasi lintas budaya, lebih andalkan insting tersebut ï¿½ ketidaknyamanan ambiguitas sering kali menjadi titik masuk kepercayaan.",
+                    "Je neigt naar directheid, maar hebt ook enige instincten voor relationele gevoeligheid. In interculturele situaties, vertrouw die instincten meer ï¿½ het ongemak van ambiguï¿½teit is vaak het toegangspunt voor vertrouwen."
                   )}
                 </p>
               </>
@@ -1148,9 +1148,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
                 </p>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(78% 0.02 80)", margin: 0 }}>
                   {t(
-                    "You sit at the centre — adaptable in both directions. This is a significant strength for cross-cultural leadership. Your challenge is knowing when to be direct and when to hold back. Context-reading is your key skill to develop.",
-                    "Anda berada di tengah — dapat beradaptasi di kedua arah. Ini adalah kekuatan signifikan untuk kepemimpinan lintas budaya. Tantangan Anda adalah mengetahui kapan harus langsung dan kapan harus menahan diri. Membaca konteks adalah keterampilan utama yang perlu dikembangkan.",
-                    "Je zit in het midden — aanpasbaar in beide richtingen. Dit is een significante sterkte voor intercultureel leiderschap. Je uitdaging is weten wanneer je direct moet zijn en wanneer je moet inhouden. Contextueel lezen is jouw sleutelcompetentie."
+                    "You sit at the centre ï¿½ adaptable in both directions. This is a significant strength for cross-cultural leadership. Your challenge is knowing when to be direct and when to hold back. Context-reading is your key skill to develop.",
+                    "Anda berada di tengah ï¿½ dapat beradaptasi di kedua arah. Ini adalah kekuatan signifikan untuk kepemimpinan lintas budaya. Tantangan Anda adalah mengetahui kapan harus langsung dan kapan harus menahan diri. Membaca konteks adalah keterampilan utama yang perlu dikembangkan.",
+                    "Je zit in het midden ï¿½ aanpasbaar in beide richtingen. Dit is een significante sterkte voor intercultureel leiderschap. Je uitdaging is weten wanneer je direct moet zijn en wanneer je moet inhouden. Contextueel lezen is jouw sleutelcompetentie."
                   )}
                 </p>
               </>
@@ -1162,9 +1162,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
                 </p>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(78% 0.02 80)", margin: 0 }}>
                   {t(
-                    "You naturally read between lines, invest in relationships, and protect dignity in conflict. Your growth edge: learn to communicate more explicitly when working with low-context colleagues. They will often need you to say it clearly — and that is not a betrayal of your values.",
+                    "You naturally read between lines, invest in relationships, and protect dignity in conflict. Your growth edge: learn to communicate more explicitly when working with low-context colleagues. They will often need you to say it clearly ï¿½ and that is not a betrayal of your values.",
                     "Anda secara alami membaca antara baris, berinvestasi dalam hubungan, dan melindungi martabat dalam konflik. Sisi pertumbuhan Anda: belajar berkomunikasi lebih eksplisit saat bekerja dengan rekan konteks rendah. Mereka akan sering membutuhkan Anda untuk mengatakannya dengan jelas.",
-                    "Je leest van nature tussen de regels, investeert in relaties en beschermt waardigheid in conflict. Jouw groeipunt: leer explicieter communiceren bij laagcontext collega's. Ze zullen jou vaak nodig hebben om het duidelijk te zeggen — en dat is geen verraad aan jouw waarden."
+                    "Je leest van nature tussen de regels, investeert in relaties en beschermt waardigheid in conflict. Jouw groeipunt: leer explicieter communiceren bij laagcontext collega's. Ze zullen jou vaak nodig hebben om het duidelijk te zeggen ï¿½ en dat is geen verraad aan jouw waarden."
                   )}
                 </p>
               </>
@@ -1176,7 +1176,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
                 </p>
                 <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(78% 0.02 80)", margin: 0 }}>
                   {t(
-                    "You are deeply relational, indirect, and sensitive to group dynamics. In mixed-culture teams, your challenge is making your meaning accessible to those who cannot read the signals you naturally send. Practice naming things directly in safe spaces — it will make you a stronger bridge between both worlds.",
+                    "You are deeply relational, indirect, and sensitive to group dynamics. In mixed-culture teams, your challenge is making your meaning accessible to those who cannot read the signals you naturally send. Practice naming things directly in safe spaces ï¿½ it will make you a stronger bridge between both worlds.",
                     "Anda sangat relasional, tidak langsung, dan sensitif terhadap dinamika kelompok. Dalam tim multi-budaya, tantangan Anda adalah membuat makna Anda dapat diakses oleh mereka yang tidak dapat membaca sinyal yang Anda kirim secara alami. Berlatihlah menyebutkan hal-hal secara langsung di tempat yang aman.",
                     "Je bent diep relationeel, indirect en gevoelig voor groepsdynamiek. In gemengde cultuurteams is je uitdaging je betekenis toegankelijk te maken voor degenen die de signalen die jij natuurlijk uitzendt niet kunnen lezen. Oefen in veilige ruimtes dingen direct te benoemen."
                   )}
@@ -1187,9 +1187,9 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
             <div style={{ marginTop: 28, padding: "20px 24px", background: "oklch(28% 0.10 260)", borderRadius: 12 }}>
               <p style={{ margin: 0, fontSize: 14, lineHeight: 1.75, color: "oklch(80% 0.02 80)", fontStyle: "italic" }}>
                 {t(
-                  "Remember: your default style is not your ceiling. The goal is not to abandon who you are — it is to expand your range. The most effective cross-cultural leaders are fluent in both registers.",
-                  "Ingat: gaya default Anda bukan batas Anda. Tujuannya bukan untuk meninggalkan siapa diri Anda — melainkan untuk memperluas jangkauan Anda. Pemimpin lintas budaya yang paling efektif fasih dalam kedua register.",
-                  "Onthoud: jouw standaardstijl is niet jouw plafond. Het doel is niet wie je bent achter te laten — het is je bereik te vergroten. De meest effectieve interculturele leiders zijn vaardig in beide registers."
+                  "Remember: your default style is not your ceiling. The goal is not to abandon who you are ï¿½ it is to expand your range. The most effective cross-cultural leaders are fluent in both registers.",
+                  "Ingat: gaya default Anda bukan batas Anda. Tujuannya bukan untuk meninggalkan siapa diri Anda ï¿½ melainkan untuk memperluas jangkauan Anda. Pemimpin lintas budaya yang paling efektif fasih dalam kedua register.",
+                  "Onthoud: jouw standaardstijl is niet jouw plafond. Het doel is niet wie je bent achter te laten ï¿½ het is je bereik te vergroten. De meest effectieve interculturele leiders zijn vaardig in beide registers."
                 )}
               </p>
             </div>
@@ -1228,7 +1228,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
             {t(
               "High-context and low-context communication is one dimension of a much larger picture. Explore the related modules below.",
               "Komunikasi konteks tinggi dan rendah adalah satu dimensi dari gambaran yang jauh lebih besar. Jelajahi modul terkait di bawah ini.",
-              "Hoge-context en lage-context communicatie is één dimensie van een veel groter geheel. Verken de gerelateerde modules hieronder."
+              "Hoge-context en lage-context communicatie is ï¿½ï¿½n dimensie van een veel groter geheel. Verken de gerelateerde modules hieronder."
             )}
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
@@ -1326,7 +1326,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
               letterSpacing: "0.08em",
               margin: "0 0 28px",
             }}>
-              — {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref}
+              ï¿½ {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref}
               {" "}({lang === "en" ? "NIV" : lang === "id" ? "TB" : "NBV"})
             </p>
             <button

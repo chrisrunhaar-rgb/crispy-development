@@ -39,7 +39,7 @@ const BIASES: Bias[] = [
     category: "memory",
     crossCulturalNote: "Leaders judge an entire region's potential based on one recent, high-profile story rather than representative data.",
     crossCulturalNote_id: "Pemimpin menilai potensi seluruh kawasan berdasarkan satu kisah menonjol yang baru terjadi, bukan data yang representatif.",
-    crossCulturalNote_nl: "Leiders beoordelen het potentieel van een hele regio op basis van één recente, opvallende gebeurtenis in plaats van representatieve data.",
+    crossCulturalNote_nl: "Leiders beoordelen het potentieel van een hele regio op basis van ï¿½ï¿½n recente, opvallende gebeurtenis in plaats van representatieve data.",
   },
   {
     name: "Forer Effect (Barnum Effect)",
@@ -66,7 +66,7 @@ const BIASES: Bias[] = [
     category: "memory",
     crossCulturalNote: "Repeated negative tropes about a culture at HQ harden into 'fact' through sheer repetition, distorting a leader's expectations before they even arrive.",
     crossCulturalNote_id: "Klise negatif yang berulang tentang suatu budaya di kantor pusat mengeras menjadi 'fakta' melalui pengulangan semata, mendistorsi ekspektasi pemimpin bahkan sebelum mereka tiba.",
-    crossCulturalNote_nl: "Herhaalde negatieve clichés over een cultuur op het hoofdkantoor worden door pure herhaling 'feiten', waardoor de verwachtingen van een leider al zijn vertekend voordat ze er aankomen.",
+    crossCulturalNote_nl: "Herhaalde negatieve clichï¿½s over een cultuur op het hoofdkantoor worden door pure herhaling 'feiten', waardoor de verwachtingen van een leider al zijn vertekend voordat ze er aankomen.",
   },
   {
     name: "Tachypsychia",
@@ -173,9 +173,9 @@ const BIASES: Bias[] = [
     name_id: "Efek Sorotan",
     name_nl: "Spotlicht-effect",
     category: "social",
-    crossCulturalNote: "Expat leaders overthink their cultural gaffes, believing the local team is constantly judging them — creating unnecessary anxiety and social distance.",
-    crossCulturalNote_id: "Pemimpin ekspatriat terlalu memikirkan kesalahan budaya mereka, percaya tim lokal terus-menerus menilai mereka — menciptakan kecemasan yang tidak perlu dan jarak sosial.",
-    crossCulturalNote_nl: "Expat-leiders denken te veel na over hun culturele blunders en geloven dat het lokale team hen constant beoordeelt — wat onnodige angst en sociale afstand creëert.",
+    crossCulturalNote: "Expat leaders overthink their cultural gaffes, believing the local team is constantly judging them ï¿½ creating unnecessary anxiety and social distance.",
+    crossCulturalNote_id: "Pemimpin ekspatriat terlalu memikirkan kesalahan budaya mereka, percaya tim lokal terus-menerus menilai mereka ï¿½ menciptakan kecemasan yang tidak perlu dan jarak sosial.",
+    crossCulturalNote_nl: "Expat-leiders denken te veel na over hun culturele blunders en geloven dat het lokale team hen constant beoordeelt ï¿½ wat onnodige angst en sociale afstand creï¿½ert.",
   },
   {
     name: "Defensive Attribution",
@@ -196,18 +196,18 @@ const BIASES: Bias[] = [
     crossCulturalNote_nl: "Leiders nemen aan dat een moeizaam draaiend lokaal kantoor simpelweg niet hard genoeg werkt, en negeren daarmee systemische ongelijkheden of historische nadelen in die regio.",
   },
   {
-    name: "Naïve Realism",
+    name: "Naï¿½ve Realism",
     name_id: "Realisme Naif",
-    name_nl: "Naïef Realisme",
+    name_nl: "Naï¿½ef Realisme",
     category: "social",
-    crossCulturalNote: "Leaders believe their business perspective is objective and that local dissent reflects bias — not a legitimately different, equally valid view.",
-    crossCulturalNote_id: "Pemimpin percaya perspektif bisnis mereka objektif dan bahwa ketidaksetujuan lokal mencerminkan bias — bukan pandangan yang legitimately berbeda dan sama-sama valid.",
-    crossCulturalNote_nl: "Leiders geloven dat hun zakelijk perspectief objectief is en dat lokale weerstand op bias duidt — niet op een legitiem ander, even geldig standpunt.",
+    crossCulturalNote: "Leaders believe their business perspective is objective and that local dissent reflects bias ï¿½ not a legitimately different, equally valid view.",
+    crossCulturalNote_id: "Pemimpin percaya perspektif bisnis mereka objektif dan bahwa ketidaksetujuan lokal mencerminkan bias ï¿½ bukan pandangan yang legitimately berbeda dan sama-sama valid.",
+    crossCulturalNote_nl: "Leiders geloven dat hun zakelijk perspectief objectief is en dat lokale weerstand op bias duidt ï¿½ niet op een legitiem ander, even geldig standpunt.",
   },
   {
-    name: "Naïve Cynicism",
+    name: "Naï¿½ve Cynicism",
     name_id: "Sinisme Naif",
-    name_nl: "Naïef Cynisme",
+    name_nl: "Naï¿½ef Cynisme",
     category: "social",
     crossCulturalNote: "Leaders dismiss a local partner's emphasis on relationship-building as self-interest, missing the deep cultural value of concepts like guanxi or wasta.",
     crossCulturalNote_id: "Pemimpin mengabaikan penekanan mitra lokal pada pembangunan hubungan sebagai kepentingan diri sendiri, melewatkan nilai budaya mendalam dari konsep seperti guanxi atau wasta.",
@@ -218,9 +218,9 @@ const BIASES: Bias[] = [
     name_id: "Efek Dunning-Kruger",
     name_nl: "Dunning-Kruger-effect",
     category: "social",
-    crossCulturalNote: "After one trip to a new country, a leader believes they are now a cultural expert — leading to overconfident and often costly decisions.",
-    crossCulturalNote_id: "Setelah satu kali kunjungan ke negara baru, seorang pemimpin percaya dirinya kini ahli budaya — yang mengarah pada keputusan yang terlalu percaya diri dan seringkali mahal.",
-    crossCulturalNote_nl: "Na één bezoek aan een nieuw land gelooft een leider dat ze nu een cultuurexpert zijn — wat leidt tot te zelfverzekerde en vaak kostbare beslissingen.",
+    crossCulturalNote: "After one trip to a new country, a leader believes they are now a cultural expert ï¿½ leading to overconfident and often costly decisions.",
+    crossCulturalNote_id: "Setelah satu kali kunjungan ke negara baru, seorang pemimpin percaya dirinya kini ahli budaya ï¿½ yang mengarah pada keputusan yang terlalu percaya diri dan seringkali mahal.",
+    crossCulturalNote_nl: "Na ï¿½ï¿½n bezoek aan een nieuw land gelooft een leider dat ze nu een cultuurexpert zijn ï¿½ wat leidt tot te zelfverzekerde en vaak kostbare beslissingen.",
   },
   {
     name: "Third-Person Effect",
@@ -254,9 +254,9 @@ const BIASES: Bias[] = [
     name_id: "Efek Ben Franklin",
     name_nl: "Ben Franklin-effect",
     category: "social",
-    crossCulturalNote: "Asking a local peer for a small favour can increase their investment in the partnership — a useful tool for building cross-cultural trust.",
-    crossCulturalNote_id: "Meminta rekan lokal untuk melakukan bantuan kecil dapat meningkatkan investasi mereka dalam kemitraan — alat yang berguna untuk membangun kepercayaan lintas budaya.",
-    crossCulturalNote_nl: "Een lokale collega om een kleine gunst vragen kan hun betrokkenheid bij het partnerschap vergroten — een nuttig middel om intercultureel vertrouwen op te bouwen.",
+    crossCulturalNote: "Asking a local peer for a small favour can increase their investment in the partnership ï¿½ a useful tool for building cross-cultural trust.",
+    crossCulturalNote_id: "Meminta rekan lokal untuk melakukan bantuan kecil dapat meningkatkan investasi mereka dalam kemitraan ï¿½ alat yang berguna untuk membangun kepercayaan lintas budaya.",
+    crossCulturalNote_nl: "Een lokale collega om een kleine gunst vragen kan hun betrokkenheid bij het partnerschap vergroten ï¿½ een nuttig middel om intercultureel vertrouwen op te bouwen.",
   },
   {
     name: "Bystander Effect",
@@ -311,16 +311,16 @@ const BIASES: Bias[] = [
     category: "learning",
     crossCulturalNote: "Leaders resist adapting proven home-country strategies to local needs, preferring the familiar over the effective.",
     crossCulturalNote_id: "Pemimpin menolak mengadaptasi strategi negara asal yang terbukti untuk kebutuhan lokal, lebih memilih yang familiar daripada yang efektif.",
-    crossCulturalNote_nl: "Leiders verzetten zich tegen het aanpassen van bewezen thuislandstrategieën aan lokale behoeften en geven de voorkeur aan het bekende boven het effectieve.",
+    crossCulturalNote_nl: "Leiders verzetten zich tegen het aanpassen van bewezen thuislandstrategieï¿½n aan lokale behoeften en geven de voorkeur aan het bekende boven het effectieve.",
   },
   {
     name: "Framing Effect",
     name_id: "Efek Pembingkaian",
     name_nl: "Framing-effect",
     category: "learning",
-    crossCulturalNote: "A local team's response to the same proposal shifts entirely based on whether it's framed as a gain or a loss — cultural context amplifies this further.",
-    crossCulturalNote_id: "Respons tim lokal terhadap proposal yang sama berubah sepenuhnya berdasarkan apakah proposal tersebut dibingkai sebagai keuntungan atau kerugian — konteks budaya memperkuat hal ini lebih jauh.",
-    crossCulturalNote_nl: "De reactie van een lokaal team op hetzelfde voorstel verandert volledig afhankelijk van of het als winst of verlies wordt gepresenteerd — culturele context versterkt dit effect verder.",
+    crossCulturalNote: "A local team's response to the same proposal shifts entirely based on whether it's framed as a gain or a loss ï¿½ cultural context amplifies this further.",
+    crossCulturalNote_id: "Respons tim lokal terhadap proposal yang sama berubah sepenuhnya berdasarkan apakah proposal tersebut dibingkai sebagai keuntungan atau kerugian ï¿½ konteks budaya memperkuat hal ini lebih jauh.",
+    crossCulturalNote_nl: "De reactie van een lokaal team op hetzelfde voorstel verandert volledig afhankelijk van of het als winst of verlies wordt gepresenteerd ï¿½ culturele context versterkt dit effect verder.",
   },
   {
     name: "Survivorship Bias",
@@ -338,7 +338,7 @@ const BIASES: Bias[] = [
     category: "learning",
     crossCulturalNote: "Two or three coincidental sales in a new market get interpreted as a trend, prompting premature and costly scaling.",
     crossCulturalNote_id: "Dua atau tiga penjualan kebetulan di pasar baru ditafsirkan sebagai tren, mendorong penskalaan yang prematur dan mahal.",
-    crossCulturalNote_nl: "Twee of drie toevallige verkopen in een nieuwe markt worden geïnterpreteerd als een trend, wat leidt tot voortijdige en kostbare schaalvergroting.",
+    crossCulturalNote_nl: "Twee of drie toevallige verkopen in een nieuwe markt worden geï¿½nterpreteerd als een trend, wat leidt tot voortijdige en kostbare schaalvergroting.",
   },
   {
     name: "Pessimism Bias",
@@ -356,7 +356,7 @@ const BIASES: Bias[] = [
     category: "learning",
     crossCulturalNote: "Leaders underestimate the time needed to navigate local bureaucracies, leading to missed deadlines and significant budget overruns.",
     crossCulturalNote_id: "Pemimpin meremehkan waktu yang diperlukan untuk menavigasi birokrasi lokal, yang mengarah pada tenggat waktu yang terlewat dan pembengkakan anggaran yang signifikan.",
-    crossCulturalNote_nl: "Leiders onderschatten de tijd die nodig is om lokale bureaucratieën te doorlopen, wat leidt tot gemiste deadlines en aanzienlijke budgetoverschrijdingen.",
+    crossCulturalNote_nl: "Leiders onderschatten de tijd die nodig is om lokale bureaucratieï¿½n te doorlopen, wat leidt tot gemiste deadlines en aanzienlijke budgetoverschrijdingen.",
   },
   // Belief
   {
@@ -364,9 +364,9 @@ const BIASES: Bias[] = [
     name_id: "Efek Ikut-ikutan",
     name_nl: "Meelopereffect",
     category: "belief",
-    crossCulturalNote: "A leader enters a popular 'emerging market' because competitors are doing so — without a real strategic fit for their specific mission or organisation.",
-    crossCulturalNote_id: "Seorang pemimpin memasuki 'pasar berkembang' yang populer karena pesaing melakukannya — tanpa kesesuaian strategis yang nyata untuk misi atau organisasi spesifik mereka.",
-    crossCulturalNote_nl: "Een leider betreedt een populaire 'opkomende markt' omdat concurrenten dat ook doen — zonder een echte strategische fit voor hun specifieke missie of organisatie.",
+    crossCulturalNote: "A leader enters a popular 'emerging market' because competitors are doing so ï¿½ without a real strategic fit for their specific mission or organisation.",
+    crossCulturalNote_id: "Seorang pemimpin memasuki 'pasar berkembang' yang populer karena pesaing melakukannya ï¿½ tanpa kesesuaian strategis yang nyata untuk misi atau organisasi spesifik mereka.",
+    crossCulturalNote_nl: "Een leider betreedt een populaire 'opkomende markt' omdat concurrenten dat ook doen ï¿½ zonder een echte strategische fit voor hun specifieke missie of organisatie.",
   },
   {
     name: "Automation Bias",
@@ -418,9 +418,9 @@ const BIASES: Bias[] = [
     name_id: "Bias Otoritas",
     name_nl: "Autoriteitsbias",
     category: "belief",
-    crossCulturalNote: "In high-power-distance cultures, a leader receives only agreement — honest, necessary dissent is withheld from anyone holding a senior title.",
-    crossCulturalNote_id: "Dalam budaya jarak kekuasaan tinggi, seorang pemimpin hanya menerima persetujuan — ketidaksetujuan yang jujur dan perlu ditahan dari siapa pun yang memegang jabatan senior.",
-    crossCulturalNote_nl: "In culturen met een grote machtsafstand krijgt een leider alleen instemming — eerlijk, noodzakelijk tegengeluid wordt onthouden aan iedereen met een hogere titel.",
+    crossCulturalNote: "In high-power-distance cultures, a leader receives only agreement ï¿½ honest, necessary dissent is withheld from anyone holding a senior title.",
+    crossCulturalNote_id: "Dalam budaya jarak kekuasaan tinggi, seorang pemimpin hanya menerima persetujuan ï¿½ ketidaksetujuan yang jujur dan perlu ditahan dari siapa pun yang memegang jabatan senior.",
+    crossCulturalNote_nl: "In culturen met een grote machtsafstand krijgt een leider alleen instemming ï¿½ eerlijk, noodzakelijk tegengeluid wordt onthouden aan iedereen met een hogere titel.",
   },
   {
     name: "Placebo Effect",
@@ -439,7 +439,7 @@ const BIASES: Bias[] = [
     category: "money",
     crossCulturalNote: "Leaders continue pouring resources into a failing foreign subsidiary because they've invested too much ego and time to admit the strategy isn't working.",
     crossCulturalNote_id: "Pemimpin terus menuangkan sumber daya ke anak perusahaan asing yang gagal karena mereka telah menginvestasikan terlalu banyak ego dan waktu untuk mengakui bahwa strategi tidak berhasil.",
-    crossCulturalNote_nl: "Leiders blijven middelen steken in een falende buitenlandse dochteronderneming omdat ze te veel ego en tijd hebben geïnvesteerd om toe te geven dat de strategie niet werkt.",
+    crossCulturalNote_nl: "Leiders blijven middelen steken in een falende buitenlandse dochteronderneming omdat ze te veel ego en tijd hebben geï¿½nvesteerd om toe te geven dat de strategie niet werkt.",
   },
   {
     name: "Gambler's Fallacy",
@@ -491,23 +491,23 @@ const BIASES: Bias[] = [
 
 const biasCategories = [
   { number: "1", en_title: "Attribution Biases", id_title: "Bias Atribusi", nl_title: "Attributiebiases", en_example: "Fundamental Attribution Error: attributing others' poor behaviour to their character while attributing your own to circumstances. In cross-cultural settings, this means assuming a team member is lazy when they are actually navigating a cultural expectation you don't understand.", id_example: "Kesalahan Atribusi Fundamental: mengatribusikan perilaku buruk orang lain pada karakter mereka sementara mengatribusikan milik Anda sendiri pada keadaan. Dalam konteks lintas budaya, ini berarti mengasumsikan anggota tim malas ketika mereka sebenarnya menavigasi harapan budaya yang tidak Anda pahami.", nl_example: "Fundamentele Attributiefout: het gedrag van anderen toeschrijven aan hun karakter terwijl je het jouwe aan omstandigheden toeschrijft. In interculturele omgevingen betekent dit aannemen dat een teamlid lui is terwijl ze eigenlijk navigeren door een culturele verwachting die jij niet begrijpt." },
-  { number: "2", en_title: "Confirmation Bias", id_title: "Bias Konfirmasi", nl_title: "Bevestigingsbias", en_example: "Seeking and favouring information that confirms your existing beliefs. In cross-cultural leadership, this creates a dangerous feedback loop: you believe local leaders are not ready for authority, you only notice evidence that supports this, and you never actually give them the chance that would disprove it.", id_example: "Mencari dan mendukung informasi yang mengkonfirmasi keyakinan Anda yang ada. Dalam kepemimpinan lintas budaya, ini menciptakan lingkaran umpan balik yang berbahaya: Anda percaya pemimpin lokal tidak siap untuk otoritas, Anda hanya memperhatikan bukti yang mendukung ini.", nl_example: "Informatie zoeken en begunstigen die je bestaande overtuigingen bevestigt. In intercultureel leiderschap creëert dit een gevaarlijke feedbacklus: je gelooft dat lokale leiders niet klaar zijn voor autoriteit, je merkt alleen bewijs op dat dit ondersteunt." },
-  { number: "3", en_title: "In-Group / Out-Group Bias", id_title: "Bias Dalam Kelompok / Luar Kelompok", nl_title: "In-groep / Uit-groep Bias", en_example: "Favouring people who are culturally similar to you — in hiring, delegation, and trust. This bias operates below conscious awareness and is one of the most damaging in multicultural teams. Leaders consistently give more opportunities, grace, and benefit of the doubt to people who look, speak, and think like them.", id_example: "Menyukai orang yang secara budaya mirip dengan Anda — dalam perekrutan, delegasi, dan kepercayaan. Bias ini beroperasi di bawah kesadaran dan merupakan salah satu yang paling merusak dalam tim multikultural.", nl_example: "De voorkeur geven aan mensen die cultureel op jou lijken — bij aanwerving, delegatie en vertrouwen. Deze bias werkt onder bewust bewustzijn en is een van de meest schadelijke in multiculturele teams." },
-  { number: "4", en_title: "Availability Bias", id_title: "Bias Ketersediaan", nl_title: "Beschikbaarheidsbias", en_example: "Overweighting information that is easily recalled. The last thing that went wrong becomes disproportionately influential. In cross-cultural leadership: one bad experience with a team from a particular culture colours all future interactions with people from that background.", id_example: "Memberi bobot berlebihan pada informasi yang mudah diingat. Hal terakhir yang berjalan salah menjadi sangat berpengaruh. Dalam kepemimpinan lintas budaya: satu pengalaman buruk dengan tim dari budaya tertentu mewarnai semua interaksi masa depan dengan orang-orang dari latar belakang itu.", nl_example: "Te veel gewicht geven aan gemakkelijk herinnerde informatie. Het laatste dat misging wordt onevenredig invloedrijk. In intercultureel leiderschap: één slechte ervaring met een team uit een bepaalde cultuur kleurt alle toekomstige interacties met mensen uit die achtergrond." },
+  { number: "2", en_title: "Confirmation Bias", id_title: "Bias Konfirmasi", nl_title: "Bevestigingsbias", en_example: "Seeking and favouring information that confirms your existing beliefs. In cross-cultural leadership, this creates a dangerous feedback loop: you believe local leaders are not ready for authority, you only notice evidence that supports this, and you never actually give them the chance that would disprove it.", id_example: "Mencari dan mendukung informasi yang mengkonfirmasi keyakinan Anda yang ada. Dalam kepemimpinan lintas budaya, ini menciptakan lingkaran umpan balik yang berbahaya: Anda percaya pemimpin lokal tidak siap untuk otoritas, Anda hanya memperhatikan bukti yang mendukung ini.", nl_example: "Informatie zoeken en begunstigen die je bestaande overtuigingen bevestigt. In intercultureel leiderschap creï¿½ert dit een gevaarlijke feedbacklus: je gelooft dat lokale leiders niet klaar zijn voor autoriteit, je merkt alleen bewijs op dat dit ondersteunt." },
+  { number: "3", en_title: "In-Group / Out-Group Bias", id_title: "Bias Dalam Kelompok / Luar Kelompok", nl_title: "In-groep / Uit-groep Bias", en_example: "Favouring people who are culturally similar to you ï¿½ in hiring, delegation, and trust. This bias operates below conscious awareness and is one of the most damaging in multicultural teams. Leaders consistently give more opportunities, grace, and benefit of the doubt to people who look, speak, and think like them.", id_example: "Menyukai orang yang secara budaya mirip dengan Anda ï¿½ dalam perekrutan, delegasi, dan kepercayaan. Bias ini beroperasi di bawah kesadaran dan merupakan salah satu yang paling merusak dalam tim multikultural.", nl_example: "De voorkeur geven aan mensen die cultureel op jou lijken ï¿½ bij aanwerving, delegatie en vertrouwen. Deze bias werkt onder bewust bewustzijn en is een van de meest schadelijke in multiculturele teams." },
+  { number: "4", en_title: "Availability Bias", id_title: "Bias Ketersediaan", nl_title: "Beschikbaarheidsbias", en_example: "Overweighting information that is easily recalled. The last thing that went wrong becomes disproportionately influential. In cross-cultural leadership: one bad experience with a team from a particular culture colours all future interactions with people from that background.", id_example: "Memberi bobot berlebihan pada informasi yang mudah diingat. Hal terakhir yang berjalan salah menjadi sangat berpengaruh. Dalam kepemimpinan lintas budaya: satu pengalaman buruk dengan tim dari budaya tertentu mewarnai semua interaksi masa depan dengan orang-orang dari latar belakang itu.", nl_example: "Te veel gewicht geven aan gemakkelijk herinnerde informatie. Het laatste dat misging wordt onevenredig invloedrijk. In intercultureel leiderschap: ï¿½ï¿½n slechte ervaring met een team uit een bepaalde cultuur kleurt alle toekomstige interacties met mensen uit die achtergrond." },
   { number: "5", en_title: "Anchoring Bias", id_title: "Bias Penjangkaran", nl_title: "Verankerbias", en_example: "Relying too heavily on the first piece of information encountered. If your first impression of a culture is negative (perhaps from a difficult entry experience), that anchor shapes all subsequent interpretations even when circumstances improve.", id_example: "Terlalu mengandalkan informasi pertama yang ditemui. Jika kesan pertama Anda tentang budaya negatif (mungkin dari pengalaman masuk yang sulit), jangkar itu membentuk semua interpretasi selanjutnya bahkan ketika keadaan membaik.", nl_example: "Te veel vertrouwen op het eerste stuk informatie dat wordt tegengekomen. Als je eerste indruk van een cultuur negatief is (misschien door een moeilijke beginervaring), vormt dat anker alle volgende interpretaties zelfs wanneer omstandigheden verbeteren." },
-  { number: "6", en_title: "Halo / Horn Effect", id_title: "Efek Halo / Tanduk", nl_title: "Halo / Hoorns Effect", en_example: "Letting one positive quality (halo) or one negative quality (horns) define your entire perception of a person. Common in cross-cultural settings when a person's language proficiency — or accent — colours your assessment of their intelligence, leadership capacity, or trustworthiness.", id_example: "Membiarkan satu kualitas positif (halo) atau satu kualitas negatif (tanduk) mendefinisikan seluruh persepsi Anda tentang seseorang. Umum dalam konteks lintas budaya ketika kemampuan bahasa seseorang mewarnai penilaian Anda.", nl_example: "Een positieve kwaliteit (halo) of negatieve kwaliteit (hoorns) je volledige perceptie van een persoon laten bepalen. Gangbaar in interculturele omgevingen wanneer de taalvaardigheid van een persoon jouw beoordeling van hun intelligentie kleurt." },
+  { number: "6", en_title: "Halo / Horn Effect", id_title: "Efek Halo / Tanduk", nl_title: "Halo / Hoorns Effect", en_example: "Letting one positive quality (halo) or one negative quality (horns) define your entire perception of a person. Common in cross-cultural settings when a person's language proficiency ï¿½ or accent ï¿½ colours your assessment of their intelligence, leadership capacity, or trustworthiness.", id_example: "Membiarkan satu kualitas positif (halo) atau satu kualitas negatif (tanduk) mendefinisikan seluruh persepsi Anda tentang seseorang. Umum dalam konteks lintas budaya ketika kemampuan bahasa seseorang mewarnai penilaian Anda.", nl_example: "Een positieve kwaliteit (halo) of negatieve kwaliteit (hoorns) je volledige perceptie van een persoon laten bepalen. Gangbaar in interculturele omgevingen wanneer de taalvaardigheid van een persoon jouw beoordeling van hun intelligentie kleurt." },
 ];
 
 const counterStrategies = [
-  { number: "1", en: "Name your biases before high-stakes decisions — literally write down: 'What bias might be shaping my thinking here?'", id: "Sebutkan bias Anda sebelum keputusan berisiko tinggi — secara harfiah tuliskan: 'Bias apa yang mungkin membentuk pemikiran saya di sini?'", nl: "Benoem je biases voor beslissingen met hoge inzet — schrijf letterlijk op: 'Welke bias kan mijn denken hier beïnvloeden?'" },
-  { number: "2", en: "Build cross-cultural accountability — have someone from a different background review significant decisions with you.", id: "Bangun akuntabilitas lintas budaya — minta seseorang dari latar belakang yang berbeda untuk meninjau keputusan penting bersama Anda.", nl: "Bouw interculturele verantwoording op — laat iemand uit een andere achtergrond significante beslissingen met je beoordelen." },
-  { number: "3", en: "Delay judgment — resist the urge to categorise quickly. The longer you suspend interpretation, the more accurate it becomes.", id: "Tunda penilaian — tahan dorongan untuk mengkategorikan dengan cepat. Semakin lama Anda menangguhkan interpretasi, semakin akurat itu.", nl: "Stel oordeel uit — weersta de drang om snel te categoriseren. Hoe langer je interpretatie uitstelt, hoe accurater het wordt." },
-  { number: "4", en: "Actively seek disconfirming information — ask: 'What would have to be true for me to be wrong about this?'", id: "Secara aktif cari informasi yang menyangkal — tanyakan: 'Apa yang harus benar agar saya salah tentang ini?'", nl: "Zoek actief naar weerleggende informatie — vraag: 'Wat zou waar moeten zijn om me in dit geval fout te laten zijn?'" },
-  { number: "5", en: "Practice cultural humility as a spiritual discipline — remember that you see through a glass darkly (1 Corinthians 13:12). Your perception is partial.", id: "Praktikkan kerendahan hati budaya sebagai disiplin rohani — ingat bahwa Anda melihat melalui kaca yang gelap (1 Korintus 13:12). Persepsi Anda hanya sebagian.", nl: "Beoefen culturele bescheidenheid als geestelijke discipline — onthoud dat je door een glas onduidelijk ziet (1 Korintiërs 13:12). Je perceptie is gedeeltelijk." },
+  { number: "1", en: "Name your biases before high-stakes decisions ï¿½ literally write down: 'What bias might be shaping my thinking here?'", id: "Sebutkan bias Anda sebelum keputusan berisiko tinggi ï¿½ secara harfiah tuliskan: 'Bias apa yang mungkin membentuk pemikiran saya di sini?'", nl: "Benoem je biases voor beslissingen met hoge inzet ï¿½ schrijf letterlijk op: 'Welke bias kan mijn denken hier beï¿½nvloeden?'" },
+  { number: "2", en: "Build cross-cultural accountability ï¿½ have someone from a different background review significant decisions with you.", id: "Bangun akuntabilitas lintas budaya ï¿½ minta seseorang dari latar belakang yang berbeda untuk meninjau keputusan penting bersama Anda.", nl: "Bouw interculturele verantwoording op ï¿½ laat iemand uit een andere achtergrond significante beslissingen met je beoordelen." },
+  { number: "3", en: "Delay judgment ï¿½ resist the urge to categorise quickly. The longer you suspend interpretation, the more accurate it becomes.", id: "Tunda penilaian ï¿½ tahan dorongan untuk mengkategorikan dengan cepat. Semakin lama Anda menangguhkan interpretasi, semakin akurat itu.", nl: "Stel oordeel uit ï¿½ weersta de drang om snel te categoriseren. Hoe langer je interpretatie uitstelt, hoe accurater het wordt." },
+  { number: "4", en: "Actively seek disconfirming information ï¿½ ask: 'What would have to be true for me to be wrong about this?'", id: "Secara aktif cari informasi yang menyangkal ï¿½ tanyakan: 'Apa yang harus benar agar saya salah tentang ini?'", nl: "Zoek actief naar weerleggende informatie ï¿½ vraag: 'Wat zou waar moeten zijn om me in dit geval fout te laten zijn?'" },
+  { number: "5", en: "Practice cultural humility as a spiritual discipline ï¿½ remember that you see through a glass darkly (1 Corinthians 13:12). Your perception is partial.", id: "Praktikkan kerendahan hati budaya sebagai disiplin rohani ï¿½ ingat bahwa Anda melihat melalui kaca yang gelap (1 Korintus 13:12). Persepsi Anda hanya sebagian.", nl: "Beoefen culturele bescheidenheid als geestelijke discipline ï¿½ onthoud dat je door een glas onduidelijk ziet (1 Korintiï¿½rs 13:12). Je perceptie is gedeeltelijk." },
 ];
 
 const reflectionQuestions = [
-  { roman: "I", en: "Which of the six bias categories resonates most with patterns you notice in yourself?", id: "Kategori bias mana dari enam yang paling beresonansi dengan pola yang Anda perhatikan dalam diri Anda?", nl: "Welke van de zes biascategorieën resoneert het meest met patronen die je in jezelf opmerkt?" },
+  { roman: "I", en: "Which of the six bias categories resonates most with patterns you notice in yourself?", id: "Kategori bias mana dari enam yang paling beresonansi dengan pola yang Anda perhatikan dalam diri Anda?", nl: "Welke van de zes biascategorieï¿½n resoneert het meest met patronen die je in jezelf opmerkt?" },
   { roman: "II", en: "Have you ever made a significant judgment about a team member that you later discovered was culturally misread?", id: "Pernahkah Anda membuat penilaian signifikan tentang anggota tim yang kemudian Anda temukan disalahbaca secara budaya?", nl: "Heb je ooit een significant oordeel geveld over een teamlid waarvan je later ontdekte dat het cultureel verkeerd was gelezen?" },
   { roman: "III", en: "Who in your life gives you the most honest feedback on your blind spots? Is that enough?", id: "Siapa dalam hidup Anda yang memberi Anda umpan balik paling jujur tentang titik buta Anda? Apakah itu cukup?", nl: "Wie in je leven geeft je de eerlijkste feedback op je blinde vlekken? Is dat genoeg?" },
   { roman: "IV", en: "How might your own cultural background be a source of systematic bias that you have never questioned?", id: "Bagaimana latar belakang budaya Anda sendiri bisa menjadi sumber bias sistematis yang belum pernah Anda pertanyakan?", nl: "Hoe kan jouw eigen culturele achtergrond een bron van systematische bias zijn die je nooit hebt bevraagd?" },
@@ -559,16 +559,16 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       {/* Hero */}
       <div style={{ background: navy, padding: "80px 24px 72px" }}>
         <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Thinking Tools · Guide", "Alat Berpikir · Panduan", "Denktools · Gids")}
+          {t("Thinking Tools ï¿½ Guide", "Alat Berpikir ï¿½ Panduan", "Denktools ï¿½ Gids")}
         </p>
         <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Cognitive Biases in Leadership", "Bias Kognitif dalam Kepemimpinan", "Cognitieve Biases in Leiderschap")}
         </h1>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.65 }}>
           {t(
-            '"We think we see the world as it is. We actually see the world as we are." — Anaïs Nin',
-            '"Kita pikir kita melihat dunia sebagaimana adanya. Kita sebenarnya melihat dunia sebagaimana kita adanya." — Anaïs Nin',
-            '"We denken dat we de wereld zien zoals ze is. We zien de wereld eigenlijk zoals wij zijn." — Anaïs Nin'
+            '"We think we see the world as it is. We actually see the world as we are." ï¿½ Anaï¿½s Nin',
+            '"Kita pikir kita melihat dunia sebagaimana adanya. Kita sebenarnya melihat dunia sebagaimana kita adanya." ï¿½ Anaï¿½s Nin',
+            '"We denken dat we de wereld zien zoals ze is. We zien de wereld eigenlijk zoals wij zijn." ï¿½ Anaï¿½s Nin'
           )}
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -583,9 +583,9 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "Cognitive biases are systematic errors in thinking that affect every human being — not just the uninformed or the unintelligent. They are shortcuts the brain takes to process the overwhelming volume of information it receives each day. In ordinary life, many of them are helpful. In leadership — and especially cross-cultural leadership — they can be devastating.",
-            "Bias kognitif adalah kesalahan sistematis dalam berpikir yang mempengaruhi setiap manusia — bukan hanya yang tidak terinformasi atau tidak cerdas. Mereka adalah jalan pintas yang diambil otak untuk memproses volume informasi yang luar biasa yang diterimanya setiap hari. Dalam kehidupan biasa, banyak di antaranya berguna. Dalam kepemimpinan — dan terutama kepemimpinan lintas budaya — bias ini bisa sangat merusak.",
-            "Cognitieve biases zijn systematische denkfouten die elke mens treffen — niet alleen de ongeïnformeerde of onintelligente. Het zijn snelkoppelingen die het brein neemt om het overweldigende volume informatie te verwerken dat het elke dag ontvangt. In het dagelijks leven zijn veel ervan nuttig. In leiderschap — en zeker in intercultureel leiderschap — kunnen ze verwoestend zijn."
+            "Cognitive biases are systematic errors in thinking that affect every human being ï¿½ not just the uninformed or the unintelligent. They are shortcuts the brain takes to process the overwhelming volume of information it receives each day. In ordinary life, many of them are helpful. In leadership ï¿½ and especially cross-cultural leadership ï¿½ they can be devastating.",
+            "Bias kognitif adalah kesalahan sistematis dalam berpikir yang mempengaruhi setiap manusia ï¿½ bukan hanya yang tidak terinformasi atau tidak cerdas. Mereka adalah jalan pintas yang diambil otak untuk memproses volume informasi yang luar biasa yang diterimanya setiap hari. Dalam kehidupan biasa, banyak di antaranya berguna. Dalam kepemimpinan ï¿½ dan terutama kepemimpinan lintas budaya ï¿½ bias ini bisa sangat merusak.",
+            "Cognitieve biases zijn systematische denkfouten die elke mens treffen ï¿½ niet alleen de ongeï¿½nformeerde of onintelligente. Het zijn snelkoppelingen die het brein neemt om het overweldigende volume informatie te verwerken dat het elke dag ontvangt. In het dagelijks leven zijn veel ervan nuttig. In leiderschap ï¿½ en zeker in intercultureel leiderschap ï¿½ kunnen ze verwoestend zijn."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75 }}>
@@ -607,7 +607,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
               {t("Reference Library", "Perpustakaan Referensi", "Naslagbibliotheek")}
             </p>
             <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 12 }}>
-              {t("50 Biases — Cross-Cultural Impact", "50 Bias — Dampak Lintas Budaya", "50 Biases — Interculturele Impact")}
+              {t("50 Biases ï¿½ Cross-Cultural Impact", "50 Bias ï¿½ Dampak Lintas Budaya", "50 Biases ï¿½ Interculturele Impact")}
             </h2>
             <p style={{ color: bodyText, fontSize: 15, maxWidth: 560, margin: "0 auto" }}>
               {t(
@@ -623,7 +623,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
             type="search"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder={t("Search biases…", "Cari bias…", "Zoek biases…")}
+            placeholder={t("Search biasesï¿½", "Cari biasï¿½", "Zoek biasesï¿½")}
             style={{
               width: "100%",
               boxSizing: "border-box",
@@ -708,7 +708,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
             {t("6 Patterns Worth Understanding Deeply", "6 Pola yang Layak Dipahami Mendalam", "6 Patronen die Diep Begrip Verdienen")}
           </h2>
           <p style={{ textAlign: "center", color: bodyText, fontSize: 15, marginBottom: 48 }}>
-            {t("These six show up most often — and most destructively — in cross-cultural teams.", "Enam ini paling sering muncul — dan paling destruktif — dalam tim lintas budaya.", "Deze zes komen het vaakst voor — en het meest destructief — in interculturele teams.")}
+            {t("These six show up most often ï¿½ and most destructively ï¿½ in cross-cultural teams.", "Enam ini paling sering muncul ï¿½ dan paling destruktif ï¿½ dalam tim lintas budaya.", "Deze zes komen het vaakst voor ï¿½ en het meest destructief ï¿½ in interculturele teams.")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {biasCategories.map((b) => (
@@ -735,7 +735,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
             {t("5 Ways to Counter Bias", "5 Cara Mengatasi Bias", "5 Manieren om Bias te Tegengaan")}
           </h2>
           <p style={{ textAlign: "center", color: bodyText, marginBottom: 40, fontSize: 15 }}>
-            {t("You cannot eliminate bias — but you can interrupt it.", "Anda tidak bisa menghilangkan bias — tetapi Anda bisa menginterupsinya.", "Je kunt bias niet elimineren — maar je kunt het wel onderbreken.")}
+            {t("You cannot eliminate bias ï¿½ but you can interrupt it.", "Anda tidak bisa menghilangkan bias ï¿½ tetapi Anda bisa menginterupsinya.", "Je kunt bias niet elimineren ï¿½ maar je kunt het wel onderbreken.")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             {counterStrategies.map((s) => (

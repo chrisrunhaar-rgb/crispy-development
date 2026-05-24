@@ -11,19 +11,19 @@ const tFn = (en: string, id: string, nl: string, lang: Lang) =>
 
 const VERSES = {
   "gen-2-2-3": {
-    en_ref: "Genesis 2:2–3", id_ref: "Kejadian 2:2–3", nl_ref: "Genesis 2:2–3",
+    en_ref: "Genesis 2:2ï¿½3", id_ref: "Kejadian 2:2ï¿½3", nl_ref: "Genesis 2:2ï¿½3",
     en: "By the seventh day God had finished the work he had been doing; so on the seventh day he rested from all his work. Then God blessed the seventh day and made it holy, because on it he rested from all the work of creating that he had done.",
     id: "Ketika Allah pada hari ketujuh telah menyelesaikan pekerjaan yang dibuat-Nya itu, berhentilah Ia pada hari ketujuh dari segala pekerjaan yang telah dibuat-Nya itu. Lalu Allah memberkati hari ketujuh itu dan menguduskannya, karena pada hari itulah Ia berhenti dari segala pekerjaan penciptaan yang telah dibuat-Nya itu.",
     nl: "Op de zevende dag had God zijn werk voltooid. Op die dag rustte hij van het werk dat hij had gemaakt. God zegende de zevende dag en verklaarde hem heilig, want op die dag rustte hij van alles wat hij had gemaakt.",
   },
   "matt-11-28-30": {
-    en_ref: "Matthew 11:28–30", id_ref: "Matius 11:28–30", nl_ref: "Matteüs 11:28–30",
+    en_ref: "Matthew 11:28ï¿½30", id_ref: "Matius 11:28ï¿½30", nl_ref: "Matteï¿½s 11:28ï¿½30",
     en: "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light.",
     id: "Marilah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu. Pikullah kuk yang Kupasang dan belajarlah pada-Ku, karena Aku lemah lembut dan rendah hati dan jiwamu akan mendapat ketenangan. Sebab kuk yang Kupasang itu enak dan beban-Ku pun ringan.",
     nl: "Kom naar mij, jullie die vermoeid zijn en onder lasten gebukt gaan, dan zal ik jullie rust geven. Neem mijn juk op je en leer van mij, want ik ben zachtmoedig en nederig van hart. Dan zullen jullie werkelijk rust vinden, want mijn juk is zacht en mijn last is licht.",
   },
   "ps-23-2-3": {
-    en_ref: "Psalm 23:2–3", id_ref: "Mazmur 23:2–3", nl_ref: "Psalm 23:2–3",
+    en_ref: "Psalm 23:2ï¿½3", id_ref: "Mazmur 23:2ï¿½3", nl_ref: "Psalm 23:2ï¿½3",
     en: "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul. He guides me along the right paths for his name's sake.",
     id: "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku. Ia menuntun aku di jalan yang benar oleh karena nama-Nya.",
     nl: "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht en leidt mij langs veilige paden tot eer van zijn naam.",
@@ -35,7 +35,7 @@ const VERSES = {
     nl: "Hij zei tegen hen: \"Ga nu mee naar een rustige, afgelegen plek, zodat jullie even kunnen uitrusten.\" Want er waren zoveel mensen die kwamen en gingen, dat ze zelfs geen tijd hadden om te eten.",
   },
   "exod-20-8": {
-    en_ref: "Exodus 20:8–10", id_ref: "Keluaran 20:8–10", nl_ref: "Exodus 20:8–10",
+    en_ref: "Exodus 20:8ï¿½10", id_ref: "Keluaran 20:8ï¿½10", nl_ref: "Exodus 20:8ï¿½10",
     en: "Remember the Sabbath day by keeping it holy. Six days you shall labor and do all your work, but the seventh day is a sabbath to the Lord your God. On it you shall not do any work.",
     id: "Ingatlah dan kuduskanlah hari Sabat: enam hari lamanya engkau akan bekerja dan melakukan segala pekerjaanmu, tetapi hari ketujuh adalah hari Sabat TUHAN, Allahmu; maka jangan melakukan sesuatu pekerjaan.",
     nl: "Houd de sabbat in ere, het is een heilige dag. Zes dagen lang kunt u werken en al uw arbeid verrichten, maar de zevende dag is een rustdag, die gewijd is aan de HEER uw God; dan mag u niet werken.",
@@ -47,48 +47,48 @@ const PORTRAITS = [
     en_title: "The Always-Available Leader",
     id_title: "Pemimpin yang Selalu Siap",
     nl_title: "De Altijd-Beschikbare Leider",
-    en_body: `He manages teams across three time zones. WhatsApp notifications stay on through the night. He prides himself on never missing a message. Eighteen months in, his creative thinking has dulled. He's short with his family. He can attend any meeting but can't fully be present in any of them. He doesn't recognise it as burnout — he calls it the cost of the mission. The cost, quietly, is his whole self.`,
-    id_body: `Ia mengelola tim di tiga zona waktu. Notifikasi WhatsApp menyala sepanjang malam. Ia bangga tidak pernah melewatkan satu pesan pun. Delapan belas bulan kemudian, pemikiran kreatifnya telah tumpul. Ia mudah marah dengan keluarganya. Ia bisa menghadiri rapat apa saja tapi tidak bisa sepenuhnya hadir di satupun. Ia tidak mengenalinya sebagai kelelahan — ia menyebutnya sebagai biaya misi. Biayanya, diam-diam, adalah dirinya sendiri.`,
-    nl_body: `Hij beheert teams over drie tijdzones. WhatsApp-meldingen blijven de hele nacht aan. Hij is trots dat hij nooit een bericht mist. Achttien maanden later is zijn creatief denken afgestompt. Hij is kortaf met zijn gezin. Hij kan elke vergadering bijwonen maar kan in geen enkele echt aanwezig zijn. Hij herkent het niet als burnout — hij noemt het de prijs van de missie. De prijs, stilletjes, is zijn hele zelf.`,
+    en_body: `He manages teams across three time zones. WhatsApp notifications stay on through the night. He prides himself on never missing a message. Eighteen months in, his creative thinking has dulled. He's short with his family. He can attend any meeting but can't fully be present in any of them. He doesn't recognise it as burnout ï¿½ he calls it the cost of the mission. The cost, quietly, is his whole self.`,
+    id_body: `Ia mengelola tim di tiga zona waktu. Notifikasi WhatsApp menyala sepanjang malam. Ia bangga tidak pernah melewatkan satu pesan pun. Delapan belas bulan kemudian, pemikiran kreatifnya telah tumpul. Ia mudah marah dengan keluarganya. Ia bisa menghadiri rapat apa saja tapi tidak bisa sepenuhnya hadir di satupun. Ia tidak mengenalinya sebagai kelelahan ï¿½ ia menyebutnya sebagai biaya misi. Biayanya, diam-diam, adalah dirinya sendiri.`,
+    nl_body: `Hij beheert teams over drie tijdzones. WhatsApp-meldingen blijven de hele nacht aan. Hij is trots dat hij nooit een bericht mist. Achttien maanden later is zijn creatief denken afgestompt. Hij is kortaf met zijn gezin. Hij kan elke vergadering bijwonen maar kan in geen enkele echt aanwezig zijn. Hij herkent het niet als burnout ï¿½ hij noemt het de prijs van de missie. De prijs, stilletjes, is zijn hele zelf.`,
   },
   {
     en_title: "The Leader Who Earns Rest",
     id_title: "Pemimpin yang Menghasilkan Istirahat",
     nl_title: "De Leider die Rust Verdient",
-    en_body: `She leads a mission organisation and has not taken a full week of holiday in five years. Her team admires her commitment. She measures her faithfulness by her output — and rest, to her, feels indistinguishable from neglect. The team mirrors her. No one admits fatigue. Output per person is declining, quietly, each year. The culture has confused sacrifice with depletion. They are not becoming more faithful — they are becoming less effective.`,
-    id_body: `Ia memimpin sebuah organisasi misi dan belum mengambil liburan penuh dalam lima tahun. Timnya mengagumi komitmennya. Ia mengukur kesetiaannya dengan hasilnya — dan istirahat, baginya, terasa tidak dapat dibedakan dari kelalaian. Tim mencerminkan pola yang sama. Tidak ada yang mengakui kelelahan. Output per orang menurun setiap tahun. Budaya telah mencampuradukkan pengorbanan dengan penipisan.`,
-    nl_body: `Ze leidt een missieorganisatie en heeft in vijf jaar geen volledige vakantieweek genomen. Haar team bewondert haar toewijding. Ze meet haar trouw af aan haar output — en rust voelt voor haar niet te onderscheiden van nalatigheid. Het team weerspiegelt haar. Niemand geeft vermoeidheid toe. De output per persoon daalt stilletjes elk jaar. De cultuur heeft opoffering verward met uitputting.`,
+    en_body: `She leads a mission organisation and has not taken a full week of holiday in five years. Her team admires her commitment. She measures her faithfulness by her output ï¿½ and rest, to her, feels indistinguishable from neglect. The team mirrors her. No one admits fatigue. Output per person is declining, quietly, each year. The culture has confused sacrifice with depletion. They are not becoming more faithful ï¿½ they are becoming less effective.`,
+    id_body: `Ia memimpin sebuah organisasi misi dan belum mengambil liburan penuh dalam lima tahun. Timnya mengagumi komitmennya. Ia mengukur kesetiaannya dengan hasilnya ï¿½ dan istirahat, baginya, terasa tidak dapat dibedakan dari kelalaian. Tim mencerminkan pola yang sama. Tidak ada yang mengakui kelelahan. Output per orang menurun setiap tahun. Budaya telah mencampuradukkan pengorbanan dengan penipisan.`,
+    nl_body: `Ze leidt een missieorganisatie en heeft in vijf jaar geen volledige vakantieweek genomen. Haar team bewondert haar toewijding. Ze meet haar trouw af aan haar output ï¿½ en rust voelt voor haar niet te onderscheiden van nalatigheid. Het team weerspiegelt haar. Niemand geeft vermoeidheid toe. De output per persoon daalt stilletjes elk jaar. De cultuur heeft opoffering verward met uitputting.`,
   },
   {
     en_title: "The Leader in the Wrong Rhythm",
     id_title: "Pemimpin dalam Ritme yang Salah",
     nl_title: "De Leider in het Verkeerde Ritme",
-    en_body: `A Western leader arrives in a Southeast Asian context and imposes a structured 40-hour workweek, Western-style productivity frameworks, and rigid separation of work and personal time. The local team's rest is woven into festivals, extended family, and seasonal rhythms — it doesn't fit his framework. He burns out trying to enforce a system that doesn't fit. He misses that rest was already present in the culture — only in a form he didn't recognise.`,
-    id_body: `Seorang pemimpin Barat tiba di konteks Asia Tenggara dan menerapkan minggu kerja 40 jam yang terstruktur, kerangka produktivitas gaya Barat, dan pemisahan kaku antara waktu kerja dan pribadi. Istirahat tim lokal terjalin dalam festival, keluarga besar, dan ritme musiman — tidak cocok dengan kerangkanya. Ia kelelahan mencoba menerapkan sistem yang tidak cocok. Ia melewatkan bahwa istirahat sudah ada dalam budaya — hanya dalam bentuk yang tidak ia kenali.`,
-    nl_body: `Een Westerse leider arriveert in een Zuidoost-Aziatische context en legt een gestructureerde 40-urige werkweek op, Westerse productiviteitsframeworks, en strakke scheiding van werk en privétijd. De rust van het lokale team is verweven in festivals, de uitgebreide familie en seizoensgebonden ritmes — het past niet in zijn framework. Hij raakt uitgeput door een systeem te willen handhaven dat niet past. Hij mist dat rust al aanwezig was in de cultuur — alleen in een vorm die hij niet herkende.`,
+    en_body: `A Western leader arrives in a Southeast Asian context and imposes a structured 40-hour workweek, Western-style productivity frameworks, and rigid separation of work and personal time. The local team's rest is woven into festivals, extended family, and seasonal rhythms ï¿½ it doesn't fit his framework. He burns out trying to enforce a system that doesn't fit. He misses that rest was already present in the culture ï¿½ only in a form he didn't recognise.`,
+    id_body: `Seorang pemimpin Barat tiba di konteks Asia Tenggara dan menerapkan minggu kerja 40 jam yang terstruktur, kerangka produktivitas gaya Barat, dan pemisahan kaku antara waktu kerja dan pribadi. Istirahat tim lokal terjalin dalam festival, keluarga besar, dan ritme musiman ï¿½ tidak cocok dengan kerangkanya. Ia kelelahan mencoba menerapkan sistem yang tidak cocok. Ia melewatkan bahwa istirahat sudah ada dalam budaya ï¿½ hanya dalam bentuk yang tidak ia kenali.`,
+    nl_body: `Een Westerse leider arriveert in een Zuidoost-Aziatische context en legt een gestructureerde 40-urige werkweek op, Westerse productiviteitsframeworks, en strakke scheiding van werk en privï¿½tijd. De rust van het lokale team is verweven in festivals, de uitgebreide familie en seizoensgebonden ritmes ï¿½ het past niet in zijn framework. Hij raakt uitgeput door een systeem te willen handhaven dat niet past. Hij mist dat rust al aanwezig was in de cultuur ï¿½ alleen in een vorm die hij niet herkende.`,
   },
 ];
 
 const PRACTICES = [
   {
-    en: "Establish one full day each week with no digital engagement — no email, no messages, no screens. Not as a rule to follow, but as an act of trust that God holds what you step away from.",
-    id: "Tetapkan satu hari penuh setiap minggu tanpa keterlibatan digital — tidak ada email, tidak ada pesan, tidak ada layar. Bukan sebagai aturan untuk diikuti, tetapi sebagai tindakan kepercayaan bahwa Allah menjaga apa yang Anda tinggalkan.",
-    nl: "Stel één volledige dag per week in zonder digitale betrokkenheid — geen e-mail, geen berichten, geen schermen. Niet als een te volgen regel, maar als een daad van vertrouwen dat God vasthoudt wat je loslaat.",
+    en: "Establish one full day each week with no digital engagement ï¿½ no email, no messages, no screens. Not as a rule to follow, but as an act of trust that God holds what you step away from.",
+    id: "Tetapkan satu hari penuh setiap minggu tanpa keterlibatan digital ï¿½ tidak ada email, tidak ada pesan, tidak ada layar. Bukan sebagai aturan untuk diikuti, tetapi sebagai tindakan kepercayaan bahwa Allah menjaga apa yang Anda tinggalkan.",
+    nl: "Stel ï¿½ï¿½n volledige dag per week in zonder digitale betrokkenheid ï¿½ geen e-mail, geen berichten, geen schermen. Niet als een te volgen regel, maar als een daad van vertrouwen dat God vasthoudt wat je loslaat.",
   },
   {
-    en: "Create a physical ritual that ends your workday — a brief prayer, a short walk, closing your laptop with intention. Something your body recognises as: this is where work stops.",
-    id: "Ciptakan ritual fisik yang mengakhiri hari kerja Anda — doa singkat, jalan kaki singkat, menutup laptop dengan niat. Sesuatu yang dikenali tubuh Anda sebagai: di sinilah pekerjaan berhenti.",
-    nl: "Creëer een fysiek ritueel dat je werkdag afsluit — een kort gebed, een korte wandeling, je laptop met bedoeling sluiten. Iets wat je lichaam herkent als: hier stopt het werk.",
+    en: "Create a physical ritual that ends your workday ï¿½ a brief prayer, a short walk, closing your laptop with intention. Something your body recognises as: this is where work stops.",
+    id: "Ciptakan ritual fisik yang mengakhiri hari kerja Anda ï¿½ doa singkat, jalan kaki singkat, menutup laptop dengan niat. Sesuatu yang dikenali tubuh Anda sebagai: di sinilah pekerjaan berhenti.",
+    nl: "Creï¿½er een fysiek ritueel dat je werkdag afsluit ï¿½ een kort gebed, een korte wandeling, je laptop met bedoeling sluiten. Iets wat je lichaam herkent als: hier stopt het werk.",
   },
   {
-    en: "Identify the communal rest rhythms already present in your cultural context — festivals, family gatherings, religious assemblies — and build your personal rhythm around them rather than against them.",
-    id: "Identifikasi ritme istirahat komunal yang sudah ada dalam konteks budaya Anda — festival, pertemuan keluarga, ibadah bersama — dan bangun ritme pribadi Anda di sekitarnya, bukan melawannya.",
-    nl: "Identificeer de communale rustritmes die al aanwezig zijn in jouw culturele context — festivals, familiereünies, religieuze samenkomsten — en bouw je persoonlijke ritme eromheen, niet ertegen.",
+    en: "Identify the communal rest rhythms already present in your cultural context ï¿½ festivals, family gatherings, religious assemblies ï¿½ and build your personal rhythm around them rather than against them.",
+    id: "Identifikasi ritme istirahat komunal yang sudah ada dalam konteks budaya Anda ï¿½ festival, pertemuan keluarga, ibadah bersama ï¿½ dan bangun ritme pribadi Anda di sekitarnya, bukan melawannya.",
+    nl: "Identificeer de communale rustritmes die al aanwezig zijn in jouw culturele context ï¿½ festivals, familiereï¿½nies, religieuze samenkomsten ï¿½ en bouw je persoonlijke ritme eromheen, niet ertegen.",
   },
   {
-    en: "Take the full annual leave you are entitled to. Rest is not a reward for enough output — it is a built-in feature of sustainable leadership. Your team will not rest unless you model it.",
-    id: "Ambil cuti tahunan penuh yang menjadi hak Anda. Istirahat bukan hadiah untuk output yang cukup — itu adalah fitur bawaan kepemimpinan yang berkelanjutan. Tim Anda tidak akan beristirahat kecuali Anda memodelkannya.",
-    nl: "Neem het volledige jaarlijkse verlof dat je toekomt. Rust is geen beloning voor voldoende output — het is een ingebouwd kenmerk van duurzaam leiderschap. Je team zal niet rusten tenzij jij het modelleert.",
+    en: "Take the full annual leave you are entitled to. Rest is not a reward for enough output ï¿½ it is a built-in feature of sustainable leadership. Your team will not rest unless you model it.",
+    id: "Ambil cuti tahunan penuh yang menjadi hak Anda. Istirahat bukan hadiah untuk output yang cukup ï¿½ itu adalah fitur bawaan kepemimpinan yang berkelanjutan. Tim Anda tidak akan beristirahat kecuali Anda memodelkannya.",
+    nl: "Neem het volledige jaarlijkse verlof dat je toekomt. Rust is geen beloning voor voldoende output ï¿½ het is een ingebouwd kenmerk van duurzaam leiderschap. Je team zal niet rusten tenzij jij het modelleert.",
   },
 ];
 
@@ -158,7 +158,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Faith & Calling · Guide", "Iman & Panggilan · Panduan", "Geloof & Roeping · Gids")}
+            {t("Faith & Calling ï¿½ Guide", "Iman & Panggilan ï¿½ Panduan", "Geloof & Roeping ï¿½ Gids")}
           </p>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Sabbath & Sustainable Leadership", "Sabat & Kepemimpinan Berkelanjutan", "Sabbat & Duurzaam Leiderschap")}
@@ -172,7 +172,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
             )}
           </p>
           <p style={{ fontSize: 13, color: orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 48 }}>
-            — <VerseRef id="gen-2-2-3">{t("Genesis 2:3", "Kejadian 2:3", "Genesis 2:3")}</VerseRef> (NIV)
+            ï¿½ <VerseRef id="gen-2-2-3">{t("Genesis 2:3", "Kejadian 2:3", "Genesis 2:3")}</VerseRef> (NIV)
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
@@ -193,16 +193,16 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
         <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "The Hebrew word shabbat comes from a root meaning to cease, to desist — not to slow down temporarily, but to genuinely stop. On the seventh day, after the work of creation was complete, God stopped. Not because he was exhausted. Not because something had gone wrong. He stopped because the work was finished and stopping was the right, holy thing to do.",
-              "Kata Ibrani shabbat berasal dari akar yang berarti berhenti, melepaskan — bukan untuk memperlambat sementara, tetapi untuk benar-benar berhenti. Pada hari ketujuh, setelah pekerjaan penciptaan selesai, Allah berhenti. Bukan karena Ia kelelahan. Bukan karena ada yang salah. Ia berhenti karena pekerjaan itu selesai dan berhenti adalah hal yang benar dan kudus untuk dilakukan.",
-              "Het Hebreeuwse woord shabbat komt van een stam die betekent ophouden, stoppen — niet tijdelijk vertragen, maar werkelijk stoppen. Op de zevende dag, nadat het werk van de schepping voltooid was, stopte God. Niet omdat hij uitgeput was. Niet omdat er iets fout was gegaan. Hij stopte omdat het werk af was en stoppen de juiste, heilige zaak was."
+              "The Hebrew word shabbat comes from a root meaning to cease, to desist ï¿½ not to slow down temporarily, but to genuinely stop. On the seventh day, after the work of creation was complete, God stopped. Not because he was exhausted. Not because something had gone wrong. He stopped because the work was finished and stopping was the right, holy thing to do.",
+              "Kata Ibrani shabbat berasal dari akar yang berarti berhenti, melepaskan ï¿½ bukan untuk memperlambat sementara, tetapi untuk benar-benar berhenti. Pada hari ketujuh, setelah pekerjaan penciptaan selesai, Allah berhenti. Bukan karena Ia kelelahan. Bukan karena ada yang salah. Ia berhenti karena pekerjaan itu selesai dan berhenti adalah hal yang benar dan kudus untuk dilakukan.",
+              "Het Hebreeuwse woord shabbat komt van een stam die betekent ophouden, stoppen ï¿½ niet tijdelijk vertragen, maar werkelijk stoppen. Op de zevende dag, nadat het werk van de schepping voltooid was, stopte God. Niet omdat hij uitgeput was. Niet omdat er iets fout was gegaan. Hij stopte omdat het werk af was en stoppen de juiste, heilige zaak was."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "This is not a minor detail in the creation story. The seventh day is the only day that God blesses and sets apart as holy. The six days of making are remarkable — but it is the day of rest that God crowns with holiness. He is not just tolerating rest. He is honouring it.",
-              "Ini bukan detail kecil dalam kisah penciptaan. Hari ketujuh adalah satu-satunya hari yang diberkati dan dikuduskan Allah. Enam hari penciptaan itu luar biasa — tetapi hari istirahat itulah yang dimahkotai Allah dengan kekudusan. Ia tidak sekadar mentoleransi istirahat. Ia menghormatinya.",
-              "Dit is geen detail in het scheppingsverhaal. De zevende dag is de enige dag die God zegent en apart stelt als heilig. De zes dagen van scheppen zijn opmerkelijk — maar het is de rustdag die God kroont met heiligheid. Hij tolereert rust niet alleen. Hij eert haar."
+              "This is not a minor detail in the creation story. The seventh day is the only day that God blesses and sets apart as holy. The six days of making are remarkable ï¿½ but it is the day of rest that God crowns with holiness. He is not just tolerating rest. He is honouring it.",
+              "Ini bukan detail kecil dalam kisah penciptaan. Hari ketujuh adalah satu-satunya hari yang diberkati dan dikuduskan Allah. Enam hari penciptaan itu luar biasa ï¿½ tetapi hari istirahat itulah yang dimahkotai Allah dengan kekudusan. Ia tidak sekadar mentoleransi istirahat. Ia menghormatinya.",
+              "Dit is geen detail in het scheppingsverhaal. De zevende dag is de enige dag die God zegent en apart stelt als heilig. De zes dagen van scheppen zijn opmerkelijk ï¿½ maar het is de rustdag die God kroont met heiligheid. Hij tolereert rust niet alleen. Hij eert haar."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
@@ -240,7 +240,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
             {t(
               "Jesus did not say: come to me when you have finished everything. He said come to me when you are weary. The invitation in Matthew 11:28 is not conditional on your output. It is issued precisely because he sees your exhaustion.",
               "Yesus tidak berkata: datanglah kepada-Ku ketika kamu telah menyelesaikan segalanya. Ia berkata datanglah kepada-Ku ketika kamu kelelahan. Undangan dalam Matius 11:28 tidak bersyarat pada output Anda. Itu diberikan tepat karena Ia melihat kelelahan Anda.",
-              "Jezus zei niet: kom naar mij als je alles klaar hebt. Hij zei: kom naar mij als je moe bent. De uitnodiging in Matteüs 11:28 is niet afhankelijk van je output. Ze wordt uitgesproken juist omdat hij je uitputting ziet."
+              "Jezus zei niet: kom naar mij als je alles klaar hebt. Hij zei: kom naar mij als je moe bent. De uitnodiging in Matteï¿½s 11:28 is niet afhankelijk van je output. Ze wordt uitgesproken juist omdat hij je uitputting ziet."
             )}
           </p>
 
@@ -254,29 +254,29 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
               )}
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
-              — <VerseRef id="matt-11-28-30">{t("Matthew 11:28–30", "Matius 11:28–30", "Matteüs 11:28–30")}</VerseRef> (NIV)
+              ï¿½ <VerseRef id="matt-11-28-30">{t("Matthew 11:28ï¿½30", "Matius 11:28ï¿½30", "Matteï¿½s 11:28ï¿½30")}</VerseRef> (NIV)
             </p>
           </div>
 
           <p style={{ marginBottom: 28 }}>
             {t(
-              "In Mark 6:31, we see Jesus watching his disciples burn out in real time. So many people were coming and going that they didn't even have time to eat. His response was not: push through, the mission requires it. It was: come away with me to a quiet place and rest. This is Jesus — the most missionally urgent person in human history — telling his team to stop.",
-              "Dalam Markus 6:31, kita melihat Yesus menyaksikan murid-murid-Nya kelelahan secara langsung. Begitu banyak orang datang dan pergi sehingga mereka tidak sempat makan. Responsnya bukan: dorong terus, misi membutuhkannya. Melainkan: marilah bersama-Ku ke tempat yang sunyi dan beristirahatlah. Ini adalah Yesus — orang dengan urgensi misi terbesar dalam sejarah manusia — yang menyuruh timnya untuk berhenti.",
-              "In Marcus 6:31 zien we Jezus toekijken hoe zijn leerlingen in real time opbranden. Er kwamen en gingen zoveel mensen dat ze geen tijd hadden om te eten. Zijn reactie was niet: doorzetten, de missie vraagt het. Het was: ga met mij mee naar een rustige plek en rust uit. Dit is Jezus — de meest missionair urgente persoon in de menselijke geschiedenis — die zijn team zegt te stoppen."
+              "In Mark 6:31, we see Jesus watching his disciples burn out in real time. So many people were coming and going that they didn't even have time to eat. His response was not: push through, the mission requires it. It was: come away with me to a quiet place and rest. This is Jesus ï¿½ the most missionally urgent person in human history ï¿½ telling his team to stop.",
+              "Dalam Markus 6:31, kita melihat Yesus menyaksikan murid-murid-Nya kelelahan secara langsung. Begitu banyak orang datang dan pergi sehingga mereka tidak sempat makan. Responsnya bukan: dorong terus, misi membutuhkannya. Melainkan: marilah bersama-Ku ke tempat yang sunyi dan beristirahatlah. Ini adalah Yesus ï¿½ orang dengan urgensi misi terbesar dalam sejarah manusia ï¿½ yang menyuruh timnya untuk berhenti.",
+              "In Marcus 6:31 zien we Jezus toekijken hoe zijn leerlingen in real time opbranden. Er kwamen en gingen zoveel mensen dat ze geen tijd hadden om te eten. Zijn reactie was niet: doorzetten, de missie vraagt het. Het was: ga met mij mee naar een rustige plek en rust uit. Dit is Jezus ï¿½ de meest missionair urgente persoon in de menselijke geschiedenis ï¿½ die zijn team zegt te stoppen."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "He is not indifferent to your exhaustion. He is not waiting for you to push through and prove yourself. He is actively inviting you to rest — and promising to meet you there. The soul-rest Jesus describes in Matthew 11 is not simply the absence of activity. It is rest in his presence.",
-              "Ia tidak acuh terhadap kelelahan Anda. Ia tidak menunggu Anda untuk bertahan dan membuktikan diri. Ia secara aktif mengundang Anda untuk beristirahat — dan berjanji untuk bertemu dengan Anda di sana. Ketenangan jiwa yang Yesus gambarkan dalam Matius 11 bukan sekadar ketiadaan aktivitas. Ini adalah istirahat dalam kehadiran-Nya.",
-              "Hij is niet onverschillig voor jouw uitputting. Hij wacht niet tot je doordrukking bewezen hebt. Hij nodigt je actief uit om te rusten — en belooft je daar te ontmoeten. De zielenrust die Jezus beschrijft in Matteüs 11 is niet simpelweg de afwezigheid van activiteit. Het is rust in zijn aanwezigheid."
+              "He is not indifferent to your exhaustion. He is not waiting for you to push through and prove yourself. He is actively inviting you to rest ï¿½ and promising to meet you there. The soul-rest Jesus describes in Matthew 11 is not simply the absence of activity. It is rest in his presence.",
+              "Ia tidak acuh terhadap kelelahan Anda. Ia tidak menunggu Anda untuk bertahan dan membuktikan diri. Ia secara aktif mengundang Anda untuk beristirahat ï¿½ dan berjanji untuk bertemu dengan Anda di sana. Ketenangan jiwa yang Yesus gambarkan dalam Matius 11 bukan sekadar ketiadaan aktivitas. Ini adalah istirahat dalam kehadiran-Nya.",
+              "Hij is niet onverschillig voor jouw uitputting. Hij wacht niet tot je doordrukking bewezen hebt. Hij nodigt je actief uit om te rusten ï¿½ en belooft je daar te ontmoeten. De zielenrust die Jezus beschrijft in Matteï¿½s 11 is niet simpelweg de afwezigheid van activiteit. Het is rust in zijn aanwezigheid."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "Psalm 23 depicts God not as a supervisor checking your output, but as a shepherd who leads you to still water and makes you lie down — not asks you, but makes you. Sometimes, rest is something God has to guide us into because we have forgotten how to receive it.",
-              "Mazmur 23 menggambarkan Allah bukan sebagai atasan yang memeriksa output Anda, tetapi sebagai gembala yang memimpin Anda ke air yang tenang dan membaringkan Anda — bukan meminta Anda, tetapi membaringkan Anda. Terkadang, istirahat adalah sesuatu yang harus Allah pimpin kita masuki karena kita telah lupa bagaimana menerimanya.",
-              "Psalm 23 beschrijft God niet als een toezichthouder die je output controleert, maar als een herder die je naar stil water leidt en je doet neerliggen — niet vraagt, maar doet. Soms is rust iets wat God ons in moet leiden omdat we vergeten zijn hoe we het moeten ontvangen."
+              "Psalm 23 depicts God not as a supervisor checking your output, but as a shepherd who leads you to still water and makes you lie down ï¿½ not asks you, but makes you. Sometimes, rest is something God has to guide us into because we have forgotten how to receive it.",
+              "Mazmur 23 menggambarkan Allah bukan sebagai atasan yang memeriksa output Anda, tetapi sebagai gembala yang memimpin Anda ke air yang tenang dan membaringkan Anda ï¿½ bukan meminta Anda, tetapi membaringkan Anda. Terkadang, istirahat adalah sesuatu yang harus Allah pimpin kita masuki karena kita telah lupa bagaimana menerimanya.",
+              "Psalm 23 beschrijft God niet als een toezichthouder die je output controleert, maar als een herder die je naar stil water leidt en je doet neerliggen ï¿½ niet vraagt, maar doet. Soms is rust iets wat God ons in moet leiden omdat we vergeten zijn hoe we het moeten ontvangen."
             )}
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}`, marginBottom: 16 }}>
@@ -287,7 +287,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
             )}
           </p>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
-            — <VerseRef id="ps-23-2-3">{t("Psalm 23:2–3", "Mazmur 23:2–3", "Psalm 23:2–3")}</VerseRef> (NIV)
+            ï¿½ <VerseRef id="ps-23-2-3">{t("Psalm 23:2ï¿½3", "Mazmur 23:2ï¿½3", "Psalm 23:2ï¿½3")}</VerseRef> (NIV)
           </p>
         </div>
       </div>
@@ -342,16 +342,16 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
         <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "The Western framework for rest tends to be individual, structured, and time-bound — a scheduled block on a calendar, a clearly delineated weekend. This is one way to practise Sabbath. It is not the only way.",
-              "Kerangka Barat untuk istirahat cenderung bersifat individual, terstruktur, dan terikat waktu — blok terjadwal dalam kalender, akhir pekan yang dibatasi dengan jelas. Ini adalah satu cara untuk mempraktikkan Sabat. Ini bukan satu-satunya cara.",
-              "Het Westerse kader voor rust neigt individueel, gestructureerd en tijdgebonden te zijn — een ingepland blok in een agenda, een duidelijk afgebakend weekend. Dit is één manier om Sabbat te beoefenen. Het is niet de enige manier."
+              "The Western framework for rest tends to be individual, structured, and time-bound ï¿½ a scheduled block on a calendar, a clearly delineated weekend. This is one way to practise Sabbath. It is not the only way.",
+              "Kerangka Barat untuk istirahat cenderung bersifat individual, terstruktur, dan terikat waktu ï¿½ blok terjadwal dalam kalender, akhir pekan yang dibatasi dengan jelas. Ini adalah satu cara untuk mempraktikkan Sabat. Ini bukan satu-satunya cara.",
+              "Het Westerse kader voor rust neigt individueel, gestructureerd en tijdgebonden te zijn ï¿½ een ingepland blok in een agenda, een duidelijk afgebakend weekend. Dit is ï¿½ï¿½n manier om Sabbat te beoefenen. Het is niet de enige manier."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "In many Asian, African, and Latin American contexts, rest is woven into the communal fabric — into festivals, extended family gatherings, religious assemblies, and seasonal rhythms. The rest is real; it simply does not look like a Western personal day off. The leader who arrives with a foreign framework and tries to enforce it against the existing culture will find both himself and his team burning out.",
-              "Dalam banyak konteks Asia, Afrika, dan Amerika Latin, istirahat terjalin ke dalam kain komunal — ke dalam festival, pertemuan keluarga besar, ibadah bersama, dan ritme musiman. Istirahatnya nyata; hanya saja tidak terlihat seperti hari libur pribadi ala Barat. Pemimpin yang datang dengan kerangka asing dan mencoba menerapkannya melawan budaya yang ada akan mendapati dirinya dan timnya kelelahan.",
-              "In veel Aziatische, Afrikaanse en Latijns-Amerikaanse contexten is rust verweven in het communale weefsel — in festivals, familiereünies, religieuze bijeenkomsten en seizoensgebonden ritmes. De rust is echt; ze ziet er alleen niet uit als een Westers persoonlijk vrij dag. De leider die aankomt met een vreemd kader en het probeert op te leggen tegen de bestaande cultuur zal zichzelf en zijn team zien opbranden."
+              "In many Asian, African, and Latin American contexts, rest is woven into the communal fabric ï¿½ into festivals, extended family gatherings, religious assemblies, and seasonal rhythms. The rest is real; it simply does not look like a Western personal day off. The leader who arrives with a foreign framework and tries to enforce it against the existing culture will find both himself and his team burning out.",
+              "Dalam banyak konteks Asia, Afrika, dan Amerika Latin, istirahat terjalin ke dalam kain komunal ï¿½ ke dalam festival, pertemuan keluarga besar, ibadah bersama, dan ritme musiman. Istirahatnya nyata; hanya saja tidak terlihat seperti hari libur pribadi ala Barat. Pemimpin yang datang dengan kerangka asing dan mencoba menerapkannya melawan budaya yang ada akan mendapati dirinya dan timnya kelelahan.",
+              "In veel Aziatische, Afrikaanse en Latijns-Amerikaanse contexten is rust verweven in het communale weefsel ï¿½ in festivals, familiereï¿½nies, religieuze bijeenkomsten en seizoensgebonden ritmes. De rust is echt; ze ziet er alleen niet uit als een Westers persoonlijk vrij dag. De leider die aankomt met een vreemd kader en het probeert op te leggen tegen de bestaande cultuur zal zichzelf en zijn team zien opbranden."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
@@ -363,9 +363,9 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
             {t(
-              "Your personal Sabbath practice may look different in Surabaya than it did in Rotterdam — and that is not a failure of discipline. It is the work of contextualisation.",
-              "Praktik Sabat pribadi Anda mungkin terlihat berbeda di Surabaya dari pada di Rotterdam — dan itu bukan kegagalan disiplin. Itu adalah pekerjaan kontekstualisasi.",
-              "Jouw persoonlijke Sabbathpraktijk kan er in Surabaya anders uitzien dan in Rotterdam — en dat is geen falen van discipline. Het is het werk van contextualisatie."
+              "Your personal Sabbath practice may look different in Surabaya than it did in Rotterdam ï¿½ and that is not a failure of discipline. It is the work of contextualisation.",
+              "Praktik Sabat pribadi Anda mungkin terlihat berbeda di Surabaya dari pada di Rotterdam ï¿½ dan itu bukan kegagalan disiplin. Itu adalah pekerjaan kontekstualisasi.",
+              "Jouw persoonlijke Sabbathpraktijk kan er in Surabaya anders uitzien dan in Rotterdam ï¿½ en dat is geen falen van discipline. Het is het werk van contextualisatie."
             )}
           </p>
         </div>
@@ -391,13 +391,13 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
           {[
             {
               id: "exod-20-8",
-              en_ref: "Exodus 20:8–10", id_ref: "Keluaran 20:8–10", nl_ref: "Exodus 20:8–10",
+              en_ref: "Exodus 20:8ï¿½10", id_ref: "Keluaran 20:8ï¿½10", nl_ref: "Exodus 20:8ï¿½10",
               en_quote: "\"Remember the Sabbath day by keeping it holy. Six days you shall labor and do all your work, but the seventh day is a sabbath to the Lord your God.\"",
               id_quote: "\"Ingatlah dan kuduskanlah hari Sabat: enam hari lamanya engkau akan bekerja dan melakukan segala pekerjaanmu, tetapi hari ketujuh adalah hari Sabat TUHAN, Allahmu.\"",
               nl_quote: "\"Houd de sabbat in ere, het is een heilige dag. Zes dagen lang kunt u werken en al uw arbeid verrichten, maar de zevende dag is een rustdag, die gewijd is aan de HEER uw God.\"",
               en_body: "The Sabbath commandment is built into the same list as do not murder and do not steal. This is not a lifestyle preference. It is a moral imperative. But notice what the commandment says: remember. Not invent. The Sabbath was already there, built into the creation week. God is asking Israel to align with a rhythm that predates them.",
               id_body: "Perintah Sabat dibangun ke dalam daftar yang sama dengan jangan membunuh dan jangan mencuri. Ini bukan preferensi gaya hidup. Ini adalah imperatif moral. Tetapi perhatikan apa yang perintah itu katakan: ingatlah. Bukan menciptakan. Sabat sudah ada, dibangun ke dalam minggu penciptaan. Allah meminta Israel untuk menyelaraskan diri dengan ritme yang mendahului mereka.",
-              nl_body: "Het sabbatsgebod staat in dezelfde lijst als niet doodslaan en niet stelen. Dit is geen levensstijlvoorkeur. Het is een morele plicht. Maar let op wat het gebod zegt: gedenk. Niet uitvind. De Sabbat was er al, ingebouwd in de scheppingsweek. God vraagt Israël om zich af te stemmen op een ritme dat hen voorafgaat.",
+              nl_body: "Het sabbatsgebod staat in dezelfde lijst als niet doodslaan en niet stelen. Dit is geen levensstijlvoorkeur. Het is een morele plicht. Maar let op wat het gebod zegt: gedenk. Niet uitvind. De Sabbat was er al, ingebouwd in de scheppingsweek. God vraagt Israï¿½l om zich af te stemmen op een ritme dat hen voorafgaat.",
             },
             {
               id: "mark-6-31",
@@ -405,9 +405,9 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
               en_quote: "\"Come with me by yourselves to a quiet place and get some rest.\"",
               id_quote: "\"Marilah ke tempat yang sunyi, supaya kita sendirian, dan beristirahatlah sebentar!\"",
               nl_quote: "\"Ga nu mee naar een rustige, afgelegen plek, zodat jullie even kunnen uitrusten.\"",
-              en_body: "Jesus spoke these words to his disciples in the middle of an active ministry season — not at the end, not as a reward. He interrupted the work to restore the workers. This is the Jesus who raised the dead and healed the sick — and he still saw the disciples' need for rest as urgent enough to pull them out of the crowd. He was not annoyed by their exhaustion. He made room for it.",
-              id_body: "Yesus mengucapkan kata-kata ini kepada murid-murid-Nya di tengah musim pelayanan yang aktif — bukan di akhir, bukan sebagai hadiah. Ia menyela pekerjaan untuk memulihkan para pekerja. Ini adalah Yesus yang membangkitkan orang mati dan menyembuhkan orang sakit — dan Ia masih melihat kebutuhan murid-murid akan istirahat cukup mendesak untuk menarik mereka keluar dari keramaian.",
-              nl_body: "Jezus sprak deze woorden tot zijn leerlingen midden in een actief dienstseizoen — niet aan het einde, niet als beloning. Hij onderbrak het werk om de werkers te herstellen. Dit is de Jezus die doden opwekte en zieken genas — en hij zag de behoefte van de leerlingen aan rust nog steeds urgent genoeg om hen uit de menigte weg te halen. Hij was niet geïrriteerd door hun uitputting. Hij maakte er ruimte voor.",
+              en_body: "Jesus spoke these words to his disciples in the middle of an active ministry season ï¿½ not at the end, not as a reward. He interrupted the work to restore the workers. This is the Jesus who raised the dead and healed the sick ï¿½ and he still saw the disciples' need for rest as urgent enough to pull them out of the crowd. He was not annoyed by their exhaustion. He made room for it.",
+              id_body: "Yesus mengucapkan kata-kata ini kepada murid-murid-Nya di tengah musim pelayanan yang aktif ï¿½ bukan di akhir, bukan sebagai hadiah. Ia menyela pekerjaan untuk memulihkan para pekerja. Ini adalah Yesus yang membangkitkan orang mati dan menyembuhkan orang sakit ï¿½ dan Ia masih melihat kebutuhan murid-murid akan istirahat cukup mendesak untuk menarik mereka keluar dari keramaian.",
+              nl_body: "Jezus sprak deze woorden tot zijn leerlingen midden in een actief dienstseizoen ï¿½ niet aan het einde, niet als beloning. Hij onderbrak het werk om de werkers te herstellen. Dit is de Jezus die doden opwekte en zieken genas ï¿½ en hij zag de behoefte van de leerlingen aan rust nog steeds urgent genoeg om hen uit de menigte weg te halen. Hij was niet geï¿½rriteerd door hun uitputting. Hij maakte er ruimte voor.",
             },
           ].map((item) => (
             <div key={item.id} style={{ marginBottom: 64 }}>
@@ -427,9 +427,9 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
           <div style={{ padding: "40px 40px", background: "oklch(18% 0.09 260)", borderRadius: 4 }}>
             <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 23px)", fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 16 }}>
               {t(
-                "God cares about your capacity. He is not asking you to give more than you have. He is asking you to trust him enough to stop — and to discover that he is still at work when you are not.",
-                "Allah peduli dengan kapasitas Anda. Ia tidak meminta Anda memberi lebih dari yang Anda miliki. Ia meminta Anda mempercayai-Nya cukup untuk berhenti — dan menemukan bahwa Ia masih bekerja ketika Anda tidak bekerja.",
-                "God geeft om jouw capaciteit. Hij vraagt je niet meer te geven dan je hebt. Hij vraagt je hem genoeg te vertrouwen om te stoppen — en te ontdekken dat hij nog steeds aan het werk is als jij dat niet bent."
+                "God cares about your capacity. He is not asking you to give more than you have. He is asking you to trust him enough to stop ï¿½ and to discover that he is still at work when you are not.",
+                "Allah peduli dengan kapasitas Anda. Ia tidak meminta Anda memberi lebih dari yang Anda miliki. Ia meminta Anda mempercayai-Nya cukup untuk berhenti ï¿½ dan menemukan bahwa Ia masih bekerja ketika Anda tidak bekerja.",
+                "God geeft om jouw capaciteit. Hij vraagt je niet meer te geven dan je hebt. Hij vraagt je hem genoeg te vertrouwen om te stoppen ï¿½ en te ontdekken dat hij nog steeds aan het werk is als jij dat niet bent."
               )}
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em", margin: 0 }}>
@@ -475,7 +475,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
             {t("VII. Your Response", "VII. Respons Anda", "VII. Jouw Reactie")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("One Practice This Week", "Satu Praktik Minggu Ini", "Één Praktijk Deze Week")}
+            {t("One Practice This Week", "Satu Praktik Minggu Ini", "ï¿½ï¿½n Praktijk Deze Week")}
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 16 }}>
             {t(
@@ -486,9 +486,9 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
             {t(
-              "What is one practice you will protect this week — not as a discipline to prove, but as an act of trust in God?",
-              "Praktik apa yang akan Anda lindungi minggu ini — bukan sebagai disiplin untuk dibuktikan, tetapi sebagai tindakan kepercayaan kepada Allah?",
-              "Welke praktijk zul je deze week beschermen — niet als discipline om te bewijzen, maar als een daad van vertrouwen in God?"
+              "What is one practice you will protect this week ï¿½ not as a discipline to prove, but as an act of trust in God?",
+              "Praktik apa yang akan Anda lindungi minggu ini ï¿½ bukan sebagai disiplin untuk dibuktikan, tetapi sebagai tindakan kepercayaan kepada Allah?",
+              "Welke praktijk zul je deze week beschermen ï¿½ niet als discipline om te bewijzen, maar als een daad van vertrouwen in God?"
             )}
           </p>
           {!committed ? (
@@ -522,9 +522,9 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
               </p>
               <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.6vw, 17px)", color: bodyText, lineHeight: 1.75 }}>
                 {t(
-                  "He is with you in it. Hold it lightly — as a gift to give, not a standard to maintain.",
-                  "Ia bersamamu di dalamnya. Pegang itu dengan ringan — sebagai hadiah untuk diberikan, bukan standar yang harus dipertahankan.",
-                  "Hij is met je daarin. Houd het licht vast — als een cadeau om te geven, niet een standaard om te handhaven."
+                  "He is with you in it. Hold it lightly ï¿½ as a gift to give, not a standard to maintain.",
+                  "Ia bersamamu di dalamnya. Pegang itu dengan ringan ï¿½ sebagai hadiah untuk diberikan, bukan standar yang harus dipertahankan.",
+                  "Hij is met je daarin. Houd het licht vast ï¿½ als een cadeau om te geven, niet een standaard om te handhaven."
                 )}
               </p>
             </div>
@@ -559,7 +559,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
               "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              ï¿½ {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
               {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
             <button

@@ -88,18 +88,18 @@ const SKILLS: {
     accentColor: "oklch(45% 0.14 200)",
     accentBg: "oklch(45% 0.14 200 / 0.08)",
     icon: "??",
-    en_label: "Skill 1 — Loving Listening",
-    id_label: "Keterampilan 1 — Mendengarkan dengan Kasih",
-    nl_label: "Vaardigheid 1 — Liefdevol Luisteren",
+    en_label: "Skill 1 ï¿½ Loving Listening",
+    id_label: "Keterampilan 1 ï¿½ Mendengarkan dengan Kasih",
+    nl_label: "Vaardigheid 1 ï¿½ Liefdevol Luisteren",
     en_subtitle: "The shift from advice-giver to question-asker",
     id_subtitle: "Beralih dari pemberi saran menjadi penanya",
     nl_subtitle: "De verschuiving van adviesgever naar vraagsteller",
     en_intro:
-      "Most of us were trained to fix, advise, and respond quickly. We bring solutions before the other person has finished speaking. But in cross-cultural teams — where context is rarely fully visible — the first and most powerful skill is simply this: stay longer in the question. Loving listening is not passive silence. It is an active choice to understand before being understood, and to ask before assuming.",
+      "Most of us were trained to fix, advise, and respond quickly. We bring solutions before the other person has finished speaking. But in cross-cultural teams ï¿½ where context is rarely fully visible ï¿½ the first and most powerful skill is simply this: stay longer in the question. Loving listening is not passive silence. It is an active choice to understand before being understood, and to ask before assuming.",
     id_intro:
-      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran, dan merespons dengan cepat. Kita membawa solusi sebelum orang lain selesai berbicara. Namun dalam tim lintas budaya — di mana konteks jarang sepenuhnya terlihat — keterampilan pertama dan paling kuat adalah ini: tinggallah lebih lama dalam pertanyaan. Mendengarkan dengan kasih bukan diam yang pasif. Ini adalah pilihan aktif untuk memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
+      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran, dan merespons dengan cepat. Kita membawa solusi sebelum orang lain selesai berbicara. Namun dalam tim lintas budaya ï¿½ di mana konteks jarang sepenuhnya terlihat ï¿½ keterampilan pertama dan paling kuat adalah ini: tinggallah lebih lama dalam pertanyaan. Mendengarkan dengan kasih bukan diam yang pasif. Ini adalah pilihan aktif untuk memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
     nl_intro:
-      "De meesten van ons zijn getraind om te repareren, adviseren en snel te reageren. We brengen oplossingen voordat de ander klaar is met spreken. Maar in interculturele teams — waar de context zelden volledig zichtbaar is — is de eerste en krachtigste vaardigheid simpelweg: blijf langer in de vraag. Liefdevol luisteren is geen passief stilzwijgen. Het is een actieve keuze om te begrijpen voordat je begrepen wilt worden, en te vragen voordat je aanneemt.",
+      "De meesten van ons zijn getraind om te repareren, adviseren en snel te reageren. We brengen oplossingen voordat de ander klaar is met spreken. Maar in interculturele teams ï¿½ waar de context zelden volledig zichtbaar is ï¿½ is de eerste en krachtigste vaardigheid simpelweg: blijf langer in de vraag. Liefdevol luisteren is geen passief stilzwijgen. Het is een actieve keuze om te begrijpen voordat je begrepen wilt worden, en te vragen voordat je aanneemt.",
     en_scenario_heading: "The scenario",
     id_scenario_heading: "Skenario",
     nl_scenario_heading: "Het scenario",
@@ -113,63 +113,63 @@ const SKILLS: {
     id_typical_label: "Respons umum",
     nl_typical_label: "Typische reactie",
     en_typical:
-      "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better — remember why you're here. Let me know if I can help with your workload.\"",
+      "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better ï¿½ remember why you're here. Let me know if I can help with your workload.\"",
     id_typical:
-      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik — ingat kenapa kamu ada di sini. Beri tahu saya jika saya bisa membantu dengan beban kerjamu.\"",
+      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik ï¿½ ingat kenapa kamu ada di sini. Beri tahu saya jika saya bisa membantu dengan beban kerjamu.\"",
     nl_typical:
-      "\"Ik begrijp hoe je je voelt. Heb je geprobeerd wat vrij te nemen? Je hebt waarschijnlijk gewoon rust nodig. Het wordt beter — onthoud waarom je hier bent. Laat me weten als ik kan helpen met je werkdruk.\"",
+      "\"Ik begrijp hoe je je voelt. Heb je geprobeerd wat vrij te nemen? Je hebt waarschijnlijk gewoon rust nodig. Het wordt beter ï¿½ onthoud waarom je hier bent. Laat me weten als ik kan helpen met je werkdruk.\"",
     en_better_label: "Loving listening response",
     id_better_label: "Respons mendengarkan dengan kasih",
     nl_better_label: "Liefdevol luisterende reactie",
     en_better:
-      "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause is not awkward — it is the space where the real thing surfaces.",
+      "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause is not awkward ï¿½ it is the space where the real thing surfaces.",
     id_better:
-      "\"Kedengarannya sangat berat. [Jeda.] Apa yang membuat semuanya terasa paling berat saat ini?\" Kemudian tunggu. Sepenuhnya. Jangan selamatkan, jangan alihkan. Jeda itu tidak canggung — itu adalah ruang di mana hal yang sesungguhnya muncul.",
+      "\"Kedengarannya sangat berat. [Jeda.] Apa yang membuat semuanya terasa paling berat saat ini?\" Kemudian tunggu. Sepenuhnya. Jangan selamatkan, jangan alihkan. Jeda itu tidak canggung ï¿½ itu adalah ruang di mana hal yang sesungguhnya muncul.",
     nl_better:
-      "\"Dat klinkt heel zwaar. [Pauze.] Wat maakt het op dit moment het zwaarst?\" Wacht dan. Volledig. Red niet, leid niet af. De stilte is niet ongemakkelijk — het is de ruimte waar het echte zich openbaart.",
-    en_technique_heading: "The technique: Reflect · Ask · Wait",
-    id_technique_heading: "Tekniknya: Refleksikan · Tanyakan · Tunggu",
-    nl_technique_heading: "De techniek: Reflecteer · Vraag · Wacht",
+      "\"Dat klinkt heel zwaar. [Pauze.] Wat maakt het op dit moment het zwaarst?\" Wacht dan. Volledig. Red niet, leid niet af. De stilte is niet ongemakkelijk ï¿½ het is de ruimte waar het echte zich openbaart.",
+    en_technique_heading: "The technique: Reflect ï¿½ Ask ï¿½ Wait",
+    id_technique_heading: "Tekniknya: Refleksikan ï¿½ Tanyakan ï¿½ Tunggu",
+    nl_technique_heading: "De techniek: Reflecteer ï¿½ Vraag ï¿½ Wacht",
     en_technique_steps: [
       {
         label: "Reflect",
-        body: "Mirror back what you heard — not a summary, a reflection. \"That sounds exhausting.\" \"It sounds like something shifted recently.\" This signals: I received what you said. It is not therapy-speak — it is presence.",
+        body: "Mirror back what you heard ï¿½ not a summary, a reflection. \"That sounds exhausting.\" \"It sounds like something shifted recently.\" This signals: I received what you said. It is not therapy-speak ï¿½ it is presence.",
       },
       {
         label: "Ask",
-        body: "Ask one open question — not a checklist. \"What feels hardest right now?\" or \"Where is most of the weight coming from?\" One question, then stop. Multiple questions in a row shut people down, especially in high-context cultures where being interrogated triggers silence.",
+        body: "Ask one open question ï¿½ not a checklist. \"What feels hardest right now?\" or \"Where is most of the weight coming from?\" One question, then stop. Multiple questions in a row shut people down, especially in high-context cultures where being interrogated triggers silence.",
       },
       {
         label: "Wait",
-        body: "Silence is not a problem to fix. In many Asian, African, and Middle Eastern cultures, a meaningful pause before responding signals respect and thoughtfulness. Western communicators are often trained to fill silence — but silence is often where the real answer forms. Give it 5 seconds. Then 10.",
+        body: "Silence is not a problem to fix. In many Asian, African, and Middle Eastern cultures, a meaningful pause before responding signals respect and thoughtfulness. Western communicators are often trained to fill silence ï¿½ but silence is often where the real answer forms. Give it 5 seconds. Then 10.",
       },
     ],
     id_technique_steps: [
       {
         label: "Refleksikan",
-        body: "Cerminkan kembali apa yang Anda dengar — bukan ringkasan, tapi refleksi. \"Kedengarannya melelahkan.\" \"Sepertinya ada sesuatu yang berubah belakangan ini.\" Ini memberi sinyal: saya menerima apa yang Anda katakan. Ini bukan bahasa terapi — ini adalah kehadiran.",
+        body: "Cerminkan kembali apa yang Anda dengar ï¿½ bukan ringkasan, tapi refleksi. \"Kedengarannya melelahkan.\" \"Sepertinya ada sesuatu yang berubah belakangan ini.\" Ini memberi sinyal: saya menerima apa yang Anda katakan. Ini bukan bahasa terapi ï¿½ ini adalah kehadiran.",
       },
       {
         label: "Tanyakan",
-        body: "Ajukan satu pertanyaan terbuka — bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar tekanan itu datang?\" Satu pertanyaan, lalu berhenti. Beberapa pertanyaan berturut-turut membuat orang diam, terutama dalam budaya high-context di mana diinterogasi memicu keheningan.",
+        body: "Ajukan satu pertanyaan terbuka ï¿½ bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar tekanan itu datang?\" Satu pertanyaan, lalu berhenti. Beberapa pertanyaan berturut-turut membuat orang diam, terutama dalam budaya high-context di mana diinterogasi memicu keheningan.",
       },
       {
         label: "Tunggu",
-        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya Asia, Afrika, dan Timur Tengah, jeda bermakna sebelum merespons menandakan rasa hormat dan kedalaman pikiran. Komunikator Barat sering dilatih untuk mengisi keheningan — tetapi keheningan sering kali adalah tempat jawaban nyata terbentuk. Berikan 5 detik. Kemudian 10.",
+        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya Asia, Afrika, dan Timur Tengah, jeda bermakna sebelum merespons menandakan rasa hormat dan kedalaman pikiran. Komunikator Barat sering dilatih untuk mengisi keheningan ï¿½ tetapi keheningan sering kali adalah tempat jawaban nyata terbentuk. Berikan 5 detik. Kemudian 10.",
       },
     ],
     nl_technique_steps: [
       {
         label: "Reflecteer",
-        body: "Spiegel terug wat je hoorde — geen samenvatting, maar een reflectie. \"Dat klinkt uitputtend.\" \"Het lijkt alsof er recent iets is verschoven.\" Dit geeft een signaal: ik heb ontvangen wat je zei. Het is geen therapietaal — het is aanwezigheid.",
+        body: "Spiegel terug wat je hoorde ï¿½ geen samenvatting, maar een reflectie. \"Dat klinkt uitputtend.\" \"Het lijkt alsof er recent iets is verschoven.\" Dit geeft een signaal: ik heb ontvangen wat je zei. Het is geen therapietaal ï¿½ het is aanwezigheid.",
       },
       {
         label: "Vraag",
-        body: "Stel één open vraag — geen vragenlijst. \"Wat voelt op dit moment het zwaarst?\" of \"Waar komt het meeste gewicht vandaan?\" Één vraag, dan stoppen. Meerdere vragen achter elkaar sluiten mensen af, zeker in high-context culturen waar ondervraagd worden stilte oproept.",
+        body: "Stel ï¿½ï¿½n open vraag ï¿½ geen vragenlijst. \"Wat voelt op dit moment het zwaarst?\" of \"Waar komt het meeste gewicht vandaan?\" ï¿½ï¿½n vraag, dan stoppen. Meerdere vragen achter elkaar sluiten mensen af, zeker in high-context culturen waar ondervraagd worden stilte oproept.",
       },
       {
         label: "Wacht",
-        body: "Stilte is geen probleem om op te lossen. In veel Aziatische, Afrikaanse en Midden-Oosterse culturen signaleert een betekenisvolle pauze voor het antwoorden respect en bedachtzaamheid. Westerse communicatoren zijn vaak getraind om stilte te vullen — maar stilte is vaak de plek waar het echte antwoord zich vormt. Geef het 5 seconden. Dan 10.",
+        body: "Stilte is geen probleem om op te lossen. In veel Aziatische, Afrikaanse en Midden-Oosterse culturen signaleert een betekenisvolle pauze voor het antwoorden respect en bedachtzaamheid. Westerse communicatoren zijn vaak getraind om stilte te vullen ï¿½ maar stilte is vaak de plek waar het echte antwoord zich vormt. Geef het 5 seconden. Dan 10.",
       },
     ],
   },
@@ -178,88 +178,88 @@ const SKILLS: {
     accentColor: "oklch(50% 0.17 30)",
     accentBg: "oklch(50% 0.17 30 / 0.08)",
     icon: "?",
-    en_label: "Skill 2 — Navigating Conflict",
-    id_label: "Keterampilan 2 — Menavigasi Konflik",
-    nl_label: "Vaardigheid 2 — Conflict Navigeren",
+    en_label: "Skill 2 ï¿½ Navigating Conflict",
+    id_label: "Keterampilan 2 ï¿½ Menavigasi Konflik",
+    nl_label: "Vaardigheid 2 ï¿½ Conflict Navigeren",
     en_subtitle: "Cross-cultural conflict escalation patterns",
     id_subtitle: "Pola eskalasi konflik lintas budaya",
     nl_subtitle: "Interculturele conflictescalatiepatronen",
     en_intro:
-      "Conflict in cross-cultural teams doesn't announce itself clearly. It often moves in patterns that are invisible to the uninitiated — especially when cultural rules about directness, hierarchy, and face differ significantly. Understanding the three stages of escalation, and what typically goes wrong at each stage, is the difference between a team that repairs and a team that fractures.",
+      "Conflict in cross-cultural teams doesn't announce itself clearly. It often moves in patterns that are invisible to the uninitiated ï¿½ especially when cultural rules about directness, hierarchy, and face differ significantly. Understanding the three stages of escalation, and what typically goes wrong at each stage, is the difference between a team that repairs and a team that fractures.",
     id_intro:
-      "Konflik dalam tim lintas budaya tidak mengumumkan dirinya dengan jelas. Sering kali bergerak dalam pola yang tidak terlihat bagi yang belum berpengalaman — terutama ketika aturan budaya tentang keterusterangan, hierarki, dan menjaga muka berbeda secara signifikan. Memahami tiga tahap eskalasi, dan apa yang biasanya salah di setiap tahap, adalah perbedaan antara tim yang memperbaiki diri dan tim yang retak.",
+      "Konflik dalam tim lintas budaya tidak mengumumkan dirinya dengan jelas. Sering kali bergerak dalam pola yang tidak terlihat bagi yang belum berpengalaman ï¿½ terutama ketika aturan budaya tentang keterusterangan, hierarki, dan menjaga muka berbeda secara signifikan. Memahami tiga tahap eskalasi, dan apa yang biasanya salah di setiap tahap, adalah perbedaan antara tim yang memperbaiki diri dan tim yang retak.",
     nl_intro:
-      "Conflict in interculturele teams kondigt zichzelf niet duidelijk aan. Het verloopt vaak in patronen die onzichtbaar zijn voor de oningewijde — vooral wanneer culturele regels over directheid, hiërarchie en gezichtsbehoud significant verschillen. Het begrijpen van de drie escalatiestadia, en wat er typisch misgaat in elk stadium, maakt het verschil tussen een team dat zich herstelt en een team dat breekt.",
+      "Conflict in interculturele teams kondigt zichzelf niet duidelijk aan. Het verloopt vaak in patronen die onzichtbaar zijn voor de oningewijde ï¿½ vooral wanneer culturele regels over directheid, hiï¿½rarchie en gezichtsbehoud significant verschillen. Het begrijpen van de drie escalatiestadia, en wat er typisch misgaat in elk stadium, maakt het verschil tussen een team dat zich herstelt en een team dat breekt.",
     en_scenario_heading: "Three stages of escalation",
     id_scenario_heading: "Tiga tahap eskalasi",
     nl_scenario_heading: "Drie escalatiestadia",
     en_scenario:
-      "A senior team member repeatedly dismisses ideas from a junior colleague in team meetings — not aggressively, but consistently. The junior colleague says nothing in the meetings, but begins withdrawing from team activities.",
+      "A senior team member repeatedly dismisses ideas from a junior colleague in team meetings ï¿½ not aggressively, but consistently. The junior colleague says nothing in the meetings, but begins withdrawing from team activities.",
     id_scenario:
-      "Seorang anggota tim senior berulang kali mengabaikan ide dari kolega junior dalam rapat tim — tidak secara agresif, tetapi secara konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
+      "Seorang anggota tim senior berulang kali mengabaikan ide dari kolega junior dalam rapat tim ï¿½ tidak secara agresif, tetapi secara konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
     nl_scenario:
-      "Een senior teamlid spreekt herhaaldelijk ideeën van een junior collega tegen in teamvergaderingen — niet agressief, maar consequent. De junior collega zegt niets in de vergaderingen, maar begint zich terug te trekken uit teamactiviteiten.",
-    en_typical_label: "Stage 1 — Signal",
-    id_typical_label: "Tahap 1 — Sinyal",
-    nl_typical_label: "Fase 1 — Signaal",
+      "Een senior teamlid spreekt herhaaldelijk ideeï¿½n van een junior collega tegen in teamvergaderingen ï¿½ niet agressief, maar consequent. De junior collega zegt niets in de vergaderingen, maar begint zich terug te trekken uit teamactiviteiten.",
+    en_typical_label: "Stage 1 ï¿½ Signal",
+    id_typical_label: "Tahap 1 ï¿½ Sinyal",
+    nl_typical_label: "Fase 1 ï¿½ Signaal",
     en_typical:
-      "The junior colleague's silence and withdrawal IS the signal — in many Asian and African cultural contexts, this is how conflict is communicated. It is not passive; it is a message. The typical mistake: the Western team leader reads the withdrawal as disengagement or personality, rather than as a relational signal that something is wrong.",
+      "The junior colleague's silence and withdrawal IS the signal ï¿½ in many Asian and African cultural contexts, this is how conflict is communicated. It is not passive; it is a message. The typical mistake: the Western team leader reads the withdrawal as disengagement or personality, rather than as a relational signal that something is wrong.",
     id_typical:
-      "Keheningan dan penarikan diri kolega junior ADALAH sinyalnya — dalam banyak konteks budaya Asia dan Afrika, inilah cara konflik dikomunikasikan. Ini bukan pasif; ini adalah pesan. Kesalahan umum: pemimpin tim Barat membaca penarikan diri sebagai ketidaktertarikan atau kepribadian, bukan sebagai sinyal relasional bahwa ada sesuatu yang salah.",
+      "Keheningan dan penarikan diri kolega junior ADALAH sinyalnya ï¿½ dalam banyak konteks budaya Asia dan Afrika, inilah cara konflik dikomunikasikan. Ini bukan pasif; ini adalah pesan. Kesalahan umum: pemimpin tim Barat membaca penarikan diri sebagai ketidaktertarikan atau kepribadian, bukan sebagai sinyal relasional bahwa ada sesuatu yang salah.",
     nl_typical:
-      "De stilte en het terugtrekken van de junior collega IS het signaal — in veel Aziatische en Afrikaanse culturele contexten is dit de manier waarop conflict wordt gecommuniceerd. Het is niet passief; het is een boodschap. De typische fout: de Westerse teamleider leest het terugtrekken als desinteresse of persoonlijkheid, niet als een relationeel signaal dat er iets mis is.",
-    en_better_label: "Stage 2 — Response",
-    id_better_label: "Tahap 2 — Respons",
-    nl_better_label: "Fase 2 — Reactie",
+      "De stilte en het terugtrekken van de junior collega IS het signaal ï¿½ in veel Aziatische en Afrikaanse culturele contexten is dit de manier waarop conflict wordt gecommuniceerd. Het is niet passief; het is een boodschap. De typische fout: de Westerse teamleider leest het terugtrekken als desinteresse of persoonlijkheid, niet als een relationeel signaal dat er iets mis is.",
+    en_better_label: "Stage 2 ï¿½ Response",
+    id_better_label: "Tahap 2 ï¿½ Respons",
+    nl_better_label: "Fase 2 ï¿½ Reactie",
     en_better:
-      "When the signal is ignored, one of two things happens: the unaddressed tension calcifies into resentment (the relationship slowly dies), or it erupts later at a higher intensity — often in the wrong context. The critical response window is between signal and escalation. A skilled leader names what they have noticed — not the conflict itself, but the pattern. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
+      "When the signal is ignored, one of two things happens: the unaddressed tension calcifies into resentment (the relationship slowly dies), or it erupts later at a higher intensity ï¿½ often in the wrong context. The critical response window is between signal and escalation. A skilled leader names what they have noticed ï¿½ not the conflict itself, but the pattern. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
     id_better:
-      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kebencian (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi — sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan — bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
+      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kebencian (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi ï¿½ sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan ï¿½ bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
     nl_better:
-      "Wanneer het signaal wordt genegeerd, gebeurt een van twee dingen: de onbehandelde spanning verstijft tot wrok (de relatie sterft langzaam), of het barst later los met hogere intensiteit — vaak in de verkeerde context. Het kritieke responsvenster ligt tussen het signaal en de escalatie. Een vaardige leider benoemt wat hij heeft opgemerkt — niet het conflict zelf, maar het patroon. Privé, vriendelijk, specifiek: \"Ik heb gemerkt dat je de laatste tijd stiller bent. Is er iets wat ik moet weten?\"",
-    en_technique_heading: "Stage 3 — Resolution",
-    id_technique_heading: "Tahap 3 — Resolusi",
-    nl_technique_heading: "Fase 3 — Oplossing",
+      "Wanneer het signaal wordt genegeerd, gebeurt een van twee dingen: de onbehandelde spanning verstijft tot wrok (de relatie sterft langzaam), of het barst later los met hogere intensiteit ï¿½ vaak in de verkeerde context. Het kritieke responsvenster ligt tussen het signaal en de escalatie. Een vaardige leider benoemt wat hij heeft opgemerkt ï¿½ niet het conflict zelf, maar het patroon. Privï¿½, vriendelijk, specifiek: \"Ik heb gemerkt dat je de laatste tijd stiller bent. Is er iets wat ik moet weten?\"",
+    en_technique_heading: "Stage 3 ï¿½ Resolution",
+    id_technique_heading: "Tahap 3 ï¿½ Resolusi",
+    nl_technique_heading: "Fase 3 ï¿½ Oplossing",
     en_technique_steps: [
       {
         label: "Resolution is not the same as agreement",
-        body: "Cross-cultural conflict resolution rarely ends in explicit mutual acknowledgement — especially in high-context cultures where directly naming a conflict can feel more damaging than the conflict itself. Resolution may look like: the senior team member begins including the junior's ideas, the junior begins re-engaging, and neither party ever says the word 'conflict.' The relationship moves forward.",
+        body: "Cross-cultural conflict resolution rarely ends in explicit mutual acknowledgement ï¿½ especially in high-context cultures where directly naming a conflict can feel more damaging than the conflict itself. Resolution may look like: the senior team member begins including the junior's ideas, the junior begins re-engaging, and neither party ever says the word 'conflict.' The relationship moves forward.",
       },
       {
         label: "Third-party facilitation",
-        body: "In many cultural contexts, conflict is best resolved through a trusted intermediary — not as a sign of failure, but as the culturally appropriate path. A respected team member, a senior pastor, or an elder figure who carries weight with both parties can often unlock movement that direct confrontation cannot. Western leaders who insist on direct resolution may be applying their own cultural framework rather than serving the relationship.",
+        body: "In many cultural contexts, conflict is best resolved through a trusted intermediary ï¿½ not as a sign of failure, but as the culturally appropriate path. A respected team member, a senior pastor, or an elder figure who carries weight with both parties can often unlock movement that direct confrontation cannot. Western leaders who insist on direct resolution may be applying their own cultural framework rather than serving the relationship.",
       },
       {
         label: "Don't wait for a crisis",
-        body: "The most effective conflict navigation happens long before any single event — by building a team culture where small tensions are named early, where questions are safe to ask, and where leaders model the vulnerability of saying: \"I think something is off between us. Can we talk?\" Prevention is not the absence of conflict. It is a culture where conflict moves quickly to the surface rather than festering underneath.",
+        body: "The most effective conflict navigation happens long before any single event ï¿½ by building a team culture where small tensions are named early, where questions are safe to ask, and where leaders model the vulnerability of saying: \"I think something is off between us. Can we talk?\" Prevention is not the absence of conflict. It is a culture where conflict moves quickly to the surface rather than festering underneath.",
       },
     ],
     id_technique_steps: [
       {
         label: "Resolusi tidak sama dengan kesepakatan",
-        body: "Resolusi konflik lintas budaya jarang berakhir dengan pengakuan bersama yang eksplisit — terutama dalam budaya high-context di mana secara langsung menyebut konflik bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi mungkin terlihat seperti: anggota tim senior mulai memasukkan ide junior, junior mulai terlibat kembali, dan tidak ada pihak yang pernah menyebut kata 'konflik.' Hubungan bergerak maju.",
+        body: "Resolusi konflik lintas budaya jarang berakhir dengan pengakuan bersama yang eksplisit ï¿½ terutama dalam budaya high-context di mana secara langsung menyebut konflik bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi mungkin terlihat seperti: anggota tim senior mulai memasukkan ide junior, junior mulai terlibat kembali, dan tidak ada pihak yang pernah menyebut kata 'konflik.' Hubungan bergerak maju.",
       },
       {
         label: "Fasilitasi pihak ketiga",
-        body: "Dalam banyak konteks budaya, konflik paling baik diselesaikan melalui perantara yang dipercaya — bukan sebagai tanda kegagalan, tetapi sebagai jalur yang tepat secara budaya. Anggota tim yang dihormati, pendeta senior, atau tokoh penatua yang memiliki bobot bagi kedua pihak sering kali dapat membuka jalan yang tidak bisa dilakukan konfrontasi langsung. Pemimpin Barat yang bersikeras pada resolusi langsung mungkin menerapkan kerangka budaya mereka sendiri daripada melayani hubungan tersebut.",
+        body: "Dalam banyak konteks budaya, konflik paling baik diselesaikan melalui perantara yang dipercaya ï¿½ bukan sebagai tanda kegagalan, tetapi sebagai jalur yang tepat secara budaya. Anggota tim yang dihormati, pendeta senior, atau tokoh penatua yang memiliki bobot bagi kedua pihak sering kali dapat membuka jalan yang tidak bisa dilakukan konfrontasi langsung. Pemimpin Barat yang bersikeras pada resolusi langsung mungkin menerapkan kerangka budaya mereka sendiri daripada melayani hubungan tersebut.",
       },
       {
         label: "Jangan menunggu krisis",
-        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun — dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memodelkan kerentanan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
+        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun ï¿½ dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memodelkan kerentanan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
       },
     ],
     nl_technique_steps: [
       {
         label: "Oplossing is niet hetzelfde als overeenstemming",
-        body: "Interculturele conflictoplossing eindigt zelden in expliciete wederzijdse erkenning — zeker in high-context culturen waar het direct benoemen van een conflict beschadigender kan aanvoelen dan het conflict zelf. Oplossing kan er zo uitzien: het senior teamlid begint de ideeën van de junior op te nemen, de junior begint opnieuw deel te nemen, en geen van beide partijen zegt ooit het woord 'conflict.' De relatie gaat vooruit.",
+        body: "Interculturele conflictoplossing eindigt zelden in expliciete wederzijdse erkenning ï¿½ zeker in high-context culturen waar het direct benoemen van een conflict beschadigender kan aanvoelen dan het conflict zelf. Oplossing kan er zo uitzien: het senior teamlid begint de ideeï¿½n van de junior op te nemen, de junior begint opnieuw deel te nemen, en geen van beide partijen zegt ooit het woord 'conflict.' De relatie gaat vooruit.",
       },
       {
         label: "Facilitatie door een derde partij",
-        body: "In veel culturele contexten wordt conflict het beste opgelost via een vertrouwde tussenpersoon — niet als teken van falen, maar als de cultureel passende weg. Een gerespecteerd teamlid, een senior pastor of een oudstefiguur die gewicht draagt bij beide partijen kan vaak beweging ontgrendelen die directe confrontatie niet kan. Westerse leiders die aandringen op directe oplossing passen mogelijk hun eigen culturele kader toe in plaats van de relatie te dienen.",
+        body: "In veel culturele contexten wordt conflict het beste opgelost via een vertrouwde tussenpersoon ï¿½ niet als teken van falen, maar als de cultureel passende weg. Een gerespecteerd teamlid, een senior pastor of een oudstefiguur die gewicht draagt bij beide partijen kan vaak beweging ontgrendelen die directe confrontatie niet kan. Westerse leiders die aandringen op directe oplossing passen mogelijk hun eigen culturele kader toe in plaats van de relatie te dienen.",
       },
       {
         label: "Wacht niet op een crisis",
-        body: "De meest effectieve conflictnavigatie vindt plaats lang voordat een enkel incident zich voordoet — door een teamcultuur te bouwen waar kleine spanningen vroeg worden benoemd, waar vragen veilig zijn om te stellen, en waar leiders de kwetsbaarheid modelleren van zeggen: \"Ik denk dat er iets niet klopt tussen ons. Kunnen we praten?\" Preventie is niet de afwezigheid van conflict. Het is een cultuur waarin conflict snel naar de oppervlakte beweegt in plaats van eronder te gisten.",
+        body: "De meest effectieve conflictnavigatie vindt plaats lang voordat een enkel incident zich voordoet ï¿½ door een teamcultuur te bouwen waar kleine spanningen vroeg worden benoemd, waar vragen veilig zijn om te stellen, en waar leiders de kwetsbaarheid modelleren van zeggen: \"Ik denk dat er iets niet klopt tussen ons. Kunnen we praten?\" Preventie is niet de afwezigheid van conflict. Het is een cultuur waarin conflict snel naar de oppervlakte beweegt in plaats van eronder te gisten.",
       },
     ],
   },
@@ -268,18 +268,18 @@ const SKILLS: {
     accentColor: "oklch(42% 0.12 290)",
     accentBg: "oklch(42% 0.12 290 / 0.08)",
     icon: "??",
-    en_label: "Skill 3 — Processing Loss Together",
-    id_label: "Keterampilan 3 — Memproses Kehilangan Bersama",
-    nl_label: "Vaardigheid 3 — Verlies Samen Verwerken",
+    en_label: "Skill 3 ï¿½ Processing Loss Together",
+    id_label: "Keterampilan 3 ï¿½ Memproses Kehilangan Bersama",
+    nl_label: "Vaardigheid 3 ï¿½ Verlies Samen Verwerken",
     en_subtitle: "The unique grief of cross-cultural life",
     id_subtitle: "Duka unik kehidupan lintas budaya",
     nl_subtitle: "Het unieke verdriet van intercultureel leven",
     en_intro:
-      "Cross-cultural workers don't just experience losses — they accumulate them. Every departure, every transition, every goodbye is a small grief that rarely gets named, let alone processed. Missionary families and international team workers often live with compacted grief: the losses stack up faster than they can be processed, and the culture of the field can make it feel inappropriate to grieve at all. This is where relational breakdown often begins — not in conflict, but in unexpressed loss.",
+      "Cross-cultural workers don't just experience losses ï¿½ they accumulate them. Every departure, every transition, every goodbye is a small grief that rarely gets named, let alone processed. Missionary families and international team workers often live with compacted grief: the losses stack up faster than they can be processed, and the culture of the field can make it feel inappropriate to grieve at all. This is where relational breakdown often begins ï¿½ not in conflict, but in unexpressed loss.",
     id_intro:
-      "Pekerja lintas budaya tidak hanya mengalami kehilangan — mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diproses. Keluarga misionaris dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diproses, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai — bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
+      "Pekerja lintas budaya tidak hanya mengalami kehilangan ï¿½ mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diproses. Keluarga misionaris dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diproses, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai ï¿½ bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
     nl_intro:
-      "Interculturele werkers ervaren niet alleen verlies — ze accumuleren het. Elke vertrek, elke overgang, elk afscheid is een klein verdriet dat zelden wordt benoemd, laat staan verwerkt. Zendingsfamilies en internationale teamwerkers leven vaak met samengeperst verdriet: de verliezen stapelen zich sneller op dan ze kunnen worden verwerkt, en de cultuur van het veld kan het ongepast laten aanvoelen om überhaupt te rouwen. Dit is waar relationele afbraak vaak begint — niet in conflict, maar in onuitgesproken verlies.",
+      "Interculturele werkers ervaren niet alleen verlies ï¿½ ze accumuleren het. Elke vertrek, elke overgang, elk afscheid is een klein verdriet dat zelden wordt benoemd, laat staan verwerkt. Zendingsfamilies en internationale teamwerkers leven vaak met samengeperst verdriet: de verliezen stapelen zich sneller op dan ze kunnen worden verwerkt, en de cultuur van het veld kan het ongepast laten aanvoelen om ï¿½berhaupt te rouwen. Dit is waar relationele afbraak vaak begint ï¿½ niet in conflict, maar in onuitgesproken verlies.",
     en_scenario_heading: "What accumulated loss looks like",
     id_scenario_heading: "Seperti apa akumulasi kehilangan",
     nl_scenario_heading: "Hoe geaccumuleerd verlies eruitziet",
@@ -293,31 +293,31 @@ const SKILLS: {
     id_typical_label: "Yang biasanya dilewatkan tim",
     nl_typical_label: "Wat teams typisch missen",
     en_typical:
-      "Teams that function well operationally often have no language for grief. The debrief focuses on tasks, logistics, and forward planning — never: \"What have we lost this season? What do we need to grieve before we move on?\" The cost of not naming loss is high: disengagement, resentment toward leadership, compassion fatigue, and — most commonly — premature departure.",
+      "Teams that function well operationally often have no language for grief. The debrief focuses on tasks, logistics, and forward planning ï¿½ never: \"What have we lost this season? What do we need to grieve before we move on?\" The cost of not naming loss is high: disengagement, resentment toward leadership, compassion fatigue, and ï¿½ most commonly ï¿½ premature departure.",
     id_typical:
-      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan — tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Biaya tidak menyebutkan kehilangan itu tinggi: ketidakterlibatan, kebencian terhadap kepemimpinan, kelelahan welas asih, dan — paling umum — kepergian prematur.",
+      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan ï¿½ tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Biaya tidak menyebutkan kehilangan itu tinggi: ketidakterlibatan, kebencian terhadap kepemimpinan, kelelahan welas asih, dan ï¿½ paling umum ï¿½ kepergian prematur.",
     nl_typical:
-      "Teams die operationeel goed functioneren hebben vaak geen taal voor verdriet. De debriefing richt zich op taken, logistiek en vooruitplannen — nooit: \"Wat hebben we dit seizoen verloren? Wat moeten we rouwen voordat we verdergaan?\" De kosten van het niet benoemen van verlies zijn hoog: ontkoppeling, wrok jegens leiderschap, compassiemoeheid, en — het meest voorkomend — voortijdig vertrek.",
+      "Teams die operationeel goed functioneren hebben vaak geen taal voor verdriet. De debriefing richt zich op taken, logistiek en vooruitplannen ï¿½ nooit: \"Wat hebben we dit seizoen verloren? Wat moeten we rouwen voordat we verdergaan?\" De kosten van het niet benoemen van verlies zijn hoog: ontkoppeling, wrok jegens leiderschap, compassiemoeheid, en ï¿½ het meest voorkomend ï¿½ voortijdig vertrek.",
     en_better_label: "How to create space for loss",
     id_better_label: "Cara menciptakan ruang untuk kehilangan",
-    nl_better_label: "Hoe ruimte te creëren voor verlies",
+    nl_better_label: "Hoe ruimte te creï¿½ren voor verlies",
     en_better:
-      "It starts with the leader naming their own losses first. Not as a performance of vulnerability, but as genuine modelling: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" This simple act — naming, inviting, and not rushing past — creates the relational safety that keeps people on the field.",
+      "It starts with the leader naming their own losses first. Not as a performance of vulnerability, but as genuine modelling: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" This simple act ï¿½ naming, inviting, and not rushing past ï¿½ creates the relational safety that keeps people on the field.",
     id_better:
-      "Ini dimulai dengan pemimpin yang menyebutkan kehilangan mereka sendiri terlebih dahulu. Bukan sebagai pertunjukan kerentanan, tetapi sebagai pemodelan yang tulus: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebutkan sesuatu yang telah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya merindukan bekerja dengannya. Adakah orang lain yang ingin menyebutkan apa yang telah mereka bawa?\" Tindakan sederhana ini — menyebutkan, mengundang, dan tidak terburu-buru melewati — menciptakan keamanan relasional yang membuat orang tetap di lapangan.",
+      "Ini dimulai dengan pemimpin yang menyebutkan kehilangan mereka sendiri terlebih dahulu. Bukan sebagai pertunjukan kerentanan, tetapi sebagai pemodelan yang tulus: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebutkan sesuatu yang telah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya merindukan bekerja dengannya. Adakah orang lain yang ingin menyebutkan apa yang telah mereka bawa?\" Tindakan sederhana ini ï¿½ menyebutkan, mengundang, dan tidak terburu-buru melewati ï¿½ menciptakan keamanan relasional yang membuat orang tetap di lapangan.",
     nl_better:
-      "Het begint met de leider die zijn eigen verliezen als eerste benoemt. Niet als een vertoning van kwetsbaarheid, maar als oprecht modelleren: \"Voordat we naar het komende kwartaal kijken, wil ik iets benoemen wat we hebben verloren. Sarah's vertrek heeft iets van dit team weggenomen. Ik mis het samenwerken met haar. Wil iemand anders benoemen wat ze met zich meedragen?\" Deze eenvoudige handeling — benoemen, uitnodigen, en niet snel voorbijgaan — creëert de relationele veiligheid die mensen op het veld houdt.",
+      "Het begint met de leider die zijn eigen verliezen als eerste benoemt. Niet als een vertoning van kwetsbaarheid, maar als oprecht modelleren: \"Voordat we naar het komende kwartaal kijken, wil ik iets benoemen wat we hebben verloren. Sarah's vertrek heeft iets van dit team weggenomen. Ik mis het samenwerken met haar. Wil iemand anders benoemen wat ze met zich meedragen?\" Deze eenvoudige handeling ï¿½ benoemen, uitnodigen, en niet snel voorbijgaan ï¿½ creï¿½ert de relationele veiligheid die mensen op het veld houdt.",
     en_technique_heading: "Three practices for teams",
     id_technique_heading: "Tiga praktik untuk tim",
     nl_technique_heading: "Drie praktijken voor teams",
     en_technique_steps: [
       {
         label: "The goodbye ritual",
-        body: "Every departure deserves a named farewell — not just a cake and a card, but a structured moment where the team speaks honestly about what this person contributed and what leaves with them. The goodbye ritual is not sentimental; it is a grief hygiene practice that prevents accumulated unspoken loss.",
+        body: "Every departure deserves a named farewell ï¿½ not just a cake and a card, but a structured moment where the team speaks honestly about what this person contributed and what leaves with them. The goodbye ritual is not sentimental; it is a grief hygiene practice that prevents accumulated unspoken loss.",
       },
       {
         label: "The quarterly grief check",
-        body: "Once per quarter, before the forward-planning session, add one question to the team meeting: \"What has this team lost — in people, in momentum, in dreams — that we haven't yet acknowledged?\" Keep a physical list visible. Naming is not the same as wallowing. It is how teams stay resilient.",
+        body: "Once per quarter, before the forward-planning session, add one question to the team meeting: \"What has this team lost ï¿½ in people, in momentum, in dreams ï¿½ that we haven't yet acknowledged?\" Keep a physical list visible. Naming is not the same as wallowing. It is how teams stay resilient.",
       },
       {
         label: "The personal loss inventory",
@@ -327,11 +327,11 @@ const SKILLS: {
     id_technique_steps: [
       {
         label: "Ritual perpisahan",
-        body: "Setiap kepergian layak mendapat perpisahan yang disebutkan — bukan hanya kue dan kartu, tetapi momen terstruktur di mana tim berbicara dengan jujur tentang apa yang dikontribusikan orang ini dan apa yang pergi bersama mereka. Ritual perpisahan bukan sentimental; ini adalah praktik kebersihan duka yang mencegah akumulasi kehilangan yang tidak terucapkan.",
+        body: "Setiap kepergian layak mendapat perpisahan yang disebutkan ï¿½ bukan hanya kue dan kartu, tetapi momen terstruktur di mana tim berbicara dengan jujur tentang apa yang dikontribusikan orang ini dan apa yang pergi bersama mereka. Ritual perpisahan bukan sentimental; ini adalah praktik kebersihan duka yang mencegah akumulasi kehilangan yang tidak terucapkan.",
       },
       {
         label: "Pemeriksaan duka triwulanan",
-        body: "Sekali per kuartal, sebelum sesi perencanaan ke depan, tambahkan satu pertanyaan pada rapat tim: \"Apa yang telah tim ini kehilangan — dalam orang, dalam momentum, dalam mimpi — yang belum kita akui?\" Simpan daftar fisik yang terlihat. Menyebutkan tidak sama dengan larut. Begitulah cara tim tetap tangguh.",
+        body: "Sekali per kuartal, sebelum sesi perencanaan ke depan, tambahkan satu pertanyaan pada rapat tim: \"Apa yang telah tim ini kehilangan ï¿½ dalam orang, dalam momentum, dalam mimpi ï¿½ yang belum kita akui?\" Simpan daftar fisik yang terlihat. Menyebutkan tidak sama dengan larut. Begitulah cara tim tetap tangguh.",
       },
       {
         label: "Inventaris kehilangan pribadi",
@@ -341,11 +341,11 @@ const SKILLS: {
     nl_technique_steps: [
       {
         label: "Het afscheidsritueel",
-        body: "Elk vertrek verdient een benoemd afscheid — niet alleen een taart en een kaart, maar een gestructureerd moment waarop het team eerlijk spreekt over wat deze persoon heeft bijgedragen en wat met hen meegaat. Het afscheidsritueel is niet sentimenteel; het is een rouwhygiënepraktijk die voorkomt dat onuitgesproken verlies zich opstapelt.",
+        body: "Elk vertrek verdient een benoemd afscheid ï¿½ niet alleen een taart en een kaart, maar een gestructureerd moment waarop het team eerlijk spreekt over wat deze persoon heeft bijgedragen en wat met hen meegaat. Het afscheidsritueel is niet sentimenteel; het is een rouwhygiï¿½nepraktijk die voorkomt dat onuitgesproken verlies zich opstapelt.",
       },
       {
         label: "De kwartaalrouwcheck",
-        body: "Eén keer per kwartaal, vóór de vooruitplanningssessie, voeg je één vraag toe aan de teamvergadering: \"Wat heeft dit team verloren — in mensen, in momentum, in dromen — dat we nog niet hebben erkend?\" Houd een zichtbare fysieke lijst bij. Benoemen is niet hetzelfde als blijven hangen. Het is hoe teams veerkrachtig blijven.",
+        body: "Eï¿½n keer per kwartaal, vï¿½ï¿½r de vooruitplanningssessie, voeg je ï¿½ï¿½n vraag toe aan de teamvergadering: \"Wat heeft dit team verloren ï¿½ in mensen, in momentum, in dromen ï¿½ dat we nog niet hebben erkend?\" Houd een zichtbare fysieke lijst bij. Benoemen is niet hetzelfde als blijven hangen. Het is hoe teams veerkrachtig blijven.",
       },
       {
         label: "De persoonlijke verliesinventaris",
@@ -365,15 +365,15 @@ const HEALTH_CHECKS: {
 }[] = [
   {
     id: "hc1",
-    en: "When a colleague shares something difficult, my first instinct is to listen — not to fix or advise.",
-    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, insting pertama saya adalah mendengarkan — bukan memperbaiki atau memberi saran.",
-    nl: "Wanneer een collega iets moeilijks deelt, is mijn eerste instinct te luisteren — niet oplossen of adviseren.",
+    en: "When a colleague shares something difficult, my first instinct is to listen ï¿½ not to fix or advise.",
+    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, insting pertama saya adalah mendengarkan ï¿½ bukan memperbaiki atau memberi saran.",
+    nl: "Wanneer een collega iets moeilijks deelt, is mijn eerste instinct te luisteren ï¿½ niet oplossen of adviseren.",
   },
   {
     id: "hc2",
-    en: "I notice early signals that something is off in a relationship — before it becomes a visible problem.",
-    id_lang: "Saya memperhatikan sinyal awal bahwa ada sesuatu yang tidak beres dalam suatu hubungan — sebelum menjadi masalah yang terlihat.",
-    nl: "Ik merk vroege signalen dat er iets mis is in een relatie — voordat het een zichtbaar probleem wordt.",
+    en: "I notice early signals that something is off in a relationship ï¿½ before it becomes a visible problem.",
+    id_lang: "Saya memperhatikan sinyal awal bahwa ada sesuatu yang tidak beres dalam suatu hubungan ï¿½ sebelum menjadi masalah yang terlihat.",
+    nl: "Ik merk vroege signalen dat er iets mis is in een relatie ï¿½ voordat het een zichtbaar probleem wordt.",
   },
   {
     id: "hc3",
@@ -383,9 +383,9 @@ const HEALTH_CHECKS: {
   },
   {
     id: "hc4",
-    en: "My team has language for grief and loss — not just for tasks and plans.",
-    id_lang: "Tim saya memiliki bahasa untuk duka dan kehilangan — bukan hanya untuk tugas dan rencana.",
-    nl: "Mijn team heeft taal voor verdriet en verlies — niet alleen voor taken en plannen.",
+    en: "My team has language for grief and loss ï¿½ not just for tasks and plans.",
+    id_lang: "Tim saya memiliki bahasa untuk duka dan kehilangan ï¿½ bukan hanya untuk tugas dan rencana.",
+    nl: "Mijn team heeft taal voor verdriet en verlies ï¿½ niet alleen voor taken en plannen.",
   },
   {
     id: "hc5",
@@ -487,9 +487,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "Team & Facilitation · Personal Development",
-              "Tim & Fasilitasi · Pengembangan Pribadi",
-              "Team & Facilitation · Persoonlijke Ontwikkeling"
+              "Team & Facilitation ï¿½ Personal Development",
+              "Tim & Fasilitasi ï¿½ Pengembangan Pribadi",
+              "Team & Facilitation ï¿½ Persoonlijke Ontwikkeling"
             )}
           </p>
 
@@ -523,7 +523,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           </div>
 
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
+            {t("Team & Facilitation ï¿½ Guide", "Tim & Fasilitasi ï¿½ Panduan", "Team & Facilitatie ï¿½ Gids")}
           </p>
           <h1
             style={{
@@ -550,9 +550,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "Why relational breakdown is the #1 reason cross-cultural workers leave the field prematurely — and three skills that build the interpersonal resilience to stay.",
-              "Mengapa kerusakan relasional adalah alasan #1 pekerja lintas budaya meninggalkan lapangan terlalu dini — dan tiga keterampilan yang membangun ketahanan interpersonal untuk bertahan.",
-              "Waarom relationele afbraak de #1 reden is dat interculturele werkers het veld voortijdig verlaten — en drie vaardigheden die de interpersoonlijke veerkracht opbouwen om te blijven."
+              "Why relational breakdown is the #1 reason cross-cultural workers leave the field prematurely ï¿½ and three skills that build the interpersonal resilience to stay.",
+              "Mengapa kerusakan relasional adalah alasan #1 pekerja lintas budaya meninggalkan lapangan terlalu dini ï¿½ dan tiga keterampilan yang membangun ketahanan interpersonal untuk bertahan.",
+              "Waarom relationele afbraak de #1 reden is dat interculturele werkers het veld voortijdig verlaten ï¿½ en drie vaardigheden die de interpersoonlijke veerkracht opbouwen om te blijven."
             )}
           </p>
 
@@ -626,9 +626,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             },
             {
               stat: "SYIS",
-              en: "Sharpening Your Interpersonal Skills — the curriculum behind this module",
-              id: "Mengasah Keterampilan Interpersonal Anda — kurikulum di balik modul ini",
-              nl: "Je Interpersoonlijke Vaardigheden Aanscherpen — het curriculum achter deze module",
+              en: "Sharpening Your Interpersonal Skills ï¿½ the curriculum behind this module",
+              id: "Mengasah Keterampilan Interpersonal Anda ï¿½ kurikulum di balik modul ini",
+              nl: "Je Interpersoonlijke Vaardigheden Aanscherpen ï¿½ het curriculum achter deze module",
             },
             {
               stat: "3",
@@ -1063,9 +1063,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "These six statements are not a scored quiz. They are honest prompts — sit with each one and notice what surfaces.",
-              "Enam pernyataan ini bukan kuis dengan skor. Ini adalah pertanyaan yang jujur — duduklah dengan masing-masing dan perhatikan apa yang muncul.",
-              "Deze zes uitspraken zijn geen gescoorde quiz. Het zijn eerlijke aanwijzingen — zit met elk en merk op wat er opkomt."
+              "These six statements are not a scored quiz. They are honest prompts ï¿½ sit with each one and notice what surfaces.",
+              "Enam pernyataan ini bukan kuis dengan skor. Ini adalah pertanyaan yang jujur ï¿½ duduklah dengan masing-masing dan perhatikan apa yang muncul.",
+              "Deze zes uitspraken zijn geen gescoorde quiz. Het zijn eerlijke aanwijzingen ï¿½ zit met elk en merk op wat er opkomt."
             )}
           </p>
 
@@ -1177,9 +1177,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               >
                 {checkedItems.size >= 5
                   ? t(
-                      "These are genuine strengths. The challenge now is to protect them — especially under pressure, in busy seasons, and when the team is losing people.",
-                      "Ini adalah kekuatan nyata. Tantangan sekarang adalah melindunginya — terutama di bawah tekanan, di musim sibuk, dan ketika tim kehilangan orang.",
-                      "Dit zijn echte sterktes. De uitdaging nu is ze te beschermen — vooral onder druk, in drukke seizoenen, en wanneer het team mensen verliest."
+                      "These are genuine strengths. The challenge now is to protect them ï¿½ especially under pressure, in busy seasons, and when the team is losing people.",
+                      "Ini adalah kekuatan nyata. Tantangan sekarang adalah melindunginya ï¿½ terutama di bawah tekanan, di musim sibuk, dan ketika tim kehilangan orang.",
+                      "Dit zijn echte sterktes. De uitdaging nu is ze te beschermen ï¿½ vooral onder druk, in drukke seizoenen, en wanneer het team mensen verliest."
                     )
                   : checkedItems.size >= 3
                   ? t(
@@ -1188,9 +1188,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                       "Je hebt een fundament om op te bouwen. De uitspraken die je niet aankruiste zijn de belangrijkste om bij te zitten. Wat zou er moeten veranderen om die waar te maken?"
                     )
                   : t(
-                      "Honesty is the starting point. These gaps are not failures — they are the exact places where the three skills in this module do their work.",
-                      "Kejujuran adalah titik awal. Kesenjangan ini bukan kegagalan — itu adalah tempat-tempat di mana tiga keterampilan dalam modul ini bekerja.",
-                      "Eerlijkheid is het beginpunt. Deze lacunes zijn geen mislukkingen — het zijn precies de plekken waar de drie vaardigheden in deze module hun werk doen."
+                      "Honesty is the starting point. These gaps are not failures ï¿½ they are the exact places where the three skills in this module do their work.",
+                      "Kejujuran adalah titik awal. Kesenjangan ini bukan kegagalan ï¿½ itu adalah tempat-tempat di mana tiga keterampilan dalam modul ini bekerja.",
+                      "Eerlijkheid is het beginpunt. Deze lacunes zijn geen mislukkingen ï¿½ het zijn precies de plekken waar de drie vaardigheden in deze module hun werk doen."
                     )}
               </p>
             </div>
@@ -1223,13 +1223,13 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
             }}
           >
             {t(
-              "Even the best relationships fracture — and God still works",
-              "Bahkan hubungan terbaik pun bisa retak — dan Allah tetap bekerja",
-              "Zelfs de beste relaties breken — en God werkt nog steeds"
+              "Even the best relationships fracture ï¿½ and God still works",
+              "Bahkan hubungan terbaik pun bisa retak ï¿½ dan Allah tetap bekerja",
+              "Zelfs de beste relaties breken ï¿½ en God werkt nog steeds"
             )}
           </h2>
 
-          {/* Verse 1 — Colossians 3:14 */}
+          {/* Verse 1 ï¿½ Colossians 3:14 */}
           <div style={{ marginBottom: 52 }}>
             <p
               style={{
@@ -1275,14 +1275,14 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {t(
-                "Paul's letter to the Colossians lists the garments of a healthy community — compassion, kindness, humility, gentleness, patience, forbearance, forgiveness. But notice the structure: love is not one item on the list. It is what binds all the others together. Without love, the other virtues remain isolated skills — good in theory, brittle in practice. The relational longevity that keeps cross-cultural teams together is not primarily a set of communication techniques. It is love expressed through them. The SYIS skills in this module — listening, navigating conflict, processing loss — are love made concrete.",
-                "Surat Paulus kepada jemaat Kolose mendaftar pakaian komunitas yang sehat — belas kasihan, kebaikan hati, kerendahan hati, kelemahlembutan, kesabaran, tenggang rasa, pengampunan. Tetapi perhatikan strukturnya: kasih bukan salah satu item dalam daftar. Kasih adalah yang mengikat semua yang lain bersama. Tanpa kasih, kebajikan lainnya tetap menjadi keterampilan yang terisolasi — baik dalam teori, rapuh dalam praktik. Kelanggengan relasional yang menjaga tim lintas budaya tetap bersatu bukan terutama seperangkat teknik komunikasi. Itu adalah kasih yang diekspresikan melaluinya.",
-                "Paulus' brief aan de Kolossenzen somt de kledingstukken van een gezonde gemeenschap op — medeleven, vriendelijkheid, bescheidenheid, zachtmoedigheid, geduld, verdraagzaamheid, vergeving. Maar let op de structuur: liefde is niet één item op de lijst. Het is wat alle andere samenbindt. Zonder liefde blijven de andere deugden geïsoleerde vaardigheden — goed in theorie, broos in de praktijk. De relationele longeviteit die interculturele teams bij elkaar houdt is niet primair een set communicatietechnieken. Het is liefde die daardoor tot uitdrukking komt."
+                "Paul's letter to the Colossians lists the garments of a healthy community ï¿½ compassion, kindness, humility, gentleness, patience, forbearance, forgiveness. But notice the structure: love is not one item on the list. It is what binds all the others together. Without love, the other virtues remain isolated skills ï¿½ good in theory, brittle in practice. The relational longevity that keeps cross-cultural teams together is not primarily a set of communication techniques. It is love expressed through them. The SYIS skills in this module ï¿½ listening, navigating conflict, processing loss ï¿½ are love made concrete.",
+                "Surat Paulus kepada jemaat Kolose mendaftar pakaian komunitas yang sehat ï¿½ belas kasihan, kebaikan hati, kerendahan hati, kelemahlembutan, kesabaran, tenggang rasa, pengampunan. Tetapi perhatikan strukturnya: kasih bukan salah satu item dalam daftar. Kasih adalah yang mengikat semua yang lain bersama. Tanpa kasih, kebajikan lainnya tetap menjadi keterampilan yang terisolasi ï¿½ baik dalam teori, rapuh dalam praktik. Kelanggengan relasional yang menjaga tim lintas budaya tetap bersatu bukan terutama seperangkat teknik komunikasi. Itu adalah kasih yang diekspresikan melaluinya.",
+                "Paulus' brief aan de Kolossenzen somt de kledingstukken van een gezonde gemeenschap op ï¿½ medeleven, vriendelijkheid, bescheidenheid, zachtmoedigheid, geduld, verdraagzaamheid, vergeving. Maar let op de structuur: liefde is niet ï¿½ï¿½n item op de lijst. Het is wat alle andere samenbindt. Zonder liefde blijven de andere deugden geï¿½soleerde vaardigheden ï¿½ goed in theorie, broos in de praktijk. De relationele longeviteit die interculturele teams bij elkaar houdt is niet primair een set communicatietechnieken. Het is liefde die daardoor tot uitdrukking komt."
               )}
             </p>
           </div>
 
-          {/* Verse 2 — Acts 15:39 */}
+          {/* Verse 2 ï¿½ Acts 15:39 */}
           <div
             style={{
               borderTop: "1px solid oklch(35% 0.06 260)",
@@ -1334,9 +1334,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {t(
-                "This verse doesn't have a happy ending tied up neatly. Paul and Barnabas — two of the most effective cross-cultural missionaries in history, the very team that launched the first Gentile church at Antioch — had a conflict so sharp that they separated permanently. The Bible does not minimise this. It reports it plainly. And what follows is not a story of failure: both Paul and Barnabas continued their mission, each with a different team. God did not require the relationship to be preserved for the mission to continue.",
-                "Ayat ini tidak memiliki akhir yang bahagia yang terikat dengan rapi. Paulus dan Barnabas — dua misionaris lintas budaya paling efektif dalam sejarah, tim yang meluncurkan gereja non-Yahudi pertama di Antiokhia — memiliki konflik yang begitu tajam sehingga mereka berpisah secara permanen. Alkitab tidak meminimalkan ini. Ini melaporkannya dengan jelas. Dan yang mengikutinya bukan kisah kegagalan: Paulus dan Barnabas melanjutkan misi mereka, masing-masing dengan tim yang berbeda. Allah tidak mengharuskan hubungan itu dipertahankan agar misi dapat berlanjut.",
-                "Dit vers heeft geen netjes afgebonden gelukkig einde. Paulus en Barnabas — twee van de meest effectieve interculturele zendelingen in de geschiedenis, het team dat de eerste heidense kerk in Antiochië lanceerde — hadden een zo scherp conflict dat ze permanent uit elkaar gingen. De Bijbel minimaliseert dit niet. Hij rapporteert het eenvoudig. En wat volgt is geen verhaal van mislukking: zowel Paulus als Barnabas zetten hun missie voort, elk met een ander team. God vereiste niet dat de relatie bewaard bleef opdat de missie door kon gaan."
+                "This verse doesn't have a happy ending tied up neatly. Paul and Barnabas ï¿½ two of the most effective cross-cultural missionaries in history, the very team that launched the first Gentile church at Antioch ï¿½ had a conflict so sharp that they separated permanently. The Bible does not minimise this. It reports it plainly. And what follows is not a story of failure: both Paul and Barnabas continued their mission, each with a different team. God did not require the relationship to be preserved for the mission to continue.",
+                "Ayat ini tidak memiliki akhir yang bahagia yang terikat dengan rapi. Paulus dan Barnabas ï¿½ dua misionaris lintas budaya paling efektif dalam sejarah, tim yang meluncurkan gereja non-Yahudi pertama di Antiokhia ï¿½ memiliki konflik yang begitu tajam sehingga mereka berpisah secara permanen. Alkitab tidak meminimalkan ini. Ini melaporkannya dengan jelas. Dan yang mengikutinya bukan kisah kegagalan: Paulus dan Barnabas melanjutkan misi mereka, masing-masing dengan tim yang berbeda. Allah tidak mengharuskan hubungan itu dipertahankan agar misi dapat berlanjut.",
+                "Dit vers heeft geen netjes afgebonden gelukkig einde. Paulus en Barnabas ï¿½ twee van de meest effectieve interculturele zendelingen in de geschiedenis, het team dat de eerste heidense kerk in Antiochiï¿½ lanceerde ï¿½ hadden een zo scherp conflict dat ze permanent uit elkaar gingen. De Bijbel minimaliseert dit niet. Hij rapporteert het eenvoudig. En wat volgt is geen verhaal van mislukking: zowel Paulus als Barnabas zetten hun missie voort, elk met een ander team. God vereiste niet dat de relatie bewaard bleef opdat de missie door kon gaan."
               )}
             </p>
             <p
@@ -1347,9 +1347,9 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
               }}
             >
               {t(
-                "What this means for you: relational longevity is worth fighting for — and the three skills in this module are how you fight for it. But relational longevity is not the same as relational perfection. Some relationships will fracture despite your best efforts. The measure of your relational health is not whether all your relationships have survived intact. It is whether you brought love, honesty, and humility to them — and whether you keep doing so.",
-                "Artinya bagi Anda: kelanggengan relasional layak diperjuangkan — dan tiga keterampilan dalam modul ini adalah cara Anda memperjuangkannya. Tetapi kelanggengan relasional tidak sama dengan kesempurnaan relasional. Beberapa hubungan akan retak meskipun Anda berupaya sebaik mungkin. Ukuran kesehatan relasional Anda bukan apakah semua hubungan Anda bertahan utuh. Melainkan apakah Anda membawa kasih, kejujuran, dan kerendahan hati — dan apakah Anda terus melakukannya.",
-                "Wat dit voor jou betekent: relationele longeviteit is het waard om voor te vechten — en de drie vaardigheden in deze module zijn hoe je ervoor vecht. Maar relationele longeviteit is niet hetzelfde als relationele perfectie. Sommige relaties zullen breken ondanks je beste inspanningen. De maatstaf van je relationele gezondheid is niet of al je relaties intact zijn gebleven. Het is of je liefde, eerlijkheid en bescheidenheid meebracht — en of je dat blijft doen."
+                "What this means for you: relational longevity is worth fighting for ï¿½ and the three skills in this module are how you fight for it. But relational longevity is not the same as relational perfection. Some relationships will fracture despite your best efforts. The measure of your relational health is not whether all your relationships have survived intact. It is whether you brought love, honesty, and humility to them ï¿½ and whether you keep doing so.",
+                "Artinya bagi Anda: kelanggengan relasional layak diperjuangkan ï¿½ dan tiga keterampilan dalam modul ini adalah cara Anda memperjuangkannya. Tetapi kelanggengan relasional tidak sama dengan kesempurnaan relasional. Beberapa hubungan akan retak meskipun Anda berupaya sebaik mungkin. Ukuran kesehatan relasional Anda bukan apakah semua hubungan Anda bertahan utuh. Melainkan apakah Anda membawa kasih, kejujuran, dan kerendahan hati ï¿½ dan apakah Anda terus melakukannya.",
+                "Wat dit voor jou betekent: relationele longeviteit is het waard om voor te vechten ï¿½ en de drie vaardigheden in deze module zijn hoe je ervoor vecht. Maar relationele longeviteit is niet hetzelfde als relationele perfectie. Sommige relaties zullen breken ondanks je beste inspanningen. De maatstaf van je relationele gezondheid is niet of al je relaties intact zijn gebleven. Het is of je liefde, eerlijkheid en bescheidenheid meebracht ï¿½ en of je dat blijft doen."
               )}
             </p>
           </div>
@@ -1474,7 +1474,7 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
                 marginBottom: 28,
               }}
             >
-              —{" "}
+              ï¿½{" "}
               {lang === "en"
                 ? verseData.en_ref
                 : lang === "id"

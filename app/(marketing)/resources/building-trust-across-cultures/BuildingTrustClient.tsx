@@ -22,17 +22,17 @@ const trustTypes = [
     en_title: "Relationship-Based Trust",
     id_title: "Kepercayaan Berbasis Hubungan",
     nl_title: "Relatiegebaseerd Vertrouwen",
-    en_desc: "Common in much of Asia, the Middle East, Africa, and Latin America. Trust is built through personal connection, shared experience, and genuine investment in the other person. Business follows relationship — not the other way around. Skipping this stage undermines everything that follows.",
-    id_desc: "Umum di sebagian besar Asia, Timur Tengah, Afrika, dan Amerika Latin. Kepercayaan dibangun melalui koneksi pribadi, pengalaman bersama, dan investasi nyata pada orang lain. Bisnis mengikuti hubungan — bukan sebaliknya.",
-    nl_desc: "Gangbaar in groot deel van Azië, het Midden-Oosten, Afrika en Latijns-Amerika. Vertrouwen wordt opgebouwd via persoonlijke verbinding, gedeelde ervaringen en echte investering in de ander. Zaken volgen relatie — niet andersom.",
+    en_desc: "Common in much of Asia, the Middle East, Africa, and Latin America. Trust is built through personal connection, shared experience, and genuine investment in the other person. Business follows relationship ï¿½ not the other way around. Skipping this stage undermines everything that follows.",
+    id_desc: "Umum di sebagian besar Asia, Timur Tengah, Afrika, dan Amerika Latin. Kepercayaan dibangun melalui koneksi pribadi, pengalaman bersama, dan investasi nyata pada orang lain. Bisnis mengikuti hubungan ï¿½ bukan sebaliknya.",
+    nl_desc: "Gangbaar in groot deel van Aziï¿½, het Midden-Oosten, Afrika en Latijns-Amerika. Vertrouwen wordt opgebouwd via persoonlijke verbinding, gedeelde ervaringen en echte investering in de ander. Zaken volgen relatie ï¿½ niet andersom.",
   },
 ];
 
 const principles = [
   { number: "1", en_title: "Know which trust language your team speaks", id_title: "Ketahui bahasa kepercayaan tim Anda", nl_title: "Ken de vertrouwenstaal van je team", en_desc: "Don't assume everyone earns trust the same way you do. Ask: does this person need to see my track record first, or do they need to know me as a person first? Invest accordingly.", id_desc: "Jangan asumsikan semua orang mendapatkan kepercayaan dengan cara yang sama seperti Anda. Tanyakan: apakah orang ini perlu melihat rekam jejak saya terlebih dahulu, atau mereka perlu mengenal saya sebagai pribadi terlebih dahulu?", nl_desc: "Veronderstel niet dat iedereen op dezelfde manier vertrouwen verdient als jij. Vraag jezelf: moet deze persoon eerst mijn trackrecord zien, of moeten ze me eerst als persoon leren kennen?" },
-  { number: "2", en_title: "Consistency over time is universally trusted", id_title: "Konsistensi dari waktu ke waktu dipercaya secara universal", nl_title: "Consistentie door de tijd wordt universeel vertrouwd", en_desc: "Regardless of cultural background, people trust leaders who do what they say, say what they mean, and are the same person in private and in public. Integrity is the common currency of all trust.", id_desc: "Terlepas dari latar belakang budaya, orang mempercayai pemimpin yang melakukan apa yang mereka katakan, mengatakan apa yang mereka maksud, dan menjadi orang yang sama dalam kehidupan pribadi dan publik.", nl_desc: "Ongeacht culturele achtergrond vertrouwen mensen leiders die doen wat ze zeggen, zeggen wat ze bedoelen, en dezelfde persoon zijn in het privéleven en in het openbaar." },
-  { number: "3", en_title: "Vulnerability accelerates trust", id_title: "Kerentanan mempercepat kepercayaan", nl_title: "Kwetsbaarheid versnelt vertrouwen", en_desc: "Admitting uncertainty, asking for help, and acknowledging a mistake signals safety. In most cultures, a leader who refuses to show any weakness is less trusted, not more — because it signals either dishonesty or insecurity.", id_desc: "Mengakui ketidakpastian, meminta bantuan, dan mengakui kesalahan memberi sinyal keamanan. Dalam kebanyakan budaya, pemimpin yang menolak menunjukkan kelemahan apa pun kurang dipercaya, bukan lebih.", nl_desc: "Onzekerheid toegeven, om hulp vragen en een fout erkennen signaleert veiligheid. In de meeste culturen wordt een leider die elke zwakte weigert te tonen minder vertrouwd, niet meer." },
-  { number: "4", en_title: "Repair broken trust quickly and specifically", id_title: "Perbaiki kepercayaan yang rusak dengan cepat dan spesifik", nl_title: "Herstel gebroken vertrouwen snel en specifiek", en_desc: "When trust breaks — and it will — address it directly, name what happened, own your part, and ask what repair would look like. Generic apologies often deepen the wound; specific ones begin healing.", id_desc: "Ketika kepercayaan rusak — dan itu akan terjadi — tangani secara langsung, sebutkan apa yang terjadi, akui bagian Anda, dan tanyakan seperti apa perbaikan yang terlihat.", nl_desc: "Wanneer vertrouwen breekt — en dat zal gebeuren — pak het direct aan, benoem wat er is gebeurd, erken je aandeel, en vraag hoe herstel eruit zou zien." },
+  { number: "2", en_title: "Consistency over time is universally trusted", id_title: "Konsistensi dari waktu ke waktu dipercaya secara universal", nl_title: "Consistentie door de tijd wordt universeel vertrouwd", en_desc: "Regardless of cultural background, people trust leaders who do what they say, say what they mean, and are the same person in private and in public. Integrity is the common currency of all trust.", id_desc: "Terlepas dari latar belakang budaya, orang mempercayai pemimpin yang melakukan apa yang mereka katakan, mengatakan apa yang mereka maksud, dan menjadi orang yang sama dalam kehidupan pribadi dan publik.", nl_desc: "Ongeacht culturele achtergrond vertrouwen mensen leiders die doen wat ze zeggen, zeggen wat ze bedoelen, en dezelfde persoon zijn in het privï¿½leven en in het openbaar." },
+  { number: "3", en_title: "Vulnerability accelerates trust", id_title: "Kerentanan mempercepat kepercayaan", nl_title: "Kwetsbaarheid versnelt vertrouwen", en_desc: "Admitting uncertainty, asking for help, and acknowledging a mistake signals safety. In most cultures, a leader who refuses to show any weakness is less trusted, not more ï¿½ because it signals either dishonesty or insecurity.", id_desc: "Mengakui ketidakpastian, meminta bantuan, dan mengakui kesalahan memberi sinyal keamanan. Dalam kebanyakan budaya, pemimpin yang menolak menunjukkan kelemahan apa pun kurang dipercaya, bukan lebih.", nl_desc: "Onzekerheid toegeven, om hulp vragen en een fout erkennen signaleert veiligheid. In de meeste culturen wordt een leider die elke zwakte weigert te tonen minder vertrouwd, niet meer." },
+  { number: "4", en_title: "Repair broken trust quickly and specifically", id_title: "Perbaiki kepercayaan yang rusak dengan cepat dan spesifik", nl_title: "Herstel gebroken vertrouwen snel en specifiek", en_desc: "When trust breaks ï¿½ and it will ï¿½ address it directly, name what happened, own your part, and ask what repair would look like. Generic apologies often deepen the wound; specific ones begin healing.", id_desc: "Ketika kepercayaan rusak ï¿½ dan itu akan terjadi ï¿½ tangani secara langsung, sebutkan apa yang terjadi, akui bagian Anda, dan tanyakan seperti apa perbaikan yang terlihat.", nl_desc: "Wanneer vertrouwen breekt ï¿½ en dat zal gebeuren ï¿½ pak het direct aan, benoem wat er is gebeurd, erken je aandeel, en vraag hoe herstel eruit zou zien." },
 ];
 
 const trustDiffs = [
@@ -46,7 +46,7 @@ const reflectionQuestions = [
   { roman: "III", en: "When has a lack of relational investment cost you influence that could not be recovered quickly?", id: "Kapan kurangnya investasi relasional menghabiskan pengaruh Anda yang tidak dapat dipulihkan dengan cepat?", nl: "Wanneer heeft een gebrek aan relationele investering je invloed gekost die niet snel hersteld kon worden?" },
   { roman: "IV", en: "How does the biblical idea of faithfulness (pistis) shape your theology of trust-building?", id: "Bagaimana konsep alkitabiah tentang kesetiaan (pistis) membentuk teologi Anda tentang membangun kepercayaan?", nl: "Hoe vormt het bijbelse begrip trouw (pistis) jouw theologie van vertrouwen opbouwen?" },
   { roman: "V", en: "Have you ever had to rebuild broken trust cross-culturally? What did you learn?", id: "Pernahkah Anda harus membangun kembali kepercayaan yang rusak secara lintas budaya? Apa yang Anda pelajari?", nl: "Heb je ooit gebroken vertrouwen intercultureel moeten herstellen? Wat heb je geleerd?" },
-  { roman: "VI", en: "What specific investment could you make this week to deepen trust with one team member?", id: "Investasi spesifik apa yang bisa Anda lakukan minggu ini untuk memperdalam kepercayaan dengan satu anggota tim?", nl: "Welke specifieke investering kun je deze week doen om vertrouwen met één teamlid te verdiepen?" },
+  { roman: "VI", en: "What specific investment could you make this week to deepen trust with one team member?", id: "Investasi spesifik apa yang bisa Anda lakukan minggu ini untuk memperdalam kepercayaan dengan satu anggota tim?", nl: "Welke specifieke investering kun je deze week doen om vertrouwen met ï¿½ï¿½n teamlid te verdiepen?" },
 ];
 
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -78,16 +78,16 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
 
       <div style={{ background: navy, padding: "80px 24px 72px" }}>
         <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Cross-Cultural · Guide", "Lintas Budaya · Panduan", "Cross-Cultureel · Gids")}
+          {t("Cross-Cultural ï¿½ Guide", "Lintas Budaya ï¿½ Panduan", "Cross-Cultureel ï¿½ Gids")}
         </p>
         <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Building Trust Across Cultures", "Membangun Kepercayaan Lintas Budaya", "Vertrouwen Opbouwen Across Culturen")}
         </h1>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.65 }}>
           {t(
-            '"Trust is the glue of life. It is the most essential ingredient in effective communication." — Stephen Covey',
-            '"Kepercayaan adalah perekat kehidupan. Ini adalah bahan paling esensial dalam komunikasi yang efektif." — Stephen Covey',
-            '"Vertrouwen is de lijm van het leven. Het is het meest essentiële ingrediënt in effectieve communicatie." — Stephen Covey'
+            '"Trust is the glue of life. It is the most essential ingredient in effective communication." ï¿½ Stephen Covey',
+            '"Kepercayaan adalah perekat kehidupan. Ini adalah bahan paling esensial dalam komunikasi yang efektif." ï¿½ Stephen Covey',
+            '"Vertrouwen is de lijm van het leven. Het is het meest essentiï¿½le ingrediï¿½nt in effectieve communicatie." ï¿½ Stephen Covey'
           )}
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -101,16 +101,16 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
       <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "Trust is not universal — the way it is built, broken, and repaired differs significantly across cultures. A leader who earns deep trust in one cultural context may find themselves starting from zero when they move to another — not because of character failure, but because the trust-building grammar is different.",
-            "Kepercayaan tidak universal — cara membangun, merusak, dan memperbaikinya berbeda secara signifikan di berbagai budaya. Seorang pemimpin yang mendapatkan kepercayaan mendalam dalam satu konteks budaya mungkin mendapati diri mereka mulai dari nol ketika pindah ke yang lain.",
-            "Vertrouwen is niet universeel — de manier waarop het wordt opgebouwd, gebroken en hersteld verschilt aanzienlijk tussen culturen. Een leider die diep vertrouwen verdient in één culturele context kan zich nul zien beginnen wanneer ze naar een andere verhuizen."
+            "Trust is not universal ï¿½ the way it is built, broken, and repaired differs significantly across cultures. A leader who earns deep trust in one cultural context may find themselves starting from zero when they move to another ï¿½ not because of character failure, but because the trust-building grammar is different.",
+            "Kepercayaan tidak universal ï¿½ cara membangun, merusak, dan memperbaikinya berbeda secara signifikan di berbagai budaya. Seorang pemimpin yang mendapatkan kepercayaan mendalam dalam satu konteks budaya mungkin mendapati diri mereka mulai dari nol ketika pindah ke yang lain.",
+            "Vertrouwen is niet universeel ï¿½ de manier waarop het wordt opgebouwd, gebroken en hersteld verschilt aanzienlijk tussen culturen. Een leider die diep vertrouwen verdient in ï¿½ï¿½n culturele context kan zich nul zien beginnen wanneer ze naar een andere verhuizen."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75 }}>
           {t(
             "The foundational distinction, identified by researchers Fons Trompenaars and Charles Hampden-Turner, is between task-based and relationship-based trust. Understanding which mode your team operates in is essential for earning genuine influence.",
             "Perbedaan mendasar, yang diidentifikasi oleh peneliti Fons Trompenaars dan Charles Hampden-Turner, adalah antara kepercayaan berbasis tugas dan berbasis hubungan. Memahami mode mana yang dioperasikan tim Anda sangat penting untuk mendapatkan pengaruh yang nyata.",
-            "Het fundamentele onderscheid, geïdentificeerd door onderzoekers Fons Trompenaars en Charles Hampden-Turner, is tussen taakgebaseerd en relatiegebaseerd vertrouwen."
+            "Het fundamentele onderscheid, geï¿½dentificeerd door onderzoekers Fons Trompenaars en Charles Hampden-Turner, is tussen taakgebaseerd en relatiegebaseerd vertrouwen."
           )}
         </p>
       </div>

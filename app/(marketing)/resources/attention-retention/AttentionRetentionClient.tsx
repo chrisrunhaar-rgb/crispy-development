@@ -40,9 +40,9 @@ const ANDRAGOGY = [
     num: "03",
     titleEn: "Experience", titleId: "Pengalaman", titleNl: "Ervaring",
     subtitleEn: "Past Knowledge", subtitleId: "Pengetahuan Sebelumnya", subtitleNl: "Voorkennis",
-    descEn: "Adults bring a reservoir of experience to any learning environment. Effective training connects new concepts to what learners already know — honoring their history rather than ignoring it.",
-    descId: "Orang dewasa membawa reservoir pengalaman ke lingkungan belajar apa pun. Pelatihan yang efektif menghubungkan konsep baru dengan apa yang sudah diketahui peserta — menghormati sejarah mereka daripada mengabaikannya.",
-    descNl: "Volwassenen brengen een reservoir aan ervaring mee naar elke leeromgeving. Effectieve training verbindt nieuwe concepten met wat leerlingen al weten — hun geschiedenis eerend in plaats van negerend.",
+    descEn: "Adults bring a reservoir of experience to any learning environment. Effective training connects new concepts to what learners already know ï¿½ honoring their history rather than ignoring it.",
+    descId: "Orang dewasa membawa reservoir pengalaman ke lingkungan belajar apa pun. Pelatihan yang efektif menghubungkan konsep baru dengan apa yang sudah diketahui peserta ï¿½ menghormati sejarah mereka daripada mengabaikannya.",
+    descNl: "Volwassenen brengen een reservoir aan ervaring mee naar elke leeromgeving. Effectieve training verbindt nieuwe concepten met wat leerlingen al weten ï¿½ hun geschiedenis eerend in plaats van negerend.",
     color: "oklch(46% 0.12 145)",
   },
   {
@@ -56,11 +56,11 @@ const ANDRAGOGY = [
   },
   {
     num: "05",
-    titleEn: "Orientation to Learning", titleId: "Orientasi terhadap Pembelajaran", titleNl: "Leeroriëntatie",
+    titleEn: "Orientation to Learning", titleId: "Orientasi terhadap Pembelajaran", titleNl: "Leeroriï¿½ntatie",
     subtitleEn: "Learning by Doing", subtitleId: "Belajar dengan Melakukan", subtitleNl: "Leren door te Doen",
-    descEn: "Adults are problem-centred, not subject-centred. They learn most effectively when content is organized around real-life problems and immediately applicable skills — not abstract theories.",
-    descId: "Orang dewasa berpusat pada masalah, bukan pada mata pelajaran. Mereka belajar paling efektif ketika konten diorganisir di sekitar masalah kehidupan nyata dan keterampilan yang langsung dapat diterapkan — bukan teori abstrak.",
-    descNl: "Volwassenen zijn probleemgericht, niet vakgericht. Ze leren het meest effectief wanneer inhoud is georganiseerd rond praktische problemen en direct toepasbare vaardigheden — niet abstracte theorieën.",
+    descEn: "Adults are problem-centred, not subject-centred. They learn most effectively when content is organized around real-life problems and immediately applicable skills ï¿½ not abstract theories.",
+    descId: "Orang dewasa berpusat pada masalah, bukan pada mata pelajaran. Mereka belajar paling efektif ketika konten diorganisir di sekitar masalah kehidupan nyata dan keterampilan yang langsung dapat diterapkan ï¿½ bukan teori abstrak.",
+    descNl: "Volwassenen zijn probleemgericht, niet vakgericht. Ze leren het meest effectief wanneer inhoud is georganiseerd rond praktische problemen en direct toepasbare vaardigheden ï¿½ niet abstracte theorieï¿½n.",
     color: "oklch(42% 0.12 25)",
   },
 ];
@@ -76,7 +76,7 @@ const LEARNING_STYLES = [
   },
   {
     num: "02",
-    titleEn: "Linguistic", titleId: "Linguistik", titleNl: "Linguïstisch",
+    titleEn: "Linguistic", titleId: "Linguistik", titleNl: "Linguï¿½stisch",
     descEn: "Learns through reading, writing, listening, and verbal explanation.",
     descId: "Belajar melalui membaca, menulis, mendengarkan, dan penjelasan verbal.",
     descNl: "Leert via lezen, schrijven, luisteren en verbale uitleg.",
@@ -163,9 +163,9 @@ const LEARNING_METHODS = [
   {
     num: "06",
     titleEn: "Experiential Learning", titleId: "Pembelajaran Pengalaman", titleNl: "Ervaringsleren",
-    descEn: "Structured activities that create direct experience — then reflection. Kolb's learning cycle in action.",
-    descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung — kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
-    descNl: "Gestructureerde activiteiten die directe ervaring creëren — dan reflectie. Kolbs leercyclus in actie.",
+    descEn: "Structured activities that create direct experience ï¿½ then reflection. Kolb's learning cycle in action.",
+    descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung ï¿½ kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
+    descNl: "Gestructureerde activiteiten die directe ervaring creï¿½ren ï¿½ dan reflectie. Kolbs leercyclus in actie.",
   },
   {
     num: "07",
@@ -241,16 +241,16 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           {/* lang toggle */}
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
+            {tr("Team & Facilitation ï¿½ Guide", "Tim & Fasilitasi ï¿½ Panduan", "Team & Facilitatie ï¿½ Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
             {tr("Attention & Retention", "Perhatian & Retensi", "Aandacht & Retentie")}
           </h1>
           <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
-              "Understanding how adults learn — and how to design training that actually sticks. Rooted in andragogy, attention science, and cross-cultural application.",
-              "Memahami bagaimana orang dewasa belajar — dan cara merancang pelatihan yang benar-benar bertahan. Berakar pada andragogi, ilmu perhatian, dan penerapan lintas budaya.",
-              "Begrijpen hoe volwassenen leren — en hoe je training ontwerpt die echt beklijft. Geworteld in andragogie, aandachtswetenschap en interculturele toepassing."
+              "Understanding how adults learn ï¿½ and how to design training that actually sticks. Rooted in andragogy, attention science, and cross-cultural application.",
+              "Memahami bagaimana orang dewasa belajar ï¿½ dan cara merancang pelatihan yang benar-benar bertahan. Berakar pada andragogi, ilmu perhatian, dan penerapan lintas budaya.",
+              "Begrijpen hoe volwassenen leren ï¿½ en hoe je training ontwerpt die echt beklijft. Geworteld in andragogie, aandachtswetenschap en interculturele toepassing."
             )}
           </p>
 
@@ -276,16 +276,16 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </h2>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {tr(
-            "The average adult attention span in a learning environment is 10–20 minutes before focus begins to fade. This is not a weakness — it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
-            "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10–20 menit sebelum fokus mulai memudar. Ini bukan kelemahan — itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
-            "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10–20 minuten voordat de focus begint te vervagen. Dit is geen zwakte — het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken mét deze realiteit, niet ertegen."
+            "The average adult attention span in a learning environment is 10ï¿½20 minutes before focus begins to fade. This is not a weakness ï¿½ it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
+            "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10ï¿½20 menit sebelum fokus mulai memudar. Ini bukan kelemahan ï¿½ itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
+            "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10ï¿½20 minuten voordat de focus begint te vervagen. Dit is geen zwakte ï¿½ het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken mï¿½t deze realiteit, niet ertegen."
           )}
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 48 }}>
           {tr(
-            "Understanding the typical attention curve helps you structure sessions for maximum impact — keeping engagement high and enabling deeper learning through strategic rhythm.",
-            "Memahami kurva perhatian tipikal membantu Anda menyusun sesi untuk dampak maksimal — menjaga keterlibatan tetap tinggi dan memungkinkan pembelajaran yang lebih dalam melalui ritme strategis.",
-            "Het begrijpen van de typische aandachtscurve helpt je sessies te structureren voor maximale impact — betrokkenheid hoog houden en dieper leren mogelijk maken door strategisch ritme."
+            "Understanding the typical attention curve helps you structure sessions for maximum impact ï¿½ keeping engagement high and enabling deeper learning through strategic rhythm.",
+            "Memahami kurva perhatian tipikal membantu Anda menyusun sesi untuk dampak maksimal ï¿½ menjaga keterlibatan tetap tinggi dan memungkinkan pembelajaran yang lebih dalam melalui ritme strategis.",
+            "Het begrijpen van de typische aandachtscurve helpt je sessies te structureren voor maximale impact ï¿½ betrokkenheid hoog houden en dieper leren mogelijk maken door strategisch ritme."
           )}
         </p>
 
@@ -297,7 +297,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "stretch" }}>
             {[
               {
-                time: tr("0–5 min", "0–5 mnt", "0–5 min"),
+                time: tr("0ï¿½5 min", "0ï¿½5 mnt", "0ï¿½5 min"),
                 levelEn: "High", levelId: "Tinggi", levelNl: "Hoog",
                 descEn: "Peak engagement. Introduce key concepts and prime the learner.",
                 descId: "Keterlibatan puncak. Perkenalkan konsep kunci dan persiapkan peserta.",
@@ -305,15 +305,15 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
                 height: "100%", color: "oklch(45% 0.14 145)"
               },
               {
-                time: tr("5–15 min", "5–15 mnt", "5–15 min"),
+                time: tr("5ï¿½15 min", "5ï¿½15 mnt", "5ï¿½15 min"),
                 levelEn: "Sustained", levelId: "Berkelanjutan", levelNl: "Aanhoudend",
-                descEn: "Solid focus. Core content delivery — your main teaching window.",
-                descId: "Fokus solid. Penyampaian konten inti — jendela pengajaran utama Anda.",
-                descNl: "Solide focus. Kerninhoud overdragen — uw belangrijkste leervenster.",
+                descEn: "Solid focus. Core content delivery ï¿½ your main teaching window.",
+                descId: "Fokus solid. Penyampaian konten inti ï¿½ jendela pengajaran utama Anda.",
+                descNl: "Solide focus. Kerninhoud overdragen ï¿½ uw belangrijkste leervenster.",
                 height: "88%", color: "oklch(48% 0.14 45)"
               },
               {
-                time: tr("15–20 min", "15–20 mnt", "15–20 min"),
+                time: tr("15ï¿½20 min", "15ï¿½20 mnt", "15ï¿½20 min"),
                 levelEn: "Fading", levelId: "Memudar", levelNl: "Wegvallend",
                 descEn: "Natural decline begins. Introduce interaction or activity to reset.",
                 descId: "Penurunan alami dimulai. Perkenalkan interaksi atau aktivitas untuk menyegarkan.",
@@ -351,9 +351,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </h3>
         <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(40% 0.06 260)", marginBottom: 24 }}>
           {tr(
-            "A 3–5 minute break between content segments is not wasted time — it is the mechanism that enables retention. Not all breaks are equal. These four types have proven most effective:",
-            "Jeda 3–5 menit di antara segmen konten bukan waktu yang terbuang — melainkan mekanisme yang memungkinkan retensi. Tidak semua jeda sama. Empat jenis berikut terbukti paling efektif:",
-            "Een pauze van 3–5 minuten tussen inhoudsegmenten is geen verspilde tijd — het is het mechanisme dat retentie mogelijk maakt. Niet alle pauzes zijn gelijk. Deze vier typen zijn het meest effectief gebleken:"
+            "A 3ï¿½5 minute break between content segments is not wasted time ï¿½ it is the mechanism that enables retention. Not all breaks are equal. These four types have proven most effective:",
+            "Jeda 3ï¿½5 menit di antara segmen konten bukan waktu yang terbuang ï¿½ melainkan mekanisme yang memungkinkan retensi. Tidak semua jeda sama. Empat jenis berikut terbukti paling efektif:",
+            "Een pauze van 3ï¿½5 minuten tussen inhoudsegmenten is geen verspilde tijd ï¿½ het is het mechanisme dat retentie mogelijk maakt. Niet alle pauzes zijn gelijk. Deze vier typen zijn het meest effectief gebleken:"
           )}
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16 }}>
@@ -384,9 +384,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
             </h2>
             <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7 }}>
               {tr(
-                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles — and design around them.",
-                "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini — dan merancang berdasarkannya.",
-                "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen — en er omheen ontwerpen."
+                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles ï¿½ and design around them.",
+                "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini ï¿½ dan merancang berdasarkannya.",
+                "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen ï¿½ en er omheen ontwerpen."
               )}
             </p>
           </div>
@@ -472,9 +472,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </h2>
           <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {tr(
-              "These ten methods cover the full spectrum from receptive to active learning. The most effective training sequences draw on at least 3–4 of these in a single session.",
-              "Sepuluh metode ini mencakup spektrum penuh dari pembelajaran reseptif hingga aktif. Urutan pelatihan yang paling efektif menggabungkan setidaknya 3–4 dari ini dalam satu sesi.",
-              "Deze tien methoden bestrijken het volledige spectrum van receptief tot actief leren. De meest effectieve trainingssequenties putten uit ten minste 3–4 van deze methoden in één sessie."
+              "These ten methods cover the full spectrum from receptive to active learning. The most effective training sequences draw on at least 3ï¿½4 of these in a single session.",
+              "Sepuluh metode ini mencakup spektrum penuh dari pembelajaran reseptif hingga aktif. Urutan pelatihan yang paling efektif menggabungkan setidaknya 3ï¿½4 dari ini dalam satu sesi.",
+              "Deze tien methoden bestrijken het volledige spectrum van receptief tot actief leren. De meest effectieve trainingssequenties putten uit ten minste 3ï¿½4 van deze methoden in ï¿½ï¿½n sessie."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
@@ -509,9 +509,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </p>
           <p style={{ fontSize: 15, color: "oklch(62% 0.06 260)", margin: 0 }}>
             {tr(
-              "The goal is not to transfer information — it is to produce transformation. When we understand how adults learn, we can design experiences that truly change how people lead.",
-              "Tujuannya bukan untuk mentransfer informasi — melainkan untuk menghasilkan transformasi. Ketika kita memahami bagaimana orang dewasa belajar, kita dapat merancang pengalaman yang benar-benar mengubah cara orang memimpin.",
-              "Het doel is niet om informatie over te dragen — het is om transformatie te bewerkstelligen. Wanneer we begrijpen hoe volwassenen leren, kunnen we ervaringen ontwerpen die echt veranderen hoe mensen leiden."
+              "The goal is not to transfer information ï¿½ it is to produce transformation. When we understand how adults learn, we can design experiences that truly change how people lead.",
+              "Tujuannya bukan untuk mentransfer informasi ï¿½ melainkan untuk menghasilkan transformasi. Ketika kita memahami bagaimana orang dewasa belajar, kita dapat merancang pengalaman yang benar-benar mengubah cara orang memimpin.",
+              "Het doel is niet om informatie over te dragen ï¿½ het is om transformatie te bewerkstelligen. Wanneer we begrijpen hoe volwassenen leren, kunnen we ervaringen ontwerpen die echt veranderen hoe mensen leiden."
             )}
           </p>
         </div>
