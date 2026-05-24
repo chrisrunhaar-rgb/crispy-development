@@ -18,6 +18,7 @@ export async function setPersonalLanguage(formData: FormData) {
     user_metadata: { language_preference: language },
   });
   revalidatePath("/dashboard");
+  revalidatePath("/coach");
 }
 
 export async function setTeamLanguage(formData: FormData) {

@@ -232,13 +232,13 @@ function CoachPanel({
       <button
         onClick={onSwitchOpen}
         style={{
-          width: "160px", height: "160px", borderRadius: "50%",
+          width: "200px", height: "200px", borderRadius: "50%",
           overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
           cursor: "pointer", padding: 0, background: "none", flexShrink: 0,
         }}
         aria-label="Switch coach"
       >
-        <Image src={coachImage} alt={coachName} width={160} height={160}
+        <Image src={coachImage} alt={coachName} width={200} height={200}
           style={{ objectFit: "cover", width: "100%", height: "100%" }} />
       </button>
 
@@ -304,7 +304,7 @@ function MinutesPanel({
           />
         </svg>
         <div style={{ position: "absolute", textAlign: "center" }}>
-          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "4rem", fontStyle: "italic", color: WHITE, lineHeight: 1 }}>
+          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "5.5rem", fontStyle: "italic", color: WHITE, lineHeight: 1 }}>
             {trialExhausted ? "0" : trialRemainingMinutes}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED }}>
@@ -351,20 +351,15 @@ function MinutesPanel({
                   {pkg.minutes} minutes
                 </p>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.4rem", fontStyle: "italic", color: WHITE }}>
-                  {currency === "idr" ? pkg.idr : pkg.usd}
-                </p>
-                <button disabled style={{
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.06em",
-                  padding: "0.4rem 0.75rem", background: "oklch(28% 0.06 260)", color: MUTED, border: "none", cursor: "not-allowed",
-                }}>
-                  Soon
-                </button>
-              </div>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: WHITE }}>
+                {currency === "idr" ? pkg.idr : pkg.usd}
+              </p>
             </div>
           ))}
         </div>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: MUTED, textAlign: "center", marginTop: "0.25rem" }}>
+          Purchases available soon
+        </p>
       </div>
     </div>
   );
@@ -676,18 +671,37 @@ export default function CoachCarousel({
             <div className="wpc-panel"><BgPanel profile={profile} /></div>
           </div>
 
-          {/* Nav dots */}
-          <div className="wpc-dots">
-            {[PANEL_BG, PANEL_NOTES, PANEL_COACH, PANEL_MINUTES].map(i => (
-              <div key={i} style={{
-                height: "6px",
-                width: i === activePanel ? "20px" : "6px",
-                borderRadius: "3px",
-                background: i === activePanel ? ORANGE : "oklch(38% 0.07 260)",
-                transition: "width 0.25s ease, background 0.25s ease",
-              }} />
-            ))}
-          </div>
+          {/* Carousel indicator — neighbour labels + dots */}
+          {(() => {
+            const PANEL_NAMES = ["Background", "Notes", "Coach", "Minutes"];
+            const leftLabel = PANEL_NAMES[(activePanel - 1 + 4) % 4];
+            const rightLabel = PANEL_NAMES[(activePanel + 1) % 4];
+            return (
+              <div style={{
+                position: "absolute", bottom: "1rem", left: 0, right: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                gap: "0.625rem", zIndex: 10, pointerEvents: "none",
+              }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(45% 0.007 260)", whiteSpace: "nowrap" }}>
+                  ← {leftLabel}
+                </span>
+                <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                  {[PANEL_BG, PANEL_NOTES, PANEL_COACH, PANEL_MINUTES].map(i => (
+                    <div key={i} style={{
+                      height: "6px",
+                      width: i === activePanel ? "22px" : "6px",
+                      borderRadius: "3px",
+                      background: i === activePanel ? ORANGE : "oklch(38% 0.07 260)",
+                      transition: "width 0.25s ease, background 0.25s ease",
+                    }} />
+                  ))}
+                </div>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(45% 0.007 260)", whiteSpace: "nowrap" }}>
+                  {rightLabel} →
+                </span>
+              </div>
+            );
+          })()}
         </div>
 
         {/* ── Desktop 2-column ── */}
@@ -753,20 +767,24 @@ export default function CoachCarousel({
                   {trialUsedMinutes} of {grantedMinutes} min used
                 </p>
               </div>
-              <div style={{ marginLeft: "auto", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                {ADDONS.map(pkg => (
-                  <button key={pkg.label} disabled style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
-                    padding: "0.5rem 0.75rem",
-                    background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
-                    border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`, cursor: "not-allowed",
-                    whiteSpace: "nowrap",
-                  }}>
-                    {pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
-                    {pkg.bestValue && <span style={{ color: ORANGE, marginLeft: "0.3rem" }}>★</span>}
-                    <span style={{ fontSize: "0.5rem", opacity: 0.6, marginLeft: "0.3rem" }}>SOON</span>
-                  </button>
-                ))}
+              <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
+                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                  {ADDONS.map(pkg => (
+                    <div key={pkg.label} style={{
+                      fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
+                      padding: "0.5rem 0.75rem",
+                      background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
+                      border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`,
+                      whiteSpace: "nowrap", position: "relative",
+                    }}>
+                      {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
+                      {pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
+                    </div>
+                  ))}
+                </div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: "oklch(40% 0.007 260)", letterSpacing: "0.04em" }}>
+                  Purchases available soon
+                </p>
               </div>
             </div>
 
