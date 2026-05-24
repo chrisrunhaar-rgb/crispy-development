@@ -488,6 +488,19 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
     };
   }, []);
 
+  useEffect(() => {
+    const main = document.querySelector("main") as HTMLElement | null;
+    const html = document.documentElement;
+    const prevPadding = main?.style.paddingBottom ?? "";
+    const prevOverflow = html.style.overflow;
+    if (main) main.style.paddingBottom = "0";
+    html.style.overflow = "hidden";
+    return () => {
+      if (main) main.style.paddingBottom = prevPadding;
+      html.style.overflow = prevOverflow;
+    };
+  }, []);
+
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
     const sec = s % 60;
