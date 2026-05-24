@@ -229,18 +229,23 @@ function CoachPanel({
       padding: "2rem 1.5rem", gap: "1.25rem",
       overflowY: "auto",
     }}>
-      <button
-        onClick={onSwitchOpen}
-        style={{
-          width: "200px", height: "200px", borderRadius: "50%",
-          overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
-          cursor: "pointer", padding: 0, background: "none", flexShrink: 0,
-        }}
-        aria-label="Switch coach"
-      >
-        <Image src={coachImage} alt={coachName} width={200} height={200}
-          style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-      </button>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
+        <button
+          onClick={onSwitchOpen}
+          style={{
+            width: "200px", height: "200px", borderRadius: "50%",
+            overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
+            cursor: "pointer", padding: 0, background: "none",
+          }}
+          aria-label="Switch coach"
+        >
+          <Image src={coachImage} alt={coachName} width={200} height={200}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+        </button>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: MUTED, letterSpacing: "0.06em" }}>
+          tap to change
+        </p>
+      </div>
 
       <div style={{ textAlign: "center" }}>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.25rem" }}>
@@ -258,15 +263,6 @@ function CoachPanel({
 
       <div style={{ width: "100%", maxWidth: "340px" }}>
         <SessionTypeSelector trialExhausted={trialExhausted} trialRemainingMinutes={trialRemainingMinutes} />
-      </div>
-
-      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-        <button onClick={onSwitchOpen} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, background: "none", border: "none", cursor: "pointer", letterSpacing: "0.06em" }}>
-          Change coach
-        </button>
-        <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, textDecoration: "none", letterSpacing: "0.06em" }}>
-          Settings
-        </Link>
       </div>
     </div>
   );
@@ -709,14 +705,19 @@ export default function CoachCarousel({
 
           {/* Left: Coach panel */}
           <div className="wpc-desktop-left">
-            <button onClick={() => setShowSwitcher(true)} style={{
-              width: "140px", height: "140px", borderRadius: "50%",
-              overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
-              cursor: "pointer", padding: 0, background: "none", flexShrink: 0,
-            }} aria-label="Switch coach">
-              <Image src={coachImage} alt={coachName} width={140} height={140}
-                style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-            </button>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
+              <button onClick={() => setShowSwitcher(true)} style={{
+                width: "140px", height: "140px", borderRadius: "50%",
+                overflow: "hidden", border: "3px solid oklch(38% 0.10 260)",
+                cursor: "pointer", padding: 0, background: "none",
+              }} aria-label="Switch coach">
+                <Image src={coachImage} alt={coachName} width={140} height={140}
+                  style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+              </button>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: MUTED, letterSpacing: "0.06em" }}>
+                click to change
+              </p>
+            </div>
 
             <div style={{ textAlign: "center" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.25rem" }}>
@@ -734,14 +735,6 @@ export default function CoachCarousel({
               <SessionTypeSelector trialExhausted={trialExhausted} trialRemainingMinutes={trialRemainingMinutes} />
             </div>
 
-            <div style={{ display: "flex", gap: "1.5rem" }}>
-              <button onClick={() => setShowSwitcher(true)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, background: "none", border: "none", cursor: "pointer", letterSpacing: "0.06em" }}>
-                Change coach
-              </button>
-              <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, textDecoration: "none", letterSpacing: "0.06em" }}>
-                Settings
-              </Link>
-            </div>
           </div>
 
           {/* Right: Minutes bar + Notes */}
