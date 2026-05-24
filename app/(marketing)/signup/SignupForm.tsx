@@ -144,7 +144,23 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                 <input className="form-input" type="password" id="password" name="password" placeholder={s.passwordPlaceholder} autoComplete="new-password" minLength={8} required />
               </div>
 
-              {/* Marketing consent — optional opt-in, GDPR compliant */}
+              {/* ToS acceptance — required, affirmative consent */}
+              <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
+                <input
+                  type="checkbox"
+                  name="tosAccepted"
+                  required
+                  style={{ marginTop: "0.2rem", flexShrink: 0, accentColor: "oklch(30% 0.12 260)", width: "16px", height: "16px" }}
+                />
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(48% 0.008 260)", lineHeight: 1.5 }}>
+                  I have read and agree to the{" "}
+                  <Link href="/terms" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>Terms of Service</Link>
+                  {" "}and{" "}
+                  <Link href="/privacy" style={{ color: "oklch(30% 0.12 260)", fontWeight: 600, textDecoration: "none" }}>Privacy Policy</Link>. *
+                </span>
+              </label>
+
+              {/* Marketing consent — optional opt-in */}
               <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer" }}>
                 <input
                   type="checkbox"
@@ -166,13 +182,6 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
                 {pending ? "…" : s.cta}
               </button>
             </form>
-
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(62% 0.006 260)", marginTop: "1.5rem", textAlign: "center", lineHeight: 1.6 }}>
-              {s.termsNote}{" "}
-              <Link href="/terms" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>{s.termsLink}</Link>
-              {" "}{s.and}{" "}
-              <Link href="/privacy" style={{ color: "oklch(42% 0.008 260)", textDecoration: "none" }}>{s.privacyLink}</Link>.
-            </p>
           </>
         )}
 

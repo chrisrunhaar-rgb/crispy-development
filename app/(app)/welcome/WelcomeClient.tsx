@@ -2,16 +2,16 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { markOnboardingComplete, setWelcomeLanguage } from "./actions";
+import { markOnboardingComplete, setWelcomeLanguage, markGdprConsent } from "./actions";
 import { changePassword } from "@/app/(app)/account/password/actions";
 
 const navy = "oklch(30% 0.12 260)";
 const orange = "oklch(65% 0.15 45)";
 
-type Step = 0 | 1 | 2 | 3 | 4;
-const TOTAL = 5;
+type Step = 0 | 1 | 2 | 3 | 4 | 5;
+const TOTAL = 6;
 
-const STEP_LABELS = ["Password", "Language", "Install", "Notifications", "Ready"];
+const STEP_LABELS = ["Password", "Language", "Privacy", "Install", "Notifications", "Ready"];
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -80,6 +80,10 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
 
+  // GDPR consent (step 2)
+  const [gdprConsent, setGdprConsent] = useState(false);
+  const [gdprPending, startGdprTransition] = useTransition();
+
   // Notifications
   const [notifState, setNotifState] = useState<"idle" | "granted" | "denied" | "unavailable">("idle");
 
@@ -114,6 +118,13 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
     if (step < (TOTAL - 1)) {
       setStep((s) => (s + 1) as Step);
     }
+  }
+
+  function handleGdprContinue() {
+    startGdprTransition(async () => {
+      if (!preview) await markGdprConsent();
+      next();
+    });
   }
 
   function finish() {
@@ -268,8 +279,39 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
           </div>
         )}
 
-        {/* ── Step 2: Install as app ── */}
+        {/* ── Step 2: Privacy & data consent ── */}
         {step === 2 && (
+          <div>
+            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.625rem", color: navy, marginBottom: "0.75rem", lineHeight: 1.2 }}>
+              Your data, your control
+            </h2>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.008 260)", lineHeight: 1.65, marginBottom: "2rem" }}>
+              Crispy Development Ltd stores your name, email, and learning progress to run your membership. Your data is handled per our Privacy Policy and never sold.
+            </p>
+
+            <label style={{ display: "flex", alignItems: "flex-start", gap: "0.875rem", cursor: "pointer", marginBottom: "1.5rem", background: "oklch(97% 0.005 80)", border: "1px solid oklch(88% 0.008 80)", padding: "1.125rem 1.25rem" }}>
+              <input
+                type="checkbox"
+                checked={gdprConsent}
+                onChange={e => setGdprConsent(e.target.checked)}
+                style={{ marginTop: "0.2rem", flexShrink: 0, accentColor: navy, width: "17px", height: "17px" }}
+              />
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(32% 0.008 260)", lineHeight: 1.6 }}>
+                I have read and agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener" style={{ color: navy, fontWeight: 700, textDecoration: "none" }}>Terms of Service</a>
+                {" "}and{" "}
+                <a href="/privacy" target="_blank" rel="noopener" style={{ color: navy, fontWeight: 700, textDecoration: "none" }}>Privacy Policy</a>. *
+              </span>
+            </label>
+
+            <PrimaryBtn onClick={handleGdprContinue} disabled={!gdprConsent || gdprPending}>
+              {gdprPending ? "Saving…" : "Continue →"}
+            </PrimaryBtn>
+          </div>
+        )}
+
+        {/* ── Step 3: Install as app ── */}
+        {step === 3 && (
           <div>
             <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.625rem", color: navy, marginBottom: "0.75rem", lineHeight: 1.2 }}>
               Add to your home screen
@@ -316,8 +358,8 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
           </div>
         )}
 
-        {/* ── Step 3: Notifications ── */}
-        {step === 3 && (
+        {/* ── Step 4: Notifications ── */}
+        {step === 4 && (
           <div>
             <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.625rem", color: navy, marginBottom: "0.75rem", lineHeight: 1.2 }}>
               Stay in the loop
@@ -358,8 +400,8 @@ export default function WelcomeClient({ firstName, currentLanguage, preview = fa
           </div>
         )}
 
-        {/* ── Step 4: All set ── */}
-        {step === 4 && (
+        {/* ── Step 5: All set ── */}
+        {step === 5 && (
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "2rem", marginBottom: "0.75rem" }}>🎉</p>
             <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.625rem", color: navy, marginBottom: "0.75rem", lineHeight: 1.2 }}>

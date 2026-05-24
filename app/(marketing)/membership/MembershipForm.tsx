@@ -183,9 +183,22 @@ export default function MembershipForm() {
         <input id="location_cultures" name="location_cultures" type="text" style={inputStyle} />
       </div>
 
-      {/* Faith */}
+      {/* Faith — Art. 9 explicit consent required before textarea */}
       <div>
         <label htmlFor="faith_share" style={labelStyle}>{c.faithLabel}</label>
+        <label style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", cursor: "pointer", marginBottom: "0.75rem" }}>
+          <input
+            type="checkbox"
+            name="faithConsent"
+            required
+            style={{ marginTop: "0.2rem", accentColor: orange, flexShrink: 0, width: "16px", height: "16px" }}
+          />
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(48% 0.008 260)", lineHeight: 1.55 }}>
+            {lang === "en"
+              ? "I consent to Crispy Development storing information about my faith as part of this application. *"
+              : "Saya menyetujui Crispy Development menyimpan informasi tentang iman saya sebagai bagian dari lamaran ini. *"}
+          </span>
+        </label>
         <textarea id="faith_share" name="faith_share" style={textareaStyle} />
       </div>
 
