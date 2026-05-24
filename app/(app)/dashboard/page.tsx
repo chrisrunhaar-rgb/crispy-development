@@ -124,7 +124,7 @@ export default async function DashboardPage({
 
   // ── Team pathway checks ──
   let teamApplicationStatus: string | null = null;
-  let teamRecord: { id: string; name: string; language: string; current_step: number; finalized_steps: number[]; selected_assessments: string[] } | null = null;
+  let teamRecord: { id: string; name: string; language: string; current_step: number; finalized_steps: number[]; selected_assessments: string[]; max_seats?: number } | null = null;
   const isLeaderByMeta = metadata?.is_leader === true;
 
   if (pathway === "team" || isLeaderByMeta) {
@@ -134,7 +134,7 @@ export default async function DashboardPage({
       teamApplicationStatus = "approved";
       const { data: team } = await admin
         .from("teams")
-        .select("id, name, language, current_step, finalized_steps, selected_assessments")
+        .select("id, name, language, current_step, finalized_steps, selected_assessments, max_seats")
         .eq("leader_user_id", viewingUserId)
         .maybeSingle();
       teamRecord = team ?? null;
@@ -149,7 +149,7 @@ export default async function DashboardPage({
       if (teamApplicationStatus === "approved") {
         const { data: team } = await admin
           .from("teams")
-          .select("id, name, language, current_step, finalized_steps, selected_assessments")
+          .select("id, name, language, current_step, finalized_steps, selected_assessments, max_seats")
           .eq("leader_user_id", viewingUserId)
           .maybeSingle();
         teamRecord = team ?? null;
@@ -1130,6 +1130,7 @@ function TeamLeaderDashboard({
         leaderName={leaderName}
         members={rosterMembers}
         isLeader={true}
+        maxSeats={(teamRecord as { max_seats?: number }).max_seats ?? 8}
         language={(language as "en" | "id") || "en"}
         currentLanguage={(language as "en" | "id") || "en"}
       />

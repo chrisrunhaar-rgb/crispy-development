@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { plan, currency } = body as { plan: "personal" | "team"; currency: "usd" | "idr" };
+  const { plan, currency, quantity } = body as { plan: "personal" | "team" | "additional_seat"; currency: "usd" | "idr"; quantity?: number };
 
-  if (!plan || !["personal", "team"].includes(plan)) {
+  if (!plan || !["personal", "team", "additional_seat"].includes(plan)) {
     return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
   }
 
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   //
   // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
   //
-  // const priceIds: Record<string, Record<string, string>> = {
+  // const priceIds: Record<string, Partial<Record<string, string>>> = {
   //   personal: {
   //     usd: process.env.STRIPE_PRICE_PERSONAL_USD!,
   //     idr: process.env.STRIPE_PRICE_PERSONAL_IDR!,
@@ -26,14 +26,19 @@ export async function POST(req: NextRequest) {
   //     usd: process.env.STRIPE_PRICE_TEAM_USD!,
   //     idr: process.env.STRIPE_PRICE_TEAM_IDR!,
   //   },
+  //   additional_seat: {
+  //     usd: process.env.STRIPE_PRICE_SEAT_USD!,
+  //   },
   // }
+  //
+  // const priceId = priceIds[plan][currency] ?? priceIds[plan]["usd"]
   //
   // const session = await stripe.checkout.sessions.create({
   //   mode: "payment",
-  //   line_items: [{ price: priceIds[plan][currency], quantity: 1 }],
-  //   success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?welcome=1`,
-  //   cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/pricing`,
-  //   metadata: { plan, currency },
+  //   line_items: [{ price: priceId, quantity: quantity ?? 1 }],
+  //   success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?seats_added=1`,
+  //   cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
+  //   metadata: { plan, currency, quantity: String(quantity ?? 1) },
   // })
   //
   // return NextResponse.json({ ready: true, checkoutUrl: session.url })

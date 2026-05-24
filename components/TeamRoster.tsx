@@ -44,6 +44,7 @@ export default function TeamRoster({
   leaderName,
   members: initialMembers,
   isLeader,
+  maxSeats = 8,
   language = "en",
   currentLanguage,
 }: {
@@ -52,6 +53,7 @@ export default function TeamRoster({
   leaderName?: string;
   members: RosterMember[];
   isLeader: boolean;
+  maxSeats?: number;
   language?: Lang;
   currentLanguage?: "en" | "id";
 }) {
@@ -60,6 +62,7 @@ export default function TeamRoster({
   const [editTitle, setEditTitle] = useState("");
   const [editTenure, setEditTenure] = useState("");
   const [inviteStatus, setInviteStatus] = useState<"idle" | "loading">("idle");
+  const [seatStatus, setSeatStatus] = useState<"idle" | "loading">("idle");
   const [invitePopup, setInvitePopup] = useState<{ url: string; text: string; whatsapp: string; title: string } | null>(null);
   const [copied, setCopied] = useState<"link" | "text" | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -156,6 +159,28 @@ export default function TeamRoster({
   }
 
   const totalCount = (leaderName ? 1 : 0) + members.length;
+  const isFull = members.length >= maxSeats;
+
+  async function handleAddSeat() {
+    setSeatStatus("loading");
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: "additional_seat", quantity: 1, currency: "usd" }),
+      });
+      const data = await res.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        alert("Seat purchases are coming soon — check back shortly.");
+      }
+    } catch {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSeatStatus("idle");
+    }
+  }
 
   return (
     <div style={{ border: "1px solid oklch(86% 0.008 80)", overflow: "hidden", borderRadius: "8px" }}>
@@ -202,8 +227,8 @@ export default function TeamRoster({
                 )}
               </div>
             )}
-            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
-              {totalCount} {totalCount === 1 ? TEAM_UI[r(language)].person : TEAM_UI[r(language)].people}
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "0.9rem", color: isFull ? "oklch(65% 0.15 45)" : "oklch(66% 0.04 260)", lineHeight: 1.4 }}>
+              {members.length} / {maxSeats} {language === "id" ? "kursi anggota" : "member seats"}{isFull ? " — Full" : ""}
             </p>
           </div>
 
@@ -230,14 +255,25 @@ export default function TeamRoster({
               </div>
             )}
             {isLeader && (
-              <button
-                type="button"
-                onClick={handleInvite}
-                disabled={inviteStatus === "loading"}
-                style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: inviteStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: inviteStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
-              >
-                {inviteStatus === "loading" ? TEAM_UI[r(language)].generating : TEAM_UI[r(language)].inviteMember}
-              </button>
+              isFull ? (
+                <button
+                  type="button"
+                  onClick={handleAddSeat}
+                  disabled={seatStatus === "loading"}
+                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: seatStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: seatStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
+                >
+                  {seatStatus === "loading" ? (language === "id" ? "Memuat…" : "Loading…") : (language === "id" ? "+ Tambah Kursi — $49" : "+ Add a Seat — $49")}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleInvite}
+                  disabled={inviteStatus === "loading"}
+                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: inviteStatus === "loading" ? "oklch(75% 0.10 45)" : "oklch(65% 0.15 45)", color: "white", border: "none", padding: "0.5rem 1rem", cursor: inviteStatus === "loading" ? "wait" : "pointer", transition: "background 0.15s", flexShrink: 0 }}
+                >
+                  {inviteStatus === "loading" ? TEAM_UI[r(language)].generating : TEAM_UI[r(language)].inviteMember}
+                </button>
+              )
             )}
           </div>
         </div>

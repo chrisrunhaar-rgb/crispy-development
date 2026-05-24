@@ -238,11 +238,21 @@ export async function acceptInvite(token: string, userId: string): Promise<{ err
   // invite.team_id = leader's auth user ID — look up the actual teams row
   const { data: team } = await admin
     .from("teams")
-    .select("id")
+    .select("id, max_seats")
     .eq("leader_user_id", invite.team_id)
     .maybeSingle();
 
   if (!team) return { error: "This team no longer exists." };
+
+  // Enforce seat cap
+  const { count: currentCount } = await admin
+    .from("team_members")
+    .select("*", { count: "exact", head: true })
+    .eq("team_id", team.id);
+
+  if ((currentCount ?? 0) >= (team.max_seats ?? 8)) {
+    return { error: "This team is full. The team leader can purchase additional seats to add more members." };
+  }
 
   // Add to team_members using teams.id (which is what team_members.team_id FK requires)
   await admin
