@@ -1157,7 +1157,7 @@ function TeamLeaderDashboard({
   }));
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
       {/* THE TEAM roster */}
       <TeamRoster

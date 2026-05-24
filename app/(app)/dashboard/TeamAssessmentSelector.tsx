@@ -40,11 +40,37 @@ export default function TeamAssessmentSelector({
     });
   }
 
-  const selectedNames = ASSESSMENTS.filter(a => selected.includes(a.id)).map(a => a.label);
-
   return (
-    <div style={{ border: "1px solid oklch(88% 0.008 80)", borderRadius: "8px", overflow: "hidden" }}>
-      {/* Toggle header */}
+    <div style={{ border: "1px solid oklch(86% 0.008 80)", borderRadius: "8px", overflow: "hidden" }}>
+
+      {/* Navy header — matches TeamRoster style */}
+      <div style={{ background: "oklch(30% 0.12 260)", padding: "1.25rem 1.75rem" }}>
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.72rem",
+          fontWeight: 800,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "oklch(65% 0.15 45)",
+          marginBottom: "0.375rem",
+        }}>
+          Team Assessments
+        </p>
+        <p style={{
+          fontFamily: "var(--font-cormorant)",
+          fontStyle: "italic",
+          fontSize: "0.9rem",
+          color: "oklch(66% 0.04 260)",
+          lineHeight: 1.4,
+          margin: 0,
+        }}>
+          {selected.length === 0
+            ? "No assessments selected"
+            : `${selected.length} assessment${selected.length === 1 ? "" : "s"} active`}
+        </p>
+      </div>
+
+      {/* Toggle row — matches TeamRoster member count row */}
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
@@ -53,30 +79,27 @@ export default function TeamAssessmentSelector({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "1rem 1.25rem",
-          background: "white",
+          padding: "0.75rem 1.5rem",
+          background: "oklch(98% 0.003 80)",
           border: "none",
+          borderTop: "1px solid oklch(90% 0.006 80)",
           cursor: "pointer",
-          textAlign: "left",
-          gap: "0.75rem",
+          gap: "0.5rem",
         }}
       >
-        <div style={{ minWidth: 0 }}>
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", fontSize: "0.62rem", marginBottom: "0.2rem" }}>Team Assessments</p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", fontWeight: 600, color: "oklch(38% 0.008 260)", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {selected.length === 0 ? "None selected" : selectedNames.slice(0, 3).join(", ") + (selectedNames.length > 3 ? ` +${selectedNames.length - 3}` : "")}
-          </p>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(38% 0.008 260)", letterSpacing: "0.04em" }}>
+            {selected.length} selected
+          </span>
           {(saved || isPending) && (
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, color: saved ? "oklch(40% 0.15 145)" : "oklch(55% 0.008 260)" }}>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 600, color: saved ? "oklch(40% 0.15 145)" : "oklch(55% 0.008 260)" }}>
               {saved ? "✓ Saved" : "Saving…"}
             </span>
           )}
-          <svg viewBox="0 0 16 16" fill="none" stroke="oklch(52% 0.008 260)" strokeWidth={1.5} strokeLinecap="round" style={{ width: "14px", height: "14px", flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-            <path d="M3 6l5 5 5-5" />
-          </svg>
         </div>
+        <svg viewBox="0 0 16 16" fill="none" stroke="oklch(52% 0.008 260)" strokeWidth={1.5} strokeLinecap="round" style={{ width: "14px", height: "14px", flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+          <path d="M3 6l5 5 5-5" />
+        </svg>
       </button>
 
       {/* Collapsible body */}

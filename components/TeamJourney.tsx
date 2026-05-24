@@ -874,7 +874,7 @@ export default function TeamJourney({
   }
 
   return (
-    <div>
+    <div style={{ borderRadius: "8px", overflow: "hidden" }}>
 
       {/* ── Journey header — navy ── */}
       <div style={{
