@@ -83,6 +83,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/privacy" className="footer-link">{t.footer.privacy}</Link>
               <Link href="/terms" className="footer-link">{t.footer.terms}</Link>
+              <Link href="/cookies" className="footer-link">{t.footer.cookies}</Link>
               <Link href="/contact" className="footer-link">{t.footer.contact}</Link>
             </div>
           </div>
