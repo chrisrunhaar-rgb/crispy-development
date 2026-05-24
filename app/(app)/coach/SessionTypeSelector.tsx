@@ -28,6 +28,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
         border: "1px solid oklch(35% 0.06 260)",
         padding: "1rem 1.25rem",
         marginBottom: "1rem",
+        borderRadius: 8,
       }}>
         <p style={{
           fontFamily: "var(--font-montserrat)",
@@ -60,41 +61,43 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
                 flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start",
-                padding: "0.875rem 1rem",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.25rem",
+                padding: "1rem 0.75rem",
                 background: isSelected ? "oklch(28% 0.10 260)" : "oklch(22% 0.06 260)",
                 border: `2px solid ${isSelected ? "oklch(65% 0.15 45)" : "oklch(32% 0.06 260)"}`,
+                borderRadius: 10,
                 cursor: "pointer",
-                textAlign: "left",
+                textAlign: "center",
                 transition: "all 0.15s ease",
               }}
             >
               <span style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
                 fontFamily: "var(--font-montserrat)",
                 fontWeight: 700,
                 fontSize: "0.75rem",
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
                 color: isSelected ? "oklch(65% 0.15 45)" : "oklch(72% 0.008 260)",
-                marginBottom: "0.2rem",
               }}>
-                {isSelected && (
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <circle cx="5" cy="5" r="4" fill="oklch(65% 0.15 45)" />
-                  </svg>
-                )}
                 {type === "deep" ? s.deep : s.quick}
               </span>
               <span style={{
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "0.65rem",
-                color: "oklch(55% 0.008 260)",
-                lineHeight: 1.4,
+                color: "oklch(60% 0.008 260)",
+                lineHeight: 1.3,
               }}>
-                {type === "deep" ? s.deepDesc : s.quickDesc}
+                {type === "deep" ? s.deepType : s.quickType}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.62rem",
+                color: "oklch(50% 0.008 260)",
+                lineHeight: 1.3,
+              }}>
+                {type === "deep" ? s.deepTime : s.quickTime}
               </span>
             </button>
           );
@@ -117,6 +120,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
           textTransform: "uppercase",
           padding: "0.9rem",
           border: "none",
+          borderRadius: 999,
           cursor: starting || !canStart ? "not-allowed" : "pointer",
           transition: "background 0.15s ease",
         }}

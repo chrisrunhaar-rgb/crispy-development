@@ -135,7 +135,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         disabled={saving}
         style={{
           width: "100%",
-          background: saving ? "oklch(70% 0.05 260)" : "oklch(30% 0.12 260)",
+          background: saving ? "oklch(70% 0.05 260)" : "oklch(65% 0.15 45)",
           color: "white",
           fontFamily: "var(--font-montserrat)",
           fontWeight: 700,
@@ -143,6 +143,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           padding: "1.125rem",
+          borderRadius: 999,
           border: "none",
           cursor: saving ? "not-allowed" : "pointer",
           transition: "background 0.2s",

@@ -501,44 +501,45 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19", position: "relative" }}>
 
-      {/* Top header — frosted glass */}
+      {/* Top header */}
       <div style={{
         position: "relative", zIndex: 10, flexShrink: 0,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0.875rem 1.5rem",
+        padding: "0.625rem 1.25rem 0.5rem",
         background: "#1B3A6B",
         borderBottom: "1px solid rgba(255,255,255,0.12)",
-        gap: "1rem",
       }}>
-        {/* Coach identity */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-          <Image src="/images/waypoint/waypoint-logo-blue.png" alt="WayPoint" width={24} height={24} style={{ opacity: 0.9, flexShrink: 0 }} />
-          <div>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.4rem", color: "oklch(65% 0.15 45)", lineHeight: 1 }}>{s.coachingSessionWith(coachName)}</p>
-          </div>
-        </div>
+        {/* Title row */}
+        <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.15rem", color: "oklch(65% 0.15 45)", lineHeight: 1.2, margin: "0 0 0.5rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          {s.coachingSessionWith(coachName)}
+        </p>
 
-        {/* Phase progress */}
-        <div style={{ display: "flex", gap: "0.375rem", alignItems: "center" }}>
-          {PHASE_ORDER.filter(p => p !== "COMPLETE").map((p, i) => (
-            <div key={p} style={{
-              height: "3px", borderRadius: "2px",
-              width: i < phaseIndex ? "24px" : i === phaseIndex ? "32px" : "16px",
-              background: i < phaseIndex ? "oklch(60% 0.15 150)" : i === phaseIndex ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.14)",
-              transition: "all 0.4s ease",
-            }} />
-          ))}
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", marginLeft: "0.375rem" }}>
-            {s.phaseLabels[phase] ?? phase}
-          </span>
-        </div>
-
-        {/* Timer + Back */}
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-          <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", minWidth: "48px", textAlign: "right" }}>
-            {status === "active" ? formatTime(elapsedSeconds) : ""}
+        {/* Phase + controls row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>
+          {/* Logo + phase dots + label */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", minWidth: 0 }}>
+            <Image src="/images/waypoint/waypoint-logo-blue.png" alt="WayPoint" width={18} height={18} style={{ opacity: 0.8, flexShrink: 0 }} />
+            <div style={{ display: "flex", gap: "0.3rem", alignItems: "center" }}>
+              {PHASE_ORDER.filter(p => p !== "COMPLETE").map((p, i) => (
+                <div key={p} style={{
+                  height: "3px", borderRadius: "2px",
+                  width: i < phaseIndex ? "20px" : i === phaseIndex ? "28px" : "14px",
+                  background: i < phaseIndex ? "oklch(60% 0.15 150)" : i === phaseIndex ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.14)",
+                  transition: "all 0.4s ease",
+                }} />
+              ))}
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", marginLeft: "0.25rem", whiteSpace: "nowrap" }}>
+                {s.phaseLabels[phase] ?? phase}
+              </span>
+            </div>
           </div>
-          <a href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em", flexShrink: 0 }}>{s.back}</a>
+
+          {/* Timer + Back */}
+          <div style={{ display: "flex", gap: "0.875rem", alignItems: "center", flexShrink: 0 }}>
+            <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600, color: "rgba(255,255,255,0.3)" }}>
+              {status === "active" ? formatTime(elapsedSeconds) : ""}
+            </div>
+            <a href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em" }}>{s.back}</a>
+          </div>
         </div>
       </div>
 
@@ -601,13 +602,23 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           </div>
 
           {/* Status text */}
-          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
-            {status === "idle" && s.readyWhenYouAre}
-            {status === "connecting" && (errorMsg ?? s.connecting)}
-            {status === "active" && (isAiSpeaking ? s.aiSpeaking(coachName) : isMuted ? s.micPaused : s.listening)}
-            {status === "complete" && s.sessionComplete}
-            {status === "error" && s.connectionFailed}
-          </p>
+          {status === "idle" ? (
+            <div style={{ textAlign: "center", maxWidth: "260px", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.5 }}>
+                {s.readyWhenYouAre}
+              </p>
+              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.05rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", margin: 0 }}>
+                {lang === "id" ? "Siap saat Anda siap." : "Ready when you are."}
+              </p>
+            </div>
+          ) : (
+            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
+              {status === "connecting" && (errorMsg ?? s.connecting)}
+              {status === "active" && (isAiSpeaking ? s.aiSpeaking(coachName) : isMuted ? s.micPaused : s.listening)}
+              {status === "complete" && s.sessionComplete}
+              {status === "error" && s.connectionFailed}
+            </p>
+          )}
 
           {status === "active" && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.32)", textAlign: "center" }}>
@@ -785,6 +796,7 @@ function btnStyle(variant: "primary" | "secondary" | "ghost"): React.CSSProperti
   return {
     fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
     letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.8rem 1.75rem",
+    borderRadius: 999,
     border: variant === "secondary" || variant === "ghost" ? "1px solid rgba(255,255,255,0.3)" : "none",
     cursor: "pointer",
     background: variant === "primary" ? "oklch(65% 0.15 45)" : "rgba(255,255,255,0.08)",

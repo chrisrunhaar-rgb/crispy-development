@@ -51,6 +51,10 @@ const strings = {
     quick: "Quick",
     deepDesc: "~40 min · complex topics",
     quickDesc: "~10 min · single focus",
+    deepType: "Complex topics",
+    quickType: "Single focus",
+    deepTime: "~40 min",
+    quickTime: "~10 min",
     starting: "Starting…",
     startSession: (type: string) => `Start ${type} session →`,
 
@@ -66,7 +70,7 @@ const strings = {
 
     // GeminiSessionClient — UI
     coachingSessionWith: (name: string) => `Coaching Session with ${name}`,
-    readyWhenYouAre: "Ready when you are.",
+    readyWhenYouAre: "Make sure you are in a private space so we can talk freely.",
     connecting: "Connecting…",
     reconnecting: "Reconnecting…",
     aiSpeaking: (name: string) => `${name} is speaking…`,
@@ -153,6 +157,10 @@ const strings = {
     quick: "Singkat",
     deepDesc: "~40 mnt · topik kompleks",
     quickDesc: "~10 mnt · fokus tunggal",
+    deepType: "Topik kompleks",
+    quickType: "Fokus tunggal",
+    deepTime: "~40 mnt",
+    quickTime: "~10 mnt",
     starting: "Memulai…",
     startSession: (type: string) => `Mulai sesi ${type} →`,
 
@@ -166,7 +174,7 @@ const strings = {
     } as Record<string, string>,
 
     coachingSessionWith: (name: string) => `Sesi Coaching dengan ${name}`,
-    readyWhenYouAre: "Siap saat Anda siap.",
+    readyWhenYouAre: "Pastikan Anda berada di tempat yang privat agar kita bisa berbicara bebas.",
     connecting: "Menghubungkan…",
     reconnecting: "Menghubungkan kembali…",
     aiSpeaking: (name: string) => `${name} sedang berbicara…`,
