@@ -81,7 +81,7 @@ function CheckoutButton({
           fontSize: "0.875rem",
           letterSpacing: "0.04em",
           padding: "0.9rem 2.25rem",
-          borderRadius: 999,
+          borderRadius: 12,
           border: "none",
           cursor: status === "loading" ? "default" : "pointer",
           opacity: status === "loading" ? 0.65 : 1,

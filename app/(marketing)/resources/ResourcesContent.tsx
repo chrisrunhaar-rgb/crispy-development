@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import { RESOURCES, Resource } from "@/lib/resources-data";
 import { saveResourceToDashboard } from "./actions";
@@ -144,8 +143,8 @@ function ResourceTile({
             fontWeight: 700,
             letterSpacing: "0.08em",
             textTransform: "uppercase",
-            padding: "2px 6px",
-            borderRadius: 3,
+            padding: "2px 8px",
+            borderRadius: 999,
             ...badgeStyle,
           }}
         >
@@ -206,8 +205,8 @@ function ResourceTile({
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
-              padding: "2px 7px",
-              borderRadius: 3,
+              padding: "2px 8px",
+              borderRadius: 999,
               background: "oklch(93% 0.005 80)",
             }}
           >
@@ -303,32 +302,26 @@ export default function ResourcesContent({
         style={{
           paddingTop: "clamp(4rem, 7vw, 7rem)",
           paddingBottom: "clamp(4rem, 7vw, 7rem)",
-          background: "oklch(30% 0.12 260)",
+          background: "oklch(22% 0.10 260)",
           position: "relative",
           overflow: "hidden",
         }}
       >
         {/* Photo background */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-library.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", opacity: 0.22, pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-library.jpg')", backgroundSize: "cover", backgroundPosition: "center 40%", opacity: 0.15, pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>
           {/* Logo + label row */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
-            <Image
-              src="/logo-icon.png"
-              alt="Crispy Development"
-              width={22}
-              height={22}
-              style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }}
-            />
-            <p
-              className="t-label"
-              style={{ color: "oklch(65% 0.15 45)", margin: 0 }}
-            >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.5rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
               {r.label}
             </p>
           </div>
+          <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
 
           <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
             {r.h1.split("\n").map((line, i) => (
@@ -342,9 +335,9 @@ export default function ResourcesContent({
             style={{
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.9375rem",
-              color: "oklch(72% 0.04 260)",
+              color: "oklch(80% 0.025 260)",
               maxWidth: "52ch",
-              lineHeight: 1.7,
+              lineHeight: 1.75,
             }}
           >
             {r.tagline}
@@ -402,7 +395,8 @@ export default function ResourcesContent({
                       fontFamily: "var(--font-montserrat)",
                       fontWeight: 700,
                       fontSize: "clamp(0.95rem, 2.5vw, 1.125rem)",
-                      color: "oklch(22% 0.005 260)",
+                      color: isOpen ? "oklch(65% 0.15 45)" : "oklch(22% 0.005 260)",
+                      transition: "color 0.15s",
                     }}>
                       {lang === "id" ? section.labelId : section.label}
                     </span>
@@ -457,7 +451,7 @@ export default function ResourcesContent({
 
       {/* ── MEMBERSHIP CTA ── */}
       {!userId && (
-        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(30% 0.12 260)", position: "relative" }}>
+        <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)", position: "relative" }}>
           <div style={{ position: "absolute", left: "clamp(1.5rem, 5vw, 4rem)", top: 0, bottom: 0, width: "3px", background: "oklch(65% 0.15 45)" }} />
           <div className="container-wide">
             <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>

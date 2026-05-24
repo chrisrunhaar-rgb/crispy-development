@@ -174,11 +174,13 @@ body {
   background: oklch(65% 0.15 45);
   color: oklch(97% 0.005 80);
   font-family: var(--font-montserrat), system-ui, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.75rem 1.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.5rem;
   border: none;
+  border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.18s ease, transform 0.12s ease;
@@ -187,6 +189,30 @@ body {
 .btn-primary:hover {
   background: oklch(58% 0.13 45);
   transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: oklch(30% 0.12 260);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.5rem;
+  border: 1.5px solid oklch(75% 0.008 260);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.btn-secondary:hover {
+  border-color: oklch(30% 0.12 260);
+  background: oklch(93% 0.006 260 / 0.5);
 }
 
 .btn-ghost {
@@ -201,6 +227,7 @@ body {
   letter-spacing: 0.04em;
   padding: 0.75rem 1.75rem;
   border: 1.5px solid oklch(65% 0.005 260);
+  border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
   transition: border-color 0.18s ease, background 0.18s ease;
@@ -223,6 +250,7 @@ body {
   letter-spacing: 0.04em;
   padding: 0.75rem 1.75rem;
   border: 1.5px solid oklch(30% 0.12 260);
+  border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease;

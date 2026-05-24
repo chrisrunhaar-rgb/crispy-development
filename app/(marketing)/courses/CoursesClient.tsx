@@ -27,21 +27,26 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
   return (
     <div style={{ background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       {/* ── PAGE HEADER ── */}
-      <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-courses.jpg')", backgroundSize: "cover", backgroundPosition: "center 35%", opacity: 0.22, pointerEvents: "none" }} />
+      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-courses.jpg')", backgroundSize: "cover", backgroundPosition: "center 35%", opacity: 0.15, pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
-            <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>Courses</p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.5rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
+              {isId ? "Kursus" : "Courses"}
+            </p>
           </div>
+          <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
 
           <h1 className="t-section" style={{ marginBottom: "1rem", maxWidth: "560px", color: "oklch(97% 0.005 80)" }}>
             {isId ? <>Kursus<br />Praktis.</> : <>Practical<br />Courses.</>}
           </h1>
 
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7 }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(80% 0.025 260)", maxWidth: "52ch", lineHeight: 1.75 }}>
             {isId
               ? "Pelatihan langsung untuk pemimpin lintas budaya. Kuasai alat digital yang diandalkan tim Anda — sesuai kecepatan Anda sendiri."
               : "Hands-on training for cross-cultural leaders. Master the digital tools your team relies on — at your own pace."
@@ -94,9 +99,12 @@ export default function CoursesClient({ courses, progressMap, isLoggedIn }: Prop
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
                     <span style={{
-                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem",
-                      letterSpacing: "0.1em", textTransform: "uppercase",
-                      color: "oklch(55% 0.008 260)",
+                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.55rem",
+                      letterSpacing: "0.08em", textTransform: "uppercase",
+                      color: "oklch(45% 0.14 45)",
+                      background: "oklch(95% 0.04 60)",
+                      padding: "2px 8px",
+                      borderRadius: 999,
                     }}>
                       {isId ? "Khusus anggota" : "Members only"}
                     </span>

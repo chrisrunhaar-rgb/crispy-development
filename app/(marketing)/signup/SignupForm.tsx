@@ -50,7 +50,7 @@ export default function SignupForm({ defaultPathway = "personal", inviteToken = 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(72% 0.04 260)", lineHeight: 1.65, marginBottom: "1.25rem", maxWidth: "38ch" }}>
             We&apos;re finalising membership plans. In the meantime, explore the 4 free modules — no account needed.
           </p>
-          <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(97% 0.005 80)", textDecoration: "none", border: "1px solid oklch(55% 0.008 260)", padding: "0.5rem 1rem", display: "inline-block" }}>
+          <Link href="/resources" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(97% 0.005 80)", textDecoration: "none", border: "1px solid oklch(55% 0.008 260)", borderRadius: 12, padding: "0.5rem 1rem", display: "inline-block" }}>
             Browse free resources →
           </Link>
         </div>

@@ -57,7 +57,7 @@ export default function Footer() {
 
           {/* Pathways */}
           <div>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.pathways}</p>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.pathways}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/personal" className="footer-link">{t.footer.personal}</Link>
               <Link href="/team" className="footer-link">{t.footer.team}</Link>
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Account */}
           <div>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.account}</p>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.account}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/membership" className="footer-link">{t.footer.getStarted}</Link>
               <Link href="/login" className="footer-link">{t.footer.login}</Link>
@@ -79,7 +79,7 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="t-label" style={{ color: "oklch(52% 0.008 260)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.legal}</p>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.legal}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/privacy" className="footer-link">{t.footer.privacy}</Link>
               <Link href="/terms" className="footer-link">{t.footer.terms}</Link>

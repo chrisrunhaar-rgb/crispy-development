@@ -1,10 +1,12 @@
+import React from "react";
 import { Metadata } from "next";
 import Image from "next/image";
+import WelfareFlagsDropdown from "./WelfareFlagsDropdown";
 
 export const metadata: Metadata = {
   title: "WayPoint for Organisations — AI Coaching for Field Workers | Crispy Development",
   description:
-    "WayPoint gives your cross-cultural workers a private coaching space — 24/7, any timezone. Built for mission agencies and church sending teams. Now in BETA.",
+    "WayPoint gives your people a private AI coaching space — 24/7, any timezone. Built for mission agencies and church sending teams. Now in BETA.",
 };
 
 // ─── colour tokens (WayPoint brand) ────────────────────────────────────────
@@ -27,42 +29,42 @@ const wp = {
 // ─── SVG icons (inline, no external deps) ─────────────────────────────────
 function IconPhone() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
     </svg>
   );
 }
 function IconClock() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V8z"/>
     </svg>
   );
 }
 function IconLock() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
     </svg>
   );
 }
 function IconMic() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
     </svg>
   );
 }
 function IconBadge() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
     </svg>
   );
 }
 function IconCheck() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.offWhite} aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill={wp.orange} aria-hidden="true">
       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
     </svg>
   );
@@ -112,7 +114,7 @@ function SarahPanel({ label, children }: { label: string; children: React.ReactN
             fontFamily: "var(--font-cormorant)",
             fontStyle: "italic",
             fontWeight: 400,
-            fontSize: "clamp(1.2rem, 2vw + 0.5rem, 1.65rem)",
+            fontSize: "clamp(1.25rem, 2vw + 0.5rem, 1.75rem)",
             color: wp.white85,
             lineHeight: 1.7,
             margin: 0,
@@ -130,28 +132,29 @@ function NoteRow({ label, value }: { label: string; value: string }) {
   return (
     <div style={{
       display: "grid",
-      gridTemplateColumns: "minmax(0, 9rem) 1fr",
+      gridTemplateColumns: "minmax(0, 8.5rem) 1fr",
       gap: "0.75rem",
-      paddingBlock: "0.6rem",
-      borderBottom: `1px solid ${wp.lightGray}`,
+      paddingBlock: "0.5rem",
+      borderBottom: `1px solid oklch(88% 0.008 80 / 0.6)`,
     }}>
       <span style={{
         fontFamily: "var(--font-montserrat)",
-        fontSize: "0.65rem",
+        fontSize: "0.58rem",
         fontWeight: 700,
         textTransform: "uppercase",
         letterSpacing: "0.1em",
         color: wp.mutedText,
-        paddingTop: "0.1rem",
+        paddingTop: "0.25rem",
+        textAlign: "left",
+        lineHeight: "28px",
       }}>
         {label}
       </span>
       <span style={{
-        fontFamily: "var(--font-montserrat)",
-        fontSize: "0.875rem",
-        color: wp.bodyText,
-        fontStyle: "italic",
-        lineHeight: 1.6,
+        fontFamily: "var(--font-kalam)",
+        fontSize: "1rem",
+        color: "oklch(28% 0.08 260)",
+        lineHeight: "28px",
       }}>
         {value}
       </span>
@@ -164,17 +167,18 @@ function SpecItem({ icon, title, children }: { icon: React.ReactNode; title: str
   return (
     <div style={{
       display: "grid",
-      gridTemplateColumns: "2.5rem 1fr",
+      gridTemplateColumns: "2.75rem 1fr",
       gap: "1rem",
       alignItems: "flex-start",
-      padding: "1.25rem",
-      background: wp.offWhite,
-      border: `1px solid ${wp.lightGray}`,
+      paddingBottom: "1.25rem",
+      borderBottom: "1px solid oklch(92% 0.006 80)",
     }}>
       <div style={{
-        width: "2.5rem",
-        height: "2.5rem",
-        background: wp.orange,
+        width: "2.75rem",
+        height: "2.75rem",
+        borderRadius: "50%",
+        border: `2px solid ${wp.orange}`,
+        background: "transparent",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -213,7 +217,6 @@ function ProgramCard({
   sessions,
   description,
   items,
-  accent = false,
 }: {
   title: string;
   sessions: string;
@@ -228,7 +231,7 @@ function ProgramCard({
       flexDirection: "column",
     }}>
       <div style={{
-        background: accent ? wp.orange : wp.navy,
+        background: wp.navy,
         color: wp.offWhite,
         padding: "0.875rem 1.25rem",
         display: "flex",
@@ -272,7 +275,7 @@ function ProgramCard({
               paddingBlock: "0.375rem",
               borderBottom: `1px solid oklch(93% 0.006 80)`,
               fontFamily: "var(--font-montserrat)",
-              fontSize: "0.8125rem",
+              fontSize: "0.875rem",
               color: wp.bodyText,
               lineHeight: 1.5,
             }}>
@@ -310,83 +313,96 @@ function PriceCard({
   features: string[];
 }) {
   return (
-    <div style={{
-      border: `1.5px solid ${wp.navy}`,
+    <div className="wp-price-card" style={{
+      border: `1.5px solid ${wp.lightGray}`,
+      borderRadius: 0,
+      background: "white",
+      padding: "1.75rem 1.5rem",
       display: "flex",
       flexDirection: "column",
     }}>
+      {/* Tier label */}
       <div style={{
-        background: wp.navy,
-        color: wp.offWhite,
-        padding: "1rem 1.25rem",
+        fontFamily: "var(--font-montserrat)",
+        fontSize: "0.6rem",
+        fontWeight: 700,
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
+        color: wp.orange,
+        marginBottom: "0.75rem",
       }}>
-        <div style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "1rem",
-          fontWeight: 700,
-        }}>
-          {tier}
-        </div>
-        <div style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "0.75rem",
-          opacity: 0.6,
-          marginTop: "0.25rem",
-        }}>
-          {size}
-        </div>
+        {tier} &mdash; {size}
       </div>
+      {/* Strikethrough full price */}
       <div style={{
-        padding: "1.25rem",
-        background: wp.offWhite,
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
+        fontFamily: "var(--font-montserrat)",
+        fontSize: "0.8rem",
+        textDecoration: "line-through",
+        color: wp.mutedText,
+        marginBottom: "0.25rem",
       }}>
-        <div style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "0.8rem",
-          textDecoration: "line-through",
-          color: wp.mutedText,
-        }}>
-          {fullPrice}
-        </div>
-        <div style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "2rem",
-          fontWeight: 700,
-          color: wp.orange,
+        {fullPrice}
+      </div>
+      {/* Beta tag */}
+      <div style={{
+        fontFamily: "var(--font-montserrat)",
+        fontSize: "0.58rem",
+        fontWeight: 700,
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        color: wp.orange,
+        marginBottom: "0.375rem",
+      }}>
+        BETA — 50% OFF
+      </div>
+      {/* Large price */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "0.25rem" }}>
+        <span style={{
+          fontFamily: "var(--font-cormorant)",
+          fontStyle: "italic",
+          fontSize: "2.625rem",
+          fontWeight: 600,
+          color: wp.navy,
           lineHeight: 1.1,
-          marginTop: "0.25rem",
         }}>
           {betaPrice}
-          <span style={{ fontSize: "0.875rem", fontWeight: 400, color: wp.mutedText }}>/month</span>
-        </div>
-        <div style={{
+        </span>
+        <span style={{
           fontFamily: "var(--font-montserrat)",
-          fontSize: "0.75rem",
-          fontWeight: 700,
-          color: wp.orange,
-          marginTop: "0.375rem",
-          marginBottom: "0.75rem",
-        }}>
-          {perSession}
-        </div>
-        <hr style={{ border: "none", borderTop: `1px solid ${wp.lightGray}`, margin: "0.75rem 0" }} />
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, flex: 1 }}>
-          {features.map((f) => (
-            <li key={f} style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.8rem",
-              color: wp.bodyText,
-              paddingBlock: "0.3rem",
-              lineHeight: 1.5,
-            }}>
-              {f}
-            </li>
-          ))}
-        </ul>
+          fontSize: "0.8rem",
+          color: wp.mutedText,
+        }}>/month</span>
       </div>
+      {/* Per-session price */}
+      <div style={{
+        fontFamily: "var(--font-montserrat)",
+        fontSize: "0.75rem",
+        fontWeight: 700,
+        color: "oklch(46% 0.14 145)",
+        marginBottom: "1rem",
+      }}>
+        {perSession}
+      </div>
+      {/* Orange divider */}
+      <div style={{ borderTop: `2px solid ${wp.orange}`, marginBottom: "1rem" }} />
+      {/* Features */}
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, flex: 1 }}>
+        {features.map((f) => (
+          <li key={f} style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.8rem",
+            color: wp.bodyText,
+            paddingBlock: "0.3rem",
+            lineHeight: 1.5,
+            display: "flex",
+            gap: "0.5rem",
+            alignItems: "baseline",
+          }}>
+            <span style={{ color: wp.orange, fontWeight: 700, flexShrink: 0, fontSize: "0.875rem" }}>›</span>
+            {f}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -398,6 +414,14 @@ function PriceCard({
 export default function WayPointAIPage() {
   return (
     <>
+      {/* Styles for interactive states */}
+      <style>{`
+        .wp-price-card { transition: border-color 0.15s, background 0.15s; cursor: pointer; }
+        .wp-price-card:hover { border-color: oklch(65% 0.15 45); background: oklch(99% 0.01 45); }
+        .wp-phase:hover { border-left-color: oklch(65% 0.15 45) !important; }
+        .wp-founder-email:hover { text-decoration: underline; }
+      `}</style>
+
       {/* ══ 1. HERO ══════════════════════════════════════════════════════════ */}
       <section style={{
         background: wp.navy,
@@ -433,14 +457,29 @@ export default function WayPointAIPage() {
             alignItems: "flex-start",
             marginBottom: "clamp(2.5rem, 5vw, 4rem)",
           }}>
-            <Image
-              src="/wp-banner-blue.png"
-              alt="WayPoint"
-              width={200}
-              height={48}
-              style={{ height: "clamp(28px, 4vw, 44px)", width: "auto" }}
-              priority
-            />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+              <Image
+                src="/images/waypoint/waypoint-logo-transp.png"
+                alt=""
+                aria-hidden="true"
+                width={48}
+                height={48}
+                style={{ height: "clamp(32px, 3.5vw, 44px)", width: "auto" }}
+                priority
+              />
+              <span
+                aria-label="WayPoint"
+                style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 800,
+                  fontSize: "clamp(1.2rem, 2vw + 0.1rem, 1.5rem)",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                }}
+              >
+                <span style={{ color: wp.offWhite }}>Way</span><span style={{ color: wp.orange }}>Point</span>
+              </span>
+            </div>
             <span style={{
               background: wp.orange,
               color: wp.offWhite,
@@ -450,7 +489,7 @@ export default function WayPointAIPage() {
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               padding: "0.375rem 1rem",
-              borderRadius: "2rem",
+              borderRadius: "2px",
               whiteSpace: "nowrap",
             }}>
               Beta Programme
@@ -461,14 +500,14 @@ export default function WayPointAIPage() {
           <div style={{ maxWidth: "640px" }}>
             <h1 style={{
               fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
-              fontSize: "clamp(2.2rem, 5vw + 0.5rem, 4.25rem)",
+              fontWeight: 700,
+              fontSize: "clamp(1.9rem, 4vw + 0.25rem, 3.25rem)",
               lineHeight: 1.05,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.02em",
               color: wp.offWhite,
               marginBottom: "1.5rem",
             }}>
-              Your field workers need opportunity to talk.{" "}
+              Your people in the field need space to talk.{" "}
               <em style={{ fontStyle: "normal", color: wp.orange }}>
                 Any time. Anywhere.
               </em>
@@ -481,7 +520,7 @@ export default function WayPointAIPage() {
               maxWidth: "52ch",
               marginBottom: "2.5rem",
             }}>
-              WayPoint is a specifically trained voice AI coaching companion for cross-cultural Christian workers. Always available.
+              WayPoint is a specifically trained voice AI coaching companion for cross-cultural Christian leaders. Always available.
             </p>
             <a
               href="mailto:chris@waypointai.coach"
@@ -526,7 +565,7 @@ export default function WayPointAIPage() {
             maxWidth: "65ch",
             marginBottom: "0.75rem",
           }}>
-            No matter how much your team cares, human availability has limits. Being present for every worker, at every difficult hour, across every timezone — it is just not possible. Something always gets missed. Not because the care is not there, but because people have limits.
+            No matter how much your team cares, human availability has limits. Being present for every one of your people, at every difficult hour, across every timezone — it is just not possible. Something always gets missed. Not because the care is not there, but because people have limits.
           </p>
           <p style={{
             fontFamily: "var(--font-montserrat)",
@@ -536,7 +575,7 @@ export default function WayPointAIPage() {
             maxWidth: "65ch",
             marginBottom: "2.5rem",
           }}>
-            WayPoint closes that gap. Not a replacement for the human care your workers need — but what makes that care sustainable.
+            WayPoint closes that gap. Not a replacement for the human care your people need — but what makes that care sustainable.
           </p>
 
           {/* Provides / Does Not grid */}
@@ -545,52 +584,24 @@ export default function WayPointAIPage() {
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "1.5rem",
           }}>
-            {/* Provides */}
+            {/* Provides — dark card */}
             <div style={{
-              background: wp.navyTint,
-              padding: "1.75rem",
-              border: `1px solid oklch(82% 0.04 260)`,
+              background: wp.navy,
+              padding: "2.25rem 2rem",
+              borderRadius: 0,
+              borderTop: `4px solid ${wp.orange}`,
+              position: "relative",
+              overflow: "hidden",
+              boxShadow: "0 4px 24px oklch(22% 0.10 260 / 0.25)",
             }}>
-              <h4 style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                color: wp.navy,
-                marginBottom: "1rem",
-              }}>
-                WayPoint provides
-              </h4>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                {[
-                  "AI Coaching — available 24/7",
-                  "A private space to process challenges out loud",
-                  "Context-aware conversations — knows the worker's situation, culture, and history",
-                  "Session notes capturing insights, values, and next steps",
-                  "Welfare visibility for your leadership team (with worker consent)",
-                  "Specialist programs for key life transitions",
-                ].map((item) => (
-                  <li key={item} style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.875rem",
-                    color: wp.bodyText,
-                    lineHeight: 1.55,
-                    paddingBottom: "0.625rem",
-                    borderBottom: `1px solid oklch(86% 0.03 260)`,
-                  }}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Does Not */}
-            <div style={{
-              background: wp.orangeTint,
-              padding: "1.75rem",
-              border: `1px solid oklch(88% 0.04 45)`,
-            }}>
+              {/* Dot-grid texture overlay */}
+              <div aria-hidden="true" style={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `radial-gradient(circle, oklch(97% 0.005 80 / 0.07) 1px, transparent 1px)`,
+                backgroundSize: "32px 32px",
+                pointerEvents: "none",
+              }} />
               <h4 style={{
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "0.65rem",
@@ -599,6 +610,53 @@ export default function WayPointAIPage() {
                 textTransform: "uppercase",
                 color: wp.orange,
                 marginBottom: "1rem",
+                position: "relative",
+              }}>
+                WayPoint provides
+              </h4>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.625rem", position: "relative" }}>
+                {[
+                  "AI Coaching — available 24/7",
+                  "A private space to process challenges out loud",
+                  "Context-aware conversations — knows the user's situation, culture, and history",
+                  "Session notes capturing insights, values, and next steps",
+                  "Welfare visibility for your leadership team (with user consent)",
+                  "Specialist programs for key life transitions",
+                ].map((item) => (
+                  <li key={item} style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.875rem",
+                    color: "oklch(88% 0.015 260)",
+                    lineHeight: 1.55,
+                    paddingBottom: "0.625rem",
+                    borderBottom: `1px solid oklch(35% 0.06 260)`,
+                    display: "flex",
+                    gap: "0.625rem",
+                    alignItems: "baseline",
+                  }}>
+                    <span style={{ color: wp.orange, fontWeight: 700, flexShrink: 0 }}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Does Not — light card */}
+            <div style={{
+              background: "oklch(97% 0.005 80)",
+              padding: "2.25rem 2rem",
+              borderRadius: 0,
+              borderTop: `4px solid ${wp.mutedText}`,
+              boxShadow: "0 4px 24px oklch(22% 0.10 260 / 0.06)",
+            }}>
+              <h4 style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: wp.mutedText,
+                marginBottom: "1rem",
               }}>
                 WayPoint does not
               </h4>
@@ -606,8 +664,8 @@ export default function WayPointAIPage() {
                 {[
                   "Diagnose, treat, or prescribe anything",
                   "Replace therapy, counselling, or crisis support",
-                  "Share anything with your organisation without worker consent",
-                  "Give advice or tell workers what to do",
+                  "Share anything with your organisation without user consent",
+                  "Give advice or tell users what to do",
                   "Use coaching jargon, Christian clichés, or empty affirmations",
                   "Pretend to be human",
                 ].map((item) => (
@@ -617,8 +675,12 @@ export default function WayPointAIPage() {
                     color: wp.bodyText,
                     lineHeight: 1.55,
                     paddingBottom: "0.625rem",
-                    borderBottom: `1px solid oklch(91% 0.03 45)`,
+                    borderBottom: `1px solid oklch(91% 0.006 80)`,
+                    display: "flex",
+                    gap: "0.625rem",
+                    alignItems: "baseline",
                   }}>
+                    <span style={{ color: "oklch(52% 0.006 260)", fontWeight: 700, flexShrink: 0 }}>×</span>
                     {item}
                   </li>
                 ))}
@@ -682,7 +744,7 @@ export default function WayPointAIPage() {
                 color: wp.bodyText,
                 marginBottom: "1rem",
               }}>
-                Every WayPoint session follows a coaching arc developed specifically for cross-cultural workers. Workers can choose a male or female coach, start when they are ready, and end when they feel complete. Sessions are typically 20 to 40 minutes.
+                Every WayPoint session follows a coaching arc developed specifically for cross-cultural leaders. Users can choose a male or female coach, start when they are ready, and end when they feel complete. Sessions are typically 20 to 40 minutes.
               </p>
               <p style={{
                 fontFamily: "var(--font-montserrat)",
@@ -691,45 +753,58 @@ export default function WayPointAIPage() {
                 color: wp.bodyText,
                 marginBottom: "2rem",
               }}>
-                The coach does not give advice. It asks questions, holds space, and helps the worker find what they already carry inside.
+                The coach does not give advice. It asks questions, holds space, and helps the user find what they already carry inside.
               </p>
 
-              {/* Phases */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              {/* Phases — flowchart with arrows */}
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 0 }}>
                 {[
                   { phase: "LAND", sub: "What is present?" },
                   { phase: "SEEK", sub: "What matters most?" },
                   { phase: "EXPLORE", sub: "Go deeper" },
                   { phase: "COMMIT", sub: "One next step" },
                   { phase: "CARRY", sub: "Close with care" },
-                ].map(({ phase, sub }) => (
-                  <div key={phase} style={{
-                    background: wp.navyTint,
-                    border: `1px solid oklch(82% 0.04 260)`,
-                    padding: "0.5rem 0.875rem",
-                    minWidth: "7rem",
-                    textAlign: "center",
-                  }}>
-                    <span style={{
-                      display: "block",
-                      fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.1em",
-                      color: wp.navy,
+                ].map(({ phase, sub }, i, arr) => (
+                  <React.Fragment key={phase}>
+                    <div className="wp-phase" style={{
+                      background: wp.navy,
+                      padding: "0.875rem 1.25rem",
+                      textAlign: "center",
+                      border: `1px solid oklch(35% 0.10 260)`,
+                      borderLeft: `3px solid oklch(35% 0.10 260)`,
+                      marginBottom: "0.5rem",
                     }}>
-                      {phase}
-                    </span>
-                    <span style={{
-                      display: "block",
-                      fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.65rem",
-                      color: wp.mutedText,
-                      marginTop: "0.125rem",
-                    }}>
-                      {sub}
-                    </span>
-                  </div>
+                      <span style={{
+                        display: "block",
+                        fontFamily: "var(--font-montserrat)",
+                        fontSize: "0.7rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.12em",
+                        color: wp.orange,
+                      }}>
+                        {phase}
+                      </span>
+                      <span style={{
+                        display: "block",
+                        fontFamily: "var(--font-montserrat)",
+                        fontSize: "0.6rem",
+                        color: wp.white70,
+                        marginTop: "0.2rem",
+                      }}>
+                        {sub}
+                      </span>
+                    </div>
+                    {i < arr.length - 1 && (
+                      <span style={{
+                        color: wp.orange,
+                        fontSize: "1.25rem",
+                        padding: "0 0.5rem",
+                        marginBottom: "0.5rem",
+                        lineHeight: 1,
+                        flexShrink: 0,
+                      }}>→</span>
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
             </div>
@@ -747,24 +822,49 @@ export default function WayPointAIPage() {
               }}>
                 Sample session notes
               </p>
+              {/* Notepad design */}
               <div style={{
-                background: wp.offWhite,
-                border: `1px solid ${wp.lightGray}`,
-                borderTop: `3px solid ${wp.navy}`,
+                background: "oklch(98.5% 0.004 80)",
+                border: "1px solid oklch(86% 0.012 80)",
+                boxShadow: "2px 4px 24px oklch(22% 0.06 260 / 0.15), -1px 0 0 oklch(82% 0.01 80) inset",
+                borderRadius: "2px",
+                position: "relative",
+                padding: 0,
+                overflow: "hidden",
               }}>
+                {/* Left margin line — classic notepad */}
+                <div aria-hidden="true" style={{
+                  position: "absolute",
+                  left: "3.5rem",
+                  top: 0,
+                  bottom: 0,
+                  width: "1px",
+                  background: "oklch(70% 0.06 25 / 0.4)",
+                  zIndex: 1,
+                }} />
+                {/* Session header tab */}
                 <div style={{
-                  padding: "0.875rem 1.25rem",
+                  background: wp.navy,
+                  padding: "0.875rem 1.25rem 0.875rem 4.25rem",
                   fontFamily: "var(--font-montserrat)",
                   fontSize: "0.7rem",
                   fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: wp.navy,
+                  color: wp.offWhite,
                   borderBottom: `1px solid ${wp.lightGray}`,
+                  position: "relative",
+                  zIndex: 2,
                 }}>
                   Session 12 — Sarah T. &nbsp;|&nbsp; 38 min
                 </div>
-                <div style={{ padding: "0 1.25rem" }}>
+                {/* Ruled content area */}
+                <div style={{
+                  padding: "4px 1.25rem 0.5rem 4.25rem",
+                  backgroundImage: "repeating-linear-gradient(transparent, transparent 27px, oklch(76% 0.015 260 / 0.45) 27px, oklch(76% 0.015 260 / 0.45) 28px)",
+                  position: "relative",
+                  zIndex: 2,
+                }}>
                   <NoteRow label="Focus area" value="Team conflict. A relationship under strain after a difficult meeting." />
                   <NoteRow label="Insights surfaced" value="Was protecting the idea, not the team. Saw her part in it." />
                   <NoteRow label="Values in tension" value="Conviction vs. belonging" />
@@ -822,9 +922,11 @@ export default function WayPointAIPage() {
           }}>
             {/* Mode A */}
             <div style={{
-              background: "oklch(98% 0.008 260)",
-              border: `1px solid oklch(82% 0.04 260)`,
-              padding: "1.75rem",
+              background: "oklch(98.5% 0.008 260)",
+              border: `1px solid ${wp.lightGray}`,
+              borderTop: `3px solid ${wp.navy}`,
+              padding: "2rem",
+              boxShadow: "0 2px 12px oklch(22% 0.10 260 / 0.07)",
             }}>
               <div style={{
                 fontFamily: "var(--font-montserrat)",
@@ -853,7 +955,7 @@ export default function WayPointAIPage() {
                 lineHeight: 1.65,
                 marginBottom: "1.25rem",
               }}>
-                Session content is never visible to your leadership team. The worker&apos;s coaching space is entirely their own.
+                Session content is never visible to your leadership team. The user&apos;s coaching space is entirely their own.
               </p>
               <p style={{
                 fontFamily: "var(--font-montserrat)",
@@ -861,17 +963,17 @@ export default function WayPointAIPage() {
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
-                color: "oklch(52% 0.07 260)",
+                color: wp.orange,
                 marginBottom: "0.625rem",
               }}>
                 What you see on the admin dashboard:
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {[
-                  "Active workers and last session date",
-                  "Total coaching time per worker",
+                  "Active users and last session date",
+                  "Total coaching time per user",
                   "Session frequency trends",
-                  "Inactivity alerts — workers who have gone quiet",
+                  "Inactivity alerts — users who have gone quiet",
                   "Package usage and remaining minutes",
                   "Org-wide engagement over time",
                 ].map((item) => (
@@ -880,7 +982,11 @@ export default function WayPointAIPage() {
                     fontSize: "0.8125rem",
                     color: wp.bodyText,
                     lineHeight: 1.5,
+                    display: "flex",
+                    gap: "0.5rem",
+                    alignItems: "baseline",
                   }}>
+                    <span style={{ color: wp.mutedText, flexShrink: 0, fontWeight: 700 }} aria-hidden="true">›</span>
                     {item}
                   </li>
                 ))}
@@ -899,9 +1005,11 @@ export default function WayPointAIPage() {
 
             {/* Mode B */}
             <div style={{
-              background: "oklch(98% 0.01 45)",
-              border: `1px solid oklch(88% 0.04 45)`,
-              padding: "1.75rem",
+              background: "oklch(98% 0.012 260)",
+              border: `1px solid ${wp.lightGray}`,
+              borderTop: `3px solid ${wp.orange}`,
+              padding: "2rem",
+              boxShadow: "0 2px 12px oklch(22% 0.10 260 / 0.07)",
             }}>
               <div style={{
                 fontFamily: "var(--font-montserrat)",
@@ -909,7 +1017,7 @@ export default function WayPointAIPage() {
                 fontWeight: 700,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "oklch(52% 0.1 45)",
+                color: wp.orange,
                 marginBottom: "0.375rem",
               }}>
                 Mode B
@@ -918,7 +1026,7 @@ export default function WayPointAIPage() {
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "1.125rem",
                 fontWeight: 700,
-                color: wp.orange,
+                color: wp.navy,
                 marginBottom: "0.75rem",
               }}>
                 Welfare Monitoring
@@ -938,7 +1046,7 @@ export default function WayPointAIPage() {
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
-                color: "oklch(52% 0.1 45)",
+                color: wp.orange,
                 marginBottom: "0.625rem",
               }}>
                 Everything in Mode A, plus:
@@ -948,7 +1056,7 @@ export default function WayPointAIPage() {
                   "Coaching notes visible per session",
                   "Welfare flag alerts sent to care providers",
                   "Your team sees the flag — they decide what to do",
-                  "Your leadership team's time goes to the workers who need them most",
+                  "Your leadership team's time goes to the people who need them most",
                   "Post-session AI scan reviews notes overnight",
                   "20 configurable welfare flag topics",
                 ].map((item) => (
@@ -957,7 +1065,11 @@ export default function WayPointAIPage() {
                     fontSize: "0.8125rem",
                     color: wp.bodyText,
                     lineHeight: 1.5,
+                    display: "flex",
+                    gap: "0.5rem",
+                    alignItems: "baseline",
                   }}>
+                    <span style={{ color: wp.orange, flexShrink: 0, fontWeight: 700 }} aria-hidden="true">›</span>
                     {item}
                   </li>
                 ))}
@@ -970,90 +1082,10 @@ export default function WayPointAIPage() {
                 lineHeight: 1.55,
                 margin: 0,
               }}>
-                Mode B requires worker consent at registration and is available as an add-on on all plans.
+                Mode B requires user consent at registration and is available as an add-on on all plans.
               </p>
+              <WelfareFlagsDropdown />
             </div>
-          </div>
-
-          {/* Welfare flags table */}
-          <p style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.8125rem",
-            fontWeight: 600,
-            color: wp.navy,
-            marginBottom: "1rem",
-          }}>
-            Mode B welfare flags — you choose which are active:
-          </p>
-
-          <div className="wp-flags-grid">
-            {[
-              {
-                header: "Always On",
-                items: [
-                  "Suicidal ideation",
-                  "Abuse",
-                  "Safety threat",
-                  "Mental health crisis",
-                ],
-              },
-              {
-                header: "Default On",
-                items: [
-                  "Burnout",
-                  "Moral injury",
-                  "Trauma indicators",
-                  "Relationship crisis",
-                  "Intent to leave field",
-                  "Spiritual crisis",
-                ],
-              },
-              {
-                header: "Optional",
-                items: [
-                  "Team conflict",
-                  "Financial stress",
-                  "Cultural overwhelm",
-                  "Grief and loss",
-                  "Re-entry stress",
-                  "Isolation",
-                  "Physical health concerns",
-                  "Boundary violations",
-                  "Language burnout",
-                  "Authority conflict",
-                ],
-              },
-            ].map((col, ci) => (
-              <div key={col.header} style={{
-                borderRight: ci < 2 ? `1px solid ${wp.lightGray}` : undefined,
-              }}>
-                <div style={{
-                  padding: "0.625rem 1rem",
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.6rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: wp.navy,
-                  background: "oklch(95% 0.006 80)",
-                  borderBottom: `1px solid ${wp.lightGray}`,
-                }}>
-                  {col.header}
-                </div>
-                {col.items.map((item) => (
-                  <div key={item} style={{
-                    padding: "0.45rem 1rem",
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.8125rem",
-                    color: wp.bodyText,
-                    borderBottom: `1px solid oklch(93% 0.005 80)`,
-                    lineHeight: 1.45,
-                  }}>
-                    {item}
-                  </div>
-                ))}
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -1090,18 +1122,18 @@ export default function WayPointAIPage() {
             maxWidth: "65ch",
             marginBottom: "2.5rem",
           }}>
-            Standard coaching lets workers bring whatever is most present. Specialist programs are structured programs for workers facing a defined transition. Your leadership team assigns a worker to a program. WayPoint does the rest.
+            Standard coaching lets users bring whatever is most present. Specialist programs are structured programs for people facing a defined transition. Your leadership team assigns someone to a program. WayPoint does the rest.
           </p>
 
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: "1.25rem",
           }}>
             <ProgramCard
               title="Cultural Integration"
               sessions="6 sessions"
-              description="For workers in their first months in a new context. From disorientation to belonging."
+              description="For people in their first months in a new context. From disorientation to belonging."
               items={[
                 "Processing culture shock and first impressions",
                 "Understanding the host culture's values and logic",
@@ -1114,7 +1146,7 @@ export default function WayPointAIPage() {
             <ProgramCard
               title="Conflict Resolution"
               sessions="4 sessions"
-              description="For workers navigating team tension or a relationship breakdown. Personal coaching — not mediation."
+              description="For people navigating team tension or a relationship breakdown. Personal coaching — not mediation."
               items={[
                 "Telling the full story of what happened",
                 "Understanding cross-cultural conflict styles",
@@ -1127,7 +1159,7 @@ export default function WayPointAIPage() {
             <ProgramCard
               title="Burnout Recovery"
               sessions="6 sessions"
-              description="For workers showing signs of depletion. Slower pace. Rest. Rebuilding from the inside out."
+              description="For people showing signs of depletion. Slower pace. Rest. Rebuilding from the inside out."
               items={[
                 "Naming where your energy has gone",
                 "Understanding what the field has cost you",
@@ -1140,16 +1172,15 @@ export default function WayPointAIPage() {
             <ProgramCard
               title="Re-Entry"
               sessions="8 sessions"
-              description="For workers returning home after field assignment. Reverse culture shock, grief, and finding a new rhythm."
+              description="For people returning home after field assignment. Reverse culture shock, grief, and finding a new rhythm."
               items={[
                 "Processing the shock of reverse culture",
                 "Grieving what was left behind",
                 "Redefining identity in a home context",
-                "What the worker carried home without knowing it",
+                "What they carried home without knowing it",
                 "Rebuilding family and friendship relationships",
                 "Finding calling again on this side of the field",
               ]}
-              accent
             />
           </div>
         </div>
@@ -1181,39 +1212,45 @@ export default function WayPointAIPage() {
           </h2>
 
           <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1rem",
+            background: wp.offWhite,
+            border: `1px solid ${wp.lightGray}`,
+            padding: "2.5rem",
           }}>
-            <SpecItem icon={<IconPhone />} title="Installable on any device — the WayPoint App">
-              Workers install WayPoint directly from their browser — one tap, no app store. It sits on their home screen, sends coaching reminders and session notifications, and works exactly like a native app.
-            </SpecItem>
-            <SpecItem icon={<IconClock />} title="Available 24/7, every timezone">
-              No waiting for office hours. No scheduling in advance. Whether it is 6am in Nairobi or 11pm in Central Asia, WayPoint is ready for a session the moment your worker needs one.
-            </SpecItem>
-            <SpecItem icon={<IconLock />} title="Private and encrypted">
-              All conversations are encrypted in transit and at rest. Your workers&apos; sessions are never used to train AI models and are never visible to anyone outside the settings your organisation chooses.
-            </SpecItem>
-            <SpecItem icon={<IconMic />} title="Voice conversations that actually work">
-              Powered by Google&apos;s real-time voice AI — instant response, natural rhythm, no lag, no breakdown. A coaching session that sounds like a real conversation, wherever your workers are in the world.
-            </SpecItem>
-            <SpecItem icon={<IconBadge />} title="Your brand. Your subdomain.">
-              Workers see your organisation&apos;s name, logo, and colours — not ours. Accessed at{" "}
-              <span style={{
-                display: "inline-block",
-                background: wp.navy,
-                color: wp.offWhite,
-                fontFamily: "monospace",
-                fontSize: "0.8rem",
-                padding: "0.1rem 0.5rem",
-                marginTop: "0.25rem",
-              }}>
-                <span style={{ color: wp.orange, fontWeight: 700 }}>[your org]</span>.WayPointAI.coach
-              </span>
-            </SpecItem>
-            <SpecItem icon={<IconCheck />} title="Live within 48 hours">
-              We configure your branding, coach persona, and dashboard settings. Your team add workers to the platform. From that moment, every worker has immediate access — no waiting, no setup on their end.
-            </SpecItem>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "2rem",
+            }}>
+              <SpecItem icon={<IconPhone />} title="Installable on any device — the WayPoint App">
+                Workers install WayPoint directly from their browser — one tap, no app store. It sits on their home screen, sends coaching reminders and session notifications, and works exactly like a native app.
+              </SpecItem>
+              <SpecItem icon={<IconClock />} title="Available 24/7, every timezone">
+                No waiting for office hours. No scheduling in advance. Whether it is 6am in Nairobi or 11pm in Central Asia, WayPoint is ready the moment one of your people needs it.
+              </SpecItem>
+              <SpecItem icon={<IconLock />} title="Private and encrypted">
+                All conversations are encrypted in transit and at rest. Sessions are never used to train AI models and are never visible to anyone outside the settings your organisation chooses.
+              </SpecItem>
+              <SpecItem icon={<IconMic />} title="Voice conversations that actually work">
+                Powered by Google&apos;s real-time voice AI — instant response, natural rhythm, no lag, no breakdown. A coaching session that sounds like a real conversation, wherever your people are in the world.
+              </SpecItem>
+              <SpecItem icon={<IconBadge />} title="Your brand. Your subdomain.">
+                Workers see your organisation&apos;s name, logo, and colours — not ours. Accessed at{" "}
+                <span style={{
+                  display: "inline-block",
+                  background: wp.navy,
+                  color: wp.offWhite,
+                  fontFamily: "monospace",
+                  fontSize: "0.8rem",
+                  padding: "0.1rem 0.5rem",
+                  marginTop: "0.25rem",
+                }}>
+                  <span style={{ color: wp.orange, fontWeight: 700 }}>[your org]</span>.WayPointAI.coach
+                </span>
+              </SpecItem>
+              <SpecItem icon={<IconCheck />} title="Live within 48 hours">
+                We configure your branding, coach persona, and dashboard settings. Your team adds people to the platform. From that moment, everyone has immediate access — no waiting, no setup on their end.
+              </SpecItem>
+            </div>
           </div>
         </div>
       </section>
@@ -1245,13 +1282,14 @@ export default function WayPointAIPage() {
             maxWidth: "65ch",
             marginBottom: "1.5rem",
           }}>
-            Each plan covers one session per worker per week on average — that is what the average field worker uses. Buffer is built in so workers who need more can have more. Your org dashboard shows real-time usage so you are never surprised.
+            Each plan covers one session per user per week on average — that is the average. Buffer is built in so users who need more can have more. Your org dashboard shows real-time usage so you are never surprised.
           </p>
 
           {/* BETA note */}
           <div style={{
             background: wp.orangeTint,
             border: `1px solid oklch(88% 0.04 45)`,
+            borderLeft: `3px solid ${wp.orange}`,
             padding: "1rem 1.25rem",
             marginBottom: "2rem",
           }}>
@@ -1276,61 +1314,61 @@ export default function WayPointAIPage() {
           }}>
             <PriceCard
               tier="Sending"
-              size="Up to 25 workers"
-              fullPrice="$349/month"
-              betaPrice="$175"
-              perSession="Only $1.40 per coaching session"
+              size="Up to 25 users"
+              fullPrice="$500/month"
+              betaPrice="$250"
+              perSession="Only $2.00 per coaching session"
               features={[
-                "1 session per worker per week on average",
+                "1 session per user per week on average",
                 "5,000 minutes of coaching included",
                 "Branded subdomain + custom coach",
                 "Mode A dashboard included",
                 "Worker usage limits via dashboard",
                 "Mode B available as add-on",
                 "Full onboarding free of charge",
-                "Overage: $0.10/min",
+                "Minutes reset monthly — top-up packages available",
               ]}
             />
             <PriceCard
               tier="Mission"
-              size="Up to 75 workers"
-              fullPrice="$999/month"
-              betaPrice="$500"
-              perSession="Only $1.33 per coaching session"
+              size="Up to 75 users"
+              fullPrice="$1,350/month"
+              betaPrice="$675"
+              perSession="Only $1.80 per coaching session"
               features={[
-                "1 session per worker per week on average",
+                "1 session per user per week on average",
                 "15,000 minutes of coaching included",
                 "Branded subdomain + custom coach",
                 "Mode A dashboard included",
                 "Priority support",
                 "Mode B available as add-on",
                 "Full onboarding free of charge",
-                "Overage: $0.10/min",
+                "Minutes reset monthly — top-up packages available",
               ]}
             />
             <PriceCard
               tier="Alliance"
-              size="Up to 200 workers"
-              fullPrice="$2,499/month"
-              betaPrice="$1,250"
-              perSession="Only $1.25 per coaching session"
+              size="Up to 200 users"
+              fullPrice="$3,200/month"
+              betaPrice="$1,600"
+              perSession="Only $1.60 per coaching session"
               features={[
-                "1 session per worker per week on average",
+                "1 session per user per week on average",
                 "40,000 minutes of coaching included",
                 "Branded subdomain + custom coach",
                 "Mode A dashboard included",
                 "Custom flag configuration",
                 "Mode B available as add-on",
                 "Full onboarding free of charge",
-                "Overage: $0.10/min",
-                "Above 200 workers: contact us",
+                "Minutes reset monthly — top-up packages available",
+                "Above 200 users: contact us",
               ]}
             />
           </div>
 
           {/* Mode B add-on */}
           <div style={{
-            background: "oklch(96% 0.006 80)",
+            background: "oklch(98% 0.008 260)",
             border: `1px solid ${wp.lightGray}`,
             padding: "1.5rem 1.75rem",
             marginBottom: "1.25rem",
@@ -1370,7 +1408,7 @@ export default function WayPointAIPage() {
 
           {/* Specialist pricing */}
           <div style={{
-            background: "oklch(96% 0.006 80)",
+            background: "oklch(98% 0.008 260)",
             border: `1px solid ${wp.lightGray}`,
             padding: "1.5rem 1.75rem",
           }}>
@@ -1381,7 +1419,7 @@ export default function WayPointAIPage() {
               color: wp.navy,
               marginBottom: "1rem",
             }}>
-              Specialist Programs &nbsp;|&nbsp; Per worker enrolled
+              Specialist Programs &nbsp;|&nbsp; Per user enrolled
             </h4>
             {[
               { label: "Cultural Integration — 6 sessions", full: "$119", beta: "$50" },
@@ -1420,7 +1458,7 @@ export default function WayPointAIPage() {
           <div style={{ maxWidth: "640px", margin: "0 auto" }}>
             <h3 style={{
               fontFamily: "var(--font-montserrat)",
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: "clamp(1.5rem, 3vw + 0.25rem, 2.25rem)",
               letterSpacing: "-0.02em",
               color: wp.offWhite,
@@ -1438,7 +1476,7 @@ export default function WayPointAIPage() {
               marginLeft: "auto",
               marginRight: "auto",
             }}>
-              All orange prices in this document are BETA rates — already 50% below our standard pricing. As a BETA partner, you lock those rates in for your first 6 months. In return, we ask for honest feedback and a conversation about what your workers actually need. You help shape the product. We serve your team at the BETA price.
+              All orange prices in this document are BETA rates — already 50% below our standard pricing. As a BETA partner, you lock those rates in for your first 6 months. In return, we ask for honest feedback and a conversation about what your people actually need. You help shape the product. We serve your team at the BETA price.
             </p>
             <a
               href="mailto:chris@waypointai.coach"
@@ -1469,7 +1507,7 @@ export default function WayPointAIPage() {
               lineHeight: 1.65,
               marginBottom: "1.25rem",
             }}>
-              WayPoint was not built in a tech lab. It was built from nearly two decades of working alongside cross-cultural workers.
+              WayPoint was not built in a tech lab. It was built from nearly two decades of working alongside cross-cultural leaders.
             </p>
             <p style={{
               fontFamily: "var(--font-montserrat)",
@@ -1478,7 +1516,7 @@ export default function WayPointAIPage() {
               lineHeight: 1.75,
               marginBottom: "1.5rem",
             }}>
-              Chris Runhaar has spent nearly two decades working with and alongside cross-cultural teams across Southeast Asia and beyond — in community development, NGO leadership, and cross-cultural ministry. He has seen firsthand what workers carry, what organisations miss at 11pm in the wrong timezone, and what a difference it makes when someone is close enough to notice.
+              Chris Runhaar has spent nearly two decades working with and alongside cross-cultural teams across Southeast Asia and beyond — in community development, NGO leadership, and cross-cultural ministry. He has seen firsthand what people carry, what organisations miss at 11pm in the wrong timezone, and what a difference it makes when someone is close enough to notice.
             </p>
             <p style={{
               fontFamily: "var(--font-montserrat)",
@@ -1487,10 +1525,11 @@ export default function WayPointAIPage() {
               lineHeight: 1.75,
               marginBottom: "1.75rem",
             }}>
-              WayPoint is not a tech product that happened to find a mission sector use case. It is a pastoral care response, built by someone who believes your workers deserve more than a voicemail.
+              WayPoint is not a tech product that happened to find a Christian leadership sector use case. It is a care response, built by someone who believes your people in the field deserve the tech support so real care can improve.
             </p>
             <a
               href="mailto:chris@waypointai.coach"
+              className="wp-founder-email"
               style={{
                 fontFamily: "var(--font-montserrat)",
                 fontSize: "0.875rem",
@@ -1553,7 +1592,7 @@ export default function WayPointAIPage() {
               margin: 0,
               textAlign: "right",
             }}>
-              Voice AI coaching for cross-cultural Christian workers
+              Voice AI coaching for cross-cultural Christian leaders
             </p>
           </div>
         </div>

@@ -120,7 +120,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
           textTransform: "uppercase",
           padding: "0.9rem",
           border: "none",
-          borderRadius: 999,
+          borderRadius: 12,
           cursor: starting || !canStart ? "not-allowed" : "pointer",
           transition: "background 0.15s ease",
         }}

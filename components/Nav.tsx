@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 import type { Lang } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
@@ -65,6 +66,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
     return () => subscription.unsubscribe();
   }, []);
 
+  const pathname = usePathname();
   const currentLang = LANGUAGES.find(l => l.code === lang) ?? LANGUAGES[0];
   const initials = firstName ? firstName[0].toUpperCase() : "?";
 
@@ -99,7 +101,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <div ref={pathwaysRef} style={{ position: "relative" }}>
               <button
                 onClick={() => { setPathwaysOpen(o => !o); setResourcesOpen(false); }}
-                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)" }}
+                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", borderBottom: (pathname === "/personal" || pathname === "/team") ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", cursor: "pointer", padding: 0, paddingBottom: "2px", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/personal" || pathname === "/team") ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)" }}
                 className="nav-link"
               >
                 Pathways
@@ -122,7 +124,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             {/* WayPoint link */}
             <Link
               href="/waypoint"
-              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)", textDecoration: "none" }}
+              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: pathname === "/waypoint" ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)", textDecoration: "none", borderBottom: pathname === "/waypoint" ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", paddingBottom: "2px" }}
               className="nav-link"
             >
               WayPoint Coaching
@@ -132,7 +134,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <div ref={resourcesRef} style={{ position: "relative" }}>
               <button
                 onClick={() => { setResourcesOpen(o => !o); setPathwaysOpen(false); }}
-                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: "oklch(30% 0.12 260)" }}
+                style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", borderBottom: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", cursor: "pointer", padding: 0, paddingBottom: "2px", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)" }}
                 className="nav-link"
               >
                 Resources
@@ -187,21 +189,23 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                       {/* Language */}
                       <div style={{ padding: "0.75rem 1rem" }}>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Site Language</p>
-                        <div style={{ display: "flex", gap: "0.375rem" }}>
+                        <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
                           {LANGUAGES.filter(l => l.available).map(l => (
                             <button
                               key={l.code}
                               onClick={() => { setLang(l.code); setAvatarOpen(false); }}
                               style={{
                                 fontFamily: "var(--font-montserrat)",
-                                fontSize: "0.65rem",
+                                fontSize: "0.62rem",
                                 fontWeight: 700,
-                                padding: "0.25rem 0.5rem",
-                                background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
-                                color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                                letterSpacing: "0.08em",
+                                padding: "0.25rem 0.625rem",
+                                background: l.code === lang ? "oklch(65% 0.15 45)" : "transparent",
+                                color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
                                 border: "none",
                                 cursor: "pointer",
-                                borderRadius: "3px",
+                                borderRadius: 999,
+                                transition: "background 0.15s, color 0.15s",
                               }}
                             >
                               {l.code.toUpperCase()}
@@ -216,22 +220,23 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             ) : (
               /* Not logged in: lang toggle + login + signup */
               <>
-                <div style={{ display: "flex", gap: "2px" }} className="hidden-mobile">
+                <div style={{ display: "inline-flex", background: "oklch(22% 0.10 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }} className="hidden-mobile">
                   {LANGUAGES.filter(l => l.available).map(l => (
                     <button
                       key={l.code}
                       onClick={() => setLang(l.code)}
                       style={{
                         fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.65rem",
+                        fontSize: "0.62rem",
                         fontWeight: 700,
                         letterSpacing: "0.08em",
-                        padding: "0.25rem 0.5rem",
-                        background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
-                        color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                        padding: "0.25rem 0.625rem",
+                        background: l.code === lang ? "oklch(65% 0.15 45)" : "transparent",
+                        color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
                         border: "none",
                         cursor: "pointer",
-                        borderRadius: "3px",
+                        borderRadius: 999,
+                        transition: "background 0.15s, color 0.15s",
                       }}
                     >
                       {l.code.toUpperCase()}
@@ -292,21 +297,23 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             {/* Language toggle in mobile menu */}
             <div style={{ paddingBottom: "0.75rem" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Language</p>
-              <div style={{ display: "flex", gap: "0.375rem" }}>
+              <div style={{ display: "inline-flex", background: "oklch(22% 0.10 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
                 {LANGUAGES.filter(l => l.available).map(l => (
                   <button
                     key={l.code}
                     onClick={() => { setLang(l.code); setOpen(false); }}
                     style={{
                       fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.7rem",
+                      fontSize: "0.65rem",
                       fontWeight: 700,
-                      padding: "0.3rem 0.625rem",
-                      background: l.code === lang ? "oklch(65% 0.15 45)" : "oklch(94% 0.006 80)",
-                      color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(42% 0.008 260)",
+                      letterSpacing: "0.08em",
+                      padding: "0.3rem 0.75rem",
+                      background: l.code === lang ? "oklch(65% 0.15 45)" : "transparent",
+                      color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
                       border: "none",
                       cursor: "pointer",
-                      borderRadius: "3px",
+                      borderRadius: 999,
+                      transition: "background 0.15s, color 0.15s",
                     }}
                   >
                     {l.code.toUpperCase()}

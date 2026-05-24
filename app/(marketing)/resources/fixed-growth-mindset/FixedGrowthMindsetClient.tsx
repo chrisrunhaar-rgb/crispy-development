@@ -1,4 +1,4 @@
-Ôªø"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -42,9 +42,9 @@ const QUESTIONS = [
   // SKILLS
   {
     dim: "Skills",
-    en: "I believe most skills can be developed with consistent practice ‚Äî intelligence and talent are starting points, not limits.",
-    id: "Saya percaya bahwa sebagian besar keterampilan dapat dikembangkan dengan latihan yang konsisten ‚Äî kecerdasan dan bakat adalah titik awal, bukan batasan.",
-    nl: "Ik geloof dat de meeste vaardigheden kunnen worden ontwikkeld door consistente oefening ‚Äî intelligentie en talent zijn startpunten, geen grenzen.",
+    en: "I believe most skills can be developed with consistent practice ó intelligence and talent are starting points, not limits.",
+    id: "Saya percaya bahwa sebagian besar keterampilan dapat dikembangkan dengan latihan yang konsisten ó kecerdasan dan bakat adalah titik awal, bukan batasan.",
+    nl: "Ik geloof dat de meeste vaardigheden kunnen worden ontwikkeld door consistente oefening ó intelligentie en talent zijn startpunten, geen grenzen.",
     type: "growth" as const,
   },
   {
@@ -88,14 +88,14 @@ const QUESTIONS = [
     dim: "Success of Others",
     en: "When I see others succeeding, I feel genuinely inspired and look for what I can learn from them.",
     id: "Ketika saya melihat orang lain berhasil, saya merasa benar-benar terinspirasi dan mencari apa yang bisa saya pelajari dari mereka.",
-    nl: "Als ik anderen zie slagen, voel ik me oprecht ge√Ønspireerd en zoek ik naar wat ik van hen kan leren.",
+    nl: "Als ik anderen zie slagen, voel ik me oprecht geÔnspireerd en zoek ik naar wat ik van hen kan leren.",
     type: "growth" as const,
   },
   {
     dim: "Success of Others",
-    en: "Other people's success motivates me ‚Äî it shows me what's possible.",
-    id: "Kesuksesan orang lain memotivasi saya ‚Äî itu menunjukkan kepada saya apa yang mungkin.",
-    nl: "Het succes van anderen motiveert mij ‚Äî het laat mij zien wat mogelijk is.",
+    en: "Other people's success motivates me ó it shows me what's possible.",
+    id: "Kesuksesan orang lain memotivasi saya ó itu menunjukkan kepada saya apa yang mungkin.",
+    nl: "Het succes van anderen motiveert mij ó het laat mij zien wat mogelijk is.",
     type: "growth" as const,
   },
   {
@@ -110,7 +110,7 @@ const QUESTIONS = [
     dim: "Effort",
     en: "I believe consistent effort is the main ingredient for long-term success.",
     id: "Saya percaya bahwa usaha yang konsisten adalah bahan utama untuk kesuksesan jangka panjang.",
-    nl: "Ik geloof dat consistente inspanning het belangrijkste ingredi√´nt is voor succes op lange termijn.",
+    nl: "Ik geloof dat consistente inspanning het belangrijkste ingrediÎnt is voor succes op lange termijn.",
     type: "growth" as const,
   },
   {
@@ -158,13 +158,13 @@ const DIMENSIONS_INFO = [
     key: "success-of-others",
     en: { label: "SUCCESS OF OTHERS", growth: "Is inspired by the success of others. Tries to learn from their success. Sees others' wins as evidence of what's possible.", fixed: "Sees the success of others as a threat. Thinks it's unfair that others are succeeding. Compares and despairs." },
     id: { label: "KESUKSESAN ORANG LAIN", growth: "Terinspirasi oleh kesuksesan orang lain. Mencoba belajar dari kesuksesan mereka. Melihat kemenangan orang lain sebagai bukti apa yang mungkin.", fixed: "Melihat kesuksesan orang lain sebagai ancaman. Berpikir tidak adil bahwa orang lain berhasil. Membandingkan dan putus asa." },
-    nl: { label: "SUCCES VAN ANDEREN", growth: "Wordt ge√Ønspireerd door het succes van anderen. Probeert te leren van hun succes. Ziet andermans winst als bewijs van wat mogelijk is.", fixed: "Ziet het succes van anderen als een bedreiging. Denkt dat het oneerlijk is dat anderen succesvol zijn. Vergelijkt en wanhoopt." },
+    nl: { label: "SUCCES VAN ANDEREN", growth: "Wordt geÔnspireerd door het succes van anderen. Probeert te leren van hun succes. Ziet andermans winst als bewijs van wat mogelijk is.", fixed: "Ziet het succes van anderen als een bedreiging. Denkt dat het oneerlijk is dat anderen succesvol zijn. Vergelijkt en wanhoopt." },
   },
   {
     key: "effort",
     en: { label: "EFFORT", growth: "Sees effort as the main ingredient for success. Embraces hard work as the path to mastery. Effort creates ability.", fixed: "Does not feel motivated to put in the extra effort. Believes that talent should be enough." },
     id: { label: "USAHA", growth: "Melihat usaha sebagai bahan utama untuk sukses. Merangkul kerja keras sebagai jalan menuju keahlian. Usaha menciptakan kemampuan.", fixed: "Tidak merasa termotivasi untuk memberikan upaya ekstra. Percaya bahwa bakat seharusnya sudah cukup." },
-    nl: { label: "INSPANNING", growth: "Ziet inspanning als het belangrijkste ingredi√´nt voor succes. Omarmt hard werken als de weg naar meesterschap. Inspanning cre√´ert vermogen.", fixed: "Voelt geen motivatie om extra moeite te doen. Gelooft dat talent genoeg zou moeten zijn." },
+    nl: { label: "INSPANNING", growth: "Ziet inspanning als het belangrijkste ingrediÎnt voor succes. Omarmt hard werken als de weg naar meesterschap. Inspanning creÎert vermogen.", fixed: "Voelt geen motivatie om extra moeite te doen. Gelooft dat talent genoeg zou moeten zijn." },
   },
 ];
 
@@ -262,31 +262,31 @@ export default function FixedGrowthMindsetClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development ¬∑ Guide", "Pengembangan Pribadi ¬∑ Panduan", "Persoonlijke Ontwikkeling ¬∑ Gids")}
+            {t("Personal Development ∑ Guide", "Pengembangan Pribadi ∑ Panduan", "Persoonlijke Ontwikkeling ∑ Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Fixed vs. Growth Mindset", "Mindset Tetap vs. Pertumbuhan", "Vast vs. Groeimindset")}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
             {t(
-              "Based on Carol Dweck's landmark research, this assessment reveals where your mindset is fixed and where it's growing ‚Äî across five key dimensions.",
-              "Berdasarkan penelitian terobosan Carol Dweck, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang ‚Äî dalam lima dimensi utama.",
-              "Gebaseerd op het baanbrekende onderzoek van Carol Dweck, toont deze beoordeling waar jouw mindset vast zit en waar het groeit ‚Äî op vijf belangrijke dimensies."
+              "Based on Carol Dweck's landmark research, this assessment reveals where your mindset is fixed and where it's growing ó across five key dimensions.",
+              "Berdasarkan penelitian terobosan Carol Dweck, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang ó dalam lima dimensi utama.",
+              "Gebaseerd op het baanbrekende onderzoek van Carol Dweck, toont deze beoordeling waar jouw mindset vast zit en waar het groeit ó op vijf belangrijke dimensies."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
-              <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Saving‚Ä¶", "Menyimpan‚Ä¶", "Opslaan‚Ä¶") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
+                {isPending ? t("SavingÖ", "MenyimpanÖ", "OpslaanÖ") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ‚úì {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
               </span>
             )}
             {growthScore != null && (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, padding: "13px 0", color: getMindsetColor(growthScore) }}>
-                {t("Last score", "Skor terakhir", "Laatste score")}: {growthScore}% ‚Äî {getMindsetLabel(growthScore)}
+                {t("Last score", "Skor terakhir", "Laatste score")}: {growthScore}% ó {getMindsetLabel(growthScore)}
               </span>
             )}
           </div>
@@ -302,9 +302,9 @@ export default function FixedGrowthMindsetClient({
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(38% 0.06 260)", margin: "0 0 16px" }}>
               {t(
-                "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate ‚Äî you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
-                "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan ‚Äî Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan.",
-                "Volgens onderzoeker Carol Dweck zijn er twee soorten mindsets. Een vast mindset gelooft dat kwaliteiten zoals intelligentie of talent aangeboren zijn ‚Äî je hebt wat je meegegeven is. Een groeimindset houdt in dat je elke kwaliteit kunt verbeteren door inspanning en doorzettingsvermogen."
+                "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate ó you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
+                "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan ó Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan.",
+                "Volgens onderzoeker Carol Dweck zijn er twee soorten mindsets. Een vast mindset gelooft dat kwaliteiten zoals intelligentie of talent aangeboren zijn ó je hebt wat je meegegeven is. Een groeimindset houdt in dat je elke kwaliteit kunt verbeteren door inspanning en doorzettingsvermogen."
               )}
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(38% 0.06 260)", margin: 0 }}>
@@ -360,13 +360,13 @@ export default function FixedGrowthMindsetClient({
                     </div>
                     <div style={{ padding: "20px 24px 20px 0", background: "oklch(46% 0.16 145 / 0.05)" }}>
                       <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 6 }}>
-                        {t("GROWTH", "PERTUMBUHAN", "GROEI")} ¬∑ {ldata.label}
+                        {t("GROWTH", "PERTUMBUHAN", "GROEI")} ∑ {ldata.label}
                       </div>
                       <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
                     </div>
                     <div style={{ padding: "20px 24px 20px 16px", background: "oklch(48% 0.18 25 / 0.05)" }}>
                       <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 6 }}>
-                        {t("FIXED", "TETAP", "VAST")} ¬∑ {ldata.label}
+                        {t("FIXED", "TETAP", "VAST")} ∑ {ldata.label}
                       </div>
                       <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(32% 0.10 25)", margin: 0 }}>{ldata.fixed}</p>
                     </div>
@@ -388,9 +388,9 @@ export default function FixedGrowthMindsetClient({
               </h2>
               <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", lineHeight: 1.65, margin: 0 }}>
                 {t(
-                  "15 statements across 5 dimensions. Rate how much each sounds like you ‚Äî be honest for the most useful results.",
-                  "15 pernyataan di 5 dimensi. Nilai seberapa banyak setiap pernyataan terdengar seperti Anda ‚Äî jujurlah untuk hasil yang paling berguna.",
-                  "15 uitspraken over 5 dimensies. Beoordeel hoe goed elke uitspraak bij jou past ‚Äî wees eerlijk voor de meest nuttige resultaten."
+                  "15 statements across 5 dimensions. Rate how much each sounds like you ó be honest for the most useful results.",
+                  "15 pernyataan di 5 dimensi. Nilai seberapa banyak setiap pernyataan terdengar seperti Anda ó jujurlah untuk hasil yang paling berguna.",
+                  "15 uitspraken over 5 dimensies. Beoordeel hoe goed elke uitspraak bij jou past ó wees eerlijk voor de meest nuttige resultaten."
                 )}
               </p>
             </div>
@@ -408,7 +408,7 @@ export default function FixedGrowthMindsetClient({
             <div style={{ marginTop: 28 }}>
               <button
                 onClick={() => { setQuizOpen(true); if (quizSubmitted) handleRetake(); }}
-                style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
+                style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
               >
                 {growthScore != null
                   ? t("Retake Assessment", "Ulangi Penilaian", "Herkies Beoordeling")
@@ -451,7 +451,7 @@ export default function FixedGrowthMindsetClient({
                                     onClick={() => !quizSubmitted && setAnswers(prev => ({ ...prev, [q.idx]: val }))}
                                     disabled={quizSubmitted}
                                     style={{
-                                      flex: 1, minWidth: 70, padding: "8px 6px", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: quizSubmitted ? "default" : "pointer",
+                                      flex: 1, minWidth: 70, padding: "8px 6px", borderRadius: 12, fontSize: 11, fontWeight: 700, cursor: quizSubmitted ? "default" : "pointer",
                                       border: `2px solid ${ans === val ? "oklch(42% 0.14 260)" : "oklch(86% 0.008 260)"}`,
                                       background: ans === val ? "oklch(42% 0.14 260)" : "white",
                                       color: ans === val ? "white" : "oklch(40% 0.06 260)",
@@ -476,7 +476,7 @@ export default function FixedGrowthMindsetClient({
                   <button
                     onClick={handleSubmit}
                     disabled={!allAnswered}
-                    style={{ background: allAnswered ? "oklch(22% 0.10 260)" : "oklch(80% 0.008 260)", color: allAnswered ? "white" : "oklch(55% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: allAnswered ? "pointer" : "not-allowed", letterSpacing: "0.04em" }}
+                    style={{ background: allAnswered ? "oklch(22% 0.10 260)" : "oklch(80% 0.008 260)", color: allAnswered ? "white" : "oklch(55% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: allAnswered ? "pointer" : "not-allowed", letterSpacing: "0.04em" }}
                   >
                     {t("See My Results", "Lihat Hasil Saya", "Zie Mijn Resultaten")}
                   </button>
@@ -497,8 +497,8 @@ export default function FixedGrowthMindsetClient({
                       <div style={{ fontSize: 14, fontWeight: 700, color: getMindsetColor(growthScore!), marginTop: 4 }}>{getMindsetLabel(growthScore!)}</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 240 }}>
-                      <div style={{ background: "oklch(88% 0.008 260)", borderRadius: 6, height: 12, marginBottom: 8, overflow: "hidden" }}>
-                        <div style={{ height: "100%", borderRadius: 6, background: "linear-gradient(to right, oklch(48% 0.18 25), oklch(65% 0.15 45), oklch(46% 0.16 145))", width: "100%" }} />
+                      <div style={{ background: "oklch(88% 0.008 260)", borderRadius: 12, height: 12, marginBottom: 8, overflow: "hidden" }}>
+                        <div style={{ height: "100%", borderRadius: 12, background: "linear-gradient(to right, oklch(48% 0.18 25), oklch(65% 0.15 45), oklch(46% 0.16 145))", width: "100%" }} />
                       </div>
                       <div style={{ position: "relative", height: 8, marginBottom: 16 }}>
                         <div style={{ position: "absolute", left: `${growthScore}%`, transform: "translateX(-50%)", width: 3, height: 16, background: "oklch(22% 0.10 260)", borderRadius: 2, top: -4 }} />
@@ -518,14 +518,14 @@ export default function FixedGrowthMindsetClient({
                             )
                           : growthScore! >= 45
                           ? t(
-                              "You have a mixed mindset ‚Äî growth in some areas, fixed in others. Understanding where the fixed patterns are gives you a clear target for growth.",
-                              "Anda memiliki mindset campuran ‚Äî pertumbuhan di beberapa area, tetap di area lain. Memahami di mana pola tetap berada memberikan Anda target yang jelas untuk pertumbuhan.",
-                              "Je hebt een gemengd mindset ‚Äî groei op sommige gebieden, vast op andere. Begrijpen waar de vaste patronen zitten, geeft je een duidelijk doel voor groei."
+                              "You have a mixed mindset ó growth in some areas, fixed in others. Understanding where the fixed patterns are gives you a clear target for growth.",
+                              "Anda memiliki mindset campuran ó pertumbuhan di beberapa area, tetap di area lain. Memahami di mana pola tetap berada memberikan Anda target yang jelas untuk pertumbuhan.",
+                              "Je hebt een gemengd mindset ó groei op sommige gebieden, vast op andere. Begrijpen waar de vaste patronen zitten, geeft je een duidelijk doel voor groei."
                             )
                           : t(
                               "Fixed thinking is showing up across several dimensions. This awareness is the first step. Start with one dimension and commit to shifting your approach there.",
                               "Pemikiran tetap muncul di beberapa dimensi. Kesadaran ini adalah langkah pertama. Mulailah dengan satu dimensi dan berkomitmen untuk mengubah pendekatan Anda di sana.",
-                              "Vast denken duikt op in meerdere dimensies. Dit bewustzijn is de eerste stap. Begin met √©√©n dimensie en commit je eraan om je aanpak daar te veranderen."
+                              "Vast denken duikt op in meerdere dimensies. Dit bewustzijn is de eerste stap. Begin met ÈÈn dimensie en commit je eraan om je aanpak daar te veranderen."
                             )}
                       </p>
                     </div>
@@ -535,18 +535,18 @@ export default function FixedGrowthMindsetClient({
                       <button
                         onClick={handleSaveScore}
                         disabled={isSavingScore}
-                        style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "12px 28px", borderRadius: 6, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
+                        style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
                       >
-                        {isSavingScore ? t("Saving‚Ä¶", "Menyimpan‚Ä¶", "Opslaan‚Ä¶") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                        {isSavingScore ? t("SavingÖ", "MenyimpanÖ", "OpslaanÖ") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                       </button>
                     ) : (
                       <span style={{ display: "flex", alignItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWeight: 700, fontSize: 13 }}>
-                        ‚úì {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                        ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
                       </span>
                     )}
                     <button
                       onClick={handleRetake}
-                      style={{ background: "transparent", color: "oklch(30% 0.06 260)", padding: "12px 28px", borderRadius: 6, fontWeight: 600, fontSize: 13, border: "1px solid oklch(82% 0.008 260)", cursor: "pointer" }}
+                      style={{ background: "transparent", color: "oklch(30% 0.06 260)", padding: "12px 28px", borderRadius: 12, fontWeight: 600, fontSize: 13, border: "1px solid oklch(82% 0.008 260)", cursor: "pointer" }}
                     >
                       {t("Retake Assessment", "Ulangi Penilaian", "Beoordeling Overdoen")}
                     </button>
@@ -566,9 +566,9 @@ export default function FixedGrowthMindsetClient({
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {t(
-              "Mindset change is not a one-time decision ‚Äî it's a practice. Use this three-step process for any dimension where you want to grow.",
-              "Perubahan mindset bukan keputusan sekali jalan ‚Äî ini adalah latihan. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan.",
-              "Mindsetverandering is geen eenmalige beslissing ‚Äî het is een oefening. Gebruik dit driestappe proces voor elke dimensie waar je wilt groeien."
+              "Mindset change is not a one-time decision ó it's a practice. Use this three-step process for any dimension where you want to grow.",
+              "Perubahan mindset bukan keputusan sekali jalan ó ini adalah latihan. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan.",
+              "Mindsetverandering is geen eenmalige beslissing ó het is een oefening. Gebruik dit driestappe proces voor elke dimensie waar je wilt groeien."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
@@ -577,18 +577,18 @@ export default function FixedGrowthMindsetClient({
                 step: "01", color: "oklch(42% 0.14 260)",
                 title: t("Name It", "Beri Nama", "Benoem Het"),
                 desc: t(
-                  "For a specific dimension, write down your current belief honestly. What do you actually think ‚Äî not what you know you should think?",
-                  "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan ‚Äî bukan apa yang Anda tahu seharusnya Anda pikirkan?",
-                  "Schrijf voor een specifieke dimensie je huidige overtuiging eerlijk op. Wat denk je werkelijk ‚Äî niet wat je denkt dat je zou moeten denken?"
+                  "For a specific dimension, write down your current belief honestly. What do you actually think ó not what you know you should think?",
+                  "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan ó bukan apa yang Anda tahu seharusnya Anda pikirkan?",
+                  "Schrijf voor een specifieke dimensie je huidige overtuiging eerlijk op. Wat denk je werkelijk ó niet wat je denkt dat je zou moeten denken?"
                 ),
               },
               {
                 step: "02", color: "oklch(48% 0.18 25)",
                 title: t("Spot the Pattern", "Kenali Polanya", "Herken het Patroon"),
                 desc: t(
-                  "Is this a fixed or growth belief? Don't judge ‚Äî just notice. Awareness is always the first step toward change.",
-                  "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi ‚Äî cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan.",
-                  "Is dit een vaste of groeiende overtuiging? Oordeel niet ‚Äî merk het gewoon op. Bewustzijn is altijd de eerste stap naar verandering."
+                  "Is this a fixed or growth belief? Don't judge ó just notice. Awareness is always the first step toward change.",
+                  "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi ó cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan.",
+                  "Is dit een vaste of groeiende overtuiging? Oordeel niet ó merk het gewoon op. Bewustzijn is altijd de eerste stap naar verandering."
                 ),
               },
               {
@@ -631,14 +631,14 @@ export default function FixedGrowthMindsetClient({
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <button
               onClick={() => { setQuizOpen(true); if (quizSubmitted) handleRetake(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
+              style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
             >
               {growthScore != null
                 ? t("Retake Assessment", "Ulangi Penilaian", "Beoordeling Overdoen")
                 : t("Start Assessment", "Mulai Tes", "Start Test")}
             </button>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("‚Üê Content Library", "‚Üê Perpustakaan Konten", "‚Üê Contentbibliotheek")}
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
+              {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
             </Link>
           </div>
         </div>

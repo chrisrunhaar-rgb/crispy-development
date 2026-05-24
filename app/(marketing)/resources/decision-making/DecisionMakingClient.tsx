@@ -1,4 +1,4 @@
-Ôªø"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -15,7 +15,7 @@ type VerseKey = "prov-3-5-6" | "james-1-5";
 
 const VERSES: Record<VerseKey, { en_ref: string; id_ref: string; nl_ref: string; en: string; id: string; nl: string }> = {
   "prov-3-5-6": {
-    en_ref: "Proverbs 3:5‚Äì6", id_ref: "Amsal 3:5‚Äì6", nl_ref: "Spreuken 3:5‚Äì6",
+    en_ref: "Proverbs 3:5ñ6", id_ref: "Amsal 3:5ñ6", nl_ref: "Spreuken 3:5ñ6",
     en: "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
     id: "Percayalah kepada TUHAN dengan segenap hatimu, dan janganlah bersandar kepada pengertianmu sendiri. Akuilah Dia dalam segala lakumu, maka Ia akan meluruskan jalanmu.",
     nl: "Vertrouw op de HEER met heel je hart, steun niet op eigen inzicht. Erken hem in alles wat je doet, dan baant hij voor jou de weg.",
@@ -41,9 +41,9 @@ const DECISIONS: {
     choices: {
       A: {
         en_label: "The Data Move", id_label: "Langkah Data", nl_label: "De Data-Stap",
-        en: "Pull the facts first ‚Äî attendance records, email response times, project milestone updates. You want data before you interpret.",
-        id: "Kumpulkan fakta terlebih dahulu ‚Äî catatan kehadiran, waktu respons email, pembaruan tonggak proyek. Anda ingin data sebelum menafsirkan.",
-        nl: "Haal eerst de feiten op ‚Äî aanwezigheidsgegevens, e-mailreactietijden, projectmijlpaalupdates. Je wilt data v√≥√≥r interpretatie.",
+        en: "Pull the facts first ó attendance records, email response times, project milestone updates. You want data before you interpret.",
+        id: "Kumpulkan fakta terlebih dahulu ó catatan kehadiran, waktu respons email, pembaruan tonggak proyek. Anda ingin data sebelum menafsirkan.",
+        nl: "Haal eerst de feiten op ó aanwezigheidsgegevens, e-mailreactietijden, projectmijlpaalupdates. Je wilt data vÛÛr interpretatie.",
       },
       C: {
         en_label: "The Relational Move", id_label: "Langkah Relasional", nl_label: "De Relationele Stap",
@@ -53,9 +53,9 @@ const DECISIONS: {
       },
       D: {
         en_label: "The Direct Move", id_label: "Langkah Langsung", nl_label: "De Directe Stap",
-        en: "Contact the partner's lead directly. A short, warm message: 'I'd like to connect ‚Äî can we find 30 minutes this week?'",
-        id: "Hubungi pemimpin mitra secara langsung. Pesan singkat dan hangat: 'Saya ingin terhubung ‚Äî bisakah kita menemukan 30 menit minggu ini?'",
-        nl: "Neem rechtstreeks contact op met de lead van de partner. Een kort, warm bericht: 'Ik wil even bijpraten ‚Äî kunnen we 30 minuten vinden deze week?'",
+        en: "Contact the partner's lead directly. A short, warm message: 'I'd like to connect ó can we find 30 minutes this week?'",
+        id: "Hubungi pemimpin mitra secara langsung. Pesan singkat dan hangat: 'Saya ingin terhubung ó bisakah kita menemukan 30 menit minggu ini?'",
+        nl: "Neem rechtstreeks contact op met de lead van de partner. Een kort, warm bericht: 'Ik wil even bijpraten ó kunnen we 30 minuten vinden deze week?'",
       },
     },
   },
@@ -69,27 +69,27 @@ const DECISIONS: {
         en_label: "The Data Move", id_label: "Langkah Data", nl_label: "De Data-Stap",
         en: "Ask both teams to submit written summaries of their understanding of roles before any meeting. You need the full picture first.",
         id: "Minta kedua tim untuk menyerahkan ringkasan tertulis tentang pemahaman mereka tentang peran sebelum rapat apa pun. Anda perlu gambaran penuh terlebih dahulu.",
-        nl: "Vraag beide teams om schriftelijke samenvattingen in te dienen over hun begrip van de rollen v√≥√≥r elke vergadering. Je hebt eerst het volledige beeld nodig.",
+        nl: "Vraag beide teams om schriftelijke samenvattingen in te dienen over hun begrip van de rollen vÛÛr elke vergadering. Je hebt eerst het volledige beeld nodig.",
       },
       C: {
         en_label: "The Relational Move", id_label: "Langkah Relasional", nl_label: "De Relationele Stap",
-        en: "Bring a small group together ‚Äî two from each side ‚Äî in an informal conversation. No agenda, no minutes. Just listening.",
-        id: "Kumpulkan kelompok kecil ‚Äî dua orang dari masing-masing pihak ‚Äî dalam percakapan informal. Tanpa agenda, tanpa notulen. Hanya mendengarkan.",
-        nl: "Breng een kleine groep samen ‚Äî twee mensen van elke kant ‚Äî in een informeel gesprek. Geen agenda, geen notulen. Alleen luisteren.",
+        en: "Bring a small group together ó two from each side ó in an informal conversation. No agenda, no minutes. Just listening.",
+        id: "Kumpulkan kelompok kecil ó dua orang dari masing-masing pihak ó dalam percakapan informal. Tanpa agenda, tanpa notulen. Hanya mendengarkan.",
+        nl: "Breng een kleine groep samen ó twee mensen van elke kant ó in een informeel gesprek. Geen agenda, geen notulen. Alleen luisteren.",
       },
       D: {
         en_label: "The Direct Move", id_label: "Langkah Langsung", nl_label: "De Directe Stap",
-        en: "Make a provisional role clarification now and circulate it. You can adjust later ‚Äî ambiguity is already costing more than imperfection.",
-        id: "Buat klarifikasi peran sementara sekarang dan sebarkan. Anda bisa menyesuaikan nanti ‚Äî ambiguitas sudah merugikan lebih banyak daripada ketidaksempurnaan.",
-        nl: "Maak nu een voorlopige rolverheldering en circuleer die. Je kunt later bijsturen ‚Äî ambigu√Øteit kost al meer dan onvolmaaktheid.",
+        en: "Make a provisional role clarification now and circulate it. You can adjust later ó ambiguity is already costing more than imperfection.",
+        id: "Buat klarifikasi peran sementara sekarang dan sebarkan. Anda bisa menyesuaikan nanti ó ambiguitas sudah merugikan lebih banyak daripada ketidaksempurnaan.",
+        nl: "Maak nu een voorlopige rolverheldering en circuleer die. Je kunt later bijsturen ó ambiguÔteit kost al meer dan onvolmaaktheid.",
       },
     },
   },
   {
     id: 3,
-    en_context: "You've proposed a path forward. Your most experienced team member ‚Äî who shares the partner's cultural background ‚Äî tells you privately: 'Moving this fast will damage trust. They'll feel dismissed.' What do you do?",
-    id_context: "Anda telah mengusulkan jalan ke depan. Anggota tim Anda yang paling berpengalaman ‚Äî yang berbagi latar belakang budaya mitra ‚Äî memberi tahu Anda secara pribadi: 'Bergerak secepat ini akan merusak kepercayaan. Mereka akan merasa diabaikan.' Apa yang Anda lakukan?",
-    nl_context: "Je hebt een weg voorwaarts voorgesteld. Je meest ervaren teamlid ‚Äî die de culturele achtergrond van de partner deelt ‚Äî vertelt je in vertrouwen: 'Als je zo snel beweegt, beschadig je het vertrouwen. Ze zullen zich genegeerd voelen.' Wat doe je?",
+    en_context: "You've proposed a path forward. Your most experienced team member ó who shares the partner's cultural background ó tells you privately: 'Moving this fast will damage trust. They'll feel dismissed.' What do you do?",
+    id_context: "Anda telah mengusulkan jalan ke depan. Anggota tim Anda yang paling berpengalaman ó yang berbagi latar belakang budaya mitra ó memberi tahu Anda secara pribadi: 'Bergerak secepat ini akan merusak kepercayaan. Mereka akan merasa diabaikan.' Apa yang Anda lakukan?",
+    nl_context: "Je hebt een weg voorwaarts voorgesteld. Je meest ervaren teamlid ó die de culturele achtergrond van de partner deelt ó vertelt je in vertrouwen: 'Als je zo snel beweegt, beschadig je het vertrouwen. Ze zullen zich genegeerd voelen.' Wat doe je?",
     choices: {
       A: {
         en_label: "The Data Move", id_label: "Langkah Data", nl_label: "De Data-Stap",
@@ -101,21 +101,21 @@ const DECISIONS: {
         en_label: "The Relational Move", id_label: "Langkah Relasional", nl_label: "De Relationele Stap",
         en: "Hold the decision for 24 hours. Create a brief listening session with representatives from the partner's team before you commit.",
         id: "Tunda keputusan selama 24 jam. Buat sesi mendengarkan singkat dengan perwakilan dari tim mitra sebelum Anda berkomitmen.",
-        nl: "Houd de beslissing 24 uur aan. Cre√´er een korte luistersessie met vertegenwoordigers van het team van de partner voordat je je vastlegt.",
+        nl: "Houd de beslissing 24 uur aan. CreÎer een korte luistersessie met vertegenwoordigers van het team van de partner voordat je je vastlegt.",
       },
       D: {
         en_label: "The Direct Move", id_label: "Langkah Langsung", nl_label: "De Directe Stap",
-        en: "Thank her for the input and explain your reasoning ‚Äî then hold your course. She may be right, but you can't let the fear of misread stop momentum.",
-        id: "Berterima kasih atas masukannya dan jelaskan alasan Anda ‚Äî lalu pertahankan arah Anda. Ia mungkin benar, tetapi Anda tidak bisa membiarkan ketakutan akan kesalahan baca menghentikan momentum.",
-        nl: "Bedank haar voor de input en leg je redenering uit ‚Äî houd dan je koers. Ze heeft misschien gelijk, maar de angst voor een verkeerde inschatting mag de vaart niet stoppen.",
+        en: "Thank her for the input and explain your reasoning ó then hold your course. She may be right, but you can't let the fear of misread stop momentum.",
+        id: "Berterima kasih atas masukannya dan jelaskan alasan Anda ó lalu pertahankan arah Anda. Ia mungkin benar, tetapi Anda tidak bisa membiarkan ketakutan akan kesalahan baca menghentikan momentum.",
+        nl: "Bedank haar voor de input en leg je redenering uit ó houd dan je koers. Ze heeft misschien gelijk, maar de angst voor een verkeerde inschatting mag de vaart niet stoppen.",
       },
     },
   },
   {
     id: 4,
-    en_context: "Decision made. Now you need to communicate it to the partner's team ‚Äî who never raised the conflict directly. They signaled discomfort through withdrawal, not words. How do you communicate?",
-    id_context: "Keputusan dibuat. Kini Anda perlu mengkomunikasikannya kepada tim mitra ‚Äî yang tidak pernah mengangkat konflik secara langsung. Mereka menandai ketidaknyamanan melalui penarikan diri, bukan kata-kata. Bagaimana Anda berkomunikasi?",
-    nl_context: "Beslissing genomen. Nu moet je die communiceren aan het team van de partner ‚Äî die het conflict nooit direct aankaarte. Ze signaleerden ongemak door terugtrekking, niet met woorden. Hoe communiceer je?",
+    en_context: "Decision made. Now you need to communicate it to the partner's team ó who never raised the conflict directly. They signaled discomfort through withdrawal, not words. How do you communicate?",
+    id_context: "Keputusan dibuat. Kini Anda perlu mengkomunikasikannya kepada tim mitra ó yang tidak pernah mengangkat konflik secara langsung. Mereka menandai ketidaknyamanan melalui penarikan diri, bukan kata-kata. Bagaimana Anda berkomunikasi?",
+    nl_context: "Beslissing genomen. Nu moet je die communiceren aan het team van de partner ó die het conflict nooit direct aankaarte. Ze signaleerden ongemak door terugtrekking, niet met woorden. Hoe communiceer je?",
     choices: {
       A: {
         en_label: "The Data Move", id_label: "Langkah Data", nl_label: "De Data-Stap",
@@ -125,9 +125,9 @@ const DECISIONS: {
       },
       C: {
         en_label: "The Relational Move", id_label: "Langkah Relasional", nl_label: "De Relationele Stap",
-        en: "Ask a trusted intermediary to have an informal conversation with the partner's team first ‚Äî no surprises when the formal message arrives.",
-        id: "Minta perantara tepercaya untuk melakukan percakapan informal dengan tim mitra terlebih dahulu ‚Äî tidak ada kejutan ketika pesan formal tiba.",
-        nl: "Vraag een vertrouwde tussenpersoon om eerst een informeel gesprek te hebben met het team van de partner ‚Äî geen verrassingen als het formele bericht aankomt.",
+        en: "Ask a trusted intermediary to have an informal conversation with the partner's team first ó no surprises when the formal message arrives.",
+        id: "Minta perantara tepercaya untuk melakukan percakapan informal dengan tim mitra terlebih dahulu ó tidak ada kejutan ketika pesan formal tiba.",
+        nl: "Vraag een vertrouwde tussenpersoon om eerst een informeel gesprek te hebben met het team van de partner ó geen verrassingen als het formele bericht aankomt.",
       },
       D: {
         en_label: "The Direct Move", id_label: "Langkah Langsung", nl_label: "De Directe Stap",
@@ -150,60 +150,60 @@ const PROFILES: Record<ProfileKey, {
     en_name: "The Evidence Analyst",
     id_name: "Analis Bukti",
     nl_name: "De Bewijs-Analist",
-    en_desc: "Under pressure, you reach for data. You distrust gut reactions and want facts before you commit. This is a real strength ‚Äî you make fewer impulsive errors than most leaders. But in cross-cultural environments, the most important signals rarely live in spreadsheets. Withdrawal, silence, a changed tone in email ‚Äî these are data in high-context cultures, and they don't compress into a report.",
-    id_desc: "Di bawah tekanan, Anda mencari data. Anda tidak mempercayai reaksi naluriah dan ingin fakta sebelum berkomitmen. Ini adalah kekuatan nyata ‚Äî Anda membuat lebih sedikit kesalahan impulsif daripada kebanyakan pemimpin. Tetapi dalam lingkungan lintas budaya, sinyal terpenting jarang ada dalam spreadsheet. Penarikan diri, keheningan, nada yang berubah dalam email ‚Äî ini adalah data dalam budaya berkonteks tinggi.",
-    nl_desc: "Onder druk reik je naar data. Je wantrouwt buikgevoelens en wilt feiten voordat je je vastlegt. Dit is een echte kracht ‚Äî je maakt minder impulsieve fouten dan de meeste leiders. Maar in interculturele omgevingen leven de belangrijkste signalen zelden in spreadsheets. Terugtrekking, stilte, een andere toon in e-mail ‚Äî dit zijn data in hoge-context culturen, en ze laten zich niet samenvatten in een rapport.",
+    en_desc: "Under pressure, you reach for data. You distrust gut reactions and want facts before you commit. This is a real strength ó you make fewer impulsive errors than most leaders. But in cross-cultural environments, the most important signals rarely live in spreadsheets. Withdrawal, silence, a changed tone in email ó these are data in high-context cultures, and they don't compress into a report.",
+    id_desc: "Di bawah tekanan, Anda mencari data. Anda tidak mempercayai reaksi naluriah dan ingin fakta sebelum berkomitmen. Ini adalah kekuatan nyata ó Anda membuat lebih sedikit kesalahan impulsif daripada kebanyakan pemimpin. Tetapi dalam lingkungan lintas budaya, sinyal terpenting jarang ada dalam spreadsheet. Penarikan diri, keheningan, nada yang berubah dalam email ó ini adalah data dalam budaya berkonteks tinggi.",
+    nl_desc: "Onder druk reik je naar data. Je wantrouwt buikgevoelens en wilt feiten voordat je je vastlegt. Dit is een echte kracht ó je maakt minder impulsieve fouten dan de meeste leiders. Maar in interculturele omgevingen leven de belangrijkste signalen zelden in spreadsheets. Terugtrekking, stilte, een andere toon in e-mail ó dit zijn data in hoge-context culturen, en ze laten zich niet samenvatten in een rapport.",
     en_risk: "You may gather evidence while the relationship quietly erodes. Your thoroughness can read as coldness or distrust in cultures where pace signals care.",
     id_risk: "Anda mungkin mengumpulkan bukti sementara hubungan diam-diam terkikis. Ketelitian Anda dapat dibaca sebagai kedinginan atau ketidakpercayaan dalam budaya di mana kecepatan menandakan kepedulian.",
     nl_risk: "Je kunt bewijs verzamelen terwijl de relatie stilletjes eroodeert. Jouw grondigheid kan gelezen worden als koelheid of wantrouwen in culturen waar tempo zorgsaamheid uitdrukt.",
     en_strength: "You rarely act on rumor. Under pressure, your calm is contagious. In diverse teams, your systematic approach creates a sense of fairness.",
     id_strength: "Anda jarang bertindak berdasarkan rumor. Di bawah tekanan, ketenangan Anda menular. Dalam tim yang beragam, pendekatan sistematis Anda menciptakan rasa keadilan.",
-    nl_strength: "Je handelt zelden op basis van roddels. Onder druk is jouw kalmte aanstekelijk. In diverse teams cre√´ert jouw systematische aanpak een gevoel van eerlijkheid.",
+    nl_strength: "Je handelt zelden op basis van roddels. Onder druk is jouw kalmte aanstekelijk. In diverse teams creÎert jouw systematische aanpak een gevoel van eerlijkheid.",
     color: "oklch(45% 0.12 250)",
   },
   relational: {
     en_name: "The Relationship Anchor",
     id_name: "Jangkar Hubungan",
     nl_name: "Het Relationele Anker",
-    en_desc: "Under pressure, you move through people. You expand consultation, listen widely, and wait until there is relational clarity before committing. In most of the world's cultures ‚Äî where decisions are made together, not alone ‚Äî this is not weakness. It is wisdom. But consultation without a moment of decisive leadership can feel like endless process, and your team eventually needs you to make the call.",
-    id_desc: "Di bawah tekanan, Anda bergerak melalui orang-orang. Anda memperluas konsultasi, mendengarkan secara luas, dan menunggu hingga ada kejelasan relasional sebelum berkomitmen. Dalam sebagian besar budaya dunia ‚Äî di mana keputusan dibuat bersama, bukan sendiri ‚Äî ini bukan kelemahan. Ini adalah kebijaksanaan. Tetapi konsultasi tanpa momen kepemimpinan yang tegas bisa terasa seperti proses tanpa akhir.",
-    nl_desc: "Onder druk beweeg je door mensen. Je breidt consultatie uit, luistert breed en wacht tot er relationele duidelijkheid is voordat je je vastlegt. In de meeste culturen wereldwijd ‚Äî waar beslissingen samen worden genomen, niet alleen ‚Äî is dit geen zwakte. Het is wijsheid. Maar consultatie zonder een moment van beslissend leiderschap kan aanvoelen als een eindeloos proces.",
+    en_desc: "Under pressure, you move through people. You expand consultation, listen widely, and wait until there is relational clarity before committing. In most of the world's cultures ó where decisions are made together, not alone ó this is not weakness. It is wisdom. But consultation without a moment of decisive leadership can feel like endless process, and your team eventually needs you to make the call.",
+    id_desc: "Di bawah tekanan, Anda bergerak melalui orang-orang. Anda memperluas konsultasi, mendengarkan secara luas, dan menunggu hingga ada kejelasan relasional sebelum berkomitmen. Dalam sebagian besar budaya dunia ó di mana keputusan dibuat bersama, bukan sendiri ó ini bukan kelemahan. Ini adalah kebijaksanaan. Tetapi konsultasi tanpa momen kepemimpinan yang tegas bisa terasa seperti proses tanpa akhir.",
+    nl_desc: "Onder druk beweeg je door mensen. Je breidt consultatie uit, luistert breed en wacht tot er relationele duidelijkheid is voordat je je vastlegt. In de meeste culturen wereldwijd ó waar beslissingen samen worden genomen, niet alleen ó is dit geen zwakte. Het is wijsheid. Maar consultatie zonder een moment van beslissend leiderschap kan aanvoelen als een eindeloos proces.",
     en_risk: "Broad consultation can become decision avoidance. Your team may feel led by committee. In urgent situations, your process can look like paralysis.",
     id_risk: "Konsultasi luas bisa menjadi penghindaran keputusan. Tim Anda mungkin merasa dipimpin oleh komite. Dalam situasi mendesak, proses Anda bisa terlihat seperti kelumpuhan.",
     nl_risk: "Brede consultatie kan beslissingsontwijking worden. Je team voelt zich misschien geleid door een commissie. In urgente situaties kan je proces eruitzien als verlamming.",
     en_strength: "You rarely alienate people with your decisions. You build buy-in before the announcement. You surface concerns that others miss entirely.",
     id_strength: "Anda jarang mengasingkan orang dengan keputusan Anda. Anda membangun dukungan sebelum pengumuman. Anda mengangkat kekhawatiran yang orang lain lewatkan.",
-    nl_strength: "Je vervreemdt mensen zelden met je beslissingen. Je bouwt draagvlak op v√≥√≥r de aankondiging. Je haalt zorgen naar boven die anderen volledig missen.",
+    nl_strength: "Je vervreemdt mensen zelden met je beslissingen. Je bouwt draagvlak op vÛÛr de aankondiging. Je haalt zorgen naar boven die anderen volledig missen.",
     color: "oklch(45% 0.14 155)",
   },
   decisive: {
     en_name: "The Decisive Driver",
     id_name: "Penggerak Tegas",
     nl_name: "De Besliste Aanjager",
-    en_desc: "Under pressure, you accelerate. You trust your read of the situation, make the call, and move forward ‚Äî adjusting as you learn. In low-context, individualist cultures, this reads as strong leadership. In high-context cultures, your speed can register as arrogance before it registers as clarity. You may be entirely right about the decision and still lose the relationship because of how you made it.",
-    id_desc: "Di bawah tekanan, Anda mempercepat. Anda mempercayai pemahaman Anda tentang situasi, membuat keputusan, dan melangkah maju ‚Äî menyesuaikan saat Anda belajar. Dalam budaya berkonteks rendah dan individualis, ini dibaca sebagai kepemimpinan yang kuat. Dalam budaya berkonteks tinggi, kecepatan Anda bisa terdaftar sebagai kesombongan sebelum terdaftar sebagai kejelasan.",
-    nl_desc: "Onder druk versnelt je. Je vertrouwt jouw lezing van de situatie, maakt de beslissing en beweegt vooruit ‚Äî aanpassend naarmate je leert. In lage-context, individualistische culturen leest dit als sterk leiderschap. In hoge-context culturen kan jouw snelheid geregistreerd worden als arrogantie voordat het als duidelijkheid wordt gezien.",
+    en_desc: "Under pressure, you accelerate. You trust your read of the situation, make the call, and move forward ó adjusting as you learn. In low-context, individualist cultures, this reads as strong leadership. In high-context cultures, your speed can register as arrogance before it registers as clarity. You may be entirely right about the decision and still lose the relationship because of how you made it.",
+    id_desc: "Di bawah tekanan, Anda mempercepat. Anda mempercayai pemahaman Anda tentang situasi, membuat keputusan, dan melangkah maju ó menyesuaikan saat Anda belajar. Dalam budaya berkonteks rendah dan individualis, ini dibaca sebagai kepemimpinan yang kuat. Dalam budaya berkonteks tinggi, kecepatan Anda bisa terdaftar sebagai kesombongan sebelum terdaftar sebagai kejelasan.",
+    nl_desc: "Onder druk versnelt je. Je vertrouwt jouw lezing van de situatie, maakt de beslissing en beweegt vooruit ó aanpassend naarmate je leert. In lage-context, individualistische culturen leest dit als sterk leiderschap. In hoge-context culturen kan jouw snelheid geregistreerd worden als arrogantie voordat het als duidelijkheid wordt gezien.",
     en_risk: "In cultures where process and face are part of the decision's quality, your outcome may be correct but your path costly. People may comply externally while disengaging internally.",
     id_risk: "Dalam budaya di mana proses dan menjaga muka adalah bagian dari kualitas keputusan, hasil Anda mungkin benar tetapi jalur Anda mahal. Orang mungkin mematuhi secara eksternal sambil melepaskan diri secara internal.",
     nl_risk: "In culturen waar proces en gezichtsbehoud deel uitmaken van de kwaliteit van de beslissing, kan jouw uitkomst correct zijn maar je pad kostbaar. Mensen kunnen extern gehoorzamen terwijl ze intern loslaten.",
-    en_strength: "You cut through ambiguity. Your team knows where you stand. Decisive leadership reduces anxiety and drift ‚Äî your clarity is a genuine gift to the people you lead.",
-    id_strength: "Anda memotong ambiguitas. Tim Anda tahu di mana Anda berdiri. Kepemimpinan yang tegas mengurangi kecemasan dan penyimpangan ‚Äî kejelasan Anda adalah hadiah nyata bagi orang yang Anda pimpin.",
-    nl_strength: "Je doorsnijdt ambigu√Øteit. Je team weet waar je staat. Beslissend leiderschap vermindert angst en koersverlies ‚Äî jouw duidelijkheid is een echte gave voor de mensen die je leidt.",
+    en_strength: "You cut through ambiguity. Your team knows where you stand. Decisive leadership reduces anxiety and drift ó your clarity is a genuine gift to the people you lead.",
+    id_strength: "Anda memotong ambiguitas. Tim Anda tahu di mana Anda berdiri. Kepemimpinan yang tegas mengurangi kecemasan dan penyimpangan ó kejelasan Anda adalah hadiah nyata bagi orang yang Anda pimpin.",
+    nl_strength: "Je doorsnijdt ambiguÔteit. Je team weet waar je staat. Beslissend leiderschap vermindert angst en koersverlies ó jouw duidelijkheid is een echte gave voor de mensen die je leidt.",
     color: "oklch(52% 0.18 25)",
   },
   adaptive: {
     en_name: "The Adaptive Leader",
     id_name: "Pemimpin Adaptif",
     nl_name: "De Adaptieve Leider",
-    en_desc: "You don't have a single dominant pattern ‚Äî you blended approaches across the four decisions. This may reflect genuine cross-cultural intelligence: reading each situation and choosing the response it calls for. Or it may reflect uncertainty about your own leadership identity. Only you know which is true. The question worth sitting with: were these choices the result of deliberate discernment, or responsive improvisation?",
-    id_desc: "Anda tidak memiliki satu pola dominan ‚Äî Anda memadukan pendekatan di empat keputusan. Ini mungkin mencerminkan kecerdasan lintas budaya yang tulus: membaca setiap situasi dan memilih respons yang dibutuhkan. Atau mungkin mencerminkan ketidakpastian tentang identitas kepemimpinan Anda sendiri. Pertanyaan yang layak direnungkan: apakah pilihan-pilihan ini merupakan hasil dari kebijaksanaan yang disengaja, atau improvisasi responsif?",
-    nl_desc: "Je hebt geen enkel dominant patroon ‚Äî je combineerde benaderingen over de vier beslissingen. Dit kan echte interculturele intelligentie weerspiegelen: elke situatie lezen en de respons kiezen die het vraagt. Of het kan onzekerheid over je eigen leiderschapsidentiteit weerspiegelen. Alleen jij weet welk van beide waar is. De vraag die de moeite waard is: waren deze keuzes het resultaat van bewuste onderscheiding, of van responsieve improvisatie?",
-    en_risk: "Without a clear default, your team may be uncertain what to expect from you under pressure. Adaptability needs a stable core beneath it ‚Äî or it becomes unpredictability.",
-    id_risk: "Tanpa default yang jelas, tim Anda mungkin tidak yakin apa yang harus diharapkan dari Anda di bawah tekanan. Adaptabilitas membutuhkan inti yang stabil di bawahnya ‚Äî atau menjadi ketidakpastian.",
-    nl_risk: "Zonder een duidelijk standaard weet je team misschien niet wat ze onder druk van je kunnen verwachten. Aanpassingsvermogen heeft een stabiel fundament nodig ‚Äî anders wordt het onvoorspelbaarheid.",
+    en_desc: "You don't have a single dominant pattern ó you blended approaches across the four decisions. This may reflect genuine cross-cultural intelligence: reading each situation and choosing the response it calls for. Or it may reflect uncertainty about your own leadership identity. Only you know which is true. The question worth sitting with: were these choices the result of deliberate discernment, or responsive improvisation?",
+    id_desc: "Anda tidak memiliki satu pola dominan ó Anda memadukan pendekatan di empat keputusan. Ini mungkin mencerminkan kecerdasan lintas budaya yang tulus: membaca setiap situasi dan memilih respons yang dibutuhkan. Atau mungkin mencerminkan ketidakpastian tentang identitas kepemimpinan Anda sendiri. Pertanyaan yang layak direnungkan: apakah pilihan-pilihan ini merupakan hasil dari kebijaksanaan yang disengaja, atau improvisasi responsif?",
+    nl_desc: "Je hebt geen enkel dominant patroon ó je combineerde benaderingen over de vier beslissingen. Dit kan echte interculturele intelligentie weerspiegelen: elke situatie lezen en de respons kiezen die het vraagt. Of het kan onzekerheid over je eigen leiderschapsidentiteit weerspiegelen. Alleen jij weet welk van beide waar is. De vraag die de moeite waard is: waren deze keuzes het resultaat van bewuste onderscheiding, of van responsieve improvisatie?",
+    en_risk: "Without a clear default, your team may be uncertain what to expect from you under pressure. Adaptability needs a stable core beneath it ó or it becomes unpredictability.",
+    id_risk: "Tanpa default yang jelas, tim Anda mungkin tidak yakin apa yang harus diharapkan dari Anda di bawah tekanan. Adaptabilitas membutuhkan inti yang stabil di bawahnya ó atau menjadi ketidakpastian.",
+    nl_risk: "Zonder een duidelijk standaard weet je team misschien niet wat ze onder druk van je kunnen verwachten. Aanpassingsvermogen heeft een stabiel fundament nodig ó anders wordt het onvoorspelbaarheid.",
     en_strength: "You are not locked into one mode. In genuinely diverse contexts, you can work across a wider range of cultural expectations than leaders with a single strong default.",
     id_strength: "Anda tidak terkunci dalam satu mode. Dalam konteks yang benar-benar beragam, Anda dapat bekerja di berbagai harapan budaya yang lebih luas daripada pemimpin dengan satu default kuat.",
-    nl_strength: "Je zit niet vast in √©√©n modus. In werkelijk diverse contexten kun je werken met een breder scala aan culturele verwachtingen dan leiders met √©√©n sterk standaard.",
+    nl_strength: "Je zit niet vast in ÈÈn modus. In werkelijk diverse contexten kun je werken met een breder scala aan culturele verwachtingen dan leiders met ÈÈn sterk standaard.",
     color: "oklch(65% 0.15 45)",
   },
 };
@@ -254,7 +254,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
         color: (isDone || isCurrent) ? offWhite : "oklch(60% 0.04 260)",
         transition: "all 0.2s ease",
       }}>
-        {isDone ? "‚úì" : n}
+        {isDone ? "?" : n}
       </div>
     ];
     if (n < 4) {
@@ -281,20 +281,20 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
             setSaved(true);
           });
         }} disabled={saved || isPending} style={{
-          padding: "8px 20px", borderRadius: 6,
+          padding: "8px 20px", borderRadius: 12,
           border: `1px solid ${saved ? "oklch(70% 0.04 260)" : orange}`,
           background: "transparent", color: saved ? "oklch(70% 0.04 260)" : orange,
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.06em",
           cursor: saved ? "default" : "pointer",
         }}>
-          {saved ? t("‚úì Saved to Dashboard", "‚úì Tersimpan di Dashboard", "‚úì Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+          {saved ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
         </button>
       </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "64px 24px 80px" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, marginBottom: 20, textTransform: "uppercase" }}>
-          {t("Thinking Tools ¬∑ Guide", "Alat Berpikir ¬∑ Panduan", "Denktools ¬∑ Gids")}
+          {t("Thinking Tools ∑ Guide", "Alat Berpikir ∑ Panduan", "Denktools ∑ Gids")}
         </p>
         <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("The Decision Under Pressure", "Keputusan di Bawah Tekanan", "De Beslissing onder Druk")}
@@ -303,7 +303,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           {t(
             "Four choices. One crisis. What your decisions reveal about how you actually lead.",
             "Empat pilihan. Satu krisis. Apa yang keputusan Anda ungkapkan tentang cara Anda sebenarnya memimpin.",
-            "Vier keuzes. √â√©n crisis. Wat jouw beslissingen onthullen over hoe jij werkelijk leidt."
+            "Vier keuzes. …Èn crisis. Wat jouw beslissingen onthullen over hoe jij werkelijk leidt."
           )}
         </p>
       </div>
@@ -317,9 +317,9 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           </p>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, margin: 0 }}>
             {t(
-              "You'll face a real cross-cultural leadership situation ‚Äî a partnership in crisis, three weeks before a critical deadline. Make four sequential decisions. No answer is wrong. At the end, your choices reveal your default decision-making pattern and what it costs you in cross-cultural contexts.",
-              "Anda akan menghadapi situasi kepemimpinan lintas budaya yang nyata ‚Äî kemitraan dalam krisis, tiga minggu sebelum tenggat waktu penting. Buat empat keputusan berurutan. Tidak ada jawaban yang salah. Di akhir, pilihan Anda mengungkapkan pola pengambilan keputusan default Anda dan apa biayanya dalam konteks lintas budaya.",
-              "Je staat voor een echte interculturele leiderschapssituatie ‚Äî een partnerschap in crisis, drie weken voor een kritieke deadline. Neem vier opeenvolgende beslissingen. Geen antwoord is fout. Aan het einde onthullen je keuzes jouw standaard besluitvormingspatroon en wat het je kost in interculturele contexten."
+              "You'll face a real cross-cultural leadership situation ó a partnership in crisis, three weeks before a critical deadline. Make four sequential decisions. No answer is wrong. At the end, your choices reveal your default decision-making pattern and what it costs you in cross-cultural contexts.",
+              "Anda akan menghadapi situasi kepemimpinan lintas budaya yang nyata ó kemitraan dalam krisis, tiga minggu sebelum tenggat waktu penting. Buat empat keputusan berurutan. Tidak ada jawaban yang salah. Di akhir, pilihan Anda mengungkapkan pola pengambilan keputusan default Anda dan apa biayanya dalam konteks lintas budaya.",
+              "Je staat voor een echte interculturele leiderschapssituatie ó een partnerschap in crisis, drie weken voor een kritieke deadline. Neem vier opeenvolgende beslissingen. Geen antwoord is fout. Aan het einde onthullen je keuzes jouw standaard besluitvormingspatroon en wat het je kost in interculturele contexten."
             )}
           </p>
         </div>
@@ -339,7 +339,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
               {t(
                 "You lead a multicultural project team. Three weeks before a critical delivery, your key local partner organization in Indonesia has gone quiet. Emails are answered briefly. A team member mentions the partner's lead contact 'seems different lately.' No one has raised it directly.",
                 "Anda memimpin tim proyek multikultural. Tiga minggu sebelum pengiriman penting, organisasi mitra lokal utama Anda di Indonesia menjadi diam. Email dijawab singkat. Seorang anggota tim menyebut kontak utama mitra 'tampak berbeda akhir-akhir ini.' Tidak ada yang membahasnya secara langsung.",
-                "Je leidt een multicultureel projectteam. Drie weken voor een kritieke oplevering is jouw belangrijkste lokale partnerorganisatie in Indonesi√´ stil geworden. E-mails worden kort beantwoord. Een teamlid merkt op dat de hoofdcontactpersoon 'lately anders lijkt.' Niemand heeft het direct aangekaart."
+                "Je leidt een multicultureel projectteam. Drie weken voor een kritieke oplevering is jouw belangrijkste lokale partnerorganisatie in IndonesiÎ stil geworden. E-mails worden kort beantwoord. Een teamlid merkt op dat de hoofdcontactpersoon 'lately anders lijkt.' Niemand heeft het direct aangekaart."
               )}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, paddingTop: 20, borderTop: "1px solid oklch(88% 0.008 80)" }}>
@@ -348,7 +348,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
                 { label: t("Time left", "Waktu tersisa", "Resterende tijd"), value: t("3 weeks", "3 minggu", "3 weken") },
                 { label: t("Information", "Informasi", "Informatie"), value: t("Incomplete", "Tidak lengkap", "Onvolledig") },
               ] as { label: string; value: string }[]).map(item => (
-                <div key={item.label} style={{ padding: "10px 16px", background: lightGray, borderRadius: 6 }}>
+                <div key={item.label} style={{ padding: "10px 16px", background: lightGray, borderRadius: 12 }}>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", color: orange, margin: "0 0 4px", textTransform: "uppercase" }}>{item.label}</p>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, color: navy, margin: 0 }}>{item.value}</p>
                 </div>
@@ -481,16 +481,16 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 20 }}>
             {t(
-              "Every framework for decision-making ‚Äî analytical, relational, decisive ‚Äî assumes that the answer exists somewhere and your job is to find it. Scripture offers a different starting point: wisdom is not found, it is given. And the posture it requires is not competence but humility ‚Äî the admission that you do not have sufficient understanding on your own.",
-              "Setiap kerangka pengambilan keputusan ‚Äî analitis, relasional, tegas ‚Äî mengasumsikan bahwa jawabannya ada di suatu tempat dan tugas Anda adalah menemukannya. Kitab Suci menawarkan titik awal yang berbeda: hikmat tidak ditemukan, melainkan diberikan. Dan sikap yang diperlukan bukan kompetensi tetapi kerendahan hati ‚Äî pengakuan bahwa Anda tidak memiliki pemahaman yang cukup sendiri.",
-              "Elk besluitvormingskader ‚Äî analytisch, relationeel, beslissend ‚Äî gaat ervan uit dat het antwoord ergens bestaat en dat het jouw taak is het te vinden. De Schrift biedt een ander vertrekpunt: wijsheid wordt niet gevonden, maar gegeven. En de houding die het vereist is niet competentie maar nederigheid ‚Äî de erkenning dat je op eigen kracht niet genoeg begrip hebt."
+              "Every framework for decision-making ó analytical, relational, decisive ó assumes that the answer exists somewhere and your job is to find it. Scripture offers a different starting point: wisdom is not found, it is given. And the posture it requires is not competence but humility ó the admission that you do not have sufficient understanding on your own.",
+              "Setiap kerangka pengambilan keputusan ó analitis, relasional, tegas ó mengasumsikan bahwa jawabannya ada di suatu tempat dan tugas Anda adalah menemukannya. Kitab Suci menawarkan titik awal yang berbeda: hikmat tidak ditemukan, melainkan diberikan. Dan sikap yang diperlukan bukan kompetensi tetapi kerendahan hati ó pengakuan bahwa Anda tidak memiliki pemahaman yang cukup sendiri.",
+              "Elk besluitvormingskader ó analytisch, relationeel, beslissend ó gaat ervan uit dat het antwoord ergens bestaat en dat het jouw taak is het te vinden. De Schrift biedt een ander vertrekpunt: wijsheid wordt niet gevonden, maar gegeven. En de houding die het vereist is niet competentie maar nederigheid ó de erkenning dat je op eigen kracht niet genoeg begrip hebt."
             )}
           </p>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 36 }}>
             {t(
-              "This doesn't make analysis irrelevant or relationships unimportant. It adds a prior step: before you reach for data or consult your network, bring the question to God. Not as a ritual to check off, but as a genuine admission that the pressured moment is beyond you ‚Äî and that you serve a King who governs the outcome.",
-              "Ini tidak membuat analisis menjadi tidak relevan atau hubungan menjadi tidak penting. Ini menambahkan langkah sebelumnya: sebelum Anda mencari data atau berkonsultasi dengan jaringan Anda, bawa pertanyaan itu kepada Allah. Bukan sebagai ritual untuk diselesaikan, tetapi sebagai pengakuan tulus bahwa momen tertekan ini melampaui kemampuan Anda ‚Äî dan bahwa Anda melayani Raja yang mengatur hasil.",
-              "Dit maakt analyse niet irrelevant of relaties onbelangrijk. Het voegt een voorafgaande stap toe: voordat je naar data grijpt of je netwerk raadpleegt, breng de vraag voor God. Niet als een ritueel om af te vinken, maar als een oprechte erkenning dat het drukmomenten je te boven gaan ‚Äî en dat je een Koning dient die de uitkomst bestuurt."
+              "This doesn't make analysis irrelevant or relationships unimportant. It adds a prior step: before you reach for data or consult your network, bring the question to God. Not as a ritual to check off, but as a genuine admission that the pressured moment is beyond you ó and that you serve a King who governs the outcome.",
+              "Ini tidak membuat analisis menjadi tidak relevan atau hubungan menjadi tidak penting. Ini menambahkan langkah sebelumnya: sebelum Anda mencari data atau berkonsultasi dengan jaringan Anda, bawa pertanyaan itu kepada Allah. Bukan sebagai ritual untuk diselesaikan, tetapi sebagai pengakuan tulus bahwa momen tertekan ini melampaui kemampuan Anda ó dan bahwa Anda melayani Raja yang mengatur hasil.",
+              "Dit maakt analyse niet irrelevant of relaties onbelangrijk. Het voegt een voorafgaande stap toe: voordat je naar data grijpt of je netwerk raadpleegt, breng de vraag voor God. Niet als een ritueel om af te vinken, maar als een oprechte erkenning dat het drukmomenten je te boven gaan ó en dat je een Koning dient die de uitkomst bestuurt."
             )}
           </p>
 
@@ -541,7 +541,7 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
               <button onClick={() => { if (commitment.trim()) setCommitted(true); }} disabled={!commitment.trim()} style={{
                 marginTop: 16, padding: "12px 28px",
                 background: commitment.trim() ? navy : "oklch(80% 0.01 80)",
-                color: offWhite, border: "none", borderRadius: 6,
+                color: offWhite, border: "none", borderRadius: 12,
                 fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.06em",
                 cursor: commitment.trim() ? "pointer" : "default",
               }}>
@@ -565,9 +565,9 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
           <Link href="/resources" style={{
             fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
             color: navy, textDecoration: "none", letterSpacing: "0.08em",
-            padding: "12px 28px", border: `2px solid ${navy}`, borderRadius: 6, display: "inline-block",
+            padding: "12px 28px", border: `2px solid ${navy}`, borderRadius: 12, display: "inline-block",
           }}>
-            {t("‚Üê Content Library", "‚Üê Perpustakaan Konten", "‚Üê Contentbibliotheek")}
+            {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
           </Link>
         </div>
       </div>
@@ -585,10 +585,10 @@ export default function DecisionMakingClient({ userPathway, isSaved: initialSave
               "{lang === "en" ? VERSES[activeVerse].en : lang === "id" ? VERSES[activeVerse].id : VERSES[activeVerse].nl}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 24 }}>
-              ‚Äî {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
+              ó {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
             <button onClick={() => setActiveVerse(null)} style={{
-              padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 6,
+              padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12,
               fontFamily: "Montserrat, sans-serif", fontWeight: 700, cursor: "pointer",
             }}>
               {t("Close", "Tutup", "Sluiten")}

@@ -1,4 +1,4 @@
-Ôªø"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -14,9 +14,9 @@ const STORY_CHAPTERS = [
     number: "I",
     en_label: "Context", id_label: "Konteks", nl_label: "Context",
     en_subtitle: "Where things stood", id_subtitle: "Keadaan awal", nl_subtitle: "Hoe het ervoor stond",
-    en_text: "Budi had been leading his team for six months. On paper, everything looked right ‚Äî seven people from five different islands, all skilled, all committed. But Budi had noticed a pattern. In meetings, one team member ‚Äî Roni, from Manado ‚Äî would lean forward, challenge assumptions, push back on decisions in front of everyone. Budi said nothing. In Javanese culture, you do not embarrass someone publicly. You give space. You wait. He kept waiting.",
-    id_text: "Budi sudah memimpin timnya selama enam bulan. Di atas kertas, semuanya terlihat baik ‚Äî tujuh orang dari lima pulau berbeda, semua berkompeten, semua berkomitmen. Namun Budi sudah memperhatikan sebuah pola. Dalam rapat-rapat, satu anggota tim ‚Äî Roni, dari Manado ‚Äî selalu condong ke depan, mempertanyakan asumsi, mendorong balik keputusan di hadapan semua orang. Budi diam saja. Dalam budaya Jawa, kamu tidak mempermalukan seseorang di depan umum. Kamu memberi ruang. Kamu menunggu. Dia terus menunggu.",
-    nl_text: "Budi leidde zijn team al zes maanden. Op papier zag alles er goed uit ‚Äî zeven mensen van vijf verschillende eilanden, allemaal capabel, allemaal betrokken. Maar Budi had een patroon opgemerkt. In vergaderingen leunde een teamlid ‚Äî Roni, uit Manado ‚Äî altijd naar voren, stelde aannames ter discussie, drukte openlijk terug op beslissingen. Budi zei niets. In de Javaanse cultuur stel je iemand niet publiekelijk in verlegenheid. Je geeft ruimte. Je wacht. Hij bleef wachten.",
+    en_text: "Budi had been leading his team for six months. On paper, everything looked right ó seven people from five different islands, all skilled, all committed. But Budi had noticed a pattern. In meetings, one team member ó Roni, from Manado ó would lean forward, challenge assumptions, push back on decisions in front of everyone. Budi said nothing. In Javanese culture, you do not embarrass someone publicly. You give space. You wait. He kept waiting.",
+    id_text: "Budi sudah memimpin timnya selama enam bulan. Di atas kertas, semuanya terlihat baik ó tujuh orang dari lima pulau berbeda, semua berkompeten, semua berkomitmen. Namun Budi sudah memperhatikan sebuah pola. Dalam rapat-rapat, satu anggota tim ó Roni, dari Manado ó selalu condong ke depan, mempertanyakan asumsi, mendorong balik keputusan di hadapan semua orang. Budi diam saja. Dalam budaya Jawa, kamu tidak mempermalukan seseorang di depan umum. Kamu memberi ruang. Kamu menunggu. Dia terus menunggu.",
+    nl_text: "Budi leidde zijn team al zes maanden. Op papier zag alles er goed uit ó zeven mensen van vijf verschillende eilanden, allemaal capabel, allemaal betrokken. Maar Budi had een patroon opgemerkt. In vergaderingen leunde een teamlid ó Roni, uit Manado ó altijd naar voren, stelde aannames ter discussie, drukte openlijk terug op beslissingen. Budi zei niets. In de Javaanse cultuur stel je iemand niet publiekelijk in verlegenheid. Je geeft ruimte. Je wacht. Hij bleef wachten.",
     en_pause: "Pause. Think of a team you have led or been part of. Who brought a different cultural communication style that you found difficult to read?",
     id_pause: "Berhenti sejenak. Pikirkan tim yang pernah Anda pimpin atau ikuti. Siapa yang membawa gaya komunikasi budaya berbeda yang sulit Anda baca?",
     nl_pause: "Pauze. Denk aan een team dat je hebt geleid of waarbij je betrokken was. Wie bracht een andere culturele communicatiestijl mee die je moeilijk kon lezen?",
@@ -25,20 +25,20 @@ const STORY_CHAPTERS = [
     number: "II",
     en_label: "Conflict", id_label: "Konflik", nl_label: "Conflict",
     en_subtitle: "What changed", id_subtitle: "Apa yang berubah", nl_subtitle: "Wat er veranderde",
-    en_text: "Three weeks before the project deadline, Budi quietly reassigned one of Roni's key tasks without explanation. He told himself it was a practical decision. It was not. It was avoidance. When Roni found out ‚Äî through a colleague ‚Äî he walked into the next team meeting with the kind of silence that is louder than anything. Halfway through, he asked: \"Why was my task given away?\" The room went still. Budi gave a careful, indirect answer that said nothing. Roni left before the meeting ended. That night, Budi drafted an email. Then deleted it. Then drafted it again.",
-    id_text: "Tiga minggu sebelum tenggat proyek, Budi diam-diam memindahkan salah satu tugas utama Roni tanpa penjelasan apa pun. Ia berkata pada dirinya sendiri bahwa ini adalah keputusan praktis. Itu bukan. Itu adalah penghindaran. Ketika Roni mengetahuinya ‚Äî melalui seorang rekan ‚Äî ia masuk ke rapat tim berikutnya dengan keheningan yang lebih keras dari kata-kata apa pun. Di tengah rapat, ia bertanya: \"Mengapa tugas saya diberikan ke orang lain?\" Ruangan hening. Budi memberikan jawaban yang hati-hati dan tidak langsung, yang tidak mengatakan apa-apa. Roni pergi sebelum rapat selesai. Malam itu, Budi menulis email. Lalu menghapusnya. Lalu menulis lagi.",
-    nl_text: "Drie weken voor de projectdeadline wees Budi stilletjes een van Roni's kerntaken toe aan iemand anders, zonder uitleg. Hij vertelde zichzelf dat het een praktische beslissing was. Dat was het niet. Het was vermijding. Toen Roni het te weten kwam ‚Äî via een collega ‚Äî liep hij de volgende teamvergadering in met de soort stilte die luider is dan welke woorden ook. Halverwege vroeg hij: \"Waarom is mijn taak weggegeven?\" De kamer verstomde. Budi gaf een voorzichtig, indirect antwoord dat niets zei. Roni vertrok voordat de vergadering was afgelopen. Die avond schreef Budi een e-mail. Verwijderde hem. Schreef hem opnieuw.",
-    en_pause: "Pause. Have you ever avoided a difficult conversation the way Budi did? What drove the avoidance ‚Äî and what did it cost?",
-    id_pause: "Berhenti sejenak. Pernahkah Anda menghindari percakapan sulit seperti yang dilakukan Budi? Apa yang mendorong penghindaran itu ‚Äî dan apa yang harus dibayar?",
-    nl_pause: "Pauze. Heb je ooit een moeilijk gesprek vermeden zoals Budi deed? Wat dreef die vermijding ‚Äî en wat kostte het?",
+    en_text: "Three weeks before the project deadline, Budi quietly reassigned one of Roni's key tasks without explanation. He told himself it was a practical decision. It was not. It was avoidance. When Roni found out ó through a colleague ó he walked into the next team meeting with the kind of silence that is louder than anything. Halfway through, he asked: \"Why was my task given away?\" The room went still. Budi gave a careful, indirect answer that said nothing. Roni left before the meeting ended. That night, Budi drafted an email. Then deleted it. Then drafted it again.",
+    id_text: "Tiga minggu sebelum tenggat proyek, Budi diam-diam memindahkan salah satu tugas utama Roni tanpa penjelasan apa pun. Ia berkata pada dirinya sendiri bahwa ini adalah keputusan praktis. Itu bukan. Itu adalah penghindaran. Ketika Roni mengetahuinya ó melalui seorang rekan ó ia masuk ke rapat tim berikutnya dengan keheningan yang lebih keras dari kata-kata apa pun. Di tengah rapat, ia bertanya: \"Mengapa tugas saya diberikan ke orang lain?\" Ruangan hening. Budi memberikan jawaban yang hati-hati dan tidak langsung, yang tidak mengatakan apa-apa. Roni pergi sebelum rapat selesai. Malam itu, Budi menulis email. Lalu menghapusnya. Lalu menulis lagi.",
+    nl_text: "Drie weken voor de projectdeadline wees Budi stilletjes een van Roni's kerntaken toe aan iemand anders, zonder uitleg. Hij vertelde zichzelf dat het een praktische beslissing was. Dat was het niet. Het was vermijding. Toen Roni het te weten kwam ó via een collega ó liep hij de volgende teamvergadering in met de soort stilte die luider is dan welke woorden ook. Halverwege vroeg hij: \"Waarom is mijn taak weggegeven?\" De kamer verstomde. Budi gaf een voorzichtig, indirect antwoord dat niets zei. Roni vertrok voordat de vergadering was afgelopen. Die avond schreef Budi een e-mail. Verwijderde hem. Schreef hem opnieuw.",
+    en_pause: "Pause. Have you ever avoided a difficult conversation the way Budi did? What drove the avoidance ó and what did it cost?",
+    id_pause: "Berhenti sejenak. Pernahkah Anda menghindari percakapan sulit seperti yang dilakukan Budi? Apa yang mendorong penghindaran itu ó dan apa yang harus dibayar?",
+    nl_pause: "Pauze. Heb je ooit een moeilijk gesprek vermeden zoals Budi deed? Wat dreef die vermijding ó en wat kostte het?",
   },
   {
     number: "III",
     en_label: "Climax", id_label: "Klimaks", nl_label: "Climax",
     en_subtitle: "The turn", id_subtitle: "Titik balik", nl_subtitle: "Het keerpunt",
-    en_text: "He remembered a story his grandfather used to tell ‚Äî about two rivers coming down from different mountains. Where they met, the currents seemed to fight. But it was in that collision that the valley below became the most fertile land for miles. His grandfather had told it not as a lesson but as an observation. Budi put down the email draft. The next morning, he walked over to Roni before the team arrived. \"Can I tell you a story?\" he asked. He told the story of the two rivers. Then: \"I reassigned your task because I was afraid to tell you I had concerns about the timeline. I should have come to you directly. I'm sorry.\" Roni was quiet for a moment. Then: \"In my culture, we say what we mean because we believe the other person can handle the truth. That is how we show respect.\"",
-    id_text: "Ia teringat sebuah cerita yang sering diceritakan kakeknya ‚Äî tentang dua sungai yang mengalir turun dari gunung yang berbeda. Di tempat pertemuan mereka, arus-arusnya tampak saling bertentangan. Namun justru di benturan itulah lembah di bawahnya menjadi tanah yang paling subur sejauh mata memandang. Kakeknya tidak menceritakannya sebagai pelajaran, melainkan sebagai pengamatan. Budi meletakkan draf emailnya. Keesokan paginya, ia menghampiri Roni sebelum anggota tim lain datang. \"Boleh saya ceritakan sebuah kisah?\" tanyanya. Ia menceritakan kisah dua sungai itu. Lalu: \"Saya memindahkan tugasmu karena saya takut untuk mengatakan bahwa saya punya kekhawatiran soal jadwal. Seharusnya saya datang langsung kepadamu. Maafkan saya.\" Roni terdiam sejenak. Kemudian: \"Di budaya kami, kami mengatakan apa yang kami maksud karena kami percaya orang lain mampu menanggung kebenaran. Itulah cara kami menunjukkan rasa hormat.\"",
-    nl_text: "Hij herinnerde zich een verhaal dat zijn grootvader altijd vertelde ‚Äî over twee rivieren die van verschillende bergen afdaalden. Waar ze samenkwamen, leken de stromingen te botsen. Maar juist in die botsing werd de vallei eronder de vruchtbaarste grond voor kilometers in de omtrek. Zijn grootvader had het niet als les verteld, maar als observatie. Budi legde het e-mailconcept neer. De volgende ochtend liep hij naar Roni voordat de rest aankwam. \"Mag ik je een verhaal vertellen?\" vroeg hij. Hij vertelde het verhaal van de twee rivieren. Dan: \"Ik heb jouw taak overgeheveld omdat ik bang was om te zeggen dat ik zorgen had over de tijdlijn. Ik had direct naar jou toe moeten komen. Het spijt me.\" Roni zweeg een moment. Dan: \"In onze cultuur zeggen we wat we bedoelen omdat we geloven dat de ander de waarheid aankan. Zo tonen we respect.\"",
+    en_text: "He remembered a story his grandfather used to tell ó about two rivers coming down from different mountains. Where they met, the currents seemed to fight. But it was in that collision that the valley below became the most fertile land for miles. His grandfather had told it not as a lesson but as an observation. Budi put down the email draft. The next morning, he walked over to Roni before the team arrived. \"Can I tell you a story?\" he asked. He told the story of the two rivers. Then: \"I reassigned your task because I was afraid to tell you I had concerns about the timeline. I should have come to you directly. I'm sorry.\" Roni was quiet for a moment. Then: \"In my culture, we say what we mean because we believe the other person can handle the truth. That is how we show respect.\"",
+    id_text: "Ia teringat sebuah cerita yang sering diceritakan kakeknya ó tentang dua sungai yang mengalir turun dari gunung yang berbeda. Di tempat pertemuan mereka, arus-arusnya tampak saling bertentangan. Namun justru di benturan itulah lembah di bawahnya menjadi tanah yang paling subur sejauh mata memandang. Kakeknya tidak menceritakannya sebagai pelajaran, melainkan sebagai pengamatan. Budi meletakkan draf emailnya. Keesokan paginya, ia menghampiri Roni sebelum anggota tim lain datang. \"Boleh saya ceritakan sebuah kisah?\" tanyanya. Ia menceritakan kisah dua sungai itu. Lalu: \"Saya memindahkan tugasmu karena saya takut untuk mengatakan bahwa saya punya kekhawatiran soal jadwal. Seharusnya saya datang langsung kepadamu. Maafkan saya.\" Roni terdiam sejenak. Kemudian: \"Di budaya kami, kami mengatakan apa yang kami maksud karena kami percaya orang lain mampu menanggung kebenaran. Itulah cara kami menunjukkan rasa hormat.\"",
+    nl_text: "Hij herinnerde zich een verhaal dat zijn grootvader altijd vertelde ó over twee rivieren die van verschillende bergen afdaalden. Waar ze samenkwamen, leken de stromingen te botsen. Maar juist in die botsing werd de vallei eronder de vruchtbaarste grond voor kilometers in de omtrek. Zijn grootvader had het niet als les verteld, maar als observatie. Budi legde het e-mailconcept neer. De volgende ochtend liep hij naar Roni voordat de rest aankwam. \"Mag ik je een verhaal vertellen?\" vroeg hij. Hij vertelde het verhaal van de twee rivieren. Dan: \"Ik heb jouw taak overgeheveld omdat ik bang was om te zeggen dat ik zorgen had over de tijdlijn. Ik had direct naar jou toe moeten komen. Het spijt me.\" Roni zweeg een moment. Dan: \"In onze cultuur zeggen we wat we bedoelen omdat we geloven dat de ander de waarheid aankan. Zo tonen we respect.\"",
     en_pause: "Pause. Is there a person or situation in your leadership right now where a story might reach further than a direct explanation?",
     id_pause: "Berhenti sejenak. Apakah ada seseorang atau situasi dalam kepemimpinan Anda saat ini di mana sebuah cerita bisa menjangkau lebih jauh daripada penjelasan langsung?",
     nl_pause: "Pauze. Is er een persoon of situatie in jouw leiderschap nu waarbij een verhaal verder zou reiken dan een directe uitleg?",
@@ -47,38 +47,38 @@ const STORY_CHAPTERS = [
     number: "IV",
     en_label: "Conclusion", id_label: "Kesimpulan", nl_label: "Conclusie",
     en_subtitle: "What it meant", id_subtitle: "Apa artinya", nl_subtitle: "Wat het betekende",
-    en_text: "Something shifted after that conversation. Budi began opening team meetings with a short story ‚Äî sometimes from Scripture, sometimes from a memory, sometimes borrowed from someone else's life. Roni started doing the same. The team that had nearly fractured became the most cohesive group in the organisation ‚Äî not because they all became the same, but because they found a common medium. Stories had done what a memo, a policy, or a confrontation never could: they had made a path between two different ways of being human.",
-    id_text: "Ada yang berubah setelah percakapan itu. Budi mulai membuka rapat tim dengan cerita singkat ‚Äî kadang dari Alkitab, kadang dari ingatan, kadang dipinjam dari kehidupan orang lain. Roni pun mulai melakukan hal yang sama. Tim yang hampir retak itu menjadi kelompok paling solid di organisasi ‚Äî bukan karena mereka semua menjadi sama, melainkan karena mereka menemukan bahasa yang sama. Cerita telah melakukan apa yang memo, kebijakan, atau konfrontasi tak pernah bisa: membuat jalan antara dua cara berbeda untuk menjadi manusia.",
-    nl_text: "Er veranderde iets na dat gesprek. Budi begon teamvergaderingen te openen met een kort verhaal ‚Äî soms uit de Bijbel, soms uit een herinnering, soms geleend uit iemand anders zijn leven. Roni begon hetzelfde te doen. Het team dat bijna uiteen was gevallen werd de meest hechte groep in de organisatie ‚Äî niet omdat ze allemaal hetzelfde werden, maar omdat ze een gemeenschappelijk medium hadden gevonden. Verhalen hadden gedaan wat een memo, een beleid of een confrontatie nooit kon: een pad maken tussen twee verschillende manieren van mens-zijn.",
+    en_text: "Something shifted after that conversation. Budi began opening team meetings with a short story ó sometimes from Scripture, sometimes from a memory, sometimes borrowed from someone else's life. Roni started doing the same. The team that had nearly fractured became the most cohesive group in the organisation ó not because they all became the same, but because they found a common medium. Stories had done what a memo, a policy, or a confrontation never could: they had made a path between two different ways of being human.",
+    id_text: "Ada yang berubah setelah percakapan itu. Budi mulai membuka rapat tim dengan cerita singkat ó kadang dari Alkitab, kadang dari ingatan, kadang dipinjam dari kehidupan orang lain. Roni pun mulai melakukan hal yang sama. Tim yang hampir retak itu menjadi kelompok paling solid di organisasi ó bukan karena mereka semua menjadi sama, melainkan karena mereka menemukan bahasa yang sama. Cerita telah melakukan apa yang memo, kebijakan, atau konfrontasi tak pernah bisa: membuat jalan antara dua cara berbeda untuk menjadi manusia.",
+    nl_text: "Er veranderde iets na dat gesprek. Budi begon teamvergaderingen te openen met een kort verhaal ó soms uit de Bijbel, soms uit een herinnering, soms geleend uit iemand anders zijn leven. Roni begon hetzelfde te doen. Het team dat bijna uiteen was gevallen werd de meest hechte groep in de organisatie ó niet omdat ze allemaal hetzelfde werden, maar omdat ze een gemeenschappelijk medium hadden gevonden. Verhalen hadden gedaan wat een memo, een beleid of een confrontatie nooit kon: een pad maken tussen twee verschillende manieren van mens-zijn.",
     en_pause: "", id_pause: "", nl_pause: "",
   },
 ];
 
 const CRAFT_ELEMENTS = [
-  { number: "01", en_title: "Context", id_title: "Konteks", nl_title: "Context", en_desc: "Set the scene. What was normal before the disruption? Without this ground, conflict means nothing ‚Äî there is no baseline to return to.", id_desc: "Atur latar. Apa yang normal sebelum gangguan terjadi? Tanpa dasar ini, konflik tidak berarti apa-apa ‚Äî tidak ada garis dasar untuk kembali.", nl_desc: "Stel de sc√®ne. Wat was normaal v√≥√≥r de verstoring? Zonder deze basis betekent conflict niets ‚Äî er is geen basislijn om naar terug te keren." },
-  { number: "02", en_title: "Conflict", id_title: "Konflik", nl_title: "Conflict", en_desc: "Something disrupts the normal. Without conflict, there is no story ‚Äî only a report. Conflict is not negative; it is the engine of meaning.", id_desc: "Sesuatu mengganggu yang normal. Tanpa konflik, tidak ada cerita ‚Äî hanya laporan. Konflik tidak negatif; itu adalah mesin makna.", nl_desc: "Iets verstoort het normale. Zonder conflict is er geen verhaal ‚Äî alleen een rapport. Conflict is niet negatief; het is de motor van betekenis." },
-  { number: "03", en_title: "Climax", id_title: "Klimaks", nl_title: "Climax", en_desc: "The pivot point ‚Äî a decision, revelation, or action that breaks the tension. This moment carries the emotional weight that makes people lean in.", id_desc: "Titik balik ‚Äî keputusan, wahyu, atau tindakan yang memecahkan ketegangan. Momen ini membawa bobot emosional yang membuat orang tertarik.", nl_desc: "Het keerpunt ‚Äî een beslissing, openbaring of actie die de spanning breekt. Dit moment draagt het emotionele gewicht dat mensen doet opletten." },
+  { number: "01", en_title: "Context", id_title: "Konteks", nl_title: "Context", en_desc: "Set the scene. What was normal before the disruption? Without this ground, conflict means nothing ó there is no baseline to return to.", id_desc: "Atur latar. Apa yang normal sebelum gangguan terjadi? Tanpa dasar ini, konflik tidak berarti apa-apa ó tidak ada garis dasar untuk kembali.", nl_desc: "Stel de scËne. Wat was normaal vÛÛr de verstoring? Zonder deze basis betekent conflict niets ó er is geen basislijn om naar terug te keren." },
+  { number: "02", en_title: "Conflict", id_title: "Konflik", nl_title: "Conflict", en_desc: "Something disrupts the normal. Without conflict, there is no story ó only a report. Conflict is not negative; it is the engine of meaning.", id_desc: "Sesuatu mengganggu yang normal. Tanpa konflik, tidak ada cerita ó hanya laporan. Konflik tidak negatif; itu adalah mesin makna.", nl_desc: "Iets verstoort het normale. Zonder conflict is er geen verhaal ó alleen een rapport. Conflict is niet negatief; het is de motor van betekenis." },
+  { number: "03", en_title: "Climax", id_title: "Klimaks", nl_title: "Climax", en_desc: "The pivot point ó a decision, revelation, or action that breaks the tension. This moment carries the emotional weight that makes people lean in.", id_desc: "Titik balik ó keputusan, wahyu, atau tindakan yang memecahkan ketegangan. Momen ini membawa bobot emosional yang membuat orang tertarik.", nl_desc: "Het keerpunt ó een beslissing, openbaring of actie die de spanning breekt. Dit moment draagt het emotionele gewicht dat mensen doet opletten." },
   { number: "04", en_title: "Conclusion", id_title: "Kesimpulan", nl_title: "Conclusie", en_desc: "Make meaning explicit. What changed? What was learned? Without a conclusion, a story is entertainment. With one, it forms.", id_desc: "Buat makna menjadi eksplisit. Apa yang berubah? Apa yang dipelajari? Tanpa kesimpulan, cerita hanya hiburan. Dengan kesimpulan, cerita membentuk.", nl_desc: "Maak betekenis expliciet. Wat veranderde? Wat werd geleerd? Zonder conclusie is een verhaal vermaak. Met een conclusie vormt het." },
 ];
 
 const STORY_TYPES = [
   { id: "origin", en_title: "Origin", id_title: "Asal Usul", nl_title: "Herkomst", en_desc: "Why does this team, mission, or organisation exist? What was the founding moment or call? This story anchors identity and reminds people why they signed up.", id_desc: "Mengapa tim, misi, atau organisasi ini ada? Apa momen pendiri atau panggilan? Cerita ini menghangat identitas dan mengingatkan orang mengapa mereka bergabung.", nl_desc: "Waarom bestaat dit team, deze missie of organisatie? Wat was het oprichtingsmoment of de roeping? Dit verhaal verankert identiteit en herinnert mensen waarom ze zich aansloten." },
-  { id: "failure", en_title: "Failure", id_title: "Kegagalan", nl_title: "Mislukking", en_desc: "A story of what went wrong ‚Äî and what you learned. Vulnerability creates trust. The leader who never admits failure is perceived as dishonest, not strong.", id_desc: "Cerita tentang apa yang berjalan salah ‚Äî dan apa yang Anda pelajari. Kerentanan menciptakan kepercayaan. Pemimpin yang tidak pernah mengakui kegagalan dianggap tidak jujur, bukan kuat.", nl_desc: "Een verhaal van wat misging ‚Äî en wat je leerde. Kwetsbaarheid cre√´ert vertrouwen. De leider die nooit een mislukking toegeeft wordt als oneerlijk gezien, niet als sterk." },
-  { id: "vision", en_title: "Vision", id_title: "Visi", nl_title: "Visie", en_desc: "A picture of the future so vivid people can feel it. Not a mission statement ‚Äî a narrative: 'Imagine it is 2030, and this is what we see...' Vision stories create movement; mission statements create obligation.", id_desc: "Gambaran masa depan yang begitu jelas sehingga orang bisa merasakannya. Bukan pernyataan misi ‚Äî sebuah narasi: 'Bayangkan tahun 2030, dan inilah yang kita lihat...' Cerita visi menciptakan gerakan; pernyataan misi menciptakan kewajiban.", nl_desc: "Een beeld van de toekomst zo levendig dat mensen het kunnen voelen. Geen missie-statement ‚Äî een narratief: 'Stel je voor dat het 2030 is, en dit is wat we zien...' Visieverhalen cre√´ren beweging; mission statements cre√´ren verplichtingen." },
-  { id: "transformation", en_title: "Transformation", id_title: "Transformasi", nl_title: "Transformatie", en_desc: "A story about someone who changed ‚Äî a team member, a person served, a community impacted. These stories prove the work matters and provide evidence that it is worth the cost.", id_desc: "Cerita tentang seseorang yang berubah ‚Äî anggota tim, orang yang dilayani, komunitas yang terdampak. Cerita-cerita ini membuktikan bahwa pekerjaan itu penting dan memberikan bukti bahwa ini sepadan.", nl_desc: "Een verhaal over iemand die veranderde ‚Äî een teamlid, een gediend persoon, een be√Ønvloede gemeenschap. Deze verhalen bewijzen dat het werk ertoe doet en leveren bewijs dat het de kosten waard is." },
-  { id: "teaching", en_title: "Teaching", id_title: "Pengajaran", nl_title: "Onderwijzing", en_desc: "A story that carries a principle. People retain story-based teaching seven times better than abstract instruction. If you want people to remember your lesson ‚Äî give it a plot.", id_desc: "Cerita yang membawa prinsip. Orang mengingat pengajaran berbasis cerita tujuh kali lebih baik daripada instruksi abstrak. Jika Anda ingin orang mengingat pelajaran Anda ‚Äî berikan alur cerita.", nl_desc: "Een verhaal dat een principe draagt. Mensen onthouden verhaalgebaseerd onderwijs zeven keer beter dan abstracte instructie. Als je wilt dat mensen je les onthouden ‚Äî geef het een verhaallijn." },
+  { id: "failure", en_title: "Failure", id_title: "Kegagalan", nl_title: "Mislukking", en_desc: "A story of what went wrong ó and what you learned. Vulnerability creates trust. The leader who never admits failure is perceived as dishonest, not strong.", id_desc: "Cerita tentang apa yang berjalan salah ó dan apa yang Anda pelajari. Kerentanan menciptakan kepercayaan. Pemimpin yang tidak pernah mengakui kegagalan dianggap tidak jujur, bukan kuat.", nl_desc: "Een verhaal van wat misging ó en wat je leerde. Kwetsbaarheid creÎert vertrouwen. De leider die nooit een mislukking toegeeft wordt als oneerlijk gezien, niet als sterk." },
+  { id: "vision", en_title: "Vision", id_title: "Visi", nl_title: "Visie", en_desc: "A picture of the future so vivid people can feel it. Not a mission statement ó a narrative: 'Imagine it is 2030, and this is what we see...' Vision stories create movement; mission statements create obligation.", id_desc: "Gambaran masa depan yang begitu jelas sehingga orang bisa merasakannya. Bukan pernyataan misi ó sebuah narasi: 'Bayangkan tahun 2030, dan inilah yang kita lihat...' Cerita visi menciptakan gerakan; pernyataan misi menciptakan kewajiban.", nl_desc: "Een beeld van de toekomst zo levendig dat mensen het kunnen voelen. Geen missie-statement ó een narratief: 'Stel je voor dat het 2030 is, en dit is wat we zien...' Visieverhalen creÎren beweging; mission statements creÎren verplichtingen." },
+  { id: "transformation", en_title: "Transformation", id_title: "Transformasi", nl_title: "Transformatie", en_desc: "A story about someone who changed ó a team member, a person served, a community impacted. These stories prove the work matters and provide evidence that it is worth the cost.", id_desc: "Cerita tentang seseorang yang berubah ó anggota tim, orang yang dilayani, komunitas yang terdampak. Cerita-cerita ini membuktikan bahwa pekerjaan itu penting dan memberikan bukti bahwa ini sepadan.", nl_desc: "Een verhaal over iemand die veranderde ó een teamlid, een gediend persoon, een beÔnvloede gemeenschap. Deze verhalen bewijzen dat het werk ertoe doet en leveren bewijs dat het de kosten waard is." },
+  { id: "teaching", en_title: "Teaching", id_title: "Pengajaran", nl_title: "Onderwijzing", en_desc: "A story that carries a principle. People retain story-based teaching seven times better than abstract instruction. If you want people to remember your lesson ó give it a plot.", id_desc: "Cerita yang membawa prinsip. Orang mengingat pengajaran berbasis cerita tujuh kali lebih baik daripada instruksi abstrak. Jika Anda ingin orang mengingat pelajaran Anda ó berikan alur cerita.", nl_desc: "Een verhaal dat een principe draagt. Mensen onthouden verhaalgebaseerd onderwijs zeven keer beter dan abstracte instructie. Als je wilt dat mensen je les onthouden ó geef het een verhaallijn." },
 ];
 
 const VERSES = {
   "matt-13-34": {
-    en_ref: "Matthew 13:34", id_ref: "Matius 13:34", nl_ref: "Matthe√ºs 13:34",
+    en_ref: "Matthew 13:34", id_ref: "Matius 13:34", nl_ref: "Matthe¸s 13:34",
     en: "Jesus spoke all these things to the crowd in parables; he did not say anything to them without using a parable.",
     id: "Semuanya itu disampaikan Yesus kepada orang banyak dalam perumpamaan, dan tanpa perumpamaan suatupun tidak disampaikan-Nya kepada mereka.",
     nl: "Dit alles vertelde Jezus de menigte in gelijkenissen; zonder gelijkenissen vertelde hij hun niets.",
   },
   "ps-78-2": {
     en_ref: "Psalm 78:2", id_ref: "Mazmur 78:2", nl_ref: "Psalm 78:2",
-    en: "I will open my mouth with a parable; I will utter hidden things, things from of old‚Äî",
+    en: "I will open my mouth with a parable; I will utter hidden things, things from of oldó",
     id: "aku mau membuka mulutku dengan amsal, aku mau mengucapkan teka-teki dari zaman purbakala,",
     nl: "Ik open mijn mond voor een gelijkenis, ik onthul raadsels uit het verleden.",
   },
@@ -87,9 +87,9 @@ const VERSES = {
 const REFLECTIONS = [
   { roman: "I", en: "Which of the five story types is most absent from your leadership right now?", id: "Jenis cerita mana dari lima jenis yang paling absen dalam kepemimpinan Anda saat ini?", nl: "Welk van de vijf soorten verhalen ontbreekt momenteel het meest in jouw leiderschap?" },
   { roman: "II", en: "What failure story do you carry that could build trust with your team, if you were willing to tell it?", id: "Cerita kegagalan apa yang Anda bawa yang bisa membangun kepercayaan dengan tim Anda, jika Anda bersedia menceritakannya?", nl: "Welk mislukkingsverhaal draag je dat vertrouwen zou kunnen opbouwen met je team, als je het bereid was te vertellen?" },
-  { roman: "III", en: "How does your cultural background shape which stories feel natural to tell ‚Äî and which feel dangerous?", id: "Bagaimana latar belakang budaya Anda membentuk cerita apa yang terasa alami untuk diceritakan ‚Äî dan mana yang terasa berbahaya?", nl: "Hoe vormt jouw culturele achtergrond welke verhalen natuurlijk aanvoelen om te vertellen ‚Äî en welke gevaarlijk voelen?" },
+  { roman: "III", en: "How does your cultural background shape which stories feel natural to tell ó and which feel dangerous?", id: "Bagaimana latar belakang budaya Anda membentuk cerita apa yang terasa alami untuk diceritakan ó dan mana yang terasa berbahaya?", nl: "Hoe vormt jouw culturele achtergrond welke verhalen natuurlijk aanvoelen om te vertellen ó en welke gevaarlijk voelen?" },
   { roman: "IV", en: "Jesus never taught without a story. What does his deliberate method tell you about how people actually change?", id: "Yesus tidak pernah mengajar tanpa cerita. Apa yang metode sengaja-Nya katakan kepada Anda tentang bagaimana orang benar-benar berubah?", nl: "Jezus gaf nooit les zonder een verhaal. Wat vertelt zijn bewuste methode je over hoe mensen werkelijk veranderen?" },
-  { roman: "V", en: "What story from your life is most worth telling ‚Äî and who most needs to hear it?", id: "Cerita apa dari hidup Anda yang paling layak diceritakan ‚Äî dan siapa yang paling perlu mendengarnya?", nl: "Welk verhaal uit jouw leven is het meest de moeite waard om te vertellen ‚Äî en wie heeft het het meest nodig om het te horen?" },
+  { roman: "V", en: "What story from your life is most worth telling ó and who most needs to hear it?", id: "Cerita apa dari hidup Anda yang paling layak diceritakan ó dan siapa yang paling perlu mendengarnya?", nl: "Welk verhaal uit jouw leven is het meest de moeite waard om te vertellen ó en wie heeft het het meest nodig om het te horen?" },
 ];
 
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -132,16 +132,16 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
       <div style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 56px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Leadership ¬∑ Guide", "Kepemimpinan ¬∑ Panduan", "Leiderschap ¬∑ Gids")}
+            {t("Leadership ∑ Guide", "Kepemimpinan ∑ Panduan", "Leiderschap ∑ Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.08, margin: "0 0 24px" }}>
             {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}
           </h1>
           <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, color: "oklch(82% 0.025 80)", lineHeight: 1.75, fontStyle: "italic", maxWidth: 580, margin: 0 }}>
             {t(
-              "Not a framework. Not a slide. A story ‚Äî told well ‚Äî can do what no memo, policy, or presentation ever could.",
-              "Bukan kerangka kerja. Bukan slide. Sebuah cerita ‚Äî yang diceritakan dengan baik ‚Äî dapat melakukan apa yang tidak bisa dilakukan memo, kebijakan, atau presentasi mana pun.",
-              "Geen framework. Geen slide. Een verhaal ‚Äî goed verteld ‚Äî kan doen wat geen memo, beleid of presentatie ooit kon."
+              "Not a framework. Not a slide. A story ó told well ó can do what no memo, policy, or presentation ever could.",
+              "Bukan kerangka kerja. Bukan slide. Sebuah cerita ó yang diceritakan dengan baik ó dapat melakukan apa yang tidak bisa dilakukan memo, kebijakan, atau presentasi mana pun.",
+              "Geen framework. Geen slide. Een verhaal ó goed verteld ó kan doen wat geen memo, beleid of presentatie ooit kon."
             )}
           </p>
         </div>
@@ -151,7 +151,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px 40px" }}>
         <div style={{ borderTop: "1px solid oklch(88% 0.01 80)", paddingTop: 32 }}>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", margin: 0 }}>
-            {t("Before the lesson ‚Äî the story", "Sebelum pelajaran ‚Äî ceritanya", "V√≥√≥r de les ‚Äî het verhaal")}
+            {t("Before the lesson ó the story", "Sebelum pelajaran ó ceritanya", "VÛÛr de les ó het verhaal")}
           </p>
         </div>
       </div>
@@ -177,7 +177,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
             {pauseText && (
               <div style={{ background: warmCream, borderRadius: 8, padding: "28px 32px", marginBottom: 72 }}>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 12 }}>
-                  {t("‚ú¶  Pause", "‚ú¶  Berhenti sejenak", "‚ú¶  Pauze")}
+                  {t("?  Pause", "?  Berhenti sejenak", "?  Pauze")}
                 </p>
                 <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 19, lineHeight: 1.75, color: bodyText, fontStyle: "italic", margin: 0 }}>
                   {pauseText}
@@ -188,7 +188,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
         );
       })}
 
-      {/* The Craft ‚Äî structure reveal on navy */}
+      {/* The Craft ó structure reveal on navy */}
       <div style={{ background: navy, padding: "72px 24px", marginTop: 16 }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 16 }}>
@@ -260,16 +260,16 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.85, color: bodyText, marginBottom: 20 }}>
             {t(
-              "Matthew 13:34 is unambiguous: he did not say anything to the crowds without using a parable. This was not a communication style ‚Äî it was a method. The greatest teacher who ever lived chose story as his primary vehicle for truth. Not lectures. Not principles. Not three-point outlines. Stories.",
-              "Matius 13:34 tidak ambigu: Ia tidak mengatakan apa pun kepada orang banyak tanpa menggunakan perumpamaan. Ini bukan gaya komunikasi ‚Äî ini adalah metode. Guru terbesar yang pernah hidup memilih cerita sebagai kendaraan utama untuk kebenaran. Bukan kuliah. Bukan prinsip. Bukan garis besar tiga poin. Cerita.",
-              "Matthe√ºs 13:34 is ondubbelzinnig: hij vertelde de menigten niets zonder gelijkenissen te gebruiken. Dit was geen communicatiestijl ‚Äî het was een methode. De grootste leraar die ooit heeft geleefd koos verhalen als zijn primaire voertuig voor waarheid. Geen lezingen. Geen principes. Geen driedelige schema's. Verhalen."
+              "Matthew 13:34 is unambiguous: he did not say anything to the crowds without using a parable. This was not a communication style ó it was a method. The greatest teacher who ever lived chose story as his primary vehicle for truth. Not lectures. Not principles. Not three-point outlines. Stories.",
+              "Matius 13:34 tidak ambigu: Ia tidak mengatakan apa pun kepada orang banyak tanpa menggunakan perumpamaan. Ini bukan gaya komunikasi ó ini adalah metode. Guru terbesar yang pernah hidup memilih cerita sebagai kendaraan utama untuk kebenaran. Bukan kuliah. Bukan prinsip. Bukan garis besar tiga poin. Cerita.",
+              "Matthe¸s 13:34 is ondubbelzinnig: hij vertelde de menigten niets zonder gelijkenissen te gebruiken. Dit was geen communicatiestijl ó het was een methode. De grootste leraar die ooit heeft geleefd koos verhalen als zijn primaire voertuig voor waarheid. Geen lezingen. Geen principes. Geen driedelige schema's. Verhalen."
             )}
           </p>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.85, color: bodyText, marginBottom: 40 }}>
             {t(
-              "The Prodigal Son doesn't argue for forgiveness ‚Äî it creates a felt experience of it. The Good Samaritan doesn't define 'neighbour' ‚Äî it forces you to become one. Nathan's story to David ('There was a man who had a lamb...') bypassed a king's defences and reached a conscience that direct accusation never could. Story is not a soft tool. In the right hands, it is the sharpest thing available.",
-              "Anak yang Hilang tidak berargumen tentang pengampunan ‚Äî ia menciptakan pengalaman yang terasa tentangnya. Orang Samaria yang Baik tidak mendefinisikan 'sesama' ‚Äî ia memaksamu untuk menjadi satu. Cerita Natan kepada Daud ('Ada seorang laki-laki yang mempunyai domba...') melewati pertahanan seorang raja dan mencapai hati nurani yang tidak pernah bisa dicapai oleh tuduhan langsung. Cerita bukan alat yang lemah. Di tangan yang tepat, itu adalah hal paling tajam yang tersedia.",
-              "De Verloren Zoon betoogt niet voor vergeving ‚Äî het cre√´ert een gevoelde ervaring ervan. De Barmhartige Samaritaan definieert 'naaste' niet ‚Äî het dwingt je er √©√©n van te worden. Nathans verhaal aan David ('Er was een man die een lam had...') omzeilde de verdedigingen van een koning en bereikte een geweten dat directe beschuldiging nooit kon bereiken. Verhaal is geen zacht gereedschap. In de juiste handen is het het scherpste wat beschikbaar is."
+              "The Prodigal Son doesn't argue for forgiveness ó it creates a felt experience of it. The Good Samaritan doesn't define 'neighbour' ó it forces you to become one. Nathan's story to David ('There was a man who had a lamb...') bypassed a king's defences and reached a conscience that direct accusation never could. Story is not a soft tool. In the right hands, it is the sharpest thing available.",
+              "Anak yang Hilang tidak berargumen tentang pengampunan ó ia menciptakan pengalaman yang terasa tentangnya. Orang Samaria yang Baik tidak mendefinisikan 'sesama' ó ia memaksamu untuk menjadi satu. Cerita Natan kepada Daud ('Ada seorang laki-laki yang mempunyai domba...') melewati pertahanan seorang raja dan mencapai hati nurani yang tidak pernah bisa dicapai oleh tuduhan langsung. Cerita bukan alat yang lemah. Di tangan yang tepat, itu adalah hal paling tajam yang tersedia.",
+              "De Verloren Zoon betoogt niet voor vergeving ó het creÎert een gevoelde ervaring ervan. De Barmhartige Samaritaan definieert 'naaste' niet ó het dwingt je er ÈÈn van te worden. Nathans verhaal aan David ('Er was een man die een lam had...') omzeilde de verdedigingen van een koning en bereikte een geweten dat directe beschuldiging nooit kon bereiken. Verhaal is geen zacht gereedschap. In de juiste handen is het het scherpste wat beschikbaar is."
             )}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -280,7 +280,7 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
                 <button key={key} onClick={() => setActiveVerse(key)} style={{
                   background: "none", border: `2px solid ${orange}`, cursor: "pointer",
                   color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif",
-                  fontSize: 13, padding: "8px 20px", borderRadius: 6,
+                  fontSize: 13, padding: "8px 20px", borderRadius: 12,
                 }}>{ref}</button>
               );
             })}
@@ -298,9 +298,9 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
         </h2>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, color: bodyText, lineHeight: 1.8, fontStyle: "italic", marginBottom: 40 }}>
           {t(
-            "Write the opening sentence of a story your team needs to hear. Not a lesson. Not a principle. One sentence ‚Äî where were you, and what was happening?",
-            "Tulis kalimat pembuka dari sebuah cerita yang perlu didengar oleh timmu. Bukan pelajaran. Bukan prinsip. Satu kalimat ‚Äî di mana Anda, dan apa yang terjadi?",
-            "Schrijf de openingszin van een verhaal dat jouw team moet horen. Geen les. Geen principe. √â√©n zin ‚Äî waar was je, en wat was er aan de hand?"
+            "Write the opening sentence of a story your team needs to hear. Not a lesson. Not a principle. One sentence ó where were you, and what was happening?",
+            "Tulis kalimat pembuka dari sebuah cerita yang perlu didengar oleh timmu. Bukan pelajaran. Bukan prinsip. Satu kalimat ó di mana Anda, dan apa yang terjadi?",
+            "Schrijf de openingszin van een verhaal dat jouw team moet horen. Geen les. Geen principe. …Èn zin ó waar was je, en wat was er aan de hand?"
           )}
         </p>
         <textarea
@@ -324,15 +324,15 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
         </p>
       </div>
 
-      {/* Reflection ‚Äî collapsible */}
+      {/* Reflection ó collapsible */}
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px 80px" }}>
         <button onClick={() => setShowReflection(!showReflection)} style={{
           background: "none", border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif",
           fontSize: 13, fontWeight: 700, color: navy, letterSpacing: "0.06em",
           display: "flex", alignItems: "center", gap: 10, padding: 0,
         }}>
-          <span style={{ fontSize: 20, transform: showReflection ? "rotate(90deg)" : "none", display: "inline-block", transition: "transform 0.2s", lineHeight: 1 }}>‚Ä∫</span>
-          {t("Dig deeper ‚Äî reflection questions", "Gali lebih dalam ‚Äî pertanyaan refleksi", "Dieper gaan ‚Äî reflectievragen")}
+          <span style={{ fontSize: 20, transform: showReflection ? "rotate(90deg)" : "none", display: "inline-block", transition: "transform 0.2s", lineHeight: 1 }}>õ</span>
+          {t("Dig deeper ó reflection questions", "Gali lebih dalam ó pertanyaan refleksi", "Dieper gaan ó reflectievragen")}
         </button>
         {showReflection && (
           <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 28 }}>
@@ -353,16 +353,16 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "32px 24px 80px", borderTop: `1px solid oklch(88% 0.01 80)`, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
         <button onClick={handleSave} disabled={saved || isPending} style={{
           padding: "12px 32px", background: saved ? "oklch(88% 0.01 80)" : navy,
-          color: saved ? bodyText : offWhite, border: "none", borderRadius: 6,
+          color: saved ? bodyText : offWhite, border: "none", borderRadius: 12,
           cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif",
           fontWeight: 700, fontSize: 14,
         }}>
           {saved
-            ? t("‚úì Saved to Dashboard", "‚úì Tersimpan di Dashboard", "‚úì Opgeslagen in Dashboard")
+            ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard")
             : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
         </button>
         <Link href="/resources" style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: bodyText, textDecoration: "none", fontWeight: 600 }}>
-          ‚Üê {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
+          ? {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
         </Link>
       </div>
 
@@ -384,11 +384,11 @@ export default function StorytellingLeadershipClient({ userPathway, isSaved: ini
                 &ldquo;{text}&rdquo;
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
-                ‚Äî {ref} ({translation})
+                ó {ref} ({translation})
               </p>
               <button onClick={() => setActiveVerse(null)} style={{
                 marginTop: 24, padding: "10px 24px", background: navy, color: offWhite,
-                border: "none", borderRadius: 6, fontFamily: "Montserrat, sans-serif",
+                border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif",
                 fontWeight: 700, cursor: "pointer",
               }}>
                 {t("Close", "Tutup", "Sluiten")}

@@ -34,37 +34,45 @@ export default function HomeContent() {
     <>
       <LogoRevealPlayer />
       {/* ── HERO ── */}
-      <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 8vw, 8rem)", paddingBottom: "clamp(4rem, 8vw, 8rem)", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(5rem, 9vw, 9rem)", paddingBottom: "clamp(5rem, 9vw, 9rem)", position: "relative", overflow: "hidden" }}>
         {/* Top orange rule */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
 
         {/* Dot grid */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "32px 32px", pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.07) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
 
         {/* Concentric arcs */}
-        <div aria-hidden="true" style={{ position: "absolute", bottom: "-180px", right: "-180px", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)", pointerEvents: "none" }}>
-          <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.05)" }}>
-            <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.15)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", bottom: "-180px", right: "-180px", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.06)", pointerEvents: "none" }}>
+          <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.06)" }}>
+            <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.18)" }} />
           </div>
         </div>
 
         <div className="container-wide" style={{ position: "relative" }}>
-          {/* Compass — constrained within container so it stays close to text on wide screens */}
-          <div aria-hidden="true" style={{ position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)", width: "min(42vw, 420px)", height: "min(42vw, 420px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.55 }}>
+          {/* Compass mark */}
+          <div aria-hidden="true" style={{ position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)", width: "min(42vw, 420px)", height: "min(42vw, 420px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.45 }}>
             <Image src="/logo-icon.png" alt="" fill style={{ objectFit: "contain" }} priority />
           </div>
 
-          <div style={{ maxWidth: "640px" }}>
-            <h1 className="t-hero animate-fade-up" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+          <div style={{ maxWidth: "640px", position: "relative" }}>
+            {/* Eyebrow */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "2rem" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
+              <p className="animate-fade-up" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>
+                {h.label}
+              </p>
+            </div>
+            {/* Accent rule */}
+            <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
+
+            <h1 className="t-hero animate-fade-up animate-delay-1" style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, color: "oklch(97% 0.005 80)", margin: "0 0 1.75rem" }}>
               {h.h1a}
             </h1>
-            <p className="animate-fade-up animate-delay-1" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "clamp(0.85rem, 1.4vw, 0.95rem)", letterSpacing: "0.05em", color: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }}>
-              {h.label}
-            </p>
-            <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(78% 0.04 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
+            <p className="t-tagline animate-fade-up animate-delay-2" style={{ color: "oklch(82% 0.03 260)", marginBottom: "2.75rem", maxWidth: "52ch" }}>
               {h.tagline}
             </p>
-            <Link href="/membership" className="btn-primary animate-fade-up animate-delay-3" style={{ fontSize: "0.875rem" }}>
+            <Link href="/membership" className="btn-primary animate-fade-up animate-delay-3" style={{ fontSize: "0.875rem", minHeight: "48px", display: "inline-flex", alignItems: "center" }}>
               {h.heroCta ?? "Apply for membership →"}
             </Link>
           </div>
@@ -201,7 +209,7 @@ export default function HomeContent() {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(38% 0.06 260)", marginBottom: "3rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "0", border: "1px solid oklch(34% 0.08 260)", marginBottom: "3rem" }}>
             {[
               {
                 num: "01",
@@ -234,10 +242,10 @@ export default function HomeContent() {
                 body: h.reason6Body ?? "Cross-cultural leadership often comes with something deeper than a career goal. This platform takes the spiritual dimension seriously — the calling, the doubt, and the resilience that grows from faith under pressure.",
               },
             ].map(({ num, title, body }) => (
-              <div key={num} style={{ background: "oklch(28% 0.11 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", color: "oklch(65% 0.15 45)" }}>{num}</span>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(97% 0.005 80)", margin: 0, lineHeight: 1.3 }}>{title}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8375rem", lineHeight: 1.7, color: "oklch(68% 0.04 260)", margin: 0 }}>{body}</p>
+              <div key={num} style={{ background: "oklch(24% 0.10 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem", borderRight: "1px solid oklch(34% 0.08 260)", borderBottom: "1px solid oklch(34% 0.08 260)" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", color: "oklch(65% 0.15 45)" }}>{num}</span>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(97% 0.005 80)", margin: 0, lineHeight: 1.35 }}>{title}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8375rem", lineHeight: 1.75, color: "oklch(72% 0.03 260)", margin: 0 }}>{body}</p>
               </div>
             ))}
           </div>

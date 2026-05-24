@@ -44,23 +44,23 @@ export default function LangToggle({ langs = ["en", "id"] }: LangToggleProps) {
           ← {BACK_LABEL[lang]}
         </Link>
         {langs.length > 1 && (
-          <div style={{ display: "flex", gap: 8 }}>
+          <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
             {langs.map(l => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
                 style={{
                   padding: "5px 14px",
-                  borderRadius: 6,
-                  border: "1px solid",
+                  borderRadius: 999,
+                  border: "none",
                   fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: "0.08em",
                   cursor: "pointer",
                   fontFamily: "Montserrat, sans-serif",
                   background: lang === l ? "oklch(65% 0.15 45)" : "transparent",
-                  color: lang === l ? "oklch(15% 0.05 45)" : "oklch(65% 0.06 260)",
-                  borderColor: lang === l ? "oklch(65% 0.15 45)" : "oklch(42% 0.08 260)",
+                  color: lang === l ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
+                  transition: "background 0.15s, color 0.15s",
                 }}
               >
                 {l.toUpperCase()}

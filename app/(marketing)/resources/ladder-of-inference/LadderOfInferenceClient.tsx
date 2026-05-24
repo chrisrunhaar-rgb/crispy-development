@@ -1,4 +1,4 @@
-ï»¿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -21,19 +21,19 @@ const RUNGS = [
     label: { en: "I Make Observations", id: "Saya Membuat Pengamatan", nl: "Ik Doe Waarnemingen" },
     shortLabel: { en: "Observations", id: "Pengamatan", nl: "Waarnemingen" },
     desc: {
-      en: "First I observe the world. This is the raw, unfiltered data â€” everything that is actually happening around me right now.",
-      id: "Pertama saya mengamati dunia. Ini adalah data mentah, tidak terfilter â€” semua yang sebenarnya terjadi di sekitar saya sekarang.",
-      nl: "Eerst observeer ik de wereld. Dit zijn de ruwe, ongefilterde data â€” alles wat er op dit moment daadwerkelijk om me heen gebeurt.",
+      en: "First I observe the world. This is the raw, unfiltered data — everything that is actually happening around me right now.",
+      id: "Pertama saya mengamati dunia. Ini adalah data mentah, tidak terfilter — semua yang sebenarnya terjadi di sekitar saya sekarang.",
+      nl: "Eerst observeer ik de wereld. Dit zijn de ruwe, ongefilterde data — alles wat er op dit moment daadwerkelijk om me heen gebeurt.",
     },
     detail: {
-      en: "At the ground level, we have access to reality itself: what was said, what happened, what was done. These are the facts, observable by any reasonable person present in the situation. No interpretation, no meaning â€” just data.",
-      id: "Di lantai dasar, kita memiliki akses ke realitas itu sendiri: apa yang dikatakan, apa yang terjadi, apa yang dilakukan. Ini adalah fakta-fakta, dapat diamati oleh siapapun yang wajar hadir dalam situasi tersebut. Tanpa interpretasi, tanpa makna â€” hanya data.",
-      nl: "Op de begane grond hebben we toegang tot de werkelijkheid zelf: wat er gezegd werd, wat er gebeurde, wat er gedaan werd. Dit zijn de feiten, waarneembaar door elke redelijke persoon die aanwezig was. Geen interpretatie, geen betekenis â€” alleen data.",
+      en: "At the ground level, we have access to reality itself: what was said, what happened, what was done. These are the facts, observable by any reasonable person present in the situation. No interpretation, no meaning — just data.",
+      id: "Di lantai dasar, kita memiliki akses ke realitas itu sendiri: apa yang dikatakan, apa yang terjadi, apa yang dilakukan. Ini adalah fakta-fakta, dapat diamati oleh siapapun yang wajar hadir dalam situasi tersebut. Tanpa interpretasi, tanpa makna — hanya data.",
+      nl: "Op de begane grond hebben we toegang tot de werkelijkheid zelf: wat er gezegd werd, wat er gebeurde, wat er gedaan werd. Dit zijn de feiten, waarneembaar door elke redelijke persoon die aanwezig was. Geen interpretatie, geen betekenis — alleen data.",
     },
     reflection: {
-      en: "What did I actually observe? Strip away any interpretation â€” what are the raw facts?",
-      id: "Apa yang sebenarnya saya amati? Singkirkan interpretasi apapun â€” apa fakta mentahnya?",
-      nl: "Wat heb ik daadwerkelijk waargenomen? Verwijder alle interpretaties â€” wat zijn de ruwe feiten?",
+      en: "What did I actually observe? Strip away any interpretation — what are the raw facts?",
+      id: "Apa yang sebenarnya saya amati? Singkirkan interpretasi apapun — apa fakta mentahnya?",
+      nl: "Wat heb ik daadwerkelijk waargenomen? Verwijder alle interpretaties — wat zijn de ruwe feiten?",
     },
     color: "#c4762a",
     colorOklch: "oklch(52% 0.14 55)",
@@ -43,14 +43,14 @@ const RUNGS = [
     label: { en: "I Select Data", id: "Saya Memilih Data", nl: "Ik Selecteer Data" },
     shortLabel: { en: "Select Data", id: "Pilih Data", nl: "Data Selectie" },
     desc: {
-      en: "Then I make a selection among the observations, based on what seems relevant â€” ignoring the rest.",
-      id: "Kemudian saya membuat pilihan di antara pengamatan, berdasarkan apa yang tampaknya relevan â€” mengabaikan sisanya.",
-      nl: "Dan maak ik een selectie uit de waarnemingen, gebaseerd op wat relevant lijkt â€” en negeer de rest.",
+      en: "Then I make a selection among the observations, based on what seems relevant — ignoring the rest.",
+      id: "Kemudian saya membuat pilihan di antara pengamatan, berdasarkan apa yang tampaknya relevan — mengabaikan sisanya.",
+      nl: "Dan maak ik een selectie uit de waarnemingen, gebaseerd op wat relevant lijkt — en negeer de rest.",
     },
     detail: {
-      en: "The human brain cannot process everything. So we filter. We pay attention to certain things and tune out others â€” shaped by past experiences, cultural background, current concerns, and existing beliefs. This filtering is often invisible to us.",
-      id: "Otak manusia tidak dapat memproses segalanya. Jadi kita menyaring. Kita memperhatikan hal-hal tertentu dan mengabaikan yang lain â€” dibentuk oleh pengalaman masa lalu, latar belakang budaya, kekhawatiran saat ini, dan keyakinan yang ada. Penyaringan ini seringkali tidak terlihat oleh kita.",
-      nl: "Het menselijk brein kan niet alles verwerken. Dus filteren we. We letten op bepaalde dingen en negeren andere â€” gevormd door eerdere ervaringen, culturele achtergrond, huidige zorgen en bestaande overtuigingen. Dit filteren is ons vaak onzichtbaar.",
+      en: "The human brain cannot process everything. So we filter. We pay attention to certain things and tune out others — shaped by past experiences, cultural background, current concerns, and existing beliefs. This filtering is often invisible to us.",
+      id: "Otak manusia tidak dapat memproses segalanya. Jadi kita menyaring. Kita memperhatikan hal-hal tertentu dan mengabaikan yang lain — dibentuk oleh pengalaman masa lalu, latar belakang budaya, kekhawatiran saat ini, dan keyakinan yang ada. Penyaringan ini seringkali tidak terlihat oleh kita.",
+      nl: "Het menselijk brein kan niet alles verwerken. Dus filteren we. We letten op bepaalde dingen en negeren andere — gevormd door eerdere ervaringen, culturele achtergrond, huidige zorgen en bestaande overtuigingen. Dit filteren is ons vaak onzichtbaar.",
     },
     reflection: {
       en: "What did I ignore? Are there data points I left out because they didn't fit my picture?",
@@ -87,9 +87,9 @@ const RUNGS = [
     label: { en: "I Make Assumptions", id: "Saya Membuat Asumsi", nl: "Ik Maak Aannames" },
     shortLabel: { en: "Assumptions", id: "Asumsi", nl: "Aannames" },
     desc: {
-      en: "I assume that I've selected the right data and the meanings are accurate â€” without questioning those assumptions.",
-      id: "Saya berasumsi bahwa saya telah memilih data yang benar dan makna-makna itu akurat â€” tanpa mempertanyakan asumsi-asumsi tersebut.",
-      nl: "Ik ga ervan uit dat ik de juiste data heb geselecteerd en dat de betekenissen kloppen â€” zonder die aannames te bevragen.",
+      en: "I assume that I've selected the right data and the meanings are accurate — without questioning those assumptions.",
+      id: "Saya berasumsi bahwa saya telah memilih data yang benar dan makna-makna itu akurat — tanpa mempertanyakan asumsi-asumsi tersebut.",
+      nl: "Ik ga ervan uit dat ik de juiste data heb geselecteerd en dat de betekenissen kloppen — zonder die aannames te bevragen.",
     },
     detail: {
       en: "Once meaning is attached, it quickly solidifies into assumptions. We treat our interpretation as if it were fact. This is where the runaway logic loop begins: our assumptions feed our next data selections, which reinforce our assumptions further.",
@@ -114,9 +114,9 @@ const RUNGS = [
       nl: "Ik trek conclusies op basis van wat het beste lijkt voor mijzelf en de mensen om me heen.",
     },
     detail: {
-      en: "From unexamined assumptions, we leap to conclusions â€” often fast, confident, and felt as obvious. These conclusions feel logical, but they're built on layers of filtered data and interpreted meaning that we've never questioned.",
-      id: "Dari asumsi yang tidak diperiksa, kita melompat ke kesimpulan â€” seringkali cepat, percaya diri, dan terasa jelas. Kesimpulan ini terasa logis, tetapi dibangun di atas lapisan data yang disaring dan makna yang ditafsirkan yang tidak pernah kita pertanyakan.",
-      nl: "Van ongekritiseerde aannames springen we naar conclusies â€” vaak snel, zelfverzekerd en als vanzelfsprekend. Deze conclusies voelen logisch, maar zijn opgebouwd op lagen gefilterde data en geÃ¯nterpreteerde betekenis die we nooit hebben bevraagd.",
+      en: "From unexamined assumptions, we leap to conclusions — often fast, confident, and felt as obvious. These conclusions feel logical, but they're built on layers of filtered data and interpreted meaning that we've never questioned.",
+      id: "Dari asumsi yang tidak diperiksa, kita melompat ke kesimpulan — seringkali cepat, percaya diri, dan terasa jelas. Kesimpulan ini terasa logis, tetapi dibangun di atas lapisan data yang disaring dan makna yang ditafsirkan yang tidak pernah kita pertanyakan.",
+      nl: "Van ongekritiseerde aannames springen we naar conclusies — vaak snel, zelfverzekerd en als vanzelfsprekend. Deze conclusies voelen logisch, maar zijn opgebouwd op lagen gefilterde data en geïnterpreteerde betekenis die we nooit hebben bevraagd.",
     },
     reflection: {
       en: "What conclusions am I drawing? If my assumptions were wrong, would these conclusions still hold?",
@@ -136,9 +136,9 @@ const RUNGS = [
       nl: "Ik neem overtuigingen over op basis van deze conclusies en ga ervan uit dat de mensen om me heen dezelfde overtuigingen hebben.",
     },
     detail: {
-      en: "Conclusions, repeated over time, harden into beliefs. They feel like truth â€” not opinion. And since we assume others see things the same way, we stop questioning them entirely. Our beliefs then directly shape what data we pay attention to next â€” completing the loop.",
-      id: "Kesimpulan, diulang dari waktu ke waktu, mengeras menjadi keyakinan. Mereka terasa seperti kebenaran â€” bukan pendapat. Dan karena kita berasumsi orang lain melihat hal-hal dengan cara yang sama, kita berhenti mempertanyakannya sama sekali. Keyakinan kita kemudian langsung membentuk data apa yang kita perhatikan berikutnya â€” melengkapi lingkaran.",
-      nl: "Conclusies, herhaald over de tijd, verharden tot overtuigingen. Ze voelen als waarheid â€” niet als mening. En omdat we aannemen dat anderen de dingen op dezelfde manier zien, houden we helemaal op ze te bevragen. Onze overtuigingen bepalen vervolgens direct welke data we de volgende keer opmerken â€” de lus sluit zich.",
+      en: "Conclusions, repeated over time, harden into beliefs. They feel like truth — not opinion. And since we assume others see things the same way, we stop questioning them entirely. Our beliefs then directly shape what data we pay attention to next — completing the loop.",
+      id: "Kesimpulan, diulang dari waktu ke waktu, mengeras menjadi keyakinan. Mereka terasa seperti kebenaran — bukan pendapat. Dan karena kita berasumsi orang lain melihat hal-hal dengan cara yang sama, kita berhenti mempertanyakannya sama sekali. Keyakinan kita kemudian langsung membentuk data apa yang kita perhatikan berikutnya — melengkapi lingkaran.",
+      nl: "Conclusies, herhaald over de tijd, verharden tot overtuigingen. Ze voelen als waarheid — niet als mening. En omdat we aannemen dat anderen de dingen op dezelfde manier zien, houden we helemaal op ze te bevragen. Onze overtuigingen bepalen vervolgens direct welke data we de volgende keer opmerken — de lus sluit zich.",
     },
     reflection: {
       en: "What beliefs are operating here? Are these beliefs I chose, or conclusions I never questioned?",
@@ -158,14 +158,14 @@ const RUNGS = [
       nl: "Ik onderneem actie op basis van deze overtuigingen en ga ervan uit dat ze de werkelijkheid weerspiegelen.",
     },
     detail: {
-      en: "At the top of the ladder, we act. But here's the danger: actions taken at the top of the ladder look completely rational from the inside â€” because they're built on beliefs that feel like facts. Others may not understand our actions because they're operating on different ladders.",
-      id: "Di puncak tangga, kita bertindak. Tapi inilah bahayanya: tindakan yang diambil di puncak tangga terlihat sangat rasional dari dalam â€” karena dibangun di atas keyakinan yang terasa seperti fakta. Orang lain mungkin tidak memahami tindakan kita karena mereka beroperasi di tangga yang berbeda.",
-      nl: "Aan de top van de ladder handelen we. Maar hier schuilt het gevaar: acties boven aan de ladder zien er van binnenuit volkomen rationeel uit â€” omdat ze zijn opgebouwd op overtuigingen die als feiten aanvoelen. Anderen begrijpen onze acties misschien niet omdat ze op andere ladders opereren.",
+      en: "At the top of the ladder, we act. But here's the danger: actions taken at the top of the ladder look completely rational from the inside — because they're built on beliefs that feel like facts. Others may not understand our actions because they're operating on different ladders.",
+      id: "Di puncak tangga, kita bertindak. Tapi inilah bahayanya: tindakan yang diambil di puncak tangga terlihat sangat rasional dari dalam — karena dibangun di atas keyakinan yang terasa seperti fakta. Orang lain mungkin tidak memahami tindakan kita karena mereka beroperasi di tangga yang berbeda.",
+      nl: "Aan de top van de ladder handelen we. Maar hier schuilt het gevaar: acties boven aan de ladder zien er van binnenuit volkomen rationeel uit — omdat ze zijn opgebouwd op overtuigingen die als feiten aanvoelen. Anderen begrijpen onze acties misschien niet omdat ze op andere ladders opereren.",
     },
     reflection: {
-      en: "If my beliefs were different, how would my actions look? Am I acting on reality â€” or on my ladder?",
-      id: "Jika keyakinan saya berbeda, bagaimana tindakan saya akan terlihat? Apakah saya bertindak berdasarkan kenyataan â€” atau berdasarkan tangga saya?",
-      nl: "Als mijn overtuigingen anders waren, hoe zouden mijn acties er dan uitzien? Handel ik op basis van de werkelijkheid â€” of op basis van mijn ladder?",
+      en: "If my beliefs were different, how would my actions look? Am I acting on reality — or on my ladder?",
+      id: "Jika keyakinan saya berbeda, bagaimana tindakan saya akan terlihat? Apakah saya bertindak berdasarkan kenyataan — atau berdasarkan tangga saya?",
+      nl: "Als mijn overtuigingen anders waren, hoe zouden mijn acties er dan uitzien? Handel ik op basis van de werkelijkheid — of op basis van mijn ladder?",
     },
     color: "#1b3a6b",
     colorOklch: "oklch(28% 0.12 255)",
@@ -177,9 +177,9 @@ const CLIMB_DOWN_STEPS = [
     num: "01",
     title: { en: "Stop at the Top", id: "Berhenti di Puncak", nl: "Stop aan de Top" },
     desc: {
-      en: "When you notice a strong reaction â€” frustration, conflict, confusion â€” recognize you may be at the top of a ladder built on unexamined rungs.",
-      id: "Ketika Anda merasakan reaksi yang kuat â€” frustrasi, konflik, kebingungan â€” kenali bahwa Anda mungkin berada di puncak tangga yang dibangun di atas anak tangga yang tidak diperiksa.",
-      nl: "Wanneer je een sterke reactie voelt â€” frustratie, conflict, verwarring â€” erken dat je mogelijk boven aan een ladder staat die is gebouwd op ongekritiseerde sporten.",
+      en: "When you notice a strong reaction — frustration, conflict, confusion — recognize you may be at the top of a ladder built on unexamined rungs.",
+      id: "Ketika Anda merasakan reaksi yang kuat — frustrasi, konflik, kebingungan — kenali bahwa Anda mungkin berada di puncak tangga yang dibangun di atas anak tangga yang tidak diperiksa.",
+      nl: "Wanneer je een sterke reactie voelt — frustratie, conflict, verwarring — erken dat je mogelijk boven aan een ladder staat die is gebouwd op ongekritiseerde sporten.",
     },
   },
   {
@@ -195,9 +195,9 @@ const CLIMB_DOWN_STEPS = [
     num: "03",
     title: { en: "Trace Your Reasoning", id: "Lacak Penalaran Anda", nl: "Traceer Uw Redenering" },
     desc: {
-      en: "Work backwards: What conclusions led here? What assumptions underpinned those? What meaning did you assign â€” and to which data?",
-      id: "Bekerja mundur: Kesimpulan apa yang membawa ke sini? Asumsi apa yang mendasari kesimpulan itu? Makna apa yang Anda tetapkan â€” dan pada data apa?",
-      nl: "Werk achterwaarts: Welke conclusies hebben hiertoe geleid? Welke aannames lagen daaraan ten grondslag? Welke betekenis kende u toe â€” en aan welke data?",
+      en: "Work backwards: What conclusions led here? What assumptions underpinned those? What meaning did you assign — and to which data?",
+      id: "Bekerja mundur: Kesimpulan apa yang membawa ke sini? Asumsi apa yang mendasari kesimpulan itu? Makna apa yang Anda tetapkan — dan pada data apa?",
+      nl: "Werk achterwaarts: Welke conclusies hebben hiertoe geleid? Welke aannames lagen daaraan ten grondslag? Welke betekenis kende u toe — en aan welke data?",
     },
   },
   {
@@ -206,7 +206,7 @@ const CLIMB_DOWN_STEPS = [
     desc: {
       en: "Get back to the observable facts. What can you verify? What did you filter out? Ask others what they observed. Reality is on the bottom rung.",
       id: "Kembali ke fakta yang dapat diamati. Apa yang dapat Anda verifikasi? Apa yang Anda saring? Tanya orang lain apa yang mereka amati. Realitas ada di anak tangga paling bawah.",
-      nl: "Ga terug naar de observeerbare feiten. Wat kunt u verifiÃ«ren? Wat heeft u gefilterd? Vraag anderen wat zij hebben waargenomen. De werkelijkheid bevindt zich op de onderste sport.",
+      nl: "Ga terug naar de observeerbare feiten. Wat kunt u verifiëren? Wat heeft u gefilterd? Vraag anderen wat zij hebben waargenomen. De werkelijkheid bevindt zich op de onderste sport.",
     },
   },
 ];
@@ -262,25 +262,25 @@ function ClimbingPerson({ personY, color }: { personY: number; color: string }) 
         fill={color}
       />
 
-      {/* Left arm â€” reaches up-left to grip left rail */}
+      {/* Left arm — reaches up-left to grip left rail */}
       <path
         d={`M ${lShoulder.x} ${lShoulder.y + 3} Q ${lShoulder.x - 12} ${lShoulder.y - 14} ${RAIL_X_L + 2} ${lHandY}`}
         stroke={color} strokeWidth="5.5" fill="none" strokeLinecap="round"
       />
 
-      {/* Right arm â€” reaches up-right to grip right rail */}
+      {/* Right arm — reaches up-right to grip right rail */}
       <path
         d={`M ${rShoulder.x} ${rShoulder.y + 3} Q ${rShoulder.x + 10} ${rShoulder.y - 8} ${RAIL_X_R - 2} ${rHandY}`}
         stroke={color} strokeWidth="5.5" fill="none" strokeLinecap="round"
       />
 
-      {/* Left leg â€” raised, stepping up toward left */}
+      {/* Left leg — raised, stepping up toward left */}
       <path
         d={`M ${lHip.x} ${lHip.y} Q ${lKneeX} ${lKneeY - 6} ${lKneeX + 4} ${lKneeY} Q ${lKneeX + 2} ${lKneeY + 10} ${RAIL_X_L + 9} ${lKneeY + 6}`}
         stroke={color} strokeWidth="5.5" fill="none" strokeLinecap="round"
       />
 
-      {/* Right leg â€” down, foot resting on rung */}
+      {/* Right leg — down, foot resting on rung */}
       <path
         d={`M ${rHip.x} ${rHip.y} Q ${cx + 20} ${personY - 16} ${cx + 18} ${rFootY}`}
         stroke={color} strokeWidth="5.5" fill="none" strokeLinecap="round"
@@ -330,16 +330,16 @@ export default function LadderOfInferenceClient({
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Thinking Tools Â· Guide", "Alat Berpikir Â· Panduan", "Denktools Â· Gids", lang)}
+            {t("Thinking Tools · Guide", "Alat Berpikir · Panduan", "Denktools · Gids", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("The Ladder of Inference", "Tangga Inferensi", "De Inferentieladder", lang)}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 32 }}>
             {t(
-              "Most conflicts and misunderstandings start at the top â€” where we act on beliefs formed from incomplete data. Learn to trace your thinking back to the ground floor.",
-              "Kebanyakan konflik dan kesalahpahaman dimulai di puncak â€” di mana kita bertindak berdasarkan keyakinan yang dibentuk dari data yang tidak lengkap. Pelajari cara menelusuri pemikiran Anda kembali ke lantai dasar.",
-              "De meeste conflicten en misverstanden beginnen bovenaan â€” waar we handelen op basis van overtuigingen die zijn gevormd uit onvolledige data. Leer uw denken terug te traceren naar de begane grond.",
+              "Most conflicts and misunderstandings start at the top — where we act on beliefs formed from incomplete data. Learn to trace your thinking back to the ground floor.",
+              "Kebanyakan konflik dan kesalahpahaman dimulai di puncak — di mana kita bertindak berdasarkan keyakinan yang dibentuk dari data yang tidak lengkap. Pelajari cara menelusuri pemikiran Anda kembali ke lantai dasar.",
+              "De meeste conflicten en misverstanden beginnen bovenaan — waar we handelen op basis van overtuigingen die zijn gevormd uit onvolledige data. Leer uw denken terug te traceren naar de begane grond.",
               lang
             )}
           </p>
@@ -348,12 +348,12 @@ export default function LadderOfInferenceClient({
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
-              <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 6, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Savingâ€¦", "Menyimpanâ€¦", "Opslaanâ€¦", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
+              <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
+                {isPending ? t("Saving…", "Menyimpan…", "Opslaan…", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                âœ“ {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
+                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
               </span>
             )}
           </div>
@@ -368,9 +368,9 @@ export default function LadderOfInferenceClient({
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {t(
-              "Start at the ground floor â€” Observations. Click any rung or use the arrows to climb up, rung by rung, from reality to action.",
-              "Mulai dari lantai dasar â€” Pengamatan. Klik anak tangga manapun atau gunakan panah untuk naik, satu per satu, dari realitas ke tindakan.",
-              "Begin op de begane grond â€” Waarnemingen. Klik op een sport of gebruik de pijlen om omhoog te klimmen, sport voor sport, van realiteit naar actie.",
+              "Start at the ground floor — Observations. Click any rung or use the arrows to climb up, rung by rung, from reality to action.",
+              "Mulai dari lantai dasar — Pengamatan. Klik anak tangga manapun atau gunakan panah untuk naik, satu per satu, dari realitas ke tindakan.",
+              "Begin op de begane grond — Waarnemingen. Klik op een sport of gebruik de pijlen om omhoog te klimmen, sport voor sport, van realiteit naar actie.",
               lang
             )}
           </p>
@@ -385,13 +385,13 @@ export default function LadderOfInferenceClient({
                 onClick={moveUp}
                 disabled={activeRung === 6}
                 style={{
-                  padding: "8px 20px", borderRadius: 6,
+                  padding: "8px 20px", borderRadius: 12,
                   background: activeRung < 6 ? "oklch(22% 0.10 260)" : "oklch(92% 0.005 260)",
                   color: activeRung < 6 ? "white" : "oklch(68% 0.04 260)",
                   border: "none", cursor: activeRung < 6 ? "pointer" : "not-allowed",
                   fontSize: 13, fontWeight: 700, letterSpacing: "0.04em", fontFamily: "Montserrat, sans-serif",
                 }}
-              >â†‘ {t("Up", "Naik", "Omhoog", lang)}</button>
+              >? {t("Up", "Naik", "Omhoog", lang)}</button>
 
               <svg
                 viewBox={`0 0 ${SVG_W} ${SVG_H}`}
@@ -400,7 +400,7 @@ export default function LadderOfInferenceClient({
                 style={{ display: "block" }}
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Wall surface â€” subtle background suggesting ladder leans against wall */}
+                {/* Wall surface — subtle background suggesting ladder leans against wall */}
                 <rect x={RAIL_X_R - 4} y={RUNG_TOP_Y - 30} width={SVG_W - RAIL_X_R + 12} height={RUNG_BOTTOM_Y - RUNG_TOP_Y + 60} rx={0} fill="#1b3a6b" opacity={0.04} />
                 <line x1={RAIL_X_R + 8} y1={RUNG_TOP_Y - 30} x2={RAIL_X_R + 8} y2={RUNG_BOTTOM_Y + 30} stroke="#1b3a6b" strokeWidth={1.5} opacity={0.12} />
 
@@ -449,18 +449,18 @@ export default function LadderOfInferenceClient({
                 onClick={moveDown}
                 disabled={activeRung === 0}
                 style={{
-                  padding: "8px 20px", borderRadius: 6,
+                  padding: "8px 20px", borderRadius: 12,
                   background: activeRung > 0 ? "oklch(22% 0.10 260)" : "oklch(92% 0.005 260)",
                   color: activeRung > 0 ? "white" : "oklch(68% 0.04 260)",
                   border: "none", cursor: activeRung > 0 ? "pointer" : "not-allowed",
                   fontSize: 13, fontWeight: 700, letterSpacing: "0.04em", fontFamily: "Montserrat, sans-serif",
                 }}
-              >â†“ {t("Down", "Turun", "Omlaag", lang)}</button>
+              >? {t("Down", "Turun", "Omlaag", lang)}</button>
             </div>
 
             {/* CONTENT PANEL */}
             <div style={{ flex: 1, minWidth: 280 }}>
-              {/* Rung selector pills â€” bottom to top */}
+              {/* Rung selector pills — bottom to top */}
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
                 {[...RUNGS].reverse().map((r, revIdx) => {
                   const idx = 6 - revIdx;
@@ -506,16 +506,16 @@ export default function LadderOfInferenceClient({
                 <button
                   onClick={moveDown}
                   disabled={activeRung === 0}
-                  style={{ padding: "10px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, border: "1px solid oklch(86% 0.008 260)", background: "white", color: activeRung > 0 ? "oklch(30% 0.06 260)" : "oklch(70% 0.04 260)", cursor: activeRung > 0 ? "pointer" : "not-allowed" }}
+                  style={{ padding: "10px 20px", borderRadius: 12, fontSize: 13, fontWeight: 600, border: "1px solid oklch(86% 0.008 260)", background: "white", color: activeRung > 0 ? "oklch(30% 0.06 260)" : "oklch(70% 0.04 260)", cursor: activeRung > 0 ? "pointer" : "not-allowed" }}
                 >
-                  â† {activeRung > 0 ? `${RUNGS[activeRung - 1].num}: ${RUNGS[activeRung - 1].shortLabel[lang]}` : t("Bottom", "Dasar", "Onderste", lang)}
+                  ? {activeRung > 0 ? `${RUNGS[activeRung - 1].num}: ${RUNGS[activeRung - 1].shortLabel[lang]}` : t("Bottom", "Dasar", "Onderste", lang)}
                 </button>
                 <button
                   onClick={moveUp}
                   disabled={activeRung === 6}
-                  style={{ padding: "10px 20px", borderRadius: 6, fontSize: 13, fontWeight: 600, border: "1px solid oklch(86% 0.008 260)", background: "white", color: activeRung < 6 ? "oklch(30% 0.06 260)" : "oklch(70% 0.04 260)", cursor: activeRung < 6 ? "pointer" : "not-allowed" }}
+                  style={{ padding: "10px 20px", borderRadius: 12, fontSize: 13, fontWeight: 600, border: "1px solid oklch(86% 0.008 260)", background: "white", color: activeRung < 6 ? "oklch(30% 0.06 260)" : "oklch(70% 0.04 260)", cursor: activeRung < 6 ? "pointer" : "not-allowed" }}
                 >
-                  {activeRung < 6 ? `${RUNGS[activeRung + 1].num}: ${RUNGS[activeRung + 1].shortLabel[lang]}` : t("Top", "Puncak", "Top", lang)} â†’
+                  {activeRung < 6 ? `${RUNGS[activeRung + 1].num}: ${RUNGS[activeRung + 1].shortLabel[lang]}` : t("Top", "Puncak", "Top", lang)} ?
                 </button>
               </div>
             </div>
@@ -531,23 +531,23 @@ export default function LadderOfInferenceClient({
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65, maxWidth: 680 }}>
             {t(
-              "The most dangerous part of the Ladder isn't the climb â€” it's the loop. Our beliefs directly influence what data we pay attention to next. This means our ladder can become self-sealing: we unconsciously select data that confirms what we already believe.",
-              "Bagian paling berbahaya dari Tangga bukan pendakiannya â€” melainkan lingkarannya. Keyakinan kita langsung mempengaruhi data apa yang kita perhatikan selanjutnya. Ini berarti tangga kita bisa menjadi mandiri: kita secara tidak sadar memilih data yang mengkonfirmasi apa yang sudah kita percayai.",
-              "Het gevaarlijkste deel van de Ladder is niet de klim â€” het is de lus. Onze overtuigingen beÃ¯nvloeden direct welke data we de volgende keer opmerken. Dit betekent dat onze ladder zelfdichtend kan worden: we selecteren onbewust data die bevestigt wat we al geloven.",
+              "The most dangerous part of the Ladder isn't the climb — it's the loop. Our beliefs directly influence what data we pay attention to next. This means our ladder can become self-sealing: we unconsciously select data that confirms what we already believe.",
+              "Bagian paling berbahaya dari Tangga bukan pendakiannya — melainkan lingkarannya. Keyakinan kita langsung mempengaruhi data apa yang kita perhatikan selanjutnya. Ini berarti tangga kita bisa menjadi mandiri: kita secara tidak sadar memilih data yang mengkonfirmasi apa yang sudah kita percayai.",
+              "Het gevaarlijkste deel van de Ladder is niet de klim — het is de lus. Onze overtuigingen beïnvloeden direct welke data we de volgende keer opmerken. Dit betekent dat onze ladder zelfdichtend kan worden: we selecteren onbewust data die bevestigt wat we al geloven.",
               lang
             )}
           </p>
           <div style={{ background: "white", borderRadius: 12, padding: "32px 36px", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-            <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 60, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>â†»</div>
+            <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 60, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>?</div>
             <div>
               <h4 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 10px" }}>
                 {t("Beliefs shape perception", "Keyakinan membentuk persepsi", "Overtuigingen vormen perceptie", lang)}
               </h4>
               <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(38% 0.06 260)", margin: 0 }}>
                 {t(
-                  "Once you believe something â€” about a colleague, a culture, a situation â€” you will naturally select and interpret new data to confirm it. The ladder runs on autopilot. The only escape is deliberate reflection: getting back down to the ground floor and questioning what you selected and why.",
-                  "Begitu Anda mempercayai sesuatu â€” tentang seorang rekan, budaya, situasi â€” Anda secara alami akan memilih dan menafsirkan data baru untuk mengkonfirmasinya. Tangga berjalan dengan autopilot. Satu-satunya jalan keluarnya adalah refleksi yang disengaja: kembali ke lantai dasar dan mempertanyakan apa yang Anda pilih dan mengapa.",
-                  "Zodra je iets gelooft â€” over een collega, een cultuur, een situatie â€” zul je van nature nieuwe data selecteren en interpreteren om het te bevestigen. De ladder draait op automatische piloot. De enige uitweg is bewuste reflectie: terugkeren naar de begane grond en bevragen wat je selecteerde en waarom.",
+                  "Once you believe something — about a colleague, a culture, a situation — you will naturally select and interpret new data to confirm it. The ladder runs on autopilot. The only escape is deliberate reflection: getting back down to the ground floor and questioning what you selected and why.",
+                  "Begitu Anda mempercayai sesuatu — tentang seorang rekan, budaya, situasi — Anda secara alami akan memilih dan menafsirkan data baru untuk mengkonfirmasinya. Tangga berjalan dengan autopilot. Satu-satunya jalan keluarnya adalah refleksi yang disengaja: kembali ke lantai dasar dan mempertanyakan apa yang Anda pilih dan mengapa.",
+                  "Zodra je iets gelooft — over een collega, een cultuur, een situatie — zul je van nature nieuwe data selecteren en interpreteren om het te bevestigen. De ladder draait op automatische piloot. De enige uitweg is bewuste reflectie: terugkeren naar de begane grond en bevragen wat je selecteerde en waarom.",
                   lang
                 )}
               </p>
@@ -563,9 +563,9 @@ export default function LadderOfInferenceClient({
         </h2>
         <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
           {t(
-            "When you notice conflict, confusion, or a strong reaction â€” use these four steps to trace your way back to reality.",
-            "Ketika Anda memperhatikan konflik, kebingungan, atau reaksi yang kuat â€” gunakan empat langkah ini untuk menelusuri jalan kembali ke realitas.",
-            "Wanneer u conflict, verwarring of een sterke reactie opmerkt â€” gebruik deze vier stappen om uw weg terug naar de werkelijkheid te traceren.",
+            "When you notice conflict, confusion, or a strong reaction — use these four steps to trace your way back to reality.",
+            "Ketika Anda memperhatikan konflik, kebingungan, atau reaksi yang kuat — gunakan empat langkah ini untuk menelusuri jalan kembali ke realitas.",
+            "Wanneer u conflict, verwarring of een sterke reactie opmerkt — gebruik deze vier stappen om uw weg terug naar de werkelijkheid te traceren.",
             lang
           )}
         </p>
@@ -592,18 +592,18 @@ export default function LadderOfInferenceClient({
           </h2>
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
-              "The next time you feel certain about someone's motives or ready to act on a conclusion â€” stop. What rung are you on? What's actually observable?",
-              "Lain kali Anda merasa yakin tentang motif seseorang atau siap bertindak berdasarkan kesimpulan â€” berhenti. Di anak tangga mana Anda berada? Apa yang sebenarnya dapat diamati?",
-              "De volgende keer dat u zeker bent over iemands motieven of klaar bent om op een conclusie te handelen â€” stop. Op welke sport staat u? Wat is er daadwerkelijk waarneembaar?",
+              "The next time you feel certain about someone's motives or ready to act on a conclusion — stop. What rung are you on? What's actually observable?",
+              "Lain kali Anda merasa yakin tentang motif seseorang atau siap bertindak berdasarkan kesimpulan — berhenti. Di anak tangga mana Anda berada? Apa yang sebenarnya dapat diamati?",
+              "De volgende keer dat u zeker bent over iemands motieven of klaar bent om op een conclusie te handelen — stop. Op welke sport staat u? Wat is er daadwerkelijk waarneembaar?",
               lang
             )}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={() => setActiveRung(0)} style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 6, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}>
+            <button onClick={() => setActiveRung(0)} style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}>
               {t("Start at the Ground Floor", "Mulai dari Lantai Dasar", "Begin op de Begane Grond", lang)}
             </button>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("â† Content Library", "â† Perpustakaan Konten", "â† Contentbibliotheek", lang)}
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
+              {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek", lang)}
             </Link>
           </div>
         </div>

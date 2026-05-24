@@ -1317,7 +1317,7 @@ export default function Personalities16Client({
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "transparent", color: "oklch(85% 0.05 260)",
-                  padding: "11px 24px", borderRadius: 6, fontFamily: "'Montserrat', sans-serif",
+                  padding: "11px 24px", borderRadius: 12, fontFamily: "'Montserrat', sans-serif",
                   fontWeight: 600, fontSize: 14, border: "1px solid oklch(55% 0.06 260)",
                   cursor: isPending ? "wait" : "pointer",
                 }}>
@@ -1426,7 +1426,7 @@ export default function Personalities16Client({
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "transparent", color: "oklch(35% 0.08 260)",
-                padding: "13px 28px", borderRadius: 6, fontFamily: "'Montserrat', sans-serif",
+                padding: "13px 28px", borderRadius: 12, fontFamily: "'Montserrat', sans-serif",
                 fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)",
                 cursor: isPending ? "wait" : "pointer",
               }}>

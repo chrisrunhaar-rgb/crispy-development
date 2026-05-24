@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -6,16 +6,16 @@ import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-// ── TYPES ──────────────────────────────────────────────────────────────────────
+// -- TYPES ----------------------------------------------------------------------
 
 type Lang = "en" | "id" | "nl";
 
-// ── HELPERS ────────────────────────────────────────────────────────────────────
+// -- HELPERS --------------------------------------------------------------------
 
 const t = (en: string, id: string, nl: string, lang: Lang) =>
   lang === "en" ? en : lang === "id" ? id : nl;
 
-// ── DATA ───────────────────────────────────────────────────────────────────────
+// -- DATA -----------------------------------------------------------------------
 
 const ANDRAGOGY = [
   {
@@ -40,9 +40,9 @@ const ANDRAGOGY = [
     num: "03",
     titleEn: "Experience", titleId: "Pengalaman", titleNl: "Ervaring",
     subtitleEn: "Past Knowledge", subtitleId: "Pengetahuan Sebelumnya", subtitleNl: "Voorkennis",
-    descEn: "Adults bring a reservoir of experience to any learning environment. Effective training connects new concepts to what learners already know — honoring their history rather than ignoring it.",
-    descId: "Orang dewasa membawa reservoir pengalaman ke lingkungan belajar apa pun. Pelatihan yang efektif menghubungkan konsep baru dengan apa yang sudah diketahui peserta — menghormati sejarah mereka daripada mengabaikannya.",
-    descNl: "Volwassenen brengen een reservoir aan ervaring mee naar elke leeromgeving. Effectieve training verbindt nieuwe concepten met wat leerlingen al weten — hun geschiedenis eerend in plaats van negerend.",
+    descEn: "Adults bring a reservoir of experience to any learning environment. Effective training connects new concepts to what learners already know � honoring their history rather than ignoring it.",
+    descId: "Orang dewasa membawa reservoir pengalaman ke lingkungan belajar apa pun. Pelatihan yang efektif menghubungkan konsep baru dengan apa yang sudah diketahui peserta � menghormati sejarah mereka daripada mengabaikannya.",
+    descNl: "Volwassenen brengen een reservoir aan ervaring mee naar elke leeromgeving. Effectieve training verbindt nieuwe concepten met wat leerlingen al weten � hun geschiedenis eerend in plaats van negerend.",
     color: "oklch(46% 0.12 145)",
   },
   {
@@ -56,11 +56,11 @@ const ANDRAGOGY = [
   },
   {
     num: "05",
-    titleEn: "Orientation to Learning", titleId: "Orientasi terhadap Pembelajaran", titleNl: "Leeroriëntatie",
+    titleEn: "Orientation to Learning", titleId: "Orientasi terhadap Pembelajaran", titleNl: "Leerori�ntatie",
     subtitleEn: "Learning by Doing", subtitleId: "Belajar dengan Melakukan", subtitleNl: "Leren door te Doen",
-    descEn: "Adults are problem-centred, not subject-centred. They learn most effectively when content is organized around real-life problems and immediately applicable skills — not abstract theories.",
-    descId: "Orang dewasa berpusat pada masalah, bukan pada mata pelajaran. Mereka belajar paling efektif ketika konten diorganisir di sekitar masalah kehidupan nyata dan keterampilan yang langsung dapat diterapkan — bukan teori abstrak.",
-    descNl: "Volwassenen zijn probleemgericht, niet vakgericht. Ze leren het meest effectief wanneer inhoud is georganiseerd rond praktische problemen en direct toepasbare vaardigheden — niet abstracte theorieën.",
+    descEn: "Adults are problem-centred, not subject-centred. They learn most effectively when content is organized around real-life problems and immediately applicable skills � not abstract theories.",
+    descId: "Orang dewasa berpusat pada masalah, bukan pada mata pelajaran. Mereka belajar paling efektif ketika konten diorganisir di sekitar masalah kehidupan nyata dan keterampilan yang langsung dapat diterapkan � bukan teori abstrak.",
+    descNl: "Volwassenen zijn probleemgericht, niet vakgericht. Ze leren het meest effectief wanneer inhoud is georganiseerd rond praktische problemen en direct toepasbare vaardigheden � niet abstracte theorie�n.",
     color: "oklch(42% 0.12 25)",
   },
 ];
@@ -76,7 +76,7 @@ const LEARNING_STYLES = [
   },
   {
     num: "02",
-    titleEn: "Linguistic", titleId: "Linguistik", titleNl: "Linguïstisch",
+    titleEn: "Linguistic", titleId: "Linguistik", titleNl: "Lingu�stisch",
     descEn: "Learns through reading, writing, listening, and verbal explanation.",
     descId: "Belajar melalui membaca, menulis, mendengarkan, dan penjelasan verbal.",
     descNl: "Leert via lezen, schrijven, luisteren en verbale uitleg.",
@@ -163,9 +163,9 @@ const LEARNING_METHODS = [
   {
     num: "06",
     titleEn: "Experiential Learning", titleId: "Pembelajaran Pengalaman", titleNl: "Ervaringsleren",
-    descEn: "Structured activities that create direct experience — then reflection. Kolb's learning cycle in action.",
-    descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung — kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
-    descNl: "Gestructureerde activiteiten die directe ervaring creëren — dan reflectie. Kolbs leercyclus in actie.",
+    descEn: "Structured activities that create direct experience � then reflection. Kolb's learning cycle in action.",
+    descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung � kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
+    descNl: "Gestructureerde activiteiten die directe ervaring cre�ren � dan reflectie. Kolbs leercyclus in actie.",
   },
   {
     num: "07",
@@ -198,13 +198,13 @@ const LEARNING_METHODS = [
 ];
 
 const BREAKS = [
-  { emoji: "💧", en: "Drink water", id: "Minum air", nl: "Water drinken" },
-  { emoji: "✍️", en: "Brief journaling or reflection", id: "Jurnal atau refleksi singkat", nl: "Kort dagboekschrijven of reflectie" },
-  { emoji: "🧘", en: "Light stretching or movement", id: "Peregangan ringan atau gerakan", nl: "Lichte rekken of beweging" },
-  { emoji: "💬", en: "Short peer interaction", id: "Interaksi singkat dengan sesama", nl: "Korte interactie met een ander" },
+  { emoji: "??", en: "Drink water", id: "Minum air", nl: "Water drinken" },
+  { emoji: "??", en: "Brief journaling or reflection", id: "Jurnal atau refleksi singkat", nl: "Kort dagboekschrijven of reflectie" },
+  { emoji: "??", en: "Light stretching or movement", id: "Peregangan ringan atau gerakan", nl: "Lichte rekken of beweging" },
+  { emoji: "??", en: "Short peer interaction", id: "Interaksi singkat dengan sesama", nl: "Korte interactie met een ander" },
 ];
 
-// ── COMPONENT ─────────────────────────────────────────────────────────────────
+// -- COMPONENT -----------------------------------------------------------------
 
 type Props = { userPathway: string | null; isSaved: boolean };
 
@@ -228,7 +228,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
     <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       <LangToggle />
 
-      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
+      {/* -- HERO --------------------------------------------------------------- */}
       <section style={{
         background: "oklch(22% 0.10 260)",
         color: "oklch(97% 0.005 80)",
@@ -241,16 +241,16 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           {/* lang toggle */}
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Team & Facilitation · Guide", "Tim & Fasilitasi · Panduan", "Team & Facilitatie · Gids")}
+            {tr("Team & Facilitation � Guide", "Tim & Fasilitasi � Panduan", "Team & Facilitatie � Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
             {tr("Attention & Retention", "Perhatian & Retensi", "Aandacht & Retentie")}
           </h1>
           <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
-              "Understanding how adults learn — and how to design training that actually sticks. Rooted in andragogy, attention science, and cross-cultural application.",
-              "Memahami bagaimana orang dewasa belajar — dan cara merancang pelatihan yang benar-benar bertahan. Berakar pada andragogi, ilmu perhatian, dan penerapan lintas budaya.",
-              "Begrijpen hoe volwassenen leren — en hoe je training ontwerpt die echt beklijft. Geworteld in andragogie, aandachtswetenschap en interculturele toepassing."
+              "Understanding how adults learn � and how to design training that actually sticks. Rooted in andragogy, attention science, and cross-cultural application.",
+              "Memahami bagaimana orang dewasa belajar � dan cara merancang pelatihan yang benar-benar bertahan. Berakar pada andragogi, ilmu perhatian, dan penerapan lintas budaya.",
+              "Begrijpen hoe volwassenen leren � en hoe je training ontwerpt die echt beklijft. Geworteld in andragogie, aandachtswetenschap en interculturele toepassing."
             )}
           </p>
 
@@ -259,33 +259,33 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               display: "inline-flex", alignItems: "center", gap: 8,
               background: saved ? "oklch(35% 0.08 260)" : "transparent",
               color: "oklch(75% 0.04 260)",
-              padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14,
+              padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14,
               border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard", "✓ Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? tr("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
         </div>
       </section>
 
-      {/* ── ATTENTION SECTION ─────────────────────────────────────────────────── */}
+      {/* -- ATTENTION SECTION --------------------------------------------------- */}
       <section style={{ padding: "80px 24px", maxWidth: 760, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 24px" }}>
           {tr("How Attention Works", "Bagaimana Perhatian Bekerja", "Hoe Aandacht Werkt")}
         </h2>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {tr(
-            "The average adult attention span in a learning environment is 10–20 minutes before focus begins to fade. This is not a weakness — it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
-            "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10–20 menit sebelum fokus mulai memudar. Ini bukan kelemahan — itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
-            "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10–20 minuten voordat de focus begint te vervagen. Dit is geen zwakte — het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken mét deze realiteit, niet ertegen."
+            "The average adult attention span in a learning environment is 10�20 minutes before focus begins to fade. This is not a weakness � it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
+            "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10�20 menit sebelum fokus mulai memudar. Ini bukan kelemahan � itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
+            "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10�20 minuten voordat de focus begint te vervagen. Dit is geen zwakte � het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken m�t deze realiteit, niet ertegen."
           )}
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 48 }}>
           {tr(
-            "Understanding the typical attention curve helps you structure sessions for maximum impact — keeping engagement high and enabling deeper learning through strategic rhythm.",
-            "Memahami kurva perhatian tipikal membantu Anda menyusun sesi untuk dampak maksimal — menjaga keterlibatan tetap tinggi dan memungkinkan pembelajaran yang lebih dalam melalui ritme strategis.",
-            "Het begrijpen van de typische aandachtscurve helpt je sessies te structureren voor maximale impact — betrokkenheid hoog houden en dieper leren mogelijk maken door strategisch ritme."
+            "Understanding the typical attention curve helps you structure sessions for maximum impact � keeping engagement high and enabling deeper learning through strategic rhythm.",
+            "Memahami kurva perhatian tipikal membantu Anda menyusun sesi untuk dampak maksimal � menjaga keterlibatan tetap tinggi dan memungkinkan pembelajaran yang lebih dalam melalui ritme strategis.",
+            "Het begrijpen van de typische aandachtscurve helpt je sessies te structureren voor maximale impact � betrokkenheid hoog houden en dieper leren mogelijk maken door strategisch ritme."
           )}
         </p>
 
@@ -297,7 +297,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "stretch" }}>
             {[
               {
-                time: tr("0–5 min", "0–5 mnt", "0–5 min"),
+                time: tr("0�5 min", "0�5 mnt", "0�5 min"),
                 levelEn: "High", levelId: "Tinggi", levelNl: "Hoog",
                 descEn: "Peak engagement. Introduce key concepts and prime the learner.",
                 descId: "Keterlibatan puncak. Perkenalkan konsep kunci dan persiapkan peserta.",
@@ -305,15 +305,15 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
                 height: "100%", color: "oklch(45% 0.14 145)"
               },
               {
-                time: tr("5–15 min", "5–15 mnt", "5–15 min"),
+                time: tr("5�15 min", "5�15 mnt", "5�15 min"),
                 levelEn: "Sustained", levelId: "Berkelanjutan", levelNl: "Aanhoudend",
-                descEn: "Solid focus. Core content delivery — your main teaching window.",
-                descId: "Fokus solid. Penyampaian konten inti — jendela pengajaran utama Anda.",
-                descNl: "Solide focus. Kerninhoud overdragen — uw belangrijkste leervenster.",
+                descEn: "Solid focus. Core content delivery � your main teaching window.",
+                descId: "Fokus solid. Penyampaian konten inti � jendela pengajaran utama Anda.",
+                descNl: "Solide focus. Kerninhoud overdragen � uw belangrijkste leervenster.",
                 height: "88%", color: "oklch(48% 0.14 45)"
               },
               {
-                time: tr("15–20 min", "15–20 mnt", "15–20 min"),
+                time: tr("15�20 min", "15�20 mnt", "15�20 min"),
                 levelEn: "Fading", levelId: "Memudar", levelNl: "Wegvallend",
                 descEn: "Natural decline begins. Introduce interaction or activity to reset.",
                 descId: "Penurunan alami dimulai. Perkenalkan interaksi atau aktivitas untuk menyegarkan.",
@@ -330,7 +330,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               },
             ].map((s) => (
               <div key={s.time} style={{ flex: "1 1 140px", display: "flex", flexDirection: "column", gap: 10, alignItems: "center" }}>
-                <div style={{ width: "100%", height: 100, background: "oklch(30% 0.08 260)", borderRadius: 6, position: "relative", overflow: "hidden" }}>
+                <div style={{ width: "100%", height: 100, background: "oklch(30% 0.08 260)", borderRadius: 12, position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: s.height, background: s.color, borderRadius: "4px 4px 0 0", transition: "height 0.3s ease" }} />
                 </div>
                 <p style={{ fontSize: 12, fontWeight: 700, color: "white", margin: 0, textAlign: "center" }}>{s.time}</p>
@@ -351,9 +351,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </h3>
         <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(40% 0.06 260)", marginBottom: 24 }}>
           {tr(
-            "A 3–5 minute break between content segments is not wasted time — it is the mechanism that enables retention. Not all breaks are equal. These four types have proven most effective:",
-            "Jeda 3–5 menit di antara segmen konten bukan waktu yang terbuang — melainkan mekanisme yang memungkinkan retensi. Tidak semua jeda sama. Empat jenis berikut terbukti paling efektif:",
-            "Een pauze van 3–5 minuten tussen inhoudsegmenten is geen verspilde tijd — het is het mechanisme dat retentie mogelijk maakt. Niet alle pauzes zijn gelijk. Deze vier typen zijn het meest effectief gebleken:"
+            "A 3�5 minute break between content segments is not wasted time � it is the mechanism that enables retention. Not all breaks are equal. These four types have proven most effective:",
+            "Jeda 3�5 menit di antara segmen konten bukan waktu yang terbuang � melainkan mekanisme yang memungkinkan retensi. Tidak semua jeda sama. Empat jenis berikut terbukti paling efektif:",
+            "Een pauze van 3�5 minuten tussen inhoudsegmenten is geen verspilde tijd � het is het mechanisme dat retentie mogelijk maakt. Niet alle pauzes zijn gelijk. Deze vier typen zijn het meest effectief gebleken:"
           )}
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16 }}>
@@ -368,7 +368,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </div>
       </section>
 
-      {/* ── ANDRAGOGY ─────────────────────────────────────────────────────────── */}
+      {/* -- ANDRAGOGY ----------------------------------------------------------- */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ maxWidth: 620, marginBottom: 48 }}>
@@ -384,9 +384,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
             </h2>
             <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7 }}>
               {tr(
-                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles — and design around them.",
-                "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini — dan merancang berdasarkannya.",
-                "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen — en er omheen ontwerpen."
+                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles � and design around them.",
+                "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini � dan merancang berdasarkannya.",
+                "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen � en er omheen ontwerpen."
               )}
             </p>
           </div>
@@ -416,7 +416,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </div>
       </section>
 
-      {/* ── LEARNING STYLES ───────────────────────────────────────────────────── */}
+      {/* -- LEARNING STYLES ----------------------------------------------------- */}
       <section style={{ padding: "80px 24px", maxWidth: 900, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
           {tr("Seven Learning Styles", "Tujuh Gaya Belajar", "Zeven Leerstijlen")}
@@ -464,7 +464,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </div>
       </section>
 
-      {/* ── LEARNING METHODS ──────────────────────────────────────────────────── */}
+      {/* -- LEARNING METHODS ---------------------------------------------------- */}
       <section style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
@@ -472,9 +472,9 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </h2>
           <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {tr(
-              "These ten methods cover the full spectrum from receptive to active learning. The most effective training sequences draw on at least 3–4 of these in a single session.",
-              "Sepuluh metode ini mencakup spektrum penuh dari pembelajaran reseptif hingga aktif. Urutan pelatihan yang paling efektif menggabungkan setidaknya 3–4 dari ini dalam satu sesi.",
-              "Deze tien methoden bestrijken het volledige spectrum van receptief tot actief leren. De meest effectieve trainingssequenties putten uit ten minste 3–4 van deze methoden in één sessie."
+              "These ten methods cover the full spectrum from receptive to active learning. The most effective training sequences draw on at least 3�4 of these in a single session.",
+              "Sepuluh metode ini mencakup spektrum penuh dari pembelajaran reseptif hingga aktif. Urutan pelatihan yang paling efektif menggabungkan setidaknya 3�4 dari ini dalam satu sesi.",
+              "Deze tien methoden bestrijken het volledige spectrum van receptief tot actief leren. De meest effectieve trainingssequenties putten uit ten minste 3�4 van deze methoden in ��n sessie."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
@@ -497,7 +497,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </div>
       </section>
 
-      {/* ── KEY INSIGHT ───────────────────────────────────────────────────────── */}
+      {/* -- KEY INSIGHT --------------------------------------------------------- */}
       <section style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
         <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 12, padding: "48px 44px" }}>
           <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(22px, 3vw, 32px)", lineHeight: 1.5, color: "oklch(92% 0.005 80)", fontStyle: "italic", margin: "0 0 24px" }}>
@@ -509,15 +509,15 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </p>
           <p style={{ fontSize: 15, color: "oklch(62% 0.06 260)", margin: 0 }}>
             {tr(
-              "The goal is not to transfer information — it is to produce transformation. When we understand how adults learn, we can design experiences that truly change how people lead.",
-              "Tujuannya bukan untuk mentransfer informasi — melainkan untuk menghasilkan transformasi. Ketika kita memahami bagaimana orang dewasa belajar, kita dapat merancang pengalaman yang benar-benar mengubah cara orang memimpin.",
-              "Het doel is niet om informatie over te dragen — het is om transformatie te bewerkstelligen. Wanneer we begrijpen hoe volwassenen leren, kunnen we ervaringen ontwerpen die echt veranderen hoe mensen leiden."
+              "The goal is not to transfer information � it is to produce transformation. When we understand how adults learn, we can design experiences that truly change how people lead.",
+              "Tujuannya bukan untuk mentransfer informasi � melainkan untuk menghasilkan transformasi. Ketika kita memahami bagaimana orang dewasa belajar, kita dapat merancang pengalaman yang benar-benar mengubah cara orang memimpin.",
+              "Het doel is niet om informatie over te dragen � het is om transformatie te bewerkstelligen. Wanneer we begrijpen hoe volwassenen leren, kunnen we ervaringen ontwerpen die echt veranderen hoe mensen leiden."
             )}
           </p>
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────────────────────── */}
+      {/* -- CTA ----------------------------------------------------------------- */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
@@ -526,7 +526,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href={userPathway ? "/dashboard" : "/personal"} style={{
               display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)",
-              padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14,
+              padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14,
               border: "1px solid oklch(42% 0.08 260)", textDecoration: "none",
             }}>
               {userPathway ? tr("Go to Dashboard", "Ke Dashboard", "Naar Dashboard") : tr("Explore Pathways", "Jelajahi Jalur", "Verken Trajecten")}

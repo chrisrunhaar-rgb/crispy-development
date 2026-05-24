@@ -1,4 +1,4 @@
-ï»¿"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -12,13 +12,13 @@ type VerseKey = "2tim-2-2" | "matt-28-19";
 
 const VERSES: Record<VerseKey, { en_ref: string; id_ref: string; nl_ref: string; en: string; id: string; nl: string }> = {
   "2tim-2-2": {
-    en_ref: "2 Timothy 2:2", id_ref: "2 Timotius 2:2", nl_ref: "2 TimotheÃ¼s 2:2",
+    en_ref: "2 Timothy 2:2", id_ref: "2 Timotius 2:2", nl_ref: "2 Timotheüs 2:2",
     en: "And the things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others.",
     id: "Apa yang telah engkau dengar dari padaku di depan banyak saksi, percayakanlah itu kepada orang-orang yang dapat dipercayai, yang juga cakap mengajar orang lain.",
     nl: "Wat je van mij gehoord hebt ten overstaan van velen, vertrouw dat toe aan betrouwbare mensen die in staat zijn ook anderen te onderwijzen.",
   },
   "matt-28-19": {
-    en_ref: "Matthew 28:19", id_ref: "Matius 28:19", nl_ref: "MatteÃ¼s 28:19",
+    en_ref: "Matthew 28:19", id_ref: "Matius 28:19", nl_ref: "Matteüs 28:19",
     en: "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.",
     id: "Karena itu pergilah, jadikanlah semua bangsa murid-Ku dan baptislah mereka dalam nama Bapa dan Anak dan Roh Kudus.",
     nl: "Ga dus op weg en maak alle volken tot mijn leerlingen, door hen te dopen in de naam van de Vader en de Zoon en de heilige Geest.",
@@ -30,76 +30,76 @@ const PHASES = [
     phaseId: 1,
     en_label: "Invite", id_label: "Undang", nl_label: "Uitnodigen",
     en_subtitle: "Come with me", id_subtitle: "Ikutlah denganku", nl_subtitle: "Kom met mij mee",
-    en: "Paul invited Timothy into his journey (Acts 16:3). He did not advertise a leadership programme â€” he identified a young person of good character and reputation, and made the invitation personal. The most powerful developmental invitation is not a form to fill in. It is a specific word, spoken to a specific person: 'I see something in you. Come and learn alongside me.'",
-    id: "Paulus mengundang Timotius ke dalam perjalanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan â€” dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam dirimu. Mari belajar bersamaku.'",
-    nl: "Paulus nodigde TimoteÃ¼s uit in zijn reis (Handelingen 16:3). Hij adverteerde geen leiderschapsprogramma â€” hij identificeerde een jongvolwassene met goed karakter en reputatie en maakte de uitnodiging persoonlijk. De krachtigste ontwikkelingsuitnodiging is geen formulier om in te vullen. Het zijn specifieke woorden, gesproken tot een specifiek persoon: 'Ik zie iets in jou. Kom en leer naast mij.'",
+    en: "Paul invited Timothy into his journey (Acts 16:3). He did not advertise a leadership programme — he identified a young person of good character and reputation, and made the invitation personal. The most powerful developmental invitation is not a form to fill in. It is a specific word, spoken to a specific person: 'I see something in you. Come and learn alongside me.'",
+    id: "Paulus mengundang Timotius ke dalam perjalanannya (Kisah 16:3). Dia tidak mengiklankan program kepemimpinan — dia mengidentifikasi orang muda dengan karakter dan reputasi yang baik, dan membuat undangan itu bersifat pribadi. Undangan pengembangan yang paling kuat bukan formulir untuk diisi. Ini adalah kata-kata spesifik, diucapkan kepada orang yang spesifik: 'Saya melihat sesuatu dalam dirimu. Mari belajar bersamaku.'",
+    nl: "Paulus nodigde Timoteüs uit in zijn reis (Handelingen 16:3). Hij adverteerde geen leiderschapsprogramma — hij identificeerde een jongvolwassene met goed karakter en reputatie en maakte de uitnodiging persoonlijk. De krachtigste ontwikkelingsuitnodiging is geen formulier om in te vullen. Het zijn specifieke woorden, gesproken tot een specifiek persoon: 'Ik zie iets in jou. Kom en leer naast mij.'",
   },
   {
     phaseId: 2,
     en_label: "Invest", id_label: "Investasi", nl_label: "Investeren",
     en_subtitle: "Do as I do", id_subtitle: "Lakukan seperti yang kulakukan", nl_subtitle: "Doe zoals ik doe",
-    en: "Investment is not a curriculum â€” it is a lifestyle. Paul invested in Timothy by involving him in real ministry (Philippians 2:22), sending him on real missions (1 Corinthians 4:17), and writing him honest, formative letters. Development happens in the doing, not in the classroom. You cannot develop a leader at arm's length. They need proximity â€” to your decisions, your failures, your way of handling pressure.",
-    id: "Investasi bukan kurikulum â€” itu adalah gaya hidup. Paulus berinvestasi dalam Timotius dengan melibatkannya dalam pelayanan nyata (Filipi 2:22), mengutusnya dalam misi nyata (1 Korintus 4:17), dan menulis surat yang jujur dan formatif kepadanya. Pengembangan terjadi dalam perbuatan, bukan di ruang kelas. Anda tidak bisa mengembangkan seorang pemimpin dari kejauhan. Mereka membutuhkan kedekatan â€” dengan keputusan Anda, kegagalan Anda, cara Anda menangani tekanan.",
-    nl: "Investering is geen curriculum â€” het is een levensstijl. Paulus investeerde in TimoteÃ¼s door hem te betrekken bij echte bediening (Filippenzen 2:22), hem op echte missies te sturen (1 KorintiÃ«rs 4:17) en hem eerlijke, vormende brieven te schrijven. Ontwikkeling gebeurt in het doen, niet in het klaslokaal. Je kunt een leider niet op afstand ontwikkelen. Ze hebben nabijheid nodig â€” bij jouw beslissingen, jouw mislukkingen, jouw manier van omgaan met druk.",
+    en: "Investment is not a curriculum — it is a lifestyle. Paul invested in Timothy by involving him in real ministry (Philippians 2:22), sending him on real missions (1 Corinthians 4:17), and writing him honest, formative letters. Development happens in the doing, not in the classroom. You cannot develop a leader at arm's length. They need proximity — to your decisions, your failures, your way of handling pressure.",
+    id: "Investasi bukan kurikulum — itu adalah gaya hidup. Paulus berinvestasi dalam Timotius dengan melibatkannya dalam pelayanan nyata (Filipi 2:22), mengutusnya dalam misi nyata (1 Korintus 4:17), dan menulis surat yang jujur dan formatif kepadanya. Pengembangan terjadi dalam perbuatan, bukan di ruang kelas. Anda tidak bisa mengembangkan seorang pemimpin dari kejauhan. Mereka membutuhkan kedekatan — dengan keputusan Anda, kegagalan Anda, cara Anda menangani tekanan.",
+    nl: "Investering is geen curriculum — het is een levensstijl. Paulus investeerde in Timoteüs door hem te betrekken bij echte bediening (Filippenzen 2:22), hem op echte missies te sturen (1 Korintiërs 4:17) en hem eerlijke, vormende brieven te schrijven. Ontwikkeling gebeurt in het doen, niet in het klaslokaal. Je kunt een leider niet op afstand ontwikkelen. Ze hebben nabijheid nodig — bij jouw beslissingen, jouw mislukkingen, jouw manier van omgaan met druk.",
   },
   {
     phaseId: 3,
     en_label: "Release", id_label: "Lepaskan", nl_label: "Loslaten",
     en_subtitle: "You go ahead of me", id_subtitle: "Kamu pergi mendahuluiku", nl_subtitle: "Jij gaat voor mij",
-    en: "The goal of all investment is release. Paul sent Timothy to places he himself could not go. The truest test of a leader-developer is whether they can celebrate someone surpassing them. Release requires letting go of control, credit, and the need to remain central. In many cultures, releasing someone is countercultural â€” it means giving away what you spent years building. But this is the logic of the Kingdom: the grain of wheat must fall into the ground.",
-    id: "Tujuan dari semua investasi adalah pelepasan. Paulus mengutus Timotius ke tempat-tempat yang tidak bisa dia pergi sendiri. Ujian paling sejati dari pengembang pemimpin adalah apakah mereka bisa merayakan seseorang yang melampaui mereka. Pelepasan memerlukan melepaskan kendali, kredit, dan kebutuhan untuk tetap menjadi pusat. Dalam banyak budaya, melepaskan seseorang adalah kontra-budaya â€” artinya menyerahkan apa yang Anda habiskan bertahun-tahun untuk membangunnya.",
-    nl: "Het doel van alle investering is loslaten. Paulus stuurde TimoteÃ¼s naar plaatsen waar hij zelf niet kon gaan. De waarhachtigste test van een leiderschapsontwikkelaar is of zij iemand kunnen vieren die hen overtreft. Loslaten vereist het loslaten van controle, krediet en de behoefte om centraal te blijven. In veel culturen is iemand loslaten tegencultureel â€” het betekent weggeven wat je jarenlang hebt gebouwd. Maar dit is de logica van het Koninkrijk.",
+    en: "The goal of all investment is release. Paul sent Timothy to places he himself could not go. The truest test of a leader-developer is whether they can celebrate someone surpassing them. Release requires letting go of control, credit, and the need to remain central. In many cultures, releasing someone is countercultural — it means giving away what you spent years building. But this is the logic of the Kingdom: the grain of wheat must fall into the ground.",
+    id: "Tujuan dari semua investasi adalah pelepasan. Paulus mengutus Timotius ke tempat-tempat yang tidak bisa dia pergi sendiri. Ujian paling sejati dari pengembang pemimpin adalah apakah mereka bisa merayakan seseorang yang melampaui mereka. Pelepasan memerlukan melepaskan kendali, kredit, dan kebutuhan untuk tetap menjadi pusat. Dalam banyak budaya, melepaskan seseorang adalah kontra-budaya — artinya menyerahkan apa yang Anda habiskan bertahun-tahun untuk membangunnya.",
+    nl: "Het doel van alle investering is loslaten. Paulus stuurde Timoteüs naar plaatsen waar hij zelf niet kon gaan. De waarhachtigste test van een leiderschapsontwikkelaar is of zij iemand kunnen vieren die hen overtreft. Loslaten vereist het loslaten van controle, krediet en de behoefte om centraal te blijven. In veel culturen is iemand loslaten tegencultureel — het betekent weggeven wat je jarenlang hebt gebouwd. Maar dit is de logica van het Koninkrijk.",
   },
 ];
 
 const QUALITIES = [
   {
-    en: "Faithfulness in small things â€” character before gifting. Look for the person who does the unseen work well, not just the person who performs when watched.",
-    id: "Kesetiaan dalam hal-hal kecil â€” karakter sebelum karunia. Carilah orang yang melakukan pekerjaan yang tidak terlihat dengan baik, bukan hanya orang yang tampil ketika diawasi.",
-    nl: "Trouw in kleine dingen â€” karakter voor begaafdheid. Zoek de persoon die het onzichtbare werk goed doet, niet alleen de persoon die presteert wanneer hij wordt bekeken.",
+    en: "Faithfulness in small things — character before gifting. Look for the person who does the unseen work well, not just the person who performs when watched.",
+    id: "Kesetiaan dalam hal-hal kecil — karakter sebelum karunia. Carilah orang yang melakukan pekerjaan yang tidak terlihat dengan baik, bukan hanya orang yang tampil ketika diawasi.",
+    nl: "Trouw in kleine dingen — karakter voor begaafdheid. Zoek de persoon die het onzichtbare werk goed doet, niet alleen de persoon die presteert wanneer hij wordt bekeken.",
   },
   {
-    en: "Teachability â€” the willingness to be shaped, corrected, and stretched. A gifted person who cannot receive honest feedback will plateau early and become defensive later.",
-    id: "Kemampuan untuk diajar â€” kesediaan untuk dibentuk, dikoreksi, dan diregangkan. Orang yang berbakat yang tidak dapat menerima umpan balik yang jujur akan mencapai plateau lebih awal dan menjadi defensif kemudian.",
-    nl: "Leerbaarheid â€” de bereidheid om gevormd, gecorrigeerd en uitgerekt te worden. Een begaafd persoon die geen eerlijke feedback kan ontvangen zal vroeg stagneren en later defensief worden.",
+    en: "Teachability — the willingness to be shaped, corrected, and stretched. A gifted person who cannot receive honest feedback will plateau early and become defensive later.",
+    id: "Kemampuan untuk diajar — kesediaan untuk dibentuk, dikoreksi, dan diregangkan. Orang yang berbakat yang tidak dapat menerima umpan balik yang jujur akan mencapai plateau lebih awal dan menjadi defensif kemudian.",
+    nl: "Leerbaarheid — de bereidheid om gevormd, gecorrigeerd en uitgerekt te worden. Een begaafd persoon die geen eerlijke feedback kan ontvangen zal vroeg stagneren en later defensief worden.",
   },
   {
-    en: "Love for people â€” leadership not rooted in genuine care for others eventually becomes hollow. Look for leaders who notice people who are overlooked.",
-    id: "Kecintaan terhadap orang â€” kepemimpinan yang tidak berakar dalam kepedulian tulus terhadap orang lain pada akhirnya menjadi hampa. Carilah pemimpin yang memperhatikan orang yang diabaikan.",
-    nl: "Liefde voor mensen â€” leiderschap dat niet geworteld is in echte zorg voor anderen wordt uiteindelijk hol. Zoek naar leiders die mensen opmerken die over het hoofd worden gezien.",
+    en: "Love for people — leadership not rooted in genuine care for others eventually becomes hollow. Look for leaders who notice people who are overlooked.",
+    id: "Kecintaan terhadap orang — kepemimpinan yang tidak berakar dalam kepedulian tulus terhadap orang lain pada akhirnya menjadi hampa. Carilah pemimpin yang memperhatikan orang yang diabaikan.",
+    nl: "Liefde voor mensen — leiderschap dat niet geworteld is in echte zorg voor anderen wordt uiteindelijk hol. Zoek naar leiders die mensen opmerken die over het hoofd worden gezien.",
   },
   {
-    en: "Responsiveness to God â€” the leader building their own kingdom eventually becomes a problem. Look for people whose primary posture is listening, not performing.",
-    id: "Responsivitas terhadap Tuhan â€” pemimpin yang membangun kerajaan mereka sendiri pada akhirnya menjadi masalah. Carilah orang yang sikap utamanya mendengarkan, bukan tampil.",
-    nl: "Responsiviteit voor God â€” de leider die zijn eigen koninkrijk opbouwt wordt uiteindelijk een probleem. Zoek mensen wiens primaire houding luisteren is, niet presteren.",
+    en: "Responsiveness to God — the leader building their own kingdom eventually becomes a problem. Look for people whose primary posture is listening, not performing.",
+    id: "Responsivitas terhadap Tuhan — pemimpin yang membangun kerajaan mereka sendiri pada akhirnya menjadi masalah. Carilah orang yang sikap utamanya mendengarkan, bukan tampil.",
+    nl: "Responsiviteit voor God — de leider die zijn eigen koninkrijk opbouwt wordt uiteindelijk een probleem. Zoek mensen wiens primaire houding luisteren is, niet presteren.",
   },
 ];
 
 const PRACTICES = [
   {
-    en: "Take them with you â€” to meetings, conversations, and contexts they are not yet entitled to. Exposure is a form of investment.",
-    id: "Bawa mereka bersama Anda â€” ke rapat, percakapan, dan konteks yang belum menjadi hak mereka. Paparan adalah bentuk investasi.",
-    nl: "Neem ze mee â€” naar vergaderingen, gesprekken en contexten waartoe ze nog niet gerechtigd zijn. Blootstelling is een vorm van investering.",
+    en: "Take them with you — to meetings, conversations, and contexts they are not yet entitled to. Exposure is a form of investment.",
+    id: "Bawa mereka bersama Anda — ke rapat, percakapan, dan konteks yang belum menjadi hak mereka. Paparan adalah bentuk investasi.",
+    nl: "Neem ze mee — naar vergaderingen, gesprekken en contexten waartoe ze nog niet gerechtigd zijn. Blootstelling is een vorm van investering.",
   },
   {
-    en: "Debrief after experiences â€” ask 'What did you see? What would you have done differently?' Reflection is the engine of growth.",
-    id: "Evaluasi setelah pengalaman â€” tanyakan 'Apa yang kamu lihat? Apa yang akan kamu lakukan secara berbeda?' Refleksi adalah mesin pertumbuhan.",
-    nl: "Debrief na ervaringen â€” vraag 'Wat zag je? Wat zou jij anders hebben gedaan?' Reflectie is de motor van groei.",
+    en: "Debrief after experiences — ask 'What did you see? What would you have done differently?' Reflection is the engine of growth.",
+    id: "Evaluasi setelah pengalaman — tanyakan 'Apa yang kamu lihat? Apa yang akan kamu lakukan secara berbeda?' Refleksi adalah mesin pertumbuhan.",
+    nl: "Debrief na ervaringen — vraag 'Wat zag je? Wat zou jij anders hebben gedaan?' Reflectie is de motor van groei.",
   },
   {
-    en: "Give real responsibility with real support â€” stretch assignments with a safety net. Not too easy (no growth) and not too hard (no survival).",
-    id: "Berikan tanggung jawab nyata dengan dukungan nyata â€” penugasan yang menantang dengan jaring pengaman. Tidak terlalu mudah (tidak ada pertumbuhan) dan tidak terlalu sulit (tidak ada kelangsungan hidup).",
-    nl: "Geef echte verantwoordelijkheid met echte ondersteuning â€” uitdagende opdrachten met een vangnet. Niet te gemakkelijk (geen groei) en niet te moeilijk (geen overleving).",
+    en: "Give real responsibility with real support — stretch assignments with a safety net. Not too easy (no growth) and not too hard (no survival).",
+    id: "Berikan tanggung jawab nyata dengan dukungan nyata — penugasan yang menantang dengan jaring pengaman. Tidak terlalu mudah (tidak ada pertumbuhan) dan tidak terlalu sulit (tidak ada kelangsungan hidup).",
+    nl: "Geef echte verantwoordelijkheid met echte ondersteuning — uitdagende opdrachten met een vangnet. Niet te gemakkelijk (geen groei) en niet te moeilijk (geen overleving).",
   },
   {
-    en: "Pray specifically for them and with them â€” this is ministry, not management. Their spiritual formation is part of your investment.",
-    id: "Doakan mereka secara spesifik dan bersama mereka â€” ini adalah pelayanan, bukan manajemen. Pembentukan rohani mereka adalah bagian dari investasi Anda.",
-    nl: "Bidt specifiek voor hen en met hen â€” dit is bediening, niet management. Hun spirituele vorming is deel van jouw investering.",
+    en: "Pray specifically for them and with them — this is ministry, not management. Their spiritual formation is part of your investment.",
+    id: "Doakan mereka secara spesifik dan bersama mereka — ini adalah pelayanan, bukan manajemen. Pembentukan rohani mereka adalah bagian dari investasi Anda.",
+    nl: "Bidt specifiek voor hen en met hen — dit is bediening, niet management. Hun spirituele vorming is deel van jouw investering.",
   },
   {
-    en: "Speak to their destiny, not just their task â€” name what you see in them that they may not yet see in themselves.",
-    id: "Berbicaralah tentang takdir mereka, bukan hanya tugas mereka â€” sebutkan apa yang Anda lihat dalam diri mereka yang mungkin belum mereka lihat.",
-    nl: "Spreek over hun bestemming, niet alleen hun taak â€” benoem wat je in hen ziet dat ze misschien nog niet in zichzelf zien.",
+    en: "Speak to their destiny, not just their task — name what you see in them that they may not yet see in themselves.",
+    id: "Berbicaralah tentang takdir mereka, bukan hanya tugas mereka — sebutkan apa yang Anda lihat dalam diri mereka yang mungkin belum mereka lihat.",
+    nl: "Spreek over hun bestemming, niet alleen hun taak — benoem wat je in hen ziet dat ze misschien nog niet in zichzelf zien.",
   },
 ];
 
@@ -143,29 +143,29 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
             setSaved(true);
           });
         }} disabled={saved || isPending} style={{
-          padding: "8px 20px", borderRadius: 6,
+          padding: "8px 20px", borderRadius: 12,
           border: `1px solid ${saved ? "oklch(70% 0.04 260)" : orange}`,
           background: "transparent", color: saved ? "oklch(70% 0.04 260)" : orange,
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
           cursor: saved ? "default" : "pointer",
         }}>
-          {saved ? t("âœ“ Saved to Dashboard", "âœ“ Tersimpan di Dashboard", "âœ“ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+          {saved ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
         </button>
       </div>
 
       {/* Hero */}
       <div style={{ background: navy, padding: "68px 24px 80px" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, marginBottom: 20, textTransform: "uppercase" }}>
-          {t("Leadership Â· Guide", "Kepemimpinan Â· Panduan", "Leiderschap Â· Gids")}
+          {t("Leadership · Guide", "Kepemimpinan · Panduan", "Leiderschap · Gids")}
         </p>
         <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Every Leader is a Seed", "Setiap Pemimpin adalah Benih", "Elke Leider is een Zaad")}
         </h1>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 16, color: "oklch(78% 0.04 260)", maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>
           {t(
-            "You will not always be here. The question is not whether you lead well â€” it is whether you are multiplying what you've been given.",
-            "Anda tidak akan selalu ada di sini. Pertanyaannya bukan apakah Anda memimpin dengan baik â€” tetapi apakah Anda melipatgandakan apa yang telah diberikan kepada Anda.",
-            "Je zult er niet altijd zijn. De vraag is niet of je goed leidt â€” maar of je vermenigvuldigt wat je is gegeven."
+            "You will not always be here. The question is not whether you lead well — it is whether you are multiplying what you've been given.",
+            "Anda tidak akan selalu ada di sini. Pertanyaannya bukan apakah Anda memimpin dengan baik — tetapi apakah Anda melipatgandakan apa yang telah diberikan kepada Anda.",
+            "Je zult er niet altijd zijn. De vraag is niet of je goed leidt — maar of je vermenigvuldigt wat je is gegeven."
           )}
         </p>
       </div>
@@ -182,9 +182,9 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.75, marginBottom: 32, maxWidth: 600 }}>
             {t(
-              "Name up to three people you are currently developing as leaders. Not who you'd like to invest in someday â€” who you are actively investing in today.",
-              "Sebutkan hingga tiga orang yang saat ini Anda kembangkan sebagai pemimpin. Bukan siapa yang ingin Anda investasikan suatu hari nanti â€” siapa yang saat ini Anda investasikan secara aktif.",
-              "Noem maximaal drie mensen in wie jij momenteel leiders ontwikkelt. Niet wie je ooit zou willen investeren â€” wie je vandaag actief in investeert."
+              "Name up to three people you are currently developing as leaders. Not who you'd like to invest in someday — who you are actively investing in today.",
+              "Sebutkan hingga tiga orang yang saat ini Anda kembangkan sebagai pemimpin. Bukan siapa yang ingin Anda investasikan suatu hari nanti — siapa yang saat ini Anda investasikan secara aktif.",
+              "Noem maximaal drie mensen in wie jij momenteel leiders ontwikkelt. Niet wie je ooit zou willen investeren — wie je vandaag actief in investeert."
             )}
           </p>
 
@@ -225,7 +225,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                         setNameAware(upd);
                       }
                     }}
-                    placeholder={t(`Timothy ${i + 1}`, `Timotius ${i + 1}`, `TimotheÃ¼s ${i + 1}`)}
+                    placeholder={t(`Timothy ${i + 1}`, `Timotius ${i + 1}`, `Timotheüs ${i + 1}`)}
                     style={{
                       width: "100%", padding: "12px 14px", border: `2px solid ${name.trim() ? navy : "oklch(80% 0.012 80)"}`,
                       borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontSize: 13,
@@ -272,14 +272,14 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                         {t("you + them", "Anda + mereka", "jij + zij")}
                       </p>
                     </div>
-                    <p style={{ fontFamily: serif, fontSize: 28, color: "oklch(50% 0.06 260)", margin: 0 }}>â†’</p>
+                    <p style={{ fontFamily: serif, fontSize: 28, color: "oklch(50% 0.06 260)", margin: 0 }}>?</p>
                     <div style={{ textAlign: "center" }}>
                       <p style={{ fontFamily: serif, fontSize: 48, fontWeight: 700, color: orange, lineHeight: 1, margin: 0 }}>{gen2}</p>
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, color: "oklch(65% 0.04 260)", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.1em" }}>
                         {t("gen 2", "generasi 2", "gen 2")}
                       </p>
                     </div>
-                    <p style={{ fontFamily: serif, fontSize: 28, color: "oklch(50% 0.06 260)", margin: 0 }}>â†’</p>
+                    <p style={{ fontFamily: serif, fontSize: 28, color: "oklch(50% 0.06 260)", margin: 0 }}>?</p>
                     <div style={{ textAlign: "center" }}>
                       <p style={{ fontFamily: serif, fontSize: 48, fontWeight: 700, color: orange, lineHeight: 1, margin: 0 }}>{gen3}</p>
                       <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, color: "oklch(65% 0.04 260)", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.1em" }}>
@@ -289,9 +289,9 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                   </div>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: "oklch(65% 0.04 260)", marginTop: 20, lineHeight: 1.65, fontStyle: "italic" }}>
                     {t(
-                      `This is the math Paul was doing. Not ${enteredCount} leader â€” ${gen3} leaders, carrying what you carry, in places you'll never reach.`,
-                      `Inilah matematika yang dilakukan Paulus. Bukan ${enteredCount} pemimpin â€” ${gen3} pemimpin, membawa apa yang Anda bawa, di tempat yang tidak akan pernah Anda capai.`,
-                      `Dit is de wiskunde die Paulus deed. Niet ${enteredCount} leider â€” ${gen3} leiders, dragend wat jij draagt, op plaatsen die jij nooit zult bereiken.`
+                      `This is the math Paul was doing. Not ${enteredCount} leader — ${gen3} leaders, carrying what you carry, in places you'll never reach.`,
+                      `Inilah matematika yang dilakukan Paulus. Bukan ${enteredCount} pemimpin — ${gen3} pemimpin, membawa apa yang Anda bawa, di tempat yang tidak akan pernah Anda capai.`,
+                      `Dit is de wiskunde die Paulus deed. Niet ${enteredCount} leider — ${gen3} leiders, dragend wat jij draagt, op plaatsen die jij nooit zult bereiken.`
                     )}
                   </p>
                 </div>
@@ -319,7 +319,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
             {t("The Model", "Modelnya", "Het Model")}
           </p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(24px, 3.5vw, 36px)", fontWeight: 600, color: navy, marginBottom: 24, lineHeight: 1.3 }}>
-            {t("The Paulâ€“Timothy Pattern", "Pola Paulusâ€“Timotius", "Het Paulusâ€“TimoteÃ¼s Patroon")}
+            {t("The Paul–Timothy Pattern", "Pola Paulus–Timotius", "Het Paulus–Timoteüs Patroon")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {PHASES.map(phase => {
@@ -342,7 +342,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                         "{tFn(phase.en_subtitle, phase.id_subtitle, phase.nl_subtitle, lang)}"
                       </p>
                     </div>
-                    <span style={{ color: isOpen ? orange : "oklch(60% 0.05 260)", fontSize: 18, lineHeight: 1, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>â†“</span>
+                    <span style={{ color: isOpen ? orange : "oklch(60% 0.05 260)", fontSize: 18, lineHeight: 1, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>?</span>
                   </button>
                   {isOpen && (
                     <div style={{ padding: "20px 24px 24px", background: lightGray }}>
@@ -406,9 +406,9 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           </h2>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: bodyText, lineHeight: 1.8, maxWidth: 680, marginBottom: 28 }}>
             {t(
-              "Paul's strategy was never to build a ministry around himself. His strategy was to entrust what he had received to reliable people who would entrust it to others. This is a four-generation vision: Paul â†’ Timothy â†’ reliable people â†’ others. The multiplication is built into the model. Jesus commissioned the same thing â€” not a congregation, but a movement of disciple-makers.",
-              "Strategi Paulus tidak pernah membangun pelayanan di sekitar dirinya. Strateginya adalah mempercayakan apa yang telah ia terima kepada orang-orang yang dapat dipercaya yang akan mempercayakannya kepada orang lain. Ini adalah visi empat generasi: Paulus â†’ Timotius â†’ orang-orang yang dapat dipercaya â†’ orang lain. Penggandaan sudah ada dalam modelnya. Yesus menugaskan hal yang sama â€” bukan jemaat, melainkan gerakan pembuat murid.",
-              "Paulus' strategie was nooit een bediening rondom zichzelf te bouwen. Zijn strategie was om wat hij had ontvangen toe te vertrouwen aan betrouwbare mensen die het aan anderen zouden toevertrouwen. Dit is een vier-generaties visie: Paulus â†’ TimoteÃ¼s â†’ betrouwbare mensen â†’ anderen. De vermenigvuldiging is ingebouwd in het model. Jezus gaf dezelfde opdracht â€” geen gemeente, maar een beweging van leerlingmakers."
+              "Paul's strategy was never to build a ministry around himself. His strategy was to entrust what he had received to reliable people who would entrust it to others. This is a four-generation vision: Paul ? Timothy ? reliable people ? others. The multiplication is built into the model. Jesus commissioned the same thing — not a congregation, but a movement of disciple-makers.",
+              "Strategi Paulus tidak pernah membangun pelayanan di sekitar dirinya. Strateginya adalah mempercayakan apa yang telah ia terima kepada orang-orang yang dapat dipercaya yang akan mempercayakannya kepada orang lain. Ini adalah visi empat generasi: Paulus ? Timotius ? orang-orang yang dapat dipercaya ? orang lain. Penggandaan sudah ada dalam modelnya. Yesus menugaskan hal yang sama — bukan jemaat, melainkan gerakan pembuat murid.",
+              "Paulus' strategie was nooit een bediening rondom zichzelf te bouwen. Zijn strategie was om wat hij had ontvangen toe te vertrouwen aan betrouwbare mensen die het aan anderen zouden toevertrouwen. Dit is een vier-generaties visie: Paulus ? Timoteüs ? betrouwbare mensen ? anderen. De vermenigvuldiging is ingebouwd in het model. Jezus gaf dezelfde opdracht — geen gemeente, maar een beweging van leerlingmakers."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
@@ -443,13 +443,13 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
                 roman: "I",
                 en: "Who invested in you in a Paul-Timothy way? What specifically did they do that shaped you most deeply?",
                 id: "Siapa yang berinvestasi dalam diri Anda dengan cara Paulus-Timotius? Apa yang secara spesifik mereka lakukan yang paling dalam membentuk Anda?",
-                nl: "Wie heeft op een Paulus-TimoteÃ¼s manier in jou geÃ¯nvesteerd? Wat deden zij specifiek dat je het diepst heeft gevormd?",
+                nl: "Wie heeft op een Paulus-Timoteüs manier in jou geïnvesteerd? Wat deden zij specifiek dat je het diepst heeft gevormd?",
               },
               {
                 roman: "II",
-                en: "What holds you back from releasing people â€” fear of losing influence, distrust, control, or simply the pace of work?",
-                id: "Apa yang menahan Anda untuk melepaskan orang â€” ketakutan kehilangan pengaruh, ketidakpercayaan, kontrol, atau hanya tempo pekerjaan?",
-                nl: "Wat houdt je tegen om mensen los te laten â€” angst voor verlies van invloed, wantrouwen, controle of simpelweg het tempo van werk?",
+                en: "What holds you back from releasing people — fear of losing influence, distrust, control, or simply the pace of work?",
+                id: "Apa yang menahan Anda untuk melepaskan orang — ketakutan kehilangan pengaruh, ketidakpercayaan, kontrol, atau hanya tempo pekerjaan?",
+                nl: "Wat houdt je tegen om mensen los te laten — angst voor verlies van invloed, wantrouwen, controle of simpelweg het tempo van werk?",
               },
               {
                 roman: "III",
@@ -475,9 +475,9 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           </p>
           <p style={{ fontFamily: serif, fontSize: 22, color: navy, lineHeight: 1.6, marginBottom: 24, fontStyle: "italic" }}>
             {t(
-              "Name one person you will intentionally invite, invest in, or release this week â€” and what you'll do.",
-              "Sebutkan satu orang yang akan Anda undang, investasikan, atau lepaskan minggu ini â€” dan apa yang akan Anda lakukan.",
-              "Noem Ã©Ã©n persoon die je deze week bewust wilt uitnodigen, in wilt investeren of wilt loslaten â€” en wat je zult doen."
+              "Name one person you will intentionally invite, invest in, or release this week — and what you'll do.",
+              "Sebutkan satu orang yang akan Anda undang, investasikan, atau lepaskan minggu ini — dan apa yang akan Anda lakukan.",
+              "Noem één persoon die je deze week bewust wilt uitnodigen, in wilt investeren of wilt loslaten — en wat je zult doen."
             )}
           </p>
           {!committed ? (
@@ -493,7 +493,7 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
               <button onClick={() => { if (commitment.trim()) setCommitted(true); }} disabled={!commitment.trim()} style={{
                 marginTop: 14, padding: "12px 28px",
                 background: commitment.trim() ? navy : "oklch(80% 0.01 80)",
-                color: offWhite, border: "none", borderRadius: 6,
+                color: offWhite, border: "none", borderRadius: 12,
                 fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13,
                 cursor: commitment.trim() ? "pointer" : "default",
               }}>
@@ -517,9 +517,9 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
           <Link href="/resources" style={{
             fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
             color: navy, textDecoration: "none", letterSpacing: "0.08em",
-            padding: "12px 28px", border: `2px solid ${navy}`, borderRadius: 6, display: "inline-block",
+            padding: "12px 28px", border: `2px solid ${navy}`, borderRadius: 12, display: "inline-block",
           }}>
-            {t("â† Content Library", "â† Perpustakaan Konten", "â† Contentbibliotheek")}
+            {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
           </Link>
         </div>
       </div>
@@ -537,10 +537,10 @@ export default function RaisingNextGenerationClient({ userPathway, isSaved: init
               "{lang === "en" ? VERSES[activeVerse].en : lang === "id" ? VERSES[activeVerse].id : VERSES[activeVerse].nl}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 24 }}>
-              â€” {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
+              — {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
             <button onClick={() => setActiveVerse(null)} style={{
-              padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 6,
+              padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12,
               fontFamily: "Montserrat, sans-serif", fontWeight: 700, cursor: "pointer",
             }}>
               {t("Close", "Tutup", "Sluiten")}

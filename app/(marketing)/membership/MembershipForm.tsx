@@ -125,7 +125,7 @@ export default function MembershipForm() {
       {/* Language toggle — first question */}
       <div>
         <label style={labelStyle}>{c.langLabel}</label>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
           {(["en", "id"] as const).map(l => (
             <button
               key={l}
@@ -136,11 +136,12 @@ export default function MembershipForm() {
                 fontSize: "0.8rem",
                 fontWeight: 700,
                 padding: "0.5rem 1.25rem",
-                border: `1px solid ${lang === l ? orange : "oklch(82% 0.008 80)"}`,
+                border: "none",
+                borderRadius: 999,
                 background: lang === l ? orange : "transparent",
-                color: lang === l ? "white" : "oklch(52% 0.008 260)",
+                color: lang === l ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
                 cursor: "pointer",
-                transition: "all 0.15s",
+                transition: "background 0.15s, color 0.15s",
               }}
             >
               {l === "en" ? "English" : "Bahasa Indonesia"}
@@ -237,6 +238,7 @@ export default function MembershipForm() {
             color: "white",
             background: pending ? "oklch(52% 0.008 260)" : orange,
             border: "none",
+            borderRadius: 12,
             padding: "0.875rem 2rem",
             cursor: pending ? "not-allowed" : "pointer",
             transition: "background 0.15s",

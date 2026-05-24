@@ -37,7 +37,7 @@ export default function PersonalLanguageSelector({ currentLanguage, compact = fa
           Content Language
         </p>
       )}
-      <div style={{ display: "flex", gap: "2px" }}>
+      <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)", opacity: isPending ? 0.7 : 1, transition: "opacity 0.15s" }}>
         {LANGS.map(({ code, label, full }) => {
           const isActive = optimisticLang === code;
           return (
@@ -52,13 +52,12 @@ export default function PersonalLanguageSelector({ currentLanguage, compact = fa
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 padding: "0.375rem 0.75rem",
-                border: "1px solid",
-                borderColor: isActive ? "oklch(65% 0.15 45)" : "oklch(82% 0.008 80)",
+                border: "none",
+                borderRadius: 999,
                 background: isActive ? "oklch(65% 0.15 45)" : "transparent",
-                color: isActive ? "oklch(97% 0.005 80)" : "oklch(48% 0.008 260)",
+                color: isActive ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
                 cursor: isPending ? "default" : isActive ? "default" : "pointer",
-                opacity: isPending ? 0.6 : 1,
-                transition: "all 0.15s",
+                transition: "background 0.15s, color 0.15s",
               }}
             >
               {label}

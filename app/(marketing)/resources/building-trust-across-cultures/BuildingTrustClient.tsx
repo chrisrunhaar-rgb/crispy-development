@@ -1,4 +1,4 @@
-ï»¿"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -22,17 +22,17 @@ const trustTypes = [
     en_title: "Relationship-Based Trust",
     id_title: "Kepercayaan Berbasis Hubungan",
     nl_title: "Relatiegebaseerd Vertrouwen",
-    en_desc: "Common in much of Asia, the Middle East, Africa, and Latin America. Trust is built through personal connection, shared experience, and genuine investment in the other person. Business follows relationship â€” not the other way around. Skipping this stage undermines everything that follows.",
-    id_desc: "Umum di sebagian besar Asia, Timur Tengah, Afrika, dan Amerika Latin. Kepercayaan dibangun melalui koneksi pribadi, pengalaman bersama, dan investasi nyata pada orang lain. Bisnis mengikuti hubungan â€” bukan sebaliknya.",
-    nl_desc: "Gangbaar in groot deel van AziÃ«, het Midden-Oosten, Afrika en Latijns-Amerika. Vertrouwen wordt opgebouwd via persoonlijke verbinding, gedeelde ervaringen en echte investering in de ander. Zaken volgen relatie â€” niet andersom.",
+    en_desc: "Common in much of Asia, the Middle East, Africa, and Latin America. Trust is built through personal connection, shared experience, and genuine investment in the other person. Business follows relationship — not the other way around. Skipping this stage undermines everything that follows.",
+    id_desc: "Umum di sebagian besar Asia, Timur Tengah, Afrika, dan Amerika Latin. Kepercayaan dibangun melalui koneksi pribadi, pengalaman bersama, dan investasi nyata pada orang lain. Bisnis mengikuti hubungan — bukan sebaliknya.",
+    nl_desc: "Gangbaar in groot deel van Azië, het Midden-Oosten, Afrika en Latijns-Amerika. Vertrouwen wordt opgebouwd via persoonlijke verbinding, gedeelde ervaringen en echte investering in de ander. Zaken volgen relatie — niet andersom.",
   },
 ];
 
 const principles = [
   { number: "1", en_title: "Know which trust language your team speaks", id_title: "Ketahui bahasa kepercayaan tim Anda", nl_title: "Ken de vertrouwenstaal van je team", en_desc: "Don't assume everyone earns trust the same way you do. Ask: does this person need to see my track record first, or do they need to know me as a person first? Invest accordingly.", id_desc: "Jangan asumsikan semua orang mendapatkan kepercayaan dengan cara yang sama seperti Anda. Tanyakan: apakah orang ini perlu melihat rekam jejak saya terlebih dahulu, atau mereka perlu mengenal saya sebagai pribadi terlebih dahulu?", nl_desc: "Veronderstel niet dat iedereen op dezelfde manier vertrouwen verdient als jij. Vraag jezelf: moet deze persoon eerst mijn trackrecord zien, of moeten ze me eerst als persoon leren kennen?" },
-  { number: "2", en_title: "Consistency over time is universally trusted", id_title: "Konsistensi dari waktu ke waktu dipercaya secara universal", nl_title: "Consistentie door de tijd wordt universeel vertrouwd", en_desc: "Regardless of cultural background, people trust leaders who do what they say, say what they mean, and are the same person in private and in public. Integrity is the common currency of all trust.", id_desc: "Terlepas dari latar belakang budaya, orang mempercayai pemimpin yang melakukan apa yang mereka katakan, mengatakan apa yang mereka maksud, dan menjadi orang yang sama dalam kehidupan pribadi dan publik.", nl_desc: "Ongeacht culturele achtergrond vertrouwen mensen leiders die doen wat ze zeggen, zeggen wat ze bedoelen, en dezelfde persoon zijn in het privÃ©leven en in het openbaar." },
-  { number: "3", en_title: "Vulnerability accelerates trust", id_title: "Kerentanan mempercepat kepercayaan", nl_title: "Kwetsbaarheid versnelt vertrouwen", en_desc: "Admitting uncertainty, asking for help, and acknowledging a mistake signals safety. In most cultures, a leader who refuses to show any weakness is less trusted, not more â€” because it signals either dishonesty or insecurity.", id_desc: "Mengakui ketidakpastian, meminta bantuan, dan mengakui kesalahan memberi sinyal keamanan. Dalam kebanyakan budaya, pemimpin yang menolak menunjukkan kelemahan apa pun kurang dipercaya, bukan lebih.", nl_desc: "Onzekerheid toegeven, om hulp vragen en een fout erkennen signaleert veiligheid. In de meeste culturen wordt een leider die elke zwakte weigert te tonen minder vertrouwd, niet meer." },
-  { number: "4", en_title: "Repair broken trust quickly and specifically", id_title: "Perbaiki kepercayaan yang rusak dengan cepat dan spesifik", nl_title: "Herstel gebroken vertrouwen snel en specifiek", en_desc: "When trust breaks â€” and it will â€” address it directly, name what happened, own your part, and ask what repair would look like. Generic apologies often deepen the wound; specific ones begin healing.", id_desc: "Ketika kepercayaan rusak â€” dan itu akan terjadi â€” tangani secara langsung, sebutkan apa yang terjadi, akui bagian Anda, dan tanyakan seperti apa perbaikan yang terlihat.", nl_desc: "Wanneer vertrouwen breekt â€” en dat zal gebeuren â€” pak het direct aan, benoem wat er is gebeurd, erken je aandeel, en vraag hoe herstel eruit zou zien." },
+  { number: "2", en_title: "Consistency over time is universally trusted", id_title: "Konsistensi dari waktu ke waktu dipercaya secara universal", nl_title: "Consistentie door de tijd wordt universeel vertrouwd", en_desc: "Regardless of cultural background, people trust leaders who do what they say, say what they mean, and are the same person in private and in public. Integrity is the common currency of all trust.", id_desc: "Terlepas dari latar belakang budaya, orang mempercayai pemimpin yang melakukan apa yang mereka katakan, mengatakan apa yang mereka maksud, dan menjadi orang yang sama dalam kehidupan pribadi dan publik.", nl_desc: "Ongeacht culturele achtergrond vertrouwen mensen leiders die doen wat ze zeggen, zeggen wat ze bedoelen, en dezelfde persoon zijn in het privéleven en in het openbaar." },
+  { number: "3", en_title: "Vulnerability accelerates trust", id_title: "Kerentanan mempercepat kepercayaan", nl_title: "Kwetsbaarheid versnelt vertrouwen", en_desc: "Admitting uncertainty, asking for help, and acknowledging a mistake signals safety. In most cultures, a leader who refuses to show any weakness is less trusted, not more — because it signals either dishonesty or insecurity.", id_desc: "Mengakui ketidakpastian, meminta bantuan, dan mengakui kesalahan memberi sinyal keamanan. Dalam kebanyakan budaya, pemimpin yang menolak menunjukkan kelemahan apa pun kurang dipercaya, bukan lebih.", nl_desc: "Onzekerheid toegeven, om hulp vragen en een fout erkennen signaleert veiligheid. In de meeste culturen wordt een leider die elke zwakte weigert te tonen minder vertrouwd, niet meer." },
+  { number: "4", en_title: "Repair broken trust quickly and specifically", id_title: "Perbaiki kepercayaan yang rusak dengan cepat dan spesifik", nl_title: "Herstel gebroken vertrouwen snel en specifiek", en_desc: "When trust breaks — and it will — address it directly, name what happened, own your part, and ask what repair would look like. Generic apologies often deepen the wound; specific ones begin healing.", id_desc: "Ketika kepercayaan rusak — dan itu akan terjadi — tangani secara langsung, sebutkan apa yang terjadi, akui bagian Anda, dan tanyakan seperti apa perbaikan yang terlihat.", nl_desc: "Wanneer vertrouwen breekt — en dat zal gebeuren — pak het direct aan, benoem wat er is gebeurd, erken je aandeel, en vraag hoe herstel eruit zou zien." },
 ];
 
 const trustDiffs = [
@@ -46,7 +46,7 @@ const reflectionQuestions = [
   { roman: "III", en: "When has a lack of relational investment cost you influence that could not be recovered quickly?", id: "Kapan kurangnya investasi relasional menghabiskan pengaruh Anda yang tidak dapat dipulihkan dengan cepat?", nl: "Wanneer heeft een gebrek aan relationele investering je invloed gekost die niet snel hersteld kon worden?" },
   { roman: "IV", en: "How does the biblical idea of faithfulness (pistis) shape your theology of trust-building?", id: "Bagaimana konsep alkitabiah tentang kesetiaan (pistis) membentuk teologi Anda tentang membangun kepercayaan?", nl: "Hoe vormt het bijbelse begrip trouw (pistis) jouw theologie van vertrouwen opbouwen?" },
   { roman: "V", en: "Have you ever had to rebuild broken trust cross-culturally? What did you learn?", id: "Pernahkah Anda harus membangun kembali kepercayaan yang rusak secara lintas budaya? Apa yang Anda pelajari?", nl: "Heb je ooit gebroken vertrouwen intercultureel moeten herstellen? Wat heb je geleerd?" },
-  { roman: "VI", en: "What specific investment could you make this week to deepen trust with one team member?", id: "Investasi spesifik apa yang bisa Anda lakukan minggu ini untuk memperdalam kepercayaan dengan satu anggota tim?", nl: "Welke specifieke investering kun je deze week doen om vertrouwen met Ã©Ã©n teamlid te verdiepen?" },
+  { roman: "VI", en: "What specific investment could you make this week to deepen trust with one team member?", id: "Investasi spesifik apa yang bisa Anda lakukan minggu ini untuk memperdalam kepercayaan dengan satu anggota tim?", nl: "Welke specifieke investering kun je deze week doen om vertrouwen met één teamlid te verdiepen?" },
 ];
 
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -78,22 +78,22 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
 
       <div style={{ background: navy, padding: "80px 24px 72px" }}>
         <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
-          {t("Cross-Cultural Â· Guide", "Lintas Budaya Â· Panduan", "Cross-Cultureel Â· Gids")}
+          {t("Cross-Cultural · Guide", "Lintas Budaya · Panduan", "Cross-Cultureel · Gids")}
         </p>
         <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
           {t("Building Trust Across Cultures", "Membangun Kepercayaan Lintas Budaya", "Vertrouwen Opbouwen Across Culturen")}
         </h1>
         <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 32px", lineHeight: 1.65 }}>
           {t(
-            '"Trust is the glue of life. It is the most essential ingredient in effective communication." â€” Stephen Covey',
-            '"Kepercayaan adalah perekat kehidupan. Ini adalah bahan paling esensial dalam komunikasi yang efektif." â€” Stephen Covey',
-            '"Vertrouwen is de lijm van het leven. Het is het meest essentiÃ«le ingrediÃ«nt in effectieve communicatie." â€” Stephen Covey'
+            '"Trust is the glue of life. It is the most essential ingredient in effective communication." — Stephen Covey',
+            '"Kepercayaan adalah perekat kehidupan. Ini adalah bahan paling esensial dalam komunikasi yang efektif." — Stephen Covey',
+            '"Vertrouwen is de lijm van het leven. Het is het meest essentiële ingrediënt in effectieve communicatie." — Stephen Covey'
           )}
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+          <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-            {saved ? t("âœ“ Saved to Dashboard", "âœ“ Tersimpan di Dashboard", "âœ“ Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+            {saved ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
           </button>
         </div>
       </div>
@@ -101,16 +101,16 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
       <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "Trust is not universal â€” the way it is built, broken, and repaired differs significantly across cultures. A leader who earns deep trust in one cultural context may find themselves starting from zero when they move to another â€” not because of character failure, but because the trust-building grammar is different.",
-            "Kepercayaan tidak universal â€” cara membangun, merusak, dan memperbaikinya berbeda secara signifikan di berbagai budaya. Seorang pemimpin yang mendapatkan kepercayaan mendalam dalam satu konteks budaya mungkin mendapati diri mereka mulai dari nol ketika pindah ke yang lain.",
-            "Vertrouwen is niet universeel â€” de manier waarop het wordt opgebouwd, gebroken en hersteld verschilt aanzienlijk tussen culturen. Een leider die diep vertrouwen verdient in Ã©Ã©n culturele context kan zich nul zien beginnen wanneer ze naar een andere verhuizen."
+            "Trust is not universal — the way it is built, broken, and repaired differs significantly across cultures. A leader who earns deep trust in one cultural context may find themselves starting from zero when they move to another — not because of character failure, but because the trust-building grammar is different.",
+            "Kepercayaan tidak universal — cara membangun, merusak, dan memperbaikinya berbeda secara signifikan di berbagai budaya. Seorang pemimpin yang mendapatkan kepercayaan mendalam dalam satu konteks budaya mungkin mendapati diri mereka mulai dari nol ketika pindah ke yang lain.",
+            "Vertrouwen is niet universeel — de manier waarop het wordt opgebouwd, gebroken en hersteld verschilt aanzienlijk tussen culturen. Een leider die diep vertrouwen verdient in één culturele context kan zich nul zien beginnen wanneer ze naar een andere verhuizen."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75 }}>
           {t(
             "The foundational distinction, identified by researchers Fons Trompenaars and Charles Hampden-Turner, is between task-based and relationship-based trust. Understanding which mode your team operates in is essential for earning genuine influence.",
             "Perbedaan mendasar, yang diidentifikasi oleh peneliti Fons Trompenaars dan Charles Hampden-Turner, adalah antara kepercayaan berbasis tugas dan berbasis hubungan. Memahami mode mana yang dioperasikan tim Anda sangat penting untuk mendapatkan pengaruh yang nyata.",
-            "Het fundamentele onderscheid, geÃ¯dentificeerd door onderzoekers Fons Trompenaars en Charles Hampden-Turner, is tussen taakgebaseerd en relatiegebaseerd vertrouwen."
+            "Het fundamentele onderscheid, geïdentificeerd door onderzoekers Fons Trompenaars en Charles Hampden-Turner, is tussen taakgebaseerd en relatiegebaseerd vertrouwen."
           )}
         </p>
       </div>
@@ -181,8 +181,8 @@ export default function BuildingTrustClient({ userPathway, isSaved: initialSaved
         <p style={{ color: "oklch(80% 0.03 80)", fontSize: 16, lineHeight: 1.75, maxWidth: 540, margin: "0 auto 32px" }}>
           {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
-        <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 6, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-          {t("â† Content Library", "â† Perpustakaan Konten", "â† Contentbibliotheek")}
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
+          {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
         </Link>
       </div>
     </div>

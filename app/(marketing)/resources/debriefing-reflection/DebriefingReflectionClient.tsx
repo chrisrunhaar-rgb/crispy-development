@@ -1,4 +1,4 @@
-Ôªø"use client";
+"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -36,9 +36,9 @@ const ORID_STAGES = [
     en_sub: "What happened?",
     id_sub: "Apa yang terjadi?",
     nl_sub: "Wat is er gebeurd?",
-    en_guide: "Start with the observable facts ‚Äî not what it meant, not how you felt. Just what actually happened. This stage protects the debrief from jumping to conclusions before the group has agreed on what the shared experience actually was.",
-    id_guide: "Mulailah dengan fakta yang dapat diamati ‚Äî bukan apa artinya, bukan bagaimana perasaan Anda. Hanya apa yang benar-benar terjadi. Tahap ini melindungi debrief dari melompat ke kesimpulan sebelum kelompok sepakat tentang apa pengalaman bersama sebenarnya.",
-    nl_guide: "Begin met de waarneembare feiten ‚Äî niet wat het betekende, niet hoe je je voelde. Alleen wat er werkelijk gebeurde. Deze fase beschermt het debrief van naar conclusies springen voordat de groep het eens is over wat de gedeelde ervaring werkelijk was.",
+    en_guide: "Start with the observable facts ó not what it meant, not how you felt. Just what actually happened. This stage protects the debrief from jumping to conclusions before the group has agreed on what the shared experience actually was.",
+    id_guide: "Mulailah dengan fakta yang dapat diamati ó bukan apa artinya, bukan bagaimana perasaan Anda. Hanya apa yang benar-benar terjadi. Tahap ini melindungi debrief dari melompat ke kesimpulan sebelum kelompok sepakat tentang apa pengalaman bersama sebenarnya.",
+    nl_guide: "Begin met de waarneembare feiten ó niet wat het betekende, niet hoe je je voelde. Alleen wat er werkelijk gebeurde. Deze fase beschermt het debrief van naar conclusies springen voordat de groep het eens is over wat de gedeelde ervaring werkelijk was.",
     en_questions: [
       "What did you observe happening? What did you see, hear, or notice?",
       "What were the key events, in order?",
@@ -54,12 +54,12 @@ const ORID_STAGES = [
       "Wat waren de sleutelgebeurtenissen, op volgorde?",
       "Welke data of resultaten kwamen binnen? Wat waren de concrete uitkomsten?",
     ],
-    en_placeholder: "Describe what actually happened ‚Äî the facts, events, and observations...",
-    id_placeholder: "Ceritakan apa yang sebenarnya terjadi ‚Äî fakta, kejadian, dan pengamatan...",
-    nl_placeholder: "Beschrijf wat er werkelijk gebeurde ‚Äî de feiten, gebeurtenissen en observaties...",
+    en_placeholder: "Describe what actually happened ó the facts, events, and observations...",
+    id_placeholder: "Ceritakan apa yang sebenarnya terjadi ó fakta, kejadian, dan pengamatan...",
+    nl_placeholder: "Beschrijf wat er werkelijk gebeurde ó de feiten, gebeurtenissen en observaties...",
     en_cross: "In high-context cultures, the 'objective' facts may be interpreted relationally rather than logically. A missed deadline, for instance, may be less about time management and more about a relationship that needed tending first. Begin here without assuming your frame is the only frame.",
     id_cross: "Dalam budaya high-context, 'fakta objektif' mungkin ditafsirkan secara relasional daripada logis. Tenggat waktu yang terlewat, misalnya, mungkin kurang tentang manajemen waktu dan lebih tentang hubungan yang perlu dijaga lebih dulu.",
-    nl_cross: "In high-context culturen kunnen 'objectieve feiten' relationeel worden ge√Ønterpreteerd in plaats van logisch. Een gemiste deadline is misschien minder over tijdbeheer en meer over een relatie die eerst verzorging nodig had.",
+    nl_cross: "In high-context culturen kunnen 'objectieve feiten' relationeel worden geÔnterpreteerd in plaats van logisch. Een gemiste deadline is misschien minder over tijdbeheer en meer over een relatie die eerst verzorging nodig had.",
   },
   {
     key: "R",
@@ -72,9 +72,9 @@ const ORID_STAGES = [
     en_sub: "How did it feel?",
     id_sub: "Bagaimana rasanya?",
     nl_sub: "Hoe voelde het?",
-    en_guide: "Now bring in the emotional layer. This is often skipped ‚Äî especially in cultures where naming feelings in a group setting is uncomfortable, or where showing emotion signals weakness. But the emotional data is real data. If it's not surfaced here, it will surface later as a conflict.",
-    id_guide: "Sekarang masukkan lapisan emosional. Ini sering dilewati ‚Äî terutama dalam budaya di mana menyebutkan perasaan dalam kelompok tidak nyaman, atau di mana menunjukkan emosi menandakan kelemahan. Tetapi data emosional adalah data nyata.",
-    nl_guide: "Breng nu de emotionele laag erin. Dit wordt vaak overgeslagen ‚Äî vooral in culturen waar het benoemen van gevoelens in een groepsetting ongemakkelijk is, of waar het tonen van emotie zwakte signaleert. Maar emotionele data is echte data.",
+    en_guide: "Now bring in the emotional layer. This is often skipped ó especially in cultures where naming feelings in a group setting is uncomfortable, or where showing emotion signals weakness. But the emotional data is real data. If it's not surfaced here, it will surface later as a conflict.",
+    id_guide: "Sekarang masukkan lapisan emosional. Ini sering dilewati ó terutama dalam budaya di mana menyebutkan perasaan dalam kelompok tidak nyaman, atau di mana menunjukkan emosi menandakan kelemahan. Tetapi data emosional adalah data nyata.",
+    nl_guide: "Breng nu de emotionele laag erin. Dit wordt vaak overgeslagen ó vooral in culturen waar het benoemen van gevoelens in een groepsetting ongemakkelijk is, of waar het tonen van emotie zwakte signaleert. Maar emotionele data is echte data.",
     en_questions: [
       "What was the emotional atmosphere in the team during this experience?",
       "What energised you? What drained you?",
@@ -90,12 +90,12 @@ const ORID_STAGES = [
       "Wat gaf je energie? Wat putte je uit?",
       "Was er een moment van verrassing, frustratie, vreugde of verwarring?",
     ],
-    en_placeholder: "Describe the emotional experience ‚Äî what the team was feeling, and when...",
-    id_placeholder: "Ceritakan pengalaman emosional ‚Äî apa yang dirasakan tim, dan kapan...",
-    nl_placeholder: "Beschrijf de emotionele ervaring ‚Äî wat het team voelde, en wanneer...",
-    en_cross: "Some team members may express emotion through indirection ‚Äî a story, a metaphor, or a reference to someone else's experience rather than their own. Create space for this. Not every reflective answer will be a direct personal statement, and that's still valid data.",
-    id_cross: "Beberapa anggota tim mungkin mengungkapkan emosi melalui ketidaklangsungan ‚Äî cerita, metafora, atau referensi pada pengalaman orang lain daripada milik sendiri. Buat ruang untuk ini.",
-    nl_cross: "Sommige teamleden kunnen emotie uitdrukken via indirectheid ‚Äî een verhaal, metafoor, of verwijzing naar iemand anders' ervaring. Maak hier ruimte voor. Niet elk reflectief antwoord hoeft een directe persoonlijke uitspraak te zijn.",
+    en_placeholder: "Describe the emotional experience ó what the team was feeling, and when...",
+    id_placeholder: "Ceritakan pengalaman emosional ó apa yang dirasakan tim, dan kapan...",
+    nl_placeholder: "Beschrijf de emotionele ervaring ó wat het team voelde, en wanneer...",
+    en_cross: "Some team members may express emotion through indirection ó a story, a metaphor, or a reference to someone else's experience rather than their own. Create space for this. Not every reflective answer will be a direct personal statement, and that's still valid data.",
+    id_cross: "Beberapa anggota tim mungkin mengungkapkan emosi melalui ketidaklangsungan ó cerita, metafora, atau referensi pada pengalaman orang lain daripada milik sendiri. Buat ruang untuk ini.",
+    nl_cross: "Sommige teamleden kunnen emotie uitdrukken via indirectheid ó een verhaal, metafoor, of verwijzing naar iemand anders' ervaring. Maak hier ruimte voor. Niet elk reflectief antwoord hoeft een directe persoonlijke uitspraak te zijn.",
   },
   {
     key: "I",
@@ -108,9 +108,9 @@ const ORID_STAGES = [
     en_sub: "What does it mean?",
     id_sub: "Apa artinya?",
     nl_sub: "Wat betekent het?",
-    en_guide: "Now the group makes meaning from the data and emotion. This is the stage that generates real insight ‚Äî and where the most significant cross-cultural divergence often appears. People from different cultural backgrounds may draw radically different conclusions from the same set of facts and feelings. The debrief leader's job here is to hold the tension and draw out the multiple interpretations before landing on one.",
-    id_guide: "Sekarang kelompok membuat makna dari data dan emosi. Ini adalah tahap yang menghasilkan wawasan nyata ‚Äî dan di mana perbedaan lintas budaya paling signifikan sering muncul. Orang dari latar belakang budaya yang berbeda mungkin menarik kesimpulan yang sangat berbeda dari kumpulan fakta dan perasaan yang sama.",
-    nl_guide: "Nu maakt de groep betekenis van de data en de emotie. Dit is de fase die echte inzichten genereert ‚Äî en waar de meest significante interculturele divergentie vaak verschijnt. Mensen met verschillende culturele achtergronden kunnen radicaal verschillende conclusies trekken uit dezelfde set feiten en gevoelens.",
+    en_guide: "Now the group makes meaning from the data and emotion. This is the stage that generates real insight ó and where the most significant cross-cultural divergence often appears. People from different cultural backgrounds may draw radically different conclusions from the same set of facts and feelings. The debrief leader's job here is to hold the tension and draw out the multiple interpretations before landing on one.",
+    id_guide: "Sekarang kelompok membuat makna dari data dan emosi. Ini adalah tahap yang menghasilkan wawasan nyata ó dan di mana perbedaan lintas budaya paling signifikan sering muncul. Orang dari latar belakang budaya yang berbeda mungkin menarik kesimpulan yang sangat berbeda dari kumpulan fakta dan perasaan yang sama.",
+    nl_guide: "Nu maakt de groep betekenis van de data en de emotie. Dit is de fase die echte inzichten genereert ó en waar de meest significante interculturele divergentie vaak verschijnt. Mensen met verschillende culturele achtergronden kunnen radicaal verschillende conclusies trekken uit dezelfde set feiten en gevoelens.",
     en_questions: [
       "Why do you think this happened the way it did?",
       "What does this tell us about how we work together?",
@@ -132,9 +132,9 @@ const ORID_STAGES = [
     en_placeholder: "What does this experience reveal? What assumptions or patterns are you seeing?",
     id_placeholder: "Apa yang pengalaman ini ungkapkan? Asumsi atau pola apa yang Anda lihat?",
     nl_placeholder: "Wat onthult deze ervaring? Welke aannames of patronen zie je?",
-    en_cross: "This stage is where monocultural teams often converge too quickly ‚Äî the dominant cultural voice provides an interpretation and everyone quietly agrees. In cross-cultural teams, slow this stage down deliberately. Ask: does anyone see it differently? That question alone can unlock the most valuable insight.",
-    id_cross: "Tahap ini adalah di mana tim monobudaya sering berkonvergensi terlalu cepat ‚Äî suara budaya dominan memberikan interpretasi dan semua orang diam-diam setuju. Dalam tim lintas budaya, perlambat tahap ini dengan sengaja.",
-    nl_cross: "Dit is de fase waar monoculturele teams te snel convergeren ‚Äî de dominante culturele stem geeft een interpretatie en iedereen stemt stilletjes in. Vertraag in interculturele teams deze fase bewust. Vraag: ziet iemand het anders?",
+    en_cross: "This stage is where monocultural teams often converge too quickly ó the dominant cultural voice provides an interpretation and everyone quietly agrees. In cross-cultural teams, slow this stage down deliberately. Ask: does anyone see it differently? That question alone can unlock the most valuable insight.",
+    id_cross: "Tahap ini adalah di mana tim monobudaya sering berkonvergensi terlalu cepat ó suara budaya dominan memberikan interpretasi dan semua orang diam-diam setuju. Dalam tim lintas budaya, perlambat tahap ini dengan sengaja.",
+    nl_cross: "Dit is de fase waar monoculturele teams te snel convergeren ó de dominante culturele stem geeft een interpretatie en iedereen stemt stilletjes in. Vertraag in interculturele teams deze fase bewust. Vraag: ziet iemand het anders?",
   },
   {
     key: "D",
@@ -147,9 +147,9 @@ const ORID_STAGES = [
     en_sub: "What will we do differently?",
     id_sub: "Apa yang akan kita lakukan berbeda?",
     nl_sub: "Wat doen we anders?",
-    en_guide: "The debrief earns its place here ‚Äî when it produces decisions, not just reflections. Good debriefs always end with a concrete next step. Not a long list of lessons that no one will read again. One or two specific commitments that someone owns.",
-    id_guide: "Debrief mendapatkan tempatnya di sini ‚Äî ketika menghasilkan keputusan, bukan hanya refleksi. Debrief yang baik selalu berakhir dengan langkah selanjutnya yang konkret. Bukan daftar panjang pelajaran yang tidak akan dibaca lagi. Satu atau dua komitmen spesifik yang dimiliki seseorang.",
-    nl_guide: "Het debrief verdient hier zijn plek ‚Äî wanneer het beslissingen oplevert, niet alleen reflecties. Goede debriefs eindigen altijd met een concrete volgende stap. Niet een lange lijst lessen die niemand meer zal lezen. √â√©n of twee specifieke commitments die iemand eigenaar van maakt.",
+    en_guide: "The debrief earns its place here ó when it produces decisions, not just reflections. Good debriefs always end with a concrete next step. Not a long list of lessons that no one will read again. One or two specific commitments that someone owns.",
+    id_guide: "Debrief mendapatkan tempatnya di sini ó ketika menghasilkan keputusan, bukan hanya refleksi. Debrief yang baik selalu berakhir dengan langkah selanjutnya yang konkret. Bukan daftar panjang pelajaran yang tidak akan dibaca lagi. Satu atau dua komitmen spesifik yang dimiliki seseorang.",
+    nl_guide: "Het debrief verdient hier zijn plek ó wanneer het beslissingen oplevert, niet alleen reflecties. Goede debriefs eindigen altijd met een concrete volgende stap. Niet een lange lijst lessen die niemand meer zal lezen. …Èn of twee specifieke commitments die iemand eigenaar van maakt.",
     en_questions: [
       "What is the one thing we will do differently next time?",
       "Who owns this change, and by when?",
@@ -168,9 +168,9 @@ const ORID_STAGES = [
     en_placeholder: "What specific changes will you make? Who is responsible and by when?",
     id_placeholder: "Perubahan spesifik apa yang akan Anda buat? Siapa yang bertanggung jawab dan kapan?",
     nl_placeholder: "Welke specifieke veranderingen ga je doorvoeren? Wie is verantwoordelijk en wanneer?",
-    en_cross: "In cultures with a strong hierarchy, the decisional stage may be uncomfortable ‚Äî making a change implies criticism of what was done before, and that criticism may feel directed at the leader. Name this explicitly: reflection is not blame. A decision to do something differently is an act of respect for the mission, not a verdict on the past.",
-    id_cross: "Dalam budaya dengan hierarki kuat, tahap keputusan mungkin tidak nyaman ‚Äî membuat perubahan menyiratkan kritik terhadap apa yang dilakukan sebelumnya. Sebutkan ini secara eksplisit: refleksi bukanlah menyalahkan. Keputusan untuk melakukan sesuatu yang berbeda adalah tindakan menghormati misi.",
-    nl_cross: "In culturen met een sterke hi√´rarchie kan de beslissingsfase ongemakkelijk zijn ‚Äî een verandering impliceert kritiek op wat eerder is gedaan. Benoem dit expliciet: reflectie is geen verwijt. Een beslissing om iets anders te doen is een daad van respect voor de missie.",
+    en_cross: "In cultures with a strong hierarchy, the decisional stage may be uncomfortable ó making a change implies criticism of what was done before, and that criticism may feel directed at the leader. Name this explicitly: reflection is not blame. A decision to do something differently is an act of respect for the mission, not a verdict on the past.",
+    id_cross: "Dalam budaya dengan hierarki kuat, tahap keputusan mungkin tidak nyaman ó membuat perubahan menyiratkan kritik terhadap apa yang dilakukan sebelumnya. Sebutkan ini secara eksplisit: refleksi bukanlah menyalahkan. Keputusan untuk melakukan sesuatu yang berbeda adalah tindakan menghormati misi.",
+    nl_cross: "In culturen met een sterke hiÎrarchie kan de beslissingsfase ongemakkelijk zijn ó een verandering impliceert kritiek op wat eerder is gedaan. Benoem dit expliciet: reflectie is geen verwijt. Een beslissing om iets anders te doen is een daad van respect voor de missie.",
   },
 ];
 
@@ -260,19 +260,19 @@ const TOOLKIT_QUESTIONS = {
 const FACILITATION_TIPS = [
   {
     en_tip: "Start with O, not I.",
-    en_body: "Inexperienced debrief leaders jump to interpretation immediately. Ground the conversation in shared facts first ‚Äî even 5 minutes on the Objective stage changes the quality of everything that follows.",
+    en_body: "Inexperienced debrief leaders jump to interpretation immediately. Ground the conversation in shared facts first ó even 5 minutes on the Objective stage changes the quality of everything that follows.",
     id_tip: "Mulai dengan O, bukan I.",
     id_body: "Pemimpin debrief yang tidak berpengalaman langsung melompat ke interpretasi. Dasarkan percakapan pada fakta bersama terlebih dahulu.",
     nl_tip: "Begin met O, niet met I.",
-    nl_body: "Onervaren debriefleiders springen meteen naar interpretatie. Grond het gesprek eerst in gedeelde feiten ‚Äî zelfs 5 minuten in de Objectieve fase verandert de kwaliteit van alles wat volgt.",
+    nl_body: "Onervaren debriefleiders springen meteen naar interpretatie. Grond het gesprek eerst in gedeelde feiten ó zelfs 5 minuten in de Objectieve fase verandert de kwaliteit van alles wat volgt.",
   },
   {
     en_tip: "Name the level you're at.",
-    en_body: "Say out loud: \"We're going to spend a few minutes just on what happened ‚Äî no analysis yet.\" This gives permission to slow down and prevents the most vocal person from pulling everyone into interpretation before the facts are shared.",
+    en_body: "Say out loud: \"We're going to spend a few minutes just on what happened ó no analysis yet.\" This gives permission to slow down and prevents the most vocal person from pulling everyone into interpretation before the facts are shared.",
     id_tip: "Sebutkan level di mana Anda berada.",
-    id_body: "Katakan dengan lantang: \"Kita akan menghabiskan beberapa menit hanya pada apa yang terjadi ‚Äî belum ada analisis.\" Ini memberi izin untuk memperlambat.",
+    id_body: "Katakan dengan lantang: \"Kita akan menghabiskan beberapa menit hanya pada apa yang terjadi ó belum ada analisis.\" Ini memberi izin untuk memperlambat.",
     nl_tip: "Benoem het niveau waarop je bent.",
-    nl_body: "Zeg hardop: \"We gaan een paar minuten besteden aan wat er is gebeurd ‚Äî nog geen analyse.\" Dit geeft toestemming om te vertragen.",
+    nl_body: "Zeg hardop: \"We gaan een paar minuten besteden aan wat er is gebeurd ó nog geen analyse.\" Dit geeft toestemming om te vertragen.",
   },
   {
     en_tip: "Silence is data.",
@@ -284,11 +284,11 @@ const FACILITATION_TIPS = [
   },
   {
     en_tip: "End with one owner.",
-    en_body: "A debrief that produces a list of 8 action items and assigns them to 'the team' will change nothing. End every debrief with one or two concrete actions, each with a named owner and a date. Everything else is insight ‚Äî which has value, but it's not change.",
+    en_body: "A debrief that produces a list of 8 action items and assigns them to 'the team' will change nothing. End every debrief with one or two concrete actions, each with a named owner and a date. Everything else is insight ó which has value, but it's not change.",
     id_tip: "Akhiri dengan satu pemilik.",
     id_body: "Debrief yang menghasilkan daftar 8 item tindakan dan menugaskannya kepada 'tim' tidak akan mengubah apapun. Akhiri setiap debrief dengan satu atau dua tindakan konkret, masing-masing dengan pemilik yang disebutkan namanya dan tanggal.",
-    nl_tip: "Eindig met √©√©n eigenaar.",
-    nl_body: "Een debrief die 8 actiepunten oplevert en ze toewijst aan 'het team' verandert niets. Eindig elk debrief met √©√©n of twee concrete acties, elk met een benoemde eigenaar en een datum.",
+    nl_tip: "Eindig met ÈÈn eigenaar.",
+    nl_body: "Een debrief die 8 actiepunten oplevert en ze toewijst aan 'het team' verandert niets. Eindig elk debrief met ÈÈn of twee concrete acties, elk met een benoemde eigenaar en een datum.",
   },
 ];
 
@@ -350,10 +350,10 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
     D: "oklch(45% 0.12 150)",
   };
   const toolkitLabels = {
-    O: { en: "Objective ‚Äî What happened?", id: "Objektif ‚Äî Apa yang terjadi?", nl: "Objectief ‚Äî Wat is er gebeurd?" },
-    R: { en: "Reflective ‚Äî How did it feel?", id: "Reflektif ‚Äî Bagaimana rasanya?", nl: "Reflectief ‚Äî Hoe voelde het?" },
-    I: { en: "Interpretive ‚Äî What does it mean?", id: "Interpretatif ‚Äî Apa artinya?", nl: "Interpretatief ‚Äî Wat betekent het?" },
-    D: { en: "Decisional ‚Äî What will we do?", id: "Keputusan ‚Äî Apa yang akan kita lakukan?", nl: "Beslissend ‚Äî Wat doen we?" },
+    O: { en: "Objective ó What happened?", id: "Objektif ó Apa yang terjadi?", nl: "Objectief ó Wat is er gebeurd?" },
+    R: { en: "Reflective ó How did it feel?", id: "Reflektif ó Bagaimana rasanya?", nl: "Reflectief ó Hoe voelde het?" },
+    I: { en: "Interpretive ó What does it mean?", id: "Interpretatif ó Apa artinya?", nl: "Interpretatief ó Wat betekent het?" },
+    D: { en: "Decisional ó What will we do?", id: "Keputusan ó Apa yang akan kita lakukan?", nl: "Beslissend ó Wat doen we?" },
   };
 
   return (
@@ -366,22 +366,22 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Team & Facilitation ¬∑ Guide", "Tim & Fasilitasi ¬∑ Panduan", "Team & Facilitatie ¬∑ Gids")}
+            {t("Team & Facilitation ∑ Guide", "Tim & Fasilitasi ∑ Panduan", "Team & Facilitatie ∑ Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Debriefing & Reflection", "Debriefing & Refleksi", "Debriefing & Reflectie")}
           </h1>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 40px" }}>
             {t(
-              "Leaders who don't debrief don't learn ‚Äî they repeat. This module walks you through a real debrief of your own experience, then hands you the tool to run it with your team.",
-              "Pemimpin yang tidak melakukan debrief tidak belajar ‚Äî mereka mengulangi. Modul ini memandu Anda melalui debrief nyata dari pengalaman Anda sendiri, kemudian memberi Anda alat untuk menjalankannya bersama tim.",
-              "Leiders die niet debriefing doen, leren niet ‚Äî ze herhalen. Deze module leidt je door een echte debrief van je eigen ervaring, en geeft je vervolgens het gereedschap om het met je team te doen."
+              "Leaders who don't debrief don't learn ó they repeat. This module walks you through a real debrief of your own experience, then hands you the tool to run it with your team.",
+              "Pemimpin yang tidak melakukan debrief tidak belajar ó mereka mengulangi. Modul ini memandu Anda melalui debrief nyata dari pengalaman Anda sendiri, kemudian memberi Anda alat untuk menjalankannya bersama tim.",
+              "Leiders die niet debriefing doen, leren niet ó ze herhalen. Deze module leidt je door een echte debrief van je eigen ervaring, en geeft je vervolgens het gereedschap om het met je team te doen."
             )}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? t("‚úì Saved to Dashboard", "‚úì Tersimpan di Dashboard", "‚úì Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
         </div>
@@ -394,23 +394,23 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
         </h2>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "Most leaders move from one experience to the next without ever processing what just happened. There isn't time. The next crisis is already on the horizon. The project is finished ‚Äî what matters now is the next one.",
+            "Most leaders move from one experience to the next without ever processing what just happened. There isn't time. The next crisis is already on the horizon. The project is finished ó what matters now is the next one.",
             "Sebagian besar pemimpin bergerak dari satu pengalaman ke pengalaman berikutnya tanpa pernah memproses apa yang baru saja terjadi. Tidak ada waktu. Krisis berikutnya sudah ada di cakrawala.",
             "De meeste leiders gaan van de ene ervaring naar de volgende zonder ooit te verwerken wat er net is gebeurd. Er is geen tijd. De volgende crisis staat al aan de horizon."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "The result is that the experience becomes a data point, not a lesson. The team gains competence in doing the thing ‚Äî but not in understanding why it worked or failed. Next time, they will do approximately the same thing again.",
-            "Hasilnya adalah pengalaman menjadi titik data, bukan pelajaran. Tim mendapatkan kompetensi dalam melakukan hal tersebut ‚Äî tetapi tidak dalam memahami mengapa berhasil atau gagal.",
-            "Het resultaat is dat de ervaring een datapunt wordt, geen les. Het team krijgt competentie in het doen van de zaak ‚Äî maar niet in het begrijpen waarom het werkte of mislukte."
+            "The result is that the experience becomes a data point, not a lesson. The team gains competence in doing the thing ó but not in understanding why it worked or failed. Next time, they will do approximately the same thing again.",
+            "Hasilnya adalah pengalaman menjadi titik data, bukan pelajaran. Tim mendapatkan kompetensi dalam melakukan hal tersebut ó tetapi tidak dalam memahami mengapa berhasil atau gagal.",
+            "Het resultaat is dat de ervaring een datapunt wordt, geen les. Het team krijgt competentie in het doen van de zaak ó maar niet in het begrijpen waarom het werkte of mislukte."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 32 }}>
           {t(
-            "The ORID method is one of the most effective structured debrief frameworks available. It moves a group through four levels of reflection in a sequence that builds meaning rather than generating noise: Objective ‚Üí Reflective ‚Üí Interpretive ‚Üí Decisional.",
-            "Metode ORID adalah salah satu kerangka debrief terstruktur yang paling efektif. Ini memindahkan kelompok melalui empat tingkat refleksi dalam urutan yang membangun makna: Objektif ‚Üí Reflektif ‚Üí Interpretatif ‚Üí Keputusan.",
-            "De ORID-methode is een van de meest effectieve gestructureerde debriefkaders. Het beweegt een groep door vier niveaus van reflectie in een volgorde die betekenis opbouwt: Objectief ‚Üí Reflectief ‚Üí Interpretatief ‚Üí Beslissend."
+            "The ORID method is one of the most effective structured debrief frameworks available. It moves a group through four levels of reflection in a sequence that builds meaning rather than generating noise: Objective ? Reflective ? Interpretive ? Decisional.",
+            "Metode ORID adalah salah satu kerangka debrief terstruktur yang paling efektif. Ini memindahkan kelompok melalui empat tingkat refleksi dalam urutan yang membangun makna: Objektif ? Reflektif ? Interpretatif ? Keputusan.",
+            "De ORID-methode is een van de meest effectieve gestructureerde debriefkaders. Het beweegt een groep door vier niveaus van reflectie in een volgorde die betekenis opbouwt: Objectief ? Reflectief ? Interpretatief ? Beslissend."
           )}
         </p>
 
@@ -439,15 +439,15 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
             )}
             <VerseRef id="prov-4-7">{t("Proverbs 4:7", "Amsal 4:7", "Spreuken 4:7")}</VerseRef>
             {t(
-              " calls us to pursue both wisdom and insight ‚Äî not just experience. And ",
-              " memanggil kita untuk mengejar hikmat dan pengertian ‚Äî bukan hanya pengalaman. Dan ",
-              " roept ons op om zowel wijsheid als inzicht na te streven ‚Äî niet alleen ervaring. En "
+              " calls us to pursue both wisdom and insight ó not just experience. And ",
+              " memanggil kita untuk mengejar hikmat dan pengertian ó bukan hanya pengalaman. Dan ",
+              " roept ons op om zowel wijsheid als inzicht na te streven ó niet alleen ervaring. En "
             )}
             <VerseRef id="james-1-19">{t("James 1:19", "Yakobus 1:19", "Jakobus 1:19")}</VerseRef>
             {t(
-              " is not just personal counsel ‚Äî it is a description of good debrief leadership: quick to listen, slow to speak, slow to draw conclusions.",
-              " bukan hanya nasihat pribadi ‚Äî ini adalah deskripsi kepemimpinan debrief yang baik: cepat mendengar, lambat berbicara, lambat menarik kesimpulan.",
-              " is niet alleen persoonlijk advies ‚Äî het is een beschrijving van goed debriefleiderschap: snel om te luisteren, traag om te spreken, traag om conclusies te trekken."
+              " is not just personal counsel ó it is a description of good debrief leadership: quick to listen, slow to speak, slow to draw conclusions.",
+              " bukan hanya nasihat pribadi ó ini adalah deskripsi kepemimpinan debrief yang baik: cepat mendengar, lambat berbicara, lambat menarik kesimpulan.",
+              " is niet alleen persoonlijk advies ó het is een beschrijving van goed debriefleiderschap: snel om te luisteren, traag om te spreken, traag om conclusies te trekken."
             )}
           </p>
         </div>
@@ -461,9 +461,9 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
           </h2>
           <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 580 }}>
             {t(
-              "Think of a recent experience ‚Äî a project, meeting, event, or conversation that didn't go quite as expected. Work through all four ORID stages. Your responses stay in your browser only.",
-              "Pikirkan pengalaman baru-baru ini ‚Äî proyek, rapat, acara, atau percakapan yang tidak berjalan seperti yang diharapkan. Kerjakan keempat tahap ORID. Respons Anda hanya tersimpan di browser Anda.",
-              "Denk aan een recente ervaring ‚Äî een project, vergadering, evenement of gesprek dat niet helemaal liep zoals verwacht. Doorwerk alle vier ORID-fasen. Je antwoorden blijven alleen in je browser."
+              "Think of a recent experience ó a project, meeting, event, or conversation that didn't go quite as expected. Work through all four ORID stages. Your responses stay in your browser only.",
+              "Pikirkan pengalaman baru-baru ini ó proyek, rapat, acara, atau percakapan yang tidak berjalan seperti yang diharapkan. Kerjakan keempat tahap ORID. Respons Anda hanya tersimpan di browser Anda.",
+              "Denk aan een recente ervaring ó een project, vergadering, evenement of gesprek dat niet helemaal liep zoals verwacht. Doorwerk alle vier ORID-fasen. Je antwoorden blijven alleen in je browser."
             )}
           </p>
         </div>
@@ -493,7 +493,7 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
                   {lang === "en" ? s.en_label : lang === "id" ? s.id_label : s.nl_label}
                 </div>
                 {isDone && !isActive && (
-                  <div style={{ fontSize: 10, color: s.color, marginTop: 3, fontWeight: 700 }}>‚úì</div>
+                  <div style={{ fontSize: 10, color: s.color, marginTop: 3, fontWeight: 700 }}>?</div>
                 )}
               </button>
             );
@@ -510,7 +510,7 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
               <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 20, fontWeight: 800, color: navy, marginBottom: 4 }}>
                 {lang === "en" ? currentStage.en_label : lang === "id" ? currentStage.id_label : currentStage.nl_label}
                 <span style={{ fontSize: 14, fontWeight: 400, color: bodyText, marginLeft: 12 }}>
-                  ‚Äî {lang === "en" ? currentStage.en_sub : lang === "id" ? currentStage.id_sub : currentStage.nl_sub}
+                  ó {lang === "en" ? currentStage.en_sub : lang === "id" ? currentStage.id_sub : currentStage.nl_sub}
                 </span>
               </h3>
               <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
@@ -557,7 +557,7 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
               disabled={!canGoBack}
               style={{ padding: "10px 24px", border: `1px solid ${canGoBack ? navy : "oklch(88% 0.01 80)"}`, background: "transparent", color: canGoBack ? navy : "oklch(80% 0.01 80)", cursor: canGoBack ? "pointer" : "default", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 4 }}
             >
-              ‚Üê {t("Back", "Kembali", "Terug")}
+              ? {t("Back", "Kembali", "Terug")}
             </button>
             <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
               {currentStageIndex + 1} / {ORID_STAGES.length}
@@ -567,14 +567,14 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
                 onClick={() => setActiveStage(ORID_STAGES[currentStageIndex + 1].key as ORIDKey)}
                 style={{ padding: "10px 24px", border: "none", background: currentStage.color, color: offWhite, cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, borderRadius: 4 }}
               >
-                {t("Next Stage", "Tahap Berikutnya", "Volgende Fase")} ‚Üí
+                {t("Next Stage", "Tahap Berikutnya", "Volgende Fase")} ?
               </button>
             ) : (
               <button
                 onClick={() => setShowToolkit(true)}
                 style={{ padding: "10px 24px", border: "none", background: allComplete ? orange : "oklch(88% 0.01 80)", color: allComplete ? offWhite : "oklch(70% 0.01 80)", cursor: allComplete ? "pointer" : "default", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, borderRadius: 4 }}
               >
-                {t("See Debrief Toolkit ‚Üí", "Lihat Toolkit Debrief ‚Üí", "Zie Debrief Toolkit ‚Üí")}
+                {t("See Debrief Toolkit ?", "Lihat Toolkit Debrief ?", "Zie Debrief Toolkit ?")}
               </button>
             )}
           </div>
@@ -605,9 +605,9 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
               </h2>
               <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 560, margin: 0 }}>
                 {t(
-                  "Use this toolkit to run structured ORID debriefs with your own team. Recommended for: after any significant project, cross-cultural experience, conflict, or leadership decision. Time required: 45‚Äì75 minutes.",
-                  "Gunakan toolkit ini untuk menjalankan debrief ORID terstruktur dengan tim Anda sendiri. Direkomendasikan untuk: setelah proyek signifikan, pengalaman lintas budaya, konflik, atau keputusan kepemimpinan. Waktu yang diperlukan: 45‚Äì75 menit.",
-                  "Gebruik deze toolkit om gestructureerde ORID-debriefs met je eigen team te leiden. Aanbevolen voor: na elk significant project, interculturele ervaring, conflict of leiderschapsbeslissing. Benodigde tijd: 45‚Äì75 minuten."
+                  "Use this toolkit to run structured ORID debriefs with your own team. Recommended for: after any significant project, cross-cultural experience, conflict, or leadership decision. Time required: 45ñ75 minutes.",
+                  "Gunakan toolkit ini untuk menjalankan debrief ORID terstruktur dengan tim Anda sendiri. Direkomendasikan untuk: setelah proyek signifikan, pengalaman lintas budaya, konflik, atau keputusan kepemimpinan. Waktu yang diperlukan: 45ñ75 menit.",
+                  "Gebruik deze toolkit om gestructureerde ORID-debriefs met je eigen team te leiden. Aanbevolen voor: na elk significant project, interculturele ervaring, conflict of leiderschapsbeslissing. Benodigde tijd: 45ñ75 minuten."
                 )}
               </p>
             </div>
@@ -660,12 +660,12 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
               </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
-                  { time: "0‚Äì5", en: "Frame the debrief: name the experience being debriefed, set the purpose, and remind the team that reflection is not blame.", id: "Bingkai debrief: sebutkan pengalaman yang akan di-debrief, tetapkan tujuan, dan ingatkan tim bahwa refleksi bukanlah menyalahkan.", nl: "Kader het debrief: benoem de ervaring die wordt gedebriefd, stel het doel vast, en herinner het team dat reflectie geen verwijt is." },
-                  { time: "5‚Äì15", en: "O ‚Äî Objective: What happened? Establish the shared facts.", id: "O ‚Äî Objektif: Apa yang terjadi? Tetapkan fakta bersama.", nl: "O ‚Äî Objectief: Wat is er gebeurd? Stel de gedeelde feiten vast." },
-                  { time: "15‚Äì25", en: "R ‚Äî Reflective: How did it feel? Surface the emotional data.", id: "R ‚Äî Reflektif: Bagaimana rasanya? Ungkapkan data emosional.", nl: "R ‚Äî Reflectief: Hoe voelde het? Haal de emotionele data naar boven." },
-                  { time: "25‚Äì45", en: "I ‚Äî Interpretive: What does it mean? This is the longest stage ‚Äî hold space for multiple perspectives.", id: "I ‚Äî Interpretatif: Apa artinya? Ini adalah tahap terpanjang ‚Äî berikan ruang untuk berbagai perspektif.", nl: "I ‚Äî Interpretatief: Wat betekent het? Dit is de langste fase ‚Äî houd ruimte voor meerdere perspectieven." },
-                  { time: "45‚Äì55", en: "D ‚Äî Decisional: What will we do? Land on 1‚Äì2 concrete actions with named owners.", id: "D ‚Äî Keputusan: Apa yang akan kita lakukan? Landas pada 1‚Äì2 tindakan konkret dengan pemilik yang disebutkan.", nl: "D ‚Äî Beslissend: Wat doen we? Land op 1‚Äì2 concrete acties met genoemde eigenaren." },
-                  { time: "55‚Äì60", en: "Close: Brief gratitude round. What was useful about this conversation?", id: "Penutup: Putaran syukur singkat. Apa yang berguna dari percakapan ini?", nl: "Afsluiting: Korte dankbaarheidsronde. Wat was nuttig aan dit gesprek?" },
+                  { time: "0ñ5", en: "Frame the debrief: name the experience being debriefed, set the purpose, and remind the team that reflection is not blame.", id: "Bingkai debrief: sebutkan pengalaman yang akan di-debrief, tetapkan tujuan, dan ingatkan tim bahwa refleksi bukanlah menyalahkan.", nl: "Kader het debrief: benoem de ervaring die wordt gedebriefd, stel het doel vast, en herinner het team dat reflectie geen verwijt is." },
+                  { time: "5ñ15", en: "O ó Objective: What happened? Establish the shared facts.", id: "O ó Objektif: Apa yang terjadi? Tetapkan fakta bersama.", nl: "O ó Objectief: Wat is er gebeurd? Stel de gedeelde feiten vast." },
+                  { time: "15ñ25", en: "R ó Reflective: How did it feel? Surface the emotional data.", id: "R ó Reflektif: Bagaimana rasanya? Ungkapkan data emosional.", nl: "R ó Reflectief: Hoe voelde het? Haal de emotionele data naar boven." },
+                  { time: "25ñ45", en: "I ó Interpretive: What does it mean? This is the longest stage ó hold space for multiple perspectives.", id: "I ó Interpretatif: Apa artinya? Ini adalah tahap terpanjang ó berikan ruang untuk berbagai perspektif.", nl: "I ó Interpretatief: Wat betekent het? Dit is de langste fase ó houd ruimte voor meerdere perspectieven." },
+                  { time: "45ñ55", en: "D ó Decisional: What will we do? Land on 1ñ2 concrete actions with named owners.", id: "D ó Keputusan: Apa yang akan kita lakukan? Landas pada 1ñ2 tindakan konkret dengan pemilik yang disebutkan.", nl: "D ó Beslissend: Wat doen we? Land op 1ñ2 concrete acties met genoemde eigenaren." },
+                  { time: "55ñ60", en: "Close: Brief gratitude round. What was useful about this conversation?", id: "Penutup: Putaran syukur singkat. Apa yang berguna dari percakapan ini?", nl: "Afsluiting: Korte dankbaarheidsronde. Wat was nuttig aan dit gesprek?" },
                 ].map((row, i) => (
                   <div key={i} style={{ display: "flex", gap: 20, padding: "12px 0", borderBottom: i < 5 ? "1px solid oklch(92% 0.008 80)" : "none", alignItems: "flex-start" }}>
                     <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, minWidth: 52, flexShrink: 0, paddingTop: 2 }}>
@@ -691,7 +691,7 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
           {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
         <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4 }}>
-          {t("‚Üê Content Library", "‚Üê Perpustakaan Konten", "‚Üê Contentbibliotheek")}
+          {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
         </Link>
       </div>
 
@@ -703,10 +703,10 @@ export default function DebriefingReflectionClient({ userPathway, isSaved: initi
               "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
-              ‚Äî {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              ó {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
               {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
-            <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 6, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+            <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
               {t("Close", "Tutup", "Sluiten")}
             </button>
           </div>

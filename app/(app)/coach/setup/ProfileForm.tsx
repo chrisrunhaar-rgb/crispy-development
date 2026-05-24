@@ -143,7 +143,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           padding: "1.125rem",
-          borderRadius: 999,
+          borderRadius: 12,
           border: "none",
           cursor: saving ? "not-allowed" : "pointer",
           transition: "background 0.2s",

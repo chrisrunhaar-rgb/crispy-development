@@ -311,7 +311,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             disabled={saved || isPending}
             style={{
               padding: "13px 28px",
-              borderRadius: 6,
+              borderRadius: 12,
               border: "none",
               cursor: saved ? "default" : "pointer",
               fontFamily: montserrat,
@@ -1044,7 +1044,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
                 disabled={auditSaved || auditPending}
                 style={{
                   padding: "12px 24px",
-                  borderRadius: 6,
+                  borderRadius: 12,
                   border: "none",
                   cursor: auditSaved ? "default" : "pointer",
                   fontFamily: montserrat,
@@ -1365,7 +1365,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
                 padding: "14px 32px",
                 background: orange,
                 color: offWhite,
-                borderRadius: 6,
+                borderRadius: 12,
                 fontFamily: montserrat,
                 fontSize: 15,
                 fontWeight: 700,

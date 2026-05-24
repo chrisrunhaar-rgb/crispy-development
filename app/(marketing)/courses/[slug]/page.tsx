@@ -231,7 +231,7 @@ export default async function CoursePage({
                   <div style={{
                     width: "2rem", height: "2rem", minWidth: "2rem",
                     borderRadius: "50%",
-                    background: done ? "oklch(45% 0.10 155)" : "oklch(93% 0.006 80)",
+                    background: done ? "oklch(65% 0.15 45)" : "oklch(93% 0.006 80)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     marginTop: "0.125rem",
                   }}>

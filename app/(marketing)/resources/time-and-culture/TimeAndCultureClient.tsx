@@ -828,7 +828,7 @@ function ScenarioCard({ card, lang }: { card: typeof SCENARIO_CARDS[0]; lang: st
             background: "none",
             border: `1px solid ${NAVY}`,
             padding: "8px 18px",
-            borderRadius: 6,
+            borderRadius: 12,
             cursor: "pointer",
           }}
         >
@@ -1064,7 +1064,7 @@ function OneAtATimeQuiz({
               background: "none",
               border: "1px solid oklch(38% 0.06 260)",
               padding: "10px 18px",
-              borderRadius: 6,
+              borderRadius: 12,
               cursor: "pointer",
             }}
           >
@@ -1161,7 +1161,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
                 background: saved ? "oklch(35% 0.08 260)" : "transparent",
                 color: "oklch(75% 0.04 260)",
                 padding: "10px 22px",
-                borderRadius: 6,
+                borderRadius: 12,
                 fontWeight: 600,
                 fontSize: 13,
                 border: "1px solid oklch(42% 0.08 260)",
@@ -1248,7 +1248,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
                 </p>
                 <button
                   onClick={() => setShowPart1Detail((v) => !v)}
-                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 12, cursor: "pointer" }}
                 >
                   {showPart1Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about your orientation", "▼ Baca lebih lanjut tentang orientasimu")}
                 </button>
@@ -1312,7 +1312,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
                 </p>
                 <button
                   onClick={() => setShowPart2Detail((v) => !v)}
-                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 6, cursor: "pointer" }}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 12, cursor: "pointer" }}
                 >
                   {showPart2Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about this orientation", "▼ Baca lebih lanjut tentang orientasi ini")}
                 </button>
@@ -1672,7 +1672,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               display: "inline-flex", alignItems: "center", gap: 6,
               marginTop: 24, padding: "10px 20px",
               background: "transparent", border: `1.5px solid ${ORANGE}`,
-              color: ORANGE, borderRadius: 6,
+              color: ORANGE, borderRadius: 12,
               fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700,
               cursor: "pointer", letterSpacing: "0.04em",
             }}
@@ -1797,13 +1797,13 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
               href="/resources"
-              style={{ display: "inline-block", padding: "13px 28px", background: ORANGE, color: OFF_WHITE, borderRadius: 6, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none" }}
+              style={{ display: "inline-block", padding: "13px 28px", background: ORANGE, color: OFF_WHITE, borderRadius: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none" }}
             >
               {L(lang, "Content Library", "Perpustakaan Konten")}
             </Link>
             <Link
               href="/resources/cultural-intelligence"
-              style={{ display: "inline-block", padding: "13px 28px", border: "1px solid oklch(45% 0.05 260)", color: OFF_WHITE, borderRadius: 6, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, textDecoration: "none" }}
+              style={{ display: "inline-block", padding: "13px 28px", border: "1px solid oklch(45% 0.05 260)", color: OFF_WHITE, borderRadius: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, textDecoration: "none" }}
             >
               {L(lang, "Cultural Intelligence →", "Kecerdasan Budaya →")}
             </Link>

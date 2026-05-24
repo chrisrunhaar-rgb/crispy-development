@@ -1,4 +1,4 @@
-Ôªø"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -98,7 +98,7 @@ const STORIES = [
     titleNl: "Het Teamconflict",
     beforeEn: "\"Sarah keeps dismissing my ideas in meetings. I'm not going to contribute anymore.\"",
     beforeId: "\"Sarah terus menolak ide saya di pertemuan. Saya tidak akan berkontribusi lagi.\"",
-    beforeNl: "\"Sarah blijft mijn idee√´n in vergaderingen afwijzen. Ik ga niet meer bijdragen.\"",
+    beforeNl: "\"Sarah blijft mijn ideeÎn in vergaderingen afwijzen. Ik ga niet meer bijdragen.\"",
     shiftEn: "Then we asked: \"What conversation do WE need to have?\"",
     shiftId: "Kemudian kami bertanya: \"Percakapan apa yang PERLU kami miliki?\"",
     shiftNl: "Vervolgens vroegen we: \"Welk gesprek moeten WIJ voeren?\"",
@@ -124,17 +124,17 @@ const STORIES = [
     afterNl: "We zochten mentorschap, volgden een online cursus en oefenden. Binnen 3 maanden: bedreven.",
     resultEn: "Expanded capability. Increased confidence. Career growth.",
     resultId: "Kemampuan diperluas. Kepercayaan diri meningkat. Pertumbuhan karir.",
-    resultNl: "Uitgebreide mogelijkheden. Verhoogd vertrouwen. Cari√®regroei.",
+    resultNl: "Uitgebreide mogelijkheden. Verhoogd vertrouwen. CariËregroei.",
   },
 ];
 
-const ABOVE_PHRASES = ["When‚Ä¶", "Choice", "I am going to‚Ä¶", "I will", "I chose to", "I chose not to", "Make things happen", "Why not?", "TGIM (Thank God It's Monday)", "Day one"];
-const ABOVE_PHRASES_ID = ["Ketika‚Ä¶", "Pilihan", "Saya akan‚Ä¶", "Saya mau", "Saya memilih untuk", "Saya memilih untuk tidak", "Jadikan hal itu terjadi", "Kenapa tidak?", "TGIM (Terima kasih Tuhan hari Senin)", "Hari pertama"];
-const ABOVE_PHRASES_NL = ["Wanneer‚Ä¶", "Keuze", "Ik ga‚Ä¶", "Ik wil", "Ik koos voor", "Ik koos ervoor niet te", "Dingen laten gebeuren", "Waarom niet?", "TGIM (Dank God, het is maandag)", "Dag √©√©n"];
+const ABOVE_PHRASES = ["WhenÖ", "Choice", "I am going toÖ", "I will", "I chose to", "I chose not to", "Make things happen", "Why not?", "TGIM (Thank God It's Monday)", "Day one"];
+const ABOVE_PHRASES_ID = ["KetikaÖ", "Pilihan", "Saya akanÖ", "Saya mau", "Saya memilih untuk", "Saya memilih untuk tidak", "Jadikan hal itu terjadi", "Kenapa tidak?", "TGIM (Terima kasih Tuhan hari Senin)", "Hari pertama"];
+const ABOVE_PHRASES_NL = ["WanneerÖ", "Keuze", "Ik gaÖ", "Ik wil", "Ik koos voor", "Ik koos ervoor niet te", "Dingen laten gebeuren", "Waarom niet?", "TGIM (Dank God, het is maandag)", "Dag ÈÈn"];
 
-const BELOW_PHRASES = ["If‚Ä¶", "Had no choice", "I hope‚Ä¶", "Maybe‚Ä¶", "I try‚Ä¶", "It might‚Ä¶", "I think‚Ä¶", "I need to‚Ä¶", "Hopefully", "Every intention", "I should", "I would", "I could", "I must", "WHY?", "TGIF", "Waiting for other people", "One day"];
-const BELOW_PHRASES_ID = ["Jika‚Ä¶", "Tidak punya pilihan", "Saya harap‚Ä¶", "Mungkin‚Ä¶", "Saya mencoba‚Ä¶", "Mungkin saja‚Ä¶", "Saya pikir‚Ä¶", "Saya perlu‚Ä¶", "Semoga", "Setiap niat", "Saya seharusnya", "Saya akan", "Saya bisa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lain", "Suatu hari nanti"];
-const BELOW_PHRASES_NL = ["Als‚Ä¶", "Had geen keuze", "Ik hoop‚Ä¶", "Misschien‚Ä¶", "Ik probeer‚Ä¶", "Het zou kunnen‚Ä¶", "Ik denk‚Ä¶", "Ik moet‚Ä¶", "Hopelijk", "Altijd de intentie", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anderen", "Op een dag"];
+const BELOW_PHRASES = ["IfÖ", "Had no choice", "I hopeÖ", "MaybeÖ", "I tryÖ", "It mightÖ", "I thinkÖ", "I need toÖ", "Hopefully", "Every intention", "I should", "I would", "I could", "I must", "WHY?", "TGIF", "Waiting for other people", "One day"];
+const BELOW_PHRASES_ID = ["JikaÖ", "Tidak punya pilihan", "Saya harapÖ", "MungkinÖ", "Saya mencobaÖ", "Mungkin sajaÖ", "Saya pikirÖ", "Saya perluÖ", "Semoga", "Setiap niat", "Saya seharusnya", "Saya akan", "Saya bisa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lain", "Suatu hari nanti"];
+const BELOW_PHRASES_NL = ["AlsÖ", "Had geen keuze", "Ik hoopÖ", "MisschienÖ", "Ik probeerÖ", "Het zou kunnenÖ", "Ik denkÖ", "Ik moetÖ", "Hopelijk", "Altijd de intentie", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anderen", "Op een dag"];
 
 function getAbovePhrases(lang: Lang) {
   return lang === "en" ? ABOVE_PHRASES : lang === "id" ? ABOVE_PHRASES_ID : ABOVE_PHRASES_NL;
@@ -170,26 +170,26 @@ export default function AboveBelowClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Team & Facilitation ¬∑ Guide", "Tim & Fasilitasi ¬∑ Panduan", "Team & Facilitatie ¬∑ Gids", lang)}
+            {t("Team & Facilitation ∑ Guide", "Tim & Fasilitasi ∑ Panduan", "Team & Facilitatie ∑ Gids", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>{t(
-            "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns ‚Äî blame, excuse, denial ‚Äî and choose ownership, accountability, and responsibility instead.",
-            "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif ‚Äî menyalahkan, mencari alasan, penyangkalan ‚Äî dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",
-            "Leidt u als Overwinnaar of als Slachtoffer? Dit kader helpt u reactieve patronen te herkennen ‚Äî beschuldiging, excuus, ontkenning ‚Äî en te kiezen voor eigenaarschap, aanspreekbaarheid en verantwoordelijkheid.",
+            "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns ó blame, excuse, denial ó and choose ownership, accountability, and responsibility instead.",
+            "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif ó menyalahkan, mencari alasan, penyangkalan ó dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",
+            "Leidt u als Overwinnaar of als Slachtoffer? Dit kader helpt u reactieve patronen te herkennen ó beschuldiging, excuus, ontkenning ó en te kiezen voor eigenaarschap, aanspreekbaarheid en verantwoordelijkheid.",
             lang
           )}</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
-              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("Saving‚Ä¶", "Menyimpan‚Ä¶", "Opslaan‚Ä¶", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}</button>
+              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("SavingÖ", "MenyimpanÖ", "OpslaanÖ", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}</button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>‚úì {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
             )}
           </div>
         </div>
       </section>
 
-      {/* MAIN FRAMEWORK ‚Äî SIDE-BY-SIDE */}
+      {/* MAIN FRAMEWORK ó SIDE-BY-SIDE */}
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("The Line", "Garis Tersebut", "De Lijn", lang)}</h2>
@@ -205,7 +205,7 @@ export default function AboveBelowClient({
             {/* ABOVE THE LINE */}
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(46% 0.16 145)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>‚Üë</div>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(46% 0.16 145)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>?</div>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)" }}>{t("ABOVE THE LINE", "DI ATAS GARIS", "BOVEN DE LIJN", lang)}</div>
                   <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(30% 0.10 145)" }}>{t("Pro-Active Mindset", "Mentalitas Pro-Aktif", "Pro-Actieve Mentaliteit", lang)}</div>
@@ -227,7 +227,7 @@ export default function AboveBelowClient({
             {/* BELOW THE LINE */}
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(48% 0.18 25)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>‚Üì</div>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(48% 0.18 25)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>?</div>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)" }}>{t("BELOW THE LINE", "DI BAWAH GARIS", "ONDER DE LIJN", lang)}</div>
                   <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(30% 0.12 25)" }}>{t("Reactive Patterns", "Pola Reaktif", "Reactieve Patronen", lang)}</div>
@@ -267,22 +267,22 @@ export default function AboveBelowClient({
                 <div style={{ background: "white", padding: "28px" }}>
                   {/* Before */}
                   <div style={{ marginBottom: 24 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 8 }}>üìç {t("Before", "Sebelum", "Voor", lang)}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 8 }}>?? {t("Before", "Sebelum", "Voor", lang)}</div>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", fontStyle: "italic", margin: 0 }}>{t(story.beforeEn, story.beforeId, story.beforeNl, lang)}</p>
                   </div>
                   {/* Shift */}
                   <div style={{ marginBottom: 24, paddingLeft: 16, borderLeft: "3px solid oklch(65% 0.15 45)" }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 8 }}>‚ú® {t("The Shift", "Peralihan", "De Verschuiving", lang)}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 8 }}>? {t("The Shift", "Peralihan", "De Verschuiving", lang)}</div>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(story.shiftEn, story.shiftId, story.shiftNl, lang)}</p>
                   </div>
                   {/* After */}
                   <div style={{ marginBottom: 24 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 8 }}>üéØ {t("After", "Sesudah", "Na", lang)}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 8 }}>?? {t("After", "Sesudah", "Na", lang)}</div>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(story.afterEn, story.afterId, story.afterNl, lang)}</p>
                   </div>
                   {/* Result */}
                   <div style={{ paddingTop: 16, borderTop: "1px solid oklch(88% 0.008 260)" }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.14 260)", marginBottom: 8 }}>‚úì {t("Outcome", "Hasil", "Uitkomst", lang)}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.14 260)", marginBottom: 8 }}>? {t("Outcome", "Hasil", "Uitkomst", lang)}</div>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", fontWeight: 600, margin: 0 }}>{t(story.resultEn, story.resultId, story.resultNl, lang)}</p>
                   </div>
                 </div>
@@ -297,18 +297,18 @@ export default function AboveBelowClient({
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen", lang)}</h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>{t(
-            "Use these to process your own leadership patterns ‚Äî alone or with a coach.",
-            "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri ‚Äî sendiri atau bersama pelatih.",
-            "Gebruik deze vragen om uw eigen leiderschapspatronen te verwerken ‚Äî alleen of met een coach.",
+            "Use these to process your own leadership patterns ó alone or with a coach.",
+            "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri ó sendiri atau bersama pelatih.",
+            "Gebruik deze vragen om uw eigen leiderschapspatronen te verwerken ó alleen of met een coach.",
             lang
           )}</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
             {[
               {
                 color: "oklch(46% 0.16 145)",
-                qEn: "Think of a recent situation. What was your first instinct ‚Äî Victor or Victim? What drove that response?",
-                qId: "Pikirkan situasi terkini. Apa naluri pertama Anda ‚Äî Victor atau Korban? Apa yang mendorong respons itu?",
-                qNl: "Denk aan een recente situatie. Wat was uw eerste instinct ‚Äî Overwinnaar of Slachtoffer? Wat dreef die reactie?",
+                qEn: "Think of a recent situation. What was your first instinct ó Victor or Victim? What drove that response?",
+                qId: "Pikirkan situasi terkini. Apa naluri pertama Anda ó Victor atau Korban? Apa yang mendorong respons itu?",
+                qNl: "Denk aan een recente situatie. Wat was uw eerste instinct ó Overwinnaar of Slachtoffer? Wat dreef die reactie?",
               },
               {
                 color: "oklch(42% 0.14 260)",
@@ -337,7 +337,7 @@ export default function AboveBelowClient({
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>{t("Choose to Lead Above the Line", "Pilih untuk Memimpin Di Atas Garis", "Kies om Boven de Lijn te Leiden", lang)}</h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 6, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("‚Üê Content Library", "‚Üê Perpustakaan Konten", "‚Üê Contentbibliotheek", lang)}</Link>
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek", lang)}</Link>
           </div>
         </div>
       </section>

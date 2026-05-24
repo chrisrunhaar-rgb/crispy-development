@@ -499,7 +499,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
   const hasWhiteboardContent = whiteboard.focus_today || whiteboard.key_insights.length > 0 || whiteboard.values_named.length > 0 || whiteboard.action_steps.length > 0 || whiteboard.carrying_forward;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px)", overflow: "hidden", background: "#0a0e19", position: "relative" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "calc(100dvh - 80px - env(safe-area-inset-bottom, 0px))", overflow: "hidden", background: "#0a0e19", position: "relative" }}>
 
       {/* Top header */}
       <div style={{
@@ -796,7 +796,7 @@ function btnStyle(variant: "primary" | "secondary" | "ghost"): React.CSSProperti
   return {
     fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
     letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.8rem 1.75rem",
-    borderRadius: 999,
+    borderRadius: 12,
     border: variant === "secondary" || variant === "ghost" ? "1px solid rgba(255,255,255,0.3)" : "none",
     cursor: "pointer",
     background: variant === "primary" ? "oklch(65% 0.15 45)" : "rgba(255,255,255,0.08)",
