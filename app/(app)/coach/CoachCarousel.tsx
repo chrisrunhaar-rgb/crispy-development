@@ -37,9 +37,9 @@ const COACHES = [
 ];
 
 const ADDONS = [
-  { label: "1 Hour", minutes: 60, idr: "Rp 150,000", usd: "~$9" },
-  { label: "3 Hours", minutes: 180, idr: "Rp 399,000", usd: "~$25" },
-  { label: "5 Hours", minutes: 300, idr: "Rp 599,000", usd: "~$37" },
+  { label: "1 Hour", minutes: 60, idr: "Rp 150,000", usd: "$10", bestValue: false },
+  { label: "3 Hours", minutes: 180, idr: "Rp 399,000", usd: "$25", bestValue: false },
+  { label: "5 Hours", minutes: 300, idr: "Rp 599,000", usd: "$37", bestValue: true },
 ];
 
 // ── SVG ring constants ───────────────────────────────────────────
@@ -79,6 +79,7 @@ export type CoachCarouselProps = {
   trialPct: number;
   sessions: NotebookSession[];
   profile: ProfileData;
+  currency: "idr" | "usd";
 };
 
 // ── Helpers ──────────────────────────────────────────────────────
@@ -273,10 +274,10 @@ function CoachPanel({
 
 // ── Panel: Minutes ───────────────────────────────────────────────
 function MinutesPanel({
-  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes,
+  trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency,
 }: {
   trialPct: number; trialExhausted: boolean; trialRemainingMinutes: number;
-  trialUsedMinutes: number; grantedMinutes: number;
+  trialUsedMinutes: number; grantedMinutes: number; currency: "idr" | "usd";
 }) {
   const used = RING_C * (trialPct / 100);
   const ringColor = trialExhausted ? "oklch(55% 0.15 30)" : ORANGE;
@@ -326,11 +327,24 @@ function MinutesPanel({
             <div key={pkg.label} style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               padding: "0.875rem 1rem",
-              background: NAVY_SUBTLE,
-              border: "1px solid oklch(28% 0.07 260)",
+              background: pkg.bestValue ? "oklch(20% 0.10 260)" : NAVY_SUBTLE,
+              border: `1px solid ${pkg.bestValue ? "oklch(36% 0.12 260)" : "oklch(28% 0.07 260)"}`,
+              position: "relative",
             }}>
+              {/* Best Value badge */}
+              {pkg.bestValue && (
+                <span style={{
+                  position: "absolute", top: "-1px", right: "0.75rem",
+                  background: ORANGE, color: "white",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.48rem", fontWeight: 700, letterSpacing: "0.1em",
+                  padding: "0.15rem 0.5rem",
+                  textTransform: "uppercase",
+                }}>
+                  Best Value
+                </span>
+              )}
               <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
                   {pkg.label}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
@@ -338,14 +352,9 @@ function MinutesPanel({
                 </p>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <div style={{ textAlign: "right" }}>
-                  <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.3rem", fontStyle: "italic", color: WHITE, lineHeight: 1.1 }}>
-                    {pkg.idr}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: MUTED }}>
-                    {pkg.usd}
-                  </p>
-                </div>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.4rem", fontStyle: "italic", color: WHITE }}>
+                  {currency === "idr" ? pkg.idr : pkg.usd}
+                </p>
                 <button disabled style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.06em",
                   padding: "0.4rem 0.75rem", background: "oklch(28% 0.06 260)", color: MUTED, border: "none", cursor: "not-allowed",
@@ -447,6 +456,7 @@ export default function CoachCarousel({
   trialPct,
   sessions,
   profile,
+  currency,
 }: CoachCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activePanel, setActivePanel] = useState(PANEL_COACH);
@@ -524,7 +534,7 @@ export default function CoachCarousel({
     try { await switchCoach(c.name); } finally { setSwitching(false); }
   }
 
-  const minutesProps = { trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes };
+  const minutesProps = { trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency };
   const ringColor = trialExhausted ? "oklch(55% 0.15 30)" : ORANGE;
   const miniUsed = MINI_C * (trialPct / 100);
 
@@ -748,11 +758,13 @@ export default function CoachCarousel({
                   <button key={pkg.label} disabled style={{
                     fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.05em",
                     padding: "0.5rem 0.75rem",
-                    background: "oklch(24% 0.07 260)", color: MUTED,
-                    border: "1px solid oklch(28% 0.07 260)", cursor: "not-allowed",
+                    background: pkg.bestValue ? "oklch(20% 0.10 260)" : "oklch(24% 0.07 260)", color: MUTED,
+                    border: `1px solid ${pkg.bestValue ? ORANGE : "oklch(28% 0.07 260)"}`, cursor: "not-allowed",
                     whiteSpace: "nowrap",
                   }}>
-                    {pkg.label} {pkg.idr} <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>SOON</span>
+                    {pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
+                    {pkg.bestValue && <span style={{ color: ORANGE, marginLeft: "0.3rem" }}>★</span>}
+                    <span style={{ fontSize: "0.5rem", opacity: 0.6, marginLeft: "0.3rem" }}>SOON</span>
                   </button>
                 ))}
               </div>

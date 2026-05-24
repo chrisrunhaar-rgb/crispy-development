@@ -75,6 +75,8 @@ export default async function CoachPage({
     .limit(10);
 
   const completedSessions = sessions ?? [];
+  const currency: "idr" | "usd" =
+    user.user_metadata?.language_preference === "id" ? "idr" : "usd";
 
   return (
     <CoachCarousel
@@ -87,6 +89,7 @@ export default async function CoachPage({
       grantedMinutes={grantedMinutes}
       trialPct={trialPct}
       sessions={completedSessions}
+      currency={currency}
       profile={{
         name: profile.name,
         role: profile.role,
