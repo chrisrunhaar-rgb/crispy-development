@@ -344,10 +344,12 @@ function MinutesPanel({
               )}
               <div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: LIGHT, marginBottom: "0.15rem", marginTop: pkg.bestValue ? "0.4rem" : 0 }}>
-                  {pkg.label}
+                  {lang === "id"
+                    ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
+                    : pkg.label}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
-                  {pkg.minutes} minutes
+                  {pkg.minutes} {lang === "id" ? "menit" : "minutes"}
                 </p>
               </div>
               <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.5rem", fontStyle: "italic", color: WHITE }}>
@@ -393,15 +395,24 @@ function NotesPanel({ sessions, lang }: { sessions: NotebookSession[]; lang: Coa
 // ── Panel: Background ────────────────────────────────────────────
 function BgPanel({ profile, lang }: { profile: ProfileData; lang: CoachLang }) {
   const s = useT(lang);
+  const fl = lang === "id" ? {
+    name: "Nama", role: "Peran", organisation: "Lembaga",
+    location: "Lokasi", homeCulture: "Budaya asal", hostCulture: "Budaya setempat",
+    monthsInContext: "Bulan di konteks", notes: "Catatan",
+  } : {
+    name: "Name", role: "Role", organisation: "Organisation",
+    location: "Location", homeCulture: "Home culture", hostCulture: "Host culture",
+    monthsInContext: "Months in context", notes: "Notes",
+  };
   const fields = [
-    { label: "Name", value: profile.name },
-    { label: "Role", value: profile.role },
-    { label: "Organisation", value: profile.organisation },
-    { label: "Location", value: profile.location },
-    { label: "Home culture", value: profile.home_culture },
-    { label: "Host culture", value: profile.host_culture },
-    { label: "Months in context", value: profile.months_in_context != null ? String(profile.months_in_context) : null },
-    { label: "Notes", value: profile.notes },
+    { label: fl.name, value: profile.name },
+    { label: fl.role, value: profile.role },
+    { label: fl.organisation, value: profile.organisation },
+    { label: fl.location, value: profile.location },
+    { label: fl.homeCulture, value: profile.home_culture },
+    { label: fl.hostCulture, value: profile.host_culture },
+    { label: fl.monthsInContext, value: profile.months_in_context != null ? String(profile.months_in_context) : null },
+    { label: fl.notes, value: profile.notes },
   ].filter(f => f.value);
 
   return (
@@ -784,7 +795,9 @@ export default function CoachCarousel({
                       whiteSpace: "nowrap", position: "relative",
                     }}>
                       {pkg.bestValue && <span style={{ color: ORANGE, marginRight: "0.3rem" }}>★</span>}
-                      {pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
+                      {lang === "id"
+                        ? pkg.minutes === 60 ? "1 Jam" : pkg.minutes === 180 ? "3 Jam" : "5 Jam"
+                        : pkg.label} {currency === "idr" ? pkg.idr : pkg.usd}
                     </div>
                   ))}
                 </div>

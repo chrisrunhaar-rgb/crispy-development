@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import ProfileForm from "./ProfileForm";
 
 type Props = {
@@ -34,11 +33,6 @@ type FormData = {
   selected_coach: string;
   family_situation: string;
 };
-
-const COACHES = [
-  { name: "Tara", image: "/images/coaches/tara-portrait.jpg", voice: "Female", description: "Warm, intuitive, draws you out gently." },
-  { name: "Ethan", image: "/images/coaches/ethan-portrait.jpg", voice: "Male", description: "Calm, grounded, holds space with steadiness." },
-];
 
 export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirst }: Props) {
   const [step, setStep] = useState(showIntroFirst ? 1 : 0);
@@ -223,82 +217,21 @@ export default function SetupFlow({ userId, isFirstTime, existing, showIntroFirs
             </Field>
           </div>
 
-          <NavRow onBack={() => setStep(2)} nextLabel="Next: Choose Your Coach" isSubmit />
+          <NavRow onBack={() => setStep(2)} onNext={async () => { await saveProfile(); setStep(4); }} nextLabel={saving ? "Saving…" : "Complete Setup"} nextDisabled={saving} />
         </form>
       </Shell>
     );
   }
 
   // ── Step 4: Coach selection ──────────────────────────────────────────────
-  if (step === 4) {
-    return (
-      <Shell step={4} title="Choose your coach" subtitle="Both coaches use the same framework. The only difference is the voice.">
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            {COACHES.map(coach => {
-              const selected = form.selected_coach === coach.name;
-              return (
-                <button
-                  key={coach.name}
-                  type="button"
-                  onClick={() => setForm(f => ({ ...f, selected_coach: coach.name }))}
-                  style={{
-                    display: "flex", flexDirection: "column", alignItems: "center",
-                    padding: "1.5rem 1rem",
-                    border: `2px solid ${selected ? "oklch(45% 0.12 260)" : "oklch(82% 0.008 80)"}`,
-                    background: selected ? "oklch(97% 0.008 260)" : "white",
-                    cursor: "pointer", transition: "all 0.2s", textAlign: "center",
-                  }}
-                >
-                  <div style={{
-                    width: "140px", height: "140px", borderRadius: "50%",
-                    overflow: "hidden", marginBottom: "1rem",
-                    border: `3px solid ${selected ? "oklch(45% 0.12 260)" : "oklch(88% 0.008 80)"}`,
-                  }}>
-                    <Image src={coach.image} alt={coach.name} width={140} height={140}
-                      style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }} />
-                  </div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.008 260)", marginBottom: "0.25rem" }}>
-                    {coach.name}
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: selected ? "oklch(45% 0.12 260)" : "oklch(60% 0.008 260)", marginBottom: "0.5rem" }}>
-                    {coach.voice} voice
-                  </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(50% 0.008 260)", lineHeight: 1.5 }}>
-                    {coach.description}
-                  </p>
-                  {selected && (
-                    <div style={{ marginTop: "0.75rem", width: "20px", height: "20px", borderRadius: "50%", background: "oklch(45% 0.12 260)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                        <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          <NavRow
-            onBack={() => setStep(3)}
-            onNext={async () => { await saveProfile(); setStep(5); }}
-            nextLabel={saving ? "Saving…" : "Complete Setup"}
-            nextDisabled={saving}
-          />
-        </div>
-      </Shell>
-    );
-  }
-
-  // ── Step 5: Complete ─────────────────────────────────────────────────────
+  // ── Step 4: Complete ─────────────────────────────────────────────────────
   return (
-    <Shell step={5} title={`You're all set, ${displayName}.`} subtitle="Your coach is ready. Your first session is waiting.">
+    <Shell step={4} title={`You're all set, ${displayName}.`} subtitle="Your coach is ready. Your first session is waiting.">
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
 
         <div style={{ background: "white", border: "1px solid oklch(88% 0.008 80)", padding: "2.5rem", textAlign: "center" }}>
           <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.625rem", color: "oklch(28% 0.008 260)", marginBottom: "1rem", lineHeight: 1.4 }}>
-            &ldquo;{form.selected_coach}{" "}is ready for you.&rdquo;
+            &ldquo;Your coach is ready for you.&rdquo;
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(50% 0.008 260)", lineHeight: 1.7 }}>
             Speak naturally. Your notes will build as you go. Everything stays private to you.
@@ -336,7 +269,7 @@ function Shell({ step, title, subtitle, children }: { step: number; title: strin
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/waypoint/waypoint-banner-blue.png" alt="WayPoint" style={{ height: "44px", width: "auto" }} />
             <div style={{ display: "flex", gap: "0.375rem", alignItems: "center" }}>
-              {[1, 2, 3, 4, 5].map(s => (
+              {[1, 2, 3, 4].map(s => (
                 <div key={s} style={{
                   height: "6px",
                   borderRadius: "3px",
@@ -346,7 +279,7 @@ function Shell({ step, title, subtitle, children }: { step: number; title: strin
                 }} />
               ))}
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", color: "rgba(255,255,255,0.32)", marginLeft: "0.5rem" }}>
-                {step} / 5
+                {step} / 4
               </span>
             </div>
           </div>

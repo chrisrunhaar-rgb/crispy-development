@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
 
 type Props = {
   userId: string;
@@ -21,21 +19,6 @@ type Props = {
     selected_coach?: string | null;
   } | null;
 };
-
-const COACHES = [
-  {
-    name: "Tara",
-    image: "/images/coaches/tara-portrait.jpg",
-    voice: "Female",
-    description: "Warm, intuitive, draws you out gently.",
-  },
-  {
-    name: "Ethan",
-    image: "/images/coaches/ethan-portrait.jpg",
-    voice: "Male",
-    description: "Calm, grounded, holds space with steadiness.",
-  },
-];
 
 export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
   const router = useRouter();
@@ -147,70 +130,6 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
         </Field>
       </div>
 
-      {/* Section: Choose your coach */}
-      <SectionHeading>Choose your coach</SectionHeading>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(55% 0.008 260)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-        Both coaches use the same coaching approach and framework. The only difference is the voice.{" "}
-        <Link href="/coach/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "oklch(45% 0.12 260)", textDecoration: "underline", textUnderlineOffset: "2px" }}>
-          Confidentiality policy →
-        </Link>
-      </p>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
-        {COACHES.map(coach => {
-          const selected = form.selected_coach === coach.name;
-          return (
-            <button
-              key={coach.name}
-              type="button"
-              onClick={() => setForm(f => ({ ...f, selected_coach: coach.name }))}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: "1.5rem 1rem",
-                border: `2px solid ${selected ? "oklch(45% 0.12 260)" : "oklch(82% 0.008 80)"}`,
-                background: selected ? "oklch(97% 0.008 260)" : "white",
-                cursor: "pointer",
-                transition: "all 0.2s",
-                textAlign: "center",
-              }}
-            >
-              <div style={{
-                width: "140px", height: "140px", borderRadius: "50%",
-                overflow: "hidden", marginBottom: "1rem",
-                border: `3px solid ${selected ? "oklch(45% 0.12 260)" : "oklch(88% 0.008 80)"}`,
-                flexShrink: 0,
-              }}>
-                <Image
-                  src={coach.image}
-                  alt={coach.name}
-                  width={140}
-                  height={140}
-                  style={{ objectFit: "cover", objectPosition: "center top", width: "100%", height: "100%" }}
-                />
-              </div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.008 260)", marginBottom: "0.25rem" }}>
-                {coach.name}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: selected ? "oklch(45% 0.12 260)" : "oklch(60% 0.008 260)", marginBottom: "0.5rem" }}>
-                {coach.voice} voice
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(50% 0.008 260)", lineHeight: 1.5 }}>
-                {coach.description}
-              </p>
-              {selected && (
-                <div style={{ marginTop: "0.75rem", width: "20px", height: "20px", borderRadius: "50%", background: "oklch(45% 0.12 260)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                    <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
       <button
         type="submit"
         disabled={saving}
@@ -229,11 +148,7 @@ export default function ProfileForm({ userId, isFirstTime, existing }: Props) {
           transition: "background 0.2s",
         }}
       >
-        {saving
-          ? "Saving…"
-          : isFirstTime
-          ? `Start your first session with ${form.selected_coach}`
-          : "Save changes"}
+        {saving ? "Saving…" : isFirstTime ? "Start your first session" : "Save changes"}
       </button>
     </form>
   );

@@ -111,8 +111,8 @@ const strings = {
   },
 
   id: {
-    panelNames: ["Latar Belakang", "Catatan", "Pelatih", "Menit"] as [string, string, string, string],
-    yourAiCoach: "Pelatih AI Anda",
+    panelNames: ["Latar Belakang", "Catatan", "Coach", "Menit"] as [string, string, string, string],
+    yourAiCoach: "AI Coach Anda",
     firstSessionReady: "Siap untuk sesi pertama Anda",
     sessionReady: (n: number, name: string) => `Sesi ${n} siap — ${name} mengingat percakapan Anda`,
     tapToChange: "ketuk untuk ganti",
@@ -136,7 +136,7 @@ const strings = {
 
     minLeft: "menit tersisa",
     minutesUsed: (used: number, granted: number) => `${used} dari ${granted} menit terpakai`,
-    addCoachingTime: "Tambah Waktu Pelatihan",
+    addCoachingTime: "Tambah Waktu Coaching",
     bestValue: "Terbaik",
     purchasesSoon: "Pembelian segera tersedia",
 
@@ -145,10 +145,10 @@ const strings = {
     freeTrial: "Uji coba gratis",
     trialComplete: "Uji coba selesai",
     minRemaining: (n: number) => `${n} menit tersisa`,
-    chooseCoach: "Pilih Pelatih Anda",
+    chooseCoach: "Pilih Coach Anda",
     current: "Aktif",
 
-    trialExhaustedMsg: "Anda telah menggunakan 120 menit uji coba gratis. Hubungi kami untuk melanjutkan pelatihan.",
+    trialExhaustedMsg: "Anda telah menggunakan 120 menit uji coba gratis. Hubungi kami untuk melanjutkan coaching.",
     deep: "Mendalam",
     quick: "Singkat",
     deepDesc: "~40 mnt · topik kompleks",
@@ -165,7 +165,7 @@ const strings = {
       COMPLETE: "Selesai",
     } as Record<string, string>,
 
-    coachingSessionWith: (name: string) => `Sesi Pelatihan dengan ${name}`,
+    coachingSessionWith: (name: string) => `Sesi Coaching dengan ${name}`,
     readyWhenYouAre: "Siap saat Anda siap.",
     connecting: "Menghubungkan…",
     reconnecting: "Menghubungkan kembali…",
