@@ -674,11 +674,17 @@ export default function CoachCarousel({
             const rightLabel = PANEL_NAMES[(activePanel + 1) % 4];
             return (
               <div style={{
-                position: "absolute", bottom: "1rem", left: 0, right: 0,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                gap: "0.625rem", zIndex: 10, pointerEvents: "none",
+                position: "absolute", bottom: "1.125rem", left: "50%",
+                transform: "translateX(-50%)",
+                display: "flex", alignItems: "center",
+                gap: "0.625rem", zIndex: 20, pointerEvents: "none",
+                background: "oklch(10% 0.06 260 / 0.7)",
+                padding: "0.35rem 0.875rem",
+                borderRadius: "100px",
+                backdropFilter: "blur(4px)",
+                whiteSpace: "nowrap",
               }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(45% 0.007 260)", whiteSpace: "nowrap" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.007 260)" }}>
                   ← {leftLabel}
                 </span>
                 <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
@@ -687,12 +693,12 @@ export default function CoachCarousel({
                       height: "6px",
                       width: i === activePanel ? "22px" : "6px",
                       borderRadius: "3px",
-                      background: i === activePanel ? ORANGE : "oklch(38% 0.07 260)",
+                      background: i === activePanel ? ORANGE : "oklch(52% 0.06 260)",
                       transition: "width 0.25s ease, background 0.25s ease",
                     }} />
                   ))}
                 </div>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(45% 0.007 260)", whiteSpace: "nowrap" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(62% 0.007 260)" }}>
                   {rightLabel} →
                 </span>
               </div>
