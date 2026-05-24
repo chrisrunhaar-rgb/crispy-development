@@ -452,10 +452,27 @@ export default function CoachCarousel({
   const teleportRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Snap to Coach panel + lock body/main scroll + set navy background on main
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
-    el.scrollLeft = DOM_COACH * el.clientWidth;
+    if (el) el.scrollLeft = DOM_COACH * el.clientWidth;
+
+    const main = document.querySelector("main") as HTMLElement | null;
+    const prevBg = main?.style.background ?? "";
+    const prevOverflow = main?.style.overflow ?? "";
+    if (main) {
+      main.style.background = NAVY;
+      main.style.overflow = "hidden";
+    }
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      if (main) {
+        main.style.background = prevBg;
+        main.style.overflow = prevOverflow;
+      }
+      document.documentElement.style.overflow = "";
+    };
   }, []);
 
   const handleScroll = useCallback(() => {
