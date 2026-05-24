@@ -62,6 +62,7 @@ export default async function CoachSessionPage({
 
   const coachName = profile.selected_coach ?? "Tara";
   const coachVoice = COACH_VOICES[coachName] ?? "Kore";
+  const lang = user.user_metadata?.language_preference === "id" ? "id" as const : "en" as const;
 
   const { count } = await admin
     .from("wp_sessions")
@@ -87,5 +88,5 @@ export default async function CoachSessionPage({
     action_steps: [],
   });
 
-  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} sessionType={sessionType} />;
+  return <GeminiSessionClient sessionId={session.id} coachName={coachName} coachVoice={coachVoice} sessionType={sessionType} lang={lang} />;
 }

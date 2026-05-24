@@ -1,0 +1,212 @@
+export type CoachLang = "en" | "id";
+
+const strings = {
+  en: {
+    // Carousel — panels
+    panelNames: ["Background", "Notes", "Coach", "Minutes"] as [string, string, string, string],
+    yourAiCoach: "Your AI Coach",
+    firstSessionReady: "Ready for your first session",
+    sessionReady: (n: number, name: string) => `Session ${n} ready — ${name} remembers your sessions`,
+    tapToChange: "tap to change",
+    clickToChange: "click to change",
+
+    // Carousel — Notes panel
+    sessionNotes: "Session Notes",
+    sessionCount: (n: number) => `${n} session${n !== 1 ? "s" : ""} — tap to expand`,
+    noNotesEmpty: "Your session notes will appear here after your first coaching session.",
+    noNotesThisSession: "No notes from this session.",
+    viewFullSession: "View full session →",
+
+    // Carousel — Background panel
+    aboutYou: "About You",
+    noBackgroundInfo: "No background info yet.",
+    editBackgroundInfo: "Edit background info →",
+
+    // Accordion note labels
+    focus: "Focus",
+    keyInsights: "Key insights",
+    values: "Values",
+    actions: "Actions",
+    carryingForward: "Carrying forward",
+
+    // Carousel — Minutes panel
+    minLeft: "min left",
+    minutesUsed: (used: number, granted: number) => `${used} of ${granted} minutes used`,
+    addCoachingTime: "Add Coaching Time",
+    bestValue: "Best Value",
+    purchasesSoon: "Purchases available soon",
+
+    // Carousel — header / misc
+    backToCrispy: "← Crispy Leaders",
+    beta: "BETA",
+    freeTrial: "Free trial",
+    trialComplete: "Trial complete",
+    minRemaining: (n: number) => `${n} min remaining`,
+    chooseCoach: "Choose Your Coach",
+    current: "Current",
+
+    // SessionTypeSelector
+    trialExhaustedMsg: "You've used your 120-minute free trial. Contact us to continue coaching.",
+    deep: "Deep",
+    quick: "Quick",
+    deepDesc: "~40 min · complex topics",
+    quickDesc: "~10 min · single focus",
+    starting: "Starting…",
+    startSession: (type: string) => `Start ${type} session →`,
+
+    // GeminiSessionClient — phases
+    phaseLabels: {
+      LAND: "Landing",
+      SEEK: "Setting Focus",
+      EXPLORE: "Exploring",
+      COMMIT: "Committing",
+      CARRY: "Carrying Forward",
+      COMPLETE: "Complete",
+    } as Record<string, string>,
+
+    // GeminiSessionClient — UI
+    coachingSessionWith: (name: string) => `Coaching Session with ${name}`,
+    readyWhenYouAre: "Ready when you are.",
+    connecting: "Connecting…",
+    reconnecting: "Reconnecting…",
+    aiSpeaking: (name: string) => `${name} is speaking…`,
+    micPaused: "Microphone paused.",
+    listening: "Listening…",
+    sessionComplete: "Session complete.",
+    connectionFailed: "Connection failed.",
+    tapResume: "Tap Resume to continue",
+    speakNaturally: "Speak naturally",
+    startSessionBtn: "Start Session",
+    resume: "Resume",
+    pause: "Pause",
+    endSession: "End Session",
+    backToWayPoint: "Back to WayPoint",
+    tryAgain: "Try Again",
+    notesWillAppear: "Your notes will appear here as the conversation unfolds.",
+    back: "← Back",
+
+    // Notepad labels (also used in GeminiSessionClient)
+    insights: "Insights",
+
+    // Past session page (session/[id])
+    wayPointSession: (n: number | null) => `WayPoint · Session ${n ?? "—"}`,
+    nMinutes: (n: number) => `${n} minutes`,
+    allSessions: "← All Sessions",
+    noNotesYet: "No notes from this session yet.",
+    myFocus: "My Focus",
+    keyInsightsFull: "Key Insights",
+    valuesNamed: "Values I Named",
+    myActionSteps: "My Action Steps",
+    whatICarriedForward: "What I Carried Forward",
+    backToWayPointLink: "← Back to WayPoint",
+
+    // Complete page (session/[id]/complete)
+    sessionCompleteHeading: (n: number | null) => `Session ${n ?? "—"} complete.`,
+    notesWillAppearSaved: "Your notes will appear here as they are saved.",
+    reviewFullSession: "Review full session →",
+
+    // Action Steps label in complete page
+    actionSteps: "Action Steps",
+    carryingForwardFull: "Carrying Forward",
+  },
+
+  id: {
+    panelNames: ["Latar Belakang", "Catatan", "Pelatih", "Menit"] as [string, string, string, string],
+    yourAiCoach: "Pelatih AI Anda",
+    firstSessionReady: "Siap untuk sesi pertama Anda",
+    sessionReady: (n: number, name: string) => `Sesi ${n} siap — ${name} mengingat percakapan Anda`,
+    tapToChange: "ketuk untuk ganti",
+    clickToChange: "klik untuk ganti",
+
+    sessionNotes: "Catatan Sesi",
+    sessionCount: (n: number) => `${n} sesi — ketuk untuk buka`,
+    noNotesEmpty: "Catatan sesi Anda akan muncul di sini setelah sesi pelatihan pertama.",
+    noNotesThisSession: "Tidak ada catatan dari sesi ini.",
+    viewFullSession: "Lihat sesi lengkap →",
+
+    aboutYou: "Tentang Anda",
+    noBackgroundInfo: "Belum ada informasi latar belakang.",
+    editBackgroundInfo: "Edit informasi →",
+
+    focus: "Fokus",
+    keyInsights: "Wawasan utama",
+    values: "Nilai-nilai",
+    actions: "Langkah aksi",
+    carryingForward: "Dibawa ke depan",
+
+    minLeft: "menit tersisa",
+    minutesUsed: (used: number, granted: number) => `${used} dari ${granted} menit terpakai`,
+    addCoachingTime: "Tambah Waktu Pelatihan",
+    bestValue: "Terbaik",
+    purchasesSoon: "Pembelian segera tersedia",
+
+    backToCrispy: "← Crispy Leaders",
+    beta: "BETA",
+    freeTrial: "Uji coba gratis",
+    trialComplete: "Uji coba selesai",
+    minRemaining: (n: number) => `${n} menit tersisa`,
+    chooseCoach: "Pilih Pelatih Anda",
+    current: "Aktif",
+
+    trialExhaustedMsg: "Anda telah menggunakan 120 menit uji coba gratis. Hubungi kami untuk melanjutkan pelatihan.",
+    deep: "Mendalam",
+    quick: "Singkat",
+    deepDesc: "~40 mnt · topik kompleks",
+    quickDesc: "~10 mnt · fokus tunggal",
+    starting: "Memulai…",
+    startSession: (type: string) => `Mulai sesi ${type} →`,
+
+    phaseLabels: {
+      LAND: "Pembukaan",
+      SEEK: "Menetapkan Fokus",
+      EXPLORE: "Eksplorasi",
+      COMMIT: "Komitmen",
+      CARRY: "Membawa ke Depan",
+      COMPLETE: "Selesai",
+    } as Record<string, string>,
+
+    coachingSessionWith: (name: string) => `Sesi Pelatihan dengan ${name}`,
+    readyWhenYouAre: "Siap saat Anda siap.",
+    connecting: "Menghubungkan…",
+    reconnecting: "Menghubungkan kembali…",
+    aiSpeaking: (name: string) => `${name} sedang berbicara…`,
+    micPaused: "Mikrofon dijeda.",
+    listening: "Mendengarkan…",
+    sessionComplete: "Sesi selesai.",
+    connectionFailed: "Koneksi gagal.",
+    tapResume: "Ketuk Lanjutkan untuk melanjutkan",
+    speakNaturally: "Bicara dengan natural",
+    startSessionBtn: "Mulai Sesi",
+    resume: "Lanjutkan",
+    pause: "Jeda",
+    endSession: "Akhiri Sesi",
+    backToWayPoint: "Kembali ke WayPoint",
+    tryAgain: "Coba Lagi",
+    notesWillAppear: "Catatan Anda akan muncul di sini seiring percakapan berlangsung.",
+    back: "← Kembali",
+
+    insights: "Wawasan",
+
+    wayPointSession: (n: number | null) => `WayPoint · Sesi ${n ?? "—"}`,
+    nMinutes: (n: number) => `${n} menit`,
+    allSessions: "← Semua Sesi",
+    noNotesYet: "Belum ada catatan dari sesi ini.",
+    myFocus: "Fokus Saya",
+    keyInsightsFull: "Wawasan Utama",
+    valuesNamed: "Nilai yang Saya Temukan",
+    myActionSteps: "Langkah Aksi Saya",
+    whatICarriedForward: "Yang Saya Bawa ke Depan",
+    backToWayPointLink: "← Kembali ke WayPoint",
+
+    sessionCompleteHeading: (n: number | null) => `Sesi ${n ?? "—"} selesai.`,
+    notesWillAppearSaved: "Catatan Anda akan muncul di sini saat tersimpan.",
+    reviewFullSession: "Lihat sesi lengkap →",
+
+    actionSteps: "Langkah Aksi",
+    carryingForwardFull: "Dibawa ke Depan",
+  },
+} as const;
+
+export function useT(lang: CoachLang) {
+  return strings[lang] ?? strings.en;
+}

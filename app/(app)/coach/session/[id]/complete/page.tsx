@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { useT } from "../../../i18n";
 
 export const metadata = {
   title: "Session Complete — WayPoint",
@@ -16,6 +17,10 @@ export default async function SessionCompletePage({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/coach");
+
+  const lang = user.user_metadata?.language_preference === "id" ? "id" as const : "en" as const;
+  const s = useT(lang);
+  const locale = lang === "id" ? "id-ID" : "en-GB";
 
   const { data: session } = await supabase
     .from("wp_sessions")
@@ -38,7 +43,7 @@ export default async function SessionCompletePage({
       (wb.action_steps && wb.action_steps.length > 0) ||
       wb.carrying_forward);
 
-  const dateStr = new Date(session.started_at).toLocaleDateString("en-GB", {
+  const dateStr = new Date(session.started_at).toLocaleDateString(locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -68,7 +73,7 @@ export default async function SessionCompletePage({
             lineHeight: 1.2,
             marginBottom: "0.5rem",
           }}>
-            Session {session.session_number ?? "—"} complete.
+            {s.sessionCompleteHeading(session.session_number)}
           </h1>
           <p style={{
             fontFamily: "var(--font-montserrat)",
@@ -92,13 +97,13 @@ export default async function SessionCompletePage({
               color: "oklch(55% 0.008 260)",
               lineHeight: 1.6,
             }}>
-              Your notes will appear here as they are saved.
+              {s.notesWillAppearSaved}
             </p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
 
               {wb.focus_today && (
-                <NoteSection label="Focus">
+                <NoteSection label={s.focus}>
                   <p style={{
                     fontFamily: "var(--font-cormorant)",
                     fontStyle: "italic",
@@ -113,7 +118,7 @@ export default async function SessionCompletePage({
               )}
 
               {wb.key_insights && (wb.key_insights as string[]).length > 0 && (
-                <NoteSection label="Insights">
+                <NoteSection label={s.insights}>
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                     {(wb.key_insights as string[]).map((ins: string, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
@@ -126,7 +131,7 @@ export default async function SessionCompletePage({
               )}
 
               {wb.values_named && (wb.values_named as string[]).length > 0 && (
-                <NoteSection label="Values">
+                <NoteSection label={s.values}>
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                     {(wb.values_named as string[]).map((v: string, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
@@ -139,7 +144,7 @@ export default async function SessionCompletePage({
               )}
 
               {wb.action_steps && (wb.action_steps as string[]).length > 0 && (
-                <NoteSection label="Action Steps">
+                <NoteSection label={s.actionSteps}>
                   <ol style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                     {(wb.action_steps as string[]).map((step: string, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "0.875rem", alignItems: "flex-start" }}>
@@ -162,7 +167,7 @@ export default async function SessionCompletePage({
               )}
 
               {wb.carrying_forward && (
-                <NoteSection label="Carrying Forward">
+                <NoteSection label={s.carryingForwardFull}>
                   <p style={{
                     fontFamily: "var(--font-montserrat)",
                     fontStyle: "italic",

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { GoogleGenAI, Modality, Type, ThinkingLevel, StartSensitivity, EndSensitivity } from "@google/genai";
 import type { LiveServerMessage, Session, LiveConnectConfig } from "@google/genai";
 import Image from "next/image";
+import { useT, type CoachLang } from "../i18n";
 
 type WhiteboardState = {
   focus_today: string | null;
@@ -15,14 +16,7 @@ type WhiteboardState = {
 
 type Phase = "LAND" | "SEEK" | "EXPLORE" | "COMMIT" | "CARRY" | "COMPLETE";
 
-const PHASE_LABELS: Record<Phase, string> = {
-  LAND: "Landing",
-  SEEK: "Setting Focus",
-  EXPLORE: "Exploring",
-  COMMIT: "Committing",
-  CARRY: "Carrying Forward",
-  COMPLETE: "Complete",
-};
+// Phase labels are now sourced from i18n (s.phaseLabels) — this constant removed
 
 const PHASE_ORDER: Phase[] = ["LAND", "SEEK", "EXPLORE", "COMMIT", "CARRY", "COMPLETE"];
 
@@ -54,9 +48,11 @@ type Props = {
   coachName: string;
   coachVoice: string;
   sessionType?: "deep" | "quick";
+  lang?: CoachLang;
 };
 
-export default function GeminiSessionClient({ sessionId, coachName, coachVoice, sessionType = "deep" }: Props) {
+export default function GeminiSessionClient({ sessionId, coachName, coachVoice, sessionType = "deep", lang = "en" }: Props) {
+  const s = useT(lang);
   const [status, setStatus] = useState<"idle" | "connecting" | "active" | "complete" | "error">("idle");
   const [phase, setPhase] = useState<Phase>("LAND");
   const [whiteboard, setWhiteboard] = useState<WhiteboardState>({
@@ -518,7 +514,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
           <Image src="/images/waypoint/waypoint-logo-blue.png" alt="WayPoint" width={24} height={24} style={{ opacity: 0.9, flexShrink: 0 }} />
           <div>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.4rem", color: "oklch(65% 0.15 45)", lineHeight: 1 }}>Coaching Session with {coachName}</p>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.4rem", color: "oklch(65% 0.15 45)", lineHeight: 1 }}>{s.coachingSessionWith(coachName)}</p>
           </div>
         </div>
 
@@ -533,7 +529,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             }} />
           ))}
           <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", marginLeft: "0.375rem" }}>
-            {PHASE_LABELS[phase]}
+            {s.phaseLabels[phase] ?? phase}
           </span>
         </div>
 
@@ -542,7 +538,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
           <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", minWidth: "48px", textAlign: "right" }}>
             {status === "active" ? formatTime(elapsedSeconds) : ""}
           </div>
-          <a href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em", flexShrink: 0 }}>← Back</a>
+          <a href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.04em", flexShrink: 0 }}>{s.back}</a>
         </div>
       </div>
 
@@ -606,30 +602,30 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
 
           {/* Status text */}
           <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", fontStyle: "italic", color: "rgba(255,255,255,0.75)", textAlign: "center", maxWidth: "240px" }}>
-            {status === "idle" && "Ready when you are."}
-            {status === "connecting" && (errorMsg ?? "Connecting…")}
-            {status === "active" && (isAiSpeaking ? `${coachName} is speaking…` : isMuted ? "Microphone paused." : "Listening…")}
-            {status === "complete" && "Session complete."}
-            {status === "error" && "Connection failed."}
+            {status === "idle" && s.readyWhenYouAre}
+            {status === "connecting" && (errorMsg ?? s.connecting)}
+            {status === "active" && (isAiSpeaking ? s.aiSpeaking(coachName) : isMuted ? s.micPaused : s.listening)}
+            {status === "complete" && s.sessionComplete}
+            {status === "error" && s.connectionFailed}
           </p>
 
           {status === "active" && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "rgba(255,255,255,0.32)", textAlign: "center" }}>
-              {isMuted ? "Tap Resume to continue" : "Speak naturally"}
+              {isMuted ? s.tapResume : s.speakNaturally}
             </p>
           )}
 
           {/* Controls */}
           <div style={{ display: "flex", gap: "0.875rem" }}>
-            {status === "idle" && <button onClick={startSession} style={btnStyle("primary")}>Start Session</button>}
+            {status === "idle" && <button onClick={startSession} style={btnStyle("primary")}>{s.startSessionBtn}</button>}
             {status === "active" && (
               <>
-                <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>{isMuted ? "Resume" : "Pause"}</button>
-                <button onClick={endSession} style={btnStyle("secondary")}>End Session</button>
+                <button onClick={toggleMute} style={btnStyle(isMuted ? "primary" : "ghost")}>{isMuted ? s.resume : s.pause}</button>
+                <button onClick={endSession} style={btnStyle("secondary")}>{s.endSession}</button>
               </>
             )}
-            {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>Back to WayPoint</a>}
-            {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>Try Again</button>}
+            {status === "complete" && <a href={`/coach/session/${sessionId}/complete`} style={{ ...btnStyle("primary"), textDecoration: "none" }}>{s.backToWayPoint}</a>}
+            {status === "error" && <button onClick={startSession} style={btnStyle("primary")}>{s.tryAgain}</button>}
           </div>
 
           {status === "error" && errorMsg && (
@@ -692,7 +688,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               {/* Notepad label area */}
               <div style={{ padding: "1rem 1.25rem 0.5rem", borderBottom: "1px solid rgba(0,0,0,0.06)", flexShrink: 0 }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(80,72,60,0.45)", margin: 0 }}>
-                  Session Notes
+                  {s.sessionNotes}
                 </p>
               </div>
 
@@ -708,21 +704,21 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
               }}>
                 {!hasWhiteboardContent && (
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "rgba(100,90,80,0.38)", fontStyle: "italic", margin: "28px 0 0" }}>
-                    Your notes will appear here as the conversation unfolds.
+                    {s.notesWillAppear}
                   </p>
                 )}
-                {whiteboard.focus_today && <WBEntry label="Focus" value={whiteboard.focus_today} />}
+                {whiteboard.focus_today && <WBEntry label={s.focus} value={whiteboard.focus_today} />}
                 {whiteboard.key_insights.map((ins, i) => (
-                  <WBEntry key={i} label={i === 0 ? "Insights" : undefined} value={`• ${ins}`} indent />
+                  <WBEntry key={i} label={i === 0 ? s.insights : undefined} value={`• ${ins}`} indent />
                 ))}
                 {whiteboard.values_named.map((v, i) => (
-                  <WBEntry key={i} label={i === 0 ? "Values" : undefined} value={`• ${v}`} indent />
+                  <WBEntry key={i} label={i === 0 ? s.values : undefined} value={`• ${v}`} indent />
                 ))}
                 {whiteboard.action_steps.map((step, i) => (
-                  <WBEntry key={i} label={i === 0 ? "Actions" : undefined} value={`${i + 1}. ${step}`} indent />
+                  <WBEntry key={i} label={i === 0 ? s.actions : undefined} value={`${i + 1}. ${step}`} indent />
                 ))}
                 {whiteboard.carrying_forward && (
-                  <WBEntry label="Carrying forward" value={`"${whiteboard.carrying_forward}"`} italic />
+                  <WBEntry label={s.carryingForward} value={`"${whiteboard.carrying_forward}"`} italic />
                 )}
               </div>
 

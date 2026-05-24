@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { useT } from "../../i18n";
 export const metadata = {
   title: "Session — WayPoint",
 };
@@ -14,6 +15,9 @@ export default async function PastSessionPage({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/coach");
+
+  const lang = user.user_metadata?.language_preference === "id" ? "id" as const : "en" as const;
+  const s = useT(lang);
 
   const { data: session } = await supabase
     .from("wp_sessions")
@@ -29,7 +33,8 @@ export default async function PastSessionPage({
     : session.wp_whiteboards;
 
   const mins = session.duration_seconds ? Math.round(session.duration_seconds / 60) : null;
-  const dateStr = new Date(session.started_at).toLocaleDateString("en-GB", {
+  const locale = lang === "id" ? "id-ID" : "en-GB";
+  const dateStr = new Date(session.started_at).toLocaleDateString(locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -43,18 +48,18 @@ export default async function PastSessionPage({
       <div style={{ background: "oklch(30% 0.12 260)", paddingBlock: "2rem", borderBottom: "1px solid oklch(22% 0.10 260)" }}>
         <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>WayPoint · Session {session.session_number ?? "—"}</p>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>{s.wayPointSession(session.session_number)}</p>
             <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "2rem", color: "oklch(97% 0.005 80)" }}>
               {dateStr}
             </h1>
             {mins && (
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(65% 0.008 260)", marginTop: "0.375rem" }}>
-                {mins} minutes
+                {s.nMinutes(mins)}
               </p>
             )}
           </div>
           <Link href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(88% 0.008 80)", textDecoration: "none" }}>
-            ← All Sessions
+            {s.allSessions}
           </Link>
         </div>
       </div>
@@ -64,19 +69,19 @@ export default async function PastSessionPage({
 
           {!wb ? (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(55% 0.008 260)" }}>
-              No notes from this session yet.
+              {s.noNotesYet}
             </p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
 
               {wb.focus_today && (
-                <WhiteboardCard label="My Focus">
+                <WhiteboardCard label={s.myFocus}>
                   <p style={bodyText}>{wb.focus_today}</p>
                 </WhiteboardCard>
               )}
 
               {wb.key_insights && wb.key_insights.length > 0 && (
-                <WhiteboardCard label="Key Insights">
+                <WhiteboardCard label={s.keyInsightsFull}>
                   {(wb.key_insights as string[]).map((ins: string, i: number) => (
                     <BulletRow key={i} text={ins} dot="oklch(65% 0.15 45)" />
                   ))}
@@ -84,7 +89,7 @@ export default async function PastSessionPage({
               )}
 
               {wb.values_named && wb.values_named.length > 0 && (
-                <WhiteboardCard label="Values I Named">
+                <WhiteboardCard label={s.valuesNamed}>
                   {(wb.values_named as string[]).map((v: string, i: number) => (
                     <BulletRow key={i} text={v} dot="oklch(55% 0.12 260)" />
                   ))}
@@ -92,7 +97,7 @@ export default async function PastSessionPage({
               )}
 
               {wb.action_steps && wb.action_steps.length > 0 && (
-                <WhiteboardCard label="My Action Steps">
+                <WhiteboardCard label={s.myActionSteps}>
                   {(wb.action_steps as string[]).map((step: string, i: number) => (
                     <div key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start", paddingBlock: "0.75rem", borderBottom: i < wb.action_steps.length - 1 ? "1px solid oklch(93% 0.004 80)" : "none" }}>
                       <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", color: "oklch(65% 0.15 45)", minWidth: "20px", paddingTop: "0.1rem" }}>
@@ -105,7 +110,7 @@ export default async function PastSessionPage({
               )}
 
               {wb.carrying_forward && (
-                <WhiteboardCard label="What I Carried Forward">
+                <WhiteboardCard label={s.whatICarriedForward}>
                   <p style={{ ...bodyText, fontStyle: "italic", fontSize: "1.0625rem", color: "oklch(28% 0.08 260)", lineHeight: 1.7 }}>
                     &ldquo;{wb.carrying_forward}&rdquo;
                   </p>
@@ -124,7 +129,7 @@ export default async function PastSessionPage({
                 textDecoration: "none",
               }}
             >
-              ← Back to WayPoint
+              {s.backToWayPointLink}
             </Link>
           </div>
         </div>

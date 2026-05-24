@@ -2,16 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useT, type CoachLang } from "./i18n";
 
 type Props = {
   trialExhausted: boolean;
   trialRemainingMinutes: number;
+  lang?: CoachLang;
 };
 
-export default function SessionTypeSelector({ trialExhausted, trialRemainingMinutes }: Props) {
+export default function SessionTypeSelector({ trialExhausted, trialRemainingMinutes, lang = "en" }: Props) {
   const [selected, setSelected] = useState<"deep" | "quick">("deep");
   const [starting, setStarting] = useState(false);
   const router = useRouter();
+  const s = useT(lang);
 
   function handleStart() {
     setStarting(true);
@@ -33,7 +36,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
           lineHeight: 1.6,
           margin: 0,
         }}>
-          You&apos;ve used your 120-minute free trial. Contact us to continue coaching.
+          {s.trialExhaustedMsg}
         </p>
       </div>
     );
@@ -83,7 +86,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
                     <circle cx="5" cy="5" r="4" fill="oklch(65% 0.15 45)" />
                   </svg>
                 )}
-                {type === "deep" ? "Deep" : "Quick"}
+                {type === "deep" ? s.deep : s.quick}
               </span>
               <span style={{
                 fontFamily: "var(--font-montserrat)",
@@ -91,7 +94,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
                 color: "oklch(55% 0.008 260)",
                 lineHeight: 1.4,
               }}>
-                {type === "deep" ? "~40 min · complex topics" : "~10 min · single focus"}
+                {type === "deep" ? s.deepDesc : s.quickDesc}
               </span>
             </button>
           );
@@ -118,7 +121,7 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
           transition: "background 0.15s ease",
         }}
       >
-        {starting ? "Starting…" : `Start ${selected} session →`}
+        {starting ? s.starting : s.startSession(selected === "deep" ? s.deep.toLowerCase() : s.quick.toLowerCase())}
       </button>
 
     </div>
