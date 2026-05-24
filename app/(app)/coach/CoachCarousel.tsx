@@ -113,14 +113,14 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-      {sessions.map((s, i) => {
-        const wb: WB = Array.isArray(s.wp_whiteboards) ? (s.wp_whiteboards[0] ?? null) : s.wp_whiteboards;
+      {sessions.map((sess, i) => {
+        const wb: WB = Array.isArray(sess.wp_whiteboards) ? (sess.wp_whiteboards[0] ?? null) : sess.wp_whiteboards;
         const isOpen = openIdx === i;
-        const dur = fmtDur(s.duration_seconds);
-        const sessionNum = s.session_number ?? sessions.length - i;
+        const dur = fmtDur(sess.duration_seconds);
+        const sessionNum = sess.session_number ?? sessions.length - i;
 
         return (
-          <div key={s.id}>
+          <div key={sess.id}>
             {/* Header row */}
             <button
               onClick={() => setOpenIdx(isOpen ? -1 : i)}
@@ -142,7 +142,7 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
                   {lang === "id" ? "Sesi" : "Session"} {sessionNum}{dur ? ` · ${dur}` : ""}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: MUTED }}>
-                  {formatDate(s.started_at)}
+                  {formatDate(sess.started_at)}
                 </p>
               </div>
               <span style={{ color: MUTED, fontSize: "0.7rem", marginLeft: "0.75rem", flexShrink: 0 }}>
@@ -178,7 +178,7 @@ function AccordionNotes({ sessions, lang }: { sessions: NotebookSession[]; lang:
                     <p style={{ ...noteText, fontStyle: "italic" }}>&ldquo;{wb.carrying_forward}&rdquo;</p>
                   </NoteSection>
                 )}
-                <Link href={`/coach/session/${session.id}`} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: ORANGE, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
+                <Link href={`/coach/session/${sess.id}`} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 600, color: ORANGE, textDecoration: "none", letterSpacing: "0.04em", marginTop: "0.25rem" }}>
                   {s.viewFullSession}
                 </Link>
               </div>
