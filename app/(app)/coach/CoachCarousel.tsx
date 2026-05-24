@@ -37,9 +37,9 @@ const COACHES = [
 ];
 
 const ADDONS = [
-  { label: "Starter Pack", minutes: 60, price: "$49" },
-  { label: "Growth Pack", minutes: 120, price: "$99" },
-  { label: "Deep Work Pack", minutes: 300, price: "$179" },
+  { label: "1 Hour", minutes: 60, idr: "Rp 150,000", usd: "~$9" },
+  { label: "3 Hours", minutes: 180, idr: "Rp 399,000", usd: "~$25" },
+  { label: "5 Hours", minutes: 300, idr: "Rp 599,000", usd: "~$37" },
 ];
 
 // ── SVG ring constants ───────────────────────────────────────────
@@ -338,9 +338,14 @@ function MinutesPanel({
                 </p>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.4rem", fontStyle: "italic", color: WHITE }}>
-                  {pkg.price}
-                </span>
+                <div style={{ textAlign: "right" }}>
+                  <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.3rem", fontStyle: "italic", color: WHITE, lineHeight: 1.1 }}>
+                    {pkg.idr}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: MUTED }}>
+                    {pkg.usd}
+                  </p>
+                </div>
                 <button disabled style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.06em",
                   padding: "0.4rem 0.75rem", background: "oklch(28% 0.06 260)", color: MUTED, border: "none", cursor: "not-allowed",
@@ -747,7 +752,7 @@ export default function CoachCarousel({
                     border: "1px solid oklch(28% 0.07 260)", cursor: "not-allowed",
                     whiteSpace: "nowrap",
                   }}>
-                    +{pkg.minutes}m {pkg.price} <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>SOON</span>
+                    {pkg.label} {pkg.idr} <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>SOON</span>
                   </button>
                 ))}
               </div>
