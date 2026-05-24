@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import SessionTypeSelector from "./SessionTypeSelector";
-import SessionNotebook from "./SessionNotebook";
+import CoachCarousel from "./CoachCarousel";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +13,6 @@ const COACH_IMAGES: Record<string, string> = {
   Tara: "/images/coaches/tara-portrait.jpg",
   Ethan: "/images/coaches/ethan-portrait.jpg",
 };
-
 
 export default async function CoachPage({
   searchParams,
@@ -30,7 +26,6 @@ export default async function CoachPage({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/coach");
 
-  // Redirect to setup if onboarding not complete
   const { data: profile } = await supabase
     .from("wp_worker_profiles")
     .select("*")
@@ -48,12 +43,13 @@ export default async function CoachPage({
     .select("is_admin, coach_access, coach_minutes_granted")
     .eq("user_id", user.id)
     .single();
+
   const isAdmin = membership?.is_admin === true;
   const hasCoachAccess = membership?.coach_access === true || isAdmin;
   if (!hasCoachAccess) redirect("/dashboard");
+
   const coachLimitSeconds = (membership?.coach_minutes_granted ?? 120) * 60;
 
-  // Trial calculation — all completed sessions
   const { data: trialData } = await supabase
     .from("wp_sessions")
     .select("duration_seconds")
@@ -79,124 +75,28 @@ export default async function CoachPage({
     .limit(10);
 
   const completedSessions = sessions ?? [];
-  const sessionCount = completedSessions.length;
 
   return (
-    <div style={{ background: "oklch(96% 0.004 80)", minHeight: "calc(100dvh - 80px)" }}>
-
-      {/* Header */}
-      <div style={{
-        background: "#1B3A6B",
-        paddingBlock: "0",
-      }}>
-        <div className="container-wide" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBlock: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/waypoint/waypoint-banner-blue.png"
-              alt="WayPoint"
-              style={{ height: "56px", width: "auto" }}
-            />
-            <span style={{ background: "oklch(65% 0.15 45)", color: "white", fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", padding: "0.15rem 0.45rem", borderRadius: "2px" }}>
-              BETA
-            </span>
-          </div>
-          <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-            <Link href="/dashboard" style={headerLink}>← Crispy Leaders</Link>
-          </div>
-        </div>
-      </div>
-
-      <div className="container-wide" style={{ paddingBlock: "3rem" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-
-          {/* Coach card + Start session */}
-          <div style={{
-            background: "oklch(18% 0.08 260)",
-            padding: "2.5rem",
-            marginBottom: "2.5rem",
-            display: "flex",
-            gap: "2rem",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}>
-            <div style={{
-              width: "180px", height: "180px", borderRadius: "50%",
-              overflow: "hidden", flexShrink: 0,
-              border: "3px solid oklch(45% 0.10 260)",
-            }}>
-              <Image src={coachImage} alt={coachName} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
-            </div>
-
-            <div style={{ flex: 1, minWidth: "200px" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.3rem" }}>
-                Your AI coach
-              </p>
-              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", fontStyle: "italic", color: "white", marginBottom: "0.5rem", lineHeight: 1.2 }}>
-                {coachName}
-              </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(65% 0.008 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
-                {sessionCount === 0
-                  ? "Ready for your first session. Speak naturally — your notes build themselves as you talk."
-                  : `Session ${sessionCount + 1} ready. ${coachName} remembers your previous sessions.`}
-              </p>
-
-              {/* Trial meter */}
-              <div style={{ marginBottom: "1.5rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.4rem" }}>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: trialExhausted ? "oklch(65% 0.15 30)" : "oklch(65% 0.008 260)" }}>
-                    Free trial
-                  </span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: trialExhausted ? "oklch(65% 0.15 30)" : "oklch(65% 0.15 45)" }}>
-                    {trialExhausted ? "Trial complete" : `${trialRemainingMinutes} min remaining`}
-                  </span>
-                </div>
-                <div style={{ height: "4px", background: "oklch(30% 0.06 260)", borderRadius: "2px", overflow: "hidden" }}>
-                  <div style={{
-                    height: "100%",
-                    width: `${trialPct}%`,
-                    background: trialExhausted ? "oklch(55% 0.15 30)" : "oklch(65% 0.15 45)",
-                    transition: "width 0.3s ease",
-                    borderRadius: "2px",
-                  }} />
-                </div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)", marginTop: "0.3rem" }}>
-                  {trialUsedMinutes} of {grantedMinutes} minutes used
-                </p>
-              </div>
-
-              <SessionTypeSelector
-                trialExhausted={trialExhausted}
-                trialRemainingMinutes={trialRemainingMinutes}
-              />
-
-              <Link href="/coach/setup" style={{
-                fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
-                color: "oklch(55% 0.008 260)", textDecoration: "none",
-                letterSpacing: "0.06em",
-              }}>
-                Coaching preferences
-              </Link>
-            </div>
-          </div>
-
-          {/* Past sessions — notebook */}
-          {completedSessions.length > 0 && (
-            <SessionNotebook sessions={completedSessions} />
-          )}
-
-        </div>
-      </div>
-    </div>
+    <CoachCarousel
+      coachName={coachName}
+      coachImage={coachImage}
+      sessionCount={completedSessions.length}
+      trialExhausted={trialExhausted}
+      trialRemainingMinutes={trialRemainingMinutes}
+      trialUsedMinutes={trialUsedMinutes}
+      grantedMinutes={grantedMinutes}
+      trialPct={trialPct}
+      sessions={completedSessions}
+      profile={{
+        name: profile.name,
+        role: profile.role,
+        organisation: profile.organisation,
+        location: profile.location,
+        home_culture: profile.home_culture,
+        host_culture: profile.host_culture,
+        months_in_context: profile.months_in_context,
+        notes: profile.notes,
+      }}
+    />
   );
 }
-
-
-const headerLink: React.CSSProperties = {
-  fontFamily: "var(--font-montserrat)",
-  fontSize: "0.72rem",
-  fontWeight: 600,
-  letterSpacing: "0.05em",
-  color: "oklch(62% 0.008 260)",
-  textDecoration: "none",
-};
