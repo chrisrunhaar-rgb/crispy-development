@@ -30,7 +30,7 @@ const teamFeatureDescriptions: Record<string, { title: string; description: stri
   ],
 };
 
-export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: string }) {
+export default function TeamContent({ ctaHref = "/pricing" }: { ctaHref?: string }) {
   const { t, lang } = useLanguage();
   const p = t.team;
   const langKey = lang in teamFeatureDescriptions ? lang : "en";
@@ -39,19 +39,22 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
   return (
     <>
       {/* ── HERO ── */}
-      <section style={{ background: "oklch(30% 0.12 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(4rem, 7vw, 7rem)", paddingBottom: "clamp(4rem, 7vw, 7rem)", position: "relative", overflow: "hidden" }}>
         {/* Photo background */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-personal.jpg')", backgroundSize: "cover", backgroundPosition: "center 30%", opacity: 0.22, pointerEvents: "none" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "url('/pathway-personal.jpg')", backgroundSize: "cover", backgroundPosition: "center 30%", opacity: 0.15, pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.06) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
         <div className="container-wide" style={{ position: "relative" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1rem" }}>
-            <img src="/logo-icon.png" alt="" width={22} height={22} style={{ filter: "brightness(0) invert(1)", opacity: 0.75, flexShrink: 0 }} />
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margin: 0 }}>{p.label}</p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.5rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-icon-dark-badge.png" alt="Crispy Development" width={28} height={28} style={{ flexShrink: 0, display: "block" }} />
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: 0 }}>{p.label}</p>
           </div>
-          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(3rem, 6vw, 5.5rem)", lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "560px" }}>
+          <div style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }} />
+          <h1 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2.8rem, 5.5vw, 5.5rem)", lineHeight: 1.0, color: "oklch(97% 0.005 80)", margin: "0 0 1.5rem", maxWidth: "560px" }}>
             {p.h1}
           </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(72% 0.04 260)", maxWidth: "52ch", lineHeight: 1.7, marginBottom: "2.5rem" }}>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(80% 0.025 260)", maxWidth: "52ch", lineHeight: 1.75, marginBottom: "2.5rem" }}>
             {p.tagline}
           </p>
           <Link href={ctaHref} className="btn-primary">
@@ -99,7 +102,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
             </div>
 
             {/* Mock dashboard preview */}
-            <div style={{ background: "oklch(30% 0.12 260)", padding: "1.5rem", fontFamily: "var(--font-montserrat)" }}>
+            <div style={{ background: "oklch(22% 0.10 260)", padding: "1.5rem", fontFamily: "var(--font-montserrat)" }}>
               <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "1.25rem" }}>{lang === "id" ? "Dasbor Tim" : lang === "nl" ? "Teamdashboard" : "Team Dashboard"}</p>
               <h4 style={{ fontSize: "1.0625rem", fontWeight: 700, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem" }}>{lang === "id" ? "Nama Tim Anda" : lang === "nl" ? "Jouw Teamnaam" : "Your Team Name"}</h4>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "oklch(97% 0.005 80 / 0.1)", marginBottom: "1.5rem" }}>
@@ -127,7 +130,7 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
       </section>
 
       {/* ── FEATURES ── */}
-      <section style={{ paddingBlock: "clamp(4rem, 6vw, 6rem)", background: "oklch(30% 0.12 260)" }}>
+      <section style={{ paddingBlock: "clamp(4rem, 6vw, 6rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>{p.featuresLabel}</p>
           <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "3rem", maxWidth: "420px" }}>
@@ -149,12 +152,12 @@ export default function TeamContent({ ctaHref = "/membership" }: { ctaHref?: str
         <div className="container-wide">
           <div style={{ width: "3px", height: "40px", background: "oklch(65% 0.15 45)", marginBottom: "2rem" }} />
           <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "480px" }}>
-            {lang === "id" ? "Ajukan akses tim." : lang === "nl" ? "Vraag teamtoegang aan." : "Apply for team access."}
+            {lang === "id" ? "Perlengkapi tim Anda." : "Equip your team."}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
             {lang === "id"
-              ? "Kami meninjau setiap lamaran secara pribadi. Tidak semua orang akan diterima."
-              : "We review every application personally. Not everyone will be accepted."}
+              ? "Satu pembayaran. 9 kursi seumur hidup. Termasuk dasbor tim, perjalanan bersama, dan 60 menit AI coaching per anggota."
+              : "One payment. 9 lifetime seats. Includes team dashboard, shared journey, and 60 min AI coaching per member."}
           </p>
           <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
             {p.ctaPrimary2} →
