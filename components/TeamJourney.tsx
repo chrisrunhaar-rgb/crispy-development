@@ -1354,11 +1354,6 @@ export default function TeamJourney({
                                       <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", color: "oklch(28% 0.005 260)", lineHeight: 1.25 }}>
                                         {member.name}
                                       </p>
-                                      {"isLeader" in member && member.isLeader && (
-                                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginTop: "0.1rem" }}>
-                                          {ui.leader}
-                                        </p>
-                                      )}
                                     </div>
                                     <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
                                       {hasResult && langKey ? (
@@ -1447,19 +1442,6 @@ export default function TeamJourney({
                                   }}>
                                     {member.name}
                                   </p>
-                                  {"isLeader" in member && member.isLeader && (
-                                    <p style={{
-                                      fontFamily: "var(--font-montserrat)",
-                                      fontSize: "0.52rem",
-                                      fontWeight: 700,
-                                      letterSpacing: "0.1em",
-                                      textTransform: "uppercase",
-                                      color: "oklch(65% 0.15 45)",
-                                      marginTop: "0.1rem",
-                                    }}>
-                                      {ui.leader}
-                                    </p>
-                                  )}
                                 </div>
                                 <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
                                   {hasResult && visual ? (
@@ -1569,19 +1551,6 @@ export default function TeamJourney({
                                   }}>
                                     {member.name}
                                   </p>
-                                  {"isLeader" in member && member.isLeader && (
-                                    <p style={{
-                                      fontFamily: "var(--font-montserrat)",
-                                      fontSize: "0.55rem",
-                                      fontWeight: 700,
-                                      letterSpacing: "0.1em",
-                                      textTransform: "uppercase",
-                                      color: "oklch(65% 0.15 45)",
-                                      marginTop: "0.1rem",
-                                    }}>
-                                      {ui.leader}
-                                    </p>
-                                  )}
                                 </div>
 
                                 <span style={{
