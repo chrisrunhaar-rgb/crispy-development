@@ -156,8 +156,8 @@ export default function TeamContent({ ctaHref = "/pricing" }: { ctaHref?: string
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
             {lang === "id"
-              ? "Satu pembayaran. 9 kursi seumur hidup. Termasuk dasbor tim, perjalanan bersama, dan 60 menit AI coaching per anggota."
-              : "One payment. 9 lifetime seats. Includes team dashboard, shared journey, and 60 min AI coaching per member."}
+              ? "Satu pembayaran. 8 kursi anggota seumur hidup. Pemimpin memerlukan Jalur Pribadi terpisah. Termasuk dasbor tim, perjalanan bersama, dan 60 menit AI coaching per anggota."
+              : "One payment. 8 lifetime member seats. Leader requires a separate Personal plan. Includes team dashboard, shared journey, and 60 min AI coaching per member."}
           </p>
           <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
             {p.ctaPrimary2} →

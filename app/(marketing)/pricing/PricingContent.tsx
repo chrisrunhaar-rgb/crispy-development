@@ -255,14 +255,14 @@ export default function PricingContent({ isIndonesia }: Props) {
           "New content as it launches",
         ],
 
-    teamLabel: id ? "Jalur Tim · 9 Kursi" : "Team Pathway · 9 Seats",
+    teamLabel: id ? "Jalur Tim · 8 Kursi" : "Team Pathway · 8 Seats",
     teamPrice: isIndonesia ? "RP 1.499.000" : "$199",
     teamPeriod: id
-      ? "pembayaran sekali · 9 kursi · seumur hidup"
-      : "one-time · 9 seats · lifetime access",
+      ? "pembayaran sekali · 8 kursi anggota · seumur hidup"
+      : "one-time · 8 member seats · lifetime",
     teamFeatures: id
       ? [
-          "Semua fitur Jalur Pribadi untuk 9 anggota",
+          "Fitur Jalur Pribadi untuk semua 8 anggota",
           "Dasbor tim + modul perjalanan bersama",
           "8 token undangan untuk dibagikan pemimpin",
           "60 menit AI coaching per anggota",
@@ -270,7 +270,7 @@ export default function PricingContent({ isIndonesia }: Props) {
           "Kurikulum konten yang dikurasi pemimpin",
         ]
       : [
-          "Everything in Personal, for 9 people",
+          "Personal plan features for all 8 members",
           "Team dashboard + shared team journey",
           "8 invite tokens for your members",
           "60 min AI coaching per member",
@@ -278,8 +278,8 @@ export default function PricingContent({ isIndonesia }: Props) {
           "Leader-curated content curriculum",
         ],
     teamNote: id
-      ? "Kursi melekat pada pembelian — tim Anda terus berjalan bersama."
-      : "Seats remain with the purchase — your team continues together.",
+      ? `Pemimpin memerlukan Jalur Pribadi${isIndonesia ? " (RP 399.000)" : " ($49)"} — dibeli terpisah. Kursi melekat pada pembelian.`
+      : `Leader requires a Personal plan${isIndonesia ? " (RP 399.000)" : " ($49)"} — purchased separately. Seats remain with the purchase.`,
 
     freeBanner: id
       ? "Hanya menjelajah? Mulai dengan sumber daya gratis kami — tidak perlu pembelian."
