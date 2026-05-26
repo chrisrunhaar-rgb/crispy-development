@@ -1873,7 +1873,7 @@ export default function AssessmentTileGrid({
         {/* 5. Enneagram */}
         <CompactTile
           title={getTitle("enneagram", lang)}
-          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 140, height: 140 }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div> : <EmptyTileVisual />}
+          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 140, height: 140 }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id"} isFlipped={false} onClick={() => {}} /></div> : <EmptyTileVisual />}
           done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
           lang={lang}
