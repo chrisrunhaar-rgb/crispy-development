@@ -1,25 +1,27 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
 import { markStepCompleteByContentKey } from "@/app/(app)/dashboard/team-actions";
 
-async function getUserTeamId(supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<string | null> {
-  const { data: leadTeam } = await supabase.from("teams").select("id").eq("leader_user_id", userId).maybeSingle();
+async function getUserTeamId(userId: string): Promise<string | null> {
+  const admin = createAdminClient();
+  const { data: leadTeam } = await admin.from("teams").select("id").eq("leader_user_id", userId).maybeSingle();
   if (leadTeam?.id) return leadTeam.id;
-  const { data: memberRow } = await supabase.from("team_members").select("team_id").eq("user_id", userId).maybeSingle();
+  const { data: memberRow } = await admin.from("team_members").select("team_id").eq("user_id", userId).maybeSingle();
   return memberRow?.team_id ?? null;
 }
 
 async function saveTeamResult(
-  supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
   resultType: string,
   resultKey: string,
   scores: Record<string, number>
 ): Promise<void> {
-  const teamId = await getUserTeamId(supabase, userId);
+  const teamId = await getUserTeamId(userId);
   if (!teamId) return;
-  await supabase.from("team_member_results").upsert(
+  const admin = createAdminClient();
+  await admin.from("team_member_results").upsert(
     { team_id: teamId, user_id: userId, result_type: resultType, result_key: resultKey, scores, completed_at: new Date().toISOString() },
     { onConflict: "team_id,user_id,result_type" }
   );
@@ -29,8 +31,7 @@ export async function saveCommStyleResult(style: string, scores: Record<string, 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
-  await saveTeamResult(supabase, user.id, "comm_style", style, scores);
-  await supabase.auth.updateUser({ data: { comm_style: style, comm_style_scores: scores } });
+  await saveTeamResult(user.id, "comm_style", style, scores);
   await markStepCompleteByContentKey("/team/communication-culture");
   revalidatePath("/dashboard");
   return { error: null };
@@ -42,8 +43,7 @@ export async function saveTrustScores(scores: Record<string, number>): Promise<{
   if (!user) return { error: "Not authenticated" };
   const avg = Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length;
   const roundedAvg = Math.round(avg * 10) / 10;
-  await saveTeamResult(supabase, user.id, "trust", String(roundedAvg), scores);
-  await supabase.auth.updateUser({ data: { trust_avg: roundedAvg, trust_scores: scores } });
+  await saveTeamResult(user.id, "trust", String(roundedAvg), scores);
   await markStepCompleteByContentKey("/team/trust-psychological-safety");
   revalidatePath("/dashboard");
   return { error: null };
@@ -53,8 +53,7 @@ export async function saveContributionZone(zone: string, scores: Record<string, 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
-  await saveTeamResult(supabase, user.id, "contribution_zone", zone, scores);
-  await supabase.auth.updateUser({ data: { contribution_zone: zone, contribution_scores: scores } });
+  await saveTeamResult(user.id, "contribution_zone", zone, scores);
   await markStepCompleteByContentKey("/team/roles-contribution");
   revalidatePath("/dashboard");
   return { error: null };
@@ -64,8 +63,7 @@ export async function saveConflictStyle(style: string, scores: Record<string, nu
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
-  await saveTeamResult(supabase, user.id, "conflict_style", style, scores);
-  await supabase.auth.updateUser({ data: { conflict_style: style, conflict_scores: scores } });
+  await saveTeamResult(user.id, "conflict_style", style, scores);
   await markStepCompleteByContentKey("/team/navigating-conflict");
   revalidatePath("/dashboard");
   return { error: null };
@@ -81,12 +79,11 @@ export async function savePurposeVisionResult(
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   const scores = { why: 1, what: 1, how: 1 } as Record<string, number>;
-  // Store full texts in a separate jsonb field via scores (adapter) — store as string-keyed dummy scores
-  // Actual text stored as result_key (truncated to 500 chars for DB safety)
-  const teamId = await getUserTeamId(supabase, user.id);
+  const teamId = await getUserTeamId(user.id);
   if (!teamId) return { error: "No team found" };
+  const admin = createAdminClient();
   const resultKey = purposeStatement.trim().slice(0, 500) || "—";
-  await supabase.from("team_member_results").upsert(
+  await admin.from("team_member_results").upsert(
     {
       team_id: teamId,
       user_id: user.id,
