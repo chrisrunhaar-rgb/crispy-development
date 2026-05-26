@@ -1,8 +1,9 @@
-import Script from "next/script";
+﻿import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata, generateFAQSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
+import ModuleComments from "@/components/ModuleComments";
 import HealthyConflictClient from "./HealthyConflictClient";
 
 export const dynamic = "force-dynamic";

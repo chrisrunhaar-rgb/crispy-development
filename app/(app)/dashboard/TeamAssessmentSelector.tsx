@@ -18,16 +18,21 @@ const ASSESSMENTS = [
 export default function TeamAssessmentSelector({
   teamId,
   initialSelected,
+  readOnly = false,
 }: {
   teamId: string;
   initialSelected: string[];
+  readOnly?: boolean;
 }) {
-  const [selected, setSelected] = useState<string[]>(initialSelected);
+  const [selected, setSelected] = useState<string[]>(
+    initialSelected.filter(id => ASSESSMENTS.some(a => a.id === id))
+  );
   const [isPending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
   const [open, setOpen] = useState(false);
 
   function toggle(id: string) {
+    if (readOnly) return;
     const next = selected.includes(id)
       ? selected.filter(s => s !== id)
       : [...selected, id];
@@ -67,6 +72,13 @@ export default function TeamAssessmentSelector({
           {selected.length === 0
             ? "No assessments selected"
             : `${selected.length} assessment${selected.length === 1 ? "" : "s"} active`}
+        </p>
+      </div>
+
+      {/* Explainer */}
+      <div style={{ padding: "0.875rem 1.75rem", borderTop: "1px solid oklch(22% 0.10 260 / 0.3)", background: "oklch(28% 0.11 260)" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(66% 0.04 260)", lineHeight: 1.6, margin: 0 }}>
+          Each selected assessment becomes a step in your team journey. Once every member completes it, the whole team sees each other&apos;s results side by side — followed by a module that unpacks what it means for your team.
         </p>
       </div>
 

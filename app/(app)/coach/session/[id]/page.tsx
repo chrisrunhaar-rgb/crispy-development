@@ -2,6 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { useT } from "../../i18n";
+import DeleteNotesButton from "./DeleteNotesButton";
 export const metadata = {
   title: "Session — WayPoint",
 };
@@ -119,7 +120,7 @@ export default async function PastSessionPage({
             </div>
           )}
 
-          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)" }}>
+          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid oklch(88% 0.008 80)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
             <Link
               href="/coach"
               style={{
@@ -131,6 +132,10 @@ export default async function PastSessionPage({
             >
               {s.backToWayPointLink}
             </Link>
+            <DeleteNotesButton
+              sessionId={session.id}
+              sessionLabel={`Session ${session.session_number ?? "—"} · ${dateStr}`}
+            />
           </div>
         </div>
       </div>

@@ -36,6 +36,37 @@ export async function POST() {
   return NextResponse.json({ session });
 }
 
+// DELETE — permanently remove whiteboard notes for a session
+export async function DELETE(req: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { searchParams } = new URL(req.url);
+  const sessionId = searchParams.get("id");
+  if (!sessionId) return NextResponse.json({ error: "Missing session id" }, { status: 400 });
+
+  // Verify session belongs to this user
+  const { data: session } = await supabase
+    .from("wp_sessions")
+    .select("id")
+    .eq("id", sessionId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (!session) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  const { error } = await supabase
+    .from("wp_whiteboards")
+    .delete()
+    .eq("session_id", sessionId)
+    .eq("user_id", user.id);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  return NextResponse.json({ ok: true });
+}
+
 // PATCH — update session (phase, transcript, complete)
 export async function PATCH(req: NextRequest) {
   const supabase = await createClient();

@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+﻿import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -13,9 +13,10 @@ import { RESOURCES } from "@/lib/resources-data";
 import TeamLeadersTab from "./TeamLeadersTab";
 import PeerInitiatorsTab from "./PeerInitiatorsTab";
 import MembershipTab from "./MembershipTab";
+import CommentsTab from "./CommentsTab";
 
 export const metadata = {
-  title: "Community Dashboard â€” Crispy Development",
+  title: "Community Dashboard - Crispy Development",
 };
 
 const ASSESSMENT_KEYS = [
@@ -36,11 +37,11 @@ export default async function AdminPage({
   if (!user || user.email !== "chris.runhaar@world-outreach.com") redirect("/");
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : tab === "membership" ? "membership" : "members";
+  const activeTab = tab === "leaders" ? "leaders" : tab === "peers" ? "peers" : tab === "content" ? "content" : tab === "messages" ? "messages" : tab === "membership" ? "membership" : tab === "comments" ? "comments" : "members";
 
   const admin = createAdminClient();
 
-  // â”€â”€ Always fetch all users â”€â”€
+  // â"€â"€ Always fetch all users â"€â"€
   const { data: { users: allAuthUsers } } = await admin.auth.admin.listUsers({ perPage: 200 });
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -58,7 +59,7 @@ export default async function AdminPage({
     u.last_sign_in_at && new Date(u.last_sign_in_at) >= thirtyDaysAgo
   ).length;
 
-  // â”€â”€ Members tab â”€â”€
+  // â"€â"€ Members tab â"€â"€
   let progressCounts = new Map<string, number>();
   type CoachEntry = { coach_access: boolean; coach_minutes_granted: number };
   let coachData = new Map<string, CoachEntry>();
@@ -76,7 +77,7 @@ export default async function AdminPage({
     });
   }
 
-  // â”€â”€ Leaders tab â”€â”€
+  // â"€â"€ Leaders tab â"€â"€
   type CoachMsgRow = { id: string; message: string; subject: string | null; reply: string | null; replied_at: string | null; created_at: string; status: string; user_id: string };
   type TeamMemberRow = { name: string; email: string; completed: number };
   let pendingTeam: Record<string, unknown>[] = [];
@@ -134,7 +135,7 @@ export default async function AdminPage({
     });
   }
 
-  // â”€â”€ Peers tab â”€â”€
+  // â"€â"€ Peers tab â"€â"€
   let pendingPeers: Record<string, unknown>[] = [];
   let approvedInitiators: Record<string, unknown>[] = [];
   let peerMessages: Record<string, unknown>[] = [];
@@ -172,7 +173,7 @@ export default async function AdminPage({
     }
   }
 
-  // â”€â”€ Messages tab â”€â”€
+  // â"€â"€ Messages tab â"€â"€
   type ContactMessage = { id: string; name: string; email: string; message: string; read: boolean; created_at: string };
   let contactMessages: ContactMessage[] = [];
   if (activeTab === "messages") {
@@ -180,7 +181,7 @@ export default async function AdminPage({
     contactMessages = (data ?? []) as ContactMessage[];
   }
 
-  // â”€â”€ Content tab â”€â”€
+  // â"€â"€ Content tab â"€â"€
   const contentSaveCounts = new Map<string, number>();
   const contentReadCounts = new Map<string, number>();
   const moduleStatuses: Record<string, string> = {};
@@ -208,7 +209,7 @@ export default async function AdminPage({
     }
   }
 
-  // â”€â”€ Membership tab â”€â”€
+  // â"€â"€ Membership tab â"€â"€
   type MembershipApp = { id: string; created_at: string; name: string; email: string; organization: string | null; role: string | null; location_cultures: string | null; faith_share: string | null; leadership_challenge: string | null; referral_source: string | null; status: string; reviewed_at: string | null };
   type MemberInvite = { id: string; token: string; email: string | null; personal_note: string | null; pathway: string; created_at: string; expires_at: string; used_at: string | null };
   let membershipApplications: MembershipApp[] = [];
@@ -223,12 +224,25 @@ export default async function AdminPage({
     memberInvites = (inv.data ?? []) as MemberInvite[];
   }
 
-  // â”€â”€ Stats â”€â”€
+  // Comments tab
+  type CommentAdminRow = { id: string; user_id: string; module_slug: string; comment: string; visibility: string; status: string; admin_reply: string | null; display_name: string | null; created_at: string; published_at: string | null };
+  let allComments: CommentAdminRow[] = [];
+  if (activeTab === "comments") {
+    const { data: cRows } = await admin
+      .from("module_comments")
+      .select("id, user_id, module_slug, comment, visibility, status, admin_reply, display_name, created_at, published_at")
+      .eq("status", "active")
+      .order("created_at", { ascending: false });
+    allComments = (cRows ?? []) as CommentAdminRow[];
+  }
+
+  // Stats
   const { count: pendingTeamCount } = await admin.from("team_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: pendingPeerCount } = await admin.from("peer_group_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
   const { count: newMessagesCount } = await admin.from("coach_messages").select("id", { count: "exact", head: true }).eq("status", "new");
   const { count: unreadContactCount } = await admin.from("contact_messages").select("id", { count: "exact", head: true }).eq("read", false);
   const { count: pendingMembershipCount } = await admin.from("membership_applications").select("id", { count: "exact", head: true }).eq("status", "pending");
+  const { count: pendingCommentsCount } = await admin.from("module_comments").select("id", { count: "exact", head: true }).eq("status", "active").eq("visibility", "public_pending");
 
   const memberCount = allUsers.length;
 
@@ -239,6 +253,7 @@ export default async function AdminPage({
     { key: "peers", label: "Peer Initiators", badge: pendingPeerCount ?? 0 },
     { key: "content", label: "Content" },
     { key: "messages", label: "Contact", badge: unreadContactCount ?? 0 },
+    { key: "comments", label: "Field Comments", badge: pendingCommentsCount ?? 0 },
   ];
 
   // Members list for broadcast form targeting
@@ -309,7 +324,7 @@ export default async function AdminPage({
 
       <div className="container-wide" style={{ paddingBlock: "3rem", display: "flex", flexDirection: "column", gap: "3rem" }}>
 
-        {/* â”€â”€ MEMBERS TAB â”€â”€ */}
+        {/* â"€â"€ MEMBERS TAB â"€â"€ */}
         {activeTab === "members" && (
           <MembersTab
             users={allUsers}
@@ -319,7 +334,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* â”€â”€ MEMBERSHIP TAB â”€â”€ */}
+        {/* â"€â"€ MEMBERSHIP TAB â"€â"€ */}
         {activeTab === "membership" && (
           <MembershipTab
             applications={membershipApplications}
@@ -328,7 +343,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* â”€â”€ LEADERS TAB â”€â”€ */}
+        {/* â"€â"€ LEADERS TAB â"€â"€ */}
         {activeTab === "leaders" && (
           <TeamLeadersTab
             pendingApplications={pendingTeam.map(app => ({
@@ -359,7 +374,7 @@ export default async function AdminPage({
           />
         )}
 
-        {/* â”€â”€ PEERS TAB â”€â”€ */}
+        {/* â"€â"€ PEERS TAB â"€â"€ */}
         {activeTab === "peers" && (
           <>
             <PeerInitiatorsTab
@@ -511,7 +526,7 @@ export default async function AdminPage({
                           </form>
                         )}
                         {msg.status === "replied" && (
-                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.14 145)", fontWeight: 700 }}>âœ“ Replied</span>
+                          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.14 145)", fontWeight: 700 }}>âœ" Replied</span>
                         )}
                       </div>
                       <AdminReplyForm
@@ -527,7 +542,7 @@ export default async function AdminPage({
           </>
         )}
 
-        {/* â”€â”€ MESSAGES TAB â”€â”€ */}
+        {/* â"€â"€ MESSAGES TAB â"€â"€ */}
         {activeTab === "messages" && (
           <section>
             <h2 style={sectionHeading}>Contact Messages ({contactMessages.length})</h2>
@@ -561,7 +576,12 @@ export default async function AdminPage({
           </section>
         )}
 
-        {/* â”€â”€ CONTENT TAB â”€â”€ */}
+        {/* COMMENTS TAB */}
+        {activeTab === "comments" && (
+          <CommentsTab comments={allComments} />
+        )}
+
+        {/* â"€â"€ CONTENT TAB â"€â"€ */}
         {activeTab === "content" && (
           <ContentTab
             modules={RESOURCES.map(r => ({
@@ -612,7 +632,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function formatDate(iso: string | null) {
-  if (!iso) return "â€”";
+  if (!iso) return "--";
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 

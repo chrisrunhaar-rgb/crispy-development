@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata, generateFAQSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
+import ModuleComments from "@/components/ModuleComments";
 import DiscClient from "./DiscClient";
 
 export const dynamic = "force-dynamic";
@@ -97,6 +98,11 @@ export default async function ResourcePage(props: any) {
       <DiscClient isSaved={isSaved} discResult={discResult} discScores={discScores} />
 
       {/* Related Resources */}
+      <div className="border-t border-gray-100 py-10">
+        <div className="container-wide">
+          <ModuleComments slug="disc" />
+        </div>
+      </div>
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">
           <RelatedResources slug="disc" />

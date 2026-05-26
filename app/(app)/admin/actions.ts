@@ -410,3 +410,44 @@ export async function markContactMessageRead(formData: FormData) {
   await admin.from("contact_messages").update({ read: true }).eq("id", id);
   revalidatePath("/admin");
 }
+
+// ── Module Comments Admin ─────────────────────────────────────────────────────
+
+export async function adminPublishComment(commentId: string): Promise<{ error: string | null }> {
+  await assertAdmin();
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("module_comments")
+    .update({ visibility: "public_published", published_at: new Date().toISOString() })
+    .eq("id", commentId);
+  if (error) return { error: error.message };
+  revalidatePath("/admin");
+  return { error: null };
+}
+
+export async function adminReplyToComment(commentId: string, reply: string, moduleSlug: string): Promise<{ error: string | null }> {
+  await assertAdmin();
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("module_comments")
+    .update({ admin_reply: reply.trim(), reply_seen: false })
+    .eq("id", commentId);
+  if (error) return { error: error.message };
+
+  // Notify user's next page load via reply_seen = false (dashboard reads this)
+  revalidatePath("/admin");
+  revalidatePath(`/resources/${moduleSlug}`);
+  return { error: null };
+}
+
+export async function adminDeleteComment(commentId: string): Promise<{ error: string | null }> {
+  await assertAdmin();
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("module_comments")
+    .update({ status: "deleted" })
+    .eq("id", commentId);
+  if (error) return { error: error.message };
+  revalidatePath("/admin");
+  return { error: null };
+}

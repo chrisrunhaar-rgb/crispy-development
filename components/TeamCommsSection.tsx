@@ -293,12 +293,13 @@ export default function TeamCommsSection({
                 {coachPending ? ui.sendingMessage : ui.sendToCoach}
               </button>
             </div>
-            {coachState?.success && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(40% 0.14 145)", fontWeight: 500 }}>{ui.sentConfirm}</p>
-            )}
-            {coachState?.error && (
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(45% 0.18 25)" }}>{coachState.error}</p>
-            )}
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(62% 0.008 260)", margin: 0 }}>
+              {coachState?.success ? (
+                <span style={{ color: "oklch(40% 0.14 145)", fontWeight: 500 }}>{ui.sentConfirm}</span>
+              ) : coachState?.error ? (
+                <span style={{ color: "oklch(45% 0.18 25)" }}>{coachState.error}</span>
+              ) : ui.replyTimeNote}
+            </p>
           </form>
 
           {/* Coach conversation history */}

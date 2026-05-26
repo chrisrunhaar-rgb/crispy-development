@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
 import { generateResourceBreadcrumbSchema, generateResourceArticleSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
+import ModuleComments from "@/components/ModuleComments";
 import FiveLanguagesClient from "../FiveLanguagesClient";
 
 export const dynamic = "force-dynamic";
@@ -78,6 +79,11 @@ export default async function ResourcePageID(props: any) {
       />
 
       {/* Related Resources */}
+      <div className="border-t border-gray-100 py-10">
+        <div className="container-wide">
+          <ModuleComments slug="5languages" />
+        </div>
+      </div>
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">
           <RelatedResources slug="5languages" />

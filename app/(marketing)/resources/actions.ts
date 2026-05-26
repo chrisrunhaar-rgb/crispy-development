@@ -289,6 +289,82 @@ export async function saveResourceNote(slug: string, note: string): Promise<void
   revalidatePath("/dashboard");
 }
 
+// ── Module Comments ──────────────────────────────────────────────────────────
+
+async function sendTelegram(text: string): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: "8799746124", text, parse_mode: "HTML" }),
+    });
+  } catch {
+    // silent — never block the user action
+  }
+}
+
+export async function submitModuleComment(
+  slug: string,
+  comment: string,
+  visibility: "private" | "public_pending"
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const firstName = user.user_metadata?.first_name as string | undefined;
+  const lastName = user.user_metadata?.last_name as string | undefined;
+  const displayName = [firstName, lastName].filter(Boolean).join(" ") || user.email?.split("@")[0] || "Anonymous";
+
+  const { error } = await supabase.from("module_comments").insert({
+    user_id: user.id,
+    module_slug: slug,
+    comment: comment.trim(),
+    visibility,
+    display_name: displayName,
+  });
+
+  if (error) return { error: error.message };
+
+  const visLabel = visibility === "private" ? "🔒 Private (to Crispy only)" : "🌐 Public pending approval";
+  const resourceName = slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+  const msg = `💬 <b>FROM THE FIELD</b> — ${resourceName}\n\n${visLabel}\n<b>From:</b> ${displayName}\n\n"${comment.trim().slice(0, 300)}${comment.length > 300 ? "…" : ""}"`;
+  await sendTelegram(msg);
+
+  revalidatePath(`/resources/${slug}`);
+  return { error: null };
+}
+
+export async function deleteModuleComment(commentId: string): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("module_comments")
+    .update({ status: "deleted" })
+    .eq("id", commentId)
+    .eq("user_id", user.id);
+
+  if (error) return { error: error.message };
+  return { error: null };
+}
+
+export async function markCommentReplySeen(commentId: string): Promise<void> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  await supabase
+    .from("module_comments")
+    .update({ reply_seen: true })
+    .eq("id", commentId)
+    .eq("user_id", user.id);
+}
+
+// ── Impact Rating ─────────────────────────────────────────────────────────────
+
 // Save an impact rating (1–5) on a resource
 export async function saveResourceRating(slug: string, rating: number): Promise<void> {
   const supabase = await createClient();
