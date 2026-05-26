@@ -1044,12 +1044,12 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
         OCEAN Profile
       </h3>
 
-      {/* Pentagon + bars side by side, stacks on mobile */}
-      <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-        <div style={{ flexShrink: 0 }}>
-          <OceanRadarSVG scores={scores} size={160} />
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", flex: 1, minWidth: "140px" }}>
+      {/* Pentagon centered, bars below */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.25rem" }}>
+        <OceanRadarSVG scores={scores} size={200} />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", marginBottom: "1.5rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
           {TRAIT_INFO.map(t => {
             const pct = pcts[t.key as keyof typeof pcts] ?? 0;
             return (
