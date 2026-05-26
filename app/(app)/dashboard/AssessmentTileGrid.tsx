@@ -150,16 +150,16 @@ const DISC_SLICES = [
 ] as const;
 
 const DISC_RESULT_TEXT: Record<string, string> = {
-  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you â€” not just past them.",
+  D:  "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you — not just past them.",
   I:  "You lead with energy and relationships. Your greatest strength is inspiring others and creating momentum. Growth edge: follow through on commitments and develop your eye for detail.",
   S:  "You lead with patience and loyalty. Your greatest strength is creating environments where people feel safe and valued. Growth edge: practise taking initiative and speaking your concerns earlier.",
   C:  "You lead with precision and expertise. Your greatest strength is bringing rigour and quality to everything. Growth edge: learn to act with less-than-perfect information and share your insights more openly.",
-  DI: "You combine boldness with people-energy â€” driving results while keeping others inspired. A powerful combination in leading diverse teams.",
-  DS: "You balance directness with steadiness â€” goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
-  DC: "You combine drive with precision â€” results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
-  IS: "You blend enthusiasm with warmth â€” inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
-  IC: "You combine persuasion with precision â€” engaging communicator and careful thinker. Balance spontaneity with follow-through.",
-  SC: "You bring steadiness and rigour together â€” reliable, patient, and quality-driven. A trusted anchor for any team.",
+  DI: "You combine boldness with people-energy — driving results while keeping others inspired. A powerful combination in leading diverse teams.",
+  DS: "You balance directness with steadiness — goal-focused yet able to create stable, loyal teams. You lead with both force and consistency.",
+  DC: "You combine drive with precision — results-oriented and quality-obsessed. Your challenge: don't let perfectionism slow momentum.",
+  IS: "You blend enthusiasm with warmth — inspiring people while genuinely caring for them. A gift in relational and cross-cultural contexts.",
+  IC: "You combine persuasion with precision — engaging communicator and careful thinker. Balance spontaneity with follow-through.",
+  SC: "You bring steadiness and rigour together — reliable, patient, and quality-driven. A trusted anchor for any team.",
 };
 
 const DISC_NAMES: Record<string, string> = {
@@ -527,7 +527,7 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/disc#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’"}
+          {lang === "id" ? "Ulangi tes →" : "Retake assessment →"}
         </Link>
         <Link href="/resources/disc" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -620,7 +620,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-              {lang === "id" ? "Ulangi tes â†’" : "Retake â†’"}
+              {lang === "id" ? "Ulangi tes →" : "Retake →"}
             </Link>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
               {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -652,7 +652,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
               onClick={() => setFlipped(false)}
               style={{ background: "none", border: `1px solid oklch(88% 0.006 80)`, borderRadius: 12, padding: "0.3rem 0.625rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.35rem", flexShrink: 0 }}
             >
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>â†© {lang === "id" ? "Skor" : "Scores"}</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: navy }}>↩ {lang === "id" ? "Skor" : "Scores"}</span>
             </button>
           </div>
 
@@ -695,7 +695,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-              {lang === "id" ? "Edit langkah aksi â†’" : "Edit action steps â†’"}
+              {lang === "id" ? "Edit langkah aksi →" : "Edit action steps →"}
             </Link>
             <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
               {lang === "id" ? "Tutup" : "Close"}
@@ -760,7 +760,7 @@ function WheelActionStepsModal({ data, onClose }: { data: Extract<ModalData, { t
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
         <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Edit langkah aksi â†’" : "Edit action steps â†’"}
+          {lang === "id" ? "Edit langkah aksi →" : "Edit action steps →"}
         </Link>
         <button onClick={onClose} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(52% 0.008 260)", background: "none", border: "none", padding: "0.6rem 0.75rem", cursor: "pointer" }}>
           {lang === "id" ? "Tutup" : "Close"}
@@ -780,9 +780,9 @@ const THINKING_STYLE_DESCRIPTIONS: Record<string, string> = {
   C:  "You lead with structure and analytical thinking. You see patterns, build frameworks, and solve problems systematically.",
   H:  "You lead with big-picture vision. You connect ideas across contexts and see how everything fits together.",
   I:  "You lead with instinct and insight. You read people and situations quickly, often knowing before you can explain why.",
-  CH: "You blend structured thinking with broad vision â€” analytical yet able to see beyond the immediate.",
-  CI: "You combine logical precision with sharp intuition â€” rigorous in your analysis but also attuned to what data can't capture.",
-  HI: "You hold the big picture while staying tuned into people â€” visionary and relationally perceptive.",
+  CH: "You blend structured thinking with broad vision — analytical yet able to see beyond the immediate.",
+  CI: "You combine logical precision with sharp intuition — rigorous in your analysis but also attuned to what data can't capture.",
+  HI: "You hold the big picture while staying tuned into people — visionary and relationally perceptive.",
   CHI: "You draw on all three dimensions. Your challenge is choosing which lens to lead with in each context.",
 };
 
@@ -833,7 +833,7 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
+          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
         </Link>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -854,7 +854,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
 
-  const retakeLabel = lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’";
+  const retakeLabel = lang === "id" ? "Ulangi tes →" : "Retake assessment →";
   const learnLabel = lang === "id" ? "Pelajari lebih" : "Learn more";
 
   return (
@@ -916,7 +916,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
         </div>
       </div>
 
-      {/* Score bars â€” top 5 */}
+      {/* Score bars — top 5 */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", marginBottom: "1.5rem" }}>
         {sortedGifts.map(([key, score], i) => {
           const maxScore = sortedGifts[0][1] || 1;
@@ -995,7 +995,7 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
+          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
         </Link>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1044,12 +1044,12 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
         OCEAN Profile
       </h3>
 
-      {/* Pentagon + bars side by side */}
-      <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+      {/* Pentagon + bars side by side, stacks on mobile */}
+      <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", marginBottom: "1.5rem", flexWrap: "wrap" }}>
         <div style={{ flexShrink: 0 }}>
-          <OceanRadarSVG scores={scores} size={200} />
+          <OceanRadarSVG scores={scores} size={160} />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", flex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem", flex: 1, minWidth: "140px" }}>
           {TRAIT_INFO.map(t => {
             const pct = pcts[t.key as keyof typeof pcts] ?? 0;
             return (
@@ -1084,7 +1084,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/big-five?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes â†’" : "Retake assessment â†’"}
+          {lang === "id" ? "Ulangi tes →" : "Retake assessment →"}
         </Link>
         <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1119,28 +1119,28 @@ const P16_SUBTITLES: Record<string, string> = {
   ESTP: "The Entrepreneur", ESFP: "The Entertainer",
 };
 const P16_SHORT: Record<string, string> = {
-  INTJ: "Independent, strategic thinkers who see five steps ahead. Excellent strategists â€” invite them into pastoral conversations, don't assume they'll step forward.",
+  INTJ: "Independent, strategic thinkers who see five steps ahead. Excellent strategists — invite them into pastoral conversations, don't assume they'll step forward.",
   INTP: "Curious, precise, and analytical. Strong at systems thinking, slower to commit. Pair with action-oriented teammates to translate insight into execution.",
   ENTJ: "Decisive, organised, results-driven. Rise to leadership quickly. Need to slow down and listen before deciding for everyone.",
   ENTP: "Energetic, idea-rich, challenge-loving. Best paired with someone who turns ideas into plans. Can wear out teammates who need stability.",
   INFJ: "Quiet, principled, deeply purposeful. Often the conscience of the team. Guard against burnout from carrying others' burdens silently.",
-  INFP: "Gentle, values-driven, creative. Rarely volunteer their inner world â€” invite it. When given room, they bring depth others cannot.",
+  INFP: "Gentle, values-driven, creative. Rarely volunteer their inner world — invite it. When given room, they bring depth others cannot.",
   ENFJ: "Warm, persuasive, people-focused. Skilled at calling out the best in others. Remember not everyone wants to be developed all the time.",
-  ENFP: "Enthusiastic, imaginative, relational. Need help finishing what they start â€” pair well with a Judger who carries projects across the line.",
-  ISTJ: "Reliable, thorough, loyal to systems. The backbone of many ministry teams â€” finances, logistics, follow-through. Tell them the why, not just the what.",
+  ENFP: "Enthusiastic, imaginative, relational. Need help finishing what they start — pair well with a Judger who carries projects across the line.",
+  ISTJ: "Reliable, thorough, loyal to systems. The backbone of many ministry teams — finances, logistics, follow-through. Tell them the why, not just the what.",
   ISFJ: "Quiet servants who notice what others miss. Often the unseen carers. Need to be invited into the spotlight, not assumed to be content in the shadows.",
   ESTJ: "Organised, direct, accountable. Make plans happen and hold others to commitments. Soften delivery in high-context cultures.",
-  ESFJ: "Warm, sociable, devoted to group wellbeing. The team's host and connector. Can take criticism personally â€” need reassurance more than rebuke.",
-  ISTP: "Practical, calm under pressure, competent. Fixes what's broken. Draw them into the relational layer â€” they won't push their way in.",
-  ISFP: "Quiet, kind, aesthetically sensitive. Leads through example. Need to be asked â€” they rarely volunteer their thoughts.",
+  ESFJ: "Warm, sociable, devoted to group wellbeing. The team's host and connector. Can take criticism personally — need reassurance more than rebuke.",
+  ISTP: "Practical, calm under pressure, competent. Fixes what's broken. Draw them into the relational layer — they won't push their way in.",
+  ISFP: "Quiet, kind, aesthetically sensitive. Leads through example. Need to be asked — they rarely volunteer their thoughts.",
   ESTP: "Action-focused, bold, energising. Excellent in pioneer settings. Need to plan past the next twenty-four hours when others depend on them.",
   ESFP: "Warm, spontaneous, present-focused. Lifts the room when it's heavy. Need help with long-term follow-through on quiet commitments.",
 };
 const P16_DICHOTOMY_LABELS: Record<string, string> = {
-  EI_A: "E â€” Extraversion", EI_B: "I â€” Introversion",
-  SN_A: "S â€” Sensing",      SN_B: "N â€” Intuition",
-  TF_A: "T â€” Thinking",     TF_B: "F â€” Feeling",
-  JP_A: "J â€” Judging",      JP_B: "P â€” Perceiving",
+  EI_A: "E — Extraversion", EI_B: "I — Introversion",
+  SN_A: "S — Sensing",      SN_B: "N — Intuition",
+  TF_A: "T — Thinking",     TF_B: "F — Feeling",
+  JP_A: "J — Judging",      JP_B: "P — Perceiving",
 };
 
 
@@ -1195,7 +1195,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
             <div key={label}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(42% 0.008 260)" }}>{label}</span>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} â€” {dominantPct}%</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, color: typeColor }}>{dominantLabel} — {dominantPct}%</span>
               </div>
               <div style={{ height: 5, background: "oklch(90% 0.004 260)", borderRadius: 3 }}>
                 <div style={{ height: "100%", width: `${dominantPct}%`, background: typeColor, borderRadius: 3 }} />
@@ -1207,7 +1207,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes â†’" : "Retake quiz â†’"}
+          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
         </Link>
         <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1237,9 +1237,9 @@ const FIVELA_MODAL_NAMES: Record<string, string> = {
 const FIVELA_MODAL_DESC: Record<string, string> = {
   A: "You feel cared for when people speak specific, genuine appreciation. A well-timed sentence can carry you through a hard season.",
   B: "You feel cared for when someone gives you their full, unhurried attention. Presence is the currency.",
-  C: "You feel cared for when someone does something practical to help you â€” without being asked.",
-  D: "You feel cared for when someone brings you something chosen specifically for you. The value is not the price â€” it is the evidence that someone thought of you.",
-  E: "You feel cared for when someone offers appropriate physical warmth â€” a firm handshake, a hand on the shoulder, a warm greeting.",
+  C: "You feel cared for when someone does something practical to help you — without being asked.",
+  D: "You feel cared for when someone brings you something chosen specifically for you. The value is not the price — it is the evidence that someone thought of you.",
+  E: "You feel cared for when someone offers appropriate physical warmth — a firm handshake, a hand on the shoulder, a warm greeting.",
 };
 
 function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "fivela" }>; onClose: () => void }) {
@@ -1248,8 +1248,8 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
   const interpretLabel = isMatch ? "Same Language" : "Two Languages";
   const interpretColor = isMatch ? "oklch(52% 0.14 150)" : "oklch(62% 0.14 235)";
   const interpretText = isMatch
-    ? "Your receiving and giving languages match. You give what you most need, which is your strength â€” and your blind spot. Ask your team members their receiving language so you don't assume they want what you want."
-    : "Your receiving and giving languages differ â€” the most insightful pattern. You carry fluency in two languages. Your risk: your team may be giving back in your giving language, not your receiving one. Tell them both out loud.";
+    ? "Your receiving and giving languages match. You give what you most need, which is your strength — and your blind spot. Ask your team members their receiving language so you don't assume they want what you want."
+    : "Your receiving and giving languages differ — the most insightful pattern. You carry fluency in two languages. Your risk: your team may be giving back in your giving language, not your receiving one. Tell them both out loud.";
 
   function MiniBarChart({ scores, primary, label }: { scores: { A: number; B: number; C: number; D: number; E: number }; primary: string; label: string }) {
     const max = Math.max(...Object.values(scores));
@@ -1296,7 +1296,7 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
           </span>
           {!isMatch && (
             <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 500, fontSize: "0.8rem", color: "rgba(255,255,255,0.8)" }}>
-              â†’ {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}
+              → {FIVELA_MODAL_NAMES[givingResult] ?? givingResult}
             </span>
           )}
         </div>
@@ -1343,7 +1343,7 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
       {/* Buttons */}
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          Retake â†’
+          Retake →
         </Link>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           Learn more
@@ -1559,7 +1559,7 @@ function WheelLifeTile({
             </Link>
           )}
 
-          {/* Tiny flip icon â€” bottom-right corner */}
+          {/* Tiny flip icon — bottom-right corner */}
           {done && (
             <button
               onClick={e => { e.stopPropagation(); setFlipped(true); }}
@@ -1603,7 +1603,7 @@ function WheelLifeTile({
               onClick={() => setFlipped(false)}
               style={{ background: "none", border: "none", color: offWhite, cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.125rem", opacity: 0.7 }}
             >
-              â†©
+              ↩
             </button>
           </div>
 
@@ -1629,7 +1629,7 @@ function WheelLifeTile({
             style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, color: orange, textDecoration: "none", alignSelf: "flex-end", flexShrink: 0 }}
             onClick={e => e.stopPropagation()}
           >
-            {lang === "id" ? "Edit â†’" : "Edit â†’"}
+            {lang === "id" ? "Edit →" : "Edit →"}
           </Link>
         </div>
 
@@ -1739,7 +1739,7 @@ export default function AssessmentTileGrid({
 
   const wheelVisual = wheelOfLifeScores ? (
     <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <WheelSpiderSVG scores={wheelOfLifeScores} size={72} showLabels={false} />
+      <WheelSpiderSVG scores={wheelOfLifeScores} size={108} showLabels={false} />
     </div>
   ) : <EmptyTileVisual />;
 
@@ -1765,19 +1765,8 @@ export default function AssessmentTileGrid({
     </div>
   ) : <EmptyTileVisual />;
 
-  const karuniaVisual = karuniaTopGifts && karuniaTopGifts.length > 0 ? (
-    <div style={{ width: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ textAlign: "center" }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.2rem", fontWeight: 800, color: orange, lineHeight: 1, marginBottom: "0.2rem" }}>
-          {karuniaLabel(karuniaTopGifts[0], lang)}
-        </p>
-        {karuniaTopGifts[1] && (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(50% 0.008 260)" }}>
-            + {karuniaLabel(karuniaTopGifts[1], lang)}
-          </p>
-        )}
-      </div>
-    </div>
+  const karuniaVisual = karuniaScores && karuniaTopGifts && karuniaTopGifts.length > 0 ? (
+    <KaruniaRing scores={karuniaScores} lang={lang} size={90} showLegend={false} />
   ) : <EmptyTileVisual />;
 
   const FIVELA_COLORS: Record<string, string> = {
@@ -1884,7 +1873,7 @@ export default function AssessmentTileGrid({
         {/* 5. Enneagram */}
         <CompactTile
           title={getTitle("enneagram", lang)}
-          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 180, height: 110, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div> : <EmptyTileVisual />}
+          visual={enneagramScores && enneagramType && ENNEAGRAM_TYPES[enneagramType] ? <div style={{ width: 160, height: 100, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><div style={{ transform: "scale(0.82)", transformOrigin: "center" }}><TypeCard type={ENNEAGRAM_TYPES[enneagramType]} lang={lang as "en" | "id"} isFlipped={enneagramFlipped} onClick={() => setEnneagramFlipped(!enneagramFlipped)} /></div></div> : <EmptyTileVisual />}
           done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
           lang={lang}
@@ -1906,7 +1895,7 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={getTitle("bigfive", lang)}
           visual={bigFiveScores
-            ? <OceanRadarSVG scores={bigFiveScores} size={90} />
+            ? <OceanRadarSVG scores={bigFiveScores} size={120} />
             : <EmptyTileVisual />}
           done={!!bigFiveScores}
           href="/resources/big-five"
