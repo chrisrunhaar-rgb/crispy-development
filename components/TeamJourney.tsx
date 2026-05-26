@@ -61,6 +61,11 @@ const WHEEL_LABELS: Record<string, string> = {
   ministry: "MINISTRY", spiritual: "SPIRITUAL", community: "COMMUNITY",
   learning: "LEARNING", health: "HEALTH",
 };
+const WHEEL_LABELS_ID: Record<string, string> = {
+  family: "KELUARGA", finance: "KEUANGAN", relaxation: "ISTIRAHAT",
+  ministry: "PELAYANAN", spiritual: "SPIRITUAL", community: "KOMUNITAS",
+  learning: "BELAJAR", health: "KESEHATAN",
+};
 function WheelSpiderSVG({ scores, size = 72 }: { scores: Record<string, number>; size?: number }) {
   const cx = size / 2, cy = size / 2, maxR = size / 2 - 5, N = WHEEL_SEGMENTS.length;
   function getPoint(i: number, score: number): [number, number] {
@@ -90,9 +95,10 @@ function WheelSpiderSVG({ scores, size = 72 }: { scores: Record<string, number>;
 }
 
 // ── Wheel of Life — large labeled template (no data) ─────────────────────────
-function WheelTemplateLabeledSVG() {
+function WheelTemplateLabeledSVG({ lang = "en" }: { lang?: TeamLang }) {
   const S = 320, cx = 160, cy = 160, maxR = 95, labelDist = 124, N = WHEEL_SEGMENTS.length;
   const rings = [0.25, 0.5, 0.75, 1.0];
+  const labels = lang === "id" ? WHEEL_LABELS_ID : WHEEL_LABELS;
   return (
     <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} style={{ overflow: "visible" }}>
       {rings.map((f, ri) => {
@@ -118,7 +124,7 @@ function WheelTemplateLabeledSVG() {
             fill="oklch(38% 0.008 260)" fontFamily="var(--font-montserrat)"
             fontSize="9" fontWeight="700" letterSpacing="0.08em"
           >
-            {WHEEL_LABELS[seg.key] ?? seg.key.toUpperCase()}
+            {labels[seg.key] ?? seg.key.toUpperCase()}
           </text>
         );
       })}
@@ -237,12 +243,13 @@ function EnneagramTypeReference({ language }: { language: TeamLang }) {
 }
 
 // ── Wheel of Life — team averaged chart ──────────────────────────────────────
-function WheelAveragedSVG({ teamResults }: { teamResults: TeamMemberResult[] }) {
+function WheelAveragedSVG({ teamResults, lang = "en" }: { teamResults: TeamMemberResult[]; lang?: TeamLang }) {
   const S = 320, cx = 160, cy = 160, maxR = 95, labelDist = 124, N = WHEEL_SEGMENTS.length;
   const rings = [0.25, 0.5, 0.75, 1.0];
+  const labels = lang === "id" ? WHEEL_LABELS_ID : WHEEL_LABELS;
   const wheelResults = teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores);
   const count = wheelResults.length;
-  if (count === 0) return <WheelTemplateLabeledSVG />;
+  if (count === 0) return <WheelTemplateLabeledSVG lang={lang} />;
   const avgScores: Record<string, number> = {};
   for (const seg of WHEEL_SEGMENTS) {
     avgScores[seg.key] = wheelResults.reduce((sum, r) => sum + (r.scores?.[seg.key] ?? 0), 0) / count;
@@ -280,7 +287,7 @@ function WheelAveragedSVG({ teamResults }: { teamResults: TeamMemberResult[] }) 
             fill="oklch(38% 0.008 260)" fontFamily="var(--font-montserrat)"
             fontSize="9" fontWeight="700" letterSpacing="0.08em"
           >
-            {WHEEL_LABELS[seg.key] ?? seg.key.toUpperCase()}
+            {labels[seg.key] ?? seg.key.toUpperCase()}
           </text>
         );
       })}
@@ -350,7 +357,12 @@ const FIVELA_NAMES: Record<string, string> = {
   A: "Words", B: "Quality Time", C: "Service", D: "Gifts", E: "Touch",
 };
 
-function getAssessmentVisual(resultType: string, resultKey: string, scores: Record<string, number>): React.ReactNode {
+function getAssessmentVisual(resultType: string, resultKey: string, scores: Record<string, number>, lang: TeamLang = "en"): React.ReactNode {
+  const THINKING_LABELS: Record<"C"|"H"|"I", { en: string; id: string }> = {
+    C: { en: "Conceptual", id: "Konseptual" },
+    H: { en: "Holistic", id: "Holistik" },
+    I: { en: "Intuitional", id: "Intuitif" },
+  };
   switch (resultType) {
     case "disc": {
       const ds = scores as { D: number; I: number; S: number; C: number };
@@ -367,7 +379,7 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
             <div key={k} style={{ marginBottom: "0.3rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.1rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", color: THINKING_STYLE_COLORS[k], fontWeight: 700 }}>
-                  {k === "C" ? "Conceptual" : k === "H" ? "Holistic" : "Intuitional"}
+                  {THINKING_LABELS[k][lang]}
                 </span>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.5rem", fontWeight: 800, color: navy }}>{scores[k] ?? 0}%</span>
               </div>
@@ -410,6 +422,7 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
     case "enneagram": {
       const typeNum = parseInt(resultKey);
       const data = ENNEAGRAM_DATA[typeNum];
+      const ennName = lang === "id" ? (ENNEA_REF[typeNum]?.name_id ?? data?.name) : data?.name;
       return (
         <div style={{ textAlign: "center" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "2.2rem", fontWeight: 900, color: data?.color ?? navy, lineHeight: 1 }}>
@@ -417,28 +430,33 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
           </p>
           {data && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", color: data.color, fontWeight: 600, marginTop: "0.2rem" }}>
-              {data.name}
+              {ennName}
             </p>
           )}
         </div>
       );
     }
-    case "karunia":
+    case "karunia": {
+      const karuniaLabelsID: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan", memberi: "Memberi", hikmat: "Hikmat", pengetahuan: "Pengetahuan", iman: "Iman", kerasulan: "Kerasulan", penginjilan: "Penginjilan", bernubuat: "Bernubuat", mengajar: "Mengajar", gembala: "Gembala", memimpin: "Memimpin", administrasi: "Administrasi", mukjizat: "Mukjizat", tafsir_bahasa_roh: "Tafsir Bahasa Roh" };
+      const karuniaLabel = lang === "id" ? (karuniaLabelsID[resultKey] ?? resultKey) : (KARUNIA_LABELS_EN[resultKey] ?? resultKey);
       return (
         <div style={{ textAlign: "center" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1.1rem", fontWeight: 800, color: orange, lineHeight: 1.1, marginBottom: "0.15rem" }}>
-            {KARUNIA_LABELS_EN[resultKey] ?? resultKey}
+            {karuniaLabel}
           </p>
         </div>
       );
+    }
     case "5languages": {
+      const FIVELA_NAMES_ID: Record<string, string> = { A: "Kata-kata", B: "Waktu Berkualitas", C: "Tindakan Pelayanan", D: "Hadiah", E: "Sentuhan Fisik" };
+      const fivelaLabels = lang === "id" ? FIVELA_NAMES_ID : FIVELA_NAMES;
       const primary = resultKey.split("|")[0];
       return (
         <div style={{ width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginBottom: "0.25rem" }}>
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: FIVELA_COLORS[primary] ?? navy, flexShrink: 0 }} />
             <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.52rem", fontWeight: 700, color: navy, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-              {FIVELA_NAMES[primary] ?? primary}
+              {fivelaLabels[primary] ?? primary}
             </span>
           </div>
           <div style={{ display: "flex", gap: "2px" }}>
@@ -456,7 +474,9 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
     }
     case "comm_style": {
       const COMM_COLORS: Record<string, string> = { A: "oklch(55% 0.18 250)", D: "oklch(52% 0.16 145)", C: "oklch(62% 0.16 45)", N: "oklch(55% 0.14 300)" };
-      const COMM_NAMES: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      const COMM_NAMES_EN: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      const COMM_NAMES_ID: Record<string, string> = { A: "Arsitek", D: "Diplomat", C: "Penghubung", N: "Analis" };
+      const COMM_NAMES = lang === "id" ? COMM_NAMES_ID : COMM_NAMES_EN;
       const commColor = COMM_COLORS[resultKey] ?? navy;
       const maxCommVal = Math.max(...(["A", "D", "C", "N"] as const).map(k => scores[k] ?? 0), 1);
       return (
@@ -916,23 +936,29 @@ function getResultDisplay(resultType: string, resultKey: string, lang: TeamLang 
       return { label: labels[resultKey] ?? resultKey, color: "oklch(42% 0.008 260)" };
     }
     case "enneagram":
-      return { label: `Type ${resultKey}`, color: "oklch(42% 0.14 260)" };
+      return { label: `${lang === "id" ? "Tipe" : "Type"} ${resultKey}`, color: "oklch(42% 0.14 260)" };
     case "personalities16":
       return { label: resultKey, color: "oklch(42% 0.14 200)" };
     case "big_five":
       return { label: resultKey, color: "oklch(42% 0.008 260)" };
     case "karunia": {
-      const labels: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", memberi: "Memberi", hikmat: "Hikmat", iman: "Iman", memimpin: "Memimpin", mengajar: "Mengajar", gembala: "Gembala", bernubuat: "Bernubuat" };
-      return { label: labels[resultKey] ?? resultKey, color: "oklch(42% 0.14 145)" };
+      const labelsEN: Record<string, string> = { melayani: "Serving", murah_hati: "Mercy", keramahan: "Hospitality", bahasa_roh: "Tongues", menyembuhkan: "Healing", menguatkan: "Exhortation", memberi: "Giving", hikmat: "Wisdom", pengetahuan: "Knowledge", iman: "Faith", kerasulan: "Apostleship", penginjilan: "Evangelism", bernubuat: "Prophecy", mengajar: "Teaching", gembala: "Shepherding", memimpin: "Leadership", administrasi: "Administration", mukjizat: "Miracles", tafsir_bahasa_roh: "Interpretation" };
+      const labelsID: Record<string, string> = { melayani: "Melayani", murah_hati: "Murah Hati", keramahan: "Keramahan", bahasa_roh: "Bahasa Roh", menyembuhkan: "Menyembuhkan", menguatkan: "Menguatkan", memberi: "Memberi", hikmat: "Hikmat", pengetahuan: "Pengetahuan", iman: "Iman", kerasulan: "Kerasulan", penginjilan: "Penginjilan", bernubuat: "Bernubuat", mengajar: "Mengajar", gembala: "Gembala", memimpin: "Memimpin", administrasi: "Administrasi", mukjizat: "Mukjizat", tafsir_bahasa_roh: "Tafsir Bahasa Roh" };
+      const lbl = lang === "id" ? labelsID : labelsEN;
+      return { label: lbl[resultKey] ?? resultKey, color: "oklch(42% 0.14 145)" };
     }
     case "5languages": {
-      const labels: Record<string, string> = { A: "Words", B: "Quality Time", C: "Acts of Service", D: "Tangible Gifts", E: "Physical Touch" };
+      const labelsEN: Record<string, string> = { A: "Words", B: "Quality Time", C: "Acts of Service", D: "Tangible Gifts", E: "Physical Touch" };
+      const labelsID: Record<string, string> = { A: "Kata-kata", B: "Waktu Berkualitas", C: "Tindakan Pelayanan", D: "Hadiah", E: "Sentuhan Fisik" };
       const [recv] = resultKey.split("|");
-      return { label: labels[recv] ?? recv, color: "oklch(42% 0.14 45)" };
+      const lbl = lang === "id" ? labelsID : labelsEN;
+      return { label: lbl[recv] ?? recv, color: "oklch(42% 0.14 45)" };
     }
     case "comm_style": {
       const colors: Record<string, string> = { A: "oklch(55% 0.18 250)", D: "oklch(52% 0.16 145)", C: "oklch(62% 0.16 45)", N: "oklch(55% 0.14 300)" };
-      const names: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      const namesEN: Record<string, string> = { A: "Architect", D: "Diplomat", C: "Connector", N: "Analyst" };
+      const namesID: Record<string, string> = { A: "Arsitek", D: "Diplomat", C: "Penghubung", N: "Analis" };
+      const names = lang === "id" ? namesID : namesEN;
       return { label: names[resultKey] ?? resultKey, color: colors[resultKey] ?? "oklch(42% 0.008 260)" };
     }
     case "trust":
@@ -1591,7 +1617,7 @@ export default function TeamJourney({
                         {step.resultType === "wheel_of_life" && (
                           <div style={{ marginBottom: "1.5rem" }}>
                             <div style={{ display: "flex", justifyContent: "center", padding: "0.5rem 0" }}>
-                              <WheelAveragedSVG teamResults={teamResults} />
+                              <WheelAveragedSVG teamResults={teamResults} lang={language} />
                             </div>
                             {teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores).length > 0 ? (
                               <p style={{
@@ -1648,7 +1674,7 @@ export default function TeamJourney({
                               ? getResultDisplay(step.resultType!, result!.result_key!, language)
                               : { label: "", color: "" };
                             const visual = (hasResult && result?.scores)
-                              ? getAssessmentVisual(step.resultType!, result.result_key!, result.scores)
+                              ? getAssessmentVisual(step.resultType!, result.result_key!, result.scores, language)
                               : null;
                             return (
                               <div key={member.id} style={{
