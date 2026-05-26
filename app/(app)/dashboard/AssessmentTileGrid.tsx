@@ -527,7 +527,7 @@ function DiscModal({ data, onClose }: { data: Extract<ModalData, { type: "disc" 
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/disc#quiz-section" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : "Retake assessment →"}
+          {lang === "id" ? "Ulangi" : "Retake"}
         </Link>
         <Link href="/resources/disc" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -620,7 +620,7 @@ function WheelModal({ data, onClose }: { data: Extract<ModalData, { type: "wheel
 
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-              {lang === "id" ? "Ulangi tes →" : "Retake →"}
+              {lang === "id" ? "Ulangi" : "Retake"}
             </Link>
             <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
               {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -833,7 +833,7 @@ function ThinkingModal({ data, onClose }: { data: Extract<ModalData, { type: "th
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi" : "Retake"}
         </Link>
         <Link href="/resources/three-thinking-styles" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -854,7 +854,7 @@ function KaruniaModal({ data, onClose }: { data: Extract<ModalData, { type: "kar
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
 
-  const retakeLabel = lang === "id" ? "Ulangi tes →" : "Retake assessment →";
+  const retakeLabel = lang === "id" ? "Ulangi" : "Retake";
   const learnLabel = lang === "id" ? "Pelajari lebih" : "Learn more";
 
   return (
@@ -995,7 +995,7 @@ function EnneagramModal({ data, onClose }: { data: Extract<ModalData, { type: "e
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi" : "Retake"}
         </Link>
         <Link href="/resources/enneagram" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1084,7 +1084,7 @@ function BigFiveModal({ data, onClose }: { data: Extract<ModalData, { type: "big
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/big-five?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : "Retake assessment →"}
+          {lang === "id" ? "Ulangi" : "Retake"}
         </Link>
         <Link href="/resources/big-five" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1207,7 +1207,7 @@ function PersonalitiesModal({ data, onClose }: { data: Extract<ModalData, { type
 
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/16-personalities?retake=1" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          {lang === "id" ? "Ulangi tes →" : "Retake quiz →"}
+          {lang === "id" ? "Ulangi" : "Retake"}
         </Link>
         <Link href="/resources/16-personalities" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           {lang === "id" ? "Pelajari lebih" : "Learn more"}
@@ -1343,7 +1343,7 @@ function FivelaModal({ data, onClose }: { data: Extract<ModalData, { type: "five
       {/* Buttons */}
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", flexWrap: "wrap" }}>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: offWhite, background: navy, padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none" }}>
-          Retake →
+          Retake
         </Link>
         <Link href="/resources/5languages" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 600, color: "oklch(38% 0.008 260)", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1.25rem", borderRadius: 12, textDecoration: "none", display: "inline-block" }}>
           Learn more
