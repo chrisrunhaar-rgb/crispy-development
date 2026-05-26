@@ -126,6 +126,116 @@ function WheelTemplateLabeledSVG() {
   );
 }
 
+// ── Enneagram type reference data ────────────────────────────────────────────
+const ENNEA_REF: Record<number, { name_en: string; name_id: string; tagline_en: string; tagline_id: string; overview_en: string; overview_id: string; color: string }> = {
+  1: { name_en: "The Reformer", name_id: "Si Perfeksionis", tagline_en: "The Principled Idealist", tagline_id: "Si Idealis Berprinsip", color: "oklch(55% 0.12 260)", overview_en: "Principled, purposeful, and self-controlled. Type 1s are driven by a strong sense of right and wrong and strive to improve everything around them. Core fear: being wrong, corrupt, or failing to live up to their standards.", overview_id: "Berprinsip, bertujuan, dan terkendali. Tipe 1 didorong oleh rasa kuat tentang benar dan salah dan berusaha meningkatkan segalanya. Ketakutan inti: salah, korup, atau gagal memenuhi standar mereka." },
+  2: { name_en: "The Helper", name_id: "Si Penolong", tagline_en: "The Caring Supporter", tagline_id: "Si Pendukung Peduli", color: "oklch(65% 0.20 25)", overview_en: "Warm, generous, and attuned to others' needs. Type 2s are driven by a need to feel loved and appreciated through helping others. Core fear: being unloved, unwanted, or of no value to others.", overview_id: "Hangat, murah hati, dan peka terhadap kebutuhan orang lain. Tipe 2 didorong oleh kebutuhan untuk merasa dicintai melalui membantu orang lain. Ketakutan inti: tidak dicintai atau tidak berharga bagi orang lain." },
+  3: { name_en: "The Achiever", name_id: "Si Pencapai", tagline_en: "The Goal-Oriented Performer", tagline_id: "Si Pemain Berorientasi Tujuan", color: "oklch(65% 0.25 40)", overview_en: "Ambitious, efficient, and adaptable. Type 3s are driven to succeed and be recognized for their accomplishments. They adjust easily to environments to project the best image. Core fear: being worthless or exposed as a failure.", overview_id: "Ambisius, efisien, dan mudah beradaptasi. Tipe 3 didorong untuk sukses dan diakui atas pencapaian mereka. Ketakutan inti: tidak berharga atau dianggap gagal." },
+  4: { name_en: "The Individualist", name_id: "Si Individualis", tagline_en: "The Authentic Expresser", tagline_id: "Si Pengekspresi Autentik", color: "oklch(55% 0.20 310)", overview_en: "Creative, introspective, and deeply sensitive. Type 4s seek to understand themselves and express their unique identity. They often feel different from others and long to be truly understood. Core fear: having no identity or personal significance.", overview_id: "Kreatif, introspektif, dan sangat sensitif. Tipe 4 ingin memahami diri dan mengekspresikan identitas unik mereka. Ketakutan inti: tidak memiliki identitas atau makna diri." },
+  5: { name_en: "The Investigator", name_id: "Si Peneliti", tagline_en: "The Knowledge Seeker", tagline_id: "Si Pencari Pengetahuan", color: "oklch(50% 0.15 260)", overview_en: "Curious, analytical, and independent. Type 5s are driven by a need to understand the world deeply and preserve their inner resources. They value expertise and tend to detach to observe. Core fear: being helpless, ignorant, or unable to cope.", overview_id: "Penasaran, analitis, dan mandiri. Tipe 5 didorong oleh kebutuhan untuk memahami dunia secara mendalam. Ketakutan inti: tidak berdaya, tidak tahu, atau tidak mampu menghadapi situasi." },
+  6: { name_en: "The Loyalist", name_id: "Si Setia", tagline_en: "The Committed Team Member", tagline_id: "Si Anggota Tim Berkomitmen", color: "oklch(55% 0.18 45)", overview_en: "Reliable, responsible, and security-oriented. Type 6s are driven by a need for belonging and trust. They are natural team players who anticipate problems and remain loyal under pressure. Core fear: being without support or guidance in a threatening world.", overview_id: "Dapat diandalkan, bertanggung jawab, dan berorientasi keamanan. Tipe 6 didorong oleh kebutuhan akan rasa memiliki dan kepercayaan. Ketakutan inti: tidak memiliki dukungan di dunia yang mengancam." },
+  7: { name_en: "The Enthusiast", name_id: "Si Antusias", tagline_en: "The Optimistic Adventurer", tagline_id: "Si Petualang Optimis", color: "oklch(70% 0.20 80)", overview_en: "Spontaneous, versatile, and upbeat. Type 7s are driven by a need for stimulation and variety. They seek joy, avoid pain, and keep options open. Core fear: being trapped in deprivation, boredom, or emotional pain.", overview_id: "Spontan, serbaguna, dan ceria. Tipe 7 didorong oleh kebutuhan akan stimulasi dan variasi. Mereka mencari kegembiraan dan menghindari rasa sakit. Ketakutan inti: terjebak dalam kekurangan atau rasa sakit emosional." },
+  8: { name_en: "The Challenger", name_id: "Si Penegak", tagline_en: "The Bold Protector", tagline_id: "Si Pelindung Berani", color: "oklch(50% 0.25 10)", overview_en: "Self-confident, decisive, and protective. Type 8s are driven by a need to be in control and protect what matters to them. They lead with strength and confront injustice directly. Core fear: being controlled, harmed, or taken advantage of.", overview_id: "Percaya diri, tegas, dan melindungi. Tipe 8 didorong oleh kebutuhan untuk mengendalikan dan melindungi yang penting bagi mereka. Ketakutan inti: dikendalikan atau dimanfaatkan." },
+  9: { name_en: "The Peacemaker", name_id: "Si Pembuat Perdamaian", tagline_en: "The Harmonious Mediator", tagline_id: "Si Mediator Harmonis", color: "oklch(55% 0.12 140)", overview_en: "Receptive, reassuring, and easygoing. Type 9s are driven by a need for inner and outer peace. They are natural mediators who bring people together and prefer harmony over conflict. Core fear: loss of connection or being pushed into unwanted conflict.", overview_id: "Reseptif, menenangkan, dan santai. Tipe 9 didorong oleh kebutuhan akan perdamaian. Mereka adalah mediator alami yang menyatukan orang. Ketakutan inti: kehilangan hubungan atau terpaksa menghadapi konflik." },
+};
+
+function EnneagramTypeReference({ language }: { language: TeamLang }) {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<number | null>(null);
+  return (
+    <div style={{ marginBottom: "1.5rem" }}>
+      <button
+        onClick={() => { setOpen(o => !o); setSelected(null); }}
+        style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.62rem",
+          fontWeight: 700,
+          letterSpacing: "0.07em",
+          textTransform: "uppercase",
+          background: "none",
+          border: "1px solid oklch(84% 0.008 260)",
+          color: "oklch(42% 0.10 260)",
+          padding: "0.375rem 0.875rem",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.4rem",
+        }}
+      >
+        {language === "id" ? "Lihat semua 9 tipe" : "Browse all 9 types"}
+        <span style={{ fontSize: "0.5rem", opacity: 0.6 }}>{open ? "▲" : "▼"}</span>
+      </button>
+      {open && (
+        <div style={{ marginTop: "0.625rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem", marginBottom: selected ? "0.75rem" : 0 }}>
+            {([1,2,3,4,5,6,7,8,9] as const).map(n => {
+              const t = ENNEA_REF[n];
+              const isActive = selected === n;
+              return (
+                <button
+                  key={n}
+                  onClick={() => setSelected(isActive ? null : n)}
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.62rem",
+                    fontWeight: isActive ? 700 : 500,
+                    background: isActive ? t.color : "oklch(97% 0.003 80)",
+                    color: isActive ? "white" : "oklch(32% 0.008 260)",
+                    border: `1px solid ${isActive ? t.color : "oklch(88% 0.006 80)"}`,
+                    padding: "0.3rem 0.625rem",
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {n} — {language === "id" ? t.name_id : t.name_en}
+                </button>
+              );
+            })}
+          </div>
+          {selected && (
+            <div style={{
+              background: "oklch(97.5% 0.003 80)",
+              border: `1px solid oklch(88% 0.006 80)`,
+              padding: "0.875rem 1rem",
+              marginTop: "0.5rem",
+            }}>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.72rem",
+                fontWeight: 800,
+                color: ENNEA_REF[selected].color,
+                marginBottom: "0.2rem",
+              }}>
+                {language === "id" ? ENNEA_REF[selected].name_id : ENNEA_REF[selected].name_en}
+              </p>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.62rem",
+                fontWeight: 600,
+                color: "oklch(52% 0.008 260)",
+                marginBottom: "0.5rem",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+              }}>
+                {language === "id" ? ENNEA_REF[selected].tagline_id : ENNEA_REF[selected].tagline_en}
+              </p>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.75rem",
+                color: "oklch(32% 0.008 260)",
+                lineHeight: 1.6,
+              }}>
+                {language === "id" ? ENNEA_REF[selected].overview_id : ENNEA_REF[selected].overview_en}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Wheel of Life — team averaged chart ──────────────────────────────────────
 function WheelAveragedSVG({ teamResults }: { teamResults: TeamMemberResult[] }) {
   const S = 320, cx = 160, cy = 160, maxR = 95, labelDist = 124, N = WHEEL_SEGMENTS.length;
@@ -1472,6 +1582,11 @@ export default function TeamJourney({
                       </div>
                     ) : step.resultType ? (
                       <div>
+                        {/* Enneagram: type reference dropdown */}
+                        {step.resultType === "enneagram" && (
+                          <EnneagramTypeReference language={language} />
+                        )}
+
                         {/* Wheel of Life: team average chart */}
                         {step.resultType === "wheel_of_life" && (
                           <div style={{ marginBottom: "1.5rem" }}>
