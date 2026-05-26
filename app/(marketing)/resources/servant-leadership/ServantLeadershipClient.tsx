@@ -16,18 +16,18 @@ const SCENARIOS = [
     en_theme: "Listening",
     id_theme: "Mendengarkan",
     nl_theme: "Luisteren",
-    en_setup: "You're leading a debrief after a project that went poorly. A junior Indonesian team member has been quiet the whole meeting. Thirty minutes in, she starts to speak � then hesitates as a senior Dutch colleague begins talking at the same time.",
-    id_setup: "Anda memimpin debrief setelah proyek yang berjalan buruk. Anggota tim junior Indonesia telah diam sepanjang rapat. Tiga puluh menit kemudian, dia mulai berbicara � kemudian ragu-ragu saat rekan kerja Belanda yang senior mulai berbicara bersamaan.",
-    nl_setup: "Je leidt een debrief na een project dat slecht is verlopen. Een junior Indonesisch teamlid heeft de hele vergadering gezwegen. Dertig minuten later begint ze te spreken � dan aarzelt ze als een senior Nederlandse collega tegelijkertijd begint te praten.",
+    en_setup: "You're leading a debrief after a project that went poorly. A junior Indonesian team member has been quiet the whole meeting. Thirty minutes in, she starts to speak — then hesitates as a senior Dutch colleague begins talking at the same time.",
+    id_setup: "Anda memimpin debrief setelah proyek yang berjalan buruk. Anggota tim junior Indonesia telah diam sepanjang rapat. Tiga puluh menit kemudian, dia mulai berbicara — kemudian ragu-ragu saat rekan kerja Belanda yang senior mulai berbicara bersamaan.",
+    nl_setup: "Je leidt een debrief na een project dat slecht is verlopen. Een junior Indonesisch teamlid heeft de hele vergadering gezwegen. Dertig minuten later begint ze te spreken — dan aarzelt ze als een senior Nederlandse collega tegelijkertijd begint te praten.",
     options: [
       {
         key: "a",
-        en_text: "Gently interrupt your Dutch colleague: \"Sorry � I think Rini was about to say something.\"",
-        id_text: "Dengan lembut menyela rekan Belanda Anda: \"Maaf � saya rasa Rini mau mengatakan sesuatu.\"",
-        nl_text: "Je Nederlandse collega vriendelijk onderbreken: \"Sorry � ik denk dat Rini iets wilde zeggen.\"",
-        en_reveal: "Active listening in action. You created space for a voice that the room's default power dynamics were erasing. In cross-cultural teams, this is not just courtesy � it is leadership.",
-        id_reveal: "Mendengarkan aktif dalam tindakan. Anda menciptakan ruang untuk suara yang sedang dihapus oleh dinamika kekuasaan default ruangan. Dalam tim lintas budaya, ini bukan hanya kesopanan � ini kepemimpinan.",
-        nl_reveal: "Actief luisteren in actie. Je cre�erde ruimte voor een stem die de standaard machtsdynamiek van de kamer aan het uitwissen was. In interculturele teams is dit niet alleen hoffelijkheid � het is leiderschap.",
+        en_text: "Gently interrupt your Dutch colleague: \"Sorry — I think Rini was about to say something.\"",
+        id_text: "Dengan lembut menyela rekan Belanda Anda: \"Maaf — saya rasa Rini mau mengatakan sesuatu.\"",
+        nl_text: "Je Nederlandse collega vriendelijk onderbreken: \"Sorry — ik denk dat Rini iets wilde zeggen.\"",
+        en_reveal: "Active listening in action. You created space for a voice that the room's default power dynamics were erasing. In cross-cultural teams, this is not just courtesy — it is leadership.",
+        id_reveal: "Mendengarkan aktif dalam tindakan. Anda menciptakan ruang untuk suara yang sedang dihapus oleh dinamika kekuasaan default ruangan. Dalam tim lintas budaya, ini bukan hanya kesopanan — ini kepemimpinan.",
+        nl_reveal: "Actief luisteren in actie. Je cre—erde ruimte voor een stem die de standaard machtsdynamiek van de kamer aan het uitwissen was. In interculturele teams is dit niet alleen hoffelijkheid — het is leiderschap.",
         en_char: "Listening",
         id_char: "Mendengarkan",
         nl_char: "Luisteren",
@@ -37,9 +37,9 @@ const SCENARIOS = [
         en_text: "Let your senior colleague finish, then ask Rini directly at the end of the meeting.",
         id_text: "Biarkan rekan senior selesai, kemudian tanya Rini langsung di akhir rapat.",
         nl_text: "Je senior collega laten uitspreken, dan Rini direct vragen aan het eind van de vergadering.",
-        en_reveal: "Reasonable � but the moment passed. In high-power-distance cultures, asking someone individually at the end after they were already overridden often results in a more guarded answer, not an honest one.",
-        id_reveal: "Masuk akal � tetapi momennya sudah berlalu. Dalam budaya berjarak kekuasaan tinggi, meminta seseorang secara individual di akhir setelah mereka sudah dilewati sering menghasilkan jawaban yang lebih terjaga, bukan yang jujur.",
-        nl_reveal: "Redelijk � maar het moment is voorbij. In hoge machtafstandsculturen resulteert het individueel vragen aan iemand aan het einde nadat ze al overstemd zijn vaak in een meer terughoudend antwoord, niet een eerlijk.",
+        en_reveal: "Reasonable — but the moment passed. In high-power-distance cultures, asking someone individually at the end after they were already overridden often results in a more guarded answer, not an honest one.",
+        id_reveal: "Masuk akal — tetapi momennya sudah berlalu. Dalam budaya berjarak kekuasaan tinggi, meminta seseorang secara individual di akhir setelah mereka sudah dilewati sering menghasilkan jawaban yang lebih terjaga, bukan yang jujur.",
+        nl_reveal: "Redelijk — maar het moment is voorbij. In hoge machtafstandsculturen resulteert het individueel vragen aan iemand aan het einde nadat ze al overstemd zijn vaak in een meer terughoudend antwoord, niet een eerlijk.",
         en_char: "Delayed inclusion",
         id_char: "Inklusi tertunda",
         nl_char: "Uitgestelde inclusie",
@@ -49,9 +49,9 @@ const SCENARIOS = [
         en_text: "The meeting is already running long. Move to close and ask for written input from everyone afterwards.",
         id_text: "Rapat sudah berjalan terlalu lama. Bergerak untuk menutup dan minta masukan tertulis dari semua orang setelahnya.",
         nl_text: "De vergadering loopt al te lang. Afsluiten en daarna schriftelijke input vragen van iedereen.",
-        en_reveal: "Efficiency over inclusion. Written input after the fact rarely surfaces what face-to-face honesty would � especially from team members who were already hesitant to speak.",
-        id_reveal: "Efisiensi di atas inklusi. Masukan tertulis setelah kejadian jarang mengungkapkan apa yang kejujuran tatap muka akan ungkapkan � terutama dari anggota tim yang sudah ragu untuk berbicara.",
-        nl_reveal: "Effici�ntie boven inclusie. Schriftelijke input achteraf brengt zelden op wat face-to-face eerlijkheid zou doen � zeker niet van teamleden die al aarzelden te spreken.",
+        en_reveal: "Efficiency over inclusion. Written input after the fact rarely surfaces what face-to-face honesty would — especially from team members who were already hesitant to speak.",
+        id_reveal: "Efisiensi di atas inklusi. Masukan tertulis setelah kejadian jarang mengungkapkan apa yang kejujuran tatap muka akan ungkapkan — terutama dari anggota tim yang sudah ragu untuk berbicara.",
+        nl_reveal: "Effici—ntie boven inclusie. Schriftelijke input achteraf brengt zelden op wat face-to-face eerlijkheid zou doen — zeker niet van teamleden die al aarzelden te spreken.",
         en_char: "Task over person",
         id_char: "Tugas di atas orang",
         nl_char: "Taak boven persoon",
@@ -63,18 +63,18 @@ const SCENARIOS = [
     en_theme: "Empathy",
     id_theme: "Empati",
     nl_theme: "Empathie",
-    en_setup: "A team member delivers a key report 48 hours late � the third time this month. You are frustrated. Before you address it, you discover that his father is seriously ill in his home province.",
-    id_setup: "Anggota tim menyerahkan laporan penting 48 jam terlambat � ketiga kalinya bulan ini. Anda frustrasi. Sebelum Anda mengatasinya, Anda menemukan bahwa ayahnya sakit parah di provinsi asalnya.",
-    nl_setup: "Een teamlid levert een belangrijk rapport 48 uur te laat in � de derde keer deze maand. Je bent gefrustreerd. Voordat je het aanpakt, ontdek je dat zijn vader ernstig ziek is in zijn thuisprovincie.",
+    en_setup: "A team member delivers a key report 48 hours late — the third time this month. You are frustrated. Before you address it, you discover that his father is seriously ill in his home province.",
+    id_setup: "Anggota tim menyerahkan laporan penting 48 jam terlambat — ketiga kalinya bulan ini. Anda frustrasi. Sebelum Anda mengatasinya, Anda menemukan bahwa ayahnya sakit parah di provinsi asalnya.",
+    nl_setup: "Een teamlid levert een belangrijk rapport 48 uur te laat in — de derde keer deze maand. Je bent gefrustreerd. Voordat je het aanpakt, ontdek je dat zijn vader ernstig ziek is in zijn thuisprovincie.",
     options: [
       {
         key: "a",
         en_text: "Address the pattern directly: \"I understand you're going through difficulty, but the team needs reliability. This can't continue.\"",
         id_text: "Tangani polanya secara langsung: \"Saya mengerti Anda sedang menghadapi kesulitan, tetapi tim membutuhkan keandalan. Ini tidak bisa dilanjutkan.\"",
         nl_text: "Het patroon direct aanpakken: \"Ik begrijp dat je het moeilijk hebt, maar het team heeft betrouwbaarheid nodig. Dit kan niet doorgaan.\"",
-        en_reveal: "Accountability without empathy. The statement is fair in isolation � but given the context, it treats a human crisis as a performance issue. The relationship will likely survive, but trust will erode.",
-        id_reveal: "Akuntabilitas tanpa empati. Pernyataan itu adil secara terpisah � tetapi mengingat konteksnya, itu memperlakukan krisis manusiawi sebagai masalah kinerja. Hubungan mungkin akan bertahan, tetapi kepercayaan akan terkikis.",
-        nl_reveal: "Verantwoording zonder empathie. De uitspraak is op zichzelf eerlijk � maar gezien de context behandelt het een menselijke crisis als een prestatie-issue. De relatie overleeft waarschijnlijk, maar vertrouwen erodeert.",
+        en_reveal: "Accountability without empathy. The statement is fair in isolation — but given the context, it treats a human crisis as a performance issue. The relationship will likely survive, but trust will erode.",
+        id_reveal: "Akuntabilitas tanpa empati. Pernyataan itu adil secara terpisah — tetapi mengingat konteksnya, itu memperlakukan krisis manusiawi sebagai masalah kinerja. Hubungan mungkin akan bertahan, tetapi kepercayaan akan terkikis.",
+        nl_reveal: "Verantwoording zonder empathie. De uitspraak is op zichzelf eerlijk — maar gezien de context behandelt het een menselijke crisis als een prestatie-issue. De relatie overleeft waarschijnlijk, maar vertrouwen erodeert.",
         en_char: "Accountability without context",
         id_char: "Akuntabilitas tanpa konteks",
         nl_char: "Verantwoording zonder context",
@@ -84,9 +84,9 @@ const SCENARIOS = [
         en_text: "Set the pattern conversation aside entirely. Focus only on supporting him through this season.",
         id_text: "Sisihkan sepenuhnya percakapan tentang pola. Fokus hanya pada mendukungnya melalui masa ini.",
         nl_text: "Het gesprek over het patroon volledig opzij zetten. Alleen focussen op hem ondersteunen in deze periode.",
-        en_reveal: "Compassion without clarity. The person feels seen � but nothing changes for the team, and the next deadline carries the same ambiguity. Full empathy also includes being honest about what the situation requires.",
-        id_reveal: "Kasih sayang tanpa kejelasan. Orang itu merasa diperhatikan � tetapi tidak ada yang berubah untuk tim, dan tenggat waktu berikutnya membawa ambiguitas yang sama. Empati penuh juga mencakup kejujuran tentang apa yang dibutuhkan situasi.",
-        nl_reveal: "Medeleven zonder duidelijkheid. De persoon voelt zich gezien � maar er verandert niets voor het team, en de volgende deadline draagt dezelfde ambigu�teit. Volledige empathie omvat ook eerlijk zijn over wat de situatie vereist.",
+        en_reveal: "Compassion without clarity. The person feels seen — but nothing changes for the team, and the next deadline carries the same ambiguity. Full empathy also includes being honest about what the situation requires.",
+        id_reveal: "Kasih sayang tanpa kejelasan. Orang itu merasa diperhatikan — tetapi tidak ada yang berubah untuk tim, dan tenggat waktu berikutnya membawa ambiguitas yang sama. Empati penuh juga mencakup kejujuran tentang apa yang dibutuhkan situasi.",
+        nl_reveal: "Medeleven zonder duidelijkheid. De persoon voelt zich gezien — maar er verandert niets voor het team, en de volgende deadline draagt dezelfde ambigu—teit. Volledige empathie omvat ook eerlijk zijn over wat de situatie vereist.",
         en_char: "Compassion without clarity",
         id_char: "Kasih sayang tanpa kejelasan",
         nl_char: "Medeleven zonder duidelijkheid",
@@ -95,10 +95,10 @@ const SCENARIOS = [
         key: "c",
         en_text: "Ask how he's doing first and listen fully. Then have an honest conversation: how can you both protect him and serve the team?",
         id_text: "Tanyakan dulu bagaimana keadaannya dan dengarkan sepenuhnya. Kemudian adakan percakapan jujur: bagaimana Anda bisa melindunginya sekaligus melayani tim?",
-        nl_text: "Eerst vragen hoe het met hem gaat en volledig luisteren. Dan een eerlijk gesprek voeren: hoe kunnen jullie hem beschermen �n het team dienen?",
-        en_reveal: "Empathy with stewardship. You are fully present for the person AND honest about the real situation. This is what servant leaders do � they hold complexity without resolving it by ignoring one side.",
-        id_reveal: "Empati dengan penatalayanan. Anda sepenuhnya hadir untuk orang tersebut DAN jujur tentang situasi nyata. Inilah yang dilakukan pemimpin hamba � mereka memegang kompleksitas tanpa menyelesaikannya dengan mengabaikan satu sisi.",
-        nl_reveal: "Empathie met rentmeesterschap. Je bent volledig aanwezig voor de persoon EN eerlijk over de werkelijke situatie. Dit is wat dienend leiders doen � ze houden complexiteit vast zonder het op te lossen door ��n kant te negeren.",
+        nl_text: "Eerst vragen hoe het met hem gaat en volledig luisteren. Dan een eerlijk gesprek voeren: hoe kunnen jullie hem beschermen —n het team dienen?",
+        en_reveal: "Empathy with stewardship. You are fully present for the person AND honest about the real situation. This is what servant leaders do — they hold complexity without resolving it by ignoring one side.",
+        id_reveal: "Empati dengan penatalayanan. Anda sepenuhnya hadir untuk orang tersebut DAN jujur tentang situasi nyata. Inilah yang dilakukan pemimpin hamba — mereka memegang kompleksitas tanpa menyelesaikannya dengan mengabaikan satu sisi.",
+        nl_reveal: "Empathie met rentmeesterschap. Je bent volledig aanwezig voor de persoon EN eerlijk over de werkelijke situatie. Dit is wat dienend leiders doen — ze houden complexiteit vast zonder het op te lossen door ——n kant te negeren.",
         en_char: "Empathy + Stewardship",
         id_char: "Empati + Penatalayanan",
         nl_char: "Empathie + Rentmeesterschap",
@@ -119,30 +119,30 @@ const SCENARIOS = [
         en_text: "Reply thanking the director, then forward it to your team with a personal note of appreciation.",
         id_text: "Balas dengan berterima kasih kepada direktur, kemudian teruskan ke tim Anda dengan catatan apresiasi pribadi.",
         nl_text: "Antwoorden met dankbetuiging aan de directeur, dan doorsturen naar je team met een persoonlijke waarderingsnoot.",
-        en_reveal: "Appreciation � but private. Your team sees the recognition internally. The director and CEO do not. In hierarchical contexts, who knows matters as much as whether you say it.",
-        id_reveal: "Apresiasi � tetapi privat. Tim Anda melihat pengakuan secara internal. Direktur dan CEO tidak. Dalam konteks hierarkis, siapa yang tahu sama pentingnya dengan apakah Anda mengatakannya.",
-        nl_reveal: "Waardering � maar priv�. Je team ziet de erkenning intern. De directeur en CEO niet. In hi�rarchische contexten maakt het uit wie het weet, niet alleen of je het zegt.",
+        en_reveal: "Appreciation — but private. Your team sees the recognition internally. The director and CEO do not. In hierarchical contexts, who knows matters as much as whether you say it.",
+        id_reveal: "Apresiasi — tetapi privat. Tim Anda melihat pengakuan secara internal. Direktur dan CEO tidak. Dalam konteks hierarkis, siapa yang tahu sama pentingnya dengan apakah Anda mengatakannya.",
+        nl_reveal: "Waardering — maar priv—. Je team ziet de erkenning intern. De directeur en CEO niet. In hi—rarchische contexten maakt het uit wie het weet, niet alleen of je het zegt.",
         en_char: "Recognition (private)",
         id_char: "Pengakuan (privat)",
-        nl_char: "Erkenning (priv�)",
+        nl_char: "Erkenning (priv—)",
       },
       {
         key: "b",
-        en_text: "Reply with gratitude and mention it was a strong team effort � without naming individuals.",
-        id_text: "Balas dengan rasa syukur dan sebutkan bahwa itu adalah upaya tim yang kuat � tanpa menyebutkan nama individu.",
-        nl_text: "Antwoorden met dankbaarheid en vermelden dat het een sterke teaminspanning was � zonder individuen te noemen.",
-        en_reveal: "Modest � but generic. 'Team effort' is honest but invisible. No one grows professionally from being mentioned as part of a collective. Good stewardship is specific.",
-        id_reveal: "Rendah hati � tetapi umum. 'Upaya tim' itu jujur tetapi tidak terlihat. Tidak ada yang tumbuh secara profesional dari disebutkan sebagai bagian dari kolektif. Penatalayanan yang baik itu spesifik.",
-        nl_reveal: "Bescheiden � maar generiek. 'Teaminspanning' is eerlijk maar onzichtbaar. Niemand groeit professioneel van vermeld worden als onderdeel van een collectief. Goed rentmeesterschap is specifiek.",
+        en_text: "Reply with gratitude and mention it was a strong team effort — without naming individuals.",
+        id_text: "Balas dengan rasa syukur dan sebutkan bahwa itu adalah upaya tim yang kuat — tanpa menyebutkan nama individu.",
+        nl_text: "Antwoorden met dankbaarheid en vermelden dat het een sterke teaminspanning was — zonder individuen te noemen.",
+        en_reveal: "Modest — but generic. 'Team effort' is honest but invisible. No one grows professionally from being mentioned as part of a collective. Good stewardship is specific.",
+        id_reveal: "Rendah hati — tetapi umum. 'Upaya tim' itu jujur tetapi tidak terlihat. Tidak ada yang tumbuh secara profesional dari disebutkan sebagai bagian dari kolektif. Penatalayanan yang baik itu spesifik.",
+        nl_reveal: "Bescheiden — maar generiek. 'Teaminspanning' is eerlijk maar onzichtbaar. Niemand groeit professioneel van vermeld worden als onderdeel van een collectief. Goed rentmeesterschap is specifiek.",
         en_char: "Modest but vague",
         id_char: "Rendah hati tapi samar",
         nl_char: "Bescheiden maar vaag",
       },
       {
         key: "c",
-        en_text: "Reply with specific names and contributions: 'This result belongs to Andi, Sarah, Pak Budi, and Wim � here is what each one did.'",
-        id_text: "Balas dengan nama spesifik dan kontribusi: 'Hasil ini milik Andi, Sarah, Pak Budi, dan Wim � inilah apa yang masing-masing lakukan.'",
-        nl_text: "Antwoorden met specifieke namen en bijdragen: 'Dit resultaat is van Andi, Sarah, Pak Budi en Wim � dit is wat elk van hen deed.'",
+        en_text: "Reply with specific names and contributions: 'This result belongs to Andi, Sarah, Pak Budi, and Wim — here is what each one did.'",
+        id_text: "Balas dengan nama spesifik dan kontribusi: 'Hasil ini milik Andi, Sarah, Pak Budi, dan Wim — inilah apa yang masing-masing lakukan.'",
+        nl_text: "Antwoorden met specifieke namen en bijdragen: 'Dit resultaat is van Andi, Sarah, Pak Budi en Wim — dit is wat elk van hen deed.'",
         en_reveal: "Stewardship. You used your position of visibility to give others what they cannot give themselves: recognition in front of leadership. Servant leaders understand that power is most useful when given away.",
         id_reveal: "Penatalayanan. Anda menggunakan posisi visibilitas Anda untuk memberi orang lain apa yang tidak bisa mereka berikan sendiri: pengakuan di depan kepemimpinan. Pemimpin hamba memahami bahwa kekuasaan paling berguna ketika diberikan.",
         nl_reveal: "Rentmeesterschap. Je hebt je positie van zichtbaarheid gebruikt om anderen te geven wat ze zichzelf niet kunnen geven: erkenning voor leiderschap. Dienend leiders begrijpen dat macht het meest nuttig is als je het weggeeft.",
@@ -157,9 +157,9 @@ const SCENARIOS = [
     en_theme: "Commitment to Growth",
     id_theme: "Komitmen terhadap Pertumbuhan",
     nl_theme: "Toewijding aan groei",
-    en_setup: "Your strongest team member � a Javanese leader with exceptional relational intelligence � tells you she's been offered a leadership role at another organisation. She's clearly excited. Losing her would significantly set back your team.",
-    id_setup: "Anggota tim Anda yang terkuat � seorang pemimpin Jawa dengan kecerdasan relasional yang luar biasa � memberi tahu Anda bahwa dia telah ditawari peran kepemimpinan di organisasi lain. Dia jelas-jelas bersemangat. Kehilangannya akan sangat menghambat tim Anda.",
-    nl_setup: "Je sterkste teamlid � een Javaanse leider met uitzonderlijke relationele intelligentie � vertelt je dat ze een leiderschapsrol aangeboden heeft gekregen bij een andere organisatie. Ze is duidelijk enthousiast. Haar verliezen zou je team aanzienlijk vertragen.",
+    en_setup: "Your strongest team member — a Javanese leader with exceptional relational intelligence — tells you she's been offered a leadership role at another organisation. She's clearly excited. Losing her would significantly set back your team.",
+    id_setup: "Anggota tim Anda yang terkuat — seorang pemimpin Jawa dengan kecerdasan relasional yang luar biasa — memberi tahu Anda bahwa dia telah ditawari peran kepemimpinan di organisasi lain. Dia jelas-jelas bersemangat. Kehilangannya akan sangat menghambat tim Anda.",
+    nl_setup: "Je sterkste teamlid — een Javaanse leider met uitzonderlijke relationele intelligentie — vertelt je dat ze een leiderschapsrol aangeboden heeft gekregen bij een andere organisatie. Ze is duidelijk enthousiast. Haar verliezen zou je team aanzienlijk vertragen.",
     options: [
       {
         key: "a",
@@ -175,12 +175,12 @@ const SCENARIOS = [
       },
       {
         key: "b",
-        en_text: "Share your honest reaction � that it's hard news � then ask what drew her to this opportunity and what she needs to thrive.",
-        id_text: "Bagikan reaksi jujur Anda � bahwa ini berita yang berat � lalu tanya apa yang menariknya ke kesempatan ini dan apa yang dia butuhkan untuk berkembang.",
-        nl_text: "Je eerlijke reactie delen � dat het moeilijk nieuws is � dan vragen wat haar naar deze kans trok en wat ze nodig heeft om te gedijen.",
-        en_reveal: "Honesty with interest in her development. You're not hiding your feelings � but you're making her growth the centre of the conversation, not your loss. This is the middle path of servant leadership.",
-        id_reveal: "Kejujuran dengan minat pada pengembangannya. Anda tidak menyembunyikan perasaan Anda � tetapi Anda membuat pertumbuhannya sebagai pusat percakapan, bukan kehilangan Anda. Ini adalah jalan tengah kepemimpinan hamba.",
-        nl_reveal: "Eerlijkheid met interesse in haar ontwikkeling. Je verbergt je gevoelens niet � maar je maakt haar groei het middelpunt van het gesprek, niet jouw verlies. Dit is het middenpad van dienend leiderschap.",
+        en_text: "Share your honest reaction — that it's hard news — then ask what drew her to this opportunity and what she needs to thrive.",
+        id_text: "Bagikan reaksi jujur Anda — bahwa ini berita yang berat — lalu tanya apa yang menariknya ke kesempatan ini dan apa yang dia butuhkan untuk berkembang.",
+        nl_text: "Je eerlijke reactie delen — dat het moeilijk nieuws is — dan vragen wat haar naar deze kans trok en wat ze nodig heeft om te gedijen.",
+        en_reveal: "Honesty with interest in her development. You're not hiding your feelings — but you're making her growth the centre of the conversation, not your loss. This is the middle path of servant leadership.",
+        id_reveal: "Kejujuran dengan minat pada pengembangannya. Anda tidak menyembunyikan perasaan Anda — tetapi Anda membuat pertumbuhannya sebagai pusat percakapan, bukan kehilangan Anda. Ini adalah jalan tengah kepemimpinan hamba.",
+        nl_reveal: "Eerlijkheid met interesse in haar ontwikkeling. Je verbergt je gevoelens niet — maar je maakt haar groei het middelpunt van het gesprek, niet jouw verlies. Dit is het middenpad van dienend leiderschap.",
         en_char: "Growth + Honesty",
         id_char: "Pertumbuhan + Kejujuran",
         nl_char: "Groei + Eerlijkheid",
@@ -190,9 +190,9 @@ const SCENARIOS = [
         en_text: "Share your genuine support and offer to write her the strongest recommendation letter you can.",
         id_text: "Bagikan dukungan tulus Anda dan tawarkan untuk menulis surat rekomendasi terkuat yang bisa Anda tulis.",
         nl_text: "Je oprechte steun delen en aanbieden haar de sterkste aanbevelingsbrief te schrijven die je kunt schrijven.",
-        en_reveal: "Commitment to growth. You put her future ahead of your present need. This is the most costly form of servant leadership � and often the most remembered. She will carry that throughout her career.",
-        id_reveal: "Komitmen terhadap pertumbuhan. Anda mengutamakan masa depannya di atas kebutuhan Anda saat ini. Ini adalah bentuk kepemimpinan hamba yang paling mahal � dan sering kali yang paling diingat. Dia akan membawa itu sepanjang karirnya.",
-        nl_reveal: "Toewijding aan groei. Je stelt haar toekomst boven jouw huidige behoefte. Dit is de meest kostbare vorm van dienend leiderschap � en vaak de meest herinnerde. Ze zal dit door haar carri�re met zich meedragen.",
+        en_reveal: "Commitment to growth. You put her future ahead of your present need. This is the most costly form of servant leadership — and often the most remembered. She will carry that throughout her career.",
+        id_reveal: "Komitmen terhadap pertumbuhan. Anda mengutamakan masa depannya di atas kebutuhan Anda saat ini. Ini adalah bentuk kepemimpinan hamba yang paling mahal — dan sering kali yang paling diingat. Dia akan membawa itu sepanjang karirnya.",
+        nl_reveal: "Toewijding aan groei. Je stelt haar toekomst boven jouw huidige behoefte. Dit is de meest kostbare vorm van dienend leiderschap — en vaak de meest herinnerde. Ze zal dit door haar carri—re met zich meedragen.",
         en_char: "Commitment to Growth",
         id_char: "Komitmen terhadap Pertumbuhan",
         nl_char: "Toewijding aan groei",
@@ -204,18 +204,18 @@ const SCENARIOS = [
     en_theme: "Building Community",
     id_theme: "Membangun Komunitas",
     nl_theme: "Gemeenschapsopbouw",
-    en_setup: "Your cross-cultural team functions well professionally but stays in cultural subgroups outside of work � Javanese members with Javanese, Bataknese with Bataknese. You notice that this is limiting the trust that would make the team exceptional.",
-    id_setup: "Tim lintas budaya Anda berfungsi dengan baik secara profesional tetapi tetap dalam subkelompok budaya di luar pekerjaan � anggota Jawa dengan Jawa, Batak dengan Batak. Anda memperhatikan bahwa ini membatasi kepercayaan yang akan membuat tim menjadi luar biasa.",
-    nl_setup: "Je interculturele team functioneert professioneel goed maar blijft in culturele subgroepen buiten het werk � Javaanse leden met Javanen, Batakkers met Batakkers. Je merkt dat dit het vertrouwen beperkt dat het team uitzonderlijk zou maken.",
+    en_setup: "Your cross-cultural team functions well professionally but stays in cultural subgroups outside of work — Javanese members with Javanese, Bataknese with Bataknese. You notice that this is limiting the trust that would make the team exceptional.",
+    id_setup: "Tim lintas budaya Anda berfungsi dengan baik secara profesional tetapi tetap dalam subkelompok budaya di luar pekerjaan — anggota Jawa dengan Jawa, Batak dengan Batak. Anda memperhatikan bahwa ini membatasi kepercayaan yang akan membuat tim menjadi luar biasa.",
+    nl_setup: "Je interculturele team functioneert professioneel goed maar blijft in culturele subgroepen buiten het werk — Javaanse leden met Javanen, Batakkers met Batakkers. Je merkt dat dit het vertrouwen beperkt dat het team uitzonderlijk zou maken.",
     options: [
       {
         key: "a",
         en_text: "Organise a structured team-building event with activities designed to mix the cultural subgroups.",
         id_text: "Organisasi acara team-building terstruktur dengan aktivitas yang dirancang untuk mencampur subkelompok budaya.",
         nl_text: "Een gestructureerd teambuildingevenement organiseren met activiteiten ontworpen om de culturele subgroepen te mengen.",
-        en_reveal: "Building community through structure. This can work � especially for teams that need a formal context to cross informal boundaries. The risk is that structured events don't always create authentic connection.",
-        id_reveal: "Membangun komunitas melalui struktur. Ini bisa berhasil � terutama untuk tim yang membutuhkan konteks formal untuk melintasi batas informal. Risikonya adalah acara terstruktur tidak selalu menciptakan koneksi yang autentik.",
-        nl_reveal: "Gemeenschapsopbouw via structuur. Dit kan werken � zeker voor teams die een formele context nodig hebben om informele grenzen te overschrijden. Het risico is dat gestructureerde evenementen niet altijd authentieke verbinding cre�ren.",
+        en_reveal: "Building community through structure. This can work — especially for teams that need a formal context to cross informal boundaries. The risk is that structured events don't always create authentic connection.",
+        id_reveal: "Membangun komunitas melalui struktur. Ini bisa berhasil — terutama untuk tim yang membutuhkan konteks formal untuk melintasi batas informal. Risikonya adalah acara terstruktur tidak selalu menciptakan koneksi yang autentik.",
+        nl_reveal: "Gemeenschapsopbouw via structuur. Dit kan werken — zeker voor teams die een formele context nodig hebben om informele grenzen te overschrijden. Het risico is dat gestructureerde evenementen niet altijd authentieke verbinding cre—ren.",
         en_char: "Building Community (structured)",
         id_char: "Membangun Komunitas (terstruktur)",
         nl_char: "Gemeenschapsopbouw (gestructureerd)",
@@ -225,21 +225,21 @@ const SCENARIOS = [
         en_text: "Trust that people will connect naturally over time. Forcing community rarely works.",
         id_text: "Percayai bahwa orang-orang akan terhubung secara alami seiring waktu. Memaksakan komunitas jarang berhasil.",
         nl_text: "Vertrouwen dat mensen op natuurlijke wijze zullen verbinden in de loop van de tijd. Gemeenschap forceren werkt zelden.",
-        en_reveal: "Passive waiting. Cross-cultural connection rarely happens without a leader who actively models it. Teams take their relational cues from how the leader moves across cultural lines � not from being left to figure it out.",
-        id_reveal: "Menunggu secara pasif. Koneksi lintas budaya jarang terjadi tanpa pemimpin yang secara aktif mencontohkannya. Tim mengambil isyarat relasional dari bagaimana pemimpin bergerak melintasi garis budaya � bukan dari dibiarkan untuk mencari tahu sendiri.",
-        nl_reveal: "Passief wachten. Interculturele verbinding gebeurt zelden zonder een leider die het actief modelleert. Teams nemen hun relationele signalen van hoe de leider zich over culturele lijnen beweegt � niet van aan hun lot overgelaten worden.",
+        en_reveal: "Passive waiting. Cross-cultural connection rarely happens without a leader who actively models it. Teams take their relational cues from how the leader moves across cultural lines — not from being left to figure it out.",
+        id_reveal: "Menunggu secara pasif. Koneksi lintas budaya jarang terjadi tanpa pemimpin yang secara aktif mencontohkannya. Tim mengambil isyarat relasional dari bagaimana pemimpin bergerak melintasi garis budaya — bukan dari dibiarkan untuk mencari tahu sendiri.",
+        nl_reveal: "Passief wachten. Interculturele verbinding gebeurt zelden zonder een leider die het actief modelleert. Teams nemen hun relationele signalen van hoe de leider zich over culturele lijnen beweegt — niet van aan hun lot overgelaten worden.",
         en_char: "Passive",
         id_char: "Pasif",
         nl_char: "Passief",
       },
       {
         key: "c",
-        en_text: "Start by modelling it yourself � eat lunch with different people, build cross-cultural friendships, and let the team watch you move between groups naturally.",
-        id_text: "Mulailah dengan mencontohkannya sendiri � makan siang dengan orang-orang yang berbeda, bangun persahabatan lintas budaya, dan biarkan tim melihat Anda bergerak di antara kelompok secara alami.",
-        nl_text: "Beginnen met het zelf te modelleren � lunchen met verschillende mensen, interculturele vriendschappen opbouwen en het team laten zien hoe je op natuurlijke wijze tussen groepen beweegt.",
-        en_reveal: "Building community by modelling. The most durable cross-cultural trust is built when the leader demonstrates that cultural boundaries are crossable � not by organising events, but by living it. Teams rarely go where their leader has not gone first.",
-        id_reveal: "Membangun komunitas dengan mencontohkan. Kepercayaan lintas budaya yang paling tahan lama dibangun ketika pemimpin menunjukkan bahwa batas budaya bisa dilintasi � bukan dengan mengorganisasi acara, tetapi dengan menghidupinya. Tim jarang pergi ke mana pemimpin mereka belum pergi lebih dulu.",
-        nl_reveal: "Gemeenschapsopbouw door modelleren. Het meest duurzame interculturele vertrouwen wordt gebouwd wanneer de leider laat zien dat culturele grenzen overschreden kunnen worden � niet door evenementen te organiseren, maar door het te leven. Teams gaan zelden waar hun leider niet als eerste is geweest.",
+        en_text: "Start by modelling it yourself — eat lunch with different people, build cross-cultural friendships, and let the team watch you move between groups naturally.",
+        id_text: "Mulailah dengan mencontohkannya sendiri — makan siang dengan orang-orang yang berbeda, bangun persahabatan lintas budaya, dan biarkan tim melihat Anda bergerak di antara kelompok secara alami.",
+        nl_text: "Beginnen met het zelf te modelleren — lunchen met verschillende mensen, interculturele vriendschappen opbouwen en het team laten zien hoe je op natuurlijke wijze tussen groepen beweegt.",
+        en_reveal: "Building community by modelling. The most durable cross-cultural trust is built when the leader demonstrates that cultural boundaries are crossable — not by organising events, but by living it. Teams rarely go where their leader has not gone first.",
+        id_reveal: "Membangun komunitas dengan mencontohkan. Kepercayaan lintas budaya yang paling tahan lama dibangun ketika pemimpin menunjukkan bahwa batas budaya bisa dilintasi — bukan dengan mengorganisasi acara, tetapi dengan menghidupinya. Tim jarang pergi ke mana pemimpin mereka belum pergi lebih dulu.",
+        nl_reveal: "Gemeenschapsopbouw door modelleren. Het meest duurzame interculturele vertrouwen wordt gebouwd wanneer de leider laat zien dat culturele grenzen overschreden kunnen worden — niet door evenementen te organiseren, maar door het te leven. Teams gaan zelden waar hun leider niet als eerste is geweest.",
         en_char: "Building Community (modelling)",
         id_char: "Membangun Komunitas (mencontohkan)",
         nl_char: "Gemeenschapsopbouw (modelleren)",
@@ -258,9 +258,9 @@ const VERSES = {
     nl: "Want ook de Mensenzoon is niet gekomen om gediend te worden, maar om te dienen en zijn leven te geven als losgeld voor velen.",
   },
   "phil-2-3": {
-    en_ref: "Philippians 2:3�4",
-    id_ref: "Filipi 2:3�4",
-    nl_ref: "Filippenzen 2:3�4",
+    en_ref: "Philippians 2:3—4",
+    id_ref: "Filipi 2:3—4",
+    nl_ref: "Filippenzen 2:3—4",
     en: "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others.",
     id: "Dengan tidak mencari kepentingan sendiri atau puji-pujian yang sia-sia. Sebaliknya hendaklah dengan rendah hati yang seorang menganggap yang lain lebih utama dari pada dirinya sendiri; dan janganlah tiap-tiap orang hanya memperhatikan kepentingannya sendiri, tetapi kepentingan orang lain juga.",
     nl: "Doe niets uit zelfzucht of eigenwaan, maar acht in ootmoed de een de ander uitnemender dan uzelf; en ieder lette niet op het zijne, maar ieder ook op dat van de ander.",
@@ -298,16 +298,16 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Leadership � Guide", "Kepemimpinan � Panduan", "Leiderschap � Gids")}
+            {t("Leadership — Guide", "Kepemimpinan — Panduan", "Leiderschap — Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {lang === "en" ? <>The Servant<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></> : lang === "id" ? <>Ujian<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Hamba.</span></> : <>De Dienende<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></>}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem", lineHeight: 1.65 }}>
             {t(
-              "Five real leadership moments. No wrong answers � just honest ones. Each choice reveals something about how you actually lead.",
-              "Lima momen kepemimpinan nyata. Tidak ada jawaban yang salah � hanya yang jujur. Setiap pilihan mengungkapkan sesuatu tentang cara Anda sebenarnya memimpin.",
-              "Vijf echte leiderschapsmomenten. Geen verkeerde antwoorden � alleen eerlijke. Elke keuze onthult iets over hoe je werkelijk leidt.",
+              "Five real leadership moments. No wrong answers — just honest ones. Each choice reveals something about how you actually lead.",
+              "Lima momen kepemimpinan nyata. Tidak ada jawaban yang salah — hanya yang jujur. Setiap pilihan mengungkapkan sesuatu tentang cara Anda sebenarnya memimpin.",
+              "Vijf echte leiderschapsmomenten. Geen verkeerde antwoorden — alleen eerlijke. Elke keuze onthult iets over hoe je werkelijk leidt.",
             )}
           </p>
 
@@ -319,7 +319,7 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
             ) : (
               <button onClick={handleSave} disabled={isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending ? t("Saving�", "Menyimpan�", "Opslaan�") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             )
           )}
@@ -410,9 +410,9 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", marginBottom: "1rem" }}>
               {t(
-                "Servant leadership is not a personality type � it is a set of practised choices. The scenarios you just completed reveal where you move naturally toward serving others, and where self-protection, efficiency, or comfort pull you in a different direction.",
-                "Kepemimpinan hamba bukan tipe kepribadian � itu adalah serangkaian pilihan yang dipraktikkan. Skenario yang baru saja Anda selesaikan mengungkapkan di mana Anda secara alami bergerak menuju melayani orang lain, dan di mana perlindungan diri, efisiensi, atau kenyamanan menarik Anda ke arah yang berbeda.",
-                "Dienend leiderschap is geen persoonlijkheidstype � het is een reeks beoefende keuzes. De scenario's die je zojuist hebt voltooid onthullen waar je van nature naar het dienen van anderen beweegt, en waar zelfbescherming, effici�ntie of comfort je een andere kant op trekken.",
+                "Servant leadership is not a personality type — it is a set of practised choices. The scenarios you just completed reveal where you move naturally toward serving others, and where self-protection, efficiency, or comfort pull you in a different direction.",
+                "Kepemimpinan hamba bukan tipe kepribadian — itu adalah serangkaian pilihan yang dipraktikkan. Skenario yang baru saja Anda selesaikan mengungkapkan di mana Anda secara alami bergerak menuju melayani orang lain, dan di mana perlindungan diri, efisiensi, atau kenyamanan menarik Anda ke arah yang berbeda.",
+                "Dienend leiderschap is geen persoonlijkheidstype — het is een reeks beoefende keuzes. De scenario's die je zojuist hebt voltooid onthullen waar je van nature naar het dienen van anderen beweegt, en waar zelfbescherming, effici—ntie of comfort je een andere kant op trekken.",
               )}
             </p>
             <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.15rem", fontStyle: "italic", color: "oklch(30% 0.10 260)", lineHeight: 1.65 }}>
@@ -437,16 +437,16 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
             {t(
-              "Robert Greenleaf coined 'servant leadership' in 1970. But the model predates him by two thousand years. Mark 10:45 is the most concentrated statement on leadership in the New Testament � and it comes in the middle of an argument among the disciples about who is the greatest.",
-              "Robert Greenleaf menciptakan 'servant leadership' pada tahun 1970. Tetapi modelnya mendahuluinya dua ribu tahun. Markus 10:45 adalah pernyataan paling ringkas tentang kepemimpinan dalam Perjanjian Baru � dan itu datang di tengah pertengkaran di antara para murid tentang siapa yang terbesar.",
-              "Robert Greenleaf bedacht 'dienend leiderschap' in 1970. Maar het model gaat hem tweeduizend jaar vooraf. Markus 10:45 is de meest geconcentreerde uitspraak over leiderschap in het Nieuwe Testament � en het komt midden in een ruzie onder de discipelen over wie de grootste is.",
+              "Robert Greenleaf coined 'servant leadership' in 1970. But the model predates him by two thousand years. Mark 10:45 is the most concentrated statement on leadership in the New Testament — and it comes in the middle of an argument among the disciples about who is the greatest.",
+              "Robert Greenleaf menciptakan 'servant leadership' pada tahun 1970. Tetapi modelnya mendahuluinya dua ribu tahun. Markus 10:45 adalah pernyataan paling ringkas tentang kepemimpinan dalam Perjanjian Baru — dan itu datang di tengah pertengkaran di antara para murid tentang siapa yang terbesar.",
+              "Robert Greenleaf bedacht 'dienend leiderschap' in 1970. Maar het model gaat hem tweeduizend jaar vooraf. Markus 10:45 is de meest geconcentreerde uitspraak over leiderschap in het Nieuwe Testament — en het komt midden in een ruzie onder de discipelen over wie de grootste is.",
             )}
           </p>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
             {t(
-              "Jesus doesn't give them a framework or a list of principles. He points to himself � not as a model to imitate from a safe distance, but as the living demonstration of what leadership that gives itself away actually looks like. Philippians 2 captures the same movement: 'consider others more significant than yourselves.' In a cross-cultural team, this is not softness. It is the most disruptive leadership posture available.",
-              "Yesus tidak memberi mereka kerangka atau daftar prinsip. Dia menunjuk pada diri-Nya sendiri � bukan sebagai model yang ditiru dari jarak aman, tetapi sebagai demonstrasi hidup tentang seperti apa kepemimpinan yang memberikan dirinya sendiri. Filipi 2 menangkap gerakan yang sama: 'anggap yang lain lebih utama dari pada dirimu sendiri.' Dalam tim lintas budaya, ini bukan kelemahan. Ini adalah postur kepemimpinan yang paling mengganggu yang tersedia.",
-              "Jezus geeft hen geen raamwerk of een lijst van principes. Hij wijst naar zichzelf � niet als een model om van veilige afstand na te bootsen, maar als de levende demonstratie van hoe leiderschap dat zichzelf weggeeft er werkelijk uitziet. Filippenzen 2 beschrijft dezelfde beweging: 'acht de ander uitnemender dan uzelf.' In een intercultureel team is dit geen zwakheid. Het is de meest disruptieve leiderschapshouding die beschikbaar is.",
+              "Jesus doesn't give them a framework or a list of principles. He points to himself — not as a model to imitate from a safe distance, but as the living demonstration of what leadership that gives itself away actually looks like. Philippians 2 captures the same movement: 'consider others more significant than yourselves.' In a cross-cultural team, this is not softness. It is the most disruptive leadership posture available.",
+              "Yesus tidak memberi mereka kerangka atau daftar prinsip. Dia menunjuk pada diri-Nya sendiri — bukan sebagai model yang ditiru dari jarak aman, tetapi sebagai demonstrasi hidup tentang seperti apa kepemimpinan yang memberikan dirinya sendiri. Filipi 2 menangkap gerakan yang sama: 'anggap yang lain lebih utama dari pada dirimu sendiri.' Dalam tim lintas budaya, ini bukan kelemahan. Ini adalah postur kepemimpinan yang paling mengganggu yang tersedia.",
+              "Jezus geeft hen geen raamwerk of een lijst van principes. Hij wijst naar zichzelf — niet als een model om van veilige afstand na te bootsen, maar als de levende demonstratie van hoe leiderschap dat zichzelf weggeeft er werkelijk uitziet. Filippenzen 2 beschrijft dezelfde beweging: 'acht de ander uitnemender dan uzelf.' In een intercultureel team is dit geen zwakheid. Het is de meest disruptieve leiderschapshouding die beschikbaar is.",
             )}
           </p>
 
@@ -482,12 +482,12 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
             </h2>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!userPathway ? (
-                <Link href="/membership" className="btn-primary">{t("Join the Community ?", "Bergabung ?", "Word lid ?")}</Link>
+                <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung", "Word lid")}</Link>
               ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard ?", "Ke Dashboard ?", "Naar Dashboard ?")}</Link>
+                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard", "Naar Dashboard")}</Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving�", "Menyimpan�", "Opslaan�") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                  {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )}
               <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>
@@ -514,7 +514,7 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
               "{lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id : VERSES[activeVerse as keyof typeof VERSES].nl}"
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
-              � {lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en_ref : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id_ref : VERSES[activeVerse as keyof typeof VERSES].nl_ref} ({translation})
+              — {lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en_ref : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id_ref : VERSES[activeVerse as keyof typeof VERSES].nl_ref} ({translation})
             </p>
             <button onClick={() => setActiveVerse(null)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, background: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", border: "none", padding: "0.625rem 1.5rem", cursor: "pointer", borderRadius: "4px" }}>
               {t("Close", "Tutup", "Sluiten")}

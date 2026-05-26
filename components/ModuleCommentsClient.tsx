@@ -5,6 +5,10 @@ import { submitModuleComment, deleteModuleComment } from "@/app/(marketing)/reso
 import type { ModuleComment } from "./ModuleComments";
 
 const FONT = "var(--font-montserrat)";
+const CORMORANT = "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif";
+const navy = "oklch(22% 0.10 260)";
+const orange = "oklch(65% 0.15 45)";
+const bodyText = "oklch(38% 0.05 260)";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -25,7 +29,6 @@ export default function ModuleCommentsClient({
   publishedComments: ModuleComment[];
   myComment: ModuleComment | null;
 }) {
-  const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [visibility, setVisibility] = useState<"private" | "public_pending">("public_pending");
   const [submitted, setSubmitted] = useState(!!myComment);
@@ -70,290 +73,305 @@ export default function ModuleCommentsClient({
     });
   }
 
-  const hasContent = hasPaidAccess && publishedComments.length > 0;
-  const showSection = isLoggedIn || hasContent;
+  const hasPublished = hasPaidAccess && publishedComments.length > 0;
+  const showSection = isLoggedIn || hasPublished;
 
   if (!showSection) return null;
 
   return (
     <div style={{ fontFamily: FONT }}>
-      {/* Section toggle */}
-      <button
-        type="button"
-        onClick={() => setOpen(v => !v)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: 0,
-          marginBottom: open ? "1.5rem" : 0,
-        }}
-      >
-        <span style={{
-          fontSize: "0.58rem",
-          fontWeight: 700,
-          letterSpacing: "0.13em",
-          textTransform: "uppercase",
-          color: "oklch(54% 0.008 260)",
-        }}>
-          From the Field
-        </span>
-        {hasPaidAccess && publishedComments.length > 0 && (
-          <span style={{
-            fontSize: "0.6rem",
-            fontWeight: 700,
-            background: "oklch(65% 0.15 45 / 0.12)",
-            color: "oklch(45% 0.12 45)",
-            padding: "1px 6px",
-            borderRadius: "10px",
+
+      {/* Section header */}
+      <p style={{
+        color: orange,
+        fontFamily: FONT,
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        margin: "0 0 12px",
+      }}>
+        From the Field
+      </p>
+      <h2 style={{
+        fontFamily: CORMORANT,
+        fontSize: "clamp(26px, 3.5vw, 36px)",
+        fontWeight: 600,
+        color: navy,
+        margin: "0 0 12px",
+        lineHeight: 1.2,
+      }}>
+        What&apos;s working in your context?
+      </h2>
+      <p style={{
+        fontFamily: FONT,
+        fontSize: 15,
+        color: bodyText,
+        lineHeight: 1.75,
+        margin: "0 0 32px",
+        maxWidth: 560,
+      }}>
+        Share what you tried, what surprised you, and what you would pass on to someone just starting.
+        {hasPublished && " Below are reflections from others in the Crispy community."}
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+
+        {/* Admin reply to current user */}
+        {currentComment?.admin_reply && (
+          <div style={{
+            padding: "1rem 1.25rem",
+            background: "oklch(65% 0.15 45 / 0.06)",
+            border: "1px solid oklch(65% 0.15 45 / 0.22)",
           }}>
-            {publishedComments.length}
-          </span>
+            <p style={{
+              fontFamily: FONT,
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "oklch(45% 0.12 45)",
+              margin: "0 0 8px",
+            }}>
+              Reply from Crispy
+            </p>
+            <p style={{
+              fontFamily: FONT,
+              fontSize: "0.875rem",
+              color: "oklch(28% 0.008 260)",
+              lineHeight: 1.7,
+              margin: 0,
+            }}>
+              {currentComment.admin_reply}
+            </p>
+          </div>
         )}
-        <span style={{
-          fontSize: "0.65rem",
-          color: "oklch(62% 0.006 260)",
-          marginLeft: "auto",
-          transition: "transform 0.2s",
-          transform: open ? "rotate(180deg)" : "none",
-          display: "inline-block",
-        }}>▾</span>
-      </button>
 
-      {open && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-
-          {/* Admin reply to user */}
-          {currentComment?.admin_reply && (
-            <div style={{
-              padding: "0.875rem 1rem",
-              background: "oklch(65% 0.15 45 / 0.06)",
-              border: "1px solid oklch(65% 0.15 45 / 0.25)",
-            }}>
-              <p style={{
-                fontSize: "0.6rem",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "oklch(45% 0.12 45)",
-                marginBottom: "0.375rem",
+        {/* Published community comments */}
+        {hasPublished && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {publishedComments.map(entry => (
+              <div key={entry.id} style={{
+                padding: "1rem 1.25rem",
+                background: "white",
+                border: "1px solid oklch(90% 0.004 80)",
               }}>
-                Reply from Crispy
-              </p>
-              <p style={{ fontSize: "0.8rem", color: "oklch(28% 0.008 260)", lineHeight: 1.65, margin: 0 }}>
-                {currentComment.admin_reply}
-              </p>
-            </div>
-          )}
-
-          {/* Published community comments */}
-          {hasPaidAccess && publishedComments.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {publishedComments.map(entry => (
-                <div key={entry.id} style={{
-                  padding: "0.875rem 1rem",
-                  background: "oklch(98% 0.003 80)",
-                  border: "1px solid oklch(90% 0.004 80)",
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  marginBottom: "0.5rem",
                 }}>
-                  <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "0.375rem",
-                    gap: "0.5rem",
+                  <span style={{
+                    fontFamily: FONT,
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    color: navy,
                   }}>
-                    <span style={{
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      color: "oklch(38% 0.008 260)",
-                    }}>
-                      {entry.display_name ?? "Community member"}
-                    </span>
-                    <span style={{ fontSize: "0.62rem", color: "oklch(58% 0.005 260)" }}>
-                      {formatDate(entry.created_at)}
-                    </span>
-                  </div>
-                  <p style={{
-                    fontSize: "0.8rem",
-                    color: "oklch(32% 0.008 260)",
-                    lineHeight: 1.65,
-                    margin: 0,
+                    {entry.display_name ?? "Community member"}
+                  </span>
+                  <span style={{
+                    fontFamily: FONT,
+                    fontSize: "0.65rem",
+                    color: "oklch(58% 0.005 260)",
                   }}>
-                    {entry.comment}
-                  </p>
+                    {formatDate(entry.created_at)}
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* My submitted comment */}
-          {submitted && currentComment && (
-            <div style={{
-              padding: "0.875rem 1rem",
-              background: "oklch(65% 0.15 45 / 0.05)",
-              border: "1px solid oklch(65% 0.15 45 / 0.18)",
-            }}>
-              <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "0.375rem",
-                gap: "0.5rem",
-              }}>
-                <span style={{
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  color: "oklch(42% 0.12 260)",
-                }}>
-                  Your reflection
-                  {currentComment.visibility === "private"
-                    ? " · Sent to Crispy"
-                    : currentComment.visibility === "public_pending"
-                    ? " · Pending approval"
-                    : " · Published"}
-                </span>
-                <button
-                  type="button"
-                  onClick={handleDelete}
-                  disabled={isDeleting}
-                  style={{
-                    fontSize: "0.62rem",
-                    color: "oklch(52% 0.06 20)",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: 0,
-                    opacity: isDeleting ? 0.5 : 1,
-                    textDecoration: "underline",
-                    textUnderlineOffset: "3px",
-                  }}
-                >
-                  {isDeleting ? "Removing…" : "Remove"}
-                </button>
-              </div>
-              <p style={{
-                fontSize: "0.8rem",
-                color: "oklch(32% 0.008 260)",
-                lineHeight: 1.65,
-                margin: 0,
-              }}>
-                {currentComment.comment}
-              </p>
-            </div>
-          )}
-
-          {/* Submit form */}
-          {isLoggedIn && !submitted && (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              <p style={{
-                fontSize: "0.62rem",
-                fontWeight: 700,
-                color: "oklch(52% 0.008 260)",
-                letterSpacing: "0.05em",
-                margin: 0,
-              }}>
-                Share from the field
-              </p>
-              <textarea
-                value={comment}
-                onChange={e => setComment(e.target.value)}
-                placeholder="What has this looked like in your context? What worked, what surprised you?"
-                required
-                rows={3}
-                style={{
-                  width: "100%",
+                <p style={{
                   fontFamily: FONT,
-                  fontSize: "0.8125rem",
-                  color: "oklch(22% 0.005 260)",
-                  border: "1px solid oklch(82% 0.008 80)",
-                  padding: "0.625rem 0.75rem",
-                  resize: "vertical",
-                  outline: "none",
-                  lineHeight: 1.6,
-                  background: "white",
-                  boxSizing: "border-box",
-                }}
-              />
-
-              {/* Visibility selector */}
-              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                {(["public_pending", "private"] as const).map(v => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setVisibility(v)}
-                    style={{
-                      fontFamily: FONT,
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.05em",
-                      padding: "0.375rem 0.875rem",
-                      border: `1px solid ${visibility === v ? "oklch(42% 0.12 260)" : "oklch(82% 0.008 80)"}`,
-                      background: visibility === v ? "oklch(42% 0.12 260)" : "transparent",
-                      color: visibility === v ? "white" : "oklch(52% 0.008 260)",
-                      cursor: "pointer",
-                      transition: "all 0.15s",
-                    }}
-                  >
-                    {v === "public_pending" ? "Share with Community" : "Send to Crispy"}
-                  </button>
-                ))}
+                  fontSize: "0.875rem",
+                  color: bodyText,
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}>
+                  {entry.comment}
+                </p>
               </div>
+            ))}
+          </div>
+        )}
 
-              <p style={{
-                fontSize: "0.65rem",
-                color: "oklch(58% 0.006 260)",
-                margin: 0,
-                lineHeight: 1.5,
+        {/* User's own submitted comment */}
+        {submitted && currentComment && (
+          <div style={{
+            padding: "1rem 1.25rem",
+            background: "oklch(65% 0.15 45 / 0.05)",
+            border: "1px solid oklch(65% 0.15 45 / 0.18)",
+          }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "0.5rem",
+              marginBottom: "0.5rem",
+            }}>
+              <span style={{
+                fontFamily: FONT,
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: "oklch(42% 0.12 260)",
               }}>
-                {visibility === "public_pending"
-                  ? "Submitted for review — published on approval, visible to paid members."
-                  : "Private — only shared with the Crispy team. We may reply."}
-              </p>
+                Your reflection
+                {currentComment.visibility === "private"
+                  ? " · Sent to Crispy"
+                  : currentComment.visibility === "public_pending"
+                  ? " · Pending approval"
+                  : " · Published"}
+              </span>
+              <button
+                type="button"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                style={{
+                  fontFamily: FONT,
+                  fontSize: "0.65rem",
+                  color: "oklch(52% 0.06 20)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  opacity: isDeleting ? 0.5 : 1,
+                  textDecoration: "underline",
+                  textUnderlineOffset: "3px",
+                }}
+              >
+                {isDeleting ? "Removing…" : "Remove"}
+              </button>
+            </div>
+            <p style={{
+              fontFamily: FONT,
+              fontSize: "0.875rem",
+              color: bodyText,
+              lineHeight: 1.7,
+              margin: 0,
+            }}>
+              {currentComment.comment}
+            </p>
+          </div>
+        )}
 
-              {error && (
-                <p style={{ fontSize: "0.72rem", color: "oklch(50% 0.18 20)", margin: 0 }}>{error}</p>
-              )}
+        {/* Submit form */}
+        {isLoggedIn && !submitted && (
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+            <textarea
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              placeholder="What has this looked like in your context? What worked, what surprised you?"
+              required
+              rows={4}
+              style={{
+                width: "100%",
+                fontFamily: FONT,
+                fontSize: "0.9rem",
+                color: "oklch(22% 0.005 260)",
+                border: "1px solid oklch(82% 0.008 80)",
+                padding: "0.75rem 0.875rem",
+                resize: "vertical",
+                outline: "none",
+                lineHeight: 1.65,
+                background: "white",
+                boxSizing: "border-box",
+              }}
+            />
 
-              <div>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              {(["public_pending", "private"] as const).map(v => (
                 <button
-                  type="submit"
-                  disabled={isPending || !comment.trim()}
+                  key={v}
+                  type="button"
+                  onClick={() => setVisibility(v)}
                   style={{
                     fontFamily: FONT,
                     fontSize: "0.68rem",
                     fontWeight: 700,
-                    letterSpacing: "0.07em",
-                    textTransform: "uppercase",
-                    background: "oklch(30% 0.12 260)",
-                    color: "white",
-                    border: "none",
-                    padding: "0.55rem 1.25rem",
-                    cursor: isPending || !comment.trim() ? "default" : "pointer",
-                    opacity: isPending || !comment.trim() ? 0.5 : 1,
-                    transition: "opacity 0.15s",
+                    letterSpacing: "0.05em",
+                    padding: "0.4rem 1rem",
+                    border: `1px solid ${visibility === v ? navy : "oklch(82% 0.008 80)"}`,
+                    background: visibility === v ? navy : "transparent",
+                    color: visibility === v ? "white" : "oklch(52% 0.008 260)",
+                    cursor: "pointer",
+                    transition: "all 0.15s",
                   }}
                 >
-                  {isPending ? "Sending…" : "Submit"}
+                  {v === "public_pending" ? "Share with Community" : "Send to Crispy"}
                 </button>
-              </div>
-            </form>
-          )}
+              ))}
+            </div>
 
-          {!isLoggedIn && (
             <p style={{
-              fontSize: "0.75rem",
-              color: "oklch(52% 0.006 260)",
+              fontFamily: FONT,
+              fontSize: "0.72rem",
+              color: "oklch(58% 0.006 260)",
               margin: 0,
+              lineHeight: 1.55,
             }}>
-              <a href="/login" style={{ color: "oklch(42% 0.12 260)", fontWeight: 700 }}>Sign in</a> to share your field experience.
+              {visibility === "public_pending"
+                ? "Submitted for review — published on approval, visible to paid members."
+                : "Private — only shared with the Crispy team. We may reply."}
             </p>
-          )}
-        </div>
-      )}
+
+            {error && (
+              <p style={{
+                fontFamily: FONT,
+                fontSize: "0.75rem",
+                color: "oklch(50% 0.18 20)",
+                margin: 0,
+              }}>
+                {error}
+              </p>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                disabled={isPending || !comment.trim()}
+                style={{
+                  fontFamily: FONT,
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.07em",
+                  textTransform: "uppercase",
+                  background: navy,
+                  color: "white",
+                  border: "none",
+                  padding: "0.6rem 1.5rem",
+                  cursor: isPending || !comment.trim() ? "default" : "pointer",
+                  opacity: isPending || !comment.trim() ? 0.5 : 1,
+                  transition: "opacity 0.15s",
+                }}
+              >
+                {isPending ? "Sending…" : "Submit"}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {!isLoggedIn && (
+          <p style={{
+            fontFamily: FONT,
+            fontSize: "0.875rem",
+            color: bodyText,
+            margin: 0,
+            lineHeight: 1.65,
+          }}>
+            <a
+              href="/login"
+              style={{
+                color: "oklch(42% 0.12 260)",
+                fontWeight: 700,
+                textDecoration: "underline",
+                textUnderlineOffset: "3px",
+              }}
+            >
+              Sign in
+            </a>{" "}
+            to share your field experience.
+          </p>
+        )}
+
+      </div>
     </div>
   );
 }

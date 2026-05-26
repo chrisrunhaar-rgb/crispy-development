@@ -51,7 +51,7 @@ const LETTERS = [
       { q: "Dapatkah Anda menjelaskan dengan jelas mengapa tujuan ini penting bagi Anda sekarang?", hint: "\"Mengapa\" yang kuat memotivasi tindakan ketika semangat memudar." },
     ],
     worksheetQNl: [
-      { q: "Kun jij in ��n heldere zin beschrijven wat je precies wilt bereiken?", hint: "Een specifiek doel benoemt de uitkomst, niet de activiteit." },
+      { q: "Kun jij in ——n heldere zin beschrijven wat je precies wilt bereiken?", hint: "Een specifiek doel benoemt de uitkomst, niet de activiteit." },
       { q: "Weet je wie verantwoordelijk is en wie er verder bij betrokken is?", hint: "Duidelijkheid over eigenaarschap voorkomt dat doelen afdrijven." },
       { q: "Weet je waar of in welke context dit zal plaatsvinden?", hint: "Context verankert een doel in de werkelijkheid." },
       { q: "Kun je duidelijk uitleggen waarom dit doel er nu voor jou toe doet?", hint: "Een sterk 'waarom' voedt actie wanneer de motivatie wegzakt." },
@@ -61,7 +61,7 @@ const LETTERS = [
     actionNl: "VERDUIDELIJK",
     actionDescEn: "Rewrite your goal as a single sentence that answers: what, who, where, and why.",
     actionDescId: "Tulis ulang tujuan Anda sebagai satu kalimat yang menjawab: apa, siapa, di mana, dan mengapa.",
-    actionDescNl: "Herschrijf je doel als ��n zin die antwoord geeft op: wat, wie, waar en waarom.",
+    actionDescNl: "Herschrijf je doel als ——n zin die antwoord geeft op: wat, wie, waar en waarom.",
     actionColor: "oklch(42% 0.14 260)",
   },
   {
@@ -90,26 +90,26 @@ const LETTERS = [
       "Helpt het doel je door uitdagingen en tegenslagen heen?",
     ],
     worksheetQEn: [
-      { q: "Does this goal connect to something you genuinely care about � a value, a calling, or a dream?", hint: "Intrinsic motivation outlasts external pressure every time." },
+      { q: "Does this goal connect to something you genuinely care about — a value, a calling, or a dream?", hint: "Intrinsic motivation outlasts external pressure every time." },
       { q: "When you think about achieving this goal, does it create positive energy and excitement?", hint: "If the idea feels flat, the goal may be borrowed from someone else's vision." },
-      { q: "Can you imagine this goal carrying you through a hard stretch � when progress stalls or costs rise?", hint: "Motivating goals feel worth the sacrifice." },
+      { q: "Can you imagine this goal carrying you through a hard stretch — when progress stalls or costs rise?", hint: "Motivating goals feel worth the sacrifice." },
     ],
     worksheetQId: [
-      { q: "Apakah tujuan ini terhubung dengan sesuatu yang benar-benar Anda pedulikan � sebuah nilai, panggilan, atau impian?", hint: "Motivasi intrinsik selalu lebih tahan lama daripada tekanan eksternal." },
+      { q: "Apakah tujuan ini terhubung dengan sesuatu yang benar-benar Anda pedulikan — sebuah nilai, panggilan, atau impian?", hint: "Motivasi intrinsik selalu lebih tahan lama daripada tekanan eksternal." },
       { q: "Ketika memikirkan pencapaian tujuan ini, apakah itu menciptakan energi positif dan kegembiraan?", hint: "Jika ideanya terasa datar, tujuan mungkin dipinjam dari visi orang lain." },
-      { q: "Bisakah Anda membayangkan tujuan ini membawa Anda melalui masa sulit � ketika kemajuan terhenti atau biaya meningkat?", hint: "Tujuan yang memotivasi terasa sepadan dengan pengorbanannya." },
+      { q: "Bisakah Anda membayangkan tujuan ini membawa Anda melalui masa sulit — ketika kemajuan terhenti atau biaya meningkat?", hint: "Tujuan yang memotivasi terasa sepadan dengan pengorbanannya." },
     ],
     worksheetQNl: [
-      { q: "Heeft dit doel verbinding met iets wat je echt belangrijk vindt � een waarde, een roeping of een droom?", hint: "Intrinsieke motivatie houdt het altijd langer vol dan externe druk." },
+      { q: "Heeft dit doel verbinding met iets wat je echt belangrijk vindt — een waarde, een roeping of een droom?", hint: "Intrinsieke motivatie houdt het altijd langer vol dan externe druk." },
       { q: "Wanneer je aan het bereiken van dit doel denkt, geeft dat positieve energie en enthousiasme?", hint: "Als het idee vlak aanvoelt, is het doel misschien geleend van iemand anders' visie." },
-      { q: "Kun jij je voorstellen dat dit doel je door een moeilijke periode heen draagt � wanneer de voortgang stagneert of de kosten stijgen?", hint: "Motiverende doelen voelen het offer waard." },
+      { q: "Kun jij je voorstellen dat dit doel je door een moeilijke periode heen draagt — wanneer de voortgang stagneert of de kosten stijgen?", hint: "Motiverende doelen voelen het offer waard." },
     ],
     actionEn: "REFRAME",
     actionId: "UBAH PERSPEKTIF",
     actionNl: "HERFORMULEER",
-    actionDescEn: "Connect the goal to a deeper value or purpose � find the 'why' that creates genuine energy.",
-    actionDescId: "Hubungkan tujuan dengan nilai atau tujuan yang lebih dalam � temukan 'mengapa' yang menciptakan energi yang nyata.",
-    actionDescNl: "Verbind het doel met een diepere waarde of een hoger doel � vind het 'waarom' dat echte energie geeft.",
+    actionDescEn: "Connect the goal to a deeper value or purpose — find the 'why' that creates genuine energy.",
+    actionDescId: "Hubungkan tujuan dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi yang nyata.",
+    actionDescNl: "Verbind het doel met een diepere waarde of een hoger doel — vind het 'waarom' dat echte energie geeft.",
     actionColor: "oklch(48% 0.18 25)",
   },
   {
@@ -140,24 +140,24 @@ const LETTERS = [
     worksheetQEn: [
       { q: "Do you have (or can realistically obtain) the time, money, and resources this goal requires?", hint: "Stretch goals inspire. Impossible goals demoralise." },
       { q: "Can you name at least three concrete actions you would take to move toward this goal?", hint: "If you can't describe the path, the goal may still be too vague." },
-      { q: "Do you have the skills, relationships, or support structure needed to succeed � or a plan to build them?", hint: "Gaps in capability are normal; ignoring them is not." },
+      { q: "Do you have the skills, relationships, or support structure needed to succeed — or a plan to build them?", hint: "Gaps in capability are normal; ignoring them is not." },
     ],
     worksheetQId: [
       { q: "Apakah Anda memiliki (atau dapat memperoleh secara realistis) waktu, uang, dan sumber daya yang diperlukan tujuan ini?", hint: "Tujuan ambisius menginspirasi. Tujuan yang mustahil membuat lesu." },
       { q: "Bisakah Anda menyebutkan setidaknya tiga tindakan konkret yang akan Anda ambil untuk menuju tujuan ini?", hint: "Jika Anda tidak bisa menggambarkan jalannya, tujuan mungkin masih terlalu kabur." },
-      { q: "Apakah Anda memiliki keterampilan, hubungan, atau struktur dukungan yang diperlukan untuk berhasil � atau rencana untuk membangunnya?", hint: "Kesenjangan kemampuan adalah hal yang normal; mengabaikannya tidak." },
+      { q: "Apakah Anda memiliki keterampilan, hubungan, atau struktur dukungan yang diperlukan untuk berhasil — atau rencana untuk membangunnya?", hint: "Kesenjangan kemampuan adalah hal yang normal; mengabaikannya tidak." },
     ],
     worksheetQNl: [
-      { q: "Heb je de tijd, het geld en de middelen die dit doel vereist � of kun je die realistisch verkrijgen?", hint: "Ambitieuze doelen inspireren. Onmogelijke doelen ontmoedigen." },
+      { q: "Heb je de tijd, het geld en de middelen die dit doel vereist — of kun je die realistisch verkrijgen?", hint: "Ambitieuze doelen inspireren. Onmogelijke doelen ontmoedigen." },
       { q: "Kun jij ten minste drie concrete acties benoemen die je zou ondernemen om dit doel te bereiken?", hint: "Als je het pad niet kunt beschrijven, is het doel misschien nog te vaag." },
-      { q: "Heb je de vaardigheden, relaties of ondersteuningsstructuur die nodig zijn om te slagen � of een plan om die op te bouwen?", hint: "Hiaten in capaciteit zijn normaal; ze negeren niet." },
+      { q: "Heb je de vaardigheden, relaties of ondersteuningsstructuur die nodig zijn om te slagen — of een plan om die op te bouwen?", hint: "Hiaten in capaciteit zijn normaal; ze negeren niet." },
     ],
     actionEn: "NEGOTIATE",
     actionId: "NEGOSIASI",
     actionNl: "ONDERHANDEL",
-    actionDescEn: "Adjust the scope, timeline, or resources to make the goal doable � without losing the ambition.",
-    actionDescId: "Sesuaikan ruang lingkup, jadwal, atau sumber daya agar tujuan bisa dilakukan � tanpa kehilangan ambisi.",
-    actionDescNl: "Pas de reikwijdte, planning of middelen aan zodat het doel uitvoerbaar wordt � zonder de ambitie te verliezen.",
+    actionDescEn: "Adjust the scope, timeline, or resources to make the goal doable — without losing the ambition.",
+    actionDescId: "Sesuaikan ruang lingkup, jadwal, atau sumber daya agar tujuan bisa dilakukan — tanpa kehilangan ambisi.",
+    actionDescNl: "Pas de reikwijdte, planning of middelen aan zodat het doel uitvoerbaar wordt — zonder de ambitie te verliezen.",
     actionColor: "oklch(46% 0.16 145)",
   },
   {
@@ -186,26 +186,26 @@ const LETTERS = [
       "Is dit het juiste moment om dit doel na te streven?",
     ],
     worksheetQEn: [
-      { q: "Does this goal align with where you are in life right now � your role, season, and priorities?", hint: "A goal right for the future can still be wrong for today." },
+      { q: "Does this goal align with where you are in life right now — your role, season, and priorities?", hint: "A goal right for the future can still be wrong for today." },
       { q: "Does pursuing this goal move you meaningfully toward your long-term vision or calling?", hint: "Relevant goals build on each other. Irrelevant ones scatter energy." },
       { q: "If you stopped everything else, would this goal be worth your full focus right now?", hint: "Saying yes to one thing means saying no to many others." },
     ],
     worksheetQId: [
-      { q: "Apakah tujuan ini selaras dengan posisi Anda dalam hidup sekarang � peran, musim, dan prioritas Anda?", hint: "Tujuan yang tepat untuk masa depan bisa saja salah untuk hari ini." },
+      { q: "Apakah tujuan ini selaras dengan posisi Anda dalam hidup sekarang — peran, musim, dan prioritas Anda?", hint: "Tujuan yang tepat untuk masa depan bisa saja salah untuk hari ini." },
       { q: "Apakah mengejar tujuan ini membawa Anda secara bermakna menuju visi atau panggilan jangka panjang Anda?", hint: "Tujuan yang relevan saling membangun. Yang tidak relevan mencerai-beraikan energi." },
       { q: "Jika Anda menghentikan segalanya, apakah tujuan ini layak mendapat fokus penuh Anda sekarang?", hint: "Berkata ya pada satu hal berarti berkata tidak pada banyak hal lainnya." },
     ],
     worksheetQNl: [
-      { q: "Sluit dit doel aan bij waar je nu in het leven staat � je rol, seizoen en prioriteiten?", hint: "Een doel dat juist is voor de toekomst kan vandaag toch verkeerd zijn." },
+      { q: "Sluit dit doel aan bij waar je nu in het leven staat — je rol, seizoen en prioriteiten?", hint: "Een doel dat juist is voor de toekomst kan vandaag toch verkeerd zijn." },
       { q: "Brengt het nastreven van dit doel je betekenisvol dichter bij je langetermijnvisie of roeping?", hint: "Relevante doelen bouwen op elkaar voort. Irrelevante doelen versnipperen energie." },
-      { q: "Als je alles zou stilleggen, is dit doel dan de volledige focus waard op dit moment?", hint: "Ja zeggen tegen ��n ding betekent nee zeggen tegen veel andere dingen." },
+      { q: "Als je alles zou stilleggen, is dit doel dan de volledige focus waard op dit moment?", hint: "Ja zeggen tegen ——n ding betekent nee zeggen tegen veel andere dingen." },
     ],
     actionEn: "NEGOTIATE",
     actionId: "NEGOSIASI",
     actionNl: "ONDERHANDEL",
-    actionDescEn: "Ask whether this is the right goal for this season � or if it belongs in a different chapter.",
-    actionDescId: "Tanyakan apakah ini tujuan yang tepat untuk musim ini � atau apakah itu milik bab yang berbeda.",
-    actionDescNl: "Vraag je af of dit het juiste doel is voor dit seizoen � of dat het thuishoort in een ander hoofdstuk.",
+    actionDescEn: "Ask whether this is the right goal for this season — or if it belongs in a different chapter.",
+    actionDescId: "Tanyakan apakah ini tujuan yang tepat untuk musim ini — atau apakah itu milik bab yang berbeda.",
+    actionDescNl: "Vraag je af of dit het juiste doel is voor dit seizoen — of dat het thuishoort in een ander hoofdstuk.",
     actionColor: "oklch(44% 0.14 290)",
   },
   {
@@ -215,9 +215,9 @@ const LETTERS = [
     wordNl: "Meetbaar",
     color: "oklch(40% 0.12 60)",
     colorBg: "oklch(40% 0.12 60 / 0.08)",
-    descEn: "A trackable goal has clear milestones and a definition of done. What gets measured gets managed � and celebrated.",
-    descId: "Tujuan yang dapat dilacak memiliki tonggak yang jelas dan definisi selesai. Apa yang diukur dikelola � dan dirayakan.",
-    descNl: "Een meetbaar doel heeft duidelijke mijlpalen en een definitie van 'klaar'. Wat gemeten wordt, wordt beheerd � en gevierd.",
+    descEn: "A trackable goal has clear milestones and a definition of done. What gets measured gets managed — and celebrated.",
+    descId: "Tujuan yang dapat dilacak memiliki tonggak yang jelas dan definisi selesai. Apa yang diukur dikelola — dan dirayakan.",
+    descNl: "Een meetbaar doel heeft duidelijke mijlpalen en een definitie van 'klaar'. Wat gemeten wordt, wordt beheerd — en gevierd.",
     questionsEn: [
       "How will you track progress?",
       "How will you know when the goal is accomplished?",
@@ -234,26 +234,26 @@ const LETTERS = [
       "Zijn er mijlpalen of controlepunten onderweg?",
     ],
     worksheetQEn: [
-      { q: "Do you have a clear finish line � a specific outcome that tells you the goal is done?", hint: "Without a finish line, goals become habits. Sometimes that's fine. Often it isn't." },
-      { q: "Can you identify 2�3 milestones that mark meaningful progress along the way?", hint: "Milestones create momentum. They let you celebrate before the end." },
-      { q: "Do you have a concrete way to track and review progress � a date, a metric, or a check-in?", hint: "Tracking needs to be built in, not hoped for." },
+      { q: "Do you have a clear finish line — a specific outcome that tells you the goal is done?", hint: "Without a finish line, goals become habits. Sometimes that's fine. Often it isn't." },
+      { q: "Can you identify 2—3 milestones that mark meaningful progress along the way?", hint: "Milestones create momentum. They let you celebrate before the end." },
+      { q: "Do you have a concrete way to track and review progress — a date, a metric, or a check-in?", hint: "Tracking needs to be built in, not hoped for." },
     ],
     worksheetQId: [
-      { q: "Apakah Anda memiliki garis akhir yang jelas � hasil spesifik yang memberi tahu Anda bahwa tujuan telah selesai?", hint: "Tanpa garis akhir, tujuan menjadi kebiasaan. Kadang itu baik. Sering kali tidak." },
-      { q: "Bisakah Anda mengidentifikasi 2�3 tonggak yang menandai kemajuan berarti di sepanjang jalan?", hint: "Tonggak menciptakan momentum. Mereka memungkinkan Anda merayakan sebelum akhir." },
-      { q: "Apakah Anda memiliki cara konkret untuk melacak dan meninjau kemajuan � tanggal, metrik, atau pemeriksaan?", hint: "Pelacakan perlu dibangun, bukan sekadar diharapkan." },
+      { q: "Apakah Anda memiliki garis akhir yang jelas — hasil spesifik yang memberi tahu Anda bahwa tujuan telah selesai?", hint: "Tanpa garis akhir, tujuan menjadi kebiasaan. Kadang itu baik. Sering kali tidak." },
+      { q: "Bisakah Anda mengidentifikasi 2—3 tonggak yang menandai kemajuan berarti di sepanjang jalan?", hint: "Tonggak menciptakan momentum. Mereka memungkinkan Anda merayakan sebelum akhir." },
+      { q: "Apakah Anda memiliki cara konkret untuk melacak dan meninjau kemajuan — tanggal, metrik, atau pemeriksaan?", hint: "Pelacakan perlu dibangun, bukan sekadar diharapkan." },
     ],
     worksheetQNl: [
-      { q: "Heb je een duidelijke eindstreep � een specifieke uitkomst die aangeeft dat het doel bereikt is?", hint: "Zonder eindstreep worden doelen gewoontes. Soms is dat goed. Vaak niet." },
-      { q: "Kun jij 2�3 mijlpalen benoemen die betekenisvolle voortgang markeren onderweg?", hint: "Mijlpalen cre�ren momentum. Ze laten je vieren voor het einde." },
-      { q: "Heb je een concrete manier om voortgang bij te houden en te evalueren � een datum, een maatstaf of een check-in?", hint: "Bijhouden moet ingebouwd zijn, niet gehoopt worden." },
+      { q: "Heb je een duidelijke eindstreep — een specifieke uitkomst die aangeeft dat het doel bereikt is?", hint: "Zonder eindstreep worden doelen gewoontes. Soms is dat goed. Vaak niet." },
+      { q: "Kun jij 2—3 mijlpalen benoemen die betekenisvolle voortgang markeren onderweg?", hint: "Mijlpalen cre—ren momentum. Ze laten je vieren voor het einde." },
+      { q: "Heb je een concrete manier om voortgang bij te houden en te evalueren — een datum, een maatstaf of een check-in?", hint: "Bijhouden moet ingebouwd zijn, niet gehoopt worden." },
     ],
     actionEn: "CLARIFY",
     actionId: "KLARIFIKASI",
     actionNl: "VERDUIDELIJK",
     actionDescEn: "Add a specific deadline, at least one measurable outcome, and a regular review point.",
     actionDescId: "Tambahkan tenggat waktu tertentu, setidaknya satu hasil yang terukur, dan titik tinjauan rutin.",
-    actionDescNl: "Voeg een specifieke deadline toe, minimaal ��n meetbaar resultaat en een regelmatig evaluatiemoment.",
+    actionDescNl: "Voeg een specifieke deadline toe, minimaal ——n meetbaar resultaat en een regelmatig evaluatiemoment.",
     actionColor: "oklch(42% 0.14 260)",
   },
 ];
@@ -262,23 +262,23 @@ const ACTIONS = [
   {
     labelEn: "CLARIFY", labelId: "KLARIFIKASI", labelNl: "VERDUIDELIJK",
     color: "oklch(42% 0.14 260)",
-    descEn: "Use when your goal is not Specific or Trackable. Make it precise � add details, define the finish line, break it into steps.",
-    descId: "Gunakan ketika tujuan Anda tidak Spesifik atau Dapat Dilacak. Jadikan tepat � tambahkan detail, tentukan garis akhir, pecah menjadi langkah-langkah.",
-    descNl: "Gebruik dit wanneer je doel niet Specifiek of Meetbaar is. Maak het precies � voeg details toe, bepaal de eindstreep, verdeel het in stappen.",
+    descEn: "Use when your goal is not Specific or Trackable. Make it precise — add details, define the finish line, break it into steps.",
+    descId: "Gunakan ketika tujuan Anda tidak Spesifik atau Dapat Dilacak. Jadikan tepat — tambahkan detail, tentukan garis akhir, pecah menjadi langkah-langkah.",
+    descNl: "Gebruik dit wanneer je doel niet Specifiek of Meetbaar is. Maak het precies — voeg details toe, bepaal de eindstreep, verdeel het in stappen.",
   },
   {
     labelEn: "REFRAME", labelId: "UBAH PERSPEKTIF", labelNl: "HERFORMULEER",
     color: "oklch(48% 0.18 25)",
-    descEn: "Use when your goal is not Motivating. Reconnect it to a deeper value or purpose � find the 'why' that creates energy.",
-    descId: "Gunakan ketika tujuan Anda tidak Memotivasi. Hubungkan kembali dengan nilai atau tujuan yang lebih dalam � temukan 'mengapa' yang menciptakan energi.",
-    descNl: "Gebruik dit wanneer je doel niet Motiverend is. Verbind het opnieuw met een diepere waarde of een hoger doel � vind het 'waarom' dat energie geeft.",
+    descEn: "Use when your goal is not Motivating. Reconnect it to a deeper value or purpose — find the 'why' that creates energy.",
+    descId: "Gunakan ketika tujuan Anda tidak Memotivasi. Hubungkan kembali dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi.",
+    descNl: "Gebruik dit wanneer je doel niet Motiverend is. Verbind het opnieuw met een diepere waarde of een hoger doel — vind het 'waarom' dat energie geeft.",
   },
   {
     labelEn: "NEGOTIATE", labelId: "NEGOSIASI", labelNl: "ONDERHANDEL",
     color: "oklch(46% 0.16 145)",
-    descEn: "Use when your goal is not Achievable or Relevant. Adjust scope, timing, or resources � or ask: 'Is this the right goal for this season?'",
-    descId: "Gunakan ketika tujuan Anda tidak Dapat Dicapai atau Relevan. Sesuaikan ruang lingkup, waktu, atau sumber daya � atau tanyakan: 'Apakah ini tujuan yang tepat untuk musim ini?'",
-    descNl: "Gebruik dit wanneer je doel niet Haalbaar of Relevant is. Pas reikwijdte, timing of middelen aan � of vraag: 'Is dit het juiste doel voor dit seizoen?'",
+    descEn: "Use when your goal is not Achievable or Relevant. Adjust scope, timing, or resources — or ask: 'Is this the right goal for this season?'",
+    descId: "Gunakan ketika tujuan Anda tidak Dapat Dicapai atau Relevan. Sesuaikan ruang lingkup, waktu, atau sumber daya — atau tanyakan: 'Apakah ini tujuan yang tepat untuk musim ini?'",
+    descNl: "Gebruik dit wanneer je doel niet Haalbaar of Relevant is. Pas reikwijdte, timing of middelen aan — of vraag: 'Is dit het juiste doel voor dit seizoen?'",
   },
 ];
 
@@ -425,16 +425,16 @@ export default function SmartGoalsClient({
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Step 1 of 6 � Your Goal", "Langkah 1 dari 6 � Tujuan Anda", "Stap 1 van 6 � Jouw doel")}
+            {t("Step 1 of 6 — Your Goal", "Langkah 1 dari 6 — Tujuan Anda", "Stap 1 van 6 — Jouw doel")}
           </p>
           <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 10px" }}>
             {t("What is the goal you want to evaluate?", "Apa tujuan yang ingin Anda evaluasi?", "Wat is het doel dat je wilt evalueren?")}
           </h3>
           <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", lineHeight: 1.65, marginBottom: 24 }}>
             {t(
-              "Write it as you currently have it � even if it feels rough. The worksheet will help you refine it.",
-              "Tuliskan seperti yang Anda miliki sekarang � meskipun terasa kasar. Lembar kerja ini akan membantu Anda menyempurnakannya.",
-              "Schrijf het op zoals je het nu hebt � ook als het nog ruw aanvoelt. Het werkblad helpt je het te verfijnen."
+              "Write it as you currently have it — even if it feels rough. The worksheet will help you refine it.",
+              "Tuliskan seperti yang Anda miliki sekarang — meskipun terasa kasar. Lembar kerja ini akan membantu Anda menyempurnakannya.",
+              "Schrijf het op zoals je het nu hebt — ook als het nog ruw aanvoelt. Het werkblad helpt je het te verfijnen."
             )}
           </p>
           <textarea
@@ -466,9 +466,9 @@ export default function SmartGoalsClient({
           {goalText.trim().length > 0 && goalText.trim().length <= 10 && (
             <p style={{ fontSize: 12, color: "oklch(44% 0.14 25)", marginTop: 8 }}>
               {t(
-                "Please write a bit more � describe your goal in full.",
-                "Mohon tulis sedikit lebih banyak � jelaskan tujuan Anda secara lengkap.",
-                "Schrijf nog iets meer � beschrijf je doel volledig."
+                "Please write a bit more — describe your goal in full.",
+                "Mohon tulis sedikit lebih banyak — jelaskan tujuan Anda secara lengkap.",
+                "Schrijf nog iets meer — beschrijf je doel volledig."
               )}
             </p>
           )}
@@ -488,7 +488,7 @@ export default function SmartGoalsClient({
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: letter.color, marginBottom: 8 }}>
-            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} dari 6`, `Stap ${step + 1} van 6`)} � {t(letter.wordEn, letter.wordId, letter.wordNl)}
+            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} dari 6`, `Stap ${step + 1} van 6`)} — {t(letter.wordEn, letter.wordId, letter.wordNl)}
           </p>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 16 }}>
             <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 56, fontWeight: 600, color: letter.color, lineHeight: 1 }}>{letter.letter}</span>
@@ -558,10 +558,10 @@ export default function SmartGoalsClient({
             </div>
             <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", margin: "6px 0 0" }}>
               {metCount === 5
-                ? t("Fully SMART � well done.", "Sepenuhnya SMART � bagus sekali.", "Volledig SMART � goed gedaan.")
+                ? t("Fully SMART — well done.", "Sepenuhnya SMART — bagus sekali.", "Volledig SMART — goed gedaan.")
                 : metCount >= 3
-                ? t("Strong foundation � a few areas to sharpen.", "Fondasi yang kuat � beberapa area perlu diasah.", "Sterke basis � enkele gebieden om aan te scherpen.")
-                : t("Good start � several areas need attention.", "Awal yang baik � beberapa area perlu perhatian.", "Goed begin � enkele gebieden vereisen aandacht.")}
+                ? t("Strong foundation — a few areas to sharpen.", "Fondasi yang kuat — beberapa area perlu diasah.", "Sterke basis — enkele gebieden om aan te scherpen.")
+                : t("Good start — several areas need attention.", "Awal yang baik — beberapa area perlu perhatian.", "Goed begin — enkele gebieden vereisen aandacht.")}
             </p>
           </div>
 
@@ -614,7 +614,7 @@ export default function SmartGoalsClient({
                 disabled={savingWorksheet}
                 style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "12px 24px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: savingWorksheet ? "not-allowed" : "pointer" }}
               >
-                {savingWorksheet ? t("Saving�", "Menyimpan�", "Opslaan�") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {savingWorksheet ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
@@ -641,14 +641,14 @@ export default function SmartGoalsClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development � Worksheet", "Pengembangan Pribadi � Lembar Kerja", "Persoonlijke Ontwikkeling � Werkblad")}
+            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>SMART Goals</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
             {t(
-              "A five-part framework for setting goals that actually get done � Specific, Motivating, Achievable, Relevant, and Trackable. With built-in corrective actions: Clarify, Reframe, or Negotiate.",
-              "Kerangka lima bagian untuk menetapkan tujuan yang benar-benar tercapai � Spesifik, Memotivasi, Dapat Dicapai, Relevan, dan Dapat Dilacak. Dengan tindakan korektif bawaan: Klarifikasi, Ubah Perspektif, atau Negosiasi.",
-              "Een vijfdelig kader voor het stellen van doelen die daadwerkelijk worden bereikt � Specifiek, Motiverend, Haalbaar, Relevant en Meetbaar. Met ingebouwde corrigerende acties: Verduidelijk, Herformuleer of Onderhandel."
+              "A five-part framework for setting goals that actually get done — Specific, Motivating, Achievable, Relevant, and Trackable. With built-in corrective actions: Clarify, Reframe, or Negotiate.",
+              "Kerangka lima bagian untuk menetapkan tujuan yang benar-benar tercapai — Spesifik, Memotivasi, Dapat Dicapai, Relevan, dan Dapat Dilacak. Dengan tindakan korektif bawaan: Klarifikasi, Ubah Perspektif, atau Negosiasi.",
+              "Een vijfdelig kader voor het stellen van doelen die daadwerkelijk worden bereikt — Specifiek, Motiverend, Haalbaar, Relevant en Meetbaar. Met ingebouwde corrigerende acties: Verduidelijk, Herformuleer of Onderhandel."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -660,7 +660,7 @@ export default function SmartGoalsClient({
             </button>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving�", "Menyimpan�", "Opslaan�") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
@@ -717,7 +717,7 @@ export default function SmartGoalsClient({
                 </div>
                 <div style={{ background: "white", borderRadius: 8, padding: "20px 24px" }}>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: active.actionColor, marginBottom: 14 }}>
-                    {t("If not met ?", "Jika tidak terpenuhi ?", "Als niet voldaan ?")}
+                    {t("If not met", "Jika tidak terpenuhi", "Als niet voldaan")}
                   </p>
                   <div style={{ display: "inline-block", background: active.actionColor, color: "white", padding: "6px 14px", borderRadius: 4, fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", marginBottom: 12 }}>
                     {t(active.actionEn, active.actionId, active.actionNl)}
@@ -772,9 +772,9 @@ export default function SmartGoalsClient({
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
             {t(
-              "Walk through the SMART framework step by step. Answer honestly � the worksheet will tell you what's working and what to refine.",
-              "Jalani kerangka SMART langkah demi langkah. Jawablah dengan jujur � lembar kerja akan memberi tahu Anda apa yang berhasil dan apa yang perlu disempurnakan.",
-              "Doorloop het SMART-kader stap voor stap. Antwoord eerlijk � het werkblad vertelt je wat werkt en wat verfijnd moet worden."
+              "Walk through the SMART framework step by step. Answer honestly — the worksheet will tell you what's working and what to refine.",
+              "Jalani kerangka SMART langkah demi langkah. Jawablah dengan jujur — lembar kerja akan memberi tahu Anda apa yang berhasil dan apa yang perlu disempurnakan.",
+              "Doorloop het SMART-kader stap voor stap. Antwoord eerlijk — het werkblad vertelt je wat werkt en wat verfijnd moet worden."
             )}
           </p>
 
@@ -840,7 +840,7 @@ export default function SmartGoalsClient({
                     onClick={step === 0 ? () => setWorksheetOpen(false) : handleBack}
                     style={{ background: "transparent", color: "oklch(44% 0.06 260)", padding: "10px 20px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "2px solid oklch(86% 0.008 260)", cursor: "pointer" }}
                   >
-                    {step === 0 ? t("Cancel", "Batal", "Annuleren") : t("? Back", "? Kembali", "? Terug")}
+                    {step === 0 ? t("Cancel", "Batal", "Annuleren") : t("Back", "Kembali", "Terug")}
                   </button>
                   <button
                     onClick={handleNext}
@@ -857,7 +857,7 @@ export default function SmartGoalsClient({
                       transition: "all 0.15s",
                     }}
                   >
-                    {step === 5 ? t("See Results ?", "Lihat Hasil ?", "Bekijk resultaten ?") : t("Next ?", "Berikutnya ?", "Volgende ?")}
+                    {step === 5 ? t("See Results", "Lihat Hasil", "Bekijk resultaten") : t("Next", "Berikutnya", "Volgende")}
                   </button>
                 </div>
               )}
@@ -878,9 +878,9 @@ export default function SmartGoalsClient({
           </h2>
           <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
-              "Use the SMART worksheet with your team or in your next one-on-one. Each member evaluates their own goal � you coach the gaps.",
-              "Gunakan lembar kerja SMART bersama tim Anda atau dalam sesi one-on-one berikutnya. Setiap anggota mengevaluasi tujuan mereka sendiri � Anda melatih kesenjangannya.",
-              "Gebruik het SMART-werkblad met jouw team of in je volgende ��n-op-��ngesprek. Elk lid evalueert zijn eigen doel � jij coacht de zwakke punten."
+              "Use the SMART worksheet with your team or in your next one-on-one. Each member evaluates their own goal — you coach the gaps.",
+              "Gunakan lembar kerja SMART bersama tim Anda atau dalam sesi one-on-one berikutnya. Setiap anggota mengevaluasi tujuan mereka sendiri — Anda melatih kesenjangannya.",
+              "Gebruik het SMART-werkblad met jouw team of in je volgende ——n-op-——ngesprek. Elk lid evalueert zijn eigen doel — jij coacht de zwakke punten."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
@@ -891,7 +891,7 @@ export default function SmartGoalsClient({
               {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
             </button>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("? Content Library", "? Perpustakaan Konten", "Bekijk alle bronnen")}
+              {t("Content Library", "Perpustakaan Konten", "Bekijk alle bronnen")}
             </Link>
           </div>
         </div>

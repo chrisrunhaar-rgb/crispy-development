@@ -79,9 +79,9 @@ const ALTITUDES = [
     qualities: ["Coaching", "Delegation", "Team culture building", "Clear communication"],
     qualitiesId: ["Pelatihan", "Delegasi", "Membangun budaya tim", "Komunikasi yang jelas"],
     qualitiesNl: ["Coachen", "Delegeren", "Teamcultuur opbouwen", "Heldere communicatie"],
-    strategy: "Develop your people � your output is their growth, not just task completion.",
-    strategyId: "Kembangkan orang-orang Anda � hasil Anda adalah pertumbuhan mereka, bukan sekadar penyelesaian tugas.",
-    strategyNl: "Ontwikkel je mensen � je output is hun groei, niet alleen taakvoltooiing.",
+    strategy: "Develop your people — your output is their growth, not just task completion.",
+    strategyId: "Kembangkan orang-orang Anda — hasil Anda adalah pertumbuhan mereka, bukan sekadar penyelesaian tugas.",
+    strategyNl: "Ontwikkel je mensen — je output is hun groei, niet alleen taakvoltooiing.",
     strengths: ["Direct influence on team culture", "Visible people development", "Agile team adjustments"],
     strengthsId: ["Pengaruh langsung pada budaya tim", "Pengembangan orang yang terlihat", "Penyesuaian tim yang gesit"],
     strengthsNl: ["Directe invloed op teamcultuur", "Zichtbare persoonsontwikkeling", "Wendbare teamaanpassingen"],
@@ -90,7 +90,7 @@ const ALTITUDES = [
     weaknessesNl: ["Risico op micromanagement", "Beperkte strategische bandbreedte", "Persoonlijke bandbreedtebeperkingen"],
     opportunities: ["Build a high-trust team culture", "Develop future leaders", "Create strong team identity"],
     opportunitiesId: ["Membangun budaya tim yang penuh kepercayaan", "Mengembangkan pemimpin masa depan", "Menciptakan identitas tim yang kuat"],
-    opportunitiesNl: ["Een hoog-vertrouwen teamcultuur opbouwen", "Toekomstige leiders ontwikkelen", "Een sterke teamidentiteit cre�ren"],
+    opportunitiesNl: ["Een hoog-vertrouwen teamcultuur opbouwen", "Toekomstige leiders ontwikkelen", "Een sterke teamidentiteit cre—ren"],
     threats: ["Burnout from carrying team's load", "Conflict avoidance damaging team", "Promotion without preparation"],
     threatsId: ["Kelelahan dari menanggung beban tim", "Penghindaran konflik merusak tim", "Promosi tanpa persiapan"],
     threatsNl: ["Burn-out door de last van het team te dragen", "Conflictvermijding beschadigt het team", "Promotie zonder voorbereiding"],
@@ -123,7 +123,7 @@ const ALTITUDES = [
     strategyNl: "Ontwerp systemen die je aanwezigheid overleven. Bouw cultuur, niet alleen programma's.",
     strengths: ["Broad organizational influence", "Systemic problem solving", "Multi-team coordination"],
     strengthsId: ["Pengaruh organisasi yang luas", "Pemecahan masalah sistemik", "Koordinasi multi-tim"],
-    strengthsNl: ["Brede organisatorische invloed", "Systemische probleemoplossing", "Multi-team co�rdinatie"],
+    strengthsNl: ["Brede organisatorische invloed", "Systemische probleemoplossing", "Multi-team co—rdinatie"],
     weaknesses: ["Distance from front-line reality", "Risk of bureaucratic drift", "Slow to respond to local needs"],
     weaknessesId: ["Jarak dari realitas garis depan", "Risiko penyimpangan birokrasi", "Lambat merespons kebutuhan lokal"],
     weaknessesNl: ["Afstand van frontline-realiteit", "Risico van bureaucratische drift", "Langzaam in reageren op lokale behoeften"],
@@ -156,16 +156,16 @@ const ALTITUDES = [
     focusDescNl: "Strategie afstemmen over nationale contexten, culturele complexiteit navigeren, veldoperaties aansturen.",
     qualities: ["Cultural adaptability", "Strategic alignment", "Multi-national coordination", "Diplomatic leadership"],
     qualitiesId: ["Adaptabilitas budaya", "Keselarasan strategis", "Koordinasi multinasional", "Kepemimpinan diplomatik"],
-    qualitiesNl: ["Culturele aanpasbaarheid", "Strategische afstemming", "Multinationale co�rdinatie", "Diplomatisch leiderschap"],
+    qualitiesNl: ["Culturele aanpasbaarheid", "Strategische afstemming", "Multinationale co—rdinatie", "Diplomatisch leiderschap"],
     strategy: "Seek alignment before action. What works in one context may need translation for another.",
     strategyId: "Cari keselarasan sebelum bertindak. Apa yang berhasil dalam satu konteks mungkin perlu diterjemahkan untuk konteks lain.",
-    strategyNl: "Zoek afstemming v��r actie. Wat in ��n context werkt, heeft misschien vertaling nodig voor een andere.",
+    strategyNl: "Zoek afstemming v——r actie. Wat in ——n context werkt, heeft misschien vertaling nodig voor een andere.",
     strengths: ["Wide strategic perspective", "Cross-cultural bridge-building", "Long-term vision capacity"],
     strengthsId: ["Perspektif strategis yang luas", "Membangun jembatan lintas budaya", "Kapasitas visi jangka panjang"],
     strengthsNl: ["Breed strategisch perspectief", "Cross-culturele brug bouwen", "Langetermijnvisiecapaciteit"],
     weaknesses: ["High complexity and ambiguity", "Relational distance from teams", "Political navigation demands"],
     weaknessesId: ["Kompleksitas dan ambiguitas tinggi", "Jarak relasional dari tim", "Tuntutan navigasi politik"],
-    weaknessesNl: ["Hoge complexiteit en ambigu�teit", "Relationele afstand van teams", "Politieke navigatie-eisen"],
+    weaknessesNl: ["Hoge complexiteit en ambigu—teit", "Relationele afstand van teams", "Politieke navigatie-eisen"],
     opportunities: ["Shape strategy across multiple nations", "Build cross-cultural leadership pipelines", "Resolve systemic barriers to mission"],
     opportunitiesId: ["Membentuk strategi di berbagai negara", "Membangun jalur kepemimpinan lintas budaya", "Menyelesaikan hambatan sistemik terhadap misi"],
     opportunitiesNl: ["Strategie vormgeven over meerdere landen", "Cross-culturele leiderschapspipelines opbouwen", "Systemische belemmeringen voor de missie oplossen"],
@@ -207,7 +207,7 @@ const ALTITUDES = [
     weaknessesNl: ["Ver van operationele realiteit", "Risico van ivoren toren leiderschap", "Complexiteit van opvolgingsplanning"],
     opportunities: ["Catalyze global movements", "Create lasting institutional frameworks", "Shape the next generation of leaders"],
     opportunitiesId: ["Mengkatalisis gerakan global", "Menciptakan kerangka institusional yang bertahan lama", "Membentuk generasi pemimpin berikutnya"],
-    opportunitiesNl: ["Mondiale bewegingen katalyseren", "Blijvende institutionele kaders cre�ren", "De volgende generatie leiders vormen"],
+    opportunitiesNl: ["Mondiale bewegingen katalyseren", "Blijvende institutionele kaders cre—ren", "De volgende generatie leiders vormen"],
     threats: ["Loss of ground-level credibility", "Organizational drift from original mission", "Leadership succession failures"],
     threatsId: ["Kehilangan kredibilitas tingkat dasar", "Penyimpangan organisasi dari misi asal", "Kegagalan suksesi kepemimpinan"],
     threatsNl: ["Verlies van geloofwaardigheid op de werkvloer", "Organisatorische drift van oorspronkelijke missie", "Falen in leiderschapsopvolging"],
@@ -220,18 +220,18 @@ const PRINCIPLES = [
     titleEn: "Understand Your Altitude",
     titleId: "Pahami Ketinggian Anda",
     titleNl: "Begrijp Uw Hoogte",
-    descEn: "Know what altitude you're currently operating at � and what that demands of you. Each level has unique responsibilities, blind spots, and growth edges.",
-    descId: "Ketahui ketinggian mana yang sedang Anda operasikan � dan apa yang itu tuntut dari Anda. Setiap level memiliki tanggung jawab, titik buta, dan tantangan pertumbuhan yang unik.",
-    descNl: "Weet op welke hoogte u momenteel opereert � en wat dat van u vraagt. Elk niveau heeft unieke verantwoordelijkheden, blinde vlekken en groeipunten.",
+    descEn: "Know what altitude you're currently operating at — and what that demands of you. Each level has unique responsibilities, blind spots, and growth edges.",
+    descId: "Ketahui ketinggian mana yang sedang Anda operasikan — dan apa yang itu tuntut dari Anda. Setiap level memiliki tanggung jawab, titik buta, dan tantangan pertumbuhan yang unik.",
+    descNl: "Weet op welke hoogte u momenteel opereert — en wat dat van u vraagt. Elk niveau heeft unieke verantwoordelijkheden, blinde vlekken en groeipunten.",
   },
   {
     num: "02",
     titleEn: "Trust Others",
     titleId: "Percayai Orang Lain",
     titleNl: "Vertrouw Anderen",
-    descEn: "You cannot operate at all altitudes simultaneously. Trust the leaders at other altitudes to do their work � and resist the urge to descend unnecessarily.",
-    descId: "Anda tidak dapat beroperasi di semua ketinggian secara bersamaan. Percayai pemimpin di ketinggian lain untuk melakukan pekerjaan mereka � dan tahan dorongan untuk turun tanpa perlu.",
-    descNl: "U kunt niet op alle hoogtes tegelijk opereren. Vertrouw leiders op andere hoogtes om hun werk te doen � en weersta de drang om onnodig te dalen.",
+    descEn: "You cannot operate at all altitudes simultaneously. Trust the leaders at other altitudes to do their work — and resist the urge to descend unnecessarily.",
+    descId: "Anda tidak dapat beroperasi di semua ketinggian secara bersamaan. Percayai pemimpin di ketinggian lain untuk melakukan pekerjaan mereka — dan tahan dorongan untuk turun tanpa perlu.",
+    descNl: "U kunt niet op alle hoogtes tegelijk opereren. Vertrouw leiders op andere hoogtes om hun werk te doen — en weersta de drang om onnodig te dalen.",
   },
   {
     num: "03",
@@ -247,9 +247,9 @@ const PRINCIPLES = [
     titleEn: "Develop Perspective",
     titleId: "Kembangkan Perspektif",
     titleNl: "Ontwikkel Perspectief",
-    descEn: "Periodically rise to a higher altitude to see the bigger picture � then return to your level with renewed clarity and purpose.",
-    descId: "Secara berkala naikkan ke ketinggian yang lebih tinggi untuk melihat gambaran yang lebih besar � kemudian kembalilah ke level Anda dengan kejelasan dan tujuan yang diperbarui.",
-    descNl: "Stijg periodiek op naar een hogere hoogte om het grotere geheel te zien � keer dan terug naar uw niveau met vernieuwde helderheid en doelgerichtheid.",
+    descEn: "Periodically rise to a higher altitude to see the bigger picture — then return to your level with renewed clarity and purpose.",
+    descId: "Secara berkala naikkan ke ketinggian yang lebih tinggi untuk melihat gambaran yang lebih besar — kemudian kembalilah ke level Anda dengan kejelasan dan tujuan yang diperbarui.",
+    descNl: "Stijg periodiek op naar een hogere hoogte om het grotere geheel te zien — keer dan terug naar uw niveau met vernieuwde helderheid en doelgerichtheid.",
   },
   {
     num: "05",
@@ -264,24 +264,24 @@ const PRINCIPLES = [
 
 const PITFALLS = [
   {
-    en: "Leading from the wrong altitude � doing work that belongs to a different level",
-    id: "Memimpin dari ketinggian yang salah � melakukan pekerjaan yang seharusnya di level berbeda",
-    nl: "Leiding geven vanaf de verkeerde hoogte � werk doen dat bij een ander niveau hoort",
+    en: "Leading from the wrong altitude — doing work that belongs to a different level",
+    id: "Memimpin dari ketinggian yang salah — melakukan pekerjaan yang seharusnya di level berbeda",
+    nl: "Leiding geven vanaf de verkeerde hoogte — werk doen dat bij een ander niveau hoort",
   },
   {
-    en: "Failing to delegate � staying at 5,000 ft when you should be at 20,000 ft",
-    id: "Gagal mendelegasikan � tetap di 5.000 kaki padahal seharusnya berada di 20.000 kaki",
-    nl: "Niet delegeren � op 5.000 voet blijven terwijl je op 20.000 voet zou moeten zijn",
+    en: "Failing to delegate — staying at 5,000 ft when you should be at 20,000 ft",
+    id: "Gagal mendelegasikan — tetap di 5.000 kaki padahal seharusnya berada di 20.000 kaki",
+    nl: "Niet delegeren — op 5.000 voet blijven terwijl je op 20.000 voet zou moeten zijn",
   },
   {
-    en: "Losing touch with ground reality � flying so high you can't read the terrain",
-    id: "Kehilangan kontak dengan realitas lapangan � terbang terlalu tinggi sehingga tidak bisa membaca medan",
-    nl: "Het contact met de realiteit op de werkvloer verliezen � zo hoog vliegen dat je het terrein niet meer kunt lezen",
+    en: "Losing touch with ground reality — flying so high you can't read the terrain",
+    id: "Kehilangan kontak dengan realitas lapangan — terbang terlalu tinggi sehingga tidak bisa membaca medan",
+    nl: "Het contact met de realiteit op de werkvloer verliezen — zo hoog vliegen dat je het terrein niet meer kunt lezen",
   },
   {
-    en: "Confusing busyness with effectiveness � activity at the wrong altitude wastes everyone's energy",
-    id: "Mengacaukan kesibukan dengan efektivitas � aktivitas di ketinggian yang salah membuang energi semua orang",
-    nl: "Drukte verwarren met effectiviteit � activiteit op de verkeerde hoogte verspilt ieders energie",
+    en: "Confusing busyness with effectiveness — activity at the wrong altitude wastes everyone's energy",
+    id: "Mengacaukan kesibukan dengan efektivitas — aktivitas di ketinggian yang salah membuang energi semua orang",
+    nl: "Drukte verwarren met effectiviteit — activiteit op de verkeerde hoogte verspilt ieders energie",
   },
 ];
 
@@ -289,10 +289,10 @@ const REFLECTION = [
   { roman: "I", en: "What feedback am I receiving about my leadership style?", id: "Umpan balik apa yang saya terima tentang gaya kepemimpinan saya?", nl: "Welke feedback ontvang ik over mijn leiderschapsstijl?" },
   { roman: "II", en: "Am I focused on the right outcomes for my altitude?", id: "Apakah saya fokus pada hasil yang tepat untuk ketinggian saya?", nl: "Ben ik gefocust op de juiste resultaten voor mijn hoogte?" },
   { roman: "III", en: "What does my current altitude require of me that I'm not yet doing?", id: "Apa yang dituntut ketinggian saya saat ini yang belum saya lakukan?", nl: "Wat vraagt mijn huidige hoogte van mij dat ik nog niet doe?" },
-  { roman: "IV", en: "Where am I feeling the most stress or confusion � and what altitude does that suggest?", id: "Di mana saya paling banyak merasakan stres atau kebingungan � dan ketinggian apa yang itu tunjukkan?", nl: "Waar voel ik de meeste stress of verwarring � en welke hoogte suggereert dat?" },
+  { roman: "IV", en: "Where am I feeling the most stress or confusion — and what altitude does that suggest?", id: "Di mana saya paling banyak merasakan stres atau kebingungan — dan ketinggian apa yang itu tunjukkan?", nl: "Waar voel ik de meeste stress of verwarring — en welke hoogte suggereert dat?" },
   { roman: "V", en: "Do I have clarity on why we're doing what we're doing at this altitude?", id: "Apakah saya memiliki kejelasan tentang mengapa kita melakukan apa yang kita lakukan di ketinggian ini?", nl: "Heb ik duidelijkheid over waarom we op deze hoogte doen wat we doen?" },
   { roman: "VI", en: "Am I trusting others enough to lead at their altitudes?", id: "Apakah saya cukup mempercayai orang lain untuk memimpin di ketinggian mereka?", nl: "Vertrouw ik anderen genoeg om op hun hoogte te leiden?" },
-  { roman: "VII", en: "Where does my work align with the larger mission � and where is there drift?", id: "Di mana pekerjaan saya selaras dengan misi yang lebih besar � dan di mana ada penyimpangan?", nl: "Waar sluit mijn werk aan op de grotere missie � en waar is er drift?" },
+  { roman: "VII", en: "Where does my work align with the larger mission — and where is there drift?", id: "Di mana pekerjaan saya selaras dengan misi yang lebih besar — dan di mana ada penyimpangan?", nl: "Waar sluit mijn werk aan op de grotere missie — en waar is er drift?" },
   { roman: "VIII", en: "Am I collaborating effectively with leaders at different altitudes?", id: "Apakah saya berkolaborasi secara efektif dengan pemimpin di ketinggian yang berbeda?", nl: "Werk ik effectief samen met leiders op verschillende hoogtes?" },
   { roman: "IX", en: "What am I holding onto that I should be delegating?", id: "Apa yang saya pegang yang seharusnya saya delegasikan?", nl: "Wat houd ik vast dat ik zou moeten delegeren?" },
   { roman: "X", en: "How effectively am I communicating vision and direction to those at lower altitudes?", id: "Seberapa efektif saya mengkomunikasikan visi dan arah kepada mereka yang berada di ketinggian lebih rendah?", nl: "Hoe effectief communiceer ik visie en richting aan mensen op lagere hoogtes?" },
@@ -338,16 +338,16 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           {/* lang toggle */}
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Leadership � Guide", "Kepemimpinan � Panduan", "Leiderschap � Gids")}
+            {t("Leadership — Guide", "Kepemimpinan — Panduan", "Leiderschap — Gids")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
             {t("Leadership Altitudes", "Ketinggian Kepemimpinan", "Leiderschapshoogtes")}
           </h1>
           <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {t(
-              "Every leader operates at a different altitude. Understanding yours � and the altitude of those you lead � transforms how you delegate, communicate, and develop others.",
-              "Setiap pemimpin beroperasi pada ketinggian yang berbeda. Memahami ketinggian Anda � dan ketinggian mereka yang Anda pimpin � mengubah cara Anda mendelegasikan, berkomunikasi, dan mengembangkan orang lain.",
-              "Elke leider opereert op een andere hoogte. Het begrijpen van uw hoogte � en de hoogte van degenen die u leidt � transformeert hoe u delegeert, communiceert en anderen ontwikkelt."
+              "Every leader operates at a different altitude. Understanding yours — and the altitude of those you lead — transforms how you delegate, communicate, and develop others.",
+              "Setiap pemimpin beroperasi pada ketinggian yang berbeda. Memahami ketinggian Anda — dan ketinggian mereka yang Anda pimpin — mengubah cara Anda mendelegasikan, berkomunikasi, dan mengembangkan orang lain.",
+              "Elke leider opereert op een andere hoogte. Het begrijpen van uw hoogte — en de hoogte van degenen die u leidt — transformeert hoe u delegeert, communiceert en anderen ontwikkelt."
             )}
           </p>
 
@@ -361,7 +361,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
               {saved
-                ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard")
+                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
@@ -372,23 +372,23 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
       <section style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
         <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(20px, 2.5vw, 26px)", lineHeight: 1.6, color: "oklch(30% 0.08 260)", fontStyle: "italic", borderLeft: "none", margin: "0 0 32px" }}>
           {t(
-            '"The higher you fly, the more you see � but the less detail you can make out. The question is never how high, but what altitude serves the mission."',
-            '"Semakin tinggi Anda terbang, semakin banyak yang Anda lihat � tetapi semakin sedikit detail yang bisa Anda kenali. Pertanyaannya bukan seberapa tinggi, tetapi ketinggian mana yang melayani misi."',
-            '"Hoe hoger je vliegt, hoe meer je ziet � maar hoe minder details je kunt onderscheiden. De vraag is nooit hoe hoog, maar welke hoogte de missie dient."'
+            '"The higher you fly, the more you see — but the less detail you can make out. The question is never how high, but what altitude serves the mission."',
+            '"Semakin tinggi Anda terbang, semakin banyak yang Anda lihat — tetapi semakin sedikit detail yang bisa Anda kenali. Pertanyaannya bukan seberapa tinggi, tetapi ketinggian mana yang melayani misi."',
+            '"Hoe hoger je vliegt, hoe meer je ziet — maar hoe minder details je kunt onderscheiden. De vraag is nooit hoe hoog, maar welke hoogte de missie dient."'
           )}
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {t(
-            "The Leadership Altitudes framework uses the metaphor of flight to describe different levels of organizational leadership. From the ground-level team member executing daily tasks to the international organization casting global vision � each altitude has a distinct focus, span of control, and set of responsibilities.",
-            "Kerangka Ketinggian Kepemimpinan menggunakan metafora penerbangan untuk menggambarkan berbagai level kepemimpinan organisasi. Dari anggota tim tingkat dasar yang melaksanakan tugas harian hingga organisasi internasional yang menetapkan visi global � setiap ketinggian memiliki fokus, rentang kendali, dan serangkaian tanggung jawab yang berbeda.",
-            "Het Leiderschapshoogtes kader gebruikt de metafoor van vliegen om verschillende niveaus van organisatorisch leiderschap te beschrijven. Van het teamlid op de werkvloer dat dagelijkse taken uitvoert tot de internationale organisatie die een globale visie uitzet � elke hoogte heeft een unieke focus, beheersspanne en reeks verantwoordelijkheden."
+            "The Leadership Altitudes framework uses the metaphor of flight to describe different levels of organizational leadership. From the ground-level team member executing daily tasks to the international organization casting global vision — each altitude has a distinct focus, span of control, and set of responsibilities.",
+            "Kerangka Ketinggian Kepemimpinan menggunakan metafora penerbangan untuk menggambarkan berbagai level kepemimpinan organisasi. Dari anggota tim tingkat dasar yang melaksanakan tugas harian hingga organisasi internasional yang menetapkan visi global — setiap ketinggian memiliki fokus, rentang kendali, dan serangkaian tanggung jawab yang berbeda.",
+            "Het Leiderschapshoogtes kader gebruikt de metafoor van vliegen om verschillende niveaus van organisatorisch leiderschap te beschrijven. Van het teamlid op de werkvloer dat dagelijkse taken uitvoert tot de internationale organisatie die een globale visie uitzet — elke hoogte heeft een unieke focus, beheersspanne en reeks verantwoordelijkheden."
           )}
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)" }}>
           {t(
-            "A leader can � and often must � operate at multiple altitudes. But the art is knowing which altitude the moment demands.",
-            "Seorang pemimpin bisa � dan seringkali harus � beroperasi di berbagai ketinggian. Tetapi seninya adalah mengetahui ketinggian mana yang dibutuhkan saat ini.",
-            "Een leider kan � en moet vaak � op meerdere hoogtes opereren. Maar de kunst is te weten welke hoogte het moment vraagt."
+            "A leader can — and often must — operate at multiple altitudes. But the art is knowing which altitude the moment demands.",
+            "Seorang pemimpin bisa — dan seringkali harus — beroperasi di berbagai ketinggian. Tetapi seninya adalah mengetahui ketinggian mana yang dibutuhkan saat ini.",
+            "Een leider kan — en moet vaak — op meerdere hoogtes opereren. Maar de kunst is te weten welke hoogte het moment vraagt."
           )}
         </p>
       </section>
@@ -407,9 +407,9 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
         </div>
         <p style={{ fontSize: 13, color: "oklch(55% 0.05 260)", textAlign: "center", marginTop: 12 }}>
           {t(
-            "Leadership Altitudes � from Team Member (5,000 ft) to International Organization (40,000 ft)",
-            "Ketinggian Kepemimpinan � dari Anggota Tim (5.000 kaki) hingga Organisasi Internasional (40.000 kaki)",
-            "Leiderschapshoogtes � van Teamlid (5.000 voet) tot Internationale Organisatie (40.000 voet)"
+            "Leadership Altitudes — from Team Member (5,000 ft) to International Organization (40,000 ft)",
+            "Ketinggian Kepemimpinan — dari Anggota Tim (5.000 kaki) hingga Organisasi Internasional (40.000 kaki)",
+            "Leiderschapshoogtes — van Teamlid (5.000 voet) tot Internationale Organisatie (40.000 voet)"
           )}
         </p>
       </section>
@@ -439,7 +439,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
               fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
               transition: "all 0.2s ease",
             }}>
-              {alt.ft} � {t(alt.role, alt.roleId, alt.roleNl)}
+              {alt.ft} — {t(alt.role, alt.roleId, alt.roleNl)}
             </button>
           ))}
         </div>
@@ -467,7 +467,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
                       {t(alt.role, alt.roleId, alt.roleNl)}
                     </h3>
                     <p style={{ margin: 0, fontSize: 14, opacity: 0.8 }}>
-                      {alt.ft} � {t(`Span: ${alt.span}`, `Rentang: ${alt.spanId}`, `Bereik: ${alt.spanNl}`)}
+                      {alt.ft} — {t(`Span: ${alt.span}`, `Rentang: ${alt.spanId}`, `Bereik: ${alt.spanNl}`)}
                     </p>
                   </div>
                 </div>
@@ -555,16 +555,16 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(75% 0.04 260)", marginBottom: 24 }}>
             {t(
-              "Effective leaders are not locked into one altitude. A Field Director may need to descend to Team Leader altitude to coach a struggling team � then rise back to 30,000 ft to navigate a strategic decision. This movement is healthy and necessary.",
-              "Pemimpin yang efektif tidak terkunci pada satu ketinggian. Seorang Direktur Lapangan mungkin perlu turun ke ketinggian Pemimpin Tim untuk melatih tim yang kesulitan � kemudian naik kembali ke 30.000 kaki untuk menavigasi keputusan strategis. Pergerakan ini sehat dan diperlukan.",
-              "Effectieve leiders zitten niet vast aan ��n hoogte. Een Veldirecteur moet misschien dalen naar de hoogte van Teamleider om een moeizaam team te coachen � en dan weer stijgen naar 30.000 voet om een strategische beslissing te navigeren. Deze beweging is gezond en noodzakelijk."
+              "Effective leaders are not locked into one altitude. A Field Director may need to descend to Team Leader altitude to coach a struggling team — then rise back to 30,000 ft to navigate a strategic decision. This movement is healthy and necessary.",
+              "Pemimpin yang efektif tidak terkunci pada satu ketinggian. Seorang Direktur Lapangan mungkin perlu turun ke ketinggian Pemimpin Tim untuk melatih tim yang kesulitan — kemudian naik kembali ke 30.000 kaki untuk menavigasi keputusan strategis. Pergerakan ini sehat dan diperlukan.",
+              "Effectieve leiders zitten niet vast aan ——n hoogte. Een Veldirecteur moet misschien dalen naar de hoogte van Teamleider om een moeizaam team te coachen — en dan weer stijgen naar 30.000 voet om een strategische beslissing te navigeren. Deze beweging is gezond en noodzakelijk."
             )}
           </p>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(75% 0.04 260)" }}>
             {t(
-              "The danger is when a leader becomes stuck � either micromanaging at a level too low for their role, or flying too high and losing touch with reality. Self-awareness and consistent feedback are the corrective mechanisms.",
-              "Bahayanya adalah ketika seorang pemimpin terjebak � entah mengelola secara mikro pada level yang terlalu rendah untuk peran mereka, atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.",
-              "Het gevaar is wanneer een leider vastzit � ofwel micromanagend op een niveau dat te laag is voor hun rol, of te hoog vliegend en het contact met de realiteit verliezend. Zelfbewustzijn en consistente feedback zijn de corrigerende mechanismen."
+              "The danger is when a leader becomes stuck — either micromanaging at a level too low for their role, or flying too high and losing touch with reality. Self-awareness and consistent feedback are the corrective mechanisms.",
+              "Bahayanya adalah ketika seorang pemimpin terjebak — entah mengelola secara mikro pada level yang terlalu rendah untuk peran mereka, atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.",
+              "Het gevaar is wanneer een leider vastzit — ofwel micromanagend op een niveau dat te laag is voor hun rol, of te hoog vliegend en het contact met de realiteit verliezend. Zelfbewustzijn en consistente feedback zijn de corrigerende mechanismen."
             )}
           </p>
         </div>
@@ -663,7 +663,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
               padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14,
               letterSpacing: "0.04em", textDecoration: "none",
             }}>
-              {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
+              {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
             </Link>
             <Link href={userPathway ? "/dashboard" : "/personal"} style={{
               display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)",

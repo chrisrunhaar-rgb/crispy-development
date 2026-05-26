@@ -17,9 +17,9 @@ const REASONS = [
     titleEn: "Expanding Vision",
     titleId: "Memperluas Visi",
     titleNl: "Visie Verbreden",
-    descEn: "Reading exposes leaders to diverse ideas, cultures, and perspectives. By engaging with literature, biographies, and thought-provoking articles, leaders cultivate a broader worldview � enabling them to see trends, understand complex issues, and craft solutions for immediate challenges.",
-    descId: "Membaca mengekspos pemimpin pada beragam ide, budaya, dan perspektif. Dengan terlibat dalam literatur, biografi, dan artikel yang memancing pemikiran, pemimpin mengembangkan pandangan dunia yang lebih luas � memungkinkan mereka melihat tren, memahami isu kompleks, dan merancang solusi untuk tantangan saat ini.",
-    descNl: "Lezen stelt leiders bloot aan diverse idee�n, culturen en perspectieven. Door boeken, biografie�n en prikkelende artikelen te lezen, ontwikkelen leiders een bredere kijk op de wereld � waardoor ze trends kunnen zien, complexe vraagstukken kunnen begrijpen en oplossingen kunnen bedenken voor directe uitdagingen.",
+    descEn: "Reading exposes leaders to diverse ideas, cultures, and perspectives. By engaging with literature, biographies, and thought-provoking articles, leaders cultivate a broader worldview — enabling them to see trends, understand complex issues, and craft solutions for immediate challenges.",
+    descId: "Membaca mengekspos pemimpin pada beragam ide, budaya, dan perspektif. Dengan terlibat dalam literatur, biografi, dan artikel yang memancing pemikiran, pemimpin mengembangkan pandangan dunia yang lebih luas — memungkinkan mereka melihat tren, memahami isu kompleks, dan merancang solusi untuk tantangan saat ini.",
+    descNl: "Lezen stelt leiders bloot aan diverse idee—n, culturen en perspectieven. Door boeken, biografie—n en prikkelende artikelen te lezen, ontwikkelen leiders een bredere kijk op de wereld — waardoor ze trends kunnen zien, complexe vraagstukken kunnen begrijpen en oplossingen kunnen bedenken voor directe uitdagingen.",
   },
   {
     num: "02",
@@ -35,9 +35,9 @@ const REASONS = [
     titleEn: "Building Emotional Intelligence",
     titleId: "Membangun Kecerdasan Emosional",
     titleNl: "Emotionele Intelligentie Ontwikkelen",
-    descEn: "Empathy and emotional intelligence are key leadership traits. Books can enhance these qualities by offering insights into human behavior, relationships, and effective communication � enabling leaders to connect deeply with their teams and communities.",
-    descId: "Empati dan kecerdasan emosional adalah sifat kepemimpinan yang utama. Buku dapat meningkatkan kualitas-kualitas ini dengan memberikan wawasan tentang perilaku manusia, hubungan, dan komunikasi efektif � memungkinkan pemimpin terhubung secara mendalam dengan tim dan komunitas mereka.",
-    descNl: "Empathie en emotionele intelligentie zijn sleuteleigenschappen van leiderschap. Boeken kunnen deze kwaliteiten versterken door inzicht te bieden in menselijk gedrag, relaties en effectieve communicatie � waardoor leiders diep verbinding kunnen maken met hun teams en gemeenschappen.",
+    descEn: "Empathy and emotional intelligence are key leadership traits. Books can enhance these qualities by offering insights into human behavior, relationships, and effective communication — enabling leaders to connect deeply with their teams and communities.",
+    descId: "Empati dan kecerdasan emosional adalah sifat kepemimpinan yang utama. Buku dapat meningkatkan kualitas-kualitas ini dengan memberikan wawasan tentang perilaku manusia, hubungan, dan komunikasi efektif — memungkinkan pemimpin terhubung secara mendalam dengan tim dan komunitas mereka.",
+    descNl: "Empathie en emotionele intelligentie zijn sleuteleigenschappen van leiderschap. Boeken kunnen deze kwaliteiten versterken door inzicht te bieden in menselijk gedrag, relaties en effectieve communicatie — waardoor leiders diep verbinding kunnen maken met hun teams en gemeenschappen.",
   },
   {
     num: "04",
@@ -58,7 +58,7 @@ const HABITS = [
     titleNl: "Stel Duidelijke Doelen",
     descEn: "Decide on a realistic reading target, such as one book per month or 15 minutes daily. Track your progress to stay motivated.",
     descId: "Tentukan target membaca yang realistis, seperti satu buku per bulan atau 15 menit setiap hari. Lacak kemajuanmu untuk tetap termotivasi.",
-    descNl: "Bepaal een realistisch leesdoel, zoals ��n boek per maand of 15 minuten per dag. Houd je voortgang bij om gemotiveerd te blijven.",
+    descNl: "Bepaal een realistisch leesdoel, zoals ——n boek per maand of 15 minuten per dag. Houd je voortgang bij om gemotiveerd te blijven.",
   },
   {
     num: "02",
@@ -73,7 +73,7 @@ const HABITS = [
     num: "03",
     titleEn: "Create a Reading Culture",
     titleId: "Ciptakan Budaya Membaca",
-    titleNl: "Cre�er een Leescultuur",
+    titleNl: "Cre—er een Leescultuur",
     descEn: "Encourage your team to read and discuss insights from books. Learning together not only encourages others to read but also brings great accountability.",
     descId: "Dorong timmu untuk membaca dan mendiskusikan wawasan dari buku. Belajar bersama tidak hanya mendorong orang lain untuk membaca tetapi juga memberikan akuntabilitas yang baik.",
     descNl: "Moedig je team aan om te lezen en inzichten uit boeken te bespreken. Samen leren moedigt anderen aan om te lezen en zorgt ook voor goede verantwoording.",
@@ -83,9 +83,9 @@ const HABITS = [
     titleEn: "Prioritize Quality Over Quantity",
     titleId: "Prioritaskan Kualitas daripada Kuantitas",
     titleNl: "Prioriteer Kwaliteit boven Kwantiteit",
-    descEn: "Focus on books that align with your leadership goals and interests. A few deeply impactful reads are more valuable than skimming many shallow ones. You don't need to read every book cover to cover � review the index or table of contents and select sections most relevant to you.",
-    descId: "Fokus pada buku-buku yang selaras dengan tujuan kepemimpinan dan minatmu. Beberapa bacaan yang sangat berdampak lebih berharga daripada membaca banyak buku secara dangkal. Kamu tidak perlu membaca setiap buku dari awal hingga akhir � tinjau indeks atau daftar isi dan pilih bagian yang paling relevan untukmu.",
-    descNl: "Focus op boeken die aansluiten bij je leidersdoelen en interesses. Een paar diep indrukwekkende lezingen zijn waardevoller dan veel oppervlakkige. Je hoeft niet elk boek van voor tot achter te lezen � bekijk de index of inhoudsopgave en selecteer de secties die het meest relevant voor je zijn.",
+    descEn: "Focus on books that align with your leadership goals and interests. A few deeply impactful reads are more valuable than skimming many shallow ones. You don't need to read every book cover to cover — review the index or table of contents and select sections most relevant to you.",
+    descId: "Fokus pada buku-buku yang selaras dengan tujuan kepemimpinan dan minatmu. Beberapa bacaan yang sangat berdampak lebih berharga daripada membaca banyak buku secara dangkal. Kamu tidak perlu membaca setiap buku dari awal hingga akhir — tinjau indeks atau daftar isi dan pilih bagian yang paling relevan untukmu.",
+    descNl: "Focus op boeken die aansluiten bij je leidersdoelen en interesses. Een paar diep indrukwekkende lezingen zijn waardevoller dan veel oppervlakkige. Je hoeft niet elk boek van voor tot achter te lezen — bekijk de index of inhoudsopgave en selecteer de secties die het meest relevant voor je zijn.",
   },
 ];
 
@@ -130,7 +130,7 @@ export default function LeadersReadersClient({
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development � Guide", "Pengembangan Pribadi � Panduan", "Persoonlijke Ontwikkeling � Gids", lang)}
+            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "14ch" }}>
             {lang === "en"
@@ -162,7 +162,7 @@ export default function LeadersReadersClient({
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                   {isPending
-                    ? t("Saving�", "Menyimpan�", "Opslaan�", lang)
+                    ? t("Saving—", "Menyimpan—", "Opslaan—", lang)
                     : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
                 </button>
               )
@@ -262,7 +262,7 @@ export default function LeadersReadersClient({
                   &ldquo;{q.text}&rdquo;
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>
-                  � {q.author}
+                  — {q.author}
                 </p>
               </div>
             ))}
@@ -286,21 +286,21 @@ export default function LeadersReadersClient({
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
               {t(
-                "Leaders are Readers is one of many resources in the Crispy Development library � tools, frameworks, and reflections built for cross-cultural leaders.",
-                "Pemimpin adalah Pembaca adalah salah satu dari banyak sumber daya dalam perpustakaan Crispy Development � alat, kerangka kerja, dan refleksi yang dibangun untuk pemimpin lintas budaya.",
-                "Leiders zijn Lezers is een van de vele bronnen in de Crispy Development bibliotheek � tools, kaders en reflecties gebouwd voor interculturele leiders.",
+                "Leaders are Readers is one of many resources in the Crispy Development library — tools, frameworks, and reflections built for cross-cultural leaders.",
+                "Pemimpin adalah Pembaca adalah salah satu dari banyak sumber daya dalam perpustakaan Crispy Development — alat, kerangka kerja, dan refleksi yang dibangun untuk pemimpin lintas budaya.",
+                "Leiders zijn Lezers is een van de vele bronnen in de Crispy Development bibliotheek — tools, kaders en reflecties gebouwd voor interculturele leiders.",
                 lang
               )}
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!showAddToDashboard ? (
-                <Link href="/membership" className="btn-primary">{t("Join the Community ?", "Bergabung ?", "Word lid ?", lang)}</Link>
+                <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung", "Word lid", lang)}</Link>
               ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard ?", "Ke Dashboard ?", "Naar Dashboard ?", lang)}</Link>
+                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard", "Naar Dashboard", lang)}</Link>
               ) : (
                 <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
                   {isPending
-                    ? t("Saving�", "Menyimpan�", "Opslaan�", lang)
+                    ? t("Saving—", "Menyimpan—", "Opslaan—", lang)
                     : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
                 </button>
               )}

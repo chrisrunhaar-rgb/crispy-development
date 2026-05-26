@@ -11,23 +11,23 @@ import LangToggle from "@/components/LangToggle";
 // -- QUIZ DATA -----------------------------------------------------------------
 
 const QS = [
-  {en:"Your team presents a new project idea. Your first instinct is to:",id:"Tim Anda mempresentasikan ide proyek baru. Naluri pertama Anda adalah:",nl:"Jouw team presenteert een nieuw projectidee. Jouw eerste instinct is om:",options:[{en:"Ask for a clear outline of the steps and expected outcomes.",id:"Meminta gambaran langkah-langkah yang jelas dan hasil yang diharapkan.",nl:"Om een duidelijk overzicht van de stappen en verwachte resultaten te vragen.",t:"C"},{en:"Ask how it will affect everyone involved and the bigger picture.",id:"Bertanya bagaimana dampaknya terhadap semua orang dan gambaran besarnya.",nl:"Te vragen hoe het iedereen die erbij betrokken is en het grotere geheel zal be�nvloeden.",t:"H"},{en:"Pause and notice whether something about it feels right or off.",id:"Berhenti sejenak dan merasakan apakah ada sesuatu yang terasa benar atau tidak.",nl:"Even te pauzeren en op te merken of iets erover goed of niet goed voelt.",t:"I"}]},
-  {en:"When conflict arises in your team, you tend to:",id:"Ketika konflik muncul dalam tim Anda, Anda cenderung:",nl:"Wanneer er een conflict ontstaat in jouw team, neig jij ertoe om:",options:[{en:"Identify the facts and define clearly what went wrong.",id:"Mengidentifikasi fakta dan mendefinisikan dengan jelas apa yang salah.",nl:"De feiten te identificeren en duidelijk te defini�ren wat er mis ging.",t:"C"},{en:"Focus on restoring harmony and keeping everyone together.",id:"Berfokus pada memulihkan keharmonisan dan menjaga semua orang tetap bersatu.",nl:"Je te richten op het herstel van harmonie en iedereen bij elkaar te houden.",t:"H"},{en:"Sense the emotional undercurrents and address what's really going on.",id:"Merasakan arus emosional yang mendasarinya dan menangani apa yang sebenarnya terjadi.",nl:"De emotionele onderstroom te voelen en aan te pakken wat er echt speelt.",t:"I"}]},
-  {en:"You're making a major decision. You feel most confident when:",id:"Anda membuat keputusan penting. Anda merasa paling yakin ketika:",nl:"Je neemt een belangrijke beslissing. Je voelt je het meest zeker wanneer:",options:[{en:"You have enough data and logical reasoning to support your choice.",id:"Anda memiliki cukup data dan penalaran logis untuk mendukung pilihan Anda.",nl:"Je voldoende gegevens en logische redenering hebt om je keuze te onderbouwen.",t:"C"},{en:"You've considered how it will affect all the people involved.",id:"Anda telah mempertimbangkan bagaimana dampaknya terhadap semua orang yang terlibat.",nl:"Je hebt nagedacht over hoe het alle betrokkenen zal be�nvloeden.",t:"H"},{en:"You have an inner sense it's the right move, even if you can't fully explain it.",id:"Anda memiliki perasaan batin bahwa ini langkah yang benar, meskipun tidak bisa sepenuhnya menjelaskannya.",nl:"Je een innerlijk gevoel hebt dat het de juiste stap is, ook al kun je het niet volledig uitleggen.",t:"I"}]},
+  {en:"Your team presents a new project idea. Your first instinct is to:",id:"Tim Anda mempresentasikan ide proyek baru. Naluri pertama Anda adalah:",nl:"Jouw team presenteert een nieuw projectidee. Jouw eerste instinct is om:",options:[{en:"Ask for a clear outline of the steps and expected outcomes.",id:"Meminta gambaran langkah-langkah yang jelas dan hasil yang diharapkan.",nl:"Om een duidelijk overzicht van de stappen en verwachte resultaten te vragen.",t:"C"},{en:"Ask how it will affect everyone involved and the bigger picture.",id:"Bertanya bagaimana dampaknya terhadap semua orang dan gambaran besarnya.",nl:"Te vragen hoe het iedereen die erbij betrokken is en het grotere geheel zal be—nvloeden.",t:"H"},{en:"Pause and notice whether something about it feels right or off.",id:"Berhenti sejenak dan merasakan apakah ada sesuatu yang terasa benar atau tidak.",nl:"Even te pauzeren en op te merken of iets erover goed of niet goed voelt.",t:"I"}]},
+  {en:"When conflict arises in your team, you tend to:",id:"Ketika konflik muncul dalam tim Anda, Anda cenderung:",nl:"Wanneer er een conflict ontstaat in jouw team, neig jij ertoe om:",options:[{en:"Identify the facts and define clearly what went wrong.",id:"Mengidentifikasi fakta dan mendefinisikan dengan jelas apa yang salah.",nl:"De feiten te identificeren en duidelijk te defini—ren wat er mis ging.",t:"C"},{en:"Focus on restoring harmony and keeping everyone together.",id:"Berfokus pada memulihkan keharmonisan dan menjaga semua orang tetap bersatu.",nl:"Je te richten op het herstel van harmonie en iedereen bij elkaar te houden.",t:"H"},{en:"Sense the emotional undercurrents and address what's really going on.",id:"Merasakan arus emosional yang mendasarinya dan menangani apa yang sebenarnya terjadi.",nl:"De emotionele onderstroom te voelen en aan te pakken wat er echt speelt.",t:"I"}]},
+  {en:"You're making a major decision. You feel most confident when:",id:"Anda membuat keputusan penting. Anda merasa paling yakin ketika:",nl:"Je neemt een belangrijke beslissing. Je voelt je het meest zeker wanneer:",options:[{en:"You have enough data and logical reasoning to support your choice.",id:"Anda memiliki cukup data dan penalaran logis untuk mendukung pilihan Anda.",nl:"Je voldoende gegevens en logische redenering hebt om je keuze te onderbouwen.",t:"C"},{en:"You've considered how it will affect all the people involved.",id:"Anda telah mempertimbangkan bagaimana dampaknya terhadap semua orang yang terlibat.",nl:"Je hebt nagedacht over hoe het alle betrokkenen zal be—nvloeden.",t:"H"},{en:"You have an inner sense it's the right move, even if you can't fully explain it.",id:"Anda memiliki perasaan batin bahwa ini langkah yang benar, meskipun tidak bisa sepenuhnya menjelaskannya.",nl:"Je een innerlijk gevoel hebt dat het de juiste stap is, ook al kun je het niet volledig uitleggen.",t:"I"}]},
   {en:"A colleague gives you a long, story-filled update. You most likely:",id:"Seorang rekan memberikan laporan panjang yang penuh cerita. Anda kemungkinan besar:",nl:"Een collega geeft je een lang en verhaalrijk bijgepraat. Jij doet waarschijnlijk:",options:[{en:"Get impatient waiting for the main point.",id:"Tidak sabar menunggu poin utamanya.",nl:"Ongeduldig worden in afwachting van het hoofdpunt.",t:"C"},{en:"Enjoy hearing about the context and all the connections.",id:"Menikmati mendengar konteks dan semua kaitannya.",nl:"Genieten van het horen over de context en alle verbanden.",t:"H"},{en:"Pay close attention to the tone and what's left unsaid.",id:"Memperhatikan nada bicara dan apa yang tidak diucapkan.",nl:"Goed letten op de toon en wat er niet gezegd wordt.",t:"I"}]},
-  {en:"In a meeting, you are most likely to say:",id:"Dalam rapat, Anda paling sering mengatakan:",nl:"In een vergadering zeg jij het vaakst:",options:[{en:'"Let\'s define the problem clearly before we discuss solutions."',id:'"Mari kita definisikan masalahnya dengan jelas sebelum membahas solusinya."',nl:'"Laten we het probleem duidelijk defini�ren voordat we oplossingen bespreken."',t:"C"},{en:'"How will this affect the team long-term?"',id:'"Bagaimana dampak jangka panjangnya terhadap tim?"',nl:'"Hoe zal dit het team op de lange termijn be�nvloeden?"',t:"H"},{en:'"Something doesn\'t feel right about this direction."',id:'"Ada sesuatu yang terasa tidak benar tentang arah ini."',nl:'"Er klopt iets niet aan deze richting."',t:"I"}]},
+  {en:"In a meeting, you are most likely to say:",id:"Dalam rapat, Anda paling sering mengatakan:",nl:"In een vergadering zeg jij het vaakst:",options:[{en:'"Let\'s define the problem clearly before we discuss solutions."',id:'"Mari kita definisikan masalahnya dengan jelas sebelum membahas solusinya."',nl:'"Laten we het probleem duidelijk defini—ren voordat we oplossingen bespreken."',t:"C"},{en:'"How will this affect the team long-term?"',id:'"Bagaimana dampak jangka panjangnya terhadap tim?"',nl:'"Hoe zal dit het team op de lange termijn be—nvloeden?"',t:"H"},{en:'"Something doesn\'t feel right about this direction."',id:'"Ada sesuatu yang terasa tidak benar tentang arah ini."',nl:'"Er klopt iets niet aan deze richting."',t:"I"}]},
   {en:"When reading or studying new material, you:",id:"Ketika membaca atau mempelajari materi baru, Anda:",nl:"Wanneer je nieuwe stof leest of bestudeert:",options:[{en:"Look for the structure, key points, and logical flow.",id:"Mencari struktur, poin-poin utama, dan alur yang logis.",nl:"Zoek je naar de structuur, kernpunten en logische opbouw.",t:"C"},{en:"Connect it to other areas of life and consider broader implications.",id:"Menghubungkannya dengan bidang kehidupan lain dan mempertimbangkan implikasi yang lebih luas.",nl:"Verbind je het met andere levensgebieden en overweeg je bredere implicaties.",t:"H"},{en:"Pay attention to how it resonates with your gut and lived experience.",id:"Memperhatikan bagaimana itu beresonansi dengan intuisi dan pengalaman hidup Anda.",nl:"Let je op hoe het resoneert met je instinct en levenservaring.",t:"I"}]},
-  {en:"If a plan seems contradictory, you:",id:"Jika sebuah rencana tampak kontradiktif, Anda:",nl:"Als een plan tegenstrijdig lijkt:",options:[{en:"Need the contradiction resolved before you can move forward.",id:"Perlu kontradiksi itu diselesaikan sebelum bisa melangkah maju.",nl:"Moet de tegenstrijdigheid opgelost worden voordat je verder kunt.",t:"C"},{en:"Accept that tension can coexist and focus on the overall outcome.",id:"Menerima bahwa ketegangan bisa hidup berdampingan dan fokus pada hasil keseluruhan.",nl:"Accepteer je dat spanning kan samengaan en richt je je op het algehele resultaat.",t:"H"},{en:"Trust your intuition about which direction is right, even without full clarity.",id:"Mempercayai intuisi Anda tentang arah mana yang benar, bahkan tanpa kejelasan penuh.",nl:"Vertrouw je op je intu�tie over welke richting juist is, zelfs zonder volledige duidelijkheid.",t:"I"}]},
+  {en:"If a plan seems contradictory, you:",id:"Jika sebuah rencana tampak kontradiktif, Anda:",nl:"Als een plan tegenstrijdig lijkt:",options:[{en:"Need the contradiction resolved before you can move forward.",id:"Perlu kontradiksi itu diselesaikan sebelum bisa melangkah maju.",nl:"Moet de tegenstrijdigheid opgelost worden voordat je verder kunt.",t:"C"},{en:"Accept that tension can coexist and focus on the overall outcome.",id:"Menerima bahwa ketegangan bisa hidup berdampingan dan fokus pada hasil keseluruhan.",nl:"Accepteer je dat spanning kan samengaan en richt je je op het algehele resultaat.",t:"H"},{en:"Trust your intuition about which direction is right, even without full clarity.",id:"Mempercayai intuisi Anda tentang arah mana yang benar, bahkan tanpa kejelasan penuh.",nl:"Vertrouw je op je intu—tie over welke richting juist is, zelfs zonder volledige duidelijkheid.",t:"I"}]},
   {en:"Your leadership strength is most often:",id:"Kekuatan kepemimpinan Anda yang paling sering terlihat adalah:",nl:"Jouw leiderschapskracht is het vaakst:",options:[{en:"Bringing clarity, structure, and direction.",id:"Membawa kejelasan, struktur, dan arah.",nl:"Helderheid, structuur en richting brengen.",t:"C"},{en:"Building unity and helping people see the bigger picture.",id:"Membangun persatuan dan membantu orang melihat gambaran besar.",nl:"Eenheid opbouwen en mensen helpen het grotere geheel te zien.",t:"H"},{en:"Sensing what's really happening beneath the surface.",id:"Merasakan apa yang sebenarnya terjadi di balik permukaan.",nl:"Voelen wat er echt onder de oppervlakte speelt.",t:"I"}]},
   {en:"When communicating important information, you prefer:",id:"Ketika mengkomunikasikan informasi penting, Anda lebih suka:",nl:"Wanneer je belangrijke informatie communiceert, geef jij de voorkeur aan:",options:[{en:"Clear, structured points in a logical sequence.",id:"Poin-poin yang jelas dan terstruktur dalam urutan logis.",nl:"Duidelijke, gestructureerde punten in een logische volgorde.",t:"C"},{en:"Stories and examples that show how things connect.",id:"Cerita dan contoh yang menunjukkan bagaimana segala sesuatu saling terhubung.",nl:"Verhalen en voorbeelden die laten zien hoe dingen met elkaar verbonden zijn.",t:"H"},{en:"Reflective language that captures the atmosphere and deeper meaning.",id:"Bahasa yang reflektif yang menangkap suasana dan makna yang lebih dalam.",nl:"Reflectieve taal die de sfeer en diepere betekenis weergeeft.",t:"I"}]},
-  {en:'When someone says "I just sense this is the right thing to do," you:',id:'Ketika seseorang berkata "Saya hanya merasakan ini adalah hal yang benar," Anda:',nl:'Wanneer iemand zegt "Ik voel gewoon dat dit het juiste is om te doen":',options:[{en:"Ask them to give you evidence or reasoning.",id:"Meminta mereka memberikan bukti atau penalaran.",nl:"Vraag je om bewijs of redenering.",t:"C"},{en:"Consider how that feeling fits into the bigger relational context.",id:"Mempertimbangkan bagaimana perasaan itu cocok dengan konteks relasional yang lebih besar.",nl:"Overweeg je hoe dat gevoel past in de bredere relationele context.",t:"H"},{en:"Respect it � you know that intuition is a valid form of knowing.",id:"Menghormatinya � Anda tahu bahwa intuisi adalah bentuk pengetahuan yang valid.",nl:"Respecteer je het � je weet dat intu�tie een geldige manier van weten is.",t:"I"}]},
+  {en:'When someone says "I just sense this is the right thing to do," you:',id:'Ketika seseorang berkata "Saya hanya merasakan ini adalah hal yang benar," Anda:',nl:'Wanneer iemand zegt "Ik voel gewoon dat dit het juiste is om te doen":',options:[{en:"Ask them to give you evidence or reasoning.",id:"Meminta mereka memberikan bukti atau penalaran.",nl:"Vraag je om bewijs of redenering.",t:"C"},{en:"Consider how that feeling fits into the bigger relational context.",id:"Mempertimbangkan bagaimana perasaan itu cocok dengan konteks relasional yang lebih besar.",nl:"Overweeg je hoe dat gevoel past in de bredere relationele context.",t:"H"},{en:"Respect it — you know that intuition is a valid form of knowing.",id:"Menghormatinya — Anda tahu bahwa intuisi adalah bentuk pengetahuan yang valid.",nl:"Respecteer je het — je weet dat intu—tie een geldige manier van weten is.",t:"I"}]},
   {en:"On a new team, you naturally:",id:"Dalam tim baru, Anda secara alami:",nl:"In een nieuw team doe jij van nature:",options:[{en:"Try to establish clear roles, processes, and expectations.",id:"Mencoba menetapkan peran, proses, dan ekspektasi yang jelas.",nl:"Probeer je duidelijke rollen, processen en verwachtingen vast te stellen.",t:"C"},{en:"Focus on building relationships and understanding group dynamics.",id:"Berfokus pada membangun hubungan dan memahami dinamika kelompok.",nl:"Richt je je op het opbouwen van relaties en het begrijpen van groepsdynamiek.",t:"H"},{en:"Read the room and tune into the unspoken atmosphere.",id:"Membaca suasana dan menyelaraskan diri dengan atmosfer yang tidak terucapkan.",nl:"Lees je de situatie en stem je je af op de onuitgesproken sfeer.",t:"I"}]},
   {en:"When evaluating whether something is true, you primarily ask:",id:"Ketika mengevaluasi apakah sesuatu itu benar, Anda terutama bertanya:",nl:"Wanneer je beoordeelt of iets waar is, vraag je je voornamelijk af:",options:[{en:"Is it consistent and principled?",id:"Apakah ini konsisten dan berprinsip?",nl:"Is het consistent en principieel?",t:"C"},{en:"Does it fit the full context and relationships involved?",id:"Apakah ini sesuai dengan konteks penuh dan hubungan yang terlibat?",nl:"Past het bij de volledige context en betrokken relaties?",t:"H"},{en:"Does it ring true from lived experience or inner conviction?",id:"Apakah ini terasa benar dari pengalaman hidup atau keyakinan batin?",nl:"Klopt het vanuit levenservaring of innerlijke overtuiging?",t:"I"}]},
-  {en:"A team member is struggling. Your first response is to:",id:"Seorang anggota tim sedang berjuang. Respons pertama Anda adalah:",nl:"Een teamlid heeft het moeilijk. Jouw eerste reactie is:",options:[{en:"Identify what's causing the problem and suggest a clear plan.",id:"Mengidentifikasi apa yang menyebabkan masalah dan menyarankan rencana yang jelas.",nl:"Identificeren wat het probleem veroorzaakt en een duidelijk plan voorstellen.",t:"C"},{en:"Make sure they feel supported and explore how it's affecting everyone.",id:"Memastikan mereka merasa didukung dan mengeksplorasi bagaimana ini mempengaruhi semua orang.",nl:"Ervoor zorgen dat ze zich gesteund voelen en onderzoeken hoe het iedereen be�nvloedt.",t:"H"},{en:"Sit with them and tune into what's really going on beneath the surface.",id:"Duduk bersama mereka dan menyelaraskan diri dengan apa yang sebenarnya terjadi di balik permukaan.",nl:"Bij hen gaan zitten en je afstemmen op wat er echt onder de oppervlakte speelt.",t:"I"}]},
+  {en:"A team member is struggling. Your first response is to:",id:"Seorang anggota tim sedang berjuang. Respons pertama Anda adalah:",nl:"Een teamlid heeft het moeilijk. Jouw eerste reactie is:",options:[{en:"Identify what's causing the problem and suggest a clear plan.",id:"Mengidentifikasi apa yang menyebabkan masalah dan menyarankan rencana yang jelas.",nl:"Identificeren wat het probleem veroorzaakt en een duidelijk plan voorstellen.",t:"C"},{en:"Make sure they feel supported and explore how it's affecting everyone.",id:"Memastikan mereka merasa didukung dan mengeksplorasi bagaimana ini mempengaruhi semua orang.",nl:"Ervoor zorgen dat ze zich gesteund voelen en onderzoeken hoe het iedereen be—nvloedt.",t:"H"},{en:"Sit with them and tune into what's really going on beneath the surface.",id:"Duduk bersama mereka dan menyelaraskan diri dengan apa yang sebenarnya terjadi di balik permukaan.",nl:"Bij hen gaan zitten en je afstemmen op wat er echt onder de oppervlakte speelt.",t:"I"}]},
   {en:"When planning, you feel most at home with:",id:"Ketika merencanakan, Anda merasa paling nyaman dengan:",nl:"Bij het plannen voel jij je het meest thuis met:",options:[{en:"Detailed steps and measurable outcomes.",id:"Langkah-langkah terperinci dan hasil yang terukur.",nl:"Gedetailleerde stappen en meetbare resultaten.",t:"C"},{en:"Flexible plans that consider people and relationships.",id:"Rencana fleksibel yang mempertimbangkan orang dan hubungan.",nl:"Flexibele plannen die rekening houden met mensen en relaties.",t:"H"},{en:"A general sense of direction guided by discernment.",id:"Arah umum yang dipandu oleh kepekaan rohani.",nl:"Een algemeen richtingsgevoel geleid door onderscheidingsvermogen.",t:"I"}]},
   {en:"Your biggest frustration in a team is when:",id:"Frustrasi terbesar Anda dalam tim adalah ketika:",nl:"Jouw grootste frustratie in een team is wanneer:",options:[{en:"Things are disorganized or undefined.",id:"Segala sesuatunya tidak terorganisir atau tidak terdefinisi.",nl:"Dingen ongeorganiseerd of ongedefinieerd zijn.",t:"C"},{en:"People ignore relational dynamics and focus only on tasks.",id:"Orang-orang mengabaikan dinamika relasional dan hanya fokus pada tugas.",nl:"Mensen relationele dynamiek negeren en alleen op taken focussen.",t:"H"},{en:"The atmosphere feels wrong but no one acknowledges it.",id:"Suasana terasa salah tetapi tidak ada yang mengakuinya.",nl:"De sfeer verkeerd aanvoelt maar niemand het erkent.",t:"I"}]},
   {en:"You tend to make decisions based on:",id:"Anda cenderung membuat keputusan berdasarkan:",nl:"Je neigt ernaar beslissingen te nemen op basis van:",options:[{en:"Facts, analysis, and objective criteria.",id:"Fakta, analisis, dan kriteria objektif.",nl:"Feiten, analyse en objectieve criteria.",t:"C"},{en:"The impact on people and the whole system.",id:"Dampak pada orang-orang dan seluruh sistem.",nl:"De impact op mensen en het gehele systeem.",t:"H"},{en:"Inner conviction and a sense of what the moment calls for.",id:"Keyakinan batin dan rasa akan apa yang dibutuhkan saat ini.",nl:"Innerlijke overtuiging en een gevoel voor wat het moment vraagt.",t:"I"}]},
-  {en:"When two ideas seem to contradict each other, your instinct is:",id:"Ketika dua ide tampak bertentangan satu sama lain, naluri Anda adalah:",nl:"Wanneer twee idee�n tegenstrijdig lijken, is jouw instinct:",options:[{en:"Figure out which one is right.",id:"Mencari tahu mana yang benar.",nl:"Uitzoeken welke de juiste is.",t:"C"},{en:"See how both might contribute to a fuller picture.",id:"Melihat bagaimana keduanya mungkin berkontribusi pada gambaran yang lebih lengkap.",nl:"Zien hoe beide kunnen bijdragen aan een vollediger beeld.",t:"H"},{en:"Sit with the tension � sometimes truth holds paradox.",id:"Duduk dengan ketegangan itu � terkadang kebenaran mengandung paradoks.",nl:"Met de spanning zitten � soms houdt waarheid een paradox in.",t:"I"}]},
+  {en:"When two ideas seem to contradict each other, your instinct is:",id:"Ketika dua ide tampak bertentangan satu sama lain, naluri Anda adalah:",nl:"Wanneer twee idee—n tegenstrijdig lijken, is jouw instinct:",options:[{en:"Figure out which one is right.",id:"Mencari tahu mana yang benar.",nl:"Uitzoeken welke de juiste is.",t:"C"},{en:"See how both might contribute to a fuller picture.",id:"Melihat bagaimana keduanya mungkin berkontribusi pada gambaran yang lebih lengkap.",nl:"Zien hoe beide kunnen bijdragen aan een vollediger beeld.",t:"H"},{en:"Sit with the tension — sometimes truth holds paradox.",id:"Duduk dengan ketegangan itu — terkadang kebenaran mengandung paradoks.",nl:"Met de spanning zitten — soms houdt waarheid een paradox in.",t:"I"}]},
   {en:"In a group discussion, you are most likely to:",id:"Dalam diskusi kelompok, Anda paling sering:",nl:"In een groepsdiscussie doe jij het vaakst:",options:[{en:"Push for clarity and specific answers.",id:"Mendorong kejelasan dan jawaban yang spesifik.",nl:"Dringen op duidelijkheid en specifieke antwoorden.",t:"C"},{en:"Make sure all voices are heard and perspectives are included.",id:"Memastikan semua suara didengar dan perspektif disertakan.",nl:"Ervoor zorgen dat alle stemmen worden gehoord en perspectieven worden meegenomen.",t:"H"},{en:"Notice what's not being said and name it carefully.",id:"Memperhatikan apa yang tidak dikatakan dan menyebutkannya dengan hati-hati.",nl:"Opmerken wat er niet gezegd wordt en het voorzichtig benoemen.",t:"I"}]},
   {en:"You describe your ideal working environment as:",id:"Anda menggambarkan lingkungan kerja ideal Anda sebagai:",nl:"Jij beschrijft jouw ideale werkomgeving als:",options:[{en:"Structured, clear expectations, logical flow.",id:"Terstruktur, ekspektasi yang jelas, alur yang logis.",nl:"Gestructureerd, duidelijke verwachtingen, logische opbouw.",t:"C"},{en:"Collaborative, relational, team-focused.",id:"Kolaboratif, relasional, berfokus pada tim.",nl:"Samenwerkend, relationeel, teamgericht.",t:"H"},{en:"Reflective, meaningful, with room for depth.",id:"Reflektif, bermakna, dengan ruang untuk kedalaman.",nl:"Reflectief, betekenisvol, met ruimte voor diepgang.",t:"I"}]},
   {en:"After a long leadership day, you feel most drained by:",id:"Setelah hari kepemimpinan yang panjang, Anda merasa paling terkuras oleh:",nl:"Na een lange leiderschapsdag voel jij je het meest uitgeput door:",options:[{en:"Endless ambiguity and lack of clarity.",id:"Ambiguitas tanpa akhir dan kurangnya kejelasan.",nl:"Eindeloze vaagheid en gebrek aan duidelijkheid.",t:"C"},{en:"Broken relationships or unresolved group tension.",id:"Hubungan yang rusak atau ketegangan kelompok yang tidak terselesaikan.",nl:"Verstoorde relaties of onopgeloste groepsspanning.",t:"H"},{en:"Shallow conversations that never get to what really matters.",id:"Percakapan dangkal yang tidak pernah sampai pada apa yang benar-benar penting.",nl:"Oppervlakkige gesprekken die nooit bij wat echt belangrijk is uitkomen.",t:"I"}]}
@@ -40,28 +40,28 @@ const RESULTS: Record<"en" | "id" | "nl", Record<ResultKey, string>> = {
     C: "You lead with structure and logic. Your greatest strength is bringing clarity to complex situations. Growth edge: invite different kinds of knowing into your leadership.",
     H: "You lead with relationships and the big picture. Your greatest strength is building unity across differences. Growth edge: practice naming what needs to be named, even when it's uncomfortable.",
     I: "You lead with depth and discernment. Your greatest strength is sensing what's really happening beneath the surface. Growth edge: translate your insights into clear, actionable language.",
-    CH: "You blend structure with relational awareness � bringing both clarity and care to your leadership. A rare and powerful combination.",
+    CH: "You blend structure with relational awareness — bringing both clarity and care to your leadership. A rare and powerful combination.",
     CI: "You combine logical thinking with deep intuition. You can analyse carefully and still trust your gut when it matters most.",
-    HI: "You hold both relationship and depth together � sensitive to people and to what lies beneath. A leader who sees the whole person.",
-    CHI: "You draw on all three styles fluidly. Analytical, relational, or deeply intuitive � depending on what the moment calls for.",
+    HI: "You hold both relationship and depth together — sensitive to people and to what lies beneath. A leader who sees the whole person.",
+    CHI: "You draw on all three styles fluidly. Analytical, relational, or deeply intuitive — depending on what the moment calls for.",
   },
   id: {
     C: "Anda memimpin dengan struktur dan logika. Kekuatan terbesar Anda adalah membawa kejelasan pada situasi yang kompleks. Tantangan: undang berbagai jenis pengetahuan ke dalam kepemimpinan Anda.",
     H: "Anda memimpin dengan hubungan dan gambaran besar. Kekuatan terbesar Anda adalah membangun persatuan di tengah perbedaan. Tantangan: latih diri untuk menyebutkan apa yang perlu disebutkan.",
     I: "Anda memimpin dengan kedalaman dan kepekaan. Kekuatan terbesar Anda adalah merasakan apa yang sebenarnya terjadi. Tantangan: terjemahkan wawasan Anda ke dalam bahasa yang jelas dan dapat ditindaklanjuti.",
-    CH: "Anda memadukan struktur dengan kesadaran relasional � membawa kejelasan sekaligus kepedulian. Kombinasi yang langka dan kuat.",
+    CH: "Anda memadukan struktur dengan kesadaran relasional — membawa kejelasan sekaligus kepedulian. Kombinasi yang langka dan kuat.",
     CI: "Anda menggabungkan pemikiran logis dengan intuisi yang dalam. Anda dapat menganalisis dengan cermat dan tetap mempercayai intuisi Anda.",
-    HI: "Anda menyatukan hubungan dan kedalaman � peka terhadap orang-orang dan terhadap apa yang tersembunyi di baliknya.",
-    CHI: "Anda menggabungkan ketiga gaya secara fleksibel � analitis, relasional, atau sangat intuitif, tergantung pada apa yang dibutuhkan saat ini.",
+    HI: "Anda menyatukan hubungan dan kedalaman — peka terhadap orang-orang dan terhadap apa yang tersembunyi di baliknya.",
+    CHI: "Anda menggabungkan ketiga gaya secara fleksibel — analitis, relasional, atau sangat intuitif, tergantung pada apa yang dibutuhkan saat ini.",
   },
   nl: {
     C: "Je leidt met structuur en logica. Jouw grootste kracht is het brengen van helderheid in complexe situaties. Groeipunt: nodig verschillende manieren van weten uit in jouw leiderschap.",
     H: "Je leidt met relaties en het grotere geheel. Jouw grootste kracht is het opbouwen van eenheid te midden van verschillen. Groeipunt: oefen om te benoemen wat benoemd moet worden, ook als het ongemakkelijk is.",
     I: "Je leidt met diepgang en onderscheidingsvermogen. Jouw grootste kracht is voelen wat er echt onder de oppervlakte speelt. Groeipunt: vertaal je inzichten naar heldere, uitvoerbare taal.",
-    CH: "Je combineert structuur met relationeel bewustzijn � en brengt zowel helderheid als zorg in jouw leiderschap. Een zeldzame en krachtige combinatie.",
-    CI: "Je combineert logisch denken met diepe intu�tie. Je kunt zorgvuldig analyseren en toch vertrouwen op je gevoel wanneer het er het meest toe doet.",
-    HI: "Je houdt relatie en diepgang samen � gevoelig voor mensen en voor wat er achter schuilgaat. Een leider die de hele mens ziet.",
-    CHI: "Je put vloeiend uit alle drie de stijlen. Analytisch, relationeel of diep intu�tief � afhankelijk van wat het moment vraagt.",
+    CH: "Je combineert structuur met relationeel bewustzijn — en brengt zowel helderheid als zorg in jouw leiderschap. Een zeldzame en krachtige combinatie.",
+    CI: "Je combineert logisch denken met diepe intu—tie. Je kunt zorgvuldig analyseren en toch vertrouwen op je gevoel wanneer het er het meest toe doet.",
+    HI: "Je houdt relatie en diepgang samen — gevoelig voor mensen en voor wat er achter schuilgaat. Een leider die de hele mens ziet.",
+    CHI: "Je put vloeiend uit alle drie de stijlen. Analytisch, relationeel of diep intu—tief — afhankelijk van wat het moment vraagt.",
   },
 };
 
@@ -89,13 +89,13 @@ const STYLES = [
     overviewNl: "De Conceptuele denker zoekt helderheid, orde en logische consistentie. De werkelijkheid wordt verwerkt via analyse en definitie. Complexe vraagstukken worden opgesplitst in kleinere delen. Het denken gaat van delen naar conclusie: A + B + C leidt tot D.",
     viewOfTruth: "Truth is consistent, definable, and based on principles that do not change. If something appears contradictory, it must be resolved. Things are evaluated in clear categories: right or wrong, correct or incorrect.",
     viewOfTruthId: "Kebenaran bersifat konsisten, dapat didefinisikan, dan didasarkan pada prinsip-prinsip yang tidak berubah. Jika sesuatu tampak bertentangan, harus diselesaikan. Segala sesuatu dievaluasi dalam kategori yang jelas: benar atau salah, tepat atau tidak tepat.",
-    viewOfTruthNl: "Waarheid is consistent, definieerbaar en gebaseerd op principes die niet veranderen. Als iets tegenstrijdig lijkt, moet dat worden opgelost. Dingen worden beoordeeld in duidelijke categorie�n: goed of fout, correct of incorrect.",
+    viewOfTruthNl: "Waarheid is consistent, definieerbaar en gebaseerd op principes die niet veranderen. Als iets tegenstrijdig lijkt, moet dat worden opgelost. Dingen worden beoordeeld in duidelijke categorie—n: goed of fout, correct of incorrect.",
     communication: "Communication is direct, structured, and often sequential. The Conceptual thinker prefers outlines, summaries, bullet points, and logical flow.",
     communicationId: "Komunikasi bersifat langsung, terstruktur, dan sering kali berurutan. Pemikir Konseptual menyukai kerangka, ringkasan, poin-poin utama, dan alur yang logis.",
     communicationNl: "Communicatie is direct, gestructureerd en vaak opeenvolgend. De Conceptuele denker geeft de voorkeur aan overzichten, samenvattingen, opsommingstekens en logische opbouw.",
-    communicationQuote: "\"What exactly do you mean?\" � \"Let's define the problem clearly.\" � \"What is the main point?\"",
-    communicationQuoteId: "\"Apa maksud Anda secara tepat?\" � \"Mari kita definisikan masalahnya dengan jelas.\" � \"Apa poin utamanya?\"",
-    communicationQuoteNl: "\"Wat bedoel je precies?\" � \"Laten we het probleem duidelijk defini�ren.\" � \"Wat is het hoofdpunt?\"",
+    communicationQuote: "\"What exactly do you mean?\" — \"Let's define the problem clearly.\" — \"What is the main point?\"",
+    communicationQuoteId: "\"Apa maksud Anda secara tepat?\" — \"Mari kita definisikan masalahnya dengan jelas.\" — \"Apa poin utamanya?\"",
+    communicationQuoteNl: "\"Wat bedoel je precies?\" — \"Laten we het probleem duidelijk defini—ren.\" — \"Wat is het hoofdpunt?\"",
     decisionMaking: "Decisions are based on analysis, principles, and evidence. Sufficient information is needed before concluding; measurable outcomes are preferred.",
     decisionMakingId: "Keputusan didasarkan pada analisis, prinsip, dan bukti. Informasi yang cukup dibutuhkan sebelum menarik kesimpulan; hasil yang terukur lebih disukai.",
     decisionMakingNl: "Beslissingen worden genomen op basis van analyse, principes en bewijs. Er is voldoende informatie nodig voordat een conclusie wordt getrokken; meetbare resultaten hebben de voorkeur.",
@@ -104,8 +104,8 @@ const STYLES = [
     strengthsNl: ["Analytisch probleemoplossen", "Heldere communicatie", "Logische besluitvorming", "Consistente principes", "Gestructureerde planning"],
     blindspots: ["May miss relational nuance", "Can over-analyse before acting", "May dismiss intuitive knowing", "Risks reducing people to processes"],
     blindspotsId: ["Mungkin melewatkan nuansa relasional", "Bisa terlalu banyak menganalisis sebelum bertindak", "Mungkin mengabaikan pengetahuan intuitif", "Risiko mereduksi orang menjadi proses"],
-    blindspotsNl: ["Mist mogelijk relationele nuance", "Kan te veel analyseren v��r er gehandeld wordt", "Kan intu�tieve kennis afwijzen", "Risico om mensen te reduceren tot processen"],
-    shadow: "Conceptual thinking goes wrong by mistaking the model for the territory � becoming so confident in a framework that the leader stops asking whether reality still fits inside it. Decisions made on principle begin to destroy the relationships the principle was meant to protect. People feel the leader is loyal to the system rather than to the people inside it.",
+    blindspotsNl: ["Mist mogelijk relationele nuance", "Kan te veel analyseren v——r er gehandeld wordt", "Kan intu—tieve kennis afwijzen", "Risico om mensen te reduceren tot processen"],
+    shadow: "Conceptual thinking goes wrong by mistaking the model for the territory — becoming so confident in a framework that the leader stops asking whether reality still fits inside it. Decisions made on principle begin to destroy the relationships the principle was meant to protect. People feel the leader is loyal to the system rather than to the people inside it.",
     relatingTo: [
       {
         img: "/head-holistic.png",
@@ -120,15 +120,15 @@ const STYLES = [
         img: "/head-intuitional.png",
         titleEn: "Relating to the Intuitional Thinker",
         titleId: "Berelasi dengan Pemikir Intuitif",
-        titleNl: "Omgaan met de Intu�tieve Denker",
+        titleNl: "Omgaan met de Intu—tieve Denker",
         bodyEn: "Feels uncomfortable when the Intuitional thinker speaks in impressions without clear explanation. \"I sense this is right\" may feel insufficient.",
         bodyId: "Merasa tidak nyaman ketika Pemikir Intuitif berbicara dalam kesan tanpa penjelasan yang jelas. \"Saya merasakan ini benar\" dapat terasa kurang kuat.",
-        bodyNl: "Voelt zich ongemakkelijk wanneer de Intu�tieve denker spreekt in indrukken zonder duidelijke uitleg. \"Ik voel dat dit juist is\" kan onvoldoende aanvoelen.",
+        bodyNl: "Voelt zich ongemakkelijk wanneer de Intu—tieve denker spreekt in indrukken zonder duidelijke uitleg. \"Ik voel dat dit juist is\" kan onvoldoende aanvoelen.",
       },
     ],
-    quote: '"Not everything can be reduced to a formula � but having one helps."',
-    quoteId: '"Tidak semua hal bisa dirumuskan � tapi memiliki rumus sangat membantu."',
-    quoteNl: '"Niet alles kan tot een formule worden herleid � maar er ��n hebben helpt enorm."',
+    quote: '"Not everything can be reduced to a formula — but having one helps."',
+    quoteId: '"Tidak semua hal bisa dirumuskan — tapi memiliki rumus sangat membantu."',
+    quoteNl: '"Niet alles kan tot een formule worden herleid — maar er ——n hebben helpt enorm."',
     img: "/head-conceptual.png",
     imgAlt: "Conceptual Thinker",
   },
@@ -143,16 +143,16 @@ const STYLES = [
     taglineNl: "Relaties. Context. Volledigheid.",
     overview: "The Holistic thinker sees reality as interconnected. Beginning with the whole, then moving to details. Life is understood as a web of relationships where everything affects everything else.",
     overviewId: "Pemikir Holistik melihat realitas sebagai sesuatu yang saling terhubung. Memulai dari keseluruhan, lalu bergerak menuju detail. Hidup dipahami sebagai jejaring relasi di mana segala sesuatu saling memengaruhi.",
-    overviewNl: "De Holistische denker ziet de werkelijkheid als onderling verbonden. Begint met het geheel, beweegt dan naar details. Het leven wordt begrepen als een web van relaties waarin alles elkaar be�nvloedt.",
+    overviewNl: "De Holistische denker ziet de werkelijkheid als onderling verbonden. Begint met het geheel, beweegt dan naar details. Het leven wordt begrepen als een web van relaties waarin alles elkaar be—nvloedt.",
     viewOfTruth: "Truth is relational and contextual. Tension and apparent contradiction can exist without immediate resolution. Change is a natural part of life.",
     viewOfTruthId: "Kebenaran bersifat relasional dan kontekstual. Ketegangan dan pertentangan yang tampak dapat tetap ada tanpa harus segera diselesaikan. Perubahan dipandang sebagai bagian alami dari kehidupan.",
     viewOfTruthNl: "Waarheid is relationeel en contextueel. Spanning en schijnbare tegenstrijdigheid kunnen bestaan zonder onmiddellijke oplossing. Verandering is een natuurlijk onderdeel van het leven.",
     communication: "Communication often includes stories, metaphors, examples, and references to shared experiences. The Holistic thinker values harmony and relational balance.",
     communicationId: "Komunikasi sering kali mencakup cerita, metafora, contoh, dan rujukan pada pengalaman bersama. Pemikir Holistik menghargai keharmonisan dan keseimbangan relasional.",
     communicationNl: "Communicatie omvat vaak verhalen, metaforen, voorbeelden en verwijzingen naar gedeelde ervaringen. De Holistische denker waardeert harmonie en relationeel evenwicht.",
-    communicationQuote: "\"We need to look at the bigger picture.\" � \"How will this affect everyone?\" � \"Let's think about long-term impact.\"",
-    communicationQuoteId: "\"Kita perlu melihat gambaran besarnya.\" � \"Bagaimana hal ini akan memengaruhi semua orang?\" � \"Mari kita pikirkan dampak jangka panjangnya.\"",
-    communicationQuoteNl: "\"We moeten het grotere geheel bekijken.\" � \"Hoe zal dit iedereen be�nvloeden?\" � \"Laten we nadenken over de impact op de lange termijn.\"",
+    communicationQuote: "\"We need to look at the bigger picture.\" — \"How will this affect everyone?\" — \"Let's think about long-term impact.\"",
+    communicationQuoteId: "\"Kita perlu melihat gambaran besarnya.\" — \"Bagaimana hal ini akan memengaruhi semua orang?\" — \"Mari kita pikirkan dampak jangka panjangnya.\"",
+    communicationQuoteNl: "\"We moeten het grotere geheel bekijken.\" — \"Hoe zal dit iedereen be—nvloeden?\" — \"Laten we nadenken over de impact op de lange termijn.\"",
     decisionMaking: "Decisions consider impact on the whole system: people, relationships, timing, and future consequences. Harmony and sustainability are important factors.",
     decisionMakingId: "Keputusan mempertimbangkan dampaknya terhadap keseluruhan sistem: orang-orang, relasi, waktu, dan konsekuensi di masa depan. Keharmonisan dan keberlanjutan menjadi faktor penting.",
     decisionMakingNl: "Beslissingen houden rekening met de impact op het gehele systeem: mensen, relaties, timing en toekomstige gevolgen. Harmonie en duurzaamheid zijn belangrijke factoren.",
@@ -177,10 +177,10 @@ const STYLES = [
         img: "/head-intuitional.png",
         titleEn: "Relating to the Intuitional Thinker",
         titleId: "Berelasi dengan Pemikir Intuitif",
-        titleNl: "Omgaan met de Intu�tieve Denker",
-        bodyEn: "Often comfortable together � both value meaning beyond pure logic and appreciate symbolism and depth. Tension arises when harmony is prioritized over conviction.",
-        bodyId: "Sering merasa nyaman bersama � keduanya menghargai makna yang melampaui logika murni dan menghargai simbolisme serta kedalaman. Ketegangan muncul ketika keharmonisan diprioritaskan di atas keyakinan.",
-        bodyNl: "Voelt zich vaak prettig samen � beiden waarderen betekenis voorbij pure logica en hechten aan symboliek en diepgang. Spanning ontstaat wanneer harmonie wordt geprioriteerd boven overtuiging.",
+        titleNl: "Omgaan met de Intu—tieve Denker",
+        bodyEn: "Often comfortable together — both value meaning beyond pure logic and appreciate symbolism and depth. Tension arises when harmony is prioritized over conviction.",
+        bodyId: "Sering merasa nyaman bersama — keduanya menghargai makna yang melampaui logika murni dan menghargai simbolisme serta kedalaman. Ketegangan muncul ketika keharmonisan diprioritaskan di atas keyakinan.",
+        bodyNl: "Voelt zich vaak prettig samen — beiden waarderen betekenis voorbij pure logica en hechten aan symboliek en diepgang. Spanning ontstaat wanneer harmonie wordt geprioriteerd boven overtuiging.",
       },
     ],
     quote: '"Everything is connected. You can\'t understand the part without understanding the whole."',
@@ -200,26 +200,26 @@ const STYLES = [
     taglineNl: "Waarneming. Diepgang. Onderscheiding.",
     overview: "The Intuitional thinker processes reality through experience, perception, and inner awareness. Meaning is often sensed before it is explained. Some truths must be encountered rather than analyzed.",
     overviewId: "Pemikir Intuitif memproses realitas melalui pengalaman, persepsi, dan kesadaran batin. Makna sering kali dirasakan sebelum dapat dijelaskan. Beberapa kebenaran perlu dialami, bukan sekadar dianalisis.",
-    overviewNl: "De Intu�tieve denker verwerkt de werkelijkheid via ervaring, waarneming en innerlijk bewustzijn. Betekenis wordt vaak gevoeld voordat het wordt uitgelegd. Sommige waarheden moeten worden ondervonden in plaats van geanalyseerd.",
-    viewOfTruth: "Truth is discovered through insight, reflection, and sometimes revelation. Authenticity and depth are central. Mystery is not a weakness � it is part of reality.",
-    viewOfTruthId: "Kebenaran ditemukan melalui wawasan, perenungan, dan terkadang melalui pewahyuan. Keaslian dan kedalaman menjadi hal yang utama. Misteri bukanlah kelemahan � itu adalah bagian dari realitas.",
-    viewOfTruthNl: "Waarheid wordt ontdekt via inzicht, reflectie en soms openbaring. Authenticiteit en diepgang staan centraal. Mysterie is geen zwakte � het is een deel van de werkelijkheid.",
+    overviewNl: "De Intu—tieve denker verwerkt de werkelijkheid via ervaring, waarneming en innerlijk bewustzijn. Betekenis wordt vaak gevoeld voordat het wordt uitgelegd. Sommige waarheden moeten worden ondervonden in plaats van geanalyseerd.",
+    viewOfTruth: "Truth is discovered through insight, reflection, and sometimes revelation. Authenticity and depth are central. Mystery is not a weakness — it is part of reality.",
+    viewOfTruthId: "Kebenaran ditemukan melalui wawasan, perenungan, dan terkadang melalui pewahyuan. Keaslian dan kedalaman menjadi hal yang utama. Misteri bukanlah kelemahan — itu adalah bagian dari realitas.",
+    viewOfTruthNl: "Waarheid wordt ontdekt via inzicht, reflectie en soms openbaring. Authenticiteit en diepgang staan centraal. Mysterie is geen zwakte — het is een deel van de werkelijkheid.",
     communication: "Language tends to be reflective, metaphorical, and atmosphere-sensitive. The Intuitional thinker communicates through impression and resonance as much as argument.",
     communicationId: "Bahasa cenderung reflektif, metaforis, dan peka terhadap suasana. Pemikir Intuitif berkomunikasi melalui kesan dan resonansi sama seperti melalui argumen.",
-    communicationNl: "Taal is doorgaans reflectief, metaforisch en sfeergevoelig. De Intu�tieve denker communiceert even zozeer via indruk en resonantie als via argumentatie.",
-    communicationQuote: "\"I sense something is happening here.\" � \"There is something deeper.\" � \"I cannot fully explain it, but I know this matters.\"",
-    communicationQuoteId: "\"Saya merasakan sesuatu sedang terjadi.\" � \"Ada sesuatu yang lebih dalam.\" � \"Saya tidak bisa menjelaskannya sepenuhnya, tetapi saya tahu ini penting.\"",
-    communicationQuoteNl: "\"Ik voel dat hier iets speelt.\" � \"Er is iets diepers.\" � \"Ik kan het niet volledig uitleggen, maar ik weet dat dit ertoe doet.\"",
+    communicationNl: "Taal is doorgaans reflectief, metaforisch en sfeergevoelig. De Intu—tieve denker communiceert even zozeer via indruk en resonantie als via argumentatie.",
+    communicationQuote: "\"I sense something is happening here.\" — \"There is something deeper.\" — \"I cannot fully explain it, but I know this matters.\"",
+    communicationQuoteId: "\"Saya merasakan sesuatu sedang terjadi.\" — \"Ada sesuatu yang lebih dalam.\" — \"Saya tidak bisa menjelaskannya sepenuhnya, tetapi saya tahu ini penting.\"",
+    communicationQuoteNl: "\"Ik voel dat hier iets speelt.\" — \"Er is iets diepers.\" — \"Ik kan het niet volledig uitleggen, maar ik weet dat dit ertoe doet.\"",
     decisionMaking: "Decisions are influenced by inner conviction, perception, and discernment. Context, timing, and atmosphere are significant factors in the process.",
     decisionMakingId: "Keputusan dipengaruhi oleh keyakinan batin, persepsi, dan kepekaan rohani. Konteks, waktu, dan suasana menjadi faktor yang signifikan dalam prosesnya.",
-    decisionMakingNl: "Beslissingen worden be�nvloed door innerlijke overtuiging, waarneming en onderscheidingsvermogen. Context, timing en sfeer zijn significante factoren in het proces.",
+    decisionMakingNl: "Beslissingen worden be—nvloed door innerlijke overtuiging, waarneming en onderscheidingsvermogen. Context, timing en sfeer zijn significante factoren in het proces.",
     strengths: ["Reading atmospheres and people", "Sensing unspoken dynamics", "Spiritual discernment", "Deep listening", "Seeing beneath the surface"],
     strengthsId: ["Membaca suasana dan orang-orang", "Merasakan dinamika yang tidak terucapkan", "Kepekaan rohani", "Mendengarkan dengan mendalam", "Melihat di balik permukaan"],
     strengthsNl: ["Sferen en mensen aanvoelen", "Onuitgesproken dynamieken waarnemen", "Geestelijk onderscheidingsvermogen", "Diep luisteren", "Onder de oppervlakte zien"],
     blindspots: ["May struggle to explain insights clearly", "Can feel misunderstood by more analytical colleagues", "May resist structure even when it would help", "Risks acting on impression without verification"],
     blindspotsId: ["Mungkin kesulitan menjelaskan wawasan dengan jelas", "Bisa merasa kurang dipahami oleh rekan yang lebih analitis", "Mungkin menolak struktur bahkan ketika itu membantu", "Risiko bertindak berdasarkan kesan tanpa verifikasi"],
     blindspotsNl: ["Kan moeite hebben inzichten duidelijk te verwoorden", "Kan zich onbegrepen voelen door meer analytische collega's", "Kan structuur afwijzen ook als die zou helpen", "Risico van handelen op indruk zonder verificatie"],
-    shadow: "Intuitional thinking goes wrong by becoming unaccountable. A leader who claims inner conviction or felt rightness � without showing reasoning, inviting challenge, or naming the limits of their own perception � effectively closes the conversation. Healthy Intuitional discernment is submitted to community, to Scripture, and to the test of fruit over time.",
+    shadow: "Intuitional thinking goes wrong by becoming unaccountable. A leader who claims inner conviction or felt rightness — without showing reasoning, inviting challenge, or naming the limits of their own perception — effectively closes the conversation. Healthy Intuitional discernment is submitted to community, to Scripture, and to the test of fruit over time.",
     relatingTo: [
       {
         img: "/head-conceptual.png",
@@ -228,7 +228,7 @@ const STYLES = [
         titleNl: "Omgaan met de Conceptuele Denker",
         bodyEn: "May feel restricted or misunderstood. Detailed analysis can feel draining. The Intuitional thinker thinks: \"Not everything can be explained.\"",
         bodyId: "Mungkin merasa dibatasi atau kurang dipahami. Analisis yang rinci dapat terasa melelahkan. Pemikir Intuitif berpikir: \"Tidak semua hal dapat dijelaskan.\"",
-        bodyNl: "Kan zich beperkt of onbegrepen voelen. Gedetailleerde analyse kan vermoeiend aanvoelen. De Intu�tieve denker denkt: \"Niet alles kan worden uitgelegd.\"",
+        bodyNl: "Kan zich beperkt of onbegrepen voelen. Gedetailleerde analyse kan vermoeiend aanvoelen. De Intu—tieve denker denkt: \"Niet alles kan worden uitgelegd.\"",
       },
       {
         img: "/head-holistic.png",
@@ -254,7 +254,7 @@ const COMPARISON_ROWS = [
   { labelEn: "Core Focus", labelId: "Fokus Utama", labelNl: "Kernfocus", C: { en: "Structure & logic", id: "Struktur & logika", nl: "Structuur & logica" }, H: { en: "Relationships & connections", id: "Relasi & keterhubungan", nl: "Relaties & verbanden" }, I: { en: "Experience & insight", id: "Pengalaman & wawasan", nl: "Ervaring & inzicht" } },
   { labelEn: "Thinking Direction", labelId: "Arah Berpikir", labelNl: "Denkrichting", C: { en: "Parts ? Whole", id: "Bagian ? Keseluruhan", nl: "Delen ? Geheel" }, H: { en: "Whole ? Parts", id: "Keseluruhan ? Bagian", nl: "Geheel ? Delen" }, I: { en: "Experience ? Meaning", id: "Pengalaman ? Makna", nl: "Ervaring ? Betekenis" } },
   { labelEn: "Primary Question", labelId: "Pertanyaan Utama", labelNl: "Centrale vraag", C: { en: '"What is the main point?"', id: '"Apa poin utamanya?"', nl: '"Wat is het hoofdpunt?"' }, H: { en: '"How does this connect?"', id: '"Bagaimana ini saling terhubung?"', nl: '"Hoe hangt dit samen?"' }, I: { en: '"What is really happening beneath this?"', id: '"Apa yang sebenarnya terjadi di balik ini?"', nl: '"Wat speelt er echt achter dit?"' } },
-  { labelEn: "View of Truth", labelId: "Pandangan Kebenaran", labelNl: "Kijk op waarheid", C: { en: "Defined, consistent, principle-based", id: "Terdefinisi, konsisten, berbasis prinsip", nl: "Omschreven, consistent, principieel" }, H: { en: "Contextual, relational, integrated", id: "Kontekstual, relasional, terintegrasi", nl: "Contextueel, relationeel, ge�ntegreerd" }, I: { en: "Revealed, perceived, experiential", id: "Diungkapkan, dipersepsikan, dialami", nl: "Onthuld, waargenomen, ervaringsgericht" } },
+  { labelEn: "View of Truth", labelId: "Pandangan Kebenaran", labelNl: "Kijk op waarheid", C: { en: "Defined, consistent, principle-based", id: "Terdefinisi, konsisten, berbasis prinsip", nl: "Omschreven, consistent, principieel" }, H: { en: "Contextual, relational, integrated", id: "Kontekstual, relasional, terintegrasi", nl: "Contextueel, relationeel, ge—ntegreerd" }, I: { en: "Revealed, perceived, experiential", id: "Diungkapkan, dipersepsikan, dialami", nl: "Onthuld, waargenomen, ervaringsgericht" } },
   { labelEn: "Contradiction", labelId: "Kontradiksi", labelNl: "Tegenstrijdigheid", C: { en: "Must be resolved", id: "Harus diselesaikan", nl: "Moet worden opgelost" }, H: { en: "Can coexist in tension", id: "Dapat hidup dalam ketegangan", nl: "Kan in spanning samengaan" }, I: { en: "May hold paradox as mystery", id: "Dapat memegang paradoks sebagai misteri", nl: "Kan paradox als mysterie bevatten" } },
   { labelEn: "Communication", labelId: "Komunikasi", labelNl: "Communicatie", C: { en: "Direct, structured, analytical", id: "Langsung, terstruktur, analitis", nl: "Direct, gestructureerd, analytisch" }, H: { en: "Story-based, relational, illustrative", id: "Berbasis cerita, relasional, ilustratif", nl: "Verhaalgebaseerd, relationeel, illustratief" }, I: { en: "Reflective, symbolic, emotional", id: "Reflektif, simbolis, emosional", nl: "Reflectief, symbolisch, emotioneel" } },
   { labelEn: "Decision Basis", labelId: "Dasar Keputusan", labelNl: "Beslissingsbasis", C: { en: "Analysis & logic", id: "Analisis & logika", nl: "Analyse & logica" }, H: { en: "Impact on people & system", id: "Dampak pada orang & sistem", nl: "Impact op mensen & systeem" }, I: { en: "Inner conviction & discernment", id: "Keyakinan batin & kepekaan", nl: "Innerlijke overtuiging & onderscheiding" } },
@@ -372,7 +372,7 @@ export default function ThinkingStylesClient({
 
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Thinking Tools � Assessment", "Alat Berpikir � Penilaian", "Denktools � Beoordeling")}
+            {tr("Thinking Tools — Assessment", "Alat Berpikir — Penilaian", "Denktools — Beoordeling")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "14ch" }}>
             {lang === "en"
@@ -391,7 +391,7 @@ export default function ThinkingStylesClient({
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3rem" }}>
             <button onClick={startQuiz} className="btn-primary">
-              {tr("Discover Your Style ?", "Temukan Gaya Anda ?", "Ontdek Jouw Stijl ?")}
+              {tr("Discover Your Style", "Temukan Gaya Anda", "Ontdek Jouw Stijl")}
             </button>
             <a href="#conceptual" className="btn-ghost" style={{ textDecoration: "none" }}>
               {tr("Explore the Styles", "Jelajahi Gaya-Gaya", "Verken de stijlen")}
@@ -425,7 +425,7 @@ export default function ThinkingStylesClient({
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                   {isPending
-                    ? tr("Saving�", "Menyimpan�", "Opslaan�")
+                    ? tr("Saving—", "Menyimpan—", "Opslaan—")
                     : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )
@@ -437,7 +437,7 @@ export default function ThinkingStylesClient({
             {[
               { img: "/head-conceptual.png", labelEn: "Conceptual", labelId: "Konseptual", labelNl: "Conceptueel", color: "oklch(62% 0.14 250)" },
               { img: "/head-holistic.png", labelEn: "Holistic", labelId: "Holistik", labelNl: "Holistisch", color: "oklch(62% 0.14 145)" },
-              { img: "/head-intuitional.png", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu�tief", color: "oklch(62% 0.14 300)" },
+              { img: "/head-intuitional.png", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu—tief", color: "oklch(62% 0.14 300)" },
             ].map((h, i) => (
               <a key={h.labelEn} href={`#${h.labelEn.toLowerCase()}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
                 <Image
@@ -473,7 +473,7 @@ export default function ThinkingStylesClient({
                 {tr(
                   "Most people can use all three styles, but usually one is dominant. Understanding these styles increases self-awareness, strengthens teamwork, and improves communication across every kind of difference.",
                   "Sebagian besar orang dapat menggunakan ketiga gaya ini, namun biasanya satu menjadi dominan. Memahami gaya-gaya ini meningkatkan kesadaran diri, memperkuat kerja sama tim, dan memperbaiki komunikasi di tengah berbagai perbedaan.",
-                  "De meeste mensen kunnen alle drie stijlen gebruiken, maar doorgaans is ��n dominant. Het begrijpen van deze stijlen vergroot zelfbewustzijn, versterkt teamwerk en verbetert communicatie over alle soorten verschillen heen."
+                  "De meeste mensen kunnen alle drie stijlen gebruiken, maar doorgaans is ——n dominant. Het begrijpen van deze stijlen vergroot zelfbewustzijn, versterkt teamwerk en verbetert communicatie over alle soorten verschillen heen."
                 )}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "52ch", marginBottom: "2.5rem" }}>
@@ -487,9 +487,9 @@ export default function ThinkingStylesClient({
               {/* Style navigation */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {[
-                  { href: "#conceptual", labelEn: "Conceptual Thinking", labelId: "Pemikiran Konseptual", labelNl: "Conceptueel Denken", subEn: "Structure � Logic � Clarity", subId: "Struktur � Logika � Kejelasan", subNl: "Structuur � Logica � Helderheid", img: "/head-conceptual.png", bg: "oklch(92% 0.04 250)", border: "oklch(80% 0.08 250)", nameColor: "oklch(38% 0.16 250)" },
-                  { href: "#holistic", labelEn: "Holistic Thinking", labelId: "Pemikiran Holistik", labelNl: "Holistisch Denken", subEn: "Relationships � Connection � Harmony", subId: "Relasi � Keterhubungan � Keharmonisan", subNl: "Relaties � Verbondenheid � Harmonie", img: "/head-holistic.png", bg: "oklch(92% 0.04 145)", border: "oklch(80% 0.08 145)", nameColor: "oklch(38% 0.16 145)" },
-                  { href: "#intuitional", labelEn: "Intuitional Thinking", labelId: "Pemikiran Intuitif", labelNl: "Intu�tief Denken", subEn: "Experience � Insight � Depth", subId: "Pengalaman � Wawasan � Kedalaman", subNl: "Ervaring � Inzicht � Diepgang", img: "/head-intuitional.png", bg: "oklch(92% 0.04 300)", border: "oklch(80% 0.08 300)", nameColor: "oklch(38% 0.16 300)" },
+                  { href: "#conceptual", labelEn: "Conceptual Thinking", labelId: "Pemikiran Konseptual", labelNl: "Conceptueel Denken", subEn: "Structure — Logic — Clarity", subId: "Struktur — Logika — Kejelasan", subNl: "Structuur — Logica — Helderheid", img: "/head-conceptual.png", bg: "oklch(92% 0.04 250)", border: "oklch(80% 0.08 250)", nameColor: "oklch(38% 0.16 250)" },
+                  { href: "#holistic", labelEn: "Holistic Thinking", labelId: "Pemikiran Holistik", labelNl: "Holistisch Denken", subEn: "Relationships — Connection — Harmony", subId: "Relasi — Keterhubungan — Keharmonisan", subNl: "Relaties — Verbondenheid — Harmonie", img: "/head-holistic.png", bg: "oklch(92% 0.04 145)", border: "oklch(80% 0.08 145)", nameColor: "oklch(38% 0.16 145)" },
+                  { href: "#intuitional", labelEn: "Intuitional Thinking", labelId: "Pemikiran Intuitif", labelNl: "Intu—tief Denken", subEn: "Experience — Insight — Depth", subId: "Pengalaman — Wawasan — Kedalaman", subNl: "Ervaring — Inzicht — Diepgang", img: "/head-intuitional.png", bg: "oklch(92% 0.04 300)", border: "oklch(80% 0.08 300)", nameColor: "oklch(38% 0.16 300)" },
                 ].map(item => (
                   <a key={item.href} href={item.href} style={{
                     display: "flex", alignItems: "center", gap: "1rem",
@@ -569,8 +569,8 @@ export default function ThinkingStylesClient({
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               tr("Identify your primary thinking style and describe its natural strengths and frustrations in team settings.", "Mengidentifikasi gaya berpikir utama Anda dan menggambarkan kekuatan serta frustrasi alaminya dalam setting tim.", "Jouw primaire denkstijl identificeren en de natuurlijke sterke punten en frustraties ervan in teamsettings beschrijven."),
-              tr("Distinguish between Conceptual, Holistic, and Intuitional thinking in live team decisions and planning conversations.", "Membedakan antara pemikiran Konseptual, Holistik, dan Intuitif dalam keputusan tim dan percakapan perencanaan secara langsung.", "Onderscheid maken tussen Conceptueel, Holistisch en Intu�tioneel denken in live teambesluiten en planningsgesprekken."),
-              tr("Apply the three-style sequencing model to structure decisions that draw on all three styles rather than defaulting to one.", "Menerapkan model urutan tiga gaya untuk menyusun pengambilan keputusan yang memanfaatkan ketiga gaya daripada hanya mengandalkan satu.", "Het drievoudige stijlvolgorde-model toepassen om besluitvorming te structureren die alle drie de stijlen benut in plaats van op ��n."),
+              tr("Distinguish between Conceptual, Holistic, and Intuitional thinking in live team decisions and planning conversations.", "Membedakan antara pemikiran Konseptual, Holistik, dan Intuitif dalam keputusan tim dan percakapan perencanaan secara langsung.", "Onderscheid maken tussen Conceptueel, Holistisch en Intu—tioneel denken in live teambesluiten en planningsgesprekken."),
+              tr("Apply the three-style sequencing model to structure decisions that draw on all three styles rather than defaulting to one.", "Menerapkan model urutan tiga gaya untuk menyusun pengambilan keputusan yang memanfaatkan ketiga gaya daripada hanya mengandalkan satu.", "Het drievoudige stijlvolgorde-model toepassen om besluitvorming te structureren die alle drie de stijlen benut in plaats van op ——n."),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                 <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
@@ -591,7 +591,7 @@ export default function ThinkingStylesClient({
           <div style={{ background: style.bg, paddingTop: "clamp(3rem, 5vw, 5rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
             <div className="container-wide" style={{ position: "relative" }}>
               <p className="t-label" style={{ color: style.colorLight, marginBottom: "0.625rem", fontSize: "0.6rem" }}>
-                {`0${styleIdx + 1} / 03 � ${tr("Thinking Style", "Gaya Berpikir", "Denkstijl")}`}
+                {`0${styleIdx + 1} / 03 — ${tr("Thinking Style", "Gaya Berpikir", "Denkstijl")}`}
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: "2rem", alignItems: "center" }}>
                 <div>
@@ -600,7 +600,7 @@ export default function ThinkingStylesClient({
                       ? (style.key === "conceptual" ? "Conceptual" : style.key === "holistic" ? "Holistic" : "Intuitional") + " Thinking"
                       : lang === "id"
                       ? (style.key === "conceptual" ? "Pemikiran Konseptual" : style.key === "holistic" ? "Pemikiran Holistik" : "Pemikiran Intuitif")
-                      : (style.key === "conceptual" ? "Conceptueel Denken" : style.key === "holistic" ? "Holistisch Denken" : "Intu�tief Denken")}
+                      : (style.key === "conceptual" ? "Conceptueel Denken" : style.key === "holistic" ? "Holistisch Denken" : "Intu—tief Denken")}
                   </h2>
                   <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.125rem", fontStyle: "italic", color: "oklch(72% 0.04 260)", marginBottom: "1.5rem" }}>
                     {tr(style.tagline, style.taglineId, style.taglineNl)}
@@ -630,7 +630,7 @@ export default function ThinkingStylesClient({
                 {/* Row 1: Overview */}
                 <div style={{ background: "white", padding: "2rem 2.5rem" }}>
                   <p className="t-label" style={{ color: style.color, marginBottom: "0.875rem", fontSize: "0.6rem" }}>
-                    {tr("Core Orientation", "Orientasi Utama", "Kernori�ntatie")}
+                    {tr("Core Orientation", "Orientasi Utama", "Kernori—ntatie")}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(32% 0.008 260)", maxWidth: "80ch" }}>
                     {tr(style.overview, style.overviewId, style.overviewNl)}
@@ -692,7 +692,7 @@ export default function ThinkingStylesClient({
                     <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                       {(lang === "en" ? style.blindspots : lang === "id" ? style.blindspotsId : style.blindspotsNl).map(s => (
                         <li key={s} style={{ display: "flex", gap: "0.625rem", fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(45% 0.008 260)", lineHeight: 1.5 }}>
-                          <span style={{ color: "oklch(65% 0.008 260)", flexShrink: 0 }}>�</span>
+                          <span style={{ color: "oklch(65% 0.008 260)", flexShrink: 0 }}>—</span>
                           {s}
                         </li>
                       ))}
@@ -765,7 +765,7 @@ export default function ThinkingStylesClient({
                   {[
                     { img: "/head-conceptual.png", labelEn: "Conceptual", labelId: "Konseptual", labelNl: "Conceptueel", color: "oklch(62% 0.14 250)" },
                     { img: "/head-holistic.png", labelEn: "Holistic", labelId: "Holistik", labelNl: "Holistisch", color: "oklch(62% 0.14 145)" },
-                    { img: "/head-intuitional.png", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu�tief", color: "oklch(62% 0.14 300)" },
+                    { img: "/head-intuitional.png", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu—tief", color: "oklch(62% 0.14 300)" },
                   ].map(col => (
                     <th key={col.labelEn} style={{ padding: "1.25rem 1rem", textAlign: "center" }}>
                       <Image src={col.img} alt={col.labelEn} width={40} height={40} style={{ objectFit: "contain", display: "block", margin: "0 auto 0.625rem" }} />
@@ -806,9 +806,9 @@ export default function ThinkingStylesClient({
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "58ch" }}>
             {tr(
-              "These three thinking styles are not modern inventions. Scripture models each one � and shows where each style does its best work, and where it needs the others.",
-              "Ketiga gaya berpikir ini bukan penemuan modern. Alkitab memodelkan masing-masing � dan menunjukkan di mana setiap gaya bekerja paling baik, dan di mana ia membutuhkan yang lain.",
-              "Deze drie denkstijlen zijn geen moderne uitvindingen. De Bijbel modelleert ze alle drie � en laat zien waar elke stijl zijn beste werk doet, en waar hij de andere nodig heeft."
+              "These three thinking styles are not modern inventions. Scripture models each one — and shows where each style does its best work, and where it needs the others.",
+              "Ketiga gaya berpikir ini bukan penemuan modern. Alkitab memodelkan masing-masing — dan menunjukkan di mana setiap gaya bekerja paling baik, dan di mana ia membutuhkan yang lain.",
+              "Deze drie denkstijlen zijn geen moderne uitvindingen. De Bijbel modelleert ze alle drie — en laat zien waar elke stijl zijn beste werk doet, en waar hij de andere nodig heeft."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
@@ -817,14 +817,14 @@ export default function ThinkingStylesClient({
                 style: "Conceptual",
                 styleColor: "oklch(62% 0.14 250)",
                 person: "Paul",
-                reference: "Romans 1�11",
-                body: "Paul's letter to the Romans is the clearest Biblical example of Conceptual leadership. Careful argument from human sinfulness through justification to ethical application � each chapter building on the last. His Conceptual gift built doctrinal foundations the church still stands on. Conceptual thinking here is not coldness. It is care. But Paul had to be reminded by James in Acts 21 that his theology was right, and his pastoral approach to Jerusalem needed adjustment. Drive needs grace.",
+                reference: "Romans 1—11",
+                body: "Paul's letter to the Romans is the clearest Biblical example of Conceptual leadership. Careful argument from human sinfulness through justification to ethical application — each chapter building on the last. His Conceptual gift built doctrinal foundations the church still stands on. Conceptual thinking here is not coldness. It is care. But Paul had to be reminded by James in Acts 21 that his theology was right, and his pastoral approach to Jerusalem needed adjustment. Drive needs grace.",
               },
               {
                 style: "Holistic",
                 styleColor: "oklch(62% 0.14 145)",
                 person: "Nehemiah",
-                reference: "Nehemiah 1�13",
+                reference: "Nehemiah 1—13",
                 body: "Nehemiah did not just rebuild Jerusalem's wall. He simultaneously organised the workforce by family group, defended against opposition, restored the dignity of returnees, addressed economic exploitation of the poor, and held the people to the covenant. A Conceptual leader would have built the wall first and worried about the people later. Nehemiah saw that the wall meant nothing without the community inside it. Holistic thinking attends to the whole at once.",
               },
               {
@@ -832,7 +832,7 @@ export default function ThinkingStylesClient({
                 styleColor: "oklch(62% 0.14 300)",
                 person: "Elijah",
                 reference: "1 Kings 19",
-                body: "When Elijah fled to Mount Horeb, God did not appear in the great wind, the earthquake, or the fire. He came in a low whisper that Elijah recognised because he had learned to listen below the surface. The whole Elijah narrative is a study in Intuitional discernment � sensing where God is moving, naming what others cannot yet see, holding still long enough to hear what shouting cannot say. Intuitional leadership is the trained ability to recognise when reason has reached its limit.",
+                body: "When Elijah fled to Mount Horeb, God did not appear in the great wind, the earthquake, or the fire. He came in a low whisper that Elijah recognised because he had learned to listen below the surface. The whole Elijah narrative is a study in Intuitional discernment — sensing where God is moving, naming what others cannot yet see, holding still long enough to hear what shouting cannot say. Intuitional leadership is the trained ability to recognise when reason has reached its limit.",
               },
             ].map(anchor => (
               <div key={anchor.person} style={{ background: "oklch(28% 0.10 260)", padding: "2.5rem" }}>
@@ -865,9 +865,9 @@ export default function ThinkingStylesClient({
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
             {tr(
-              "20 scenarios. Choose what feels most natural � not what you think you should do. Your result shows a percentage breakdown across all three styles.",
-              "20 skenario. Pilih yang paling alami � bukan apa yang Anda pikir seharusnya Anda lakukan. Hasilnya menunjukkan persentase dari ketiga gaya berpikir.",
-              "20 scenario's. Kies wat het meest natuurlijk aanvoelt � niet wat je denkt dat je zou moeten doen. Jouw resultaat toont een procentuele verdeling over alle drie de stijlen."
+              "20 scenarios. Choose what feels most natural — not what you think you should do. Your result shows a percentage breakdown across all three styles.",
+              "20 skenario. Pilih yang paling alami — bukan apa yang Anda pikir seharusnya Anda lakukan. Hasilnya menunjukkan persentase dari ketiga gaya berpikir.",
+              "20 scenario's. Kies wat het meest natuurlijk aanvoelt — niet wat je denkt dat je zou moeten doen. Jouw resultaat toont een procentuele verdeling over alle drie de stijlen."
             )}
           </p>
 
@@ -885,7 +885,7 @@ export default function ThinkingStylesClient({
                     )}
                   </p>
                   <button onClick={startQuiz} className="btn-primary">
-                    {tr("Start Assessment ?", "Mulai Kuis ?", "Start de quiz ?")}
+                    {tr("Start Assessment", "Mulai Kuis", "Start de quiz")}
                   </button>
                 </div>
               )}
@@ -946,7 +946,7 @@ export default function ThinkingStylesClient({
                     {[
                       { key: "C", labelEn: "Conceptual", labelId: "Konseptual", labelNl: "Conceptueel", pct: pC, color: "oklch(48% 0.18 250)" },
                       { key: "H", labelEn: "Holistic", labelId: "Holistik", labelNl: "Holistisch", pct: pH, color: "oklch(48% 0.18 145)" },
-                      { key: "I", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu�tief", pct: pI, color: "oklch(48% 0.18 300)" },
+                      { key: "I", labelEn: "Intuitional", labelId: "Intuitif", labelNl: "Intu—tief", pct: pI, color: "oklch(48% 0.18 300)" },
                     ].map(bar => (
                       <div key={bar.key} style={{ display: "grid", gridTemplateColumns: "140px 1fr 48px", gap: "1rem", alignItems: "center" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -978,7 +978,7 @@ export default function ThinkingStylesClient({
                       </div>
                       {resultSaved ? (
                         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: "oklch(55% 0.15 145)", whiteSpace: "nowrap" }}>
-                          ? {tr("Saved to dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard")}
+                          ? {tr("Saved to dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
                         </span>
                       ) : (
                         <button
@@ -992,7 +992,7 @@ export default function ThinkingStylesClient({
                             whiteSpace: "nowrap", flexShrink: 0,
                           }}
                         >
-                          {isPending ? tr("Saving�", "Menyimpan�", "Opslaan�") : tr("Save My Result ?", "Simpan Hasilku ?", "Sla op ?")}
+                          {isPending ? tr("Saving—", "Menyimpan—", "Opslaan—") : tr("Save My Result", "Simpan Hasilku", "Sla op")}
                         </button>
                       )}
                     </div>
@@ -1004,11 +1004,11 @@ export default function ThinkingStylesClient({
                     </button>
                     {!showAddToDashboard ? (
                       <Link href="/membership" className="btn-primary" style={{ textDecoration: "none" }}>
-                        {tr("Join the Community ?", "Bergabung dengan Komunitas ?", "Sluit je aan ?")}
+                        {tr("Join the Community", "Bergabung dengan Komunitas", "Sluit je aan")}
                       </Link>
                     ) : (
                       <Link href="/dashboard" className="btn-primary" style={{ textDecoration: "none" }}>
-                        {tr("Go to Dashboard ?", "Ke Dashboard ?", "Naar dashboard ?")}
+                        {tr("Go to Dashboard", "Ke Dashboard", "Naar dashboard")}
                       </Link>
                     )}
                   </div>
@@ -1038,12 +1038,12 @@ export default function ThinkingStylesClient({
               tr(
                 "In your next planning session, deliberately sequence the three styles: open with possibility (Conceptual), map the implications (Holistic), and apply the experience filter (Intuitional) before deciding.",
                 "Dalam sesi perencanaan Anda berikutnya, secara sengaja urutkan tiga gaya: mulai dengan kemungkinan (Konseptual), petakan implikasinya (Holistik), dan terapkan filter pengalaman (Intuitif) sebelum memutuskan.",
-                "Volgorde in je volgende planningssessie de drie stijlen bewust: begin met mogelijkheden (Conceptueel), breng de implicaties in kaart (Holistisch) en pas het ervaringsfilter toe (Intu�tief) v��r het nemen van een beslissing."
+                "Volgorde in je volgende planningssessie de drie stijlen bewust: begin met mogelijkheden (Conceptueel), breng de implicaties in kaart (Holistisch) en pas het ervaringsfilter toe (Intu—tief) v——r het nemen van een beslissing."
               ),
               tr(
-                "Identify the team member whose thinking style most frustrates you � and name one specific thing they see that you tend to miss. That is the contribution you most need.",
-                "Identifikasi anggota tim yang gaya berpikirnya paling membuat Anda frustrasi � dan sebutkan satu hal spesifik yang mereka lihat yang cenderung Anda lewatkan. Itulah kontribusi yang paling Anda butuhkan.",
-                "Identificeer het teamlid wiens denkstijl jou het meest frustreert � en noem ��n specifiek ding dat zij zien dat jij vaak mist. Dat is de bijdrage die je het meest nodig hebt."
+                "Identify the team member whose thinking style most frustrates you — and name one specific thing they see that you tend to miss. That is the contribution you most need.",
+                "Identifikasi anggota tim yang gaya berpikirnya paling membuat Anda frustrasi — dan sebutkan satu hal spesifik yang mereka lihat yang cenderung Anda lewatkan. Itulah kontribusi yang paling Anda butuhkan.",
+                "Identificeer het teamlid wiens denkstijl jou het meest frustreert — en noem ——n specifiek ding dat zij zien dat jij vaak mist. Dat is de bijdrage die je het meest nodig hebt."
               ),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
@@ -1067,21 +1067,21 @@ export default function ThinkingStylesClient({
             {tr(
               "The Three Thinking Styles: Why Conceptual, Holistic, and Intuitional Thinkers See the World Differently",
               "Tiga Gaya Berpikir: Mengapa Pemikir Konseptual, Holistik, dan Intuitif Melihat Dunia Secara Berbeda",
-              "De Drie Denkstijlen: Waarom Conceptuele, Holistische en Intu�tieve Denkers de Wereld Anders Zien"
+              "De Drie Denkstijlen: Waarom Conceptuele, Holistische en Intu—tieve Denkers de Wereld Anders Zien"
             )}
           </h2>
           {[
             "Thinking styles in leadership teams rarely get the attention they deserve. Most team development conversations focus on personality, communication style, or cultural background. These are important. But underneath those layers sits something more fundamental: the way a person's mind naturally organizes information, generates insight, and reaches conclusions. When thinking styles are mismatched and unnamed, teams experience the friction as personality conflict or cultural difference, when what is actually happening is that people are working from different cognitive grammars.",
             "Crispy Development's Three Thinking Styles framework identifies three distinct modes of processing: Conceptual, Holistic, and Intuitional. This framework was developed through Chris Runhaar's work in cross-cultural leadership development, shaped by direct observation of how different kinds of thinkers show up in field teams, organizational leadership, and cross-cultural training contexts. It is not derived from existing academic typologies. It describes something that practitioners in complex, multicultural environments recognize immediately once it is named.",
-            "The Conceptual thinker starts with ideas. Not with the task at hand, not with what happened last time, but with the territory of possibility. Given this situation, what are the frameworks that help make sense of it? What is the underlying principle? What would happen if we approached this from a completely different angle? Conceptual thinkers are drawn to the large and the abstract. They find frameworks satisfying in themselves � a good mental model feels like clarity, and they will often stop to name it before moving on. In a planning meeting, they may introduce three different ways of thinking about the problem before the team has agreed on what the problem actually is. This is not because they are disorganized. It is because for a Conceptual thinker, getting the frame right is the first work.",
+            "The Conceptual thinker starts with ideas. Not with the task at hand, not with what happened last time, but with the territory of possibility. Given this situation, what are the frameworks that help make sense of it? What is the underlying principle? What would happen if we approached this from a completely different angle? Conceptual thinkers are drawn to the large and the abstract. They find frameworks satisfying in themselves — a good mental model feels like clarity, and they will often stop to name it before moving on. In a planning meeting, they may introduce three different ways of thinking about the problem before the team has agreed on what the problem actually is. This is not because they are disorganized. It is because for a Conceptual thinker, getting the frame right is the first work.",
             "The frustration that Conceptual thinkers generate in teams is real. To an Intuitional thinker who knows from long field experience what works and what does not, the frameworks can seem like academic scaffolding around conclusions that could be reached more directly. To a Holistic thinker tracking the relationships between moving parts, the Conceptual thinker's big-picture frame can feel disconnected from the actual system they need to navigate. The Conceptual thinker, for their part, can find teams frustrating when they are unwilling to reconsider their assumptions, or when they treat the practical complexity of implementation as a reason not to start a necessary conversation.",
-            "The Holistic thinker sees the system. They are naturally attuned to connections � how this decision affects that relationship, how a change in one part of an organization creates pressure in three other places, how the short-term solution will produce a longer-term problem if a certain assumption turns out to be wrong. Holistic thinkers are often the ones who ask the questions that slow a meeting down: \"But what happens if...?\" \"Have we thought about how this interacts with...?\" They are not being obstructive. They are genuinely tracking a level of complexity that others in the room may not be holding simultaneously.",
-            "In cross-cultural field contexts, the Holistic thinker's capacity to see second-order effects is particularly valuable � and particularly difficult to communicate across thinking-style lines. A community development initiative that looks straightforward to a Conceptual thinker may appear to the Holistic thinker as a set of connected risks: the initiative changes the economic relationships in the community, which affects the social status of certain families, which affects who holds informal authority over the outcome of the program itself. This is not pessimism. It is systems thinking applied to a complex human environment. Teams that do not have Holistic thinkers, or that do not create space for their analysis, often find themselves surprised by consequences that were predictable if someone had been asked to map the system.",
-            "The Intuitional thinker works from a different place entirely. Their primary mode of knowing is not abstract or systemic � it is experiential and relational. They read people. They read rooms. They know from long practice what a particular kind of community or situation requires, and they know it in a way that is often very difficult to articulate in frameworks or diagrams. When asked \"why do you think that?\", an Intuitional thinker may struggle to produce a step-by-step explanation � not because the knowing is shallow, but because it is embodied, built up from hundreds of interactions and observations over time, more like fluency in a language than a set of rules about grammar.",
+            "The Holistic thinker sees the system. They are naturally attuned to connections — how this decision affects that relationship, how a change in one part of an organization creates pressure in three other places, how the short-term solution will produce a longer-term problem if a certain assumption turns out to be wrong. Holistic thinkers are often the ones who ask the questions that slow a meeting down: \"But what happens if...?\" \"Have we thought about how this interacts with...?\" They are not being obstructive. They are genuinely tracking a level of complexity that others in the room may not be holding simultaneously.",
+            "In cross-cultural field contexts, the Holistic thinker's capacity to see second-order effects is particularly valuable — and particularly difficult to communicate across thinking-style lines. A community development initiative that looks straightforward to a Conceptual thinker may appear to the Holistic thinker as a set of connected risks: the initiative changes the economic relationships in the community, which affects the social status of certain families, which affects who holds informal authority over the outcome of the program itself. This is not pessimism. It is systems thinking applied to a complex human environment. Teams that do not have Holistic thinkers, or that do not create space for their analysis, often find themselves surprised by consequences that were predictable if someone had been asked to map the system.",
+            "The Intuitional thinker works from a different place entirely. Their primary mode of knowing is not abstract or systemic — it is experiential and relational. They read people. They read rooms. They know from long practice what a particular kind of community or situation requires, and they know it in a way that is often very difficult to articulate in frameworks or diagrams. When asked \"why do you think that?\", an Intuitional thinker may struggle to produce a step-by-step explanation — not because the knowing is shallow, but because it is embodied, built up from hundreds of interactions and observations over time, more like fluency in a language than a set of rules about grammar.",
             "This makes the Intuitional thinker's contribution easy to undervalue in organizational cultures that reward data and frameworks. Their read on a situation can sound like opinion. Their sense of timing can sound like caution or hesitance. But in cross-cultural field work, the Intuitional thinker's knowledge is often the most accurate map the team has. They know whether the community is actually with the program or just politely cooperating. They sense when a key relationship is under strain before it surfaces in any measurable indicator. Teams that dismiss this input because it is not systematic are dismissing some of the most reliable knowledge available to them.",
-            "The most productive cross-cultural teams tend to contain all three thinking styles, and the most productive teams learn to use them in sequence. Early in a planning or decision-making process, the Conceptual thinker's contribution is most generative: get the frame right, explore the range of possibilities, challenge assumptions before the team commits to a direction. Once a direction is taking shape, the Holistic thinker's contribution becomes critical: map the system, surface the second-order effects, identify the places where the plan is making assumptions that need to be tested. As the team moves toward implementation, the Intuitional thinker's filter is the most valuable: given this specific context, with these specific people, in this particular moment � what is actually going to work?",
-            "The Three Thinking Styles framework gives teams a language for engaging the tension productively. It does not suggest that all thinkers are equal in all situations � the context genuinely shapes which mode is most critical at which point. It does suggest that all three contribute something the others cannot supply on their own, and that the best outcomes come from teams that have learned to recognize what mode is needed, invite the right voice, and trust that the friction between styles is generative rather than destructive.",
-            "Proverbs 15:22 puts it plainly: plans fail without counsel, but they succeed with many advisers. The Three Thinking Styles framework is one way of understanding what that counsel looks like when it is genuinely diverse � not just culturally diverse, but cognitively diverse. The leader who can draw on a Conceptual vision, a Holistic systems analysis, and an Intuitional read of the people and the ground is working with a fuller picture than any single perspective can produce.",
+            "The most productive cross-cultural teams tend to contain all three thinking styles, and the most productive teams learn to use them in sequence. Early in a planning or decision-making process, the Conceptual thinker's contribution is most generative: get the frame right, explore the range of possibilities, challenge assumptions before the team commits to a direction. Once a direction is taking shape, the Holistic thinker's contribution becomes critical: map the system, surface the second-order effects, identify the places where the plan is making assumptions that need to be tested. As the team moves toward implementation, the Intuitional thinker's filter is the most valuable: given this specific context, with these specific people, in this particular moment — what is actually going to work?",
+            "The Three Thinking Styles framework gives teams a language for engaging the tension productively. It does not suggest that all thinkers are equal in all situations — the context genuinely shapes which mode is most critical at which point. It does suggest that all three contribute something the others cannot supply on their own, and that the best outcomes come from teams that have learned to recognize what mode is needed, invite the right voice, and trust that the friction between styles is generative rather than destructive.",
+            "Proverbs 15:22 puts it plainly: plans fail without counsel, but they succeed with many advisers. The Three Thinking Styles framework is one way of understanding what that counsel looks like when it is genuinely diverse — not just culturally diverse, but cognitively diverse. The leader who can draw on a Conceptual vision, a Holistic systems analysis, and an Intuitional read of the people and the ground is working with a fuller picture than any single perspective can produce.",
           ].map((para, i) => (
             <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
               {para}
@@ -1102,19 +1102,19 @@ export default function ThinkingStylesClient({
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
               {tr(
-                "Three Thinking Styles is one of many frameworks in the Crispy Development library � tools, reflections, and assessments built for cross-cultural leaders.",
-                "Tiga Gaya Berpikir adalah salah satu dari banyak kerangka kerja dalam perpustakaan Crispy Development � alat, refleksi, dan penilaian yang dibangun untuk pemimpin lintas budaya.",
-                "Drie Denkstijlen is een van de vele kaders in de Crispy Development bibliotheek � instrumenten, reflecties en assessments gebouwd voor interculturele leiders."
+                "Three Thinking Styles is one of many frameworks in the Crispy Development library — tools, reflections, and assessments built for cross-cultural leaders.",
+                "Tiga Gaya Berpikir adalah salah satu dari banyak kerangka kerja dalam perpustakaan Crispy Development — alat, refleksi, dan penilaian yang dibangun untuk pemimpin lintas budaya.",
+                "Drie Denkstijlen is een van de vele kaders in de Crispy Development bibliotheek — instrumenten, reflecties en assessments gebouwd voor interculturele leiders."
               )}
             </p>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!showAddToDashboard ? (
                 <Link href="/membership" className="btn-primary">
-                  {tr("Join the Community ?", "Bergabung ?", "Sluit je aan ?")}
+                  {tr("Join the Community", "Bergabung", "Sluit je aan")}
                 </Link>
               ) : saved ? (
                 <Link href="/dashboard" className="btn-primary">
-                  {tr("Go to Dashboard ?", "Ke Dashboard ?", "Naar dashboard ?")}
+                  {tr("Go to Dashboard", "Ke Dashboard", "Naar dashboard")}
                 </Link>
               ) : (
                 <button
@@ -1124,7 +1124,7 @@ export default function ThinkingStylesClient({
                   style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}
                 >
                   {isPending
-                    ? tr("Saving�", "Menyimpan�", "Opslaan�")
+                    ? tr("Saving—", "Menyimpan—", "Opslaan—")
                     : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                 </button>
               )}

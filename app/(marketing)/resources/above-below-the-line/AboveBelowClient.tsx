@@ -98,7 +98,7 @@ const STORIES = [
     titleNl: "Het Teamconflict",
     beforeEn: "\"Sarah keeps dismissing my ideas in meetings. I'm not going to contribute anymore.\"",
     beforeId: "\"Sarah terus menolak ide saya di pertemuan. Saya tidak akan berkontribusi lagi.\"",
-    beforeNl: "\"Sarah blijft mijn idee�n in vergaderingen afwijzen. Ik ga niet meer bijdragen.\"",
+    beforeNl: "\"Sarah blijft mijn idee—n in vergaderingen afwijzen. Ik ga niet meer bijdragen.\"",
     shiftEn: "Then we asked: \"What conversation do WE need to have?\"",
     shiftId: "Kemudian kami bertanya: \"Percakapan apa yang PERLU kami miliki?\"",
     shiftNl: "Vervolgens vroegen we: \"Welk gesprek moeten WIJ voeren?\"",
@@ -124,17 +124,17 @@ const STORIES = [
     afterNl: "We zochten mentorschap, volgden een online cursus en oefenden. Binnen 3 maanden: bedreven.",
     resultEn: "Expanded capability. Increased confidence. Career growth.",
     resultId: "Kemampuan diperluas. Kepercayaan diri meningkat. Pertumbuhan karir.",
-    resultNl: "Uitgebreide mogelijkheden. Verhoogd vertrouwen. Cari�regroei.",
+    resultNl: "Uitgebreide mogelijkheden. Verhoogd vertrouwen. Cari—regroei.",
   },
 ];
 
-const ABOVE_PHRASES = ["When�", "Choice", "I am going to�", "I will", "I chose to", "I chose not to", "Make things happen", "Why not?", "TGIM (Thank God It's Monday)", "Day one"];
-const ABOVE_PHRASES_ID = ["Ketika�", "Pilihan", "Saya akan�", "Saya mau", "Saya memilih untuk", "Saya memilih untuk tidak", "Jadikan hal itu terjadi", "Kenapa tidak?", "TGIM (Terima kasih Tuhan hari Senin)", "Hari pertama"];
-const ABOVE_PHRASES_NL = ["Wanneer�", "Keuze", "Ik ga�", "Ik wil", "Ik koos voor", "Ik koos ervoor niet te", "Dingen laten gebeuren", "Waarom niet?", "TGIM (Dank God, het is maandag)", "Dag ��n"];
+const ABOVE_PHRASES = ["When—", "Choice", "I am going to—", "I will", "I chose to", "I chose not to", "Make things happen", "Why not?", "TGIM (Thank God It's Monday)", "Day one"];
+const ABOVE_PHRASES_ID = ["Ketika—", "Pilihan", "Saya akan—", "Saya mau", "Saya memilih untuk", "Saya memilih untuk tidak", "Jadikan hal itu terjadi", "Kenapa tidak?", "TGIM (Terima kasih Tuhan hari Senin)", "Hari pertama"];
+const ABOVE_PHRASES_NL = ["Wanneer—", "Keuze", "Ik ga—", "Ik wil", "Ik koos voor", "Ik koos ervoor niet te", "Dingen laten gebeuren", "Waarom niet?", "TGIM (Dank God, het is maandag)", "Dag ——n"];
 
-const BELOW_PHRASES = ["If�", "Had no choice", "I hope�", "Maybe�", "I try�", "It might�", "I think�", "I need to�", "Hopefully", "Every intention", "I should", "I would", "I could", "I must", "WHY?", "TGIF", "Waiting for other people", "One day"];
-const BELOW_PHRASES_ID = ["Jika�", "Tidak punya pilihan", "Saya harap�", "Mungkin�", "Saya mencoba�", "Mungkin saja�", "Saya pikir�", "Saya perlu�", "Semoga", "Setiap niat", "Saya seharusnya", "Saya akan", "Saya bisa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lain", "Suatu hari nanti"];
-const BELOW_PHRASES_NL = ["Als�", "Had geen keuze", "Ik hoop�", "Misschien�", "Ik probeer�", "Het zou kunnen�", "Ik denk�", "Ik moet�", "Hopelijk", "Altijd de intentie", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anderen", "Op een dag"];
+const BELOW_PHRASES = ["If—", "Had no choice", "I hope—", "Maybe—", "I try—", "It might—", "I think—", "I need to—", "Hopefully", "Every intention", "I should", "I would", "I could", "I must", "WHY?", "TGIF", "Waiting for other people", "One day"];
+const BELOW_PHRASES_ID = ["Jika—", "Tidak punya pilihan", "Saya harap—", "Mungkin—", "Saya mencoba—", "Mungkin saja—", "Saya pikir—", "Saya perlu—", "Semoga", "Setiap niat", "Saya seharusnya", "Saya akan", "Saya bisa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lain", "Suatu hari nanti"];
+const BELOW_PHRASES_NL = ["Als—", "Had geen keuze", "Ik hoop—", "Misschien—", "Ik probeer—", "Het zou kunnen—", "Ik denk—", "Ik moet—", "Hopelijk", "Altijd de intentie", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anderen", "Op een dag"];
 
 function getAbovePhrases(lang: Lang) {
   return lang === "en" ? ABOVE_PHRASES : lang === "id" ? ABOVE_PHRASES_ID : ABOVE_PHRASES_NL;
@@ -170,18 +170,18 @@ export default function AboveBelowClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Team & Facilitation � Guide", "Tim & Fasilitasi � Panduan", "Team & Facilitatie � Gids", lang)}
+            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>{t(
-            "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns � blame, excuse, denial � and choose ownership, accountability, and responsibility instead.",
-            "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif � menyalahkan, mencari alasan, penyangkalan � dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",
-            "Leidt u als Overwinnaar of als Slachtoffer? Dit kader helpt u reactieve patronen te herkennen � beschuldiging, excuus, ontkenning � en te kiezen voor eigenaarschap, aanspreekbaarheid en verantwoordelijkheid.",
+            "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns — blame, excuse, denial — and choose ownership, accountability, and responsibility instead.",
+            "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif — menyalahkan, mencari alasan, penyangkalan — dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",
+            "Leidt u als Overwinnaar of als Slachtoffer? Dit kader helpt u reactieve patronen te herkennen — beschuldiging, excuus, ontkenning — en te kiezen voor eigenaarschap, aanspreekbaarheid en verantwoordelijkheid.",
             lang
           )}</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
-              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("Saving�", "Menyimpan�", "Opslaan�", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}</button>
+              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("Saving—", "Menyimpan—", "Opslaan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}</button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
             )}
@@ -189,7 +189,7 @@ export default function AboveBelowClient({
         </div>
       </section>
 
-      {/* MAIN FRAMEWORK � SIDE-BY-SIDE */}
+      {/* MAIN FRAMEWORK — SIDE-BY-SIDE */}
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("The Line", "Garis Tersebut", "De Lijn", lang)}</h2>
@@ -297,18 +297,18 @@ export default function AboveBelowClient({
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen", lang)}</h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>{t(
-            "Use these to process your own leadership patterns � alone or with a coach.",
-            "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri � sendiri atau bersama pelatih.",
-            "Gebruik deze vragen om uw eigen leiderschapspatronen te verwerken � alleen of met een coach.",
+            "Use these to process your own leadership patterns — alone or with a coach.",
+            "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri — sendiri atau bersama pelatih.",
+            "Gebruik deze vragen om uw eigen leiderschapspatronen te verwerken — alleen of met een coach.",
             lang
           )}</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
             {[
               {
                 color: "oklch(46% 0.16 145)",
-                qEn: "Think of a recent situation. What was your first instinct � Victor or Victim? What drove that response?",
-                qId: "Pikirkan situasi terkini. Apa naluri pertama Anda � Victor atau Korban? Apa yang mendorong respons itu?",
-                qNl: "Denk aan een recente situatie. Wat was uw eerste instinct � Overwinnaar of Slachtoffer? Wat dreef die reactie?",
+                qEn: "Think of a recent situation. What was your first instinct — Victor or Victim? What drove that response?",
+                qId: "Pikirkan situasi terkini. Apa naluri pertama Anda — Victor atau Korban? Apa yang mendorong respons itu?",
+                qNl: "Denk aan een recente situatie. Wat was uw eerste instinct — Overwinnaar of Slachtoffer? Wat dreef die reactie?",
               },
               {
                 color: "oklch(42% 0.14 260)",
@@ -337,7 +337,7 @@ export default function AboveBelowClient({
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>{t("Choose to Lead Above the Line", "Pilih untuk Memimpin Di Atas Garis", "Kies om Boven de Lijn te Leiden", lang)}</h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek", lang)}</Link>
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("Content Library", "Perpustakaan Konten", "Contentbibliotheek", lang)}</Link>
           </div>
         </div>
       </section>

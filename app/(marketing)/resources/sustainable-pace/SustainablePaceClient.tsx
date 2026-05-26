@@ -27,7 +27,7 @@ const VERSES = {
     nl: "Vroeg in de ochtend, toen het nog donker was, stond hij op en ging naar buiten. Hij liep naar een eenzame plek en bad daar.",
   },
   "ps-23-2-3": {
-    en_ref: "Psalm 23:2�3", id_ref: "Mazmur 23:2�3", nl_ref: "Psalm 23:2�3",
+    en_ref: "Psalm 23:2—3", id_ref: "Mazmur 23:2—3", nl_ref: "Psalm 23:2—3",
     en: "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.",
     id: "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku.",
     nl: "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht.",
@@ -56,15 +56,15 @@ const SPHERES: {
     en_subtitle: "God's care for you",
     id_subtitle: "Pemeliharaan Tuhan untuk Anda",
     nl_subtitle: "Gods zorg voor jou",
-    en_desc: "The foundation of everything. God is not a supervisor tracking your output � he is the shepherd who actively leads you to rest and restores your soul. Before you build any structure, you must believe that God's care for you is not contingent on your performance. He cares for the vessel, not just the mission.",
-    id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak output Anda � Ia adalah gembala yang secara aktif memimpin Anda ke tempat istirahat dan memulihkan jiwa Anda. Sebelum Anda membangun struktur apapun, Anda harus percaya bahwa pemeliharaan Tuhan terhadap Anda tidak tergantung pada kinerja Anda. Ia merawat bejana, bukan hanya misi.",
-    nl_desc: "De basis van alles. God is geen supervisor die je output bijhoudt � hij is de herder die je actief naar rust leidt en je ziel herstelt. Voordat je enige structuur opbouwt, moet je geloven dat Gods zorg voor jou niet afhankelijk is van je prestaties. Hij zorgt voor het vat, niet alleen de missie.",
-    en_examples: ["Daily communion with God � not as duty but as source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
-    id_examples: ["Persekutuan harian dengan Tuhan � bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika Anda beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
-    nl_examples: ["Dagelijkse gemeenschap met God � niet als plicht maar als bron", "Gebed als eerlijk gesprek, niet als prestatie", "Vertrouwen dat God de missie vasthoudt als jij even stopt", "Schrift lezen als voeding, niet als informatie"],
-    en_question: "When did you last come to God without an agenda � just to be with him?",
-    id_question: "Kapan terakhir kali Anda datang kepada Tuhan tanpa agenda � hanya untuk bersama dengan-Nya?",
-    nl_question: "Wanneer ben je voor het laatst naar God gegaan zonder agenda � gewoon om bij hem te zijn?",
+    en_desc: "The foundation of everything. God is not a supervisor tracking your output — he is the shepherd who actively leads you to rest and restores your soul. Before you build any structure, you must believe that God's care for you is not contingent on your performance. He cares for the vessel, not just the mission.",
+    id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak output Anda — Ia adalah gembala yang secara aktif memimpin Anda ke tempat istirahat dan memulihkan jiwa Anda. Sebelum Anda membangun struktur apapun, Anda harus percaya bahwa pemeliharaan Tuhan terhadap Anda tidak tergantung pada kinerja Anda. Ia merawat bejana, bukan hanya misi.",
+    nl_desc: "De basis van alles. God is geen supervisor die je output bijhoudt — hij is de herder die je actief naar rust leidt en je ziel herstelt. Voordat je enige structuur opbouwt, moet je geloven dat Gods zorg voor jou niet afhankelijk is van je prestaties. Hij zorgt voor het vat, niet alleen de missie.",
+    en_examples: ["Daily communion with God — not as duty but as source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
+    id_examples: ["Persekutuan harian dengan Tuhan — bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika Anda beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
+    nl_examples: ["Dagelijkse gemeenschap met God — niet als plicht maar als bron", "Gebed als eerlijk gesprek, niet als prestatie", "Vertrouwen dat God de missie vasthoudt als jij even stopt", "Schrift lezen als voeding, niet als informatie"],
+    en_question: "When did you last come to God without an agenda — just to be with him?",
+    id_question: "Kapan terakhir kali Anda datang kepada Tuhan tanpa agenda — hanya untuk bersama dengan-Nya?",
+    nl_question: "Wanneer ben je voor het laatst naar God gegaan zonder agenda — gewoon om bij hem te zijn?",
     color: "oklch(55% 0.14 290)",
   },
   {
@@ -76,15 +76,15 @@ const SPHERES: {
     en_subtitle: "Your personal health architecture",
     id_subtitle: "Arsitektur kesehatan pribadi Anda",
     nl_subtitle: "Je persoonlijke gezondheidsarchitectuur",
-    en_desc: "Self-care is not indulgence � it is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
-    id_desc: "Perawatan diri bukan kemewahan � itu adalah penatalayanan. Anda adalah instrumen yang dipilih Tuhan untuk digunakan. Cara Anda mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitas Anda untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
-    nl_desc: "Zelfzorg is geen verwennerij � het is rentmeesterschap. Jij bent het instrument dat God heeft gekozen om te gebruiken. De manier waarop je je lichaam, geest en ziel beheert, bepaalt direct je vermogen om anderen lief te hebben en goed te leiden. Verwaarlozing hier is geen bescheidenheid; het is slecht rentmeesterschap van een middel dat aan God toebehoort.",
-    en_examples: ["Consistent sleep (7�8 hours) as a non-negotiable", "Physical movement � whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
-    id_examples: ["Tidur yang konsisten (7�8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik � apapun yang sesuai dengan konteks dan tubuh Anda", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang Anda tanggung"],
-    nl_examples: ["Consistent slapen (7�8 uur) als niet-onderhandelbaar", "Lichamelijke beweging � wat ook bij jouw context en lichaam past", "Mentale rust: tijd zonder input, schermen of eisen", "Emotioneel bewustzijn: benoemen wat je draagt"],
-    en_question: "Which of the three � body, mind, or spirit � is most depleted for you right now?",
-    id_question: "Di antara ketiganya � tubuh, pikiran, atau roh � mana yang paling terkuras bagi Anda saat ini?",
-    nl_question: "Welke van de drie � lichaam, geest of ziel � is voor jou nu het meest uitgeput?",
+    en_desc: "Self-care is not indulgence — it is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
+    id_desc: "Perawatan diri bukan kemewahan — itu adalah penatalayanan. Anda adalah instrumen yang dipilih Tuhan untuk digunakan. Cara Anda mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitas Anda untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
+    nl_desc: "Zelfzorg is geen verwennerij — het is rentmeesterschap. Jij bent het instrument dat God heeft gekozen om te gebruiken. De manier waarop je je lichaam, geest en ziel beheert, bepaalt direct je vermogen om anderen lief te hebben en goed te leiden. Verwaarlozing hier is geen bescheidenheid; het is slecht rentmeesterschap van een middel dat aan God toebehoort.",
+    en_examples: ["Consistent sleep (7—8 hours) as a non-negotiable", "Physical movement — whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
+    id_examples: ["Tidur yang konsisten (7—8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik — apapun yang sesuai dengan konteks dan tubuh Anda", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang Anda tanggung"],
+    nl_examples: ["Consistent slapen (7—8 uur) als niet-onderhandelbaar", "Lichamelijke beweging — wat ook bij jouw context en lichaam past", "Mentale rust: tijd zonder input, schermen of eisen", "Emotioneel bewustzijn: benoemen wat je draagt"],
+    en_question: "Which of the three — body, mind, or spirit — is most depleted for you right now?",
+    id_question: "Di antara ketiganya — tubuh, pikiran, atau roh — mana yang paling terkuras bagi Anda saat ini?",
+    nl_question: "Welke van de drie — lichaam, geest of ziel — is voor jou nu het meest uitgeput?",
     color: orange,
   },
   {
@@ -96,15 +96,15 @@ const SPHERES: {
     en_subtitle: "Teammates who know the real weight",
     id_subtitle: "Rekan tim yang mengenal beban nyata",
     nl_subtitle: "Teamgenoten die het echte gewicht kennen",
-    en_desc: "The people you work alongside are not just colleagues � they are potential co-sustainers. Mutual care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
-    id_desc: "Orang-orang yang bekerja bersama Anda bukan sekadar rekan kerja � mereka adalah pemelihara bersama yang potensial. Perawatan bersama terjadi ketika anggota tim saling menanggung beban satu sama lain, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
-    nl_desc: "De mensen met wie je samenwerkt zijn niet zomaar collega's � ze zijn potenti�le mede-dragers. Wederzijdse zorg vindt plaats wanneer teamleden elkaars lasten dragen, elkaar de waarheid vertellen en ruimte scheppen om mens te zijn. Het vraagt intentionaliteit: in prestatiegerichte culturen is deze zorg vaak het eerste slachtoffer van drukte.",
-    en_examples: ["Regular honest check-ins with a trusted peer � not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
-    id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya � bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
-    nl_examples: ["Regelmatige eerlijke check-ins met een vertrouwde collega � niet alleen taakinformatie", "Toestemming om vermoeidheid te benoemen zonder dat het als zwakte wordt gezien", "Interculturele teams: erken dat zorgstijlen verschillen", "Successen samen vieren, niet alleen doorgaan naar de volgende uitdaging"],
-    en_question: "Who on your team knows when you are struggling � and do they feel safe enough to tell you the same?",
-    id_question: "Siapa di tim Anda yang tahu ketika Anda sedang berjuang � dan apakah mereka cukup aman untuk memberitahu Anda hal yang sama?",
-    nl_question: "Wie in jouw team weet wanneer jij het moeilijk hebt � en voelen zij zich veilig genoeg om jou hetzelfde te vertellen?",
+    en_desc: "The people you work alongside are not just colleagues — they are potential co-sustainers. Mutual care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
+    id_desc: "Orang-orang yang bekerja bersama Anda bukan sekadar rekan kerja — mereka adalah pemelihara bersama yang potensial. Perawatan bersama terjadi ketika anggota tim saling menanggung beban satu sama lain, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
+    nl_desc: "De mensen met wie je samenwerkt zijn niet zomaar collega's — ze zijn potenti—le mede-dragers. Wederzijdse zorg vindt plaats wanneer teamleden elkaars lasten dragen, elkaar de waarheid vertellen en ruimte scheppen om mens te zijn. Het vraagt intentionaliteit: in prestatiegerichte culturen is deze zorg vaak het eerste slachtoffer van drukte.",
+    en_examples: ["Regular honest check-ins with a trusted peer — not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
+    id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya — bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
+    nl_examples: ["Regelmatige eerlijke check-ins met een vertrouwde collega — niet alleen taakinformatie", "Toestemming om vermoeidheid te benoemen zonder dat het als zwakte wordt gezien", "Interculturele teams: erken dat zorgstijlen verschillen", "Successen samen vieren, niet alleen doorgaan naar de volgende uitdaging"],
+    en_question: "Who on your team knows when you are struggling — and do they feel safe enough to tell you the same?",
+    id_question: "Siapa di tim Anda yang tahu ketika Anda sedang berjuang — dan apakah mereka cukup aman untuk memberitahu Anda hal yang sama?",
+    nl_question: "Wie in jouw team weet wanneer jij het moeilijk hebt — en voelen zij zich veilig genoeg om jou hetzelfde te vertellen?",
     color: "oklch(52% 0.16 165)",
   },
   {
@@ -116,15 +116,15 @@ const SPHERES: {
     en_subtitle: "Your agency, church, or organisation",
     id_subtitle: "Lembaga, gereja, atau organisasi Anda",
     nl_subtitle: "Jouw organisatie, kerk of zendende gemeenschap",
-    en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing � not just their output. This includes adequate financial support, regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution � not just more personal resilience.",
-    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka � bukan hanya output mereka. Ini termasuk dukungan keuangan yang memadai, check-in pastoral yang teratur, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadi Anda. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural � bukan hanya lebih banyak ketahanan pribadi.",
-    nl_desc: "Duurzame leiders hebben een zendende gemeenschap nodig die actief investeert in hun welzijn � niet alleen in hun output. Dit omvat adequate financi�le steun, regelmatige pastorale check-ins, verantwoordelijkheidsstructuren en oprechte interesse in je persoonlijke bloei. Als dit ontbreekt of stuk is, is dat een structureel probleem dat een structurele oplossing vereist � niet alleen meer persoonlijke weerbaarheid.",
+    en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing — not just their output. This includes adequate financial support, regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution — not just more personal resilience.",
+    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka — bukan hanya output mereka. Ini termasuk dukungan keuangan yang memadai, check-in pastoral yang teratur, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadi Anda. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural — bukan hanya lebih banyak ketahanan pribadi.",
+    nl_desc: "Duurzame leiders hebben een zendende gemeenschap nodig die actief investeert in hun welzijn — niet alleen in hun output. Dit omvat adequate financi—le steun, regelmatige pastorale check-ins, verantwoordelijkheidsstructuren en oprechte interesse in je persoonlijke bloei. Als dit ontbreekt of stuk is, is dat een structureel probleem dat een structurele oplossing vereist — niet alleen meer persoonlijke weerbaarheid.",
     en_examples: ["Annual review conversations that include wellbeing, not just performance", "Financial support that removes economic stress", "A pastor or mentor who knows your personal situation", "Clear re-entry support and debriefing after difficult seasons"],
     id_examples: ["Percakapan tinjauan tahunan yang mencakup kesejahteraan, bukan hanya kinerja", "Dukungan keuangan yang menghilangkan tekanan ekonomi", "Seorang pendeta atau mentor yang mengenal situasi pribadi Anda", "Dukungan kepulangan dan debriefing yang jelas setelah musim-musim yang sulit"],
-    nl_examples: ["Jaarlijkse gesprekken die ook welzijn bespreken, niet alleen prestaties", "Financi�le steun die economische stress wegneemt", "Een pastor of mentor die je persoonlijke situatie kent", "Duidelijke ondersteuning bij terugkeer en debriefing na zware seizoenen"],
-    en_question: "Does your sending organisation know how you are really doing � and do they have structures to respond to what you tell them?",
-    id_question: "Apakah organisasi pengirim Anda mengetahui keadaan Anda yang sebenarnya � dan apakah mereka memiliki struktur untuk merespons apa yang Anda katakan?",
-    nl_question: "Weet jouw zendende organisatie hoe het echt met je gaat � en hebben ze structuren om te reageren op wat je hen vertelt?",
+    nl_examples: ["Jaarlijkse gesprekken die ook welzijn bespreken, niet alleen prestaties", "Financi—le steun die economische stress wegneemt", "Een pastor of mentor die je persoonlijke situatie kent", "Duidelijke ondersteuning bij terugkeer en debriefing na zware seizoenen"],
+    en_question: "Does your sending organisation know how you are really doing — and do they have structures to respond to what you tell them?",
+    id_question: "Apakah organisasi pengirim Anda mengetahui keadaan Anda yang sebenarnya — dan apakah mereka memiliki struktur untuk merespons apa yang Anda katakan?",
+    nl_question: "Weet jouw zendende organisatie hoe het echt met je gaat — en hebben ze structuren om te reageren op wat je hen vertelt?",
     color: "oklch(50% 0.14 220)",
   },
   {
@@ -136,15 +136,15 @@ const SPHERES: {
     en_subtitle: "Professional support when you need it",
     id_subtitle: "Dukungan profesional saat Anda membutuhkannya",
     nl_subtitle: "Professionele ondersteuning wanneer je dat nodig hebt",
-    en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care � a counsellor, therapist, psychologist, doctor, or spiritual director � is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
-    id_desc: "Ada saat-saat ketika beban yang Anda tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional � konselor, terapis, psikolog, dokter, atau direktur spiritual � bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
-    nl_desc: "Er zijn momenten dat het gewicht dat je draagt meer vereist dan een goede vriend, een zorgzaam team of een ondersteunende organisatie. Professionele zorg � een counselor, therapeut, psycholoog, arts of geestelijk begeleider � is geen teken van falen. Het is het wijze gebruik van een middel dat God heeft verschaft. In veel interculturele contexten draagt het zoeken naar specialistische zorg stigma. Dat stigma kost levens en bedieningen.",
-    en_examples: ["Regular counselling or therapy � preventive, not just crisis response", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
-    id_examples: ["Konseling atau terapi teratur � preventif, bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
-    nl_examples: ["Regelmatige counseling of therapie � preventief, niet alleen crisisrespons", "Medische check-ups, inclusief screening van geestelijke gezondheid", "Een geestelijk begeleider die gestructureerde reflectie biedt", "Crisisopvang na traumatische ervaringen in het veld"],
-    en_question: "Is there something you are currently carrying that would benefit from a professional conversation � and what is stopping you from seeking it?",
-    id_question: "Apakah ada sesuatu yang saat ini Anda tanggung yang akan mendapat manfaat dari percakapan profesional � dan apa yang menghalangi Anda untuk mencarinya?",
-    nl_question: "Is er iets wat je nu draagt dat baat zou hebben bij een professioneel gesprek � en wat weerhoudt je ervan om dat te zoeken?",
+    en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care — a counsellor, therapist, psychologist, doctor, or spiritual director — is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
+    id_desc: "Ada saat-saat ketika beban yang Anda tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional — konselor, terapis, psikolog, dokter, atau direktur spiritual — bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
+    nl_desc: "Er zijn momenten dat het gewicht dat je draagt meer vereist dan een goede vriend, een zorgzaam team of een ondersteunende organisatie. Professionele zorg — een counselor, therapeut, psycholoog, arts of geestelijk begeleider — is geen teken van falen. Het is het wijze gebruik van een middel dat God heeft verschaft. In veel interculturele contexten draagt het zoeken naar specialistische zorg stigma. Dat stigma kost levens en bedieningen.",
+    en_examples: ["Regular counselling or therapy — preventive, not just crisis response", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
+    id_examples: ["Konseling atau terapi teratur — preventif, bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
+    nl_examples: ["Regelmatige counseling of therapie — preventief, niet alleen crisisrespons", "Medische check-ups, inclusief screening van geestelijke gezondheid", "Een geestelijk begeleider die gestructureerde reflectie biedt", "Crisisopvang na traumatische ervaringen in het veld"],
+    en_question: "Is there something you are currently carrying that would benefit from a professional conversation — and what is stopping you from seeking it?",
+    id_question: "Apakah ada sesuatu yang saat ini Anda tanggung yang akan mendapat manfaat dari percakapan profesional — dan apa yang menghalangi Anda untuk mencarinya?",
+    nl_question: "Is er iets wat je nu draagt dat baat zou hebben bij een professioneel gesprek — en wat weerhoudt je ervan om dat te zoeken?",
     color: "oklch(48% 0.14 250)",
   },
 ];
@@ -204,7 +204,7 @@ const STRESS_AREAS: {
     nl_label: "Sleutelrelaties",
     en_low: "Isolated, strained, or surface-level only",
     id_low: "Terisolasi, tegang, atau hanya di permukaan",
-    nl_low: "Ge�soleerd, gespannen of alleen oppervlakkig",
+    nl_low: "Ge—soleerd, gespannen of alleen oppervlakkig",
     en_high: "Connected, honest, genuinely supported",
     id_high: "Terhubung, jujur, didukung dengan tulus",
     nl_high: "Verbonden, eerlijk, oprecht ondersteund",
@@ -214,7 +214,7 @@ const STRESS_AREAS: {
     icon: "??",
     en_label: "Financial Stability",
     id_label: "Stabilitas Keuangan",
-    nl_label: "Financi�le Stabiliteit",
+    nl_label: "Financi—le Stabiliteit",
     en_low: "Chronic stress, uncertainty, under-resourced",
     id_low: "Stres kronis, ketidakpastian, kurang sumber daya",
     nl_low: "Chronische stress, onzekerheid, onvoldoende middelen",
@@ -311,24 +311,24 @@ const HABIT_CATEGORIES: {
     en_tagline: "Your physical instrument",
     id_tagline: "Instrumen fisik Anda",
     nl_tagline: "Jouw fysieke instrument",
-    en_desc: "Your body is not separate from your ministry � it is the medium through which all of it happens. Leaders who neglect their physical health are not more sacrificial. They are less sustainable. Treat your body as the instrument it is.",
-    id_desc: "Tubuh Anda tidak terpisah dari pelayanan Anda � tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh Anda sebagai instrumen yang seharusnya.",
-    nl_desc: "Jouw lichaam staat niet los van je bediening � het is het medium waardoor alles gebeurt. Leiders die hun lichamelijke gezondheid verwaarlozen zijn niet meer opofferend. Ze zijn minder duurzaam. Behandel je lichaam als het instrument dat het is.",
+    en_desc: "Your body is not separate from your ministry — it is the medium through which all of it happens. Leaders who neglect their physical health are not more sacrificial. They are less sustainable. Treat your body as the instrument it is.",
+    id_desc: "Tubuh Anda tidak terpisah dari pelayanan Anda — tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh Anda sebagai instrumen yang seharusnya.",
+    nl_desc: "Jouw lichaam staat niet los van je bediening — het is het medium waardoor alles gebeurt. Leiders die hun lichamelijke gezondheid verwaarlozen zijn niet meer opofferend. Ze zijn minder duurzaam. Behandel je lichaam als het instrument dat het is.",
     habits: [
       {
-        en: "Sleep 7�8 hours. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication � it is slow self-destruction.",
-        id: "Tidur 7�8 jam. Bukan sebagai hadiah karena sudah menyelesaikan pekerjaan, tetapi sebagai hal yang tidak bisa ditawar setiap hari. Kekurangan tidur kronis bukan dedikasi � itu adalah penghancuran diri yang perlahan.",
-        nl: "Slaap 7�8 uur. Niet als beloning voor het afmaken, maar als dagelijks niet-onderhandelbaar. Chronisch slaaptekort is geen toewijding � het is langzame zelfvernietiging.",
+        en: "Sleep 7—8 hours. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication — it is slow self-destruction.",
+        id: "Tidur 7—8 jam. Bukan sebagai hadiah karena sudah menyelesaikan pekerjaan, tetapi sebagai hal yang tidak bisa ditawar setiap hari. Kekurangan tidur kronis bukan dedikasi — itu adalah penghancuran diri yang perlahan.",
+        nl: "Slaap 7—8 uur. Niet als beloning voor het afmaken, maar als dagelijks niet-onderhandelbaar. Chronisch slaaptekort is geen toewijding — het is langzame zelfvernietiging.",
       },
       {
-        en: "Move your body for 30 minutes, three times a week. Adapt the form to your context � walking is enough. Your cardiovascular health predicts your cognitive sharpness.",
-        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda � berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif Anda.",
-        nl: "Beweeg je lichaam 30 minuten, drie keer per week. Pas de vorm aan jouw context aan � wandelen is genoeg. Je cardiovasculaire gezondheid voorspelt je cognitieve scherpte.",
+        en: "Move your body for 30 minutes, three times a week. Adapt the form to your context — walking is enough. Your cardiovascular health predicts your cognitive sharpness.",
+        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda — berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif Anda.",
+        nl: "Beweeg je lichaam 30 minuten, drie keer per week. Pas de vorm aan jouw context aan — wandelen is genoeg. Je cardiovasculaire gezondheid voorspelt je cognitieve scherpte.",
       },
       {
         en: "Eat food that sustains rather than numbs. In high-stress seasons, leaders often default to stimulants (caffeine, sugar) and neglect real nutrition. Notice the pattern.",
         id: "Makan makanan yang menopang daripada mematikan rasa. Dalam musim penuh tekanan, pemimpin sering beralih ke stimulan (kafein, gula) dan mengabaikan nutrisi yang sesungguhnya. Perhatikan pola ini.",
-        nl: "Eet voedsel dat voedt in plaats van verdooft. In periodes met veel stress grijpen leiders vaak naar stimulantia (cafe�ne, suiker) en verwaarlozen echte voeding. Merk het patroon op.",
+        nl: "Eet voedsel dat voedt in plaats van verdooft. In periodes met veel stress grijpen leiders vaak naar stimulantia (cafe—ne, suiker) en verwaarlozen echte voeding. Merk het patroon op.",
       },
     ],
   },
@@ -342,24 +342,24 @@ const HABIT_CATEGORIES: {
     en_tagline: "Your cognitive and emotional capacity",
     id_tagline: "Kapasitas kognitif dan emosional Anda",
     nl_tagline: "Je cognitieve en emotionele capaciteit",
-    en_desc: "The mind needs input, processing time, and genuine limits. Leaders who never stop taking in information, never process what they experience, and never set cognitive limits eventually produce neither wisdom nor clarity � only noise.",
-    id_desc: "Pikiran membutuhkan masukan, waktu pemrosesan, dan batasan yang sesungguhnya. Pemimpin yang tidak pernah berhenti menerima informasi, tidak pernah memproses pengalaman mereka, dan tidak pernah menetapkan batasan kognitif pada akhirnya tidak menghasilkan kebijaksanaan atau kejernihan � hanya kebisingan.",
-    nl_desc: "De geest heeft input, verwerkingstijd en echte grenzen nodig. Leiders die nooit stoppen met informatie opnemen, nooit verwerken wat ze meemaken en nooit cognitieve grenzen stellen, produceren uiteindelijk geen wijsheid of helderheid � alleen ruis.",
+    en_desc: "The mind needs input, processing time, and genuine limits. Leaders who never stop taking in information, never process what they experience, and never set cognitive limits eventually produce neither wisdom nor clarity — only noise.",
+    id_desc: "Pikiran membutuhkan masukan, waktu pemrosesan, dan batasan yang sesungguhnya. Pemimpin yang tidak pernah berhenti menerima informasi, tidak pernah memproses pengalaman mereka, dan tidak pernah menetapkan batasan kognitif pada akhirnya tidak menghasilkan kebijaksanaan atau kejernihan — hanya kebisingan.",
+    nl_desc: "De geest heeft input, verwerkingstijd en echte grenzen nodig. Leiders die nooit stoppen met informatie opnemen, nooit verwerken wat ze meemaken en nooit cognitieve grenzen stellen, produceren uiteindelijk geen wijsheid of helderheid — alleen ruis.",
     habits: [
       {
-        en: "Read one book every month � not for professional development only, but for joy, breadth, and perspective. Narrow minds lead narrow organisations.",
-        id: "Baca satu buku setiap bulan � bukan hanya untuk pengembangan profesional, tetapi untuk kesenangan, wawasan, dan perspektif. Pikiran yang sempit memimpin organisasi yang sempit.",
-        nl: "Lees ��n boek per maand � niet alleen voor professionele ontwikkeling, maar voor plezier, breedte en perspectief. Smalle geesten leiden smalle organisaties.",
+        en: "Read one book every month — not for professional development only, but for joy, breadth, and perspective. Narrow minds lead narrow organisations.",
+        id: "Baca satu buku setiap bulan — bukan hanya untuk pengembangan profesional, tetapi untuk kesenangan, wawasan, dan perspektif. Pikiran yang sempit memimpin organisasi yang sempit.",
+        nl: "Lees ——n boek per maand — niet alleen voor professionele ontwikkeling, maar voor plezier, breedte en perspectief. Smalle geesten leiden smalle organisaties.",
       },
       {
-        en: "Create 20 minutes of daily processing time � journalling, walking without a podcast, or quiet prayer. Your brain needs white space to integrate experience into learning.",
-        id: "Ciptakan 20 menit waktu pemrosesan harian � jurnal, berjalan tanpa podcast, atau doa yang tenang. Otak Anda membutuhkan ruang kosong untuk mengintegrasikan pengalaman menjadi pembelajaran.",
-        nl: "Cre�er dagelijks 20 minuten verwerkingstijd � journaling, wandelen zonder podcast, of stil gebed. Je brein heeft witte ruimte nodig om ervaringen te integreren tot leren.",
+        en: "Create 20 minutes of daily processing time — journalling, walking without a podcast, or quiet prayer. Your brain needs white space to integrate experience into learning.",
+        id: "Ciptakan 20 menit waktu pemrosesan harian — jurnal, berjalan tanpa podcast, atau doa yang tenang. Otak Anda membutuhkan ruang kosong untuk mengintegrasikan pengalaman menjadi pembelajaran.",
+        nl: "Cre—er dagelijks 20 minuten verwerkingstijd — journaling, wandelen zonder podcast, of stil gebed. Je brein heeft witte ruimte nodig om ervaringen te integreren tot leren.",
       },
       {
-        en: "Set a digital boundary: no screens for the first 30 minutes of your morning and the last 30 minutes before sleep. These are your highest-value thinking windows � protect them.",
-        id: "Tetapkan batasan digital: tidak ada layar selama 30 menit pertama di pagi hari dan 30 menit terakhir sebelum tidur. Ini adalah jendela berpikir bernilai tertinggi Anda � lindungi mereka.",
-        nl: "Stel een digitale grens: geen schermen gedurende de eerste 30 minuten van je ochtend en de laatste 30 minuten voor het slapen. Dit zijn je meest waardevolle denkvensters � bescherm ze.",
+        en: "Set a digital boundary: no screens for the first 30 minutes of your morning and the last 30 minutes before sleep. These are your highest-value thinking windows — protect them.",
+        id: "Tetapkan batasan digital: tidak ada layar selama 30 menit pertama di pagi hari dan 30 menit terakhir sebelum tidur. Ini adalah jendela berpikir bernilai tertinggi Anda — lindungi mereka.",
+        nl: "Stel een digitale grens: geen schermen gedurende de eerste 30 minuten van je ochtend en de laatste 30 minuten voor het slapen. Dit zijn je meest waardevolle denkvensters — bescherm ze.",
       },
     ],
   },
@@ -373,19 +373,19 @@ const HABIT_CATEGORIES: {
     en_tagline: "Your connection to the source",
     id_tagline: "Koneksi Anda ke sumber",
     nl_tagline: "Je verbinding met de bron",
-    en_desc: "Spiritual health is not measured by religious activity � it is measured by your connectedness to God. A leader can be extraordinarily busy with spiritual work and be spiritually empty. The habits here are not about performance. They are about remaining connected to the one who called you.",
-    id_desc: "Kesehatan rohani tidak diukur dari aktivitas keagamaan � tetapi dari koneksi Anda dengan Tuhan. Seorang pemimpin bisa sangat sibuk dengan pekerjaan rohani dan tetap kosong secara rohani. Kebiasaan di sini bukan tentang performa. Ini tentang tetap terhubung dengan Dia yang memanggil Anda.",
-    nl_desc: "Geestelijke gezondheid wordt niet gemeten aan religieuze activiteit � maar aan je verbondenheid met God. Een leider kan buitengewoon druk zijn met geestelijk werk en toch geestelijk leeg zijn. De gewoonten hier gaan niet over prestaties. Ze gaan over verbonden blijven met degene die jou riep.",
+    en_desc: "Spiritual health is not measured by religious activity — it is measured by your connectedness to God. A leader can be extraordinarily busy with spiritual work and be spiritually empty. The habits here are not about performance. They are about remaining connected to the one who called you.",
+    id_desc: "Kesehatan rohani tidak diukur dari aktivitas keagamaan — tetapi dari koneksi Anda dengan Tuhan. Seorang pemimpin bisa sangat sibuk dengan pekerjaan rohani dan tetap kosong secara rohani. Kebiasaan di sini bukan tentang performa. Ini tentang tetap terhubung dengan Dia yang memanggil Anda.",
+    nl_desc: "Geestelijke gezondheid wordt niet gemeten aan religieuze activiteit — maar aan je verbondenheid met God. Een leider kan buitengewoon druk zijn met geestelijk werk en toch geestelijk leeg zijn. De gewoonten hier gaan niet over prestaties. Ze gaan over verbonden blijven met degene die jou riep.",
     habits: [
       {
-        en: "Pray honestly � including your doubts, frustrations, and fears. Jesus withdrew to solitary places not to report his successes but to remain in communion with the Father.",
-        id: "Berdoa dengan jujur � termasuk keraguan, frustrasi, dan ketakutan Anda. Yesus menyingkir ke tempat-tempat yang sunyi bukan untuk melaporkan keberhasilan-Nya tetapi untuk tetap berada dalam persekutuan dengan Bapa.",
-        nl: "Bid eerlijk � inclusief je twijfels, frustraties en angsten. Jezus trok zich terug naar eenzame plekken niet om zijn successen te rapporteren maar om in gemeenschap met de Vader te blijven.",
+        en: "Pray honestly — including your doubts, frustrations, and fears. Jesus withdrew to solitary places not to report his successes but to remain in communion with the Father.",
+        id: "Berdoa dengan jujur — termasuk keraguan, frustrasi, dan ketakutan Anda. Yesus menyingkir ke tempat-tempat yang sunyi bukan untuk melaporkan keberhasilan-Nya tetapi untuk tetap berada dalam persekutuan dengan Bapa.",
+        nl: "Bid eerlijk — inclusief je twijfels, frustraties en angsten. Jezus trok zich terug naar eenzame plekken niet om zijn successen te rapporteren maar om in gemeenschap met de Vader te blijven.",
       },
       {
-        en: "Read Scripture slowly � not for sermon preparation or content production, but for personal nourishment. Two verses read meditatively sustain more than two chapters read for information.",
-        id: "Baca Kitab Suci dengan perlahan � bukan untuk persiapan khotbah atau produksi konten, tetapi untuk pemeliharaan pribadi. Dua ayat yang dibaca secara meditatif memberikan lebih banyak sustansi daripada dua pasal yang dibaca hanya untuk informasi.",
-        nl: "Lees de Schrift langzaam � niet voor preekvoorbereiding of inhoudsproductie, maar voor persoonlijke voeding. Twee verzen meditatief gelezen geven meer voeding dan twee hoofdstukken informatief gelezen.",
+        en: "Read Scripture slowly — not for sermon preparation or content production, but for personal nourishment. Two verses read meditatively sustain more than two chapters read for information.",
+        id: "Baca Kitab Suci dengan perlahan — bukan untuk persiapan khotbah atau produksi konten, tetapi untuk pemeliharaan pribadi. Dua ayat yang dibaca secara meditatif memberikan lebih banyak sustansi daripada dua pasal yang dibaca hanya untuk informasi.",
+        nl: "Lees de Schrift langzaam — niet voor preekvoorbereiding of inhoudsproductie, maar voor persoonlijke voeding. Twee verzen meditatief gelezen geven meer voeding dan twee hoofdstukken informatief gelezen.",
       },
       {
         en: "Stay embedded in a local community of faith. Cross-cultural leaders are especially vulnerable to becoming 'everyone's pastor and no one's parishioner.' Find a community where you receive, not only give.",
@@ -453,7 +453,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
           letterSpacing: "0.14em", color: "oklch(62% 0.06 260)", textTransform: "uppercase",
         }}>
-          {t("Personal Development � Health Architecture", "Pengembangan Pribadi � Arsitektur Kesehatan", "Persoonlijke Ontwikkeling � Gezondheidsarchitectuur")}
+          {t("Personal Development — Health Architecture", "Pengembangan Pribadi — Arsitektur Kesehatan", "Persoonlijke Ontwikkeling — Gezondheidsarchitectuur")}
         </span>
       </div>
 
@@ -469,7 +469,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: orange, fontSize: 11, fontWeight: 700,
             letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 20,
           }}>
-            {t("Personal Development � Guide", "Pengembangan Pribadi � Panduan", "Persoonlijke Ontwikkeling � Gids")}
+            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids")}
           </p>
           <h1 style={{
             fontFamily: serif, fontSize: "clamp(38px, 6vw, 72px)",
@@ -485,9 +485,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             fontStyle: "italic", maxWidth: 640,
           }}>
             {t(
-              "Most leaders are not failing. They are surviving � managing output while quietly depleting. The question this module asks is not: can you keep going? It is: are you building to last?",
-              "Kebanyakan pemimpin tidak gagal. Mereka sedang bertahan � mengelola output sambil diam-diam menguras diri. Pertanyaan yang diajukan modul ini bukan: bisakah Anda terus berjalan? Melainkan: apakah Anda sedang membangun untuk bertahan lama?",
-              "De meeste leiders falen niet. Ze overleven � ze managen output terwijl ze zichzelf stiekem uitputten. De vraag die deze module stelt is niet: kun je doorgaan? Het is: bouw je om te blijven?"
+              "Most leaders are not failing. They are surviving — managing output while quietly depleting. The question this module asks is not: can you keep going? It is: are you building to last?",
+              "Kebanyakan pemimpin tidak gagal. Mereka sedang bertahan — mengelola output sambil diam-diam menguras diri. Pertanyaan yang diajukan modul ini bukan: bisakah Anda terus berjalan? Melainkan: apakah Anda sedang membangun untuk bertahan lama?",
+              "De meeste leiders falen niet. Ze overleven — ze managen output terwijl ze zichzelf stiekem uitputten. De vraag die deze module stelt is niet: kun je doorgaan? Het is: bouw je om te blijven?"
             )}
           </p>
           <p style={{
@@ -495,9 +495,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: "oklch(55% 0.06 260)", lineHeight: 1.65, maxWidth: 600, marginBottom: 48,
           }}>
             {t(
-              "This is not the Sabbath module � that is about theological rest. This is practical. It is about the architecture of your personal health: the systems, habits, and support structures that determine whether you are still effective in 10 years.",
-              "Ini bukan modul Sabat � itu tentang istirahat teologis. Ini bersifat praktis. Ini tentang arsitektur kesehatan pribadi Anda: sistem, kebiasaan, dan struktur dukungan yang menentukan apakah Anda masih efektif dalam 10 tahun ke depan.",
-              "Dit is niet de Sabbat-module � die gaat over theologische rust. Dit is praktisch. Het gaat over de architectuur van je persoonlijke gezondheid: de systemen, gewoonten en ondersteunende structuren die bepalen of je over 10 jaar nog effectief bent."
+              "This is not the Sabbath module — that is about theological rest. This is practical. It is about the architecture of your personal health: the systems, habits, and support structures that determine whether you are still effective in 10 years.",
+              "Ini bukan modul Sabat — itu tentang istirahat teologis. Ini bersifat praktis. Ini tentang arsitektur kesehatan pribadi Anda: sistem, kebiasaan, dan struktur dukungan yang menentukan apakah Anda masih efektif dalam 10 tahun ke depan.",
+              "Dit is niet de Sabbat-module — die gaat over theologische rust. Dit is praktisch. Het gaat over de architectuur van je persoonlijke gezondheid: de systemen, gewoonten en ondersteunende structuren die bepalen of je over 10 jaar nog effectief bent."
             )}
           </p>
 
@@ -517,7 +517,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               )}"
             </p>
             <p style={{ fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
-              �{" "}
+              —{" "}
               <button
                 onClick={() => setActiveVerse("mark-1-35")}
                 style={{
@@ -546,7 +546,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               }}
             >
               {saved
-                ? t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard")
+                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
           </div>
@@ -570,16 +570,16 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
         <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "The ReMap research � one of the most extensive studies of cross-cultural worker attrition ever conducted � found that the majority of preventable departures were not caused by theological failure, moral collapse, or lack of vision. They were caused by neglect of personal health: physical depletion, relational isolation, emotional overload, and lack of adequate support structures.",
-              "Penelitian ReMap � salah satu studi paling ekstensif tentang keluarnya pekerja lintas budaya yang pernah dilakukan � menemukan bahwa mayoritas keberangkatan yang dapat dicegah tidak disebabkan oleh kegagalan teologis, keruntuhan moral, atau kurangnya visi. Mereka disebabkan oleh pengabaian kesehatan pribadi: kelelahan fisik, isolasi relasional, kelebihan emosional, dan kurangnya struktur dukungan yang memadai.",
-              "Het ReMap-onderzoek � een van de meest uitgebreide studies naar uitval van interculturele werkers ooit uitgevoerd � ontdekte dat de meerderheid van vermijdbare vertrekken niet werd veroorzaakt door theologisch falen, morele ineenstorting of gebrek aan visie. Ze werden veroorzaakt door verwaarlozing van persoonlijke gezondheid: fysieke uitputting, relationele isolatie, emotionele overbelasting en gebrek aan adequate ondersteuningsstructuren."
+              "The ReMap research — one of the most extensive studies of cross-cultural worker attrition ever conducted — found that the majority of preventable departures were not caused by theological failure, moral collapse, or lack of vision. They were caused by neglect of personal health: physical depletion, relational isolation, emotional overload, and lack of adequate support structures.",
+              "Penelitian ReMap — salah satu studi paling ekstensif tentang keluarnya pekerja lintas budaya yang pernah dilakukan — menemukan bahwa mayoritas keberangkatan yang dapat dicegah tidak disebabkan oleh kegagalan teologis, keruntuhan moral, atau kurangnya visi. Mereka disebabkan oleh pengabaian kesehatan pribadi: kelelahan fisik, isolasi relasional, kelebihan emosional, dan kurangnya struktur dukungan yang memadai.",
+              "Het ReMap-onderzoek — een van de meest uitgebreide studies naar uitval van interculturele werkers ooit uitgevoerd — ontdekte dat de meerderheid van vermijdbare vertrekken niet werd veroorzaakt door theologisch falen, morele ineenstorting of gebrek aan visie. Ze werden veroorzaakt door verwaarlozing van persoonlijke gezondheid: fysieke uitputting, relationele isolatie, emotionele overbelasting en gebrek aan adequate ondersteuningsstructuren."
             )}
           </p>
           <p style={{ marginBottom: 28 }}>
             {t(
-              "The insight is confronting: most leaders who leave the field � or who stay but become shadows of themselves � were not undone by the hard things. They were undone by the slow accumulation of small depletions they never addressed.",
-              "Pemahamannya mengejutkan: sebagian besar pemimpin yang meninggalkan lapangan � atau yang tetap tetapi menjadi bayang-bayang diri mereka sendiri � tidak dihancurkan oleh hal-hal yang sulit. Mereka dihancurkan oleh akumulasi perlahan dari penipisan kecil yang tidak pernah mereka tangani.",
-              "Het inzicht is confronterend: de meeste leiders die het veld verlaten � of die blijven maar zichzelf niet meer zijn � werden niet geveld door de zware dingen. Ze werden geveld door de langzame opeenhoping van kleine uitputtingen die ze nooit aanpakten."
+              "The insight is confronting: most leaders who leave the field — or who stay but become shadows of themselves — were not undone by the hard things. They were undone by the slow accumulation of small depletions they never addressed.",
+              "Pemahamannya mengejutkan: sebagian besar pemimpin yang meninggalkan lapangan — atau yang tetap tetapi menjadi bayang-bayang diri mereka sendiri — tidak dihancurkan oleh hal-hal yang sulit. Mereka dihancurkan oleh akumulasi perlahan dari penipisan kecil yang tidak pernah mereka tangani.",
+              "Het inzicht is confronterend: de meeste leiders die het veld verlaten — of die blijven maar zichzelf niet meer zijn — werden niet geveld door de zware dingen. Ze werden geveld door de langzame opeenhoping van kleine uitputtingen die ze nooit aanpakten."
             )}
           </p>
           <p style={{
@@ -596,9 +596,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           </p>
           <p style={{ marginBottom: 0 }}>
             {t(
-              "Jesus modelled this. The most effective leader in human history regularly withdrew from the work � before dawn, to solitary places � not as indulgence, but as the deep rhythm that sustained everything else. He was not less missional because he withdrew. He was more effective because of it.",
-              "Yesus memodelkan hal ini. Pemimpin paling efektif dalam sejarah manusia secara teratur mengundurkan diri dari pekerjaan � sebelum fajar, ke tempat-tempat yang sunyi � bukan sebagai kemewahan, tetapi sebagai ritme mendalam yang menopang segalanya. Ia tidak kurang bermisi karena menyingkir. Ia lebih efektif karena hal itu.",
-              "Jezus modelleerde dit. De meest effectieve leider in de menselijke geschiedenis trok zich regelmatig terug van het werk � voor zonsopgang, naar eenzame plaatsen � niet als verwennerij, maar als het diepe ritme dat alles onderhield. Hij was niet minder missionair omdat hij zich terugtrok. Hij was effectiever daardoor."
+              "Jesus modelled this. The most effective leader in human history regularly withdrew from the work — before dawn, to solitary places — not as indulgence, but as the deep rhythm that sustained everything else. He was not less missional because he withdrew. He was more effective because of it.",
+              "Yesus memodelkan hal ini. Pemimpin paling efektif dalam sejarah manusia secara teratur mengundurkan diri dari pekerjaan — sebelum fajar, ke tempat-tempat yang sunyi — bukan sebagai kemewahan, tetapi sebagai ritme mendalam yang menopang segalanya. Ia tidak kurang bermisi karena menyingkir. Ia lebih efektif karena hal itu.",
+              "Jezus modelleerde dit. De meest effectieve leider in de menselijke geschiedenis trok zich regelmatig terug van het werk — voor zonsopgang, naar eenzame plaatsen — niet als verwennerij, maar als het diepe ritme dat alles onderhield. Hij was niet minder missionair omdat hij zich terugtrok. Hij was effectiever daardoor."
             )}
           </p>
         </div>
@@ -626,9 +626,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             margin: "0 auto 20px", textAlign: "center",
           }}>
             {t(
-              "Kelly O'Donnell's member care framework identifies five concentric levels of care that every long-term leader needs. No single level is sufficient alone � resilience requires all five.",
-              "Kerangka perawatan anggota Kelly O'Donnell mengidentifikasi lima tingkat perawatan konsentris yang dibutuhkan setiap pemimpin jangka panjang. Tidak ada satu tingkat yang cukup sendiri � ketahanan membutuhkan kelima level tersebut.",
-              "Kelly O'Donnells member care-raamwerk identificeert vijf concentrische niveaus van zorg die elke langetermijnleider nodig heeft. Geen enkel niveau is alleen voldoende � weerbaarheid vereist alle vijf."
+              "Kelly O'Donnell's member care framework identifies five concentric levels of care that every long-term leader needs. No single level is sufficient alone — resilience requires all five.",
+              "Kerangka perawatan anggota Kelly O'Donnell mengidentifikasi lima tingkat perawatan konsentris yang dibutuhkan setiap pemimpin jangka panjang. Tidak ada satu tingkat yang cukup sendiri — ketahanan membutuhkan kelima level tersebut.",
+              "Kelly O'Donnells member care-raamwerk identificeert vijf concentrische niveaus van zorg die elke langetermijnleider nodig heeft. Geen enkel niveau is alleen voldoende — weerbaarheid vereist alle vijf."
             )}
           </p>
           <p style={{
@@ -642,7 +642,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             )}
           </p>
 
-          {/* Sphere visual � concentric rings with clickable labels */}
+          {/* Sphere visual — concentric rings with clickable labels */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 700, margin: "0 auto 48px" }}>
             {SPHERES.map((sphere, i) => {
               const isActive = activeSphere === sphere.key;
@@ -800,28 +800,28 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: bodyText, lineHeight: 1.85, maxWidth: 640, marginBottom: 16,
           }}>
             {t(
-              "Rate each of the ten areas on a scale of 1�5. This is not a diagnostic test � it is a rapid scan to help you see where your energy is actually going. Be honest. No one else will see this.",
-              "Nilai setiap sepuluh area pada skala 1�5. Ini bukan tes diagnostik � ini adalah pemindaian cepat untuk membantu Anda melihat ke mana energi Anda sebenarnya pergi. Jujurlah. Tidak ada orang lain yang akan melihat ini.",
-              "Beoordeel elk van de tien gebieden op een schaal van 1�5. Dit is geen diagnostische test � het is een snelle scan om te zien waar je energie eigenlijk naartoe gaat. Wees eerlijk. Niemand anders zal dit zien."
+              "Rate each of the ten areas on a scale of 1—5. This is not a diagnostic test — it is a rapid scan to help you see where your energy is actually going. Be honest. No one else will see this.",
+              "Nilai setiap sepuluh area pada skala 1—5. Ini bukan tes diagnostik — ini adalah pemindaian cepat untuk membantu Anda melihat ke mana energi Anda sebenarnya pergi. Jujurlah. Tidak ada orang lain yang akan melihat ini.",
+              "Beoordeel elk van de tien gebieden op een schaal van 1—5. Dit is geen diagnostische test — het is een snelle scan om te zien waar je energie eigenlijk naartoe gaat. Wees eerlijk. Niemand anders zal dit zien."
             )}
           </p>
           <div style={{ display: "flex", gap: 32, marginBottom: 56, flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "oklch(55% 0.18 25)" }} />
               <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                1�2: {t("Critical attention needed", "Perlu perhatian kritis", "Kritieke aandacht nodig")}
+                1—2: {t("Critical attention needed", "Perlu perhatian kritis", "Kritieke aandacht nodig")}
               </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: orange }} />
               <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                3: {t("Watchful � invest here", "Waspada � investasikan di sini", "Attent � investeer hier")}
+                3: {t("Watchful — invest here", "Waspada — investasikan di sini", "Attent — investeer hier")}
               </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "oklch(52% 0.16 145)" }} />
               <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                4�5: {t("Healthy � maintain it", "Sehat � pertahankan", "Gezond � houd het vast")}
+                4—5: {t("Healthy — maintain it", "Sehat — pertahankan", "Gezond — houd het vast")}
               </span>
             </div>
           </div>
@@ -855,7 +855,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                             ? tFn(area.en_low, area.id_low, area.nl_low, lang)
                             : score >= 4
                             ? tFn(area.en_high, area.id_high, area.nl_high, lang)
-                            : t("Moderate � worth monitoring", "Sedang � perlu dipantau", "Matig � het waard om te monitoren")}
+                            : t("Moderate — worth monitoring", "Sedang — perlu dipantau", "Matig — het waard om te monitoren")}
                         </div>
                       )}
                     </div>
@@ -909,20 +909,20 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                 <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: "oklch(80% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
                   {avgScore !== null && avgScore <= 2.5
                     ? t(
-                        "Your overall picture shows significant depletion. This is not the time for more willpower � it is the time for structural change. Look at your lowest-scored areas first.",
-                        "Gambaran keseluruhan Anda menunjukkan penipisan yang signifikan. Ini bukan saatnya untuk lebih banyak kemauan � ini saatnya untuk perubahan struktural. Lihat area dengan skor terendah Anda terlebih dahulu.",
-                        "Jouw totaalbeeld laat aanzienlijke uitputting zien. Dit is niet de tijd voor meer wilskracht � het is de tijd voor structurele verandering. Kijk eerst naar je laagst gescoorde gebieden."
+                        "Your overall picture shows significant depletion. This is not the time for more willpower — it is the time for structural change. Look at your lowest-scored areas first.",
+                        "Gambaran keseluruhan Anda menunjukkan penipisan yang signifikan. Ini bukan saatnya untuk lebih banyak kemauan — ini saatnya untuk perubahan struktural. Lihat area dengan skor terendah Anda terlebih dahulu.",
+                        "Jouw totaalbeeld laat aanzienlijke uitputting zien. Dit is niet de tijd voor meer wilskracht — het is de tijd voor structurele verandering. Kijk eerst naar je laagst gescoorde gebieden."
                       )
                     : avgScore !== null && avgScore <= 3.5
                     ? t(
-                        "You are managing, but the margin is thin. The areas you scored 1�2 are worth your focused attention before they become crises.",
-                        "Anda bisa bertahan, tetapi ruang gerak Anda sempit. Area yang Anda nilai 1�2 layak mendapat perhatian terfokus sebelum menjadi krisis.",
-                        "Je redt het, maar de marge is dun. De gebieden die je 1�2 scoorde verdienen je gerichte aandacht voordat ze crises worden."
+                        "You are managing, but the margin is thin. The areas you scored 1—2 are worth your focused attention before they become crises.",
+                        "Anda bisa bertahan, tetapi ruang gerak Anda sempit. Area yang Anda nilai 1—2 layak mendapat perhatian terfokus sebelum menjadi krisis.",
+                        "Je redt het, maar de marge is dun. De gebieden die je 1—2 scoorde verdienen je gerichte aandacht voordat ze crises worden."
                       )
                     : t(
-                        "Your overall health looks solid. The practice now is maintenance � protect what is working and stay honest about any areas that start to slip.",
-                        "Kesehatan keseluruhan Anda terlihat solid. Praktik sekarang adalah pemeliharaan � lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun.",
-                        "Jouw algehele gezondheid ziet er solide uit. De oefening nu is onderhoud � bescherm wat werkt en blijf eerlijk over gebieden die beginnen te zakken."
+                        "Your overall health looks solid. The practice now is maintenance — protect what is working and stay honest about any areas that start to slip.",
+                        "Kesehatan keseluruhan Anda terlihat solid. Praktik sekarang adalah pemeliharaan — lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun.",
+                        "Jouw algehele gezondheid ziet er solide uit. De oefening nu is onderhoud — bescherm wat werkt en blijf eerlijk over gebieden die beginnen te zakken."
                       )}
                 </p>
               </div>
@@ -953,9 +953,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             margin: "0 auto 64px", textAlign: "center",
           }}>
             {t(
-              "Three categories � nine habits. Not rules to comply with, but investments to protect. You are not going to do all nine perfectly. Pick the one or two that your Stress Audit revealed you need most.",
-              "Tiga kategori � sembilan kebiasaan. Bukan aturan untuk dipatuhi, tetapi investasi untuk dilindungi. Anda tidak akan melakukan semua sembilan dengan sempurna. Pilih satu atau dua yang diungkapkan Audit Stres Anda sebagai yang paling Anda butuhkan.",
-              "Drie categorie�n � negen gewoonten. Geen regels om na te leven, maar investeringen om te beschermen. Je gaat ze niet alle negen perfect doen. Kies de een of twee die jouw Stressaudit heeft onthuld als wat je het meest nodig hebt."
+              "Three categories — nine habits. Not rules to comply with, but investments to protect. You are not going to do all nine perfectly. Pick the one or two that your Stress Audit revealed you need most.",
+              "Tiga kategori — sembilan kebiasaan. Bukan aturan untuk dipatuhi, tetapi investasi untuk dilindungi. Anda tidak akan melakukan semua sembilan dengan sempurna. Pilih satu atau dua yang diungkapkan Audit Stres Anda sebagai yang paling Anda butuhkan.",
+              "Drie categorie—n — negen gewoonten. Geen regels om na te leven, maar investeringen om te beschermen. Je gaat ze niet alle negen perfect doen. Kies de een of twee die jouw Stressaudit heeft onthuld als wat je het meest nodig hebt."
             )}
           </p>
 
@@ -1065,9 +1065,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             margin: "0 auto 72px", textAlign: "center",
           }}>
             {t(
-              "Sustainable pace is not a leadership strategy invented in the 21st century. It is a pattern modelled by Jesus himself � and described throughout Scripture.",
-              "Kecepatan yang berkelanjutan bukan strategi kepemimpinan yang ditemukan di abad ke-21. Ini adalah pola yang dimodelkan oleh Yesus sendiri � dan digambarkan di seluruh Kitab Suci.",
-              "Duurzaam tempo is geen leiderschapsstrategie uitgevonden in de 21e eeuw. Het is een patroon gemodelleerd door Jezus zelf � en beschreven door de hele Schrift."
+              "Sustainable pace is not a leadership strategy invented in the 21st century. It is a pattern modelled by Jesus himself — and described throughout Scripture.",
+              "Kecepatan yang berkelanjutan bukan strategi kepemimpinan yang ditemukan di abad ke-21. Ini adalah pola yang dimodelkan oleh Yesus sendiri — dan digambarkan di seluruh Kitab Suci.",
+              "Duurzaam tempo is geen leiderschapsstrategie uitgevonden in de 21e eeuw. Het is een patroon gemodelleerd door Jezus zelf — en beschreven door de hele Schrift."
             )}
           </p>
 
@@ -1104,9 +1104,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               color: "oklch(72% 0.03 80)", lineHeight: 1.85,
             }}>
               {t(
-                "This verse sits in the middle of one of the most intense ministry passages in the Gospels. The day before, Jesus had healed Peter's mother-in-law, and by evening the whole town had gathered at the door. He healed many, drove out demons, and was in constant demand. And then � before anyone else was awake � he left. Not after everyone had been seen to. Not after the crowds had dispersed. Before.",
-                "Ayat ini berada di tengah salah satu bagian pelayanan paling intens dalam Injil. Sehari sebelumnya, Yesus telah menyembuhkan ibu mertua Petrus, dan menjelang sore seluruh kota telah berkumpul di depan pintu. Ia menyembuhkan banyak orang, mengusir setan, dan terus diminta. Dan kemudian � sebelum siapa pun terbangun � Ia pergi. Bukan setelah semua orang dilayani. Bukan setelah kerumunan bubar. Sebelum.",
-                "Dit vers staat midden in een van de meest intense bedieningspassages in de Evangeli�n. De dag ervoor had Jezus de schoonmoeder van Petrus genezen, en 's avonds had de hele stad zich voor de deur verzameld. Hij genas velen, dreef demonen uit en was voortdurend gevraagd. En toen � voordat iemand anders wakker was � vertrok hij. Niet nadat iedereen geholpen was. Niet nadat de menigte was opgelost. Daarv��r."
+                "This verse sits in the middle of one of the most intense ministry passages in the Gospels. The day before, Jesus had healed Peter's mother-in-law, and by evening the whole town had gathered at the door. He healed many, drove out demons, and was in constant demand. And then — before anyone else was awake — he left. Not after everyone had been seen to. Not after the crowds had dispersed. Before.",
+                "Ayat ini berada di tengah salah satu bagian pelayanan paling intens dalam Injil. Sehari sebelumnya, Yesus telah menyembuhkan ibu mertua Petrus, dan menjelang sore seluruh kota telah berkumpul di depan pintu. Ia menyembuhkan banyak orang, mengusir setan, dan terus diminta. Dan kemudian — sebelum siapa pun terbangun — Ia pergi. Bukan setelah semua orang dilayani. Bukan setelah kerumunan bubar. Sebelum.",
+                "Dit vers staat midden in een van de meest intense bedieningspassages in de Evangeli—n. De dag ervoor had Jezus de schoonmoeder van Petrus genezen, en 's avonds had de hele stad zich voor de deur verzameld. Hij genas velen, dreef demonen uit en was voortdurend gevraagd. En toen — voordat iemand anders wakker was — vertrok hij. Niet nadat iedereen geholpen was. Niet nadat de menigte was opgelost. Daarv——r."
               )}
             </p>
           </div>
@@ -1126,7 +1126,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                   letterSpacing: "0.1em",
                 }}
               >
-                {t("Psalm 23:2�3", "Mazmur 23:2�3", "Psalm 23:2�3")}
+                {t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}
               </button>
             </p>
             <p style={{
@@ -1144,9 +1144,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               color: "oklch(72% 0.03 80)", lineHeight: 1.85,
             }}>
               {t(
-                "Notice the active verbs: he makes, he leads, he refreshes. The Psalm describes a God who does not simply permit rest � he initiates it. 'He makes me lie down' is a strong image: the shepherd leads the sheep to green pasture and the sheep lies down, because that is what the shepherd is doing. God is not passive about your wellbeing. He is actively guiding you toward renewal.",
-                "Perhatikan kata kerja aktif: Ia membaringkan, Ia membimbing, Ia menyegarkan. Mazmur ini menggambarkan Allah yang tidak sekadar mengizinkan istirahat � Ia memulainya. 'Ia membaringkan aku' adalah gambaran yang kuat: Gembala memimpin domba ke padang yang berumput hijau dan domba itu berbaring, karena itulah yang dilakukan Gembala. Allah tidak pasif terhadap kesejahteraan Anda. Ia secara aktif memandu Anda menuju pembaruan.",
-                "Let op de actieve werkwoorden: hij laat rusten, hij voert, hij geeft kracht. De Psalm beschrijft een God die rust niet slechts toestaat � hij initieert het. 'Hij laat mij rusten' is een sterk beeld: de herder leidt het schaap naar groene weiden en het schaap gaat liggen, omdat dat is wat de herder doet. God is niet passief over jouw welzijn. Hij leidt je actief naar vernieuwing."
+                "Notice the active verbs: he makes, he leads, he refreshes. The Psalm describes a God who does not simply permit rest — he initiates it. 'He makes me lie down' is a strong image: the shepherd leads the sheep to green pasture and the sheep lies down, because that is what the shepherd is doing. God is not passive about your wellbeing. He is actively guiding you toward renewal.",
+                "Perhatikan kata kerja aktif: Ia membaringkan, Ia membimbing, Ia menyegarkan. Mazmur ini menggambarkan Allah yang tidak sekadar mengizinkan istirahat — Ia memulainya. 'Ia membaringkan aku' adalah gambaran yang kuat: Gembala memimpin domba ke padang yang berumput hijau dan domba itu berbaring, karena itulah yang dilakukan Gembala. Allah tidak pasif terhadap kesejahteraan Anda. Ia secara aktif memandu Anda menuju pembaruan.",
+                "Let op de actieve werkwoorden: hij laat rusten, hij voert, hij geeft kracht. De Psalm beschrijft een God die rust niet slechts toestaat — hij initieert het. 'Hij laat mij rusten' is een sterk beeld: de herder leidt het schaap naar groene weiden en het schaap gaat liggen, omdat dat is wat de herder doet. God is niet passief over jouw welzijn. Hij leidt je actief naar vernieuwing."
               )}
             </p>
           </div>
@@ -1167,9 +1167,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 20,
             }}>
               {t(
-                "You are not the energy source. You are the vessel. The same God who sent you into the work is the God who designed rest into the fabric of creation. Building a sustainable pace is not a concession to your weakness � it is an act of faith in his ongoing provision.",
-                "Anda bukan sumber energi. Anda adalah bejananya. Tuhan yang sama yang mengutus Anda ke dalam pekerjaan adalah Tuhan yang merancang istirahat ke dalam jalinan penciptaan. Membangun kecepatan yang berkelanjutan bukan konsesi terhadap kelemahan Anda � itu adalah tindakan iman dalam pemeliharaan-Nya yang terus-menerus.",
-                "Jij bent niet de energiebron. Jij bent het vat. Dezelfde God die jou in het werk zond is de God die rust in het weefsel van de schepping heeft ontworpen. Een duurzaam tempo bouwen is geen concessie aan jouw zwakte � het is een daad van geloof in zijn voortdurende voorziening."
+                "You are not the energy source. You are the vessel. The same God who sent you into the work is the God who designed rest into the fabric of creation. Building a sustainable pace is not a concession to your weakness — it is an act of faith in his ongoing provision.",
+                "Anda bukan sumber energi. Anda adalah bejananya. Tuhan yang sama yang mengutus Anda ke dalam pekerjaan adalah Tuhan yang merancang istirahat ke dalam jalinan penciptaan. Membangun kecepatan yang berkelanjutan bukan konsesi terhadap kelemahan Anda — itu adalah tindakan iman dalam pemeliharaan-Nya yang terus-menerus.",
+                "Jij bent niet de energiebron. Jij bent het vat. Dezelfde God die jou in het werk zond is de God die rust in het weefsel van de schepping heeft ontworpen. Een duurzaam tempo bouwen is geen concessie aan jouw zwakte — het is een daad van geloof in zijn voortdurende voorziening."
               )}
             </p>
             <p style={{
@@ -1200,16 +1200,16 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2,
             fontStyle: "italic", textAlign: "center",
           }}>
-            {t("One Investment This Week", "Satu Investasi Minggu Ini", "��n Investering Deze Week")}
+            {t("One Investment This Week", "Satu Investasi Minggu Ini", "——n Investering Deze Week")}
           </h2>
           <p style={{
             fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)",
             color: bodyText, lineHeight: 1.85, textAlign: "center", marginBottom: 48,
           }}>
             {t(
-              "Look back at your Stress Audit. Which area scored lowest? That is where you begin. Not the whole framework � one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
-              "Lihat kembali Audit Stres Anda. Area mana yang mendapat skor terendah? Di situlah Anda memulai. Bukan seluruh kerangka � satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu.",
-              "Kijk terug naar je Stressaudit. Welk gebied scoorde het laagst? Daar begin je. Niet het hele raamwerk � ��n gewoonte, ��n sfeer, ��n eerlijk gesprek. Duurzaam tempo wordt gebouwd ��n beschermde investering tegelijk."
+              "Look back at your Stress Audit. Which area scored lowest? That is where you begin. Not the whole framework — one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
+              "Lihat kembali Audit Stres Anda. Area mana yang mendapat skor terendah? Di situlah Anda memulai. Bukan seluruh kerangka — satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu.",
+              "Kijk terug naar je Stressaudit. Welk gebied scoorde het laagst? Daar begin je. Niet het hele raamwerk — ——n gewoonte, ——n sfeer, ——n eerlijk gesprek. Duurzaam tempo wordt gebouwd ——n beschermde investering tegelijk."
             )}
           </p>
 
@@ -1230,7 +1230,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               )}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
-              �{" "}
+              —{" "}
               <button
                 onClick={() => setActiveVerse("ps-23-2-3")}
                 style={{
@@ -1239,7 +1239,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                   textDecoration: "underline dotted", textUnderlineOffset: 3, padding: 0,
                 }}
               >
-                {t("Psalm 23:2�3", "Mazmur 23:2�3", "Psalm 23:2�3")}
+                {t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}
               </button>{" "}
               (NIV)
             </p>
@@ -1259,7 +1259,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               }}
             >
               {saved
-                ? `? ${t("? Saved to Dashboard", "? Tersimpan di Dashboard", "? Opgeslagen in Dashboard")}`
+                ? `? ${t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}`
                 : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
             {userPathway && (
@@ -1308,7 +1308,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em",
           }}
         >
-          {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek")}
+          {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
         </Link>
       </section>
 

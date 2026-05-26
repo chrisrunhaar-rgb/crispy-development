@@ -28,9 +28,9 @@ const ROOT_CAUSES = [
     label: { en: "Fear of Failure", id: "Takut Gagal", nl: "Faalangst" },
     color: "oklch(42% 0.14 260)",
     desc: {
-      en: "Procrastination becomes a protective shield. If I never finish � or never start � I can never fail. The problem is that avoiding the task feels safe in the short term but creates a far bigger failure over time.",
-      id: "Penundaan menjadi tameng pelindung. Jika saya tidak pernah selesai � atau tidak pernah memulai � saya tidak bisa gagal. Masalahnya, menghindari tugas terasa aman dalam jangka pendek tetapi menciptakan kegagalan jauh lebih besar seiring waktu.",
-      nl: "Uitstelgedrag wordt een beschermend schild. Als ik nooit klaar kom � of nooit begin � kan ik ook nooit falen. Het probleem is dat het vermijden van een taak op korte termijn veilig voelt, maar op lange termijn tot een veel groter falen leidt.",
+      en: "Procrastination becomes a protective shield. If I never finish — or never start — I can never fail. The problem is that avoiding the task feels safe in the short term but creates a far bigger failure over time.",
+      id: "Penundaan menjadi tameng pelindung. Jika saya tidak pernah selesai — atau tidak pernah memulai — saya tidak bisa gagal. Masalahnya, menghindari tugas terasa aman dalam jangka pendek tetapi menciptakan kegagalan jauh lebih besar seiring waktu.",
+      nl: "Uitstelgedrag wordt een beschermend schild. Als ik nooit klaar kom — of nooit begin — kan ik ook nooit falen. Het probleem is dat het vermijden van een taak op korte termijn veilig voelt, maar op lange termijn tot een veel groter falen leidt.",
     },
     signs: {
       en: ["You start tasks but leave them 90% done", "You say 'I just need a bit more time' indefinitely", "You feel relief when someone else takes over"],
@@ -38,18 +38,18 @@ const ROOT_CAUSES = [
       nl: ["Je begint taken maar laat ze voor 90% af", "Je zegt 'Ik heb nog even meer tijd nodig' eindeloos", "Je voelt opluchting als iemand anders het overneemt"],
     },
     strategy: {
-      en: "Separate completing the task from the outcome. Your worth is not measured by the result � only by your faithfulness to show up. Ask: what is the smallest version of this I could finish today?",
-      id: "Pisahkan antara menyelesaikan tugas dari hasilnya. Nilai Anda tidak diukur dari hasil � hanya dari kesetiaan Anda untuk hadir. Tanyakan: apa versi terkecil dari ini yang bisa saya selesaikan hari ini?",
-      nl: "Maak onderscheid tussen de taak afmaken en de uitkomst. Je waarde wordt niet gemeten aan het resultaat � alleen aan je trouw om op te komen dagen. Vraag je af: wat is de kleinste versie die ik vandaag kan afronden?",
+      en: "Separate completing the task from the outcome. Your worth is not measured by the result — only by your faithfulness to show up. Ask: what is the smallest version of this I could finish today?",
+      id: "Pisahkan antara menyelesaikan tugas dari hasilnya. Nilai Anda tidak diukur dari hasil — hanya dari kesetiaan Anda untuk hadir. Tanyakan: apa versi terkecil dari ini yang bisa saya selesaikan hari ini?",
+      nl: "Maak onderscheid tussen de taak afmaken en de uitkomst. Je waarde wordt niet gemeten aan het resultaat — alleen aan je trouw om op te komen dagen. Vraag je af: wat is de kleinste versie die ik vandaag kan afronden?",
     },
   },
   {
     label: { en: "Perfectionism", id: "Perfeksionisme", nl: "Perfectionisme" },
     color: "oklch(44% 0.14 300)",
     desc: {
-      en: "For perfectionists, starting means risking an imperfect result. So they don't start at all � or they start and restart endlessly. Perfectionism disguises itself as high standards, but it's often fear wearing a sophisticated mask.",
-      id: "Bagi perfeksionis, memulai berarti berisiko menghasilkan sesuatu yang tidak sempurna. Jadi mereka tidak mulai sama sekali � atau mulai dan mulai ulang terus-menerus. Perfeksionisme menyamar sebagai standar tinggi, tetapi seringkali merupakan ketakutan yang memakai topeng canggih.",
-      nl: "Voor perfectionisten betekent beginnen het risico nemen op een onvolmaakt resultaat. Dus beginnen ze helemaal niet � of ze beginnen en beginnen steeds opnieuw. Perfectionisme vermomt zich als hoge standaarden, maar het is vaak angst in een verfijnd masker.",
+      en: "For perfectionists, starting means risking an imperfect result. So they don't start at all — or they start and restart endlessly. Perfectionism disguises itself as high standards, but it's often fear wearing a sophisticated mask.",
+      id: "Bagi perfeksionis, memulai berarti berisiko menghasilkan sesuatu yang tidak sempurna. Jadi mereka tidak mulai sama sekali — atau mulai dan mulai ulang terus-menerus. Perfeksionisme menyamar sebagai standar tinggi, tetapi seringkali merupakan ketakutan yang memakai topeng canggih.",
+      nl: "Voor perfectionisten betekent beginnen het risico nemen op een onvolmaakt resultaat. Dus beginnen ze helemaal niet — of ze beginnen en beginnen steeds opnieuw. Perfectionisme vermomt zich als hoge standaarden, maar het is vaak angst in een verfijnd masker.",
     },
     signs: {
       en: ["Excessive research before beginning anything", "Redoing work that was already adequate", "All-or-nothing thinking: if it's not perfect, it's not worth doing"],
@@ -66,9 +66,9 @@ const ROOT_CAUSES = [
     label: { en: "Overwhelm", id: "Kewalahan", nl: "Overweldiging" },
     color: "oklch(48% 0.18 25)",
     desc: {
-      en: "When a task feels too large or too complex, the brain interprets it as a threat. The overwhelmed mind doesn't break it down � it freezes or flees. This is often why creative and complex work triggers more procrastination than routine tasks.",
-      id: "Ketika tugas terasa terlalu besar atau terlalu kompleks, otak menafsirkannya sebagai ancaman. Pikiran yang kewalahan tidak memecahnya � melainkan membekukan atau melarikan diri. Inilah mengapa pekerjaan kreatif dan kompleks seringkali memicu penundaan lebih besar dari tugas rutin.",
-      nl: "Als een taak te groot of te complex aanvoelt, interpreteert het brein dit als een bedreiging. Het overweldigde brein breekt het niet op � het bevriest of vlucht. Dit verklaart waarom creatief en complex werk vaker uitstelgedrag uitlokt dan routinetaken.",
+      en: "When a task feels too large or too complex, the brain interprets it as a threat. The overwhelmed mind doesn't break it down — it freezes or flees. This is often why creative and complex work triggers more procrastination than routine tasks.",
+      id: "Ketika tugas terasa terlalu besar atau terlalu kompleks, otak menafsirkannya sebagai ancaman. Pikiran yang kewalahan tidak memecahnya — melainkan membekukan atau melarikan diri. Inilah mengapa pekerjaan kreatif dan kompleks seringkali memicu penundaan lebih besar dari tugas rutin.",
+      nl: "Als een taak te groot of te complex aanvoelt, interpreteert het brein dit als een bedreiging. Het overweldigde brein breekt het niet op — het bevriest of vlucht. Dit verklaart waarom creatief en complex werk vaker uitstelgedrag uitlokt dan routinetaken.",
     },
     signs: {
       en: ["You stare at the blank page for too long", "You feel paralyzed even though you know what needs doing", "Small tasks multiply because the big one never gets touched"],
@@ -76,18 +76,18 @@ const ROOT_CAUSES = [
       nl: ["Je staart te lang naar de blanco pagina", "Je voelt je verlamd, ook al weet je wat er gedaan moet worden", "Kleine taken stapelen zich op omdat de grote nooit aangepakt wordt"],
     },
     strategy: {
-      en: "Break the task into the smallest possible first action � not 'write the report' but 'open the document.' Research shows that starting anything, even imperfectly, activates momentum. The Zeigarnik effect: your brain wants to finish what it starts.",
-      id: "Pecah tugas menjadi tindakan pertama yang sekecil mungkin � bukan 'tulis laporan' tapi 'buka dokumen.' Penelitian menunjukkan bahwa memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik: otak Anda ingin menyelesaikan apa yang sudah dimulai.",
-      nl: "Breek de taak op in de kleinst mogelijke eerste actie � niet 'schrijf het rapport' maar 'open het document.' Onderzoek toont aan dat ergens mee beginnen, zelfs imperfect, momentum cre�ert. Het Zeigarnik-effect: je brein wil afmaken wat het begonnen is.",
+      en: "Break the task into the smallest possible first action — not 'write the report' but 'open the document.' Research shows that starting anything, even imperfectly, activates momentum. The Zeigarnik effect: your brain wants to finish what it starts.",
+      id: "Pecah tugas menjadi tindakan pertama yang sekecil mungkin — bukan 'tulis laporan' tapi 'buka dokumen.' Penelitian menunjukkan bahwa memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik: otak Anda ingin menyelesaikan apa yang sudah dimulai.",
+      nl: "Breek de taak op in de kleinst mogelijke eerste actie — niet 'schrijf het rapport' maar 'open het document.' Onderzoek toont aan dat ergens mee beginnen, zelfs imperfect, momentum cre—ert. Het Zeigarnik-effect: je brein wil afmaken wat het begonnen is.",
     },
   },
   {
     label: { en: "Instant Gratification", id: "Kepuasan Instan", nl: "Onmiddellijke Bevrediging" },
     color: "oklch(46% 0.16 145)",
     desc: {
-      en: "Psychologist Piers Steel's research identifies delay discounting as central to procrastination: we undervalue future rewards and overvalue immediate pleasure. Social media, snacks, or any task with a faster payoff will always win against long-term work � unless you design your environment intentionally.",
-      id: "Penelitian psikolog Piers Steel mengidentifikasi penundaan imbalan sebagai inti penundaan: kita meremehkan imbalan masa depan dan terlalu menilai kesenangan langsung. Media sosial, camilan, atau tugas apapun dengan hasil lebih cepat akan selalu menang melawan pekerjaan jangka panjang � kecuali Anda merancang lingkungan dengan sengaja.",
-      nl: "Onderzoek van psycholoog Piers Steel identificeert uitstelgedrag bij beloningen als centraal: we onderwaarderen toekomstige beloningen en overwaarderen onmiddellijk plezier. Sociale media, snacks of welke taak met een snellere beloning dan ook wint het altijd van langetermijnwerk � tenzij je je omgeving bewust inricht.",
+      en: "Psychologist Piers Steel's research identifies delay discounting as central to procrastination: we undervalue future rewards and overvalue immediate pleasure. Social media, snacks, or any task with a faster payoff will always win against long-term work — unless you design your environment intentionally.",
+      id: "Penelitian psikolog Piers Steel mengidentifikasi penundaan imbalan sebagai inti penundaan: kita meremehkan imbalan masa depan dan terlalu menilai kesenangan langsung. Media sosial, camilan, atau tugas apapun dengan hasil lebih cepat akan selalu menang melawan pekerjaan jangka panjang — kecuali Anda merancang lingkungan dengan sengaja.",
+      nl: "Onderzoek van psycholoog Piers Steel identificeert uitstelgedrag bij beloningen als centraal: we onderwaarderen toekomstige beloningen en overwaarderen onmiddellijk plezier. Sociale media, snacks of welke taak met een snellere beloning dan ook wint het altijd van langetermijnwerk — tenzij je je omgeving bewust inricht.",
     },
     signs: {
       en: ["You consistently choose comfortable tasks over important ones", "Short-term distraction feels genuinely urgent", "You know you're procrastinating and still can't stop"],
@@ -104,9 +104,9 @@ const ROOT_CAUSES = [
     label: { en: "Fear of the Unknown", id: "Takut Ketidakpastian", nl: "Angst voor het Onbekende" },
     color: "oklch(40% 0.12 60)",
     desc: {
-      en: "When we can't predict the outcome � when the path is unclear or the standards are ambiguous � anxiety fills the gap. We delay not because we're lazy, but because the task feels fundamentally uncertain.",
-      id: "Ketika kita tidak dapat memprediksi hasilnya � ketika jalurnya tidak jelas atau standarnya ambigu � kecemasan mengisi kekosongan itu. Kita menunda bukan karena malas, tetapi karena tugas terasa sangat tidak pasti secara fundamental.",
-      nl: "Als we de uitkomst niet kunnen voorspellen � als het pad onduidelijk is of de standaarden ambigu � vult angst die leegte. We stellen uit niet omdat we lui zijn, maar omdat de taak fundamenteel onzeker aanvoelt.",
+      en: "When we can't predict the outcome — when the path is unclear or the standards are ambiguous — anxiety fills the gap. We delay not because we're lazy, but because the task feels fundamentally uncertain.",
+      id: "Ketika kita tidak dapat memprediksi hasilnya — ketika jalurnya tidak jelas atau standarnya ambigu — kecemasan mengisi kekosongan itu. Kita menunda bukan karena malas, tetapi karena tugas terasa sangat tidak pasti secara fundamental.",
+      nl: "Als we de uitkomst niet kunnen voorspellen — als het pad onduidelijk is of de standaarden ambigu — vult angst die leegte. We stellen uit niet omdat we lui zijn, maar omdat de taak fundamenteel onzeker aanvoelt.",
     },
     signs: {
       en: ["New projects or roles trigger more procrastination than familiar ones", "You ask for excessive reassurance before acting", "You confuse 'I don't know enough yet' with 'I'm not ready'"],
@@ -114,18 +114,18 @@ const ROOT_CAUSES = [
       nl: ["Nieuwe projecten of rollen leiden tot meer uitstelgedrag dan vertrouwde", "Je vraagt overmatig om bevestiging voordat je handelt", "Je verwart 'ik weet nog niet genoeg' met 'ik ben er nog niet klaar voor'"],
     },
     strategy: {
-      en: "Clarify the first concrete action, not the entire outcome. Ask: 'What would a person who wasn't afraid do next?' Then do that one thing. Uncertainty doesn't go away � you just have to act into it.",
-      id: "Perjelas tindakan konkret pertama, bukan keseluruhan hasilnya. Tanyakan: 'Apa yang akan dilakukan orang yang tidak takut selanjutnya?' Kemudian lakukan satu hal itu. Ketidakpastian tidak hilang � Anda hanya perlu bertindak di tengahnya.",
-      nl: "Verduidelijk de eerste concrete actie, niet de gehele uitkomst. Vraag je af: 'Wat zou iemand die niet bang was als volgende doen?' Doe dan dat ene ding. Onzekerheid verdwijnt niet � je moet er gewoon in handelen.",
+      en: "Clarify the first concrete action, not the entire outcome. Ask: 'What would a person who wasn't afraid do next?' Then do that one thing. Uncertainty doesn't go away — you just have to act into it.",
+      id: "Perjelas tindakan konkret pertama, bukan keseluruhan hasilnya. Tanyakan: 'Apa yang akan dilakukan orang yang tidak takut selanjutnya?' Kemudian lakukan satu hal itu. Ketidakpastian tidak hilang — Anda hanya perlu bertindak di tengahnya.",
+      nl: "Verduidelijk de eerste concrete actie, niet de gehele uitkomst. Vraag je af: 'Wat zou iemand die niet bang was als volgende doen?' Doe dan dat ene ding. Onzekerheid verdwijnt niet — je moet er gewoon in handelen.",
     },
   },
   {
     label: { en: "Low Self-Confidence", id: "Kurang Percaya Diri", nl: "Laag Zelfvertrouwen" },
     color: "oklch(44% 0.12 195)",
     desc: {
-      en: "At the core, some procrastination is a belief: 'I'm not capable of doing this well.' So we delay, waiting until we feel more confident. But confidence is not a prerequisite for action � it's a consequence of it. We become capable by doing, not by waiting until we feel ready.",
-      id: "Pada intinya, beberapa penundaan adalah sebuah keyakinan: 'Saya tidak mampu melakukan ini dengan baik.' Jadi kita menunda, menunggu sampai merasa lebih percaya diri. Tapi kepercayaan diri bukanlah prasyarat untuk bertindak � itu adalah konsekuensinya. Kita menjadi mampu dengan melakukan, bukan dengan menunggu sampai kita merasa siap.",
-      nl: "In de kern is sommig uitstelgedrag een overtuiging: 'Ik ben niet in staat dit goed te doen.' Dus stellen we uit en wachten we totdat we ons zelfverzekerder voelen. Maar zelfvertrouwen is geen vereiste voor actie � het is een gevolg ervan. We worden bekwaam door te doen, niet door te wachten tot we ons klaar voelen.",
+      en: "At the core, some procrastination is a belief: 'I'm not capable of doing this well.' So we delay, waiting until we feel more confident. But confidence is not a prerequisite for action — it's a consequence of it. We become capable by doing, not by waiting until we feel ready.",
+      id: "Pada intinya, beberapa penundaan adalah sebuah keyakinan: 'Saya tidak mampu melakukan ini dengan baik.' Jadi kita menunda, menunggu sampai merasa lebih percaya diri. Tapi kepercayaan diri bukanlah prasyarat untuk bertindak — itu adalah konsekuensinya. Kita menjadi mampu dengan melakukan, bukan dengan menunggu sampai kita merasa siap.",
+      nl: "In de kern is sommig uitstelgedrag een overtuiging: 'Ik ben niet in staat dit goed te doen.' Dus stellen we uit en wachten we totdat we ons zelfverzekerder voelen. Maar zelfvertrouwen is geen vereiste voor actie — het is een gevolg ervan. We worden bekwaam door te doen, niet door te wachten tot we ons klaar voelen.",
     },
     signs: {
       en: ["Comparing your work unfavorably to others' before you even start", "Dismissing compliments on past work", "The inner voice says 'who do you think you are?'"],
@@ -133,9 +133,9 @@ const ROOT_CAUSES = [
       nl: ["Je vergelijkt je werk ongunstig met anderen, nog voordat je begonnen bent", "Je wuift complimenten over eerder werk weg", "De innerlijke stem zegt: 'Wie denk je wel dat je bent?'"],
     },
     strategy: {
-      en: "Reframe the task as an experiment, not a performance. You don't have to be the best � you have to be faithful to the work. Ask yourself: 'What would I attempt if I knew I could not fail?' Then take one step toward that answer.",
-      id: "Ubah tugas sebagai eksperimen, bukan pertunjukan. Anda tidak harus menjadi yang terbaik � Anda harus setia pada pekerjaan. Tanyakan pada diri sendiri: 'Apa yang akan saya coba jika saya tahu tidak bisa gagal?' Kemudian ambil satu langkah menuju jawaban itu.",
-      nl: "Herdefinieer de taak als een experiment, niet als een optreden. Je hoeft niet de beste te zijn � je moet trouw zijn aan het werk. Vraag jezelf: 'Wat zou ik proberen als ik wist dat ik niet kon falen?' Zet dan ��n stap in die richting.",
+      en: "Reframe the task as an experiment, not a performance. You don't have to be the best — you have to be faithful to the work. Ask yourself: 'What would I attempt if I knew I could not fail?' Then take one step toward that answer.",
+      id: "Ubah tugas sebagai eksperimen, bukan pertunjukan. Anda tidak harus menjadi yang terbaik — Anda harus setia pada pekerjaan. Tanyakan pada diri sendiri: 'Apa yang akan saya coba jika saya tahu tidak bisa gagal?' Kemudian ambil satu langkah menuju jawaban itu.",
+      nl: "Herdefinieer de taak als een experiment, niet als een optreden. Je hoeft niet de beste te zijn — je moet trouw zijn aan het werk. Vraag jezelf: 'Wat zou ik proberen als ik wist dat ik niet kon falen?' Zet dan ——n stap in die richting.",
     },
   },
 ];
@@ -145,37 +145,37 @@ const TECHNIQUES = [
     name: { en: "Eat the Frog", id: "Makan Katak", nl: "Eet de Kikker" },
     origin: "Brian Tracy",
     desc: {
-      en: "Identify your most important � and usually most avoided � task. Do it first, before anything else in your day. Once the frog is eaten, everything else feels easy.",
-      id: "Identifikasi tugas paling penting � dan biasanya paling dihindari. Lakukan pertama, sebelum hal lain dalam hari Anda. Setelah katak dimakan, segalanya terasa mudah.",
-      nl: "Identificeer je meest belangrijke � en doorgaans meest vermeden � taak. Doe het als eerste, voor al het andere in je dag. Zodra de kikker op is, voelt de rest gemakkelijk.",
+      en: "Identify your most important — and usually most avoided — task. Do it first, before anything else in your day. Once the frog is eaten, everything else feels easy.",
+      id: "Identifikasi tugas paling penting — dan biasanya paling dihindari. Lakukan pertama, sebelum hal lain dalam hari Anda. Setelah katak dimakan, segalanya terasa mudah.",
+      nl: "Identificeer je meest belangrijke — en doorgaans meest vermeden — taak. Doe het als eerste, voor al het andere in je dag. Zodra de kikker op is, voelt de rest gemakkelijk.",
     },
     steps: {
-      en: ["Identify the one task you're most avoiding today.", "Block 60�90 minutes at the start of your day for it.", "Close all notifications. Start immediately."],
-      id: ["Identifikasi satu tugas yang paling Anda hindari hari ini.", "Blokir 60�90 menit di awal hari Anda untuk itu.", "Tutup semua notifikasi. Mulai segera."],
-      nl: ["Identificeer de ene taak die je vandaag het meest vermijdt.", "Plan 60�90 minuten aan het begin van je dag hiervoor in.", "Sluit alle meldingen. Begin direct."],
+      en: ["Identify the one task you're most avoiding today.", "Block 60—90 minutes at the start of your day for it.", "Close all notifications. Start immediately."],
+      id: ["Identifikasi satu tugas yang paling Anda hindari hari ini.", "Blokir 60—90 menit di awal hari Anda untuk itu.", "Tutup semua notifikasi. Mulai segera."],
+      nl: ["Identificeer de ene taak die je vandaag het meest vermijdt.", "Plan 60—90 minuten aan het begin van je dag hiervoor in.", "Sluit alle meldingen. Begin direct."],
     },
   },
   {
     name: { en: "The 5-Minute Rule", id: "Aturan 5 Menit", nl: "De 5-Minuten Regel" },
     origin: "Behavior Science",
     desc: {
-      en: "Commit to working on a task for only 5 minutes. That's the whole commitment. Most of the time, you'll keep going � because starting is the hardest part. Motivation follows action, not the other way around.",
-      id: "Komit untuk mengerjakan tugas hanya selama 5 menit. Itu seluruh komitmennya. Sebagian besar waktu, Anda akan terus � karena memulailah bagian tersulit. Motivasi mengikuti tindakan, bukan sebaliknya.",
-      nl: "Commit je om slechts 5 minuten aan een taak te werken. Dat is de hele toezegging. Meestal ga je door � want beginnen is het moeilijkste deel. Motivatie volgt actie, niet andersom.",
+      en: "Commit to working on a task for only 5 minutes. That's the whole commitment. Most of the time, you'll keep going — because starting is the hardest part. Motivation follows action, not the other way around.",
+      id: "Komit untuk mengerjakan tugas hanya selama 5 menit. Itu seluruh komitmennya. Sebagian besar waktu, Anda akan terus — karena memulailah bagian tersulit. Motivasi mengikuti tindakan, bukan sebaliknya.",
+      nl: "Commit je om slechts 5 minuten aan een taak te werken. Dat is de hele toezegging. Meestal ga je door — want beginnen is het moeilijkste deel. Motivatie volgt actie, niet andersom.",
     },
     steps: {
-      en: ["Set a timer for 5 minutes.", "Begin the task � no distractions.", "After 5 minutes, you may stop. But you probably won't."],
-      id: ["Atur timer selama 5 menit.", "Mulai tugasnya � tanpa gangguan.", "Setelah 5 menit, Anda boleh berhenti. Tapi kemungkinan Anda tidak akan."],
-      nl: ["Stel een timer in voor 5 minuten.", "Begin met de taak � zonder afleidingen.", "Na 5 minuten mag je stoppen. Maar waarschijnlijk doe je dat niet."],
+      en: ["Set a timer for 5 minutes.", "Begin the task — no distractions.", "After 5 minutes, you may stop. But you probably won't."],
+      id: ["Atur timer selama 5 menit.", "Mulai tugasnya — tanpa gangguan.", "Setelah 5 menit, Anda boleh berhenti. Tapi kemungkinan Anda tidak akan."],
+      nl: ["Stel een timer in voor 5 minuten.", "Begin met de taak — zonder afleidingen.", "Na 5 minuten mag je stoppen. Maar waarschijnlijk doe je dat niet."],
     },
   },
   {
     name: { en: "Implementation Intentions", id: "Niat Implementasi", nl: "Implementatie-Intenties" },
     origin: "Peter Gollwitzer",
     desc: {
-      en: "Research shows that deciding when and where you'll do something dramatically increases follow-through. 'I will work on the proposal on Tuesday from 9�11am at my desk' is 2�3x more likely to happen than 'I'll work on the proposal this week.'",
-      id: "Penelitian menunjukkan bahwa memutuskan kapan dan di mana Anda akan melakukan sesuatu secara dramatis meningkatkan tindak lanjut. 'Saya akan mengerjakan proposal pada Selasa dari jam 9�11 di meja saya' 2�3x lebih mungkin terjadi daripada 'Saya akan mengerjakan proposal minggu ini.'",
-      nl: "Onderzoek toont aan dat beslissen wanneer en waar je iets gaat doen de kans op nakoming dramatisch vergroot. 'Ik werk aan het voorstel op dinsdag van 9�11 uur aan mijn bureau' heeft 2�3x meer kans van slagen dan 'Ik werk deze week aan het voorstel.'",
+      en: "Research shows that deciding when and where you'll do something dramatically increases follow-through. 'I will work on the proposal on Tuesday from 9—11am at my desk' is 2—3x more likely to happen than 'I'll work on the proposal this week.'",
+      id: "Penelitian menunjukkan bahwa memutuskan kapan dan di mana Anda akan melakukan sesuatu secara dramatis meningkatkan tindak lanjut. 'Saya akan mengerjakan proposal pada Selasa dari jam 9—11 di meja saya' 2—3x lebih mungkin terjadi daripada 'Saya akan mengerjakan proposal minggu ini.'",
+      nl: "Onderzoek toont aan dat beslissen wanneer en waar je iets gaat doen de kans op nakoming dramatisch vergroot. 'Ik werk aan het voorstel op dinsdag van 9—11 uur aan mijn bureau' heeft 2—3x meer kans van slagen dan 'Ik werk deze week aan het voorstel.'",
     },
     steps: {
       en: ["State the task specifically: not 'work on project' but 'write the introduction.'", "Assign a time and place: 'Tuesday, 9am, my desk.'", "Remove friction: have everything you need ready the night before."],
@@ -202,7 +202,7 @@ const TECHNIQUES = [
 const INNER_DIALOGUE = [
   {
     fixed: { en: "I'll feel more like it tomorrow.", id: "Besok saya akan lebih siap.", nl: "Morgen voel ik er meer voor." },
-    reframe: { en: "Motivation follows action. I don't need to feel ready � I need to start.", id: "Motivasi mengikuti tindakan. Saya tidak perlu merasa siap � saya perlu memulai.", nl: "Motivatie volgt actie. Ik hoef me er niet klaar voor te voelen � ik moet beginnen." },
+    reframe: { en: "Motivation follows action. I don't need to feel ready — I need to start.", id: "Motivasi mengikuti tindakan. Saya tidak perlu merasa siap — saya perlu memulai.", nl: "Motivatie volgt actie. Ik hoef me er niet klaar voor te voelen — ik moet beginnen." },
   },
   {
     fixed: { en: "This needs to be perfect before I can share it.", id: "Ini harus sempurna sebelum bisa saya bagikan.", nl: "Dit moet perfect zijn voordat ik het kan delen." },
@@ -210,7 +210,7 @@ const INNER_DIALOGUE = [
   },
   {
     fixed: { en: "I don't know where to start.", id: "Saya tidak tahu harus mulai dari mana.", nl: "Ik weet niet waar ik moet beginnen." },
-    reframe: { en: "I don't need to know all the steps � just the first one. What's one concrete action I can take right now?", id: "Saya tidak perlu mengetahui semua langkah � hanya yang pertama. Apa satu tindakan konkret yang bisa saya lakukan sekarang?", nl: "Ik hoef niet alle stappen te kennen � alleen de eerste. Welke ene concrete actie kan ik nu nemen?" },
+    reframe: { en: "I don't need to know all the steps — just the first one. What's one concrete action I can take right now?", id: "Saya tidak perlu mengetahui semua langkah — hanya yang pertama. Apa satu tindakan konkret yang bisa saya lakukan sekarang?", nl: "Ik hoef niet alle stappen te kennen — alleen de eerste. Welke ene concrete actie kan ik nu nemen?" },
   },
   {
     fixed: { en: "I work better under pressure.", id: "Saya bekerja lebih baik di bawah tekanan.", nl: "Ik werk beter onder druk." },
@@ -257,16 +257,16 @@ export default function OvercomingProcrastinationClient({
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development � Worksheet", "Pengembangan Pribadi � Lembar Kerja", "Persoonlijke Ontwikkeling � Werkblad", lang)}
+            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad", lang)}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Overcoming Procrastination", "Mengatasi Penundaan", "Uitstelgedrag Overwinnen", lang)}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 32 }}>
             {t(
-              "Procrastination isn't laziness. It's an emotion regulation problem � and that means it can be understood, addressed, and overcome with the right tools and honest self-awareness.",
-              "Penundaan bukan kemalasan. Ini adalah masalah regulasi emosi � dan itu berarti bisa dipahami, diatasi, dan dikalahkan dengan alat yang tepat dan kesadaran diri yang jujur.",
-              "Uitstelgedrag is geen luiheid. Het is een emotieregulatieprobleem � en dat betekent dat het begrepen, aangepakt en overwonnen kan worden met de juiste tools en eerlijke zelfkennis.",
+              "Procrastination isn't laziness. It's an emotion regulation problem — and that means it can be understood, addressed, and overcome with the right tools and honest self-awareness.",
+              "Penundaan bukan kemalasan. Ini adalah masalah regulasi emosi — dan itu berarti bisa dipahami, diatasi, dan dikalahkan dengan alat yang tepat dan kesadaran diri yang jujur.",
+              "Uitstelgedrag is geen luiheid. Het is een emotieregulatieprobleem — en dat betekent dat het begrepen, aangepakt en overwonnen kan worden met de juiste tools en eerlijke zelfkennis.",
               lang
             )}
           </p>
@@ -276,7 +276,7 @@ export default function OvercomingProcrastinationClient({
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
-                {isPending ? t("Saving�", "Menyimpan�", "Opslaan�", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
@@ -290,13 +290,13 @@ export default function OvercomingProcrastinationClient({
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 40 }}>
           <div>
             <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 16px" }}>
-              {t("Not Laziness � Avoidance", "Bukan Kemalasan � Penghindaran", "Geen Luiheid � Vermijding", lang)}
+              {t("Not Laziness — Avoidance", "Bukan Kemalasan — Penghindaran", "Geen Luiheid — Vermijding", lang)}
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "oklch(38% 0.06 260)", margin: "0 0 16px" }}>
               {t(
-                "Research by psychologist Timothy Pychyl shows that procrastination is not a time management problem � it's an emotion regulation problem. We delay tasks not because we're lazy, but because they trigger uncomfortable emotions: anxiety, self-doubt, boredom, frustration, or resentment.",
-                "Penelitian psikolog Timothy Pychyl menunjukkan bahwa penundaan bukan masalah manajemen waktu � ini adalah masalah regulasi emosi. Kita menunda tugas bukan karena malas, tetapi karena tugas memicu emosi yang tidak nyaman: kecemasan, keraguan diri, kebosanan, frustrasi, atau kebencian.",
-                "Onderzoek van psycholoog Timothy Pychyl toont aan dat uitstelgedrag geen tijdmanagementprobleem is � het is een emotieregulatieprobleem. We stellen taken uit niet omdat we lui zijn, maar omdat ze oncomfortabele emoties oproepen: angst, twijfel, verveling, frustratie of wrok.",
+                "Research by psychologist Timothy Pychyl shows that procrastination is not a time management problem — it's an emotion regulation problem. We delay tasks not because we're lazy, but because they trigger uncomfortable emotions: anxiety, self-doubt, boredom, frustration, or resentment.",
+                "Penelitian psikolog Timothy Pychyl menunjukkan bahwa penundaan bukan masalah manajemen waktu — ini adalah masalah regulasi emosi. Kita menunda tugas bukan karena malas, tetapi karena tugas memicu emosi yang tidak nyaman: kecemasan, keraguan diri, kebosanan, frustrasi, atau kebencian.",
+                "Onderzoek van psycholoog Timothy Pychyl toont aan dat uitstelgedrag geen tijdmanagementprobleem is — het is een emotieregulatieprobleem. We stellen taken uit niet omdat we lui zijn, maar omdat ze oncomfortabele emoties oproepen: angst, twijfel, verveling, frustratie of wrok.",
                 lang
               )}
             </p>
@@ -310,9 +310,9 @@ export default function OvercomingProcrastinationClient({
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "oklch(38% 0.06 260)", margin: 0 }}>
               {t(
-                "The antidote is not willpower � it's self-compassion and strategy. When you understand why you're avoiding something, you can address the actual cause rather than trying to force yourself through it.",
-                "Penangkalnya bukan kemauan keras � melainkan belas kasihan diri dan strategi. Ketika Anda memahami mengapa Anda menghindari sesuatu, Anda dapat mengatasi penyebab sebenarnya daripada mencoba memaksakan diri untuk melaluinya.",
-                "Het tegengif is geen wilskracht � het is zelfcompassie en strategie. Als je begrijpt waarom je iets vermijdt, kun je de werkelijke oorzaak aanpakken in plaats van jezelf erdoor te forceren.",
+                "The antidote is not willpower — it's self-compassion and strategy. When you understand why you're avoiding something, you can address the actual cause rather than trying to force yourself through it.",
+                "Penangkalnya bukan kemauan keras — melainkan belas kasihan diri dan strategi. Ketika Anda memahami mengapa Anda menghindari sesuatu, Anda dapat mengatasi penyebab sebenarnya daripada mencoba memaksakan diri untuk melaluinya.",
+                "Het tegengif is geen wilskracht — het is zelfcompassie en strategie. Als je begrijpt waarom je iets vermijdt, kun je de werkelijke oorzaak aanpakken in plaats van jezelf erdoor te forceren.",
                 lang
               )}
             </p>
@@ -320,15 +320,15 @@ export default function OvercomingProcrastinationClient({
           <div>
             <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 10, padding: "28px 32px", marginBottom: 16 }}>
               <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: "oklch(90% 0.03 80)", lineHeight: 1.5, margin: "0 0 12px" }}>&ldquo;{t("Procrastination is an emotion regulation problem, not a time management problem.", "Penundaan adalah masalah regulasi emosi, bukan masalah manajemen waktu.", "Uitstelgedrag is een emotieregulatieprobleem, geen tijdmanagementprobleem.", lang)}&rdquo;</p>
-              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.08 260)", margin: 0 }}>� Timothy Pychyl, {t("Researcher", "Peneliti", "Onderzoeker", lang)}</p>
+              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(65% 0.08 260)", margin: 0 }}>— Timothy Pychyl, {t("Researcher", "Peneliti", "Onderzoeker", lang)}</p>
             </div>
             <div style={{ background: "oklch(94% 0.008 260)", borderRadius: 10, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(38% 0.06 260)", margin: 0 }}>
                 <strong style={{ color: "oklch(22% 0.10 260)" }}>{t("Before you begin:", "Sebelum Anda mulai:", "Voordat je begint:", lang)}</strong>{" "}
                 {t(
-                  "Changing habits takes time. You'll have relapses � that's normal. If the full change feels too big, start by minimizing the effects rather than eliminating procrastination entirely. Progress, not perfection.",
-                  "Mengubah kebiasaan membutuhkan waktu. Anda akan mengalami kemunduran � itu normal. Jika perubahan penuh terasa terlalu besar, mulailah dengan meminimalkan dampaknya daripada menghilangkan penundaan sepenuhnya. Kemajuan, bukan kesempurnaan.",
-                  "Gewoonten veranderen kost tijd. Je zult terugvallen � dat is normaal. Als de volledige verandering te groot voelt, begin dan met het minimaliseren van de effecten in plaats van uitstelgedrag volledig te elimineren. Vooruitgang, niet perfectie.",
+                  "Changing habits takes time. You'll have relapses — that's normal. If the full change feels too big, start by minimizing the effects rather than eliminating procrastination entirely. Progress, not perfection.",
+                  "Mengubah kebiasaan membutuhkan waktu. Anda akan mengalami kemunduran — itu normal. Jika perubahan penuh terasa terlalu besar, mulailah dengan meminimalkan dampaknya daripada menghilangkan penundaan sepenuhnya. Kemajuan, bukan kesempurnaan.",
+                  "Gewoonten veranderen kost tijd. Je zult terugvallen — dat is normaal. Als de volledige verandering te groot voelt, begin dan met het minimaliseren van de effecten in plaats van uitstelgedrag volledig te elimineren. Vooruitgang, niet perfectie.",
                   lang
                 )}
               </p>
@@ -344,7 +344,7 @@ export default function OvercomingProcrastinationClient({
             {QUOTES.map((q, i) => (
               <div key={i} style={{ padding: "20px 24px" }}>
                 <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 17, fontStyle: "italic", color: "oklch(88% 0.03 80)", lineHeight: 1.55, margin: "0 0 10px" }}>&ldquo;{q.quote}&rdquo;</p>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.08 45)", margin: 0 }}>� {q.author}</p>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.08 45)", margin: 0 }}>— {q.author}</p>
               </div>
             ))}
           </div>
@@ -419,7 +419,7 @@ export default function OvercomingProcrastinationClient({
             {t("Proven Techniques", "Teknik yang Terbukti", "Bewezen Technieken", lang)}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
-            {t("Techniques that have research or practical backing. Pick one � not all four at once.", "Teknik-teknik yang didukung penelitian atau praktik. Pilih satu � bukan semua empat sekaligus.", "Technieken met onderzoeks- of praktijkbasis. Kies er ��n � niet alle vier tegelijk.", lang)}
+            {t("Techniques that have research or practical backing. Pick one — not all four at once.", "Teknik-teknik yang didukung penelitian atau praktik. Pilih satu — bukan semua empat sekaligus.", "Technieken met onderzoeks- of praktijkbasis. Kies er ——n — niet alle vier tegelijk.", lang)}
           </p>
 
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
@@ -500,10 +500,10 @@ export default function OvercomingProcrastinationClient({
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
             {t("Start Before You're Ready", "Mulai Sebelum Anda Siap", "Begin Voordat Je Klaar Bent", lang)}
           </h2>
-          <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: "oklch(75% 0.05 80)", lineHeight: 1.6, margin: "0 0 40px" }}>&ldquo;The time for action is now. It&apos;s never too late to do something.&rdquo;<br /><span style={{ fontSize: 14, fontStyle: "normal", color: "oklch(60% 0.06 260)", fontFamily: "Montserrat, sans-serif" }}>� Antoine de Saint-Exup�ry</span></p>
+          <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontStyle: "italic", color: "oklch(75% 0.05 80)", lineHeight: 1.6, margin: "0 0 40px" }}>&ldquo;The time for action is now. It&apos;s never too late to do something.&rdquo;<br /><span style={{ fontSize: 14, fontStyle: "normal", color: "oklch(60% 0.06 260)", fontFamily: "Montserrat, sans-serif" }}>— Antoine de Saint-Exup—ry</span></p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", textDecoration: "none" }}>
-              {t("? Content Library", "? Perpustakaan Konten", "? Contentbibliotheek", lang)}
+              {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek", lang)}
             </Link>
           </div>
         </div>
