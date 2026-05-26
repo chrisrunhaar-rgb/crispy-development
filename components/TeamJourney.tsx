@@ -126,6 +126,58 @@ function WheelTemplateLabeledSVG() {
   );
 }
 
+// ── Wheel of Life — team averaged chart ──────────────────────────────────────
+function WheelAveragedSVG({ teamResults }: { teamResults: TeamMemberResult[] }) {
+  const S = 320, cx = 160, cy = 160, maxR = 95, labelDist = 124, N = WHEEL_SEGMENTS.length;
+  const rings = [0.25, 0.5, 0.75, 1.0];
+  const wheelResults = teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores);
+  const count = wheelResults.length;
+  if (count === 0) return <WheelTemplateLabeledSVG />;
+  const avgScores: Record<string, number> = {};
+  for (const seg of WHEEL_SEGMENTS) {
+    avgScores[seg.key] = wheelResults.reduce((sum, r) => sum + (r.scores?.[seg.key] ?? 0), 0) / count;
+  }
+  function getPoint(i: number, score: number): [number, number] {
+    const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+    return [cx + (score / 10) * maxR * Math.cos(a), cy + (score / 10) * maxR * Math.sin(a)];
+  }
+  const pts = WHEEL_SEGMENTS.map((seg, i) => getPoint(i, avgScores[seg.key] ?? 0));
+  const poly = pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  return (
+    <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} style={{ overflow: "visible" }}>
+      {rings.map((f, ri) => {
+        const rpts = WHEEL_SEGMENTS.map((_, i): [number, number] => {
+          const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+          return [cx + maxR * f * Math.cos(a), cy + maxR * f * Math.sin(a)];
+        });
+        return <polygon key={ri} points={rpts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ")} fill="none" stroke="oklch(84% 0.008 260)" strokeWidth="1" />;
+      })}
+      {WHEEL_SEGMENTS.map((_, i) => {
+        const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+        return <line key={i} x1={cx} y1={cy} x2={(cx + maxR * Math.cos(a)).toFixed(1)} y2={(cy + maxR * Math.sin(a)).toFixed(1)} stroke="oklch(84% 0.008 260)" strokeWidth="1" />;
+      })}
+      <polygon points={poly} fill="oklch(42% 0.14 145 / 0.18)" stroke="oklch(42% 0.14 145)" strokeWidth={2} />
+      {pts.map(([x, y], i) => <circle key={i} cx={x.toFixed(1)} cy={y.toFixed(1)} r={4} fill="oklch(42% 0.14 145)" />)}
+      {WHEEL_SEGMENTS.map((seg, i) => {
+        const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+        const lx = cx + labelDist * Math.cos(a);
+        const ly = cy + labelDist * Math.sin(a);
+        const cosA = Math.cos(a);
+        const textAnchor = cosA < -0.12 ? "end" : cosA > 0.12 ? "start" : "middle";
+        return (
+          <text key={i} x={lx.toFixed(1)} y={ly.toFixed(1)}
+            textAnchor={textAnchor} dominantBaseline="middle"
+            fill="oklch(38% 0.008 260)" fontFamily="var(--font-montserrat)"
+            fontSize="9" fontWeight="700" letterSpacing="0.08em"
+          >
+            {WHEEL_LABELS[seg.key] ?? seg.key.toUpperCase()}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
+
 // ── Big Five OCEAN radar ──────────────────────────────────────────────────────
 function OceanRadarSVG({ scores, size = 72 }: { scores: Record<string, number>; size?: number }) {
   function calcPct(raw: number) { return Math.round(((raw - 10) / 40) * 100); }
@@ -195,9 +247,9 @@ function getAssessmentVisual(resultType: string, resultKey: string, scores: Reco
       return <DiscPieSVG scores={ds} size={72} />;
     }
     case "wheel_of_life":
-      return <WheelSpiderSVG scores={scores} size={72} />;
+      return <WheelSpiderSVG scores={scores} size={120} />;
     case "big_five":
-      return <OceanRadarSVG scores={scores} size={72} />;
+      return <OceanRadarSVG scores={scores} size={120} />;
     case "thinking_style":
       return (
         <div style={{ width: "100%", paddingInline: "0.25rem" }}>
@@ -424,6 +476,7 @@ type Step = {
   comingSoon?: boolean;
   contentUrl?: string;
   resultType?: string;
+  duration?: string;
 };
 
 const BASE_JOURNEY_STEPS: Step[] = [
@@ -438,6 +491,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: false,
     dataLabel: null,
     contentUrl: "/team/team-foundations",
+    duration: "20 min",
   },
   {
     number: 2,
@@ -452,6 +506,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     dataLabel_id: "Pernyataan Tujuan",
     contentUrl: "/team/team-purpose-vision",
     resultType: "purpose_vision",
+    duration: "45 min",
   },
   {
     number: 3,
@@ -464,6 +519,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: false,
     dataLabel: null,
     contentUrl: "/team/know-each-other",
+    duration: "45 min",
   },
   {
     number: 4,
@@ -478,6 +534,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     dataLabel_id: "Gaya Komunikasi",
     contentUrl: "/team/communication-culture",
     resultType: "comm_style",
+    duration: "20 min",
   },
   {
     number: 5,
@@ -492,6 +549,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     dataLabel_id: "Skor Kepercayaan",
     contentUrl: "/team/trust-psychological-safety",
     resultType: "trust",
+    duration: "45 min",
   },
   {
     number: 6,
@@ -506,6 +564,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     dataLabel_id: "Zona Kontribusi",
     contentUrl: "/team/roles-contribution",
     resultType: "contribution_zone",
+    duration: "20 min",
   },
   {
     number: 7,
@@ -520,6 +579,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     dataLabel_id: "Gaya Konflik",
     contentUrl: "/team/navigating-conflict",
     resultType: "conflict_style",
+    duration: "45 min",
   },
   {
     number: 8,
@@ -532,6 +592,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: false,
     dataLabel: null,
     contentUrl: "/team/decision-making",
+    duration: "20 min",
   },
   {
     number: 9,
@@ -544,6 +605,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: false,
     dataLabel: null,
     contentUrl: "/team/accountability",
+    duration: "45 min",
   },
   {
     number: 10,
@@ -556,6 +618,7 @@ const BASE_JOURNEY_STEPS: Step[] = [
     collectsData: false,
     dataLabel: null,
     contentUrl: "/team/forward-together",
+    duration: "45 min",
   },
 ];
 
@@ -579,6 +642,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "wheel_of_life",
     insertAfter: 3,
     order: 2,
+    duration: "10 min",
   },
   "enneagram": {
     title: "Enneagram",
@@ -593,6 +657,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "enneagram",
     insertAfter: 3,
     order: 3,
+    duration: "15 min",
   },
   // After step 3 "Getting to Know Each Other" — knowing how people feel valued is core to truly knowing them
   "5languages": {
@@ -609,6 +674,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "5languages",
     insertAfter: 3,
     order: 1,
+    duration: "10 min",
   },
   // After step 4 "Communication Culture" — behavioural & personality styles shape how teams communicate
   "disc": {
@@ -624,6 +690,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "disc",
     insertAfter: 4,
     order: 1,
+    duration: "15 min",
   },
   "three-thinking-styles": {
     title: "Three Thinking Styles",
@@ -639,6 +706,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "thinking_style",
     insertAfter: 4,
     order: 2,
+    duration: "10 min",
   },
   "16-personalities": {
     title: "16 Personalities",
@@ -653,6 +721,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "personalities16",
     insertAfter: 4,
     order: 3,
+    duration: "12 min",
   },
   "big-five": {
     title: "Big Five (OCEAN)",
@@ -667,6 +736,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "big_five",
     insertAfter: 4,
     order: 4,
+    duration: "10 min",
   },
   // After step 5 "Trust & Psychological Safety" — spiritual gifts are shared most freely in a safe team
   "karunia-rohani": {
@@ -682,6 +752,7 @@ const ASSESSMENT_STEP_DEFS: Record<string, AssessmentDef> = {
     resultType: "karunia",
     insertAfter: 5,
     order: 1,
+    duration: "15 min",
   },
 };
 
@@ -703,10 +774,10 @@ function buildJourneySteps(selectedAssessments: string[]): Step[] {
 
 function getTypeLabel(type: string, lang: TeamLang): string {
   if (lang === "id") {
-    const id: Record<string, string> = { article: "Artikel", assessment: "Asesmen", workshop: "Lokakarya" };
+    const id: Record<string, string> = { article: "Modul Tim", assessment: "Asesmen", workshop: "Modul Tim" };
     return id[type] ?? type;
   }
-  const en: Record<string, string> = { article: "Article", assessment: "Assessment", workshop: "Workshop" };
+  const en: Record<string, string> = { article: "Team Module", assessment: "Assessment", workshop: "Team Module" };
   return en[type] ?? type;
 }
 
@@ -714,8 +785,10 @@ function getTypeLabel(type: string, lang: TeamLang): string {
 const TYPE_BADGE: Record<string, { color: string; bg: string }> = {
   article:    { color: "oklch(38% 0.10 260)", bg: "oklch(38% 0.10 260 / 0.08)" },
   assessment: { color: "oklch(40% 0.10 290)", bg: "oklch(40% 0.10 290 / 0.08)" },
-  workshop:   { color: "oklch(38% 0.12 145)", bg: "oklch(38% 0.12 145 / 0.08)" },
+  workshop:   { color: "oklch(38% 0.10 260)", bg: "oklch(38% 0.10 260 / 0.08)" },
 };
+
+export { BASE_JOURNEY_STEPS, buildJourneySteps, getTypeLabel, TYPE_BADGE };
 
 function getResultDisplay(resultType: string, resultKey: string, lang: TeamLang = "en"): { label: string; color: string } {
   const ui = TEAM_UI[lang];
@@ -1160,6 +1233,18 @@ export default function TeamJourney({
                       {getTypeLabel(step.type, language)}
                     </span>
 
+                    {step.duration && (
+                      <span style={{
+                        fontFamily: "var(--font-montserrat)",
+                        fontSize: "0.58rem",
+                        fontWeight: 500,
+                        color: "oklch(58% 0.006 260)",
+                        flexShrink: 0,
+                      }}>
+                        {step.duration}
+                      </span>
+                    )}
+
                     {step.comingSoon && isUnlocked && (
                       <span style={{
                         fontFamily: "var(--font-montserrat)",
@@ -1387,10 +1472,40 @@ export default function TeamJourney({
                       </div>
                     ) : step.resultType ? (
                       <div>
-                        {/* Wheel of Life: show labeled reference diagram above tiles */}
+                        {/* Wheel of Life: team average chart */}
                         {step.resultType === "wheel_of_life" && (
-                          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem", padding: "0.5rem 0" }}>
-                            <WheelTemplateLabeledSVG />
+                          <div style={{ marginBottom: "1.5rem" }}>
+                            <div style={{ display: "flex", justifyContent: "center", padding: "0.5rem 0" }}>
+                              <WheelAveragedSVG teamResults={teamResults} />
+                            </div>
+                            {teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores).length > 0 ? (
+                              <p style={{
+                                fontFamily: "var(--font-montserrat)",
+                                fontSize: "0.68rem",
+                                color: "oklch(54% 0.008 260)",
+                                textAlign: "center",
+                                marginTop: "0.375rem",
+                              }}>
+                                {language === "id"
+                                  ? `Rata-rata dari ${teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores).length} anggota yang telah menyelesaikan asesmen ini.`
+                                  : `Team average based on ${teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores).length} member${teamResults.filter(r => r.result_type === "wheel_of_life" && r.scores).length !== 1 ? "s" : ""} who completed this assessment.`
+                                }
+                              </p>
+                            ) : (
+                              <p style={{
+                                fontFamily: "var(--font-montserrat)",
+                                fontSize: "0.68rem",
+                                color: "oklch(62% 0.006 260)",
+                                textAlign: "center",
+                                marginTop: "0.375rem",
+                                fontStyle: "italic",
+                              }}>
+                                {language === "id"
+                                  ? "Grafik akan terisi saat anggota tim menyelesaikan asesmen."
+                                  : "Chart will fill in as team members complete the assessment."
+                                }
+                              </p>
+                            )}
                           </div>
                         )}
                         <p style={{
