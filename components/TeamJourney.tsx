@@ -1558,8 +1558,10 @@ export default function TeamJourney({
                                 const hasResult = result?.result_key != null;
                                 const parts = result?.result_key?.split("|") ?? [];
                                 const langKey = parts[modeIdx] ?? parts[0] ?? "";
+                                const FIVELA_NAMES_ID: Record<string, string> = { A: "Kata-kata", B: "Waktu Berkualitas", C: "Tindakan Pelayanan", D: "Hadiah", E: "Sentuhan Fisik" };
+                                const fivelaNames = language === "id" ? FIVELA_NAMES_ID : FIVELA_NAMES;
                                 const tileColor = langKey ? (FIVELA_COLORS[langKey] ?? navy) : "";
-                                const tileName = langKey ? (FIVELA_NAMES[langKey] ?? langKey) : "";
+                                const tileName = langKey ? (fivelaNames[langKey] ?? langKey) : "";
                                 return (
                                   <div key={member.id} style={{
                                     background: hasResult ? "white" : "oklch(97% 0.004 80)",
@@ -1833,6 +1835,7 @@ export default function TeamJourney({
                     teamId={teamId}
                     stepNumber={step.number}
                     entries={stepFeedback[step.number] ?? []}
+                    lang={language}
                   />
 
                   {/* Leader unlock controls */}

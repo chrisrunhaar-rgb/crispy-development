@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { submitStepFeedback } from "@/app/(app)/dashboard/team-actions";
+import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 
 export type FeedbackEntry = {
   user_id: string;
@@ -16,11 +17,14 @@ export default function StepFeedback({
   teamId,
   stepNumber,
   entries,
+  lang = "en",
 }: {
   teamId: string;
   stepNumber: number;
   entries: FeedbackEntry[];
+  lang?: TeamLang;
 }) {
+  const ui = TEAM_UI[lang];
   const existing = entries.find(e => e.is_current_user);
   const [comment, setComment] = useState(existing?.comment ?? "");
   const [rating, setRating] = useState<number | null>(existing?.rating ?? null);
@@ -52,7 +56,7 @@ export default function StepFeedback({
         color: "oklch(54% 0.008 260)",
         marginBottom: "0.875rem",
       }}>
-        Team Reflections
+        {ui.teamReflections as string}
       </p>
 
       {/* Existing feedback from all team members */}
@@ -71,7 +75,7 @@ export default function StepFeedback({
                   fontWeight: 700,
                   color: entry.is_current_user ? "oklch(42% 0.12 260)" : "oklch(38% 0.008 260)",
                 }}>
-                  {entry.user_name}{entry.is_current_user ? " (you)" : ""}
+                  {entry.user_name}{entry.is_current_user ? (ui.youSuffix as string) : ""}
                 </span>
                 {entry.rating !== null && (
                   <div style={{ display: "flex", gap: "1px", flexShrink: 0 }}>
@@ -110,12 +114,12 @@ export default function StepFeedback({
               marginBottom: "0.375rem",
               letterSpacing: "0.05em",
             }}>
-              {existing ? "Edit your reflection" : "Share your reflection"}
+              {existing ? (ui.editReflection as string) : (ui.shareReflection as string)}
             </p>
             <textarea
               value={comment}
               onChange={e => setComment(e.target.value)}
-              placeholder="What did you learn or experience in this step?"
+              placeholder={ui.reflectionPlaceholder as string}
               required
               rows={3}
               style={{
@@ -143,7 +147,7 @@ export default function StepFeedback({
               marginBottom: "0.375rem",
               letterSpacing: "0.05em",
             }}>
-              Rating (optional)
+              {ui.ratingOptional as string}
             </p>
             <div style={{ display: "flex", gap: "4px" }}>
               {[1,2,3,4,5].map(n => (
@@ -191,7 +195,7 @@ export default function StepFeedback({
                 transition: "opacity 0.15s",
               }}
             >
-              {isPending ? "Saving…" : "Post Reflection"}
+              {isPending ? (ui.saving as string) : (ui.postReflection as string)}
             </button>
             {existing && (
               <button
@@ -209,7 +213,7 @@ export default function StepFeedback({
                   textUnderlineOffset: "3px",
                 }}
               >
-                Cancel
+                {ui.cancelReflection as string}
               </button>
             )}
           </div>
@@ -232,7 +236,7 @@ export default function StepFeedback({
             transition: "all 0.15s",
           }}
         >
-          {existing ? "Edit reflection" : "Add reflection +"}
+          {existing ? (ui.editReflectionBtn as string) : (ui.addReflection as string)}
         </button>
       )}
     </div>
