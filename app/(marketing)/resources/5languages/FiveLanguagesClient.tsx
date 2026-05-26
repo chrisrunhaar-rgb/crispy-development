@@ -454,6 +454,7 @@ export default function FiveLanguagesClient({
   const [isSaving, startSaving] = useTransition();
   const [flippedLang, setFlippedLang] = useState<ScoreKey | null>(null);
   const [openAccordion, setOpenAccordion] = useState<ScoreKey | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
 
   const displayReceiving: Scores = quizState === "done" && receivingResult && receivingScores
     ? receivingScores
@@ -1351,7 +1352,20 @@ export default function FiveLanguagesClient({
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
             Why Love Languages in the Workplace Matter for Cross-Cultural Leaders
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Love languages in the workplace began as a practical adaptation of Gary Chapman's landmark work on relational care. When Chapman partnered with organizational consultant Paul White to produce The 5 Languages of Appreciation in the Workplace, they were addressing a problem every leader quietly recognizes: people can work alongside each other for years, receive recognition regularly, and still feel unseen. The issue is rarely a lack of effort. It is usually a mismatch of languages.",
             "For cross-cultural leaders, field workers, and expat team members, this mismatch runs deeper than most leadership frameworks acknowledge. The five appreciation languages — Words of Affirmation, Quality Time, Acts of Service, Tangible Gifts, and Physical Touch — are not culturally neutral in their expression. The same language can land completely differently depending on the cultural background of the person receiving it, the setting in which it is offered, and the relational history between the people involved.",
             "Take Words of Affirmation, the most commonly expressed appreciation language in the Chapman and White research. In many North American and Northern European work cultures, verbal praise given in front of a group is understood as an honor. The person being praised is lifted up, and the team shares in the recognition. In many East Asian, Southeast Asian, and Middle Eastern team cultures, the same public moment singles out an individual in a way that creates social discomfort. The person receiving the praise may feel exposed, pressured to deflect, or quietly embarrassed — the opposite of what the leader intended. This is not a problem with the Words of Affirmation language itself. It is a problem of form and setting. A leader who learns to offer specific, private, and well-timed verbal affirmation can work fully within this language and have it land as intended.",

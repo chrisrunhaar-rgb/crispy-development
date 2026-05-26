@@ -723,6 +723,7 @@ export default function Personalities16Client({
   const [answerHistory, setAnswerHistory] = useState<{ qIdx: number; value: number; key: string }[]>([]);
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedType);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
@@ -1206,7 +1207,20 @@ export default function Personalities16Client({
             <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
               {lang === "id" ? "Memahami 16 Tipe Kepribadian Lintas Budaya: Yang Perlu Diketahui Pemimpin" : "Understanding 16 Personality Types Across Cultures: What Leaders Need to Know"}
             </h2>
-            {(lang === "id" ? SEO_PARAS_ID : [
+            <button
+              onClick={() => setBgOpen(!bgOpen)}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                marginTop: 20, marginBottom: 24, padding: "10px 20px",
+                background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+                color: "oklch(65% 0.15 45)", borderRadius: 12,
+                fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+                cursor: "pointer", letterSpacing: "0.04em",
+              }}
+            >
+              {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+            </button>
+            {bgOpen && (lang === "id" ? SEO_PARAS_ID : [
               "Few tools in the world of leadership development have achieved the name recognition of the Myers-Briggs Type Indicator. Millions of people take some version of the assessment each year, and the four-letter type codes have become part of everyday conversation in workplaces, churches, and online communities globally. But for leaders working across cultural boundaries, a deeper question matters: what does a personality framework developed in mid-20th century America actually measure when it travels to Nairobi, Jakarta, or Beirut?",
               "The origins of MBTI trace back to Carl Jung's theory of psychological types, articulated in his 1921 work Psychological Types, and later translated into a practical assessment by Isabel Briggs Myers and her mother Katharine Cook Briggs. Their goal was generous and practical — to help ordinary people understand themselves and work better with others. The assessment organizes personality across four dichotomies: where you focus your attention (Introversion or Extraversion), how you take in information (Sensing or Intuition), how you make decisions (Thinking or Feeling), and how you organize your life (Judging or Perceiving). The result is one of 16 possible type combinations, each carrying a profile description.",
               "The popularity of MBTI has not insulated it from scientific scrutiny. Researchers reviewing decades of personality data have raised two primary concerns: test-retest reliability (a notable portion of respondents receive a different type when retested weeks later) and the validity of forcing continuous human traits into binary either/or categories. Personality scientists working in the field increasingly favor dimensional models, such as the Big Five, that treat traits as spectrums rather than switches. This does not invalidate the MBTI conversation, but it does mean the tool should be held lightly, as a useful map rather than a precise measurement.",

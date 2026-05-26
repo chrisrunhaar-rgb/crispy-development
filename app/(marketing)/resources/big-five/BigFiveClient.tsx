@@ -755,6 +755,7 @@ export default function BigFiveClient({
   const [answerHistory, setAnswerHistory] = useState<{ qIdx: number; value: number; trait: string }[]>([]);
   const [isSaved, setIsSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(!!savedScores);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
@@ -989,7 +990,20 @@ export default function BigFiveClient({
             <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
               {lang === "id" ? "Big Five: Panduan Lintas Budaya untuk Pemimpin Global" : lang === "nl" ? "De Big Five Persoonlijkheidstrekken: Een Interculturele Gids voor Mondiale Leiders" : "The Big Five Personality Traits Explained: A Cross-Cultural Guide for Global Leaders"}
             </h2>
-            {[
+            <button
+              onClick={() => setBgOpen(!bgOpen)}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                marginTop: 20, marginBottom: 24, padding: "10px 20px",
+                background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+                color: "oklch(65% 0.15 45)", borderRadius: 12,
+                fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+                cursor: "pointer", letterSpacing: "0.04em",
+              }}
+            >
+              {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+            </button>
+            {bgOpen && [
               "Among the many personality frameworks available to leaders today, the Big Five — sometimes called OCEAN — stands apart on one significant measure: it is the personality model that has most consistently held up across cultures, languages, and research populations. For leaders working in diverse or international contexts, this matters enormously. A tool that was built and normed on North American college students tells you something quite different from a tool that has been validated in Lagos, Jakarta, São Paulo, and Seoul. The Big Five does not claim cultural neutrality, but it offers a shared dimensional vocabulary that crosses cultural boundaries more reliably than most of its competitors.",
               "The five dimensions of the Big Five are Openness to Experience, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — forming the acronym OCEAN. The model emerged from decades of factor-analytic research, the landmark contributions coming from Robert McCrae and Paul Costa, whose work through the 1980s and 1990s established the five-factor model as the dominant framework in academic personality psychology. Unlike the Myers-Briggs Type Indicator, which assigns people to discrete types, the Big Five treats each dimension as a continuous spectrum. A person is not an Extravert or an Introvert but scores somewhere along the full range of the Extraversion dimension, with most people clustering near the middle rather than at the extremes.",
               "Openness to Experience captures intellectual curiosity, aesthetic sensitivity, and comfort with novelty and abstraction. In cross-cultural leadership contexts, Openness matters because it shapes how a leader responds to cultural difference itself. A leader with low Openness working in an unfamiliar cultural environment may unconsciously interpret difference as deficit, while a high Openness leader may romanticize novelty and fail to appreciate what is genuinely valuable in established tradition. Both tendencies carry risk, and self-awareness about where you sit on this dimension is the first step toward managing it well.",

@@ -284,6 +284,7 @@ export default function ThinkingStylesClient({
   const [shuffledOptions, setShuffledOptions] = useState<typeof QS[0]["options"]>([]);
   const [saved, setSaved] = useState(isSavedProp);
   const [resultSaved, setResultSaved] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const tr = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
@@ -1070,7 +1071,20 @@ export default function ThinkingStylesClient({
               "De Drie Denkstijlen: Waarom Conceptuele, Holistische en Intu—tieve Denkers de Wereld Anders Zien"
             )}
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Thinking styles in leadership teams rarely get the attention they deserve. Most team development conversations focus on personality, communication style, or cultural background. These are important. But underneath those layers sits something more fundamental: the way a person's mind naturally organizes information, generates insight, and reaches conclusions. When thinking styles are mismatched and unnamed, teams experience the friction as personality conflict or cultural difference, when what is actually happening is that people are working from different cognitive grammars.",
             "Crispy Development's Three Thinking Styles framework identifies three distinct modes of processing: Conceptual, Holistic, and Intuitional. This framework was developed through Chris Runhaar's work in cross-cultural leadership development, shaped by direct observation of how different kinds of thinkers show up in field teams, organizational leadership, and cross-cultural training contexts. It is not derived from existing academic typologies. It describes something that practitioners in complex, multicultural environments recognize immediately once it is named.",
             "The Conceptual thinker starts with ideas. Not with the task at hand, not with what happened last time, but with the territory of possibility. Given this situation, what are the frameworks that help make sense of it? What is the underlying principle? What would happen if we approached this from a completely different angle? Conceptual thinkers are drawn to the large and the abstract. They find frameworks satisfying in themselves — a good mental model feels like clarity, and they will often stop to name it before moving on. In a planning meeting, they may introduce three different ways of thinking about the problem before the team has agreed on what the problem actually is. This is not because they are disorganized. It is because for a Conceptual thinker, getting the frame right is the first work.",

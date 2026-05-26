@@ -922,6 +922,7 @@ export default function EnneagramClient({
   const [expandedType, setExpandedType] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const [resultFlipped, setResultFlipped] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
 
   function startQuiz() {
     setCurrentIdx(0);
@@ -1613,7 +1614,20 @@ export default function EnneagramClient({
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
             Understanding the Enneagram for Christian Leaders: Types, Motivations, and the Cultural Layer
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "The Enneagram for Christian leaders has become one of the more widely discussed personality frameworks in faith-based and cross-cultural ministry contexts over the past decade. It arrives not as a neutral behavioral tool but as a system that attempts to describe what lies underneath behavior — the motivating fear or desire that shapes how a person engages with work, leadership, relationships, and conflict. That depth is both its appeal and the source of the genuine debate it has generated in some theological circles.",
             "The nine Enneagram types — Reformer, Helper, Achiever, Individualist, Investigator, Loyalist, Enthusiast, Challenger, Peacemaker — each describe a core concern that a person organizes their life around, often below the level of conscious awareness. A Type 2 (Helper) is not simply someone who likes helping people. The Enneagram's description goes further: the Helper's core fear is that they are unlovable in themselves, and their helpfulness is often a way of securing connection and belonging through being needed. Understanding that layer does not reduce a person to a psychological category. Used well, it invites honest self-reflection: where does this pattern serve me and others, and where does it create problems I have not fully admitted?",
             "Ian Morgan Cron and Suzanne Stabile, whose book The Road Back to You brought the Enneagram to a wide Christian readership, frame the system explicitly as a tool for self-knowledge in service of spiritual growth. Christopher Heuertz, in The Sacred Enneagram, roots it in contemplative Christian tradition and centers it on the question of what it means to find one's way back to one's true self in God. Both approaches treat the framework as observational rather than prescriptive — a map, not a destination.",

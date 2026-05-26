@@ -251,6 +251,7 @@ export default function WheelOfLifeClient({
   const [reflectionsSaved, setReflectionsSaved] = useState(
     !!(savedReflections && Object.values(savedReflections).some(r => r.gratitude || r.action))
   );
+  const [bgOpen, setBgOpen] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const t = (en: string, id: string, nl: string) => tr(en, id, nl, lang);
@@ -891,7 +892,20 @@ export default function WheelOfLifeClient({
               "Het Wiel van het Leven over Culturen Heen: Een Gids voor Leiders en Interculturele Werkers"
             )}
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+          </button>
+          {bgOpen && [
             t(
               "Most leaders who encounter the Wheel of Life for the first time find it disarmingly simple. You draw a circle, divide it into segments, give each segment a score, and connect the dots. The resulting shape, rarely a perfect circle, tells you something immediately visible about where life feels full and where it feels depleted. That simplicity is its strength. But simplicity also conceals assumptions, and for leaders working across cultures, those assumptions deserve careful examination.",
               "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Kamu menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama.",

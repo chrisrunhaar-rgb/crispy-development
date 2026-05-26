@@ -430,6 +430,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   const [isPending, startTransition] = useTransition();
   const [expandedGift, setExpandedGift] = useState<string | null>(null);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
 
   useEffect(() => {
     if (window.location.hash === "#quiz-section") {
@@ -1248,7 +1249,20 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
               ? "Memahami Karunia Rohani dalam Konteks Lintas Budaya: Panduan bagi Pemimpin Kristen Indonesia"
               : "Understanding Spiritual Gifts Across Cultures: A Guide for Christian Leaders"}
           </h2>
-          {(lang === "id" ? [
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+          </button>
+          {bgOpen && (lang === "id" ? [
             "Setiap orang percaya membawa sesuatu yang unik ke dalam tubuh Kristus. Inilah keyakinan yang mendasari pemahaman Perjanjian Baru tentang karunia rohani, dan inilah pula yang membuat asesmen karunia rohani menjadi alat yang berharga bagi pemimpin Kristen yang ingin melayani dari tempat kekuatan sejati. Namun pemahaman karunia rohani tidak bisa dilepaskan dari konteks budaya tempat ia diekspresikan, dan bagi pemimpin di Indonesia serta Asia Tenggara, ini berarti kita perlu membaca teks Alkitab dengan mata yang terbuka terhadap keragaman cara Roh Kudus bekerja dalam berbagai konteks budaya yang kaya.",
             "Alkitab tidak memberikan satu daftar tunggal yang komprehensif tentang karunia rohani. Setidaknya ada tiga bagian utama yang membahasnya secara langsung: 1 Korintus 12, Roma 12, dan Efesus 4. Masing-masing daftar ini muncul dalam konteks teologis dan situasional yang berbeda, dan Gordon Fee dalam karya monumentalnya God's Empowering Presence mengingatkan pembaca bahwa daftar-daftar ini bukan katalog sistematis melainkan contoh representatif dari bagaimana Roh Kudus bekerja. Paulus tidak sedang menyusun taksonomi yang lengkap. Ia sedang menunjukkan keragaman dan kesatuan: banyak karunia, satu Roh, satu tubuh, satu misi.",
             "Konteks budaya secara langsung membentuk bagaimana karunia rohani diekspresikan dan dikenali. Ambil contoh karunia nubuat. Dalam tradisi lisan berkontek-tinggi yang umum di banyak komunitas di Papua, Kalimantan, atau kepulauan Nusa Tenggara, nubuat sering datang dalam bentuk mimpi yang dikomunal-kan, narasi yang dibagikan dalam pertemuan adat, atau perkataan para tetua yang diterima sebagai suara ilahi. Ini berbeda secara bentuk dari nubuat dalam gereja karismatik perkotaan yang lebih terpengaruh oleh model Barat. Keduanya bisa menjadi ekspresi sah dari karunia yang sama; yang berubah adalah kemasannya, bukan esensinya.",

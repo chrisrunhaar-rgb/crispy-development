@@ -192,6 +192,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openDimension, setOpenDimension] = useState<number | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   function handleSave() {
@@ -750,7 +751,20 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
             Cultural Intelligence: What the Research Says and Why It Matters for Global Leaders
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Cultural intelligence as a formal construct entered leadership research in 2003, when P. Christopher Earley and Soon Ang published their foundational work through Stanford University Press. Their core argument was that intelligence is context-dependent. A leader can be analytically sharp, emotionally perceptive, and still consistently ineffective when the cultural context shifts significantly from the one they were formed in. CQ was their term for the specific capability that fills that gap.",
             "The framework Earley and Ang proposed has four dimensions. Metacognitive CQ is the capacity to think about culture in real time — catching your own assumptions, noticing when a situation is not behaving the way you expected, and adjusting your interpretation before you act on it incorrectly. Cognitive CQ is the knowledge dimension: understanding the norms, values, communication patterns, and social structures of cultures different from your own. Motivational CQ is the drive to engage — genuine curiosity and willingness to invest in cross-cultural relationships even when they are slow, ambiguous, or uncomfortable. Behavioural CQ is the ability to actually change what you do: tone, pace, posture, directness, formality, depending on what the situation calls for.",
             "Most leaders who have lived or worked internationally develop some cognitive CQ over time. They accumulate knowledge. They know, for example, that hierarchy is more explicit in many Asian and Middle Eastern contexts, or that relationship-building precedes task-work in most of sub-Saharan Africa. The harder development, and the one research repeatedly identifies as the missing piece in global ministry leadership specifically, is metacognitive CQ. This is the dimension that requires catching yourself mid-assumption — not after the fact, but in the room, before the damage is done.",

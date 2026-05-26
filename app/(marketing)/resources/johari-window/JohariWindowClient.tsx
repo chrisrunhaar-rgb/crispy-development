@@ -168,6 +168,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
   const [isPending, startTransition] = useTransition();
   const [activePane, setActivePane] = useState<string | null>(null);
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
   const showSave = userPathway !== null;
   const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
@@ -472,7 +473,20 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.25rem, 2.5vw, 1.7rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.5rem", lineHeight: 1.2 }}>
             The Johari Window: Self-Awareness, Blind Spots, and What Faith Adds
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Joseph Luft and Harry Ingham were psychologists at UCLA when they first presented their model at a group dynamics conference in 1955. The name — Johari — is simply a combination of their first names, Joe and Harry. The framework they produced is, by the standards of its longevity and application, remarkably simple: two axes, four quadrants, one central insight. What you know about yourself and what others know about you do not always match. That gap is where much of the invisible friction in leadership lives.",
             "The Open quadrant contains what is known to both you and the people around you. This is the foundation of functional working relationships — shared context, clear communication, predictable behaviour. The larger the Open quadrant, the less energy a team spends trying to interpret each other. The Hidden quadrant contains what you know about yourself that others do not: your uncertainties, your private concerns, the parts of your inner world you have not chosen to share. The Blind Spot is what others observe about you that you do not see in yourself: patterns in your communication, emotional reactions, the way your presence changes a room. The Unknown quadrant is what neither you nor the people around you currently know — the deeper material that has not yet surfaced.",
             "For leaders, the most practically significant quadrant is the Blind Spot. This is not because blind spots are shameful — every leader has them, by definition. It is because your team is already navigating around your blind spots whether you know about them or not. They are adjusting their communication, withholding information, working around patterns that have never been named. The leader's blind spot is, in practice, a tax on the team. The work of shrinking it is not a personal improvement project. It is a service to the people you lead.",

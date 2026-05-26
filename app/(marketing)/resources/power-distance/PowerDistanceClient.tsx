@@ -304,6 +304,7 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
   const [openFramework, setOpenFramework] = useState<number | null>(null);
   const [countryA, setCountryA] = useState("NL");
   const [countryB, setCountryB] = useState("ID");
+  const [bgOpen, setBgOpen] = useState(false);
   const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   function handleSave() {
@@ -1203,7 +1204,20 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
             Power Distance in Cross-Cultural Leadership: What Hofstede's Research Means for Field Workers and Global Teams
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Power distance in cross-cultural leadership is one of the most practically consequential cultural dimensions a leader can understand — and one of the most commonly misread. The concept was introduced by Dutch organizational sociologist Geert Hofstede, whose foundational research across IBM subsidiaries in more than 70 countries produced one of the largest cross-cultural datasets in management history. His first major publication, Culture's Consequences (1980), and the subsequent synthesis in Cultures and Organizations, co-authored with Gert Jan Hofstede and Michael Minkov, gave the world a vocabulary for cultural difference that remains the most widely cited in leadership and organizational research.",
             "The Power Distance Index (PDI) measures how much inequality between people is expected, accepted, and reinforced in a given culture. A high PDI score does not mean a culture is oppressive. It means that hierarchy is seen as natural, that authority carries social weight, and that the relationship between a person of higher status and a person of lower status is understood as fundamentally different from a relationship between peers. In cultures with high PDI scores — Malaysia at 100, the Philippines at 94, China at 80, Indonesia at 78 — the lines of authority are clear, deference to leaders is normal, and challenging a superior publicly is not just unusual but actively problematic for the challenger. It risks damaging the relationship, disrupting group harmony, and marking the challenger as difficult or disloyal.",
             "Low PDI cultures present the opposite set of assumptions. In the Netherlands, scoring 38, and Germany at 35, challenging a manager's decision is not only acceptable but often expected as a sign of engagement and professional investment. Hierarchy exists, but it is instrumental — it exists to coordinate work, not to establish social distance. A Dutch team member who does not push back on a decision is often assumed to be disengaged or to have nothing to contribute. The silence that signals respect in Jakarta signals indifference in Amsterdam.",

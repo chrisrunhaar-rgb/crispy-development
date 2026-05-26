@@ -385,6 +385,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
+  const [bgOpen, setBgOpen] = useState(false);
   const [reflections, setReflections] = useState<Record<number, string>>({});
 
   const t = (en: string, id: string) => tFn(en, id, lang);
@@ -1381,7 +1382,20 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
             Healthy Conflict in Teams: Why Avoidance Is the Real Leadership Failure
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Most leadership literature on conflict begins in the wrong place. It treats conflict as the problem to be managed, and harmony as the goal. But in cross-cultural team settings, that framing is exactly backwards. Conflict is not the threat to team health. Unresolved, underground conflict is. The leader who creates conditions where disagreement is safe has done more for their team's long-term effectiveness than the one who keeps every meeting comfortable.",
             "Healthy conflict is the productive surfacing of real differences so a team can work through them and reach genuine alignment. It is not performance, not aggression, and not the absence of care for relationships. It is a form of respect — the belief that the people around the table are capable of handling honest conversation, and that the work is important enough to do well.",
             "The challenge in multicultural and cross-cultural teams is that conflict avoidance is often not a personal weakness. It is a culturally encoded survival strategy. In many high-context cultures across Asia, the Middle East, and Africa, direct disagreement — especially upward or in a group setting — carries real social risk. To disagree publicly is to create discomfort for others, to potentially embarrass someone of higher status, and to invite the same back toward yourself. The rational response, in those cultural frameworks, is to signal concern indirectly: through silence, through delayed implementation, through vague agreement that never fully materialises. This is not dishonesty. It is social intelligence operating within a different set of rules.",

@@ -136,6 +136,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
     Object.fromEntries(fiveTests.map((ft) => [ft.id, null]))
   );
   const [auditSaved, setAuditSaved] = useState(false);
+  const [bgOpen, setBgOpen] = useState(false);
   const [auditPending, startAuditTransition] = useTransition();
 
   const allAnswered = fiveTests.every((ft) => responses[ft.id] !== null);
@@ -1413,7 +1414,20 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
           <h2 style={{ fontFamily: montserrat, fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
             Communicating Vision Across Cultures: Why the Message Is Not the Whole Job
           </h2>
-          {[
+          <button
+            onClick={() => setBgOpen(!bgOpen)}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
+            }}
+          >
+            {bgOpen ? "Close ↑" : "Read the research →"}
+          </button>
+          {bgOpen && [
             "Vision is the most over-talked and under-examined subject in leadership literature. The shelves are full of frameworks for vision-casting, vision-crafting, vision-sharing, vision-alignment. What most of them assume, without saying so, is that the leader's job is to produce a sufficiently compelling statement and deliver it clearly. After that, people will follow. This assumption holds in some contexts. In many others, particularly cross-cultural ones, it consistently fails — not because the leader lacks vision, but because the communication model they are using was designed for a different audience.",
             "Vision communicates within a set of cultural assumptions about authority, hope, time, and collective identity. In high-individualism cultures — particularly in North America and parts of Northern Europe — vision is typically framed around personal opportunity and individual contribution. The implicit message is: this is where we are going, and here is what it means for you. In collectivist cultures, which represent the majority of the world's population and the majority of the contexts where cross-cultural workers and global church leaders operate, that frame lands differently. Vision must be communicated in terms of the community: what it means for us, what we are building together, what it asks of us collectively.",
             "This is not about changing the vision. It is about understanding that the same destination, described through different frames, produces different responses. The leader's task is not to have a better vision. It is to understand who is in the room well enough to communicate it in a way that actually lands.",
