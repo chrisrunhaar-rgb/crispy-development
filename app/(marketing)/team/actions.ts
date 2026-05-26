@@ -30,6 +30,7 @@ export async function saveCommStyleResult(style: string, scores: Record<string, 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "comm_style", style, scores);
+  await supabase.auth.updateUser({ data: { comm_style: style, comm_style_scores: scores } });
   await markStepCompleteByContentKey("/team/communication-culture");
   revalidatePath("/dashboard");
   return { error: null };
@@ -42,6 +43,7 @@ export async function saveTrustScores(scores: Record<string, number>): Promise<{
   const avg = Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length;
   const roundedAvg = Math.round(avg * 10) / 10;
   await saveTeamResult(supabase, user.id, "trust", String(roundedAvg), scores);
+  await supabase.auth.updateUser({ data: { trust_avg: roundedAvg, trust_scores: scores } });
   await markStepCompleteByContentKey("/team/trust-psychological-safety");
   revalidatePath("/dashboard");
   return { error: null };
@@ -52,6 +54,7 @@ export async function saveContributionZone(zone: string, scores: Record<string, 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "contribution_zone", zone, scores);
+  await supabase.auth.updateUser({ data: { contribution_zone: zone, contribution_scores: scores } });
   await markStepCompleteByContentKey("/team/roles-contribution");
   revalidatePath("/dashboard");
   return { error: null };
@@ -62,6 +65,7 @@ export async function saveConflictStyle(style: string, scores: Record<string, nu
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
   await saveTeamResult(supabase, user.id, "conflict_style", style, scores);
+  await supabase.auth.updateUser({ data: { conflict_style: style, conflict_scores: scores } });
   await markStepCompleteByContentKey("/team/navigating-conflict");
   revalidatePath("/dashboard");
   return { error: null };
