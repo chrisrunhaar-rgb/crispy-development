@@ -30,18 +30,17 @@ export default function ModuleCommentsClient({
   myComment: ModuleComment | null;
 }) {
   const [comment, setComment] = useState("");
-  const [visibility, setVisibility] = useState<"private" | "public_pending">("public_pending");
   const [submitted, setSubmitted] = useState(!!myComment);
   const [currentComment, setCurrentComment] = useState<ModuleComment | null>(myComment);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isDeleting, startDeleting] = useTransition();
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  function handleSubmit(visibility: "private" | "public_pending") {
+    if (!comment.trim()) return;
     setError(null);
     startTransition(async () => {
-      const result = await submitModuleComment(slug, comment, visibility);
+      const result = await submitModuleComment(slug, comment.trim(), visibility);
       if (result.error) {
         setError(result.error);
       } else {
@@ -254,12 +253,11 @@ export default function ModuleCommentsClient({
 
         {/* Submit form */}
         {isLoggedIn && !submitted && (
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
             <textarea
               value={comment}
               onChange={e => setComment(e.target.value)}
               placeholder="What has this looked like in your context? What worked, what surprised you?"
-              required
               rows={4}
               style={{
                 width: "100%",
@@ -276,42 +274,6 @@ export default function ModuleCommentsClient({
               }}
             />
 
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-              {(["public_pending", "private"] as const).map(v => (
-                <button
-                  key={v}
-                  type="button"
-                  onClick={() => setVisibility(v)}
-                  style={{
-                    fontFamily: FONT,
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.05em",
-                    padding: "0.4rem 1rem",
-                    border: `1px solid ${visibility === v ? navy : "oklch(82% 0.008 80)"}`,
-                    background: visibility === v ? navy : "transparent",
-                    color: visibility === v ? "white" : "oklch(52% 0.008 260)",
-                    cursor: "pointer",
-                    transition: "all 0.15s",
-                  }}
-                >
-                  {v === "public_pending" ? "Share with Community" : "Send to Crispy"}
-                </button>
-              ))}
-            </div>
-
-            <p style={{
-              fontFamily: FONT,
-              fontSize: "0.72rem",
-              color: "oklch(58% 0.006 260)",
-              margin: 0,
-              lineHeight: 1.55,
-            }}>
-              {visibility === "public_pending"
-                ? "Submitted for review — published on approval, visible to paid members."
-                : "Private — only shared with the Crispy team. We may reply."}
-            </p>
-
             {error && (
               <p style={{
                 fontFamily: FONT,
@@ -323,29 +285,51 @@ export default function ModuleCommentsClient({
               </p>
             )}
 
-            <div>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               <button
-                type="submit"
+                type="button"
+                onClick={() => handleSubmit("public_pending")}
                 disabled={isPending || !comment.trim()}
                 style={{
                   fontFamily: FONT,
-                  fontSize: "0.7rem",
+                  fontSize: "0.68rem",
                   fontWeight: 700,
-                  letterSpacing: "0.07em",
-                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                  padding: "0.45rem 1.125rem",
                   background: navy,
                   color: "white",
-                  border: "none",
-                  padding: "0.6rem 1.5rem",
+                  border: `1px solid ${navy}`,
+                  borderRadius: 8,
                   cursor: isPending || !comment.trim() ? "default" : "pointer",
                   opacity: isPending || !comment.trim() ? 0.5 : 1,
                   transition: "opacity 0.15s",
                 }}
               >
-                {isPending ? "Sending…" : "Submit"}
+                {isPending ? "Sending…" : "Share with Community"}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSubmit("private")}
+                disabled={isPending || !comment.trim()}
+                style={{
+                  fontFamily: FONT,
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.05em",
+                  padding: "0.45rem 1.125rem",
+                  background: "transparent",
+                  color: "oklch(42% 0.008 260)",
+                  border: "1px solid oklch(82% 0.008 80)",
+                  borderRadius: 8,
+                  cursor: isPending || !comment.trim() ? "default" : "pointer",
+                  opacity: isPending || !comment.trim() ? 0.5 : 1,
+                  transition: "opacity 0.15s",
+                }}
+              >
+                {isPending ? "Sending…" : "Send to Crispy"}
               </button>
             </div>
-          </form>
+          </div>
         )}
 
         {!isLoggedIn && (
