@@ -543,6 +543,8 @@ export default function CoachCarousel({
     try { await switchCoach(c.name); } finally { setSwitching(false); }
   }
 
+  const [rightTab, setRightTab] = useState<"notes" | "background">("notes");
+
   const minutesProps = { trialPct, trialExhausted, trialRemainingMinutes, trialUsedMinutes, grantedMinutes, currency, lang };
   const ringColor = trialExhausted ? "oklch(55% 0.15 30)" : ORANGE;
   const miniUsed = MINI_C * (trialPct / 100);
@@ -807,16 +809,83 @@ export default function CoachCarousel({
               </div>
             </div>
 
+            {/* Tab strip */}
+            <div style={{ display: "flex", borderBottom: "1px solid oklch(22% 0.08 260)", flexShrink: 0 }}>
+              {(["notes", "background"] as const).map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setRightTab(tab)}
+                  style={{
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700,
+                    letterSpacing: "0.12em", textTransform: "uppercase",
+                    padding: "0.75rem 1.5rem",
+                    background: "none", border: "none",
+                    borderBottom: `2px solid ${rightTab === tab ? ORANGE : "transparent"}`,
+                    color: rightTab === tab ? ORANGE : MUTED,
+                    cursor: "pointer",
+                    transition: "color 0.15s, border-color 0.15s",
+                    marginBottom: "-1px",
+                  }}
+                >
+                  {tab === "notes" ? s.sessionNotes : (lang === "id" ? "Latar Belakang" : "Background")}
+                </button>
+              ))}
+            </div>
+
             <div className="wpc-notes-area">
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: "0.75rem" }}>
-                {s.sessionNotes}
-              </p>
-              {sessions.length > 0 && (
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, marginBottom: "1rem" }}>
-                  {s.sessionCount(sessions.length)}
-                </p>
-              )}
-              <AccordionNotes sessions={sessions} lang={lang} />
+              {rightTab === "notes" ? (
+                <>
+                  {sessions.length > 0 && (
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED, marginBottom: "1rem" }}>
+                      {s.sessionCount(sessions.length)}
+                    </p>
+                  )}
+                  <AccordionNotes sessions={sessions} lang={lang} />
+                </>
+              ) : (() => {
+                const fl = lang === "id" ? {
+                  name: "Nama", role: "Peran", organisation: "Lembaga",
+                  location: "Lokasi", homeCulture: "Budaya asal", hostCulture: "Budaya setempat",
+                  monthsInContext: "Bulan di konteks", notes: "Catatan",
+                } : {
+                  name: "Name", role: "Role", organisation: "Organisation",
+                  location: "Location", homeCulture: "Home culture", hostCulture: "Host culture",
+                  monthsInContext: "Months in context", notes: "Notes",
+                };
+                const fields = [
+                  { label: fl.name, value: profile.name },
+                  { label: fl.role, value: profile.role },
+                  { label: fl.organisation, value: profile.organisation },
+                  { label: fl.location, value: profile.location },
+                  { label: fl.homeCulture, value: profile.home_culture },
+                  { label: fl.hostCulture, value: profile.host_culture },
+                  { label: fl.monthsInContext, value: profile.months_in_context != null ? String(profile.months_in_context) : null },
+                  { label: fl.notes, value: profile.notes },
+                ].filter(f => f.value);
+                return (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    {fields.length === 0 ? (
+                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: MUTED, lineHeight: 1.7 }}>
+                        {s.noBackgroundInfo}
+                      </p>
+                    ) : (
+                      fields.map(f => (
+                        <div key={f.label} style={{ paddingBottom: "0.75rem", borderBottom: "1px solid oklch(24% 0.07 260)" }}>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.25rem" }}>
+                            {f.label}
+                          </p>
+                          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: LIGHT, lineHeight: 1.5 }}>
+                            {f.value}
+                          </p>
+                        </div>
+                      ))
+                    )}
+                    <Link href="/coach/setup" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: ORANGE, textDecoration: "none", letterSpacing: "0.04em" }}>
+                      {s.editBackgroundInfo}
+                    </Link>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
