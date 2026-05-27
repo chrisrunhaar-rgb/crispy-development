@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ChapterActions from "./ChapterActions";
+import ChapterLangToggle from "./ChapterLangToggle";
 import ChapterQuiz from "./ChapterQuiz";
 
 type QuizQuestion = {
@@ -53,7 +54,8 @@ export default async function ChapterPage({
 }) {
   const { slug, "chapter-slug": chapterSlug } = await params;
   const { lang } = await searchParams;
-  const isId = lang === "id";
+  const profileLang = user?.user_metadata?.language_preference as string | undefined;
+  const isId = (lang ?? profileLang ?? "en") === "id";
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -145,35 +147,14 @@ export default async function ChapterPage({
             </p>
           )}
 
-          {/* Language toggle */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "1rem" }}>
-            <Link
-              href={`/courses/${slug}/${chapterSlug}`}
-              style={{
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
-                letterSpacing: "0.1em", padding: "0.2rem 0.6rem",
-                background: !isId ? "oklch(65% 0.15 45)" : "oklch(35% 0.06 260)",
-                color: "oklch(97% 0.005 80)",
-                textDecoration: "none",
-              }}
-            >
-              EN
-            </Link>
-            {chapter.content_html_id ? (
-              <Link
-                href={`/courses/${slug}/${chapterSlug}?lang=id`}
-                style={{
-                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.63rem",
-                  letterSpacing: "0.1em", padding: "0.2rem 0.6rem",
-                  background: isId ? "oklch(65% 0.15 45)" : "oklch(35% 0.06 260)",
-                  color: "oklch(97% 0.005 80)",
-                  textDecoration: "none",
-                }}
-              >
-                ID
-              </Link>
-            ) : null}
-          </div>
+          {/* Language toggle — synced to profile language preference */}
+          <ChapterLangToggle
+            isId={isId}
+            hasIdContent={!!chapter.content_html_id}
+            isLoggedIn={!!user}
+            slug={slug}
+            chapterSlug={chapterSlug}
+          />
 
           {/* Progress indicator */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "1.25rem" }}>
