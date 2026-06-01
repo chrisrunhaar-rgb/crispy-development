@@ -17,7 +17,7 @@ type Article = {
 
 const articles: Article[] = [
   {
-    image: "/pathway-team.jpg",
+    image: "https://www.talaera.com/app/uploads/2026/05/high-vs-low-power-distance-featured.png",
     source: "Talaera",
     title: "High vs. Low Power Distance: Why Your Team Won't Speak Up",
     summary: "When you ask for input and the room goes quiet, that silence is rarely indifference. This piece unpacks power distance — the cultural dimension that shapes whether team members feel safe to challenge a leader or offer dissenting views. It diagnoses a compounding effect: team members from high power distance cultures often face both cultural deference and language insecurity simultaneously, each reinforcing the other. Practical and direct, with concrete structural fixes for leaders who want to hear what their teams actually think.",
