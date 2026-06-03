@@ -117,24 +117,22 @@ export default async function ChallengeLandingPage() {
             navy={navy}
           />
           <PathCard
-            badge="Coming soon"
-            badgeColor="oklch(58% 0.008 260)"
+            badge="New"
+            badgeColor={orange}
             title="Facilitator"
             desc="Lead a small group of 4–12 people through the challenge together. Set your own schedule, invite by email or link."
-            href="#"
-            cta="Coming soon"
+            href="/challenge/group/create"
+            cta="Create a group →"
             navy={navy}
-            disabled
           />
           <PathCard
-            badge="Coming soon"
-            badgeColor="oklch(58% 0.008 260)"
+            badge="New"
+            badgeColor={orange}
             title="Join an open group"
             desc="Browse public groups and apply to join one that fits your context and schedule."
-            href="#"
-            cta="Coming soon"
+            href="/challenge/group/browse"
+            cta="Browse groups →"
             navy={navy}
-            disabled
           />
         </div>
 
