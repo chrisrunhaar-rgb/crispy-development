@@ -222,3 +222,21 @@ export async function toggleGroupPublic(groupId: string, isPublic: boolean) {
   revalidatePath("/challenge/facilitator");
   return { success: true };
 }
+
+// ── Save notification settings ────────────────────────────────────────────────
+export async function saveNotificationSettings(groupId: string, notifyTime: string | null, notifyTimezone: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("challenge_groups")
+    .update({ notify_time: notifyTime, notify_timezone: notifyTimezone })
+    .eq("id", groupId)
+    .eq("facilitator_id", user.id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/challenge/facilitator");
+  return { success: true };
+}

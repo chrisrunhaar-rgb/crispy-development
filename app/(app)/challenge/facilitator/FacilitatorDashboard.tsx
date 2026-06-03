@@ -2,12 +2,28 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { reviewApplication, toggleGroupPublic } from "@/app/challenge/group-actions";
+import { reviewApplication, toggleGroupPublic, saveNotificationSettings } from "@/app/challenge/group-actions";
 
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
 const offWhite = "oklch(97% 0.005 80)";
 const mid      = "oklch(52% 0.008 260)";
+
+const TIMEZONES = [
+  { value: "Asia/Kuala_Lumpur", label: "Kuala Lumpur (UTC+8)" },
+  { value: "Asia/Jakarta",      label: "Jakarta (UTC+7)" },
+  { value: "Asia/Singapore",    label: "Singapore (UTC+8)" },
+  { value: "Asia/Manila",       label: "Manila (UTC+8)" },
+  { value: "Asia/Bangkok",      label: "Bangkok (UTC+7)" },
+  { value: "Europe/Amsterdam",  label: "Amsterdam (UTC+1/2)" },
+  { value: "Europe/London",     label: "London (UTC+0/1)" },
+  { value: "America/New_York",  label: "New York (UTC-5/4)" },
+  { value: "America/Chicago",   label: "Chicago (UTC-6/5)" },
+  { value: "America/Denver",    label: "Denver (UTC-7/6)" },
+  { value: "America/Los_Angeles", label: "Los Angeles (UTC-8/7)" },
+  { value: "Africa/Nairobi",    label: "Nairobi (UTC+3)" },
+  { value: "Australia/Sydney",  label: "Sydney (UTC+10/11)" },
+];
 
 type Group = {
   id: string;
@@ -19,6 +35,8 @@ type Group = {
   schedule_days: number[];
   memberCount: number;
   inviteUrl: string;
+  notify_time: string | null;
+  notify_timezone: string;
 };
 
 type Application = {
@@ -45,6 +63,10 @@ export default function FacilitatorDashboard({
 }) {
   const [copied, setCopied] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [notifyTime, setNotifyTime] = useState(groups[0]?.notify_time?.slice(0, 5) ?? "");
+  const [notifyTz, setNotifyTz] = useState(groups[0]?.notify_timezone ?? "Asia/Kuala_Lumpur");
+  const [notifySaved, setNotifySaved] = useState(false);
+  const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const group = groups[0] ?? null;
 
@@ -57,6 +79,34 @@ export default function FacilitatorDashboard({
 
   function handleTogglePublic(groupId: string, current: boolean) {
     startTransition(async () => { await toggleGroupPublic(groupId, !current); });
+  }
+
+  function handleSaveNotify() {
+    if (!group) return;
+    startTransition(async () => {
+      await saveNotificationSettings(group.id, notifyTime || null, notifyTz);
+      setNotifySaved(true);
+      setTimeout(() => setNotifySaved(false), 2500);
+    });
+  }
+
+  async function handleSendNow() {
+    if (!group) return;
+    setSendStatus("sending");
+    try {
+      const res = await fetch("/api/push/challenge-group", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          groupId: group.id,
+          title: "📖 Time to read",
+          message: `Day ${group.name} — open your challenge session now.`,
+          url: "/challenge/day/1",
+        }),
+      });
+      setSendStatus(res.ok ? "done" : "error");
+    } catch { setSendStatus("error"); }
+    setTimeout(() => setSendStatus("idle"), 3000);
   }
 
   function handleReview(appId: string, action: "approve" | "reject") {
@@ -145,6 +195,49 @@ export default function FacilitatorDashboard({
               >
                 {group.is_public ? "✓ Open group" : "Make open group"}
               </button>
+            </div>
+
+            {/* Notification settings */}
+            <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.25rem", marginBottom: "1.25rem" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>
+                Member notifications
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: mid, lineHeight: 1.55, marginBottom: "1rem" }}>
+                Members get a push notification on reading days at this time — only if they have push enabled on their device.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "0.625rem", marginBottom: "0.875rem" }}>
+                <input
+                  type="time"
+                  value={notifyTime}
+                  onChange={e => setNotifyTime(e.target.value)}
+                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: navy, background: "oklch(95% 0.004 80)", border: "1px solid oklch(85% 0.006 80)", borderRadius: "6px", padding: "0.5rem 0.75rem", outline: "none" }}
+                />
+                <select
+                  value={notifyTz}
+                  onChange={e => setNotifyTz(e.target.value)}
+                  style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, background: "oklch(95% 0.004 80)", border: "1px solid oklch(85% 0.006 80)", borderRadius: "6px", padding: "0.5rem 0.75rem", outline: "none", cursor: "pointer" }}
+                >
+                  {TIMEZONES.map(tz => (
+                    <option key={tz.value} value={tz.value}>{tz.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div style={{ display: "flex", gap: "0.625rem", flexWrap: "wrap" }}>
+                <button
+                  onClick={handleSaveNotify}
+                  disabled={isPending}
+                  style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem", color: offWhite, background: notifySaved ? "oklch(42% 0.14 145)" : navy, border: "none", borderRadius: "6px", padding: "0.5rem 1rem", cursor: "pointer", transition: "background 0.2s" }}
+                >
+                  {notifySaved ? "Saved ✓" : "Save schedule"}
+                </button>
+                <button
+                  onClick={handleSendNow}
+                  disabled={sendStatus === "sending"}
+                  style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem", color: navy, background: "white", border: `1px solid ${navy}`, borderRadius: "6px", padding: "0.5rem 1rem", cursor: "pointer" }}
+                >
+                  {sendStatus === "sending" ? "Sending..." : sendStatus === "done" ? "Sent ✓" : sendStatus === "error" ? "Failed — retry" : "Send now"}
+                </button>
+              </div>
             </div>
 
             {/* Pending applications */}

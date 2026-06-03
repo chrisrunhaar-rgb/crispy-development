@@ -19,7 +19,7 @@ export default async function FacilitatorPage({
 
   const { data: groups } = await admin
     .from("challenge_groups")
-    .select("id, name, description, group_code, is_public, max_members, schedule_days, created_at")
+    .select("id, name, description, group_code, is_public, max_members, schedule_days, notify_time, notify_timezone, created_at")
     .eq("facilitator_id", user.id)
     .order("created_at", { ascending: false });
 
@@ -52,6 +52,8 @@ export default async function FacilitatorPage({
         ...g,
         memberCount: memberCounts[g.id] ?? 0,
         inviteUrl: `${siteUrl}/challenge/join/${g.group_code}`,
+        notify_time: g.notify_time ?? null,
+        notify_timezone: g.notify_timezone ?? "Asia/Kuala_Lumpur",
       }))}
       pendingApplications={applications as AppRow[] ?? []}
       newlyCreatedId={created ?? null}
