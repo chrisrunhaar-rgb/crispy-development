@@ -1,0 +1,52 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import DayClient from "./DayClient";
+
+export async function generateMetadata({ params }: { params: Promise<{ n: string }> }) {
+  const { n } = await params;
+  return { title: `Day ${n} — Influential Leadership Challenge` };
+}
+
+export default async function ChallengeDayPage({ params }: { params: Promise<{ n: string }> }) {
+  const { n } = await params;
+  const dayNumber = parseInt(n, 10);
+
+  if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 62) {
+    redirect("/challenge");
+  }
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect(`/login?next=/challenge/day/${dayNumber}`);
+
+  const admin = createAdminClient();
+
+  const [{ data: enrollment }, { data: module }, { data: journalEntry }] = await Promise.all([
+    admin.from("challenge_enrollments").select("id, current_day, status, path").eq("user_id", user.id).maybeSingle(),
+    admin.from("challenge_modules").select("*").eq("day_number", dayNumber).maybeSingle(),
+    admin.from("challenge_journal_entries").select("answer_1, answer_2, updated_at").eq("user_id", user.id).eq("day_number", dayNumber).maybeSingle(),
+  ]);
+
+  if (!enrollment) {
+    redirect("/challenge/solo");
+  }
+
+  if (!module) {
+    redirect("/challenge");
+  }
+
+  const currentDay = enrollment.current_day ?? 1;
+  const isLocked = dayNumber > currentDay;
+
+  return (
+    <DayClient
+      module={module}
+      dayNumber={dayNumber}
+      currentDay={currentDay}
+      isLocked={isLocked}
+      initialJournal={journalEntry ? { answer1: journalEntry.answer_1 ?? "", answer2: journalEntry.answer_2 ?? "" } : null}
+      firstName={(user.user_metadata?.first_name as string | undefined) ?? ""}
+    />
+  );
+}
