@@ -102,8 +102,8 @@ export default function ChallengeContent() {
           <h1 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.75rem,5vw,4rem)", lineHeight:1.05, color:"oklch(22% 0.10 260)", margin:"0 0 0.625rem", textShadow:"0 1px 6px oklch(97% 0.005 80 / 0.5)" }}>
             {isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge"}
           </h1>
-          <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.7rem,1.2vw,0.82rem)", color:"oklch(28% 0.08 260)", margin:0 }}>
-            {isId ? "60 hari · Dipandu · Gratis · Berdasarkan Deep Influence — T.J. Addington" : "60 days · Guided · Free · Based on Deep Influence — T.J. Addington"}
+          <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.72rem,1.3vw,0.875rem)", color:"oklch(28% 0.08 260)", margin:0, maxWidth:"52ch", lineHeight:1.55 }}>
+            {isId ? "Pemimpin paling berpengaruh bukan karena keterampilan mereka — tapi karena siapa mereka di dalam. 62 sesi gratis untuk membentuk kepemimpinan dari dalam ke luar." : "The most influential leaders aren't shaped by their skills — they're shaped by who they are inside. 62 free sessions to form leadership from the inside out."}
           </p>
         </div>
 
