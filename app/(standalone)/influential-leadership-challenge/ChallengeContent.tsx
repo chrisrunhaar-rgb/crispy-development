@@ -117,7 +117,7 @@ export default function ChallengeContent() {
           <div className="ch-tiles">
             <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
             <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
-            <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
+            <Link href="/challenge" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@ export default function ChallengeContent() {
                 <blockquote style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontSize:"1.1rem", lineHeight:1.55, color:"oklch(78% 0.025 260)", borderLeft:"2px solid oklch(65% 0.15 45)", paddingLeft:"1rem", margin:"0 0 1.375rem" }}>
                   {isId ? "\"Di atas segalanya, jagalah hatimu, karena dari situlah terpancar kehidupan.\" — Amsal 4:23" : "\"Above all else, guard your heart, for everything you do flows from it.\" — Proverbs 4:23"}
                 </blockquote>
-                <Link href="/challenge/solo" style={{ fontFamily:"var(--font-montserrat)", fontWeight:800, fontSize:"0.78rem", letterSpacing:"0.08em", textTransform:"uppercase", color:"oklch(22% 0.10 260)", background:"oklch(65% 0.15 45)", borderRadius:"4px", padding:"0.75rem 1.75rem", textDecoration:"none", display:"inline-block" }}>
+                <Link href="/challenge" style={{ fontFamily:"var(--font-montserrat)", fontWeight:800, fontSize:"0.78rem", letterSpacing:"0.08em", textTransform:"uppercase", color:"oklch(22% 0.10 260)", background:"oklch(65% 0.15 45)", borderRadius:"4px", padding:"0.75rem 1.75rem", textDecoration:"none", display:"inline-block" }}>
                   {isId ? "Ikuti Tantangan Sekarang →" : "Join Challenge Now →"}
                 </Link>
               </div>
