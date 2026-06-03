@@ -102,8 +102,8 @@ export default function ChallengeContent() {
           <h1 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.75rem,5vw,4rem)", lineHeight:1.05, color:"oklch(22% 0.10 260)", margin:"0 0 0.625rem", textShadow:"0 1px 6px oklch(97% 0.005 80 / 0.5)" }}>
             {isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge"}
           </h1>
-          <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.85rem,1.6vw,1.05rem)", color:"oklch(65% 0.15 45)", margin:0, maxWidth:"48ch", lineHeight:1.55, fontWeight:600 }}>
-            {isId ? "Pemimpin paling berpengaruh bukan karena keterampilan mereka — tapi karena siapa mereka di dalam." : "The most influential leaders aren't shaped by their skills — they're shaped by who they are inside."}
+          <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.85rem,1.6vw,1.05rem)", color:"oklch(65% 0.15 45)", margin:0, maxWidth:"48ch", lineHeight:1.65, fontWeight:600 }}>
+            {isId ? <>Pemimpin berpengaruh bukan dibentuk oleh keterampilan mereka,<br />melainkan oleh siapa mereka di dalam.</> : <>Influential leaders aren&apos;t shaped by their skills,<br />they are shaped by who they are inside.</>}
           </p>
         </div>
 
