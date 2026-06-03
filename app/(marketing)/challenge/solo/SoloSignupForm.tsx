@@ -76,7 +76,7 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1rem" }}>
           Have an account?{" "}
-          <Link href="/login?next=/challenge/solo" style={{ color: navy, fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
+          <Link href="/login?redirectTo=/challenge/solo" style={{ color: navy, fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
         </p>
       </form>
     </div>

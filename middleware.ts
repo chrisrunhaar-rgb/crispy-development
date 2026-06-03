@@ -42,9 +42,10 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from login/signup
   if (user && (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup")) {
-    const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = "/dashboard";
-    return NextResponse.redirect(dashboardUrl);
+    const redirectTo = request.nextUrl.searchParams.get("redirectTo") || "/dashboard";
+    const dest = request.nextUrl.clone();
+    dest.href = new URL(redirectTo, request.nextUrl.origin).href;
+    return NextResponse.redirect(dest);
   }
 
   // Protect /community — require auth
