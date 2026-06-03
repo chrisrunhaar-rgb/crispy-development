@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useMemo } from "react";
 import Link from "next/link";
 import { createGroup } from "@/app/challenge/group-actions";
 
@@ -19,16 +19,35 @@ const DAYS = [
   { value: 0, label: "Sun" },
 ];
 
+const SESSIONS = 62;
+
+function calcEndDate(startDateStr: string, daysPerWeek: number): string {
+  if (!startDateStr || daysPerWeek === 0) return "";
+  const start = new Date(startDateStr + "T00:00:00");
+  const weeksNeeded = Math.ceil(SESSIONS / daysPerWeek);
+  const end = new Date(start);
+  end.setDate(end.getDate() + weeksNeeded * 7 - 1);
+  return end.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
+
 const initialState = { error: "" };
 
 export default function CreateGroupForm() {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic]         = useState(false);
+  const [hasMeetings, setHasMeetings]   = useState(false);
+  const [startDate, setStartDate]       = useState("");
+
+  const endDateDisplay = useMemo(
+    () => calcEndDate(startDate, selectedDays.length),
+    [startDate, selectedDays.length]
+  );
 
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
       selectedDays.forEach(d => formData.append("schedule_days", String(d)));
       formData.set("is_public", String(isPublic));
+      formData.set("has_meetings", String(hasMeetings));
       const result = await createGroup(formData);
       return result ?? initialState;
     },
@@ -41,9 +60,11 @@ export default function CreateGroupForm() {
     );
   }
 
+  const todayStr = new Date().toISOString().split("T")[0];
+
   return (
     <div style={{ width: "100%", maxWidth: "520px" }}>
-      <Link href="/challenge" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
+      <Link href="/challenge/solo" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
         ← Back
       </Link>
 
@@ -54,7 +75,7 @@ export default function CreateGroupForm() {
         Create your group
       </h1>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.6, marginBottom: "2rem" }}>
-        You&apos;ll get an invite link to share. Members join at their own pace, but read together on the same schedule.
+        You&apos;ll get an invite link to share. Members read together on the same schedule.
       </p>
 
       <form action={formAction}>
@@ -72,10 +93,12 @@ export default function CreateGroupForm() {
             <textarea name="description" rows={3} placeholder="What's this group about? Who's it for?" style={{ ...inputStyle, resize: "vertical" }} />
           </div>
 
-          {/* Schedule */}
+          {/* Reading days */}
           <div>
             <label style={labelStyle}>Reading days</label>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, marginBottom: "0.75rem" }}>Which days do members read? They can also read on off-days, but these are the nudge days.</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, marginBottom: "0.75rem" }}>
+              Which days do members read? Members can read any day, but these are the scheduled nudge days.
+            </p>
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               {DAYS.map(d => (
                 <button
@@ -97,17 +120,72 @@ export default function CreateGroupForm() {
             </div>
           </div>
 
-          {/* Max members */}
-          <div>
-            <label style={labelStyle}>Max members</label>
-            <select name="max_members" style={{ ...inputStyle, cursor: "pointer" }}>
-              {[4, 6, 8, 10, 12, 15, 20].map(n => (
-                <option key={n} value={n} selected={n === 12}>{n} people</option>
-              ))}
-            </select>
+          {/* Start date + end date */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+            <div>
+              <label style={labelStyle}>Start date</label>
+              <input
+                name="start_date"
+                type="date"
+                min={todayStr}
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={labelStyle}>Estimated end date</label>
+              <div style={{ ...inputStyle, color: endDateDisplay ? navy : "oklch(70% 0.006 260)", background: "oklch(94% 0.004 80)", display: "flex", alignItems: "center" }}>
+                {endDateDisplay || (selectedDays.length === 0 ? "Pick reading days" : "Pick a start date")}
+              </div>
+            </div>
           </div>
 
-          {/* Public toggle */}
+          {/* Online meetings toggle */}
+          <div style={{ background: "white", border: `1px solid ${hasMeetings ? orange.replace(")", " / 0.4)") : "oklch(88% 0.006 80)"}`, borderRadius: "12px", padding: "1rem 1.25rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>
+                  Online meetings
+                </p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid, lineHeight: 1.55 }}>
+                  Highly recommended. Each topic has a guided discussion script for the facilitator — making it easy to lead the group conversation online.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setHasMeetings(p => !p)}
+                style={{
+                  width: "44px", height: "24px", borderRadius: "12px", border: "none", cursor: "pointer",
+                  background: hasMeetings ? orange : "oklch(82% 0.006 260)",
+                  position: "relative", flexShrink: 0, transition: "background 0.2s",
+                }}
+              >
+                <span style={{
+                  position: "absolute", top: "2px", left: hasMeetings ? "22px" : "2px",
+                  width: "20px", height: "20px", borderRadius: "50%", background: "white",
+                  transition: "left 0.2s",
+                }} />
+              </button>
+            </div>
+
+            {hasMeetings && (
+              <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid oklch(90% 0.006 80)" }}>
+                <label style={labelStyle}>Your Zoom / Teams meeting link <span style={{ fontWeight: 400, color: mid }}>(optional)</span></label>
+                <input
+                  name="meeting_link"
+                  type="url"
+                  placeholder="https://zoom.us/j/... or https://teams.microsoft.com/..."
+                  style={inputStyle}
+                />
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid, marginTop: "0.375rem" }}>
+                  Members will see this link on each daily session page.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Open group toggle */}
           <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1rem 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
             <div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>Open group</p>

@@ -15,7 +15,19 @@ export async function createGroup(formData: FormData) {
   const description = (formData.get("description") as string | null)?.trim() || null;
   const scheduleDays = formData.getAll("schedule_days").map(Number).filter(n => n >= 0 && n <= 6);
   const isPublic = formData.get("is_public") === "true";
-  const maxMembers = parseInt(formData.get("max_members") as string) || 12;
+  const hasMeetings = formData.get("has_meetings") === "true";
+  const meetingLink = (formData.get("meeting_link") as string | null)?.trim() || null;
+  const startDate = (formData.get("start_date") as string | null) || null;
+
+  // Calculate end date: ceil(62 / daysPerWeek) weeks from start
+  let endDate: string | null = null;
+  if (startDate && scheduleDays.length > 0) {
+    const start = new Date(startDate + "T00:00:00");
+    const weeksNeeded = Math.ceil(62 / scheduleDays.length);
+    const end = new Date(start);
+    end.setDate(end.getDate() + weeksNeeded * 7 - 1);
+    endDate = end.toISOString().split("T")[0];
+  }
 
   if (!name) return { error: "Group name is required" };
 
@@ -29,7 +41,10 @@ export async function createGroup(formData: FormData) {
       description,
       schedule_days: scheduleDays.length > 0 ? scheduleDays : [1, 2, 3, 4, 5],
       is_public: isPublic,
-      max_members: maxMembers,
+      has_meetings: hasMeetings,
+      meeting_link: meetingLink,
+      start_date: startDate,
+      end_date: endDate,
     })
     .select("id, group_code")
     .single();
