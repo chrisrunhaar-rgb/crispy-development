@@ -117,7 +117,7 @@ export default function ChallengeContent() {
           <div className="ch-tiles">
             <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
             <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
-            <Link href="/challenge" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
+            <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
           </div>
         </div>
       </div>

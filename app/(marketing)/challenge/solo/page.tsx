@@ -2,9 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SoloSignupForm from "./SoloSignupForm";
 
-export const metadata = {
-  title: "Join the Challenge — Crispy Development",
-};
+export const metadata = { title: "Join — Influential Leadership Challenge" };
 
 export default async function ChallengeSoloPage() {
   const supabase = await createClient();
@@ -15,7 +13,7 @@ export default async function ChallengeSoloPage() {
   }
 
   return (
-    <div style={{ minHeight: "calc(100dvh - 120px)", background: "oklch(97% 0.005 80)", paddingBlock: "4rem", paddingInline: "1.5rem", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
+    <div style={{ minHeight: "100dvh", background: "oklch(97% 0.005 80)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem 1.5rem" }}>
       <SoloSignupForm isLoggedIn={!!user} userEmail={user?.email ?? null} />
     </div>
   );
