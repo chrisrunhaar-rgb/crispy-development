@@ -21,8 +21,10 @@ export default function Footer() {
       <style>{`
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2.5rem; }
         @media (max-width: 600px) {
-          .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem 1rem; margin-bottom: 2rem; }
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; margin-bottom: 1.5rem; }
           .footer-brand { grid-column: 1 / -1; margin-bottom: 0.25rem; }
+          .footer-pathways, .footer-account { display: none; }
+          .footer-legal-contact { display: none; }
         }
       `}</style>
       <div className="container-wide">
@@ -56,7 +58,7 @@ export default function Footer() {
           </div>
 
           {/* Pathways */}
-          <div>
+          <div className="footer-pathways">
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.pathways}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/personal" className="footer-link">{t.footer.personal}</Link>
@@ -68,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Account */}
-          <div>
+          <div className="footer-account">
             <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem", fontSize: "0.62rem" }}>{t.footer.account}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <Link href="/membership" className="footer-link">{t.footer.getStarted}</Link>
@@ -84,7 +86,7 @@ export default function Footer() {
               <Link href="/privacy" className="footer-link">{t.footer.privacy}</Link>
               <Link href="/terms" className="footer-link">{t.footer.terms}</Link>
               <Link href="/cookies" className="footer-link">{t.footer.cookies}</Link>
-              <Link href="/contact" className="footer-link">{t.footer.contact}</Link>
+              <Link href="/contact" className="footer-link footer-legal-contact">{t.footer.contact}</Link>
             </div>
           </div>
         </div>{/* /footer-grid */}
