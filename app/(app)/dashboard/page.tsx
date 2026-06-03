@@ -222,6 +222,12 @@ export default async function DashboardPage({
   modules = allMods ?? [];
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
   const challengeCurrentDay = (challengeRow as { current_day: number; status: string } | null)?.current_day ?? null;
+
+  const { data: facilitatorGroup } = await admin
+    .from("challenge_groups")
+    .select("id, name")
+    .eq("facilitator_id", viewingUserId)
+    .maybeSingle();
   userMessages = (msgs ?? []) as CoachMsg[];
   const pendingReplies = (unseenReplies ?? []) as { id: string; module_slug: string; comment: string; admin_reply: string }[];
 
@@ -642,7 +648,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -808,7 +814,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -836,6 +842,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   languagePreference?: "en" | "id";
   challengeCurrentDay?: number | null;
+  isFacilitator?: boolean;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -949,6 +956,21 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
               </div>
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(72% 0.04 260)" }}>→</span>
             </Link>
+            {isFacilitator && (
+              <Link
+                href="/challenge/facilitator"
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  background: "oklch(28% 0.10 260)", borderRadius: "8px",
+                  padding: "0.625rem 1rem", textDecoration: "none", marginTop: "0.5rem",
+                }}
+              >
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(80% 0.04 260)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                  Facilitator settings
+                </span>
+                <span style={{ color: "oklch(65% 0.15 45)", fontSize: "0.8rem" }}>→</span>
+              </Link>
+            )}
           </div>
         )}
 
