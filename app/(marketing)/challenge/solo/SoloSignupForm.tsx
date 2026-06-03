@@ -28,22 +28,50 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
 
   if (isLoggedIn) {
     return (
-      <div style={{ width: "100%", maxWidth: "400px" }}>
-        <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.5rem" }}>
-          Ready to start?
+      <div style={{ width: "100%", maxWidth: "480px" }}>
+        <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.375rem" }}>
+          How do you want to join?
         </h1>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(52% 0.008 260)", marginBottom: "2rem" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginBottom: "2rem" }}>
           Signed in as {userEmail}
         </p>
-        <form action={enrollAction}>
-          <button
-            type="submit"
-            disabled={enrollPending}
-            style={btnStyle(enrollPending)}
-          >
-            {enrollPending ? "Starting..." : "Start Day 1 →"}
-          </button>
-        </form>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+          {/* Solo */}
+          <form action={enrollAction} style={{ display: "contents" }}>
+            <button type="submit" disabled={enrollPending} style={pathCardStyle}>
+              <div style={pathCardInner}>
+                <div>
+                  <p style={pathTitle}>Solo</p>
+                  <p style={pathDesc}>Work through the challenge at your own pace. Private journal, daily content.</p>
+                </div>
+                <span style={pathArrow}>→</span>
+              </div>
+            </button>
+          </form>
+
+          {/* Facilitator */}
+          <Link href="/challenge/group/create" style={{ ...pathCardStyle, textDecoration: "none", display: "block" }}>
+            <div style={pathCardInner}>
+              <div>
+                <p style={pathTitle}>Facilitator</p>
+                <p style={pathDesc}>Lead a small group. Set a schedule, share an invite link, track progress.</p>
+              </div>
+              <span style={pathArrow}>→</span>
+            </div>
+          </Link>
+
+          {/* Join group */}
+          <Link href="/challenge/group/browse" style={{ ...pathCardStyle, textDecoration: "none", display: "block" }}>
+            <div style={pathCardInner}>
+              <div>
+                <p style={pathTitle}>Join a group</p>
+                <p style={pathDesc}>Browse open groups and apply to join one that fits your context.</p>
+              </div>
+              <span style={pathArrow}>→</span>
+            </div>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -96,4 +124,29 @@ const inputStyle: React.CSSProperties = {
   width: "100%", fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem",
   color: navy, background: "white", border: "1px solid oklch(82% 0.006 260)",
   borderRadius: "8px", padding: "0.75rem 1rem", outline: "none", boxSizing: "border-box",
+};
+
+const pathCardStyle: React.CSSProperties = {
+  width: "100%", background: "white", border: "1px solid oklch(85% 0.006 80)",
+  borderRadius: "12px", padding: "1.125rem 1.25rem", cursor: "pointer",
+  textAlign: "left",
+};
+
+const pathCardInner: React.CSSProperties = {
+  display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem",
+};
+
+const pathTitle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.9375rem",
+  color: navy, marginBottom: "0.25rem",
+};
+
+const pathDesc: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "0.8rem",
+  color: "oklch(52% 0.008 260)", lineHeight: 1.5, maxWidth: "34ch",
+};
+
+const pathArrow: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "1.1rem",
+  color: "oklch(65% 0.15 45)", flexShrink: 0, fontWeight: 700,
 };
