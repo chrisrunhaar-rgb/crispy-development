@@ -792,8 +792,8 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           </h2>
           <p style={{ color: "oklch(75% 0.04 260)", fontSize: 16, lineHeight: 1.75, marginBottom: 32 }}>
             {t(
-              "Explore more resources to deepen your cross-cultural leadership.",
-              "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
+              "Explore more training modules to deepen your cross-cultural leadership.",
+              "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.",
               "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
             )}
           </p>

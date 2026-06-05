@@ -1379,8 +1379,8 @@ export default function RelationalLongevityClient({ userPathway, isSaved: initia
           }}
         >
           {t(
-            "The skills that keep teams together take practice. Explore more resources to deepen your cross-cultural leadership.",
-            "Keterampilan yang menjaga tim tetap bersatu membutuhkan latihan. Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
+            "The skills that keep teams together take practice. Explore more training modules to deepen your cross-cultural leadership.",
+            "Keterampilan yang menjaga tim tetap bersatu membutuhkan latihan. Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.",
             "De vaardigheden die teams bij elkaar houden vergen oefening. Verken meer bronnen om je intercultureel leiderschap te verdiepen."
           )}
         </p>

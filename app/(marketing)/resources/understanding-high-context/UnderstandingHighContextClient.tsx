@@ -471,7 +471,7 @@ export default function UnderstandingHighContextClient({ userPathway, isSaved: i
       }}>
         <Link href="/resources" style={{ fontSize: 13, color: bodyText, textDecoration: "none", fontWeight: 600, opacity: 0.7, display: "flex", alignItems: "center", gap: 6 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-          {t("Resources", "Sumber Daya", "Bronnen")}
+          {t("Training", "Pelatihan", "Bronnen")}
         </Link>
         <button
           onClick={handleSave}

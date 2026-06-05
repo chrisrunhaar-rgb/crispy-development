@@ -607,8 +607,8 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         </h2>
         <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
           {t(
-            "Explore more resources to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
+            "Explore more training modules to deepen your cross-cultural leadership.",
+            "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.",
             "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
           )}
         </p>

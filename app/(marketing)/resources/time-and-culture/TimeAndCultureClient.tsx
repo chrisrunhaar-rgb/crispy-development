@@ -1792,7 +1792,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
             {L(lang, "Keep Growing", "Terus Bertumbuh")}
           </h2>
           <p style={{ color: "oklch(72% 0.04 260)", fontSize: 15, lineHeight: 1.75, marginBottom: 28, fontFamily: "'Montserrat', sans-serif" }}>
-            {L(lang, "Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber daya untuk memperdalam kepemimpinan lintas budaya kamu.")}
+            {L(lang, "Explore more training modules to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber daya untuk memperdalam kepemimpinan lintas budaya kamu.")}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link

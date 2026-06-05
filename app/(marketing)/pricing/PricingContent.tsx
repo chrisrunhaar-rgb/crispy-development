@@ -291,10 +291,10 @@ export default function PricingContent({ isIndonesia }: Props) {
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
     eyebrow: id ? "Akses · Harga" : "Access · Pricing",
-    h1: id ? "Sumber daya. Coaching. Komunitas." : "Resources. Coaching. Community.",
+    h1: id ? "Pelatihan. Coaching. Komunitas." : "Training. Coaching. Community.",
     tagline: id
-      ? "Sumber daya, jalur, dan coaching AI untuk pemimpin lintas budaya. Siapa pun bisa bergabung."
-      : "Resources, pathways, and AI coaching for cross-cultural leaders. Open to all.",
+      ? "Pelatihan, jalur, dan coaching AI untuk pemimpin lintas budaya. Siapa pun bisa bergabung."
+      : "Training, pathways, and AI coaching for cross-cultural leaders. Open to all.",
 
     toggleMonthly: id ? "Bulanan" : "Monthly",
     toggleAnnual: id ? "Tahunan" : "Annual",

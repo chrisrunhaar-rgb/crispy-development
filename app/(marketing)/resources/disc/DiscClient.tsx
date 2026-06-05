@@ -1680,7 +1680,7 @@ export default function DiscClient({
                 {tr("Go Deeper", "Pelajari Lebih Lanjut", "Ga dieper")}
               </p>
               <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.5rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2, margin: 0 }}>
-                {tr("Explore more cross-cultural leadership tools.", "Jelajahi lebih banyak alat kepemimpinan lintas budaya.", "Verken meer interculturele leiderschapstools.")}
+                {tr("Explore more cross-cultural leadership training modules.", "Jelajahi lebih banyak modul pelatihan kepemimpinan lintas budaya.", "Verken meer interculturele leiderschapstools.")}
               </p>
             </div>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>

@@ -1196,7 +1196,7 @@ export default function InfluentialLeadershipClient({
           }}
         >
           {t(
-            "Explore more frameworks for leading with depth across cultural boundaries.",
+            "Explore more training modules for leading with depth across cultural boundaries.",
             "Jelajahi lebih banyak kerangka untuk memimpin dengan kedalaman melintasi batas budaya.",
             "Verken meer kaders voor leidinggeven met diepgang over culturele grenzen heen."
           )}

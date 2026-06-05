@@ -80,7 +80,7 @@ export default function TopicContent({ topic, resources, userId, savedResources:
 
             <div>
               <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.375rem", fontSize: "0.62rem" }}>
-                Resources · {topic.title}
+                Training · {topic.title}
               </p>
               <h1 style={{
                 fontFamily: "var(--font-montserrat)",

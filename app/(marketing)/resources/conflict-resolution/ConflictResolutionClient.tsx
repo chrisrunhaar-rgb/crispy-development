@@ -535,7 +535,7 @@ export default function ConflictResolutionClient({ userPathway, isSaved: initial
           {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
         <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
-          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
+          {t("Explore more training modules to deepen your cross-cultural leadership.", "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
         <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: navy, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4 }}>
           {t("Training", "Pelatihan", "Contentbibliotheek")}

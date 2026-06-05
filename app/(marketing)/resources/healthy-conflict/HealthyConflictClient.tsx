@@ -1439,7 +1439,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
           margin: "0 auto 40px",
         }}>
           {t(
-            "Explore more resources to deepen your cross-cultural leadership.",
+            "Explore more training modules to deepen your cross-cultural leadership.",
             "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya kamu.",
           )}
         </p>

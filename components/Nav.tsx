@@ -143,7 +143,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                 style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "none", border: "none", borderBottom: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "2px solid oklch(65% 0.15 45)" : "2px solid transparent", cursor: "pointer", padding: 0, paddingBottom: "2px", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", letterSpacing: "0.03em", color: (pathname === "/resources" || pathname === "/courses" || pathname === "/articles" || pathname.startsWith("/resources/") || pathname.startsWith("/courses/")) ? "oklch(65% 0.15 45)" : "oklch(30% 0.12 260)" }}
                 className="nav-link"
               >
-                Resources
+                Training
                 <span style={{ fontSize: "0.45rem", opacity: 0.5 }}>▼</span>
               </button>
               {resourcesOpen && (
@@ -243,7 +243,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               WayPoint Coaching
             </Link>
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
-            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Resources</p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Training</p>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Training
             </Link>
