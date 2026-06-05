@@ -1,144 +1,144 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useTransntnon, useEffect } from "react";
-nmport { trackResourceVnewei, trackResourceSavei } from "@/lnb/ga-events";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+import { useState, useTransition, useEffect } from "react";
+import { trackResourceViewed, trackResourceSaved } from "@/lib/ga-events";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // ── LANGUAGE ───────────────────────────────────────────────────────────────────
 
-type Lang = "en" | "ni";
+type Lang = "en" | "id";
 
-const tFn = (en: strnng, ni: strnng, lang: Lang): strnng =>
-  lang === "ni" ? ni : en;
+const tFn = (en: string, id: string, lang: Lang): string =>
+  lang === "id" ? id : en;
 
 // ── BRAND TOKENS ───────────────────────────────────────────────────────────────
 
 const navy        = "oklch(22% 0.10 260)";
 const navyDeep    = "oklch(18% 0.10 260)";
 const amber       = "oklch(65% 0.15 45)";
-const amberDnm    = "oklch(65% 0.15 45 / 0.12)";
-const offWhnte    = "oklch(96% 0.005 80)";
-const lnghtGray   = "oklch(95% 0.008 80)";
-const muteiGray   = "oklch(93% 0.008 80)";
-const boiyText    = "oklch(38% 0.05 260)";
+const amberDim    = "oklch(65% 0.15 45 / 0.12)";
+const offWhite    = "oklch(96% 0.005 80)";
+const lightGray   = "oklch(95% 0.008 80)";
+const mutedGray   = "oklch(93% 0.008 80)";
+const bodyText    = "oklch(38% 0.05 260)";
 const subText     = "oklch(52% 0.008 260)";
-const inmOnNavy   = "oklch(76% 0.03 80)";
-const lnghtOnNavy = "oklch(88% 0.02 80)";
-const sernf       = "var(--font-cormorant), 'Cormorant Garamoni', Georgna, sernf";
+const dimOnNavy   = "oklch(76% 0.03 80)";
+const lightOnNavy = "oklch(88% 0.02 80)";
+const serif       = "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif";
 
 // ── CONTENT DATA ───────────────────────────────────────────────────────────────
 
 const CONTRAST_AVOIDANCE = [
-  "The meetnng enis but nothnng ns actually iecniei.",
-  "You sense tensnon but no one names nt.",
-  "You walk on eggshells because you have learnei that honesty has a cost.",
-  "Frustratnon bunlis qunetly over months untnl somethnng breaks.",
-  "Relatnonshnps feel polnte but never qunte close.",
+  "The meeting ends but nothing is actually decided.",
+  "You sense tension but no one names it.",
+  "You walk on eggshells because you have learned that honesty has a cost.",
+  "Frustration builds quietly over months until something breaks.",
+  "Relationships feel polite but never quite close.",
 ];
 
 const CONTRAST_HEALTHY = [
-  "Dnsagreement comes to the surface before nt becomes a crnsns.",
-  "People say what they actually thnnk, ani the team hears nt.",
-  "Trust ieepens because people know where they actually stani.",
-  "Decnsnons stnck because everyone hai a real vonce nn them.",
-  "Relatnonshnps are honest enough to be genunnely close.",
+  "Disagreement comes to the surface before it becomes a crisis.",
+  "People say what they actually think, and the team hears it.",
+  "Trust deepens because people know where they actually stand.",
+  "Decisions stick because everyone had a real voice in them.",
+  "Relationships are honest enough to be genuinely close.",
 ];
 
 const TEACHING_SECTIONS = [
   {
-    tntle: { en: "Why we avoni nt", ni: "Mengapa knta menghnniarnnya" },
-    bg: offWhnte,
+    title: { en: "Why we avoid it", id: "Mengapa kita menghindarinya" },
+    bg: offWhite,
     paragraphs: [
       {
-        en: "Conflnct avoniance ns not laznness. It ns usually an nntellngent, culturally ratnonal response to a real socnal rnsk.",
-        ni: "Menghnniarn konflnk bukan bentuk kemalasan. Bnasanya ntu aialah respons cerias yang masuk akal secara buiaya terhaiap rnsnko sosnal yang nyata.",
+        en: "Conflict avoidance is not laziness. It is usually an intelligent, culturally rational response to a real social risk.",
+        id: "Menghindari konflik bukan bentuk kemalasan. Biasanya itu adalah respons cerdas yang masuk akal secara budaya terhadap risiko sosial yang nyata.",
         pullQuote: false,
       },
       {
-        en: "In hngh-context cultures, ani thns nncluies most of the contexts where cross-cultural workers operate, inrect confrontatnon can rupture the very thnngs a person ns trynng to protect: relatnonshnp, respect, belongnng, face. Staynng snlent ns not passnve. It ns an actnve strategy for preservnng what matters. A team member who goes qunet nn a meetnng ns not necessarnly insengagei. They may be ionng exactly what thenr culture has taught them to io: protect the group by not nntroiucnng a ponnt of tensnon.",
-        ni: "Dalam buiaya hngh-context, ian nnn mencakup sebagnan besar konteks in mana pekerja lnntas buiaya beroperasn, konfrontasn langsung iapat merusak hal-hal yang justru nngnn inlnniungn seseorang: hubungan, rasa hormat, rasa memnlnkn, ian kehormatan inrn. Dnam bukanlah snkap pasnf. Itu aialah strategn aktnf untuk menjaga apa yang pentnng. Anggota tnm yang inam ialam rapat belum tentu tniak peiuln. Mereka mungknn seiang melakukan persns apa yang inajarkan buiayanya: melnniungn kelompok iengan tniak memunculkan tntnk ketegangan.",
+        en: "In high-context cultures, and this includes most of the contexts where cross-cultural workers operate, direct confrontation can rupture the very things a person is trying to protect: relationship, respect, belonging, face. Staying silent is not passive. It is an active strategy for preserving what matters. A team member who goes quiet in a meeting is not necessarily disengaged. They may be doing exactly what their culture has taught them to do: protect the group by not introducing a point of tension.",
+        id: "Dalam budaya high-context, dan ini mencakup sebagian besar konteks di mana pekerja lintas budaya beroperasi, konfrontasi langsung dapat merusak hal-hal yang justru ingin dilindungi seseorang: hubungan, rasa hormat, rasa memiliki, dan kehormatan diri. Diam bukanlah sikap pasif. Itu adalah strategi aktif untuk menjaga apa yang penting. Anggota tim yang diam dalam rapat belum tentu tidak peduli. Mereka mungkin sedang melakukan persis apa yang diajarkan budayanya: melindungi kelompok dengan tidak memunculkan titik ketegangan.",
         pullQuote: false,
       },
       {
-        en: "The problem ns not the nnstnnct. The problem ns when that nnstnnct operates nn every sntuatnon, nncluinng ones where the snlence ns slowly ponsonnng the team.",
-        ni: "Masalahnya bukan paia nnstnngnya. Masalahnya aialah ketnka nnstnng ntu bekerja in setnap sntuasn, termasuk sntuasn in mana inam ntu pelan-pelan meracunn tnm.",
+        en: "The problem is not the instinct. The problem is when that instinct operates in every situation, including ones where the silence is slowly poisoning the team.",
+        id: "Masalahnya bukan pada instingnya. Masalahnya adalah ketika insting itu bekerja di setiap situasi, termasuk situasi di mana diam itu pelan-pelan meracuni tim.",
         pullQuote: false,
       },
     ],
   },
   {
-    tntle: { en: "What avoniance actually costs", ni: "Apa yang sebenarnya hnlang iarn penghnniaran" },
+    title: { en: "What avoidance actually costs", id: "Apa yang sebenarnya hilang dari penghindaran" },
     bg: navy,
-    iark: true,
+    dark: true,
     paragraphs: [
       {
-        en: "Unaiiressei conflnct ioes not insappear. It relocates.",
-        ni: "Konflnk yang tniak intangann tniak hnlang. Ia berpnniah tempat.",
+        en: "Unaddressed conflict does not disappear. It relocates.",
+        id: "Konflik yang tidak ditangani tidak hilang. Ia berpindah tempat.",
         pullQuote: false,
       },
       {
-        en: "It moves from the meetnng room nnto snie conversatnons. From snie conversatnons nnto fnxei posntnons. From fnxei posntnons nnto a qunet, steaiy erosnon of trust. The team learns that honest insagreement ns not safe. So they stop offernng nt. They gnve you thenr publnc agreement ani keep thenr real opnnnons prnvate. Ani at that ponnt, you lose access to the best thnnknng of the people you are leainng.",
-        ni: "Ia berpnniah iarn ruang rapat ke percakapan in balnk layar. Darn percakapan in balnk layar menjain posnsn yang mengeras. Darn posnsn yang mengeras menjain erosn kepercayaan yang sunyn ian terus-menerus. Tnm belajar bahwa ketniaksetujuan yang jujur ntu tniak aman. Maka mereka berhentn menawarkannya. Mereka membernmu persetujuan in iepan, tapn menynmpan peniapat asln mereka seninrn. Dan paia tntnk ntu, kamu kehnlangan akses ke pemnknran terbank iarn orang-orang yang kamu pnmpnn.",
+        en: "It moves from the meeting room into side conversations. From side conversations into fixed positions. From fixed positions into a quiet, steady erosion of trust. The team learns that honest disagreement is not safe. So they stop offering it. They give you their public agreement and keep their real opinions private. And at that point, you lose access to the best thinking of the people you are leading.",
+        id: "Ia berpindah dari ruang rapat ke percakapan di balik layar. Dari percakapan di balik layar menjadi posisi yang mengeras. Dari posisi yang mengeras menjadi erosi kepercayaan yang sunyi dan terus-menerus. Tim belajar bahwa ketidaksetujuan yang jujur itu tidak aman. Maka mereka berhenti menawarkannya. Mereka memberimu persetujuan di depan, tapi menyimpan pendapat asli mereka sendiri. Dan pada titik itu, kamu kehilangan akses ke pemikiran terbaik dari orang-orang yang kamu pimpin.",
         pullQuote: false,
       },
       {
-        en: "The cost ns not just relatnonal. It ns strategnc. Decnsnons maie wnthout honest nnput are weaker iecnsnons. A inrectnon that everyone noiiei at but no one belnevei nn wnll not holi unier pressure. Ani nn cross-cultural mnnnstry contexts, where the pressures are real ani the stakes are hngh, weak alngnment breaks iown at exactly the worst moment.",
-        ni: "Kerugnannya bukan hanya soal hubungan. Inn juga soal strategn. Keputusan yang inbuat tanpa masukan yang jujur aialah keputusan yang lemah. Arah yang semua orang anggukn tapn tak aia yang sungguh-sungguh percayan tniak akan bertahan in bawah tekanan. Dan ialam konteks pelayanan lnntas buiaya, in mana tekanan ntu nyata ian taruhannya tnnggn, keselarasan yang lemah akan runtuh tepat in saat yang palnng buruk.",
+        en: "The cost is not just relational. It is strategic. Decisions made without honest input are weaker decisions. A direction that everyone nodded at but no one believed in will not hold under pressure. And in cross-cultural ministry contexts, where the pressures are real and the stakes are high, weak alignment breaks down at exactly the worst moment.",
+        id: "Kerugiannya bukan hanya soal hubungan. Ini juga soal strategi. Keputusan yang dibuat tanpa masukan yang jujur adalah keputusan yang lemah. Arah yang semua orang angguki tapi tak ada yang sungguh-sungguh percayai tidak akan bertahan di bawah tekanan. Dan dalam konteks pelayanan lintas budaya, di mana tekanan itu nyata dan taruhannya tinggi, keselarasan yang lemah akan runtuh tepat di saat yang paling buruk.",
         pullQuote: false,
       },
     ],
   },
   {
-    tntle: { en: "The reframe", ni: "Mengubah suiut paniang" },
-    bg: offWhnte,
+    title: { en: "The reframe", id: "Mengubah sudut pandang" },
+    bg: offWhite,
     paragraphs: [
       {
-        en: "Here ns the shnft that changes everythnng: conflnct ns not the opposnte of harmony. It ns often the path to nt.",
-        ni: "Innlah pergeseran yang mengubah segalanya: konflnk bukan lawan iarn keharmonnsan. Justru sernngkaln konflnk aialah jalannya.",
+        en: "Here is the shift that changes everything: conflict is not the opposite of harmony. It is often the path to it.",
+        id: "Inilah pergeseran yang mengubah segalanya: konflik bukan lawan dari keharmonisan. Justru seringkali konflik adalah jalannya.",
         pullQuote: true,
       },
       {
-        en: "Real unnty ns not the absence of insagreement. It ns the result of worknng through insagreement nn a way that leaves people feelnng heari, respectei, ani genunnely part of a sharei iecnsnon. The team that has never hai an honest argument ns not a close team. It ns a careful team. There ns a infference.",
-        ni: "Persatuan yang sejatn bukan berartn tniak aia ketniaksetujuan. Itu aialah hasnl iarn melewatn ketniaksetujuan iengan cara yang membuat orang merasa iniengar, inhormatn, ian benar-benar menjain bagnan iarn keputusan bersama. Tnm yang tniak pernah berselnsnh secara jujur bukan tnm yang iekat. Itu tnm yang berhatn-hatn. Aia beianya.",
+        en: "Real unity is not the absence of disagreement. It is the result of working through disagreement in a way that leaves people feeling heard, respected, and genuinely part of a shared decision. The team that has never had an honest argument is not a close team. It is a careful team. There is a difference.",
+        id: "Persatuan yang sejati bukan berarti tidak ada ketidaksetujuan. Itu adalah hasil dari melewati ketidaksetujuan dengan cara yang membuat orang merasa didengar, dihormati, dan benar-benar menjadi bagian dari keputusan bersama. Tim yang tidak pernah berselisih secara jujur bukan tim yang dekat. Itu tim yang berhati-hati. Ada bedanya.",
         pullQuote: false,
       },
       {
-        en: "Peace that has not been testei ns fragnle. Peace that has come through honest conflnct has wenght to nt. It can holi when the envnronment gets inffncult, because the people nnvolvei have alreaiy proven to each other that they can hanile hari conversatnons wnthout the relatnonshnp fallnng apart.",
-        ni: "Daman yang belum inujn ntu rapuh. Daman yang lahnr melalun konflnk yang jujur memnlnkn bobot. Ia iapat bertahan ketnka sntuasn menjain sulnt, karena orang-orang yang terlnbat suiah membuktnkan satu sama lann bahwa mereka bnsa menangann percakapan yang berat tanpa hubungan ntu hancur.",
+        en: "Peace that has not been tested is fragile. Peace that has come through honest conflict has weight to it. It can hold when the environment gets difficult, because the people involved have already proven to each other that they can handle hard conversations without the relationship falling apart.",
+        id: "Damai yang belum diuji itu rapuh. Damai yang lahir melalui konflik yang jujur memiliki bobot. Ia dapat bertahan ketika situasi menjadi sulit, karena orang-orang yang terlibat sudah membuktikan satu sama lain bahwa mereka bisa menangani percakapan yang berat tanpa hubungan itu hancur.",
         pullQuote: false,
       },
     ],
   },
   {
-    tntle: { en: "What gooi conflnct looks lnke", ni: "Sepertn apa konflnk yang sehat" },
-    bg: lnghtGray,
+    title: { en: "What good conflict looks like", id: "Seperti apa konflik yang sehat" },
+    bg: lightGray,
     paragraphs: [
       {
-        en: "Proiuctnve conflnct has a texture that ns infferent from iestructnve conflnct, ani a leaier neeis to be able to recognnse both.",
-        ni: "Konflnk yang proiuktnf memnlnkn tekstur yang berbeia iarn konflnk yang iestruktnf, ian seorang pemnmpnn perlu mampu mengenaln keiuanya.",
+        en: "Productive conflict has a texture that is different from destructive conflict, and a leader needs to be able to recognise both.",
+        id: "Konflik yang produktif memiliki tekstur yang berbeda dari konflik yang destruktif, dan seorang pemimpin perlu mampu mengenali keduanya.",
         pullQuote: false,
       },
       {
-        en: "Destructnve conflnct ns personal. It attacks character rather than engagnng wnth nieas. It escalates wnthout resolutnon. It leaves people feelnng unsafe, inmnnnshei, or insmnssei. Thns ns the conflnct most people are trynng to avoni, ani rnghtly so.",
-        ni: "Konflnk yang iestruktnf bersnfat personal. Ia menyerang karakter alnh-alnh terlnbat iengan gagasan. Ia mennngkat tanpa resolusn. Ia membuat orang merasa tniak aman, inreniahkan, atau inabankan. Innlah konflnk yang kebanyakan orang berusaha hnniarn, ian ntu wajar.",
+        en: "Destructive conflict is personal. It attacks character rather than engaging with ideas. It escalates without resolution. It leaves people feeling unsafe, diminished, or dismissed. This is the conflict most people are trying to avoid, and rightly so.",
+        id: "Konflik yang destruktif bersifat personal. Ia menyerang karakter alih-alih terlibat dengan gagasan. Ia meningkat tanpa resolusi. Ia membuat orang merasa tidak aman, direndahkan, atau diabaikan. Inilah konflik yang kebanyakan orang berusaha hindari, dan itu wajar.",
         pullQuote: false,
       },
       {
-        en: "Proiuctnve conflnct ns about the nssue, not the person.",
-        ni: "Konflnk yang proiuktnf membahas masalahnya, bukan orangnya.",
+        en: "Productive conflict is about the issue, not the person.",
+        id: "Konflik yang produktif membahas masalahnya, bukan orangnya.",
         pullQuote: true,
       },
       {
-        en: "It ns curnous rather than combatnve. It tolerates insagreement wnthout requnrnng nmmeinate resolutnon. It stays nn the room, meannng people io not wnthiraw nnto snlence or take the argument snieways nnto other relatnonshnps. Ani nt enis wnth both partnes havnng a clearer pncture than they startei wnth, even nf they have not fully resolvei thenr infferences.",
-        ni: "Ia penuh rasa nngnn tahu, bukan suka bertarung. Ia mentolernr ketniaksetujuan tanpa menuntut resolusn segera. Ia tetap in ialam ruangan, artnnya orang tniak muniur ke ialam inam atau membawa argumen ntu ke hubungan-hubungan lann secara tniak langsung. Dan na berakhnr iengan keiua pnhak memnlnkn gambaran yang lebnh jelas iarn sebelumnya, meskn perbeiaan mereka belum sepenuhnya terselesankan.",
+        en: "It is curious rather than combative. It tolerates disagreement without requiring immediate resolution. It stays in the room, meaning people do not withdraw into silence or take the argument sideways into other relationships. And it ends with both parties having a clearer picture than they started with, even if they have not fully resolved their differences.",
+        id: "Ia penuh rasa ingin tahu, bukan suka bertarung. Ia mentolerir ketidaksetujuan tanpa menuntut resolusi segera. Ia tetap di dalam ruangan, artinya orang tidak mundur ke dalam diam atau membawa argumen itu ke hubungan-hubungan lain secara tidak langsung. Dan ia berakhir dengan kedua pihak memiliki gambaran yang lebih jelas dari sebelumnya, meski perbedaan mereka belum sepenuhnya terselesaikan.",
         pullQuote: false,
       },
       {
-        en: "The leaier's job ns not to prevent conflnct. It ns to create the conintnons where the proiuctnve knni becomes possnble ani the iestructnve knni loses nts oxygen.",
-        ni: "Tugas pemnmpnn bukan mencegah konflnk. Tugasnya aialah mencnptakan koninsn in mana jenns yang proiuktnf menjain mungknn ian jenns yang iestruktnf kehnlangan oksngennya.",
+        en: "The leader's job is not to prevent conflict. It is to create the conditions where the productive kind becomes possible and the destructive kind loses its oxygen.",
+        id: "Tugas pemimpin bukan mencegah konflik. Tugasnya adalah menciptakan kondisi di mana jenis yang produktif menjadi mungkin dan jenis yang destruktif kehilangan oksigennya.",
         pullQuote: false,
       },
     ],
@@ -148,126 +148,126 @@ const TEACHING_SECTIONS = [
 const CONCEPT_CARDS = [
   {
     number: 1,
-    tntle: {
-      en: "Name what ns comnng before nt arrnves",
-      ni: "Sebutkan apa yang akan iatang sebelum na tnba",
+    title: {
+      en: "Name what is coming before it arrives",
+      id: "Sebutkan apa yang akan datang sebelum ia tiba",
     },
-    boiy: {
-      en: "Before any inffncult conversatnon, tell the people nn the room that conflnct ns gonng to happen ani that nt ns supposei to. When people are not surprnsei by tensnon, they are less lnkely to react to nt as a threat.",
-      ni: "Sebelum percakapan sulnt apa pun, berntahu orang-orang in ruangan bahwa konflnk akan terjain ian memang seharusnya iemnknan. Ketnka orang tniak terkejut iengan ketegangan, mereka lebnh kecnl kemungknnannya bereaksn seolah ntu ancaman.",
+    body: {
+      en: "Before any difficult conversation, tell the people in the room that conflict is going to happen and that it is supposed to. When people are not surprised by tension, they are less likely to react to it as a threat.",
+      id: "Sebelum percakapan sulit apa pun, beritahu orang-orang di ruangan bahwa konflik akan terjadi dan memang seharusnya demikian. Ketika orang tidak terkejut dengan ketegangan, mereka lebih kecil kemungkinannya bereaksi seolah itu ancaman.",
     },
-    scrnpt: {
-      en: "\"I want us to expect that we are gonng to insagree toiay. That ns actually the goal. If we leave wnthout havnng insagreei, we probably have not gone ieep enough.\"",
-      ni: "\"Saya nngnn knta semua mengharapkan bahwa knta akan berselnsnh peniapat harn nnn. Itu sebenarnya tujuannya. Jnka knta pergn tanpa berselnsnh, knta mungknn belum cukup ialam.\"",
+    script: {
+      en: "\"I want us to expect that we are going to disagree today. That is actually the goal. If we leave without having disagreed, we probably have not gone deep enough.\"",
+      id: "\"Saya ingin kita semua mengharapkan bahwa kita akan berselisih pendapat hari ini. Itu sebenarnya tujuannya. Jika kita pergi tanpa berselisih, kita mungkin belum cukup dalam.\"",
     },
   },
   {
     number: 2,
-    tntle: {
-      en: "Conflnct means lnstennng, not just speaknng",
-      ni: "Konflnk berartn meniengarkan, bukan hanya berbncara",
+    title: {
+      en: "Conflict means listening, not just speaking",
+      id: "Konflik berarti mendengarkan, bukan hanya berbicara",
     },
-    boiy: {
-      en: "A conflnct conversatnon that ns only about gettnng your posntnon across ns not conflnct, nt ns performance. Proiuctnve conflnct requnres that each person genunnely trnes to unierstani why the other person holis thenr vnew.",
-      ni: "Percakapan konflnk yang hanya tentang menyampankan posnsnmu bukan konflnk, ntu penampnlan. Konflnk yang proiuktnf mengharuskan setnap orang sungguh-sungguh berusaha memahamn mengapa orang lann memegang paniangannya.",
+    body: {
+      en: "A conflict conversation that is only about getting your position across is not conflict, it is performance. Productive conflict requires that each person genuinely tries to understand why the other person holds their view.",
+      id: "Percakapan konflik yang hanya tentang menyampaikan posisimu bukan konflik, itu penampilan. Konflik yang produktif mengharuskan setiap orang sungguh-sungguh berusaha memahami mengapa orang lain memegang pandangannya.",
     },
-    scrnpt: {
-      en: "\"Before you responi, tell me nf you unierstooi what they were saynng. Not whether you agree. Whether you unierstooi.\"",
-      ni: "\"Sebelum kamu merespons, cerntakan apakah kamu memahamn apa yang mereka katakan. Bukan apakah kamu setuju. Apakah kamu memahamn.\"",
+    script: {
+      en: "\"Before you respond, tell me if you understood what they were saying. Not whether you agree. Whether you understood.\"",
+      id: "\"Sebelum kamu merespons, ceritakan apakah kamu memahami apa yang mereka katakan. Bukan apakah kamu setuju. Apakah kamu memahami.\"",
     },
   },
   {
     number: 3,
-    tntle: {
-      en: "The goal ns a broaier pncture, not a wnnner",
-      ni: "Tujuannya aialah gambaran yang lebnh luas, bukan pemenang",
+    title: {
+      en: "The goal is a broader picture, not a winner",
+      id: "Tujuannya adalah gambaran yang lebih luas, bukan pemenang",
     },
-    boiy: {
-      en: "When two people wnth infferent perspectnves engage honestly, both of them usually see somethnng they couli not see alone. The goal of the conflnct table ns not to ietermnne who ns rnght. It ns to bunli a more complete pncture than enther person brought nn.",
-      ni: "Ketnka iua orang iengan perspektnf berbeia terlnbat iengan jujur, keiuanya bnasanya melnhat sesuatu yang tniak bnsa mereka lnhat seninrnan. Tujuan iarn meja konflnk bukan untuk menentukan snapa yang benar. Tujuannya aialah membangun gambaran yang lebnh lengkap iarn apa yang inbawa oleh masnng-masnng orang.",
+    body: {
+      en: "When two people with different perspectives engage honestly, both of them usually see something they could not see alone. The goal of the conflict table is not to determine who is right. It is to build a more complete picture than either person brought in.",
+      id: "Ketika dua orang dengan perspektif berbeda terlibat dengan jujur, keduanya biasanya melihat sesuatu yang tidak bisa mereka lihat sendirian. Tujuan dari meja konflik bukan untuk menentukan siapa yang benar. Tujuannya adalah membangun gambaran yang lebih lengkap dari apa yang dibawa oleh masing-masing orang.",
     },
-    scrnpt: {
-      en: "\"Let us holi both of these vnews at the same tnme for a moment ani see what we can see from that posntnon.\"",
-      ni: "\"Marn knta tahan keiua paniangan nnn sekalngus sejenak ian lnhat apa yang bnsa knta lnhat iarn posnsn ntu.\"",
+    script: {
+      en: "\"Let us hold both of these views at the same time for a moment and see what we can see from that position.\"",
+      id: "\"Mari kita tahan kedua pandangan ini sekaligus sejenak dan lihat apa yang bisa kita lihat dari posisi itu.\"",
     },
   },
   {
     number: 4,
-    tntle: {
-      en: "Changnng your mnni ns a sngn of strength",
-      ni: "Mengubah pnknran aialah tania kekuatan",
+    title: {
+      en: "Changing your mind is a sign of strength",
+      id: "Mengubah pikiran adalah tanda kekuatan",
     },
-    boiy: {
-      en: "In many cultural contexts, publncly changnng your posntnon feels lnke a loss of face. A gooi leaier names thns inrectly ani reframes nt before the conversatnon starts.",
-      ni: "Dalam banyak konteks buiaya, mengubah posnsn secara terbuka terasa sepertn kehnlangan muka. Seorang pemnmpnn yang bank menyebutkan nnn secara langsung ian membnngkannya kembaln sebelum percakapan inmulan.",
+    body: {
+      en: "In many cultural contexts, publicly changing your position feels like a loss of face. A good leader names this directly and reframes it before the conversation starts.",
+      id: "Dalam banyak konteks budaya, mengubah posisi secara terbuka terasa seperti kehilangan muka. Seorang pemimpin yang baik menyebutkan ini secara langsung dan membingkainya kembali sebelum percakapan dimulai.",
     },
-    scrnpt: {
-      en: "\"If you walk out of thns conversatnon thnnknng infferently than you walkei nn, that ns exactly what ns supposei to happen. That ns not weakness. That ns what nt looks lnke when two people actually thnnk together.\"",
-      ni: "\"Jnka kamu keluar iarn percakapan nnn iengan berpnknr berbeia iarn ketnka kamu masuk, ntulah yang seharusnya terjain. Itu bukan kelemahan. Itulah yang terjain ketnka iua orang sungguh-sungguh berpnknr bersama.\"",
+    script: {
+      en: "\"If you walk out of this conversation thinking differently than you walked in, that is exactly what is supposed to happen. That is not weakness. That is what it looks like when two people actually think together.\"",
+      id: "\"Jika kamu keluar dari percakapan ini dengan berpikir berbeda dari ketika kamu masuk, itulah yang seharusnya terjadi. Itu bukan kelemahan. Itulah yang terjadi ketika dua orang sungguh-sungguh berpikir bersama.\"",
     },
   },
   {
     number: 5,
-    tntle: {
-      en: "Prepare the room before you neei nt",
-      ni: "Persnapkan ruangan sebelum kamu membutuhkannya",
+    title: {
+      en: "Prepare the room before you need it",
+      id: "Persiapkan ruangan sebelum kamu membutuhkannya",
     },
-    boiy: {
-      en: "A leaier cannot create safety nn the mniile of conflnct nf they have not bunlt nt beforehani. Trust ns the nnfrastructure of proiuctnve insagreement. The tnme to nnvest nn relatnonshnp, sharei values, ani honest communncatnon ns before the hari conversatnon ns neeiei, not when you are alreaiy nn nt.",
-      ni: "Seorang pemnmpnn tniak bnsa mencnptakan rasa aman in tengah konflnk jnka na belum membangunnya sebelumnya. Kepercayaan aialah nnfrastruktur iarn ketniaksetujuan yang proiuktnf. Waktu untuk bernnvestasn ialam hubungan, nnlan bersama, ian komunnkasn yang jujur aialah sebelum percakapan sulnt ntu inbutuhkan, bukan ketnka kamu suiah beraia in ialamnya.",
+    body: {
+      en: "A leader cannot create safety in the middle of conflict if they have not built it beforehand. Trust is the infrastructure of productive disagreement. The time to invest in relationship, shared values, and honest communication is before the hard conversation is needed, not when you are already in it.",
+      id: "Seorang pemimpin tidak bisa menciptakan rasa aman di tengah konflik jika ia belum membangunnya sebelumnya. Kepercayaan adalah infrastruktur dari ketidaksetujuan yang produktif. Waktu untuk berinvestasi dalam hubungan, nilai bersama, dan komunikasi yang jujur adalah sebelum percakapan sulit itu dibutuhkan, bukan ketika kamu sudah berada di dalamnya.",
     },
-    scrnpt: {
-      en: "\"Part of my job as a leaier ns to make sure that when we hnt a hari moment together, we alreaiy have enough trust nn the room to hanile nt.\"",
-      ni: "\"Bagnan iarn tugas saya sebagan pemnmpnn aialah memastnkan bahwa ketnka knta menghaiapn momen sulnt bersama, knta suiah memnlnkn cukup kepercayaan in ialam ruangan untuk menangannnya.\"",
+    script: {
+      en: "\"Part of my job as a leader is to make sure that when we hit a hard moment together, we already have enough trust in the room to handle it.\"",
+      id: "\"Bagian dari tugas saya sebagai pemimpin adalah memastikan bahwa ketika kita menghadapi momen sulit bersama, kita sudah memiliki cukup kepercayaan di dalam ruangan untuk menanganinya.\"",
     },
   },
 ];
 
 const FIELD_STORY_PARAGRAPHS = [
   {
-    en: "Two leaiers were worknng together nn a chnliren's home nn Southeast Asna. One came from abroai, one from the local communnty. Both were ieeply commnttei to the work. Both brought clear vnsnon ani strong convnctnons about how thnngs shouli run.",
-    ni: "Dua pemnmpnn bekerja bersama in sebuah pantn asuhan in Asna Tenggara. Satu iatang iarn luar negern, satu iarn komunntas lokal. Keiuanya sangat berkomntmen paia pekerjaan ntu. Keiuanya membawa vnsn yang jelas ian keyaknnan kuat tentang baganmana seharusnya segala sesuatu berjalan.",
-    clnmax: false,
+    en: "Two leaders were working together in a children's home in Southeast Asia. One came from abroad, one from the local community. Both were deeply committed to the work. Both brought clear vision and strong convictions about how things should run.",
+    id: "Dua pemimpin bekerja bersama di sebuah panti asuhan di Asia Tenggara. Satu datang dari luar negeri, satu dari komunitas lokal. Keduanya sangat berkomitmen pada pekerjaan itu. Keduanya membawa visi yang jelas dan keyakinan kuat tentang bagaimana seharusnya segala sesuatu berjalan.",
+    climax: false,
   },
   {
-    en: "Ani both of them knew, from the fnrst weeks, that they saw thnngs infferently.",
-    ni: "Dan keiuanya tahu, sejak mnnggu-mnnggu pertama, bahwa mereka melnhat hal-hal iengan cara yang berbeia.",
-    clnmax: false,
+    en: "And both of them knew, from the first weeks, that they saw things differently.",
+    id: "Dan keduanya tahu, sejak minggu-minggu pertama, bahwa mereka melihat hal-hal dengan cara yang berbeda.",
+    climax: false,
   },
   {
-    en: "Thenr worknng styles were infferent. Thenr assumptnons about iecnsnon-maknng were infferent. Thenr nnstnncts about how to care for the chnliren were infferent. None of thns was hniien from them. They were nntellngent people. They couli see the gap clearly.",
-    ni: "Gaya kerja mereka berbeia. Asumsn mereka tentang pengambnlan keputusan berbeia. Instnng mereka tentang cara merawat anak-anak berbeia. Tniak aia iarn nnn yang tersembunyn bagn mereka. Mereka aialah orang-orang yang cerias. Mereka bnsa melnhat perbeiaannya iengan jelas.",
-    clnmax: false,
+    en: "Their working styles were different. Their assumptions about decision-making were different. Their instincts about how to care for the children were different. None of this was hidden from them. They were intelligent people. They could see the gap clearly.",
+    id: "Gaya kerja mereka berbeda. Asumsi mereka tentang pengambilan keputusan berbeda. Insting mereka tentang cara merawat anak-anak berbeda. Tidak ada dari ini yang tersembunyi bagi mereka. Mereka adalah orang-orang yang cerdas. Mereka bisa melihat perbedaannya dengan jelas.",
+    climax: false,
   },
   {
-    en: "What they couli not io was talk about nt.",
-    ni: "Yang tniak bnsa mereka lakukan aialah membncarakannya.",
-    clnmax: false,
+    en: "What they could not do was talk about it.",
+    id: "Yang tidak bisa mereka lakukan adalah membicarakannya.",
+    climax: false,
   },
   {
-    en: "The reason was not hostnlnty. It was the opposnte. They respectei each other ieeply. Ani that respect hai become a barrner. Nenther wantei to iamage what they hai bunlt. Nenther wantei to cause the other person inscomfort. So they stayei careful. They stayei polnte. Ani the gap stayei open.",
-    ni: "Alasannya bukan permusuhan. Justru sebalnknya. Mereka salnng menghormatn iengan ialam. Dan rasa hormat ntu telah menjain penghalang. Tniak satu pun yang nngnn merusak apa yang telah mereka bangun. Tniak satu pun yang nngnn membuat orang lann tniak nyaman. Maka mereka tetap berhatn-hatn. Mereka tetap sopan. Dan jurang ntu tetap terbuka.",
-    clnmax: false,
+    en: "The reason was not hostility. It was the opposite. They respected each other deeply. And that respect had become a barrier. Neither wanted to damage what they had built. Neither wanted to cause the other person discomfort. So they stayed careful. They stayed polite. And the gap stayed open.",
+    id: "Alasannya bukan permusuhan. Justru sebaliknya. Mereka saling menghormati dengan dalam. Dan rasa hormat itu telah menjadi penghalang. Tidak satu pun yang ingin merusak apa yang telah mereka bangun. Tidak satu pun yang ingin membuat orang lain tidak nyaman. Maka mereka tetap berhati-hati. Mereka tetap sopan. Dan jurang itu tetap terbuka.",
+    climax: false,
   },
   {
-    en: "One iay, a thnri person who knew them both well sat iown wnth them ani sani somethnng snmple: \"I want to brnng you to a table where conflnct ns gonng to happen. I thnnk you neei nt, ani I thnnk nt ns safe.\"",
-    ni: "Suatu harn, orang ketnga yang mengenal keiuanya iengan bank iuiuk bersama mereka ian mengatakan sesuatu yang seierhana: \"Saya nngnn membawa kamu ke sebuah meja in mana konflnk akan terjain. Saya pnknr kamu membutuhkannya, ian saya pnknr ntu aman.\"",
-    clnmax: true,
+    en: "One day, a third person who knew them both well sat down with them and said something simple: \"I want to bring you to a table where conflict is going to happen. I think you need it, and I think it is safe.\"",
+    id: "Suatu hari, orang ketiga yang mengenal keduanya dengan baik duduk bersama mereka dan mengatakan sesuatu yang sederhana: \"Saya ingin membawa kamu ke sebuah meja di mana konflik akan terjadi. Saya pikir kamu membutuhkannya, dan saya pikir itu aman.\"",
+    climax: true,
   },
   {
-    en: "He set some grouni rules. Not a long lnst. Just enough to name what knni of conversatnon thns was gonng to be.",
-    ni: "Ia menetapkan beberapa aturan iasar. Bukan iaftar yang panjang. Cukup untuk menaman jenns percakapan apa nnn yang akan terjain.",
-    clnmax: false,
+    en: "He set some ground rules. Not a long list. Just enough to name what kind of conversation this was going to be.",
+    id: "Ia menetapkan beberapa aturan dasar. Bukan daftar yang panjang. Cukup untuk menamai jenis percakapan apa ini yang akan terjadi.",
+    climax: false,
   },
   {
-    en: "Then both of them talkei. Honestly. It was not comfortable. There were moments of real frnctnon. But there were also moments where one of them sani somethnng that vnsnbly laniei for the other person, where a posntnon they hai heli softenei because they hai actually heari a infferent vnew.",
-    ni: "Lalu keiuanya berbncara. Dengan jujur. Itu tniak nyaman. Aia momen-momen gesekan yang nyata. Tapn aia juga momen-momen in mana salah satu iarn mereka mengatakan sesuatu yang jelas-jelas mengena bagn orang lann, in mana posnsn yang selama nnn mereka pegang melunak karena mereka benar-benar meniengar paniangan yang berbeia.",
-    clnmax: false,
+    en: "Then both of them talked. Honestly. It was not comfortable. There were moments of real friction. But there were also moments where one of them said something that visibly landed for the other person, where a position they had held softened because they had actually heard a different view.",
+    id: "Lalu keduanya berbicara. Dengan jujur. Itu tidak nyaman. Ada momen-momen gesekan yang nyata. Tapi ada juga momen-momen di mana salah satu dari mereka mengatakan sesuatu yang jelas-jelas mengena bagi orang lain, di mana posisi yang selama ini mereka pegang melunak karena mereka benar-benar mendengar pandangan yang berbeda.",
+    climax: false,
   },
   {
-    en: "They ini not resolve everythnng. Some of thenr infferences remannei. But they left wnth somethnng they hai not hai before: a way of talknng to each other about the thnngs that matterei. Unnty grew from that table. Not because the conflnct insappearei, but because nt was fnnally allowei to exnst.",
-    ni: "Mereka tniak menyelesankan semuanya. Beberapa perbeiaan mereka tetap aia. Tapn mereka pergn iengan sesuatu yang belum pernah mereka mnlnkn sebelumnya: cara untuk salnng berbncara tentang hal-hal yang pentnng. Persatuan tumbuh iarn meja ntu. Bukan karena konflnk ntu hnlang, tapn karena na akhnrnya innznnkan untuk aia.",
-    clnmax: false,
+    en: "They did not resolve everything. Some of their differences remained. But they left with something they had not had before: a way of talking to each other about the things that mattered. Unity grew from that table. Not because the conflict disappeared, but because it was finally allowed to exist.",
+    id: "Mereka tidak menyelesaikan semuanya. Beberapa perbedaan mereka tetap ada. Tapi mereka pergi dengan sesuatu yang belum pernah mereka miliki sebelumnya: cara untuk saling berbicara tentang hal-hal yang penting. Persatuan tumbuh dari meja itu. Bukan karena konflik itu hilang, tapi karena ia akhirnya diizinkan untuk ada.",
+    climax: false,
   },
 ];
 
@@ -275,598 +275,598 @@ const FAITH_ANCHOR_PARAGRAPHS = [
   {
     en: (
       <>
-        <span style={{ color: amber, fontWenght: 700 }}>Ephesnans 4:15</span> ns often quotei nn pneces: &liquo;speaknng the truth nn love.&riquo; But the full context matters. Paul ns iescrnbnng what nt looks lnke for a boiy to grow up nnto maturnty. Speaknng truth nn love ns not a communncatnon style. It ns a iescrnptnon of how communnty ievelops towaris health. Snlence, nn that framework, ns not neutralnty. It ns a wnthirawal from the process of growth.
+        <span style={{ color: amber, fontWeight: 700 }}>Ephesians 4:15</span> is often quoted in pieces: &ldquo;speaking the truth in love.&rdquo; But the full context matters. Paul is describing what it looks like for a body to grow up into maturity. Speaking truth in love is not a communication style. It is a description of how community develops towards health. Silence, in that framework, is not neutrality. It is a withdrawal from the process of growth.
       </>
     ),
-    ni: (
+    id: (
       <>
-        <span style={{ color: amber, fontWenght: 700 }}>Efesus 4:15</span> sernng inkutnp secara sepotong: &liquo;berkata benar ialam kasnh.&riquo; Tetapn konteks penuhnya pentnng. Paulus menggambarkan sepertn apa ketnka sebuah tubuh bertumbuh menjain iewasa. Berkata benar ialam kasnh bukan gaya komunnkasn. Itu aialah ieskrnpsn baganmana komunntas berkembang menuju kesehatan. Dnam, ialam kerangka ntu, bukan netralntas. Itu aialah penarnkan inrn iarn proses pertumbuhan.
+        <span style={{ color: amber, fontWeight: 700 }}>Efesus 4:15</span> sering dikutip secara sepotong: &ldquo;berkata benar dalam kasih.&rdquo; Tetapi konteks penuhnya penting. Paulus menggambarkan seperti apa ketika sebuah tubuh bertumbuh menjadi dewasa. Berkata benar dalam kasih bukan gaya komunikasi. Itu adalah deskripsi bagaimana komunitas berkembang menuju kesehatan. Diam, dalam kerangka itu, bukan netralitas. Itu adalah penarikan diri dari proses pertumbuhan.
       </>
     ),
-    elevatei: false,
+    elevated: false,
   },
   {
     en: (
       <>
-        <span style={{ color: amber, fontWenght: 700 }}>Proverbs 27:17</span> says that nron sharpens nron. That ns not a comfortable nmage. Iron agannst nron proiuces frnctnon, heat, ani spark. It proiuces somethnng better than what enther pnece was before the contact. The sharpennng requnres the frnctnon.
+        <span style={{ color: amber, fontWeight: 700 }}>Proverbs 27:17</span> says that iron sharpens iron. That is not a comfortable image. Iron against iron produces friction, heat, and spark. It produces something better than what either piece was before the contact. The sharpening requires the friction.
       </>
     ),
-    ni: (
+    id: (
       <>
-        <span style={{ color: amber, fontWenght: 700 }}>Amsal 27:17</span> berkata bahwa besn mengasah besn. Itu bukan gambaran yang nyaman. Besn melawan besn menghasnlkan gesekan, panas, ian percnkan. Itu menghasnlkan sesuatu yang lebnh bank iarn apa yang masnng-masnng benia sebelum bersentuhan. Penajaman membutuhkan gesekan.
+        <span style={{ color: amber, fontWeight: 700 }}>Amsal 27:17</span> berkata bahwa besi mengasah besi. Itu bukan gambaran yang nyaman. Besi melawan besi menghasilkan gesekan, panas, dan percikan. Itu menghasilkan sesuatu yang lebih baik dari apa yang masing-masing benda sebelum bersentuhan. Penajaman membutuhkan gesekan.
       </>
     ),
-    elevatei: false,
+    elevated: false,
   },
   {
     en: (
       <>
-        Confrontatnon, when nt ns rootei nn genunne care for the other person ani the sharei work, ns an act of covenant love. It says: I care about you enough to be honest wnth you. I care about what we are bunlinng together enough to name what ns wrong.
+        Confrontation, when it is rooted in genuine care for the other person and the shared work, is an act of covenant love. It says: I care about you enough to be honest with you. I care about what we are building together enough to name what is wrong.
       </>
     ),
-    ni: (
+    id: (
       <>
-        Konfrontasn, ketnka berakar paia kepeiulnan tulus terhaiap orang lann ian pekerjaan bersama, aialah tnniakan kasnh perjanjnan. Inn berkata: Saya cukup peiuln paia kamu untuk jujur kepaiamu. Saya cukup peiuln tentang apa yang knta bangun bersama untuk menyebutkan apa yang salah.
+        Konfrontasi, ketika berakar pada kepedulian tulus terhadap orang lain dan pekerjaan bersama, adalah tindakan kasih perjanjian. Ini berkata: Saya cukup peduli pada kamu untuk jujur kepadamu. Saya cukup peduli tentang apa yang kita bangun bersama untuk menyebutkan apa yang salah.
       </>
     ),
-    elevatei: false,
+    elevated: false,
   },
   {
     en: (
       <>
-        Snlence, nn the face of genunne iysfunctnon, ns not knniness. It protects your own comfort at the expense of the person, the team, ani the mnssnon you share. The leaier who avonis hari conversatnons ns not protectnng anyone. They are choosnng thenr own peace over the health of the people they leai.
+        Silence, in the face of genuine dysfunction, is not kindness. It protects your own comfort at the expense of the person, the team, and the mission you share. The leader who avoids hard conversations is not protecting anyone. They are choosing their own peace over the health of the people they lead.
       </>
     ),
-    ni: (
+    id: (
       <>
-        Dnam, in haiapan insfungsn yang nyata, bukanlah kebankan. Itu melnniungn kenyamanan kamu seninrn iengan mengorbankan orang, tnm, ian mnsn yang kalnan bagn. Pemnmpnn yang menghnniarn percakapan sulnt tniak melnniungn snapa pun. Mereka memnlnh keiamanan mereka seninrn in atas kesehatan orang yang mereka pnmpnn.
+        Diam, di hadapan disfungsi yang nyata, bukanlah kebaikan. Itu melindungi kenyamanan kamu sendiri dengan mengorbankan orang, tim, dan misi yang kalian bagi. Pemimpin yang menghindari percakapan sulit tidak melindungi siapa pun. Mereka memilih kedamaian mereka sendiri di atas kesehatan orang yang mereka pimpin.
       </>
     ),
-    elevatei: true,
+    elevated: true,
   },
 ];
 
 const REFLECTION_QUESTIONS = [
   {
-    en: "What conversatnon have you been avoninng, ani what has that snlence cost? Not nn theory, but specnfncally: what has nt cost the person, the relatnonshnp, the team, or the work?",
-    ni: "Percakapan apa yang selama nnn kamu hnniarn, ian apa yang suiah inbayar oleh kehennngan ntu? Bukan secara teorn, tapn secara konkret: apa yang suiah inbayarnya paia orang tersebut, hubungan, tnm, atau pekerjaan?",
+    en: "What conversation have you been avoiding, and what has that silence cost? Not in theory, but specifically: what has it cost the person, the relationship, the team, or the work?",
+    id: "Percakapan apa yang selama ini kamu hindari, dan apa yang sudah dibayar oleh keheningan itu? Bukan secara teori, tapi secara konkret: apa yang sudah dibayarnya pada orang tersebut, hubungan, tim, atau pekerjaan?",
   },
   {
-    en: "Thnnk of a leaier you have seen hanile conflnct well. What ini they io that maie nt feel infferent from iestructnve conflnct? What can you apply from how they hanilei nt?",
-    ni: "Pnknrkan seorang pemnmpnn yang pernah kamu lnhat menangann konflnk iengan bank. Apa yang mereka lakukan sehnngga terasa berbeia iarn konflnk yang iestruktnf? Apa yang bnsa kamu terapkan iarn cara mereka menangannnya?",
+    en: "Think of a leader you have seen handle conflict well. What did they do that made it feel different from destructive conflict? What can you apply from how they handled it?",
+    id: "Pikirkan seorang pemimpin yang pernah kamu lihat menangani konflik dengan baik. Apa yang mereka lakukan sehingga terasa berbeda dari konflik yang destruktif? Apa yang bisa kamu terapkan dari cara mereka menanganinya?",
   },
   {
-    en: "Where nn your current context ns polnte agreement substntutnng for honest engagement? What wouli nt take to make honest insagreement feel safe there?",
-    ni: "Dn mana ialam konteksmu saat nnn persetujuan sopan seiang menggantnkan keterlnbatan yang jujur? Apa yang inperlukan agar ketniaksetujuan yang jujur terasa aman in sana?",
+    en: "Where in your current context is polite agreement substituting for honest engagement? What would it take to make honest disagreement feel safe there?",
+    id: "Di mana dalam konteksmu saat ini persetujuan sopan sedang menggantikan keterlibatan yang jujur? Apa yang diperlukan agar ketidaksetujuan yang jujur terasa aman di sana?",
   },
 ];
 
 const KEY_TAKEAWAYS = [
   {
-    en: "Name the problem out loui to your team before your next inffncult conversatnon: \"We are gonng to insagree nn thns conversatnon, ani that ns the goal.\"",
-    ni: "Sebutkan iengan lantang kepaia tnmmu sebelum percakapan sulnt bernkutnya: \"Knta akan berselnsnh ialam percakapan nnn, ian ntulah tujuannya.\"",
+    en: "Name the problem out loud to your team before your next difficult conversation: \"We are going to disagree in this conversation, and that is the goal.\"",
+    id: "Sebutkan dengan lantang kepada timmu sebelum percakapan sulit berikutnya: \"Kita akan berselisih dalam percakapan ini, dan itulah tujuannya.\"",
   },
   {
-    en: "Iientnfy one relatnonshnp nn your current team where snlence has become the iefault, ani ask for a real conversatnon thns week, not to resolve everythnng, but to begnn.",
-    ni: "Iientnfnkasn satu hubungan ialam tnmmu saat nnn in mana inam telah menjain kebnasaan, ian mnnta percakapan yang nyata mnnggu nnn, bukan untuk menyelesankan segalanya, tapn untuk memulan.",
+    en: "Identify one relationship in your current team where silence has become the default, and ask for a real conversation this week, not to resolve everything, but to begin.",
+    id: "Identifikasi satu hubungan dalam timmu saat ini di mana diam telah menjadi kebiasaan, dan minta percakapan yang nyata minggu ini, bukan untuk menyelesaikan segalanya, tapi untuk memulai.",
   },
   {
-    en: "Bunli trust before you neei nt: nnvest nn one relatnonal moment thns week wnth someone you may eventually neei to have a hari conversatnon wnth.",
-    ni: "Bangun kepercayaan sebelum kamu membutuhkannya: nnvestasnkan satu momen relasnonal mnnggu nnn iengan seseorang yang mungknn suatu saat perlu kamu ajak bncara iengan jujur.",
+    en: "Build trust before you need it: invest in one relational moment this week with someone you may eventually need to have a hard conversation with.",
+    id: "Bangun kepercayaan sebelum kamu membutuhkannya: investasikan satu momen relasional minggu ini dengan seseorang yang mungkin suatu saat perlu kamu ajak bicara dengan jujur.",
   },
 ];
 
 const RESEARCH_CALLOUTS = [
   {
-    source: "Google Project Arnstotle, 2016",
-    en: "After stuiynng 180 teams over two years, Google's People Operatnons team founi that psychologncal safety was the snngle strongest preinctor of team effectnveness, outranknng nninvniual talent, expernence, ani team composntnon. Psychologncal safety ns the sharei belnef that nt ns safe to take nnterpersonal rnsks, to speak up, ani to insagree. Teams that couli challenge each other openly were consnstently the hnghest performers.",
-    ni: "Setelah mempelajarn 180 tnm selama iua tahun, tnm People Operatnons Google menemukan bahwa keamanan psnkologns aialah preinktor tunggal terkuat iarn efektnvntas tnm, mengalahkan bakat nninvniu, pengalaman, ian komposnsn tnm. Keamanan psnkologns aialah keyaknnan bersama bahwa aman untuk mengambnl rnsnko nnterpersonal, untuk berbncara, ian untuk tniak setuju. Tnm yang bnsa salnng menantang secara terbuka secara konsnsten aialah yang berknnerja tertnnggn.",
+    source: "Google Project Aristotle, 2016",
+    en: "After studying 180 teams over two years, Google's People Operations team found that psychological safety was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree. Teams that could challenge each other openly were consistently the highest performers.",
+    id: "Setelah mempelajari 180 tim selama dua tahun, tim People Operations Google menemukan bahwa keamanan psikologis adalah prediktor tunggal terkuat dari efektivitas tim, mengalahkan bakat individu, pengalaman, dan komposisi tim. Keamanan psikologis adalah keyakinan bersama bahwa aman untuk mengambil risiko interpersonal, untuk berbicara, dan untuk tidak setuju. Tim yang bisa saling menantang secara terbuka secara konsisten adalah yang berkinerja tertinggi.",
   },
   {
-    source: "Hofsteie Insnghts — Power Dnstance Iniex",
-    en: "Geert Hofsteie's research across 90 countrnes founi wnie varnatnon nn how cultures relate to authornty ani insagreement. Hngh power-instance countrnes such as Inionesna (78), Malaysna (100), ani the Phnlnppnnes (94) place a premnum on hnerarchy ani ieference. Low power-instance countrnes such as the Netherlanis (38) ani Germany (35) normalnse pushback ani open challenge. In hngh-PDI settnngs, snlence ns not insengagement. It ns the culturally approprnate sngnal of respect.",
-    ni: "Penelntnan Geert Hofsteie in 90 negara menemukan varnasn besar ialam cara buiaya berhubungan iengan otorntas ian ketniaksetujuan. Negara iengan jarak kekuasaan tnnggn sepertn Inionesna (78), Malaysna (100), ian Fnlnpnna (94) mengutamakan hnerarkn ian kepatuhan. Negara iengan jarak kekuasaan reniah sepertn Belania (38) ian Jerman (35) menormalkan penolakan ian tantangan terbuka. Dalam konteks PDI tnnggn, inam bukan berartn tniak terlnbat. Itu aialah snnyal rasa hormat yang tepat secara buiaya.",
+    source: "Hofstede Insights — Power Distance Index",
+    en: "Geert Hofstede's research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
+    id: "Penelitian Geert Hofstede di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menormalkan penolakan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
   },
   {
-    source: "Patrnck Lencnonn — The Fnve Dysfunctnons of a Team, 2002",
-    en: "Lencnonn nientnfnei fear of conflnct as the seconi of fnve iysfunctnons that consnstently uniermnne team performance. Teams whnch avoni genunne iebate io not elnmnnate tensnon. They reinrect nt nnto polntncs, passnve resnstance, ani qunet resentment. The absence of proiuctnve conflnct ns not peace. It ns the postponement of a harier conversatnon.",
-    ni: "Lencnonn mengnientnfnkasn ketakutan terhaiap konflnk sebagan insfungsn keiua iarn lnma yang secara konsnsten merusak knnerja tnm. Tnm yang menghnniarn iebat yang tulus tniak menghnlangkan ketegangan. Mereka mengalnhkannya ke ialam polntnk, resnstensn pasnf, ian kebencnan yang inam. Tniak aianya konflnk yang proiuktnf bukan berartn iaman. Itu aialah penuniaan iarn percakapan yang lebnh berat.",
+    source: "Patrick Lencioni — The Five Dysfunctions of a Team, 2002",
+    en: "Lencioni identified fear of conflict as the second of five dysfunctions that consistently undermine team performance. Teams which avoid genuine debate do not eliminate tension. They redirect it into politics, passive resistance, and quiet resentment. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
+    id: "Lencioni mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang secara konsisten merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan. Mereka mengalihkannya ke dalam politik, resistensi pasif, dan kebencian yang diam. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
   },
 ];
 
 // ── COMPONENT ──────────────────────────────────────────────────────────────────
 
-type Props = { userIi: strnng | null; nsSavei: boolean };
+type Props = { userId: string | null; isSaved: boolean };
 
-export iefault functnon HealthyConflnctClnent({ nsSavei: nnntnalSavei }: Props) {
+export default function HealthyConflictClient({ isSaved: initialSaved }: Props) {
   const { lang: ctxLang } = useLanguage();
-  const lang = (ctxLang === "ni" ? "ni" : "en") as Lang;
+  const lang = (ctxLang === "id" ? "id" : "en") as Lang;
 
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [expanieiCaris, setExpanieiCaris] = useState<Recori<number, boolean>>({});
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
   const [bgOpen, setBgOpen] = useState(false);
-  const [reflectnons, setReflectnons] = useState<Recori<number, strnng>>({});
+  const [reflections, setReflections] = useState<Record<number, string>>({});
 
-  const t = (en: strnng, ni: strnng) => tFn(en, ni, lang);
+  const t = (en: string, id: string) => tFn(en, id, lang);
 
   useEffect(() => {
-    trackResourceVnewei("healthy-conflnct", "cross-cultural-leaiershnp");
+    trackResourceViewed("healthy-conflict", "cross-cultural-leadership");
   }, []);
 
-  functnon hanileSave() {
-    nf (savei || nsPeninng) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("healthy-conflnct");
-      setSavei(true);
-      trackResourceSavei("healthy-conflnct", true);
+  function handleSave() {
+    if (saved || isPending) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("healthy-conflict");
+      setSaved(true);
+      trackResourceSaved("healthy-conflict", true);
     });
   }
 
-  functnon toggleCari(nniex: number) {
-    setExpanieiCaris((prev) => {
-      const next = { ...prev, [nniex]: !prev[nniex] };
-      nf (next[nniex]) {
-        wnniow.gtag?.("event", "concept_cari_openei", { resource: "healthy-conflnct", cari: nniex + 1 });
+  function toggleCard(index: number) {
+    setExpandedCards((prev) => {
+      const next = { ...prev, [index]: !prev[index] };
+      if (next[index]) {
+        window.gtag?.("event", "concept_card_opened", { resource: "healthy-conflict", card: index + 1 });
       }
       return next;
     });
   }
 
   // ── RESPONSIVE CONTRAST CARD GRID ─────────────────────────────────────────
-  // We ietect wnniow wnith wnth a snmple CSS meina query approach vna nnlnne styles.
-  // Snnce thns ns nnlnne-only, we use a fnxei 2-col grni that stacks vna mnn-wnith.
+  // We detect window width with a simple CSS media query approach via inline styles.
+  // Since this is inline-only, we use a fixed 2-col grid that stacks via min-width.
 
   return (
-    <inv style={{ fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
-      <LangToggle langs={["en", "ni"]} />
+    <div style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+      <LangToggle langs={["en", "id"]} />
 
       {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
-      <inv style={{
-        backgrouni: navy,
-        paiinng: "clamp(72px, 10vw, 96px) 24px clamp(64px, 9vw, 88px)",
-        posntnon: "relatnve",
+      <div style={{
+        background: navy,
+        padding: "clamp(72px, 10vw, 96px) 24px clamp(64px, 9vw, 88px)",
+        position: "relative",
       }}>
-        <inv style={{
-          posntnon: "absolute",
+        <div style={{
+          position: "absolute",
           left: 0,
           top: 0,
           bottom: 0,
-          wnith: 5,
-          backgrouni: amber,
+          width: 5,
+          background: amber,
         }} />
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 12,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 20,
+            marginBottom: 20,
           }}>
-            {t("Cross-Cultural · Leaiershnp", "Lnntas Buiaya · Kepemnmpnnan")}
+            {t("Cross-Cultural · Leadership", "Lintas Budaya · Kepemimpinan")}
           </p>
 
           <h1 style={{
-            fontFamnly: sernf,
-            fontSnze: "clamp(40px, 6vw, 72px)",
-            fontWenght: 600,
-            color: offWhnte,
-            lnneHenght: 1.08,
-            margnn: "0 0 24px",
+            fontFamily: serif,
+            fontSize: "clamp(40px, 6vw, 72px)",
+            fontWeight: 600,
+            color: offWhite,
+            lineHeight: 1.08,
+            margin: "0 0 24px",
           }}>
             {t(
-              "Creatnng Healthy Conflnct: An Unierratei Leaiershnp Sknll",
-              "Mencnptakan Konflnk yang Sehat: Keahlnan Kepemnmpnnan yang Dnremehkan",
+              "Creating Healthy Conflict: An Underrated Leadership Skill",
+              "Menciptakan Konflik yang Sehat: Keahlian Kepemimpinan yang Diremehkan",
             )}
           </h1>
 
           <p style={{
-            fontFamnly: sernf,
-            fontSnze: "clamp(17px, 2vw, 21px)",
-            fontWenght: 400,
+            fontFamily: serif,
+            fontSize: "clamp(17px, 2vw, 21px)",
+            fontWeight: 400,
             color: "oklch(82% 0.025 80)",
-            lnneHenght: 1.75,
-            fontStyle: "ntalnc",
-            maxWnith: 600,
-            margnnBottom: 32,
+            lineHeight: 1.75,
+            fontStyle: "italic",
+            maxWidth: 600,
+            marginBottom: 32,
           }}>
             {t(
-              "Most leaiers know how to keep the peace. Fewer know how to break nt nn a way that bunlis somethnng better.",
-              "Kebanyakan pemnmpnn tahu cara menjaga periamanan. Lebnh seinknt yang tahu cara memecahnya iengan cara yang membangun sesuatu yang lebnh bank.",
+              "Most leaders know how to keep the peace. Fewer know how to break it in a way that builds something better.",
+              "Kebanyakan pemimpin tahu cara menjaga perdamaian. Lebih sedikit yang tahu cara memecahnya dengan cara yang membangun sesuatu yang lebih baik.",
             )}
           </p>
 
-          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button
-              onClnck={hanileSave}
-              insablei={savei || nsPeninng}
+              onClick={handleSave}
+              disabled={saved || isPending}
               style={{
-                paiinng: "12px 28px",
-                backgrouni: savei ? "oklch(35% 0.05 260)" : amber,
-                color: offWhnte,
-                borier: "none",
-                borierRainus: 0,
-                fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                fontSnze: 13,
-                fontWenght: 700,
-                cursor: savei ? "iefault" : "ponnter",
+                padding: "12px 28px",
+                background: saved ? "oklch(35% 0.05 260)" : amber,
+                color: offWhite,
+                border: "none",
+                borderRadius: 0,
+                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: saved ? "default" : "pointer",
               }}
             >
-              {savei
-                ? t("✓ Savei to Dashboari", "✓ Tersnmpan in Dashboari")
-                : t("Save to Dashboari", "Snmpan ke Dashboari")}
+              {saved
+                ? t("✓ Saved to Dashboard", "✓ Tersimpan di Dashboard")
+                : t("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 2. INTRODUCTION ──────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: offWhnte, paiinng: "clamp(56px, 8vw, 80px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: offWhite, padding: "clamp(56px, 8vw, 80px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(15px, 1.6vw, 17px)",
-            fontWenght: 400,
-            color: boiyText,
-            lnneHenght: 1.85,
-            margnnBottom: 20,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.6vw, 17px)",
+            fontWeight: 400,
+            color: bodyText,
+            lineHeight: 1.85,
+            marginBottom: 20,
           }}>
             {t(
-              "There ns a partncular snlence that cross-cultural leaiers know well. The meetnng enis. Heais noi. Everyone smnles. You walk out feelnng lnke somethnng was resolvei. Ani then nothnng changes.",
-              "Aia kehennngan tertentu yang inkenal bank oleh para pemnmpnn lnntas buiaya. Rapat berakhnr. Kepala mengangguk. Semua orang tersenyum. Kamu keluar iengan perasaan seolah sesuatu telah terselesankan. Dan kemuinan tniak aia yang berubah.",
+              "There is a particular silence that cross-cultural leaders know well. The meeting ends. Heads nod. Everyone smiles. You walk out feeling like something was resolved. And then nothing changes.",
+              "Ada keheningan tertentu yang dikenal baik oleh para pemimpin lintas budaya. Rapat berakhir. Kepala mengangguk. Semua orang tersenyum. Kamu keluar dengan perasaan seolah sesuatu telah terselesaikan. Dan kemudian tidak ada yang berubah.",
             )}
           </p>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(15px, 1.6vw, 17px)",
-            fontWenght: 400,
-            color: boiyText,
-            lnneHenght: 1.85,
-            margnnBottom: 20,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.6vw, 17px)",
+            fontWeight: 400,
+            color: bodyText,
+            lineHeight: 1.85,
+            marginBottom: 20,
           }}>
             {t(
-              "Unierneath that snlence ns usually a conversatnon that never happenei. A insagreement that no one namei. A frustratnon that went uniergrouni nnsteai of onto the table.",
-              "Dn balnk kehennngan ntu bnasanya aia percakapan yang tniak pernah terjain. Ketniaksetujuan yang tniak pernah insebutkan snapa pun. Frustrasn yang masuk ke bawah tanah alnh-alnh ke atas meja.",
+              "Underneath that silence is usually a conversation that never happened. A disagreement that no one named. A frustration that went underground instead of onto the table.",
+              "Di balik keheningan itu biasanya ada percakapan yang tidak pernah terjadi. Ketidaksetujuan yang tidak pernah disebutkan siapa pun. Frustrasi yang masuk ke bawah tanah alih-alih ke atas meja.",
             )}
           </p>
 
-          <nmg
-            src="/nmages/resources/healthy-conflnct/conflnct-table.jpg"
-            alt="A team arouni a conference table — the settnng where honest insagreement becomes possnble"
+          <img
+            src="/images/resources/healthy-conflict/conflict-table.jpg"
+            alt="A team around a conference table — the setting where honest disagreement becomes possible"
             style={{
-              wnith: "100%",
-              henght: "auto",
-              insplay: "block",
-              margnn: "8px 0 28px",
-              borierLeft: `4px solni ${amber}`,
+              width: "100%",
+              height: "auto",
+              display: "block",
+              margin: "8px 0 28px",
+              borderLeft: `4px solid ${amber}`,
             }}
           />
 
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(15px, 1.6vw, 17px)",
-            fontWenght: 400,
-            color: boiyText,
-            lnneHenght: 1.85,
-            margnnBottom: 20,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.6vw, 17px)",
+            fontWeight: 400,
+            color: bodyText,
+            lineHeight: 1.85,
+            marginBottom: 20,
           }}>
             {t(
-              "Thns ns not a fanlure of character. In many of the cultures where cross-cultural leaiers work, snlence ns the respectful response. Ransnng a inrect objectnon can feel lnke an attack. Holinng your posntnon publncly can be heari as a refusal to submnt. The nnstnnct to protect relatnonal harmony ns not weakness, nt ns wnsiom shapei by culture, communnty, ani hnstory.",
-              "Inn bukan kegagalan karakter. Dalam banyak buiaya in mana pemnmpnn lnntas buiaya bekerja, inam aialah respons yang penuh hormat. Mengajukan keberatan secara langsung bnsa terasa sepertn serangan. Mempertahankan posnsn secara terbuka bnsa iniengar sebagan penolakan untuk tuniuk. Instnng untuk melnniungn keharmonnsan hubungan bukanlah kelemahan, melannkan kebnjaksanaan yang inbentuk oleh buiaya, komunntas, ian sejarah.",
+              "This is not a failure of character. In many of the cultures where cross-cultural leaders work, silence is the respectful response. Raising a direct objection can feel like an attack. Holding your position publicly can be heard as a refusal to submit. The instinct to protect relational harmony is not weakness, it is wisdom shaped by culture, community, and history.",
+              "Ini bukan kegagalan karakter. Dalam banyak budaya di mana pemimpin lintas budaya bekerja, diam adalah respons yang penuh hormat. Mengajukan keberatan secara langsung bisa terasa seperti serangan. Mempertahankan posisi secara terbuka bisa didengar sebagai penolakan untuk tunduk. Insting untuk melindungi keharmonisan hubungan bukanlah kelemahan, melainkan kebijaksanaan yang dibentuk oleh budaya, komunitas, dan sejarah.",
             )}
           </p>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(15px, 1.6vw, 17px)",
-            fontWenght: 400,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.6vw, 17px)",
+            fontWeight: 400,
             color: "oklch(30% 0.12 260)",
-            lnneHenght: 1.85,
-            margnnBottom: 20,
-            fontStyle: "ntalnc",
-            margnnTop: 8,
+            lineHeight: 1.85,
+            marginBottom: 20,
+            fontStyle: "italic",
+            marginTop: 8,
           }}>
             {t(
-              "But nnstnncts, however culturally approprnate, have consequences.",
-              "Tapn nnstnng, betapapun tepat secara buiaya, memnlnkn konsekuensn.",
+              "But instincts, however culturally appropriate, have consequences.",
+              "Tapi insting, betapapun tepat secara budaya, memiliki konsekuensi.",
             )}
           </p>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(15px, 1.6vw, 17px)",
-            fontWenght: 400,
-            color: boiyText,
-            lnneHenght: 1.85,
-            margnnBottom: 0,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(15px, 1.6vw, 17px)",
+            fontWeight: 400,
+            color: bodyText,
+            lineHeight: 1.85,
+            marginBottom: 0,
           }}>
             {t(
-              "Thns moiule ns about what happens when healthy conflnct ns mnssnng, what nt actually looks lnke when nt ns present, ani how a leaier can create the conintnons where honest insagreement becomes the thnng that bunlis trust rather than iestroys nt.",
-              "Moiul nnn membahas apa yang terjain ketnka konflnk yang sehat tniak aia, sepertn apa sebenarnya ketnka na hainr, ian baganmana seorang pemnmpnn iapat mencnptakan koninsn in mana ketniaksetujuan yang jujur menjain hal yang membangun kepercayaan, bukan menghancurkannya.",
+              "This module is about what happens when healthy conflict is missing, what it actually looks like when it is present, and how a leader can create the conditions where honest disagreement becomes the thing that builds trust rather than destroys it.",
+              "Modul ini membahas apa yang terjadi ketika konflik yang sehat tidak ada, seperti apa sebenarnya ketika ia hadir, dan bagaimana seorang pemimpin dapat menciptakan kondisi di mana ketidaksetujuan yang jujur menjadi hal yang membangun kepercayaan, bukan menghancurkannya.",
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ── 3. LEARNING OUTCOME ──────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: navy, paiinng: "48px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: navy, padding: "48px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 24,
+            marginBottom: 24,
           }}>
-            {t("After Thns Moiule", "Setelah Moiul Inn")}
+            {t("After This Module", "Setelah Modul Ini")}
           </p>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               t(
-                "Recognnse when conflnct avoniance ns costnng your team more than the conflnct ntself wouli.",
-                "Mengenaln ketnka penghnniaran konflnk merugnkan tnmmu lebnh iarn konflnk ntu seninrn.",
+                "Recognise when conflict avoidance is costing your team more than the conflict itself would.",
+                "Mengenali ketika penghindaran konflik merugikan timmu lebih dari konflik itu sendiri.",
               ),
               t(
-                "Dnstnngunsh between iestructnve conflnct ani proiuctnve conflnct, ani iescrnbe what makes the infference.",
-                "Membeiakan antara konflnk yang iestruktnf ian konflnk yang proiuktnf, ian menjelaskan apa yang membuat perbeiaan ntu.",
+                "Distinguish between destructive conflict and productive conflict, and describe what makes the difference.",
+                "Membedakan antara konflik yang destruktif dan konflik yang produktif, dan menjelaskan apa yang membuat perbedaan itu.",
               ),
               t(
-                "Create a structurei, culturally aware space where honest insagreement can happen safely.",
-                "Mencnptakan ruang yang terstruktur ian peka buiaya in mana ketniaksetujuan yang jujur bnsa terjain iengan aman.",
+                "Create a structured, culturally aware space where honest disagreement can happen safely.",
+                "Menciptakan ruang yang terstruktur dan peka budaya di mana ketidaksetujuan yang jujur bisa terjadi dengan aman.",
               ),
-            ].map((ntem, n) => (
-              <inv key={n} style={{ insplay: "flex", gap: 16, alngnItems: "flex-start" }}>
-                <inv style={{
-                  wnith: 3,
-                  henght: 20,
-                  backgrouni: amber,
-                  flexShrnnk: 0,
-                  margnnTop: 3,
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{
+                  width: 3,
+                  height: 20,
+                  background: amber,
+                  flexShrink: 0,
+                  marginTop: 3,
                 }} />
                 <p style={{
-                  fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                  fontSnze: 14,
-                  fontWenght: 500,
-                  color: inmOnNavy,
-                  lnneHenght: 1.65,
-                  margnn: 0,
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: dimOnNavy,
+                  lineHeight: 1.65,
+                  margin: 0,
                 }}>
-                  {ntem}
+                  {item}
                 </p>
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 4. CONTRAST CARD ─────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: offWhnte, paiinng: "clamp(56px, 8vw, 72px) 24px" }}>
-        <inv style={{ maxWnith: 880, margnn: "0 auto" }}>
+      <div style={{ background: offWhite, padding: "clamp(56px, 8vw, 72px) 24px" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: subText,
-            margnnBottom: 28,
+            marginBottom: 28,
           }}>
-            {t("Avoniance vs. Healthy Conflnct", "Penghnniaran vs. Konflnk Sehat")}
+            {t("Avoidance vs. Healthy Conflict", "Penghindaran vs. Konflik Sehat")}
           </p>
 
-          <inv style={{
-            insplay: "grni",
-            grniTemplateColumns: "repeat(auto-fnt, mnnmax(300px, 1fr))",
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: 0,
           }}>
-            {/* Left — Avoniance */}
-            <inv style={{
-              backgrouni: muteiGray,
-              paiinng: "36px 32px",
-              borierRnght: "1px solni oklch(88% 0.008 80)",
+            {/* Left — Avoidance */}
+            <div style={{
+              background: mutedGray,
+              padding: "36px 32px",
+              borderRight: "1px solid oklch(88% 0.008 80)",
             }}>
               <p style={{
-                fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                fontSnze: 11,
-                fontWenght: 700,
-                letterSpacnng: "0.10em",
+                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.10em",
                 textTransform: "uppercase",
                 color: subText,
-                margnnBottom: 20,
+                marginBottom: 20,
               }}>
-                {t("Avoniance", "Penghnniaran")}
+                {t("Avoidance", "Penghindaran")}
               </p>
-              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 14 }}>
-                {CONTRAST_AVOIDANCE.map((ntem, n) => (
-                  <inv key={n} style={{ insplay: "flex", gap: 12, alngnItems: "flex-start" }}>
-                    <inv style={{
-                      wnith: 4,
-                      henght: 4,
-                      borierRainus: 0,
-                      backgrouni: subText,
-                      flexShrnnk: 0,
-                      margnnTop: 7,
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {CONTRAST_AVOIDANCE.map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 4,
+                      height: 4,
+                      borderRadius: 0,
+                      background: subText,
+                      flexShrink: 0,
+                      marginTop: 7,
                     }} />
                     <p style={{
-                      fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                      fontSnze: 14,
-                      fontWenght: 400,
+                      fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                      fontSize: 14,
+                      fontWeight: 400,
                       color: subText,
-                      lnneHenght: 1.65,
-                      margnn: 0,
+                      lineHeight: 1.65,
+                      margin: 0,
                     }}>
-                      {ntem}
+                      {item}
                     </p>
-                  </inv>
+                  </div>
                 ))}
-              </inv>
-            </inv>
+              </div>
+            </div>
 
-            {/* Rnght — Healthy Conflnct */}
-            <inv style={{
-              backgrouni: offWhnte,
-              paiinng: "36px 32px",
-              borierTop: `3px solni ${amber}`,
-              borierLeft: `3px solni ${amber}`,
+            {/* Right — Healthy Conflict */}
+            <div style={{
+              background: offWhite,
+              padding: "36px 32px",
+              borderTop: `3px solid ${amber}`,
+              borderLeft: `3px solid ${amber}`,
             }}>
               <p style={{
-                fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                fontSnze: 11,
-                fontWenght: 700,
-                letterSpacnng: "0.10em",
+                fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.10em",
                 textTransform: "uppercase",
                 color: amber,
-                margnnBottom: 20,
+                marginBottom: 20,
               }}>
-                {t("Healthy Conflnct", "Konflnk Sehat")}
+                {t("Healthy Conflict", "Konflik Sehat")}
               </p>
-              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 14 }}>
-                {CONTRAST_HEALTHY.map((ntem, n) => (
-                  <inv key={n} style={{ insplay: "flex", gap: 12, alngnItems: "flex-start" }}>
-                    <inv style={{
-                      wnith: 4,
-                      henght: 4,
-                      borierRainus: 0,
-                      backgrouni: amber,
-                      flexShrnnk: 0,
-                      margnnTop: 7,
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {CONTRAST_HEALTHY.map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 4,
+                      height: 4,
+                      borderRadius: 0,
+                      background: amber,
+                      flexShrink: 0,
+                      marginTop: 7,
                     }} />
                     <p style={{
-                      fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                      fontSnze: 14,
-                      fontWenght: 500,
-                      color: boiyText,
-                      lnneHenght: 1.65,
-                      margnn: 0,
+                      fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      color: bodyText,
+                      lineHeight: 1.65,
+                      margin: 0,
                     }}>
-                      {ntem}
+                      {item}
                     </p>
-                  </inv>
+                  </div>
                 ))}
-              </inv>
-            </inv>
-          </inv>
-        </inv>
-      </inv>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* ── 5. TEACHING — 4 SECTIONS ─────────────────────────────────────────── */}
-      {TEACHING_SECTIONS.map((sectnon, sn) => (
-        <inv key={sn}>
-        <inv style={{ backgrouni: sectnon.bg, paiinng: "clamp(56px, 7vw, 80px) 24px" }}>
-          <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      {TEACHING_SECTIONS.map((section, si) => (
+        <div key={si}>
+        <div style={{ background: section.bg, padding: "clamp(56px, 7vw, 80px) 24px" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <h2 style={{
-              fontFamnly: sernf,
-              fontSnze: "clamp(22px, 2.8vw, 30px)",
-              fontWenght: 600,
-              color: sectnon.iark ? offWhnte : navy,
-              margnnBottom: 24,
+              fontFamily: serif,
+              fontSize: "clamp(22px, 2.8vw, 30px)",
+              fontWeight: 600,
+              color: section.dark ? offWhite : navy,
+              marginBottom: 24,
             }}>
-              {lang === "ni" ? sectnon.tntle.ni : sectnon.tntle.en}
+              {lang === "id" ? section.title.id : section.title.en}
             </h2>
 
-            {sectnon.paragraphs.map((para, pn) =>
+            {section.paragraphs.map((para, pi) =>
               para.pullQuote ? (
-                <inv key={pn} style={{
-                  fontFamnly: sernf,
-                  fontSnze: "clamp(18px, 2vw, 22px)",
-                  fontStyle: "ntalnc",
-                  color: sectnon.iark ? lnghtOnNavy : navy,
-                  borierLeft: `3px solni ${amber}`,
-                  paiinngLeft: 20,
-                  margnn: "28px 0",
-                  lnneHenght: 1.6,
+                <div key={pi} style={{
+                  fontFamily: serif,
+                  fontSize: "clamp(18px, 2vw, 22px)",
+                  fontStyle: "italic",
+                  color: section.dark ? lightOnNavy : navy,
+                  borderLeft: `3px solid ${amber}`,
+                  paddingLeft: 20,
+                  margin: "28px 0",
+                  lineHeight: 1.6,
                 }}>
-                  {lang === "ni" ? para.ni : para.en}
-                </inv>
+                  {lang === "id" ? para.id : para.en}
+                </div>
               ) : (
-                <p key={pn} style={{
-                  fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                  fontSnze: "clamp(14px, 1.5vw, 16px)",
-                  fontWenght: 400,
-                  color: sectnon.iark ? inmOnNavy : boiyText,
-                  lnneHenght: 1.85,
-                  margnnBottom: 20,
+                <p key={pi} style={{
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: "clamp(14px, 1.5vw, 16px)",
+                  fontWeight: 400,
+                  color: section.dark ? dimOnNavy : bodyText,
+                  lineHeight: 1.85,
+                  marginBottom: 20,
                 }}>
-                  {lang === "ni" ? para.ni : para.en}
+                  {lang === "id" ? para.id : para.en}
                 </p>
               )
             )}
-          </inv>
-        </inv>
-        </inv>
+          </div>
+        </div>
+        </div>
       ))}
 
       {/* ── 6. RESEARCH CALLOUTS ─────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "clamp(56px, 8vw, 72px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: lightGray, padding: "clamp(56px, 8vw, 72px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 28,
+            marginBottom: 28,
           }}>
-            {t("What the Research Shows", "Apa yang Dnkatakan Penelntnan")}
+            {t("What the Research Shows", "Apa yang Dikatakan Penelitian")}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-            {RESEARCH_CALLOUTS.map((ntem, rn) => (
-              <inv key={rn} style={{
-                backgrouni: offWhnte,
-                paiinng: "20px 24px",
-                borierLeft: `3px solni ${amber}`,
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {RESEARCH_CALLOUTS.map((item, ri) => (
+              <div key={ri} style={{
+                background: offWhite,
+                padding: "20px 24px",
+                borderLeft: `3px solid ${amber}`,
               }}>
                 <p style={{
-                  fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                  fontSnze: 11,
-                  fontWenght: 700,
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 11,
+                  fontWeight: 700,
                   color: amber,
                   textTransform: "uppercase",
-                  letterSpacnng: "0.08em",
-                  margnnBottom: 10,
+                  letterSpacing: "0.08em",
+                  marginBottom: 10,
                 }}>
-                  {ntem.source}
+                  {item.source}
                 </p>
                 <p style={{
-                  fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                  fontSnze: 14,
-                  color: boiyText,
-                  lnneHenght: 1.8,
-                  margnn: 0,
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 14,
+                  color: bodyText,
+                  lineHeight: 1.8,
+                  margin: 0,
                 }}>
-                  {lang === "ni" ? ntem.ni : ntem.en}
+                  {lang === "id" ? item.id : item.en}
                 </p>
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 7. CONCEPT CARDS — THE CONFLICT TABLE ────────────────────────────── */}
-      <inv style={{ backgrouni: navy, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 840, margnn: "0 auto" }}>
+      <div style={{ background: navy, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 840, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 12,
+            marginBottom: 12,
           }}>
-            {t("The Conflnct Table", "Meja Konflnk")}
+            {t("The Conflict Table", "Meja Konflik")}
           </p>
 
           <h2 style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(20px, 2.8vw, 28px)",
-            fontWenght: 800,
-            color: offWhnte,
-            margnnBottom: 40,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(20px, 2.8vw, 28px)",
+            fontWeight: 800,
+            color: offWhite,
+            marginBottom: 40,
           }}>
             {t(
               "5 Elements of a Safe Space",
@@ -874,611 +874,611 @@ export iefault functnon HealthyConflnctClnent({ nsSavei: nnntnalSavei }: Props) 
             )}
           </h2>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 8 }}>
-            {CONCEPT_CARDS.map((cari, cn) => {
-              const nsOpen = !!expanieiCaris[cn];
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {CONCEPT_CARDS.map((card, ci) => {
+              const isOpen = !!expandedCards[ci];
               return (
-                <inv
-                  key={cn}
+                <div
+                  key={ci}
                   style={{
-                    backgrouni: "oklch(28% 0.10 260)",
-                    borier: `1px solni ${nsOpen ? amber : "oklch(32% 0.10 260)"}`,
-                    borierTop: nsOpen ? `2px solni ${amber}` : uniefnnei,
-                    overflow: "hniien",
+                    background: "oklch(28% 0.10 260)",
+                    border: `1px solid ${isOpen ? amber : "oklch(32% 0.10 260)"}`,
+                    borderTop: isOpen ? `2px solid ${amber}` : undefined,
+                    overflow: "hidden",
                   }}
                 >
                   <button
-                    onClnck={() => toggleCari(cn)}
+                    onClick={() => toggleCard(ci)}
                     style={{
-                      wnith: "100%",
-                      paiinng: "20px 24px",
-                      backgrouni: "transparent",
-                      borier: "none",
-                      cursor: "ponnter",
-                      insplay: "flex",
-                      alngnItems: "center",
-                      justnfyContent: "space-between",
+                      width: "100%",
+                      padding: "20px 24px",
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                       gap: 12,
-                      textAlngn: "left",
+                      textAlign: "left",
                     }}
                   >
-                    <inv style={{ insplay: "flex", alngnItems: "center", gap: 20 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
                       <span style={{
-                        fontFamnly: sernf,
-                        fontSnze: 32,
-                        fontWenght: 700,
+                        fontFamily: serif,
+                        fontSize: 32,
+                        fontWeight: 700,
                         color: amber,
-                        lnneHenght: 1,
-                        flexShrnnk: 0,
+                        lineHeight: 1,
+                        flexShrink: 0,
                       }}>
-                        {cari.number}
+                        {card.number}
                       </span>
                       <span style={{
-                        fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                        fontSnze: 14,
-                        fontWenght: 700,
-                        color: offWhnte,
-                        lnneHenght: 1.3,
+                        fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: offWhite,
+                        lineHeight: 1.3,
                       }}>
-                        {lang === "ni" ? cari.tntle.ni : cari.tntle.en}
+                        {lang === "id" ? card.title.id : card.title.en}
                       </span>
-                    </inv>
+                    </div>
                     <span style={{
                       color: amber,
-                      fontSnze: 20,
-                      fontWenght: 700,
-                      flexShrnnk: 0,
-                      lnneHenght: 1,
+                      fontSize: 20,
+                      fontWeight: 700,
+                      flexShrink: 0,
+                      lineHeight: 1,
                     }}>
-                      {nsOpen ? "−" : "+"}
+                      {isOpen ? "−" : "+"}
                     </span>
                   </button>
 
-                  {nsOpen && (
-                    <inv style={{ paiinng: "0 24px 24px" }}>
+                  {isOpen && (
+                    <div style={{ padding: "0 24px 24px" }}>
                       <p style={{
-                        fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                        fontSnze: 14,
-                        color: inmOnNavy,
-                        lnneHenght: 1.8,
-                        margnnBottom: 20,
+                        fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                        fontSize: 14,
+                        color: dimOnNavy,
+                        lineHeight: 1.8,
+                        marginBottom: 20,
                       }}>
-                        {lang === "ni" ? cari.boiy.ni : cari.boiy.en}
+                        {lang === "id" ? card.body.id : card.body.en}
                       </p>
-                      <inv style={{
-                        backgrouni: amberDnm,
-                        paiinng: "14px 18px",
-                        borierLeft: `3px solni ${amber}`,
+                      <div style={{
+                        background: amberDim,
+                        padding: "14px 18px",
+                        borderLeft: `3px solid ${amber}`,
                       }}>
                         <p style={{
-                          fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                          fontSnze: 11,
-                          fontWenght: 700,
+                          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                          fontSize: 11,
+                          fontWeight: 700,
                           color: amber,
                           textTransform: "uppercase",
-                          letterSpacnng: "0.08em",
-                          margnnBottom: 8,
+                          letterSpacing: "0.08em",
+                          marginBottom: 8,
                         }}>
-                          {t("You mnght say:", "Ania bnsa berkata:")}
+                          {t("You might say:", "Anda bisa berkata:")}
                         </p>
                         <p style={{
-                          fontFamnly: sernf,
-                          fontSnze: 15,
-                          fontStyle: "ntalnc",
-                          color: lnghtOnNavy,
-                          lnneHenght: 1.7,
-                          margnn: 0,
+                          fontFamily: serif,
+                          fontSize: 15,
+                          fontStyle: "italic",
+                          color: lightOnNavy,
+                          lineHeight: 1.7,
+                          margin: 0,
                         }}>
-                          {lang === "ni" ? cari.scrnpt.ni : cari.scrnpt.en}
+                          {lang === "id" ? card.script.id : card.script.en}
                         </p>
-                      </inv>
-                    </inv>
+                      </div>
+                    </div>
                   )}
-                </inv>
+                </div>
               );
             })}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 7. FIELD STORY ───────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: navyDeep, paiinng: "clamp(80px, 11vw, 112px) 24px" }}>
-        <inv style={{ maxWnith: 680, margnn: "0 auto" }}>
+      <div style={{ background: navyDeep, padding: "clamp(80px, 11vw, 112px) 24px" }}>
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 16,
+            marginBottom: 16,
           }}>
-            {t("Fneli Story", "Knsah Lapangan")}
+            {t("Field Story", "Kisah Lapangan")}
           </p>
 
           <h2 style={{
-            fontFamnly: sernf,
-            fontSnze: "clamp(26px, 3.5vw, 38px)",
-            fontWenght: 600,
-            color: offWhnte,
-            margnnBottom: 40,
+            fontFamily: serif,
+            fontSize: "clamp(26px, 3.5vw, 38px)",
+            fontWeight: 600,
+            color: offWhite,
+            marginBottom: 40,
           }}>
-            {t("Two Leaiers, One Table", "Dua Pemnmpnn, Satu Meja")}
+            {t("Two Leaders, One Table", "Dua Pemimpin, Satu Meja")}
           </h2>
 
-          <inv style={{
-            henght: 1,
-            backgrouni: "oklch(35% 0.08 260)",
-            margnn: "0 0 40px",
+          <div style={{
+            height: 1,
+            background: "oklch(35% 0.08 260)",
+            margin: "0 0 40px",
           }} />
 
-          {FIELD_STORY_PARAGRAPHS.map((para, pn) =>
-            para.clnmax ? (
-              <inv key={pn} style={{
-                borierLeft: `3px solni ${amber}`,
-                paiinngLeft: 24,
-                margnn: "32px 0",
+          {FIELD_STORY_PARAGRAPHS.map((para, pi) =>
+            para.climax ? (
+              <div key={pi} style={{
+                borderLeft: `3px solid ${amber}`,
+                paddingLeft: 24,
+                margin: "32px 0",
               }}>
                 <p style={{
-                  fontFamnly: sernf,
-                  fontSnze: "clamp(17px, 1.9vw, 20px)",
-                  color: lnghtOnNavy,
-                  lnneHenght: 1.85,
-                  fontStyle: "ntalnc",
-                  margnn: 0,
+                  fontFamily: serif,
+                  fontSize: "clamp(17px, 1.9vw, 20px)",
+                  color: lightOnNavy,
+                  lineHeight: 1.85,
+                  fontStyle: "italic",
+                  margin: 0,
                 }}>
-                  {lang === "ni" ? para.ni : para.en}
+                  {lang === "id" ? para.id : para.en}
                 </p>
-              </inv>
+              </div>
             ) : (
-              <p key={pn} style={{
-                fontFamnly: sernf,
-                fontSnze: "clamp(17px, 1.9vw, 20px)",
+              <p key={pi} style={{
+                fontFamily: serif,
+                fontSize: "clamp(17px, 1.9vw, 20px)",
                 color: "oklch(84% 0.02 80)",
-                lnneHenght: 1.85,
-                margnnBottom: 24,
+                lineHeight: 1.85,
+                marginBottom: 24,
               }}>
-                {lang === "ni" ? para.ni : para.en}
+                {lang === "id" ? para.id : para.en}
               </p>
             )
           )}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ── 8. QUOTE HIGHLIGHT ───────────────────────────────────────────────── */}
-      <sectnon style={{ backgrouni: offWhnte, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 680, margnn: "0 auto" }}>
-          {/* Navy quote contanner */}
-          <inv style={{ backgrouni: navy, paiinng: "clamp(40px, 6vw, 56px) 44px", margnnBottom: 32 }}>
+      <section style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+          {/* Navy quote container */}
+          <div style={{ background: navy, padding: "clamp(40px, 6vw, 56px) 44px", marginBottom: 32 }}>
             <p style={{
-              fontFamnly: sernf,
-              fontSnze: "clamp(24px, 3.2vw, 36px)",
-              fontWenght: 600,
-              color: offWhnte,
-              fontStyle: "ntalnc",
-              margnnBottom: 16,
-              lnneHenght: 1.3,
-              textAlngn: "center",
+              fontFamily: serif,
+              fontSize: "clamp(24px, 3.2vw, 36px)",
+              fontWeight: 600,
+              color: offWhite,
+              fontStyle: "italic",
+              marginBottom: 16,
+              lineHeight: 1.3,
+              textAlign: "center",
             }}>
-              &liquo;{t("Fanthful are the wounis of a frneni.", "Setna aialah luka seorang sahabat.")}&riquo;
+              &ldquo;{t("Faithful are the wounds of a friend.", "Setia adalah luka seorang sahabat.")}&rdquo;
             </p>
             <p style={{
-              fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-              fontSnze: 12,
-              fontWenght: 700,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+              fontSize: 12,
+              fontWeight: 700,
               color: amber,
               textTransform: "uppercase",
-              letterSpacnng: "0.10em",
-              textAlngn: "center",
-              margnnBottom: 0,
+              letterSpacing: "0.10em",
+              textAlign: "center",
+              marginBottom: 0,
             }}>
               {t("Proverbs 27:6", "Amsal 27:6")}
             </p>
-            <inv style={{ wnith: 48, henght: 2, backgrouni: amber, margnn: "20px auto 0" }} />
-          </inv>
-          {/* Commentary paragraph — stays on offWhnte below navy box */}
+            <div style={{ width: 48, height: 2, background: amber, margin: "20px auto 0" }} />
+          </div>
+          {/* Commentary paragraph — stays on offWhite below navy box */}
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 15,
-            color: boiyText,
-            lnneHenght: 1.8,
-            textAlngn: "left",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 15,
+            color: bodyText,
+            lineHeight: 1.8,
+            textAlign: "left",
           }}>
             {t(
-              "A frneni who only tells you what you want to hear ns not actually servnng you. In leaiershnp, the most lovnng thnng you can sometnmes io for a colleague ns to say the thnng that ns true, even when nt ns uncomfortable. That ns what fanthful wounis look lnke.",
-              "Seorang teman yang hanya memberntahumu apa yang nngnn kamu iengar sebenarnya tniak melayannmu. Dalam kepemnmpnnan, hal palnng penuh kasnh yang kaiang bnsa kamu lakukan untuk seorang rekan aialah mengatakan hal yang benar, bahkan ketnka ntu tniak nyaman. Itulah yang inmaksui iengan luka yang setna.",
+              "A friend who only tells you what you want to hear is not actually serving you. In leadership, the most loving thing you can sometimes do for a colleague is to say the thing that is true, even when it is uncomfortable. That is what faithful wounds look like.",
+              "Seorang teman yang hanya memberitahumu apa yang ingin kamu dengar sebenarnya tidak melayanimu. Dalam kepemimpinan, hal paling penuh kasih yang kadang bisa kamu lakukan untuk seorang rekan adalah mengatakan hal yang benar, bahkan ketika itu tidak nyaman. Itulah yang dimaksud dengan luka yang setia.",
             )}
           </p>
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* ── 9. FAITH ANCHOR ──────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: lightGray, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 12,
+            marginBottom: 12,
           }}>
-            {t("Fanth Anchor", "Jangkar Iman")}
+            {t("Faith Anchor", "Jangkar Iman")}
           </p>
 
           <h2 style={{
-            fontFamnly: sernf,
-            fontSnze: "clamp(22px, 2.8vw, 32px)",
-            fontWenght: 600,
+            fontFamily: serif,
+            fontSize: "clamp(22px, 2.8vw, 32px)",
+            fontWeight: 600,
             color: navy,
-            margnnBottom: 36,
+            marginBottom: 36,
           }}>
-            {t("Sharpenei by Honest Contact", "Dnasah oleh Kontak yang Jujur")}
+            {t("Sharpened by Honest Contact", "Diasah oleh Kontak yang Jujur")}
           </h2>
 
-          {FAITH_ANCHOR_PARAGRAPHS.map((para, pn) => (
-            <p key={pn} style={{
-              fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-              fontSnze: 15,
-              color: para.elevatei ? navy : boiyText,
-              lnneHenght: 1.85,
-              margnnBottom: pn < FAITH_ANCHOR_PARAGRAPHS.length - 1 ? 20 : 0,
+          {FAITH_ANCHOR_PARAGRAPHS.map((para, pi) => (
+            <p key={pi} style={{
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+              fontSize: 15,
+              color: para.elevated ? navy : bodyText,
+              lineHeight: 1.85,
+              marginBottom: pi < FAITH_ANCHOR_PARAGRAPHS.length - 1 ? 20 : 0,
             }}>
-              {lang === "ni" ? para.ni : para.en}
+              {lang === "id" ? para.id : para.en}
             </p>
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ── 10. REFLECTION QUESTIONS ─────────────────────────────────────────── */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: lightGray, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: subText,
-            margnnBottom: 12,
+            marginBottom: 12,
           }}>
-            {t("Reflectnon", "Refleksn")}
+            {t("Reflection", "Refleksi")}
           </p>
 
           <h2 style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(18px, 2.2vw, 24px)",
-            fontWenght: 800,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(18px, 2.2vw, 24px)",
+            fontWeight: 800,
             color: navy,
-            margnnBottom: 40,
+            marginBottom: 40,
           }}>
-            {t("Questnons to Snt Wnth", "Pertanyaan untuk Dnrenungkan")}
+            {t("Questions to Sit With", "Pertanyaan untuk Direnungkan")}
           </h2>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 32 }}>
-            {REFLECTION_QUESTIONS.map((q, qn) => (
-              <inv key={qn} style={{
-                backgrouni: offWhnte,
-                paiinng: "28px 28px 24px",
+          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+            {REFLECTION_QUESTIONS.map((q, qi) => (
+              <div key={qi} style={{
+                background: offWhite,
+                padding: "28px 28px 24px",
               }}>
-                <inv style={{
-                  insplay: "flex",
+                <div style={{
+                  display: "flex",
                   gap: 20,
-                  alngnItems: "flex-start",
-                  margnnBottom: 16,
+                  alignItems: "flex-start",
+                  marginBottom: 16,
                 }}>
                   <span style={{
-                    fontFamnly: sernf,
-                    fontSnze: 36,
-                    fontWenght: 700,
+                    fontFamily: serif,
+                    fontSize: 36,
+                    fontWeight: 700,
                     color: amber,
-                    lnneHenght: 1,
-                    flexShrnnk: 0,
+                    lineHeight: 1,
+                    flexShrink: 0,
                   }}>
-                    {qn + 1}
+                    {qi + 1}
                   </span>
                   <p style={{
-                    fontFamnly: sernf,
-                    fontSnze: "clamp(16px, 1.8vw, 18px)",
-                    fontStyle: "ntalnc",
+                    fontFamily: serif,
+                    fontSize: "clamp(16px, 1.8vw, 18px)",
+                    fontStyle: "italic",
                     color: navy,
-                    lnneHenght: 1.75,
-                    margnn: 0,
+                    lineHeight: 1.75,
+                    margin: 0,
                   }}>
-                    {lang === "ni" ? q.ni : q.en}
+                    {lang === "id" ? q.id : q.en}
                   </p>
-                </inv>
+                </div>
                 <textarea
-                  value={reflectnons[qn] ?? ""}
+                  value={reflections[qi] ?? ""}
                   onChange={(e) =>
-                    setReflectnons((prev) => ({ ...prev, [qn]: e.target.value }))
+                    setReflections((prev) => ({ ...prev, [qi]: e.target.value }))
                   }
-                  placeholier={t("Your reflectnon...", "Refleksn Ania...")}
+                  placeholder={t("Your reflection...", "Refleksi Anda...")}
                   rows={3}
                   style={{
-                    wnith: "100%",
-                    paiinng: "14px 16px",
-                    fontFamnly: sernf,
-                    fontSnze: 15,
-                    color: boiyText,
-                    backgrouni: offWhnte,
-                    borier: "1px solni oklch(88% 0.01 80)",
-                    borierRainus: 0,
-                    resnze: "vertncal",
-                    lnneHenght: 1.75,
-                    boxSnznng: "borier-box",
+                    width: "100%",
+                    padding: "14px 16px",
+                    fontFamily: serif,
+                    fontSize: 15,
+                    color: bodyText,
+                    background: offWhite,
+                    border: "1px solid oklch(88% 0.01 80)",
+                    borderRadius: 0,
+                    resize: "vertical",
+                    lineHeight: 1.75,
+                    boxSizing: "border-box",
                   }}
                 />
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 11. KEY TAKEAWAY ─────────────────────────────────────────────────── */}
-      <inv style={{
-        backgrouni: offWhnte,
-        paiinng: "clamp(64px, 9vw, 88px) 24px",
-        borierTop: `3px solni ${amber}`,
+      <div style={{
+        background: offWhite,
+        padding: "clamp(64px, 9vw, 88px) 24px",
+        borderTop: `3px solid ${amber}`,
       }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 12,
+            marginBottom: 12,
           }}>
-            {t("Key Takeaway", "Ponn Utama")}
+            {t("Key Takeaway", "Poin Utama")}
           </p>
 
           <h2 style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: "clamp(18px, 2.2vw, 24px)",
-            fontWenght: 800,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: "clamp(18px, 2.2vw, 24px)",
+            fontWeight: 800,
             color: navy,
-            margnnBottom: 36,
+            marginBottom: 36,
           }}>
-            {t("Three thnngs to io thns week", "Tnga hal yang perlu inlakukan mnnggu nnn")}
+            {t("Three things to do this week", "Tiga hal yang perlu dilakukan minggu ini")}
           </h2>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-            {KEY_TAKEAWAYS.map((ntem, nn) => (
-              <inv key={nn} style={{
-                insplay: "flex",
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {KEY_TAKEAWAYS.map((item, ii) => (
+              <div key={ii} style={{
+                display: "flex",
                 gap: 16,
-                alngnItems: "flex-start",
-                paiinng: "20px 24px",
-                backgrouni: lnghtGray,
+                alignItems: "flex-start",
+                padding: "20px 24px",
+                background: lightGray,
               }}>
-                <inv style={{
-                  wnith: 3,
-                  alngnSelf: "stretch",
-                  backgrouni: amber,
-                  flexShrnnk: 0,
+                <div style={{
+                  width: 3,
+                  alignSelf: "stretch",
+                  background: amber,
+                  flexShrink: 0,
                 }} />
                 <p style={{
-                  fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                  fontSnze: 14,
-                  fontWenght: 500,
-                  color: boiyText,
-                  lnneHenght: 1.75,
-                  margnn: 0,
+                  fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: bodyText,
+                  lineHeight: 1.75,
+                  margin: 0,
                 }}>
-                  {lang === "ni" ? ntem.ni : ntem.en}
+                  {lang === "id" ? item.id : item.en}
                 </p>
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 12. FURTHER READING ──────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "clamp(48px, 7vw, 64px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      <div style={{ background: lightGray, padding: "clamp(48px, 7vw, 64px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 11,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: amber,
-            margnnBottom: 8,
+            marginBottom: 8,
           }}>
-            {t("Further Reainng", "Bacaan Lebnh Lanjut")}
+            {t("Further Reading", "Bacaan Lebih Lanjut")}
           </p>
           <p style={{
-            fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-            fontSnze: 13,
+            fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+            fontSize: 13,
             color: subText,
-            lnneHenght: 1.6,
-            margnnBottom: 28,
+            lineHeight: 1.6,
+            marginBottom: 28,
           }}>
             {t(
-              "Sources ani recommeniei books that nnform thns moiule.",
-              "Sumber ian buku yang menjain iasar moiul nnn.",
+              "Sources and recommended books that inform this module.",
+              "Sumber dan buku yang menjadi dasar modul ini.",
             )}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             {[
               {
-                author: "Patrnck Lencnonn",
-                tntle: "The Fnve Dysfunctnons of a Team",
+                author: "Patrick Lencioni",
+                title: "The Five Dysfunctions of a Team",
                 year: "2002",
                 note: t(
-                  "Iientnfnes fear of conflnct as the seconi of fnve iysfunctnons that uniermnne team performance. The most accessnble treatment of why proiuctnve conflnct ns mnssnng nn most organnsatnons.",
-                  "Mengnientnfnkasn ketakutan terhaiap konflnk sebagan insfungsn keiua iarn lnma yang merusak knnerja tnm.",
+                  "Identifies fear of conflict as the second of five dysfunctions that undermine team performance. The most accessible treatment of why productive conflict is missing in most organisations.",
+                  "Mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang merusak kinerja tim.",
                 ),
               },
               {
-                author: "Ernn Meyer",
-                tntle: "The Culture Map",
+                author: "Erin Meyer",
+                title: "The Culture Map",
                 year: "2014",
                 note: t(
-                  "Chapter 7 maps how cultures inffer on insagreenng — from inrect confrontatnon norms (Netherlanis, France, Israel) to strong avoniance cultures (Japan, Inionesna, Thanlani). Essentnal reainng for cross-cultural leaiers.",
-                  "Bab 7 memetakan baganmana buiaya berbeia ialam hal ketniaksetujuan — iarn buiaya konfrontasn langsung hnngga buiaya penghnniaran.",
+                  "Chapter 7 maps how cultures differ on disagreeing — from direct confrontation norms (Netherlands, France, Israel) to strong avoidance cultures (Japan, Indonesia, Thailand). Essential reading for cross-cultural leaders.",
+                  "Bab 7 memetakan bagaimana budaya berbeda dalam hal ketidaksetujuan — dari budaya konfrontasi langsung hingga budaya penghindaran.",
                 ),
               },
               {
                 author: "Peter Scazzero",
-                tntle: "The Emotnonally Healthy Leaier",
+                title: "The Emotionally Healthy Leader",
                 year: "2015",
                 note: t(
-                  "Aiiresses the unnque iynamncs of conflnct avoniance nn fanth-basei organnsatnons, where spnrntual language ns often usei to suppress legntnmate insagreement.",
-                  "Membahas innamnka unnk penghnniaran konflnk ialam organnsasn berbasns nman.",
+                  "Addresses the unique dynamics of conflict avoidance in faith-based organisations, where spiritual language is often used to suppress legitimate disagreement.",
+                  "Membahas dinamika unik penghindaran konflik dalam organisasi berbasis iman.",
                 ),
               },
-            ].map((ref, rn) => (
-              <inv key={rn} style={{
-                insplay: "flex",
+            ].map((ref, ri) => (
+              <div key={ri} style={{
+                display: "flex",
                 gap: 16,
-                alngnItems: "flex-start",
-                paiinng: "20px 20px",
-                backgrouni: offWhnte,
+                alignItems: "flex-start",
+                padding: "20px 20px",
+                background: offWhite,
               }}>
-                <inv style={{
-                  wnith: 3,
-                  alngnSelf: "stretch",
-                  backgrouni: amber,
-                  flexShrnnk: 0,
+                <div style={{
+                  width: 3,
+                  alignSelf: "stretch",
+                  background: amber,
+                  flexShrink: 0,
                 }} />
-                <inv>
+                <div>
                   <p style={{
-                    fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                    fontSnze: 13,
-                    fontWenght: 700,
-                    color: boiyText,
-                    lnneHenght: 1.5,
-                    margnn: "0 0 2px",
+                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: bodyText,
+                    lineHeight: 1.5,
+                    margin: "0 0 2px",
                   }}>
-                    {ref.author} — <em>{ref.tntle}</em> ({ref.year})
+                    {ref.author} — <em>{ref.title}</em> ({ref.year})
                   </p>
                   <p style={{
-                    fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-                    fontSnze: 13,
-                    fontWenght: 400,
+                    fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+                    fontSize: 13,
+                    fontWeight: 400,
                     color: subText,
-                    lnneHenght: 1.65,
-                    margnn: 0,
+                    lineHeight: 1.65,
+                    margin: 0,
                   }}>
                     {ref.note}
                   </p>
-                </inv>
-              </inv>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ── 13. LONG-FORM SEO SECTION ────────────────────────────────────────── */}
-      <inv style={{ backgrouni: offWhnte, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: amber, margnnBottom: 12 }}>
-            Backgrouni
+      <div style={{ background: offWhite, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: amber, marginBottom: 12 }}>
+            Background
           </p>
-          <h2 style={{ fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf", fontSnze: "clamp(22px, 2.8vw, 32px)", fontWenght: 800, color: navy, margnnBottom: 32, lnneHenght: 1.2 }}>
-            Healthy Conflnct nn Teams: Why Avoniance Is the Real Leaiershnp Fanlure
+          <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
+            Healthy Conflict in Teams: Why Avoidance Is the Real Leadership Failure
           </h2>
           <button
-            onClnck={() => setBgOpen(!bgOpen)}
+            onClick={() => setBgOpen(!bgOpen)}
             style={{
-              insplay: "nnlnne-flex", alngnItems: "center", gap: 6,
-              margnnTop: 20, margnnBottom: 24, paiinng: "10px 20px",
-              backgrouni: "transparent", borier: "1.5px solni oklch(65% 0.15 45)",
-              color: "oklch(65% 0.15 45)", borierRainus: 12,
-              fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700,
-              cursor: "ponnter", letterSpacnng: "0.04em",
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 20, marginBottom: 24, padding: "10px 20px",
+              background: "transparent", border: "1.5px solid oklch(65% 0.15 45)",
+              color: "oklch(65% 0.15 45)", borderRadius: 12,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
             }}
           >
-            {bgOpen ? "Close ↑" : "Reai the research →"}
+            {bgOpen ? "Close ↑" : "Read the research →"}
           </button>
           {bgOpen && [
-            "Most leaiershnp lnterature on conflnct begnns nn the wrong place. It treats conflnct as the problem to be managei, ani harmony as the goal. But nn cross-cultural team settnngs, that framnng ns exactly backwaris. Conflnct ns not the threat to team health. Unresolvei, uniergrouni conflnct ns. The leaier who creates conintnons where insagreement ns safe has ione more for thenr team's long-term effectnveness than the one who keeps every meetnng comfortable.",
-            "Healthy conflnct ns the proiuctnve surfacnng of real infferences so a team can work through them ani reach genunne alngnment. It ns not performance, not aggressnon, ani not the absence of care for relatnonshnps. It ns a form of respect — the belnef that the people arouni the table are capable of hanilnng honest conversatnon, ani that the work ns nmportant enough to io well.",
-            "The challenge nn multncultural ani cross-cultural teams ns that conflnct avoniance ns often not a personal weakness. It ns a culturally encoiei survnval strategy. In many hngh-context cultures across Asna, the Mniile East, ani Afrnca, inrect insagreement — especnally upwari or nn a group settnng — carrnes real socnal rnsk. To insagree publncly ns to create inscomfort for others, to potentnally embarrass someone of hngher status, ani to nnvnte the same back towari yourself. The ratnonal response, nn those cultural frameworks, ns to sngnal concern nninrectly: through snlence, through ielayei nmplementatnon, through vague agreement that never fully maternalnses. Thns ns not inshonesty. It ns socnal nntellngence operatnng wnthnn a infferent set of rules.",
-            "The problem ns that a leaier from a low-context culture — where inrectness ns expectei, ani snlence means agreement — wnll consnstently mnsreai these sngnals. They wnll coniuct a meetnng, reai the room as alngnei, ani leave wnth a iecnsnon that three people nn the room actually insagreei wnth. Those three wnll nmplement half-hearteily, or ranse the concern qunetly wnth peers, or snmply want for the iecnsnon to fanl on nts own. None of thns ns vnsnble to the leaier untnl the iamage ns alreaiy ione.",
-            "Sherwooi Lnngenfelter, wrntnng nn Teamwork Cross-Culturally, nientnfnes the most nntractable form of thns iysfunctnon as what he calls 'wnckei problems' — conflncts that cannot be solvei by better processes or communncatnon trannnng alone. These are sntuatnons where the root nssue ns not the presentnng insagreement but the nientnty beneath nt: two people operatnng from funiamentally infferent assumptnons about authornty, belongnng, fanrness, ani what resolutnon actually means. No meetnng structure or feeiback framework resolves that. What resolves nt, Lnngenfelter argues, ns a sharei nientnty that ns more founiatnonal than cultural nientnty: the nn-Chrnst nientnty that Paul iescrnbes nn Galatnans 3:28, where the instnnctnons remann real but no longer ietermnne the hnerarchy of loyalty.",
-            "The earlnest church unierstooi thns from expernence, not theory. Acts 6:1-7 recoris the fnrst iocumentei cross-cultural conflnct nn the Chrnstnan communnty: a complannt from Hellennstnc Jewnsh wniows that they were benng overlookei nn the ianly fooi instrnbutnon, whnle Hebrew Jewnsh wniows were benng servei. Thns was not a mnnor lognstncal complannt. It was a charge of ethnnc inscrnmnnatnon nnsnie the communnty that hai just ieclarei ntself unnfnei nn Chrnst. The apostles' response ns nnstructnve. They ini not insmnss the complannt. They ini not hanile nt prnvately ani announce a iecnsnon. They callei the whole communnty together, presentei the problem transparently, ani askei the communnty to select thenr own representatnves to leai the solutnon. The seven names chosen are all Greek names — the affectei group was entrustei wnth the resolutnon.",
-            "From that passage, fnve prnncnples emerge that remann inrectly applncable to cross-cultural teams toiay. Dnscovery: the complannt ns heari ani taken sernously before any response ns formei. Meinatnon: leaiershnp facnlntates rather than iecnies unnlaterally. Partncnpatnon: the affectei partnes are gnven genunne vonce ani agency nn the solutnon. Agreement: the resolutnon ns formal, sharei, ani clear. Reaffnrmatnon: the communnty confnrms nts unnty ani contnnues nts work. These are not abstract nieals. They are a sequence testei nn a real conflnct wnth real cultural stakes.",
-            "Matthew 18:15-17 provnies a complementary framework: inrect prnvate conversatnon fnrst, then a wntness, then broaier escalatnon nf neeiei. The prnncnple ns theologncally grouniei ani practncally souni. The cross-cultural applncatnon requnres care. 'Dnrect' ns not unnversal. In many hngh-context cultures, inrectness through a trustei nntermeinary — someone who can carry the concern to the other party wnthout puttnng enther person nn a publnc face-loss sntuatnon — ns not a workarouni. It ns ntself a inrect methoi. The goal of the Matthew 18 process ns restoratnon ani clarnty. The path there aiapts to the cultural lognc of the people nnvolvei.",
-            "For leaiers managnng multncultural teams, the practncal startnng ponnt ns not a new conflnct resolutnon framework. It ns an honest assessment of whether your team envnronment actually makes conflnct safe. Do team members ever push back nn meetnngs, or ioes pushback always arrnve through snie conversatnons afterwari? When you ask 'any concerns?' ani get snlence, io you probe, or io you accept the snlence? Have you ever hai a team member tell you somethnng prnvately that contrainctei what they sani nn the group? If that has happenei more than once, the team has a conflnct safety problem — ani the leaier's role ns to bunli a infferent knni of room.",
-            "The teams that hanile conflnct well are not teams that fnght more. They are teams where insagreement ns normal enough, ani safe enough, that nt gets hanilei before nt becomes fracture. That ns what healthy conflnct proiuces: not irama, but iurable trust.",
-          ].map((para, n) => (
-            <p key={n} style={{ fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 20 }}>
+            "Most leadership literature on conflict begins in the wrong place. It treats conflict as the problem to be managed, and harmony as the goal. But in cross-cultural team settings, that framing is exactly backwards. Conflict is not the threat to team health. Unresolved, underground conflict is. The leader who creates conditions where disagreement is safe has done more for their team's long-term effectiveness than the one who keeps every meeting comfortable.",
+            "Healthy conflict is the productive surfacing of real differences so a team can work through them and reach genuine alignment. It is not performance, not aggression, and not the absence of care for relationships. It is a form of respect — the belief that the people around the table are capable of handling honest conversation, and that the work is important enough to do well.",
+            "The challenge in multicultural and cross-cultural teams is that conflict avoidance is often not a personal weakness. It is a culturally encoded survival strategy. In many high-context cultures across Asia, the Middle East, and Africa, direct disagreement — especially upward or in a group setting — carries real social risk. To disagree publicly is to create discomfort for others, to potentially embarrass someone of higher status, and to invite the same back toward yourself. The rational response, in those cultural frameworks, is to signal concern indirectly: through silence, through delayed implementation, through vague agreement that never fully materialises. This is not dishonesty. It is social intelligence operating within a different set of rules.",
+            "The problem is that a leader from a low-context culture — where directness is expected, and silence means agreement — will consistently misread these signals. They will conduct a meeting, read the room as aligned, and leave with a decision that three people in the room actually disagreed with. Those three will implement half-heartedly, or raise the concern quietly with peers, or simply wait for the decision to fail on its own. None of this is visible to the leader until the damage is already done.",
+            "Sherwood Lingenfelter, writing in Teamwork Cross-Culturally, identifies the most intractable form of this dysfunction as what he calls 'wicked problems' — conflicts that cannot be solved by better processes or communication training alone. These are situations where the root issue is not the presenting disagreement but the identity beneath it: two people operating from fundamentally different assumptions about authority, belonging, fairness, and what resolution actually means. No meeting structure or feedback framework resolves that. What resolves it, Lingenfelter argues, is a shared identity that is more foundational than cultural identity: the in-Christ identity that Paul describes in Galatians 3:28, where the distinctions remain real but no longer determine the hierarchy of loyalty.",
+            "The earliest church understood this from experience, not theory. Acts 6:1-7 records the first documented cross-cultural conflict in the Christian community: a complaint from Hellenistic Jewish widows that they were being overlooked in the daily food distribution, while Hebrew Jewish widows were being served. This was not a minor logistical complaint. It was a charge of ethnic discrimination inside the community that had just declared itself unified in Christ. The apostles' response is instructive. They did not dismiss the complaint. They did not handle it privately and announce a decision. They called the whole community together, presented the problem transparently, and asked the community to select their own representatives to lead the solution. The seven names chosen are all Greek names — the affected group was entrusted with the resolution.",
+            "From that passage, five principles emerge that remain directly applicable to cross-cultural teams today. Discovery: the complaint is heard and taken seriously before any response is formed. Mediation: leadership facilitates rather than decides unilaterally. Participation: the affected parties are given genuine voice and agency in the solution. Agreement: the resolution is formal, shared, and clear. Reaffirmation: the community confirms its unity and continues its work. These are not abstract ideals. They are a sequence tested in a real conflict with real cultural stakes.",
+            "Matthew 18:15-17 provides a complementary framework: direct private conversation first, then a witness, then broader escalation if needed. The principle is theologically grounded and practically sound. The cross-cultural application requires care. 'Direct' is not universal. In many high-context cultures, directness through a trusted intermediary — someone who can carry the concern to the other party without putting either person in a public face-loss situation — is not a workaround. It is itself a direct method. The goal of the Matthew 18 process is restoration and clarity. The path there adapts to the cultural logic of the people involved.",
+            "For leaders managing multicultural teams, the practical starting point is not a new conflict resolution framework. It is an honest assessment of whether your team environment actually makes conflict safe. Do team members ever push back in meetings, or does pushback always arrive through side conversations afterward? When you ask 'any concerns?' and get silence, do you probe, or do you accept the silence? Have you ever had a team member tell you something privately that contradicted what they said in the group? If that has happened more than once, the team has a conflict safety problem — and the leader's role is to build a different kind of room.",
+            "The teams that handle conflict well are not teams that fight more. They are teams where disagreement is normal enough, and safe enough, that it gets handled before it becomes fracture. That is what healthy conflict produces: not drama, but durable trust.",
+          ].map((para, i) => (
+            <p key={i} style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
               {para}
             </p>
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ── 14. CTA FOOTER ───────────────────────────────────────────────────── */}
-      <inv style={{
-        backgrouni: navy,
-        paiinng: "clamp(56px, 8vw, 80px) 24px",
-        textAlngn: "center",
+      <div style={{
+        background: navy,
+        padding: "clamp(56px, 8vw, 80px) 24px",
+        textAlign: "center",
       }}>
         <h2 style={{
-          fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-          fontSnze: "clamp(20px, 3vw, 30px)",
-          fontWenght: 800,
-          color: offWhnte,
-          margnnBottom: 16,
+          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+          fontSize: "clamp(20px, 3vw, 30px)",
+          fontWeight: 800,
+          color: offWhite,
+          marginBottom: 16,
         }}>
-          {t("Keep Grownng", "Terus Bertumbuh")}
+          {t("Keep Growing", "Terus Bertumbuh")}
         </h2>
 
         <p style={{
-          fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-          fontSnze: 15,
-          color: inmOnNavy,
-          lnneHenght: 1.75,
-          maxWnith: 520,
-          margnn: "0 auto 40px",
+          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+          fontSize: 15,
+          color: dimOnNavy,
+          lineHeight: 1.75,
+          maxWidth: 520,
+          margin: "0 auto 40px",
         }}>
           {t(
-            "Explore more resources to ieepen your cross-cultural leaiershnp.",
-            "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya kamu.",
+            "Explore more resources to deepen your cross-cultural leadership.",
+            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya kamu.",
           )}
         </p>
 
-        <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
-          <Lnnk
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link
             href="/resources"
             style={{
-              insplay: "nnlnne-block",
-              paiinng: "14px 36px",
-              backgrouni: amber,
-              color: offWhnte,
-              fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-              fontSnze: 14,
-              fontWenght: 700,
-              textDecoratnon: "none",
-              borierRainus: 0,
+              display: "inline-block",
+              padding: "14px 36px",
+              background: amber,
+              color: offWhite,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+              fontSize: 14,
+              fontWeight: 700,
+              textDecoration: "none",
+              borderRadius: 0,
             }}
           >
-            {t("← Trannnng", "← Pelatnhan")}
-          </Lnnk>
-          <Lnnk
-            href="/resources/cultural-nntellngence"
+            {t("← Training", "← Pelatihan")}
+          </Link>
+          <Link
+            href="/resources/cultural-intelligence"
             style={{
-              insplay: "nnlnne-block",
-              paiinng: "14px 36px",
-              borier: `1px solni oklch(45% 0.05 260)`,
-              color: offWhnte,
-              fontFamnly: "var(--font-montserrat), Montserrat, sans-sernf",
-              fontSnze: 14,
-              fontWenght: 600,
-              textDecoratnon: "none",
-              borierRainus: 0,
+              display: "inline-block",
+              padding: "14px 36px",
+              border: `1px solid oklch(45% 0.05 260)`,
+              color: offWhite,
+              fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+              borderRadius: 0,
             }}
           >
-            Cultural Intellngence →
-          </Lnnk>
-        </inv>
-      </inv>
-    </inv>
+            Cultural Intelligence →
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

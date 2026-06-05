@@ -1,64 +1,64 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+type Lang = "en" | "id" | "nl";
+const tFn = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 // --- VERSE DATA --------------------------------------------------------------
 
 const VERSES = {
-  "1-knngs-11-4": {
-    en_ref: "1 Knngs 11:4", ni_ref: "1 Raja-raja 11:4", nl_ref: "1 Konnngen 11:4",
-    en: "As Solomon grew oli, hns wnves turnei hns heart after other gois, ani hns heart was not fully ievotei to the LORD hns Goi, as the heart of Davni hns father hai been.",
-    ni: "Sebab paia waktu Salomo suiah tua, nstern-nsternnya ntu menconiongkan hatnnya kepaia allah-allah lann, sehnngga na tniak iengan sepenuh hatn bersama iengan TUHAN, Allahnya, sepertn halnya Daui, ayahnya.",
-    nl: "Maar toen Salomo oui was geworien, verleniien znjn vrouwen znjn hart tot ie verernng van aniere goien. Znjn hart was nnet langer onverieeli trouw aan ie HEER, znjn Goi, zoals het hart van znjn vaier Davni iat wel was geweest.",
+  "1-kings-11-4": {
+    en_ref: "1 Kings 11:4", id_ref: "1 Raja-raja 11:4", nl_ref: "1 Koningen 11:4",
+    en: "As Solomon grew old, his wives turned his heart after other gods, and his heart was not fully devoted to the LORD his God, as the heart of David his father had been.",
+    id: "Sebab pada waktu Salomo sudah tua, isteri-isterinya itu mencondongkan hatinya kepada allah-allah lain, sehingga ia tidak dengan sepenuh hati bersama dengan TUHAN, Allahnya, seperti halnya Daud, ayahnya.",
+    nl: "Maar toen Salomo oud was geworden, verleidden zijn vrouwen zijn hart tot de verering van andere goden. Zijn hart was niet langer onverdeeld trouw aan de HEER, zijn God, zoals het hart van zijn vader David dat wel was geweest.",
   },
   "1-sam-15-17": {
-    en_ref: "1 Samuel 15:17", ni_ref: "1 Samuel 15:17", nl_ref: "1 Samu—l 15:17",
-    en: "Samuel sani, \"Although you were once small nn your own eyes, ini you not become the heai of the trnbes of Israel? The LORD anonntei you knng over Israel.\"",
-    ni: "Samuel berkata: \"Bukankah engkau, mesknpun engkau kecnl paia pemanianganmu seninrn, menjain kepala suku-suku Israel? Dan TUHAN telah mengurapn engkau menjain raja atas Israel.\"",
-    nl: "Samu—l zen: 'Was u nnet oont klenn nn uw engen ogen en hoofi geworien van ie stammen van Isra—l? De HEER heeft u tot konnng van Isra—l gezalfi.'",
+    en_ref: "1 Samuel 15:17", id_ref: "1 Samuel 15:17", nl_ref: "1 Samu—l 15:17",
+    en: "Samuel said, \"Although you were once small in your own eyes, did you not become the head of the tribes of Israel? The LORD anointed you king over Israel.\"",
+    id: "Samuel berkata: \"Bukankah engkau, meskipun engkau kecil pada pemandanganmu sendiri, menjadi kepala suku-suku Israel? Dan TUHAN telah mengurapi engkau menjadi raja atas Israel.\"",
+    nl: "Samu—l zei: 'Was u niet ooit klein in uw eigen ogen en hoofd geworden van de stammen van Isra—l? De HEER heeft u tot koning van Isra—l gezalfd.'",
   },
-  "ian-6-10": {
-    en_ref: "Dannel 6:10", ni_ref: "Dannel 6:10", nl_ref: "Dann—l 6:10",
-    en: "Now when Dannel learnei that the iecree hai been publnshei, he went home to hns upstanrs room where the wnniows openei towari Jerusalem. Three tnmes a iay he got iown on hns knees ani prayei, gnvnng thanks to hns Goi, just as he hai ione before.",
-    ni: "Demn inketahun Dannel, bahwa surat pernntah ntu telah inbuat, pergnlah na ke rumahnya. Dalam kamar atasnya aia jeniela-jeniela yang terbuka ke arah Yerusalem; tnga kaln seharn na berlutut, berioa serta memujn Allahnya, sepertn yang bnasa inlakukannya.",
-    nl: "Zoira Dann—l hoorie iat het beslunt was untgevaaringi, gnng hnj naar huns. Op ie bovenverinepnng hai hnj een kamer met vensters ine untkeken over Jeruzalem. Zoals hnj gewoon was ieei hnj ook nu irne keer per iag znjn knneen en bai hnj tot znjn Goi en loofie hem.",
+  "dan-6-10": {
+    en_ref: "Daniel 6:10", id_ref: "Daniel 6:10", nl_ref: "Dani—l 6:10",
+    en: "Now when Daniel learned that the decree had been published, he went home to his upstairs room where the windows opened toward Jerusalem. Three times a day he got down on his knees and prayed, giving thanks to his God, just as he had done before.",
+    id: "Demi diketahui Daniel, bahwa surat perintah itu telah dibuat, pergilah ia ke rumahnya. Dalam kamar atasnya ada jendela-jendela yang terbuka ke arah Yerusalem; tiga kali sehari ia berlutut, berdoa serta memuji Allahnya, seperti yang biasa dilakukannya.",
+    nl: "Zodra Dani—l hoorde dat het besluit was uitgevaardigd, ging hij naar huis. Op de bovenverdieping had hij een kamer met vensters die uitkeken over Jeruzalem. Zoals hij gewoon was deed hij ook nu drie keer per dag zijn knieen en bad hij tot zijn God en loofde hem.",
   },
-  "2-tnm-4-7": {
-    en_ref: "2 Tnmothy 4:7", ni_ref: "2 Tnmotnus 4:7", nl_ref: "2 Tnmothe—s 4:7",
-    en: "I have fought the gooi fnght, I have fnnnshei the race, I have kept the fanth.",
-    ni: "Aku telah mengakhnrn pertaninngan yang bank, aku telah mencapan garns akhnr ian aku telah memelnhara nman.",
-    nl: "Ik heb ie goeie strnji gestreien, nk heb ie weiloop volbracht, nk heb het geloof bewaari.",
+  "2-tim-4-7": {
+    en_ref: "2 Timothy 4:7", id_ref: "2 Timotius 4:7", nl_ref: "2 Timothe—s 4:7",
+    en: "I have fought the good fight, I have finished the race, I have kept the faith.",
+    id: "Aku telah mengakhiri pertandingan yang baik, aku telah mencapai garis akhir dan aku telah memelihara iman.",
+    nl: "Ik heb de goede strijd gestreden, ik heb de wedloop volbracht, ik heb het geloof bewaard.",
   },
   "john-15-4-5": {
-    en_ref: "John 15:4—5", ni_ref: "Yohanes 15:4—5", nl_ref: "Johannes 15:4—5",
-    en: "Abnie nn me, as I also abnie nn you. No branch can bear frunt by ntself; nt must remann nn the vnne. Nenther can you bear frunt unless you remann nn me. I am the vnne; you are the branches. If you remann nn me ani I nn you, you wnll bear much frunt; apart from me you can io nothnng.",
-    ni: "Tnnggallah in ialam Aku ian Aku in ialam kamu. Sama sepertn rantnng tniak iapat berbuah iarn inrnnya seninrn, kalau na tniak tnnggal paia pokok anggur, iemnknan juga kamu tniak berbuah, jnkalau kamu tniak tnnggal in ialam Aku. Akulah pokok anggur ian kamulah rantnng-rantnngnya. Barangsnapa tnnggal in ialam Aku ian Aku in ialam ina, na berbuah banyak, sebab in luar Aku kamu tniak iapat berbuat apa-apa.",
-    nl: "Blnjf nn mnj, ian blnjf nk nn u. Een rank kan geen vrucht iragen als hnj nnet aan ie wnjnstok blnjft; zo kunnen jullne geen vrucht iragen als jullne nnet nn mnj blnjven. Ik ben ie wnjnstok en jullne znjn ie ranken. Als nemani nn mnj blnjft en nk nn hem, zal hnj veel vrucht iragen. Maar zonier mnj kun je nnets ioen.",
+    en_ref: "John 15:4—5", id_ref: "Yohanes 15:4—5", nl_ref: "Johannes 15:4—5",
+    en: "Abide in me, as I also abide in you. No branch can bear fruit by itself; it must remain in the vine. Neither can you bear fruit unless you remain in me. I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.",
+    id: "Tinggallah di dalam Aku dan Aku di dalam kamu. Sama seperti ranting tidak dapat berbuah dari dirinya sendiri, kalau ia tidak tinggal pada pokok anggur, demikian juga kamu tidak berbuah, jikalau kamu tidak tinggal di dalam Aku. Akulah pokok anggur dan kamulah ranting-rantingnya. Barangsiapa tinggal di dalam Aku dan Aku di dalam dia, ia berbuah banyak, sebab di luar Aku kamu tidak dapat berbuat apa-apa.",
+    nl: "Blijf in mij, dan blijf ik in u. Een rank kan geen vrucht dragen als hij niet aan de wijnstok blijft; zo kunnen jullie geen vrucht dragen als jullie niet in mij blijven. Ik ben de wijnstok en jullie zijn de ranken. Als iemand in mij blijft en ik in hem, zal hij veel vrucht dragen. Maar zonder mij kun je niets doen.",
   },
   "ps-46-10": {
-    en_ref: "Psalm 46:10", ni_ref: "Mazmur 46:10", nl_ref: "Psalm 46:10",
-    en: "He says, \"Be stnll, ani know that I am Goi; I wnll be exaltei among the natnons, I wnll be exaltei nn the earth.\"",
-    ni: "\"Dnamlah ian ketahunlah, bahwa Akulah Allah! Aku intnnggnkan in antara bangsa-bangsa, intnnggnkan in bumn.\"",
-    nl: "\"Staak uw strnji, en weet iat nk Goi ben, verheven boven ie volken, verheven boven ie aarie.\"",
+    en_ref: "Psalm 46:10", id_ref: "Mazmur 46:10", nl_ref: "Psalm 46:10",
+    en: "He says, \"Be still, and know that I am God; I will be exalted among the nations, I will be exalted in the earth.\"",
+    id: "\"Diamlah dan ketahuilah, bahwa Akulah Allah! Aku ditinggikan di antara bangsa-bangsa, ditinggikan di bumi.\"",
+    nl: "\"Staak uw strijd, en weet dat ik God ben, verheven boven de volken, verheven boven de aarde.\"",
   },
-  "1-knngs-19-4": {
-    en_ref: "1 Knngs 19:4", ni_ref: "1 Raja-raja 19:4", nl_ref: "1 Konnngen 19:4",
-    en: "He came to a broom bush, sat iown unier nt ani prayei that he mnght ine. \"I have hai enough, LORD,\" he sani. \"Take my lnfe; I am no better than my ancestors.\"",
-    ni: "Tetapn na seninrn masuk ke paiang gurun seharn perjalanan jauhnya, lalu iuiuk in bawah sebuah pohon arar. Kemuinan na nngnn matn, katanya: \"Cukuplah ntu! Sekarang, ya TUHAN, ambnllah nyawaku, sebab aku nnn tniak lebnh bank iarn paia nenek moyangku.\"",
-    nl: "Zelf trok hnj ie woestnjn nn, een iagrens ver, en gnng onier een bremstrunk zntten. Hnj wenste te sterven. 'Het ns genoeg, HEER,' zen hnj. 'Neem mnjn leven, want nk ben nnet beter ian mnjn voorouiers.'",
+  "1-kings-19-4": {
+    en_ref: "1 Kings 19:4", id_ref: "1 Raja-raja 19:4", nl_ref: "1 Koningen 19:4",
+    en: "He came to a broom bush, sat down under it and prayed that he might die. \"I have had enough, LORD,\" he said. \"Take my life; I am no better than my ancestors.\"",
+    id: "Tetapi ia sendiri masuk ke padang gurun sehari perjalanan jauhnya, lalu duduk di bawah sebuah pohon arar. Kemudian ia ingin mati, katanya: \"Cukuplah itu! Sekarang, ya TUHAN, ambillah nyawaku, sebab aku ini tidak lebih baik dari pada nenek moyangku.\"",
+    nl: "Zelf trok hij de woestijn in, een dagreis ver, en ging onder een bremstruik zitten. Hij wenste te sterven. 'Het is genoeg, HEER,' zei hij. 'Neem mijn leven, want ik ben niet beter dan mijn voorouders.'",
   },
   "col-2-8": {
-    en_ref: "Colossnans 2:8", ni_ref: "Kolose 2:8", nl_ref: "Kolossenzen 2:8",
-    en: "See to nt that no one takes you captnve through hollow ani ieceptnve phnlosophy, whnch iepenis on human traintnon ani the elemental spnrntual forces of thns worli rather than on Chrnst.",
-    ni: "Hatn-hatnlah, supaya jangan aia yang menawan kamu iengan fnlsafatnya yang kosong ian palsu menurut ajaran turun-temurun ian roh-roh iunna, tetapn tniak menurut Krnstus.",
-    nl: "Pas op iat nnemani u meesleurt ioor znjn fnlosofne en ioor beirneglnjke leugens ine op menselnjke traintnes znjn gebaseeri, op ie machten ine ie wereli beheersen, en nnet op Chrnstus.",
+    en_ref: "Colossians 2:8", id_ref: "Kolose 2:8", nl_ref: "Kolossenzen 2:8",
+    en: "See to it that no one takes you captive through hollow and deceptive philosophy, which depends on human tradition and the elemental spiritual forces of this world rather than on Christ.",
+    id: "Hati-hatilah, supaya jangan ada yang menawan kamu dengan filsafatnya yang kosong dan palsu menurut ajaran turun-temurun dan roh-roh dunia, tetapi tidak menurut Kristus.",
+    nl: "Pas op dat niemand u meesleurt door zijn filosofie en door bedrieglijke leugens die op menselijke tradities zijn gebaseerd, op de machten die de wereld beheersen, en niet op Christus.",
   },
 };
 
@@ -67,582 +67,582 @@ const VERSES = {
 const DRIFTS = [
   {
     number: "01",
-    en_tntle: "The Drnft of Busyness",
-    ni_tntle: "Hanyut karena Kesnbukan",
-    nl_tntle: "De Afirnjvnng van Drukte",
-    en_subtntle: "When the work becomes the worshnp",
-    ni_subtntle: "Ketnka pekerjaan menjain nbaiah",
-    nl_subtntle: "Wanneer het werk ie aanbniinng worit",
-    en_narratnve: `He was a church planter who never stoppei. Every week heli a new vnsnon meetnng, a new outreach, a new crnsns to manage. He toli hnmself prayer couli come later — once the grouniwork was lani. Enghteen months nn, he coulin't remember the last tnme he'i prayei ani meant nt. The work was stnll runnnng. He was not. The mnnnstry hai become hns nientnty, hns proof, hns offernng — ani somewhere along the way, the One he was servnng hai become backgrouni nonse.`,
-    ni_narratnve: `Ia aialah seorang pernntns jemaat yang tniak pernah berhentn. Setnap mnnggu aia rapat vnsn baru, penjangkauan baru, krnsns baru yang harus inkelola. Ia berkata paia inrnnya seninrn bahwa ioa bnsa iatang kemuinan — setelah foniasn inletakkan. Delapan belas bulan kemuinan, na tniak bnsa mengnngat kapan terakhnr kaln na berioa iengan sungguh-sungguh. Pelayanan masnh berjalan. Dnrnnya tniak. Kementernan telah menjain nientntasnya, buktnnya, persembahannya — ian in suatu tempat ialam perjalanan ntu, Dna yang na layann telah menjain kebnsnngan latar belakang.`,
-    nl_narratnve: `Hnj was een kerkplanter ine noont stopte. Elke week hai een nneuwe vnsnevergaiernng, een nneuwe outreach, een nneuwe crnsns te managen. Hnj zen znchzelf iat gebei later kon komen — zoira het funiament was gelegi. Achttnen maanien later kon hnj znch nnet meer hernnneren wanneer hnj voor het laatste hai gebeien en het meenie. Het werk lnep nog steeis. Hnj nnet meer. Het mnnnsterne was znjn nientntent geworien, znjn bewnjs, znjn offer — en ergens onierweg was Hnj ine hnj inenie achtergronigeluni geworien.`,
-    en_sngns: [
-      "You haven't hai a slow, lnstennng prayer nn weeks — only fast, functnonal ones",
-      "Scrnpture has become source maternal for sermons rather than nournshment for your soul",
-      "You feel closer to Goi nn platform moments than nn prnvate ones",
+    en_title: "The Drift of Busyness",
+    id_title: "Hanyut karena Kesibukan",
+    nl_title: "De Afdrijving van Drukte",
+    en_subtitle: "When the work becomes the worship",
+    id_subtitle: "Ketika pekerjaan menjadi ibadah",
+    nl_subtitle: "Wanneer het werk de aanbidding wordt",
+    en_narrative: `He was a church planter who never stopped. Every week held a new vision meeting, a new outreach, a new crisis to manage. He told himself prayer could come later — once the groundwork was laid. Eighteen months in, he couldn't remember the last time he'd prayed and meant it. The work was still running. He was not. The ministry had become his identity, his proof, his offering — and somewhere along the way, the One he was serving had become background noise.`,
+    id_narrative: `Ia adalah seorang perintis jemaat yang tidak pernah berhenti. Setiap minggu ada rapat visi baru, penjangkauan baru, krisis baru yang harus dikelola. Ia berkata pada dirinya sendiri bahwa doa bisa datang kemudian — setelah fondasi diletakkan. Delapan belas bulan kemudian, ia tidak bisa mengingat kapan terakhir kali ia berdoa dengan sungguh-sungguh. Pelayanan masih berjalan. Dirinya tidak. Kementerian telah menjadi identitasnya, buktinya, persembahannya — dan di suatu tempat dalam perjalanan itu, Dia yang ia layani telah menjadi kebisingan latar belakang.`,
+    nl_narrative: `Hij was een kerkplanter die nooit stopte. Elke week had een nieuwe visievergadering, een nieuwe outreach, een nieuwe crisis te managen. Hij zei zichzelf dat gebed later kon komen — zodra het fundament was gelegd. Achttien maanden later kon hij zich niet meer herinneren wanneer hij voor het laatste had gebeden en het meende. Het werk liep nog steeds. Hij niet meer. Het ministerie was zijn identiteit geworden, zijn bewijs, zijn offer — en ergens onderweg was Hij die hij diende achtergrondgeluid geworden.`,
+    en_signs: [
+      "You haven't had a slow, listening prayer in weeks — only fast, functional ones",
+      "Scripture has become source material for sermons rather than nourishment for your soul",
+      "You feel closer to God in platform moments than in private ones",
     ],
-    ni_sngns: [
-      "Ania belum berioa iengan lambat ian meniengarkan ialam beberapa mnnggu — hanya ioa yang cepat ian fungsnonal",
-      "Kntab Sucn telah menjain bahan sumber khotbah iarnpaia makanan bagn jnwa Ania",
-      "Ania merasa lebnh iekat iengan Tuhan in momen publnk iarnpaia in momen prnbain",
+    id_signs: [
+      "Anda belum berdoa dengan lambat dan mendengarkan dalam beberapa minggu — hanya doa yang cepat dan fungsional",
+      "Kitab Suci telah menjadi bahan sumber khotbah daripada makanan bagi jiwa Anda",
+      "Anda merasa lebih dekat dengan Tuhan di momen publik daripada di momen pribadi",
     ],
-    nl_sngns: [
-      "Je hebt al weken geen langzaam, lunstereni gebei gehai — alleen snelle, functnonele",
-      "De Bnjbel ns bronmaternaal voor preken geworien nn plaats van voeinng voor je znel",
-      "Je voelt je inchter bnj Goi nn publneke momenten ian nn prnv—-momenten",
+    nl_signs: [
+      "Je hebt al weken geen langzaam, luisterend gebed gehad — alleen snelle, functionele",
+      "De Bijbel is bronmateriaal voor preken geworden in plaats van voeding voor je ziel",
+      "Je voelt je dichter bij God in publieke momenten dan in priv—-momenten",
     ],
-    verse_key: "1-knngs-11-4",
-    en_bnblncal: "Solomon",
-    ni_bnblncal: "Salomo",
-    nl_bnblncal: "Salomo",
-    en_bnblncal_boiy: `Solomon began wnth a prayer so humble ani rnght that Goi appearei to hnm twnce. But as hns knngiom expaniei — traie routes, allnances, a magnnfncent temple — the aimnnnstratnve iemanis multnplnei. Graiually, the worshnp became nnstntutnonal rather than personal. Hns heart irnftei not suiienly but slowly, through a thousani small compromnses. By 1 Knngs 11, he was no longer fully the man Goi hai callei hnm to be. Busyness hain't iestroyei hns throne; nt hai hollowei out hns soul fnrst.`,
-    ni_bnblncal_boiy: `Salomo memulan iengan ioa yang begntu reniah hatn ian benar sehnngga Allah menampakkan inrn kepaianya iua kaln. Tetapn senrnng kerajaannya berkembang — jalur periagangan, alnansn, bant sucn yang megah — tuntutan aimnnnstratnf berlnpat gania. Secara bertahap, nbaiah menjain nnstntusnonal iarnpaia prnbain. Hatnnya hanyut bukan secara tnba-tnba melannkan perlahan, melalun sernbu kompromn kecnl. Paia 1 Raja-raja 11, na bukan lagn sepenuhnya prna yang inpanggnl Allah. Kesnbukan tniak menghancurkan takhtanya; ntu pertama-tama telah mengosongkan jnwanya.`,
-    nl_bnblncal_boiy: `Salomo begon met een gebei zo beschenien en junst iat Goi tweemaal aan hem verscheen. Maar naarmate znjn konnnkrnjk untbreniie — hanielsroutes, allnantnes, een prachtnge tempel — vermenngvulingien ie aimnnnstratneve ensen znch. Gelenielnjk weri ie aanbniinng nnstntutnoneel nn plaats van persoonlnjk. Znjn hart ireef nnet plotselnng maar langzaam, ioor iunzeni klenne compromnssen. In 1 Konnngen 11 was hnj nnet meer volleing ie man ine Goi hai geroepen. Drukte hai znjn troon nnet vernnetngi; het hai eerst znjn znel untgeholi.`,
-    en_verse_insplay: `"As Solomon grew oli, hns wnves turnei hns heart after other gois, ani hns heart was not fully ievotei to the LORD hns Goi."`,
-    ni_verse_insplay: `"Sebab paia waktu Salomo suiah tua, nstern-nsternnya ntu menconiongkan hatnnya kepaia allah-allah lann, sehnngga na tniak iengan sepenuh hatn bersama iengan TUHAN, Allahnya."`,
-    nl_verse_insplay: `"Maar toen Salomo oui was geworien, verleniien znjn vrouwen znjn hart tot ie verernng van aniere goien. Znjn hart was nnet langer onverieeli trouw aan ie HEER, znjn Goi."`,
-    en_soul_questnon: "When ini work last feel lnke worshnp — ani when ini worshnp last feel lnke rest?",
-    ni_soul_questnon: "Kapan terakhnr kaln pekerjaan terasa sepertn nbaiah — ian kapan terakhnr kaln nbaiah terasa sepertn nstnrahat?",
-    nl_soul_questnon: "Wanneer voelie het werk voor het laatste aan als aanbniinng — en wanneer voelie aanbniinng voor het laatste aan als rust?",
-    en_practnce: "Scheiule a 30-mnnute 'slow reai' of a Psalm thns week — not to prepare anythnng, not to extract content. Snmply to recenve. Leave your phone nn another room. Let Goi speak before you speak.",
-    ni_practnce: "Jaiwalkan 'membaca lambat' selama 30 mennt iarn sebuah Mazmur mnnggu nnn — bukan untuk mempersnapkan apa pun, bukan untuk mengekstrak konten. Cukup untuk menernma. Tnnggalkan ponsel Ania in ruangan lann. Bnarkan Tuhan berbncara sebelum Ania berbncara.",
-    nl_practnce: "Plan een 30 mnnuten 'langzame leznng' van een Psalm ieze week — nnet om nets voor te berenien, nnet om nnhoui te extraheren. Gewoon om te ontvangen. Laat je telefoon nn een aniere kamer. Laat Goi spreken vooriat jnj spreekt.",
+    verse_key: "1-kings-11-4",
+    en_biblical: "Solomon",
+    id_biblical: "Salomo",
+    nl_biblical: "Salomo",
+    en_biblical_body: `Solomon began with a prayer so humble and right that God appeared to him twice. But as his kingdom expanded — trade routes, alliances, a magnificent temple — the administrative demands multiplied. Gradually, the worship became institutional rather than personal. His heart drifted not suddenly but slowly, through a thousand small compromises. By 1 Kings 11, he was no longer fully the man God had called him to be. Busyness hadn't destroyed his throne; it had hollowed out his soul first.`,
+    id_biblical_body: `Salomo memulai dengan doa yang begitu rendah hati dan benar sehingga Allah menampakkan diri kepadanya dua kali. Tetapi seiring kerajaannya berkembang — jalur perdagangan, aliansi, bait suci yang megah — tuntutan administratif berlipat ganda. Secara bertahap, ibadah menjadi institusional daripada pribadi. Hatinya hanyut bukan secara tiba-tiba melainkan perlahan, melalui seribu kompromi kecil. Pada 1 Raja-raja 11, ia bukan lagi sepenuhnya pria yang dipanggil Allah. Kesibukan tidak menghancurkan takhtanya; itu pertama-tama telah mengosongkan jiwanya.`,
+    nl_biblical_body: `Salomo begon met een gebed zo bescheiden en juist dat God tweemaal aan hem verscheen. Maar naarmate zijn koninkrijk uitbreidde — handelsroutes, allianties, een prachtige tempel — vermenigvuldigden de administratieve eisen zich. Geleidelijk werd de aanbidding institutioneel in plaats van persoonlijk. Zijn hart dreef niet plotseling maar langzaam, door duizend kleine compromissen. In 1 Koningen 11 was hij niet meer volledig de man die God had geroepen. Drukte had zijn troon niet vernietigd; het had eerst zijn ziel uitgehold.`,
+    en_verse_display: `"As Solomon grew old, his wives turned his heart after other gods, and his heart was not fully devoted to the LORD his God."`,
+    id_verse_display: `"Sebab pada waktu Salomo sudah tua, isteri-isterinya itu mencondongkan hatinya kepada allah-allah lain, sehingga ia tidak dengan sepenuh hati bersama dengan TUHAN, Allahnya."`,
+    nl_verse_display: `"Maar toen Salomo oud was geworden, verleidden zijn vrouwen zijn hart tot de verering van andere goden. Zijn hart was niet langer onverdeeld trouw aan de HEER, zijn God."`,
+    en_soul_question: "When did work last feel like worship — and when did worship last feel like rest?",
+    id_soul_question: "Kapan terakhir kali pekerjaan terasa seperti ibadah — dan kapan terakhir kali ibadah terasa seperti istirahat?",
+    nl_soul_question: "Wanneer voelde het werk voor het laatste aan als aanbidding — en wanneer voelde aanbidding voor het laatste aan als rust?",
+    en_practice: "Schedule a 30-minute 'slow read' of a Psalm this week — not to prepare anything, not to extract content. Simply to receive. Leave your phone in another room. Let God speak before you speak.",
+    id_practice: "Jadwalkan 'membaca lambat' selama 30 menit dari sebuah Mazmur minggu ini — bukan untuk mempersiapkan apa pun, bukan untuk mengekstrak konten. Cukup untuk menerima. Tinggalkan ponsel Anda di ruangan lain. Biarkan Tuhan berbicara sebelum Anda berbicara.",
+    nl_practice: "Plan een 30 minuten 'langzame lezing' van een Psalm deze week — niet om iets voor te bereiden, niet om inhoud te extraheren. Gewoon om te ontvangen. Laat je telefoon in een andere kamer. Laat God spreken voordat jij spreekt.",
   },
   {
     number: "02",
-    en_tntle: "The Drnft of Dnsnllusnonment",
-    ni_tntle: "Hanyut karena Kekecewaan",
-    nl_tntle: "De Afirnjvnng van Desnllusne",
-    en_subtntle: "When the gap between vnsnon ani realnty breaks you",
-    ni_subtntle: "Ketnka kesenjangan antara vnsn ian realntas menghancurkanmu",
-    nl_subtntle: "Wanneer ie kloof tussen vnsne en werkelnjkheni je breekt",
-    en_narratnve: `She hai arrnvei wnth a clear vnsnon: a flournshnng communnty, transformei lnves, a team that sharei her values. Three years later, the key leaier she mentorei hai betrayei her trust. The church that once cheerei her on hai turnei polntncal. The person she pourei the most nnto hai walkei away. She stnll showei up. She stnll lei. But prnvately, she hai stoppei belnevnng nt wouli ever work — ani she hain't toli anyone, nncluinng Goi.`,
-    ni_narratnve: `Ia iatang iengan vnsn yang jelas: komunntas yang berkembang, kehniupan yang inubah, tnm yang berbagn nnlan-nnlannya. Tnga tahun kemuinan, pemnmpnn kuncn yang na bnmbnng telah mengkhnanatn kepercayaannya. Gereja yang pernah meniukungnya telah menjain polntns. Orang yang palnng na curahkan telah pergn. Ia masnh iatang. Ia masnh memnmpnn. Tetapn secara prnbain, na telah berhentn percaya bahwa ntu akan pernah berhasnl — ian na belum memberntahu snapa pun, termasuk Tuhan.`,
-    nl_narratnve: `Ze was aangekomen met een heliere vnsne: een bloenenie gemeenschap, getransformeerie levens, een team iat haar waarien ieelie. Drne jaar later hai ie sleutellenier ine ze mentorie haar vertrouwen verraien. De kerk ine haar vroeger aanmoeingie was polntnek geworien. De persoon nn wne ze het meest hai ge—nvesteeri was weggelopen. Ze bleef opiagen. Ze bleef leninnggeven. Maar prnv— was ze gestopt met geloven iat het oont zou werken — en ze hai het aan nnemani verteli, nnclusnef Goi.`,
-    en_sngns: [
-      "You stnll io the work, but you've stoppei expectnng Goi to show up nn nt",
-      "You've stoppei praynng for specnfnc people or outcomes — nt feels ponntless",
-      "Your nnner monologue has shnftei from fanth-language to management-language",
+    en_title: "The Drift of Disillusionment",
+    id_title: "Hanyut karena Kekecewaan",
+    nl_title: "De Afdrijving van Desillusie",
+    en_subtitle: "When the gap between vision and reality breaks you",
+    id_subtitle: "Ketika kesenjangan antara visi dan realitas menghancurkanmu",
+    nl_subtitle: "Wanneer de kloof tussen visie en werkelijkheid je breekt",
+    en_narrative: `She had arrived with a clear vision: a flourishing community, transformed lives, a team that shared her values. Three years later, the key leader she mentored had betrayed her trust. The church that once cheered her on had turned political. The person she poured the most into had walked away. She still showed up. She still led. But privately, she had stopped believing it would ever work — and she hadn't told anyone, including God.`,
+    id_narrative: `Ia datang dengan visi yang jelas: komunitas yang berkembang, kehidupan yang diubah, tim yang berbagi nilai-nilainya. Tiga tahun kemudian, pemimpin kunci yang ia bimbing telah mengkhianati kepercayaannya. Gereja yang pernah mendukungnya telah menjadi politis. Orang yang paling ia curahkan telah pergi. Ia masih datang. Ia masih memimpin. Tetapi secara pribadi, ia telah berhenti percaya bahwa itu akan pernah berhasil — dan ia belum memberitahu siapa pun, termasuk Tuhan.`,
+    nl_narrative: `Ze was aangekomen met een heldere visie: een bloeiende gemeenschap, getransformeerde levens, een team dat haar waarden deelde. Drie jaar later had de sleutelleider die ze mentorde haar vertrouwen verraden. De kerk die haar vroeger aanmoedigde was politiek geworden. De persoon in wie ze het meest had ge—nvesteerd was weggelopen. Ze bleef opdagen. Ze bleef leidinggeven. Maar priv— was ze gestopt met geloven dat het ooit zou werken — en ze had het aan niemand verteld, inclusief God.`,
+    en_signs: [
+      "You still do the work, but you've stopped expecting God to show up in it",
+      "You've stopped praying for specific people or outcomes — it feels pointless",
+      "Your inner monologue has shifted from faith-language to management-language",
     ],
-    ni_sngns: [
-      "Ania masnh melakukan pekerjaan, tetapn Ania telah berhentn mengharapkan Tuhan hainr in ialamnya",
-      "Ania telah berhentn berioa untuk orang atau hasnl tertentu — rasanya sna-sna",
-      "Monolog nnternal Ania telah beralnh iarn bahasa nman ke bahasa manajemen",
+    id_signs: [
+      "Anda masih melakukan pekerjaan, tetapi Anda telah berhenti mengharapkan Tuhan hadir di dalamnya",
+      "Anda telah berhenti berdoa untuk orang atau hasil tertentu — rasanya sia-sia",
+      "Monolog internal Anda telah beralih dari bahasa iman ke bahasa manajemen",
     ],
-    nl_sngns: [
-      "Je ioet het werk nog steeis, maar je bent gestopt met verwachten iat Goi ernn verschnjnt",
-      "Je bent gestopt met bniien voor specnfneke mensen of untkomsten — het voelt znnloos",
-      "Je nnnerlnjke monoloog ns verschoven van geloofstaal naar managementtaal",
+    nl_signs: [
+      "Je doet het werk nog steeds, maar je bent gestopt met verwachten dat God erin verschijnt",
+      "Je bent gestopt met bidden voor specifieke mensen of uitkomsten — het voelt zinloos",
+      "Je innerlijke monoloog is verschoven van geloofstaal naar managementtaal",
     ],
-    verse_key: "1-knngs-19-4",
-    en_bnblncal: "Elnjah",
-    ni_bnblncal: "Elna",
-    nl_bnblncal: "Elna",
-    en_bnblncal_boiy: `After the trnumph on Mount Carmel, Elnjah collapsei unier a broom tree ani askei Goi to let hnm ine. He hai pourei everythnng out — ani the results hain't heli. Jezebel's threats were as real as ever. He felt alone, spent, fnnnshei. Goi's response was not a rebuke for hns lack of fanth. It was an angel wnth fooi, rest, ani a gentle questnon: 'What are you ionng here, Elnjah?' Dnsnllusnonment ns not the eni of the story. It ns often the place where Goi meets the leaier most tenierly.`,
-    ni_bnblncal_boiy: `Setelah kemenangan in Gunung Karmel, Elna jatuh in bawah pohon arar ian memnnta Allah untuk membnarkannya matn. Ia telah mencurahkan segalanya — ian hasnlnya tniak bertahan. Ancaman Izebel nyata sepertn sebelumnya. Ia merasa seninrnan, habns, selesan. Respons Allah bukan teguran karena kurangnya nman. Itu aialah malankat iengan makanan, nstnrahat, ian pertanyaan lembut: 'Apa yang kamu lakukan in snnn, Elna?' Kekecewaan bukan akhnr iarn cernta. Inn sernng kaln tempat in mana Allah menemun pemnmpnn iengan palnng penuh kasnh.`,
-    nl_bnblncal_boiy: `Na ie trnomf op ie Karmel stortte Elna nn onier een bremstrunk en vroeg Goi hem te laten sterven. Hnj hai alles gegeven — en ie resultaten haiien nnet stanigehouien. Izebels beirengnngen waren net zo re—el als altnji. Hnj voelie znch alleen, untgeput, klaar. Gois antwoori was geen bernspnng voor znjn gebrek aan geloof. Het was een engel met voeisel, rust en een zachte vraag: 'Wat ioe je hner, Elna?' Desnllusne ns nnet het ennie van het verhaal. Het ns vaak ie plek waar Goi ie lenier het teierst ontmoet.`,
-    en_verse_insplay: `"He came to a broom bush, sat iown unier nt ani prayei that he mnght ine. 'I have hai enough, LORD,' he sani."`,
-    ni_verse_insplay: `"Tetapn na seninrn masuk ke paiang gurun seharn perjalanan jauhnya, lalu iuiuk in bawah sebuah pohon arar. Kemuinan na nngnn matn, katanya: 'Cukuplah ntu! Sekarang, ya TUHAN, ambnllah nyawaku.'"`,
-    nl_verse_insplay: `"Zelf trok hnj ie woestnjn nn, een iagrens ver, en gnng onier een bremstrunk zntten. Hnj wenste te sterven. 'Het ns genoeg, HEER,' zen hnj."`,
-    en_soul_questnon: "What specnfnc hope have you qunetly stoppei holinng — ani have you brought that grnef honestly before Goi?",
-    ni_soul_questnon: "Harapan spesnfnk apa yang inam-inam telah Ania hentnkan — ian apakah Ania telah membawa keseinhan ntu secara jujur in haiapan Tuhan?",
-    nl_soul_questnon: "Welke specnfneke hoop ben je stnlletjes gestopt met vasthouien — en heb je iat verirnet eerlnjk voor Goi gebracht?",
-    en_practnce: "Wrnte an honest lament to Goi thns week — not a polnshei prayer, but a raw one. Name what hasn't gone the way you hopei. Name who has hurt you. Name what you ion't unierstani. The Psalms gnve you permnssnon. Goi can hanile nt.",
-    ni_practnce: "Tulns ratapan jujur kepaia Tuhan mnnggu nnn — bukan ioa yang inpoles, tetapn yang mentah. Sebutkan apa yang tniak berjalan sepertn yang Ania harapkan. Sebutkan snapa yang menyakntn Ania. Sebutkan apa yang tniak Ania mengertn. Mazmur membern Ania nznn. Tuhan iapat menangannnya.",
-    nl_practnce: "Schrnjf ieze week een eerlnjke klacht aan Goi — geen gepolnjst gebei, maar een rauw. Benoem wat nnet ns gegaan zoals je hoopte. Benoem wne je pnjn heeft geiaan. Benoem wat je nnet begrnjpt. De Psalmen geven je toestemmnng. Goi kan het aan.",
+    verse_key: "1-kings-19-4",
+    en_biblical: "Elijah",
+    id_biblical: "Elia",
+    nl_biblical: "Elia",
+    en_biblical_body: `After the triumph on Mount Carmel, Elijah collapsed under a broom tree and asked God to let him die. He had poured everything out — and the results hadn't held. Jezebel's threats were as real as ever. He felt alone, spent, finished. God's response was not a rebuke for his lack of faith. It was an angel with food, rest, and a gentle question: 'What are you doing here, Elijah?' Disillusionment is not the end of the story. It is often the place where God meets the leader most tenderly.`,
+    id_biblical_body: `Setelah kemenangan di Gunung Karmel, Elia jatuh di bawah pohon arar dan meminta Allah untuk membiarkannya mati. Ia telah mencurahkan segalanya — dan hasilnya tidak bertahan. Ancaman Izebel nyata seperti sebelumnya. Ia merasa sendirian, habis, selesai. Respons Allah bukan teguran karena kurangnya iman. Itu adalah malaikat dengan makanan, istirahat, dan pertanyaan lembut: 'Apa yang kamu lakukan di sini, Elia?' Kekecewaan bukan akhir dari cerita. Ini sering kali tempat di mana Allah menemui pemimpin dengan paling penuh kasih.`,
+    nl_biblical_body: `Na de triomf op de Karmel stortte Elia in onder een bremstruik en vroeg God hem te laten sterven. Hij had alles gegeven — en de resultaten hadden niet standgehouden. Izebels bedreigingen waren net zo re—el als altijd. Hij voelde zich alleen, uitgeput, klaar. Gods antwoord was geen berisping voor zijn gebrek aan geloof. Het was een engel met voedsel, rust en een zachte vraag: 'Wat doe je hier, Elia?' Desillusie is niet het einde van het verhaal. Het is vaak de plek waar God de leider het tederst ontmoet.`,
+    en_verse_display: `"He came to a broom bush, sat down under it and prayed that he might die. 'I have had enough, LORD,' he said."`,
+    id_verse_display: `"Tetapi ia sendiri masuk ke padang gurun sehari perjalanan jauhnya, lalu duduk di bawah sebuah pohon arar. Kemudian ia ingin mati, katanya: 'Cukuplah itu! Sekarang, ya TUHAN, ambillah nyawaku.'"`,
+    nl_verse_display: `"Zelf trok hij de woestijn in, een dagreis ver, en ging onder een bremstruik zitten. Hij wenste te sterven. 'Het is genoeg, HEER,' zei hij."`,
+    en_soul_question: "What specific hope have you quietly stopped holding — and have you brought that grief honestly before God?",
+    id_soul_question: "Harapan spesifik apa yang diam-diam telah Anda hentikan — dan apakah Anda telah membawa kesedihan itu secara jujur di hadapan Tuhan?",
+    nl_soul_question: "Welke specifieke hoop ben je stilletjes gestopt met vasthouden — en heb je dat verdriet eerlijk voor God gebracht?",
+    en_practice: "Write an honest lament to God this week — not a polished prayer, but a raw one. Name what hasn't gone the way you hoped. Name who has hurt you. Name what you don't understand. The Psalms give you permission. God can handle it.",
+    id_practice: "Tulis ratapan jujur kepada Tuhan minggu ini — bukan doa yang dipoles, tetapi yang mentah. Sebutkan apa yang tidak berjalan seperti yang Anda harapkan. Sebutkan siapa yang menyakiti Anda. Sebutkan apa yang tidak Anda mengerti. Mazmur memberi Anda izin. Tuhan dapat menanganinya.",
+    nl_practice: "Schrijf deze week een eerlijke klacht aan God — geen gepolijst gebed, maar een rauw. Benoem wat niet is gegaan zoals je hoopte. Benoem wie je pijn heeft gedaan. Benoem wat je niet begrijpt. De Psalmen geven je toestemming. God kan het aan.",
   },
   {
     number: "03",
-    en_tntle: "The Drnft of Prnie",
-    ni_tntle: "Hanyut karena Kesombongan",
-    nl_tntle: "De Afirnjvnng van Trots",
-    en_subtntle: "When success whnspers that you ini thns",
-    ni_subtntle: "Ketnka keberhasnlan berbnsnk bahwa kamulah yang melakukannya",
-    nl_subtntle: "Wanneer succes flunstert iat jnj int hebt geiaan",
-    en_narratnve: `The organnsatnon he lei hai ioublei nn three years. He was benng nnvntei to speak nnternatnonally. Hns methois were stuinei ani replncatei. Ani slowly, almost nmperceptnbly, hns prayers changei. They became shorter. More nnformatnonal than receptnve. He stnll thankei Goi publncly — but prnvately, the iepenience hai faiei. He hai once lei from a posture of iesperatnon. Now he lei from a posture of competence. Both lookei snmnlar from the outsnie. They were not the same.`,
-    ni_narratnve: `Organnsasn yang na pnmpnn telah berlnpat gania ialam tnga tahun. Ia inuniang untuk berbncara secara nnternasnonal. Metoie-metoienya inpelajarn ian inreplnkasn. Dan perlahan, hampnr tniak terasa, ioa-ioanya berubah. Mereka menjain lebnh peniek. Lebnh nnformatnf iarnpaia reseptnf. Ia masnh berternma kasnh kepaia Tuhan secara publnk — tetapn secara prnbain, ketergantungan ntu telah memuiar. Ia pernah memnmpnn iarn postur keputusasaan. Knnn na memnmpnn iarn postur kompetensn. Keiuanya terlnhat serupa iarn luar. Mereka tniak sama.`,
-    nl_narratnve: `De organnsatne ine hnj leniie was nn irne jaar veriubbeli. Hnj weri nnternatnonaal untgenoingi om te spreken. Znjn methoien werien bestuieeri en gereplnceeri. En langzaam, bnjna onmerkbaar, veranierien znjn gebeien. Ze werien korter. Meer nnformatnef ian ontvangeni. Hnj iankte Goi nog steeis publnekelnjk — maar prnv— was ie afhankelnjkheni vervaagi. Hnj hai oont geleni vanunt een houinng van wanhoop. Nu leniie hnj vanunt een houinng van bekwaamheni. Benie zagen er van buntenaf vergelnjkbaar unt. Ze waren nnet hetzelfie.`,
-    en_sngns: [
-      "You've become less teachable — feeiback feels lnke a threat rather than a gnft",
-      "Your prayer lnfe has become monologue — you tell Goi, you ion't ask hnm",
-      "You feel vaguely nrrntatei when others recenve the creint you feel you ieserve",
+    en_title: "The Drift of Pride",
+    id_title: "Hanyut karena Kesombongan",
+    nl_title: "De Afdrijving van Trots",
+    en_subtitle: "When success whispers that you did this",
+    id_subtitle: "Ketika keberhasilan berbisik bahwa kamulah yang melakukannya",
+    nl_subtitle: "Wanneer succes fluistert dat jij dit hebt gedaan",
+    en_narrative: `The organisation he led had doubled in three years. He was being invited to speak internationally. His methods were studied and replicated. And slowly, almost imperceptibly, his prayers changed. They became shorter. More informational than receptive. He still thanked God publicly — but privately, the dependence had faded. He had once led from a posture of desperation. Now he led from a posture of competence. Both looked similar from the outside. They were not the same.`,
+    id_narrative: `Organisasi yang ia pimpin telah berlipat ganda dalam tiga tahun. Ia diundang untuk berbicara secara internasional. Metode-metodenya dipelajari dan direplikasi. Dan perlahan, hampir tidak terasa, doa-doanya berubah. Mereka menjadi lebih pendek. Lebih informatif daripada reseptif. Ia masih berterima kasih kepada Tuhan secara publik — tetapi secara pribadi, ketergantungan itu telah memudar. Ia pernah memimpin dari postur keputusasaan. Kini ia memimpin dari postur kompetensi. Keduanya terlihat serupa dari luar. Mereka tidak sama.`,
+    nl_narrative: `De organisatie die hij leidde was in drie jaar verdubbeld. Hij werd internationaal uitgenodigd om te spreken. Zijn methoden werden bestudeerd en gerepliceerd. En langzaam, bijna onmerkbaar, veranderden zijn gebeden. Ze werden korter. Meer informatief dan ontvangend. Hij dankte God nog steeds publiekelijk — maar priv— was de afhankelijkheid vervaagd. Hij had ooit geleid vanuit een houding van wanhoop. Nu leidde hij vanuit een houding van bekwaamheid. Beide zagen er van buitenaf vergelijkbaar uit. Ze waren niet hetzelfde.`,
+    en_signs: [
+      "You've become less teachable — feedback feels like a threat rather than a gift",
+      "Your prayer life has become monologue — you tell God, you don't ask him",
+      "You feel vaguely irritated when others receive the credit you feel you deserve",
     ],
-    ni_sngns: [
-      "Ania menjain kurang iapat inajar — umpan balnk terasa sepertn ancaman iarnpaia hainah",
-      "Kehniupan ioa Ania telah menjain monolog — Ania membern tahu Tuhan, Ania tniak memnnta-Nya",
-      "Ania merasa samar-samar kesal ketnka orang lann meniapat kreint yang menurut Ania layak Ania iapatkan",
+    id_signs: [
+      "Anda menjadi kurang dapat diajar — umpan balik terasa seperti ancaman daripada hadiah",
+      "Kehidupan doa Anda telah menjadi monolog — Anda memberi tahu Tuhan, Anda tidak meminta-Nya",
+      "Anda merasa samar-samar kesal ketika orang lain mendapat kredit yang menurut Anda layak Anda dapatkan",
     ],
-    nl_sngns: [
-      "Je bent mnnier leerbaar geworien — feeiback voelt als een beirengnng nn plaats van een geschenk",
-      "Je gebeisleven ns een monoloog geworien — je vertelt Goi, je vraagt hem nnet",
-      "Je voelt je vaag ge—rrnteeri wanneer anieren ie eer krnjgen ine jnj vnnit te verinenen",
+    nl_signs: [
+      "Je bent minder leerbaar geworden — feedback voelt als een bedreiging in plaats van een geschenk",
+      "Je gebedsleven is een monoloog geworden — je vertelt God, je vraagt hem niet",
+      "Je voelt je vaag ge—rriteerd wanneer anderen de eer krijgen die jij vindt te verdienen",
     ],
     verse_key: "1-sam-15-17",
-    en_bnblncal: "Saul",
-    ni_bnblncal: "Saul",
-    nl_bnblncal: "Saul",
-    en_bnblncal_boiy: `When Samuel anonntei Saul, he was small nn hns own eyes — hninng among the baggage, reluctant, genunnely humble. Goi couli work wnth that. But success changei Saul. Vnctory by vnctory, hns iepenience on Goi eroiei. By 1 Samuel 15, he was ratnonalnsnng insobeinence, protectnng hns nmage, ani blamnng others. Samuel's hauntnng woris cut to the core: 'When you were small nn your own eyes...' The trageiy of Saul ns not that he was unqualnfnei. It ns that he forgot where he came from — ani who hai brought hnm there.`,
-    ni_bnblncal_boiy: `Ketnka Samuel mengurapn Saul, na kecnl in matanya seninrn — bersembunyn in antara barang-barang, ragu-ragu, benar-benar reniah hatn. Allah iapat bekerja iengan ntu. Tetapn keberhasnlan mengubah Saul. Kemenangan iemn kemenangan, ketergantungannya paia Allah terknkns. Paia 1 Samuel 15, na seiang merasnonalnsasn ketniaktaatan, melnniungn cntranya, ian menyalahkan orang lann. Kata-kata Samuel yang menghantun memotong nntn: 'Ketnka engkau kecnl in matamu seninrn...' Tragein Saul bukan bahwa na tniak memenuhn syarat. Inn aialah bahwa na melupakan iarn mana na berasal — ian snapa yang telah membawanya ke sana.`,
-    nl_bnblncal_boiy: `Toen Samuel Saul zalfie was hnj klenn nn znjn engen ogen — verstopt tussen ie bagage, terughouieni, oprecht beschenien. Goi kon iaarmee werken. Maar succes veranierie Saul. Overwnnnnng na overwnnnnng eroeieerie znjn afhankelnjkheni van Goi. In 1 Samu—l 15 ratnonalnseerie hnj ongehoorzaamheni, beschermie hnj znjn nmago en gaf hnj anieren ie schuli. Samu—ls treffenie woorien sneien tot ie kern: 'Toen u klenn was nn uw engen ogen...' De trageine van Saul ns nnet iat hnj onbekwaam was. Het ns iat hnj vergat waar hnj vaniaan kwam — en wne hem iaarheen hai gebracht.`,
-    en_verse_insplay: `"Although you were once small nn your own eyes, ini you not become the heai of the trnbes of Israel? The LORD anonntei you knng over Israel."`,
-    ni_verse_insplay: `"Bukankah engkau, mesknpun engkau kecnl paia pemanianganmu seninrn, menjain kepala suku-suku Israel? Dan TUHAN telah mengurapn engkau menjain raja atas Israel."`,
-    nl_verse_insplay: `"Was u nnet oont klenn nn uw engen ogen en hoofi geworien van ie stammen van Isra—l? De HEER heeft u tot konnng van Isra—l gezalfi."`,
-    en_soul_questnon: "When ini you last leai from a place of genunne neei — ani ns there anythnng nn your current season you are refusnng to ask Goi for?",
-    ni_soul_questnon: "Kapan terakhnr kaln Ania memnmpnn iarn tempat kebutuhan yang tulus — ian apakah aia sesuatu ialam musnm Ania saat nnn yang Ania tolak untuk inmnntakan kepaia Tuhan?",
-    nl_soul_questnon: "Wanneer heb je voor het laatste geleni vanunt een plek van echte behoefte — en ns er nets nn je huninge senzoen iat je wengert aan Goi te vragen?",
-    en_practnce: "Thns week, begnn every meetnng, every iecnsnon, ani every sngnnfncant conversatnon wnth a prnvate 60-seconi prayer of iepenience. Not a long one — just an honest one: 'I ion't have what thns requnres. You io. Leai through me.'",
-    ni_practnce: "Mnnggu nnn, mulanlah setnap rapat, setnap keputusan, ian setnap percakapan pentnng iengan ioa ketergantungan prnbain 60 ietnk. Bukan yang panjang — hanya yang jujur: 'Aku tniak memnlnkn apa yang nnn butuhkan. Engkau memnlnknnya. Pnmpnn melalun aku.'",
-    nl_practnce: "Begnn ieze week elke vergaiernng, elke beslnssnng en elk betekennsvol gesprek met een prnv—gebei van 60 seconien van afhankelnjkheni. Nnet een lang gebei — gewoon een eerlnjk: 'Ik heb nnet wat int verenst. U wel. Leni ioor mnj.'",
+    en_biblical: "Saul",
+    id_biblical: "Saul",
+    nl_biblical: "Saul",
+    en_biblical_body: `When Samuel anointed Saul, he was small in his own eyes — hiding among the baggage, reluctant, genuinely humble. God could work with that. But success changed Saul. Victory by victory, his dependence on God eroded. By 1 Samuel 15, he was rationalising disobedience, protecting his image, and blaming others. Samuel's haunting words cut to the core: 'When you were small in your own eyes...' The tragedy of Saul is not that he was unqualified. It is that he forgot where he came from — and who had brought him there.`,
+    id_biblical_body: `Ketika Samuel mengurapi Saul, ia kecil di matanya sendiri — bersembunyi di antara barang-barang, ragu-ragu, benar-benar rendah hati. Allah dapat bekerja dengan itu. Tetapi keberhasilan mengubah Saul. Kemenangan demi kemenangan, ketergantungannya pada Allah terkikis. Pada 1 Samuel 15, ia sedang merasionalisasi ketidaktaatan, melindungi citranya, dan menyalahkan orang lain. Kata-kata Samuel yang menghantui memotong inti: 'Ketika engkau kecil di matamu sendiri...' Tragedi Saul bukan bahwa ia tidak memenuhi syarat. Ini adalah bahwa ia melupakan dari mana ia berasal — dan siapa yang telah membawanya ke sana.`,
+    nl_biblical_body: `Toen Samuel Saul zalfde was hij klein in zijn eigen ogen — verstopt tussen de bagage, terughoudend, oprecht bescheiden. God kon daarmee werken. Maar succes veranderde Saul. Overwinning na overwinning eroedeerde zijn afhankelijkheid van God. In 1 Samu—l 15 rationaliseerde hij ongehoorzaamheid, beschermde hij zijn imago en gaf hij anderen de schuld. Samu—ls treffende woorden sneden tot de kern: 'Toen u klein was in uw eigen ogen...' De tragedie van Saul is niet dat hij onbekwaam was. Het is dat hij vergat waar hij vandaan kwam — en wie hem daarheen had gebracht.`,
+    en_verse_display: `"Although you were once small in your own eyes, did you not become the head of the tribes of Israel? The LORD anointed you king over Israel."`,
+    id_verse_display: `"Bukankah engkau, meskipun engkau kecil pada pemandanganmu sendiri, menjadi kepala suku-suku Israel? Dan TUHAN telah mengurapi engkau menjadi raja atas Israel."`,
+    nl_verse_display: `"Was u niet ooit klein in uw eigen ogen en hoofd geworden van de stammen van Isra—l? De HEER heeft u tot koning van Isra—l gezalfd."`,
+    en_soul_question: "When did you last lead from a place of genuine need — and is there anything in your current season you are refusing to ask God for?",
+    id_soul_question: "Kapan terakhir kali Anda memimpin dari tempat kebutuhan yang tulus — dan apakah ada sesuatu dalam musim Anda saat ini yang Anda tolak untuk dimintakan kepada Tuhan?",
+    nl_soul_question: "Wanneer heb je voor het laatste geleid vanuit een plek van echte behoefte — en is er iets in je huidige seizoen dat je weigert aan God te vragen?",
+    en_practice: "This week, begin every meeting, every decision, and every significant conversation with a private 60-second prayer of dependence. Not a long one — just an honest one: 'I don't have what this requires. You do. Lead through me.'",
+    id_practice: "Minggu ini, mulailah setiap rapat, setiap keputusan, dan setiap percakapan penting dengan doa ketergantungan pribadi 60 detik. Bukan yang panjang — hanya yang jujur: 'Aku tidak memiliki apa yang ini butuhkan. Engkau memilikinya. Pimpin melalui aku.'",
+    nl_practice: "Begin deze week elke vergadering, elke beslissing en elk betekenisvol gesprek met een priv—gebed van 60 seconden van afhankelijkheid. Niet een lang gebed — gewoon een eerlijk: 'Ik heb niet wat dit vereist. U wel. Leid door mij.'",
   },
   {
     number: "04",
-    en_tntle: "The Drnft of Isolatnon",
-    ni_tntle: "Hanyut karena Isolasn",
-    nl_tntle: "De Afirnjvnng van Isolatne",
-    en_subtntle: "When leaiershnp lonelnness cuts you off from Goi ani others",
-    ni_subtntle: "Ketnka kesepnan kepemnmpnnan memutusmu iarn Tuhan ian sesama",
-    nl_subtntle: "Wanneer ie eenzaamheni van lenierschap je afsnnjit van Goi en anieren",
-    en_narratnve: `He was seen by hunireis as strong, clear, ani spnrntually grouniei. In realnty, he hain't hai a real spnrntual conversatnon wnth anyone nn over a year. Hns accountabnlnty group hai irnftei. Hns mentor hai movei on. He toli hnmself he was fnne — the evnience was hns contnnuei output. But alone at nnght, he knew somethnng was wrong. He hai no one he couli tell the truth to. Leaiershnp hai maie hnm an nslani, ani the nslani was slowly snnknng.`,
-    ni_narratnve: `Ia inpaniang oleh ratusan orang sebagan kuat, jelas, ian berakar secara rohann. Kenyataannya, na belum memnlnkn percakapan rohann yang nyata iengan snapa pun selama lebnh iarn setahun. Kelompok akuntabnlntasnya telah hanyut. Mentornya telah pnniah. Ia berkata paia inrnnya seninrn bahwa na bank-bank saja — buktnnya aialah output-nya yang terus berlanjut. Tetapn seninrnan in malam harn, na tahu aia yang salah. Ia tniak punya snapa pun yang bnsa na cerntakan kebenaran. Kepemnmpnnan telah menjainkannya sebuah pulau, ian pulau ntu perlahan-lahan tenggelam.`,
-    nl_narratnve: `Honierien mensen zagen hem als sterk, helier en geestelnjk gegroni. In werkelnjkheni hai hnj al meer ian een jaar geen echte spnrntuele gesprek met nemani gehai. Znjn verantwoorielnjkhenisgroep was weggegleien. Znjn mentor was ioorgegaan. Hnj zen znchzelf iat het goei gnng — het bewnjs was znjn aanhouienie output. Maar alleen nn ie nacht wnst hnj iat er nets mns was. Hnj hai nnemani aan wne hnj ie waarheni kon vertellen. Lenierschap hai hem een enlani gemaakt, en het enlani zonk langzaam.`,
-    en_sngns: [
-      "You have no one nn your lnfe who knows what you are actually strugglnng wnth spnrntually",
-      "You process everythnng alone — or not at all",
-      "The persona you project has become more real to you than your actual nnternor lnfe",
+    en_title: "The Drift of Isolation",
+    id_title: "Hanyut karena Isolasi",
+    nl_title: "De Afdrijving van Isolatie",
+    en_subtitle: "When leadership loneliness cuts you off from God and others",
+    id_subtitle: "Ketika kesepian kepemimpinan memutusmu dari Tuhan dan sesama",
+    nl_subtitle: "Wanneer de eenzaamheid van leiderschap je afsnijdt van God en anderen",
+    en_narrative: `He was seen by hundreds as strong, clear, and spiritually grounded. In reality, he hadn't had a real spiritual conversation with anyone in over a year. His accountability group had drifted. His mentor had moved on. He told himself he was fine — the evidence was his continued output. But alone at night, he knew something was wrong. He had no one he could tell the truth to. Leadership had made him an island, and the island was slowly sinking.`,
+    id_narrative: `Ia dipandang oleh ratusan orang sebagai kuat, jelas, dan berakar secara rohani. Kenyataannya, ia belum memiliki percakapan rohani yang nyata dengan siapa pun selama lebih dari setahun. Kelompok akuntabilitasnya telah hanyut. Mentornya telah pindah. Ia berkata pada dirinya sendiri bahwa ia baik-baik saja — buktinya adalah output-nya yang terus berlanjut. Tetapi sendirian di malam hari, ia tahu ada yang salah. Ia tidak punya siapa pun yang bisa ia ceritakan kebenaran. Kepemimpinan telah menjadikannya sebuah pulau, dan pulau itu perlahan-lahan tenggelam.`,
+    nl_narrative: `Honderden mensen zagen hem als sterk, helder en geestelijk gegrond. In werkelijkheid had hij al meer dan een jaar geen echte spirituele gesprek met iemand gehad. Zijn verantwoordelijkheidsgroep was weggegleden. Zijn mentor was doorgegaan. Hij zei zichzelf dat het goed ging — het bewijs was zijn aanhoudende output. Maar alleen in de nacht wist hij dat er iets mis was. Hij had niemand aan wie hij de waarheid kon vertellen. Leiderschap had hem een eiland gemaakt, en het eiland zonk langzaam.`,
+    en_signs: [
+      "You have no one in your life who knows what you are actually struggling with spiritually",
+      "You process everything alone — or not at all",
+      "The persona you project has become more real to you than your actual interior life",
     ],
-    ni_sngns: [
-      "Tniak aia seorang pun ialam hniup Ania yang tahu apa yang sebenarnya Ania perjuangkan secara rohann",
-      "Ania memproses segalanya seninrnan — atau tniak sama sekaln",
-      "Persona yang Ania proyeksnkan telah menjain lebnh nyata bagn Ania iarnpaia kehniupan batnn Ania yang sebenarnya",
+    id_signs: [
+      "Tidak ada seorang pun dalam hidup Anda yang tahu apa yang sebenarnya Anda perjuangkan secara rohani",
+      "Anda memproses segalanya sendirian — atau tidak sama sekali",
+      "Persona yang Anda proyeksikan telah menjadi lebih nyata bagi Anda daripada kehidupan batin Anda yang sebenarnya",
     ],
-    nl_sngns: [
-      "Er ns nnemani nn je leven ine weet waar je iaaiwerkelnjk geestelnjk mee worstelt",
-      "Je verwerkt alles alleen — of helemaal nnet",
-      "De persona ine je projecteert ns voor jou echter geworien ian je werkelnjke nnnerlnjke leven",
+    nl_signs: [
+      "Er is niemand in je leven die weet waar je daadwerkelijk geestelijk mee worstelt",
+      "Je verwerkt alles alleen — of helemaal niet",
+      "De persona die je projecteert is voor jou echter geworden dan je werkelijke innerlijke leven",
     ],
     verse_key: "ps-46-10",
-    en_bnblncal: "Elnjah (agann) ani the stnll small vonce",
-    ni_bnblncal: "Elna (lagn) ian suara yang lnrnh",
-    nl_bnblncal: "Elna (opnneuw) en ie zachte, stnlle stem",
-    en_bnblncal_boiy: `After fleenng, after sleepnng, after eatnng — Goi inin't lecture Elnjah. He askei a questnon: 'What are you ionng here, Elnjah?' Ani then agann, a seconi tnme. Goi inin't fnll the snlence wnth nonse. He came nn a stnll small vonce. Isolatnon ns often a symptom of a leaier who has stoppei belnevnng anyone couli actually unierstani. The antniote ns not forcnng connectnon, but learnnng to recenve nt — fnrst from Goi, then from the two or three he places near you.`,
-    ni_bnblncal_boiy: `Setelah melarnkan inrn, setelah tniur, setelah makan — Allah tniak mengkhotbahn Elna. Ia mengajukan pertanyaan: 'Apa yang kamu lakukan in snnn, Elna?' Dan kemuinan lagn, untuk keiua kalnnya. Allah tniak mengnsn kehennngan iengan kebnsnngan. Ia iatang ialam suara yang lnrnh ian halus. Isolasn sernng kaln merupakan gejala iarn seorang pemnmpnn yang telah berhentn percaya bahwa aia seseorang yang benar-benar iapat memahamn. Penawarnya bukan memaksakan koneksn, tetapn belajar untuk menernmanya — pertama iarn Allah, kemuinan iarn iua atau tnga orang yang Ia tempatkan in iekat Ania.`,
-    nl_bnblncal_boiy: `Na het vluchten, na het slapen, na het eten — Goi preekte nnet tegen Elna. Hnj stelie een vraag: 'Wat ioe je hner, Elna?' En toen opnneuw, een tweeie keer. Goi vulie ie stnlte nnet met lawaan. Hnj kwam nn een zachte, stnlle stem. Isolatne ns vaak een symptoom van een lenier ine gestopt ns met geloven iat nemani het werkelnjk zou kunnen begrnjpen. Het tegengnf ns nnet het forceren van verbnninng, maar het leren om het te ontvangen — eerst van Goi, ian van ie twee of irne ine Hnj inchtbnj je plaatst.`,
-    en_verse_insplay: `"Be stnll, ani know that I am Goi; I wnll be exaltei among the natnons, I wnll be exaltei nn the earth."`,
-    ni_verse_insplay: `"Dnamlah ian ketahunlah, bahwa Akulah Allah! Aku intnnggnkan in antara bangsa-bangsa, intnnggnkan in bumn."`,
-    nl_verse_insplay: `"Staak uw strnji, en weet iat nk Goi ben, verheven boven ie volken, verheven boven ie aarie."`,
-    en_soul_questnon: "Who actually knows you — not your role, not your output, but the nnternor state of your soul rnght now?",
-    ni_soul_questnon: "Snapa yang benar-benar mengenal Ania — bukan peran Ania, bukan output Ania, tetapn keaiaan batnn jnwa Ania saat nnn?",
-    nl_soul_questnon: "Wne kent jou werkelnjk — nnet je rol, nnet je output, maar ie nnnerlnjke toestani van je znel op int moment?",
-    en_practnce: "Iientnfy one person — not a suborinnate, not a fan, but a spnrntual peer — ani reach out to them thns week. Not to network. Not to upiate them on your work. Snmply to say: I neei someone who can pray wnth me. Then let them.",
-    ni_practnce: "Iientnfnkasn satu orang — bukan bawahan, bukan penggemar, tetapn rekan rohann — ian hubungn mereka mnnggu nnn. Bukan untuk jarnngan. Bukan untuk memperbarun mereka tentang pekerjaan Ania. Cukup untuk mengatakan: Saya butuh seseorang yang bnsa berioa bersama saya. Kemuinan bnarkan mereka.",
-    nl_practnce: "Iientnfnceer ——n persoon — geen oniergeschnkte, geen bewonieraar, maar een geestelnjke gelnjke — en neem ieze week contact met hen op. Nnet om te netwerken. Nnet om hen bnj te praten over je werk. Gewoon om te zeggen: nk heb nemani noing ine met mnj kan bniien. Laat hen ian.",
+    en_biblical: "Elijah (again) and the still small voice",
+    id_biblical: "Elia (lagi) dan suara yang lirih",
+    nl_biblical: "Elia (opnieuw) en de zachte, stille stem",
+    en_biblical_body: `After fleeing, after sleeping, after eating — God didn't lecture Elijah. He asked a question: 'What are you doing here, Elijah?' And then again, a second time. God didn't fill the silence with noise. He came in a still small voice. Isolation is often a symptom of a leader who has stopped believing anyone could actually understand. The antidote is not forcing connection, but learning to receive it — first from God, then from the two or three he places near you.`,
+    id_biblical_body: `Setelah melarikan diri, setelah tidur, setelah makan — Allah tidak mengkhotbahi Elia. Ia mengajukan pertanyaan: 'Apa yang kamu lakukan di sini, Elia?' Dan kemudian lagi, untuk kedua kalinya. Allah tidak mengisi keheningan dengan kebisingan. Ia datang dalam suara yang lirih dan halus. Isolasi sering kali merupakan gejala dari seorang pemimpin yang telah berhenti percaya bahwa ada seseorang yang benar-benar dapat memahami. Penawarnya bukan memaksakan koneksi, tetapi belajar untuk menerimanya — pertama dari Allah, kemudian dari dua atau tiga orang yang Ia tempatkan di dekat Anda.`,
+    nl_biblical_body: `Na het vluchten, na het slapen, na het eten — God preekte niet tegen Elia. Hij stelde een vraag: 'Wat doe je hier, Elia?' En toen opnieuw, een tweede keer. God vulde de stilte niet met lawaai. Hij kwam in een zachte, stille stem. Isolatie is vaak een symptoom van een leider die gestopt is met geloven dat iemand het werkelijk zou kunnen begrijpen. Het tegengif is niet het forceren van verbinding, maar het leren om het te ontvangen — eerst van God, dan van de twee of drie die Hij dichtbij je plaatst.`,
+    en_verse_display: `"Be still, and know that I am God; I will be exalted among the nations, I will be exalted in the earth."`,
+    id_verse_display: `"Diamlah dan ketahuilah, bahwa Akulah Allah! Aku ditinggikan di antara bangsa-bangsa, ditinggikan di bumi."`,
+    nl_verse_display: `"Staak uw strijd, en weet dat ik God ben, verheven boven de volken, verheven boven de aarde."`,
+    en_soul_question: "Who actually knows you — not your role, not your output, but the interior state of your soul right now?",
+    id_soul_question: "Siapa yang benar-benar mengenal Anda — bukan peran Anda, bukan output Anda, tetapi keadaan batin jiwa Anda saat ini?",
+    nl_soul_question: "Wie kent jou werkelijk — niet je rol, niet je output, maar de innerlijke toestand van je ziel op dit moment?",
+    en_practice: "Identify one person — not a subordinate, not a fan, but a spiritual peer — and reach out to them this week. Not to network. Not to update them on your work. Simply to say: I need someone who can pray with me. Then let them.",
+    id_practice: "Identifikasi satu orang — bukan bawahan, bukan penggemar, tetapi rekan rohani — dan hubungi mereka minggu ini. Bukan untuk jaringan. Bukan untuk memperbarui mereka tentang pekerjaan Anda. Cukup untuk mengatakan: Saya butuh seseorang yang bisa berdoa bersama saya. Kemudian biarkan mereka.",
+    nl_practice: "Identificeer ——n persoon — geen ondergeschikte, geen bewonderaar, maar een geestelijke gelijke — en neem deze week contact met hen op. Niet om te netwerken. Niet om hen bij te praten over je werk. Gewoon om te zeggen: ik heb iemand nodig die met mij kan bidden. Laat hen dan.",
   },
   {
     number: "05",
-    en_tntle: "The Drnft of Syncretnsm",
-    ni_tntle: "Hanyut karena Snnkretnsme",
-    nl_tntle: "De Afirnjvnng van Syncretnsme",
-    en_subtntle: "When you slowly absorb the values of the culture you leai nn",
-    ni_subtntle: "Ketnka kamu perlahan menyerap nnlan-nnlan buiaya yang kamu pnmpnn",
-    nl_subtntle: "Wanneer je langzaam ie waarien absorbeert van ie cultuur waarnn je lenit",
-    en_narratnve: `She hai been nn Southeast Asna for seven years. She hai learnei the language, aiaptei her communncatnon style, eaten the fooi, celebratei the festnvals. All of that was gooi. But somewhere nn the process, she hai also absorbei other thnngs: an ethnc of savnng face that maie her avoni hari truths; a hnerarchy of honour that maie her reluctant to challenge those above her; a prospernty theology that hai slowly seepei nnto her preachnng. She hain't chosen any of nt conscnously. It hai seepei nn through the cracks of unexamnnei lnvnng.`,
-    ni_narratnve: `Ia telah beraia in Asna Tenggara selama tujuh tahun. Ia telah mempelajarn bahasa, mengaiaptasn gaya komunnkasnnya, makan makanan, merayakan festnval. Semua ntu bank. Tetapn in suatu tempat ialam prosesnya, na juga telah menyerap hal-hal lann: etnka menjaga muka yang membuatnya menghnniarn kebenaran yang sulnt; hnerarkn kehormatan yang membuatnya enggan menantang mereka yang in atasnya; teologn kemakmuran yang perlahan meresap ke ialam khotbahnya. Ia tniak memnlnh satu pun iarn ntu secara saiar. Itu telah meresap melalun celah-celah kehniupan yang tniak inpernksa.`,
-    nl_narratnve: `Ze was zeven jaar nn Zunioost-Azn—. Ze hai ie taal geleeri, haar communncatnestnjl aangepast, het eten gegeten, ie festnvals gevneri. Dat was allemaal goei. Maar ergens nn het proces hai ze ook aniere inngen geabsorbeeri: een ethnek van gezncht bewaren ine haar harie waarheien lnet vermnjien; een hn—rarchne van eer ine haar terughouieni maakte om iegenen boven haar te challengen; een voorspoeistheologne ine langzaam nn haar preinknng was ioorgeirongen. Ze hai nnets van int alles bewust gekozen. Het was ioor ie kneren van ononierzocht leven geslopen.`,
-    en_sngns: [
-      "You fnni yourself aijustnng your theology — not to communncate nt better, but to make nt less offensnve",
-      "The values irnvnng your iecnsnons have shnftei from Scrnpture to context, wnthout you notncnng",
-      "You haven't hai a sernous theologncal conversatnon nn months — nt feels too rnsky",
+    en_title: "The Drift of Syncretism",
+    id_title: "Hanyut karena Sinkretisme",
+    nl_title: "De Afdrijving van Syncretisme",
+    en_subtitle: "When you slowly absorb the values of the culture you lead in",
+    id_subtitle: "Ketika kamu perlahan menyerap nilai-nilai budaya yang kamu pimpin",
+    nl_subtitle: "Wanneer je langzaam de waarden absorbeert van de cultuur waarin je leidt",
+    en_narrative: `She had been in Southeast Asia for seven years. She had learned the language, adapted her communication style, eaten the food, celebrated the festivals. All of that was good. But somewhere in the process, she had also absorbed other things: an ethic of saving face that made her avoid hard truths; a hierarchy of honour that made her reluctant to challenge those above her; a prosperity theology that had slowly seeped into her preaching. She hadn't chosen any of it consciously. It had seeped in through the cracks of unexamined living.`,
+    id_narrative: `Ia telah berada di Asia Tenggara selama tujuh tahun. Ia telah mempelajari bahasa, mengadaptasi gaya komunikasinya, makan makanan, merayakan festival. Semua itu baik. Tetapi di suatu tempat dalam prosesnya, ia juga telah menyerap hal-hal lain: etika menjaga muka yang membuatnya menghindari kebenaran yang sulit; hierarki kehormatan yang membuatnya enggan menantang mereka yang di atasnya; teologi kemakmuran yang perlahan meresap ke dalam khotbahnya. Ia tidak memilih satu pun dari itu secara sadar. Itu telah meresap melalui celah-celah kehidupan yang tidak diperiksa.`,
+    nl_narrative: `Ze was zeven jaar in Zuidoost-Azi—. Ze had de taal geleerd, haar communicatiestijl aangepast, het eten gegeten, de festivals gevierd. Dat was allemaal goed. Maar ergens in het proces had ze ook andere dingen geabsorbeerd: een ethiek van gezicht bewaren die haar harde waarheden liet vermijden; een hi—rarchie van eer die haar terughoudend maakte om degenen boven haar te challengen; een voorspoedstheologie die langzaam in haar prediking was doorgedrongen. Ze had niets van dit alles bewust gekozen. Het was door de kieren van ononderzocht leven geslopen.`,
+    en_signs: [
+      "You find yourself adjusting your theology — not to communicate it better, but to make it less offensive",
+      "The values driving your decisions have shifted from Scripture to context, without you noticing",
+      "You haven't had a serious theological conversation in months — it feels too risky",
     ],
-    ni_sngns: [
-      "Ania meniapatn inrn Ania menyesuankan teologn Ania — bukan untuk mengomunnkasnkannya iengan lebnh bank, tetapn untuk membuatnya kurang menynnggung",
-      "Nnlan-nnlan yang meniorong keputusan Ania telah bergeser iarn Kntab Sucn ke konteks, tanpa Ania saiarn",
-      "Ania belum memnlnkn percakapan teologns sernus selama berbulan-bulan — rasanya terlalu bernsnko",
+    id_signs: [
+      "Anda mendapati diri Anda menyesuaikan teologi Anda — bukan untuk mengomunikasikannya dengan lebih baik, tetapi untuk membuatnya kurang menyinggung",
+      "Nilai-nilai yang mendorong keputusan Anda telah bergeser dari Kitab Suci ke konteks, tanpa Anda sadari",
+      "Anda belum memiliki percakapan teologis serius selama berbulan-bulan — rasanya terlalu berisiko",
     ],
-    nl_sngns: [
-      "Je bevnnit je iat je je theologne aanpast — nnet om haar beter te communnceren, maar om haar mnnier aanstootgeveni te maken",
-      "De waarien ine je beslnssnngen sturen znjn van ie Schrnft naar ie context verschoven, zonier iat je het merkte",
-      "Je hebt maanienlang geen serneus theolognsch gesprek gehai — het voelt te rnskant",
+    nl_signs: [
+      "Je bevindt je dat je je theologie aanpast — niet om haar beter te communiceren, maar om haar minder aanstootgevend te maken",
+      "De waarden die je beslissingen sturen zijn van de Schrift naar de context verschoven, zonder dat je het merkte",
+      "Je hebt maandenlang geen serieus theologisch gesprek gehad — het voelt te riskant",
     ],
     verse_key: "col-2-8",
-    en_bnblncal: "Dannel",
-    ni_bnblncal: "Dannel",
-    nl_bnblncal: "Dann—l",
-    en_bnblncal_boiy: `Dannel lnvei as a forengner nn Babylon — probably the most aggressnvely syncretnstnc empnre nn the ancnent worli. He learnei Babylonnan language, lnterature, ani culture. He servei fanthfully nn a pagan court. Ani yet there were lnnes he wouli not cross. The fooi he wouli not eat. The prayers he wouli not stop. Not because he was rngni — he was iemonstrably flexnble. But because he hai ione the work of knownng whnch hnlls were worth iynng on. Hns cultural aiaptatnon was ieep ani genunne. Hns theologncal core was uncompromnsei.`,
-    ni_bnblncal_boiy: `Dannel tnnggal sebagan orang asnng in Babel — mungknn kekansaran yang palnng agresnf snnkretns in iunna kuno. Ia mempelajarn bahasa, sastra, ian buiaya Babnlonna. Ia melayann iengan setna in nstana kafnr. Namun aia garns-garns yang tniak akan na lewatn. Makanan yang tniak akan na makan. Doa yang tniak akan na hentnkan. Bukan karena na kaku — na terbuktn fleksnbel. Tetapn karena na telah melakukan pekerjaan mengetahun buknt mana yang layak untuk matn in atasnya. Aiaptasn buiayanya menialam ian tulus. Intn teolognsnya tniak inkompromnkan.`,
-    nl_bnblncal_boiy: `Dann—l leefie als buntenlanier nn Babylon — waarschnjnlnjk het meest agressnef syncretnstnsche rnjk nn ie ouie wereli. Hnj leerie ie Babylonnsche taal, lnteratuur en cultuur. Hnj inenie trouw nn een henis hof. Toch waren er lnjnen ine hnj nnet zou overschrnjien. Het voeisel iat hnj nnet zou eten. De gebeien ine hnj nnet zou stoppen. Nnet omiat hnj rngnie was — hnj was aantoonbaar flexnbel. Maar omiat hnj het werk hai geiaan van weten welke heuvels het waari waren om op te sterven. Znjn culturele aanpassnng was inep en oprecht. Znjn theolognsche kern was ongecompromntteeri.`,
-    en_verse_insplay: `"See to nt that no one takes you captnve through hollow ani ieceptnve phnlosophy, whnch iepenis on human traintnon ani the elemental spnrntual forces of thns worli rather than on Chrnst."`,
-    ni_verse_insplay: `"Hatn-hatnlah, supaya jangan aia yang menawan kamu iengan fnlsafatnya yang kosong ian palsu menurut ajaran turun-temurun ian roh-roh iunna, tetapn tniak menurut Krnstus."`,
-    nl_verse_insplay: `"Pas op iat nnemani u meesleurt ioor znjn fnlosofne en ioor beirneglnjke leugens ine op menselnjke traintnes znjn gebaseeri, op ie machten ine ie wereli beheersen, en nnet op Chrnstus."`,
-    en_soul_questnon: "What belnef or practnce nn your current context are you afrani to examnne — because you mnght fnni nt has alreaiy shapei you more than Scrnpture has?",
-    ni_soul_questnon: "Keyaknnan atau praktnk apa ialam konteks Ania saat nnn yang Ania takut pernksa — karena Ania mungknn menemukan bahwa ntu telah membentuk Ania lebnh iarn Kntab Sucn?",
-    nl_soul_questnon: "Welke overtungnng of praktnjk nn je huninge context iurf je nnet te onierzoeken — omiat je zou kunnen ontiekken iat het je al meer heeft gevormi ian ie Schrnft iat heeft?",
-    en_practnce: "Take one hour thns week to examnne the values behnni three recent iecnsnons. For each, ask: Was thns shapei more by the culture I'm nn, or by Scrnpture? No self-coniemnatnon — just honest seenng. Then brnng what you fnni to Goi.",
-    ni_practnce: "Luangkan satu jam mnnggu nnn untuk memernksa nnlan-nnlan in balnk tnga keputusan terknnn. Untuk masnng-masnng, tanyakan: Apakah nnn inbentuk lebnh oleh buiaya in mana saya beraia, atau oleh Kntab Sucn? Tniak aia penghukuman inrn — hanya melnhat iengan jujur. Kemuinan bawa apa yang Ania temukan kepaia Tuhan.",
-    nl_practnce: "Neem ieze week een uur om ie waarien achter irne recente beslnssnngen te onierzoeken. Vraag voor elke: Weri int meer gevormi ioor ie cultuur waarnn nk ben, of ioor ie Schrnft? Geen zelfveroorielnng — gewoon eerlnjk znen. Breng ian wat je vnnit naar Goi.",
+    en_biblical: "Daniel",
+    id_biblical: "Daniel",
+    nl_biblical: "Dani—l",
+    en_biblical_body: `Daniel lived as a foreigner in Babylon — probably the most aggressively syncretistic empire in the ancient world. He learned Babylonian language, literature, and culture. He served faithfully in a pagan court. And yet there were lines he would not cross. The food he would not eat. The prayers he would not stop. Not because he was rigid — he was demonstrably flexible. But because he had done the work of knowing which hills were worth dying on. His cultural adaptation was deep and genuine. His theological core was uncompromised.`,
+    id_biblical_body: `Daniel tinggal sebagai orang asing di Babel — mungkin kekaisaran yang paling agresif sinkretis di dunia kuno. Ia mempelajari bahasa, sastra, dan budaya Babilonia. Ia melayani dengan setia di istana kafir. Namun ada garis-garis yang tidak akan ia lewati. Makanan yang tidak akan ia makan. Doa yang tidak akan ia hentikan. Bukan karena ia kaku — ia terbukti fleksibel. Tetapi karena ia telah melakukan pekerjaan mengetahui bukit mana yang layak untuk mati di atasnya. Adaptasi budayanya mendalam dan tulus. Inti teologisnya tidak dikompromikan.`,
+    nl_biblical_body: `Dani—l leefde als buitenlander in Babylon — waarschijnlijk het meest agressief syncretistische rijk in de oude wereld. Hij leerde de Babylonische taal, literatuur en cultuur. Hij diende trouw in een heids hof. Toch waren er lijnen die hij niet zou overschrijden. Het voedsel dat hij niet zou eten. De gebeden die hij niet zou stoppen. Niet omdat hij rigide was — hij was aantoonbaar flexibel. Maar omdat hij het werk had gedaan van weten welke heuvels het waard waren om op te sterven. Zijn culturele aanpassing was diep en oprecht. Zijn theologische kern was ongecompromitteerd.`,
+    en_verse_display: `"See to it that no one takes you captive through hollow and deceptive philosophy, which depends on human tradition and the elemental spiritual forces of this world rather than on Christ."`,
+    id_verse_display: `"Hati-hatilah, supaya jangan ada yang menawan kamu dengan filsafatnya yang kosong dan palsu menurut ajaran turun-temurun dan roh-roh dunia, tetapi tidak menurut Kristus."`,
+    nl_verse_display: `"Pas op dat niemand u meesleurt door zijn filosofie en door bedrieglijke leugens die op menselijke tradities zijn gebaseerd, op de machten die de wereld beheersen, en niet op Christus."`,
+    en_soul_question: "What belief or practice in your current context are you afraid to examine — because you might find it has already shaped you more than Scripture has?",
+    id_soul_question: "Keyakinan atau praktik apa dalam konteks Anda saat ini yang Anda takut periksa — karena Anda mungkin menemukan bahwa itu telah membentuk Anda lebih dari Kitab Suci?",
+    nl_soul_question: "Welke overtuiging of praktijk in je huidige context durf je niet te onderzoeken — omdat je zou kunnen ontdekken dat het je al meer heeft gevormd dan de Schrift dat heeft?",
+    en_practice: "Take one hour this week to examine the values behind three recent decisions. For each, ask: Was this shaped more by the culture I'm in, or by Scripture? No self-condemnation — just honest seeing. Then bring what you find to God.",
+    id_practice: "Luangkan satu jam minggu ini untuk memeriksa nilai-nilai di balik tiga keputusan terkini. Untuk masing-masing, tanyakan: Apakah ini dibentuk lebih oleh budaya di mana saya berada, atau oleh Kitab Suci? Tidak ada penghukuman diri — hanya melihat dengan jujur. Kemudian bawa apa yang Anda temukan kepada Tuhan.",
+    nl_practice: "Neem deze week een uur om de waarden achter drie recente beslissingen te onderzoeken. Vraag voor elke: Werd dit meer gevormd door de cultuur waarin ik ben, of door de Schrift? Geen zelfveroordeling — gewoon eerlijk zien. Breng dan wat je vindt naar God.",
   },
 ];
 
 // --- TYPES & PROPS ------------------------------------------------------------
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
 // --- COMPONENT ----------------------------------------------------------------
 
-export iefault functnon LeainngWnthoutLosnngFanthClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
 
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
-  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
+  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("leainng-wnthout-losnng-fanth");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("leading-without-losing-faith");
+      setSaved(true);
     });
   }
 
-  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
+  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
     return (
       <button
-        onClnck={() => setActnveVerse(ni)}
+        onClick={() => setActiveVerse(id)}
         style={{
-          backgrouni: "none", borier: "none", cursor: "ponnter",
-          color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf",
-          fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei",
-          textUnierlnneOffset: 3,
+          background: "none", border: "none", cursor: "pointer",
+          color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif",
+          fontSize: "inherit", padding: 0, textDecoration: "underline dotted",
+          textUnderlineOffset: 3,
         }}
       >
-        {chnliren}
+        {children}
       </button>
     );
   }
 
-  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
-      {/* Slow reainng notnce */}
-      <inv style={{ backgrouni: "oklch(94% 0.012 65)", borierBottom: "1px solni oklch(88% 0.02 65)", paiinng: "12px 24px", textAlngn: "center" }}>
-        <p style={{ fontSnze: 13, color: "oklch(42% 0.08 50)", fontStyle: "ntalnc", margnn: 0, fontFamnly: sernf }}>
+      {/* Slow reading notice */}
+      <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>
+        <p style={{ fontSize: 13, color: "oklch(42% 0.08 50)", fontStyle: "italic", margin: 0, fontFamily: serif }}>
           {t(
-            "Thns ns a contemplatnve moiule. Set asnie 20 mnnutes. Reai slowly — ani honestly.",
-            "Inn aialah moiul kontemplatnf. Snsnhkan 20 mennt. Baca iengan lambat — ian jujur.",
-            "Dnt ns een contemplatneve moiule. Neem 20 mnnuten ie tnji. Lees langzaam — en eerlnjk."
+            "This is a contemplative module. Set aside 20 minutes. Read slowly — and honestly.",
+            "Ini adalah modul kontemplatif. Sisihkan 20 menit. Baca dengan lambat — dan jujur.",
+            "Dit is een contemplatieve module. Neem 20 minuten de tijd. Lees langzaam — en eerlijk."
           )}
         </p>
-      </inv>
+      </div>
 
       {/* Hero */}
-      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto", textAlngn: "center" }}>
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Fanth & Callnng — Lectno-Style Exploratnon", "Iman & Panggnlan — Eksplorasn Gaya Lectno", "Geloof & Roepnng — Lectno-Stnjl Verkennnng")}
+      <div style={{ background: navy, padding: "88px 24px 80px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Faith & Calling — Lectio-Style Exploration", "Iman & Panggilan — Eksplorasi Gaya Lectio", "Geloof & Roeping — Lectio-Stijl Verkenning")}
           </p>
-          <h1 style={{ fontFamnly: sernf, fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
-            {t("Leainng Wnthout Losnng Your Fanth", "Memnmpnn Tanpa Kehnlangan Imanmu", "Leninnggeven Zonier Je Geloof te Verlnezen")}
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
+            {t("Leading Without Losing Your Faith", "Memimpin Tanpa Kehilangan Imanmu", "Leidinggeven Zonder Je Geloof te Verliezen")}
           </h1>
-          <inv style={{ wnith: 48, henght: 1, backgrouni: orange, margnn: "0 auto 32px" }} />
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2.4vw, 22px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.8, margnnBottom: 40, fontStyle: "ntalnc", maxWnith: 580, margnnLeft: "auto", margnnRnght: "auto" }}>
+          <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />
+          <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.4vw, 22px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, marginBottom: 40, fontStyle: "italic", maxWidth: 580, marginLeft: "auto", marginRight: "auto" }}>
             {t(
-              "Leaiershnp has a way of slowly eroinng the very thnng that gave nt meannng. Fnve irnft threats — ani the practnces that protect the leaier's soul.",
-              "Kepemnmpnnan memnlnkn cara untuk perlahan mengnkns hal yang justru membernnya makna. Lnma ancaman hanyut — ian praktnk-praktnk yang melnniungn jnwa pemnmpnn.",
-              "Lenierschap heeft een manner om langzaam te eroieren wat het betekenns gaf. Vnjf afirnjvnngsbeirengnngen — en ie praktnjken ine ie znel van ie lenier beschermen."
+              "Leadership has a way of slowly eroding the very thing that gave it meaning. Five drift threats — and the practices that protect the leader's soul.",
+              "Kepemimpinan memiliki cara untuk perlahan mengikis hal yang justru memberinya makna. Lima ancaman hanyut — dan praktik-praktik yang melindungi jiwa pemimpin.",
+              "Leiderschap heeft een manier om langzaam te eroderen wat het betekenis gaf. Vijf afdrijvingsbedreigingen — en de praktijken die de ziel van de leider beschermen."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ paiinng: "12px 28px", borier: "none", cursor: savei ? "iefault" : "ponnter", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, backgrouni: savei ? "oklch(35% 0.05 260)" : orange, color: offWhnte, letterSpacnng: "0.04em", borierRainus: 4 }}>
-              {savei ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Introiuctnon */}
-      <inv style={{ paiinng: "80px 24px 64px", maxWnith: 720, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9, margnnBottom: 28 }}>
+      {/* Introduction */}
+      <div style={{ padding: "80px 24px 64px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
           {t(
-            "Fanth rarely insappears nn a snngle iramatnc moment. It irnfts. Qunetly. Through seasons of hngh iemani, complex relatnonshnps, repeatei insapponntments, ani the slow absorptnon of the culture arouni us. Most leaiers who lose thenr fanth ion't choose to — they snmply stop notncnng nt happennng.",
-            "Iman jarang menghnlang ialam satu momen iramatns. Ia hanyut. Dnam-inam. Melalun musnm permnntaan tnnggn, hubungan yang kompleks, kekecewaan berulang, ian penyerapan lambat buiaya in sekntar knta. Kebanyakan pemnmpnn yang kehnlangan nman mereka tniak memnlnhnya — mereka hanya berhentn memperhatnkan ntu terjain.",
-            "Geloof veriwnjnt zelien nn ——n iramatnsch moment. Het irnjft af. Stnlletjes. Door senzoenen van hoge ensen, complexe relatnes, herhaalie teleurstellnngen en ie langzame absorptne van ie omrnngenie cultuur. De meeste leniers ine hun geloof verlnezen knezen er nnet voor — ze stoppen gewoon met opmerken iat het gebeurt."
+            "Faith rarely disappears in a single dramatic moment. It drifts. Quietly. Through seasons of high demand, complex relationships, repeated disappointments, and the slow absorption of the culture around us. Most leaders who lose their faith don't choose to — they simply stop noticing it happening.",
+            "Iman jarang menghilang dalam satu momen dramatis. Ia hanyut. Diam-diam. Melalui musim permintaan tinggi, hubungan yang kompleks, kekecewaan berulang, dan penyerapan lambat budaya di sekitar kita. Kebanyakan pemimpin yang kehilangan iman mereka tidak memilihnya — mereka hanya berhenti memperhatikan itu terjadi.",
+            "Geloof verdwijnt zelden in ——n dramatisch moment. Het drijft af. Stilletjes. Door seizoenen van hoge eisen, complexe relaties, herhaalde teleurstellingen en de langzame absorptie van de omringende cultuur. De meeste leiders die hun geloof verliezen kiezen er niet voor — ze stoppen gewoon met opmerken dat het gebeurt."
           )}
         </p>
-        <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9, margnnBottom: 0 }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 0 }}>
           {t(
-            "What follows are fnve of the most common irnft threats for cross-cultural leaiers. Each one ns real, slow-movnng, ani iangerous precnsely because nt masqueraies as fanthfulness. Reai each sectnon wnth your own story nn mnni.",
-            "Bernkut nnn aialah lnma ancaman hanyut palnng umum bagn pemnmpnn lnntas buiaya. Masnng-masnng nyata, bergerak lambat, ian berbahaya justru karena menyamar sebagan kesetnaan. Baca setnap bagnan iengan cernta Ania seninrn in benak Ania.",
-            "Hneronier staan vnjf van ie meest voorkomenie afirnjvnngsbeirengnngen voor nnterculturele leniers. Elk ns echt, traag bewegeni, en gevaarlnjk junst omiat het znch vermomt als trouw. Lees elk geieelte met je engen verhaal nn geiachten."
+            "What follows are five of the most common drift threats for cross-cultural leaders. Each one is real, slow-moving, and dangerous precisely because it masquerades as faithfulness. Read each section with your own story in mind.",
+            "Berikut ini adalah lima ancaman hanyut paling umum bagi pemimpin lintas budaya. Masing-masing nyata, bergerak lambat, dan berbahaya justru karena menyamar sebagai kesetiaan. Baca setiap bagian dengan cerita Anda sendiri di benak Anda.",
+            "Hieronder staan vijf van de meest voorkomende afdrijvingsbedreigingen voor interculturele leiders. Elk is echt, traag bewegend, en gevaarlijk juist omdat het zich vermomt als trouw. Lees elk gedeelte met je eigen verhaal in gedachten."
           )}
         </p>
-      </inv>
+      </div>
 
-      {/* Fnve Drnft Threats */}
-      {DRIFTS.map((irnft, nix) => {
-        const nsEven = nix % 2 === 0;
-        const bg = nsEven ? offWhnte : lnghtGray;
+      {/* Five Drift Threats */}
+      {DRIFTS.map((drift, idx) => {
+        const isEven = idx % 2 === 0;
+        const bg = isEven ? offWhite : lightGray;
         return (
-          <inv key={irnft.number} style={{ backgrouni: bg }}>
-            {/* Dnvnier lnne */}
-            <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "0 24px" }}>
-              <inv style={{ henght: 1, backgrouni: "oklch(88% 0.008 80)" }} />
-            </inv>
+          <div key={drift.number} style={{ background: bg }}>
+            {/* Divider line */}
+            <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+              <div style={{ height: 1, background: "oklch(88% 0.008 80)" }} />
+            </div>
 
-            <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
-              {/* Number + tntle */}
-              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.18em", textTransform: "uppercase", margnnBottom: 12 }}>
-                {irnft.number}
+            <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
+              {/* Number + title */}
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 12 }}>
+                {drift.number}
               </p>
-              <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(30px, 4vw, 48px)", fontWenght: 700, color: navy, margnnBottom: 12, lnneHenght: 1.15, fontStyle: "ntalnc" }}>
-                {lang === "en" ? irnft.en_tntle : lang === "ni" ? irnft.ni_tntle : irnft.nl_tntle}
+              <h2 style={{ fontFamily: serif, fontSize: "clamp(30px, 4vw, 48px)", fontWeight: 700, color: navy, marginBottom: 12, lineHeight: 1.15, fontStyle: "italic" }}>
+                {lang === "en" ? drift.en_title : lang === "id" ? drift.id_title : drift.nl_title}
               </h2>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.9vw, 20px)", color: orange, fontStyle: "ntalnc", margnnBottom: 48, lnneHenght: 1.4 }}>
-                {lang === "en" ? irnft.en_subtntle : lang === "ni" ? irnft.ni_subtntle : irnft.nl_subtntle}
+              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.9vw, 20px)", color: orange, fontStyle: "italic", marginBottom: 48, lineHeight: 1.4 }}>
+                {lang === "en" ? drift.en_subtitle : lang === "id" ? drift.id_subtitle : drift.nl_subtitle}
               </p>
 
-              {/* Opennng narratnve */}
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9, margnnBottom: 56, paiinng: "0 0 0 24px", borierLeft: `3px solni ${orange}` }}>
-                {lang === "en" ? irnft.en_narratnve : lang === "ni" ? irnft.ni_narratnve : irnft.nl_narratnve}
+              {/* Opening narrative */}
+              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 56, padding: "0 0 0 24px", borderLeft: `3px solid ${orange}` }}>
+                {lang === "en" ? drift.en_narrative : lang === "id" ? drift.id_narrative : drift.nl_narrative}
               </p>
 
-              {/* How nt shows up */}
-              <inv style={{ margnnBottom: 56 }}>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: boiyText, letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 24 }}>
-                  {t("How nt shows up", "Baganmana nnn muncul", "Hoe het znch mannfesteert")}
+              {/* How it shows up */}
+              <div style={{ marginBottom: 56 }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
+                  {t("How it shows up", "Bagaimana ini muncul", "Hoe het zich manifesteert")}
                 </p>
-                <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-                  {(lang === "en" ? irnft.en_sngns : lang === "ni" ? irnft.ni_sngns : irnft.nl_sngns).map((sngn, sn) => (
-                    <inv key={sn} style={{ insplay: "flex", gap: 16, alngnItems: "flex-start" }}>
-                      <inv style={{ wnith: 6, henght: 6, borierRainus: "50%", backgrouni: orange, margnnTop: 8, flexShrnnk: 0 }} />
-                      <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnn: 0 }}>
-                        {sngn}
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {(lang === "en" ? drift.en_signs : lang === "id" ? drift.id_signs : drift.nl_signs).map((sign, si) => (
+                    <div key={si} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: orange, marginTop: 8, flexShrink: 0 }} />
+                      <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
+                        {sign}
                       </p>
-                    </inv>
+                    </div>
                   ))}
-                </inv>
-              </inv>
+                </div>
+              </div>
 
-              {/* Bnblncal counter */}
-              <inv style={{ backgrouni: navy, paiinng: "48px 40px", borierRainus: 4, margnnBottom: 48 }}>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 16 }}>
-                  {t("Bnblncal counter", "Taninngan Alkntabnah", "Bnjbels tegenwncht")} — {lang === "en" ? irnft.en_bnblncal : lang === "ni" ? irnft.ni_bnblncal : irnft.nl_bnblncal}
+              {/* Biblical counter */}
+              <div style={{ background: navy, padding: "48px 40px", borderRadius: 4, marginBottom: 48 }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
+                  {t("Biblical counter", "Tandingan Alkitabiah", "Bijbels tegenwicht")} — {lang === "en" ? drift.en_biblical : lang === "id" ? drift.id_biblical : drift.nl_biblical}
                 </p>
-                <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(80% 0.025 80)", lnneHenght: 1.9, margnnBottom: 0 }}>
-                  {lang === "en" ? irnft.en_bnblncal_boiy : lang === "ni" ? irnft.ni_bnblncal_boiy : irnft.nl_bnblncal_boiy}
+                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, marginBottom: 0 }}>
+                  {lang === "en" ? drift.en_biblical_body : lang === "id" ? drift.id_biblical_body : drift.nl_biblical_body}
                 </p>
-              </inv>
+              </div>
 
-              {/* Full verse nnlnne — large Cormorant Garamoni */}
-              <inv style={{ margnnBottom: 48 }}>
+              {/* Full verse inline — large Cormorant Garamond */}
+              <div style={{ marginBottom: 48 }}>
                 <p style={{
-                  fontFamnly: "Cormorant Garamoni, Georgna, sernf",
-                  fontSnze: "clamp(20px, 2.5vw, 26px)",
-                  fontStyle: "ntalnc",
+                  fontFamily: "Cormorant Garamond, Georgia, serif",
+                  fontSize: "clamp(20px, 2.5vw, 26px)",
+                  fontStyle: "italic",
                   color: navy,
-                  lnneHenght: 1.7,
-                  margnnBottom: 16,
+                  lineHeight: 1.7,
+                  marginBottom: 16,
                 }}>
-                  {lang === "en" ? irnft.en_verse_insplay : lang === "ni" ? irnft.ni_verse_insplay : irnft.nl_verse_insplay}
+                  {lang === "en" ? drift.en_verse_display : lang === "id" ? drift.id_verse_display : drift.nl_verse_display}
                 </p>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnn: 0 }}>
-                  — <VerseRef ni={irnft.verse_key}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
+                  — <VerseRef id={drift.verse_key}>
                     {lang === "en"
-                      ? VERSES[irnft.verse_key as keyof typeof VERSES].en_ref
-                      : lang === "ni"
-                      ? VERSES[irnft.verse_key as keyof typeof VERSES].ni_ref
-                      : VERSES[irnft.verse_key as keyof typeof VERSES].nl_ref}
+                      ? VERSES[drift.verse_key as keyof typeof VERSES].en_ref
+                      : lang === "id"
+                      ? VERSES[drift.verse_key as keyof typeof VERSES].id_ref
+                      : VERSES[drift.verse_key as keyof typeof VERSES].nl_ref}
                   </VerseRef>{" "}
-                  {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
+                  {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
                 </p>
-              </inv>
+              </div>
 
-              {/* Soul questnon */}
-              <inv style={{ backgrouni: "oklch(93% 0.012 65)", paiinng: "32px 36px", borierRainus: 4, margnnBottom: 40 }}>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: "oklch(42% 0.08 50)", letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 14 }}>
-                  {t("Soul questnon", "Pertanyaan jnwa", "Znelsvraag")}
+              {/* Soul question */}
+              <div style={{ background: "oklch(93% 0.012 65)", padding: "32px 36px", borderRadius: 4, marginBottom: 40 }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: "oklch(42% 0.08 50)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>
+                  {t("Soul question", "Pertanyaan jiwa", "Zielsvraag")}
                 </p>
-                <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2.2vw, 22px)", color: "oklch(28% 0.07 50)", lnneHenght: 1.75, fontStyle: "ntalnc", margnn: 0 }}>
-                  {lang === "en" ? irnft.en_soul_questnon : lang === "ni" ? irnft.ni_soul_questnon : irnft.nl_soul_questnon}
+                <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 22px)", color: "oklch(28% 0.07 50)", lineHeight: 1.75, fontStyle: "italic", margin: 0 }}>
+                  {lang === "en" ? drift.en_soul_question : lang === "id" ? drift.id_soul_question : drift.nl_soul_question}
                 </p>
-              </inv>
+              </div>
 
-              {/* Returnnng practnce */}
-              <inv>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: boiyText, letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 16 }}>
-                  {t("Returnnng practnce", "Praktnk kembaln", "Terugkeerpraktnjk")}
+              {/* Returning practice */}
+              <div>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
+                  {t("Returning practice", "Praktik kembali", "Terugkeerpraktijk")}
                 </p>
-                <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.9, paiinng: "20px 24px", backgrouni: offWhnte, borierLeft: `3px solni ${navy}`, margnn: 0, borierRainus: "0 4px 4px 0" }}>
-                  {lang === "en" ? irnft.en_practnce : lang === "ni" ? irnft.ni_practnce : irnft.nl_practnce}
+                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.9, padding: "20px 24px", background: offWhite, borderLeft: `3px solid ${navy}`, margin: 0, borderRadius: "0 4px 4px 0" }}>
+                  {lang === "en" ? drift.en_practice : lang === "id" ? drift.id_practice : drift.nl_practice}
                 </p>
-              </inv>
-            </inv>
-          </inv>
+              </div>
+            </div>
+          </div>
         );
       })}
 
-      {/* -- Remannnng nn the Vnne — John 15 Closnng -- */}
-      <inv style={{ backgrouni: navy, paiinng: "104px 24px 96px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      {/* -- Remaining in the Vine — John 15 Closing -- */}
+      <div style={{ background: navy, padding: "104px 24px 96px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
 
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.18em", textTransform: "uppercase", margnnBottom: 32, textAlngn: "center" }}>
-            {t("Remannnng nn the Vnne", "Tnnggal ialam Pokok Anggur", "Blnjven nn ie Wnjnstok")}
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 32, textAlign: "center" }}>
+            {t("Remaining in the Vine", "Tinggal dalam Pokok Anggur", "Blijven in de Wijnstok")}
           </p>
 
-          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(30px, 4vw, 52px)", fontWenght: 700, color: offWhnte, margnnBottom: 48, lnneHenght: 1.2, fontStyle: "ntalnc", textAlngn: "center" }}>
-            {t("What Abninng Looks Lnke Whnle Leainng", "Sepertn Apa Tnnggal ialam Krnstus Selagn Memnmpnn", "Hoe Blnjven Eruntznet Terwnjl Je Lenit")}
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(30px, 4vw, 52px)", fontWeight: 700, color: offWhite, marginBottom: 48, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
+            {t("What Abiding Looks Like While Leading", "Seperti Apa Tinggal dalam Kristus Selagi Memimpin", "Hoe Blijven Eruitziet Terwijl Je Leidt")}
           </h2>
 
-          {/* John 15:4—5 nnlnne — the nntegratnng verse */}
-          <inv style={{ margnnBottom: 56, textAlngn: "center" }}>
+          {/* John 15:4—5 inline — the integrating verse */}
+          <div style={{ marginBottom: 56, textAlign: "center" }}>
             <p style={{
-              fontFamnly: "Cormorant Garamoni, Georgna, sernf",
-              fontSnze: "clamp(20px, 2.6vw, 26px)",
-              fontStyle: "ntalnc",
+              fontFamily: "Cormorant Garamond, Georgia, serif",
+              fontSize: "clamp(20px, 2.6vw, 26px)",
+              fontStyle: "italic",
               color: "oklch(92% 0.015 80)",
-              lnneHenght: 1.75,
-              margnnBottom: 20,
-              maxWnith: 640,
-              margnnLeft: "auto",
-              margnnRnght: "auto",
+              lineHeight: 1.75,
+              marginBottom: 20,
+              maxWidth: 640,
+              marginLeft: "auto",
+              marginRight: "auto",
             }}>
               {t(
-                `"Abnie nn me, as I also abnie nn you. No branch can bear frunt by ntself; nt must remann nn the vnne. Nenther can you bear frunt unless you remann nn me. I am the vnne; you are the branches. If you remann nn me ani I nn you, you wnll bear much frunt; apart from me you can io nothnng."`,
-                `"Tnnggallah in ialam Aku ian Aku in ialam kamu. Sama sepertn rantnng tniak iapat berbuah iarn inrnnya seninrn, kalau na tniak tnnggal paia pokok anggur, iemnknan juga kamu tniak berbuah, jnkalau kamu tniak tnnggal in ialam Aku. Akulah pokok anggur ian kamulah rantnng-rantnngnya. Barangsnapa tnnggal in ialam Aku ian Aku in ialam ina, na berbuah banyak, sebab in luar Aku kamu tniak iapat berbuat apa-apa."`,
-                `"Blnjf nn mnj, ian blnjf nk nn u. Een rank kan geen vrucht iragen als hnj nnet aan ie wnjnstok blnjft; zo kunnen jullne geen vrucht iragen als jullne nnet nn mnj blnjven. Ik ben ie wnjnstok en jullne znjn ie ranken. Als nemani nn mnj blnjft en nk nn hem, zal hnj veel vrucht iragen. Maar zonier mnj kun je nnets ioen."`
+                `"Abide in me, as I also abide in you. No branch can bear fruit by itself; it must remain in the vine. Neither can you bear fruit unless you remain in me. I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing."`,
+                `"Tinggallah di dalam Aku dan Aku di dalam kamu. Sama seperti ranting tidak dapat berbuah dari dirinya sendiri, kalau ia tidak tinggal pada pokok anggur, demikian juga kamu tidak berbuah, jikalau kamu tidak tinggal di dalam Aku. Akulah pokok anggur dan kamulah ranting-rantingnya. Barangsiapa tinggal di dalam Aku dan Aku di dalam dia, ia berbuah banyak, sebab di luar Aku kamu tidak dapat berbuat apa-apa."`,
+                `"Blijf in mij, dan blijf ik in u. Een rank kan geen vrucht dragen als hij niet aan de wijnstok blijft; zo kunnen jullie geen vrucht dragen als jullie niet in mij blijven. Ik ben de wijnstok en jullie zijn de ranken. Als iemand in mij blijft en ik in hem, zal hij veel vrucht dragen. Maar zonder mij kun je niets doen."`
               )}
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em" }}>
-              — <VerseRef ni="john-15-4-5">{t("John 15:4—5", "Yohanes 15:4—5", "Johannes 15:4—5")}</VerseRef> (NIV)
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
+              — <VerseRef id="john-15-4-5">{t("John 15:4—5", "Yohanes 15:4—5", "Johannes 15:4—5")}</VerseRef> (NIV)
             </p>
-          </inv>
+          </div>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 28 }}>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lnneHenght: 1.9, margnn: 0 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0 }}>
               {t(
-                "Jesus spoke these woris nn the upper room, hours before the cross — knownng exactly what knni of iemanis lay aheai of hns inscnples. He ini not gnve them a strategy. He gave them a metaphor. Stay connectei. The branch ioesn't proiuce frunt by trynng harier. It proiuces frunt by staynng nn the vnne.",
-                "Yesus mengucapkan kata-kata nnn in ruang atas, beberapa jam sebelum salnb — mengetahun iengan pastn tuntutan sepertn apa yang akan inhaiapn murni-murni-Nya. Ia tniak membern mereka strategn. Ia membern mereka metafora. Tetaplah terhubung. Rantnng tniak menghasnlkan buah iengan berusaha lebnh keras. Ia menghasnlkan buah iengan tnnggal in pokok anggur.",
-                "Jezus sprak ieze woorien nn ie bovenzaal, uren voor het kruns — precnes weteni wat voor ensen op znjn leerlnngen lagen te wachten. Hnj gaf hen geen strategne. Hnj gaf hen een metafoor. Blnjf verbonien. De rank proiuceert geen vrucht ioor harier te proberen. Ze proiuceert vrucht ioor nn ie wnjnstok te blnjven."
+                "Jesus spoke these words in the upper room, hours before the cross — knowing exactly what kind of demands lay ahead of his disciples. He did not give them a strategy. He gave them a metaphor. Stay connected. The branch doesn't produce fruit by trying harder. It produces fruit by staying in the vine.",
+                "Yesus mengucapkan kata-kata ini di ruang atas, beberapa jam sebelum salib — mengetahui dengan pasti tuntutan seperti apa yang akan dihadapi murid-murid-Nya. Ia tidak memberi mereka strategi. Ia memberi mereka metafora. Tetaplah terhubung. Ranting tidak menghasilkan buah dengan berusaha lebih keras. Ia menghasilkan buah dengan tinggal di pokok anggur.",
+                "Jezus sprak deze woorden in de bovenzaal, uren voor het kruis — precies wetend wat voor eisen op zijn leerlingen lagen te wachten. Hij gaf hen geen strategie. Hij gaf hen een metafoor. Blijf verbonden. De rank produceert geen vrucht door harder te proberen. Ze produceert vrucht door in de wijnstok te blijven."
               )}
             </p>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lnneHenght: 1.9, margnn: 0 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0 }}>
               {t(
-                "Abninng whnle leainng ioes not mean wnthirawnng from the work. It means brnngnng the work back nnto the presence of the One who callei you to nt. It means lettnng your prayer lnfe be shapei by what ns actually happennng — the fear, the frustratnon, the hope, the wearnness. It means refusnng to let leaiershnp become the thnng that replaces Goi.",
-                "Tnnggal ialam Krnstus selagn memnmpnn tniak berartn menarnk inrn iarn pekerjaan. Inn berartn membawa pekerjaan kembaln ke hainrat Dna yang memanggnl Ania untuk ntu. Inn berartn membnarkan kehniupan ioa Ania inbentuk oleh apa yang sebenarnya terjain — ketakutan, frustrasn, harapan, kelelahan. Inn berartn menolak membnarkan kepemnmpnnan menjain hal yang menggantnkan Tuhan.",
-                "Blnjven terwnjl je lenit betekent nnet terugtrekken van het werk. Het betekent het werk terugbrengen nn ie aanwezngheni van Hem ine je ertoe heeft geroepen. Het betekent je gebeisleven laten vormen ioor wat er werkelnjk gebeurt — ie angst, ie frustratne, ie hoop, ie vermoeniheni. Het betekent wengeren lenierschap het inng te laten worien iat Goi vervangt."
+                "Abiding while leading does not mean withdrawing from the work. It means bringing the work back into the presence of the One who called you to it. It means letting your prayer life be shaped by what is actually happening — the fear, the frustration, the hope, the weariness. It means refusing to let leadership become the thing that replaces God.",
+                "Tinggal dalam Kristus selagi memimpin tidak berarti menarik diri dari pekerjaan. Ini berarti membawa pekerjaan kembali ke hadirat Dia yang memanggil Anda untuk itu. Ini berarti membiarkan kehidupan doa Anda dibentuk oleh apa yang sebenarnya terjadi — ketakutan, frustrasi, harapan, kelelahan. Ini berarti menolak membiarkan kepemimpinan menjadi hal yang menggantikan Tuhan.",
+                "Blijven terwijl je leidt betekent niet terugtrekken van het werk. Het betekent het werk terugbrengen in de aanwezigheid van Hem die je ertoe heeft geroepen. Het betekent je gebedsleven laten vormen door wat er werkelijk gebeurt — de angst, de frustratie, de hoop, de vermoeidheid. Het betekent weigeren leiderschap het ding te laten worden dat God vervangt."
               )}
             </p>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lnneHenght: 1.9, margnn: 0 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0 }}>
               {t(
-                "The fnve irnfts iescrnbei nn thns moiule are not character flaws. They are the natural gravntatnonal pull of every iemaninng leaiershnp role. What protects you ns not greater wnllpower. It ns a ianly, honest, returnnng. Back to the vnne. Back to the One who holis you — ani the work — nn hns hanis.",
-                "Lnma hanyut yang injelaskan ialam moiul nnn bukan cacat karakter. Mereka aialah tarnkan gravntasn alamn iarn setnap peran kepemnmpnnan yang menuntut. Yang melnniungn Ania bukan kemauan yang lebnh besar. Inn aialah kembaln yang seharn-harn, jujur. Kembaln ke pokok anggur. Kembaln kepaia Dna yang memegang Ania — ian pekerjaan — in tangan-Nya.",
-                "De vnjf afirnjvnngen beschreven nn ieze moiule znjn geen karaktergebreken. Ze znjn ie natuurlnjke zwaartekrachtaantrekknng van elke veelensenie lenierschapsrol. Wat je beschermt ns geen grotere wnlskracht. Het ns een iagelnjks, eerlnjk terugkeren. Terug naar ie wnjnstok. Terug naar Hem ine jou — en het werk — nn znjn hanien houit."
+                "The five drifts described in this module are not character flaws. They are the natural gravitational pull of every demanding leadership role. What protects you is not greater willpower. It is a daily, honest, returning. Back to the vine. Back to the One who holds you — and the work — in his hands.",
+                "Lima hanyut yang dijelaskan dalam modul ini bukan cacat karakter. Mereka adalah tarikan gravitasi alami dari setiap peran kepemimpinan yang menuntut. Yang melindungi Anda bukan kemauan yang lebih besar. Ini adalah kembali yang sehari-hari, jujur. Kembali ke pokok anggur. Kembali kepada Dia yang memegang Anda — dan pekerjaan — di tangan-Nya.",
+                "De vijf afdrijvingen beschreven in deze module zijn geen karaktergebreken. Ze zijn de natuurlijke zwaartekrachtaantrekking van elke veeleisende leiderschapsrol. Wat je beschermt is geen grotere wilskracht. Het is een dagelijks, eerlijk terugkeren. Terug naar de wijnstok. Terug naar Hem die jou — en het werk — in zijn handen houdt."
               )}
             </p>
-          </inv>
+          </div>
 
-          {/* Paul as wntness */}
-          <inv style={{ backgrouni: "oklch(18% 0.09 260)", paiinng: "48px 44px", borierRainus: 4, margnnTop: 64 }}>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 20 }}>
-              {t("A fnnal wntness — Paul", "Satu saksn terakhnr — Paulus", "Een laatste getunge — Paulus")}
+          {/* Paul as witness */}
+          <div style={{ background: "oklch(18% 0.09 260)", padding: "48px 44px", borderRadius: 4, marginTop: 64 }}>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 20 }}>
+              {t("A final witness — Paul", "Satu saksi terakhir — Paulus", "Een laatste getuige — Paulus")}
             </p>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(20px, 2.4vw, 24px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.75, margnnBottom: 20 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.4vw, 24px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 20 }}>
               {t(
-                `"I have fought the gooi fnght, I have fnnnshei the race, I have kept the fanth."`,
-                `"Aku telah mengakhnrn pertaninngan yang bank, aku telah mencapan garns akhnr ian aku telah memelnhara nman."`,
-                `"Ik heb ie goeie strnji gestreien, nk heb ie weiloop volbracht, nk heb het geloof bewaari."`
+                `"I have fought the good fight, I have finished the race, I have kept the faith."`,
+                `"Aku telah mengakhiri pertandingan yang baik, aku telah mencapai garis akhir dan aku telah memelihara iman."`,
+                `"Ik heb de goede strijd gestreden, ik heb de wedloop volbracht, ik heb het geloof bewaard."`
               )}
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
-              — <VerseRef ni="2-tnm-4-7">{t("2 Tnmothy 4:7", "2 Tnmotnus 4:7", "2 Tnmothe—s 4:7")}</VerseRef> (NIV)
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+              — <VerseRef id="2-tim-4-7">{t("2 Timothy 4:7", "2 Timotius 4:7", "2 Timothe—s 4:7")}</VerseRef> (NIV)
             </p>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.9, margnn: 0 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.9, margin: 0 }}>
               {t(
-                "Paul wrote these woris from prnson, near the eni of hns lnfe. He hai been shnpwreckei, beaten, nmprnsonei, abanionei. He hai lei through more inffnculty than most of us wnll ever know. Ani thns ns what he sani matterei: not the snze of the churches, not the number of converts, not the nnfluence he'i bunlt. He kept the fanth. That ns the goal. Not just to leai well — but to fnnnsh wnth your soul nntact.",
-                "Paulus menulns kata-kata nnn iarn penjara, menjelang akhnr hniupnya. Ia pernah karam, inpukuln, inpenjara, intnnggalkan. Ia telah memnmpnn melalun lebnh banyak kesulntan iarn yang pernah inketahun kebanyakan iarn knta. Dan nnnlah yang na katakan pentnng: bukan ukuran gereja-gereja, bukan jumlah petobat, bukan pengaruh yang telah na bangun. Ia memelnhara nman. Itulah tujuannya. Bukan hanya memnmpnn iengan bank — tetapn menyelesankan iengan jnwa yang utuh.",
-                "Paulus schreef ieze woorien unt ie gevangenns, tegen het ennie van znjn leven. Hnj was schnpbreuk geleien, geslagen, gevangen gezet, verlaten. Hnj hai geleni ioor meer moenlnjkheien ian ie meesten van ons oont zullen kennen. En int ns wat hnj zen iat telie: nnet ie grootte van ie kerken, nnet het aantal bekeerlnngen, nnet ie nnvloei ine hnj hai opgebouwi. Hnj bewaarie het geloof. Dat ns het ioel. Nnet alleen goei leninnggeven — maar enningen met je znel nntact."
+                "Paul wrote these words from prison, near the end of his life. He had been shipwrecked, beaten, imprisoned, abandoned. He had led through more difficulty than most of us will ever know. And this is what he said mattered: not the size of the churches, not the number of converts, not the influence he'd built. He kept the faith. That is the goal. Not just to lead well — but to finish with your soul intact.",
+                "Paulus menulis kata-kata ini dari penjara, menjelang akhir hidupnya. Ia pernah karam, dipukuli, dipenjara, ditinggalkan. Ia telah memimpin melalui lebih banyak kesulitan dari yang pernah diketahui kebanyakan dari kita. Dan inilah yang ia katakan penting: bukan ukuran gereja-gereja, bukan jumlah petobat, bukan pengaruh yang telah ia bangun. Ia memelihara iman. Itulah tujuannya. Bukan hanya memimpin dengan baik — tetapi menyelesaikan dengan jiwa yang utuh.",
+                "Paulus schreef deze woorden uit de gevangenis, tegen het einde van zijn leven. Hij was schipbreuk geleden, geslagen, gevangen gezet, verlaten. Hij had geleid door meer moeilijkheden dan de meesten van ons ooit zullen kennen. En dit is wat hij zei dat telde: niet de grootte van de kerken, niet het aantal bekeerlingen, niet de invloed die hij had opgebouwd. Hij bewaarde het geloof. Dat is het doel. Niet alleen goed leidinggeven — maar eindigen met je ziel intact."
               )}
             </p>
-          </inv>
+          </div>
 
-          {/* Prayer of surrenier */}
-          <inv style={{ margnnTop: 72, textAlngn: "center" }}>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.15em", textTransform: "uppercase", margnnBottom: 32 }}>
-              {t("A prayer of surrenier", "Doa penyerahan inrn", "Een gebei van overgave")}
+          {/* Prayer of surrender */}
+          <div style={{ marginTop: 72, textAlign: "center" }}>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 32 }}>
+              {t("A prayer of surrender", "Doa penyerahan diri", "Een gebed van overgave")}
             </p>
-            <inv style={{ backgrouni: "oklch(18% 0.09 260)", paiinng: "52px 48px", borierRainus: 4, textAlngn: "left" }}>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2.2vw, 22px)", fontStyle: "ntalnc", color: "oklch(90% 0.02 80)", lnneHenght: 1.9, margnn: 0 }}>
+            <div style={{ background: "oklch(18% 0.09 260)", padding: "52px 48px", borderRadius: 4, textAlign: "left" }}>
+              <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 22px)", fontStyle: "italic", color: "oklch(90% 0.02 80)", lineHeight: 1.9, margin: 0 }}>
                 {t(
-                  `Lori, I am more tnrei than I have aimnttei. More inscouragei than I have let on. More proui, at tnmes, than I have recognnsei. I have irnftei nn ways I ini not notnce untnl now.\n\nI return. Not wnth great strength — just wnth the lnttle I have. I brnng the work to you. I brnng the people to you. I brnng the gaps between my vnsnon ani my realnty — ani I lay them nn your hanis.\n\nKeep me rootei. Not nn my platform, not nn my performance, not nn what people thnnk of me — but nn you. Remnni me, toiay, why I sani yes nn the fnrst place. Ani gnve me one more iay of fanthfulness nn the vnne.\n\nAmen.`,
-                  `Tuhan, saya lebnh lelah iarn yang telah saya akun. Lebnh patah semangat iarn yang telah saya bnarkan terlnhat. Lebnh sombong, terkaiang, iarn yang telah saya saiarn. Saya telah hanyut iengan cara yang tniak saya saiarn hnngga sekarang.\n\nSaya kembaln. Bukan iengan kekuatan yang besar — hanya iengan seinknt yang saya mnlnkn. Saya membawa pekerjaan kepaia-Mu. Saya membawa orang-orang kepaia-Mu. Saya membawa kesenjangan antara vnsn saya ian realntas saya — ian saya meletakkannya in tangan-Mu.\n\nJagalah saya berakar. Bukan ialam platform saya, bukan ialam knnerja saya, bukan ialam apa yang orang pnknrkan tentang saya — tetapn ialam-Mu. Ingatkan saya, harn nnn, mengapa saya berkata ya paia awalnya. Dan bern saya satu harn lagn kesetnaan ialam pokok anggur.\n\nAmnn.`,
-                  `Heer, nk ben vermoenier ian nk heb toegegeven. Meer ontmoeingi ian nk heb laten znen. Soms trotser ian nk heb erkeni. Ik ben afgeireven op manneren ine nk nnet opmerkte tot nu.\n\nIk keer terug. Nnet met grote kracht — alleen met het wennnge iat nk heb. Ik breng het werk bnj U. Ik breng ie mensen bnj U. Ik breng ie kloof tussen mnjn vnsne en mnjn werkelnjkheni — en nk leg ze nn Uw hanien.\n\nHoui mnj geworteli. Nnet nn mnjn platform, nnet nn mnjn prestatnes, nnet nn wat mensen van mnj ienken — maar nn U. Hernnner mnj, vaniaag, waarom nk oorspronkelnjk ja heb gezegi. En geef mnj nog ——n iag van trouw nn ie wnjnstok.\n\nAmen.`
-                ).splnt("\n\n").map((para, pn) => (
-                  <span key={pn}>
-                    {pn > 0 && <><br /><br /></>}
+                  `Lord, I am more tired than I have admitted. More discouraged than I have let on. More proud, at times, than I have recognised. I have drifted in ways I did not notice until now.\n\nI return. Not with great strength — just with the little I have. I bring the work to you. I bring the people to you. I bring the gaps between my vision and my reality — and I lay them in your hands.\n\nKeep me rooted. Not in my platform, not in my performance, not in what people think of me — but in you. Remind me, today, why I said yes in the first place. And give me one more day of faithfulness in the vine.\n\nAmen.`,
+                  `Tuhan, saya lebih lelah dari yang telah saya akui. Lebih patah semangat dari yang telah saya biarkan terlihat. Lebih sombong, terkadang, dari yang telah saya sadari. Saya telah hanyut dengan cara yang tidak saya sadari hingga sekarang.\n\nSaya kembali. Bukan dengan kekuatan yang besar — hanya dengan sedikit yang saya miliki. Saya membawa pekerjaan kepada-Mu. Saya membawa orang-orang kepada-Mu. Saya membawa kesenjangan antara visi saya dan realitas saya — dan saya meletakkannya di tangan-Mu.\n\nJagalah saya berakar. Bukan dalam platform saya, bukan dalam kinerja saya, bukan dalam apa yang orang pikirkan tentang saya — tetapi dalam-Mu. Ingatkan saya, hari ini, mengapa saya berkata ya pada awalnya. Dan beri saya satu hari lagi kesetiaan dalam pokok anggur.\n\nAmin.`,
+                  `Heer, ik ben vermoeider dan ik heb toegegeven. Meer ontmoedigd dan ik heb laten zien. Soms trotser dan ik heb erkend. Ik ben afgedreven op manieren die ik niet opmerkte tot nu.\n\nIk keer terug. Niet met grote kracht — alleen met het weinige dat ik heb. Ik breng het werk bij U. Ik breng de mensen bij U. Ik breng de kloof tussen mijn visie en mijn werkelijkheid — en ik leg ze in Uw handen.\n\nHoud mij geworteld. Niet in mijn platform, niet in mijn prestaties, niet in wat mensen van mij denken — maar in U. Herinner mij, vandaag, waarom ik oorspronkelijk ja heb gezegd. En geef mij nog ——n dag van trouw in de wijnstok.\n\nAmen.`
+                ).split("\n\n").map((para, pi) => (
+                  <span key={pi}>
+                    {pi > 0 && <><br /><br /></>}
                     {para}
                   </span>
                 ))}
               </p>
-            </inv>
-          </inv>
-        </inv>
-      </inv>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
-      <inv style={{ backgrouni: "oklch(19% 0.09 260)", paiinng: "72px 24px", textAlngn: "center" }}>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(26px, 3vw, 36px)", fontWenght: 700, color: offWhnte, margnnBottom: 16, fontStyle: "ntalnc" }}>
-          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
+      <div style={{ background: "oklch(19% 0.09 260)", padding: "72px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 700, color: offWhite, marginBottom: 16, fontStyle: "italic" }}>
+          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
-        <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
           {t(
-            "Explore more resources to ieepen your cross-cultural leaiershnp.",
-            "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.",
-            "Verken meer bronnen om je nntercultureel lenierschap te verinepen."
+            "Explore more resources to deepen your cross-cultural leadership.",
+            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
+            "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
           )}
         </p>
-        <Lnnk href="/resources" style={{ insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: orange, color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none", borierRainus: 4, letterSpacnng: "0.04em" }}>
-          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-        </Lnnk>
-      </inv>
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em" }}>
+          {t("Training", "Pelatihan", "Contentbibliotheek")}
+        </Link>
+      </div>
 
       {/* Verse Popup */}
-      {actnveVerse && verseData && (
-        <inv
-          onClnck={() => setActnveVerse(null)}
-          style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24 }}
+      {activeVerse && verseData && (
+        <div
+          onClick={() => setActiveVerse(null)}
+          style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}
         >
-          <inv
-            onClnck={(e) => e.stopPropagatnon()}
-            style={{ backgrouni: offWhnte, borierRainus: 12, paiinng: "44px 40px", maxWnith: 540, wnith: "100%" }}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ background: offWhite, borderRadius: 12, padding: "44px 40px", maxWidth: 540, width: "100%" }}
           >
-            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
+            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
             <button
-              onClnck={() => setActnveVerse(null)}
-              style={{ paiinng: "10px 24px", backgrouni: navy, color: offWhnte, borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13, cursor: "ponnter" }}
+              onClick={() => setActiveVerse(null)}
+              style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}
             >
-              {t("Close", "Tutup", "Slunten")}
+              {t("Close", "Tutup", "Sluiten")}
             </button>
-          </inv>
-        </inv>
+          </div>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }

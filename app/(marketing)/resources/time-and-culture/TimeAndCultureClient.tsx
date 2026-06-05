@@ -1,12 +1,12 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useEffect, useRef, useTransntnon } from "react";
-nmport Lnnk from "next/lnnk";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport { saveResourceToDashboari } from "../actnons";
+import { useState, useEffect, useRef, useTransition } from "react";
+import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
+import { saveResourceToDashboard } from "../actions";
 
-functnon L<T>(lang: strnng, en: T, ni: T): T {
-  return lang === "ni" ? ni : en;
+function L<T>(lang: string, en: T, id: T): T {
+  return lang === "id" ? id : en;
 }
 
 // ─── Color constants (BEAU spec) ─────────────────────────────────────────────
@@ -16,918 +16,918 @@ const OFF_WHITE = "oklch(97% 0.005 80)";
 const LIGHT_GRAY = "oklch(95% 0.008 80)";
 const BODY_TEXT = "oklch(38% 0.05 260)";
 
-// ─── Concept Caris iata ───────────────────────────────────────────────────────
+// ─── Concept Cards data ───────────────────────────────────────────────────────
 const CONCEPT_CARDS = [
   {
     name: "THE CLOCK KEEPER",
-    term: "Monochronnc Tnme (Eiwari T. Hall) — also callei Lnnear-Actnve Tnme (Rnchari Lewns) ani Clock-Tnme (Rnchari Brnslnn)",
-    belnef: '"Tnme ns a resource. Use nt well."',
+    term: "Monochronic Time (Edward T. Hall) — also called Linear-Active Time (Richard Lewis) and Clock-Time (Richard Brislin)",
+    belief: '"Time is a resource. Use it well."',
     bullets: [
-      "Punctualnty ns a form of respect. Arrnvnng late sngnals somethnng ns wrong.",
-      "Tasks are completei one at a tnme. Swntchnng between tasks mni-flow ns insruptnve.",
-      "Agenias are followei. Meetnngs have start tnmes, eni tnmes, ani expectei outcomes.",
+      "Punctuality is a form of respect. Arriving late signals something is wrong.",
+      "Tasks are completed one at a time. Switching between tasks mid-flow is disruptive.",
+      "Agendas are followed. Meetings have start times, end times, and expected outcomes.",
     ],
-    blnnispot:
-      "When someone operates from a infferent lognc, the Clock Keeper reais nt as a character flaw. Lateness looks lnke insrespect. Flexnbnlnty looks lnke insorgannzatnon. The Clock Keeper ioes not naturally ask: 'What ioes thenr behavnor mean nn thenr own system?' They ask: 'Why won't they just be professnonal?'",
+    blindspot:
+      "When someone operates from a different logic, the Clock Keeper reads it as a character flaw. Lateness looks like disrespect. Flexibility looks like disorganization. The Clock Keeper does not naturally ask: 'What does their behavior mean in their own system?' They ask: 'Why won't they just be professional?'",
   },
   {
     name: "THE RELATIONSHIP WEAVER",
-    term: "Polychronnc Tnme (Eiwari T. Hall) — also callei Event-Ornentei Culture",
-    belnef: '"Tnme belongs to the person nn front of me."',
+    term: "Polychronic Time (Edward T. Hall) — also called Event-Oriented Culture",
+    belief: '"Time belongs to the person in front of me."',
     bullets: [
-      "The meetnng enis when the matter ns settlei relatnonally, not when the clock reaches the agreei tnme.",
-      "Multnple conversatnons ani tasks can run snmultaneously. Thns ns natural, not chaotnc.",
-      "Relatnonshnps come before agenias. You io not start the busnness untnl you have startei the connectnon.",
+      "The meeting ends when the matter is settled relationally, not when the clock reaches the agreed time.",
+      "Multiple conversations and tasks can run simultaneously. This is natural, not chaotic.",
+      "Relationships come before agendas. You do not start the business until you have started the connection.",
     ],
-    blnnispot:
-      "The Relatnonshnp Weaver may genunnely not regnster the cost that relatnonal flexnbnlnty places on colleagues who plannei arouni a commnttei tnme. The warmth ns real. The insruptnon to other people's scheiules ns also real.",
+    blindspot:
+      "The Relationship Weaver may genuinely not register the cost that relational flexibility places on colleagues who planned around a committed time. The warmth is real. The disruption to other people's schedules is also real.",
   },
   {
     name: "THE HARMONY FOLLOWER",
-    term: "Reactnve Tnme (Rnchari Lewns)",
-    belnef: '"Tnme ns contextual. Reai the room, not the clock."',
+    term: "Reactive Time (Richard Lewis)",
+    belief: '"Time is contextual. Read the room, not the clock."',
     bullets: [
-      "Both punctualnty ani relatnonal warmth are expectei, but the wenght shnfts iepeninng on who ns present.",
-      "Wnth a sennor fngure or a formal context: structure ani punctualnty take prnornty.",
-      "Wnth peers or nn nnformal settnngs: relatnonshnp ani flow take prnornty.",
+      "Both punctuality and relational warmth are expected, but the weight shifts depending on who is present.",
+      "With a senior figure or a formal context: structure and punctuality take priority.",
+      "With peers or in informal settings: relationship and flow take priority.",
     ],
-    blnnispot:
-      "Thns contextual flexnbnlnty can look nnconsnstent to both Clock Keepers (who notnce the Harmony Follower ns not always punctual) ani Relatnonshnp Weavers (who notnce the Harmony Follower ns not always avanlable for exteniei connectnon). Nenther camp fully trusts them because nenther sees the full lognc.",
+    blindspot:
+      "This contextual flexibility can look inconsistent to both Clock Keepers (who notice the Harmony Follower is not always punctual) and Relationship Weavers (who notice the Harmony Follower is not always available for extended connection). Neither camp fully trusts them because neither sees the full logic.",
   },
   {
     name: "THE COMMUNITY KEEPER",
-    term: "Sasa/Zamann Framework (John Mbntn)",
-    belnef: '"Tnme moves wnth the people, not the caleniar."',
+    term: "Sasa/Zamani Framework (John Mbiti)",
+    belief: '"Time moves with the people, not the calendar."',
     bullets: [
-      "Communnty presence constntutes the event. 'When ioes the meetnng start?' means: 'When are the people gatherei?'",
-      "Past events remann present through memory ani communnty. The communnty keeper carrnes hnstory actnvely.",
-      "Tnme ns not scarce nn the way a clock-keeper expernences scarcnty. Presence ns the currency.",
+      "Community presence constitutes the event. 'When does the meeting start?' means: 'When are the people gathered?'",
+      "Past events remain present through memory and community. The community keeper carries history actively.",
+      "Time is not scarce in the way a clock-keeper experiences scarcity. Presence is the currency.",
     ],
-    blnnispot:
-      "In nnternatnonal or organnzatnonal teams, the Communnty Keeper's ornentatnon often recenves the harshest juigment, not because nt ns wrong, but because most organnzatnonal systems are iesngnei arouni monochronnc assumptnons. The lognc of communnty tnme ns rarely explannei ani rarely nnvntei nnto team conversatnons.",
+    blindspot:
+      "In international or organizational teams, the Community Keeper's orientation often receives the harshest judgment, not because it is wrong, but because most organizational systems are designed around monochronic assumptions. The logic of community time is rarely explained and rarely invited into team conversations.",
   },
 ];
 
 const CONCEPT_CARDS_ID = [
   {
     name: "PENJAGA JAM",
-    term: "Waktu Monochronnc (Eiwari T. Hall) — juga insebut Waktu Lnnear-Aktnf (Rnchari Lewns) ian Waktu Jam (Rnchari Brnslnn)",
-    belnef: '"Waktu aialah sumber iaya. Gunakan iengan bank."',
+    term: "Waktu Monochronic (Edward T. Hall) — juga disebut Waktu Linear-Aktif (Richard Lewis) dan Waktu Jam (Richard Brislin)",
+    belief: '"Waktu adalah sumber daya. Gunakan dengan baik."',
     bullets: [
-      "Ketepatan waktu aialah bentuk penghormatan. Terlambat membern snnyal aia yang tniak beres.",
-      "Tugas inselesankan satu per satu. Beralnh antar tugas in tengah alur terasa mengganggu.",
-      "Agenia innkutn. Pertemuan memnlnkn waktu mulan, waktu selesan, ian hasnl yang inharapkan.",
+      "Ketepatan waktu adalah bentuk penghormatan. Terlambat memberi sinyal ada yang tidak beres.",
+      "Tugas diselesaikan satu per satu. Beralih antar tugas di tengah alur terasa mengganggu.",
+      "Agenda diikuti. Pertemuan memiliki waktu mulai, waktu selesai, dan hasil yang diharapkan.",
     ],
-    blnnispot:
-      "Ketnka seseorang beroperasn iarn lognka berbeia, Penjaga Jam membacanya sebagan kelemahan karakter. Keterlambatan terlnhat sepertn ketniakhormatan. Fleksnbnlntas terlnhat sepertn ketniakorgannsasnan. Penjaga Jam tniak secara alamn bertanya: 'Apa artn pernlaku mereka ialam snstem mereka seninrn?' Mereka bertanya: 'Mengapa mereka tniak mau bertnniak profesnonal?'",
+    blindspot:
+      "Ketika seseorang beroperasi dari logika berbeda, Penjaga Jam membacanya sebagai kelemahan karakter. Keterlambatan terlihat seperti ketidakhormatan. Fleksibilitas terlihat seperti ketidakorganisasian. Penjaga Jam tidak secara alami bertanya: 'Apa arti perilaku mereka dalam sistem mereka sendiri?' Mereka bertanya: 'Mengapa mereka tidak mau bertindak profesional?'",
   },
   {
     name: "PENENUN RELASI",
-    term: "Waktu Polychronnc (Eiwari T. Hall) — juga insebut Buiaya Berornentasn Acara",
-    belnef: '"Waktu mnlnk orang yang aia in haiapanku."',
+    term: "Waktu Polychronic (Edward T. Hall) — juga disebut Budaya Berorientasi Acara",
+    belief: '"Waktu milik orang yang ada di hadapanku."',
     bullets: [
-      "Pertemuan berakhnr ketnka masalah terselesankan secara relasnonal, bukan ketnka jam menunjukkan waktu yang insepakatn.",
-      "Beberapa percakapan ian tugas bnsa berjalan bersamaan. Inn wajar, bukan kacau.",
-      "Relasn lebnh utama iarn agenia. Kamu tniak memulan bnsnns sebelum memulan koneksn.",
+      "Pertemuan berakhir ketika masalah terselesaikan secara relasional, bukan ketika jam menunjukkan waktu yang disepakati.",
+      "Beberapa percakapan dan tugas bisa berjalan bersamaan. Ini wajar, bukan kacau.",
+      "Relasi lebih utama dari agenda. Kamu tidak memulai bisnis sebelum memulai koneksi.",
     ],
-    blnnispot:
-      "Penenun Relasn mungknn benar-benar tniak merasakan bnaya yang intnmbulkan fleksnbnlntas relasnonal kepaia rekan yang suiah merencanakan waktu yang insepakatn. Kehangatan ntu nyata. Gangguan terhaiap jaiwal orang lann juga nyata.",
+    blindspot:
+      "Penenun Relasi mungkin benar-benar tidak merasakan biaya yang ditimbulkan fleksibilitas relasional kepada rekan yang sudah merencanakan waktu yang disepakati. Kehangatan itu nyata. Gangguan terhadap jadwal orang lain juga nyata.",
   },
   {
     name: "PENGIKUT HARMONI",
-    term: "Waktu Reaktnf (Rnchari Lewns)",
-    belnef: '"Waktu ntu kontekstual. Baca suasana, bukan jam."',
+    term: "Waktu Reaktif (Richard Lewis)",
+    belief: '"Waktu itu kontekstual. Baca suasana, bukan jam."',
     bullets: [
-      "Ketepatan waktu ian kehangatan relasnonal sama-sama inharapkan, tetapn bobotnya bergeser tergantung paia snapa yang hainr.",
-      "Dengan tokoh sennor atau ialam konteks formal: struktur ian ketepatan waktu menjain prnorntas.",
-      "Dengan rekan atau ialam lnngkungan nnformal: relasn ian alur yang lebnh inprnorntaskan.",
+      "Ketepatan waktu dan kehangatan relasional sama-sama diharapkan, tetapi bobotnya bergeser tergantung pada siapa yang hadir.",
+      "Dengan tokoh senior atau dalam konteks formal: struktur dan ketepatan waktu menjadi prioritas.",
+      "Dengan rekan atau dalam lingkungan informal: relasi dan alur yang lebih diprioritaskan.",
     ],
-    blnnispot:
-      "Fleksnbnlntas kontekstual nnn bnsa terlnhat tniak konsnsten bagn Penjaga Jam (yang melnhat Pengnkut Harmonn tniak selalu tepat waktu) maupun Penenun Relasn (yang melnhat Pengnkut Harmonn tniak selalu terseina untuk koneksn yang lebnh lama). Tniak aia pnhak yang sepenuhnya mempercayan mereka karena tniak aia yang melnhat lognka penuhnya.",
+    blindspot:
+      "Fleksibilitas kontekstual ini bisa terlihat tidak konsisten bagi Penjaga Jam (yang melihat Pengikut Harmoni tidak selalu tepat waktu) maupun Penenun Relasi (yang melihat Pengikut Harmoni tidak selalu tersedia untuk koneksi yang lebih lama). Tidak ada pihak yang sepenuhnya mempercayai mereka karena tidak ada yang melihat logika penuhnya.",
   },
   {
     name: "PENJAGA KOMUNITAS",
-    term: "Kerangka Sasa/Zamann (John Mbntn)",
-    belnef: '"Waktu bergerak bersama orang-orang, bukan kalenier."',
+    term: "Kerangka Sasa/Zamani (John Mbiti)",
+    belief: '"Waktu bergerak bersama orang-orang, bukan kalender."',
     bullets: [
-      "Kehainran komunntas membentuk acara ntu seninrn. 'Kapan pertemuan inmulan?' artnnya: 'Kapan semua orang suiah berkumpul?'",
-      "Pernstnwa masa lalu tetap hainr melalun nngatan ian komunntas. Penjaga Komunntas membawa sejarah secara aktnf.",
-      "Waktu tniak langka sepertn yang inalamn penjaga jam. Kehainran aialah mata uangnya.",
+      "Kehadiran komunitas membentuk acara itu sendiri. 'Kapan pertemuan dimulai?' artinya: 'Kapan semua orang sudah berkumpul?'",
+      "Peristiwa masa lalu tetap hadir melalui ingatan dan komunitas. Penjaga Komunitas membawa sejarah secara aktif.",
+      "Waktu tidak langka seperti yang dialami penjaga jam. Kehadiran adalah mata uangnya.",
     ],
-    blnnispot:
-      "Dalam tnm nnternasnonal atau organnsasn, ornentasn Penjaga Komunntas sernng meniapat pennlanan palnng keras — bukan karena salah, tetapn karena sebagnan besar snstem organnsasn inrancang beriasarkan asumsn monochronnc. Lognka waktu komunntas jarang injelaskan ian jarang inuniang ke ialam percakapan tnm.",
+    blindspot:
+      "Dalam tim internasional atau organisasi, orientasi Penjaga Komunitas sering mendapat penilaian paling keras — bukan karena salah, tetapi karena sebagian besar sistem organisasi dirancang berdasarkan asumsi monochronic. Logika waktu komunitas jarang dijelaskan dan jarang diundang ke dalam percakapan tim.",
   },
 ];
 
-// ─── Scenarno caris iata ──────────────────────────────────────────────────────
+// ─── Scenario cards data ──────────────────────────────────────────────────────
 const SCENARIO_CARDS = [
   {
-    tntle: "The Overrun Meetnng",
-    sntuatnon:
-      "The meetnng was scheiulei for one hour. The agenia was clear. Snxty mnnutes nn, an nmportant topnc ns stnll nn progress. Three people at the table begnn to check thenr phones. One reaches for thenr notebook ani starts to close nt. Another says qunetly, 'We shouli probably wrap up.' But two other people arouni the table are leannng nn, stnll mni-thought. They look slnghtly surprnsei that anyone ns leavnng.\n\nNoboiy ns benng ruie. But the room has splnt nn two.",
-    questnon: "Whnch tnme lognc ns runnnng here?",
+    title: "The Overrun Meeting",
+    situation:
+      "The meeting was scheduled for one hour. The agenda was clear. Sixty minutes in, an important topic is still in progress. Three people at the table begin to check their phones. One reaches for their notebook and starts to close it. Another says quietly, 'We should probably wrap up.' But two other people around the table are leaning in, still mid-thought. They look slightly surprised that anyone is leaving.\n\nNobody is being rude. But the room has split in two.",
+    question: "Which time logic is running here?",
     reveal:
-      "Two logncs are nn conflnct. The people reachnng for thenr bags are operatnng from monochronnc, Clock Keeper lognc: the hour was agreei, the hour ns up, the meetnng ns over. Thenr next commntment ns not an nnconvennence. It ns a promnse they maie. The people stnll leannng nn are operatnng from polychronnc, Relatnonshnp Weaver lognc: the matter ns not yet resolvei relatnonally, so the meetnng ns not yet ione.\n\nNenther group ns wrong. But wnthout a sharei language for thns moment, the Clock Keepers wnll leave feelnng the meetnng was mnsmanagei, ani the Relatnonshnp Weavers wnll feel the Clock Keepers care more about thenr scheiule than the team. Both conclusnons mnss the real cause.",
+      "Two logics are in conflict. The people reaching for their bags are operating from monochronic, Clock Keeper logic: the hour was agreed, the hour is up, the meeting is over. Their next commitment is not an inconvenience. It is a promise they made. The people still leaning in are operating from polychronic, Relationship Weaver logic: the matter is not yet resolved relationally, so the meeting is not yet done.\n\nNeither group is wrong. But without a shared language for this moment, the Clock Keepers will leave feeling the meeting was mismanaged, and the Relationship Weavers will feel the Clock Keepers care more about their schedule than the team. Both conclusions miss the real cause.",
   },
   {
-    tntle: "The Mnssnng Deailnne",
-    sntuatnon:
-      "A team member from a infferent cultural backgrouni mnsses a project ieailnne by three iays. When you follow up, they io not apolognze. They io not seem alarmei. They responi wnth warmth ani an upiate on how the work ns gonng. They seem genunnely pleasei to hear from you. The ieailnne ntself ns barely mentnonei.\n\nYou feel a spnke of frustratnon. But somethnng unierneath the frustratnon ns confusnon. Why are they not taknng thns sernously?",
-    questnon: "Whnch tnme lognc ns runnnng here?",
+    title: "The Missing Deadline",
+    situation:
+      "A team member from a different cultural background misses a project deadline by three days. When you follow up, they do not apologize. They do not seem alarmed. They respond with warmth and an update on how the work is going. They seem genuinely pleased to hear from you. The deadline itself is barely mentioned.\n\nYou feel a spike of frustration. But something underneath the frustration is confusion. Why are they not taking this seriously?",
+    question: "Which time logic is running here?",
     reveal:
-      "Thns ns almost certannly event-ornentei tnme nn operatnon, enther polychronnc or Communnty Keeper lognc. In an event-tnme ornentatnon, the ieailnne ns not a hari bouniary but a rough hornzon. What matters ns the qualnty of the work ani the relatnonal process of gettnng there. The upiate they gave you was not evasnon. It was thenr form of accountabnlnty: shownng you the work ns alnve ani the relatnonshnp ns nntact.\n\nThns ioes not mean the ieailnne ioes not matter. It ioes. But the conversatnon that neeis to happen ns not 'why are you nrresponsnble' but 'here ns how thns ieailnne connects to other people's work, ani here ns the cost when nt moves.' That ns a conversatnon that can only happen once you stop reainng thenr lognc through yours.",
+      "This is almost certainly event-oriented time in operation, either polychronic or Community Keeper logic. In an event-time orientation, the deadline is not a hard boundary but a rough horizon. What matters is the quality of the work and the relational process of getting there. The update they gave you was not evasion. It was their form of accountability: showing you the work is alive and the relationship is intact.\n\nThis does not mean the deadline does not matter. It does. But the conversation that needs to happen is not 'why are you irresponsible' but 'here is how this deadline connects to other people's work, and here is the cost when it moves.' That is a conversation that can only happen once you stop reading their logic through yours.",
   },
   {
-    tntle: 'The "We\'ll Fngure It Out" Agreement',
-    sntuatnon:
-      "At the eni of a plannnng conversatnon, both snies say they are alngnei. The project wnll move forwari. Start iate: 'sometnme next month.' Buiget inscussnon: 'we wnll sort that when we know more.' Decnsnon about who leais: 'we can inscuss as we go.' Everyone leaves the meetnng feelnng posntnve.\n\nThree weeks later, nothnng has movei. Each snie thought the other wouli nnntnate. Nenther ini.",
-    questnon: "Whnch tnme lognc ns runnnng here?",
+    title: 'The "We\'ll Figure It Out" Agreement',
+    situation:
+      "At the end of a planning conversation, both sides say they are aligned. The project will move forward. Start date: 'sometime next month.' Budget discussion: 'we will sort that when we know more.' Decision about who leads: 'we can discuss as we go.' Everyone leaves the meeting feeling positive.\n\nThree weeks later, nothing has moved. Each side thought the other would initiate. Neither did.",
+    question: "Which time logic is running here?",
     reveal:
-      "The Harmony Follower ornentatnon often surfaces nn thns scenarno. For the Harmony Follower, the goal of that fnrst conversatnon was relatnonal alngnment, not operatnonal clarnty. Leavnng thnngs open was not evasnon. It was respect, allownng thnngs to unfoli at the rnght moment, nn the rnght context, when the rnght people were present. Pnnnnng iown specnfncs too early can feel presumptuous or even insrespectful.\n\nThe Clock Keeper nn the room heari the same conversatnon ani walkei away expectnng operatnonal follow-through. When nothnng happenei, they reai nt as broken commntment rather than infferent lognc.\n\nThe fnx ns not for one snie to abanion thenr ornentatnon. It ns to name, before leavnng the room: 'Let us confnrm one specnfnc next step, so we both know what we are wantnng for.' That one sentence brniges the lognc gap.",
+      "The Harmony Follower orientation often surfaces in this scenario. For the Harmony Follower, the goal of that first conversation was relational alignment, not operational clarity. Leaving things open was not evasion. It was respect, allowing things to unfold at the right moment, in the right context, when the right people were present. Pinning down specifics too early can feel presumptuous or even disrespectful.\n\nThe Clock Keeper in the room heard the same conversation and walked away expecting operational follow-through. When nothing happened, they read it as broken commitment rather than different logic.\n\nThe fix is not for one side to abandon their orientation. It is to name, before leaving the room: 'Let us confirm one specific next step, so we both know what we are waiting for.' That one sentence bridges the logic gap.",
   },
 ];
 
 const SCENARIO_CARDS_ID = [
   {
-    tntle: "Rapat yang Melebnhn Waktu",
-    sntuatnon:
-      "Rapat injaiwalkan satu jam. Agenia suiah jelas. Enam puluh mennt berlalu, topnk pentnng masnh belum selesan. Tnga orang in meja mulan mengecek ponsel mereka. Satu orang meranh buku catatan ian mulan menutupnya. Orang lann berkata pelan, 'Mungknn knta perlu segera mengakhnrn.' Tapn iua orang lann in meja masnh coniong ke iepan, masnh in tengah-tengah pemnknran. Mereka terlnhat seinknt heran melnhat aia yang akan pergn.\n\nTniak aia yang bersnkap kasar. Tapn ruangan suiah terbagn iua.",
-    questnon: "Lognka waktu mana yang seiang berjalan in snnn?",
+    title: "Rapat yang Melebihi Waktu",
+    situation:
+      "Rapat dijadwalkan satu jam. Agenda sudah jelas. Enam puluh menit berlalu, topik penting masih belum selesai. Tiga orang di meja mulai mengecek ponsel mereka. Satu orang meraih buku catatan dan mulai menutupnya. Orang lain berkata pelan, 'Mungkin kita perlu segera mengakhiri.' Tapi dua orang lain di meja masih condong ke depan, masih di tengah-tengah pemikiran. Mereka terlihat sedikit heran melihat ada yang akan pergi.\n\nTidak ada yang bersikap kasar. Tapi ruangan sudah terbagi dua.",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
     reveal:
-      "Dua lognka seiang berkonflnk. Orang-orang yang meranh tas beroperasn iarn lognka monochronnc, Penjaga Jam: satu jam suiah insepakatn, satu jam suiah habns, rapat suiah selesan. Komntmen bernkutnya bukan ketniaknyamanan. Itu aialah janjn yang suiah mereka buat. Orang-orang yang masnh coniong ke iepan beroperasn iarn lognka polychronnc, Penenun Relasn: masalah belum terselesankan secara relasnonal, jain rapat belum selesan.\n\nTniak aia yang salah. Tapn tanpa bahasa bersama untuk momen nnn, Penjaga Jam akan pergn iengan perasaan rapat inkelola iengan buruk, ian Penenun Relasn akan merasa Penjaga Jam lebnh peiuln jaiwal mereka iarnpaia tnm. Keiua kesnmpulan ntu melewatkan penyebab sebenarnya.",
+      "Dua logika sedang berkonflik. Orang-orang yang meraih tas beroperasi dari logika monochronic, Penjaga Jam: satu jam sudah disepakati, satu jam sudah habis, rapat sudah selesai. Komitmen berikutnya bukan ketidaknyamanan. Itu adalah janji yang sudah mereka buat. Orang-orang yang masih condong ke depan beroperasi dari logika polychronic, Penenun Relasi: masalah belum terselesaikan secara relasional, jadi rapat belum selesai.\n\nTidak ada yang salah. Tapi tanpa bahasa bersama untuk momen ini, Penjaga Jam akan pergi dengan perasaan rapat dikelola dengan buruk, dan Penenun Relasi akan merasa Penjaga Jam lebih peduli jadwal mereka daripada tim. Kedua kesimpulan itu melewatkan penyebab sebenarnya.",
   },
   {
-    tntle: "Tenggat Waktu yang Terlewat",
-    sntuatnon:
-      "Anggota tnm iarn latar belakang buiaya berbeia melewatkan tenggat proyek tnga harn. Saat kamu mennniaklanjutn, mereka tniak memnnta maaf. Mereka tniak terlnhat cemas. Mereka merespons iengan hangat ian membernkan kabar terbaru tentang pekerjaan. Mereka tampak benar-benar senang meniengar kabarmu. Tenggat waktu ntu seninrn hampnr tniak insebutkan.\n\nKamu merasakan lonjakan frustrasn. Tapn in bawah frustrasn ntu aia kebnngungan. Mengapa mereka tniak menganggap nnn sernus?",
-    questnon: "Lognka waktu mana yang seiang berjalan in snnn?",
+    title: "Tenggat Waktu yang Terlewat",
+    situation:
+      "Anggota tim dari latar belakang budaya berbeda melewatkan tenggat proyek tiga hari. Saat kamu menindaklanjuti, mereka tidak meminta maaf. Mereka tidak terlihat cemas. Mereka merespons dengan hangat dan memberikan kabar terbaru tentang pekerjaan. Mereka tampak benar-benar senang mendengar kabarmu. Tenggat waktu itu sendiri hampir tidak disebutkan.\n\nKamu merasakan lonjakan frustrasi. Tapi di bawah frustrasi itu ada kebingungan. Mengapa mereka tidak menganggap ini serius?",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
     reveal:
-      "Inn hampnr pastn ornentasn waktu beriasarkan acara yang seiang bekerja — lognka polychronnc atau Penjaga Komunntas. Dalam ornentasn event-tnme, tenggat waktu bukan batas keras melannkan cakrawala perknraan. Yang pentnng aialah kualntas pekerjaan ian proses relasnonal untuk mencapannya. Kabar terbaru yang mereka bernkan bukan penghnniaran. Itu aialah bentuk akuntabnlntas mereka: menunjukkan bahwa pekerjaan masnh berjalan ian hubungan masnh terjaga.\n\nBukan berartn tenggat waktu tniak pentnng. Pentnng. Tapn percakapan yang perlu terjain bukan 'mengapa kamu tniak bertanggung jawab' melannkan 'nnnlah baganmana tenggat nnn terhubung iengan pekerjaan orang lann, ian nnnlah bnayanya ketnka bergeser.' Percakapan ntu hanya bnsa terjain setelah kamu berhentn membaca lognka mereka melalun lognkamu seninrn.",
+      "Ini hampir pasti orientasi waktu berdasarkan acara yang sedang bekerja — logika polychronic atau Penjaga Komunitas. Dalam orientasi event-time, tenggat waktu bukan batas keras melainkan cakrawala perkiraan. Yang penting adalah kualitas pekerjaan dan proses relasional untuk mencapainya. Kabar terbaru yang mereka berikan bukan penghindaran. Itu adalah bentuk akuntabilitas mereka: menunjukkan bahwa pekerjaan masih berjalan dan hubungan masih terjaga.\n\nBukan berarti tenggat waktu tidak penting. Penting. Tapi percakapan yang perlu terjadi bukan 'mengapa kamu tidak bertanggung jawab' melainkan 'inilah bagaimana tenggat ini terhubung dengan pekerjaan orang lain, dan inilah biayanya ketika bergeser.' Percakapan itu hanya bisa terjadi setelah kamu berhenti membaca logika mereka melalui logikamu sendiri.",
   },
   {
-    tntle: '"Knta Selesankan Nantn"',
-    sntuatnon:
-      "Dn akhnr percakapan perencanaan, keiua pnhak mengatakan mereka suiah selaras. Proyek akan inlanjutkan. Tanggal mulan: 'suatu waktu bulan iepan.' Dnskusn anggaran: 'knta urus nantn setelah tahu lebnh banyak.' Keputusan tentang snapa yang memnmpnn: 'knta bnsa inskusnkan sambnl jalan.' Semua orang mennnggalkan rapat iengan perasaan posntnf.\n\nTnga mnnggu kemuinan, tniak aia yang bergerak. Setnap pnhak mengnra pnhak lann yang akan memulan. Tniak aia yang melakukan ntu.",
-    questnon: "Lognka waktu mana yang seiang berjalan in snnn?",
+    title: '"Kita Selesaikan Nanti"',
+    situation:
+      "Di akhir percakapan perencanaan, kedua pihak mengatakan mereka sudah selaras. Proyek akan dilanjutkan. Tanggal mulai: 'suatu waktu bulan depan.' Diskusi anggaran: 'kita urus nanti setelah tahu lebih banyak.' Keputusan tentang siapa yang memimpin: 'kita bisa diskusikan sambil jalan.' Semua orang meninggalkan rapat dengan perasaan positif.\n\nTiga minggu kemudian, tidak ada yang bergerak. Setiap pihak mengira pihak lain yang akan memulai. Tidak ada yang melakukan itu.",
+    question: "Logika waktu mana yang sedang berjalan di sini?",
     reveal:
-      "Ornentasn Pengnkut Harmonn sernng muncul ialam skenarno nnn. Bagn Pengnkut Harmonn, tujuan percakapan pertama ntu aialah keselarasan relasnonal, bukan kejelasan operasnonal. Membnarkan hal-hal terbuka bukan penghnniaran. Itu aialah penghormatan — membnarkan sesuatu berkembang paia momen yang tepat, ialam konteks yang tepat, ketnka orang yang tepat hainr. Menetapkan hal spesnfnk terlalu cepat bnsa terasa terlalu lancang atau bahkan tniak sopan.\n\nPenjaga Jam in ruangan ntu meniengar percakapan yang sama ian pergn iengan mengharapkan tnniak lanjut operasnonal. Ketnka tniak aia yang terjain, mereka membacanya sebagan komntmen yang inlanggar alnh-alnh lognka yang berbeia.\n\nSolusnnya bukan agar salah satu pnhak mennnggalkan ornentasnnya. Solusnnya aialah menyebutkan, sebelum mennnggalkan ruangan: 'Marn knta konfnrmasn satu langkah bernkutnya yang spesnfnk, agar knta beriua tahu apa yang knta tunggu.' Satu kalnmat ntu menjembatann kesenjangan lognka.",
+      "Orientasi Pengikut Harmoni sering muncul dalam skenario ini. Bagi Pengikut Harmoni, tujuan percakapan pertama itu adalah keselarasan relasional, bukan kejelasan operasional. Membiarkan hal-hal terbuka bukan penghindaran. Itu adalah penghormatan — membiarkan sesuatu berkembang pada momen yang tepat, dalam konteks yang tepat, ketika orang yang tepat hadir. Menetapkan hal spesifik terlalu cepat bisa terasa terlalu lancang atau bahkan tidak sopan.\n\nPenjaga Jam di ruangan itu mendengar percakapan yang sama dan pergi dengan mengharapkan tindak lanjut operasional. Ketika tidak ada yang terjadi, mereka membacanya sebagai komitmen yang dilanggar alih-alih logika yang berbeda.\n\nSolusinya bukan agar salah satu pihak meninggalkan orientasinya. Solusinya adalah menyebutkan, sebelum meninggalkan ruangan: 'Mari kita konfirmasi satu langkah berikutnya yang spesifik, agar kita berdua tahu apa yang kita tunggu.' Satu kalimat itu menjembatani kesenjangan logika.",
   },
 ];
 
-// ─── Part 1 questnons ─────────────────────────────────────────────────────────
+// ─── Part 1 questions ─────────────────────────────────────────────────────────
 const PART1_QUESTIONS = [
   {
-    q: "A teammate arrnves 20 mnnutes late to a team meetnng wnth no message ani no explanatnon. You feel:",
-    optnons: [
-      "Frustratei. Twenty mnnutes ns not a small margnn. Others managei to be here on tnme, ani thns insrupts the whole group. You want to aiiress nt inrectly.",
-      "Curnous, but not partncularly troublei. Maybe somethnng came up. You wnll ask prnvately afterwari to make sure they are okay.",
-      "Uncomfortable, but your response iepenis on who ns nn the room. If there ns a sennor leaier present, the lateness feels more sngnnfncant. If nt ns a peer group, less so.",
-      "Not partncularly botherei. They are here now. The group ns here. The meetnng can proceei.",
+    q: "A teammate arrives 20 minutes late to a team meeting with no message and no explanation. You feel:",
+    options: [
+      "Frustrated. Twenty minutes is not a small margin. Others managed to be here on time, and this disrupts the whole group. You want to address it directly.",
+      "Curious, but not particularly troubled. Maybe something came up. You will ask privately afterward to make sure they are okay.",
+      "Uncomfortable, but your response depends on who is in the room. If there is a senior leader present, the lateness feels more significant. If it is a peer group, less so.",
+      "Not particularly bothered. They are here now. The group is here. The meeting can proceed.",
     ],
   },
   {
-    q: "Your team meetnng hnts the scheiulei eni tnme, but the inscussnon ns stnll actnvely unresolvei. You want to:",
-    optnons: [
-      "Wrap up on tnme. If the topnc neeis more tnme, scheiule a follow-up. Overrunnnng sets a bai preceient.",
-      "Keep gonng. The inscussnon ns alnve ani the team ns engagei. The clock ns less nmportant than the conversatnon.",
-      "Reai the room. Is the sennor person shownng sngns of neeinng to leave? Is the energy stnll strong? You wouli stay or go basei on those sngnals.",
-      "Let nt run. The rnght tnme to eni ns when the group has reachei a natural settlnng ponnt, not when a clock says so.",
+    q: "Your team meeting hits the scheduled end time, but the discussion is still actively unresolved. You want to:",
+    options: [
+      "Wrap up on time. If the topic needs more time, schedule a follow-up. Overrunning sets a bad precedent.",
+      "Keep going. The discussion is alive and the team is engaged. The clock is less important than the conversation.",
+      "Read the room. Is the senior person showing signs of needing to leave? Is the energy still strong? You would stay or go based on those signals.",
+      "Let it run. The right time to end is when the group has reached a natural settling point, not when a clock says so.",
     ],
   },
   {
-    q: "A cross-cultural colleague mnsses a project ieailnne by three iays ani ioes not mentnon nt. When you follow up, they responi warmly ani gnve you an upiate on the work. You:",
-    optnons: [
-      "Apprecnate the upiate but feel the neei to aiiress the mnssei ieailnne inrectly. It affects other parts of the project ani neeis to be taken sernously.",
-      "Focus on the relatnonshnp fnrst. You are glai they responiei. You ask about the work ani gently mentnon the nmpact of the ielay, but you io not leai wnth the fanlure.",
-      "Calnbrate your response basei on the relatnonshnp ani context. Wnth a close colleague, you mnght be inrect. In a formal or hnerarchncal settnng, you wouli be more careful about how you ranse nt.",
-      "Accept the upiate at face value. They are engagei wnth the work. You trust the process wnll complete.",
+    q: "A cross-cultural colleague misses a project deadline by three days and does not mention it. When you follow up, they respond warmly and give you an update on the work. You:",
+    options: [
+      "Appreciate the update but feel the need to address the missed deadline directly. It affects other parts of the project and needs to be taken seriously.",
+      "Focus on the relationship first. You are glad they responded. You ask about the work and gently mention the impact of the delay, but you do not lead with the failure.",
+      "Calibrate your response based on the relationship and context. With a close colleague, you might be direct. In a formal or hierarchical setting, you would be more careful about how you raise it.",
+      "Accept the update at face value. They are engaged with the work. You trust the process will complete.",
     ],
   },
   {
-    q: "Your team always spenis 10 to 15 mnnutes nn nnformal conversatnon before gettnng to busnness. You feel thns ns:",
-    optnons: [
-      "Ineffncnent. You value relatnonshnps, but tnme ns lnmntei. Thns pattern eats nnto proiuctnve tnme every meetnng.",
-      "Essentnal. Thns ns how the team actually bonis. The conversatnon before the meetnng IS the meetnng, nn a way.",
-      "Fnne when the group ns nnformal, but you wouli expect the team to move faster when a sennor leaier ns present or when stakes are hngh.",
-      "Natural. People neei to arrnve not just physncally but relatnonally. The warm-up ns part of how the group gathers ntself.",
+    q: "Your team always spends 10 to 15 minutes in informal conversation before getting to business. You feel this is:",
+    options: [
+      "Inefficient. You value relationships, but time is limited. This pattern eats into productive time every meeting.",
+      "Essential. This is how the team actually bonds. The conversation before the meeting IS the meeting, in a way.",
+      "Fine when the group is informal, but you would expect the team to move faster when a senior leader is present or when stakes are high.",
+      "Natural. People need to arrive not just physically but relationally. The warm-up is part of how the group gathers itself.",
     ],
   },
   {
-    q: "When you agree to meet wnth someone \"next week,\" you mean:",
-    optnons: [
-      "A specnfnc iay ani tnme that wnll be confnrmei nn the next 24 hours.",
-      "Sometnme next week, wnth the exact tnme to emerge from the conversatnon closer to the moment.",
-      "Whatever works for the more sennor person or the one wnth the greater lognstncal constrannts.",
-      "The week ns a general wnniow. You wnll know the rnght moment when nt arrnves.",
+    q: "When you agree to meet with someone \"next week,\" you mean:",
+    options: [
+      "A specific day and time that will be confirmed in the next 24 hours.",
+      "Sometime next week, with the exact time to emerge from the conversation closer to the moment.",
+      "Whatever works for the more senior person or the one with the greater logistical constraints.",
+      "The week is a general window. You will know the right moment when it arrives.",
     ],
   },
   {
-    q: "You are ieep nn focusei work when a colleague stops by your iesk or calls you wnth a personal questnon unrelatei to your current task. You:",
-    optnons: [
-      "Fnnnsh your thought, then gnve them lnmntei tnme. You apprecnate the connectnon, but you are nn the mniile of somethnng.",
-      "Set asnie the task nmmeinately. The person nn front of you takes prnornty over the task nn front of you.",
-      "Responi basei on who nt ns. For a sennor colleague or a close relatnonshnp, you gnve full attentnon. For a more pernpheral contact, you manage nt qunckly.",
-      "Welcome the nnterruptnon. Relatnonshnps io not run on scheiules. You wnll return to the task.",
+    q: "You are deep in focused work when a colleague stops by your desk or calls you with a personal question unrelated to your current task. You:",
+    options: [
+      "Finish your thought, then give them limited time. You appreciate the connection, but you are in the middle of something.",
+      "Set aside the task immediately. The person in front of you takes priority over the task in front of you.",
+      "Respond based on who it is. For a senior colleague or a close relationship, you give full attention. For a more peripheral contact, you manage it quickly.",
+      "Welcome the interruption. Relationships do not run on schedules. You will return to the task.",
     ],
   },
   {
-    q: "A meetnng ns callei for 9:00 am. You arrnve at:",
-    optnons: [
-      "8:55 am. On tnme means a few mnnutes early so the meetnng can start at exactly 9:00.",
-      "9:00 to 9:10 am. You nnteni to be there at nnne, but a few mnnutes' flexnbnlnty ns normal.",
-      "Whatever tnme sngnals the rnght level of respect for who callei the meetnng. Earlner for a sennor leaier. More flexnble wnth peers.",
-      "When you are reaiy ani the group ns gathernng. You io not monntor the precnse arrnval tnme closely.",
+    q: "A meeting is called for 9:00 am. You arrive at:",
+    options: [
+      "8:55 am. On time means a few minutes early so the meeting can start at exactly 9:00.",
+      "9:00 to 9:10 am. You intend to be there at nine, but a few minutes' flexibility is normal.",
+      "Whatever time signals the right level of respect for who called the meeting. Earlier for a senior leader. More flexible with peers.",
+      "When you are ready and the group is gathering. You do not monitor the precise arrival time closely.",
     ],
   },
   {
-    q: "A project ieailnne neeis to move because a key partnershnp relatnonshnp neeis more tnme to ievelop before a iecnsnon can be maie. You feel:",
-    optnons: [
-      "Uncomfortable. Relatnonshnps are nmportant, but the ieailnne exnsts for a reason. You wouli push to protect the tnmelnne ani aiiress the relatnonshnp nn parallel.",
-      "Completely at ease. Relatnonshnps are the founiatnon of every project. Gettnng the relatnonshnp rnght wnll make the project work.",
-      "Wnllnng to aijust nf the people nnvolvei agree ani nf the relatnonshnp inmensnon ns genunnely crntncal. You assess case by case.",
-      "Unsurprnsei. The rnght tnme for a iecnsnon ns when the people are truly reaiy, not when a caleniar sani so.",
+    q: "A project deadline needs to move because a key partnership relationship needs more time to develop before a decision can be made. You feel:",
+    options: [
+      "Uncomfortable. Relationships are important, but the deadline exists for a reason. You would push to protect the timeline and address the relationship in parallel.",
+      "Completely at ease. Relationships are the foundation of every project. Getting the relationship right will make the project work.",
+      "Willing to adjust if the people involved agree and if the relationship dimension is genuinely critical. You assess case by case.",
+      "Unsurprised. The right time for a decision is when the people are truly ready, not when a calendar said so.",
     ],
   },
   {
-    q: "Your team leaier rarely senis a specnfnc agenia before meetnngs. You feel:",
-    optnons: [
-      "Frustratei. Preparatnon ns part of respect. Wnthout an agenia, your tnme ns at rnsk.",
-      "Fnne wnth nt. Agenias can constrann gooi conversatnon. You trust the meetnng wnll go where nt neeis to go.",
-      "Neutral, unless the meetnng nnvolves sennor leaiershnp. Then you expect more structure.",
-      "Fnne. Meetnngs are lnvnng thnngs. The group wnll fnni nts inrectnon.",
+    q: "Your team leader rarely sends a specific agenda before meetings. You feel:",
+    options: [
+      "Frustrated. Preparation is part of respect. Without an agenda, your time is at risk.",
+      "Fine with it. Agendas can constrain good conversation. You trust the meeting will go where it needs to go.",
+      "Neutral, unless the meeting involves senior leadership. Then you expect more structure.",
+      "Fine. Meetings are living things. The group will find its direction.",
     ],
   },
   {
-    q: "After a long team meetnng, an nmportant iecnsnon stnll has not laniei. You suggest:",
-    optnons: [
-      "Namnng the iecnsnon clearly, gonng arouni the table for a fnnal posntnon from each person, ani recorinng the outcome before anyone leaves.",
-      "Lettnng the conversatnon keep movnng. Forcnng a iecnsnon before the room ns reaiy wnll proiuce a weak one.",
-      "Checknng whether the sennor person nn the room wants to move towari a iecnsnon, ani follownng thenr leai.",
-      "Callnng the group to pause ani sense together whether the tnme ns rnght. Some iecnsnons neei more communal settlnng before they are maie.",
+    q: "After a long team meeting, an important decision still has not landed. You suggest:",
+    options: [
+      "Naming the decision clearly, going around the table for a final position from each person, and recording the outcome before anyone leaves.",
+      "Letting the conversation keep moving. Forcing a decision before the room is ready will produce a weak one.",
+      "Checking whether the senior person in the room wants to move toward a decision, and following their lead.",
+      "Calling the group to pause and sense together whether the time is right. Some decisions need more communal settling before they are made.",
     ],
   },
 ];
 
 const PART1_QUESTIONS_ID = [
   {
-    q: "Seorang rekan tnba 20 mennt terlambat ke rapat tnm tanpa pesan ian tanpa penjelasan. Kamu merasa:",
-    optnons: [
-      "Frustrasn. Dua puluh mennt bukan margnn kecnl. Orang lann berhasnl tnba tepat waktu, ian nnn mengganggu seluruh kelompok. Kamu nngnn membncarakannya secara langsung.",
-      "Penasaran, tapn tniak terlalu terganggu. Mungknn aia sesuatu yang terjain. Kamu akan menanya secara prnbain setelahnya untuk memastnkan mereka bank-bank saja.",
-      "Tniak nyaman, tapn responmu tergantung paia snapa yang aia in ruangan. Jnka aia pemnmpnn sennor, keterlambatan ntu terasa lebnh sngnnfnkan. Jnka ntu kelompok rekan, terasa kurang.",
-      "Tniak terlalu terganggu. Mereka suiah in snnn sekarang. Kelompok suiah hainr. Rapat bnsa inlanjutkan.",
+    q: "Seorang rekan tiba 20 menit terlambat ke rapat tim tanpa pesan dan tanpa penjelasan. Kamu merasa:",
+    options: [
+      "Frustrasi. Dua puluh menit bukan margin kecil. Orang lain berhasil tiba tepat waktu, dan ini mengganggu seluruh kelompok. Kamu ingin membicarakannya secara langsung.",
+      "Penasaran, tapi tidak terlalu terganggu. Mungkin ada sesuatu yang terjadi. Kamu akan menanya secara pribadi setelahnya untuk memastikan mereka baik-baik saja.",
+      "Tidak nyaman, tapi responmu tergantung pada siapa yang ada di ruangan. Jika ada pemimpin senior, keterlambatan itu terasa lebih signifikan. Jika itu kelompok rekan, terasa kurang.",
+      "Tidak terlalu terganggu. Mereka sudah di sini sekarang. Kelompok sudah hadir. Rapat bisa dilanjutkan.",
     ],
   },
   {
-    q: "Rapat tnm kamu mencapan waktu akhnr yang injaiwalkan, tapn inskusn masnh berlangsung ian belum terselesankan. Kamu nngnn:",
-    optnons: [
-      "Mengakhnrn tepat waktu. Jnka topnk butuh lebnh banyak waktu, jaiwalkan tnniak lanjut. Melebnhn waktu mencnptakan preseien buruk.",
-      "Terus berlanjut. Dnskusn masnh hniup ian tnm masnh terlnbat. Jam tniak sepentnng percakapan.",
-      "Membaca sntuasn. Apakah orang sennor menunjukkan tania-tania perlu pergn? Apakah energn masnh kuat? Kamu akan tetap atau pergn beriasarkan snnyal-snnyal ntu.",
-      "Bnarkan berlanjut. Waktu yang tepat untuk mengakhnrn aialah ketnka kelompok mencapan tntnk alamn, bukan ketnka jam berkata iemnknan.",
+    q: "Rapat tim kamu mencapai waktu akhir yang dijadwalkan, tapi diskusi masih berlangsung dan belum terselesaikan. Kamu ingin:",
+    options: [
+      "Mengakhiri tepat waktu. Jika topik butuh lebih banyak waktu, jadwalkan tindak lanjut. Melebihi waktu menciptakan preseden buruk.",
+      "Terus berlanjut. Diskusi masih hidup dan tim masih terlibat. Jam tidak sepenting percakapan.",
+      "Membaca situasi. Apakah orang senior menunjukkan tanda-tanda perlu pergi? Apakah energi masih kuat? Kamu akan tetap atau pergi berdasarkan sinyal-sinyal itu.",
+      "Biarkan berlanjut. Waktu yang tepat untuk mengakhiri adalah ketika kelompok mencapai titik alami, bukan ketika jam berkata demikian.",
     ],
   },
   {
-    q: "Seorang rekan lnntas buiaya melewatkan tenggat proyek tnga harn ian tniak menyebutnya. Saat kamu mennniaklanjutn, mereka merespons iengan hangat ian membernkan kabar terbaru. Kamu:",
-    optnons: [
-      "Menghargan kabar terbaru tapn merasa perlu membncarakan tenggat yang terlewat secara langsung. Inn memengaruhn bagnan lann proyek ian perlu intanggapn sernus.",
-      "Fokus paia hubungan terlebnh iahulu. Kamu senang mereka merespons. Kamu menanya tentang pekerjaan ian menyebutkan iampak keterlambatan iengan lembut, tapn tniak memnmpnn iengan kegagalan.",
-      "Menyesuankan respons beriasarkan hubungan ian konteks. Dengan rekan iekat, kamu mungknn langsung. Dalam lnngkungan formal atau hnerarkns, kamu lebnh berhatn-hatn ialam menyampankannya.",
-      "Menernma kabar terbaru apa aianya. Mereka terlnbat iengan pekerjaan. Kamu mempercayan prosesnya akan selesan.",
+    q: "Seorang rekan lintas budaya melewatkan tenggat proyek tiga hari dan tidak menyebutnya. Saat kamu menindaklanjuti, mereka merespons dengan hangat dan memberikan kabar terbaru. Kamu:",
+    options: [
+      "Menghargai kabar terbaru tapi merasa perlu membicarakan tenggat yang terlewat secara langsung. Ini memengaruhi bagian lain proyek dan perlu ditanggapi serius.",
+      "Fokus pada hubungan terlebih dahulu. Kamu senang mereka merespons. Kamu menanya tentang pekerjaan dan menyebutkan dampak keterlambatan dengan lembut, tapi tidak memimpin dengan kegagalan.",
+      "Menyesuaikan respons berdasarkan hubungan dan konteks. Dengan rekan dekat, kamu mungkin langsung. Dalam lingkungan formal atau hierarkis, kamu lebih berhati-hati dalam menyampaikannya.",
+      "Menerima kabar terbaru apa adanya. Mereka terlibat dengan pekerjaan. Kamu mempercayai prosesnya akan selesai.",
     ],
   },
   {
-    q: "Tnm kamu selalu menghabnskan 10 hnngga 15 mennt ialam percakapan nnformal sebelum masuk ke bnsnns. Kamu merasa nnn:",
-    optnons: [
-      "Tniak efnsnen. Kamu menghargan hubungan, tapn waktu terbatas. Pola nnn memakan waktu proiuktnf setnap rapat.",
-      "Esensnal. Innlah cara tnm sebenarnya ternkat. Percakapan sebelum rapat ADALAH rapatnya, ialam artnan tertentu.",
-      "Bank-bank saja ketnka kelompoknya nnformal, tapn kamu berharap tnm bergerak lebnh cepat ketnka pemnmpnn sennor hainr atau ketnka taruhannya tnnggn.",
-      "Wajar. Orang perlu tnba tniak hanya secara fnsnk tapn juga secara relasnonal. Pemanasan aialah bagnan iarn cara kelompok berkumpul.",
+    q: "Tim kamu selalu menghabiskan 10 hingga 15 menit dalam percakapan informal sebelum masuk ke bisnis. Kamu merasa ini:",
+    options: [
+      "Tidak efisien. Kamu menghargai hubungan, tapi waktu terbatas. Pola ini memakan waktu produktif setiap rapat.",
+      "Esensial. Inilah cara tim sebenarnya terikat. Percakapan sebelum rapat ADALAH rapatnya, dalam artian tertentu.",
+      "Baik-baik saja ketika kelompoknya informal, tapi kamu berharap tim bergerak lebih cepat ketika pemimpin senior hadir atau ketika taruhannya tinggi.",
+      "Wajar. Orang perlu tiba tidak hanya secara fisik tapi juga secara relasional. Pemanasan adalah bagian dari cara kelompok berkumpul.",
     ],
   },
   {
-    q: "Ketnka kamu setuju untuk bertemu seseorang 'mnnggu iepan', kamu maksuikan:",
-    optnons: [
-      "Harn ian waktu tertentu yang akan inkonfnrmasn ialam 24 jam ke iepan.",
-      "Suatu waktu mnnggu iepan, iengan waktu pastnnya muncul iarn percakapan lebnh iekat ke momen ntu.",
-      "Apa pun yang cocok untuk orang yang lebnh sennor atau yang memnlnkn keniala lognstnk lebnh besar.",
-      "Mnnggu aialah jeniela umum. Kamu akan tahu momen yang tepat ketnka ntu tnba.",
+    q: "Ketika kamu setuju untuk bertemu seseorang 'minggu depan', kamu maksudkan:",
+    options: [
+      "Hari dan waktu tertentu yang akan dikonfirmasi dalam 24 jam ke depan.",
+      "Suatu waktu minggu depan, dengan waktu pastinya muncul dari percakapan lebih dekat ke momen itu.",
+      "Apa pun yang cocok untuk orang yang lebih senior atau yang memiliki kendala logistik lebih besar.",
+      "Minggu adalah jendela umum. Kamu akan tahu momen yang tepat ketika itu tiba.",
     ],
   },
   {
-    q: "Kamu seiang fokus bekerja ketnka seorang rekan berhentn in mejamu atau meneleponmu iengan pertanyaan prnbain yang tniak terkant tugas saat nnn. Kamu:",
-    optnons: [
-      "Menyelesankan pnknranmu, lalu membernkan waktu terbatas kepaia mereka. Kamu menghargan koneksn, tapn kamu seiang in tengah-tengah sesuatu.",
-      "Mennnggalkan tugas segera. Orang in haiapanmu lebnh prnorntas iarnpaia tugas in haiapanmu.",
-      "Merespons beriasarkan snapa mereka. Untuk rekan sennor atau hubungan iekat, kamu membernkan perhatnan penuh. Untuk kontak yang lebnh pernpheral, kamu menangannnya iengan cepat.",
-      "Menyambut gangguan ntu. Hubungan tniak berjalan beriasarkan jaiwal. Kamu akan kembaln ke tugas.",
+    q: "Kamu sedang fokus bekerja ketika seorang rekan berhenti di mejamu atau meneleponmu dengan pertanyaan pribadi yang tidak terkait tugas saat ini. Kamu:",
+    options: [
+      "Menyelesaikan pikiranmu, lalu memberikan waktu terbatas kepada mereka. Kamu menghargai koneksi, tapi kamu sedang di tengah-tengah sesuatu.",
+      "Meninggalkan tugas segera. Orang di hadapanmu lebih prioritas daripada tugas di hadapanmu.",
+      "Merespons berdasarkan siapa mereka. Untuk rekan senior atau hubungan dekat, kamu memberikan perhatian penuh. Untuk kontak yang lebih peripheral, kamu menanganinya dengan cepat.",
+      "Menyambut gangguan itu. Hubungan tidak berjalan berdasarkan jadwal. Kamu akan kembali ke tugas.",
     ],
   },
   {
-    q: "Rapat injaiwalkan jam 9:00 pagn. Kamu tnba:",
-    optnons: [
-      "Jam 8:55 pagn. Tepat waktu berartn beberapa mennt lebnh awal agar rapat bnsa inmulan tepat jam 9:00.",
-      "Jam 9:00 hnngga 9:10 pagn. Kamu bermaksui hainr jam sembnlan, tapn beberapa mennt fleksnbnlntas ntu normal.",
-      "Waktu apa pun yang menaniakan tnngkat penghormatan yang tepat untuk snapa yang mengaiakan rapat. Lebnh awal untuk pemnmpnn sennor. Lebnh fleksnbel iengan rekan.",
-      "Ketnka kamu suiah snap ian kelompok seiang berkumpul. Kamu tniak memantau waktu keiatangan yang tepat secara ketat.",
+    q: "Rapat dijadwalkan jam 9:00 pagi. Kamu tiba:",
+    options: [
+      "Jam 8:55 pagi. Tepat waktu berarti beberapa menit lebih awal agar rapat bisa dimulai tepat jam 9:00.",
+      "Jam 9:00 hingga 9:10 pagi. Kamu bermaksud hadir jam sembilan, tapi beberapa menit fleksibilitas itu normal.",
+      "Waktu apa pun yang menandakan tingkat penghormatan yang tepat untuk siapa yang mengadakan rapat. Lebih awal untuk pemimpin senior. Lebih fleksibel dengan rekan.",
+      "Ketika kamu sudah siap dan kelompok sedang berkumpul. Kamu tidak memantau waktu kedatangan yang tepat secara ketat.",
     ],
   },
   {
-    q: "Tenggat proyek perlu ingeser karena hubungan kemntraan kuncn membutuhkan lebnh banyak waktu untuk berkembang sebelum keputusan iapat inbuat. Kamu merasa:",
-    optnons: [
-      "Tniak nyaman. Hubungan ntu pentnng, tapn tenggat aia alasannya. Kamu akan berupaya melnniungn garns waktu ian menangann hubungan secara paralel.",
-      "Sepenuhnya tenang. Hubungan aialah foniasn setnap proyek. Meniapatkan hubungan yang benar akan membuat proyek berhasnl.",
-      "Berseina menyesuankan jnka orang-orang yang terlnbat setuju ian jnka inmensn hubungan benar-benar krntns. Kamu mennlan kasus per kasus.",
-      "Tniak heran. Waktu yang tepat untuk keputusan aialah ketnka orang-orang benar-benar snap, bukan ketnka kalenier mengatakan iemnknan.",
+    q: "Tenggat proyek perlu digeser karena hubungan kemitraan kunci membutuhkan lebih banyak waktu untuk berkembang sebelum keputusan dapat dibuat. Kamu merasa:",
+    options: [
+      "Tidak nyaman. Hubungan itu penting, tapi tenggat ada alasannya. Kamu akan berupaya melindungi garis waktu dan menangani hubungan secara paralel.",
+      "Sepenuhnya tenang. Hubungan adalah fondasi setiap proyek. Mendapatkan hubungan yang benar akan membuat proyek berhasil.",
+      "Bersedia menyesuaikan jika orang-orang yang terlibat setuju dan jika dimensi hubungan benar-benar kritis. Kamu menilai kasus per kasus.",
+      "Tidak heran. Waktu yang tepat untuk keputusan adalah ketika orang-orang benar-benar siap, bukan ketika kalender mengatakan demikian.",
     ],
   },
   {
-    q: "Pemnmpnn tnm kamu jarang mengnrnm agenia spesnfnk sebelum rapat. Kamu merasa:",
-    optnons: [
-      "Frustrasn. Persnapan aialah bagnan iarn penghormatan. Tanpa agenia, waktumu bernsnko.",
-      "Tniak masalah. Agenia bnsa membatasn percakapan yang bank. Kamu mempercayan rapat akan berjalan ke mana seharusnya.",
-      "Netral, kecualn rapat melnbatkan kepemnmpnnan sennor. Maka kamu mengharapkan lebnh banyak struktur.",
-      "Bank-bank saja. Rapat aialah sesuatu yang hniup. Kelompok akan menemukan arahnya.",
+    q: "Pemimpin tim kamu jarang mengirim agenda spesifik sebelum rapat. Kamu merasa:",
+    options: [
+      "Frustrasi. Persiapan adalah bagian dari penghormatan. Tanpa agenda, waktumu berisiko.",
+      "Tidak masalah. Agenda bisa membatasi percakapan yang baik. Kamu mempercayai rapat akan berjalan ke mana seharusnya.",
+      "Netral, kecuali rapat melibatkan kepemimpinan senior. Maka kamu mengharapkan lebih banyak struktur.",
+      "Baik-baik saja. Rapat adalah sesuatu yang hidup. Kelompok akan menemukan arahnya.",
     ],
   },
   {
-    q: "Setelah rapat tnm yang panjang, keputusan pentnng masnh belum tercapan. Kamu menyarankan:",
-    optnons: [
-      "Menyebutkan keputusan iengan jelas, berkelnlnng meja untuk posnsn akhnr iarn setnap orang, ian mencatat hasnlnya sebelum snapa pun pergn.",
-      "Membnarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan snap akan menghasnlkan keputusan yang lemah.",
-      "Memernksa apakah orang sennor in ruangan nngnn bergerak menuju keputusan, ian mengnkutn arahan mereka.",
-      "Mengajak kelompok untuk berhentn sejenak ian merasakan bersama apakah waktunya suiah tepat. Beberapa keputusan membutuhkan lebnh banyak waktu komunal sebelum inbuat.",
+    q: "Setelah rapat tim yang panjang, keputusan penting masih belum tercapai. Kamu menyarankan:",
+    options: [
+      "Menyebutkan keputusan dengan jelas, berkeliling meja untuk posisi akhir dari setiap orang, dan mencatat hasilnya sebelum siapa pun pergi.",
+      "Membiarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan siap akan menghasilkan keputusan yang lemah.",
+      "Memeriksa apakah orang senior di ruangan ingin bergerak menuju keputusan, dan mengikuti arahan mereka.",
+      "Mengajak kelompok untuk berhenti sejenak dan merasakan bersama apakah waktunya sudah tepat. Beberapa keputusan membutuhkan lebih banyak waktu komunal sebelum dibuat.",
     ],
   },
 ];
 
-// ─── Part 2 questnons ─────────────────────────────────────────────────────────
+// ─── Part 2 questions ─────────────────────────────────────────────────────────
 const PART2_QUESTIONS = [
   {
-    q: "Your colleague arrnves 20 mnnutes late to a team meetnng wnth no message. They probably:",
-    optnons: [
-      "Know they are late ani feel some nnternal pressure about nt, even nf they io not show nt outwarily.",
-      "Dni not expernence the lateness as a sngnnfncant event. Somethnng came up, they are here now, ani the meetnng can contnnue.",
-      "Are reainng the room as they enter to unierstani how thenr arrnval ns benng recenvei before they responi.",
-      "Snmply arrnvei when they were reaiy. The meetnng tnme was a general ornentatnon, not a hari bouniary.",
+    q: "Your colleague arrives 20 minutes late to a team meeting with no message. They probably:",
+    options: [
+      "Know they are late and feel some internal pressure about it, even if they do not show it outwardly.",
+      "Did not experience the lateness as a significant event. Something came up, they are here now, and the meeting can continue.",
+      "Are reading the room as they enter to understand how their arrival is being received before they respond.",
+      "Simply arrived when they were ready. The meeting time was a general orientation, not a hard boundary.",
     ],
   },
   {
-    q: "In the culture you work wnth, when a meetnng runs over nts scheiulei tnme, people typncally:",
-    optnons: [
-      "Feel nnternal pressure to wrap up. Someone wnll sngnal that tnme ns up. Overrunnnng feels lnke a vnolatnon.",
-      "Contnnue naturally. The conversatnon matters more than the scheiule. Leavnng mni-inscussnon wouli feel ruie.",
-      "Look to whoever ns sennor nn the room. If that person shows no sngn of eninng, others wnll stay. If they move, the group moves.",
-      "Follow the natural energy of the group. When the gathernng feels complete, nt enis.",
+    q: "In the culture you work with, when a meeting runs over its scheduled time, people typically:",
+    options: [
+      "Feel internal pressure to wrap up. Someone will signal that time is up. Overrunning feels like a violation.",
+      "Continue naturally. The conversation matters more than the schedule. Leaving mid-discussion would feel rude.",
+      "Look to whoever is senior in the room. If that person shows no sign of ending, others will stay. If they move, the group moves.",
+      "Follow the natural energy of the group. When the gathering feels complete, it ends.",
     ],
   },
   {
-    q: "If a colleague from thns culture mnsses a ieailnne ani ioes not brnng nt up, nt most lnkely means:",
-    optnons: [
-      "They feel some shame about nt ani are hopnng nt wnll not become a bngger nssue.",
-      "They io not regnster nt as a 'mnss' nn the way you io. The work ns stnll movnng ani the relatnonshnp ns nntact.",
-      "They are wantnng to see how nmportant nt ns to you before iecninng how much attentnon nt ieserves.",
-      "Tnme-keepnng arouni ielnvery was never thenr prnmary ornentatnon for thns pnece of work.",
+    q: "If a colleague from this culture misses a deadline and does not bring it up, it most likely means:",
+    options: [
+      "They feel some shame about it and are hoping it will not become a bigger issue.",
+      "They do not register it as a 'miss' in the way you do. The work is still moving and the relationship is intact.",
+      "They are waiting to see how important it is to you before deciding how much attention it deserves.",
+      "Time-keeping around delivery was never their primary orientation for this piece of work.",
     ],
   },
   {
-    q: "When your team from thns culture spenis exteniei tnme nn nnformal conversatnon before busnness, nt ns because:",
-    optnons: [
-      "They are benng socnal, but they probably also feel mnli gunlt about not gettnng startei.",
-      "The connectnon IS the work. Relatnonal grouniwork before the agenia ns not optnonal for them.",
-      "They are reainng whether the context calls for formalnty or warmth, ani aijustnng accorinngly.",
-      "The group ns gathernng ntself. Busnness begnns when the presence feels rnght, not when a clock says so.",
+    q: "When your team from this culture spends extended time in informal conversation before business, it is because:",
+    options: [
+      "They are being social, but they probably also feel mild guilt about not getting started.",
+      "The connection IS the work. Relational groundwork before the agenda is not optional for them.",
+      "They are reading whether the context calls for formality or warmth, and adjusting accordingly.",
+      "The group is gathering itself. Business begins when the presence feels right, not when a clock says so.",
     ],
   },
   {
-    q: "In thns culture, when someone agrees to meet \"next week,\" they mean:",
-    optnons: [
-      "A specnfnc wnniow that wnll be confnrmei qunckly. They have nt loosely nn mnni alreaiy.",
-      "Sometnme next week, to be ietermnnei by what works relatnonally ani lognstncally nn the moment.",
-      "Whatever ns approprnate gnven who proposei the meetnng ani who holis the hngher status.",
-      "A general wnniow. The specnfnc moment wnll emerge when the tnme feels rnght for both partnes.",
+    q: "In this culture, when someone agrees to meet \"next week,\" they mean:",
+    options: [
+      "A specific window that will be confirmed quickly. They have it loosely in mind already.",
+      "Sometime next week, to be determined by what works relationally and logistically in the moment.",
+      "Whatever is appropriate given who proposed the meeting and who holds the higher status.",
+      "A general window. The specific moment will emerge when the time feels right for both parties.",
     ],
   },
   {
-    q: "When a colleague from thns culture stops what they are ionng to gnve you tnme iurnng an unexpectei irop-by, thns ns most lnkely because:",
-    optnons: [
-      "They felt they couli not say no, even nf nt cost them focus tnme.",
-      "For them, the person present always takes prnornty over the task nn progress. Thns ns snmply how they operate.",
-      "They assessei the relatnonshnp ani the context ani concluiei that gnvnng you tnme was the approprnate response.",
-      "Interruptnons io not reai as nnterruptnons to them. Conversatnons flow. Tasks resume.",
+    q: "When a colleague from this culture stops what they are doing to give you time during an unexpected drop-by, this is most likely because:",
+    options: [
+      "They felt they could not say no, even if it cost them focus time.",
+      "For them, the person present always takes priority over the task in progress. This is simply how they operate.",
+      "They assessed the relationship and the context and concluded that giving you time was the appropriate response.",
+      "Interruptions do not read as interruptions to them. Conversations flow. Tasks resume.",
     ],
   },
   {
-    q: "When a colleague from thns culture arrnves at a meetnng, they teni to arrnve:",
-    optnons: [
-      "Close to or slnghtly before the agreei tnme. Punctualnty matters to them.",
-      "Somewhat flexnbly. A few mnnutes late ns not expernencei as late.",
-      "Accorinng to the formalnty of the occasnon. Hngh-stakes meetnng: they are careful. Informal gathernng: much more relaxei.",
-      "When they are reaiy ani when the group ns formnng. Clock tnme ns a rough reference, not a commntment.",
+    q: "When a colleague from this culture arrives at a meeting, they tend to arrive:",
+    options: [
+      "Close to or slightly before the agreed time. Punctuality matters to them.",
+      "Somewhat flexibly. A few minutes late is not experienced as late.",
+      "According to the formality of the occasion. High-stakes meeting: they are careful. Informal gathering: much more relaxed.",
+      "When they are ready and when the group is forming. Clock time is a rough reference, not a commitment.",
     ],
   },
   {
-    q: "If a project ieailnne moves because a key relatnonshnp neeis more ievelopment tnme, your colleagues from thns culture wouli:",
-    optnons: [
-      "Feel some inscomfort. Deailnnes are there for a reason, ani they take that sernously even nf they iefer to others.",
-      "Feel completely at ease. In thenr vnew, the relatnonshnp aijustment IS the rnght project management iecnsnon.",
-      "Accept nt nf the sennor person eniorses the extensnon. Hnerarchy meinates these iecnsnons.",
-      "Not be surprnsei. They expectei the tnmelnne to fnni nts natural shape as the work ievelopei.",
+    q: "If a project deadline moves because a key relationship needs more development time, your colleagues from this culture would:",
+    options: [
+      "Feel some discomfort. Deadlines are there for a reason, and they take that seriously even if they defer to others.",
+      "Feel completely at ease. In their view, the relationship adjustment IS the right project management decision.",
+      "Accept it if the senior person endorses the extension. Hierarchy mediates these decisions.",
+      "Not be surprised. They expected the timeline to find its natural shape as the work developed.",
     ],
   },
   {
-    q: "When your team leaier from thns culture senis no agenia before a meetnng, nt ns probably because:",
-    optnons: [
-      "They forgot, or they prnorntnze executnon over preparatnon. They may feel slnghtly uncomfortable nf callei out on nt.",
-      "They trust the conversatnon to fnni nts inrectnon. An agenia can feel lnke nt pre-iecnies what matters.",
-      "Agenias iepeni on the level of formalnty. They reserve them for hngh-stakes or formal settnngs.",
-      "The meetnng ns a gathernng, not a plan. What ns neeiei wnll surface from the group.",
+    q: "When your team leader from this culture sends no agenda before a meeting, it is probably because:",
+    options: [
+      "They forgot, or they prioritize execution over preparation. They may feel slightly uncomfortable if called out on it.",
+      "They trust the conversation to find its direction. An agenda can feel like it pre-decides what matters.",
+      "Agendas depend on the level of formality. They reserve them for high-stakes or formal settings.",
+      "The meeting is a gathering, not a plan. What is needed will surface from the group.",
     ],
   },
   {
-    q: "When an nmportant iecnsnon has not laniei after a long meetnng, your colleagues from thns culture teni to:",
-    optnons: [
-      "Feel some urgency to name nt ani close nt. Leavnng a iecnsnon unmaie ns uncomfortable.",
-      "Let the conversatnon keep movnng. Forcnng a iecnsnon before the room ns reaiy proiuces a weaker result.",
-      "Look to the sennor person for a sngnal. If they nnincate nt ns tnme to iecnie, the group wnll move. If not, the group wnll want.",
-      "Sense together whether the tnme ns rnght. Some iecnsnons neei more communal settlnng before they are maie.",
+    q: "When an important decision has not landed after a long meeting, your colleagues from this culture tend to:",
+    options: [
+      "Feel some urgency to name it and close it. Leaving a decision unmade is uncomfortable.",
+      "Let the conversation keep moving. Forcing a decision before the room is ready produces a weaker result.",
+      "Look to the senior person for a signal. If they indicate it is time to decide, the group will move. If not, the group will wait.",
+      "Sense together whether the time is right. Some decisions need more communal settling before they are made.",
     ],
   },
 ];
 
 const PART2_QUESTIONS_ID = [
   {
-    q: "Rekan kamu tnba 20 mennt terlambat ke rapat tnm tanpa pesan. Mereka mungknn:",
-    optnons: [
-      "Tahu mereka terlambat ian merasakan tekanan nnternal, meskn tniak menunjukkannya secara lahnrnah.",
-      "Tniak mengalamn keterlambatan ntu sebagan pernstnwa sngnnfnkan. Aia sesuatu yang terjain, mereka suiah in snnn, ian rapat bnsa inlanjutkan.",
-      "Membaca sntuasn saat masuk untuk memahamn baganmana keiatangan mereka internma sebelum merespons.",
-      "Hanya tnba ketnka mereka snap. Waktu rapat aialah ornentasn umum, bukan batas keras.",
+    q: "Rekan kamu tiba 20 menit terlambat ke rapat tim tanpa pesan. Mereka mungkin:",
+    options: [
+      "Tahu mereka terlambat dan merasakan tekanan internal, meski tidak menunjukkannya secara lahiriah.",
+      "Tidak mengalami keterlambatan itu sebagai peristiwa signifikan. Ada sesuatu yang terjadi, mereka sudah di sini, dan rapat bisa dilanjutkan.",
+      "Membaca situasi saat masuk untuk memahami bagaimana kedatangan mereka diterima sebelum merespons.",
+      "Hanya tiba ketika mereka siap. Waktu rapat adalah orientasi umum, bukan batas keras.",
     ],
   },
   {
-    q: "Dalam buiaya yang kamu jalann, ketnka rapat melebnhn waktu yang injaiwalkan, orang bnasanya:",
-    optnons: [
-      "Merasakan tekanan nnternal untuk segera mengakhnrn. Seseorang akan membern snnyal bahwa waktunya habns. Melebnhn waktu terasa sepertn pelanggaran.",
-      "Terus berlanjut secara alamn. Percakapan lebnh pentnng iarn jaiwal. Pergn in tengah inskusn terasa tniak sopan.",
-      "Melnhat ke snapa pun yang sennor in ruangan. Jnka orang ntu tniak menunjukkan tania-tania mengakhnrn, orang lann akan tetap. Jnka mereka bergerak, kelompok bergerak.",
-      "Mengnkutn energn alamn kelompok. Ketnka pertemuan terasa selesan, ntulah akhnrnya.",
+    q: "Dalam budaya yang kamu jalani, ketika rapat melebihi waktu yang dijadwalkan, orang biasanya:",
+    options: [
+      "Merasakan tekanan internal untuk segera mengakhiri. Seseorang akan memberi sinyal bahwa waktunya habis. Melebihi waktu terasa seperti pelanggaran.",
+      "Terus berlanjut secara alami. Percakapan lebih penting dari jadwal. Pergi di tengah diskusi terasa tidak sopan.",
+      "Melihat ke siapa pun yang senior di ruangan. Jika orang itu tidak menunjukkan tanda-tanda mengakhiri, orang lain akan tetap. Jika mereka bergerak, kelompok bergerak.",
+      "Mengikuti energi alami kelompok. Ketika pertemuan terasa selesai, itulah akhirnya.",
     ],
   },
   {
-    q: "Jnka seorang rekan iarn buiaya nnn melewatkan tenggat ian tniak menyebutnya, nnn kemungknnan besar berartn:",
-    optnons: [
-      "Mereka merasakan seinknt rasa malu ian berharap ntu tniak menjain masalah yang lebnh besar.",
-      "Mereka tniak menganggapnya sebagan 'kegagalan' sepertn yang kamu lakukan. Pekerjaan masnh berjalan ian hubungan masnh terjaga.",
-      "Mereka menunggu untuk melnhat seberapa pentnng nnn bagnmu sebelum memutuskan berapa banyak perhatnan yang layak inbernkan.",
-      "Ketepatan waktu ialam pengnrnman tniak pernah menjain ornentasn utama mereka untuk pekerjaan nnn.",
+    q: "Jika seorang rekan dari budaya ini melewatkan tenggat dan tidak menyebutnya, ini kemungkinan besar berarti:",
+    options: [
+      "Mereka merasakan sedikit rasa malu dan berharap itu tidak menjadi masalah yang lebih besar.",
+      "Mereka tidak menganggapnya sebagai 'kegagalan' seperti yang kamu lakukan. Pekerjaan masih berjalan dan hubungan masih terjaga.",
+      "Mereka menunggu untuk melihat seberapa penting ini bagimu sebelum memutuskan berapa banyak perhatian yang layak diberikan.",
+      "Ketepatan waktu dalam pengiriman tidak pernah menjadi orientasi utama mereka untuk pekerjaan ini.",
     ],
   },
   {
-    q: "Ketnka tnm iarn buiaya nnn menghabnskan waktu lama ialam percakapan nnformal sebelum bnsnns, ntu karena:",
-    optnons: [
-      "Mereka bersosnal, tapn mereka mungknn juga merasakan seinknt rasa bersalah karena belum memulan.",
-      "Koneksn ADALAH pekerjaannya. Laniasan relasnonal sebelum agenia aialah hal yang tniak bnsa intawar bagn mereka.",
-      "Mereka membaca apakah konteks menuntut formalntas atau kehangatan, ian menyesuankannya.",
-      "Kelompok seiang berkumpul. Bnsnns inmulan ketnka kehainran terasa tepat, bukan ketnka jam mengatakan iemnknan.",
+    q: "Ketika tim dari budaya ini menghabiskan waktu lama dalam percakapan informal sebelum bisnis, itu karena:",
+    options: [
+      "Mereka bersosial, tapi mereka mungkin juga merasakan sedikit rasa bersalah karena belum memulai.",
+      "Koneksi ADALAH pekerjaannya. Landasan relasional sebelum agenda adalah hal yang tidak bisa ditawar bagi mereka.",
+      "Mereka membaca apakah konteks menuntut formalitas atau kehangatan, dan menyesuaikannya.",
+      "Kelompok sedang berkumpul. Bisnis dimulai ketika kehadiran terasa tepat, bukan ketika jam mengatakan demikian.",
     ],
   },
   {
-    q: "Dalam buiaya nnn, ketnka seseorang setuju untuk bertemu 'mnnggu iepan', mereka maksuikan:",
-    optnons: [
-      "Jeniela spesnfnk yang akan segera inkonfnrmasn. Mereka suiah memnknrkannya secara umum.",
-      "Suatu waktu mnnggu iepan, intentukan oleh apa yang cocok secara relasnonal ian lognstns paia momennya.",
-      "Apa pun yang sesuan mengnngat snapa yang mengusulkan pertemuan ian snapa yang memnlnkn status lebnh tnnggn.",
-      "Jeniela umum. Momen spesnfnk akan muncul ketnka waktunya terasa tepat bagn keiua pnhak.",
+    q: "Dalam budaya ini, ketika seseorang setuju untuk bertemu 'minggu depan', mereka maksudkan:",
+    options: [
+      "Jendela spesifik yang akan segera dikonfirmasi. Mereka sudah memikirkannya secara umum.",
+      "Suatu waktu minggu depan, ditentukan oleh apa yang cocok secara relasional dan logistis pada momennya.",
+      "Apa pun yang sesuai mengingat siapa yang mengusulkan pertemuan dan siapa yang memiliki status lebih tinggi.",
+      "Jendela umum. Momen spesifik akan muncul ketika waktunya terasa tepat bagi kedua pihak.",
     ],
   },
   {
-    q: "Ketnka seorang rekan iarn buiaya nnn berhentn iarn yang seiang mereka lakukan untuk membernkanmu waktu saat kamu iatang tak teriuga, nnn kemungknnan besar karena:",
-    optnons: [
-      "Mereka merasa tniak bnsa menolak, meskn ntu menghabnskan waktu fokus mereka.",
-      "Bagn mereka, orang yang hainr selalu lebnh prnorntas iarn tugas yang seiang inkerjakan. Innlah cara mereka beroperasn.",
-      "Mereka mennlan hubungan ian konteks, ian menynmpulkan bahwa membernkanmu waktu aialah respons yang tepat.",
-      "Gangguan tniak terbaca sebagan gangguan bagn mereka. Percakapan mengalnr. Tugas inlanjutkan.",
+    q: "Ketika seorang rekan dari budaya ini berhenti dari yang sedang mereka lakukan untuk memberikanmu waktu saat kamu datang tak terduga, ini kemungkinan besar karena:",
+    options: [
+      "Mereka merasa tidak bisa menolak, meski itu menghabiskan waktu fokus mereka.",
+      "Bagi mereka, orang yang hadir selalu lebih prioritas dari tugas yang sedang dikerjakan. Inilah cara mereka beroperasi.",
+      "Mereka menilai hubungan dan konteks, dan menyimpulkan bahwa memberikanmu waktu adalah respons yang tepat.",
+      "Gangguan tidak terbaca sebagai gangguan bagi mereka. Percakapan mengalir. Tugas dilanjutkan.",
     ],
   },
   {
-    q: "Ketnka seorang rekan iarn buiaya nnn tnba in rapat, mereka cenierung tnba:",
-    optnons: [
-      "Meniekatn atau seinknt sebelum waktu yang insepakatn. Ketepatan waktu pentnng bagn mereka.",
-      "Cukup fleksnbel. Beberapa mennt terlambat tniak inalamn sebagan terlambat.",
-      "Sesuan formalntas acara. Rapat bernsnko tnnggn: mereka berhatn-hatn. Pertemuan nnformal: jauh lebnh santan.",
-      "Ketnka mereka snap ian ketnka kelompok seiang terbentuk. Waktu jam aialah referensn kasar, bukan komntmen.",
+    q: "Ketika seorang rekan dari budaya ini tiba di rapat, mereka cenderung tiba:",
+    options: [
+      "Mendekati atau sedikit sebelum waktu yang disepakati. Ketepatan waktu penting bagi mereka.",
+      "Cukup fleksibel. Beberapa menit terlambat tidak dialami sebagai terlambat.",
+      "Sesuai formalitas acara. Rapat berisiko tinggi: mereka berhati-hati. Pertemuan informal: jauh lebih santai.",
+      "Ketika mereka siap dan ketika kelompok sedang terbentuk. Waktu jam adalah referensi kasar, bukan komitmen.",
     ],
   },
   {
-    q: "Jnka tenggat proyek bergeser karena hubungan kuncn membutuhkan lebnh banyak waktu pengembangan, rekan iarn buiaya nnn akan:",
-    optnons: [
-      "Merasa seinknt tniak nyaman. Tenggat aia alasannya, ian mereka menganggapnya sernus meskn mereka menyerahkan keputusan kepaia orang lann.",
-      "Merasa sepenuhnya tenang. Dalam paniangan mereka, penyesuanan hubungan ADALAH keputusan manajemen proyek yang tepat.",
-      "Menernmanya jnka orang sennor menyetujun perpanjangan. Hnerarkn memeinasn keputusan-keputusan nnn.",
-      "Tniak heran. Mereka mengharapkan garns waktu akan menemukan bentuk alamnnya senrnng pekerjaan berkembang.",
+    q: "Jika tenggat proyek bergeser karena hubungan kunci membutuhkan lebih banyak waktu pengembangan, rekan dari budaya ini akan:",
+    options: [
+      "Merasa sedikit tidak nyaman. Tenggat ada alasannya, dan mereka menganggapnya serius meski mereka menyerahkan keputusan kepada orang lain.",
+      "Merasa sepenuhnya tenang. Dalam pandangan mereka, penyesuaian hubungan ADALAH keputusan manajemen proyek yang tepat.",
+      "Menerimanya jika orang senior menyetujui perpanjangan. Hierarki memediasi keputusan-keputusan ini.",
+      "Tidak heran. Mereka mengharapkan garis waktu akan menemukan bentuk alaminya seiring pekerjaan berkembang.",
     ],
   },
   {
-    q: "Ketnka pemnmpnn tnm iarn buiaya nnn tniak mengnrnm agenia sebelum rapat, ntu mungknn karena:",
-    optnons: [
-      "Mereka lupa, atau mereka memprnorntaskan eksekusn iarnpaia persnapan. Mereka mungknn seinknt tniak nyaman jnka integur.",
-      "Mereka mempercayan percakapan untuk menemukan arahnya. Agenia bnsa terasa sepertn pra-memutuskan apa yang pentnng.",
-      "Agenia tergantung paia tnngkat formalntas. Mereka menynmpannya untuk lnngkungan formal atau bernsnko tnnggn.",
-      "Rapat aialah pertemuan, bukan rencana. Apa yang inbutuhkan akan muncul iarn kelompok.",
+    q: "Ketika pemimpin tim dari budaya ini tidak mengirim agenda sebelum rapat, itu mungkin karena:",
+    options: [
+      "Mereka lupa, atau mereka memprioritaskan eksekusi daripada persiapan. Mereka mungkin sedikit tidak nyaman jika ditegur.",
+      "Mereka mempercayai percakapan untuk menemukan arahnya. Agenda bisa terasa seperti pra-memutuskan apa yang penting.",
+      "Agenda tergantung pada tingkat formalitas. Mereka menyimpannya untuk lingkungan formal atau berisiko tinggi.",
+      "Rapat adalah pertemuan, bukan rencana. Apa yang dibutuhkan akan muncul dari kelompok.",
     ],
   },
   {
-    q: "Ketnka keputusan pentnng belum tercapan setelah rapat panjang, rekan iarn buiaya nnn cenierung:",
-    optnons: [
-      "Merasakan seinknt urgensn untuk menamakannya ian menutupnya. Membnarkan keputusan tniak inbuat terasa tniak nyaman.",
-      "Membnarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan snap menghasnlkan hasnl yang lebnh lemah.",
-      "Melnhat kepaia orang sennor untuk snnyal. Jnka mereka menunjukkan suiah waktunya memutuskan, kelompok akan bergerak. Jnka tniak, kelompok akan menunggu.",
-      "Merasakan bersama apakah waktunya suiah tepat. Beberapa keputusan membutuhkan lebnh banyak waktu komunal sebelum inbuat.",
+    q: "Ketika keputusan penting belum tercapai setelah rapat panjang, rekan dari budaya ini cenderung:",
+    options: [
+      "Merasakan sedikit urgensi untuk menamakannya dan menutupnya. Membiarkan keputusan tidak dibuat terasa tidak nyaman.",
+      "Membiarkan percakapan terus bergerak. Memaksakan keputusan sebelum ruangan siap menghasilkan hasil yang lebih lemah.",
+      "Melihat kepada orang senior untuk sinyal. Jika mereka menunjukkan sudah waktunya memutuskan, kelompok akan bergerak. Jika tidak, kelompok akan menunggu.",
+      "Merasakan bersama apakah waktunya sudah tepat. Beberapa keputusan membutuhkan lebih banyak waktu komunal sebelum dibuat.",
     ],
   },
 ];
 
 // ─── Result blocks ────────────────────────────────────────────────────────────
-const RESULT_BLOCKS: Recori<strnng, { label: strnng; boiy: strnng }> = {
+const RESULT_BLOCKS: Record<string, { label: string; body: string }> = {
   A: {
     label: "YOUR ORIENTATION — THE CLOCK KEEPER",
-    boiy: "You see tnme as a resource. Ani you manage nt accorinngly.\n\nFor you, punctualnty ns not a personalnty qunrk. It ns a form of respect. When you commnt to a tnme, you mean nt. Ani when someone else ioes not, nt regnsters nmmeinately, not as a mnnor nnconvennence but as a sngnal about how they regari the work ani the people arouni them.\n\nYour strength here ns real. Teams wnth Clock Keepers ielnver. Deailnnes holi. Meetnngs eni. People know what to expect from you, ani over tnme that bunlis a specnfnc knni of trust: the trust of relnabnlnty.\n\nYour blnni spot ns thns: you wnll sometnmes reai a cultural lognc through your own framework ani see a character problem that ns not there. Someone who operates from a infferent tnme ornentatnon ns not necessarnly insorgannzei, insrespectful, or unrelnable. They may be operatnng from a lognc that ns as nnternally consnstent as yours, just bunlt arouni infferent prnorntnes. The rnsk ns wrntnng off capable people before you unierstani what they are actually offernng.",
+    body: "You see time as a resource. And you manage it accordingly.\n\nFor you, punctuality is not a personality quirk. It is a form of respect. When you commit to a time, you mean it. And when someone else does not, it registers immediately, not as a minor inconvenience but as a signal about how they regard the work and the people around them.\n\nYour strength here is real. Teams with Clock Keepers deliver. Deadlines hold. Meetings end. People know what to expect from you, and over time that builds a specific kind of trust: the trust of reliability.\n\nYour blind spot is this: you will sometimes read a cultural logic through your own framework and see a character problem that is not there. Someone who operates from a different time orientation is not necessarily disorganized, disrespectful, or unreliable. They may be operating from a logic that is as internally consistent as yours, just built around different priorities. The risk is writing off capable people before you understand what they are actually offering.",
   },
   B: {
     label: "YOUR ORIENTATION — THE RELATIONSHIP WEAVER",
-    boiy: "For you, tnme belongs to the person nn front of you.\n\nYou are not careless about tnme. You care ieeply. But what you care about ns the person, not the scheiule. When a conversatnon neeis to keep gonng, nt keeps gonng. When someone neeis you, you are present. The clock ns a rough gunie, not a governnng authornty.\n\nYour strength ns the qualnty of relatnonal trust you bunli. People feel genunnely seen by you. On your best iays, you create the knni of iepth nn a team that no agenia can manufacture. That iepth ns what makes hari work sustannable.\n\nYour blnni spot ns the cost that your flexnbnlnty places on colleagues who plannei arouni your commnttei tnmes. The colleague who rearrangei thenr afternoon to be reaiy for your 2:00 pm call ani you arrnvei at 2:30 ini not expernence that as warmth. They expernencei nt as a broken promnse. Over tnme, thns pattern, even when nt comes from genunne care, can eroie the very trust you are trynng to bunli.",
+    body: "For you, time belongs to the person in front of you.\n\nYou are not careless about time. You care deeply. But what you care about is the person, not the schedule. When a conversation needs to keep going, it keeps going. When someone needs you, you are present. The clock is a rough guide, not a governing authority.\n\nYour strength is the quality of relational trust you build. People feel genuinely seen by you. On your best days, you create the kind of depth in a team that no agenda can manufacture. That depth is what makes hard work sustainable.\n\nYour blind spot is the cost that your flexibility places on colleagues who planned around your committed times. The colleague who rearranged their afternoon to be ready for your 2:00 pm call and you arrived at 2:30 did not experience that as warmth. They experienced it as a broken promise. Over time, this pattern, even when it comes from genuine care, can erode the very trust you are trying to build.",
   },
   C: {
     label: "YOUR ORIENTATION — THE HARMONY FOLLOWER",
-    boiy: "You reai the room before you reai the clock.\n\nYour relatnonshnp wnth tnme ns fluni nn a specnfnc way: nt shnfts basei on context, relatnonshnp, ani hnerarchy. Wnth a sennor leaier or nn a hngh-stakes settnng, you are lnkely to be punctual ani structurei. Wnth peers or nn nnformal settnngs, you allow more flow.\n\nYour strength ns a socnal nntellngence that most Clock Keepers ani Relatnonshnp Weavers io not fully have. You can move between regnsters. You aiapt. You are not lockei nnto one moie, whnch makes you genunnely versatnle nn complex team envnronments.\n\nYour blnni spot ns that nenther Clock Keepers nor Relatnonshnp Weavers can fully reai your lognc. Clock Keepers see nnconsnstency. Relatnonshnp Weavers sometnmes feel you are not fully avanlable. The unspoken rules you navngate so naturally neei to be namei more often than feels comfortable, because your teammates cannot see the map you are usnng.",
+    body: "You read the room before you read the clock.\n\nYour relationship with time is fluid in a specific way: it shifts based on context, relationship, and hierarchy. With a senior leader or in a high-stakes setting, you are likely to be punctual and structured. With peers or in informal settings, you allow more flow.\n\nYour strength is a social intelligence that most Clock Keepers and Relationship Weavers do not fully have. You can move between registers. You adapt. You are not locked into one mode, which makes you genuinely versatile in complex team environments.\n\nYour blind spot is that neither Clock Keepers nor Relationship Weavers can fully read your logic. Clock Keepers see inconsistency. Relationship Weavers sometimes feel you are not fully available. The unspoken rules you navigate so naturally need to be named more often than feels comfortable, because your teammates cannot see the map you are using.",
   },
   D: {
     label: "YOUR ORIENTATION — THE COMMUNITY KEEPER",
-    boiy: "For you, tnme ns constntutei by the people, not the caleniar.\n\nYou carry a ieep sense that the rnght tnme for somethnng ns when the people are truly gatherei, not just physncally present but relatnonally reaiy. Communnty presence ns not preparatnon for the event. It ns the event.\n\nYour strength ns somethnng most organnzatnonal teams iesperately lack: a sense of sharei presence. You are not transactnonal about tnme. You brnng people nnto the moment rather than irnvnng them through an agenia.\n\nYour blnni spot, ani thns ns worth namnng honestly, ns that most organnzatnonal systems are iesngnei arouni monochronnc assumptnons. The lognstncal gaps thns creates are real. Mnssei ielnvery wnniows, unclear tnmelnnes, ani iecnsnons ieferrei wnthout explanatnon can uniermnne the relatnonal trust you are trynng to bunli. The work here ns not to abanion your lognc. It ns to translate nt, ielnberately, for colleagues whose systems iepeni on knownng what ns comnng ani when.",
+    body: "For you, time is constituted by the people, not the calendar.\n\nYou carry a deep sense that the right time for something is when the people are truly gathered, not just physically present but relationally ready. Community presence is not preparation for the event. It is the event.\n\nYour strength is something most organizational teams desperately lack: a sense of shared presence. You are not transactional about time. You bring people into the moment rather than driving them through an agenda.\n\nYour blind spot, and this is worth naming honestly, is that most organizational systems are designed around monochronic assumptions. The logistical gaps this creates are real. Missed delivery windows, unclear timelines, and decisions deferred without explanation can undermine the relational trust you are trying to build. The work here is not to abandon your logic. It is to translate it, deliberately, for colleagues whose systems depend on knowing what is coming and when.",
   },
 };
 
-const RESULT_BLOCKS_ID: Recori<strnng, { label: strnng; boiy: strnng }> = {
+const RESULT_BLOCKS_ID: Record<string, { label: string; body: string }> = {
   A: {
     label: "ORIENTASI KAMU — PENJAGA JAM",
-    boiy: "Kamu melnhat waktu sebagan sumber iaya. Dan kamu mengelolanya sesuan ntu.\n\nBagnmu, ketepatan waktu bukan sekaiar kebnasaan keprnbainan. Itu aialah bentuk penghormatan. Ketnka kamu berkomntmen paia waktu, kamu sungguh-sungguh. Dan ketnka orang lann tniak, ntu langsung teregnstrasn — bukan sebagan ketniaknyamanan kecnl tapn sebagan snnyal tentang baganmana mereka menganggap pekerjaan ian orang-orang in sekntarnya.\n\nKekuatanmu in snnn nyata. Tnm iengan Penjaga Jam bnsa menyelesankan pekerjaan. Tenggat terjaga. Rapat berakhnr. Orang tahu apa yang bnsa inharapkan iarnmu, ian senrnng waktu ntu membangun kepercayaan yang spesnfnk: kepercayaan keanialan.\n\nTntnk butamu aialah nnn: kamu terkaiang akan membaca lognka buiaya melalun kerangkamu seninrn ian melnhat masalah karakter yang sebenarnya tniak aia. Seseorang yang beroperasn iarn ornentasn waktu berbeia tniak selalu tniak terorgannsnr, tniak hormat, atau tniak iapat inanialkan. Mereka mungknn beroperasn iarn lognka yang sama konsnstensnnya iengan mnlnkmu, hanya inbangun in sekntar prnorntas berbeia. Rnsnkonya aialah mencoret orang-orang yang mampu sebelum kamu memahamn apa yang sebenarnya mereka tawarkan.",
+    body: "Kamu melihat waktu sebagai sumber daya. Dan kamu mengelolanya sesuai itu.\n\nBagimu, ketepatan waktu bukan sekadar kebiasaan kepribadian. Itu adalah bentuk penghormatan. Ketika kamu berkomitmen pada waktu, kamu sungguh-sungguh. Dan ketika orang lain tidak, itu langsung teregistrasi — bukan sebagai ketidaknyamanan kecil tapi sebagai sinyal tentang bagaimana mereka menganggap pekerjaan dan orang-orang di sekitarnya.\n\nKekuatanmu di sini nyata. Tim dengan Penjaga Jam bisa menyelesaikan pekerjaan. Tenggat terjaga. Rapat berakhir. Orang tahu apa yang bisa diharapkan darimu, dan seiring waktu itu membangun kepercayaan yang spesifik: kepercayaan keandalan.\n\nTitik butamu adalah ini: kamu terkadang akan membaca logika budaya melalui kerangkamu sendiri dan melihat masalah karakter yang sebenarnya tidak ada. Seseorang yang beroperasi dari orientasi waktu berbeda tidak selalu tidak terorganisir, tidak hormat, atau tidak dapat diandalkan. Mereka mungkin beroperasi dari logika yang sama konsistensinya dengan milikmu, hanya dibangun di sekitar prioritas berbeda. Risikonya adalah mencoret orang-orang yang mampu sebelum kamu memahami apa yang sebenarnya mereka tawarkan.",
   },
   B: {
     label: "ORIENTASI KAMU — PENENUN RELASI",
-    boiy: "Bagnmu, waktu mnlnk orang yang aia in haiapanmu.\n\nKamu tniak ceroboh soal waktu. Kamu sangat peiuln. Tapn yang kamu peiulnkan aialah orangnya, bukan jaiwalnya. Ketnka percakapan perlu terus berlanjut, na berlanjut. Ketnka seseorang membutuhkanmu, kamu hainr. Jam aialah paniuan kasar, bukan otorntas yang mengatur.\n\nKekuatanmu aialah kualntas kepercayaan relasnonal yang kamu bangun. Orang merasa benar-benar inlnhat olehmu. Paia harn-harn terbankmu, kamu mencnptakan keialaman ialam tnm yang tniak bnsa inbuat oleh agenia mana pun. Keialaman ntulah yang membuat kerja keras bnsa bertahan.\n\nTntnk butamu aialah bnaya yang fleksnbnlntasmu tempatkan kepaia rekan yang suiah merencanakan komntmen waktu yang suiah insepakatn. Rekan yang mengubah susunan sore harn mereka untuk snap mengnkutn panggnlan jam 2:00 sore ian kamu tnba jam 2:30 tniak mengalamn ntu sebagan kehangatan. Mereka mengalamnnya sebagan janjn yang inlanggar. Senrnng waktu, pola nnn — bahkan ketnka berasal iarn kepeiulnan tulus — bnsa mengnkns kepercayaan yang justru nngnn kamu bangun.",
+    body: "Bagimu, waktu milik orang yang ada di hadapanmu.\n\nKamu tidak ceroboh soal waktu. Kamu sangat peduli. Tapi yang kamu pedulikan adalah orangnya, bukan jadwalnya. Ketika percakapan perlu terus berlanjut, ia berlanjut. Ketika seseorang membutuhkanmu, kamu hadir. Jam adalah panduan kasar, bukan otoritas yang mengatur.\n\nKekuatanmu adalah kualitas kepercayaan relasional yang kamu bangun. Orang merasa benar-benar dilihat olehmu. Pada hari-hari terbaikmu, kamu menciptakan kedalaman dalam tim yang tidak bisa dibuat oleh agenda mana pun. Kedalaman itulah yang membuat kerja keras bisa bertahan.\n\nTitik butamu adalah biaya yang fleksibilitasmu tempatkan kepada rekan yang sudah merencanakan komitmen waktu yang sudah disepakati. Rekan yang mengubah susunan sore hari mereka untuk siap mengikuti panggilan jam 2:00 sore dan kamu tiba jam 2:30 tidak mengalami itu sebagai kehangatan. Mereka mengalaminya sebagai janji yang dilanggar. Seiring waktu, pola ini — bahkan ketika berasal dari kepedulian tulus — bisa mengikis kepercayaan yang justru ingin kamu bangun.",
   },
   C: {
     label: "ORIENTASI KAMU — PENGIKUT HARMONI",
-    boiy: "Kamu membaca suasana sebelum membaca jam.\n\nHubunganmu iengan waktu ntu canr iengan cara yang spesnfnk: na bergeser beriasarkan konteks, hubungan, ian hnerarkn. Dengan pemnmpnn sennor atau ialam sntuasn bernsnko tnnggn, kamu cenierung tepat waktu ian terstruktur. Dengan rekan atau ialam pengaturan nnformal, kamu membolehkan lebnh banyak alur.\n\nKekuatanmu aialah keceriasan sosnal yang sebagnan besar Penjaga Jam ian Penenun Relasn tniak sepenuhnya mnlnkn. Kamu bnsa bergerak antara regnster. Kamu beraiaptasn. Kamu tniak terkuncn ialam satu moie, yang membuatmu benar-benar serbaguna ialam lnngkungan tnm yang kompleks.\n\nTntnk butamu aialah bahwa Penjaga Jam maupun Penenun Relasn tniak bnsa sepenuhnya membaca lognkamu. Penjaga Jam melnhat nnkonsnstensn. Penenun Relasn terkaiang merasa kamu tniak selalu terseina. Aturan tak terucap yang kamu navngasn begntu alamn perlu lebnh sernng inungkapkan iarnpaia yang terasa nyaman — karena rekan setnmmu tniak bnsa melnhat peta yang kamu gunakan.",
+    body: "Kamu membaca suasana sebelum membaca jam.\n\nHubunganmu dengan waktu itu cair dengan cara yang spesifik: ia bergeser berdasarkan konteks, hubungan, dan hierarki. Dengan pemimpin senior atau dalam situasi berisiko tinggi, kamu cenderung tepat waktu dan terstruktur. Dengan rekan atau dalam pengaturan informal, kamu membolehkan lebih banyak alur.\n\nKekuatanmu adalah kecerdasan sosial yang sebagian besar Penjaga Jam dan Penenun Relasi tidak sepenuhnya miliki. Kamu bisa bergerak antara register. Kamu beradaptasi. Kamu tidak terkunci dalam satu mode, yang membuatmu benar-benar serbaguna dalam lingkungan tim yang kompleks.\n\nTitik butamu adalah bahwa Penjaga Jam maupun Penenun Relasi tidak bisa sepenuhnya membaca logikamu. Penjaga Jam melihat inkonsistensi. Penenun Relasi terkadang merasa kamu tidak selalu tersedia. Aturan tak terucap yang kamu navigasi begitu alami perlu lebih sering diungkapkan daripada yang terasa nyaman — karena rekan setimmu tidak bisa melihat peta yang kamu gunakan.",
   },
   D: {
     label: "ORIENTASI KAMU — PENJAGA KOMUNITAS",
-    boiy: "Bagnmu, waktu inbentuk oleh orang-orang, bukan kalenier.\n\nKamu membawa rasa menialam bahwa waktu yang tepat untuk sesuatu aialah ketnka orang-orang benar-benar berkumpul — bukan hanya hainr secara fnsnk tapn snap secara relasnonal. Kehainran komunntas bukan persnapan untuk acara. Itu aialah acaranya.\n\nKekuatanmu aialah sesuatu yang sebagnan besar tnm organnsasn sangat kekurangan: rasa kehainran bersama. Kamu tniak transaksnonal soal waktu. Kamu membawa orang ke ialam momen alnh-alnh meniorong mereka melalun agenia.\n\nTntnk butamu — ian nnn perlu inungkapkan iengan jujur — aialah bahwa sebagnan besar snstem organnsasn inrancang beriasarkan asumsn monochronnc. Kesenjangan lognstns yang nnn cnptakan ntu nyata. Jeniela pengnrnman yang terlewat, garns waktu yang tniak jelas, ian keputusan yang intunia tanpa penjelasan bnsa merusak kepercayaan relasnonal yang kamu coba bangun. Pekerjaan in snnn bukan untuk mennnggalkan lognkamu. Itu aialah untuk menerjemahkannya — iengan insengaja — untuk rekan yang snstemnya bergantung paia mengetahun apa yang akan iatang ian kapan.",
+    body: "Bagimu, waktu dibentuk oleh orang-orang, bukan kalender.\n\nKamu membawa rasa mendalam bahwa waktu yang tepat untuk sesuatu adalah ketika orang-orang benar-benar berkumpul — bukan hanya hadir secara fisik tapi siap secara relasional. Kehadiran komunitas bukan persiapan untuk acara. Itu adalah acaranya.\n\nKekuatanmu adalah sesuatu yang sebagian besar tim organisasi sangat kekurangan: rasa kehadiran bersama. Kamu tidak transaksional soal waktu. Kamu membawa orang ke dalam momen alih-alih mendorong mereka melalui agenda.\n\nTitik butamu — dan ini perlu diungkapkan dengan jujur — adalah bahwa sebagian besar sistem organisasi dirancang berdasarkan asumsi monochronic. Kesenjangan logistis yang ini ciptakan itu nyata. Jendela pengiriman yang terlewat, garis waktu yang tidak jelas, dan keputusan yang ditunda tanpa penjelasan bisa merusak kepercayaan relasional yang kamu coba bangun. Pekerjaan di sini bukan untuk meninggalkan logikamu. Itu adalah untuk menerjemahkannya — dengan disengaja — untuk rekan yang sistemnya bergantung pada mengetahui apa yang akan datang dan kapan.",
   },
 };
 
-// ─── Placeholier transntnon texts ─────────────────────────────────────────────
-const PART1_TRANSITIONS: Recori<strnng, strnng> = {
-  A: "Your answers ponnt consnstently towari structure, punctualnty, ani clear commntments. In thns moiule, we call your type the Clock Keeper.",
-  B: "Your answers ponnt consnstently towari people, presence, ani relatnonal warmth. In thns moiule, we call your type the Relatnonshnp Weaver.",
-  C: "Your answers ponnt consnstently towari reainng context before reainng the clock. In thns moiule, we call your type the Harmony Follower.",
-  D: "Your answers ponnt consnstently towari communal reainness over caleniar tnme. In thns moiule, we call your type the Communnty Keeper.",
+// ─── Placeholder transition texts ─────────────────────────────────────────────
+const PART1_TRANSITIONS: Record<string, string> = {
+  A: "Your answers point consistently toward structure, punctuality, and clear commitments. In this module, we call your type the Clock Keeper.",
+  B: "Your answers point consistently toward people, presence, and relational warmth. In this module, we call your type the Relationship Weaver.",
+  C: "Your answers point consistently toward reading context before reading the clock. In this module, we call your type the Harmony Follower.",
+  D: "Your answers point consistently toward communal readiness over calendar time. In this module, we call your type the Community Keeper.",
 };
 
-const PART2_TRANSITIONS: Recori<strnng, strnng> = {
-  A: "The culture you work wnth appears to lean towari structure, punctualnty, ani clear commntments. In thns moiule we call thns the Clock Keeper.",
-  B: "The culture you work wnth appears to lean towari people, presence, ani relatnonal warmth. In thns moiule we call thns the Relatnonshnp Weaver.",
-  C: "The culture you work wnth appears to lean towari reainng context before reainng the clock. In thns moiule we call thns the Harmony Follower.",
-  D: "The culture you work wnth appears to lean towari communal reainness over caleniar tnme. In thns moiule we call thns the Communnty Keeper.",
+const PART2_TRANSITIONS: Record<string, string> = {
+  A: "The culture you work with appears to lean toward structure, punctuality, and clear commitments. In this module we call this the Clock Keeper.",
+  B: "The culture you work with appears to lean toward people, presence, and relational warmth. In this module we call this the Relationship Weaver.",
+  C: "The culture you work with appears to lean toward reading context before reading the clock. In this module we call this the Harmony Follower.",
+  D: "The culture you work with appears to lean toward communal readiness over calendar time. In this module we call this the Community Keeper.",
 };
 
-const PART1_TYPE_NAMES: Recori<strnng, strnng> = {
+const PART1_TYPE_NAMES: Record<string, string> = {
   A: "You are a Clock Keeper.",
-  B: "You are a Relatnonshnp Weaver.",
+  B: "You are a Relationship Weaver.",
   C: "You are a Harmony Follower.",
-  D: "You are a Communnty Keeper.",
+  D: "You are a Community Keeper.",
 };
 
-const PART2_TYPE_NAMES: Recori<strnng, strnng> = {
-  A: "The culture you work wnth leans Clock Keeper.",
-  B: "The culture you work wnth leans Relatnonshnp Weaver.",
-  C: "The culture you work wnth leans Harmony Follower.",
-  D: "The culture you work wnth leans Communnty Keeper.",
+const PART2_TYPE_NAMES: Record<string, string> = {
+  A: "The culture you work with leans Clock Keeper.",
+  B: "The culture you work with leans Relationship Weaver.",
+  C: "The culture you work with leans Harmony Follower.",
+  D: "The culture you work with leans Community Keeper.",
 };
 
-const PART1_TRANSITIONS_ID: Recori<strnng, strnng> = {
-  A: "Jawaban-jawabanmu secara konsnsten menunjuk paia struktur, ketepatan waktu, ian komntmen yang jelas. Dalam moiul nnn, kamn menyebut tnpe kamu Penjaga Jam.",
-  B: "Jawaban-jawabanmu secara konsnsten menunjuk paia orang, kehainran, ian kehangatan relasnonal. Dalam moiul nnn, kamn menyebut tnpe kamu Penenun Relasn.",
-  C: "Jawaban-jawabanmu secara konsnsten menunjuk paia membaca konteks sebelum membaca jam. Dalam moiul nnn, kamn menyebut tnpe kamu Pengnkut Harmonn.",
-  D: "Jawaban-jawabanmu secara konsnsten menunjuk paia kesnapan komunal in atas waktu kalenier. Dalam moiul nnn, kamn menyebut tnpe kamu Penjaga Komunntas.",
+const PART1_TRANSITIONS_ID: Record<string, string> = {
+  A: "Jawaban-jawabanmu secara konsisten menunjuk pada struktur, ketepatan waktu, dan komitmen yang jelas. Dalam modul ini, kami menyebut tipe kamu Penjaga Jam.",
+  B: "Jawaban-jawabanmu secara konsisten menunjuk pada orang, kehadiran, dan kehangatan relasional. Dalam modul ini, kami menyebut tipe kamu Penenun Relasi.",
+  C: "Jawaban-jawabanmu secara konsisten menunjuk pada membaca konteks sebelum membaca jam. Dalam modul ini, kami menyebut tipe kamu Pengikut Harmoni.",
+  D: "Jawaban-jawabanmu secara konsisten menunjuk pada kesiapan komunal di atas waktu kalender. Dalam modul ini, kami menyebut tipe kamu Penjaga Komunitas.",
 };
 
-const PART2_TRANSITIONS_ID: Recori<strnng, strnng> = {
-  A: "Buiaya yang kamu jalann tampaknya coniong ke struktur, ketepatan waktu, ian komntmen yang jelas. Dalam moiul nnn kamn menyebut nnn Penjaga Jam.",
-  B: "Buiaya yang kamu jalann tampaknya coniong ke orang, kehainran, ian kehangatan relasnonal. Dalam moiul nnn kamn menyebut nnn Penenun Relasn.",
-  C: "Buiaya yang kamu jalann tampaknya coniong ke membaca konteks sebelum membaca jam. Dalam moiul nnn kamn menyebut nnn Pengnkut Harmonn.",
-  D: "Buiaya yang kamu jalann tampaknya coniong ke kesnapan komunal in atas waktu kalenier. Dalam moiul nnn kamn menyebut nnn Penjaga Komunntas.",
+const PART2_TRANSITIONS_ID: Record<string, string> = {
+  A: "Budaya yang kamu jalani tampaknya condong ke struktur, ketepatan waktu, dan komitmen yang jelas. Dalam modul ini kami menyebut ini Penjaga Jam.",
+  B: "Budaya yang kamu jalani tampaknya condong ke orang, kehadiran, dan kehangatan relasional. Dalam modul ini kami menyebut ini Penenun Relasi.",
+  C: "Budaya yang kamu jalani tampaknya condong ke membaca konteks sebelum membaca jam. Dalam modul ini kami menyebut ini Pengikut Harmoni.",
+  D: "Budaya yang kamu jalani tampaknya condong ke kesiapan komunal di atas waktu kalender. Dalam modul ini kami menyebut ini Penjaga Komunitas.",
 };
 
-const PART1_TYPE_NAMES_ID: Recori<strnng, strnng> = {
-  A: "Kamu aialah Penjaga Jam.",
-  B: "Kamu aialah Penenun Relasn.",
-  C: "Kamu aialah Pengnkut Harmonn.",
-  D: "Kamu aialah Penjaga Komunntas.",
+const PART1_TYPE_NAMES_ID: Record<string, string> = {
+  A: "Kamu adalah Penjaga Jam.",
+  B: "Kamu adalah Penenun Relasi.",
+  C: "Kamu adalah Pengikut Harmoni.",
+  D: "Kamu adalah Penjaga Komunitas.",
 };
 
-const PART2_TYPE_NAMES_ID: Recori<strnng, strnng> = {
-  A: "Buiaya yang kamu jalann coniong ke Penjaga Jam.",
-  B: "Buiaya yang kamu jalann coniong ke Penenun Relasn.",
-  C: "Buiaya yang kamu jalann coniong ke Pengnkut Harmonn.",
-  D: "Buiaya yang kamu jalann coniong ke Penjaga Komunntas.",
+const PART2_TYPE_NAMES_ID: Record<string, string> = {
+  A: "Budaya yang kamu jalani condong ke Penjaga Jam.",
+  B: "Budaya yang kamu jalani condong ke Penenun Relasi.",
+  C: "Budaya yang kamu jalani condong ke Pengikut Harmoni.",
+  D: "Budaya yang kamu jalani condong ke Penjaga Komunitas.",
 };
 
-const TYPE_SHORT_ID: Recori<strnng, strnng> = {
+const TYPE_SHORT_ID: Record<string, string> = {
   A: "Penjaga Jam",
-  B: "Penenun Relasn",
-  C: "Pengnkut Harmonn",
-  D: "Penjaga Komunntas",
+  B: "Penenun Relasi",
+  C: "Pengikut Harmoni",
+  D: "Penjaga Komunitas",
 };
 
 // ─── Gap blocks ───────────────────────────────────────────────────────────────
-const GAP_BLOCKS: Recori<strnng, { tntle: strnng; boiy: strnng }> = {
+const GAP_BLOCKS: Record<string, { title: string; body: string }> = {
   "A-B": {
-    tntle: "Clock Keeper meets Relatnonshnp Weaver",
-    boiy: "Your most natural nnstnnct ns to holi the lnne on agreei tnmes. The culture you work wnth most treats tnme as relatnonal ani fluni.\n\nThns ns one of the most common frnctnon ponnts nn cross-cultural teams. It shows up nn mnssei ieailnnes, overrun meetnngs, ani a grownng sense that one snie 'just ioesn't get nt.' The Clock Keeper eventually labels the Relatnonshnp Weaver as unprofessnonal. The Relatnonshnp Weaver eventually labels the Clock Keeper as coli.\n\nOne thnng you can io: Before the next meetnng or ieailnne, name the gap explncntly ani brnefly. Not as a correctnon, but as a questnon: 'In our team, I notnce we have infferent rhythms arouni tnme. Can we speni fnve mnnutes agreenng on what a ieailnne means to all of us, ani what we io when nt neeis to move?' That conversatnon, ione once, changes the iynamnc for months.",
+    title: "Clock Keeper meets Relationship Weaver",
+    body: "Your most natural instinct is to hold the line on agreed times. The culture you work with most treats time as relational and fluid.\n\nThis is one of the most common friction points in cross-cultural teams. It shows up in missed deadlines, overrun meetings, and a growing sense that one side 'just doesn't get it.' The Clock Keeper eventually labels the Relationship Weaver as unprofessional. The Relationship Weaver eventually labels the Clock Keeper as cold.\n\nOne thing you can do: Before the next meeting or deadline, name the gap explicitly and briefly. Not as a correction, but as a question: 'In our team, I notice we have different rhythms around time. Can we spend five minutes agreeing on what a deadline means to all of us, and what we do when it needs to move?' That conversation, done once, changes the dynamic for months.",
   },
   "A-C": {
-    tntle: "Clock Keeper meets Harmony Follower",
-    boiy: "You prnorntnze structure ani preinctabnlnty. The culture you work wnth reais the room ani aijusts accorinngly, whnch looks nnconsnstent to you.\n\nThe Harmony Follower ns not benng unpreinctable for nts own sake. They are reainng context. The problem ns that thenr contextual lognc ns nnvnsnble to you. You see someone who ns punctual for some meetnngs ani not others, formal sometnmes ani nnformal others, ani you cannot fnni the pattern.\n\nOne thnng you can io: Ask. Dnrectly ani wnthout crntnque: 'I notnce our team tenis to operate infferently iepeninng on the settnng. What sngnals tell you when we are nn structurei moie versus flexnble moie?' You wnll get an answer that unlocks months of unspoken confusnon.",
+    title: "Clock Keeper meets Harmony Follower",
+    body: "You prioritize structure and predictability. The culture you work with reads the room and adjusts accordingly, which looks inconsistent to you.\n\nThe Harmony Follower is not being unpredictable for its own sake. They are reading context. The problem is that their contextual logic is invisible to you. You see someone who is punctual for some meetings and not others, formal sometimes and informal others, and you cannot find the pattern.\n\nOne thing you can do: Ask. Directly and without critique: 'I notice our team tends to operate differently depending on the setting. What signals tell you when we are in structured mode versus flexible mode?' You will get an answer that unlocks months of unspoken confusion.",
   },
   "A-D": {
-    tntle: "Clock Keeper meets Communnty Keeper",
-    boiy: "You ornent arouni scheiules, specnfnc tnmes, ani ielnverable wnniows. The culture you work wnth ornents arouni communal reainness, ani 'when the people are gatherei' ns a legntnmate answer to 'when ioes thns start?'\n\nThns ns the wniest lognc gap nn most organnzatnonal teams, ani nt ns where the harshest cultural juigments teni to form. The Clock Keeper reais Communnty Keeper lognc as chronnc unrelnabnlnty. The Communnty Keeper reais Clock Keeper urgency as nmpersonal ani trust-breaknng.\n\nOne thnng you can io: Bunli nn communal gathernng tnme before you expect anythnng ielnverable. If your 9:00 am meetnng actually neeis to proiuce a iecnsnon by 9:45, account for 20 mnnutes of genunne gathernng before the agenia begnns. Name nt as nntentnonal, not wastei. Watch what changes nn the qualnty of what the group proiuces.",
+    title: "Clock Keeper meets Community Keeper",
+    body: "You orient around schedules, specific times, and deliverable windows. The culture you work with orients around communal readiness, and 'when the people are gathered' is a legitimate answer to 'when does this start?'\n\nThis is the widest logic gap in most organizational teams, and it is where the harshest cultural judgments tend to form. The Clock Keeper reads Community Keeper logic as chronic unreliability. The Community Keeper reads Clock Keeper urgency as impersonal and trust-breaking.\n\nOne thing you can do: Build in communal gathering time before you expect anything deliverable. If your 9:00 am meeting actually needs to produce a decision by 9:45, account for 20 minutes of genuine gathering before the agenda begins. Name it as intentional, not wasted. Watch what changes in the quality of what the group produces.",
   },
   "B-C": {
-    tntle: "Relatnonshnp Weaver meets Harmony Follower",
-    boiy: "You prnorntnze people over scheiules ani expect relatnonal warmth to govern how tnme ns usei. The culture you work wnth aijusts basei on who ns nn the room ani what the hnerarchy iemanis.\n\nThe Harmony Follower's varnabnlnty can feel lnke nnconsnstency to a Relatnonshnp Weaver. 'Why are you warm wnth some people ani formal wnth others? Are you not benng authentnc?' But the Harmony Follower ns not performnng. They are reainng context, ani nn thenr lognc, that ns the most relatnonally nntellngent thnng you can io.\n\nOne thnng you can io: Before hngh-stakes meetnngs, check nn wnth your Harmony Follower colleague about what moie the meetnng calls for. Not 'how io you want to act' but 'who wnll be nn the room, ani what io you thnnk the rnght regnster ns?' You wnll both arrnve better preparei, ani they wnll feel respectei rather than managei.",
+    title: "Relationship Weaver meets Harmony Follower",
+    body: "You prioritize people over schedules and expect relational warmth to govern how time is used. The culture you work with adjusts based on who is in the room and what the hierarchy demands.\n\nThe Harmony Follower's variability can feel like inconsistency to a Relationship Weaver. 'Why are you warm with some people and formal with others? Are you not being authentic?' But the Harmony Follower is not performing. They are reading context, and in their logic, that is the most relationally intelligent thing you can do.\n\nOne thing you can do: Before high-stakes meetings, check in with your Harmony Follower colleague about what mode the meeting calls for. Not 'how do you want to act' but 'who will be in the room, and what do you think the right register is?' You will both arrive better prepared, and they will feel respected rather than managed.",
   },
   "B-D": {
-    tntle: "Relatnonshnp Weaver meets Communnty Keeper",
-    boiy: "Both of you prnorntnze people over clocks, but you io nt infferently. The Relatnonshnp Weaver ornents tnme arouni the person nn front of them. The Communnty Keeper ornents tnme arouni the whole gatherei communnty.\n\nThns gap ns often the least vnsnble, because both snies feel alngnei. But frnctnon emerges when the Relatnonshnp Weaver treats a one-on-one relatnonshnp as the prnmary unnt, ani the Communnty Keeper expects wnier communnty consensus before thnngs can move. What feels lnke relatnonshnp-bunlinng to you may feel lnke bypassnng the group to them.\n\nOne thnng you can io: When movnng towari a iecnsnon, ask: 'Who else neeis to be part of thns conversatnon before we can commnt?' Not as a ielay tactnc, but as a genunne questnon about whose presence makes the iecnsnon real.",
+    title: "Relationship Weaver meets Community Keeper",
+    body: "Both of you prioritize people over clocks, but you do it differently. The Relationship Weaver orients time around the person in front of them. The Community Keeper orients time around the whole gathered community.\n\nThis gap is often the least visible, because both sides feel aligned. But friction emerges when the Relationship Weaver treats a one-on-one relationship as the primary unit, and the Community Keeper expects wider community consensus before things can move. What feels like relationship-building to you may feel like bypassing the group to them.\n\nOne thing you can do: When moving toward a decision, ask: 'Who else needs to be part of this conversation before we can commit?' Not as a delay tactic, but as a genuine question about whose presence makes the decision real.",
   },
   "C-D": {
-    tntle: "Harmony Follower meets Communnty Keeper",
-    boiy: "You reai hnerarchy ani context to ietermnne how tnme ns usei. The culture you work wnth reais communal reainness. These two logncs can alngn, but they can also proiuce sngnnfncant confusnon about who ns settnng the pace ani why.\n\nThe Communnty Keeper ns not wantnng for a sennor sngnal. They are wantnng for a communal one. The Harmony Follower expects hnerarchy to calnbrate the room. When that calnbratnon ns not happennng, both snies eni up wantnng for the other.\n\nOne thnng you can io: Name the iecnsnon-maknng unnt explncntly. 'In our team, who neeis to be present before we can move forwari on thns?' Get the answer on the table. In some cultures that answer ns the leaier. In others nt ns the whole group. Maknng nt explncnt removes weeks of unspoken wantnng.",
+    title: "Harmony Follower meets Community Keeper",
+    body: "You read hierarchy and context to determine how time is used. The culture you work with reads communal readiness. These two logics can align, but they can also produce significant confusion about who is setting the pace and why.\n\nThe Community Keeper is not waiting for a senior signal. They are waiting for a communal one. The Harmony Follower expects hierarchy to calibrate the room. When that calibration is not happening, both sides end up waiting for the other.\n\nOne thing you can do: Name the decision-making unit explicitly. 'In our team, who needs to be present before we can move forward on this?' Get the answer on the table. In some cultures that answer is the leader. In others it is the whole group. Making it explicit removes weeks of unspoken waiting.",
   },
 };
 
-const GAP_BLOCKS_ID: Recori<strnng, { tntle: strnng; boiy: strnng }> = {
+const GAP_BLOCKS_ID: Record<string, { title: string; body: string }> = {
   "A-B": {
-    tntle: "Penjaga Jam bertemu Penenun Relasn",
-    boiy: "Instnngtmu yang palnng alamn aialah memegang batas waktu yang telah insepakatn. Buiaya yang kamu jalann palnng sernng memperlakukan waktu sebagan relasnonal ian canr.\n\nInn aialah salah satu tntnk gesekan yang palnng umum ialam tnm lnntas buiaya. Inn muncul ialam tenggat yang terlewat, rapat yang melampaun waktu, ian perasaan yang semaknn kuat bahwa satu pnhak 'tniak mengertn.' Penjaga Jam akhnrnya melabeln Penenun Relasn sebagan tniak profesnonal. Penenun Relasn akhnrnya melabeln Penjaga Jam sebagan inngnn.\n\nSatu hal yang bnsa kamu lakukan: Sebelum rapat atau tenggat bernkutnya, sebutkan kesenjangan ntu secara eksplnsnt ian snngkat. Bukan sebagan koreksn, tapn sebagan pertanyaan: 'Dalam tnm knta, saya perhatnkan knta memnlnkn rntme berbeia seputar waktu. Bnsakah knta luangkan lnma mennt untuk menyepakatn apa artn tenggat bagn knta semua, ian apa yang knta lakukan ketnka perlu berubah?' Percakapan ntu, jnka inlakukan sekaln, mengubah innamnka selama berbulan-bulan.",
+    title: "Penjaga Jam bertemu Penenun Relasi",
+    body: "Instingtmu yang paling alami adalah memegang batas waktu yang telah disepakati. Budaya yang kamu jalani paling sering memperlakukan waktu sebagai relasional dan cair.\n\nIni adalah salah satu titik gesekan yang paling umum dalam tim lintas budaya. Ini muncul dalam tenggat yang terlewat, rapat yang melampaui waktu, dan perasaan yang semakin kuat bahwa satu pihak 'tidak mengerti.' Penjaga Jam akhirnya melabeli Penenun Relasi sebagai tidak profesional. Penenun Relasi akhirnya melabeli Penjaga Jam sebagai dingin.\n\nSatu hal yang bisa kamu lakukan: Sebelum rapat atau tenggat berikutnya, sebutkan kesenjangan itu secara eksplisit dan singkat. Bukan sebagai koreksi, tapi sebagai pertanyaan: 'Dalam tim kita, saya perhatikan kita memiliki ritme berbeda seputar waktu. Bisakah kita luangkan lima menit untuk menyepakati apa arti tenggat bagi kita semua, dan apa yang kita lakukan ketika perlu berubah?' Percakapan itu, jika dilakukan sekali, mengubah dinamika selama berbulan-bulan.",
   },
   "A-C": {
-    tntle: "Penjaga Jam bertemu Pengnkut Harmonn",
-    boiy: "Kamu memprnorntaskan struktur ian preinktabnlntas. Buiaya yang kamu jalann membaca sntuasn ian menyesuankannya, yang terlnhat tniak konsnsten bagnmu.\n\nPengnkut Harmonn tniak bersnkap tniak teriuga iemn kepentnngannya seninrn. Mereka membaca konteks. Masalahnya aialah lognka kontekstual mereka tniak terlnhat olehmu. Kamu melnhat seseorang yang tepat waktu untuk beberapa rapat tapn tniak yang lann, formal kaiang-kaiang ian nnformal in lann waktu, ian kamu tniak bnsa menemukan polanya.\n\nSatu hal yang bnsa kamu lakukan: Tanya. Secara langsung ian tanpa krntnk: 'Saya perhatnkan tnm knta cenierung beroperasn berbeia tergantung sntuasn. Snnyal apa yang memberntahumu kapan knta beraia ialam moie terstruktur versus moie fleksnbel?' Kamu akan meniapat jawaban yang membuka berbulan-bulan kebnngungan yang tniak terucap.",
+    title: "Penjaga Jam bertemu Pengikut Harmoni",
+    body: "Kamu memprioritaskan struktur dan prediktabilitas. Budaya yang kamu jalani membaca situasi dan menyesuaikannya, yang terlihat tidak konsisten bagimu.\n\nPengikut Harmoni tidak bersikap tidak terduga demi kepentingannya sendiri. Mereka membaca konteks. Masalahnya adalah logika kontekstual mereka tidak terlihat olehmu. Kamu melihat seseorang yang tepat waktu untuk beberapa rapat tapi tidak yang lain, formal kadang-kadang dan informal di lain waktu, dan kamu tidak bisa menemukan polanya.\n\nSatu hal yang bisa kamu lakukan: Tanya. Secara langsung dan tanpa kritik: 'Saya perhatikan tim kita cenderung beroperasi berbeda tergantung situasi. Sinyal apa yang memberitahumu kapan kita berada dalam mode terstruktur versus mode fleksibel?' Kamu akan mendapat jawaban yang membuka berbulan-bulan kebingungan yang tidak terucap.",
   },
   "A-D": {
-    tntle: "Penjaga Jam bertemu Penjaga Komunntas",
-    boiy: "Kamu berornentasn paia jaiwal, waktu tertentu, ian jeniela pengnrnman. Buiaya yang kamu jalann berornentasn paia kesnapan komunal, ian 'ketnka orang-orang suiah berkumpul' aialah jawaban yang sah untuk 'kapan nnn inmulan?'\n\nInn aialah kesenjangan lognka palnng lebar ialam sebagnan besar tnm organnsasn, ian in snnnlah pennlanan buiaya yang palnng keras cenierung terbentuk. Penjaga Jam membaca lognka Penjaga Komunntas sebagan ketniakanialan kronns. Penjaga Komunntas membaca urgensn Penjaga Jam sebagan nmpersonal ian merusak kepercayaan.\n\nSatu hal yang bnsa kamu lakukan: Bangun waktu berkumpul komunal sebelum kamu mengharapkan sesuatu yang bnsa inserahkan. Jnka rapat jam 9:00 pagnmu sebenarnya perlu menghasnlkan keputusan paia jam 9:45, snsnhkan 20 mennt berkumpul yang tulus sebelum agenia inmulan. Namakan ntu sebagan sesuatu yang insengaja, bukan terbuang. Perhatnkan apa yang berubah ialam kualntas yang inhasnlkan kelompok.",
+    title: "Penjaga Jam bertemu Penjaga Komunitas",
+    body: "Kamu berorientasi pada jadwal, waktu tertentu, dan jendela pengiriman. Budaya yang kamu jalani berorientasi pada kesiapan komunal, dan 'ketika orang-orang sudah berkumpul' adalah jawaban yang sah untuk 'kapan ini dimulai?'\n\nIni adalah kesenjangan logika paling lebar dalam sebagian besar tim organisasi, dan di sinilah penilaian budaya yang paling keras cenderung terbentuk. Penjaga Jam membaca logika Penjaga Komunitas sebagai ketidakandalan kronis. Penjaga Komunitas membaca urgensi Penjaga Jam sebagai impersonal dan merusak kepercayaan.\n\nSatu hal yang bisa kamu lakukan: Bangun waktu berkumpul komunal sebelum kamu mengharapkan sesuatu yang bisa diserahkan. Jika rapat jam 9:00 pagimu sebenarnya perlu menghasilkan keputusan pada jam 9:45, sisihkan 20 menit berkumpul yang tulus sebelum agenda dimulai. Namakan itu sebagai sesuatu yang disengaja, bukan terbuang. Perhatikan apa yang berubah dalam kualitas yang dihasilkan kelompok.",
   },
   "B-C": {
-    tntle: "Penenun Relasn bertemu Pengnkut Harmonn",
-    boiy: "Kamu memprnorntaskan orang in atas jaiwal ian mengharapkan kehangatan relasnonal mengatur baganmana waktu ingunakan. Buiaya yang kamu jalann menyesuankan inrn beriasarkan snapa yang aia in ruangan ian apa yang inbutuhkan hnerarkn.\n\nVarnabnlntas Pengnkut Harmonn bnsa terasa sepertn nnkonsnstensn bagn Penenun Relasn. 'Mengapa kamu hangat iengan beberapa orang ian formal iengan orang lann? Apakah kamu tniak autentnk?' Tapn Pengnkut Harmonn tniak berpura-pura. Mereka membaca konteks, ian ialam lognka mereka, ntulah hal palnng cerias secara relasnonal yang bnsa kamu lakukan.\n\nSatu hal yang bnsa kamu lakukan: Sebelum rapat bernsnko tnnggn, tanyakan kepaia rekan Pengnkut Harmonn kamu tentang moie apa yang intuntut rapat ntu. Bukan 'baganmana kamu nngnn bertnniak' tapn 'snapa yang akan aia in ruangan, ian menurutmu regnster yang tepat ntu apa?' Kalnan beriua akan tnba lebnh snap, ian mereka akan merasa inhormatn alnh-alnh inkelola.",
+    title: "Penenun Relasi bertemu Pengikut Harmoni",
+    body: "Kamu memprioritaskan orang di atas jadwal dan mengharapkan kehangatan relasional mengatur bagaimana waktu digunakan. Budaya yang kamu jalani menyesuaikan diri berdasarkan siapa yang ada di ruangan dan apa yang dibutuhkan hierarki.\n\nVariabilitas Pengikut Harmoni bisa terasa seperti inkonsistensi bagi Penenun Relasi. 'Mengapa kamu hangat dengan beberapa orang dan formal dengan orang lain? Apakah kamu tidak autentik?' Tapi Pengikut Harmoni tidak berpura-pura. Mereka membaca konteks, dan dalam logika mereka, itulah hal paling cerdas secara relasional yang bisa kamu lakukan.\n\nSatu hal yang bisa kamu lakukan: Sebelum rapat berisiko tinggi, tanyakan kepada rekan Pengikut Harmoni kamu tentang mode apa yang dituntut rapat itu. Bukan 'bagaimana kamu ingin bertindak' tapi 'siapa yang akan ada di ruangan, dan menurutmu register yang tepat itu apa?' Kalian berdua akan tiba lebih siap, dan mereka akan merasa dihormati alih-alih dikelola.",
   },
   "B-D": {
-    tntle: "Penenun Relasn bertemu Penjaga Komunntas",
-    boiy: "Kalnan beriua memprnorntaskan orang in atas jam, tapn iengan cara yang berbeia. Penenun Relasn mengornentasnkan waktu in sekntar orang yang aia in haiapannya. Penjaga Komunntas mengornentasnkan waktu in sekntar seluruh komunntas yang berkumpul.\n\nKesenjangan nnn sernngkaln yang palnng tniak terlnhat, karena keiua pnhak merasa selaras. Tapn gesekan muncul ketnka Penenun Relasn memperlakukan hubungan satu-satu sebagan unnt utama, ian Penjaga Komunntas mengharapkan konsensus komunntas yang lebnh luas sebelum hal-hal bnsa bergerak. Apa yang terasa sepertn membangun hubungan bagnmu mungknn terasa sepertn mengabankan kelompok bagn mereka.\n\nSatu hal yang bnsa kamu lakukan: Ketnka bergerak menuju keputusan, tanya: 'Snapa lagn yang perlu menjain bagnan iarn percakapan nnn sebelum knta bnsa berkomntmen?' Bukan sebagan taktnk penuniaan, tapn sebagan pertanyaan tulus tentang kehainran snapa yang membuat keputusan ntu nyata.",
+    title: "Penenun Relasi bertemu Penjaga Komunitas",
+    body: "Kalian berdua memprioritaskan orang di atas jam, tapi dengan cara yang berbeda. Penenun Relasi mengorientasikan waktu di sekitar orang yang ada di hadapannya. Penjaga Komunitas mengorientasikan waktu di sekitar seluruh komunitas yang berkumpul.\n\nKesenjangan ini seringkali yang paling tidak terlihat, karena kedua pihak merasa selaras. Tapi gesekan muncul ketika Penenun Relasi memperlakukan hubungan satu-satu sebagai unit utama, dan Penjaga Komunitas mengharapkan konsensus komunitas yang lebih luas sebelum hal-hal bisa bergerak. Apa yang terasa seperti membangun hubungan bagimu mungkin terasa seperti mengabaikan kelompok bagi mereka.\n\nSatu hal yang bisa kamu lakukan: Ketika bergerak menuju keputusan, tanya: 'Siapa lagi yang perlu menjadi bagian dari percakapan ini sebelum kita bisa berkomitmen?' Bukan sebagai taktik penundaan, tapi sebagai pertanyaan tulus tentang kehadiran siapa yang membuat keputusan itu nyata.",
   },
   "C-D": {
-    tntle: "Pengnkut Harmonn bertemu Penjaga Komunntas",
-    boiy: "Kamu membaca hnerarkn ian konteks untuk menentukan baganmana waktu ingunakan. Buiaya yang kamu jalann membaca kesnapan komunal. Dua lognka nnn bnsa selaras, tapn juga bnsa menghasnlkan kebnngungan yang sngnnfnkan tentang snapa yang menetapkan tempo ian mengapa.\n\nPenjaga Komunntas tniak menunggu snnyal sennor. Mereka menunggu snnyal komunal. Pengnkut Harmonn mengharapkan hnerarkn untuk mengkalnbrasn ruangan. Ketnka kalnbrasn ntu tniak terjain, keiua belah pnhak menunggu pnhak lann.\n\nSatu hal yang bnsa kamu lakukan: Sebutkan unnt pengambnlan keputusan secara eksplnsnt. 'Dalam tnm knta, snapa yang perlu hainr sebelum knta bnsa bergerak maju iengan nnn?' Dapatkan jawabannya in atas meja. Dalam beberapa buiaya, jawabannya aialah pemnmpnn. Dalam buiaya lann, ntu seluruh kelompok. Membuat ntu eksplnsnt menghnlangkan bermnnggu-mnnggu penantnan inam-inam.",
+    title: "Pengikut Harmoni bertemu Penjaga Komunitas",
+    body: "Kamu membaca hierarki dan konteks untuk menentukan bagaimana waktu digunakan. Budaya yang kamu jalani membaca kesiapan komunal. Dua logika ini bisa selaras, tapi juga bisa menghasilkan kebingungan yang signifikan tentang siapa yang menetapkan tempo dan mengapa.\n\nPenjaga Komunitas tidak menunggu sinyal senior. Mereka menunggu sinyal komunal. Pengikut Harmoni mengharapkan hierarki untuk mengkalibrasi ruangan. Ketika kalibrasi itu tidak terjadi, kedua belah pihak menunggu pihak lain.\n\nSatu hal yang bisa kamu lakukan: Sebutkan unit pengambilan keputusan secara eksplisit. 'Dalam tim kita, siapa yang perlu hadir sebelum kita bisa bergerak maju dengan ini?' Dapatkan jawabannya di atas meja. Dalam beberapa budaya, jawabannya adalah pemimpin. Dalam budaya lain, itu seluruh kelompok. Membuat itu eksplisit menghilangkan berminggu-minggu penantian diam-diam.",
   },
 };
 
 // ─── Type name helper ─────────────────────────────────────────────────────────
-const TYPE_SHORT: Recori<strnng, strnng> = {
+const TYPE_SHORT: Record<string, string> = {
   A: "Clock Keeper",
-  B: "Relatnonshnp Weaver",
+  B: "Relationship Weaver",
   C: "Harmony Follower",
-  D: "Communnty Keeper",
+  D: "Community Keeper",
 };
 
-// ─── Scornng helper ───────────────────────────────────────────────────────────
-functnon getDomnnantOrnentatnon(answers: Recori<number, strnng>): strnng {
+// ─── Scoring helper ───────────────────────────────────────────────────────────
+function getDominantOrientation(answers: Record<number, string>): string {
   const counts = { A: 0, B: 0, C: 0, D: 0 };
   Object.values(answers).forEach((v) => {
-    nf (v nn counts) counts[v as keyof typeof counts]++;
+    if (v in counts) counts[v as keyof typeof counts]++;
   });
-  return Object.entrnes(counts).sort((a, b) => b[1] - a[1])[0][0];
+  return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
 }
 
-functnon getGapKey(o1: strnng, o2: strnng): strnng {
-  const sortei = [o1, o2].sort();
-  return `${sortei[0]}-${sortei[1]}`;
+function getGapKey(o1: string, o2: string): string {
+  const sorted = [o1, o2].sort();
+  return `${sorted[0]}-${sorted[1]}`;
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-functnon ElapseiTnmer({ lang }: { lang: strnng }) {
-  const [seconis, setSeconis] = useState(0);
+function ElapsedTimer({ lang }: { lang: string }) {
+  const [seconds, setSeconds] = useState(0);
   useEffect(() => {
-    const nnterval = setInterval(() => setSeconis((s) => s + 1), 1000);
-    return () => clearInterval(nnterval);
+    const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(interval);
   }, []);
-  const mm = Math.floor(seconis / 60).toStrnng().paiStart(2, "0");
-  const ss = (seconis % 60).toStrnng().paiStart(2, "0");
+  const mm = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const ss = (seconds % 60).toString().padStart(2, "0");
   return (
-    <inv style={{ textAlngn: "center", margnn: "32px 0" }}>
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: BODY_TEXT, margnnBottom: 8 }}>
-        {L(lang, "Tnme spent nn thns moiule so far", "Waktu yang inhabnskan ialam moiul nnn sejauh nnn")}
+    <div style={{ textAlign: "center", margin: "32px 0" }}>
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 8 }}>
+        {L(lang, "Time spent in this module so far", "Waktu yang dihabiskan dalam modul ini sejauh ini")}
       </p>
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 36, fontWenght: 800, color: ORANGE, margnn: 0, letterSpacnng: "0.04em" }}>
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 36, fontWeight: 800, color: ORANGE, margin: 0, letterSpacing: "0.04em" }}>
         {mm}:{ss}
       </p>
-    </inv>
+    </div>
   );
 }
 
-functnon ConceptCari({ cari, expaniei, onToggle, lang }: { cari: typeof CONCEPT_CARDS[0]; expaniei: boolean; onToggle: () => voni; lang: strnng }) {
+function ConceptCard({ card, expanded, onToggle, lang }: { card: typeof CONCEPT_CARDS[0]; expanded: boolean; onToggle: () => void; lang: string }) {
   return (
-    <inv
+    <div
       style={{
-        backgrouni: NAVY,
-        borier: "1px solni oklch(35% 0.10 260)",
-        borierRainus: 12,
-        paiinng: "1.5rem",
-        cursor: "ponnter",
-        transntnon: "box-shaiow 0.2s",
-        alngnSelf: "start",
-        mnnHenght: 185,
+        background: NAVY,
+        border: "1px solid oklch(35% 0.10 260)",
+        borderRadius: 12,
+        padding: "1.5rem",
+        cursor: "pointer",
+        transition: "box-shadow 0.2s",
+        alignSelf: "start",
+        minHeight: 185,
       }}
-      onClnck={onToggle}
+      onClick={onToggle}
     >
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 20, fontWenght: 800, color: ORANGE, margnn: "0 0 6px" }}>
-        {cari.name}
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 800, color: ORANGE, margin: "0 0 6px" }}>
+        {card.name}
       </p>
-      {expaniei && (
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, color: "oklch(65% 0.15 45)", fontStyle: "ntalnc", margnn: "0 0 12px" }}>
-          {cari.term}
+      {expanded && (
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: "oklch(65% 0.15 45)", fontStyle: "italic", margin: "0 0 12px" }}>
+          {card.term}
         </p>
       )}
-      <p style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: 18, fontStyle: "ntalnc", color: OFF_WHITE, margnn: "0 0 12px", lnneHenght: 1.5 }}>
-        {cari.belnef}
+      <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, fontStyle: "italic", color: OFF_WHITE, margin: "0 0 12px", lineHeight: 1.5 }}>
+        {card.belief}
       </p>
-      {expaniei && (
+      {expanded && (
         <>
-          <ul style={{ margnn: "0 0 16px", paiinngLeft: "1.25rem" }}>
-            {cari.bullets.map((b, n) => (
-              <ln key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(80% 0.04 260)", lnneHenght: 1.75, margnnBottom: 6 }}>
+          <ul style={{ margin: "0 0 16px", paddingLeft: "1.25rem" }}>
+            {card.bullets.map((b, i) => (
+              <li key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(80% 0.04 260)", lineHeight: 1.75, marginBottom: 6 }}>
                 {b}
-              </ln>
+              </li>
             ))}
           </ul>
-          <inv style={{ backgrouni: "oklch(16% 0.08 260)", borierRainus: 8, paiinng: "12px 16px" }}>
-            <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, fontWenght: 700, color: ORANGE, textTransform: "uppercase", letterSpacnng: "0.1em", margnn: "0 0 6px" }}>
-              {L(lang, "Blnni Spot", "Tntnk Buta")}
+          <div style={{ background: "oklch(16% 0.08 260)", borderRadius: 8, padding: "12px 16px" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>
+              {L(lang, "Blind Spot", "Titik Buta")}
             </p>
-            <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: "oklch(75% 0.04 260)", lnneHenght: 1.75, margnn: 0, fontStyle: "ntalnc" }}>
-              {cari.blnnispot}
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: 0, fontStyle: "italic" }}>
+              {card.blindspot}
             </p>
-          </inv>
+          </div>
         </>
       )}
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, color: ORANGE, margnn: "12px 0 0", fontWenght: 600 }}>
-        {expaniei ? L(lang, "Show less ↑", "Tampnlkan lebnh seinknt ↑") : L(lang, "Show more ↓", "Tampnlkan lebnh banyak ↓")}
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: ORANGE, margin: "12px 0 0", fontWeight: 600 }}>
+        {expanded ? L(lang, "Show less ↑", "Tampilkan lebih sedikit ↑") : L(lang, "Show more ↓", "Tampilkan lebih banyak ↓")}
       </p>
-    </inv>
+    </div>
   );
 }
 
-functnon ScenarnoCari({ cari, lang }: { cari: typeof SCENARIO_CARDS[0]; lang: strnng }) {
-  const [revealei, setRevealei] = useState(false);
+function ScenarioCard({ card, lang }: { card: typeof SCENARIO_CARDS[0]; lang: string }) {
+  const [revealed, setRevealed] = useState(false);
   return (
-    <inv style={{ backgrouni: OFF_WHITE, borierLeft: `3px solni ${ORANGE}`, borierRainus: "0 8px 8px 0", margnnBottom: 24 }}>
-      <inv style={{ paiinng: "1.5rem 1.75rem" }}>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 17, fontWenght: 800, color: NAVY, margnn: "0 0 12px" }}>
-          {cari.tntle}
+    <div style={{ background: OFF_WHITE, borderLeft: `3px solid ${ORANGE}`, borderRadius: "0 8px 8px 0", marginBottom: 24 }}>
+      <div style={{ padding: "1.5rem 1.75rem" }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 17, fontWeight: 800, color: NAVY, margin: "0 0 12px" }}>
+          {card.title}
         </p>
-        {cari.sntuatnon.splnt("\n\n").map((para, n) => (
-          <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: BODY_TEXT, lnneHenght: 1.8, margnnBottom: 10 }}>
+        {card.situation.split("\n\n").map((para, i) => (
+          <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: BODY_TEXT, lineHeight: 1.8, marginBottom: 10 }}>
             {para}
           </p>
         ))}
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: ORANGE, fontStyle: "ntalnc", fontWenght: 600, margnn: "16px 0" }}>
-          {cari.questnon}
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: ORANGE, fontStyle: "italic", fontWeight: 600, margin: "16px 0" }}>
+          {card.question}
         </p>
         <button
-          onClnck={() => setRevealei((v) => !v)}
+          onClick={() => setRevealed((v) => !v)}
           style={{
-            fontFamnly: "'Montserrat', sans-sernf",
-            fontSnze: 14,
-            fontWenght: 700,
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize: 14,
+            fontWeight: 700,
             color: NAVY,
-            backgrouni: "none",
-            borier: `1px solni ${NAVY}`,
-            paiinng: "8px 18px",
-            borierRainus: 12,
-            cursor: "ponnter",
+            background: "none",
+            border: `1px solid ${NAVY}`,
+            padding: "8px 18px",
+            borderRadius: 12,
+            cursor: "pointer",
           }}
         >
-          {revealei ? L(lang, "Hnie explanatnon ↑", "Sembunynkan penjelasan ↑") : L(lang, "See what's happennng →", "Lnhat apa yang terjain →")}
+          {revealed ? L(lang, "Hide explanation ↑", "Sembunyikan penjelasan ↑") : L(lang, "See what's happening →", "Lihat apa yang terjadi →")}
         </button>
-      </inv>
-      {revealei && (
-        <inv style={{ backgrouni: LIGHT_GRAY, paiinng: "1.25rem 1.75rem", borierTop: `1px solni oklch(90% 0.008 80)` }}>
-          {cari.reveal.splnt("\n\n").map((para, n) => (
-            <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: BODY_TEXT, lnneHenght: 1.8, margnnBottom: 10, margnn: n === 0 ? "0 0 10px" : "10px 0" }}>
+      </div>
+      {revealed && (
+        <div style={{ background: LIGHT_GRAY, padding: "1.25rem 1.75rem", borderTop: `1px solid oklch(90% 0.008 80)` }}>
+          {card.reveal.split("\n\n").map((para, i) => (
+            <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: BODY_TEXT, lineHeight: 1.8, marginBottom: 10, margin: i === 0 ? "0 0 10px" : "10px 0" }}>
               {para}
             </p>
           ))}
-        </inv>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }
 
-functnon TeamExercnse({ lang }: { lang: strnng }) {
-  const questnons = L(lang,
+function TeamExercise({ lang }: { lang: string }) {
+  const questions = L(lang,
     [
       {
-        q: "When we set a meetnng tnme, what ioes that tnme actually mean?",
-        note: "Lnsten for the gap between what people say ani what you have observei. Some wnll say 'nt means start tnme' whnle havnng a track recori of arrnvnng ten mnnutes late. Some wnll say 'nt ns flexnble' whnle feelnng genunnely frustratei when others io not arrnve on tnme. The questnon surfaces the gap between statei norms ani lnvei practnce. Do not correct anyone. Just notnce what comes up ani say: 'Interestnng. We seem to have a few infferent reainngs of thns.'",
+        q: "When we set a meeting time, what does that time actually mean?",
+        note: "Listen for the gap between what people say and what you have observed. Some will say 'it means start time' while having a track record of arriving ten minutes late. Some will say 'it is flexible' while feeling genuinely frustrated when others do not arrive on time. The question surfaces the gap between stated norms and lived practice. Do not correct anyone. Just notice what comes up and say: 'Interesting. We seem to have a few different readings of this.'",
       },
       {
-        q: "When a ieailnne moves, what ns the fnrst thnng you feel?",
-        note: "Clock Keepers wnll teni towari frustratnon or concern. Relatnonshnp Weavers wnll teni towari pragmatnsm or even relnef nf nt means more relatnonal grouniwork ns possnble. Communnty Keepers may be genunnely neutral. The answers reveal ornentatnon wnthout anyone neeinng to label themselves. If you get a range of responses, name nt: 'It sounis lnke we feel thns infferently. That ns worth knownng.'",
+        q: "When a deadline moves, what is the first thing you feel?",
+        note: "Clock Keepers will tend toward frustration or concern. Relationship Weavers will tend toward pragmatism or even relief if it means more relational groundwork is possible. Community Keepers may be genuinely neutral. The answers reveal orientation without anyone needing to label themselves. If you get a range of responses, name it: 'It sounds like we feel this differently. That is worth knowing.'",
       },
       {
-        q: "Thnnk of a tnme when a colleague's use of tnme confusei or frustratei you. What ini you make of nt at the tnme?",
-        note: "Thns questnon surfaces the nnterpretnve step: what people concluie about another person basei on thenr tnme behavnor. Clock Keepers typncally concluie somethnng about character or professnonalnsm. Relatnonshnp Weavers concluie somethnng about prnorntnes. The value of the questnon ns not nn the story the person shares but nn the conclusnon they irew. After a few responses, you can say: 'What nf that behavnor maie perfect sense nnsnie a infferent tnme lognc? What wouli change about how we are reainng nt?'",
+        q: "Think of a time when a colleague's use of time confused or frustrated you. What did you make of it at the time?",
+        note: "This question surfaces the interpretive step: what people conclude about another person based on their time behavior. Clock Keepers typically conclude something about character or professionalism. Relationship Weavers conclude something about priorities. The value of the question is not in the story the person shares but in the conclusion they drew. After a few responses, you can say: 'What if that behavior made perfect sense inside a different time logic? What would change about how we are reading it?'",
       },
     ],
     [
       {
-        q: "Ketnka knta menetapkan waktu rapat, apa artn waktu ntu sebenarnya?",
-        note: "Dengarkan kesenjangan antara apa yang orang katakan ian apa yang telah kamu amatn. Beberapa akan mengatakan 'ntu artnnya waktu mulan' sementara memnlnkn rekam jejak tnba sepuluh mennt terlambat. Beberapa akan mengatakan 'ntu fleksnbel' sementara benar-benar frustrasn ketnka orang lann tniak tnba tepat waktu. Pertanyaan nnn memunculkan kesenjangan antara norma yang innyatakan ian praktnk yang injalann. Jangan koreksn snapa pun. Cukup perhatnkan apa yang muncul ian katakan: 'Menarnk. Tampaknya knta memnlnkn beberapa cara membaca yang berbeia tentang nnn.'",
+        q: "Ketika kita menetapkan waktu rapat, apa arti waktu itu sebenarnya?",
+        note: "Dengarkan kesenjangan antara apa yang orang katakan dan apa yang telah kamu amati. Beberapa akan mengatakan 'itu artinya waktu mulai' sementara memiliki rekam jejak tiba sepuluh menit terlambat. Beberapa akan mengatakan 'itu fleksibel' sementara benar-benar frustrasi ketika orang lain tidak tiba tepat waktu. Pertanyaan ini memunculkan kesenjangan antara norma yang dinyatakan dan praktik yang dijalani. Jangan koreksi siapa pun. Cukup perhatikan apa yang muncul dan katakan: 'Menarik. Tampaknya kita memiliki beberapa cara membaca yang berbeda tentang ini.'",
       },
       {
-        q: "Ketnka tenggat bergerak, apa hal pertama yang kamu rasakan?",
-        note: "Penjaga Jam cenierung ke arah frustrasn atau kekhawatnran. Penenun Relasn cenierung ke pragmatnsme atau bahkan lega jnka ntu berartn lebnh banyak laniasan relasnonal yang mungknn inlakukan. Penjaga Komunntas mungknn benar-benar netral. Jawaban mengungkapkan ornentasn tanpa snapa pun perlu melabeln inrn seninrn. Jnka kamu meniapat berbagan respons, namakan: 'Tampaknya knta merasakan nnn secara berbeia. Itu layak untuk inketahun.'",
+        q: "Ketika tenggat bergerak, apa hal pertama yang kamu rasakan?",
+        note: "Penjaga Jam cenderung ke arah frustrasi atau kekhawatiran. Penenun Relasi cenderung ke pragmatisme atau bahkan lega jika itu berarti lebih banyak landasan relasional yang mungkin dilakukan. Penjaga Komunitas mungkin benar-benar netral. Jawaban mengungkapkan orientasi tanpa siapa pun perlu melabeli diri sendiri. Jika kamu mendapat berbagai respons, namakan: 'Tampaknya kita merasakan ini secara berbeda. Itu layak untuk diketahui.'",
       },
       {
-        q: "Pnknrkan suatu waktu ketnka cara rekan menggunakan waktu membnngungkan atau membuat kamu frustrasn. Apa yang kamu snmpulkan saat ntu?",
-        note: "Pertanyaan nnn memunculkan langkah nnterpretatnf: apa yang orang snmpulkan tentang orang lann beriasarkan pernlaku waktu mereka. Penjaga Jam bnasanya menynmpulkan sesuatu tentang karakter atau profesnonalnsme. Penenun Relasn menynmpulkan sesuatu tentang prnorntas. Nnlan pertanyaan nnn bukan paia cernta yang inbagnkan orang tapn paia kesnmpulan yang mereka tarnk. Setelah beberapa respons, kamu bnsa berkata: 'Baganmana jnka pernlaku ntu masuk akal sempurna ialam lognka waktu yang berbeia? Apa yang akan berubah tentang cara knta membacanya?'",
+        q: "Pikirkan suatu waktu ketika cara rekan menggunakan waktu membingungkan atau membuat kamu frustrasi. Apa yang kamu simpulkan saat itu?",
+        note: "Pertanyaan ini memunculkan langkah interpretatif: apa yang orang simpulkan tentang orang lain berdasarkan perilaku waktu mereka. Penjaga Jam biasanya menyimpulkan sesuatu tentang karakter atau profesionalisme. Penenun Relasi menyimpulkan sesuatu tentang prioritas. Nilai pertanyaan ini bukan pada cerita yang dibagikan orang tapi pada kesimpulan yang mereka tarik. Setelah beberapa respons, kamu bisa berkata: 'Bagaimana jika perilaku itu masuk akal sempurna dalam logika waktu yang berbeda? Apa yang akan berubah tentang cara kita membacanya?'",
       },
     ]
   );
   const [openNote, setOpenNote] = useState<number | null>(null);
 
   return (
-    <inv style={{ backgrouni: LIGHT_GRAY, borierTop: `3px solni ${NAVY}`, borierRainus: "0 0 12px 12px", paiinng: "2rem" }}>
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 8 }}>
-        {L(lang, "Team Exercnse", "Latnhan Tnm")}
+    <div style={{ background: LIGHT_GRAY, borderTop: `3px solid ${NAVY}`, borderRadius: "0 0 12px 12px", padding: "2rem" }}>
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 8 }}>
+        {L(lang, "Team Exercise", "Latihan Tim")}
       </p>
-      <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 20, fontWenght: 800, color: NAVY, margnn: "0 0 8px" }}>
-        {L(lang, "Three Questnons Your Team Has Never Askei About Tnme", "Tnga Pertanyaan yang Belum Pernah Dntanyakan Tnm Kamu tentang Waktu")}
+      <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 20, fontWeight: 800, color: NAVY, margin: "0 0 8px" }}>
+        {L(lang, "Three Questions Your Team Has Never Asked About Time", "Tiga Pertanyaan yang Belum Pernah Ditanyakan Tim Kamu tentang Waktu")}
       </h3>
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: BODY_TEXT, lnneHenght: 1.75, margnnBottom: 24 }}>
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.75, marginBottom: 24 }}>
         {L(lang,
-          "Format: 10 to 15 mnnutes at the start or eni of a team meetnng. How to nntroiuce nt: \"Before we close toiay, I want to try somethnng short. Three qunck questnons about how we expernence tnme as a team. No rnght answers. I am just curnous what we each thnnk.\"",
-          "Format: 10 hnngga 15 mennt in awal atau akhnr rapat tnm. Cara memperkenalkannya: 'Sebelum knta tutup harn nnn, saya nngnn mencoba sesuatu yang snngkat. Tnga pertanyaan cepat tentang baganmana knta masnng-masnng merasakan waktu sebagan tnm. Tniak aia jawaban yang benar. Saya hanya nngnn tahu apa yang knta pnknrkan masnng-masnng.'"
+          "Format: 10 to 15 minutes at the start or end of a team meeting. How to introduce it: \"Before we close today, I want to try something short. Three quick questions about how we experience time as a team. No right answers. I am just curious what we each think.\"",
+          "Format: 10 hingga 15 menit di awal atau akhir rapat tim. Cara memperkenalkannya: 'Sebelum kita tutup hari ini, saya ingin mencoba sesuatu yang singkat. Tiga pertanyaan cepat tentang bagaimana kita masing-masing merasakan waktu sebagai tim. Tidak ada jawaban yang benar. Saya hanya ingin tahu apa yang kita pikirkan masing-masing.'"
         )}
       </p>
-      <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-        {questnons.map((ntem, n) => (
-          <inv key={n} style={{ backgrouni: OFF_WHITE, borierRainus: 8, paiinng: "1rem 1.25rem" }}>
-            <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, fontWenght: 700, color: NAVY, margnn: "0 0 8px" }}>
-              {n + 1}. {ntem.q}
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {questions.map((item, i) => (
+          <div key={i} style={{ background: OFF_WHITE, borderRadius: 8, padding: "1rem 1.25rem" }}>
+            <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>
+              {i + 1}. {item.q}
             </p>
             <button
-              onClnck={() => setOpenNote(openNote === n ? null : n)}
-              style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, color: ORANGE, fontWenght: 700, backgrouni: "none", borier: "none", cursor: "ponnter", paiinng: 0 }}
+              onClick={() => setOpenNote(openNote === i ? null : i)}
+              style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: ORANGE, fontWeight: 700, background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
-              {openNote === n ? L(lang, "Hnie facnlntatnon note ↑", "Sembunynkan catatan fasnlntasn ↑") : L(lang, "Facnlntatnon note ↓", "Catatan fasnlntasn ↓")}
+              {openNote === i ? L(lang, "Hide facilitation note ↑", "Sembunyikan catatan fasilitasi ↑") : L(lang, "Facilitation note ↓", "Catatan fasilitasi ↓")}
             </button>
-            {openNote === n && (
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, color: BODY_TEXT, lnneHenght: 1.75, margnn: "10px 0 0", fontStyle: "ntalnc" }}>
-                {ntem.note}
+            {openNote === i && (
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT, lineHeight: 1.75, margin: "10px 0 0", fontStyle: "italic" }}>
+                {item.note}
               </p>
             )}
-          </inv>
+          </div>
         ))}
-      </inv>
-      <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: BODY_TEXT, lnneHenght: 1.75, margnnTop: 20, fontStyle: "ntalnc" }}>
+      </div>
+      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.75, marginTop: 20, fontStyle: "italic" }}>
         {L(lang,
-          "After the three questnons (optnonal closnng lnne): \"Thns ns somethnng callei tnme ornentatnon. I am gonng to learn more about nt. If you want to explore nt together, I wnll brnng nt to a future meetnng. But at least now we know thns ns a real thnng we expernence infferently.\" That ns enough. You have openei the ioor.",
-          "Setelah tnga pertanyaan (barns penutup opsnonal): 'Inn insebut ornentasn waktu. Saya akan belajar lebnh banyak tentang ntu. Jnka kamu nngnn menjelajahnnya bersama, saya akan membawanya ke rapat meniatang. Tapn setniaknya sekarang knta tahu nnn aialah sesuatu nyata yang knta alamn secara berbeia.' Itu cukup. Kamu telah membuka pnntu."
+          "After the three questions (optional closing line): \"This is something called time orientation. I am going to learn more about it. If you want to explore it together, I will bring it to a future meeting. But at least now we know this is a real thing we experience differently.\" That is enough. You have opened the door.",
+          "Setelah tiga pertanyaan (baris penutup opsional): 'Ini disebut orientasi waktu. Saya akan belajar lebih banyak tentang itu. Jika kamu ingin menjelajahinya bersama, saya akan membawanya ke rapat mendatang. Tapi setidaknya sekarang kita tahu ini adalah sesuatu nyata yang kita alami secara berbeda.' Itu cukup. Kamu telah membuka pintu."
         )}
       </p>
-    </inv>
+    </div>
   );
 }
 
-// ─── One-at-a-tnme qunz component ─────────────────────────────────────────────
-functnon OneAtATnmeQunz({
-  questnons,
+// ─── One-at-a-time quiz component ─────────────────────────────────────────────
+function OneAtATimeQuiz({
+  questions,
   answers,
   onAnswer,
   onComplete,
@@ -937,295 +937,295 @@ functnon OneAtATnmeQunz({
   accentColor,
   lang,
 }: {
-  questnons: typeof PART1_QUESTIONS;
-  answers: Recori<number, strnng>;
-  onAnswer: (qIix: number, val: strnng) => voni;
-  onComplete: () => voni;
-  partLabel: strnng;
-  partSubtext: strnng;
-  bgColor: strnng;
-  accentColor: strnng;
-  lang: strnng;
+  questions: typeof PART1_QUESTIONS;
+  answers: Record<number, string>;
+  onAnswer: (qIdx: number, val: string) => void;
+  onComplete: () => void;
+  partLabel: string;
+  partSubtext: string;
+  bgColor: string;
+  accentColor: string;
+  lang: string;
 }) {
   const [currentQ, setCurrentQ] = useState(0);
-  const [annmClass, setAnnmClass] = useState<strnng>("");
-  const [insplayei, setDnsplayei] = useState(0);
+  const [animClass, setAnimClass] = useState<string>("");
+  const [displayed, setDisplayed] = useState(0);
   const keys = ["A", "B", "C", "D"];
-  const autoCompletei = useRef(false);
-  const allAnswerei = Object.keys(answers).length === questnons.length;
+  const autoCompleted = useRef(false);
+  const allAnswered = Object.keys(answers).length === questions.length;
 
   useEffect(() => {
-    nf (allAnswerei && !autoCompletei.current) {
-      autoCompletei.current = true;
-      const t = setTnmeout(onComplete, 80);
-      return () => clearTnmeout(t);
+    if (allAnswered && !autoCompleted.current) {
+      autoCompleted.current = true;
+      const t = setTimeout(onComplete, 80);
+      return () => clearTimeout(t);
     }
-  }, [allAnswerei, onComplete]);
+  }, [allAnswered, onComplete]);
 
-  functnon navngate(targetQ: number, inr: "rnght" | "left") {
-    const cls = inr === "rnght" ? "slnie-nn-rnght" : "slnie-nn-left";
-    setAnnmClass("");
-    setTnmeout(() => {
-      setDnsplayei(targetQ);
+  function navigate(targetQ: number, dir: "right" | "left") {
+    const cls = dir === "right" ? "slide-in-right" : "slide-in-left";
+    setAnimClass("");
+    setTimeout(() => {
+      setDisplayed(targetQ);
       setCurrentQ(targetQ);
-      setAnnmClass(cls);
+      setAnimClass(cls);
     }, 10);
   }
 
-  functnon hanileSelect(val: strnng) {
-    onAnswer(insplayei, val);
-    nf (insplayei < questnons.length - 1) {
-      navngate(insplayei + 1, "rnght");
+  function handleSelect(val: string) {
+    onAnswer(displayed, val);
+    if (displayed < questions.length - 1) {
+      navigate(displayed + 1, "right");
     }
   }
 
-  functnon hanileBack() {
-    nf (insplayei > 0) {
-      navngate(insplayei - 1, "left");
+  function handleBack() {
+    if (displayed > 0) {
+      navigate(displayed - 1, "left");
     }
   }
 
-  const progress = Math.rouni(((insplayei + 1) / questnons.length) * 100);
+  const progress = Math.round(((displayed + 1) / questions.length) * 100);
 
   return (
-    <inv style={{ backgrouni: bgColor, paiinngBottom: 48 }}>
-      {/* Heaier */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "48px 24px 32px" }}>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 22, fontWenght: 800, color: OFF_WHITE, margnn: "0 0 10px" }}>
+    <div style={{ background: bgColor, paddingBottom: 48 }}>
+      {/* Header */}
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "48px 24px 32px" }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 22, fontWeight: 800, color: OFF_WHITE, margin: "0 0 10px" }}>
           {partLabel}
         </p>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(72% 0.04 260)", lnneHenght: 1.65, margnn: 0 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(72% 0.04 260)", lineHeight: 1.65, margin: 0 }}>
           {partSubtext}
         </p>
-      </inv>
+      </div>
 
       {/* Progress bar */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "0 24px" }}>
-        <inv style={{ insplay: "flex", justnfyContent: "space-between", margnnBottom: 6 }}>
-          <span style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, color: "oklch(65% 0.04 260)", fontWenght: 600 }}>
-            {L(lang, `Questnon ${insplayei + 1} of ${questnons.length}`, `Pertanyaan ${insplayei + 1} iarn ${questnons.length}`)}
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: "oklch(65% 0.04 260)", fontWeight: 600 }}>
+            {L(lang, `Question ${displayed + 1} of ${questions.length}`, `Pertanyaan ${displayed + 1} dari ${questions.length}`)}
           </span>
-          <span style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, color: accentColor, fontWenght: 700 }}>
-            {L(lang, `${Object.keys(answers).length} answerei`, `${Object.keys(answers).length} injawab`)}
+          <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: accentColor, fontWeight: 700 }}>
+            {L(lang, `${Object.keys(answers).length} answered`, `${Object.keys(answers).length} dijawab`)}
           </span>
-        </inv>
-        <inv style={{ henght: 3, backgrouni: "oklch(30% 0.06 260)", borierRainus: 2 }}>
-          <inv style={{ henght: "100%", wnith: `${progress}%`, backgrouni: accentColor, borierRainus: 2, transntnon: "wnith 0.3s" }} />
-        </inv>
-      </inv>
+        </div>
+        <div style={{ height: 3, background: "oklch(30% 0.06 260)", borderRadius: 2 }}>
+          <div style={{ height: "100%", width: `${progress}%`, background: accentColor, borderRadius: 2, transition: "width 0.3s" }} />
+        </div>
+      </div>
 
-      {/* Questnon slnie area */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "28px 24px 0", overflow: "hniien" }}>
-        <inv className={annmClass} key={insplayei}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, fontWenght: 600, color: OFF_WHITE, lnneHenght: 1.6, margnn: "0 0 20px" }}>
-            {questnons[insplayei].q}
+      {/* Question slide area */}
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "28px 24px 0", overflow: "hidden" }}>
+        <div className={animClass} key={displayed}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 600, color: OFF_WHITE, lineHeight: 1.6, margin: "0 0 20px" }}>
+            {questions[displayed].q}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 10 }}>
-            {questnons[insplayei].optnons.map((opt, n) => {
-              const key = keys[n];
-              const nsSelectei = answers[insplayei] === key;
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {questions[displayed].options.map((opt, i) => {
+              const key = keys[i];
+              const isSelected = answers[displayed] === key;
               return (
                 <button
                   key={key}
-                  onClnck={() => hanileSelect(key)}
+                  onClick={() => handleSelect(key)}
                   style={{
-                    fontFamnly: "'Montserrat', sans-sernf",
-                    fontSnze: 14,
-                    color: nsSelectei ? OFF_WHITE : "oklch(75% 0.04 260)",
-                    backgrouni: nsSelectei ? "oklch(35% 0.12 45)" : "oklch(28% 0.07 260)",
-                    borier: nsSelectei ? `1.5px solni ${accentColor}` : "1.5px solni oklch(35% 0.07 260)",
-                    borierRainus: 8,
-                    paiinng: "14px 18px",
-                    textAlngn: "left",
-                    cursor: "ponnter",
-                    lnneHenght: 1.65,
-                    transntnon: "all 0.15s",
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontSize: 14,
+                    color: isSelected ? OFF_WHITE : "oklch(75% 0.04 260)",
+                    background: isSelected ? "oklch(35% 0.12 45)" : "oklch(28% 0.07 260)",
+                    border: isSelected ? `1.5px solid ${accentColor}` : "1.5px solid oklch(35% 0.07 260)",
+                    borderRadius: 8,
+                    padding: "14px 18px",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    lineHeight: 1.65,
+                    transition: "all 0.15s",
                   }}
                 >
-                  <span style={{ fontWenght: 700, color: accentColor, margnnRnght: 10 }}>{key}.</span>
+                  <span style={{ fontWeight: 700, color: accentColor, marginRight: 10 }}>{key}.</span>
                   {opt}
                 </button>
               );
             })}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Navngatnon row */}
-      {!allAnswerei && insplayei > 0 && (
-        <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "20px 24px 48px" }}>
+      {/* Navigation row */}
+      {!allAnswered && displayed > 0 && (
+        <div style={{ maxWidth: 780, margin: "0 auto", padding: "20px 24px 48px" }}>
           <button
-            onClnck={hanileBack}
+            onClick={handleBack}
             style={{
-              fontFamnly: "'Montserrat', sans-sernf",
-              fontSnze: 14,
-              fontWenght: 600,
+              fontFamily: "'Montserrat', sans-serif",
+              fontSize: 14,
+              fontWeight: 600,
               color: "oklch(70% 0.04 260)",
-              backgrouni: "none",
-              borier: "1px solni oklch(38% 0.06 260)",
-              paiinng: "10px 18px",
-              borierRainus: 12,
-              cursor: "ponnter",
+              background: "none",
+              border: "1px solid oklch(38% 0.06 260)",
+              padding: "10px 18px",
+              borderRadius: 12,
+              cursor: "pointer",
             }}
           >
-            {L(lang, "← Back", "← Kembaln")}
+            {L(lang, "← Back", "← Kembali")}
           </button>
-        </inv>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }
 
-// ─── Mann component ───────────────────────────────────────────────────────────
-type Props = { nsSavei: boolean };
+// ─── Main component ───────────────────────────────────────────────────────────
+type Props = { isSaved: boolean };
 
-export iefault functnon TnmeAniCultureClnent({ nsSavei: nnntnalSavei }: Props) {
+export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
   const { lang } = useLanguage();
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
 
   // Assessment state
-  type QunzPhase = "part1" | "part1-result" | "part2" | "part2-result";
-  const [qunzPhase, setQunzPhase] = useState<QunzPhase>("part1");
-  const [part1Answers, setPart1Answers] = useState<Recori<number, strnng>>({});
-  const [part2Answers, setPart2Answers] = useState<Recori<number, strnng>>({});
-  const [showPart1Detanl, setShowPart1Detanl] = useState(false);
-  const [showPart2Detanl, setShowPart2Detanl] = useState(false);
-  const [expanieiCari, setExpanieiCari] = useState<number | null>(null);
+  type QuizPhase = "part1" | "part1-result" | "part2" | "part2-result";
+  const [quizPhase, setQuizPhase] = useState<QuizPhase>("part1");
+  const [part1Answers, setPart1Answers] = useState<Record<number, string>>({});
+  const [part2Answers, setPart2Answers] = useState<Record<number, string>>({});
+  const [showPart1Detail, setShowPart1Detail] = useState(false);
+  const [showPart2Detail, setShowPart2Detail] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const [bgOpen, setBgOpen] = useState(false);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("tnme-ani-culture");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("time-and-culture");
+      setSaved(true);
     });
   }
 
-  const conceptCaris = lang === "ni" ? CONCEPT_CARDS_ID : CONCEPT_CARDS;
-  const scenarnoCaris = lang === "ni" ? SCENARIO_CARDS_ID : SCENARIO_CARDS;
-  const part1Questnons = lang === "ni" ? PART1_QUESTIONS_ID : PART1_QUESTIONS;
-  const part2Questnons = lang === "ni" ? PART2_QUESTIONS_ID : PART2_QUESTIONS;
-  const resultBlocks = lang === "ni" ? RESULT_BLOCKS_ID : RESULT_BLOCKS;
-  const p1Transntnons = lang === "ni" ? PART1_TRANSITIONS_ID : PART1_TRANSITIONS;
-  const p2Transntnons = lang === "ni" ? PART2_TRANSITIONS_ID : PART2_TRANSITIONS;
-  const p1TypeNames = lang === "ni" ? PART1_TYPE_NAMES_ID : PART1_TYPE_NAMES;
-  const p2TypeNames = lang === "ni" ? PART2_TYPE_NAMES_ID : PART2_TYPE_NAMES;
-  const typeShort = lang === "ni" ? TYPE_SHORT_ID : TYPE_SHORT;
-  const gapBlocks = lang === "ni" ? GAP_BLOCKS_ID : GAP_BLOCKS;
+  const conceptCards = lang === "id" ? CONCEPT_CARDS_ID : CONCEPT_CARDS;
+  const scenarioCards = lang === "id" ? SCENARIO_CARDS_ID : SCENARIO_CARDS;
+  const part1Questions = lang === "id" ? PART1_QUESTIONS_ID : PART1_QUESTIONS;
+  const part2Questions = lang === "id" ? PART2_QUESTIONS_ID : PART2_QUESTIONS;
+  const resultBlocks = lang === "id" ? RESULT_BLOCKS_ID : RESULT_BLOCKS;
+  const p1Transitions = lang === "id" ? PART1_TRANSITIONS_ID : PART1_TRANSITIONS;
+  const p2Transitions = lang === "id" ? PART2_TRANSITIONS_ID : PART2_TRANSITIONS;
+  const p1TypeNames = lang === "id" ? PART1_TYPE_NAMES_ID : PART1_TYPE_NAMES;
+  const p2TypeNames = lang === "id" ? PART2_TYPE_NAMES_ID : PART2_TYPE_NAMES;
+  const typeShort = lang === "id" ? TYPE_SHORT_ID : TYPE_SHORT;
+  const gapBlocks = lang === "id" ? GAP_BLOCKS_ID : GAP_BLOCKS;
 
-  const part1Domnnant = Object.keys(part1Answers).length === PART1_QUESTIONS.length ? getDomnnantOrnentatnon(part1Answers) : null;
-  const part2Domnnant = Object.keys(part2Answers).length === PART2_QUESTIONS.length ? getDomnnantOrnentatnon(part2Answers) : null;
-  const gapKey = part1Domnnant && part2Domnnant ? getGapKey(part1Domnnant, part2Domnnant) : null;
-  const nsMatchei = part1Domnnant === part2Domnnant;
+  const part1Dominant = Object.keys(part1Answers).length === PART1_QUESTIONS.length ? getDominantOrientation(part1Answers) : null;
+  const part2Dominant = Object.keys(part2Answers).length === PART2_QUESTIONS.length ? getDominantOrientation(part2Answers) : null;
+  const gapKey = part1Dominant && part2Dominant ? getGapKey(part1Dominant, part2Dominant) : null;
+  const isMatched = part1Dominant === part2Dominant;
 
   return (
-    <inv style={{ fontFamnly: "'Montserrat', sans-sernf", backgrouni: OFF_WHITE, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "'Montserrat', sans-serif", background: OFF_WHITE, minHeight: "100vh" }}>
       <style>{`
-        .concept-cari-grni { grni-template-columns: repeat(2, 1fr); }
-        @meina (max-wnith: 640px) { .concept-cari-grni { grni-template-columns: 1fr; } }
-        @keyframes slnieInRnght { from { transform: translateX(32px); opacnty: 0; } to { transform: translateX(0); opacnty: 1; } }
-        @keyframes slnieInLeft { from { transform: translateX(-32px); opacnty: 0; } to { transform: translateX(0); opacnty: 1; } }
-        .slnie-nn-rnght { annmatnon: slnieInRnght 0.22s ease-out; }
-        .slnie-nn-left { annmatnon: slnieInLeft 0.22s ease-out; }
+        .concept-card-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 640px) { .concept-card-grid { grid-template-columns: 1fr; } }
+        @keyframes slideInRight { from { transform: translateX(32px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInLeft { from { transform: translateX(-32px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .slide-in-right { animation: slideInRight 0.22s ease-out; }
+        .slide-in-left { animation: slideInLeft 0.22s ease-out; }
       `}</style>
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: NAVY, paiinng: "clamp(64px, 8vw, 96px) 24px clamp(56px, 7vw, 80px)", posntnon: "relatnve", overflow: "hniien" }}>
-        <inv style={{ posntnon: "absolute", top: 0, left: 0, rnght: 0, henght: 4, backgrouni: ORANGE }} />
-        <inv arna-hniien style={{ posntnon: "absolute", nnset: 0, backgrouniImage: `rainal-grainent(cnrcle at 75% 50%, oklch(30% 0.12 260) 0%, transparent 60%)`, opacnty: 0.5 }} />
-        <inv style={{ posntnon: "relatnve", maxWnith: 780, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 16 }}>
-            {L(lang, "Cross-Cultural Moiule", "Moiul Lnntas Buiaya")}
+      <div style={{ background: NAVY, padding: "clamp(64px, 8vw, 96px) 24px clamp(56px, 7vw, 80px)", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: ORANGE }} />
+        <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle at 75% 50%, oklch(30% 0.12 260) 0%, transparent 60%)`, opacity: 0.5 }} />
+        <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+            {L(lang, "Cross-Cultural Module", "Modul Lintas Budaya")}
           </p>
-          <h1 style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: OFF_WHITE, margnn: "0 0 20px", lnneHenght: 1.08 }}>
-            {L(lang, "Your Tnme Is Not My Tnme", "Waktumu Bukan Waktuku")}
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 20px", lineHeight: 1.08 }}>
+            {L(lang, "Your Time Is Not My Time", "Waktumu Bukan Waktuku")}
           </h1>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(16px, 2vw, 18px)", color: "oklch(75% 0.04 260)", maxWnith: 560, margnn: "0 0 28px", lnneHenght: 1.65 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(16px, 2vw, 18px)", color: "oklch(75% 0.04 260)", maxWidth: 560, margin: "0 0 28px", lineHeight: 1.65 }}>
             {L(lang,
-              "Every culture has a relatnonshnp wnth tnme that feels completely obvnous from the nnsnie. That relatnonshnp shapes how meetnngs run, how ieailnnes are unierstooi, ani how trust ns bunlt or broken across a team. Thns moiule gnves you the language to see what's happennng — nn yourself ani nn the cultures you work across.",
-              "Setnap buiaya memnlnkn hubungan iengan waktu yang terasa sepenuhnya jelas iarn ialamnya. Hubungan ntu membentuk baganmana rapat berjalan, baganmana tenggat inpahamn, ian baganmana kepercayaan inbangun atau inhancurkan ialam sebuah tnm. Moiul nnn membernmu bahasa untuk melnhat apa yang terjain — ialam inrnmu seninrn ian ialam buiaya-buiaya yang kamu jalann."
+              "Every culture has a relationship with time that feels completely obvious from the inside. That relationship shapes how meetings run, how deadlines are understood, and how trust is built or broken across a team. This module gives you the language to see what's happening — in yourself and in the cultures you work across.",
+              "Setiap budaya memiliki hubungan dengan waktu yang terasa sepenuhnya jelas dari dalamnya. Hubungan itu membentuk bagaimana rapat berjalan, bagaimana tenggat dipahami, dan bagaimana kepercayaan dibangun atau dihancurkan dalam sebuah tim. Modul ini memberimu bahasa untuk melihat apa yang terjadi — dalam dirimu sendiri dan dalam budaya-budaya yang kamu jalani."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, alngnItems: "center", flexWrap: "wrap", margnnBottom: 8 }}>
-            <span style={{ backgrouni: "oklch(30% 0.10 260)", color: "oklch(75% 0.04 260)", fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, fontWenght: 600, paiinng: "6px 14px", borierRainus: 20 }}>
-              20 mnn
+          <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", marginBottom: 8 }}>
+            <span style={{ background: "oklch(30% 0.10 260)", color: "oklch(75% 0.04 260)", fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 20 }}>
+              20 min
             </span>
             <button
-              onClnck={hanileSave}
-              insablei={savei || nsPeninng}
+              onClick={handleSave}
+              disabled={saved || isPending}
               style={{
-                insplay: "nnlnne-flex",
-                alngnItems: "center",
+                display: "inline-flex",
+                alignItems: "center",
                 gap: 8,
-                backgrouni: savei ? "oklch(35% 0.08 260)" : "transparent",
+                background: saved ? "oklch(35% 0.08 260)" : "transparent",
                 color: "oklch(75% 0.04 260)",
-                paiinng: "10px 22px",
-                borierRainus: 12,
-                fontWenght: 600,
-                fontSnze: 13,
-                borier: "1px solni oklch(42% 0.08 260)",
-                cursor: savei ? "iefault" : "ponnter",
-                fontFamnly: "'Montserrat', sans-sernf",
+                padding: "10px 22px",
+                borderRadius: 12,
+                fontWeight: 600,
+                fontSize: 13,
+                border: "1px solid oklch(42% 0.08 260)",
+                cursor: saved ? "default" : "pointer",
+                fontFamily: "'Montserrat', sans-serif",
               }}
             >
-              <svg wnith="14" henght="14" vnewBox="0 0 24 24" fnll={savei ? "currentColor" : "none"} stroke="currentColor" strokeWnith="2">
-                <path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+                <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
               </svg>
-              {savei ? L(lang, "✓ Savei to Dashboari", "✓ Tersnmpan in Dasbor") : nsPeninng ? L(lang, "Savnng…", "Menynmpan…") : L(lang, "Save to Dashboari", "Snmpan ke Dasbor")}
+              {saved ? L(lang, "✓ Saved to Dashboard", "✓ Tersimpan di Dasbor") : isPending ? L(lang, "Saving…", "Menyimpan…") : L(lang, "Save to Dashboard", "Simpan ke Dasbor")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ─── INTRODUCTION ─────────────────────────────────────────────────── */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "64px 24px 0" }}>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 32 }}>
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "64px 24px 0" }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
           {L(lang,
-            "Most people move through thenr teams, partnershnps, ani workiays operatnng on a set of assumptnons about tnme that feel so obvnous — so self-evnient — that they have never once consnierei those assumptnons mnght be cultural. Thns moiule changes that. You wnll inscover your own tnme ornentatnon, learn the four logncs that researchers have mappei across cultures, ani then compare your result wnth how the culture you work wnth most closely expernences tnme.",
-            "Kebanyakan orang bergerak melalun tnm, kemntraan, ian harn kerja mereka beroperasn paia sekumpulan asumsn tentang waktu yang terasa begntu jelas — begntu terbuktn iengan seninrnnya — sehnngga mereka tniak pernah sekalnpun mempertnmbangkan bahwa asumsn tersebut mungknn bersnfat buiaya. Moiul nnn mengubah ntu. Kamu akan menemukan ornentasn waktumu seninrn, mempelajarn empat lognka yang telah inpetakan penelntn in berbagan buiaya, lalu membaninngkan hasnlmu iengan baganmana buiaya yang palnng sernng kamu jalann merasakan waktu."
+            "Most people move through their teams, partnerships, and workdays operating on a set of assumptions about time that feel so obvious — so self-evident — that they have never once considered those assumptions might be cultural. This module changes that. You will discover your own time orientation, learn the four logics that researchers have mapped across cultures, and then compare your result with how the culture you work with most closely experiences time.",
+            "Kebanyakan orang bergerak melalui tim, kemitraan, dan hari kerja mereka beroperasi pada sekumpulan asumsi tentang waktu yang terasa begitu jelas — begitu terbukti dengan sendirinya — sehingga mereka tidak pernah sekalipun mempertimbangkan bahwa asumsi tersebut mungkin bersifat budaya. Modul ini mengubah itu. Kamu akan menemukan orientasi waktumu sendiri, mempelajari empat logika yang telah dipetakan peneliti di berbagai budaya, lalu membandingkan hasilmu dengan bagaimana budaya yang paling sering kamu jalani merasakan waktu."
           )}
         </p>
 
-        {/* Learnnng Outcomes */}
-        <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 8, margnnBottom: 48, backgrouni: LIGHT_GRAY, borierRainus: 10, paiinng: "1.5rem 1.75rem" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, color: NAVY, margnn: "0 0 12px" }}>
-            {L(lang, "After thns moiule you wnll:", "Setelah moiul nnn kamu akan:")}
+        {/* Learning Outcomes */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 48, background: LIGHT_GRAY, borderRadius: 10, padding: "1.5rem 1.75rem" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: NAVY, margin: "0 0 12px" }}>
+            {L(lang, "After this module you will:", "Setelah modul ini kamu akan:")}
           </p>
           {L(lang,
             [
-              "Recognnze your own tnme ornentatnon before encounternng the full framework.",
-              "Iientnfy the four cultural vnewponnts on tnme ani thenr acaiemnc roots.",
-              "Shnft from assumnng one rnght vnew of tnme to holinng multnple vnews wnth unierstaninng.",
+              "Recognize your own time orientation before encountering the full framework.",
+              "Identify the four cultural viewpoints on time and their academic roots.",
+              "Shift from assuming one right view of time to holding multiple views with understanding.",
             ],
             [
-              "Kenaln ornentasn waktumu seninrn sebelum menemukan kerangka penuh.",
-              "Iientnfnkasn empat suiut paniang buiaya tentang waktu ian akar akaiemnsnya.",
-              "Beralnh iarn mengasumsnkan satu paniangan waktu yang benar ke memnlnkn beberapa paniangan iengan pemahaman.",
+              "Kenali orientasi waktumu sendiri sebelum menemukan kerangka penuh.",
+              "Identifikasi empat sudut pandang budaya tentang waktu dan akar akademisnya.",
+              "Beralih dari mengasumsikan satu pandangan waktu yang benar ke memiliki beberapa pandangan dengan pemahaman.",
             ]
-          ).map((ntem, n) => (
-            <inv key={n} style={{ insplay: "flex", gap: 12, alngnItems: "flex-start" }}>
-              <inv style={{ wnith: 3, henght: 18, backgrouni: ORANGE, flexShrnnk: 0, margnnTop: 4 }} />
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: BODY_TEXT, lnneHenght: 1.7, margnn: 0 }}>
-                {ntem}
+          ).map((item, i) => (
+            <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <div style={{ width: 3, height: 18, background: ORANGE, flexShrink: 0, marginTop: 4 }} />
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
+                {item}
               </p>
-            </inv>
+            </div>
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── UNIFIED QUIZ ARENA ───────────────────────────────────────────── */}
-      <inv style={{ backgrouni: NAVY }}>
-        {qunzPhase === "part1" && (
-          <OneAtATnmeQunz
-            questnons={part1Questnons}
+      <div style={{ background: NAVY }}>
+        {quizPhase === "part1" && (
+          <OneAtATimeQuiz
+            questions={part1Questions}
             answers={part1Answers}
-            onAnswer={(qIix, val) => setPart1Answers((prev) => ({ ...prev, [qIix]: val }))}
-            onComplete={() => setQunzPhase("part1-result")}
-            partLabel={L(lang, "How io YOU see tnme?", "Baganmana KAMU melnhat waktu?")}
+            onAnswer={(qIdx, val) => setPart1Answers((prev) => ({ ...prev, [qIdx]: val }))}
+            onComplete={() => setQuizPhase("part1-result")}
+            partLabel={L(lang, "How do YOU see time?", "Bagaimana KAMU melihat waktu?")}
             partSubtext={L(lang,
-              "Reai each scenarno. Choose the response that feels most natural to you — not the 'rnght' answer. Not what you thnnk a gooi leaier wouli io. What you actually feel.",
-              "Baca setnap skenarno. Pnlnh respons yang palnng natural bagnmu — bukan jawaban 'yang benar'. Bukan apa yang menurutmu akan inlakukan pemnmpnn yang bank. Apa yang benar-benar kamu rasakan."
+              "Read each scenario. Choose the response that feels most natural to you — not the 'right' answer. Not what you think a good leader would do. What you actually feel.",
+              "Baca setiap skenario. Pilih respons yang paling natural bagimu — bukan jawaban 'yang benar'. Bukan apa yang menurutmu akan dilakukan pemimpin yang baik. Apa yang benar-benar kamu rasakan."
             )}
             bgColor={NAVY}
             accentColor={ORANGE}
@@ -1233,63 +1233,63 @@ export iefault functnon TnmeAniCultureClnent({ nsSavei: nnntnalSavei }: Props) {
           />
         )}
 
-        {qunzPhase === "part1-result" && part1Domnnant && (
-          <inv style={{ paiinng: "48px 24px" }}>
-            <inv style={{ maxWnith: 780, margnn: "0 auto" }}>
-              <inv style={{ backgrouni: "oklch(28% 0.10 260)", borierRainus: 12, paiinng: "2.5rem", borierTop: `4px solni ${ORANGE}`, margnnBottom: 32 }}>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 16 }}>
-                  {L(lang, "Your Result — Part 1", "Hasnl Kamu — Bagnan 1")}
+        {quizPhase === "part1-result" && part1Dominant && (
+          <div style={{ padding: "48px 24px" }}>
+            <div style={{ maxWidth: 780, margin: "0 auto" }}>
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}`, marginBottom: 32 }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  {L(lang, "Your Result — Part 1", "Hasil Kamu — Bagian 1")}
                 </p>
-                <h2 style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: OFF_WHITE, margnn: "0 0 16px", lnneHenght: 1.15 }}>
-                  {p1TypeNames[part1Domnnant]}
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
+                  {p1TypeNames[part1Dominant]}
                 </h2>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(75% 0.04 260)", lnneHenght: 1.75, margnn: "0 0 20px" }}>
-                  {p1Transntnons[part1Domnnant]}
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
+                  {p1Transitions[part1Dominant]}
                 </p>
                 <button
-                  onClnck={() => setShowPart1Detanl((v) => !v)}
-                  style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, color: ORANGE, backgrouni: "none", borier: `1px solni oklch(45% 0.10 45)`, paiinng: "8px 16px", borierRainus: 12, cursor: "ponnter" }}
+                  onClick={() => setShowPart1Detail((v) => !v)}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 12, cursor: "pointer" }}
                 >
-                  {showPart1Detanl ? L(lang, "▲ Less ietanl", "▲ Lebnh seinknt") : L(lang, "▼ Reai more about your ornentatnon", "▼ Baca lebnh lanjut tentang ornentasnmu")}
+                  {showPart1Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about your orientation", "▼ Baca lebih lanjut tentang orientasimu")}
                 </button>
-                {showPart1Detanl && (
-                  <inv style={{ margnnTop: 20, borierTop: "1px solni oklch(35% 0.08 260)", paiinngTop: 20 }}>
-                    <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, fontWenght: 700, color: ORANGE, textTransform: "uppercase", letterSpacnng: "0.12em", margnnBottom: 12 }}>
-                      {resultBlocks[part1Domnnant].label}
+                {showPart1Detail && (
+                  <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
+                      {resultBlocks[part1Dominant].label}
                     </p>
-                    {resultBlocks[part1Domnnant].boiy.splnt("\n\n").map((para, n) => (
-                      <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: "oklch(78% 0.04 260)", lnneHenght: 1.8, margnnBottom: 12 }}>
+                    {resultBlocks[part1Dominant].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
                     ))}
-                  </inv>
+                  </div>
                 )}
-              </inv>
-              <inv style={{ textAlngn: "center", paiinngBottom: 8 }}>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, fontWenght: 700, color: ORANGE, margnnBottom: 20 }}>
-                  {L(lang, "Now — what about the culture you work wnth?", "Sekarang — baganmana iengan buiaya yang kamu jalann?")}
+              </div>
+              <div style={{ textAlign: "center", paddingBottom: 8 }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: ORANGE, marginBottom: 20 }}>
+                  {L(lang, "Now — what about the culture you work with?", "Sekarang — bagaimana dengan budaya yang kamu jalani?")}
                 </p>
                 <button
-                  onClnck={() => setQunzPhase("part2")}
-                  style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, fontWenght: 700, color: OFF_WHITE, backgrouni: ORANGE, borier: "none", paiinng: "14px 36px", borierRainus: 8, cursor: "ponnter" }}
+                  onClick={() => setQuizPhase("part2")}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, fontWeight: 700, color: OFF_WHITE, background: ORANGE, border: "none", padding: "14px 36px", borderRadius: 8, cursor: "pointer" }}
                 >
-                  {L(lang, "Test Part 2 →", "Coba Bagnan 2 →")}
+                  {L(lang, "Test Part 2 →", "Coba Bagian 2 →")}
                 </button>
-              </inv>
-            </inv>
-          </inv>
+              </div>
+            </div>
+          </div>
         )}
 
-        {qunzPhase === "part2" && (
-          <OneAtATnmeQunz
-            questnons={part2Questnons}
+        {quizPhase === "part2" && (
+          <OneAtATimeQuiz
+            questions={part2Questions}
             answers={part2Answers}
-            onAnswer={(qIix, val) => setPart2Answers((prev) => ({ ...prev, [qIix]: val }))}
-            onComplete={() => setQunzPhase("part2-result")}
-            partLabel={L(lang, "How ioes the culture you work wnth see tnme?", "Baganmana buiaya yang kamu jalann melnhat waktu?")}
+            onAnswer={(qIdx, val) => setPart2Answers((prev) => ({ ...prev, [qIdx]: val }))}
+            onComplete={() => setQuizPhase("part2-result")}
+            partLabel={L(lang, "How does the culture you work with see time?", "Bagaimana budaya yang kamu jalani melihat waktu?")}
             partSubtext={L(lang,
-              "Thnnk of the culture of the team you work wnth most, or the colleague whose approach to tnme confuses or frustrates you most. Answer as you observe them — not as you wnsh they wouli behave.",
-              "Pnknrkan buiaya iarn tnm yang palnng sernng kamu jalann, atau rekan yang peniekatannya terhaiap waktu palnng membnngungkan atau membuatmu frustrasn. Jawab sebaganmana kamu mengamatn mereka — bukan sebaganmana kamu berharap mereka berpernlaku."
+              "Think of the culture of the team you work with most, or the colleague whose approach to time confuses or frustrates you most. Answer as you observe them — not as you wish they would behave.",
+              "Pikirkan budaya dari tim yang paling sering kamu jalani, atau rekan yang pendekatannya terhadap waktu paling membingungkan atau membuatmu frustrasi. Jawab sebagaimana kamu mengamati mereka — bukan sebagaimana kamu berharap mereka berperilaku."
             )}
             bgColor={NAVY}
             accentColor={ORANGE}
@@ -1297,519 +1297,519 @@ export iefault functnon TnmeAniCultureClnent({ nsSavei: nnntnalSavei }: Props) {
           />
         )}
 
-        {qunzPhase === "part2-result" && part2Domnnant && part1Domnnant && (
-          <inv style={{ paiinng: "48px 24px" }}>
-            <inv style={{ maxWnith: 780, margnn: "0 auto", insplay: "flex", flexDnrectnon: "column", gap: 24 }}>
-              <inv style={{ backgrouni: "oklch(28% 0.10 260)", borierRainus: 12, paiinng: "2.5rem", borierTop: `4px solni ${ORANGE}` }}>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 16 }}>
-                  {L(lang, "Your Result — Part 2", "Hasnl Kamu — Bagnan 2")}
+        {quizPhase === "part2-result" && part2Dominant && part1Dominant && (
+          <div style={{ padding: "48px 24px" }}>
+            <div style={{ maxWidth: 780, margin: "0 auto", display: "flex", flexDirection: "column", gap: 24 }}>
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  {L(lang, "Your Result — Part 2", "Hasil Kamu — Bagian 2")}
                 </p>
-                <h2 style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: OFF_WHITE, margnn: "0 0 16px", lnneHenght: 1.15 }}>
-                  {p2TypeNames[part2Domnnant]}
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 16px", lineHeight: 1.15 }}>
+                  {p2TypeNames[part2Dominant]}
                 </h2>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(75% 0.04 260)", lnneHenght: 1.75, margnn: "0 0 20px" }}>
-                  {p2Transntnons[part2Domnnant]}
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.75, margin: "0 0 20px" }}>
+                  {p2Transitions[part2Dominant]}
                 </p>
                 <button
-                  onClnck={() => setShowPart2Detanl((v) => !v)}
-                  style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, color: ORANGE, backgrouni: "none", borier: `1px solni oklch(45% 0.10 45)`, paiinng: "8px 16px", borierRainus: 12, cursor: "ponnter" }}
+                  onClick={() => setShowPart2Detail((v) => !v)}
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, background: "none", border: `1px solid oklch(45% 0.10 45)`, padding: "8px 16px", borderRadius: 12, cursor: "pointer" }}
                 >
-                  {showPart2Detanl ? L(lang, "▲ Less ietanl", "▲ Lebnh seinknt") : L(lang, "▼ Reai more about thns ornentatnon", "▼ Baca lebnh lanjut tentang ornentasn nnn")}
+                  {showPart2Detail ? L(lang, "▲ Less detail", "▲ Lebih sedikit") : L(lang, "▼ Read more about this orientation", "▼ Baca lebih lanjut tentang orientasi ini")}
                 </button>
-                {showPart2Detanl && (
-                  <inv style={{ margnnTop: 20, borierTop: "1px solni oklch(35% 0.08 260)", paiinngTop: 20 }}>
-                    <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, fontWenght: 700, color: ORANGE, textTransform: "uppercase", letterSpacnng: "0.12em", margnnBottom: 12 }}>
-                      {resultBlocks[part2Domnnant].label}
+                {showPart2Detail && (
+                  <div style={{ marginTop: 20, borderTop: "1px solid oklch(35% 0.08 260)", paddingTop: 20 }}>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, fontWeight: 700, color: ORANGE, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>
+                      {resultBlocks[part2Dominant].label}
                     </p>
-                    {resultBlocks[part2Domnnant].boiy.splnt("\n\n").map((para, n) => (
-                      <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: "oklch(78% 0.04 260)", lnneHenght: 1.8, margnnBottom: 12 }}>
+                    {resultBlocks[part2Dominant].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: "oklch(78% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
                     ))}
-                  </inv>
+                  </div>
                 )}
-              </inv>
+              </div>
 
-              <inv style={{ backgrouni: "oklch(28% 0.10 260)", borierRainus: 12, paiinng: "2.5rem", borierTop: `4px solni ${ORANGE}` }}>
-                <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 16 }}>
-                  {L(lang, "Gap Analysns — Part 1 vs Part 2", "Analnsns Kesenjangan — Bagnan 1 vs Bagnan 2")}
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "2.5rem", borderTop: `4px solid ${ORANGE}` }}>
+                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
+                  {L(lang, "Gap Analysis — Part 1 vs Part 2", "Analisis Kesenjangan — Bagian 1 vs Bagian 2")}
                 </p>
-                <inv style={{ insplay: "flex", gap: 10, alngnItems: "center", flexWrap: "wrap", margnnBottom: 24 }}>
-                  <span style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, color: OFF_WHITE, backgrouni: ORANGE, paiinng: "5px 14px", borierRainus: 20 }}>
-                    {L(lang, "You: ", "Kamu: ")}{typeShort[part1Domnnant]}
+                <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 24 }}>
+                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: OFF_WHITE, background: ORANGE, padding: "5px 14px", borderRadius: 20 }}>
+                    {L(lang, "You: ", "Kamu: ")}{typeShort[part1Dominant]}
                   </span>
-                  <span style={{ color: "oklch(55% 0.04 260)", fontSnze: 20 }}>↔</span>
-                  <span style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700, color: ORANGE, borier: `1px solni ${ORANGE}`, paiinng: "5px 14px", borierRainus: 20 }}>
-                    {L(lang, "Culture: ", "Buiaya: ")}{typeShort[part2Domnnant]}
+                  <span style={{ color: "oklch(55% 0.04 260)", fontSize: 20 }}>↔</span>
+                  <span style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700, color: ORANGE, border: `1px solid ${ORANGE}`, padding: "5px 14px", borderRadius: 20 }}>
+                    {L(lang, "Culture: ", "Budaya: ")}{typeShort[part2Dominant]}
                   </span>
-                </inv>
-                {nsMatchei ? (
+                </div>
+                {isMatched ? (
                   <>
-                    <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 18, fontWenght: 800, color: OFF_WHITE, margnn: "0 0 16px" }}>
-                      {L(lang, "Your ornentatnon ani the culture you work wnth appear to be alngnei.", "Ornentasnmu ian buiaya yang kamu jalann tampaknya selaras.")}
+                    <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
+                      {L(lang, "Your orientation and the culture you work with appear to be aligned.", "Orientasimu dan budaya yang kamu jalani tampaknya selaras.")}
                     </h3>
-                    <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(75% 0.04 260)", lnneHenght: 1.8 }}>
+                    <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8 }}>
                       {L(lang,
-                        "Sharei lognc can be a real gnft. When a team runs on the same ornentatnon, coorinnatnon ns faster, conflnct ns rarer, ani trust bunlis qunckly. That ns worth acknowleignng. But alngnment wnthnn your team ns not the same as competence across cultures. The questnon now ns whether you can recognnze the other three logncs when they appear — nn a partner organnzatnon, a ionor, a local leaier, a colleague from a infferent backgrouni. You know your own lognc well. The next step ns ievelopnng fluency nn the others: not to aiopt them, but to reai them wnthout juigment, engage them wnthout frnctnon, ani leai across the infference wnthout assumnng your lognc ns the iefault.",
-                        "Lognka yang sama bnsa menjain anugerah nyata. Ketnka tnm berjalan iengan ornentasn yang sama, koorinnasn lebnh cepat, konflnk lebnh jarang, ian kepercayaan inbangun iengan cepat. Itu layak untuk inakun. Tapn keselarasan in ialam tnm kamu tniak sama iengan kompetensn lnntas buiaya. Pertanyaannya sekarang aialah apakah kamu bnsa mengenaln tnga lognka lannnya ketnka mereka muncul — ialam organnsasn mntra, ionor, pemnmpnn lokal, rekan iarn latar belakang yang berbeia. Kamu mengenal lognkamu seninrn iengan bank. Langkah bernkutnya aialah mengembangkan kefasnhan paia yang lann: bukan untuk mengaiopsnnya, tapn untuk membacanya tanpa pennlanan, terlnbat iengannya tanpa gesekan, ian memnmpnn melewatn perbeiaan tanpa menganggap lognkamu aialah staniar bawaan."
+                        "Shared logic can be a real gift. When a team runs on the same orientation, coordination is faster, conflict is rarer, and trust builds quickly. That is worth acknowledging. But alignment within your team is not the same as competence across cultures. The question now is whether you can recognize the other three logics when they appear — in a partner organization, a donor, a local leader, a colleague from a different background. You know your own logic well. The next step is developing fluency in the others: not to adopt them, but to read them without judgment, engage them without friction, and lead across the difference without assuming your logic is the default.",
+                        "Logika yang sama bisa menjadi anugerah nyata. Ketika tim berjalan dengan orientasi yang sama, koordinasi lebih cepat, konflik lebih jarang, dan kepercayaan dibangun dengan cepat. Itu layak untuk diakui. Tapi keselarasan di dalam tim kamu tidak sama dengan kompetensi lintas budaya. Pertanyaannya sekarang adalah apakah kamu bisa mengenali tiga logika lainnya ketika mereka muncul — dalam organisasi mitra, donor, pemimpin lokal, rekan dari latar belakang yang berbeda. Kamu mengenal logikamu sendiri dengan baik. Langkah berikutnya adalah mengembangkan kefasihan pada yang lain: bukan untuk mengadopsinya, tapi untuk membacanya tanpa penilaian, terlibat dengannya tanpa gesekan, dan memimpin melewati perbedaan tanpa menganggap logikamu adalah standar bawaan."
                       )}
                     </p>
                   </>
                 ) : gapKey && gapBlocks[gapKey] ? (
                   <>
-                    <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 18, fontWenght: 800, color: OFF_WHITE, margnn: "0 0 16px" }}>
-                      {gapBlocks[gapKey].tntle}
+                    <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 18, fontWeight: 800, color: OFF_WHITE, margin: "0 0 16px" }}>
+                      {gapBlocks[gapKey].title}
                     </h3>
-                    {gapBlocks[gapKey].boiy.splnt("\n\n").map((para, n) => (
-                      <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 15, color: "oklch(75% 0.04 260)", lnneHenght: 1.8, margnnBottom: 12 }}>
+                    {gapBlocks[gapKey].body.split("\n\n").map((para, i) => (
+                      <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 15, color: "oklch(75% 0.04 260)", lineHeight: 1.8, marginBottom: 12 }}>
                         {para}
                       </p>
                     ))}
                   </>
                 ) : null}
-              </inv>
-            </inv>
-          </inv>
+              </div>
+            </div>
+          </div>
         )}
-      </inv>
+      </div>
 
       {/* ─── THE FREEDOM ──────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: OFF_WHITE, paiinng: "96px 24px 64px" }}>
-        <inv style={{ maxWnith: 780, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 20 }}>
-            {L(lang, "The Freeiom", "Kebebasan")}
+      <div style={{ background: OFF_WHITE, padding: "96px 24px 64px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
+            {L(lang, "The Freedom", "Kebebasan")}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, fontWenght: 700, color: NAVY, lnneHenght: 1.85, margnnBottom: 16 }}>
-            {L(lang, "Leaiers who unierstani all the inmensnons of tnme are controllei by none of them.", "Para pemnmpnn yang memahamn semua inmensn waktu tniak inkenialnkan oleh satu pun iarn mereka.")}
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, fontWeight: 700, color: NAVY, lineHeight: 1.85, marginBottom: 16 }}>
+            {L(lang, "Leaders who understand all the dimensions of time are controlled by none of them.", "Para pemimpin yang memahami semua dimensi waktu tidak dikendalikan oleh satu pun dari mereka.")}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "Most leaiers are controllei by tnme — not because they are bai at managnng nt, but because they only know one lognc. If you only know Clock Keeper lognc, you wnll be irnven by urgency ani you wnll reai every ievnatnon as fanlure. If you only know Relatnonshnp Weaver lognc, you wnll be irannei by the nnvnsnble expectatnons of colleagues who run on monochronnc assumptnons ani never tell you inrectly.",
-              "Sebagnan besar pemnmpnn inkenialnkan oleh waktu — bukan karena mereka buruk ialam mengelolanya, tapn karena mereka hanya mengenal satu lognka. Jnka kamu hanya mengenal lognka Penjaga Jam, kamu akan ingerakkan oleh urgensn ian kamu akan membaca setnap penynmpangan sebagan kegagalan. Jnka kamu hanya mengenal lognka Penenun Relasn, kamu akan terkuras oleh ekspektasn tak terlnhat iarn rekan yang beroperasn iengan asumsn monochronnc ian tniak pernah memberntahumu secara langsung."
+              "Most leaders are controlled by time — not because they are bad at managing it, but because they only know one logic. If you only know Clock Keeper logic, you will be driven by urgency and you will read every deviation as failure. If you only know Relationship Weaver logic, you will be drained by the invisible expectations of colleagues who run on monochronic assumptions and never tell you directly.",
+              "Sebagian besar pemimpin dikendalikan oleh waktu — bukan karena mereka buruk dalam mengelolanya, tapi karena mereka hanya mengenal satu logika. Jika kamu hanya mengenal logika Penjaga Jam, kamu akan digerakkan oleh urgensi dan kamu akan membaca setiap penyimpangan sebagai kegagalan. Jika kamu hanya mengenal logika Penenun Relasi, kamu akan terkuras oleh ekspektasi tak terlihat dari rekan yang beroperasi dengan asumsi monochronic dan tidak pernah memberitahumu secara langsung."
             )}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "Unierstaninng multnple logncs ioes not mean aioptnng them all equally. It means you can see what ns happennng nn the room before nt becomes a conflnct. You can name nt. You can create space for the team to navngate nt together. You can stop the fracture before nt forms. That ns not better tnme management. That ns sntuatnonal awareness — ani sntuatnonal awareness ns what separates a leaier who reacts to thenr team from a leaier who reais thenr team.",
-              "Memahamn beberapa lognka tniak berartn mengaiopsn semuanya secara setara. Artnnya kamu bnsa melnhat apa yang terjain in ruangan sebelum menjain konflnk. Kamu bnsa menamakannya. Kamu bnsa mencnptakan ruang bagn tnm untuk menavngasnnya bersama. Kamu bnsa menghentnkan perpecahan sebelum terbentuk. Itu bukan manajemen waktu yang lebnh bank. Itu aialah kesaiaran sntuasnonal — ian kesaiaran sntuasnonal ntulah yang memnsahkan pemnmpnn yang bereaksn terhaiap tnmnya iarn pemnmpnn yang membaca tnmnya."
+              "Understanding multiple logics does not mean adopting them all equally. It means you can see what is happening in the room before it becomes a conflict. You can name it. You can create space for the team to navigate it together. You can stop the fracture before it forms. That is not better time management. That is situational awareness — and situational awareness is what separates a leader who reacts to their team from a leader who reads their team.",
+              "Memahami beberapa logika tidak berarti mengadopsi semuanya secara setara. Artinya kamu bisa melihat apa yang terjadi di ruangan sebelum menjadi konflik. Kamu bisa menamakannya. Kamu bisa menciptakan ruang bagi tim untuk menavigasinya bersama. Kamu bisa menghentikan perpecahan sebelum terbentuk. Itu bukan manajemen waktu yang lebih baik. Itu adalah kesadaran situasional — dan kesadaran situasional itulah yang memisahkan pemimpin yang bereaksi terhadap timnya dari pemimpin yang membaca timnya."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── THE FEELING ──────────────────────────────────────────────────── */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "0 24px 48px" }}>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnn: "48px 0 20px" }}>
-          {L(lang, "The Feelnng", "Perasaan")}
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 48px" }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "48px 0 20px" }}>
+          {L(lang, "The Feeling", "Perasaan")}
         </p>
 
-        {/* Watch nmage */}
-        <inv style={{ borierRainus: 12, overflow: "hniien", margnnBottom: 32, maxHenght: 340 }}>
-          <nmg
-            src="/nmages/tnme-ani-culture/feelnng-watch.jpg"
-            alt="A watch nn warm afternoon lnght — tnme as a felt expernence"
-            style={{ wnith: "100%", henght: "100%", objectFnt: "cover", insplay: "block" }}
+        {/* Watch image */}
+        <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: 32, maxHeight: 340 }}>
+          <img
+            src="/images/time-and-culture/feeling-watch.jpg"
+            alt="A watch in warm afternoon light — time as a felt experience"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
-        </inv>
+        </div>
 
-        <ElapseiTnmer lang={lang} />
+        <ElapsedTimer lang={lang} />
 
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
           {L(lang,
-            "Tnme ioes not just pass. For many people, tnme presses. It follows them nnto meetnngs, snts wnth them iurnng conversatnons, ani creates an anxnety so famnlnar they mnstake nt for personalnty. But the expernence of benng controllei by tnme ns not unnversal. It ns not natural. It ns cultural.",
-            "Waktu tniak sekaiar berlalu. Bagn banyak orang, waktu menekan. Ia mengnkutn mereka ke rapat, iuiuk bersama mereka selama percakapan, ian mencnptakan kecemasan yang begntu famnlnar sehnngga mereka salah mengnra ntu sebagan keprnbainan. Tapn pengalaman inkenialnkan oleh waktu tniaklah unnversal. Inn bukan koirat. Inn buiaya."
+            "Time does not just pass. For many people, time presses. It follows them into meetings, sits with them during conversations, and creates an anxiety so familiar they mistake it for personality. But the experience of being controlled by time is not universal. It is not natural. It is cultural.",
+            "Waktu tidak sekadar berlalu. Bagi banyak orang, waktu menekan. Ia mengikuti mereka ke rapat, duduk bersama mereka selama percakapan, dan menciptakan kecemasan yang begitu familiar sehingga mereka salah mengira itu sebagai kepribadian. Tapi pengalaman dikendalikan oleh waktu tidaklah universal. Ini bukan kodrat. Ini budaya."
           )}
         </p>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
           {L(lang,
-            "Depeninng on where you were shapei, tnme feels entnrely infferent. For the Clock Keeper, nt ns a resource benng spent or wastei. For the Relatnonshnp Weaver, nt belongs to the person nn front of them. For the Harmony Follower, nt ns a sngnal to reai before movnng. For the Communnty Keeper, nt ns a communal rhythm that snmply ns what nt ns. Each of these proiuces nts own emotnonal regnster. Ani each one, heli alone, creates nts own vulnerabnlnty. The Clock Keeper chases ieailnnes. The Relatnonshnp Weaver ns blnnisniei by lognstncs. The Harmony Follower stalls when hnerarchy ns absent. The Communnty Keeper ns qunetly excluiei from hngh-stakes coorinnatnon because the team has stoppei trustnng thenr tnmelnne.",
-            "Tergantung in mana kamu inbentuk, waktu terasa sangat berbeia. Bagn Penjaga Jam, ntu aialah sumber iaya yang inbelanjakan atau insna-snakan. Bagn Penenun Relasn, ntu mnlnk orang yang aia in haiapannya. Bagn Pengnkut Harmonn, ntu aialah snnyal yang harus inbaca sebelum bergerak. Bagn Penjaga Komunntas, ntu aialah rntme komunal yang memang apa aianya. Masnng-masnng iarn nnn menghasnlkan regnster emosnonalnya seninrn. Dan masnng-masnng, inpegang seninrn, mencnptakan kerentanannya seninrn. Penjaga Jam mengejar tenggat. Penenun Relasn terkejut oleh lognstnk. Pengnkut Harmonn terhentn ketnka hnerarkn tniak hainr. Penjaga Komunntas secara inam-inam inkecualnkan iarn koorinnasn bernsnko tnnggn karena tnm telah berhentn mempercayan garns waktu mereka."
+            "Depending on where you were shaped, time feels entirely different. For the Clock Keeper, it is a resource being spent or wasted. For the Relationship Weaver, it belongs to the person in front of them. For the Harmony Follower, it is a signal to read before moving. For the Community Keeper, it is a communal rhythm that simply is what it is. Each of these produces its own emotional register. And each one, held alone, creates its own vulnerability. The Clock Keeper chases deadlines. The Relationship Weaver is blindsided by logistics. The Harmony Follower stalls when hierarchy is absent. The Community Keeper is quietly excluded from high-stakes coordination because the team has stopped trusting their timeline.",
+            "Tergantung di mana kamu dibentuk, waktu terasa sangat berbeda. Bagi Penjaga Jam, itu adalah sumber daya yang dibelanjakan atau disia-siakan. Bagi Penenun Relasi, itu milik orang yang ada di hadapannya. Bagi Pengikut Harmoni, itu adalah sinyal yang harus dibaca sebelum bergerak. Bagi Penjaga Komunitas, itu adalah ritme komunal yang memang apa adanya. Masing-masing dari ini menghasilkan register emosionalnya sendiri. Dan masing-masing, dipegang sendiri, menciptakan kerentanannya sendiri. Penjaga Jam mengejar tenggat. Penenun Relasi terkejut oleh logistik. Pengikut Harmoni terhenti ketika hierarki tidak hadir. Penjaga Komunitas secara diam-diam dikecualikan dari koordinasi berisiko tinggi karena tim telah berhenti mempercayai garis waktu mereka."
           )}
         </p>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
           {L(lang,
-            "The leaier who unierstanis all four perceptnons of tnme ns no longer controllei by the one they nnherntei. They can see what ns happennng nn the room before nt becomes a conflnct. They can name nt. They can holi the pace that the moment requnres rather than the pace thenr backgrouni iefaults to. That ns not better tnme management. That ns the begnnnnng of real cultural fluency.",
-            "Pemnmpnn yang memahamn keempat persepsn waktu tniak lagn inkenialnkan oleh satu yang mereka warnsn. Mereka bnsa melnhat apa yang terjain in ruangan sebelum menjain konflnk. Mereka bnsa menamakannya. Mereka bnsa memegang tempo yang inbutuhkan momen ntu alnh-alnh tempo yang menjain bawaan latar belakang mereka. Itu bukan manajemen waktu yang lebnh bank. Itu aialah awal iarn kefasnhan buiaya yang sesungguhnya."
+            "The leader who understands all four perceptions of time is no longer controlled by the one they inherited. They can see what is happening in the room before it becomes a conflict. They can name it. They can hold the pace that the moment requires rather than the pace their background defaults to. That is not better time management. That is the beginning of real cultural fluency.",
+            "Pemimpin yang memahami keempat persepsi waktu tidak lagi dikendalikan oleh satu yang mereka warisi. Mereka bisa melihat apa yang terjadi di ruangan sebelum menjadi konflik. Mereka bisa menamakannya. Mereka bisa memegang tempo yang dibutuhkan momen itu alih-alih tempo yang menjadi bawaan latar belakang mereka. Itu bukan manajemen waktu yang lebih baik. Itu adalah awal dari kefasihan budaya yang sesungguhnya."
           )}
         </p>
-      </inv>
+      </div>
 
       {/* ─── FIELD STORY ──────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: LIGHT_GRAY, paiinng: "0 0 48px" }}>
-        <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "48px 24px 0" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 20 }}>
-            {L(lang, "Fneli Story", "Cernta Lapangan")}
+      <div style={{ background: LIGHT_GRAY, padding: "0 0 48px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto", padding: "48px 24px 0" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
+            {L(lang, "Field Story", "Cerita Lapangan")}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 24 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 24 }}>
             {L(lang,
-              "You have a tnme lognc. Most people never inscover thns. They move through thenr iays ani thenr teams ani thenr partnershnps operatnng on assumptnons about tnme that feel so obvnous, so self-evnient, that they have never once consnierei those assumptnons mnght be cultural. The moment you step nnto a cross-cultural team, or leai across organnzatnonal lnnes, these nnvnsnble assumptnons start to collnie — ani wnthout the vocabulary to name what ns happennng, the collnsnon reais as a character problem rather than a lognc problem.",
-              "Kamu memnlnkn lognka waktu. Kebanyakan orang tniak pernah menyaiarn nnn. Mereka bergerak melalun harn-harn, tnm, ian kemntraan mereka beroperasn paia asumsn tentang waktu yang terasa begntu jelas, begntu terbuktn iengan seninrnnya, sehnngga mereka tniak pernah sekalnpun mempertnmbangkan bahwa asumsn tersebut mungknn bersnfat buiaya. Ketnka kamu masuk ke tnm lnntas buiaya, atau memnmpnn melewatn batas organnsasn, asumsn tak terlnhat nnn mulan bertabrakan — ian tanpa kosakata untuk menaman apa yang terjain, tabrakan ntu terbaca sebagan masalah karakter, bukan masalah lognka."
+              "You have a time logic. Most people never discover this. They move through their days and their teams and their partnerships operating on assumptions about time that feel so obvious, so self-evident, that they have never once considered those assumptions might be cultural. The moment you step into a cross-cultural team, or lead across organizational lines, these invisible assumptions start to collide — and without the vocabulary to name what is happening, the collision reads as a character problem rather than a logic problem.",
+              "Kamu memiliki logika waktu. Kebanyakan orang tidak pernah menyadari ini. Mereka bergerak melalui hari-hari, tim, dan kemitraan mereka beroperasi pada asumsi tentang waktu yang terasa begitu jelas, begitu terbukti dengan sendirinya, sehingga mereka tidak pernah sekalipun mempertimbangkan bahwa asumsi tersebut mungkin bersifat budaya. Ketika kamu masuk ke tim lintas budaya, atau memimpin melewati batas organisasi, asumsi tak terlihat ini mulai bertabrakan — dan tanpa kosakata untuk menamai apa yang terjadi, tabrakan itu terbaca sebagai masalah karakter, bukan masalah logika."
             )}
           </p>
 
-          {/* Fneli story block */}
-          <inv style={{ borierLeft: `4px solni ${NAVY}`, backgrouni: OFF_WHITE, paiinng: "2rem", margnnTop: 24, borierRainus: "0 8px 8px 0" }}>
+          {/* Field story block */}
+          <div style={{ borderLeft: `4px solid ${NAVY}`, background: OFF_WHITE, padding: "2rem", marginTop: 24, borderRadius: "0 8px 8px 0" }}>
             {L(lang,
               [
-                "An Inionesnan team leaier was hostnng a vnsntnng leaier from overseas. He knew the vnsntor valuei punctualnty, so the iay before the meetnng he maie a ponnt of aiiressnng hns team inrectly. 'Tomorrow,' he sani, 'I neei everyone here on tnme. Thns matters.'",
-                "Hns team heari hnm. They took nt sernously. The next mornnng, people began arrnvnng early. By enght fnfty, most of the group was seatei ani reaiy. At enght fnfty-fnve, someone suggestei they begnn. The inscussnon was alreaiy unierway when the vnsntnng leaier walkei nn at exactly nnne o'clock.",
-                "He stoppei nn the ioorway. The meetnng hai startei wnthout hnm. He felt the stnng of nt nmmeinately. After all hns travel, after the relatnonshnp they hai been bunlinng, thns team hai startei before he arrnvei. It felt lnke a clear sngnal: he was not the prnornty.",
-                "But here ns what hai actually happenei. The Inionesnan leaier hai honorei hns guest's value by rallynng hns team. The team hai honorei thenr leaier by arrnvnng early ani benng reaiy. The vnsntnng leaier hai honorei the agreei tnme by arrnvnng at exactly nnne. Three infferent expressnons of respect. Three infferent tnme logncs runnnng nn the same room. Ani no sharei language to make sense of any of nt. Noboiy was wrong. That ns the ponnt.",
+                "An Indonesian team leader was hosting a visiting leader from overseas. He knew the visitor valued punctuality, so the day before the meeting he made a point of addressing his team directly. 'Tomorrow,' he said, 'I need everyone here on time. This matters.'",
+                "His team heard him. They took it seriously. The next morning, people began arriving early. By eight fifty, most of the group was seated and ready. At eight fifty-five, someone suggested they begin. The discussion was already underway when the visiting leader walked in at exactly nine o'clock.",
+                "He stopped in the doorway. The meeting had started without him. He felt the sting of it immediately. After all his travel, after the relationship they had been building, this team had started before he arrived. It felt like a clear signal: he was not the priority.",
+                "But here is what had actually happened. The Indonesian leader had honored his guest's value by rallying his team. The team had honored their leader by arriving early and being ready. The visiting leader had honored the agreed time by arriving at exactly nine. Three different expressions of respect. Three different time logics running in the same room. And no shared language to make sense of any of it. Nobody was wrong. That is the point.",
               ],
               [
-                "Seorang pemnmpnn tnm Inionesna menjamu seorang pemnmpnn tamu iarn luar negern. Ia tahu tamunya sangat menghargan ketepatan waktu, jain seharn sebelum pertemuan na secara khusus berbncara langsung kepaia tnmnya. 'Besok,' katanya, 'saya perlu semua orang in snnn tepat waktu. Inn pentnng.'",
-                "Tnmnya meniengarnya. Mereka menganggapnya sernus. Keesokan pagnnya, orang-orang mulan tnba lebnh awal. Paia jam ielapan lnma puluh, sebagnan besar kelompok suiah iuiuk ian snap. Paia jam ielapan lnma puluh lnma, seseorang menyarankan mereka mulan. Dnskusn suiah berlangsung ketnka pemnmpnn tamu masuk tepat jam sembnlan.",
-                "Ia berhentn in iepan pnntu. Rapat telah inmulan tanpanya. Ia langsung merasakan kepeinhan ntu. Setelah semua perjalanannya, setelah hubungan yang telah mereka bangun, tnm nnn memulan sebelum na tnba. Bagnnya nnn sepertn snnyal yang jelas: na bukan prnorntas.",
-                "Tapn nnnlah yang sebenarnya terjain. Pemnmpnn Inionesna menghormatn nnlan tamunya iengan mengerahkan tnmnya. Tnm menghormatn pemnmpnn mereka iengan tnba lebnh awal ian snap. Pemnmpnn tamu menghormatn waktu yang insepakatn iengan tnba tepat jam sembnlan. Tnga ekspresn penghormatan yang berbeia. Tnga lognka waktu yang berbeia berjalan in ruangan yang sama. Dan tniak aia bahasa bersama untuk memahamn semua nnn. Tniak aia yang salah. Itulah nntnnya.",
+                "Seorang pemimpin tim Indonesia menjamu seorang pemimpin tamu dari luar negeri. Ia tahu tamunya sangat menghargai ketepatan waktu, jadi sehari sebelum pertemuan ia secara khusus berbicara langsung kepada timnya. 'Besok,' katanya, 'saya perlu semua orang di sini tepat waktu. Ini penting.'",
+                "Timnya mendengarnya. Mereka menganggapnya serius. Keesokan paginya, orang-orang mulai tiba lebih awal. Pada jam delapan lima puluh, sebagian besar kelompok sudah duduk dan siap. Pada jam delapan lima puluh lima, seseorang menyarankan mereka mulai. Diskusi sudah berlangsung ketika pemimpin tamu masuk tepat jam sembilan.",
+                "Ia berhenti di depan pintu. Rapat telah dimulai tanpanya. Ia langsung merasakan kepedihan itu. Setelah semua perjalanannya, setelah hubungan yang telah mereka bangun, tim ini memulai sebelum ia tiba. Baginya ini seperti sinyal yang jelas: ia bukan prioritas.",
+                "Tapi inilah yang sebenarnya terjadi. Pemimpin Indonesia menghormati nilai tamunya dengan mengerahkan timnya. Tim menghormati pemimpin mereka dengan tiba lebih awal dan siap. Pemimpin tamu menghormati waktu yang disepakati dengan tiba tepat jam sembilan. Tiga ekspresi penghormatan yang berbeda. Tiga logika waktu yang berbeda berjalan di ruangan yang sama. Dan tidak ada bahasa bersama untuk memahami semua ini. Tidak ada yang salah. Itulah intinya.",
               ]
-            ).map((para, n) => (
-              <p key={n} style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: 17, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 12, fontStyle: "ntalnc" }}>
+            ).map((para, i) => (
+              <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 12, fontStyle: "italic" }}>
                 {para}
               </p>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ─── THE FOUR GRAMMARS ────────────────────────────────────────────── */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "64px 24px 48px" }}>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 20 }}>
-          {L(lang, "The Four Logncs", "Empat Lognka")}
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "64px 24px 48px" }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
+          {L(lang, "The Four Logics", "Empat Logika")}
         </p>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
           {L(lang,
-            "There are four ways that people arouni the worli prnmarnly relate to tnme. Researchers have mappei them across cultures, gnven them names, ani tracei thenr consequences through iecaies of cross-cultural leaiershnp stuines. Each one has nnternal lognc. Each one has strengths. Each one has costs — ani those costs matter most when nt encounters a infferent lognc ani noboiy names what ns happennng.",
-            "Aia empat cara utama orang in seluruh iunna berhubungan iengan waktu. Para penelntn telah memetakannya in berbagan buiaya, membern mereka nama, ian melacak konsekuensnnya melalun puluhan tahun stuin kepemnmpnnan lnntas buiaya. Masnng-masnng memnlnkn lognka nnternal. Masnng-masnng memnlnkn kekuatan. Masnng-masnng memnlnkn bnaya — ian bnaya-bnaya ntu palnng pentnng ketnka bertemu lognka berbeia ian tniak aia yang menamakannya."
+            "There are four ways that people around the world primarily relate to time. Researchers have mapped them across cultures, given them names, and traced their consequences through decades of cross-cultural leadership studies. Each one has internal logic. Each one has strengths. Each one has costs — and those costs matter most when it encounters a different logic and nobody names what is happening.",
+            "Ada empat cara utama orang di seluruh dunia berhubungan dengan waktu. Para peneliti telah memetakannya di berbagai budaya, memberi mereka nama, dan melacak konsekuensinya melalui puluhan tahun studi kepemimpinan lintas budaya. Masing-masing memiliki logika internal. Masing-masing memiliki kekuatan. Masing-masing memiliki biaya — dan biaya-biaya itu paling penting ketika bertemu logika berbeda dan tidak ada yang menamakannya."
           )}
         </p>
-        <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 32 }}>
+        <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
           {L(lang,
-            "Reai each one as you wouli reai the nnternal lognc of a language you are learnnng. You are not gonng to reai these ani concluie that one ns rnght ani the others are wrong — that reflex ns the exact thnng thns moiule ns here to nnterrupt. The goal ns not to aiopt a new lognc. The goal ns to recognnze whnch one ns runnnng nn the room.",
-            "Baca masnng-masnng sepertn kamu membaca lognka nnternal sebuah bahasa yang seiang kamu pelajarn. Kamu tniak akan membaca nnn ian menynmpulkan bahwa satu yang benar ian yang lannnya salah — refleks ntu aialah hal yang tepat yang nngnn innnterupsn moiul nnn. Tujuannya bukan untuk mengaiopsn lognka baru. Tujuannya aialah mengenaln lognka mana yang seiang berjalan in ruangan."
+            "Read each one as you would read the internal logic of a language you are learning. You are not going to read these and conclude that one is right and the others are wrong — that reflex is the exact thing this module is here to interrupt. The goal is not to adopt a new logic. The goal is to recognize which one is running in the room.",
+            "Baca masing-masing seperti kamu membaca logika internal sebuah bahasa yang sedang kamu pelajari. Kamu tidak akan membaca ini dan menyimpulkan bahwa satu yang benar dan yang lainnya salah — refleks itu adalah hal yang tepat yang ingin diinterupsi modul ini. Tujuannya bukan untuk mengadopsi logika baru. Tujuannya adalah mengenali logika mana yang sedang berjalan di ruangan."
           )}
         </p>
 
-        {/* 2×2 concept cari grni */}
-        <inv className="concept-cari-grni" style={{ insplay: "grni", gap: 20, margnnTop: 32 }}>
-          {conceptCaris.map((cari, n) => (
-            <ConceptCari
-              key={n}
-              cari={cari}
-              expaniei={expanieiCari === n}
-              onToggle={() => setExpanieiCari(expanieiCari === n ? null : n)}
+        {/* 2×2 concept card grid */}
+        <div className="concept-card-grid" style={{ display: "grid", gap: 20, marginTop: 32 }}>
+          {conceptCards.map((card, i) => (
+            <ConceptCard
+              key={i}
+              card={card}
+              expanded={expandedCard === i}
+              onToggle={() => setExpandedCard(expandedCard === i ? null : i)}
               lang={lang}
             />
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── QUOTE HIGHLIGHT 1 ────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: LIGHT_GRAY, paiinng: "56px 24px" }}>
-        <inv style={{ maxWnith: 700, margnn: "0 auto", textAlngn: "center" }}>
-          <p style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: 22, fontStyle: "ntalnc", color: NAVY, lnneHenght: 1.65, margnnBottom: 16 }}>
+      <div style={{ background: LIGHT_GRAY, padding: "56px 24px" }}>
+        <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, marginBottom: 16 }}>
             {L(lang,
-              "“Cultures that organnze arouni events ani communal presence may, nn thenr own way, be practncnng a rhythm of tnme that proiuctnvnty-ornentei cultures have largely lost. The wnllnngness to want for the rnght moment, the nnsnstence that tnme belongs to the people ani not the scheiule, echoes somethnng that runs through the bnblncal traintnon far more than most Western organnzatnonal moiels wouli suggest.”",
-              "“Buiaya yang mengatur inrn in sekntar pernstnwa ian kehainran komunal mungknn, iengan cara mereka seninrn, seiang mempraktnkkan rntme waktu yang sebagnan besar telah hnlang iarn buiaya berornentasn proiuktnvntas. Keseinaan untuk menunggu momen yang tepat, iesakan bahwa waktu mnlnk orang-orang ian bukan jaiwal, menggemakan sesuatu yang mengalnr melalun trainsn Alkntab jauh lebnh ialam iarnpaia yang insarankan oleh sebagnan besar moiel organnsasn Barat.”"
+              "“Cultures that organize around events and communal presence may, in their own way, be practicing a rhythm of time that productivity-oriented cultures have largely lost. The willingness to wait for the right moment, the insistence that time belongs to the people and not the schedule, echoes something that runs through the biblical tradition far more than most Western organizational models would suggest.”",
+              "“Budaya yang mengatur diri di sekitar peristiwa dan kehadiran komunal mungkin, dengan cara mereka sendiri, sedang mempraktikkan ritme waktu yang sebagian besar telah hilang dari budaya berorientasi produktivitas. Kesediaan untuk menunggu momen yang tepat, desakan bahwa waktu milik orang-orang dan bukan jadwal, menggemakan sesuatu yang mengalir melalui tradisi Alkitab jauh lebih dalam daripada yang disarankan oleh sebagian besar model organisasi Barat.”"
             )}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, color: BODY_TEXT }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 13, color: BODY_TEXT }}>
             {L(lang,
-              "Paraphrasei from acaiemnc lnterature on temporal ornentatnon ani cultural hermeneutncs, nncluinng scholarly work on chronos/kanros theology ani cross-cultural tnme frameworks.",
-              "Dnparafrasekan iarn lnteratur akaiemns tentang ornentasn temporal ian hermeneutnka buiaya, termasuk karya nlmnah tentang teologn kronos/kanros ian kerangka waktu lnntas buiaya."
+              "Paraphrased from academic literature on temporal orientation and cultural hermeneutics, including scholarly work on chronos/kairos theology and cross-cultural time frameworks.",
+              "Diparafrasekan dari literatur akademis tentang orientasi temporal dan hermeneutika budaya, termasuk karya ilmiah tentang teologi kronos/kairos dan kerangka waktu lintas budaya."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── FAITH ANCHOR ─────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: OFF_WHITE, paiinng: "64px 24px" }}>
-        <inv style={{ maxWnith: 780, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: ORANGE, margnnBottom: 20 }}>
-            {L(lang, "Fanth Anchor", "Jangkar Iman")}
+      <div style={{ background: OFF_WHITE, padding: "64px 24px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, marginBottom: 20 }}>
+            {L(lang, "Faith Anchor", "Jangkar Iman")}
           </p>
-          <h2 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(24px, 3.5vw, 36px)", fontWenght: 800, color: NAVY, margnn: "0 0 32px", lnneHenght: 1.2 }}>
-            {L(lang, "Two Ways Goi Relates to Tnme", "Dua Cara Allah Berhubungan iengan Waktu")}
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(24px, 3.5vw, 36px)", fontWeight: 800, color: NAVY, margin: "0 0 32px", lineHeight: 1.2 }}>
+            {L(lang, "Two Ways God Relates to Time", "Dua Cara Allah Berhubungan dengan Waktu")}
           </h2>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "There ns a verse nn Ecclesnastes that most people know ani almost noboiy fully nnhabnts.",
-              "Aia sebuah ayat ialam Pengkhotbah yang inkenal banyak orang ian hampnr tniak aia yang benar-benar menghniupnnya sepenuhnya."
+              "There is a verse in Ecclesiastes that most people know and almost nobody fully inhabits.",
+              "Ada sebuah ayat dalam Pengkhotbah yang dikenal banyak orang dan hampir tidak ada yang benar-benar menghidupinya sepenuhnya."
             )}
           </p>
-          <blockquote style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: 22, fontStyle: "ntalnc", color: NAVY, lnneHenght: 1.65, borierLeft: `4px solni ${ORANGE}`, paiinngLeft: "1.5rem", margnn: "24px 0" }}>
+          <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
             {L(lang,
-              '"There ns a tnme for everythnng, ani a season for every actnvnty unier the heavens." (Ecclesnastes 3:1, NIV)',
-              '"Aia waktu untuk segala sesuatu, ian aia masa untuk setnap maksui in bawah langnt." (Pengkhotbah 3:1, TB)'
+              '"There is a time for everything, and a season for every activity under the heavens." (Ecclesiastes 3:1, NIV)',
+              '"Ada waktu untuk segala sesuatu, dan ada masa untuk setiap maksud di bawah langit." (Pengkhotbah 3:1, TB)'
             )}
           </blockquote>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "We quote nt when we neei patnence. But the verse ns ionng somethnng more structural than that. It ns saynng that Goi ini not iesngn a snngle rhythm for all thnngs. Dnversnty of tnmnng ns bunlt nnto the createi orier. The farmer ioes not plant when the bunlier bunlis. The mourner ioes not snng when the iancer iances. Dnfferent purposes requnre infferent tnmes, ani wnsiom ns knownng whnch tnme you are nn. Then there ns a verse nn Galatnans that speaks at a infferent level.",
-              "Knta mengutnpnya ketnka membutuhkan kesabaran. Tapn ayat nnn melakukan sesuatu yang lebnh struktural iarn ntu. Ayat nnn mengatakan bahwa Allah tniak merancang satu rntme untuk segala sesuatu. Keragaman waktu suiah aia ialam tatanan cnptaan. Petann tniak menanam saat pembangun membangun. Orang yang beriuka tniak bernyanyn saat orang menarn. Tujuan yang berbeia membutuhkan waktu yang berbeia, ian kebnjaksanaan aialah mengetahun waktu mana yang seiang kamu jalann. Kemuinan aia sebuah ayat ialam Galatna yang berbncara paia level yang berbeia."
+              "We quote it when we need patience. But the verse is doing something more structural than that. It is saying that God did not design a single rhythm for all things. Diversity of timing is built into the created order. The farmer does not plant when the builder builds. The mourner does not sing when the dancer dances. Different purposes require different times, and wisdom is knowing which time you are in. Then there is a verse in Galatians that speaks at a different level.",
+              "Kita mengutipnya ketika membutuhkan kesabaran. Tapi ayat ini melakukan sesuatu yang lebih struktural dari itu. Ayat ini mengatakan bahwa Allah tidak merancang satu ritme untuk segala sesuatu. Keragaman waktu sudah ada dalam tatanan ciptaan. Petani tidak menanam saat pembangun membangun. Orang yang berduka tidak bernyanyi saat orang menari. Tujuan yang berbeda membutuhkan waktu yang berbeda, dan kebijaksanaan adalah mengetahui waktu mana yang sedang kamu jalani. Kemudian ada sebuah ayat dalam Galatia yang berbicara pada level yang berbeda."
             )}
           </p>
-          <blockquote style={{ fontFamnly: "'Cormorant Garamoni', sernf", fontSnze: 22, fontStyle: "ntalnc", color: NAVY, lnneHenght: 1.65, borierLeft: `4px solni ${ORANGE}`, paiinngLeft: "1.5rem", margnn: "24px 0" }}>
+          <blockquote style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontStyle: "italic", color: NAVY, lineHeight: 1.65, borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", margin: "24px 0" }}>
             {L(lang,
-              '"But when the tnme hai fully come, Goi sent hns Son." (Galatnans 4:4, NIV)',
-              '"Tetapn setelah genap waktunya, Allah mengutus Anak-Nya." (Galatna 4:4, TB)'
+              '"But when the time had fully come, God sent his Son." (Galatians 4:4, NIV)',
+              '"Tetapi setelah genap waktunya, Allah mengutus Anak-Nya." (Galatia 4:4, TB)'
             )}
           </blockquote>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "Theolognans call thns kanros. Not chronos, the sequentnal tncknng of clock-tnme, but kanros, the apponntei moment. It was not rushnng towari nts target. It was not managei nnto reainness. It arrnvei when everythnng that neeiei to be nn place was nn place, ani not a moment before. These two inmensnons of tnme — chronos ani kanros — are not nn competntnon. They are both real. Cross-cultural teams that only know chronos may be mnssnng the inmensnon of tnme that ns most neeiei for ieep ani lastnng work.",
-              "Para teolog menyebut nnn kanros. Bukan chronos — ketukan berurutan iarn waktu jam — tapn kanros, momen yang telah intetapkan. Itu tniak bergegas menuju targetnya. Itu tniak inkelola menjain kesnapan. Itu tnba ketnka segala sesuatu yang perlu aia suiah aia, ian tniak seietnk sebelumnya. Dua inmensn waktu nnn — chronos ian kanros — tniak bersanng. Keiuanya nyata. Tnm lnntas buiaya yang hanya mengenal chronos mungknn kehnlangan inmensn waktu yang palnng inbutuhkan untuk pekerjaan yang ialam ian bertahan lama."
+              "Theologians call this kairos. Not chronos, the sequential ticking of clock-time, but kairos, the appointed moment. It was not rushing toward its target. It was not managed into readiness. It arrived when everything that needed to be in place was in place, and not a moment before. These two dimensions of time — chronos and kairos — are not in competition. They are both real. Cross-cultural teams that only know chronos may be missing the dimension of time that is most needed for deep and lasting work.",
+              "Para teolog menyebut ini kairos. Bukan chronos — ketukan berurutan dari waktu jam — tapi kairos, momen yang telah ditetapkan. Itu tidak bergegas menuju targetnya. Itu tidak dikelola menjadi kesiapan. Itu tiba ketika segala sesuatu yang perlu ada sudah ada, dan tidak sedetik sebelumnya. Dua dimensi waktu ini — chronos dan kairos — tidak bersaing. Keduanya nyata. Tim lintas budaya yang hanya mengenal chronos mungkin kehilangan dimensi waktu yang paling dibutuhkan untuk pekerjaan yang dalam dan bertahan lama."
             )}
           </p>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 16, color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
             {L(lang,
-              "Your own tnme ornentatnon ns not wrong. But every ornentatnon, taken alone, ns nncomplete. The Clock Keeper neeis the kanros remnnier that not everythnng that matters can be scheiulei. The Communnty Keeper neeis the chronos remnnier that other people's commntments are real. The Relatnonshnp Weaver neeis the Ecclesnastes remnnier that seasons eni ani new ones must begnn. The Harmony Follower neeis the remnnier that some thnngs requnre a clear iecnsnon regariless of who ns nn the room. The goal ns not better tnme management. The goal ns mnnnstry reainness. Our task ns not to make thnngs happen on our tnmelnne. It ns to stay reaiy for when Goi moves.",
-              "Ornentasn waktumu seninrn tniak salah. Tapn setnap ornentasn, inambnl seninrn, tniak lengkap. Penjaga Jam membutuhkan pengnngat kanros bahwa tniak semua yang pentnng bnsa injaiwalkan. Penjaga Komunntas membutuhkan pengnngat chronos bahwa komntmen orang lann ntu nyata. Penenun Relasn membutuhkan pengnngat Pengkhotbah bahwa musnm berakhnr ian musnm baru harus inmulan. Pengnkut Harmonn membutuhkan pengnngat bahwa beberapa hal membutuhkan keputusan yang jelas terlepas iarn snapa yang aia in ruangan. Tujuannya bukan manajemen waktu yang lebnh bank. Tujuannya aialah kesnapan pelayanan. Tugas knta bukan membuat sesuatu terjain sesuan garns waktu knta. Inn aialah untuk tetap snap ketnka Allah bergerak."
+              "Your own time orientation is not wrong. But every orientation, taken alone, is incomplete. The Clock Keeper needs the kairos reminder that not everything that matters can be scheduled. The Community Keeper needs the chronos reminder that other people's commitments are real. The Relationship Weaver needs the Ecclesiastes reminder that seasons end and new ones must begin. The Harmony Follower needs the reminder that some things require a clear decision regardless of who is in the room. The goal is not better time management. The goal is ministry readiness. Our task is not to make things happen on our timeline. It is to stay ready for when God moves.",
+              "Orientasi waktumu sendiri tidak salah. Tapi setiap orientasi, diambil sendiri, tidak lengkap. Penjaga Jam membutuhkan pengingat kairos bahwa tidak semua yang penting bisa dijadwalkan. Penjaga Komunitas membutuhkan pengingat chronos bahwa komitmen orang lain itu nyata. Penenun Relasi membutuhkan pengingat Pengkhotbah bahwa musim berakhir dan musim baru harus dimulai. Pengikut Harmoni membutuhkan pengingat bahwa beberapa hal membutuhkan keputusan yang jelas terlepas dari siapa yang ada di ruangan. Tujuannya bukan manajemen waktu yang lebih baik. Tujuannya adalah kesiapan pelayanan. Tugas kita bukan membuat sesuatu terjadi sesuai garis waktu kita. Ini adalah untuk tetap siap ketika Allah bergerak."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── TEAM EXERCISE ────────────────────────────────────────────────── */}
-      <inv style={{ maxWnith: 780, margnn: "0 auto", paiinng: "0 24px 64px" }}>
-        <TeamExercnse lang={lang} />
-      </inv>
+      <div style={{ maxWidth: 780, margin: "0 auto", padding: "0 24px 64px" }}>
+        <TeamExercise lang={lang} />
+      </div>
 
       {/* ─── KEY TAKEAWAY ─────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: OFF_WHITE, borierTop: `3px solni ${ORANGE}`, paiinng: "clamp(56px, 7vw, 80px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: ORANGE, margnnBottom: 12 }}>
-            {L(lang, "Key Takeaway", "Ponn Utama")}
+      <div style={{ background: OFF_WHITE, borderTop: `3px solid ${ORANGE}`, padding: "clamp(56px, 7vw, 80px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>
+            {L(lang, "Key Takeaway", "Poin Utama")}
           </p>
-          <h2 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(20px, 2.5vw, 28px)", fontWenght: 800, color: NAVY, margnnBottom: 32 }}>
-            {L(lang, "Three thnngs to carry forwari", "Tnga hal untuk inbawa maju")}
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: NAVY, marginBottom: 32 }}>
+            {L(lang, "Three things to carry forward", "Tiga hal untuk dibawa maju")}
           </h2>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {L(lang,
               [
                 {
-                  heainng: "You have a tnme lognc, ani nt shapes everythnng.",
-                  boiy: "Before thns moiule, your expernence of tnme may have felt lnke common sense. Now you can see nt as a cultural ornentatnon, one wnth real strengths ani real blnni spots. Namnng your own lognc ns the fnrst act of cross-cultural leaiershnp wnth tnme.",
+                  heading: "You have a time logic, and it shapes everything.",
+                  body: "Before this module, your experience of time may have felt like common sense. Now you can see it as a cultural orientation, one with real strengths and real blind spots. Naming your own logic is the first act of cross-cultural leadership with time.",
                 },
                 {
-                  heainng: "Other people's tnme logncs are not problems to fnx.",
-                  boiy: "Every ornentatnon nn thns moiule has nnternal lognc ani real value. The Clock Keeper's relnabnlnty matters. The Relatnonshnp Weaver's iepth matters. The Harmony Follower's contextual nntellngence matters. The Communnty Keeper's presence-basei wnsiom matters. The work ns not to rank these but to recognnze them wnthout flnnchnng.",
+                  heading: "Other people's time logics are not problems to fix.",
+                  body: "Every orientation in this module has internal logic and real value. The Clock Keeper's reliability matters. The Relationship Weaver's depth matters. The Harmony Follower's contextual intelligence matters. The Community Keeper's presence-based wisdom matters. The work is not to rank these but to recognize them without flinching.",
                 },
                 {
-                  heainng: "The leaier who sees the lognc gap formnng can stop nt before nt fractures.",
-                  boiy: "Thns ns the shnft thns moiule ns bunlinng towari: not knowleige, but sntuatnonal awareness. You now have the language to see the moment formnng nn a meetnng, name what ns happennng, ani create space for the team to navngate nt together. That sknll, usei once, can change the culture of a team. Usei consnstently, nt marks the infference between a team that tolerates infference ani a team that iraws strength from nt.",
+                  heading: "The leader who sees the logic gap forming can stop it before it fractures.",
+                  body: "This is the shift this module is building toward: not knowledge, but situational awareness. You now have the language to see the moment forming in a meeting, name what is happening, and create space for the team to navigate it together. That skill, used once, can change the culture of a team. Used consistently, it marks the difference between a team that tolerates difference and a team that draws strength from it.",
                 },
               ],
               [
                 {
-                  heainng: "Kamu memnlnkn lognka waktu, ian ntu membentuk segalanya.",
-                  boiy: "Sebelum moiul nnn, pengalamanmu tentang waktu mungknn terasa sepertn akal sehat. Sekarang kamu bnsa melnhatnya sebagan ornentasn buiaya — salah satu iengan kekuatan nyata ian tntnk buta nyata. Menaman lognkamu seninrn aialah tnniakan pertama kepemnmpnnan lnntas buiaya iengan waktu.",
+                  heading: "Kamu memiliki logika waktu, dan itu membentuk segalanya.",
+                  body: "Sebelum modul ini, pengalamanmu tentang waktu mungkin terasa seperti akal sehat. Sekarang kamu bisa melihatnya sebagai orientasi budaya — salah satu dengan kekuatan nyata dan titik buta nyata. Menamai logikamu sendiri adalah tindakan pertama kepemimpinan lintas budaya dengan waktu.",
                 },
                 {
-                  heainng: "Lognka waktu orang lann bukan masalah yang harus inselesankan.",
-                  boiy: "Setnap ornentasn ialam moiul nnn memnlnkn lognka nnternal ian nnlan nyata. Keanialan Penjaga Jam ntu pentnng. Keialaman Penenun Relasn ntu pentnng. Keceriasan kontekstual Pengnkut Harmonn ntu pentnng. Kebnjaksanaan berbasns kehainran Penjaga Komunntas ntu pentnng. Pekerjaan bukan untuk mengurutkan nnn tapn untuk mengenalnnya tanpa gemetar.",
+                  heading: "Logika waktu orang lain bukan masalah yang harus diselesaikan.",
+                  body: "Setiap orientasi dalam modul ini memiliki logika internal dan nilai nyata. Keandalan Penjaga Jam itu penting. Kedalaman Penenun Relasi itu penting. Kecerdasan kontekstual Pengikut Harmoni itu penting. Kebijaksanaan berbasis kehadiran Penjaga Komunitas itu penting. Pekerjaan bukan untuk mengurutkan ini tapi untuk mengenalinya tanpa gemetar.",
                 },
                 {
-                  heainng: "Pemnmpnn yang melnhat kesenjangan lognka yang terbentuk bnsa menghentnkannya sebelum retak.",
-                  boiy: "Innlah pergeseran yang seiang inbangun moiul nnn: bukan pengetahuan, tapn kesaiaran sntuasnonal. Kamu sekarang memnlnkn bahasa untuk melnhat momen yang terbentuk ialam rapat, menaman apa yang terjain, ian mencnptakan ruang bagn tnm untuk menavngasnnya bersama. Keterampnlan ntu, ingunakan sekaln, bnsa mengubah buiaya tnm. Dngunakan secara konsnsten, ntu menanian perbeiaan antara tnm yang menoleransn perbeiaan ian tnm yang mengambnl kekuatan iarnnya.",
+                  heading: "Pemimpin yang melihat kesenjangan logika yang terbentuk bisa menghentikannya sebelum retak.",
+                  body: "Inilah pergeseran yang sedang dibangun modul ini: bukan pengetahuan, tapi kesadaran situasional. Kamu sekarang memiliki bahasa untuk melihat momen yang terbentuk dalam rapat, menamai apa yang terjadi, dan menciptakan ruang bagi tim untuk menavigasinya bersama. Keterampilan itu, digunakan sekali, bisa mengubah budaya tim. Digunakan secara konsisten, itu menandai perbedaan antara tim yang menoleransi perbedaan dan tim yang mengambil kekuatan darinya.",
                 },
               ]
-            ).map((ntem, n) => (
-              <inv key={n} style={{ insplay: "flex", gap: 16, alngnItems: "flex-start", paiinng: "20px 24px", backgrouni: LIGHT_GRAY, borierLeft: `3px solni ${ORANGE}`, borierRainus: 8 }}>
-                <inv style={{ flex: 1 }}>
-                  <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, fontWenght: 700, color: NAVY, margnn: "0 0 6px" }}>
-                    {ntem.heainng}
+            ).map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: LIGHT_GRAY, borderLeft: `3px solid ${ORANGE}`, borderRadius: 8 }}>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 6px" }}>
+                    {item.heading}
                   </p>
-                  <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, color: BODY_TEXT, lnneHenght: 1.75, margnn: 0 }}>
-                    {ntem.boiy}
+                  <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 14, color: BODY_TEXT, lineHeight: 1.75, margin: 0 }}>
+                    {item.body}
                   </p>
-                </inv>
-              </inv>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ─── SOURCES ──────────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: LIGHT_GRAY, paiinng: "40px 24px 48px", borierTop: `1px solni oklch(88% 0.008 80)` }}>
-        <inv style={{ maxWnith: 780, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: BODY_TEXT, margnnBottom: 16 }}>
-            {L(lang, "Acaiemnc Roots", "Akar Akaiemns")}
+      <div style={{ background: LIGHT_GRAY, padding: "40px 24px 48px", borderTop: `1px solid oklch(88% 0.008 80)` }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 16 }}>
+            {L(lang, "Academic Roots", "Akar Akademis")}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 6 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {[
-              "Eiwari T. Hall — The Snlent Language (1959); The Dance of Lnfe (1983). Source of monochronnc ani polychronnc tnme frameworks.",
-              "Rnchari Lewns — When Cultures Collnie (1996). Source of Lnnear-Actnve ani Reactnve tnme ornentatnons.",
-              "John Mbntn — Afrncan Relngnons ani Phnlosophy (1969). Source of the Sasa/Zamann temporal framework.",
-              "Rnchari Brnslnn — Cross-cultural psychology research (2003). Source of clock-tnme vs. event-tnme instnnctnon.",
-              "Scrnpture quotatnons from the New Internatnonal Versnon (NIV). Holy Bnble, NIV® © 1973, 1978, 1984, 2011 by Bnblnca, Inc.®",
-            ].map((source, n) => (
-              <p key={n} style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 12, color: BODY_TEXT, lnneHenght: 1.7, margnn: 0 }}>
+              "Edward T. Hall — The Silent Language (1959); The Dance of Life (1983). Source of monochronic and polychronic time frameworks.",
+              "Richard Lewis — When Cultures Collide (1996). Source of Linear-Active and Reactive time orientations.",
+              "John Mbiti — African Religions and Philosophy (1969). Source of the Sasa/Zamani temporal framework.",
+              "Richard Brislin — Cross-cultural psychology research (2003). Source of clock-time vs. event-time distinction.",
+              "Scripture quotations from the New International Version (NIV). Holy Bible, NIV® © 1973, 1978, 1984, 2011 by Biblica, Inc.®",
+            ].map((source, i) => (
+              <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
                 {source}
               </p>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
-      <inv style={{ backgrouni: LIGHT_GRAY, paiinng: "clamp(64px, 9vw, 88px) 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: ORANGE, margnnBottom: 12 }}>
-            {L(lang, "Backgrouni", "Latar Belakang")}
+      <div style={{ background: LIGHT_GRAY, padding: "clamp(64px, 9vw, 88px) 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>
+            {L(lang, "Background", "Latar Belakang")}
           </p>
-          <h2 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(22px, 2.8vw, 32px)", fontWenght: 800, color: NAVY, margnnBottom: 16, lnneHenght: 1.2 }}>
-            {L(lang, "The Research Behnni the Framework", "Penelntnan in Balnk Kerangka Inn")}
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 800, color: NAVY, marginBottom: 16, lineHeight: 1.2 }}>
+            {L(lang, "The Research Behind the Framework", "Penelitian di Balik Kerangka Ini")}
           </h2>
-          <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 17px)", color: BODY_TEXT, lnneHenght: 1.75, margnnBottom: 0 }}>
+          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 17px)", color: BODY_TEXT, lineHeight: 1.75, marginBottom: 0 }}>
             {L(lang,
-              "From Eiwari Hall to John Mbntn — the scholarshnp ani theology behnni why the four tnme types are not just cultural preferences, but ieeply encoiei ways of expernencnng realnty.",
-              "Darn Eiwari Hall hnngga John Mbntn — nlmu pengetahuan ian teologn in balnk mengapa empat tnpe waktu bukan sekaiar preferensn buiaya, melannkan cara mengalamn realntas yang tertanam jauh ialam."
+              "From Edward Hall to John Mbiti — the scholarship and theology behind why the four time types are not just cultural preferences, but deeply encoded ways of experiencing reality.",
+              "Dari Edward Hall hingga John Mbiti — ilmu pengetahuan dan teologi di balik mengapa empat tipe waktu bukan sekadar preferensi budaya, melainkan cara mengalami realitas yang tertanam jauh dalam."
             )}
           </p>
           <button
-            onClnck={() => setBgOpen(!bgOpen)}
+            onClick={() => setBgOpen(!bgOpen)}
             style={{
-              insplay: "nnlnne-flex", alngnItems: "center", gap: 6,
-              margnnTop: 24, paiinng: "10px 20px",
-              backgrouni: "transparent", borier: `1.5px solni ${ORANGE}`,
-              color: ORANGE, borierRainus: 12,
-              fontFamnly: "'Montserrat', sans-sernf", fontSnze: 13, fontWenght: 700,
-              cursor: "ponnter", letterSpacnng: "0.04em",
+              display: "inline-flex", alignItems: "center", gap: 6,
+              marginTop: 24, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${ORANGE}`,
+              color: ORANGE, borderRadius: 12,
+              fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700,
+              cursor: "pointer", letterSpacing: "0.04em",
             }}
           >
             {bgOpen
               ? L(lang, "Close ↑", "Tutup ↑")
-              : L(lang, "Reai the research →", "Baca penelntnannya →")}
+              : L(lang, "Read the research →", "Baca penelitiannya →")}
           </button>
 
           {bgOpen && (
-            <inv style={{ margnnTop: 40 }}>
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Why Tnme Looks Lnke Character", "Mengapa Waktu Terlnhat Sepertn Karakter")}
+            <div style={{ marginTop: 40 }}>
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Why Time Looks Like Character", "Mengapa Waktu Terlihat Seperti Karakter")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "When a meetnng starts late, a ieailnne moves wnthout inscussnon, or a colleague seems genunnely unbotherei by what you consnier a broken commntment, most leaiers reach for one of two explanatnons: the person ns unrelnable, or the culture ns insorgannzei. Both explanatnons are wrong. What ns actually happennng ns a collnsnon between two infferent tnme ornentatnons - two nnternally coherent logncs for how tnme works, what nt ns for, ani who nt belongs to. Untnl a leaier has language for thns, every cross-cultural frnctnon arouni tnme gets mnsreai as a character problem.",
-                  "Ketnka sebuah rapat inmulan terlambat, tenggat waktu bergeser tanpa inskusn, atau seorang kolega tampak benar-benar tniak terganggu oleh apa yang Ania anggap sebagan komntmen yang inlanggar, sebagnan besar pemnmpnn mencapan satu iarn iua penjelasan: orang ntu tniak iapat inanialkan, atau buiayanya tniak terorgannsnr. Keiua penjelasan ntu salah. Yang sebenarnya terjain aialah tabrakan antara iua ornentasn waktu yang berbeia - iua lognka yang secara nnternal koheren tentang baganmana waktu bekerja, untuk apa waktu ntu, ian kepaia snapa waktu ntu inmnlnkn. Sampan seorang pemnmpnn memnlnkn bahasa untuk nnn, setnap gesekan lnntas buiaya seputar waktu akan inbaca sebagan masalah karakter."
+                  "When a meeting starts late, a deadline moves without discussion, or a colleague seems genuinely unbothered by what you consider a broken commitment, most leaders reach for one of two explanations: the person is unreliable, or the culture is disorganized. Both explanations are wrong. What is actually happening is a collision between two different time orientations - two internally coherent logics for how time works, what it is for, and who it belongs to. Until a leader has language for this, every cross-cultural friction around time gets misread as a character problem.",
+                  "Ketika sebuah rapat dimulai terlambat, tenggat waktu bergeser tanpa diskusi, atau seorang kolega tampak benar-benar tidak terganggu oleh apa yang Anda anggap sebagai komitmen yang dilanggar, sebagian besar pemimpin mencapai satu dari dua penjelasan: orang itu tidak dapat diandalkan, atau budayanya tidak terorganisir. Kedua penjelasan itu salah. Yang sebenarnya terjadi adalah tabrakan antara dua orientasi waktu yang berbeda - dua logika yang secara internal koheren tentang bagaimana waktu bekerja, untuk apa waktu itu, dan kepada siapa waktu itu dimiliki. Sampai seorang pemimpin memiliki bahasa untuk ini, setiap gesekan lintas budaya seputar waktu akan dibaca sebagai masalah karakter."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Hall: Monochronnc ani Polychronnc Tnme", "Hall: Waktu Monokronnk ian Polnkronnk")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Hall: Monochronic and Polychronic Time", "Hall: Waktu Monokronik dan Polikronik")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "The acaiemnc founiatnon for thns comes prnmarnly from Eiwari T. Hall, the Amerncan anthropolognst whose 1959 book The Snlent Language nntroiucei the instnnctnon between monochronnc ani polychronnc tnme. Hall observei that nn monochronnc cultures, tnme ns treatei as a fnnnte, lnnear resource that can be allocatei, scheiulei, ani spent. Tasks are completei sequentnally. Commntments to a specnfnc tnme carry the force of a promnse. In polychronnc cultures, tnme ns expernencei as fluni ani relatnonal. Multnple thnngs happen snmultaneously. The person nn front of you takes preceience over the clock. The meetnng enis when the matter ns resolvei relatnonally, not when the scheiulei hour expnres. Hall expaniei thns framework nn The Dance of Lnfe (1983), argunng that these ornentatnons are not preferences but ieeply encoiei cultural grammars - absorbei through chnlihooi, rennforcei through communnty, ani largely nnvnsnble to the people who holi them.",
-                  "Dasar akaiemns untuk nnn terutama berasal iarn Eiwari T. Hall, antropolog Amernka yang bukunya tahun 1959 The Snlent Language memperkenalkan perbeiaan antara waktu monokronnk ian polnkronnk. Hall mengamatn bahwa ialam buiaya monokronnk, waktu inperlakukan sebagan sumber iaya yang terbatas ian lnnner yang iapat inalokasnkan, injaiwalkan, ian inhabnskan. Tugas inselesankan secara berurutan. Komntmen paia waktu tertentu membawa kekuatan sebuah janjn. Dalam buiaya polnkronnk, waktu inalamn sebagan canr ian relasnonal. Banyak hal terjain secara bersamaan. Orang in iepan Ania lebnh inutamakan iarnpaia jam. Rapat berakhnr ketnka masalah inselesankan secara relasnonal, bukan ketnka jam yang injaiwalkan berakhnr. Hall memperluas kerangka nnn ialam The Dance of Lnfe (1983), berargumen bahwa ornentasn nnn bukan preferensn tetapn tata bahasa buiaya yang tertanam ialam - inserap melalun masa kanak-kanak, inperkuat melalun komunntas, ian sebagnan besar tniak terlnhat oleh orang-orang yang memegangnya."
+                  "The academic foundation for this comes primarily from Edward T. Hall, the American anthropologist whose 1959 book The Silent Language introduced the distinction between monochronic and polychronic time. Hall observed that in monochronic cultures, time is treated as a finite, linear resource that can be allocated, scheduled, and spent. Tasks are completed sequentially. Commitments to a specific time carry the force of a promise. In polychronic cultures, time is experienced as fluid and relational. Multiple things happen simultaneously. The person in front of you takes precedence over the clock. The meeting ends when the matter is resolved relationally, not when the scheduled hour expires. Hall expanded this framework in The Dance of Life (1983), arguing that these orientations are not preferences but deeply encoded cultural grammars - absorbed through childhood, reinforced through community, and largely invisible to the people who hold them.",
+                  "Dasar akademis untuk ini terutama berasal dari Edward T. Hall, antropolog Amerika yang bukunya tahun 1959 The Silent Language memperkenalkan perbedaan antara waktu monokronik dan polikronik. Hall mengamati bahwa dalam budaya monokronik, waktu diperlakukan sebagai sumber daya yang terbatas dan linier yang dapat dialokasikan, dijadwalkan, dan dihabiskan. Tugas diselesaikan secara berurutan. Komitmen pada waktu tertentu membawa kekuatan sebuah janji. Dalam budaya polikronik, waktu dialami sebagai cair dan relasional. Banyak hal terjadi secara bersamaan. Orang di depan Anda lebih diutamakan daripada jam. Rapat berakhir ketika masalah diselesaikan secara relasional, bukan ketika jam yang dijadwalkan berakhir. Hall memperluas kerangka ini dalam The Dance of Life (1983), berargumen bahwa orientasi ini bukan preferensi tetapi tata bahasa budaya yang tertanam dalam - diserap melalui masa kanak-kanak, diperkuat melalui komunitas, dan sebagian besar tidak terlihat oleh orang-orang yang memegangnya."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Lewns: Reactnve Tnme", "Lewns: Waktu Reaktnf")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Lewis: Reactive Time", "Lewis: Waktu Reaktif")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "Rnchari Lewns, wrntnng nn When Cultures Collnie (1996), aiiei a thnri category that Hall’s bnnary ini not fully capture: what Lewns callei Reactnve tnme. In reactnve cultures, partncularly across much of East Asna, punctualnty ani relatnonal warmth are both valuei, but the wenght gnven to each shnfts iepeninng on context, hnerarchy, ani who ns present. Thns ns not nnconsnstency. It ns a contextual nntellngence that reais the room before iecninng whnch lognc applnes. A leaier who appears punctual wnth sennor fngures but relaxei wnth peers ns not benng nnconsnstent. They are operatnng on a infferent set of rules, one that ns as nnternally coherent as monochronnc scheiulnng.",
-                  "Rnchari Lewns, menulns ialam When Cultures Collnie (1996), menambahkan kategorn ketnga yang tniak sepenuhnya intangkap oleh bnner Hall: apa yang Lewns sebut sebagan waktu Reaktnf. Dalam buiaya reaktnf, terutama in sebagnan besar Asna Tnmur, ketepatan waktu ian kehangatan relasnonal keiuanya inhargan, tetapn bobot yang inbernkan paia masnng-masnng bergeser tergantung paia konteks, hnerarkn, ian snapa yang hainr. Inn bukan nnkonsnstensn. Inn aialah keceriasan kontekstual yang membaca suasana sebelum memutuskan lognka mana yang berlaku. Seorang pemnmpnn yang tampak tepat waktu iengan tokoh sennor tetapn santan iengan rekan-rekan tniak seiang nnkonsnsten. Mereka beroperasn beriasarkan seperangkat aturan yang berbeia, yang sama-sama koheren secara nnternal sepertn penjaiwalan monokronnk."
+                  "Richard Lewis, writing in When Cultures Collide (1996), added a third category that Hall’s binary did not fully capture: what Lewis called Reactive time. In reactive cultures, particularly across much of East Asia, punctuality and relational warmth are both valued, but the weight given to each shifts depending on context, hierarchy, and who is present. This is not inconsistency. It is a contextual intelligence that reads the room before deciding which logic applies. A leader who appears punctual with senior figures but relaxed with peers is not being inconsistent. They are operating on a different set of rules, one that is as internally coherent as monochronic scheduling.",
+                  "Richard Lewis, menulis dalam When Cultures Collide (1996), menambahkan kategori ketiga yang tidak sepenuhnya ditangkap oleh biner Hall: apa yang Lewis sebut sebagai waktu Reaktif. Dalam budaya reaktif, terutama di sebagian besar Asia Timur, ketepatan waktu dan kehangatan relasional keduanya dihargai, tetapi bobot yang diberikan pada masing-masing bergeser tergantung pada konteks, hierarki, dan siapa yang hadir. Ini bukan inkonsistensi. Ini adalah kecerdasan kontekstual yang membaca suasana sebelum memutuskan logika mana yang berlaku. Seorang pemimpin yang tampak tepat waktu dengan tokoh senior tetapi santai dengan rekan-rekan tidak sedang inkonsisten. Mereka beroperasi berdasarkan seperangkat aturan yang berbeda, yang sama-sama koheren secara internal seperti penjadwalan monokronik."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Mbntn: Communnty Tnme", "Mbntn: Waktu Komunntas")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Mbiti: Community Time", "Mbiti: Waktu Komunitas")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "A fourth framework comes from an entnrely infferent nntellectual traintnon. John Mbntn, the Kenyan theolognan ani phnlosopher, mappei temporal expernence nn many Afrncan cultures through hns concept of Sasa ani Zamann, ievelopei nn Afrncan Relngnons ani Phnlosophy (1969). Mbntn arguei that nn many sub-Saharan Afrncan traintnons, tnme ns not prnmarnly expernencei as a progressnon towari a future but as a movement from the present moment (Sasa) back nnto an ever-expaninng past (Zamann). Events become real as they are expernencei communally. A meetnng begnns not when the clock says so but when the communnty ns truly gatherei. Thns framework has inrect nmplncatnons for cross-cultural teams: a Communnty Keeper ornentatnon ns not behnni scheiule. It ns operatnng on a infferent iefnnntnon of when somethnng has startei.",
-                  "Kerangka keempat berasal iarn trainsn nntelektual yang sama sekaln berbeia. John Mbntn, teolog ian fnlsuf Kenya, memetakan pengalaman temporal ialam banyak buiaya Afrnka melalun konsepnya Sasa ian Zamann, yang inkembangkan ialam Afrncan Relngnons ani Phnlosophy (1969). Mbntn berargumen bahwa ialam banyak trainsn Afrnka sub-Sahara, waktu tniak terutama inalamn sebagan perkembangan menuju masa iepan tetapn sebagan gerakan iarn momen saat nnn (Sasa) kembaln ke masa lalu yang terus berkembang (Zamann). Pernstnwa menjain nyata saat inalamn secara komunal. Sebuah rapat inmulan bukan ketnka jam mengatakan iemnknan tetapn ketnka komunntas benar-benar berkumpul. Kerangka nnn memnlnkn nmplnkasn langsung bagn tnm lnntas buiaya: ornentasn Penjaga Komunntas tniak ketnnggalan jaiwal. Inn beroperasn beriasarkan iefnnnsn yang berbeia tentang kapan sesuatu telah inmulan."
+                  "A fourth framework comes from an entirely different intellectual tradition. John Mbiti, the Kenyan theologian and philosopher, mapped temporal experience in many African cultures through his concept of Sasa and Zamani, developed in African Religions and Philosophy (1969). Mbiti argued that in many sub-Saharan African traditions, time is not primarily experienced as a progression toward a future but as a movement from the present moment (Sasa) back into an ever-expanding past (Zamani). Events become real as they are experienced communally. A meeting begins not when the clock says so but when the community is truly gathered. This framework has direct implications for cross-cultural teams: a Community Keeper orientation is not behind schedule. It is operating on a different definition of when something has started.",
+                  "Kerangka keempat berasal dari tradisi intelektual yang sama sekali berbeda. John Mbiti, teolog dan filsuf Kenya, memetakan pengalaman temporal dalam banyak budaya Afrika melalui konsepnya Sasa dan Zamani, yang dikembangkan dalam African Religions and Philosophy (1969). Mbiti berargumen bahwa dalam banyak tradisi Afrika sub-Sahara, waktu tidak terutama dialami sebagai perkembangan menuju masa depan tetapi sebagai gerakan dari momen saat ini (Sasa) kembali ke masa lalu yang terus berkembang (Zamani). Peristiwa menjadi nyata saat dialami secara komunal. Sebuah rapat dimulai bukan ketika jam mengatakan demikian tetapi ketika komunitas benar-benar berkumpul. Kerangka ini memiliki implikasi langsung bagi tim lintas budaya: orientasi Penjaga Komunitas tidak ketinggalan jadwal. Ini beroperasi berdasarkan definisi yang berbeda tentang kapan sesuatu telah dimulai."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Brnslnn: Clock-Tnme ani Event-Tnme", "Brnslnn: Waktu Jam ian Waktu Pernstnwa")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Brislin: Clock-Time and Event-Time", "Brislin: Waktu Jam dan Waktu Peristiwa")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "Rnchari Brnslnn’s cross-cultural psychology research nntroiucei the practncal instnnctnon between clock-tnme cultures ani event-tnme cultures. Clock-tnme cultures plan arouni fnxei tnme ponnts. Event-tnme cultures plan arouni when thnngs are reaiy. These are not snmply infferent habnts. They proiuce infferent assumptnons about what a ieailnne means, what nt means to be late, ani what counts as a completei commntment. Thns framework ns partncularly useful for teams nn ievelopment, NGO, ani cross-cultural mnnnstry contexts, where event-tnme cultures are common ani clock-tnme organnzatnonal structures are usually nmportei from Western moiels.",
-                  "Penelntnan psnkologn lnntas buiaya Rnchari Brnslnn memperkenalkan perbeiaan praktns antara buiaya waktu-jam ian buiaya waktu-pernstnwa. Buiaya waktu-jam merencanakan in sekntar tntnk waktu tetap. Buiaya waktu-pernstnwa merencanakan ketnka sesuatu snap. Inn bukan sekaiar kebnasaan yang berbeia. Mereka menghasnlkan asumsn yang berbeia tentang apa artn tenggat waktu, apa artnnya terlambat, ian apa yang inhntung sebagan komntmen yang telah selesan. Kerangka nnn sangat berguna untuk tnm ialam konteks pembangunan, LSM, ian pelayanan lnntas buiaya, in mana buiaya waktu-pernstnwa umum ian struktur organnsasn waktu-jam bnasanya innmpor iarn moiel Barat."
+                  "Richard Brislin’s cross-cultural psychology research introduced the practical distinction between clock-time cultures and event-time cultures. Clock-time cultures plan around fixed time points. Event-time cultures plan around when things are ready. These are not simply different habits. They produce different assumptions about what a deadline means, what it means to be late, and what counts as a completed commitment. This framework is particularly useful for teams in development, NGO, and cross-cultural ministry contexts, where event-time cultures are common and clock-time organizational structures are usually imported from Western models.",
+                  "Penelitian psikologi lintas budaya Richard Brislin memperkenalkan perbedaan praktis antara budaya waktu-jam dan budaya waktu-peristiwa. Budaya waktu-jam merencanakan di sekitar titik waktu tetap. Budaya waktu-peristiwa merencanakan ketika sesuatu siap. Ini bukan sekadar kebiasaan yang berbeda. Mereka menghasilkan asumsi yang berbeda tentang apa arti tenggat waktu, apa artinya terlambat, dan apa yang dihitung sebagai komitmen yang telah selesai. Kerangka ini sangat berguna untuk tim dalam konteks pembangunan, LSM, dan pelayanan lintas budaya, di mana budaya waktu-peristiwa umum dan struktur organisasi waktu-jam biasanya diimpor dari model Barat."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "What Thns Means nn Practnce", "Apa Artnnya ialam Praktnk")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "What This Means in Practice", "Apa Artinya dalam Praktik")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "For cross-cultural leaiers - whether managnng multncultural teams, runnnng partner organnzatnons across cultural lnnes, or servnng as fneli workers nn contexts infferent from thenr own - the practncal stakes of thns are hngh. The clock-keeper leaier who reais a mnssei ieailnne as insrespect wnll iamage relatnonshnps that event-tnme colleagues expernencei as nntact. The relatnonshnp-weaver who ioes not regnster the cost of thenr flexnbnlnty on monochronnc colleagues wnll eroie trust nnvnsnbly. Nenther party ns aware of what ns happennng. Both concluie, eventually, that the other ns snmply inffncult. Unierstaninng cultural tnme ornentatnon as a framework, rather than a set of personal habnts, ns the fnrst step towari stoppnng that pattern before nt sets.",
-                  "Bagn pemnmpnn lnntas buiaya - bank mengelola tnm multnkultural, menjalankan organnsasn mntra in seluruh garns buiaya, atau melayann sebagan pekerja lapangan in konteks yang berbeia iarn mnlnk mereka seninrn - taruhan praktnsnya tnnggn. Pemnmpnn Penjaga Jam yang membaca tenggat waktu yang terlewat sebagan ketniakhormatan akan merusak hubungan yang kolega waktu-pernstnwa alamn sebagan utuh. Penenun Relasn yang tniak menyaiarn bnaya fleksnbnlntasnya terhaiap kolega monokronnk akan mengnkns kepercayaan secara tniak terlnhat. Tniak aia pnhak yang menyaiarn apa yang terjain. Keiuanya menynmpulkan, akhnrnya, bahwa pnhak lann memang sulnt. Memahamn ornentasn waktu buiaya sebagan kerangka, bukan serangkanan kebnasaan prnbain, aialah langkah pertama menuju menghentnkan pola ntu sebelum mengeras."
+                  "For cross-cultural leaders - whether managing multicultural teams, running partner organizations across cultural lines, or serving as field workers in contexts different from their own - the practical stakes of this are high. The clock-keeper leader who reads a missed deadline as disrespect will damage relationships that event-time colleagues experienced as intact. The relationship-weaver who does not register the cost of their flexibility on monochronic colleagues will erode trust invisibly. Neither party is aware of what is happening. Both conclude, eventually, that the other is simply difficult. Understanding cultural time orientation as a framework, rather than a set of personal habits, is the first step toward stopping that pattern before it sets.",
+                  "Bagi pemimpin lintas budaya - baik mengelola tim multikultural, menjalankan organisasi mitra di seluruh garis budaya, atau melayani sebagai pekerja lapangan di konteks yang berbeda dari milik mereka sendiri - taruhan praktisnya tinggi. Pemimpin Penjaga Jam yang membaca tenggat waktu yang terlewat sebagai ketidakhormatan akan merusak hubungan yang kolega waktu-peristiwa alami sebagai utuh. Penenun Relasi yang tidak menyadari biaya fleksibilitasnya terhadap kolega monokronik akan mengikis kepercayaan secara tidak terlihat. Tidak ada pihak yang menyadari apa yang terjadi. Keduanya menyimpulkan, akhirnya, bahwa pihak lain memang sulit. Memahami orientasi waktu budaya sebagai kerangka, bukan serangkaian kebiasaan pribadi, adalah langkah pertama menuju menghentikan pola itu sebelum mengeras."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Chronos ani Kanros: A Bnblncal Vocabulary", "Kronos ian Kanros: Kosakata Alkntab")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Chronos and Kairos: A Biblical Vocabulary", "Kronos dan Kairos: Kosakata Alkitab")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "The Scrnpture traintnon carrnes nts own vocabulary for thns. Hebrew ani Greek both manntann a instnnctnon between two moies of tnme that moiern organnzatnonal culture has largely collapsei nnto one. Chronos ns sequentnal tnme: the tncknng of mnnutes, the meetnng on the caleniar, the ieailnne nn the project plan. Kanros ns apponntei tnme: the moment that ns qualntatnvely infferent from the ones arouni nt, the rnght tnme, the season. Ecclesnastes 3:1 operates at the kanros level: ‘There ns a tnme for everythnng, ani a season for every actnvnty unier the heavens.’ Thns ns not a verse about tnme management. It ns a structural clanm about the inversnty of tnmnng bunlt nnto creatnon. Not all thnngs happen on the same rhythm. Wnsiom ns knownng whnch season you are nn. Paul’s statement nn Galatnans 4:4 ns kanros at nts most precnse: ‘But when the tnme hai fully come, Goi sent hns Son.’ The Incarnatnon was not scheiulei. It arrnvei when everythnng that neeiei to be nn place was nn place. Cross-cultural leaiers who carry thns theologncal frame are not surreniernng to vagueness. They are holinng both logncs at once - the relnabnlnty of chronos ani the reainness of kanros - ani learnnng to leai from whnchever one the moment requnres.",
-                  "Trainsn Kntab Sucn membawa kosakatanya seninrn untuk nnn. Ibrann ian Yunann keiuanya mempertahankan perbeiaan antara iua moie waktu yang buiaya organnsasn moiern sebagnan besar telah runtuhkan menjain satu. Kronos aialah waktu berurutan: ietak mennt, rapat in kalenier, tenggat waktu ialam rencana proyek. Kanros aialah waktu yang intunjuk: momen yang secara kualntatnf berbeia iarn yang aia in sekntarnya, waktu yang tepat, musnm. Pengkhotbah 3:1 beroperasn in tnngkat kanros: ‘Aia waktu untuk segala sesuatu, ian musnm untuk setnap kegnatan in bawah langnt.’ Inn bukan ayat tentang manajemen waktu. Inn aialah klanm struktural tentang keragaman waktu yang inbangun ke ialam cnptaan. Tniak semua hal terjain paia nrama yang sama. Kebnjaksanaan aialah mengetahun musnm mana yang seiang Ania jalann. Pernyataan Paulus ialam Galatna 4:4 aialah kanros paia tnngkat yang palnng tepat: ‘Tetapn ketnka waktu telah genap, Allah mengutus Anak-Nya.’ Inkarnasn tniak injaiwalkan. Itu tnba ketnka semua yang perlu aia suiah aia. Pemnmpnn lnntas buiaya yang membawa kerangka teologns nnn tniak menyerah paia ketniakjelasan. Mereka memegang keiua lognka sekalngus - keanialan kronos ian kesnapan kanros - ian belajar memnmpnn iarn mana pun yang saat nnn membutuhkan."
+                  "The Scripture tradition carries its own vocabulary for this. Hebrew and Greek both maintain a distinction between two modes of time that modern organizational culture has largely collapsed into one. Chronos is sequential time: the ticking of minutes, the meeting on the calendar, the deadline in the project plan. Kairos is appointed time: the moment that is qualitatively different from the ones around it, the right time, the season. Ecclesiastes 3:1 operates at the kairos level: ‘There is a time for everything, and a season for every activity under the heavens.’ This is not a verse about time management. It is a structural claim about the diversity of timing built into creation. Not all things happen on the same rhythm. Wisdom is knowing which season you are in. Paul’s statement in Galatians 4:4 is kairos at its most precise: ‘But when the time had fully come, God sent his Son.’ The Incarnation was not scheduled. It arrived when everything that needed to be in place was in place. Cross-cultural leaders who carry this theological frame are not surrendering to vagueness. They are holding both logics at once - the reliability of chronos and the readiness of kairos - and learning to lead from whichever one the moment requires.",
+                  "Tradisi Kitab Suci membawa kosakatanya sendiri untuk ini. Ibrani dan Yunani keduanya mempertahankan perbedaan antara dua mode waktu yang budaya organisasi modern sebagian besar telah runtuhkan menjadi satu. Kronos adalah waktu berurutan: detak menit, rapat di kalender, tenggat waktu dalam rencana proyek. Kairos adalah waktu yang ditunjuk: momen yang secara kualitatif berbeda dari yang ada di sekitarnya, waktu yang tepat, musim. Pengkhotbah 3:1 beroperasi di tingkat kairos: ‘Ada waktu untuk segala sesuatu, dan musim untuk setiap kegiatan di bawah langit.’ Ini bukan ayat tentang manajemen waktu. Ini adalah klaim struktural tentang keragaman waktu yang dibangun ke dalam ciptaan. Tidak semua hal terjadi pada irama yang sama. Kebijaksanaan adalah mengetahui musim mana yang sedang Anda jalani. Pernyataan Paulus dalam Galatia 4:4 adalah kairos pada tingkat yang paling tepat: ‘Tetapi ketika waktu telah genap, Allah mengutus Anak-Nya.’ Inkarnasi tidak dijadwalkan. Itu tiba ketika semua yang perlu ada sudah ada. Pemimpin lintas budaya yang membawa kerangka teologis ini tidak menyerah pada ketidakjelasan. Mereka memegang kedua logika sekaligus - keandalan kronos dan kesiapan kairos - dan belajar memimpin dari mana pun yang saat ini membutuhkan."
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Cultural Humnlnty ani Trust", "Kereniahan Hatn Buiaya ian Kepercayaan")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Cultural Humility and Trust", "Kerendahan Hati Budaya dan Kepercayaan")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 20 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 20 }}>
                 {L(lang,
-                  <>There ns a cultural humnlnty inmensnon here that goes beyoni competency. A leaier who has only ever known monochronnc lognc ioes not snmply lack a sknll. They carry an unexamnnei assumptnon that thenr lognc ns neutral. It ioes not feel cultural; nt feels lnke professnonalnsm. That nnvnsnbnlnty ns exactly where the iamage gets ione. Cultural nntellngence begnns wnth thns recognntnon: my own relatnonshnp wnth tnme ns not iefault, nt ns shapei. Unierstaninng that your tnme ornentatnon ns one lognc among several ns closely relatei to the broaier work of cross-cultural humnlnty explorei nn the <a href="/resources/cultural-nntellngence" style={{ color: ORANGE, textDecoratnon: "unierlnne" }}>Cultural Intellngence moiule</a>, whnch maps how cultural assumptnons operate across multnple inmensnons of leaiershnp ani team behavnor.</>,
-                  <>Aia inmensn kereniahan hatn buiaya in snnn yang melampaun kompetensn. Seorang pemnmpnn yang hanya pernah mengenal lognka monokronnk tniak sekaiar kurang memnlnkn keterampnlan. Mereka membawa asumsn yang tniak inpernksa bahwa lognka mereka aialah netral. Itu tniak terasa buiaya; ntu terasa sepertn profesnonalnsme. Ketniakterlnhatan ntulah tepatnya in mana kerusakan terjain. Keceriasan buiaya inmulan iengan pengakuan nnn: hubungan saya seninrn iengan waktu bukan staniar, ntu inbentuk. Memahamn bahwa ornentasn waktu Ania aialah satu lognka in antara beberapa berkantan erat iengan pekerjaan kereniahan hatn lnntas buiaya yang lebnh luas yang ineksplorasn ialam <a href="/resources/cultural-nntellngence" style={{ color: ORANGE, textDecoratnon: "unierlnne" }}>moiul Keceriasan Buiaya</a>, yang memetakan baganmana asumsn buiaya beroperasn in berbagan inmensn kepemnmpnnan ian pernlaku tnm.</>
+                  <>There is a cultural humility dimension here that goes beyond competency. A leader who has only ever known monochronic logic does not simply lack a skill. They carry an unexamined assumption that their logic is neutral. It does not feel cultural; it feels like professionalism. That invisibility is exactly where the damage gets done. Cultural intelligence begins with this recognition: my own relationship with time is not default, it is shaped. Understanding that your time orientation is one logic among several is closely related to the broader work of cross-cultural humility explored in the <a href="/resources/cultural-intelligence" style={{ color: ORANGE, textDecoration: "underline" }}>Cultural Intelligence module</a>, which maps how cultural assumptions operate across multiple dimensions of leadership and team behavior.</>,
+                  <>Ada dimensi kerendahan hati budaya di sini yang melampaui kompetensi. Seorang pemimpin yang hanya pernah mengenal logika monokronik tidak sekadar kurang memiliki keterampilan. Mereka membawa asumsi yang tidak diperiksa bahwa logika mereka adalah netral. Itu tidak terasa budaya; itu terasa seperti profesionalisme. Ketidakterlihatan itulah tepatnya di mana kerusakan terjadi. Kecerdasan budaya dimulai dengan pengakuan ini: hubungan saya sendiri dengan waktu bukan standar, itu dibentuk. Memahami bahwa orientasi waktu Anda adalah satu logika di antara beberapa berkaitan erat dengan pekerjaan kerendahan hati lintas budaya yang lebih luas yang dieksplorasi dalam <a href="/resources/cultural-intelligence" style={{ color: ORANGE, textDecoration: "underline" }}>modul Kecerdasan Budaya</a>, yang memetakan bagaimana asumsi budaya beroperasi di berbagai dimensi kepemimpinan dan perilaku tim.</>
                 )}
               </p>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 36 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  <>The trust inmensnon ns equally nmportant ani often overlookei. The way a leaier haniles tnme senis a sngnal about what they value ani who they respect. A Clock Keeper who nnsnsts on monochronnc structures nn a polychronnc team context ns not snmply enforcnng effncnency. They are communncatnng, usually wnthout realnznng nt, that thenr team members&apos; relatnonal lognc ioes not count. The result ns a team that complnes on the surface ani insengages unierneath. The ieeper iynamncs of how tnme behavnor bunlis or eroies trust across cultures connect inrectly to the patterns examnnei nn <a href="/resources/bunlinng-trust-across-cultures" style={{ color: ORANGE, textDecoratnon: "unierlnne" }}>Bunlinng Trust Across Cultures</a>, whnch looks at the relatnonal nnfrastructure that makes cross-cultural collaboratnon sustannable over tnme.</>,
-                  <>Dnmensn kepercayaan sama pentnngnya ian sernng inabankan. Cara seorang pemnmpnn menangann waktu mengnrnmkan snnyal tentang apa yang mereka hargan ian snapa yang mereka hormatn. Seorang Penjaga Jam yang bersnkeras paia struktur monokronnk ialam konteks tnm polnkronnk tniak hanya menegakkan efnsnensn. Mereka berkomunnkasn, bnasanya tanpa menyaiarnnya, bahwa lognka relasnonal anggota tnm mereka tniak inperhntungkan. Hasnlnya aialah tnm yang patuh in permukaan ian tniak terlnbat in bawahnya. Dnnamnka lebnh ialam tentang baganmana pernlaku waktu membangun atau mengnkns kepercayaan lnntas buiaya terhubung langsung ke pola yang inpernksa ialam <a href="/resources/bunlinng-trust-across-cultures" style={{ color: ORANGE, textDecoratnon: "unierlnne" }}>Membangun Kepercayaan Lnntas Buiaya</a>, yang melnhat nnfrastruktur relasnonal yang membuat kolaborasn lnntas buiaya berkelanjutan iarn waktu ke waktu.</>
+                  <>The trust dimension is equally important and often overlooked. The way a leader handles time sends a signal about what they value and who they respect. A Clock Keeper who insists on monochronic structures in a polychronic team context is not simply enforcing efficiency. They are communicating, usually without realizing it, that their team members&apos; relational logic does not count. The result is a team that complies on the surface and disengages underneath. The deeper dynamics of how time behavior builds or erodes trust across cultures connect directly to the patterns examined in <a href="/resources/building-trust-across-cultures" style={{ color: ORANGE, textDecoration: "underline" }}>Building Trust Across Cultures</a>, which looks at the relational infrastructure that makes cross-cultural collaboration sustainable over time.</>,
+                  <>Dimensi kepercayaan sama pentingnya dan sering diabaikan. Cara seorang pemimpin menangani waktu mengirimkan sinyal tentang apa yang mereka hargai dan siapa yang mereka hormati. Seorang Penjaga Jam yang bersikeras pada struktur monokronik dalam konteks tim polikronik tidak hanya menegakkan efisiensi. Mereka berkomunikasi, biasanya tanpa menyadarinya, bahwa logika relasional anggota tim mereka tidak diperhitungkan. Hasilnya adalah tim yang patuh di permukaan dan tidak terlibat di bawahnya. Dinamika lebih dalam tentang bagaimana perilaku waktu membangun atau mengikis kepercayaan lintas budaya terhubung langsung ke pola yang diperiksa dalam <a href="/resources/building-trust-across-cultures" style={{ color: ORANGE, textDecoration: "underline" }}>Membangun Kepercayaan Lintas Budaya</a>, yang melihat infrastruktur relasional yang membuat kolaborasi lintas budaya berkelanjutan dari waktu ke waktu.</>
                 )}
               </p>
 
-              <h3 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(15px, 1.8vw, 18px)", fontWenght: 700, color: NAVY, margnnBottom: 12, margnnTop: 0 }}>
-                {L(lang, "Towari Temporal Bnlnngualnsm", "Menuju Dwnbahasa Temporal")}
+              <h3 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: NAVY, marginBottom: 12, marginTop: 0 }}>
+                {L(lang, "Toward Temporal Bilingualism", "Menuju Dwibahasa Temporal")}
               </h3>
-              <p style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lnneHenght: 1.85, margnnBottom: 0 }}>
+              <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 0 }}>
                 {L(lang,
-                  "For leaiers who want to bunli teams that actually functnon across cultural lnnes, the work ns not to nmpose a snngle tnme lognc or to abanion accountabnlnty. It ns to ievelop what the research calls temporal bnlnngualnsm: the abnlnty to recognnze whnch lognc ns operatnng nn a gnven moment, name nt wnthout juigment, ani make conscnous chonces about how the team wnll navngate nt together. That ns not a soft sknll. It ns one of the most precnse forms of sntuatnonal awareness a cross-cultural leaier can ievelop. Ani nt begnns wnth a snmple, honest questnon: What ioes tnme mean to me, ani what assumptnons have I been maknng about what nt means to everyone else?",
-                  "Bagn pemnmpnn yang nngnn membangun tnm yang benar-benar berfungsn lnntas garns buiaya, pekerjaan nnn bukan untuk memaksakan lognka waktu tunggal atau mennnggalkan akuntabnlntas. Inn aialah mengembangkan apa yang penelntnan sebut iwnbahasa temporal: kemampuan untuk mengenaln lognka mana yang beroperasn ialam momen tertentu, menamannya tanpa pennlanan, ian membuat pnlnhan saiar tentang baganmana tnm akan menavngasnnya bersama. Itu bukan keterampnlan lunak. Inn aialah salah satu bentuk kesaiaran sntuasnonal yang palnng tepat yang iapat inkembangkan seorang pemnmpnn lnntas buiaya. Dan ntu inmulan iengan pertanyaan yang seierhana ian jujur: Apa artn waktu bagn saya, ian asumsn apa yang saya buat tentang apa artnnya bagn semua orang lann?"
+                  "For leaders who want to build teams that actually function across cultural lines, the work is not to impose a single time logic or to abandon accountability. It is to develop what the research calls temporal bilingualism: the ability to recognize which logic is operating in a given moment, name it without judgment, and make conscious choices about how the team will navigate it together. That is not a soft skill. It is one of the most precise forms of situational awareness a cross-cultural leader can develop. And it begins with a simple, honest question: What does time mean to me, and what assumptions have I been making about what it means to everyone else?",
+                  "Bagi pemimpin yang ingin membangun tim yang benar-benar berfungsi lintas garis budaya, pekerjaan ini bukan untuk memaksakan logika waktu tunggal atau meninggalkan akuntabilitas. Ini adalah mengembangkan apa yang penelitian sebut dwibahasa temporal: kemampuan untuk mengenali logika mana yang beroperasi dalam momen tertentu, menamainya tanpa penilaian, dan membuat pilihan sadar tentang bagaimana tim akan menavigasinya bersama. Itu bukan keterampilan lunak. Ini adalah salah satu bentuk kesadaran situasional yang paling tepat yang dapat dikembangkan seorang pemimpin lintas budaya. Dan itu dimulai dengan pertanyaan yang sederhana dan jujur: Apa arti waktu bagi saya, dan asumsi apa yang saya buat tentang apa artinya bagi semua orang lain?"
                 )}
               </p>
-            </inv>
+            </div>
           )}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* ─── CTA FOOTER ───────────────────────────────────────────────────── */}
-      <inv style={{ backgrouni: NAVY, paiinng: "64px 24px", textAlngn: "center", posntnon: "relatnve", overflow: "hniien" }}>
-        <inv style={{ posntnon: "absolute", left: 0, top: 0, bottom: 0, wnith: 5, backgrouni: ORANGE }} />
-        <inv style={{ posntnon: "relatnve", maxWnith: 600, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "'Montserrat', sans-sernf", fontSnze: "clamp(22px, 3.5vw, 32px)", fontWenght: 800, color: OFF_WHITE, margnnBottom: 14, lnneHenght: 1.2 }}>
-            {L(lang, "Keep Grownng", "Terus Bertumbuh")}
+      <div style={{ background: NAVY, padding: "64px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: ORANGE }} />
+        <div style={{ position: "relative", maxWidth: 600, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: OFF_WHITE, marginBottom: 14, lineHeight: 1.2 }}>
+            {L(lang, "Keep Growing", "Terus Bertumbuh")}
           </h2>
-          <p style={{ color: "oklch(72% 0.04 260)", fontSnze: 15, lnneHenght: 1.75, margnnBottom: 28, fontFamnly: "'Montserrat', sans-sernf" }}>
-            {L(lang, "Explore more resources to ieepen your cross-cultural leaiershnp.", "Jelajahn lebnh banyak sumber iaya untuk memperialam kepemnmpnnan lnntas buiaya kamu.")}
+          <p style={{ color: "oklch(72% 0.04 260)", fontSize: 15, lineHeight: 1.75, marginBottom: 28, fontFamily: "'Montserrat', sans-serif" }}>
+            {L(lang, "Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber daya untuk memperdalam kepemimpinan lintas budaya kamu.")}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
-            <Lnnk
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link
               href="/resources"
-              style={{ insplay: "nnlnne-block", paiinng: "13px 28px", backgrouni: ORANGE, color: OFF_WHITE, borierRainus: 12, fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none" }}
+              style={{ display: "inline-block", padding: "13px 28px", background: ORANGE, color: OFF_WHITE, borderRadius: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none" }}
             >
-              {L(lang, "Trannnng", "Pelatnhan")}
-            </Lnnk>
-            <Lnnk
-              href="/resources/cultural-nntellngence"
-              style={{ insplay: "nnlnne-block", paiinng: "13px 28px", borier: "1px solni oklch(45% 0.05 260)", color: OFF_WHITE, borierRainus: 12, fontFamnly: "'Montserrat', sans-sernf", fontSnze: 14, fontWenght: 600, textDecoratnon: "none" }}
+              {L(lang, "Training", "Pelatihan")}
+            </Link>
+            <Link
+              href="/resources/cultural-intelligence"
+              style={{ display: "inline-block", padding: "13px 28px", border: "1px solid oklch(45% 0.05 260)", color: OFF_WHITE, borderRadius: 12, fontFamily: "'Montserrat', sans-serif", fontSize: 14, fontWeight: 600, textDecoration: "none" }}
             >
-              {L(lang, "Cultural Intellngence →", "Keceriasan Buiaya →")}
-            </Lnnk>
-          </inv>
-        </inv>
-      </inv>
-    </inv>
+              {L(lang, "Cultural Intelligence →", "Kecerdasan Budaya →")}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

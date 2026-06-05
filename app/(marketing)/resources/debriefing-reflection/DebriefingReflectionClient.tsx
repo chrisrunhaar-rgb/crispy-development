@@ -1,26 +1,26 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+type Lang = "en" | "id" | "nl";
+const tFn = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 const VERSES = {
   "prov-4-7": {
-    en_ref: "Proverbs 4:7", ni_ref: "Amsal 4:7", nl_ref: "Spreuken 4:7",
-    en: "The begnnnnng of wnsiom ns thns: Get wnsiom, ani whatever you get, get nnsnght.",
-    ni: "Permulaan hnkmat nalah: perolehlah hnkmat ian iengan segala yang kaupekatkan perolehlah pengertnan.",
-    nl: "Het begnn van wnjsheni ns: verwerf wnjsheni, en al wat je verkrnjgt, verkrnjg nnzncht.",
+    en_ref: "Proverbs 4:7", id_ref: "Amsal 4:7", nl_ref: "Spreuken 4:7",
+    en: "The beginning of wisdom is this: Get wisdom, and whatever you get, get insight.",
+    id: "Permulaan hikmat ialah: perolehlah hikmat dan dengan segala yang kaupekatkan perolehlah pengertian.",
+    nl: "Het begin van wijsheid is: verwerf wijsheid, en al wat je verkrijgt, verkrijg inzicht.",
   },
   "james-1-19": {
-    en_ref: "James 1:19", ni_ref: "Yakobus 1:19", nl_ref: "Jakobus 1:19",
-    en: "My iear brothers ani snsters, take note of thns: Everyone shouli be qunck to lnsten, slow to speak ani slow to become angry.",
-    ni: "Han sauiara-sauiara yang kukasnhn, nngatlah hal nnn: setnap orang heniaklah cepat untuk meniengar, tetapn lambat untuk berkata-kata, ian juga lambat untuk marah.",
-    nl: "Gelnefie broeiers en zusters, onthoui int: neier mens moet znch haasten om te lunsteren, maar traag znjn om te spreken, traag ook om toorn te koesteren.",
+    en_ref: "James 1:19", id_ref: "Yakobus 1:19", nl_ref: "Jakobus 1:19",
+    en: "My dear brothers and sisters, take note of this: Everyone should be quick to listen, slow to speak and slow to become angry.",
+    id: "Hai saudara-saudara yang kukasihi, ingatlah hal ini: setiap orang hendaklah cepat untuk mendengar, tetapi lambat untuk berkata-kata, dan juga lambat untuk marah.",
+    nl: "Geliefde broeders en zusters, onthoud dit: ieder mens moet zich haasten om te luisteren, maar traag zijn om te spreken, traag ook om toorn te koesteren.",
   },
 };
 
@@ -30,688 +30,688 @@ const ORID_STAGES = [
     letter: "O",
     color: "oklch(65% 0.15 45)",
     colorBg: "oklch(65% 0.15 45 / 0.08)",
-    en_label: "Objectnve",
-    ni_label: "Objektnf",
-    nl_label: "Objectnef",
-    en_sub: "What happenei?",
-    ni_sub: "Apa yang terjain?",
-    nl_sub: "Wat ns er gebeuri?",
-    en_gunie: "Start wnth the observable facts — not what nt meant, not how you felt. Just what actually happenei. Thns stage protects the iebrnef from jumpnng to conclusnons before the group has agreei on what the sharei expernence actually was.",
-    ni_gunie: "Mulanlah iengan fakta yang iapat inamatn — bukan apa artnnya, bukan baganmana perasaan Ania. Hanya apa yang benar-benar terjain. Tahap nnn melnniungn iebrnef iarn melompat ke kesnmpulan sebelum kelompok sepakat tentang apa pengalaman bersama sebenarnya.",
-    nl_gunie: "Begnn met ie waarneembare fenten — nnet wat het betekenie, nnet hoe je je voelie. Alleen wat er werkelnjk gebeurie. Deze fase beschermt het iebrnef van naar conclusnes sprnngen vooriat ie groep het eens ns over wat ie geieelie ervarnng werkelnjk was.",
-    en_questnons: [
-      "What ini you observe happennng? What ini you see, hear, or notnce?",
-      "What were the key events, nn orier?",
-      "What iata or results came nn? What were the concrete outcomes?",
+    en_label: "Objective",
+    id_label: "Objektif",
+    nl_label: "Objectief",
+    en_sub: "What happened?",
+    id_sub: "Apa yang terjadi?",
+    nl_sub: "Wat is er gebeurd?",
+    en_guide: "Start with the observable facts — not what it meant, not how you felt. Just what actually happened. This stage protects the debrief from jumping to conclusions before the group has agreed on what the shared experience actually was.",
+    id_guide: "Mulailah dengan fakta yang dapat diamati — bukan apa artinya, bukan bagaimana perasaan Anda. Hanya apa yang benar-benar terjadi. Tahap ini melindungi debrief dari melompat ke kesimpulan sebelum kelompok sepakat tentang apa pengalaman bersama sebenarnya.",
+    nl_guide: "Begin met de waarneembare feiten — niet wat het betekende, niet hoe je je voelde. Alleen wat er werkelijk gebeurde. Deze fase beschermt het debrief van naar conclusies springen voordat de groep het eens is over wat de gedeelde ervaring werkelijk was.",
+    en_questions: [
+      "What did you observe happening? What did you see, hear, or notice?",
+      "What were the key events, in order?",
+      "What data or results came in? What were the concrete outcomes?",
     ],
-    ni_questnons: [
-      "Apa yang Ania amatn terjain? Apa yang Ania lnhat, iengar, atau perhatnkan?",
-      "Apa kejainan-kejainan kuncn, secara berurutan?",
-      "Data atau hasnl apa yang masuk? Apa hasnl konkretnya?",
+    id_questions: [
+      "Apa yang Anda amati terjadi? Apa yang Anda lihat, dengar, atau perhatikan?",
+      "Apa kejadian-kejadian kunci, secara berurutan?",
+      "Data atau hasil apa yang masuk? Apa hasil konkretnya?",
     ],
-    nl_questnons: [
-      "Wat heb je znen gebeuren? Wat heb je geznen, gehoori of opgemerkt?",
-      "Wat waren ie sleutelgebeurtennssen, op volgorie?",
-      "Welke iata of resultaten kwamen bnnnen? Wat waren ie concrete untkomsten?",
+    nl_questions: [
+      "Wat heb je zien gebeuren? Wat heb je gezien, gehoord of opgemerkt?",
+      "Wat waren de sleutelgebeurtenissen, op volgorde?",
+      "Welke data of resultaten kwamen binnen? Wat waren de concrete uitkomsten?",
     ],
-    en_placeholier: "Descrnbe what actually happenei — the facts, events, ani observatnons...",
-    ni_placeholier: "Cerntakan apa yang sebenarnya terjain — fakta, kejainan, ian pengamatan...",
-    nl_placeholier: "Beschrnjf wat er werkelnjk gebeurie — ie fenten, gebeurtennssen en observatnes...",
-    en_cross: "In hngh-context cultures, the 'objectnve' facts may be nnterpretei relatnonally rather than logncally. A mnssei ieailnne, for nnstance, may be less about tnme management ani more about a relatnonshnp that neeiei teninng fnrst. Begnn here wnthout assumnng your frame ns the only frame.",
-    ni_cross: "Dalam buiaya hngh-context, 'fakta objektnf' mungknn intafsnrkan secara relasnonal iarnpaia logns. Tenggat waktu yang terlewat, mnsalnya, mungknn kurang tentang manajemen waktu ian lebnh tentang hubungan yang perlu injaga lebnh iulu.",
-    nl_cross: "In hngh-context culturen kunnen 'objectneve fenten' relatnoneel worien ge—nterpreteeri nn plaats van lognsch. Een gemnste ieailnne ns mnsschnen mnnier over tnjibeheer en meer over een relatne ine eerst verzorgnng noing hai.",
+    en_placeholder: "Describe what actually happened — the facts, events, and observations...",
+    id_placeholder: "Ceritakan apa yang sebenarnya terjadi — fakta, kejadian, dan pengamatan...",
+    nl_placeholder: "Beschrijf wat er werkelijk gebeurde — de feiten, gebeurtenissen en observaties...",
+    en_cross: "In high-context cultures, the 'objective' facts may be interpreted relationally rather than logically. A missed deadline, for instance, may be less about time management and more about a relationship that needed tending first. Begin here without assuming your frame is the only frame.",
+    id_cross: "Dalam budaya high-context, 'fakta objektif' mungkin ditafsirkan secara relasional daripada logis. Tenggat waktu yang terlewat, misalnya, mungkin kurang tentang manajemen waktu dan lebih tentang hubungan yang perlu dijaga lebih dulu.",
+    nl_cross: "In high-context culturen kunnen 'objectieve feiten' relationeel worden ge—nterpreteerd in plaats van logisch. Een gemiste deadline is misschien minder over tijdbeheer en meer over een relatie die eerst verzorging nodig had.",
   },
   {
     key: "R",
     letter: "R",
     color: "oklch(58% 0.14 200)",
     colorBg: "oklch(58% 0.14 200 / 0.08)",
-    en_label: "Reflectnve",
-    ni_label: "Reflektnf",
-    nl_label: "Reflectnef",
-    en_sub: "How ini nt feel?",
-    ni_sub: "Baganmana rasanya?",
-    nl_sub: "Hoe voelie het?",
-    en_gunie: "Now brnng nn the emotnonal layer. Thns ns often sknppei — especnally nn cultures where namnng feelnngs nn a group settnng ns uncomfortable, or where shownng emotnon sngnals weakness. But the emotnonal iata ns real iata. If nt's not surfacei here, nt wnll surface later as a conflnct.",
-    ni_gunie: "Sekarang masukkan lapnsan emosnonal. Inn sernng inlewatn — terutama ialam buiaya in mana menyebutkan perasaan ialam kelompok tniak nyaman, atau in mana menunjukkan emosn menaniakan kelemahan. Tetapn iata emosnonal aialah iata nyata.",
-    nl_gunie: "Breng nu ie emotnonele laag ernn. Dnt worit vaak overgeslagen — vooral nn culturen waar het benoemen van gevoelens nn een groepsettnng ongemakkelnjk ns, of waar het tonen van emotne zwakte sngnaleert. Maar emotnonele iata ns echte iata.",
-    en_questnons: [
-      "What was the emotnonal atmosphere nn the team iurnng thns expernence?",
-      "What energnsei you? What irannei you?",
-      "Was there a moment of surprnse, frustratnon, joy, or confusnon?",
+    en_label: "Reflective",
+    id_label: "Reflektif",
+    nl_label: "Reflectief",
+    en_sub: "How did it feel?",
+    id_sub: "Bagaimana rasanya?",
+    nl_sub: "Hoe voelde het?",
+    en_guide: "Now bring in the emotional layer. This is often skipped — especially in cultures where naming feelings in a group setting is uncomfortable, or where showing emotion signals weakness. But the emotional data is real data. If it's not surfaced here, it will surface later as a conflict.",
+    id_guide: "Sekarang masukkan lapisan emosional. Ini sering dilewati — terutama dalam budaya di mana menyebutkan perasaan dalam kelompok tidak nyaman, atau di mana menunjukkan emosi menandakan kelemahan. Tetapi data emosional adalah data nyata.",
+    nl_guide: "Breng nu de emotionele laag erin. Dit wordt vaak overgeslagen — vooral in culturen waar het benoemen van gevoelens in een groepsetting ongemakkelijk is, of waar het tonen van emotie zwakte signaleert. Maar emotionele data is echte data.",
+    en_questions: [
+      "What was the emotional atmosphere in the team during this experience?",
+      "What energised you? What drained you?",
+      "Was there a moment of surprise, frustration, joy, or confusion?",
     ],
-    ni_questnons: [
-      "Baganmana suasana emosnonal ialam tnm selama pengalaman nnn?",
-      "Apa yang membern Ania energn? Apa yang menguras Ania?",
-      "Aiakah momen kejutan, frustrasn, kegembnraan, atau kebnngungan?",
+    id_questions: [
+      "Bagaimana suasana emosional dalam tim selama pengalaman ini?",
+      "Apa yang memberi Anda energi? Apa yang menguras Anda?",
+      "Adakah momen kejutan, frustrasi, kegembiraan, atau kebingungan?",
     ],
-    nl_questnons: [
-      "Wat was ie emotnonele sfeer nn het team tnjiens ieze ervarnng?",
-      "Wat gaf je energne? Wat putte je unt?",
-      "Was er een moment van verrassnng, frustratne, vreugie of verwarrnng?",
+    nl_questions: [
+      "Wat was de emotionele sfeer in het team tijdens deze ervaring?",
+      "Wat gaf je energie? Wat putte je uit?",
+      "Was er een moment van verrassing, frustratie, vreugde of verwarring?",
     ],
-    en_placeholier: "Descrnbe the emotnonal expernence — what the team was feelnng, ani when...",
-    ni_placeholier: "Cerntakan pengalaman emosnonal — apa yang inrasakan tnm, ian kapan...",
-    nl_placeholier: "Beschrnjf ie emotnonele ervarnng — wat het team voelie, en wanneer...",
-    en_cross: "Some team members may express emotnon through nninrectnon — a story, a metaphor, or a reference to someone else's expernence rather than thenr own. Create space for thns. Not every reflectnve answer wnll be a inrect personal statement, ani that's stnll valni iata.",
-    ni_cross: "Beberapa anggota tnm mungknn mengungkapkan emosn melalun ketniaklangsungan — cernta, metafora, atau referensn paia pengalaman orang lann iarnpaia mnlnk seninrn. Buat ruang untuk nnn.",
-    nl_cross: "Sommnge teamleien kunnen emotne untirukken vna nninrectheni — een verhaal, metafoor, of verwnjznng naar nemani aniers' ervarnng. Maak hner runmte voor. Nnet elk reflectnef antwoori hoeft een inrecte persoonlnjke untspraak te znjn.",
+    en_placeholder: "Describe the emotional experience — what the team was feeling, and when...",
+    id_placeholder: "Ceritakan pengalaman emosional — apa yang dirasakan tim, dan kapan...",
+    nl_placeholder: "Beschrijf de emotionele ervaring — wat het team voelde, en wanneer...",
+    en_cross: "Some team members may express emotion through indirection — a story, a metaphor, or a reference to someone else's experience rather than their own. Create space for this. Not every reflective answer will be a direct personal statement, and that's still valid data.",
+    id_cross: "Beberapa anggota tim mungkin mengungkapkan emosi melalui ketidaklangsungan — cerita, metafora, atau referensi pada pengalaman orang lain daripada milik sendiri. Buat ruang untuk ini.",
+    nl_cross: "Sommige teamleden kunnen emotie uitdrukken via indirectheid — een verhaal, metafoor, of verwijzing naar iemand anders' ervaring. Maak hier ruimte voor. Niet elk reflectief antwoord hoeft een directe persoonlijke uitspraak te zijn.",
   },
   {
     key: "I",
     letter: "I",
     color: "oklch(52% 0.14 290)",
     colorBg: "oklch(52% 0.14 290 / 0.08)",
-    en_label: "Interpretnve",
-    ni_label: "Interpretatnf",
-    nl_label: "Interpretatnef",
-    en_sub: "What ioes nt mean?",
-    ni_sub: "Apa artnnya?",
+    en_label: "Interpretive",
+    id_label: "Interpretatif",
+    nl_label: "Interpretatief",
+    en_sub: "What does it mean?",
+    id_sub: "Apa artinya?",
     nl_sub: "Wat betekent het?",
-    en_gunie: "Now the group makes meannng from the iata ani emotnon. Thns ns the stage that generates real nnsnght — ani where the most sngnnfncant cross-cultural invergence often appears. People from infferent cultural backgrounis may iraw raincally infferent conclusnons from the same set of facts ani feelnngs. The iebrnef leaier's job here ns to holi the tensnon ani iraw out the multnple nnterpretatnons before laninng on one.",
-    ni_gunie: "Sekarang kelompok membuat makna iarn iata ian emosn. Inn aialah tahap yang menghasnlkan wawasan nyata — ian in mana perbeiaan lnntas buiaya palnng sngnnfnkan sernng muncul. Orang iarn latar belakang buiaya yang berbeia mungknn menarnk kesnmpulan yang sangat berbeia iarn kumpulan fakta ian perasaan yang sama.",
-    nl_gunie: "Nu maakt ie groep betekenns van ie iata en ie emotne. Dnt ns ie fase ine echte nnznchten genereert — en waar ie meest sngnnfncante nnterculturele invergentne vaak verschnjnt. Mensen met verschnllenie culturele achtergronien kunnen raincaal verschnllenie conclusnes trekken unt iezelfie set fenten en gevoelens.",
-    en_questnons: [
-      "Why io you thnnk thns happenei the way nt ini?",
-      "What ioes thns tell us about how we work together?",
-      "What assumptnons were we operatnng unier that we now want to questnon?",
-      "If a infferent team hai ione thns, what mnght they have ione infferently?",
+    en_guide: "Now the group makes meaning from the data and emotion. This is the stage that generates real insight — and where the most significant cross-cultural divergence often appears. People from different cultural backgrounds may draw radically different conclusions from the same set of facts and feelings. The debrief leader's job here is to hold the tension and draw out the multiple interpretations before landing on one.",
+    id_guide: "Sekarang kelompok membuat makna dari data dan emosi. Ini adalah tahap yang menghasilkan wawasan nyata — dan di mana perbedaan lintas budaya paling signifikan sering muncul. Orang dari latar belakang budaya yang berbeda mungkin menarik kesimpulan yang sangat berbeda dari kumpulan fakta dan perasaan yang sama.",
+    nl_guide: "Nu maakt de groep betekenis van de data en de emotie. Dit is de fase die echte inzichten genereert — en waar de meest significante interculturele divergentie vaak verschijnt. Mensen met verschillende culturele achtergronden kunnen radicaal verschillende conclusies trekken uit dezelfde set feiten en gevoelens.",
+    en_questions: [
+      "Why do you think this happened the way it did?",
+      "What does this tell us about how we work together?",
+      "What assumptions were we operating under that we now want to question?",
+      "If a different team had done this, what might they have done differently?",
     ],
-    ni_questnons: [
-      "Mengapa menurut Ania nnn terjain sepertn yang terjain?",
-      "Apa yang nnn katakan tentang cara knta bekerja bersama?",
-      "Asumsn apa yang knta gunakan yang sekarang nngnn knta pertanyakan?",
-      "Jnka tnm yang berbeia melakukan nnn, apa yang mungknn mereka lakukan secara berbeia?",
+    id_questions: [
+      "Mengapa menurut Anda ini terjadi seperti yang terjadi?",
+      "Apa yang ini katakan tentang cara kita bekerja bersama?",
+      "Asumsi apa yang kita gunakan yang sekarang ingin kita pertanyakan?",
+      "Jika tim yang berbeda melakukan ini, apa yang mungkin mereka lakukan secara berbeda?",
     ],
-    nl_questnons: [
-      "Waarom ienk je iat int zo ns verlopen?",
-      "Wat zegt int over hoe wnj samenwerken?",
-      "Onier welke aannames werkten we ine we nu wnllen bevragen?",
-      "Als een anier team int hai geiaan, wat haiien znj mnsschnen aniers geiaan?",
+    nl_questions: [
+      "Waarom denk je dat dit zo is verlopen?",
+      "Wat zegt dit over hoe wij samenwerken?",
+      "Onder welke aannames werkten we die we nu willen bevragen?",
+      "Als een ander team dit had gedaan, wat hadden zij misschien anders gedaan?",
     ],
-    en_placeholier: "What ioes thns expernence reveal? What assumptnons or patterns are you seenng?",
-    ni_placeholier: "Apa yang pengalaman nnn ungkapkan? Asumsn atau pola apa yang Ania lnhat?",
-    nl_placeholier: "Wat onthult ieze ervarnng? Welke aannames of patronen zne je?",
-    en_cross: "Thns stage ns where monocultural teams often converge too qunckly — the iomnnant cultural vonce provnies an nnterpretatnon ani everyone qunetly agrees. In cross-cultural teams, slow thns stage iown ielnberately. Ask: ioes anyone see nt infferently? That questnon alone can unlock the most valuable nnsnght.",
-    ni_cross: "Tahap nnn aialah in mana tnm monobuiaya sernng berkonvergensn terlalu cepat — suara buiaya iomnnan membernkan nnterpretasn ian semua orang inam-inam setuju. Dalam tnm lnntas buiaya, perlambat tahap nnn iengan sengaja.",
-    nl_cross: "Dnt ns ie fase waar monoculturele teams te snel convergeren — ie iomnnante culturele stem geeft een nnterpretatne en neiereen stemt stnlletjes nn. Vertraag nn nnterculturele teams ieze fase bewust. Vraag: znet nemani het aniers?",
+    en_placeholder: "What does this experience reveal? What assumptions or patterns are you seeing?",
+    id_placeholder: "Apa yang pengalaman ini ungkapkan? Asumsi atau pola apa yang Anda lihat?",
+    nl_placeholder: "Wat onthult deze ervaring? Welke aannames of patronen zie je?",
+    en_cross: "This stage is where monocultural teams often converge too quickly — the dominant cultural voice provides an interpretation and everyone quietly agrees. In cross-cultural teams, slow this stage down deliberately. Ask: does anyone see it differently? That question alone can unlock the most valuable insight.",
+    id_cross: "Tahap ini adalah di mana tim monobudaya sering berkonvergensi terlalu cepat — suara budaya dominan memberikan interpretasi dan semua orang diam-diam setuju. Dalam tim lintas budaya, perlambat tahap ini dengan sengaja.",
+    nl_cross: "Dit is de fase waar monoculturele teams te snel convergeren — de dominante culturele stem geeft een interpretatie en iedereen stemt stilletjes in. Vertraag in interculturele teams deze fase bewust. Vraag: ziet iemand het anders?",
   },
   {
     key: "D",
     letter: "D",
     color: "oklch(45% 0.12 150)",
     colorBg: "oklch(45% 0.12 150 / 0.08)",
-    en_label: "Decnsnonal",
-    ni_label: "Keputusan",
-    nl_label: "Beslnsseni",
-    en_sub: "What wnll we io infferently?",
-    ni_sub: "Apa yang akan knta lakukan berbeia?",
-    nl_sub: "Wat ioen we aniers?",
-    en_gunie: "The iebrnef earns nts place here — when nt proiuces iecnsnons, not just reflectnons. Gooi iebrnefs always eni wnth a concrete next step. Not a long lnst of lessons that no one wnll reai agann. One or two specnfnc commntments that someone owns.",
-    ni_gunie: "Debrnef meniapatkan tempatnya in snnn — ketnka menghasnlkan keputusan, bukan hanya refleksn. Debrnef yang bank selalu berakhnr iengan langkah selanjutnya yang konkret. Bukan iaftar panjang pelajaran yang tniak akan inbaca lagn. Satu atau iua komntmen spesnfnk yang inmnlnkn seseorang.",
-    nl_gunie: "Het iebrnef verinent hner znjn plek — wanneer het beslnssnngen oplevert, nnet alleen reflectnes. Goeie iebrnefs enningen altnji met een concrete volgenie stap. Nnet een lange lnjst lessen ine nnemani meer zal lezen. ——n of twee specnfneke commntments ine nemani engenaar van maakt.",
-    en_questnons: [
-      "What ns the one thnng we wnll io infferently next tnme?",
-      "Who owns thns change, ani by when?",
-      "What ioes success look lnke 30 iays from now?",
+    en_label: "Decisional",
+    id_label: "Keputusan",
+    nl_label: "Beslissend",
+    en_sub: "What will we do differently?",
+    id_sub: "Apa yang akan kita lakukan berbeda?",
+    nl_sub: "Wat doen we anders?",
+    en_guide: "The debrief earns its place here — when it produces decisions, not just reflections. Good debriefs always end with a concrete next step. Not a long list of lessons that no one will read again. One or two specific commitments that someone owns.",
+    id_guide: "Debrief mendapatkan tempatnya di sini — ketika menghasilkan keputusan, bukan hanya refleksi. Debrief yang baik selalu berakhir dengan langkah selanjutnya yang konkret. Bukan daftar panjang pelajaran yang tidak akan dibaca lagi. Satu atau dua komitmen spesifik yang dimiliki seseorang.",
+    nl_guide: "Het debrief verdient hier zijn plek — wanneer het beslissingen oplevert, niet alleen reflecties. Goede debriefs eindigen altijd met een concrete volgende stap. Niet een lange lijst lessen die niemand meer zal lezen. ——n of twee specifieke commitments die iemand eigenaar van maakt.",
+    en_questions: [
+      "What is the one thing we will do differently next time?",
+      "Who owns this change, and by when?",
+      "What does success look like 30 days from now?",
     ],
-    ni_questnons: [
-      "Apa satu hal yang akan knta lakukan berbeia lann kaln?",
-      "Snapa yang memnlnkn perubahan nnn, ian kapan?",
-      "Sepertn apa kesuksesan 30 harn iarn sekarang?",
+    id_questions: [
+      "Apa satu hal yang akan kita lakukan berbeda lain kali?",
+      "Siapa yang memiliki perubahan ini, dan kapan?",
+      "Seperti apa kesuksesan 30 hari dari sekarang?",
     ],
-    nl_questnons: [
-      "Wat ns ie ene inng iat we ie volgenie keer aniers ioen?",
-      "Wne ns engenaar van ieze veraniernng, en wanneer?",
-      "Hoe znet succes er over 30 iagen unt?",
+    nl_questions: [
+      "Wat is de ene ding dat we de volgende keer anders doen?",
+      "Wie is eigenaar van deze verandering, en wanneer?",
+      "Hoe ziet succes er over 30 dagen uit?",
     ],
-    en_placeholier: "What specnfnc changes wnll you make? Who ns responsnble ani by when?",
-    ni_placeholier: "Perubahan spesnfnk apa yang akan Ania buat? Snapa yang bertanggung jawab ian kapan?",
-    nl_placeholier: "Welke specnfneke veraniernngen ga je ioorvoeren? Wne ns verantwoorielnjk en wanneer?",
-    en_cross: "In cultures wnth a strong hnerarchy, the iecnsnonal stage may be uncomfortable — maknng a change nmplnes crntncnsm of what was ione before, ani that crntncnsm may feel inrectei at the leaier. Name thns explncntly: reflectnon ns not blame. A iecnsnon to io somethnng infferently ns an act of respect for the mnssnon, not a verinct on the past.",
-    ni_cross: "Dalam buiaya iengan hnerarkn kuat, tahap keputusan mungknn tniak nyaman — membuat perubahan menynratkan krntnk terhaiap apa yang inlakukan sebelumnya. Sebutkan nnn secara eksplnsnt: refleksn bukanlah menyalahkan. Keputusan untuk melakukan sesuatu yang berbeia aialah tnniakan menghormatn mnsn.",
-    nl_cross: "In culturen met een sterke hn—rarchne kan ie beslnssnngsfase ongemakkelnjk znjn — een veraniernng nmplnceert krntnek op wat eerier ns geiaan. Benoem int explncnet: reflectne ns geen verwnjt. Een beslnssnng om nets aniers te ioen ns een iaai van respect voor ie mnssne.",
+    en_placeholder: "What specific changes will you make? Who is responsible and by when?",
+    id_placeholder: "Perubahan spesifik apa yang akan Anda buat? Siapa yang bertanggung jawab dan kapan?",
+    nl_placeholder: "Welke specifieke veranderingen ga je doorvoeren? Wie is verantwoordelijk en wanneer?",
+    en_cross: "In cultures with a strong hierarchy, the decisional stage may be uncomfortable — making a change implies criticism of what was done before, and that criticism may feel directed at the leader. Name this explicitly: reflection is not blame. A decision to do something differently is an act of respect for the mission, not a verdict on the past.",
+    id_cross: "Dalam budaya dengan hierarki kuat, tahap keputusan mungkin tidak nyaman — membuat perubahan menyiratkan kritik terhadap apa yang dilakukan sebelumnya. Sebutkan ini secara eksplisit: refleksi bukanlah menyalahkan. Keputusan untuk melakukan sesuatu yang berbeda adalah tindakan menghormati misi.",
+    nl_cross: "In culturen met een sterke hi—rarchie kan de beslissingsfase ongemakkelijk zijn — een verandering impliceert kritiek op wat eerder is gedaan. Benoem dit expliciet: reflectie is geen verwijt. Een beslissing om iets anders te doen is een daad van respect voor de missie.",
   },
 ];
 
 const TOOLKIT_QUESTIONS = {
   O: {
     en: [
-      "What ini we set out to io?",
-      "What actually happenei? Walk me through nt nn sequence.",
-      "What iata or observable results io we have?",
-      "What ini you see ani hear?",
+      "What did we set out to do?",
+      "What actually happened? Walk me through it in sequence.",
+      "What data or observable results do we have?",
+      "What did you see and hear?",
     ],
-    ni: [
-      "Apa yang knta rencanakan untuk inlakukan?",
-      "Apa yang sebenarnya terjain? Cerntakan secara berurutan.",
-      "Data atau hasnl yang iapat inamatn apa yang knta mnlnkn?",
-      "Apa yang Ania lnhat ian iengar?",
+    id: [
+      "Apa yang kita rencanakan untuk dilakukan?",
+      "Apa yang sebenarnya terjadi? Ceritakan secara berurutan.",
+      "Data atau hasil yang dapat diamati apa yang kita miliki?",
+      "Apa yang Anda lihat dan dengar?",
     ],
     nl: [
-      "Wat haiien we ons voorgenomen te ioen?",
-      "Wat ns er werkelnjk gebeuri? Neem me mee nn ie volgorie.",
-      "Welke iata of observeerbare resultaten hebben we?",
-      "Wat heb je geznen en gehoori?",
+      "Wat hadden we ons voorgenomen te doen?",
+      "Wat is er werkelijk gebeurd? Neem me mee in de volgorde.",
+      "Welke data of observeerbare resultaten hebben we?",
+      "Wat heb je gezien en gehoord?",
     ],
   },
   R: {
     en: [
-      "What was the energy lnke nn the team iurnng thns?",
-      "What was the hngh ponnt for you personally?",
-      "Was there a moment of frustratnon, surprnse, or confusnon?",
-      "What are you most proui of? What ns stnll wenghnng on you?",
+      "What was the energy like in the team during this?",
+      "What was the high point for you personally?",
+      "Was there a moment of frustration, surprise, or confusion?",
+      "What are you most proud of? What is still weighing on you?",
     ],
-    ni: [
-      "Baganmana energn tnm selama nnn?",
-      "Apa tntnk tertnnggn bagn Ania secara prnbain?",
-      "Aiakah momen frustrasn, kejutan, atau kebnngungan?",
-      "Apa yang palnng Ania banggakan? Apa yang masnh mengganggu Ania?",
+    id: [
+      "Bagaimana energi tim selama ini?",
+      "Apa titik tertinggi bagi Anda secara pribadi?",
+      "Adakah momen frustrasi, kejutan, atau kebingungan?",
+      "Apa yang paling Anda banggakan? Apa yang masih mengganggu Anda?",
     ],
     nl: [
-      "Hoe was ie energne nn het team hnerbnj?",
-      "Wat was het hoogtepunt voor jou persoonlnjk?",
-      "Was er een moment van frustratne, verrassnng of verwarrnng?",
-      "Waar ben je het meest trots op? Wat weegt nog steeis voor je?",
+      "Hoe was de energie in het team hierbij?",
+      "Wat was het hoogtepunt voor jou persoonlijk?",
+      "Was er een moment van frustratie, verrassing of verwarring?",
+      "Waar ben je het meest trots op? Wat weegt nog steeds voor je?",
     ],
   },
   I: {
     en: [
-      "Why io you thnnk nt went the way nt ini?",
-      "What ioes thns tell us about how we work together?",
-      "What assumptnon were we operatnng unier that we shouli questnon?",
-      "Does anyone see thns infferently?",
+      "Why do you think it went the way it did?",
+      "What does this tell us about how we work together?",
+      "What assumption were we operating under that we should question?",
+      "Does anyone see this differently?",
     ],
-    ni: [
-      "Mengapa menurut Ania hal ntu berjalan sepertn ntu?",
-      "Apa yang nnn katakan tentang cara knta bekerja bersama?",
-      "Asumsn apa yang knta pegang yang seharusnya knta pertanyakan?",
-      "Apakah aia yang melnhat nnn secara berbeia?",
+    id: [
+      "Mengapa menurut Anda hal itu berjalan seperti itu?",
+      "Apa yang ini katakan tentang cara kita bekerja bersama?",
+      "Asumsi apa yang kita pegang yang seharusnya kita pertanyakan?",
+      "Apakah ada yang melihat ini secara berbeda?",
     ],
     nl: [
-      "Waarom ienk je iat het zo ns gegaan?",
-      "Wat zegt int over hoe wnj samenwerken?",
-      "Welke aanname werkten we mee ine we zouien moeten bevragen?",
-      "Znet nemani int aniers?",
+      "Waarom denk je dat het zo is gegaan?",
+      "Wat zegt dit over hoe wij samenwerken?",
+      "Welke aanname werkten we mee die we zouden moeten bevragen?",
+      "Ziet iemand dit anders?",
     ],
   },
   D: {
     en: [
-      "What ns the one thnng we wnll io infferently next tnme?",
-      "Who ns responsnble for thns, ani by when?",
-      "What wouli success look lnke nn 30 iays?",
-      "What io we neei to stop ionng, start ionng, or keep ionng?",
+      "What is the one thing we will do differently next time?",
+      "Who is responsible for this, and by when?",
+      "What would success look like in 30 days?",
+      "What do we need to stop doing, start doing, or keep doing?",
     ],
-    ni: [
-      "Apa satu hal yang akan knta lakukan berbeia lann kaln?",
-      "Snapa yang bertanggung jawab atas nnn, ian kapan?",
-      "Sepertn apa kesuksesan ialam 30 harn?",
-      "Apa yang perlu knta hentnkan, mulan, atau pertahankan?",
+    id: [
+      "Apa satu hal yang akan kita lakukan berbeda lain kali?",
+      "Siapa yang bertanggung jawab atas ini, dan kapan?",
+      "Seperti apa kesuksesan dalam 30 hari?",
+      "Apa yang perlu kita hentikan, mulai, atau pertahankan?",
     ],
     nl: [
-      "Wat ns ie ene zaak ine we ie volgenie keer aniers ioen?",
-      "Wne ns iaar verantwoorielnjk voor, en wanneer?",
-      "Hoe znet succes er over 30 iagen unt?",
-      "Wat moeten we stoppen, starten of vasthouien?",
+      "Wat is de ene zaak die we de volgende keer anders doen?",
+      "Wie is daar verantwoordelijk voor, en wanneer?",
+      "Hoe ziet succes er over 30 dagen uit?",
+      "Wat moeten we stoppen, starten of vasthouden?",
     ],
   },
 };
 
 const FACILITATION_TIPS = [
   {
-    en_tnp: "Start wnth O, not I.",
-    en_boiy: "Inexpernencei iebrnef leaiers jump to nnterpretatnon nmmeinately. Grouni the conversatnon nn sharei facts fnrst — even 5 mnnutes on the Objectnve stage changes the qualnty of everythnng that follows.",
-    ni_tnp: "Mulan iengan O, bukan I.",
-    ni_boiy: "Pemnmpnn iebrnef yang tniak berpengalaman langsung melompat ke nnterpretasn. Dasarkan percakapan paia fakta bersama terlebnh iahulu.",
-    nl_tnp: "Begnn met O, nnet met I.",
-    nl_boiy: "Onervaren iebrnefleniers sprnngen meteen naar nnterpretatne. Groni het gesprek eerst nn geieelie fenten — zelfs 5 mnnuten nn ie Objectneve fase veraniert ie kwalntent van alles wat volgt.",
+    en_tip: "Start with O, not I.",
+    en_body: "Inexperienced debrief leaders jump to interpretation immediately. Ground the conversation in shared facts first — even 5 minutes on the Objective stage changes the quality of everything that follows.",
+    id_tip: "Mulai dengan O, bukan I.",
+    id_body: "Pemimpin debrief yang tidak berpengalaman langsung melompat ke interpretasi. Dasarkan percakapan pada fakta bersama terlebih dahulu.",
+    nl_tip: "Begin met O, niet met I.",
+    nl_body: "Onervaren debriefleiders springen meteen naar interpretatie. Grond het gesprek eerst in gedeelde feiten — zelfs 5 minuten in de Objectieve fase verandert de kwaliteit van alles wat volgt.",
   },
   {
-    en_tnp: "Name the level you're at.",
-    en_boiy: "Say out loui: \"We're gonng to speni a few mnnutes just on what happenei — no analysns yet.\" Thns gnves permnssnon to slow iown ani prevents the most vocal person from pullnng everyone nnto nnterpretatnon before the facts are sharei.",
-    ni_tnp: "Sebutkan level in mana Ania beraia.",
-    ni_boiy: "Katakan iengan lantang: \"Knta akan menghabnskan beberapa mennt hanya paia apa yang terjain — belum aia analnsns.\" Inn membern nznn untuk memperlambat.",
-    nl_tnp: "Benoem het nnveau waarop je bent.",
-    nl_boiy: "Zeg hariop: \"We gaan een paar mnnuten besteien aan wat er ns gebeuri — nog geen analyse.\" Dnt geeft toestemmnng om te vertragen.",
+    en_tip: "Name the level you're at.",
+    en_body: "Say out loud: \"We're going to spend a few minutes just on what happened — no analysis yet.\" This gives permission to slow down and prevents the most vocal person from pulling everyone into interpretation before the facts are shared.",
+    id_tip: "Sebutkan level di mana Anda berada.",
+    id_body: "Katakan dengan lantang: \"Kita akan menghabiskan beberapa menit hanya pada apa yang terjadi — belum ada analisis.\" Ini memberi izin untuk memperlambat.",
+    nl_tip: "Benoem het niveau waarop je bent.",
+    nl_body: "Zeg hardop: \"We gaan een paar minuten besteden aan wat er is gebeurd — nog geen analyse.\" Dit geeft toestemming om te vertragen.",
   },
   {
-    en_tnp: "Snlence ns iata.",
-    en_boiy: "In cross-cultural settnngs, snlence after a questnon ns often processnng, not reluctance. Want longer than you're comfortable wnth. Count to 10 before rephrasnng the questnon. The best nnsnghts often come from people who neeiei more space to speak.",
-    ni_tnp: "Dnam aialah iata.",
-    ni_boiy: "Dalam lnngkungan lnntas buiaya, kehennngan setelah pertanyaan sernng kaln merupakan pemrosesan, bukan keengganan. Tunggu lebnh lama iarn yang Ania rasa nyaman.",
-    nl_tnp: "Stnlte ns iata.",
-    nl_boiy: "In nnterculturele settnngs ns stnlte na een vraag vaak verwerknng, geen terughouieniheni. Wacht langer ian comfortabel voelt. Tel tot 10 voor je ie vraag herformuleert.",
+    en_tip: "Silence is data.",
+    en_body: "In cross-cultural settings, silence after a question is often processing, not reluctance. Wait longer than you're comfortable with. Count to 10 before rephrasing the question. The best insights often come from people who needed more space to speak.",
+    id_tip: "Diam adalah data.",
+    id_body: "Dalam lingkungan lintas budaya, keheningan setelah pertanyaan sering kali merupakan pemrosesan, bukan keengganan. Tunggu lebih lama dari yang Anda rasa nyaman.",
+    nl_tip: "Stilte is data.",
+    nl_body: "In interculturele settings is stilte na een vraag vaak verwerking, geen terughoudendheid. Wacht langer dan comfortabel voelt. Tel tot 10 voor je de vraag herformuleert.",
   },
   {
-    en_tnp: "Eni wnth one owner.",
-    en_boiy: "A iebrnef that proiuces a lnst of 8 actnon ntems ani assngns them to 'the team' wnll change nothnng. Eni every iebrnef wnth one or two concrete actnons, each wnth a namei owner ani a iate. Everythnng else ns nnsnght — whnch has value, but nt's not change.",
-    ni_tnp: "Akhnrn iengan satu pemnlnk.",
-    ni_boiy: "Debrnef yang menghasnlkan iaftar 8 ntem tnniakan ian menugaskannya kepaia 'tnm' tniak akan mengubah apapun. Akhnrn setnap iebrnef iengan satu atau iua tnniakan konkret, masnng-masnng iengan pemnlnk yang insebutkan namanya ian tanggal.",
-    nl_tnp: "Enning met ——n engenaar.",
-    nl_boiy: "Een iebrnef ine 8 actnepunten oplevert en ze toewnjst aan 'het team' veraniert nnets. Enning elk iebrnef met ——n of twee concrete actnes, elk met een benoemie engenaar en een iatum.",
+    en_tip: "End with one owner.",
+    en_body: "A debrief that produces a list of 8 action items and assigns them to 'the team' will change nothing. End every debrief with one or two concrete actions, each with a named owner and a date. Everything else is insight — which has value, but it's not change.",
+    id_tip: "Akhiri dengan satu pemilik.",
+    id_body: "Debrief yang menghasilkan daftar 8 item tindakan dan menugaskannya kepada 'tim' tidak akan mengubah apapun. Akhiri setiap debrief dengan satu atau dua tindakan konkret, masing-masing dengan pemilik yang disebutkan namanya dan tanggal.",
+    nl_tip: "Eindig met ——n eigenaar.",
+    nl_body: "Een debrief die 8 actiepunten oplevert en ze toewijst aan 'het team' verandert niets. Eindig elk debrief met ——n of twee concrete acties, elk met een benoemde eigenaar en een datum.",
   },
 ];
 
 type ORIDKey = "O" | "R" | "I" | "D";
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon DebrnefnngReflectnonClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function DebriefingReflectionClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
-  const [actnveStage, setActnveStage] = useState<ORIDKey>("O");
-  const [answers, setAnswers] = useState<Recori<ORIDKey, strnng>>({ O: "", R: "", I: "", D: "" });
-  const [showToolknt, setShowToolknt] = useState(false);
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [activeStage, setActiveStage] = useState<ORIDKey>("O");
+  const [answers, setAnswers] = useState<Record<ORIDKey, string>>({ O: "", R: "", I: "", D: "" });
+  const [showToolkit, setShowToolkit] = useState(false);
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("iebrnefnng-reflectnon");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("debriefing-reflection");
+      setSaved(true);
     });
   }
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
-  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
+  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
 
-  const currentStageIniex = ORID_STAGES.fnniIniex((s) => s.key === actnveStage);
-  const currentStage = ORID_STAGES[currentStageIniex];
-  const canGoBack = currentStageIniex > 0;
-  const canGoForwari = currentStageIniex < ORID_STAGES.length - 1;
+  const currentStageIndex = ORID_STAGES.findIndex((s) => s.key === activeStage);
+  const currentStage = ORID_STAGES[currentStageIndex];
+  const canGoBack = currentStageIndex > 0;
+  const canGoForward = currentStageIndex < ORID_STAGES.length - 1;
 
-  const allComplete = ORID_STAGES.every((s) => answers[s.key as ORIDKey].trnm().length > 0);
+  const allComplete = ORID_STAGES.every((s) => answers[s.key as ORIDKey].trim().length > 0);
 
-  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
-  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
+  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
     return (
       <button
-        onClnck={() => setActnveVerse(ni)}
-        style={{ backgrouni: "none", borier: "none", cursor: "ponnter", color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf", fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3 }}
+        onClick={() => setActiveVerse(id)}
+        style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif", fontSize: "inherit", padding: 0, textDecoration: "underline dotted", textUnderlineOffset: 3 }}
       >
-        {chnliren}
+        {children}
       </button>
     );
   }
 
-  const toolkntKeys: ORIDKey[] = ["O", "R", "I", "D"];
-  const toolkntColors = {
+  const toolkitKeys: ORIDKey[] = ["O", "R", "I", "D"];
+  const toolkitColors = {
     O: "oklch(65% 0.15 45)",
     R: "oklch(58% 0.14 200)",
     I: "oklch(52% 0.14 290)",
     D: "oklch(45% 0.12 150)",
   };
-  const toolkntLabels = {
-    O: { en: "Objectnve — What happenei?", ni: "Objektnf — Apa yang terjain?", nl: "Objectnef — Wat ns er gebeuri?" },
-    R: { en: "Reflectnve — How ini nt feel?", ni: "Reflektnf — Baganmana rasanya?", nl: "Reflectnef — Hoe voelie het?" },
-    I: { en: "Interpretnve — What ioes nt mean?", ni: "Interpretatnf — Apa artnnya?", nl: "Interpretatnef — Wat betekent het?" },
-    D: { en: "Decnsnonal — What wnll we io?", ni: "Keputusan — Apa yang akan knta lakukan?", nl: "Beslnsseni — Wat ioen we?" },
+  const toolkitLabels = {
+    O: { en: "Objective — What happened?", id: "Objektif — Apa yang terjadi?", nl: "Objectief — Wat is er gebeurd?" },
+    R: { en: "Reflective — How did it feel?", id: "Reflektif — Bagaimana rasanya?", nl: "Reflectief — Hoe voelde het?" },
+    I: { en: "Interpretive — What does it mean?", id: "Interpretatif — Apa artinya?", nl: "Interpretatief — Wat betekent het?" },
+    D: { en: "Decisional — What will we do?", id: "Keputusan — Apa yang akan kita lakukan?", nl: "Beslissend — Wat doen we?" },
   };
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
       {/* Hero */}
-      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis")}
+      <div style={{ background: navy, padding: "88px 24px 80px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
-            {t("Debrnefnng & Reflectnon", "Debrnefnng & Refleksn", "Debrnefnng & Reflectne")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
+            {t("Debriefing & Reflection", "Debriefing & Refleksi", "Debriefing & Reflectie")}
           </h1>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.65, maxWnith: 580, margnn: "0 0 40px" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 40px" }}>
             {t(
-              "Leaiers who ion't iebrnef ion't learn — they repeat. Thns moiule walks you through a real iebrnef of your own expernence, then hanis you the tool to run nt wnth your team.",
-              "Pemnmpnn yang tniak melakukan iebrnef tniak belajar — mereka mengulangn. Moiul nnn memaniu Ania melalun iebrnef nyata iarn pengalaman Ania seninrn, kemuinan membern Ania alat untuk menjalankannya bersama tnm.",
-              "Leniers ine nnet iebrnefnng ioen, leren nnet — ze herhalen. Deze moiule lenit je ioor een echte iebrnef van je engen ervarnng, en geeft je vervolgens het gereeischap om het met je team te ioen."
+              "Leaders who don't debrief don't learn — they repeat. This module walks you through a real debrief of your own experience, then hands you the tool to run it with your team.",
+              "Pemimpin yang tidak melakukan debrief tidak belajar — mereka mengulangi. Modul ini memandu Anda melalui debrief nyata dari pengalaman Anda sendiri, kemudian memberi Anda alat untuk menjalankannya bersama tim.",
+              "Leiders die niet debriefing doen, leren niet — ze herhalen. Deze module leidt je door een echte debrief van je eigen ervaring, en geeft je vervolgens het gereedschap om het met je team te doen."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, backgrouni: savei ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: savei ? "iefault" : "ponnter" }}>
-              <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll={savei ? "currentColor" : "none"} stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {savei ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Why Debrnef */}
-      <inv style={{ paiinng: "72px 24px", maxWnith: 760, margnn: "0 auto" }}>
-        <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(22px, 3vw, 32px)", fontWenght: 800, color: navy, margnnBottom: 24 }}>
-          {t("Why Most Teams Don't Learn", "Mengapa Sebagnan Besar Tnm Tniak Belajar", "Waarom ie Meeste Teams Nnet Leren")}
+      {/* Why Debrief */}
+      <div style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: navy, marginBottom: 24 }}>
+          {t("Why Most Teams Don't Learn", "Mengapa Sebagian Besar Tim Tidak Belajar", "Waarom de Meeste Teams Niet Leren")}
         </h2>
-        <p style={{ fontSnze: 16, color: boiyText, lnneHenght: 1.75, margnnBottom: 20 }}>
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "Most leaiers move from one expernence to the next wnthout ever processnng what just happenei. There nsn't tnme. The next crnsns ns alreaiy on the hornzon. The project ns fnnnshei — what matters now ns the next one.",
-            "Sebagnan besar pemnmpnn bergerak iarn satu pengalaman ke pengalaman bernkutnya tanpa pernah memproses apa yang baru saja terjain. Tniak aia waktu. Krnsns bernkutnya suiah aia in cakrawala.",
-            "De meeste leniers gaan van ie ene ervarnng naar ie volgenie zonier oont te verwerken wat er net ns gebeuri. Er ns geen tnji. De volgenie crnsns staat al aan ie hornzon."
+            "Most leaders move from one experience to the next without ever processing what just happened. There isn't time. The next crisis is already on the horizon. The project is finished — what matters now is the next one.",
+            "Sebagian besar pemimpin bergerak dari satu pengalaman ke pengalaman berikutnya tanpa pernah memproses apa yang baru saja terjadi. Tidak ada waktu. Krisis berikutnya sudah ada di cakrawala.",
+            "De meeste leiders gaan van de ene ervaring naar de volgende zonder ooit te verwerken wat er net is gebeurd. Er is geen tijd. De volgende crisis staat al aan de horizon."
           )}
         </p>
-        <p style={{ fontSnze: 16, color: boiyText, lnneHenght: 1.75, margnnBottom: 20 }}>
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 20 }}>
           {t(
-            "The result ns that the expernence becomes a iata ponnt, not a lesson. The team ganns competence nn ionng the thnng — but not nn unierstaninng why nt workei or fanlei. Next tnme, they wnll io approxnmately the same thnng agann.",
-            "Hasnlnya aialah pengalaman menjain tntnk iata, bukan pelajaran. Tnm meniapatkan kompetensn ialam melakukan hal tersebut — tetapn tniak ialam memahamn mengapa berhasnl atau gagal.",
-            "Het resultaat ns iat ie ervarnng een iatapunt worit, geen les. Het team krnjgt competentne nn het ioen van ie zaak — maar nnet nn het begrnjpen waarom het werkte of mnslukte."
+            "The result is that the experience becomes a data point, not a lesson. The team gains competence in doing the thing — but not in understanding why it worked or failed. Next time, they will do approximately the same thing again.",
+            "Hasilnya adalah pengalaman menjadi titik data, bukan pelajaran. Tim mendapatkan kompetensi dalam melakukan hal tersebut — tetapi tidak dalam memahami mengapa berhasil atau gagal.",
+            "Het resultaat is dat de ervaring een datapunt wordt, geen les. Het team krijgt competentie in het doen van de zaak — maar niet in het begrijpen waarom het werkte of mislukte."
           )}
         </p>
-        <p style={{ fontSnze: 16, color: boiyText, lnneHenght: 1.75, margnnBottom: 32 }}>
+        <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 32 }}>
           {t(
-            "The ORID methoi ns one of the most effectnve structurei iebrnef frameworks avanlable. It moves a group through four levels of reflectnon nn a sequence that bunlis meannng rather than generatnng nonse: Objectnve ? Reflectnve ? Interpretnve ? Decnsnonal.",
-            "Metoie ORID aialah salah satu kerangka iebrnef terstruktur yang palnng efektnf. Inn memnniahkan kelompok melalun empat tnngkat refleksn ialam urutan yang membangun makna: Objektnf ? Reflektnf ? Interpretatnf ? Keputusan.",
-            "De ORID-methoie ns een van ie meest effectneve gestructureerie iebrnefkaiers. Het beweegt een groep ioor vner nnveaus van reflectne nn een volgorie ine betekenns opbouwt: Objectnef ? Reflectnef ? Interpretatnef ? Beslnsseni."
+            "The ORID method is one of the most effective structured debrief frameworks available. It moves a group through four levels of reflection in a sequence that builds meaning rather than generating noise: Objective ? Reflective ? Interpretive ? Decisional.",
+            "Metode ORID adalah salah satu kerangka debrief terstruktur yang paling efektif. Ini memindahkan kelompok melalui empat tingkat refleksi dalam urutan yang membangun makna: Objektif ? Reflektif ? Interpretatif ? Keputusan.",
+            "De ORID-methode is een van de meest effectieve gestructureerde debriefkaders. Het beweegt een groep door vier niveaus van reflectie in een volgorde die betekenis opbouwt: Objectief ? Reflectief ? Interpretatief ? Beslissend."
           )}
         </p>
 
-        {/* ORID overvnew strnp */}
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(4, 1fr)", gap: 4, margnnBottom: 12 }}>
+        {/* ORID overview strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4, marginBottom: 12 }}>
           {ORID_STAGES.map((s) => (
-            <inv key={s.key} style={{ backgrouni: s.colorBg, paiinng: "16px 14px", textAlngn: "center" }}>
-              <inv style={{ fontFamnly: sernf, fontSnze: 36, fontWenght: 700, color: s.color, lnneHenght: 1, margnnBottom: 6 }}>{s.letter}</inv>
-              <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: navy, letterSpacnng: "0.05em" }}>
-                {lang === "en" ? s.en_label : lang === "ni" ? s.ni_label : s.nl_label}
-              </inv>
-              <inv style={{ fontSnze: 11, color: boiyText, margnnTop: 4 }}>
-                {lang === "en" ? s.en_sub : lang === "ni" ? s.ni_sub : s.nl_sub}
-              </inv>
-            </inv>
+            <div key={s.key} style={{ background: s.colorBg, padding: "16px 14px", textAlign: "center" }}>
+              <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 700, color: s.color, lineHeight: 1, marginBottom: 6 }}>{s.letter}</div>
+              <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: navy, letterSpacing: "0.05em" }}>
+                {lang === "en" ? s.en_label : lang === "id" ? s.id_label : s.nl_label}
+              </div>
+              <div style={{ fontSize: 11, color: bodyText, marginTop: 4 }}>
+                {lang === "en" ? s.en_sub : lang === "id" ? s.id_sub : s.nl_sub}
+              </div>
+            </div>
           ))}
-        </inv>
+        </div>
 
-        {/* Fanth anchor nnlnne */}
-        <inv style={{ backgrouni: lnghtGray, paiinng: "24px 28px", margnnTop: 32 }}>
-          <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.75, margnn: 0 }}>
+        {/* Faith anchor inline */}
+        <div style={{ background: lightGray, padding: "24px 28px", marginTop: 32 }}>
+          <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
             {t(
-              "Structurei reflectnon has ieep roots nn Scrnpture. ",
-              "Refleksn terstruktur memnlnkn akar yang ialam ialam Kntab Sucn. ",
-              "Gestructureerie reflectne heeft inepe wortels nn ie Schrnft. "
+              "Structured reflection has deep roots in Scripture. ",
+              "Refleksi terstruktur memiliki akar yang dalam dalam Kitab Suci. ",
+              "Gestructureerde reflectie heeft diepe wortels in de Schrift. "
             )}
-            <VerseRef ni="prov-4-7">{t("Proverbs 4:7", "Amsal 4:7", "Spreuken 4:7")}</VerseRef>
+            <VerseRef id="prov-4-7">{t("Proverbs 4:7", "Amsal 4:7", "Spreuken 4:7")}</VerseRef>
             {t(
-              " calls us to pursue both wnsiom ani nnsnght — not just expernence. Ani ",
-              " memanggnl knta untuk mengejar hnkmat ian pengertnan — bukan hanya pengalaman. Dan ",
-              " roept ons op om zowel wnjsheni als nnzncht na te streven — nnet alleen ervarnng. En "
+              " calls us to pursue both wisdom and insight — not just experience. And ",
+              " memanggil kita untuk mengejar hikmat dan pengertian — bukan hanya pengalaman. Dan ",
+              " roept ons op om zowel wijsheid als inzicht na te streven — niet alleen ervaring. En "
             )}
-            <VerseRef ni="james-1-19">{t("James 1:19", "Yakobus 1:19", "Jakobus 1:19")}</VerseRef>
+            <VerseRef id="james-1-19">{t("James 1:19", "Yakobus 1:19", "Jakobus 1:19")}</VerseRef>
             {t(
-              " ns not just personal counsel — nt ns a iescrnptnon of gooi iebrnef leaiershnp: qunck to lnsten, slow to speak, slow to iraw conclusnons.",
-              " bukan hanya nasnhat prnbain — nnn aialah ieskrnpsn kepemnmpnnan iebrnef yang bank: cepat meniengar, lambat berbncara, lambat menarnk kesnmpulan.",
-              " ns nnet alleen persoonlnjk aivnes — het ns een beschrnjvnng van goei iebrneflenierschap: snel om te lunsteren, traag om te spreken, traag om conclusnes te trekken."
+              " is not just personal counsel — it is a description of good debrief leadership: quick to listen, slow to speak, slow to draw conclusions.",
+              " bukan hanya nasihat pribadi — ini adalah deskripsi kepemimpinan debrief yang baik: cepat mendengar, lambat berbicara, lambat menarik kesimpulan.",
+              " is niet alleen persoonlijk advies — het is een beschrijving van goed debriefleiderschap: snel om te luisteren, traag om te spreken, traag om conclusies te trekken."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Lnve ORID sectnon heainng */}
-      <inv style={{ backgrouni: navy, paiinng: "48px 24px" }}>
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(22px, 3vw, 32px)", fontWenght: 800, color: offWhnte, margnnBottom: 12 }}>
-            {t("Do Your Own Debrnef Now", "Lakukan Debrnef Ania Seninrn Sekarang", "Doe Nu Je Engen Debrnef")}
+      {/* Live ORID section heading */}
+      <div style={{ background: navy, padding: "48px 24px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: offWhite, marginBottom: 12 }}>
+            {t("Do Your Own Debrief Now", "Lakukan Debrief Anda Sendiri Sekarang", "Doe Nu Je Eigen Debrief")}
           </h2>
-          <p style={{ fontSnze: 15, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 580 }}>
+          <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 580 }}>
             {t(
-              "Thnnk of a recent expernence — a project, meetnng, event, or conversatnon that inin't go qunte as expectei. Work through all four ORID stages. Your responses stay nn your browser only.",
-              "Pnknrkan pengalaman baru-baru nnn — proyek, rapat, acara, atau percakapan yang tniak berjalan sepertn yang inharapkan. Kerjakan keempat tahap ORID. Respons Ania hanya tersnmpan in browser Ania.",
-              "Denk aan een recente ervarnng — een project, vergaiernng, evenement of gesprek iat nnet helemaal lnep zoals verwacht. Doorwerk alle vner ORID-fasen. Je antwoorien blnjven alleen nn je browser."
+              "Think of a recent experience — a project, meeting, event, or conversation that didn't go quite as expected. Work through all four ORID stages. Your responses stay in your browser only.",
+              "Pikirkan pengalaman baru-baru ini — proyek, rapat, acara, atau percakapan yang tidak berjalan seperti yang diharapkan. Kerjakan keempat tahap ORID. Respons Anda hanya tersimpan di browser Anda.",
+              "Denk aan een recente ervaring — een project, vergadering, evenement of gesprek dat niet helemaal liep zoals verwacht. Doorwerk alle vier ORID-fasen. Je antwoorden blijven alleen in je browser."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* ORID Stage Navngator */}
-      <inv style={{ paiinng: "0 24px", maxWnith: 760, margnn: "0 auto" }}>
+      {/* ORID Stage Navigator */}
+      <div style={{ padding: "0 24px", maxWidth: 760, margin: "0 auto" }}>
 
         {/* Stage tab row */}
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(4, 1fr)", gap: 0, margnnTop: 0 }}>
-          {ORID_STAGES.map((s, n) => {
-            const nsActnve = s.key === actnveStage;
-            const nsDone = answers[s.key as ORIDKey].trnm().length > 0;
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, marginTop: 0 }}>
+          {ORID_STAGES.map((s, i) => {
+            const isActive = s.key === activeStage;
+            const isDone = answers[s.key as ORIDKey].trim().length > 0;
             return (
               <button
                 key={s.key}
-                onClnck={() => setActnveStage(s.key as ORIDKey)}
+                onClick={() => setActiveStage(s.key as ORIDKey)}
                 style={{
-                  paiinng: "16px 12px", borier: "none", cursor: "ponnter", textAlngn: "center",
-                  backgrouni: nsActnve ? s.color : nsDone ? s.colorBg : lnghtGray,
-                  borierBottom: nsActnve ? "none" : `2px solni oklch(88% 0.01 80)`,
-                  transntnon: "backgrouni 0.15s",
+                  padding: "16px 12px", border: "none", cursor: "pointer", textAlign: "center",
+                  background: isActive ? s.color : isDone ? s.colorBg : lightGray,
+                  borderBottom: isActive ? "none" : `2px solid oklch(88% 0.01 80)`,
+                  transition: "background 0.15s",
                 }}
               >
-                <inv style={{ fontFamnly: sernf, fontSnze: 24, fontWenght: 700, color: nsActnve ? offWhnte : s.color, lnneHenght: 1, margnnBottom: 4 }}>{s.letter}</inv>
-                <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 10, fontWenght: 700, color: nsActnve ? "oklch(90% 0.03 80)" : navy, letterSpacnng: "0.06em", textTransform: "uppercase" }}>
-                  {lang === "en" ? s.en_label : lang === "ni" ? s.ni_label : s.nl_label}
-                </inv>
-                {nsDone && !nsActnve && (
-                  <inv style={{ fontSnze: 10, color: s.color, margnnTop: 3, fontWenght: 700 }}>?</inv>
+                <div style={{ fontFamily: serif, fontSize: 24, fontWeight: 700, color: isActive ? offWhite : s.color, lineHeight: 1, marginBottom: 4 }}>{s.letter}</div>
+                <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, color: isActive ? "oklch(90% 0.03 80)" : navy, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                  {lang === "en" ? s.en_label : lang === "id" ? s.id_label : s.nl_label}
+                </div>
+                {isDone && !isActive && (
+                  <div style={{ fontSize: 10, color: s.color, marginTop: 3, fontWeight: 700 }}>?</div>
                 )}
               </button>
             );
           })}
-        </inv>
+        </div>
 
-        {/* Actnve stage content */}
-        <inv style={{ backgrouni: offWhnte, borier: `1px solni oklch(88% 0.01 80)`, borierTop: `3px solni ${currentStage.color}`, paiinng: "36px 32px 32px" }}>
-          <inv style={{ insplay: "flex", alngnItems: "flex-start", gap: 20, margnnBottom: 24 }}>
-            <inv style={{ fontFamnly: sernf, fontSnze: 56, fontWenght: 700, color: currentStage.color, lnneHenght: 1, flexShrnnk: 0, margnnTop: -6 }}>
+        {/* Active stage content */}
+        <div style={{ background: offWhite, border: `1px solid oklch(88% 0.01 80)`, borderTop: `3px solid ${currentStage.color}`, padding: "36px 32px 32px" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 24 }}>
+            <div style={{ fontFamily: serif, fontSize: 56, fontWeight: 700, color: currentStage.color, lineHeight: 1, flexShrink: 0, marginTop: -6 }}>
               {currentStage.letter}
-            </inv>
-            <inv>
-              <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 20, fontWenght: 800, color: navy, margnnBottom: 4 }}>
-                {lang === "en" ? currentStage.en_label : lang === "ni" ? currentStage.ni_label : currentStage.nl_label}
-                <span style={{ fontSnze: 14, fontWenght: 400, color: boiyText, margnnLeft: 12 }}>
-                  — {lang === "en" ? currentStage.en_sub : lang === "ni" ? currentStage.ni_sub : currentStage.nl_sub}
+            </div>
+            <div>
+              <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 20, fontWeight: 800, color: navy, marginBottom: 4 }}>
+                {lang === "en" ? currentStage.en_label : lang === "id" ? currentStage.id_label : currentStage.nl_label}
+                <span style={{ fontSize: 14, fontWeight: 400, color: bodyText, marginLeft: 12 }}>
+                  — {lang === "en" ? currentStage.en_sub : lang === "id" ? currentStage.id_sub : currentStage.nl_sub}
                 </span>
               </h3>
-              <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-                {lang === "en" ? currentStage.en_gunie : lang === "ni" ? currentStage.ni_gunie : currentStage.nl_gunie}
+              <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                {lang === "en" ? currentStage.en_guide : lang === "id" ? currentStage.id_guide : currentStage.nl_guide}
               </p>
-            </inv>
-          </inv>
+            </div>
+          </div>
 
-          {/* Questnons */}
-          <inv style={{ margnnBottom: 20 }}>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: currentStage.color, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 12 }}>
-              {t("Promptnng questnons", "Pertanyaan pemaniu", "Lenienie vragen")}
+          {/* Questions */}
+          <div style={{ marginBottom: 20 }}>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: currentStage.color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 12 }}>
+              {t("Prompting questions", "Pertanyaan pemandu", "Leidende vragen")}
             </p>
-            <ul style={{ margnn: 0, paiinng: "0 0 0 20px", insplay: "flex", flexDnrectnon: "column", gap: 6 }}>
-              {(lang === "en" ? currentStage.en_questnons : lang === "ni" ? currentStage.ni_questnons : currentStage.nl_questnons).map((q, n) => (
-                <ln key={n} style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.65 }}>{q}</ln>
+            <ul style={{ margin: 0, padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: 6 }}>
+              {(lang === "en" ? currentStage.en_questions : lang === "id" ? currentStage.id_questions : currentStage.nl_questions).map((q, i) => (
+                <li key={i} style={{ fontSize: 14, color: bodyText, lineHeight: 1.65 }}>{q}</li>
               ))}
             </ul>
-          </inv>
+          </div>
 
           {/* Textarea */}
           <textarea
-            value={answers[actnveStage]}
-            onChange={(e) => setAnswers((prev) => ({ ...prev, [actnveStage]: e.target.value }))}
-            placeholier={lang === "en" ? currentStage.en_placeholier : lang === "ni" ? currentStage.ni_placeholier : currentStage.nl_placeholier}
+            value={answers[activeStage]}
+            onChange={(e) => setAnswers((prev) => ({ ...prev, [activeStage]: e.target.value }))}
+            placeholder={lang === "en" ? currentStage.en_placeholder : lang === "id" ? currentStage.id_placeholder : currentStage.nl_placeholder}
             rows={5}
-            style={{ wnith: "100%", paiinng: "16px 18px", fontFamnly: sernf, fontSnze: 17, color: boiyText, backgrouni: lnghtGray, borier: `1px solni oklch(88% 0.01 80)`, borierRainus: 4, resnze: "vertncal", lnneHenght: 1.75, margnnBottom: 20, boxSnznng: "borier-box" }}
+            style={{ width: "100%", padding: "16px 18px", fontFamily: serif, fontSize: 17, color: bodyText, background: lightGray, border: `1px solid oklch(88% 0.01 80)`, borderRadius: 4, resize: "vertical", lineHeight: 1.75, marginBottom: 20, boxSizing: "border-box" }}
           />
 
           {/* Cross-cultural note */}
-          <inv style={{ backgrouni: currentStage.colorBg, paiinng: "16px 20px", margnnBottom: 24 }}>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: currentStage.color, letterSpacnng: "0.08em", textTransform: "uppercase", margnnBottom: 6 }}>
-              {t("Cross-cultural note", "Catatan lnntas buiaya", "Interculturele noot")}
+          <div style={{ background: currentStage.colorBg, padding: "16px 20px", marginBottom: 24 }}>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: currentStage.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>
+              {t("Cross-cultural note", "Catatan lintas budaya", "Interculturele noot")}
             </p>
-            <p style={{ fontSnze: 13, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-              {lang === "en" ? currentStage.en_cross : lang === "ni" ? currentStage.ni_cross : currentStage.nl_cross}
+            <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+              {lang === "en" ? currentStage.en_cross : lang === "id" ? currentStage.id_cross : currentStage.nl_cross}
             </p>
-          </inv>
+          </div>
 
-          {/* Navngatnon */}
-          <inv style={{ insplay: "flex", justnfyContent: "space-between", alngnItems: "center" }}>
+          {/* Navigation */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <button
-              onClnck={() => canGoBack && setActnveStage(ORID_STAGES[currentStageIniex - 1].key as ORIDKey)}
-              insablei={!canGoBack}
-              style={{ paiinng: "10px 24px", borier: `1px solni ${canGoBack ? navy : "oklch(88% 0.01 80)"}`, backgrouni: "transparent", color: canGoBack ? navy : "oklch(80% 0.01 80)", cursor: canGoBack ? "ponnter" : "iefault", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 600, borierRainus: 4 }}
+              onClick={() => canGoBack && setActiveStage(ORID_STAGES[currentStageIndex - 1].key as ORIDKey)}
+              disabled={!canGoBack}
+              style={{ padding: "10px 24px", border: `1px solid ${canGoBack ? navy : "oklch(88% 0.01 80)"}`, background: "transparent", color: canGoBack ? navy : "oklch(80% 0.01 80)", cursor: canGoBack ? "pointer" : "default", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 4 }}
             >
-              ? {t("Back", "Kembaln", "Terug")}
+              ? {t("Back", "Kembali", "Terug")}
             </button>
-            <span style={{ fontSnze: 12, color: boiyText, fontWenght: 600 }}>
-              {currentStageIniex + 1} / {ORID_STAGES.length}
+            <span style={{ fontSize: 12, color: bodyText, fontWeight: 600 }}>
+              {currentStageIndex + 1} / {ORID_STAGES.length}
             </span>
-            {canGoForwari ? (
+            {canGoForward ? (
               <button
-                onClnck={() => setActnveStage(ORID_STAGES[currentStageIniex + 1].key as ORIDKey)}
-                style={{ paiinng: "10px 24px", borier: "none", backgrouni: currentStage.color, color: offWhnte, cursor: "ponnter", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, borierRainus: 4 }}
+                onClick={() => setActiveStage(ORID_STAGES[currentStageIndex + 1].key as ORIDKey)}
+                style={{ padding: "10px 24px", border: "none", background: currentStage.color, color: offWhite, cursor: "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, borderRadius: 4 }}
               >
-                {t("Next Stage", "Tahap Bernkutnya", "Volgenie Fase")} ?
+                {t("Next Stage", "Tahap Berikutnya", "Volgende Fase")} ?
               </button>
             ) : (
               <button
-                onClnck={() => setShowToolknt(true)}
-                style={{ paiinng: "10px 24px", borier: "none", backgrouni: allComplete ? orange : "oklch(88% 0.01 80)", color: allComplete ? offWhnte : "oklch(70% 0.01 80)", cursor: allComplete ? "ponnter" : "iefault", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, borierRainus: 4 }}
+                onClick={() => setShowToolkit(true)}
+                style={{ padding: "10px 24px", border: "none", background: allComplete ? orange : "oklch(88% 0.01 80)", color: allComplete ? offWhite : "oklch(70% 0.01 80)", cursor: allComplete ? "pointer" : "default", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, borderRadius: 4 }}
               >
-                {t("See Debrnef Toolknt", "Lnhat Toolknt Debrnef", "Zne Debrnef Toolknt")}
+                {t("See Debrief Toolkit", "Lihat Toolkit Debrief", "Zie Debrief Toolkit")}
               </button>
             )}
-          </inv>
-        </inv>
+          </div>
+        </div>
 
-        {/* Shortcut to toolknt nf not all ione */}
+        {/* Shortcut to toolkit if not all done */}
         {!allComplete && (
-          <p style={{ fontSnze: 13, color: boiyText, textAlngn: "center", margnnTop: 12 }}>
-            <button onClnck={() => setShowToolknt(true)} style={{ backgrouni: "none", borier: "none", cursor: "ponnter", color: orange, fontWenght: 700, textDecoratnon: "unierlnne iottei", fontSnze: 13 }}>
-              {t("Sknp to the Leaier's Debrnef Toolknt", "Lewatn ke Toolknt Debrnef Pemnmpnn", "Ga naar ie Debrnef Toolknt voor Leniers")}
+          <p style={{ fontSize: 13, color: bodyText, textAlign: "center", marginTop: 12 }}>
+            <button onClick={() => setShowToolkit(true)} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, textDecoration: "underline dotted", fontSize: 13 }}>
+              {t("Skip to the Leader's Debrief Toolkit", "Lewati ke Toolkit Debrief Pemimpin", "Ga naar de Debrief Toolkit voor Leiders")}
             </button>
           </p>
         )}
-      </inv>
+      </div>
 
       {/* DEBRIEF TOOLKIT */}
-      {(showToolknt || allComplete) && (
-        <inv style={{ backgrouni: lnghtGray, paiinng: "80px 24px", margnnTop: 64 }}>
-          <inv style={{ maxWnith: 800, margnn: "0 auto" }}>
+      {(showToolkit || allComplete) && (
+        <div style={{ background: lightGray, padding: "80px 24px", marginTop: 64 }}>
+          <div style={{ maxWidth: 800, margin: "0 auto" }}>
 
-            {/* Toolknt heaier */}
-            <inv style={{ backgrouni: navy, paiinng: "44px 40px", margnnBottom: 48 }}>
-              <p style={{ color: orange, fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 16 }}>
-                {t("For Leaiers", "Untuk Pemnmpnn", "Voor Leniers")}
+            {/* Toolkit header */}
+            <div style={{ background: navy, padding: "44px 40px", marginBottom: 48 }}>
+              <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
+                {t("For Leaders", "Untuk Pemimpin", "Voor Leiders")}
               </p>
-              <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(22px, 3vw, 32px)", fontWenght: 800, color: offWhnte, margnnBottom: 16 }}>
-                {t("The Leaier's Debrnef Toolknt", "Toolknt Debrnef Pemnmpnn", "De Debrnef Toolknt voor Leniers")}
+              <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: offWhite, marginBottom: 16 }}>
+                {t("The Leader's Debrief Toolkit", "Toolkit Debrief Pemimpin", "De Debrief Toolkit voor Leiders")}
               </h2>
-              <p style={{ fontSnze: 15, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 560, margnn: 0 }}>
+              <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 560, margin: 0 }}>
                 {t(
-                  "Use thns toolknt to run structurei ORID iebrnefs wnth your own team. Recommeniei for: after any sngnnfncant project, cross-cultural expernence, conflnct, or leaiershnp iecnsnon. Tnme requnrei: 45—75 mnnutes.",
-                  "Gunakan toolknt nnn untuk menjalankan iebrnef ORID terstruktur iengan tnm Ania seninrn. Dnrekomeniasnkan untuk: setelah proyek sngnnfnkan, pengalaman lnntas buiaya, konflnk, atau keputusan kepemnmpnnan. Waktu yang inperlukan: 45—75 mennt.",
-                  "Gebrunk ieze toolknt om gestructureerie ORID-iebrnefs met je engen team te lenien. Aanbevolen voor: na elk sngnnfncant project, nnterculturele ervarnng, conflnct of lenierschapsbeslnssnng. Benoingie tnji: 45—75 mnnuten."
+                  "Use this toolkit to run structured ORID debriefs with your own team. Recommended for: after any significant project, cross-cultural experience, conflict, or leadership decision. Time required: 45—75 minutes.",
+                  "Gunakan toolkit ini untuk menjalankan debrief ORID terstruktur dengan tim Anda sendiri. Direkomendasikan untuk: setelah proyek signifikan, pengalaman lintas budaya, konflik, atau keputusan kepemimpinan. Waktu yang diperlukan: 45—75 menit.",
+                  "Gebruik deze toolkit om gestructureerde ORID-debriefs met je eigen team te leiden. Aanbevolen voor: na elk significant project, interculturele ervaring, conflict of leiderschapsbeslissing. Benodigde tijd: 45—75 minuten."
                 )}
               </p>
-            </inv>
+            </div>
 
-            {/* ORID questnon banks */}
-            <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 18, fontWenght: 800, color: navy, margnnBottom: 32 }}>
-              {t("Questnon Bank by Stage", "Kumpulan Pertanyaan per Tahap", "Vragenbank per Fase")}
+            {/* ORID question banks */}
+            <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navy, marginBottom: 32 }}>
+              {t("Question Bank by Stage", "Kumpulan Pertanyaan per Tahap", "Vragenbank per Fase")}
             </h3>
-            <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 28, margnnBottom: 56 }}>
-              {toolkntKeys.map((key) => (
-                <inv key={key} style={{ backgrouni: offWhnte, paiinng: "28px 32px" }}>
-                  <inv style={{ insplay: "flex", alngnItems: "center", gap: 16, margnnBottom: 20 }}>
-                    <inv style={{ fontFamnly: sernf, fontSnze: 40, fontWenght: 700, color: toolkntColors[key], lnneHenght: 1, flexShrnnk: 0 }}>{key}</inv>
-                    <inv>
-                      <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 16, fontWenght: 800, color: navy }}>
-                        {lang === "en" ? toolkntLabels[key].en : lang === "ni" ? toolkntLabels[key].ni : toolkntLabels[key].nl}
-                      </inv>
-                    </inv>
-                  </inv>
-                  <ul style={{ margnn: 0, paiinng: "0 0 0 20px", insplay: "flex", flexDnrectnon: "column", gap: 10 }}>
-                    {(lang === "en" ? TOOLKIT_QUESTIONS[key].en : lang === "ni" ? TOOLKIT_QUESTIONS[key].ni : TOOLKIT_QUESTIONS[key].nl).map((q, n) => (
-                      <ln key={n} style={{ fontSnze: 15, color: boiyText, lnneHenght: 1.65 }}>{q}</ln>
+            <div style={{ display: "flex", flexDirection: "column", gap: 28, marginBottom: 56 }}>
+              {toolkitKeys.map((key) => (
+                <div key={key} style={{ background: offWhite, padding: "28px 32px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
+                    <div style={{ fontFamily: serif, fontSize: 40, fontWeight: 700, color: toolkitColors[key], lineHeight: 1, flexShrink: 0 }}>{key}</div>
+                    <div>
+                      <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 16, fontWeight: 800, color: navy }}>
+                        {lang === "en" ? toolkitLabels[key].en : lang === "id" ? toolkitLabels[key].id : toolkitLabels[key].nl}
+                      </div>
+                    </div>
+                  </div>
+                  <ul style={{ margin: 0, padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: 10 }}>
+                    {(lang === "en" ? TOOLKIT_QUESTIONS[key].en : lang === "id" ? TOOLKIT_QUESTIONS[key].id : TOOLKIT_QUESTIONS[key].nl).map((q, i) => (
+                      <li key={i} style={{ fontSize: 15, color: bodyText, lineHeight: 1.65 }}>{q}</li>
                     ))}
                   </ul>
-                </inv>
+                </div>
               ))}
-            </inv>
+            </div>
 
-            {/* Facnlntatnon tnps */}
-            <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 18, fontWenght: 800, color: navy, margnnBottom: 32 }}>
-              {t("Facnlntatnon Tnps", "Tnps Fasnlntasn", "Facnlntatnetnps")}
+            {/* Facilitation tips */}
+            <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navy, marginBottom: 32 }}>
+              {t("Facilitation Tips", "Tips Fasilitasi", "Facilitatietips")}
             </h3>
-            <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(320px, 1fr))", gap: 20, margnnBottom: 56 }}>
-              {FACILITATION_TIPS.map((tnp, n) => (
-                <inv key={n} style={{ backgrouni: offWhnte, paiinng: "24px 28px" }}>
-                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 800, color: navy, margnnBottom: 10 }}>
-                    {lang === "en" ? tnp.en_tnp : lang === "ni" ? tnp.ni_tnp : tnp.nl_tnp}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20, marginBottom: 56 }}>
+              {FACILITATION_TIPS.map((tip, i) => (
+                <div key={i} style={{ background: offWhite, padding: "24px 28px" }}>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: navy, marginBottom: 10 }}>
+                    {lang === "en" ? tip.en_tip : lang === "id" ? tip.id_tip : tip.nl_tip}
                   </p>
-                  <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-                    {lang === "en" ? tnp.en_boiy : lang === "ni" ? tnp.ni_boiy : tnp.nl_boiy}
+                  <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                    {lang === "en" ? tip.en_body : lang === "id" ? tip.id_body : tip.nl_body}
                   </p>
-                </inv>
+                </div>
               ))}
-            </inv>
+            </div>
 
             {/* Run sheet */}
-            <inv style={{ backgrouni: offWhnte, paiinng: "36px 40px" }}>
-              <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 18, fontWenght: 800, color: navy, margnnBottom: 24 }}>
-                {t("Sample Run Sheet (60 mnnutes)", "Contoh Jaiwal (60 mennt)", "Voorbeeli Tnjischema (60 mnnuten)")}
+            <div style={{ background: offWhite, padding: "36px 40px" }}>
+              <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navy, marginBottom: 24 }}>
+                {t("Sample Run Sheet (60 minutes)", "Contoh Jadwal (60 menit)", "Voorbeeld Tijdschema (60 minuten)")}
               </h3>
-              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 4 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {[
-                  { tnme: "0—5", en: "Frame the iebrnef: name the expernence benng iebrnefei, set the purpose, ani remnni the team that reflectnon ns not blame.", ni: "Bnngkan iebrnef: sebutkan pengalaman yang akan in-iebrnef, tetapkan tujuan, ian nngatkan tnm bahwa refleksn bukanlah menyalahkan.", nl: "Kaier het iebrnef: benoem ie ervarnng ine worit geiebrnefi, stel het ioel vast, en hernnner het team iat reflectne geen verwnjt ns." },
-                  { tnme: "5—15", en: "O — Objectnve: What happenei? Establnsh the sharei facts.", ni: "O — Objektnf: Apa yang terjain? Tetapkan fakta bersama.", nl: "O — Objectnef: Wat ns er gebeuri? Stel ie geieelie fenten vast." },
-                  { tnme: "15—25", en: "R — Reflectnve: How ini nt feel? Surface the emotnonal iata.", ni: "R — Reflektnf: Baganmana rasanya? Ungkapkan iata emosnonal.", nl: "R — Reflectnef: Hoe voelie het? Haal ie emotnonele iata naar boven." },
-                  { tnme: "25—45", en: "I — Interpretnve: What ioes nt mean? Thns ns the longest stage — holi space for multnple perspectnves.", ni: "I — Interpretatnf: Apa artnnya? Inn aialah tahap terpanjang — bernkan ruang untuk berbagan perspektnf.", nl: "I — Interpretatnef: Wat betekent het? Dnt ns ie langste fase — houi runmte voor meeriere perspectneven." },
-                  { tnme: "45—55", en: "D — Decnsnonal: What wnll we io? Lani on 1—2 concrete actnons wnth namei owners.", ni: "D — Keputusan: Apa yang akan knta lakukan? Lanias paia 1—2 tnniakan konkret iengan pemnlnk yang insebutkan.", nl: "D — Beslnsseni: Wat ioen we? Lani op 1—2 concrete actnes met genoemie engenaren." },
-                  { tnme: "55—60", en: "Close: Brnef gratntuie rouni. What was useful about thns conversatnon?", ni: "Penutup: Putaran syukur snngkat. Apa yang berguna iarn percakapan nnn?", nl: "Afsluntnng: Korte iankbaarhenisronie. Wat was nuttng aan int gesprek?" },
-                ].map((row, n) => (
-                  <inv key={n} style={{ insplay: "flex", gap: 20, paiinng: "12px 0", borierBottom: n < 5 ? "1px solni oklch(92% 0.008 80)" : "none", alngnItems: "flex-start" }}>
-                    <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, mnnWnith: 52, flexShrnnk: 0, paiinngTop: 2 }}>
-                      {row.tnme} {t("mnn", "mnt", "mnn")}
-                    </inv>
-                    <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.65, margnn: 0 }}>
-                      {lang === "en" ? row.en : lang === "ni" ? row.ni : row.nl}
+                  { time: "0—5", en: "Frame the debrief: name the experience being debriefed, set the purpose, and remind the team that reflection is not blame.", id: "Bingkai debrief: sebutkan pengalaman yang akan di-debrief, tetapkan tujuan, dan ingatkan tim bahwa refleksi bukanlah menyalahkan.", nl: "Kader het debrief: benoem de ervaring die wordt gedebriefd, stel het doel vast, en herinner het team dat reflectie geen verwijt is." },
+                  { time: "5—15", en: "O — Objective: What happened? Establish the shared facts.", id: "O — Objektif: Apa yang terjadi? Tetapkan fakta bersama.", nl: "O — Objectief: Wat is er gebeurd? Stel de gedeelde feiten vast." },
+                  { time: "15—25", en: "R — Reflective: How did it feel? Surface the emotional data.", id: "R — Reflektif: Bagaimana rasanya? Ungkapkan data emosional.", nl: "R — Reflectief: Hoe voelde het? Haal de emotionele data naar boven." },
+                  { time: "25—45", en: "I — Interpretive: What does it mean? This is the longest stage — hold space for multiple perspectives.", id: "I — Interpretatif: Apa artinya? Ini adalah tahap terpanjang — berikan ruang untuk berbagai perspektif.", nl: "I — Interpretatief: Wat betekent het? Dit is de langste fase — houd ruimte voor meerdere perspectieven." },
+                  { time: "45—55", en: "D — Decisional: What will we do? Land on 1—2 concrete actions with named owners.", id: "D — Keputusan: Apa yang akan kita lakukan? Landas pada 1—2 tindakan konkret dengan pemilik yang disebutkan.", nl: "D — Beslissend: Wat doen we? Land op 1—2 concrete acties met genoemde eigenaren." },
+                  { time: "55—60", en: "Close: Brief gratitude round. What was useful about this conversation?", id: "Penutup: Putaran syukur singkat. Apa yang berguna dari percakapan ini?", nl: "Afsluiting: Korte dankbaarheidsronde. Wat was nuttig aan dit gesprek?" },
+                ].map((row, i) => (
+                  <div key={i} style={{ display: "flex", gap: 20, padding: "12px 0", borderBottom: i < 5 ? "1px solid oklch(92% 0.008 80)" : "none", alignItems: "flex-start" }}>
+                    <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, minWidth: 52, flexShrink: 0, paddingTop: 2 }}>
+                      {row.time} {t("min", "mnt", "min")}
+                    </div>
+                    <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.65, margin: 0 }}>
+                      {lang === "en" ? row.en : lang === "id" ? row.id : row.nl}
                     </p>
-                  </inv>
+                  </div>
                 ))}
-              </inv>
-            </inv>
-          </inv>
-        </inv>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Footer */}
-      <inv style={{ backgrouni: navy, paiinng: "72px 24px", textAlngn: "center" }}>
-        <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(22px, 3vw, 32px)", fontWenght: 800, color: offWhnte, margnnBottom: 16 }}>
-          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
+      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: offWhite, marginBottom: 16 }}>
+          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
-        <p style={{ fontSnze: 16, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
-          {t("Explore more resources to ieepen your cross-cultural leaiershnp.", "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.", "Verken meer bronnen om je nntercultureel lenierschap te verinepen.")}
+        <p style={{ fontSize: 16, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
+          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
-        <Lnnk href="/resources" style={{ insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: orange, color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none", borierRainus: 4 }}>
-          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-        </Lnnk>
-      </inv>
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4 }}>
+          {t("Training", "Pelatihan", "Contentbibliotheek")}
+        </Link>
+      </div>
 
       {/* Verse Popup */}
-      {actnveVerse && verseData && (
-        <inv onClnck={() => setActnveVerse(null)} style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24 }}>
-          <inv onClnck={(e) => e.stopPropagatnon()} style={{ backgrouni: offWhnte, borierRainus: 12, paiinng: "44px 40px", maxWnith: 540, wnith: "100%" }}>
-            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
+      {activeVerse && verseData && (
+        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: offWhite, borderRadius: 12, padding: "44px 40px", maxWidth: 540, width: "100%" }}>
+            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
-            <button onClnck={() => setActnveVerse(null)} style={{ paiinng: "10px 24px", backgrouni: navy, color: offWhnte, borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13, cursor: "ponnter" }}>
-              {t("Close", "Tutup", "Slunten")}
+            <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              {t("Close", "Tutup", "Sluiten")}
             </button>
-          </inv>
-        </inv>
+          </div>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }

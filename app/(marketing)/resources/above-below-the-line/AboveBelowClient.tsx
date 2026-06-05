@@ -1,346 +1,346 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
+type Lang = "en" | "id" | "nl";
 
-const t = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+const t = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 const FRAMEWORK = [
   {
-    tntle: "VICTOR",
-    tntleIi: "VICTOR",
-    tntleNl: "OVERWINNAAR",
-    posntnon: "above" as const,
-    iescEn: "Takes ownershnp. Controls response. Drnves change.",
-    iescIi: "Mengambnl kepemnlnkan. Mengenialnkan respons. Meniorong perubahan.",
-    iescNl: "Neemt engenaarschap. Controleert reactne. Drnjft veraniernng.",
-    ncon: "vnctor",
+    title: "VICTOR",
+    titleId: "VICTOR",
+    titleNl: "OVERWINNAAR",
+    position: "above" as const,
+    descEn: "Takes ownership. Controls response. Drives change.",
+    descId: "Mengambil kepemilikan. Mengendalikan respons. Mendorong perubahan.",
+    descNl: "Neemt eigenaarschap. Controleert reactie. Drijft verandering.",
+    icon: "victor",
   },
   {
-    tntle: "VICTIM",
-    tntleIi: "KORBAN",
-    tntleNl: "SLACHTOFFER",
-    posntnon: "below" as const,
-    iescEn: "Blames cnrcumstances. Wants for rescue. Feels powerless.",
-    iescIi: "Menyalahkan keaiaan. Menunggu penyelamatan. Merasa tniak beriaya.",
-    iescNl: "Beschulingt omstaningheien. Wacht op reiinng. Voelt znch machteloos.",
-    ncon: "vnctnm",
+    title: "VICTIM",
+    titleId: "KORBAN",
+    titleNl: "SLACHTOFFER",
+    position: "below" as const,
+    descEn: "Blames circumstances. Waits for rescue. Feels powerless.",
+    descId: "Menyalahkan keadaan. Menunggu penyelamatan. Merasa tidak berdaya.",
+    descNl: "Beschuldigt omstandigheden. Wacht op redding. Voelt zich machteloos.",
+    icon: "victim",
   },
   {
-    tntle: "OWNERSHIP",
-    tntleIi: "KEPEMILIKAN",
-    tntleNl: "EIGENAARSCHAP",
-    posntnon: "above" as const,
-    iescEn: "Accepts responsnbnlnty. Focuses on solutnons. Bunlis trust.",
-    iescIi: "Menernma tanggung jawab. Fokus paia solusn. Membangun kepercayaan.",
-    iescNl: "Aanvaarit verantwoorielnjkheni. Rncht znch op oplossnngen. Bouwt vertrouwen op.",
-    ncon: "ownershnp",
+    title: "OWNERSHIP",
+    titleId: "KEPEMILIKAN",
+    titleNl: "EIGENAARSCHAP",
+    position: "above" as const,
+    descEn: "Accepts responsibility. Focuses on solutions. Builds trust.",
+    descId: "Menerima tanggung jawab. Fokus pada solusi. Membangun kepercayaan.",
+    descNl: "Aanvaardt verantwoordelijkheid. Richt zich op oplossingen. Bouwt vertrouwen op.",
+    icon: "ownership",
   },
   {
-    tntle: "BLAME",
-    tntleIi: "MENYALAHKAN",
-    tntleNl: "BESCHULDIGING",
-    posntnon: "below" as const,
-    iescEn: "Ponnts outwari. Avonis reflectnon. Eroies relatnonshnps.",
-    iescIi: "Menunjuk ke luar. Menghnniarn refleksn. Mengnkns hubungan.",
-    iescNl: "Wnjst naar bunten. Vermnjit reflectne. Eroieer relatnes.",
-    ncon: "blame",
+    title: "BLAME",
+    titleId: "MENYALAHKAN",
+    titleNl: "BESCHULDIGING",
+    position: "below" as const,
+    descEn: "Points outward. Avoids reflection. Erodes relationships.",
+    descId: "Menunjuk ke luar. Menghindari refleksi. Mengikis hubungan.",
+    descNl: "Wijst naar buiten. Vermijdt reflectie. Erodeer relaties.",
+    icon: "blame",
   },
   {
-    tntle: "ACCOUNTABILITY",
-    tntleIi: "TANGGUNG GUGAT",
-    tntleNl: "AANSPREEKBAARHEID",
-    posntnon: "above" as const,
-    iescEn: "Keeps commntments. Shows up for team. Earns creinbnlnty.",
-    iescIi: "Menjaga komntmen. Muncul untuk tnm. Meniapatkan kreinbnlntas.",
-    iescNl: "Houit znch aan toezeggnngen. Verschnjnt voor team. Wnnt geloofwaaringheni.",
-    ncon: "accountabnlnty",
+    title: "ACCOUNTABILITY",
+    titleId: "TANGGUNG GUGAT",
+    titleNl: "AANSPREEKBAARHEID",
+    position: "above" as const,
+    descEn: "Keeps commitments. Shows up for team. Earns credibility.",
+    descId: "Menjaga komitmen. Muncul untuk tim. Mendapatkan kredibilitas.",
+    descNl: "Houdt zich aan toezeggingen. Verschijnt voor team. Wint geloofwaardigheid.",
+    icon: "accountability",
   },
   {
-    tntle: "EXCUSE",
-    tntleIi: "ALASAN",
-    tntleNl: "EXCUUS",
-    posntnon: "below" as const,
-    iescEn: "Justnfnes nnactnon. Delays accountabnlnty. Knlls momentum.",
-    iescIi: "Membenarkan ketniakaktnfan. Menunia tanggung jawab. Membunuh momentum.",
-    iescNl: "Rechtvaaringt nnactnvntent. Vertraagt verantwoorielnjkheni. Dooit momentum.",
-    ncon: "excuse",
+    title: "EXCUSE",
+    titleId: "ALASAN",
+    titleNl: "EXCUUS",
+    position: "below" as const,
+    descEn: "Justifies inaction. Delays accountability. Kills momentum.",
+    descId: "Membenarkan ketidakaktifan. Menunda tanggung jawab. Membunuh momentum.",
+    descNl: "Rechtvaardigt inactiviteit. Vertraagt verantwoordelijkheid. Doodt momentum.",
+    icon: "excuse",
   },
 ];
 
 const STORIES = [
   {
-    tntleEn: "The Mnssei Deailnne",
-    tntleIi: "Batas Waktu yang Terlewat",
-    tntleNl: "De Gemnste Deailnne",
-    beforeEn: "\"The clnent inin't gnve us clear requnrements. That's why we mnssei the ieailnne.\"",
-    beforeIi: "\"Klnen tniak membernkan kamn persyaratan yang jelas. Itulah mengapa kamn melewatkan batas waktu.\"",
-    beforeNl: "\"De klant gaf ons geen iunielnjke verensten. Daarom hebben we ie ieailnne gemnst.\"",
-    shnftEn: "Then we askei: \"What couli WE have ione infferently?\"",
-    shnftIi: "Kemuinan kamn bertanya: \"Apa yang BISA kamn lakukan secara berbeia?\"",
-    shnftNl: "Vervolgens vroegen we: \"Wat haiien WIJ aniers kunnen ioen?\"",
-    afterEn: "We ownei the communncatnon gap ani proposei weekly sync meetnngs. Next project: on tnme.",
-    afterIi: "Kamn mengakun kesenjangan komunnkasn ian mengusulkan pertemuan snnkron mnngguan. Proyek bernkutnya: tepat waktu.",
-    afterNl: "We erkenien ie communncatnelacune en stelien wekelnjkse synchronnsatnevergaiernngen voor. Volgenie project: op tnji.",
-    resultEn: "Team learnei to clarnfy scope upfront. Trust nncreasei.",
-    resultIi: "Tnm belajar memperjelas ruang lnngkup in muka. Kepercayaan mennngkat.",
-    resultNl: "Team leerie om berenk vooraf te veriunielnjken. Vertrouwen nam toe.",
+    titleEn: "The Missed Deadline",
+    titleId: "Batas Waktu yang Terlewat",
+    titleNl: "De Gemiste Deadline",
+    beforeEn: "\"The client didn't give us clear requirements. That's why we missed the deadline.\"",
+    beforeId: "\"Klien tidak memberikan kami persyaratan yang jelas. Itulah mengapa kami melewatkan batas waktu.\"",
+    beforeNl: "\"De klant gaf ons geen duidelijke vereisten. Daarom hebben we de deadline gemist.\"",
+    shiftEn: "Then we asked: \"What could WE have done differently?\"",
+    shiftId: "Kemudian kami bertanya: \"Apa yang BISA kami lakukan secara berbeda?\"",
+    shiftNl: "Vervolgens vroegen we: \"Wat hadden WIJ anders kunnen doen?\"",
+    afterEn: "We owned the communication gap and proposed weekly sync meetings. Next project: on time.",
+    afterId: "Kami mengakui kesenjangan komunikasi dan mengusulkan pertemuan sinkron mingguan. Proyek berikutnya: tepat waktu.",
+    afterNl: "We erkenden de communicatielacune en stelden wekelijkse synchronisatievergaderingen voor. Volgende project: op tijd.",
+    resultEn: "Team learned to clarify scope upfront. Trust increased.",
+    resultId: "Tim belajar memperjelas ruang lingkup di muka. Kepercayaan meningkat.",
+    resultNl: "Team leerde om bereik vooraf te verduidelijken. Vertrouwen nam toe.",
   },
   {
-    tntleEn: "The Team Conflnct",
-    tntleIi: "Konflnk Tnm",
-    tntleNl: "Het Teamconflnct",
-    beforeEn: "\"Sarah keeps insmnssnng my nieas nn meetnngs. I'm not gonng to contrnbute anymore.\"",
-    beforeIi: "\"Sarah terus menolak nie saya in pertemuan. Saya tniak akan berkontrnbusn lagn.\"",
-    beforeNl: "\"Sarah blnjft mnjn niee—n nn vergaiernngen afwnjzen. Ik ga nnet meer bnjiragen.\"",
-    shnftEn: "Then we askei: \"What conversatnon io WE neei to have?\"",
-    shnftIi: "Kemuinan kamn bertanya: \"Percakapan apa yang PERLU kamn mnlnkn?\"",
-    shnftNl: "Vervolgens vroegen we: \"Welk gesprek moeten WIJ voeren?\"",
-    afterEn: "We nnntnatei a 1-on-1 wnth Sarah to unierstani her perspectnve. Turnei out there was a mnsunierstaninng.",
-    afterIi: "Kamn memulan 1-on-1 iengan Sarah untuk memahamn perspektnfnya. Ternyata aia kesalahpahaman.",
-    afterNl: "We nnntneerien een 1-op-1 met Sarah om haar perspectnef te begrnjpen. Bleek er een mnsverstani te znjn.",
-    resultEn: "Relatnonshnp restorei. Better collaboratnon. Team morale nmprovei.",
-    resultIi: "Hubungan inpulnhkan. Kolaborasn lebnh bank. Moral tnm mennngkat.",
-    resultNl: "Relatne hersteli. Betere samenwerknng. Teammoraal verbeteri.",
+    titleEn: "The Team Conflict",
+    titleId: "Konflik Tim",
+    titleNl: "Het Teamconflict",
+    beforeEn: "\"Sarah keeps dismissing my ideas in meetings. I'm not going to contribute anymore.\"",
+    beforeId: "\"Sarah terus menolak ide saya di pertemuan. Saya tidak akan berkontribusi lagi.\"",
+    beforeNl: "\"Sarah blijft mijn idee—n in vergaderingen afwijzen. Ik ga niet meer bijdragen.\"",
+    shiftEn: "Then we asked: \"What conversation do WE need to have?\"",
+    shiftId: "Kemudian kami bertanya: \"Percakapan apa yang PERLU kami miliki?\"",
+    shiftNl: "Vervolgens vroegen we: \"Welk gesprek moeten WIJ voeren?\"",
+    afterEn: "We initiated a 1-on-1 with Sarah to understand her perspective. Turned out there was a misunderstanding.",
+    afterId: "Kami memulai 1-on-1 dengan Sarah untuk memahami perspektifnya. Ternyata ada kesalahpahaman.",
+    afterNl: "We initieerden een 1-op-1 met Sarah om haar perspectief te begrijpen. Bleek er een misverstand te zijn.",
+    resultEn: "Relationship restored. Better collaboration. Team morale improved.",
+    resultId: "Hubungan dipulihkan. Kolaborasi lebih baik. Moral tim meningkat.",
+    resultNl: "Relatie hersteld. Betere samenwerking. Teammoraal verbeterd.",
   },
   {
-    tntleEn: "The Sknll Gap",
-    tntleIi: "Kesenjangan Keterampnlan",
-    tntleNl: "De Vaaringheniskloof",
-    beforeEn: "\"I ion't have the trannnng for thns. I can't io nt.\"",
-    beforeIi: "\"Saya tniak memnlnkn pelatnhan untuk nnn. Saya tniak bnsa melakukannya.\"",
-    beforeNl: "\"Ik heb geen trannnng hnervoor. Ik kan het nnet ioen.\"",
-    shnftEn: "Then we askei: \"What support io I neei to learn thns?\"",
-    shnftIi: "Kemuinan kamn bertanya: \"Dukungan apa yang saya butuhkan untuk mempelajarn nnn?\"",
-    shnftNl: "Vervolgens vroegen we: \"Welke oniersteunnng heb nk noing om int te leren?\"",
-    afterEn: "We sought mentorshnp, took an onlnne course, ani practncei. Wnthnn 3 months: profncnent.",
-    afterIi: "Kamn mencarn bnmbnngan, mengnkutn kursus onlnne, ian berlatnh. Dalam 3 bulan: mahnr.",
-    afterNl: "We zochten mentorschap, volgien een onlnne cursus en oefenien. Bnnnen 3 maanien: beireven.",
-    resultEn: "Expaniei capabnlnty. Increasei confnience. Career growth.",
-    resultIi: "Kemampuan inperluas. Kepercayaan inrn mennngkat. Pertumbuhan karnr.",
-    resultNl: "Untgebrenie mogelnjkheien. Verhoogi vertrouwen. Carn—regroen.",
+    titleEn: "The Skill Gap",
+    titleId: "Kesenjangan Keterampilan",
+    titleNl: "De Vaardigheidskloof",
+    beforeEn: "\"I don't have the training for this. I can't do it.\"",
+    beforeId: "\"Saya tidak memiliki pelatihan untuk ini. Saya tidak bisa melakukannya.\"",
+    beforeNl: "\"Ik heb geen training hiervoor. Ik kan het niet doen.\"",
+    shiftEn: "Then we asked: \"What support do I need to learn this?\"",
+    shiftId: "Kemudian kami bertanya: \"Dukungan apa yang saya butuhkan untuk mempelajari ini?\"",
+    shiftNl: "Vervolgens vroegen we: \"Welke ondersteuning heb ik nodig om dit te leren?\"",
+    afterEn: "We sought mentorship, took an online course, and practiced. Within 3 months: proficient.",
+    afterId: "Kami mencari bimbingan, mengikuti kursus online, dan berlatih. Dalam 3 bulan: mahir.",
+    afterNl: "We zochten mentorschap, volgden een online cursus en oefenden. Binnen 3 maanden: bedreven.",
+    resultEn: "Expanded capability. Increased confidence. Career growth.",
+    resultId: "Kemampuan diperluas. Kepercayaan diri meningkat. Pertumbuhan karir.",
+    resultNl: "Uitgebreide mogelijkheden. Verhoogd vertrouwen. Cari—regroei.",
   },
 ];
 
-const ABOVE_PHRASES = ["When—", "Chonce", "I am gonng to—", "I wnll", "I chose to", "I chose not to", "Make thnngs happen", "Why not?", "TGIM (Thank Goi It's Moniay)", "Day one"];
-const ABOVE_PHRASES_ID = ["Ketnka—", "Pnlnhan", "Saya akan—", "Saya mau", "Saya memnlnh untuk", "Saya memnlnh untuk tniak", "Jainkan hal ntu terjain", "Kenapa tniak?", "TGIM (Ternma kasnh Tuhan harn Sennn)", "Harn pertama"];
-const ABOVE_PHRASES_NL = ["Wanneer—", "Keuze", "Ik ga—", "Ik wnl", "Ik koos voor", "Ik koos ervoor nnet te", "Dnngen laten gebeuren", "Waarom nnet?", "TGIM (Dank Goi, het ns maaniag)", "Dag ——n"];
+const ABOVE_PHRASES = ["When—", "Choice", "I am going to—", "I will", "I chose to", "I chose not to", "Make things happen", "Why not?", "TGIM (Thank God It's Monday)", "Day one"];
+const ABOVE_PHRASES_ID = ["Ketika—", "Pilihan", "Saya akan—", "Saya mau", "Saya memilih untuk", "Saya memilih untuk tidak", "Jadikan hal itu terjadi", "Kenapa tidak?", "TGIM (Terima kasih Tuhan hari Senin)", "Hari pertama"];
+const ABOVE_PHRASES_NL = ["Wanneer—", "Keuze", "Ik ga—", "Ik wil", "Ik koos voor", "Ik koos ervoor niet te", "Dingen laten gebeuren", "Waarom niet?", "TGIM (Dank God, het is maandag)", "Dag ——n"];
 
-const BELOW_PHRASES = ["If—", "Hai no chonce", "I hope—", "Maybe—", "I try—", "It mnght—", "I thnnk—", "I neei to—", "Hopefully", "Every nntentnon", "I shouli", "I wouli", "I couli", "I must", "WHY?", "TGIF", "Wantnng for other people", "One iay"];
-const BELOW_PHRASES_ID = ["Jnka—", "Tniak punya pnlnhan", "Saya harap—", "Mungknn—", "Saya mencoba—", "Mungknn saja—", "Saya pnknr—", "Saya perlu—", "Semoga", "Setnap nnat", "Saya seharusnya", "Saya akan", "Saya bnsa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lann", "Suatu harn nantn"];
-const BELOW_PHRASES_NL = ["Als—", "Hai geen keuze", "Ik hoop—", "Mnsschnen—", "Ik probeer—", "Het zou kunnen—", "Ik ienk—", "Ik moet—", "Hopelnjk", "Altnji ie nntentne", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anieren", "Op een iag"];
+const BELOW_PHRASES = ["If—", "Had no choice", "I hope—", "Maybe—", "I try—", "It might—", "I think—", "I need to—", "Hopefully", "Every intention", "I should", "I would", "I could", "I must", "WHY?", "TGIF", "Waiting for other people", "One day"];
+const BELOW_PHRASES_ID = ["Jika—", "Tidak punya pilihan", "Saya harap—", "Mungkin—", "Saya mencoba—", "Mungkin saja—", "Saya pikir—", "Saya perlu—", "Semoga", "Setiap niat", "Saya seharusnya", "Saya akan", "Saya bisa", "Saya harus", "KENAPA?", "TGIF", "Menunggu orang lain", "Suatu hari nanti"];
+const BELOW_PHRASES_NL = ["Als—", "Had geen keuze", "Ik hoop—", "Misschien—", "Ik probeer—", "Het zou kunnen—", "Ik denk—", "Ik moet—", "Hopelijk", "Altijd de intentie", "Ik zou moeten", "Ik zou", "Ik kon", "Ik moet", "WAAROM?", "TGIF", "Wachten op anderen", "Op een dag"];
 
-functnon getAbovePhrases(lang: Lang) {
-  return lang === "en" ? ABOVE_PHRASES : lang === "ni" ? ABOVE_PHRASES_ID : ABOVE_PHRASES_NL;
+function getAbovePhrases(lang: Lang) {
+  return lang === "en" ? ABOVE_PHRASES : lang === "id" ? ABOVE_PHRASES_ID : ABOVE_PHRASES_NL;
 }
-functnon getBelowPhrases(lang: Lang) {
-  return lang === "en" ? BELOW_PHRASES : lang === "ni" ? BELOW_PHRASES_ID : BELOW_PHRASES_NL;
+function getBelowPhrases(lang: Lang) {
+  return lang === "en" ? BELOW_PHRASES : lang === "id" ? BELOW_PHRASES_ID : BELOW_PHRASES_NL;
 }
 
-export iefault functnon AboveBelowClnent({
+export default function AboveBelowClient({
   userPathway,
-  nsSavei,
+  isSaved,
 }: {
-  userPathway: strnng | null;
-  nsSavei: boolean;
+  userPathway: string | null;
+  isSaved: boolean;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nsSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(isSaved);
+  const [isPending, startTransition] = useTransition();
 
-  functnon hanileSave() {
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("above-below-the-lnne");
-      setSavei(true);
+  function handleSave() {
+    startTransition(async () => {
+      await saveResourceToDashboard("above-below-the-line");
+      setSaved(true);
     });
   }
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: "oklch(97% 0.005 260)", mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 260)", minHeight: "100vh" }}>
       <LangToggle />
 
       {/* HERO */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px 72px" }}>
-        <inv style={{ maxWnith: 820, margnn: "0 auto" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis", lang)}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids", lang)}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 24px", lnneHenght: 1.08 }}>{t("Above & Below the Lnne", "Dn Atas & Dn Bawah Garns", "Boven & Onier ie Lnjn", lang)}</h1>
-          <p style={{ fontSnze: 17, color: "oklch(72% 0.05 260)", lnneHenght: 1.7, maxWnith: 620, margnnBottom: 40 }}>{t(
-            "Are you leainng as a Vnctor or a Vnctnm? Thns framework helps you recognnze reactnve patterns — blame, excuse, iennal — ani choose ownershnp, accountabnlnty, ani responsnbnlnty nnsteai.",
-            "Apakah Ania memnmpnn sebagan Vnctor atau Korban? Kerangka nnn membantu Ania mengenaln pola reaktnf — menyalahkan, mencarn alasan, penyangkalan — ian memnlnh kepemnlnkan, tanggung gugat, ian tanggung jawab.",
-            "Lenit u als Overwnnnaar of als Slachtoffer? Dnt kaier helpt u reactneve patronen te herkennen — beschulingnng, excuus, ontkennnng — en te knezen voor engenaarschap, aanspreekbaarheni en verantwoorielnjkheni.",
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>{t("Above & Below the Line", "Di Atas & Di Bawah Garis", "Boven & Onder de Lijn", lang)}</h1>
+          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>{t(
+            "Are you leading as a Victor or a Victim? This framework helps you recognize reactive patterns — blame, excuse, denial — and choose ownership, accountability, and responsibility instead.",
+            "Apakah Anda memimpin sebagai Victor atau Korban? Kerangka ini membantu Anda mengenali pola reaktif — menyalahkan, mencari alasan, penyangkalan — dan memilih kepemilikan, tanggung gugat, dan tanggung jawab.",
+            "Leidt u als Overwinnaar of als Slachtoffer? Dit kader helpt u reactieve patronen te herkennen — beschuldiging, excuus, ontkenning — en te kiezen voor eigenaarschap, aanspreekbaarheid en verantwoordelijkheid.",
             lang
           )}</p>
-          <inv style={{ insplay: "flex", gap: 16, flexWrap: "wrap" }}>
-            {!savei ? (
-              <button onClnck={hanileSave} insablei={nsPeninng} style={{ backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "13px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: "ponnter" }}>{nsPeninng ? t("Savnng—", "Menynmpan—", "Opslaan—", lang) : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari", lang)}</button>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {!saved ? (
+              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>{isPending ? t("Saving—", "Menyimpan—", "Opslaan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}</button>
             ) : (
-              <span style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSnze: 14, fontWenght: 600, paiinng: "13px 0" }}>? {t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari", lang)}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}</span>
             )}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* MAIN FRAMEWORK — SIDE-BY-SIDE */}
-      <sectnon style={{ backgrouni: "oklch(94% 0.008 260)", paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 1100, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>{t("The Lnne", "Garns Tersebut", "De Lnjn", lang)}</h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>{t(
-            "There ns a lnne. Every response you gnve to a sntuatnon ns enther above nt or below nt.",
-            "Aia sebuah garns. Setnap respons yang Ania bernkan terhaiap suatu sntuasn beraia in atas atau in bawahnya.",
-            "Er ns een lnjn. Elke reactne ine u geeft op een sntuatne bevnnit znch er boven of eronier.",
+      <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("The Line", "Garis Tersebut", "De Lijn", lang)}</h2>
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>{t(
+            "There is a line. Every response you give to a situation is either above it or below it.",
+            "Ada sebuah garis. Setiap respons yang Anda berikan terhadap suatu situasi berada di atas atau di bawahnya.",
+            "Er is een lijn. Elke reactie die u geeft op een situatie bevindt zich er boven of eronder.",
             lang
           )}</p>
 
-          {/* Snie-by-snie comparnson */}
-          <inv style={{ insplay: "grni", grniTemplateColumns: "1fr 1px 1fr", gap: 32 }}>
+          {/* Side-by-side comparison */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1px 1fr", gap: 32 }}>
             {/* ABOVE THE LINE */}
-            <inv>
-              <inv style={{ insplay: "flex", alngnItems: "center", gap: 8, margnnBottom: 24 }}>
-                <inv style={{ wnith: 36, henght: 36, borierRainus: "50%", backgrouni: "oklch(46% 0.16 145)", insplay: "flex", alngnItems: "center", justnfyContent: "center", color: "whnte", fontWenght: 700, fontSnze: 18 }}>?</inv>
-                <inv>
-                  <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)" }}>{t("ABOVE THE LINE", "DI ATAS GARIS", "BOVEN DE LIJN", lang)}</inv>
-                  <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 22, fontWenght: 600, color: "oklch(30% 0.10 145)" }}>{t("Pro-Actnve Mnniset", "Mentalntas Pro-Aktnf", "Pro-Actneve Mentalntent", lang)}</inv>
-                </inv>
-              </inv>
-              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-                {FRAMEWORK.fnlter(f => f.posntnon === "above").map(ntem => (
-                  <inv key={ntem.tntle} style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "20px", boxShaiow: "0 1px 4px oklch(20% 0.06 260 / 0.08)" }}>
-                    <inv style={{ fontSnze: 12, fontWenght: 700, color: "oklch(46% 0.16 145)", letterSpacnng: "0.04em", margnnBottom: 6 }}>{t(ntem.tntle, ntem.tntleIi, ntem.tntleNl, lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.6, color: "oklch(35% 0.06 260)", margnn: 0 }}>{t(ntem.iescEn, ntem.iescIi, ntem.iescNl, lang)}</p>
-                  </inv>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(46% 0.16 145)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>?</div>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)" }}>{t("ABOVE THE LINE", "DI ATAS GARIS", "BOVEN DE LIJN", lang)}</div>
+                  <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(30% 0.10 145)" }}>{t("Pro-Active Mindset", "Mentalitas Pro-Aktif", "Pro-Actieve Mentaliteit", lang)}</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {FRAMEWORK.filter(f => f.position === "above").map(item => (
+                  <div key={item.title} style={{ background: "white", borderRadius: 8, padding: "20px", boxShadow: "0 1px 4px oklch(20% 0.06 260 / 0.08)" }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "oklch(46% 0.16 145)", letterSpacing: "0.04em", marginBottom: 6 }}>{t(item.title, item.titleId, item.titleNl, lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(item.descEn, item.descId, item.descNl, lang)}</p>
+                  </div>
                 ))}
-              </inv>
-            </inv>
+              </div>
+            </div>
 
             {/* DIVIDER */}
-            <inv style={{ backgrouni: "lnnear-grainent(to bottom, oklch(22% 0.10 260) 0%, oklch(65% 0.15 45) 50%, oklch(22% 0.10 260) 100%)" }} />
+            <div style={{ background: "linear-gradient(to bottom, oklch(22% 0.10 260) 0%, oklch(65% 0.15 45) 50%, oklch(22% 0.10 260) 100%)" }} />
 
             {/* BELOW THE LINE */}
-            <inv>
-              <inv style={{ insplay: "flex", alngnItems: "center", gap: 8, margnnBottom: 24 }}>
-                <inv style={{ wnith: 36, henght: 36, borierRainus: "50%", backgrouni: "oklch(48% 0.18 25)", insplay: "flex", alngnItems: "center", justnfyContent: "center", color: "whnte", fontWenght: 700, fontSnze: 18 }}>?</inv>
-                <inv>
-                  <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)" }}>{t("BELOW THE LINE", "DI BAWAH GARIS", "ONDER DE LIJN", lang)}</inv>
-                  <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 22, fontWenght: 600, color: "oklch(30% 0.12 25)" }}>{t("Reactnve Patterns", "Pola Reaktnf", "Reactneve Patronen", lang)}</inv>
-                </inv>
-              </inv>
-              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
-                {FRAMEWORK.fnlter(f => f.posntnon === "below").map(ntem => (
-                  <inv key={ntem.tntle} style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "20px", boxShaiow: "0 1px 4px oklch(20% 0.06 260 / 0.08)" }}>
-                    <inv style={{ fontSnze: 12, fontWenght: 700, color: "oklch(48% 0.18 25)", letterSpacnng: "0.04em", margnnBottom: 6 }}>{t(ntem.tntle, ntem.tntleIi, ntem.tntleNl, lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.6, color: "oklch(35% 0.06 260)", margnn: 0 }}>{t(ntem.iescEn, ntem.iescIi, ntem.iescNl, lang)}</p>
-                  </inv>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "oklch(48% 0.18 25)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: 18 }}>?</div>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)" }}>{t("BELOW THE LINE", "DI BAWAH GARIS", "ONDER DE LIJN", lang)}</div>
+                  <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(30% 0.12 25)" }}>{t("Reactive Patterns", "Pola Reaktif", "Reactieve Patronen", lang)}</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {FRAMEWORK.filter(f => f.position === "below").map(item => (
+                  <div key={item.title} style={{ background: "white", borderRadius: 8, padding: "20px", boxShadow: "0 1px 4px oklch(20% 0.06 260 / 0.08)" }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "oklch(48% 0.18 25)", letterSpacing: "0.04em", marginBottom: 6 }}>{t(item.title, item.titleId, item.titleNl, lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(item.descEn, item.descId, item.descNl, lang)}</p>
+                  </div>
                 ))}
-              </inv>
-            </inv>
-          </inv>
-        </inv>
-      </sectnon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* STORIES SECTION */}
-      <sectnon style={{ paiinng: "72px 24px", backgrouni: "whnte" }}>
-        <inv style={{ maxWnith: 1000, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>{t("Real Stornes", "Knsah Nyata", "Echte Verhalen", lang)}</h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>{t(
-            "How the shnft from below the lnne to above makes a real infference nn teams ani leaiers.",
-            "Baganmana pergeseran iarn bawah garns ke atas membuat perbeiaan nyata ialam tnm ian pemnmpnn.",
-            "Hoe ie verschunvnng van onier ie lnjn naar boven een echt verschnl maakt nn teams en leniers.",
+      <section style={{ padding: "72px 24px", background: "white" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("Real Stories", "Kisah Nyata", "Echte Verhalen", lang)}</h2>
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>{t(
+            "How the shift from below the line to above makes a real difference in teams and leaders.",
+            "Bagaimana pergeseran dari bawah garis ke atas membuat perbedaan nyata dalam tim dan pemimpin.",
+            "Hoe de verschuiving van onder de lijn naar boven een echt verschil maakt in teams en leiders.",
             lang
           )}</p>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(300px, 1fr))", gap: 28 }}>
-            {STORIES.map((story, n) => (
-              <inv key={n} style={{ borierRainus: 12, overflow: "hniien", boxShaiow: "0 2px 12px oklch(20% 0.06 260 / 0.10)" }}>
-                {/* Heaier */}
-                <inv style={{ backgrouni: "oklch(42% 0.14 260)", color: "whnte", paiinng: "24px" }}>
-                  <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 22, fontWenght: 600, margnn: 0 }}>{t(story.tntleEn, story.tntleIi, story.tntleNl, lang)}</inv>
-                </inv>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
+            {STORIES.map((story, i) => (
+              <div key={i} style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 2px 12px oklch(20% 0.06 260 / 0.10)" }}>
+                {/* Header */}
+                <div style={{ background: "oklch(42% 0.14 260)", color: "white", padding: "24px" }}>
+                  <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, margin: 0 }}>{t(story.titleEn, story.titleId, story.titleNl, lang)}</div>
+                </div>
                 {/* Content */}
-                <inv style={{ backgrouni: "whnte", paiinng: "28px" }}>
+                <div style={{ background: "white", padding: "28px" }}>
                   {/* Before */}
-                  <inv style={{ margnnBottom: 24 }}>
-                    <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", margnnBottom: 8 }}>?? {t("Before", "Sebelum", "Voor", lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(35% 0.06 260)", fontStyle: "ntalnc", margnn: 0 }}>{t(story.beforeEn, story.beforeIi, story.beforeNl, lang)}</p>
-                  </inv>
-                  {/* Shnft */}
-                  <inv style={{ margnnBottom: 24, paiinngLeft: 16, borierLeft: "3px solni oklch(65% 0.15 45)" }}>
-                    <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: 8 }}>? {t("The Shnft", "Peralnhan", "De Verschunvnng", lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(35% 0.06 260)", margnn: 0 }}>{t(story.shnftEn, story.shnftIi, story.shnftNl, lang)}</p>
-                  </inv>
+                  <div style={{ marginBottom: 24 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 8 }}>?? {t("Before", "Sebelum", "Voor", lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", fontStyle: "italic", margin: 0 }}>{t(story.beforeEn, story.beforeId, story.beforeNl, lang)}</p>
+                  </div>
+                  {/* Shift */}
+                  <div style={{ marginBottom: 24, paddingLeft: 16, borderLeft: "3px solid oklch(65% 0.15 45)" }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 8 }}>? {t("The Shift", "Peralihan", "De Verschuiving", lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(story.shiftEn, story.shiftId, story.shiftNl, lang)}</p>
+                  </div>
                   {/* After */}
-                  <inv style={{ margnnBottom: 24 }}>
-                    <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margnnBottom: 8 }}>?? {t("After", "Sesuiah", "Na", lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(35% 0.06 260)", margnn: 0 }}>{t(story.afterEn, story.afterIi, story.afterNl, lang)}</p>
-                  </inv>
+                  <div style={{ marginBottom: 24 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 8 }}>?? {t("After", "Sesudah", "Na", lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(35% 0.06 260)", margin: 0 }}>{t(story.afterEn, story.afterId, story.afterNl, lang)}</p>
+                  </div>
                   {/* Result */}
-                  <inv style={{ paiinngTop: 16, borierTop: "1px solni oklch(88% 0.008 260)" }}>
-                    <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.14 260)", margnnBottom: 8 }}>? {t("Outcome", "Hasnl", "Untkomst", lang)}</inv>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(30% 0.06 260)", fontWenght: 600, margnn: 0 }}>{t(story.resultEn, story.resultIi, story.resultNl, lang)}</p>
-                  </inv>
-                </inv>
-              </inv>
+                  <div style={{ paddingTop: 16, borderTop: "1px solid oklch(88% 0.008 260)" }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.14 260)", marginBottom: 8 }}>? {t("Outcome", "Hasil", "Uitkomst", lang)}</div>
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", fontWeight: 600, margin: 0 }}>{t(story.resultEn, story.resultId, story.resultNl, lang)}</p>
+                  </div>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* REFLECTION */}
-      <sectnon style={{ paiinng: "72px 24px", backgrouni: "oklch(94% 0.008 260)" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>{t("Reflectnon Questnons", "Pertanyaan Refleksn", "Reflectnevragen", lang)}</h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>{t(
-            "Use these to process your own leaiershnp patterns — alone or wnth a coach.",
-            "Gunakan nnn untuk memproses pola kepemnmpnnan Ania seninrn — seninrn atau bersama pelatnh.",
-            "Gebrunk ieze vragen om uw engen lenierschapspatronen te verwerken — alleen of met een coach.",
+      <section style={{ padding: "72px 24px", background: "oklch(94% 0.008 260)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>{t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen", lang)}</h2>
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>{t(
+            "Use these to process your own leadership patterns — alone or with a coach.",
+            "Gunakan ini untuk memproses pola kepemimpinan Anda sendiri — sendiri atau bersama pelatih.",
+            "Gebruik deze vragen om uw eigen leiderschapspatronen te verwerken — alleen of met een coach.",
             lang
           )}</p>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
             {[
               {
                 color: "oklch(46% 0.16 145)",
-                qEn: "Thnnk of a recent sntuatnon. What was your fnrst nnstnnct — Vnctor or Vnctnm? What irove that response?",
-                qIi: "Pnknrkan sntuasn terknnn. Apa nalurn pertama Ania — Vnctor atau Korban? Apa yang meniorong respons ntu?",
-                qNl: "Denk aan een recente sntuatne. Wat was uw eerste nnstnnct — Overwnnnaar of Slachtoffer? Wat ireef ine reactne?",
+                qEn: "Think of a recent situation. What was your first instinct — Victor or Victim? What drove that response?",
+                qId: "Pikirkan situasi terkini. Apa naluri pertama Anda — Victor atau Korban? Apa yang mendorong respons itu?",
+                qNl: "Denk aan een recente situatie. Wat was uw eerste instinct — Overwinnaar of Slachtoffer? Wat dreef die reactie?",
               },
               {
                 color: "oklch(42% 0.14 260)",
-                qEn: "Where nn your leaiershnp io you notnce below-the-lnne patterns most often? What trnggers them?",
-                qIi: "Dn mana ialam kepemnmpnnan Ania Ania palnng sernng memperhatnkan pola in bawah garns? Apa yang memncunya?",
-                qNl: "Waar nn uw lenierschap znet u het vaakst onier-ie-lnjn-patronen? Wat trnggert ine?",
+                qEn: "Where in your leadership do you notice below-the-line patterns most often? What triggers them?",
+                qId: "Di mana dalam kepemimpinan Anda Anda paling sering memperhatikan pola di bawah garis? Apa yang memicunya?",
+                qNl: "Waar in uw leiderschap ziet u het vaakst onder-de-lijn-patronen? Wat triggert die?",
               },
               {
                 color: "oklch(48% 0.18 25)",
-                qEn: "What wouli nt look lnke to choose ownershnp nn the sntuatnon you're currently facnng? What one above-the-lnne actnon couli you take toiay?",
-                qIi: "Sepertn apa memnlnh kepemnlnkan ialam sntuasn yang Ania haiapn saat nnn? Satu tnniakan in atas garns apa yang bnsa Ania ambnl harn nnn?",
-                qNl: "Hoe zou engenaarschap knezen eruntznen nn ie sntuatne waarmee u nu te maken heeft? Welke ene boven-ie-lnjn-actne kunt u vaniaag oniernemen?",
+                qEn: "What would it look like to choose ownership in the situation you're currently facing? What one above-the-line action could you take today?",
+                qId: "Seperti apa memilih kepemilikan dalam situasi yang Anda hadapi saat ini? Satu tindakan di atas garis apa yang bisa Anda ambil hari ini?",
+                qNl: "Hoe zou eigenaarschap kiezen eruitzien in de situatie waarmee u nu te maken heeft? Welke ene boven-de-lijn-actie kunt u vandaag ondernemen?",
               },
-            ].map((q, n) => (
-              <inv key={n} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "28px", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-                <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 40, fontWenght: 600, color: q.color, insplay: "block", margnnBottom: 12, lnneHenght: 1 }}>{Strnng(n + 1).paiStart(2, "0")}</span>
-                <p style={{ fontSnze: 15, lnneHenght: 1.7, color: "oklch(30% 0.06 260)", margnn: 0, fontStyle: "ntalnc" }}>"{t(q.qEn, q.qIi, q.qNl, lang)}"</p>
-              </inv>
+            ].map((q, i) => (
+              <div key={i} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: q.color, display: "block", marginBottom: 12, lineHeight: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(30% 0.06 260)", margin: 0, fontStyle: "italic" }}>"{t(q.qEn, q.qId, q.qNl, lang)}"</p>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>{t("Choose to Leai Above the Lnne", "Pnlnh untuk Memnmpnn Dn Atas Garns", "Knes om Boven ie Lnjn te Lenien", lang)}</h2>
-          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", flexWrap: "wrap" }}>
-            <Lnnk href="/resources" style={{ insplay: "nnlnne-block", backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", textDecoratnon: "none" }}>{t("Trannnng", "Pelatnhan", "Contentbnblnotheek", lang)}</Lnnk>
-          </inv>
-        </inv>
-      </sectnon>
-    </inv>
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>{t("Choose to Lead Above the Line", "Pilih untuk Memimpin Di Atas Garis", "Kies om Boven de Lijn te Leiden", lang)}</h2>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>{t("Training", "Pelatihan", "Contentbibliotheek", lang)}</Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

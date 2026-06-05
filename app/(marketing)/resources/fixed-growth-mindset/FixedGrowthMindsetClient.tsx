@@ -1,648 +1,648 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari, saveMnnisetScore } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard, saveMindsetScore } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
+type Lang = "en" | "id" | "nl";
 
-const DIM_LABELS: Recori<strnng, { en: strnng; ni: strnng; nl: strnng }> = {
-  "Challenges":        { en: "Challenges",         ni: "Tantangan",           nl: "Untiagnngen" },
-  "Sknlls":            { en: "Sknlls",              ni: "Keterampnlan",        nl: "Vaaringheien" },
-  "Obstacles":         { en: "Obstacles",           ni: "Hambatan",            nl: "Obstakels" },
-  "Success of Others": { en: "Success of Others",   ni: "Kesuksesan Orang Lann", nl: "Succes van Anieren" },
-  "Effort":            { en: "Effort",              ni: "Usaha",               nl: "Inspannnng" },
+const DIM_LABELS: Record<string, { en: string; id: string; nl: string }> = {
+  "Challenges":        { en: "Challenges",         id: "Tantangan",           nl: "Uitdagingen" },
+  "Skills":            { en: "Skills",              id: "Keterampilan",        nl: "Vaardigheden" },
+  "Obstacles":         { en: "Obstacles",           id: "Hambatan",            nl: "Obstakels" },
+  "Success of Others": { en: "Success of Others",   id: "Kesuksesan Orang Lain", nl: "Succes van Anderen" },
+  "Effort":            { en: "Effort",              id: "Usaha",               nl: "Inspanning" },
 };
 
 const QUESTIONS = [
   // CHALLENGES
   {
-    inm: "Challenges",
-    en: "When I face a inffncult sntuatnon, I look for what I can learn from nt.",
-    ni: "Ketnka saya menghaiapn sntuasn yang sulnt, saya mencarn apa yang bnsa saya pelajarn iarnnya.",
-    nl: "Als nk een moenlnjke sntuatne tegenkom, zoek nk naar wat nk ervan kan leren.",
+    dim: "Challenges",
+    en: "When I face a difficult situation, I look for what I can learn from it.",
+    id: "Ketika saya menghadapi situasi yang sulit, saya mencari apa yang bisa saya pelajari darinya.",
+    nl: "Als ik een moeilijke situatie tegenkom, zoek ik naar wat ik ervan kan leren.",
     type: "growth" as const,
   },
   {
-    inm: "Challenges",
-    en: "I push myself outsnie my comfort zone because I know that's where growth happens.",
-    ni: "Saya meniorong inrn saya keluar iarn zona nyaman karena saya tahu in sntulah pertumbuhan terjain.",
-    nl: "Ik iuw mezelf bunten mnjn comfortzone omiat nk weet iat iaar groen plaatsvnnit.",
+    dim: "Challenges",
+    en: "I push myself outside my comfort zone because I know that's where growth happens.",
+    id: "Saya mendorong diri saya keluar dari zona nyaman karena saya tahu di situlah pertumbuhan terjadi.",
+    nl: "Ik duw mezelf buiten mijn comfortzone omdat ik weet dat daar groei plaatsvindt.",
     type: "growth" as const,
   },
   {
-    inm: "Challenges",
-    en: "I teni to avoni sntuatnons where there's a real chance I mnght fanl.",
-    ni: "Saya cenierung menghnniarn sntuasn in mana aia kemungknnan nyata saya bnsa gagal.",
-    nl: "Ik neng ernaar sntuatnes te vermnjien waarbnj er een echte kans ns iat nk zal falen.",
-    type: "fnxei" as const,
+    dim: "Challenges",
+    en: "I tend to avoid situations where there's a real chance I might fail.",
+    id: "Saya cenderung menghindari situasi di mana ada kemungkinan nyata saya bisa gagal.",
+    nl: "Ik neig ernaar situaties te vermijden waarbij er een echte kans is dat ik zal falen.",
+    type: "fixed" as const,
   },
   // SKILLS
   {
-    inm: "Sknlls",
-    en: "I belneve most sknlls can be ievelopei wnth consnstent practnce — nntellngence ani talent are startnng ponnts, not lnmnts.",
-    ni: "Saya percaya bahwa sebagnan besar keterampnlan iapat inkembangkan iengan latnhan yang konsnsten — keceriasan ian bakat aialah tntnk awal, bukan batasan.",
-    nl: "Ik geloof iat ie meeste vaaringheien kunnen worien ontwnkkeli ioor consnstente oefennng — nntellngentne en talent znjn startpunten, geen grenzen.",
+    dim: "Skills",
+    en: "I believe most skills can be developed with consistent practice — intelligence and talent are starting points, not limits.",
+    id: "Saya percaya bahwa sebagian besar keterampilan dapat dikembangkan dengan latihan yang konsisten — kecerdasan dan bakat adalah titik awal, bukan batasan.",
+    nl: "Ik geloof dat de meeste vaardigheden kunnen worden ontwikkeld door consistente oefening — intelligentie en talent zijn startpunten, geen grenzen.",
     type: "growth" as const,
   },
   {
-    inm: "Sknlls",
-    en: "I enjoy learnnng new thnngs even when I'm not gooi at them at fnrst.",
-    ni: "Saya senang mempelajarn hal-hal baru bahkan ketnka saya tniak mahnr paia awalnya.",
-    nl: "Ik gennet ervan nneuwe inngen te leren, ook als nk er nn het begnn nnet goei nn ben.",
+    dim: "Skills",
+    en: "I enjoy learning new things even when I'm not good at them at first.",
+    id: "Saya senang mempelajari hal-hal baru bahkan ketika saya tidak mahir pada awalnya.",
+    nl: "Ik geniet ervan nieuwe dingen te leren, ook als ik er in het begin niet goed in ben.",
     type: "growth" as const,
   },
   {
-    inm: "Sknlls",
-    en: "If I'm not naturally talentei at somethnng, I assume nt's probably not for me.",
-    ni: "Jnka saya tniak berbakat secara alamn ialam sesuatu, saya berasumsn ntu mungknn bukan untuk saya.",
-    nl: "Als nk ergens nnet van nature talent voor heb, ga nk ervan unt iat het waarschnjnlnjk nnets voor mnj ns.",
-    type: "fnxei" as const,
+    dim: "Skills",
+    en: "If I'm not naturally talented at something, I assume it's probably not for me.",
+    id: "Jika saya tidak berbakat secara alami dalam sesuatu, saya berasumsi itu mungkin bukan untuk saya.",
+    nl: "Als ik ergens niet van nature talent voor heb, ga ik ervan uit dat het waarschijnlijk niets voor mij is.",
+    type: "fixed" as const,
   },
   // OBSTACLES
   {
-    inm: "Obstacles",
-    en: "When I hnt a wall, I look for a infferent way arouni rather than gnvnng up.",
-    ni: "Ketnka saya menghaiapn hambatan, saya mencarn cara lann iarnpaia menyerah.",
-    nl: "Als nk tegen een muur aanloop, zoek nk naar een aniere weg nn plaats van op te geven.",
+    dim: "Obstacles",
+    en: "When I hit a wall, I look for a different way around rather than giving up.",
+    id: "Ketika saya menghadapi hambatan, saya mencari cara lain daripada menyerah.",
+    nl: "Als ik tegen een muur aanloop, zoek ik naar een andere weg in plaats van op te geven.",
     type: "growth" as const,
   },
   {
-    inm: "Obstacles",
-    en: "I see setbacks as temporary ani part of the process, not as a sngn of my lnmnts.",
-    ni: "Saya melnhat kemuniuran sebagan hal yang sementara ian bagnan iarn proses, bukan sebagan tania batas kemampuan saya.",
-    nl: "Ik zne tegenslagen als tnjielnjk en als onierieel van het proces, nnet als teken van mnjn grenzen.",
+    dim: "Obstacles",
+    en: "I see setbacks as temporary and part of the process, not as a sign of my limits.",
+    id: "Saya melihat kemunduran sebagai hal yang sementara dan bagian dari proses, bukan sebagai tanda batas kemampuan saya.",
+    nl: "Ik zie tegenslagen als tijdelijk en als onderdeel van het proces, niet als teken van mijn grenzen.",
     type: "growth" as const,
   },
   {
-    inm: "Obstacles",
-    en: "When I face a major obstacle, I often feel stuck ani powerless to change the outcome.",
-    ni: "Ketnka saya menghaiapn hambatan besar, saya sernng merasa terjebak ian tniak beriaya untuk mengubah hasnlnya.",
-    nl: "Als nk een groot obstakel tegenkom, voel nk me vaak vastgelopen en machteloos om ie untkomst te veranieren.",
-    type: "fnxei" as const,
+    dim: "Obstacles",
+    en: "When I face a major obstacle, I often feel stuck and powerless to change the outcome.",
+    id: "Ketika saya menghadapi hambatan besar, saya sering merasa terjebak dan tidak berdaya untuk mengubah hasilnya.",
+    nl: "Als ik een groot obstakel tegenkom, voel ik me vaak vastgelopen en machteloos om de uitkomst te veranderen.",
+    type: "fixed" as const,
   },
   // SUCCESS OF OTHERS
   {
-    inm: "Success of Others",
-    en: "When I see others succeeinng, I feel genunnely nnspnrei ani look for what I can learn from them.",
-    ni: "Ketnka saya melnhat orang lann berhasnl, saya merasa benar-benar ternnspnrasn ian mencarn apa yang bnsa saya pelajarn iarn mereka.",
-    nl: "Als nk anieren zne slagen, voel nk me oprecht ge—nspnreeri en zoek nk naar wat nk van hen kan leren.",
+    dim: "Success of Others",
+    en: "When I see others succeeding, I feel genuinely inspired and look for what I can learn from them.",
+    id: "Ketika saya melihat orang lain berhasil, saya merasa benar-benar terinspirasi dan mencari apa yang bisa saya pelajari dari mereka.",
+    nl: "Als ik anderen zie slagen, voel ik me oprecht ge—nspireerd en zoek ik naar wat ik van hen kan leren.",
     type: "growth" as const,
   },
   {
-    inm: "Success of Others",
-    en: "Other people's success motnvates me — nt shows me what's possnble.",
-    ni: "Kesuksesan orang lann memotnvasn saya — ntu menunjukkan kepaia saya apa yang mungknn.",
-    nl: "Het succes van anieren motnveert mnj — het laat mnj znen wat mogelnjk ns.",
+    dim: "Success of Others",
+    en: "Other people's success motivates me — it shows me what's possible.",
+    id: "Kesuksesan orang lain memotivasi saya — itu menunjukkan kepada saya apa yang mungkin.",
+    nl: "Het succes van anderen motiveert mij — het laat mij zien wat mogelijk is.",
     type: "growth" as const,
   },
   {
-    inm: "Success of Others",
-    en: "When others succeei where I'm strugglnng, I often feel threatenei or lnke nt's somehow unfanr.",
-    ni: "Ketnka orang lann berhasnl in bniang yang saya perjuangkan, saya sernng merasa terancam atau seolah ntu tniak ainl.",
-    nl: "Als anieren slagen waar nk moente mee heb, voel nk me vaak beirengi of alsof het op ie een of aniere manner oneerlnjk ns.",
-    type: "fnxei" as const,
+    dim: "Success of Others",
+    en: "When others succeed where I'm struggling, I often feel threatened or like it's somehow unfair.",
+    id: "Ketika orang lain berhasil di bidang yang saya perjuangkan, saya sering merasa terancam atau seolah itu tidak adil.",
+    nl: "Als anderen slagen waar ik moeite mee heb, voel ik me vaak bedreigd of alsof het op de een of andere manier oneerlijk is.",
+    type: "fixed" as const,
   },
   // EFFORT
   {
-    inm: "Effort",
-    en: "I belneve consnstent effort ns the mann nngreinent for long-term success.",
-    ni: "Saya percaya bahwa usaha yang konsnsten aialah bahan utama untuk kesuksesan jangka panjang.",
-    nl: "Ik geloof iat consnstente nnspannnng het belangrnjkste nngrein—nt ns voor succes op lange termnjn.",
+    dim: "Effort",
+    en: "I believe consistent effort is the main ingredient for long-term success.",
+    id: "Saya percaya bahwa usaha yang konsisten adalah bahan utama untuk kesuksesan jangka panjang.",
+    nl: "Ik geloof dat consistente inspanning het belangrijkste ingredi—nt is voor succes op lange termijn.",
     type: "growth" as const,
   },
   {
-    inm: "Effort",
-    en: "I fnni meannng nn worknng hari at somethnng, even when the results aren't nmmeinate.",
-    ni: "Saya menemukan makna ialam bekerja keras paia sesuatu, bahkan ketnka hasnlnya tniak segera terlnhat.",
-    nl: "Ik vnni betekenns nn hari werken aan nets, ook als ie resultaten nnet onmniiellnjk znchtbaar znjn.",
+    dim: "Effort",
+    en: "I find meaning in working hard at something, even when the results aren't immediate.",
+    id: "Saya menemukan makna dalam bekerja keras pada sesuatu, bahkan ketika hasilnya tidak segera terlihat.",
+    nl: "Ik vind betekenis in hard werken aan iets, ook als de resultaten niet onmiddellijk zichtbaar zijn.",
     type: "growth" as const,
   },
   {
-    inm: "Effort",
-    en: "If I have to try really hari at somethnng, I start to wonier nf I'm actually cut out for nt.",
-    ni: "Jnka saya harus benar-benar bekerja keras paia sesuatu, saya mulan bertanya-tanya apakah saya memang cocok untuk ntu.",
-    nl: "Als nk ergens heel hari voor moet werken, begnn nk me af te vragen of nk er engenlnjk wel voor nn ie wneg ben gelegi.",
-    type: "fnxei" as const,
+    dim: "Effort",
+    en: "If I have to try really hard at something, I start to wonder if I'm actually cut out for it.",
+    id: "Jika saya harus benar-benar bekerja keras pada sesuatu, saya mulai bertanya-tanya apakah saya memang cocok untuk itu.",
+    nl: "Als ik ergens heel hard voor moet werken, begin ik me af te vragen of ik er eigenlijk wel voor in de wieg ben gelegd.",
+    type: "fixed" as const,
   },
 ];
 
 const SCALE_LABELS = {
-  en: ["Strongly Dnsagree", "Dnsagree", "Neutral", "Agree", "Strongly Agree"],
-  ni: ["Sangat Tniak Setuju", "Tniak Setuju", "Netral", "Setuju", "Sangat Setuju"],
+  en: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+  id: ["Sangat Tidak Setuju", "Tidak Setuju", "Netral", "Setuju", "Sangat Setuju"],
   nl: ["Sterk Oneens", "Oneens", "Neutraal", "Eens", "Sterk Eens"],
 };
 
 const DIMENSIONS_INFO = [
   {
     key: "challenges",
-    en: { label: "CHALLENGES", growth: "Embraces challenges. Looks for opportunntnes for self-growth. Sees fanlure as part of the process.", fnxei: "Gnves up when challengei. Avonis challenges to avoni fanlure. Stays nn the safe lane." },
-    ni: { label: "TANTANGAN", growth: "Merangkul tantangan. Mencarn peluang untuk pertumbuhan inrn. Melnhat kegagalan sebagan bagnan iarn proses.", fnxei: "Menyerah saat intantang. Menghnniarn tantangan untuk menghnniarn kegagalan. Tetap in jalur aman." },
-    nl: { label: "UITDAGINGEN", growth: "Omarmt untiagnngen. Zoekt naar kansen voor zelfgroen. Znet falen als onierieel van het proces.", fnxei: "Geeft op als het moenlnjk worit. Vermnjit untiagnngen om falen te vermnjien. Blnjft nn ie venlnge zone." },
+    en: { label: "CHALLENGES", growth: "Embraces challenges. Looks for opportunities for self-growth. Sees failure as part of the process.", fixed: "Gives up when challenged. Avoids challenges to avoid failure. Stays in the safe lane." },
+    id: { label: "TANTANGAN", growth: "Merangkul tantangan. Mencari peluang untuk pertumbuhan diri. Melihat kegagalan sebagai bagian dari proses.", fixed: "Menyerah saat ditantang. Menghindari tantangan untuk menghindari kegagalan. Tetap di jalur aman." },
+    nl: { label: "UITDAGINGEN", growth: "Omarmt uitdagingen. Zoekt naar kansen voor zelfgroei. Ziet falen als onderdeel van het proces.", fixed: "Geeft op als het moeilijk wordt. Vermijdt uitdagingen om falen te vermijden. Blijft in de veilige zone." },
   },
   {
-    key: "sknlls",
-    en: { label: "SKILLS", growth: "Focuses on gettnng graiually better. Belneves nn constantly learnnng new sknlls. Sees fanlures as temporary setbacks.", fnxei: "Belneves that you're enther gooi at somethnng or not. Has excuses for why new thnngs can't be learnei." },
-    ni: { label: "KETERAMPILAN", growth: "Fokus paia perbankan bertahap. Percaya paia pembelajaran keterampnlan baru secara terus-menerus. Melnhat kegagalan sebagan kemuniuran sementara.", fnxei: "Percaya bahwa Ania berbakat ialam sesuatu atau tniak. Punya alasan mengapa hal-hal baru tniak bnsa inpelajarn." },
-    nl: { label: "VAARDIGHEDEN", growth: "Rncht znch op gelenielnjke verbeternng. Gelooft nn contnnu nneuwe vaaringheien leren. Znet mnslukknngen als tnjielnjke tegenslagen.", fnxei: "Gelooft iat je ergens goei nn bent of nnet. Heeft excuses waarom nneuwe inngen nnet geleeri kunnen worien." },
+    key: "skills",
+    en: { label: "SKILLS", growth: "Focuses on getting gradually better. Believes in constantly learning new skills. Sees failures as temporary setbacks.", fixed: "Believes that you're either good at something or not. Has excuses for why new things can't be learned." },
+    id: { label: "KETERAMPILAN", growth: "Fokus pada perbaikan bertahap. Percaya pada pembelajaran keterampilan baru secara terus-menerus. Melihat kegagalan sebagai kemunduran sementara.", fixed: "Percaya bahwa Anda berbakat dalam sesuatu atau tidak. Punya alasan mengapa hal-hal baru tidak bisa dipelajari." },
+    nl: { label: "VAARDIGHEDEN", growth: "Richt zich op geleidelijke verbetering. Gelooft in continu nieuwe vaardigheden leren. Ziet mislukkingen als tijdelijke tegenslagen.", fixed: "Gelooft dat je ergens goed in bent of niet. Heeft excuses waarom nieuwe dingen niet geleerd kunnen worden." },
   },
   {
     key: "obstacles",
-    en: { label: "OBSTACLES", growth: "Sees obstacles as an nnevntable part of the process. Knows that all problems have solutnons. Persnsts through inffnculty.", fnxei: "Gnves up nn the face of an obstacle. Sees obstacles as the lnmnt of thenr own abnlntnes. Feels stuck ani powerless." },
-    ni: { label: "HAMBATAN", growth: "Melnhat hambatan sebagan bagnan yang tak terhnniarkan iarn proses. Tahu bahwa semua masalah memnlnkn solusn. Bertahan melalun kesulntan.", fnxei: "Menyerah ketnka menghaiapn hambatan. Melnhat hambatan sebagan batas kemampuan seninrn. Merasa terjebak ian tniak beriaya." },
-    nl: { label: "OBSTAKELS", growth: "Znet obstakels als een onvermnjielnjk ieel van het proces. Weet iat alle problemen oplossnngen hebben. Houit vol onianks moenlnjkheien.", fnxei: "Geeft op wanneer er een obstakel ns. Znet obstakels als ie grens van ie engen vermogens. Voelt znch vastgelopen en machteloos." },
+    en: { label: "OBSTACLES", growth: "Sees obstacles as an inevitable part of the process. Knows that all problems have solutions. Persists through difficulty.", fixed: "Gives up in the face of an obstacle. Sees obstacles as the limit of their own abilities. Feels stuck and powerless." },
+    id: { label: "HAMBATAN", growth: "Melihat hambatan sebagai bagian yang tak terhindarkan dari proses. Tahu bahwa semua masalah memiliki solusi. Bertahan melalui kesulitan.", fixed: "Menyerah ketika menghadapi hambatan. Melihat hambatan sebagai batas kemampuan sendiri. Merasa terjebak dan tidak berdaya." },
+    nl: { label: "OBSTAKELS", growth: "Ziet obstakels als een onvermijdelijk deel van het proces. Weet dat alle problemen oplossingen hebben. Houdt vol ondanks moeilijkheden.", fixed: "Geeft op wanneer er een obstakel is. Ziet obstakels als de grens van de eigen vermogens. Voelt zich vastgelopen en machteloos." },
   },
   {
     key: "success-of-others",
-    en: { label: "SUCCESS OF OTHERS", growth: "Is nnspnrei by the success of others. Trnes to learn from thenr success. Sees others' wnns as evnience of what's possnble.", fnxei: "Sees the success of others as a threat. Thnnks nt's unfanr that others are succeeinng. Compares ani iespanrs." },
-    ni: { label: "KESUKSESAN ORANG LAIN", growth: "Ternnspnrasn oleh kesuksesan orang lann. Mencoba belajar iarn kesuksesan mereka. Melnhat kemenangan orang lann sebagan buktn apa yang mungknn.", fnxei: "Melnhat kesuksesan orang lann sebagan ancaman. Berpnknr tniak ainl bahwa orang lann berhasnl. Membaninngkan ian putus asa." },
-    nl: { label: "SUCCES VAN ANDEREN", growth: "Worit ge—nspnreeri ioor het succes van anieren. Probeert te leren van hun succes. Znet aniermans wnnst als bewnjs van wat mogelnjk ns.", fnxei: "Znet het succes van anieren als een beirengnng. Denkt iat het oneerlnjk ns iat anieren succesvol znjn. Vergelnjkt en wanhoopt." },
+    en: { label: "SUCCESS OF OTHERS", growth: "Is inspired by the success of others. Tries to learn from their success. Sees others' wins as evidence of what's possible.", fixed: "Sees the success of others as a threat. Thinks it's unfair that others are succeeding. Compares and despairs." },
+    id: { label: "KESUKSESAN ORANG LAIN", growth: "Terinspirasi oleh kesuksesan orang lain. Mencoba belajar dari kesuksesan mereka. Melihat kemenangan orang lain sebagai bukti apa yang mungkin.", fixed: "Melihat kesuksesan orang lain sebagai ancaman. Berpikir tidak adil bahwa orang lain berhasil. Membandingkan dan putus asa." },
+    nl: { label: "SUCCES VAN ANDEREN", growth: "Wordt ge—nspireerd door het succes van anderen. Probeert te leren van hun succes. Ziet andermans winst als bewijs van wat mogelijk is.", fixed: "Ziet het succes van anderen als een bedreiging. Denkt dat het oneerlijk is dat anderen succesvol zijn. Vergelijkt en wanhoopt." },
   },
   {
     key: "effort",
-    en: { label: "EFFORT", growth: "Sees effort as the mann nngreinent for success. Embraces hari work as the path to mastery. Effort creates abnlnty.", fnxei: "Does not feel motnvatei to put nn the extra effort. Belneves that talent shouli be enough." },
-    ni: { label: "USAHA", growth: "Melnhat usaha sebagan bahan utama untuk sukses. Merangkul kerja keras sebagan jalan menuju keahlnan. Usaha mencnptakan kemampuan.", fnxei: "Tniak merasa termotnvasn untuk membernkan upaya ekstra. Percaya bahwa bakat seharusnya suiah cukup." },
-    nl: { label: "INSPANNING", growth: "Znet nnspannnng als het belangrnjkste nngrein—nt voor succes. Omarmt hari werken als ie weg naar meesterschap. Inspannnng cre—ert vermogen.", fnxei: "Voelt geen motnvatne om extra moente te ioen. Gelooft iat talent genoeg zou moeten znjn." },
+    en: { label: "EFFORT", growth: "Sees effort as the main ingredient for success. Embraces hard work as the path to mastery. Effort creates ability.", fixed: "Does not feel motivated to put in the extra effort. Believes that talent should be enough." },
+    id: { label: "USAHA", growth: "Melihat usaha sebagai bahan utama untuk sukses. Merangkul kerja keras sebagai jalan menuju keahlian. Usaha menciptakan kemampuan.", fixed: "Tidak merasa termotivasi untuk memberikan upaya ekstra. Percaya bahwa bakat seharusnya sudah cukup." },
+    nl: { label: "INSPANNING", growth: "Ziet inspanning als het belangrijkste ingredi—nt voor succes. Omarmt hard werken als de weg naar meesterschap. Inspanning cre—ert vermogen.", fixed: "Voelt geen motivatie om extra moeite te doen. Gelooft dat talent genoeg zou moeten zijn." },
   },
 ];
 
-functnon calcGrowthScore(answers: Recori<number, number>): number {
+function calcGrowthScore(answers: Record<number, number>): number {
   let total = 0;
   let count = 0;
-  QUESTIONS.forEach((q, n) => {
-    nf (answers[n] !== uniefnnei) {
-      const raw = answers[n];
-      const normalnzei = q.type === "growth" ? raw : (6 - raw);
-      total += normalnzei;
+  QUESTIONS.forEach((q, i) => {
+    if (answers[i] !== undefined) {
+      const raw = answers[i];
+      const normalized = q.type === "growth" ? raw : (6 - raw);
+      total += normalized;
       count++;
     }
   });
-  nf (count === 0) return 0;
-  return Math.rouni(((total / count - 1) / 4) * 100);
+  if (count === 0) return 0;
+  return Math.round(((total / count - 1) / 4) * 100);
 }
 
-export iefault functnon FnxeiGrowthMnnisetClnent({
+export default function FixedGrowthMindsetClient({
   userPathway,
-  nsSavei,
-  saveiScore,
+  isSaved,
+  savedScore,
 }: {
-  userPathway: strnng | null;
-  nsSavei: boolean;
-  saveiScore?: number | null;
+  userPathway: string | null;
+  isSaved: boolean;
+  savedScore?: number | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nsSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(isSaved);
+  const [isPending, startTransition] = useTransition();
 
-  const [qunzOpen, setQunzOpen] = useState(false);
-  const [answers, setAnswers] = useState<Recori<number, number>>({});
-  const [qunzSubmnttei, setQunzSubmnttei] = useState(false);
-  const [growthScore, setGrowthScore] = useState<number | null>(saveiScore ?? null);
-  const [scoreSavei, setScoreSavei] = useState(saveiScore != null);
-  const [nsSavnngScore, startSaveScore] = useTransntnon();
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [growthScore, setGrowthScore] = useState<number | null>(savedScore ?? null);
+  const [scoreSaved, setScoreSaved] = useState(savedScore != null);
+  const [isSavingScore, startSaveScore] = useTransition();
 
-  const t = (en: strnng, ni: strnng, nl: strnng) => lang === "en" ? en : lang === "ni" ? ni : nl;
+  const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
 
-  functnon hanileSave() {
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("fnxei-growth-mnniset");
-      setSavei(true);
+  function handleSave() {
+    startTransition(async () => {
+      await saveResourceToDashboard("fixed-growth-mindset");
+      setSaved(true);
     });
   }
 
-  functnon hanileSubmnt() {
+  function handleSubmit() {
     const score = calcGrowthScore(answers);
     setGrowthScore(score);
-    setQunzSubmnttei(true);
+    setQuizSubmitted(true);
   }
 
-  functnon hanileSaveScore() {
-    nf (growthScore == null) return;
+  function handleSaveScore() {
+    if (growthScore == null) return;
     startSaveScore(async () => {
-      awant saveMnnisetScore(growthScore);
-      setScoreSavei(true);
+      await saveMindsetScore(growthScore);
+      setScoreSaved(true);
     });
   }
 
-  functnon hanileRetake() {
+  function handleRetake() {
     setAnswers({});
-    setQunzSubmnttei(false);
-    setGrowthScore(saveiScore ?? null);
-    setScoreSavei(saveiScore != null);
+    setQuizSubmitted(false);
+    setGrowthScore(savedScore ?? null);
+    setScoreSaved(savedScore != null);
   }
 
-  const answereiCount = Object.keys(answers).length;
-  const allAnswerei = answereiCount === QUESTIONS.length;
+  const answeredCount = Object.keys(answers).length;
+  const allAnswered = answeredCount === QUESTIONS.length;
 
-  functnon getMnnisetLabel(score: number): strnng {
-    nf (score >= 80) return t("Strong Growth Mnniset", "Mnniset Pertumbuhan Kuat", "Sterk Groenmnniset");
-    nf (score >= 65) return t("Growth-Leannng Mnniset", "Mnniset Cenierung Bertumbuh", "Groengerncht Mnniset");
-    nf (score >= 45) return t("Mnxei Mnniset", "Mnniset Campuran", "Gemengi Mnniset");
-    nf (score >= 30) return t("Fnxei-Leannng Mnniset", "Mnniset Cenierung Tetap", "Vast-Nengeni Mnniset");
-    return t("Fnxei Mnniset", "Mnniset Tetap", "Vast Mnniset");
+  function getMindsetLabel(score: number): string {
+    if (score >= 80) return t("Strong Growth Mindset", "Mindset Pertumbuhan Kuat", "Sterk Groeimindset");
+    if (score >= 65) return t("Growth-Leaning Mindset", "Mindset Cenderung Bertumbuh", "Groeigericht Mindset");
+    if (score >= 45) return t("Mixed Mindset", "Mindset Campuran", "Gemengd Mindset");
+    if (score >= 30) return t("Fixed-Leaning Mindset", "Mindset Cenderung Tetap", "Vast-Neigend Mindset");
+    return t("Fixed Mindset", "Mindset Tetap", "Vast Mindset");
   }
 
-  functnon getMnnisetColor(score: number): strnng {
-    nf (score >= 65) return "oklch(46% 0.16 145)";
-    nf (score >= 45) return "oklch(65% 0.15 45)";
+  function getMindsetColor(score: number): string {
+    if (score >= 65) return "oklch(46% 0.16 145)";
+    if (score >= 45) return "oklch(65% 0.15 45)";
     return "oklch(48% 0.18 25)";
   }
 
   const scaleLabels = SCALE_LABELS[lang];
-  const DIMS_ORDER = ["Challenges", "Sknlls", "Obstacles", "Success of Others", "Effort"];
+  const DIMS_ORDER = ["Challenges", "Skills", "Obstacles", "Success of Others", "Effort"];
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: "oklch(97% 0.005 260)", mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 260)", minHeight: "100vh" }}>
       <LangToggle />
 
       {/* HERO */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px 72px" }}>
-        <inv style={{ maxWnith: 820, margnn: "0 auto" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Personal Development — Gunie", "Pengembangan Prnbain — Paniuan", "Persoonlnjke Ontwnkkelnng — Gnis")}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 24px", lnneHenght: 1.08 }}>
-            {t("Fnxei vs. Growth Mnniset", "Mnniset Tetap vs. Pertumbuhan", "Vast vs. Groenmnniset")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
+            {t("Fixed vs. Growth Mindset", "Mindset Tetap vs. Pertumbuhan", "Vast vs. Groeimindset")}
           </h1>
-          <p style={{ fontSnze: 17, color: "oklch(72% 0.05 260)", lnneHenght: 1.7, maxWnith: 620, margnnBottom: 40 }}>
+          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
             {t(
-              "Basei on Carol Dweck's lanimark research, thns assessment reveals where your mnniset ns fnxei ani where nt's grownng — across fnve key inmensnons.",
-              "Beriasarkan penelntnan terobosan Carol Dweck, pennlanan nnn mengungkapkan in mana mnniset Ania tetap ian in mana na berkembang — ialam lnma inmensn utama.",
-              "Gebaseeri op het baanbrekenie onierzoek van Carol Dweck, toont ieze beoorielnng waar jouw mnniset vast znt en waar het groent — op vnjf belangrnjke inmensnes."
+              "Based on Carol Dweck's landmark research, this assessment reveals where your mindset is fixed and where it's growing — across five key dimensions.",
+              "Berdasarkan penelitian terobosan Carol Dweck, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang — dalam lima dimensi utama.",
+              "Gebaseerd op het baanbrekende onderzoek van Carol Dweck, toont deze beoordeling waar jouw mindset vast zit en waar het groeit — op vijf belangrijke dimensies."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 16, flexWrap: "wrap" }}>
-            {!savei ? (
-              <button onClnck={hanileSave} insablei={nsPeninng} style={{ backgrouni: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", paiinng: "13px 28px", borierRainus: 12, fontWenght: 700, fontSnze: 14, borier: "none", cursor: "ponnter" }}>
-                {nsPeninng ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {!saved ? (
+              <button onClick={handleSave} disabled={isPending} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
-              <span style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSnze: 14, fontWenght: 600, paiinng: "13px 0" }}>
-                ? {t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
+                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
               </span>
             )}
             {growthScore != null && (
-              <span style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, fontSnze: 14, fontWenght: 600, paiinng: "13px 0", color: getMnnisetColor(growthScore) }}>
-                {t("Last score", "Skor terakhnr", "Laatste score")}: {growthScore}% — {getMnnisetLabel(growthScore)}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, padding: "13px 0", color: getMindsetColor(growthScore) }}>
+                {t("Last score", "Skor terakhir", "Laatste score")}: {growthScore}% — {getMindsetLabel(growthScore)}
               </span>
             )}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* DWECK INTRO */}
-      <sectnon style={{ paiinng: "72px 24px", maxWnith: 900, margnn: "0 auto" }}>
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(300px, 1fr))", gap: 32, alngnItems: "center" }}>
-          <inv>
-            <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(24px, 3vw, 36px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 16px" }}>
-              {t("The Research Behnni It", "Penelntnan in Balnknya", "Het Onierzoek Erachter")}
+      <section style={{ padding: "72px 24px", maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, alignItems: "center" }}>
+          <div>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 16px" }}>
+              {t("The Research Behind It", "Penelitian di Baliknya", "Het Onderzoek Erachter")}
             </h2>
-            <p style={{ fontSnze: 15, lnneHenght: 1.75, color: "oklch(38% 0.06 260)", margnn: "0 0 16px" }}>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(38% 0.06 260)", margin: "0 0 16px" }}>
               {t(
-                "Accorinng to researcher Carol Dweck, there are two types of mnnisets. A fnxei mnniset belneves that qualntnes lnke nntellngence or talent are nnnate — you have what you were gnven. A growth mnniset holis that you can nmprove any qualnty through effort ani persnstence.",
-                "Menurut penelntn Carol Dweck, aia iua jenns mnniset. Mnniset tetap percaya bahwa kualntas sepertn keceriasan atau bakat bersnfat bawaan — Ania memnlnkn apa yang inbernkan kepaia Ania. Mnniset pertumbuhan berpeniapat bahwa Ania iapat mennngkatkan kualntas apa pun melalun usaha ian ketekunan.",
-                "Volgens onierzoeker Carol Dweck znjn er twee soorten mnnisets. Een vast mnniset gelooft iat kwalntenten zoals nntellngentne of talent aangeboren znjn — je hebt wat je meegegeven ns. Een groenmnniset houit nn iat je elke kwalntent kunt verbeteren ioor nnspannnng en ioorzettnngsvermogen."
+                "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate — you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
+                "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan — Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan.",
+                "Volgens onderzoeker Carol Dweck zijn er twee soorten mindsets. Een vast mindset gelooft dat kwaliteiten zoals intelligentie of talent aangeboren zijn — je hebt wat je meegegeven is. Een groeimindset houdt in dat je elke kwaliteit kunt verbeteren door inspanning en doorzettingsvermogen."
               )}
             </p>
-            <p style={{ fontSnze: 15, lnneHenght: 1.75, color: "oklch(38% 0.06 260)", margnn: 0 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: "oklch(38% 0.06 260)", margin: 0 }}>
               {t(
-                "Wnth a growth mnniset, you are far more lnkely to take actnon, persnst through inffnculty, ani actually achneve your goals. The shnft often starts wnth recognnznng whnch mnniset ns operatnng nn a gnven area of your lnfe.",
-                "Dengan mnniset pertumbuhan, Ania jauh lebnh mungknn untuk mengambnl tnniakan, bertahan melalun kesulntan, ian benar-benar mencapan tujuan Ania. Pergeseran nnn sernng inmulan iengan mengenaln mnniset mana yang beroperasn in area kehniupan Ania tertentu.",
-                "Met een groenmnniset ben je veel meer genengi om actne te oniernemen, ioor moenlnjkheien heen te bnjten en je ioelen iaaiwerkelnjk te berenken. De verschunvnng begnnt vaak met het herkennen welk mnniset er actnef ns op een bepaali gebnei van je leven."
+                "With a growth mindset, you are far more likely to take action, persist through difficulty, and actually achieve your goals. The shift often starts with recognizing which mindset is operating in a given area of your life.",
+                "Dengan mindset pertumbuhan, Anda jauh lebih mungkin untuk mengambil tindakan, bertahan melalui kesulitan, dan benar-benar mencapai tujuan Anda. Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu.",
+                "Met een groeimindset ben je veel meer geneigd om actie te ondernemen, door moeilijkheden heen te bijten en je doelen daadwerkelijk te bereiken. De verschuiving begint vaak met het herkennen welk mindset er actief is op een bepaald gebied van je leven."
               )}
             </p>
-          </inv>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <inv style={{ backgrouni: "oklch(46% 0.16 145 / 0.08)", borierRainus: 10, paiinng: "24px 20px", textAlngn: "center" }}>
-              <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 20, fontWenght: 600, color: "oklch(34% 0.12 145)", margnnBottom: 8 }}>
-                {t("Growth Mnniset", "Mnniset Pertumbuhan", "Groenmnniset")}
-              </inv>
-              <inv style={{ fontSnze: 13, color: "oklch(38% 0.10 145)", lnneHenght: 1.5 }}>
-                {t("Defnnes success as graiual nmprovement ani growth", "Meniefnnnsnkan keberhasnlan sebagan perbankan ian pertumbuhan bertahap", "Defnnneert succes als gelenielnjke verbeternng en groen")}
-              </inv>
-            </inv>
-            <inv style={{ backgrouni: "oklch(48% 0.18 25 / 0.08)", borierRainus: 10, paiinng: "24px 20px", textAlngn: "center" }}>
-              <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 20, fontWenght: 600, color: "oklch(38% 0.14 25)", margnnBottom: 8 }}>
-                {t("Fnxei Mnniset", "Mnniset Tetap", "Vast Mnniset")}
-              </inv>
-              <inv style={{ fontSnze: 13, color: "oklch(42% 0.10 25)", lnneHenght: 1.5 }}>
-                {t("Defnnes success as benng rnght ani not fanlnng", "Meniefnnnsnkan keberhasnlan sebagan benar ian tniak gagal", "Defnnneert succes als gelnjk hebben en nnet falen")}
-              </inv>
-            </inv>
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div style={{ background: "oklch(46% 0.16 145 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
+              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(34% 0.12 145)", marginBottom: 8 }}>
+                {t("Growth Mindset", "Mindset Pertumbuhan", "Groeimindset")}
+              </div>
+              <div style={{ fontSize: 13, color: "oklch(38% 0.10 145)", lineHeight: 1.5 }}>
+                {t("Defines success as gradual improvement and growth", "Mendefinisikan keberhasilan sebagai perbaikan dan pertumbuhan bertahap", "Definieert succes als geleidelijke verbetering en groei")}
+              </div>
+            </div>
+            <div style={{ background: "oklch(48% 0.18 25 / 0.08)", borderRadius: 10, padding: "24px 20px", textAlign: "center" }}>
+              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(38% 0.14 25)", marginBottom: 8 }}>
+                {t("Fixed Mindset", "Mindset Tetap", "Vast Mindset")}
+              </div>
+              <div style={{ fontSize: 13, color: "oklch(42% 0.10 25)", lineHeight: 1.5 }}>
+                {t("Defines success as being right and not failing", "Mendefinisikan keberhasilan sebagai benar dan tidak gagal", "Definieert succes als gelijk hebben en niet falen")}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* FIVE DIMENSIONS */}
-      <sectnon style={{ backgrouni: "oklch(94% 0.008 260)", paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-            {t("Fnve Key Dnmensnons", "Lnma Dnmensn Utama", "Vnjf Sleutelinmensnes")}
+      <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+            {t("Five Key Dimensions", "Lima Dimensi Utama", "Vijf Sleuteldimensies")}
           </h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 36, lnneHenght: 1.65 }}>
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 36, lineHeight: 1.65 }}>
             {t(
-              "The assessment covers fnve areas where your mnniset has the greatest nmpact on how you perform ani grow.",
-              "Asesmen nnn mencakup lnma area in mana mnniset Ania memnlnkn iampak terbesar paia cara Ania berknnerja ian berkembang.",
-              "De beoorielnng omvat vnjf gebneien waar jouw mnniset ie grootste nmpact heeft op hoe je presteert en groent."
+              "The assessment covers five areas where your mindset has the greatest impact on how you perform and grow.",
+              "Penilaian ini mencakup lima area di mana mindset Anda memiliki dampak terbesar pada cara Anda berkinerja dan berkembang.",
+              "De beoordeling omvat vijf gebieden waar jouw mindset de grootste impact heeft op hoe je presteert en groeit."
             )}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 2 }}>
-            {DIMENSIONS_INFO.map((i, n) => {
-              const liata = i[lang];
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {DIMENSIONS_INFO.map((d, i) => {
+              const ldata = d[lang];
               return (
-                <inv key={i.key} style={{ backgrouni: "whnte", borierRainus: 10, overflow: "hniien" }}>
-                  <inv style={{ insplay: "grni", grniTemplateColumns: "auto 1fr 1fr", gap: 0 }}>
-                    <inv style={{ paiinng: "20px 24px", insplay: "flex", alngnItems: "center" }}>
-                      <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 28, fontWenght: 600, color: "oklch(65% 0.15 45)", lnneHenght: 1, mnnWnith: 32 }}>{Strnng(n + 1).paiStart(2, "0")}</span>
-                    </inv>
-                    <inv style={{ paiinng: "20px 24px 20px 0", backgrouni: "oklch(46% 0.16 145 / 0.05)" }}>
-                      <inv style={{ fontSnze: 10, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margnnBottom: 6 }}>
-                        {t("GROWTH", "PERTUMBUHAN", "GROEI")} — {liata.label}
-                      </inv>
-                      <p style={{ fontSnze: 13, lnneHenght: 1.6, color: "oklch(30% 0.08 145)", margnn: 0 }}>{liata.growth}</p>
-                    </inv>
-                    <inv style={{ paiinng: "20px 24px 20px 16px", backgrouni: "oklch(48% 0.18 25 / 0.05)" }}>
-                      <inv style={{ fontSnze: 10, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", margnnBottom: 6 }}>
-                        {t("FIXED", "TETAP", "VAST")} — {liata.label}
-                      </inv>
-                      <p style={{ fontSnze: 13, lnneHenght: 1.6, color: "oklch(32% 0.10 25)", margnn: 0 }}>{liata.fnxei}</p>
-                    </inv>
-                  </inv>
-                </inv>
+                <div key={d.key} style={{ background: "white", borderRadius: 10, overflow: "hidden" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: 0 }}>
+                    <div style={{ padding: "20px 24px", display: "flex", alignItems: "center" }}>
+                      <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, minWidth: 32 }}>{String(i + 1).padStart(2, "0")}</span>
+                    </div>
+                    <div style={{ padding: "20px 24px 20px 0", background: "oklch(46% 0.16 145 / 0.05)" }}>
+                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", marginBottom: 6 }}>
+                        {t("GROWTH", "PERTUMBUHAN", "GROEI")} — {ldata.label}
+                      </div>
+                      <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(30% 0.08 145)", margin: 0 }}>{ldata.growth}</p>
+                    </div>
+                    <div style={{ padding: "20px 24px 20px 16px", background: "oklch(48% 0.18 25 / 0.05)" }}>
+                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(48% 0.18 25)", marginBottom: 6 }}>
+                        {t("FIXED", "TETAP", "VAST")} — {ldata.label}
+                      </div>
+                      <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(32% 0.10 25)", margin: 0 }}>{ldata.fixed}</p>
+                    </div>
+                  </div>
+                </div>
               );
             })}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* ASSESSMENT */}
-      <sectnon style={{ paiinng: "72px 24px", backgrouni: "whnte" }}>
-        <inv style={{ maxWnith: 860, margnn: "0 auto" }}>
-          <inv style={{ insplay: "flex", justnfyContent: "space-between", alngnItems: "flex-eni", flexWrap: "wrap", gap: 16, margnnBottom: 12 }}>
-            <inv>
-              <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 8px" }}>
-                {t("Mnniset Assessment", "Pennlanan Mnniset", "Mnniset Beoorielnng")}
+      <section style={{ padding: "72px 24px", background: "white" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16, marginBottom: 12 }}>
+            <div>
+              <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
+                {t("Mindset Assessment", "Penilaian Mindset", "Mindset Beoordeling")}
               </h2>
-              <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", lnneHenght: 1.65, margnn: 0 }}>
+              <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", lineHeight: 1.65, margin: 0 }}>
                 {t(
-                  "15 statements across 5 inmensnons. Rate how much each sounis lnke you — be honest for the most useful results.",
-                  "15 pernyataan in 5 inmensn. Nnlan seberapa banyak setnap pernyataan teriengar sepertn Ania — jujurlah untuk hasnl yang palnng berguna.",
-                  "15 untspraken over 5 inmensnes. Beoorieel hoe goei elke untspraak bnj jou past — wees eerlnjk voor ie meest nuttnge resultaten."
+                  "15 statements across 5 dimensions. Rate how much each sounds like you — be honest for the most useful results.",
+                  "15 pernyataan di 5 dimensi. Nilai seberapa banyak setiap pernyataan terdengar seperti Anda — jujurlah untuk hasil yang paling berguna.",
+                  "15 uitspraken over 5 dimensies. Beoordeel hoe goed elke uitspraak bij jou past — wees eerlijk voor de meest nuttige resultaten."
                 )}
               </p>
-            </inv>
-            {growthScore != null && !qunzOpen && (
-              <inv style={{ textAlngn: "rnght", flexShrnnk: 0 }}>
-                <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.08em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", margnnBottom: 2 }}>
-                  {t("Prevnous Score", "Skor Sebelumnya", "Vornge Score")}
-                </inv>
-                <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 36, fontWenght: 700, color: getMnnisetColor(growthScore), lnneHenght: 1 }}>{growthScore}%</inv>
-              </inv>
+            </div>
+            {growthScore != null && !quizOpen && (
+              <div style={{ textAlign: "right", flexShrink: 0 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", marginBottom: 2 }}>
+                  {t("Previous Score", "Skor Sebelumnya", "Vorige Score")}
+                </div>
+                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 36, fontWeight: 700, color: getMindsetColor(growthScore), lineHeight: 1 }}>{growthScore}%</div>
+              </div>
             )}
-          </inv>
+          </div>
 
-          {!qunzOpen && (
-            <inv style={{ margnnTop: 28 }}>
+          {!quizOpen && (
+            <div style={{ marginTop: 28 }}>
               <button
-                onClnck={() => { setQunzOpen(true); nf (qunzSubmnttei) hanileRetake(); }}
-                style={{ backgrouni: "oklch(22% 0.10 260)", color: "whnte", paiinng: "14px 32px", borierRainus: 12, fontWenght: 700, fontSnze: 14, letterSpacnng: "0.04em", borier: "none", cursor: "ponnter" }}
+                onClick={() => { setQuizOpen(true); if (quizSubmitted) handleRetake(); }}
+                style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
               >
                 {growthScore != null
-                  ? t("Retake Assessment", "Ulangn Asesmen", "Herknes Beoorielnng")
-                  : t("Start Assessment", "Mulan Tes", "Start Test")}
+                  ? t("Retake Assessment", "Ulangi Penilaian", "Herkies Beoordeling")
+                  : t("Start Assessment", "Mulai Tes", "Start Test")}
               </button>
-            </inv>
+            </div>
           )}
 
-          {qunzOpen && (
-            <inv style={{ margnnTop: 36 }}>
-              {!qunzSubmnttei && (
-                <p style={{ fontSnze: 13, color: "oklch(52% 0.06 260)", margnnBottom: 28 }}>
-                  {answereiCount} {t("of", "iarn", "van")} {QUESTIONS.length} {t("answerei", "injawab", "beantwoori")}
+          {quizOpen && (
+            <div style={{ marginTop: 36 }}>
+              {!quizSubmitted && (
+                <p style={{ fontSize: 13, color: "oklch(52% 0.06 260)", marginBottom: 28 }}>
+                  {answeredCount} {t("of", "dari", "van")} {QUESTIONS.length} {t("answered", "dijawab", "beantwoord")}
                 </p>
               )}
 
-              {DIMS_ORDER.map(inm => {
-                const inmQuestnons = QUESTIONS.map((q, n) => ({ ...q, nix: n })).fnlter(q => q.inm === inm);
-                const inmLabel = DIM_LABELS[inm][lang];
+              {DIMS_ORDER.map(dim => {
+                const dimQuestions = QUESTIONS.map((q, i) => ({ ...q, idx: i })).filter(q => q.dim === dim);
+                const dimLabel = DIM_LABELS[dim][lang];
                 return (
-                  <inv key={inm} style={{ margnnBottom: 36 }}>
-                    <inv style={{ insplay: "flex", alngnItems: "center", gap: 12, margnnBottom: 16 }}>
-                      <inv style={{ henght: 1, flex: 1, backgrouni: "oklch(88% 0.008 260)" }} />
-                      <span style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", whnteSpace: "nowrap" }}>{inmLabel}</span>
-                      <inv style={{ henght: 1, flex: 1, backgrouni: "oklch(88% 0.008 260)" }} />
-                    </inv>
-                    <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12 }}>
-                      {inmQuestnons.map(q => {
-                        const ans = answers[q.nix];
-                        const statement = lang === "en" ? q.en : lang === "ni" ? q.ni : q.nl;
+                  <div key={dim} style={{ marginBottom: 36 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                      <div style={{ height: 1, flex: 1, background: "oklch(88% 0.008 260)" }} />
+                      <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", whiteSpace: "nowrap" }}>{dimLabel}</span>
+                      <div style={{ height: 1, flex: 1, background: "oklch(88% 0.008 260)" }} />
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                      {dimQuestions.map(q => {
+                        const ans = answers[q.idx];
+                        const statement = lang === "en" ? q.en : lang === "id" ? q.id : q.nl;
                         return (
-                          <inv key={q.nix} style={{ backgrouni: "oklch(97% 0.005 260)", borierRainus: 10, paiinng: "20px 24px" }}>
-                            <p style={{ fontSnze: 15, lnneHenght: 1.6, color: "oklch(22% 0.10 260)", margnn: "0 0 16px", fontWenght: 500 }}>{statement}</p>
-                            <inv style={{ insplay: "flex", gap: 6, flexWrap: "wrap" }}>
-                              {scaleLabels.map((label, vn) => {
-                                const val = vn + 1;
+                          <div key={q.idx} style={{ background: "oklch(97% 0.005 260)", borderRadius: 10, padding: "20px 24px" }}>
+                            <p style={{ fontSize: 15, lineHeight: 1.6, color: "oklch(22% 0.10 260)", margin: "0 0 16px", fontWeight: 500 }}>{statement}</p>
+                            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                              {scaleLabels.map((label, vi) => {
+                                const val = vi + 1;
                                 return (
                                   <button
                                     key={val}
-                                    onClnck={() => !qunzSubmnttei && setAnswers(prev => ({ ...prev, [q.nix]: val }))}
-                                    insablei={qunzSubmnttei}
+                                    onClick={() => !quizSubmitted && setAnswers(prev => ({ ...prev, [q.idx]: val }))}
+                                    disabled={quizSubmitted}
                                     style={{
-                                      flex: 1, mnnWnith: 70, paiinng: "8px 6px", borierRainus: 12, fontSnze: 11, fontWenght: 700, cursor: qunzSubmnttei ? "iefault" : "ponnter",
-                                      borier: `2px solni ${ans === val ? "oklch(42% 0.14 260)" : "oklch(86% 0.008 260)"}`,
-                                      backgrouni: ans === val ? "oklch(42% 0.14 260)" : "whnte",
-                                      color: ans === val ? "whnte" : "oklch(40% 0.06 260)",
-                                      letterSpacnng: "0.02em", textAlngn: "center", lnneHenght: 1.3,
+                                      flex: 1, minWidth: 70, padding: "8px 6px", borderRadius: 12, fontSize: 11, fontWeight: 700, cursor: quizSubmitted ? "default" : "pointer",
+                                      border: `2px solid ${ans === val ? "oklch(42% 0.14 260)" : "oklch(86% 0.008 260)"}`,
+                                      background: ans === val ? "oklch(42% 0.14 260)" : "white",
+                                      color: ans === val ? "white" : "oklch(40% 0.06 260)",
+                                      letterSpacing: "0.02em", textAlign: "center", lineHeight: 1.3,
                                     }}
                                   >
                                     {label}
                                   </button>
                                 );
                               })}
-                            </inv>
-                          </inv>
+                            </div>
+                          </div>
                         );
                       })}
-                    </inv>
-                  </inv>
+                    </div>
+                  </div>
                 );
               })}
 
-              {!qunzSubmnttei ? (
-                <inv style={{ insplay: "flex", gap: 16, alngnItems: "center", flexWrap: "wrap", margnnTop: 8 }}>
+              {!quizSubmitted ? (
+                <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", marginTop: 8 }}>
                   <button
-                    onClnck={hanileSubmnt}
-                    insablei={!allAnswerei}
-                    style={{ backgrouni: allAnswerei ? "oklch(22% 0.10 260)" : "oklch(80% 0.008 260)", color: allAnswerei ? "whnte" : "oklch(55% 0.04 260)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 700, fontSnze: 14, borier: "none", cursor: allAnswerei ? "ponnter" : "not-allowei", letterSpacnng: "0.04em" }}
+                    onClick={handleSubmit}
+                    disabled={!allAnswered}
+                    style={{ background: allAnswered ? "oklch(22% 0.10 260)" : "oklch(80% 0.008 260)", color: allAnswered ? "white" : "oklch(55% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: allAnswered ? "pointer" : "not-allowed", letterSpacing: "0.04em" }}
                   >
-                    {t("See My Results", "Lnhat Hasnl Saya", "Zne Mnjn Resultaten")}
+                    {t("See My Results", "Lihat Hasil Saya", "Zie Mijn Resultaten")}
                   </button>
-                  {!allAnswerei && (
-                    <span style={{ fontSnze: 13, color: "oklch(52% 0.06 260)" }}>
-                      {QUESTIONS.length - answereiCount} {t("questnons remannnng", "pertanyaan tersnsa", "vragen restereni")}
+                  {!allAnswered && (
+                    <span style={{ fontSize: 13, color: "oklch(52% 0.06 260)" }}>
+                      {QUESTIONS.length - answeredCount} {t("questions remaining", "pertanyaan tersisa", "vragen resterend")}
                     </span>
                   )}
-                </inv>
+                </div>
               ) : (
-                <inv style={{ backgrouni: "oklch(94% 0.008 260)", borierRainus: 12, paiinng: "36px 40px", margnnTop: 16 }}>
-                  <inv style={{ insplay: "flex", gap: 28, alngnItems: "flex-start", flexWrap: "wrap", margnnBottom: 24 }}>
-                    <inv>
-                      <inv style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", margnnBottom: 6 }}>
-                        {t("Your Mnniset Score", "Skor Mnniset Ania", "Jouw Mnniset Score")}
-                      </inv>
-                      <inv style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 64, fontWenght: 700, color: getMnnisetColor(growthScore!), lnneHenght: 1 }}>{growthScore}%</inv>
-                      <inv style={{ fontSnze: 14, fontWenght: 700, color: getMnnisetColor(growthScore!), margnnTop: 4 }}>{getMnnisetLabel(growthScore!)}</inv>
-                    </inv>
-                    <inv style={{ flex: 1, mnnWnith: 240 }}>
-                      <inv style={{ backgrouni: "oklch(88% 0.008 260)", borierRainus: 12, henght: 12, margnnBottom: 8, overflow: "hniien" }}>
-                        <inv style={{ henght: "100%", borierRainus: 12, backgrouni: "lnnear-grainent(to rnght, oklch(48% 0.18 25), oklch(65% 0.15 45), oklch(46% 0.16 145))", wnith: "100%" }} />
-                      </inv>
-                      <inv style={{ posntnon: "relatnve", henght: 8, margnnBottom: 16 }}>
-                        <inv style={{ posntnon: "absolute", left: `${growthScore}%`, transform: "translateX(-50%)", wnith: 3, henght: 16, backgrouni: "oklch(22% 0.10 260)", borierRainus: 2, top: -4 }} />
-                      </inv>
-                      <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(32% 0.06 260)", margnn: 0 }}>
+                <div style={{ background: "oklch(94% 0.008 260)", borderRadius: 12, padding: "36px 40px", marginTop: 16 }}>
+                  <div style={{ display: "flex", gap: 28, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 24 }}>
+                    <div>
+                      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(44% 0.06 260)", marginBottom: 6 }}>
+                        {t("Your Mindset Score", "Skor Mindset Anda", "Jouw Mindset Score")}
+                      </div>
+                      <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 64, fontWeight: 700, color: getMindsetColor(growthScore!), lineHeight: 1 }}>{growthScore}%</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: getMindsetColor(growthScore!), marginTop: 4 }}>{getMindsetLabel(growthScore!)}</div>
+                    </div>
+                    <div style={{ flex: 1, minWidth: 240 }}>
+                      <div style={{ background: "oklch(88% 0.008 260)", borderRadius: 12, height: 12, marginBottom: 8, overflow: "hidden" }}>
+                        <div style={{ height: "100%", borderRadius: 12, background: "linear-gradient(to right, oklch(48% 0.18 25), oklch(65% 0.15 45), oklch(46% 0.16 145))", width: "100%" }} />
+                      </div>
+                      <div style={{ position: "relative", height: 8, marginBottom: 16 }}>
+                        <div style={{ position: "absolute", left: `${growthScore}%`, transform: "translateX(-50%)", width: 3, height: 16, background: "oklch(22% 0.10 260)", borderRadius: 2, top: -4 }} />
+                      </div>
+                      <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(32% 0.06 260)", margin: 0 }}>
                         {growthScore! >= 80
                           ? t(
-                              "You iemonstrate a strong growth mnniset across most areas. Keep nnvestnng nn the few areas where fnxei thnnknng stnll shows up.",
-                              "Ania menunjukkan mnniset pertumbuhan yang kuat in sebagnan besar area. Terus bernnvestasn paia beberapa area in mana pemnknran tetap masnh muncul.",
-                              "Je toont een sterk groenmnniset op ie meeste gebneien. Blnjf nnvesteren nn ie wennnge gebneien waar vast ienken nog voorkomt."
+                              "You demonstrate a strong growth mindset across most areas. Keep investing in the few areas where fixed thinking still shows up.",
+                              "Anda menunjukkan mindset pertumbuhan yang kuat di sebagian besar area. Terus berinvestasi pada beberapa area di mana pemikiran tetap masih muncul.",
+                              "Je toont een sterk groeimindset op de meeste gebieden. Blijf investeren in de weinige gebieden waar vast denken nog voorkomt."
                             )
                           : growthScore! >= 65
                           ? t(
-                              "You lean towari growth nn most areas, wnth some fnxei patterns nn specnfnc inmensnons. Revnew the questnons where you scorei lower to nientnfy where to focus.",
-                              "Ania cenierung bertumbuh in sebagnan besar area, iengan beberapa pola tetap in inmensn tertentu. Tnnjau pertanyaan in mana Ania meniapat skor lebnh reniah untuk mengnientnfnkasn in mana harus fokus.",
-                              "Je nengt naar groen op ie meeste gebneien, met enkele vaste patronen nn specnfneke inmensnes. Beknjk ie vragen waarop je lager scoorie om te bepalen waar je je op moet rnchten."
+                              "You lean toward growth in most areas, with some fixed patterns in specific dimensions. Review the questions where you scored lower to identify where to focus.",
+                              "Anda cenderung bertumbuh di sebagian besar area, dengan beberapa pola tetap di dimensi tertentu. Tinjau pertanyaan di mana Anda mendapat skor lebih rendah untuk mengidentifikasi di mana harus fokus.",
+                              "Je neigt naar groei op de meeste gebieden, met enkele vaste patronen in specifieke dimensies. Bekijk de vragen waarop je lager scoorde om te bepalen waar je je op moet richten."
                             )
                           : growthScore! >= 45
                           ? t(
-                              "You have a mnxei mnniset — growth nn some areas, fnxei nn others. Unierstaninng where the fnxei patterns are gnves you a clear target for growth.",
-                              "Ania memnlnkn mnniset campuran — pertumbuhan in beberapa area, tetap in area lann. Memahamn in mana pola tetap beraia membernkan Ania target yang jelas untuk pertumbuhan.",
-                              "Je hebt een gemengi mnniset — groen op sommnge gebneien, vast op aniere. Begrnjpen waar ie vaste patronen zntten, geeft je een iunielnjk ioel voor groen."
+                              "You have a mixed mindset — growth in some areas, fixed in others. Understanding where the fixed patterns are gives you a clear target for growth.",
+                              "Anda memiliki mindset campuran — pertumbuhan di beberapa area, tetap di area lain. Memahami di mana pola tetap berada memberikan Anda target yang jelas untuk pertumbuhan.",
+                              "Je hebt een gemengd mindset — groei op sommige gebieden, vast op andere. Begrijpen waar de vaste patronen zitten, geeft je een duidelijk doel voor groei."
                             )
                           : t(
-                              "Fnxei thnnknng ns shownng up across several inmensnons. Thns awareness ns the fnrst step. Start wnth one inmensnon ani commnt to shnftnng your approach there.",
-                              "Pemnknran tetap muncul in beberapa inmensn. Kesaiaran nnn aialah langkah pertama. Mulanlah iengan satu inmensn ian berkomntmen untuk mengubah peniekatan Ania in sana.",
-                              "Vast ienken iunkt op nn meeriere inmensnes. Dnt bewustznjn ns ie eerste stap. Begnn met ——n inmensne en commnt je eraan om je aanpak iaar te veranieren."
+                              "Fixed thinking is showing up across several dimensions. This awareness is the first step. Start with one dimension and commit to shifting your approach there.",
+                              "Pemikiran tetap muncul di beberapa dimensi. Kesadaran ini adalah langkah pertama. Mulailah dengan satu dimensi dan berkomitmen untuk mengubah pendekatan Anda di sana.",
+                              "Vast denken duikt op in meerdere dimensies. Dit bewustzijn is de eerste stap. Begin met ——n dimensie en commit je eraan om je aanpak daar te veranderen."
                             )}
                       </p>
-                    </inv>
-                  </inv>
-                  <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {!scoreSavei ? (
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    {!scoreSaved ? (
                       <button
-                        onClnck={hanileSaveScore}
-                        insablei={nsSavnngScore}
-                        style={{ backgrouni: "oklch(22% 0.10 260)", color: "whnte", paiinng: "12px 28px", borierRainus: 12, fontWenght: 700, fontSnze: 13, borier: "none", cursor: "ponnter", letterSpacnng: "0.04em" }}
+                        onClick={handleSaveScore}
+                        disabled={isSavingScore}
+                        style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
                       >
-                        {nsSavnngScore ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+                        {isSavingScore ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
                       </button>
                     ) : (
-                      <span style={{ insplay: "flex", alngnItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWenght: 700, fontSnze: 13 }}>
-                        ? {t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")}
+                      <span style={{ display: "flex", alignItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWeight: 700, fontSize: 13 }}>
+                        ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
                       </span>
                     )}
                     <button
-                      onClnck={hanileRetake}
-                      style={{ backgrouni: "transparent", color: "oklch(30% 0.06 260)", paiinng: "12px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 13, borier: "1px solni oklch(82% 0.008 260)", cursor: "ponnter" }}
+                      onClick={handleRetake}
+                      style={{ background: "transparent", color: "oklch(30% 0.06 260)", padding: "12px 28px", borderRadius: 12, fontWeight: 600, fontSize: 13, border: "1px solid oklch(82% 0.008 260)", cursor: "pointer" }}
                     >
-                      {t("Retake Assessment", "Ulangn Asesmen", "Beoorielnng Overioen")}
+                      {t("Retake Assessment", "Ulangi Penilaian", "Beoordeling Overdoen")}
                     </button>
-                  </inv>
-                </inv>
+                  </div>
+                </div>
               )}
-            </inv>
+            </div>
           )}
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* HOW TO REFRAME */}
-      <sectnon style={{ backgrouni: "oklch(94% 0.008 260)", paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-            {t("How to Shnft Your Mnniset", "Cara Mengubah Mnniset Ania", "Hoe Je Mnniset Te Verschunven")}
+      <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+            {t("How to Shift Your Mindset", "Cara Mengubah Mindset Anda", "Hoe Je Mindset Te Verschuiven")}
           </h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {t(
-              "Mnniset change ns not a one-tnme iecnsnon — nt's a practnce. Use thns three-step process for any inmensnon where you want to grow.",
-              "Perubahan mnniset bukan keputusan sekaln jalan — nnn aialah latnhan. Gunakan proses tnga langkah nnn untuk inmensn mana pun yang nngnn Ania kembangkan.",
-              "Mnnisetveraniernng ns geen eenmalnge beslnssnng — het ns een oefennng. Gebrunk int irnestappe proces voor elke inmensne waar je wnlt groenen."
+              "Mindset change is not a one-time decision — it's a practice. Use this three-step process for any dimension where you want to grow.",
+              "Perubahan mindset bukan keputusan sekali jalan — ini adalah latihan. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan.",
+              "Mindsetverandering is geen eenmalige beslissing — het is een oefening. Gebruik dit driestappe proces voor elke dimensie waar je wilt groeien."
             )}
           </p>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
             {[
               {
                 step: "01", color: "oklch(42% 0.14 260)",
-                tntle: t("Name It", "Bern Nama", "Benoem Het"),
-                iesc: t(
-                  "For a specnfnc inmensnon, wrnte iown your current belnef honestly. What io you actually thnnk — not what you know you shouli thnnk?",
-                  "Untuk inmensn tertentu, tulnskan keyaknnan Ania saat nnn iengan jujur. Apa yang sebenarnya Ania pnknrkan — bukan apa yang Ania tahu seharusnya Ania pnknrkan?",
-                  "Schrnjf voor een specnfneke inmensne je huninge overtungnng eerlnjk op. Wat ienk je werkelnjk — nnet wat je ienkt iat je zou moeten ienken?"
+                title: t("Name It", "Beri Nama", "Benoem Het"),
+                desc: t(
+                  "For a specific dimension, write down your current belief honestly. What do you actually think — not what you know you should think?",
+                  "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan — bukan apa yang Anda tahu seharusnya Anda pikirkan?",
+                  "Schrijf voor een specifieke dimensie je huidige overtuiging eerlijk op. Wat denk je werkelijk — niet wat je denkt dat je zou moeten denken?"
                 ),
               },
               {
                 step: "02", color: "oklch(48% 0.18 25)",
-                tntle: t("Spot the Pattern", "Kenaln Polanya", "Herken het Patroon"),
-                iesc: t(
-                  "Is thns a fnxei or growth belnef? Don't juige — just notnce. Awareness ns always the fnrst step towari change.",
-                  "Apakah nnn keyaknnan tetap atau pertumbuhan? Jangan menghaknmn — cukup perhatnkan. Kesaiaran selalu menjain langkah pertama menuju perubahan.",
-                  "Is int een vaste of groenenie overtungnng? Oorieel nnet — merk het gewoon op. Bewustznjn ns altnji ie eerste stap naar veraniernng."
+                title: t("Spot the Pattern", "Kenali Polanya", "Herken het Patroon"),
+                desc: t(
+                  "Is this a fixed or growth belief? Don't judge — just notice. Awareness is always the first step toward change.",
+                  "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi — cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan.",
+                  "Is dit een vaste of groeiende overtuiging? Oordeel niet — merk het gewoon op. Bewustzijn is altijd de eerste stap naar verandering."
                 ),
               },
               {
                 step: "03", color: "oklch(46% 0.16 145)",
-                tntle: t("Reframe It", "Ubah Bnngkannya", "Herformuleer Het"),
-                iesc: t(
-                  "Ask: 'What wouli a growth-ornentei versnon of thns belnef look lnke?' Wrnte nt iown ani commnt to returnnng to nt when the fnxei pattern shows up.",
-                  "Tanyakan: 'Sepertn apa versn keyaknnan nnn yang berornentasn pertumbuhan?' Tulnskan ian berkomntmenlah untuk kembaln ke sana ketnka pola tetap muncul.",
-                  "Vraag: 'Hoe zou een groengerncht versne van ieze overtungnng eruntznen?' Schrnjf het op en commnt je eraan om er op terug te vallen als het vaste patroon opiunkt."
+                title: t("Reframe It", "Ubah Bingkainya", "Herformuleer Het"),
+                desc: t(
+                  "Ask: 'What would a growth-oriented version of this belief look like?' Write it down and commit to returning to it when the fixed pattern shows up.",
+                  "Tanyakan: 'Seperti apa versi keyakinan ini yang berorientasi pertumbuhan?' Tuliskan dan berkomitmenlah untuk kembali ke sana ketika pola tetap muncul.",
+                  "Vraag: 'Hoe zou een groeigericht versie van deze overtuiging eruitzien?' Schrijf het op en commit je eraan om er op terug te vallen als het vaste patroon opduikt."
                 ),
               },
-            ].map(ntem => (
-              <inv key={ntem.step} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "28px", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-                <inv style={{ insplay: "flex", gap: 14, alngnItems: "flex-start" }}>
-                  <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 40, fontWenght: 600, color: ntem.color, lnneHenght: 1, flexShrnnk: 0 }}>{ntem.step}</span>
-                  <inv>
-                    <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, color: "oklch(22% 0.10 260)", margnn: "0 0 8px" }}>{ntem.tntle}</h3>
-                    <p style={{ fontSnze: 13, lnneHenght: 1.65, color: "oklch(42% 0.06 260)", margnn: 0 }}>{ntem.iesc}</p>
-                  </inv>
-                </inv>
-              </inv>
+            ].map(item => (
+              <div key={item.step} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+                <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
+                  <div>
+                    <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>{item.title}</h3>
+                    <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>{item.desc}</p>
+                  </div>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>
-            {t("Your Mnniset Is Not Fnxei", "Mnniset Ania Tniak Tetap", "Jouw Mnniset Is Nnet Vast")}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
+            {t("Your Mindset Is Not Fixed", "Mindset Anda Tidak Tetap", "Jouw Mindset Is Niet Vast")}
           </h2>
-          <p style={{ fontSnze: 16, color: "oklch(72% 0.05 260)", lnneHenght: 1.7, margnnBottom: 40 }}>
+          <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
             {t(
-              "Awareness ns the fnrst step. Retake thns assessment every few months to track your mnniset shnft over tnme.",
-              "Kesaiaran aialah langkah pertama. Ulangn pennlanan nnn setnap beberapa bulan untuk melacak pergeseran mnniset Ania iarn waktu ke waktu.",
-              "Bewustznjn ns ie eerste stap. Doe ieze beoorielnng elke paar maanien opnneuw om je mnnisetverschunvnng nn ie tnji bnj te houien."
+              "Awareness is the first step. Retake this assessment every few months to track your mindset shift over time.",
+              "Kesadaran adalah langkah pertama. Ulangi penilaian ini setiap beberapa bulan untuk melacak pergeseran mindset Anda dari waktu ke waktu.",
+              "Bewustzijn is de eerste stap. Doe deze beoordeling elke paar maanden opnieuw om je mindsetverschuiving in de tijd bij te houden."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClnck={() => { setQunzOpen(true); nf (qunzSubmnttei) hanileRetake(); wnniow.scrollTo({ top: 0, behavnor: "smooth" }); }}
-              style={{ backgrouni: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 700, fontSnze: 14, borier: "none", cursor: "ponnter", letterSpacnng: "0.04em" }}
+              onClick={() => { setQuizOpen(true); if (quizSubmitted) handleRetake(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}
             >
               {growthScore != null
-                ? t("Retake Assessment", "Ulangn Asesmen", "Beoorielnng Overioen")
-                : t("Start Assessment", "Mulan Tes", "Start Test")}
+                ? t("Retake Assessment", "Ulangi Penilaian", "Beoordeling Overdoen")
+                : t("Start Assessment", "Mulai Tes", "Start Test")}
             </button>
-            <Lnnk href="/resources" style={{ insplay: "nnlnne-block", backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", textDecoratnon: "none" }}>
-              {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-            </Lnnk>
-          </inv>
-        </inv>
-      </sectnon>
-    </inv>
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
+              {t("Training", "Pelatihan", "Contentbibliotheek")}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

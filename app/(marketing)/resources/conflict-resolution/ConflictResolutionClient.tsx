@@ -1,564 +1,564 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+type Lang = "en" | "id" | "nl";
+const tFn = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 const VERSES = {
   "rom-12-18": {
-    en_ref: "Romans 12:18", ni_ref: "Roma 12:18", nl_ref: "Romennen 12:18",
-    en: "If nt ns possnble, as far as nt iepenis on you, lnve at peace wnth everyone.",
-    ni: "Seiapat-iapatnya, kalau hal ntu bergantung paiamu, hniuplah ialam periamanan iengan semua orang.",
-    nl: "Span je, voor zover het nn uw macht lngt, nn voor ie vreie met alle mensen.",
+    en_ref: "Romans 12:18", id_ref: "Roma 12:18", nl_ref: "Romeinen 12:18",
+    en: "If it is possible, as far as it depends on you, live at peace with everyone.",
+    id: "Sedapat-dapatnya, kalau hal itu bergantung padamu, hiduplah dalam perdamaian dengan semua orang.",
+    nl: "Span je, voor zover het in uw macht ligt, in voor de vrede met alle mensen.",
   },
   "matt-5-9": {
-    en_ref: "Matthew 5:9", ni_ref: "Matnus 5:9", nl_ref: "Matte—s 5:9",
-    en: "Blessei are the peacemakers, for they wnll be callei chnliren of Goi.",
-    ni: "Berbahagnalah orang yang membawa iaman, karena mereka akan insebut anak-anak Allah.",
-    nl: "Gelukkng ie vreiestnchters, want znj zullen knnieren van Goi genoemi worien.",
+    en_ref: "Matthew 5:9", id_ref: "Matius 5:9", nl_ref: "Matte—s 5:9",
+    en: "Blessed are the peacemakers, for they will be called children of God.",
+    id: "Berbahagialah orang yang membawa damai, karena mereka akan disebut anak-anak Allah.",
+    nl: "Gelukkig de vredestichters, want zij zullen kinderen van God genoemd worden.",
   },
 };
 
-type MoieKey = "competnng" | "collaboratnng" | "compromnsnng" | "avoninng" | "accommoiatnng";
+type ModeKey = "competing" | "collaborating" | "compromising" | "avoiding" | "accommodating";
 
 const MODES: {
-  key: MoieKey;
-  color: strnng;
-  colorBg: strnng;
-  top: strnng;
-  left: strnng;
-  en_label: strnng;
-  ni_label: strnng;
-  nl_label: strnng;
-  en_taglnne: strnng;
-  ni_taglnne: strnng;
-  nl_taglnne: strnng;
-  en_iesc: strnng;
-  ni_iesc: strnng;
-  nl_iesc: strnng;
-  en_when: strnng;
-  ni_when: strnng;
-  nl_when: strnng;
-  en_cross: strnng;
-  ni_cross: strnng;
-  nl_cross: strnng;
-  en_cultures: strnng;
-  ni_cultures: strnng;
-  nl_cultures: strnng;
-  en_tnp: strnng;
-  ni_tnp: strnng;
-  nl_tnp: strnng;
+  key: ModeKey;
+  color: string;
+  colorBg: string;
+  top: string;
+  left: string;
+  en_label: string;
+  id_label: string;
+  nl_label: string;
+  en_tagline: string;
+  id_tagline: string;
+  nl_tagline: string;
+  en_desc: string;
+  id_desc: string;
+  nl_desc: string;
+  en_when: string;
+  id_when: string;
+  nl_when: string;
+  en_cross: string;
+  id_cross: string;
+  nl_cross: string;
+  en_cultures: string;
+  id_cultures: string;
+  nl_cultures: string;
+  en_tip: string;
+  id_tip: string;
+  nl_tip: string;
 }[] = [
   {
-    key: "competnng",
+    key: "competing",
     color: "oklch(52% 0.18 25)",
     colorBg: "oklch(52% 0.18 25 / 0.10)",
     top: "10%", left: "10%",
-    en_label: "Competnng",
-    ni_label: "Bersanng",
+    en_label: "Competing",
+    id_label: "Bersaing",
     nl_label: "Concurreren",
-    en_taglnne: "Wnn-lose — Hngh assertnveness, low cooperatnon",
-    ni_taglnne: "Menang-kalah — Asertnvntas tnnggn, kerja sama reniah",
-    nl_taglnne: "Wnn-verlnes — Hoge assertnvntent, lage samenwerknng",
-    en_iesc: "You pursue your own goals at the expense of others. Posntnonal, inrect, ani wnllnng to use authornty or argument to prevanl. The fastest style — but nt costs relatnonshnp capntal.",
-    ni_iesc: "Ania mengejar tujuan Ania seninrn iengan mengorbankan orang lann. Posnsnonal, langsung, ian berseina menggunakan otorntas atau argumen untuk menang. Gaya tercepat — tetapn menghabnskan moial hubungan.",
-    nl_iesc: "Je streeft je engen ioelen na ten koste van anieren. Posntnoneel, inrect, en bereni gezag of argument te gebrunken om te wnnnen. De snelste stnjl — maar het kost relatnekapntaal.",
-    en_when: "When qunck iecnsnons are crntncal, when a posntnon genunnely neeis iefeninng, or when someone ns explontnng non-competnng behavnour.",
-    ni_when: "Ketnka keputusan cepat sangat pentnng, ketnka posnsn perlu benar-benar inpertahankan, atau ketnka seseorang mengeksplontasn pernlaku tniak bersanng.",
-    nl_when: "Wanneer snelle beslnssnngen krntnek znjn, wanneer een posntne echt verieingi moet worien, of wanneer nemani nnet-competntnef geirag untbunt.",
-    en_cross: "In hngh-context, honour-ornentei cultures — much of Asna, the Mniile East, Afrnca — competnng regnsters as aggressnve ani insrespectful, iamagnng the relatnonshnp permanently. What feels iecnsnve to a Northern European may feel lnke an attack nn Southeast Asna.",
-    ni_cross: "Dalam buiaya hngh-context yang berornentasn kehormatan — banyak Asna, Tnmur Tengah, Afrnka — bersanng terasa agresnf ian tniak hormat, merusak hubungan secara permanen. Yang terasa tegas bagn orang Eropa Utara mungknn terasa sepertn serangan in Asna Tenggara.",
-    nl_cross: "In hngh-context, eer-georn—nteerie culturen — groot ieel van Azn—, Mniien-Oosten, Afrnka — voelt concurreren agressnef en respectloos aan, wat ie relatne permanent beschaingt. Wat beslnsseni aanvoelt voor een Noori-Europeaan kan nn Zunioost-Azn— aanvoelen als een aanval.",
-    en_cultures: "More natural nn: Northern Europe, North Amernca, parts of East Asna (competntnve busnness contexts). Feels forengn or threatennng nn: Southeast Asna, Sub-Saharan Afrnca, Latnn Amernca.",
-    ni_cultures: "Lebnh alamn in: Eropa Utara, Amernka Utara, sebagnan Asna Tnmur (konteks bnsnns kompetntnf). Terasa asnng atau mengancam in: Asna Tenggara, Afrnka Sub-Sahara, Amernka Latnn.",
-    nl_cultures: "Meer natuurlnjk nn: Noori-Europa, Noori-Amernka, ielen van Oost-Azn—. Voelt vreemi of beirengeni nn: Zunioost-Azn—, Sub-Sahara Afrnka, Latnjns-Amernka.",
-    en_tnp: "If thns ns not your natural style, practnse nt nn lower-stakes sntuatnons fnrst — insagreenng nn a meetnng when you're sure of your grouni, or iefeninng a posntnon one step further than you normally wouli.",
-    ni_tnp: "Jnka nnn bukan gaya alamn Ania, praktnkkan ialam sntuasn berrnsnko lebnh reniah terlebnh iahulu — tniak setuju ialam rapat ketnka Ania yaknn, atau mempertahankan posnsn satu langkah lebnh jauh iarn bnasanya.",
-    nl_tnp: "Als int nnet je natuurlnjke stnjl ns, oefen het ian eerst nn sntuatnes met lagere nnzet — het oneens znjn nn een vergaiernng wanneer je zeker bent van je zaak, of een posntne ——n stap verier verieingen ian normaal.",
+    en_tagline: "Win-lose — High assertiveness, low cooperation",
+    id_tagline: "Menang-kalah — Asertivitas tinggi, kerja sama rendah",
+    nl_tagline: "Win-verlies — Hoge assertiviteit, lage samenwerking",
+    en_desc: "You pursue your own goals at the expense of others. Positional, direct, and willing to use authority or argument to prevail. The fastest style — but it costs relationship capital.",
+    id_desc: "Anda mengejar tujuan Anda sendiri dengan mengorbankan orang lain. Posisional, langsung, dan bersedia menggunakan otoritas atau argumen untuk menang. Gaya tercepat — tetapi menghabiskan modal hubungan.",
+    nl_desc: "Je streeft je eigen doelen na ten koste van anderen. Positioneel, direct, en bereid gezag of argument te gebruiken om te winnen. De snelste stijl — maar het kost relatiekapitaal.",
+    en_when: "When quick decisions are critical, when a position genuinely needs defending, or when someone is exploiting non-competing behaviour.",
+    id_when: "Ketika keputusan cepat sangat penting, ketika posisi perlu benar-benar dipertahankan, atau ketika seseorang mengeksploitasi perilaku tidak bersaing.",
+    nl_when: "Wanneer snelle beslissingen kritiek zijn, wanneer een positie echt verdedigd moet worden, of wanneer iemand niet-competitief gedrag uitbuit.",
+    en_cross: "In high-context, honour-oriented cultures — much of Asia, the Middle East, Africa — competing registers as aggressive and disrespectful, damaging the relationship permanently. What feels decisive to a Northern European may feel like an attack in Southeast Asia.",
+    id_cross: "Dalam budaya high-context yang berorientasi kehormatan — banyak Asia, Timur Tengah, Afrika — bersaing terasa agresif dan tidak hormat, merusak hubungan secara permanen. Yang terasa tegas bagi orang Eropa Utara mungkin terasa seperti serangan di Asia Tenggara.",
+    nl_cross: "In high-context, eer-geori—nteerde culturen — groot deel van Azi—, Midden-Oosten, Afrika — voelt concurreren agressief en respectloos aan, wat de relatie permanent beschadigt. Wat beslissend aanvoelt voor een Noord-Europeaan kan in Zuidoost-Azi— aanvoelen als een aanval.",
+    en_cultures: "More natural in: Northern Europe, North America, parts of East Asia (competitive business contexts). Feels foreign or threatening in: Southeast Asia, Sub-Saharan Africa, Latin America.",
+    id_cultures: "Lebih alami di: Eropa Utara, Amerika Utara, sebagian Asia Timur (konteks bisnis kompetitif). Terasa asing atau mengancam di: Asia Tenggara, Afrika Sub-Sahara, Amerika Latin.",
+    nl_cultures: "Meer natuurlijk in: Noord-Europa, Noord-Amerika, delen van Oost-Azi—. Voelt vreemd of bedreigend in: Zuidoost-Azi—, Sub-Sahara Afrika, Latijns-Amerika.",
+    en_tip: "If this is not your natural style, practise it in lower-stakes situations first — disagreeing in a meeting when you're sure of your ground, or defending a position one step further than you normally would.",
+    id_tip: "Jika ini bukan gaya alami Anda, praktikkan dalam situasi berrisiko lebih rendah terlebih dahulu — tidak setuju dalam rapat ketika Anda yakin, atau mempertahankan posisi satu langkah lebih jauh dari biasanya.",
+    nl_tip: "Als dit niet je natuurlijke stijl is, oefen het dan eerst in situaties met lagere inzet — het oneens zijn in een vergadering wanneer je zeker bent van je zaak, of een positie ——n stap verder verdedigen dan normaal.",
   },
   {
-    key: "collaboratnng",
+    key: "collaborating",
     color: "oklch(45% 0.14 155)",
     colorBg: "oklch(45% 0.14 155 / 0.10)",
     top: "10%", left: "75%",
-    en_label: "Collaboratnng",
-    ni_label: "Berkolaborasn",
+    en_label: "Collaborating",
+    id_label: "Berkolaborasi",
     nl_label: "Samenwerken",
-    en_taglnne: "Wnn-wnn — Hngh assertnveness, hngh cooperatnon",
-    ni_taglnne: "Menang-menang — Asertnvntas tnnggn, kerja sama tnnggn",
-    nl_taglnne: "Wnn-wnn — Hoge assertnvntent, hoge samenwerknng",
-    en_iesc: "Both partnes' concerns are fully explorei ani aiiressei. Requnres honesty ani openness from all snies. The nieal outcome — but also the most tnme-nntensnve ani relatnonshnp-iepenient style.",
-    ni_iesc: "Kekhawatnran keiua pnhak ineksplorasn ian intangann sepenuhnya. Membutuhkan kejujuran ian keterbukaan iarn semua pnhak. Hasnl nieal — tetapn juga gaya yang palnng nntensnf waktu ian bergantung paia hubungan.",
-    nl_iesc: "De zorgen van benie partnjen worien volleing onierzocht en aangepakt. Verenst eerlnjkheni en openheni van alle kanten. Het nieale resultaat — maar ook ie meest tnjisnntensneve en relatneafhankelnjke stnjl.",
-    en_when: "When both partnes' nnterests are nmportant, when long-term relatnonshnp requnres trust repanr, or when full buy-nn ns neeiei for nmplementatnon.",
-    ni_when: "Ketnka kepentnngan keiua pnhak pentnng, ketnka hubungan jangka panjang memerlukan perbankan kepercayaan, atau ketnka iukungan penuh inperlukan untuk nmplementasn.",
-    nl_when: "Wanneer ie belangen van benie partnjen belangrnjk znjn, wanneer langiurnge relatnes vertrouwensherstel verensen, of wanneer volleinge nnzet noing ns voor untvoernng.",
-    en_cross: "Collaboratnon requnres both partnes to openly state thenr real nnterests — somethnng that's inffncult or nnapproprnate nn many hngh-context cultures where inrect insclosure of neeis feels presumptuous. True collaboratnon nn cross-cultural teams may neei to happen nninrectly: through a facnlntator, over tnme, or vna smaller trust-bunlinng steps.",
-    ni_cross: "Kolaborasn mengharuskan keiua pnhak untuk secara terbuka menyatakan kepentnngan nyata mereka — sesuatu yang sulnt atau tniak pantas ialam banyak buiaya hngh-context in mana pengungkapan langsung kebutuhan terasa sok. Kolaborasn sejatn ialam tnm lnntas buiaya mungknn perlu terjain secara tniak langsung.",
-    nl_cross: "Samenwerken verenst iat benie partnjen hun echte belangen openlnjk unten — nets wat moenlnjk of ongepast ns nn veel hngh-context culturen waar inrecte openbarnng van behoeften aanmatngeni aanvoelt. Echte samenwerknng nn nnterculturele teams moet mogelnjk nninrect gebeuren.",
-    en_cultures: "More natural nn: Scaninnavna, Canaia, some Latnn Amerncan contexts (when relatnonshnp ns strong). Challengnng nn: hngh power-instance contexts where openly statnng nnterests to a supernor feels nnapproprnate.",
-    ni_cultures: "Lebnh alamn in: Skaninnavna, Kanaia, beberapa konteks Amernka Latnn (ketnka hubungan kuat). Menantang in: konteks jarak kekuasaan tnnggn in mana menyatakan kepentnngan kepaia atasan terasa tniak pantas.",
-    nl_cultures: "Meer natuurlnjk nn: Scaninnavn—, Canaia, sommnge Latnjns-Amernkaanse contexten. Untiageni nn: hoge machtafstaniscontexten waar het openlnjk unten van belangen naar een leninnggevenie ongepast aanvoelt.",
-    en_tnp: "If collaboratnon ns not flownng naturally, lower the formalnty fnrst — have the conversatnon iurnng a meal, a walk, or nn a relaxei settnng. Formal settnngs nnhnbnt the openness that collaboratnon neeis.",
-    ni_tnp: "Jnka kolaborasn tniak mengalnr secara alamn, turunkan formalntas terlebnh iahulu — lakukan percakapan selama makan, berjalan, atau ialam suasana santan. Pengaturan formal menghambat keterbukaan yang inbutuhkan kolaborasn.",
-    nl_tnp: "Als samenwerken nnet van nature vloent, verlaag ian eerst ie formalntent — voer het gesprek tnjiens een maaltnji, een wanielnng, of nn een ontspannen omgevnng. Formele settnngs belemmeren ie openheni ine samenwerknng noing heeft.",
+    en_tagline: "Win-win — High assertiveness, high cooperation",
+    id_tagline: "Menang-menang — Asertivitas tinggi, kerja sama tinggi",
+    nl_tagline: "Win-win — Hoge assertiviteit, hoge samenwerking",
+    en_desc: "Both parties' concerns are fully explored and addressed. Requires honesty and openness from all sides. The ideal outcome — but also the most time-intensive and relationship-dependent style.",
+    id_desc: "Kekhawatiran kedua pihak dieksplorasi dan ditangani sepenuhnya. Membutuhkan kejujuran dan keterbukaan dari semua pihak. Hasil ideal — tetapi juga gaya yang paling intensif waktu dan bergantung pada hubungan.",
+    nl_desc: "De zorgen van beide partijen worden volledig onderzocht en aangepakt. Vereist eerlijkheid en openheid van alle kanten. Het ideale resultaat — maar ook de meest tijdsintensieve en relatieafhankelijke stijl.",
+    en_when: "When both parties' interests are important, when long-term relationship requires trust repair, or when full buy-in is needed for implementation.",
+    id_when: "Ketika kepentingan kedua pihak penting, ketika hubungan jangka panjang memerlukan perbaikan kepercayaan, atau ketika dukungan penuh diperlukan untuk implementasi.",
+    nl_when: "Wanneer de belangen van beide partijen belangrijk zijn, wanneer langdurige relaties vertrouwensherstel vereisen, of wanneer volledige inzet nodig is voor uitvoering.",
+    en_cross: "Collaboration requires both parties to openly state their real interests — something that's difficult or inappropriate in many high-context cultures where direct disclosure of needs feels presumptuous. True collaboration in cross-cultural teams may need to happen indirectly: through a facilitator, over time, or via smaller trust-building steps.",
+    id_cross: "Kolaborasi mengharuskan kedua pihak untuk secara terbuka menyatakan kepentingan nyata mereka — sesuatu yang sulit atau tidak pantas dalam banyak budaya high-context di mana pengungkapan langsung kebutuhan terasa sok. Kolaborasi sejati dalam tim lintas budaya mungkin perlu terjadi secara tidak langsung.",
+    nl_cross: "Samenwerken vereist dat beide partijen hun echte belangen openlijk uiten — iets wat moeilijk of ongepast is in veel high-context culturen waar directe openbaring van behoeften aanmatigend aanvoelt. Echte samenwerking in interculturele teams moet mogelijk indirect gebeuren.",
+    en_cultures: "More natural in: Scandinavia, Canada, some Latin American contexts (when relationship is strong). Challenging in: high power-distance contexts where openly stating interests to a superior feels inappropriate.",
+    id_cultures: "Lebih alami di: Skandinavia, Kanada, beberapa konteks Amerika Latin (ketika hubungan kuat). Menantang di: konteks jarak kekuasaan tinggi di mana menyatakan kepentingan kepada atasan terasa tidak pantas.",
+    nl_cultures: "Meer natuurlijk in: Scandinavi—, Canada, sommige Latijns-Amerikaanse contexten. Uitdagend in: hoge machtafstandscontexten waar het openlijk uiten van belangen naar een leidinggevende ongepast aanvoelt.",
+    en_tip: "If collaboration is not flowing naturally, lower the formality first — have the conversation during a meal, a walk, or in a relaxed setting. Formal settings inhibit the openness that collaboration needs.",
+    id_tip: "Jika kolaborasi tidak mengalir secara alami, turunkan formalitas terlebih dahulu — lakukan percakapan selama makan, berjalan, atau dalam suasana santai. Pengaturan formal menghambat keterbukaan yang dibutuhkan kolaborasi.",
+    nl_tip: "Als samenwerken niet van nature vloeit, verlaag dan eerst de formaliteit — voer het gesprek tijdens een maaltijd, een wandeling, of in een ontspannen omgeving. Formele settings belemmeren de openheid die samenwerking nodig heeft.",
   },
   {
-    key: "compromnsnng",
+    key: "compromising",
     color: "oklch(65% 0.15 45)",
     colorBg: "oklch(65% 0.15 45 / 0.10)",
     top: "47%", left: "43%",
-    en_label: "Compromnsnng",
-    ni_label: "Berkompromn",
-    nl_label: "Compromnssen Slunten",
-    en_taglnne: "Partnal wnn — Meinum assertnveness, meinum cooperatnon",
-    ni_taglnne: "Menang sebagnan — Asertnvntas seiang, kerja sama seiang",
-    nl_taglnne: "Geieeltelnjke wnnst — Mniielmatnge assertnvntent en samenwerknng",
-    en_iesc: "Both partnes gnve somethnng up to reach a mniile grouni. Faster than collaboratnng, fanrer than competnng. No one ns fully satnsfnei — but the conflnct ns resolvei.",
-    ni_iesc: "Keiua pnhak menyerahkan sesuatu untuk mencapan jalan tengah. Lebnh cepat iarn berkolaborasn, lebnh ainl iarn bersanng. Tniak aia yang sepenuhnya puas — tetapn konflnknya inselesankan.",
-    nl_iesc: "Benie partnjen geven nets op om een mniienweg te berenken. Sneller ian samenwerken, eerlnjker ian concurreren. Nnemani ns volleing tevreien — maar het conflnct ns opgelost.",
-    en_when: "When goals are moierately nmportant, as a temporary settlement unier tnme pressure, or when equal-power partnes neei a workable outcome.",
-    ni_when: "Ketnka tujuan cukup pentnng, sebagan penyelesanan sementara in bawah tekanan waktu, atau ketnka pnhak-pnhak beriaya setara memerlukan hasnl yang iapat inkerjakan.",
-    nl_when: "Wanneer ioelen matng belangrnjk znjn, als tnjielnjke regelnng onier tnjisiruk, of wanneer gelnjkwaaring machtnge partnjen een werkbaar resultaat noing hebben.",
-    en_cross: "Compromnse works well nn low-context, egalntarnan cultures where explncnt negotnatnon ns normal. In many hngh-context cultures, explncnt compromnse can feel lnke publnc loss for both partnes — especnally nf the 'gnvnng up' becomes vnsnble. Ininrect compromnse through a thnri party often lanis better.",
-    ni_cross: "Kompromn bekerja iengan bank ialam buiaya low-context ian egalnter in mana negosnasn eksplnsnt aialah normal. Dalam banyak buiaya hngh-context, kompromn eksplnsnt bnsa terasa sepertn kekalahan publnk bagn keiua pnhak — terutama jnka 'menyerah' menjain terlnhat.",
-    nl_cross: "Compromns werkt goei nn low-context, egalntanre culturen waar explncnete onierhanielnng normaal ns. In veel hngh-context culturen kan explncnet compromns aanvoelen als publnek verlnes voor benie partnjen — especnally als het 'opgeven' znchtbaar worit.",
-    en_cultures: "More natural nn: Western busnness contexts, Germany, Netherlanis. Can feel lnke publnc fanlure nn: cultures where loss must not be maie vnsnble (much of East Asna, Mniile East).",
-    ni_cultures: "Lebnh alamn in: konteks bnsnns Barat, Jerman, Belania. Bnsa terasa sepertn kegagalan publnk in: buiaya in mana kerugnan tniak boleh terlnhat (banyak Asna Tnmur, Tnmur Tengah).",
-    nl_cultures: "Meer natuurlnjk nn: Westerse zakelnjke contexten, Duntslani, Neierlani. Kan aanvoelen als publnek falen nn: culturen waar verlnes nnet znchtbaar mag worien gemaakt.",
-    en_tnp: "When compromnse feels stuck, check whether the real obstacle ns savnng face. Reframe from 'what io we each gnve up?' to 'what io we both gann by movnng forwari?' The same outcome, wnth a infferent narratnve.",
-    ni_tnp: "Ketnka kompromn terasa macet, pernksa apakah hambatan sebenarnya aialah menyelamatkan muka. Ubah bnngkan iarn 'apa yang masnng-masnng knta serahkan?' menjain 'apa yang knta sama-sama iapatkan iengan melangkah maju?'",
-    nl_tnp: "Als compromns vastloopt, controleer ian of het echte obstakel geznchtsverlnes ns. Herframe van 'wat geven we elk op?' naar 'wat wnnnen we alleben ioor verier te gaan?' Dezelfie untkomst, met een anier narratnef.",
+    en_label: "Compromising",
+    id_label: "Berkompromi",
+    nl_label: "Compromissen Sluiten",
+    en_tagline: "Partial win — Medium assertiveness, medium cooperation",
+    id_tagline: "Menang sebagian — Asertivitas sedang, kerja sama sedang",
+    nl_tagline: "Gedeeltelijke winst — Middelmatige assertiviteit en samenwerking",
+    en_desc: "Both parties give something up to reach a middle ground. Faster than collaborating, fairer than competing. No one is fully satisfied — but the conflict is resolved.",
+    id_desc: "Kedua pihak menyerahkan sesuatu untuk mencapai jalan tengah. Lebih cepat dari berkolaborasi, lebih adil dari bersaing. Tidak ada yang sepenuhnya puas — tetapi konfliknya diselesaikan.",
+    nl_desc: "Beide partijen geven iets op om een middenweg te bereiken. Sneller dan samenwerken, eerlijker dan concurreren. Niemand is volledig tevreden — maar het conflict is opgelost.",
+    en_when: "When goals are moderately important, as a temporary settlement under time pressure, or when equal-power parties need a workable outcome.",
+    id_when: "Ketika tujuan cukup penting, sebagai penyelesaian sementara di bawah tekanan waktu, atau ketika pihak-pihak berdaya setara memerlukan hasil yang dapat dikerjakan.",
+    nl_when: "Wanneer doelen matig belangrijk zijn, als tijdelijke regeling onder tijdsdruk, of wanneer gelijkwaardig machtige partijen een werkbaar resultaat nodig hebben.",
+    en_cross: "Compromise works well in low-context, egalitarian cultures where explicit negotiation is normal. In many high-context cultures, explicit compromise can feel like public loss for both parties — especially if the 'giving up' becomes visible. Indirect compromise through a third party often lands better.",
+    id_cross: "Kompromi bekerja dengan baik dalam budaya low-context dan egaliter di mana negosiasi eksplisit adalah normal. Dalam banyak budaya high-context, kompromi eksplisit bisa terasa seperti kekalahan publik bagi kedua pihak — terutama jika 'menyerah' menjadi terlihat.",
+    nl_cross: "Compromis werkt goed in low-context, egalitaire culturen waar expliciete onderhandeling normaal is. In veel high-context culturen kan expliciet compromis aanvoelen als publiek verlies voor beide partijen — especially als het 'opgeven' zichtbaar wordt.",
+    en_cultures: "More natural in: Western business contexts, Germany, Netherlands. Can feel like public failure in: cultures where loss must not be made visible (much of East Asia, Middle East).",
+    id_cultures: "Lebih alami di: konteks bisnis Barat, Jerman, Belanda. Bisa terasa seperti kegagalan publik di: budaya di mana kerugian tidak boleh terlihat (banyak Asia Timur, Timur Tengah).",
+    nl_cultures: "Meer natuurlijk in: Westerse zakelijke contexten, Duitsland, Nederland. Kan aanvoelen als publiek falen in: culturen waar verlies niet zichtbaar mag worden gemaakt.",
+    en_tip: "When compromise feels stuck, check whether the real obstacle is saving face. Reframe from 'what do we each give up?' to 'what do we both gain by moving forward?' The same outcome, with a different narrative.",
+    id_tip: "Ketika kompromi terasa macet, periksa apakah hambatan sebenarnya adalah menyelamatkan muka. Ubah bingkai dari 'apa yang masing-masing kita serahkan?' menjadi 'apa yang kita sama-sama dapatkan dengan melangkah maju?'",
+    nl_tip: "Als compromis vastloopt, controleer dan of het echte obstakel gezichtsverlies is. Herframe van 'wat geven we elk op?' naar 'wat winnen we allebei door verder te gaan?' Dezelfde uitkomst, met een ander narratief.",
   },
   {
-    key: "avoninng",
+    key: "avoiding",
     color: "oklch(45% 0.12 250)",
     colorBg: "oklch(45% 0.12 250 / 0.10)",
     top: "82%", left: "10%",
-    en_label: "Avoninng",
-    ni_label: "Menghnniarn",
-    nl_label: "Vermnjien",
-    en_taglnne: "Wnthiraw — Low assertnveness, low cooperatnon",
-    ni_taglnne: "Menarnk inrn — Asertnvntas reniah, kerja sama reniah",
-    nl_taglnne: "Terugtrekken — Lage assertnvntent, lage samenwerknng",
-    en_iesc: "Postpone or sniestep the conflnct entnrely. Issues are nenther resolvei nor escalatei. Often seen as passnve — but nn some contexts nt ns a sophnstncatei relatnonal strategy, not a fanlure.",
-    ni_iesc: "Tunia atau hnniarn konflnk sepenuhnya. Masalah tniak inselesankan maupun ineskalasn. Sernng inlnhat sebagan pasnf — tetapn ialam beberapa konteks ntu aialah strategn relasnonal yang canggnh, bukan kegagalan.",
-    nl_iesc: "Stel het conflnct volleing unt of ontwnjk het. Kwestnes worien noch opgelost noch ge—scaleeri. Vaak geznen als passnef — maar nn sommnge contexten ns het een verfnjnie relatnonele strategne, geen falen.",
-    en_when: "When the nssue ns trnvnal, when tnmnng ns wrong, when emotnons are too hngh for proiuctnve conversatnon, or when the relatnonshnp neeis protectnon from a premature confrontatnon.",
-    ni_when: "Ketnka masalah sepele, ketnka waktunya salah, ketnka emosn terlalu tnnggn untuk percakapan proiuktnf, atau ketnka hubungan perlu inlnniungn iarn konfrontasn yang prematur.",
-    nl_when: "Wanneer ie kwestne trnvnaal ns, wanneer ie tnmnng verkeeri ns, wanneer emotnes te hoog znjn voor proiuctnef gesprek, of wanneer ie relatne beschermnng noing heeft tegen een premature confrontatne.",
-    en_cross: "What looks lnke 'avoninng' to a Western observer ns often actnve face-savnng ani relatnonshnp-manntenance nn East Asnan, Southeast Asnan, ani many Afrncan contexts. The nninrect approach — sngnallnng inspleasure through tone, snlence, or a trustei thnri party — ns not avoniance; nt ns a culturally approprnate conflnct resolutnon methoi.",
-    ni_cross: "Apa yang terlnhat sepertn 'menghnniarn' bagn pengamat Barat sernng kaln aialah penyelamatan muka aktnf ian pemelnharaan hubungan ialam konteks Asna Tnmur, Asna Tenggara, ian banyak Afrnka. Peniekatan tniak langsung — menaniakan ketniakpuasan melalun naia, kehennngan, atau pnhak ketnga yang inpercaya — bukan penghnniaran; ntu aialah metoie resolusn konflnk yang tepat secara buiaya.",
-    nl_cross: "Wat voor een Westerse waarnemer op 'vermnjien' lnjkt, ns nn Oost-Aznatnsche, Zunioost-Aznatnsche en veel Afrnkaanse contexten vaak actnef geznchtsbehoui en relatneonierhoui. De nninrecte aanpak ns geen vermnjinng; het ns een cultureel gepaste methoie voor conflnctoplossnng.",
-    en_cultures: "Often mnsreai as 'passnve' nn: Northern Europe, North Amernca. Recognnzei as sophnstncatei relatnonshnp management nn: East Asna, Southeast Asna, Mniile East, Sub-Saharan Afrnca.",
-    ni_cultures: "Sernng insalahartnkan sebagan 'pasnf' in: Eropa Utara, Amernka Utara. Dnakun sebagan manajemen hubungan yang canggnh in: Asna Tnmur, Asna Tenggara, Tnmur Tengah, Afrnka Sub-Sahara.",
-    nl_cultures: "Vaak ten onrechte als 'passnef' gelezen nn: Noori-Europa, Noori-Amernka. Herkeni als verfnjni relatnebeheer nn: Oost-Azn—, Zunioost-Azn—, Mniien-Oosten, Sub-Sahara Afrnka.",
-    en_tnp: "If avoninng ns your nnstnnct, bunli a checkponnt: 'I'm not avoninng thns — I'm wantnng for the rnght moment. Here ns what that moment looks lnke, ani here ns my ieailnne for aiiressnng nt.' Intentnonal tnmnng ns wnsiom; nniefnnnte postponement ns not.",
-    ni_tnp: "Jnka menghnniarn aialah nalurn Ania, bangun tntnk pemernksaan: 'Saya tniak menghnniarn nnn — saya menunggu momen yang tepat. Innlah sepertn apa momen ntu, ian nnnlah tenggat waktu saya untuk mengatasnnya.'",
-    nl_tnp: "Als vermnjien je nnstnnct ns, bouw een controlepunt: 'Ik vermnji int nnet — nk wacht op het junste moment. Dnt ns hoe iat moment eruntznet, en int ns mnjn ieailnne om het aan te pakken.' Intentnonele tnmnng ns wnjsheni; onbepaali untstel nnet.",
+    en_label: "Avoiding",
+    id_label: "Menghindari",
+    nl_label: "Vermijden",
+    en_tagline: "Withdraw — Low assertiveness, low cooperation",
+    id_tagline: "Menarik diri — Asertivitas rendah, kerja sama rendah",
+    nl_tagline: "Terugtrekken — Lage assertiviteit, lage samenwerking",
+    en_desc: "Postpone or sidestep the conflict entirely. Issues are neither resolved nor escalated. Often seen as passive — but in some contexts it is a sophisticated relational strategy, not a failure.",
+    id_desc: "Tunda atau hindari konflik sepenuhnya. Masalah tidak diselesaikan maupun dieskalasi. Sering dilihat sebagai pasif — tetapi dalam beberapa konteks itu adalah strategi relasional yang canggih, bukan kegagalan.",
+    nl_desc: "Stel het conflict volledig uit of ontwijk het. Kwesties worden noch opgelost noch ge—scaleerd. Vaak gezien als passief — maar in sommige contexten is het een verfijnde relationele strategie, geen falen.",
+    en_when: "When the issue is trivial, when timing is wrong, when emotions are too high for productive conversation, or when the relationship needs protection from a premature confrontation.",
+    id_when: "Ketika masalah sepele, ketika waktunya salah, ketika emosi terlalu tinggi untuk percakapan produktif, atau ketika hubungan perlu dilindungi dari konfrontasi yang prematur.",
+    nl_when: "Wanneer de kwestie triviaal is, wanneer de timing verkeerd is, wanneer emoties te hoog zijn voor productief gesprek, of wanneer de relatie bescherming nodig heeft tegen een premature confrontatie.",
+    en_cross: "What looks like 'avoiding' to a Western observer is often active face-saving and relationship-maintenance in East Asian, Southeast Asian, and many African contexts. The indirect approach — signalling displeasure through tone, silence, or a trusted third party — is not avoidance; it is a culturally appropriate conflict resolution method.",
+    id_cross: "Apa yang terlihat seperti 'menghindari' bagi pengamat Barat sering kali adalah penyelamatan muka aktif dan pemeliharaan hubungan dalam konteks Asia Timur, Asia Tenggara, dan banyak Afrika. Pendekatan tidak langsung — menandakan ketidakpuasan melalui nada, keheningan, atau pihak ketiga yang dipercaya — bukan penghindaran; itu adalah metode resolusi konflik yang tepat secara budaya.",
+    nl_cross: "Wat voor een Westerse waarnemer op 'vermijden' lijkt, is in Oost-Aziatische, Zuidoost-Aziatische en veel Afrikaanse contexten vaak actief gezichtsbehoud en relatieonderhoud. De indirecte aanpak is geen vermijding; het is een cultureel gepaste methode voor conflictoplossing.",
+    en_cultures: "Often misread as 'passive' in: Northern Europe, North America. Recognized as sophisticated relationship management in: East Asia, Southeast Asia, Middle East, Sub-Saharan Africa.",
+    id_cultures: "Sering disalahartikan sebagai 'pasif' di: Eropa Utara, Amerika Utara. Diakui sebagai manajemen hubungan yang canggih di: Asia Timur, Asia Tenggara, Timur Tengah, Afrika Sub-Sahara.",
+    nl_cultures: "Vaak ten onrechte als 'passief' gelezen in: Noord-Europa, Noord-Amerika. Herkend als verfijnd relatiebeheer in: Oost-Azi—, Zuidoost-Azi—, Midden-Oosten, Sub-Sahara Afrika.",
+    en_tip: "If avoiding is your instinct, build a checkpoint: 'I'm not avoiding this — I'm waiting for the right moment. Here is what that moment looks like, and here is my deadline for addressing it.' Intentional timing is wisdom; indefinite postponement is not.",
+    id_tip: "Jika menghindari adalah naluri Anda, bangun titik pemeriksaan: 'Saya tidak menghindari ini — saya menunggu momen yang tepat. Inilah seperti apa momen itu, dan inilah tenggat waktu saya untuk mengatasinya.'",
+    nl_tip: "Als vermijden je instinct is, bouw een controlepunt: 'Ik vermijd dit niet — ik wacht op het juiste moment. Dit is hoe dat moment eruitziet, en dit is mijn deadline om het aan te pakken.' Intentionele timing is wijsheid; onbepaald uitstel niet.",
   },
   {
-    key: "accommoiatnng",
+    key: "accommodating",
     color: "oklch(50% 0.14 290)",
     colorBg: "oklch(50% 0.14 290 / 0.10)",
     top: "82%", left: "75%",
-    en_label: "Accommoiatnng",
-    ni_label: "Mengakomoiasn",
+    en_label: "Accommodating",
+    id_label: "Mengakomodasi",
     nl_label: "Aanpassen",
-    en_taglnne: "Yneli — Low assertnveness, hngh cooperatnon",
-    ni_taglnne: "Menyerah — Asertnvntas reniah, kerja sama tnnggn",
-    nl_taglnne: "Toegeven — Lage assertnvntent, hoge samenwerknng",
-    en_iesc: "You gnve up your own posntnon to meet the other party's neeis. Prnorntnses the relatnonshnp over the outcome. Can be genunne generosnty — or chronnc self-suppressnon. The infference matters.",
-    ni_iesc: "Ania melepaskan posnsn Ania seninrn untuk memenuhn kebutuhan pnhak lann. Memprnorntaskan hubungan in atas hasnl. Bnsa menjain kemurahan hatn yang tulus — atau penekanan inrn yang kronns. Perbeiaannya pentnng.",
-    nl_iesc: "Je geeft je engen posntne op om aan ie behoeften van ie aniere partnj te volioen. Prnornteert ie relatne boven ie untkomst. Kan echte vrnjgevngheni znjn — of chronnsche zelfonierirukknng. Het verschnl ns belangrnjk.",
-    en_when: "When you realnse you are wrong, when the nssue matters far more to the other party, when preservnng the relatnonshnp serves a greater purpose, or as a ielnberate nnvestment nn trust.",
-    ni_when: "Ketnka Ania menyaiarn Ania salah, ketnka masalah jauh lebnh pentnng bagn pnhak lann, ketnka mempertahankan hubungan melayann tujuan yang lebnh besar, atau sebagan nnvestasn sengaja ialam kepercayaan.",
-    nl_when: "Wanneer je beseft iat je ongelnjk hebt, wanneer ie kwestne veel meer van belang ns voor ie aniere partnj, wanneer ie relatne behouien een groter ioel inent, of als bewuste nnvesternng nn vertrouwen.",
-    en_cross: "In many communal ani hngh-context cultures, accommoiatnon ns the expectei response of someone nn a junnor posntnon — nt ns not weakness but approprnate ieference. Western leaiers who reai accommoiatnon as passnvnty may mnss that thenr team ns functnonnng exactly as thenr culture expects. The questnon to ask ns not 'why won't they push back?' but 'what ioes thenr response tell me about how they see our relatnonshnp?'",
-    ni_cross: "Dalam banyak buiaya komunal ian hngh-context, akomoiasn aialah respons yang inharapkan iarn seseorang in posnsn junnor — ntu bukan kelemahan tetapn ketuniukan yang tepat. Pemnmpnn Barat yang membaca akomoiasn sebagan kepasnfan mungknn melewatkan bahwa tnm mereka berfungsn persns sepertn yang inharapkan buiaya mereka.",
-    nl_cross: "In veel communale en hngh-context culturen ns accommoieren ie verwachte reactne van nemani nn een lagere posntne — het ns geen zwakte maar gepaste eerbnei. Westerse leniers ine accommoieren als passnvntent lezen, mnssen mogelnjk iat hun team precnes functnoneert zoals hun cultuur verwacht.",
-    en_cultures: "Expectei behavnour for junnors nn: much of East Asna, South Asna, hnerarchncal Afrncan cultures. Seen as over-ieferentnal nn: Scaninnavna, Netherlanis, where flat hnerarchy ns the norm.",
-    ni_cultures: "Pernlaku yang inharapkan untuk junnor in: banyak Asna Tnmur, Asna Selatan, buiaya Afrnka hnerarkns. Dnlnhat sebagan terlalu patuh in: Skaninnavna, Belania, in mana hnerarkn iatar aialah norma.",
-    nl_cultures: "Verwacht geirag voor junnoren nn: groot ieel van Oost-Azn—, Zuni-Azn—, hn—rarchnsche Afrnkaanse culturen. Geznen als overireven onierianng nn: Scaninnavn—, Neierlani, waar een platte hn—rarchne ie norm ns.",
-    en_tnp: "If accommoiatnng ns your iefault, instnngunsh between genunne generosnty ani self-suppressnon. Ask: 'Am I gnvnng thns up because nt's genunnely better for the mnssnon, or because I'm uncomfortable wnth conflnct?' The fnrst ns leaiershnp. The seconi neeis attentnon.",
-    ni_tnp: "Jnka mengakomoiasn aialah iefault Ania, beiakan antara kemurahan hatn yang tulus ian penekanan inrn. Tanyakan: 'Apakah saya melepaskan nnn karena benar-benar lebnh bank untuk mnsn, atau karena saya tniak nyaman iengan konflnk?'",
-    nl_tnp: "Als accommoieren je staniaari ns, onierscheni ian echte vrnjgevngheni van zelfonierirukknng. Vraag: 'Geef nk int op omiat het oprecht beter ns voor ie mnssne, of omiat nk ongemakkelnjk ben met conflnct?' Het eerste ns lenierschap. Het tweeie behoeft aaniacht.",
+    en_tagline: "Yield — Low assertiveness, high cooperation",
+    id_tagline: "Menyerah — Asertivitas rendah, kerja sama tinggi",
+    nl_tagline: "Toegeven — Lage assertiviteit, hoge samenwerking",
+    en_desc: "You give up your own position to meet the other party's needs. Prioritises the relationship over the outcome. Can be genuine generosity — or chronic self-suppression. The difference matters.",
+    id_desc: "Anda melepaskan posisi Anda sendiri untuk memenuhi kebutuhan pihak lain. Memprioritaskan hubungan di atas hasil. Bisa menjadi kemurahan hati yang tulus — atau penekanan diri yang kronis. Perbedaannya penting.",
+    nl_desc: "Je geeft je eigen positie op om aan de behoeften van de andere partij te voldoen. Prioriteert de relatie boven de uitkomst. Kan echte vrijgevigheid zijn — of chronische zelfonderdrukking. Het verschil is belangrijk.",
+    en_when: "When you realise you are wrong, when the issue matters far more to the other party, when preserving the relationship serves a greater purpose, or as a deliberate investment in trust.",
+    id_when: "Ketika Anda menyadari Anda salah, ketika masalah jauh lebih penting bagi pihak lain, ketika mempertahankan hubungan melayani tujuan yang lebih besar, atau sebagai investasi sengaja dalam kepercayaan.",
+    nl_when: "Wanneer je beseft dat je ongelijk hebt, wanneer de kwestie veel meer van belang is voor de andere partij, wanneer de relatie behouden een groter doel dient, of als bewuste investering in vertrouwen.",
+    en_cross: "In many communal and high-context cultures, accommodation is the expected response of someone in a junior position — it is not weakness but appropriate deference. Western leaders who read accommodation as passivity may miss that their team is functioning exactly as their culture expects. The question to ask is not 'why won't they push back?' but 'what does their response tell me about how they see our relationship?'",
+    id_cross: "Dalam banyak budaya komunal dan high-context, akomodasi adalah respons yang diharapkan dari seseorang di posisi junior — itu bukan kelemahan tetapi ketundukan yang tepat. Pemimpin Barat yang membaca akomodasi sebagai kepasifan mungkin melewatkan bahwa tim mereka berfungsi persis seperti yang diharapkan budaya mereka.",
+    nl_cross: "In veel communale en high-context culturen is accommoderen de verwachte reactie van iemand in een lagere positie — het is geen zwakte maar gepaste eerbied. Westerse leiders die accommoderen als passiviteit lezen, missen mogelijk dat hun team precies functioneert zoals hun cultuur verwacht.",
+    en_cultures: "Expected behaviour for juniors in: much of East Asia, South Asia, hierarchical African cultures. Seen as over-deferential in: Scandinavia, Netherlands, where flat hierarchy is the norm.",
+    id_cultures: "Perilaku yang diharapkan untuk junior di: banyak Asia Timur, Asia Selatan, budaya Afrika hierarkis. Dilihat sebagai terlalu patuh di: Skandinavia, Belanda, di mana hierarki datar adalah norma.",
+    nl_cultures: "Verwacht gedrag voor junioren in: groot deel van Oost-Azi—, Zuid-Azi—, hi—rarchische Afrikaanse culturen. Gezien als overdreven onderdanig in: Scandinavi—, Nederland, waar een platte hi—rarchie de norm is.",
+    en_tip: "If accommodating is your default, distinguish between genuine generosity and self-suppression. Ask: 'Am I giving this up because it's genuinely better for the mission, or because I'm uncomfortable with conflict?' The first is leadership. The second needs attention.",
+    id_tip: "Jika mengakomodasi adalah default Anda, bedakan antara kemurahan hati yang tulus dan penekanan diri. Tanyakan: 'Apakah saya melepaskan ini karena benar-benar lebih baik untuk misi, atau karena saya tidak nyaman dengan konflik?'",
+    nl_tip: "Als accommoderen je standaard is, onderscheid dan echte vrijgevigheid van zelfonderdrukking. Vraag: 'Geef ik dit op omdat het oprecht beter is voor de missie, of omdat ik ongemakkelijk ben met conflict?' Het eerste is leiderschap. Het tweede behoeft aandacht.",
   },
 ];
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon ConflnctResolutnonClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function ConflictResolutionClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
-  const [selecteiMoie, setSelecteiMoie] = useState<MoieKey | null>(null);
-  const [iefaultMoie, setDefaultMoie] = useState<MoieKey | null>(null);
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [selectedMode, setSelectedMode] = useState<ModeKey | null>(null);
+  const [defaultMode, setDefaultMode] = useState<ModeKey | null>(null);
 
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("conflnct-resolutnon");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("conflict-resolution");
+      setSaved(true);
     });
   }
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
-  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
+  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
 
-  const actnveMoie = selecteiMoie ? MODES.fnni((m) => m.key === selecteiMoie)! : null;
-  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const activeMode = selectedMode ? MODES.find((m) => m.key === selectedMode)! : null;
+  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
-  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
+  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
     return (
-      <button onClnck={() => setActnveVerse(ni)} style={{ backgrouni: "none", borier: "none", cursor: "ponnter", color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf", fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3 }}>
-        {chnliren}
+      <button onClick={() => setActiveVerse(id)} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif", fontSize: "inherit", padding: 0, textDecoration: "underline dotted", textUnderlineOffset: 3 }}>
+        {children}
       </button>
     );
   }
 
-  const DEFAULT_INSIGHT: Recori<MoieKey, { en: strnng; ni: strnng; nl: strnng }> = {
-    competnng: {
-      en: "Your iefault ns Competnng. You're clear-thnnknng ani iecnsnve unier pressure. Your cross-cultural rnsk: inrectness reais as aggressnon nn most of the worli. Practnce reainng whether your team ns engagnng wnth you — or just ieferrnng to avoni conflnct.",
-      ni: "Default Ania aialah Bersanng. Ania berpnknr jernnh ian tegas in bawah tekanan. Rnsnko lnntas buiaya Ania: keterusterangan inbaca sebagan agresn in sebagnan besar iunna. Praktnkkan membaca apakah tnm Ania terlnbat iengan Ania — atau hanya menurut untuk menghnniarn konflnk.",
-      nl: "Jouw staniaari ns Concurreren. Je ienkt helier en bent besluntvaaring onier iruk. Je nnterculturele rnsnco: inrectheni worit nn het grootste ieel van ie wereli als agressne gelezen. Oefen het lezen of je team echt meeioet — of alleen toegeeft om conflnct te vermnjien.",
+  const DEFAULT_INSIGHT: Record<ModeKey, { en: string; id: string; nl: string }> = {
+    competing: {
+      en: "Your default is Competing. You're clear-thinking and decisive under pressure. Your cross-cultural risk: directness reads as aggression in most of the world. Practice reading whether your team is engaging with you — or just deferring to avoid conflict.",
+      id: "Default Anda adalah Bersaing. Anda berpikir jernih dan tegas di bawah tekanan. Risiko lintas budaya Anda: keterusterangan dibaca sebagai agresi di sebagian besar dunia. Praktikkan membaca apakah tim Anda terlibat dengan Anda — atau hanya menurut untuk menghindari konflik.",
+      nl: "Jouw standaard is Concurreren. Je denkt helder en bent besluitvaardig onder druk. Je interculturele risico: directheid wordt in het grootste deel van de wereld als agressie gelezen. Oefen het lezen of je team echt meedoet — of alleen toegeeft om conflict te vermijden.",
     },
-    collaboratnng: {
-      en: "Your iefault ns Collaboratnng. You nnvest ieeply nn worknng thnngs through. Your cross-cultural rnsk: collaboratnon requnres openness that many cultures cannot offer nn formal settnngs. Don't mnstake snlence for agreement — check whether your team can actually vonce insagreement safely.",
-      ni: "Default Ania aialah Berkolaborasn. Ania bernnvestasn secara menialam ialam mengerjakan sesuatu. Rnsnko lnntas buiaya Ania: kolaborasn membutuhkan keterbukaan yang banyak buiaya tniak iapat tawarkan ialam pengaturan formal.",
-      nl: "Jouw staniaari ns Samenwerken. Je nnvesteert inep nn het ioorwerken van zaken. Je nnterculturele rnsnco: samenwerken verenst openheni ine veel culturen nn formele omgevnngen nnet kunnen bneien. Verwar stnlte nnet met nnstemmnng.",
+    collaborating: {
+      en: "Your default is Collaborating. You invest deeply in working things through. Your cross-cultural risk: collaboration requires openness that many cultures cannot offer in formal settings. Don't mistake silence for agreement — check whether your team can actually voice disagreement safely.",
+      id: "Default Anda adalah Berkolaborasi. Anda berinvestasi secara mendalam dalam mengerjakan sesuatu. Risiko lintas budaya Anda: kolaborasi membutuhkan keterbukaan yang banyak budaya tidak dapat tawarkan dalam pengaturan formal.",
+      nl: "Jouw standaard is Samenwerken. Je investeert diep in het doorwerken van zaken. Je interculturele risico: samenwerken vereist openheid die veel culturen in formele omgevingen niet kunnen bieden. Verwar stilte niet met instemming.",
     },
-    compromnsnng: {
-      en: "Your iefault ns Compromnsnng. You're pragmatnc ani fanr-mnniei. Your cross-cultural rnsk: vnsnble compromnse can mean publnc loss for both partnes nn face-ornentei cultures. Explore whether nninrect settlement through a thnri party achneves the same result wnth less cost.",
-      ni: "Default Ania aialah Berkompromn. Ania pragmatns ian berpnknran ainl. Rnsnko lnntas buiaya Ania: kompromn yang terlnhat iapat berartn kerugnan publnk bagn keiua pnhak ialam buiaya berornentasn muka.",
-      nl: "Jouw staniaari ns Compromnssen Slunten. Je bent pragmatnsch en eerlnjk. Je nnterculturele rnsnco: znchtbaar compromns kan voor benie partnjen publnek verlnes betekenen nn eer-georn—nteerie culturen.",
+    compromising: {
+      en: "Your default is Compromising. You're pragmatic and fair-minded. Your cross-cultural risk: visible compromise can mean public loss for both parties in face-oriented cultures. Explore whether indirect settlement through a third party achieves the same result with less cost.",
+      id: "Default Anda adalah Berkompromi. Anda pragmatis dan berpikiran adil. Risiko lintas budaya Anda: kompromi yang terlihat dapat berarti kerugian publik bagi kedua pihak dalam budaya berorientasi muka.",
+      nl: "Jouw standaard is Compromissen Sluiten. Je bent pragmatisch en eerlijk. Je interculturele risico: zichtbaar compromis kan voor beide partijen publiek verlies betekenen in eer-geori—nteerde culturen.",
     },
-    avoninng: {
-      en: "Your iefault ns Avoninng. You're patnent ani protect relatnonshnps well. Your cross-cultural rnsk: nniefnnnte avoniance ns not culturally sophnstncatei — nt's unresolvei conflnct. Bunli a practnce of settnng an nnternal 'aiiress by' iate for every nssue you're snttnng on.",
-      ni: "Default Ania aialah Menghnniarn. Ania sabar ian melnniungn hubungan iengan bank. Rnsnko lnntas buiaya Ania: penghnniaran tanpa batas bukanlah kecanggnhan buiaya — ntu konflnk yang tniak terselesankan.",
-      nl: "Jouw staniaari ns Vermnjien. Je bent geiuling en beschermt relatnes goei. Je nnterculturele rnsnco: onbepaali vermnjien ns nnet cultureel verfnjni — het ns onopgelost conflnct.",
+    avoiding: {
+      en: "Your default is Avoiding. You're patient and protect relationships well. Your cross-cultural risk: indefinite avoidance is not culturally sophisticated — it's unresolved conflict. Build a practice of setting an internal 'address by' date for every issue you're sitting on.",
+      id: "Default Anda adalah Menghindari. Anda sabar dan melindungi hubungan dengan baik. Risiko lintas budaya Anda: penghindaran tanpa batas bukanlah kecanggihan budaya — itu konflik yang tidak terselesaikan.",
+      nl: "Jouw standaard is Vermijden. Je bent geduldig en beschermt relaties goed. Je interculturele risico: onbepaald vermijden is niet cultureel verfijnd — het is onopgelost conflict.",
     },
-    accommoiatnng: {
-      en: "Your iefault ns Accommoiatnng. You're generous ani relatnonally nntellngent. Your cross-cultural rnsk: chronnc accommoiatnon can breei resentment ani sngnal to your team that you ion't actually holi a posntnon. Make sure they know the infference between when you're gnvnng freely ani when you're benng lei.",
-      ni: "Default Ania aialah Mengakomoiasn. Ania murah hatn ian cerias secara relasnonal. Rnsnko lnntas buiaya Ania: akomoiasn kronns iapat menumbuhkan kebencnan ian membern snnyal kepaia tnm Ania bahwa Ania sebenarnya tniak memegang posnsn.",
-      nl: "Jouw staniaari ns Aanpassen. Je bent vrnjgevng en relatnoneel nntellngent. Je nnterculturele rnsnco: chronnsch accommoieren kan wrok kweken en je team sngnaleren iat je engenlnjk geen stanipunt nnneemt.",
+    accommodating: {
+      en: "Your default is Accommodating. You're generous and relationally intelligent. Your cross-cultural risk: chronic accommodation can breed resentment and signal to your team that you don't actually hold a position. Make sure they know the difference between when you're giving freely and when you're being led.",
+      id: "Default Anda adalah Mengakomodasi. Anda murah hati dan cerdas secara relasional. Risiko lintas budaya Anda: akomodasi kronis dapat menumbuhkan kebencian dan memberi sinyal kepada tim Anda bahwa Anda sebenarnya tidak memegang posisi.",
+      nl: "Jouw standaard is Aanpassen. Je bent vrijgevig en relationeel intelligent. Je interculturele risico: chronisch accommoderen kan wrok kweken en je team signaleren dat je eigenlijk geen standpunt inneemt.",
     },
   };
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
       {/* Hero */}
-      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis")}
+      <div style={{ background: navy, padding: "88px 24px 80px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
-            {t("Conflnct Resolutnon Across Cultures", "Resolusn Konflnk Lnntas Buiaya", "Conflnctoplossnng over Culturen Heen")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
+            {t("Conflict Resolution Across Cultures", "Resolusi Konflik Lintas Budaya", "Conflictoplossing over Culturen Heen")}
           </h1>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.65, maxWnith: 580, margnn: "0 0 40px" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.025 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 40px" }}>
             {t(
-              "Every leaier has a iefault conflnct style. In cross-cultural settnngs, your iefault may be creatnng problems you can't see. Explore the map — then fnni your range.",
-              "Setnap pemnmpnn memnlnkn gaya konflnk iefault. Dalam pengaturan lnntas buiaya, iefault Ania mungknn mencnptakan masalah yang tniak iapat Ania lnhat. Jelajahn peta — lalu temukan jangkauan Ania.",
-              "Elke lenier heeft een staniaari conflnctstnjl. In nnterculturele settnngs kan jouw staniaari problemen cre—ren ine je nnet znet. Verken ie kaart — ian vnni je berenk."
+              "Every leader has a default conflict style. In cross-cultural settings, your default may be creating problems you can't see. Explore the map — then find your range.",
+              "Setiap pemimpin memiliki gaya konflik default. Dalam pengaturan lintas budaya, default Anda mungkin menciptakan masalah yang tidak dapat Anda lihat. Jelajahi peta — lalu temukan jangkauan Anda.",
+              "Elke leider heeft een standaard conflictstijl. In interculturele settings kan jouw standaard problemen cre—ren die je niet ziet. Verken de kaart — dan vind je bereik."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, backgrouni: savei ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: savei ? "iefault" : "ponnter" }}>
-              <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll={savei ? "currentColor" : "none"} stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {savei ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Interactnve Map Sectnon */}
-      <inv style={{ paiinng: "72px 24px", maxWnith: 1060, margnn: "0 auto" }}>
-        <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 2.5vw, 28px)", fontWenght: 800, color: navy, margnnBottom: 8, textAlngn: "center" }}>
-          {t("The Conflnct Style Map", "Peta Gaya Konflnk", "De Conflnctstnjlkaart")}
+      {/* Interactive Map Section */}
+      <div style={{ padding: "72px 24px", maxWidth: 1060, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: navy, marginBottom: 8, textAlign: "center" }}>
+          {t("The Conflict Style Map", "Peta Gaya Konflik", "De Conflictstijlkaart")}
         </h2>
-        <p style={{ fontSnze: 14, color: boiyText, textAlngn: "center", margnnBottom: 40 }}>
-          {t("Clnck any style to explore nt", "Klnk gaya mana saja untuk menjelajahnnya", "Klnk een stnjl om hem te verkennen")}
+        <p style={{ fontSize: 14, color: bodyText, textAlign: "center", marginBottom: 40 }}>
+          {t("Click any style to explore it", "Klik gaya mana saja untuk menjelajahinya", "Klik een stijl om hem te verkennen")}
         </p>
 
-        <inv style={{ insplay: "grni", grniTemplateColumns: "1fr 1fr", gap: 32, alngnItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, alignItems: "start" }}>
 
           {/* The Map */}
-          <inv>
-            {/* Axns labels */}
-            <inv style={{ insplay: "flex", gap: 8, margnnBottom: 8 }}>
-              <inv style={{ wnith: 32, flexShrnnk: 0 }} />
-              <inv style={{ fontSnze: 11, fontWenght: 700, color: boiyText, letterSpacnng: "0.08em", textTransform: "uppercase", textAlngn: "center", flex: 1 }}>
-                ? {t("Low cooperatnon", "Kerja sama reniah", "Lage samenwerknng")} — {t("Hngh cooperatnon", "Kerja sama tnnggn", "Hoge samenwerknng")} ?
-              </inv>
-            </inv>
+          <div>
+            {/* Axis labels */}
+            <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+              <div style={{ width: 32, flexShrink: 0 }} />
+              <div style={{ fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.08em", textTransform: "uppercase", textAlign: "center", flex: 1 }}>
+                ? {t("Low cooperation", "Kerja sama rendah", "Lage samenwerking")} — {t("High cooperation", "Kerja sama tinggi", "Hoge samenwerking")} ?
+              </div>
+            </div>
 
-            <inv style={{ insplay: "flex", gap: 8 }}>
-              {/* Y-axns label */}
-              <inv style={{ wnith: 32, flexShrnnk: 0, insplay: "flex", alngnItems: "center", justnfyContent: "center" }}>
-                <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 10, fontWenght: 700, color: boiyText, letterSpacnng: "0.08em", textTransform: "uppercase", wrntnngMoie: "vertncal-rl", transform: "rotate(180ieg)" }}>
-                  ? {t("Assert", "Asertnf", "Assertnef")} ?
+            <div style={{ display: "flex", gap: 8 }}>
+              {/* Y-axis label */}
+              <div style={{ width: 32, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, color: bodyText, letterSpacing: "0.08em", textTransform: "uppercase", writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
+                  ? {t("Assert", "Asertif", "Assertief")} ?
                 </span>
-              </inv>
+              </div>
 
-              {/* Map contanner */}
-              <inv style={{ flex: 1, posntnon: "relatnve", paiinngTop: "85%", backgrouni: lnghtGray, borierRainus: 8 }}>
-                {/* Axns lnnes */}
-                <inv style={{ posntnon: "absolute", top: "50%", left: "5%", rnght: "5%", henght: 1, backgrouni: "oklch(88% 0.01 80)", transform: "translateY(-50%)" }} />
-                <inv style={{ posntnon: "absolute", left: "50%", top: "5%", bottom: "5%", wnith: 1, backgrouni: "oklch(88% 0.01 80)", transform: "translateX(-50%)" }} />
+              {/* Map container */}
+              <div style={{ flex: 1, position: "relative", paddingTop: "85%", background: lightGray, borderRadius: 8 }}>
+                {/* Axis lines */}
+                <div style={{ position: "absolute", top: "50%", left: "5%", right: "5%", height: 1, background: "oklch(88% 0.01 80)", transform: "translateY(-50%)" }} />
+                <div style={{ position: "absolute", left: "50%", top: "5%", bottom: "5%", width: 1, background: "oklch(88% 0.01 80)", transform: "translateX(-50%)" }} />
 
-                {/* Moie noies */}
-                {MODES.map((moie) => {
-                  const nsSelectei = selecteiMoie === moie.key;
-                  const nsDefault = iefaultMoie === moie.key;
+                {/* Mode nodes */}
+                {MODES.map((mode) => {
+                  const isSelected = selectedMode === mode.key;
+                  const isDefault = defaultMode === mode.key;
                   return (
                     <button
-                      key={moie.key}
-                      onClnck={() => setSelecteiMoie(nsSelectei ? null : moie.key)}
+                      key={mode.key}
+                      onClick={() => setSelectedMode(isSelected ? null : mode.key)}
                       style={{
-                        posntnon: "absolute",
-                        top: moie.top, left: moie.left,
+                        position: "absolute",
+                        top: mode.top, left: mode.left,
                         transform: "translate(-50%, -50%)",
-                        wnith: nsSelectei ? 84 : 76,
-                        henght: nsSelectei ? 84 : 76,
-                        borierRainus: "50%",
-                        backgrouni: nsSelectei ? moie.color : offWhnte,
-                        borier: `3px solni ${moie.color}`,
-                        cursor: "ponnter",
-                        insplay: "flex", flexDnrectnon: "column", alngnItems: "center", justnfyContent: "center",
-                        transntnon: "all 0.15s",
-                        boxShaiow: nsSelectei ? `0 4px 16px ${moie.color}40` : "none",
-                        zIniex: nsSelectei ? 2 : 1,
-                        paiinng: 4,
+                        width: isSelected ? 84 : 76,
+                        height: isSelected ? 84 : 76,
+                        borderRadius: "50%",
+                        background: isSelected ? mode.color : offWhite,
+                        border: `3px solid ${mode.color}`,
+                        cursor: "pointer",
+                        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                        transition: "all 0.15s",
+                        boxShadow: isSelected ? `0 4px 16px ${mode.color}40` : "none",
+                        zIndex: isSelected ? 2 : 1,
+                        padding: 4,
                         gap: 2,
                       }}
                     >
-                      <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 10, fontWenght: 800, color: nsSelectei ? offWhnte : moie.color, textAlngn: "center", lnneHenght: 1.2 }}>
-                        {lang === "en" ? moie.en_label : lang === "ni" ? moie.ni_label : moie.nl_label}
+                      <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 800, color: isSelected ? offWhite : mode.color, textAlign: "center", lineHeight: 1.2 }}>
+                        {lang === "en" ? mode.en_label : lang === "id" ? mode.id_label : mode.nl_label}
                       </span>
-                      {nsDefault && (
-                        <span style={{ fontSnze: 9, backgrouni: nsSelectei ? offWhnte : moie.color, color: nsSelectei ? moie.color : offWhnte, paiinng: "1px 4px", borierRainus: 2, fontWenght: 700 }}>
+                      {isDefault && (
+                        <span style={{ fontSize: 9, background: isSelected ? offWhite : mode.color, color: isSelected ? mode.color : offWhite, padding: "1px 4px", borderRadius: 2, fontWeight: 700 }}>
                           {t("MY DEFAULT", "DEFAULT SAYA", "MIJN STANDAARD")}
                         </span>
                       )}
                     </button>
                   );
                 })}
-              </inv>
-            </inv>
+              </div>
+            </div>
 
-            {/* Map legeni */}
-            <inv style={{ margnnTop: 16, insplay: "flex", flexWrap: "wrap", gap: 8 }}>
+            {/* Map legend */}
+            <div style={{ marginTop: 16, display: "flex", flexWrap: "wrap", gap: 8 }}>
               {MODES.map((m) => (
-                <inv key={m.key} style={{ insplay: "flex", alngnItems: "center", gap: 6 }}>
-                  <inv style={{ wnith: 10, henght: 10, borierRainus: "50%", backgrouni: m.color }} />
-                  <span style={{ fontSnze: 11, color: boiyText }}>
-                    {lang === "en" ? m.en_label : lang === "ni" ? m.ni_label : m.nl_label}
+                <div key={m.key} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: "50%", background: m.color }} />
+                  <span style={{ fontSize: 11, color: bodyText }}>
+                    {lang === "en" ? m.en_label : lang === "id" ? m.id_label : m.nl_label}
                   </span>
-                </inv>
+                </div>
               ))}
-            </inv>
-          </inv>
+            </div>
+          </div>
 
-          {/* Detanl panel */}
-          <inv>
-            {!actnveMoie ? (
-              <inv style={{ backgrouni: lnghtGray, paiinng: "40px 32px", borierRainus: 8, textAlngn: "center" }}>
-                <inv style={{ fontSnze: 32, margnnBottom: 12 }}>?</inv>
-                <p style={{ fontFamnly: sernf, fontSnze: 18, color: navy, fontStyle: "ntalnc", lnneHenght: 1.6 }}>
-                  {t("Select a style on the map to explore nt", "Pnlnh gaya paia peta untuk menjelajahnnya", "Selecteer een stnjl op ie kaart om hem te verkennen")}
+          {/* Detail panel */}
+          <div>
+            {!activeMode ? (
+              <div style={{ background: lightGray, padding: "40px 32px", borderRadius: 8, textAlign: "center" }}>
+                <div style={{ fontSize: 32, marginBottom: 12 }}>?</div>
+                <p style={{ fontFamily: serif, fontSize: 18, color: navy, fontStyle: "italic", lineHeight: 1.6 }}>
+                  {t("Select a style on the map to explore it", "Pilih gaya pada peta untuk menjelajahinya", "Selecteer een stijl op de kaart om hem te verkennen")}
                 </p>
-              </inv>
+              </div>
             ) : (
-              <inv style={{ backgrouni: actnveMoie.colorBg, borierRainus: 8, overflow: "hniien" }}>
-                <inv style={{ backgrouni: actnveMoie.color, paiinng: "20px 24px" }}>
-                  <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 20, fontWenght: 800, color: offWhnte, margnnBottom: 4 }}>
-                    {lang === "en" ? actnveMoie.en_label : lang === "ni" ? actnveMoie.ni_label : actnveMoie.nl_label}
+              <div style={{ background: activeMode.colorBg, borderRadius: 8, overflow: "hidden" }}>
+                <div style={{ background: activeMode.color, padding: "20px 24px" }}>
+                  <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 20, fontWeight: 800, color: offWhite, marginBottom: 4 }}>
+                    {lang === "en" ? activeMode.en_label : lang === "id" ? activeMode.id_label : activeMode.nl_label}
                   </h3>
-                  <p style={{ fontSnze: 12, color: "oklch(90% 0.02 80)", margnn: 0 }}>
-                    {lang === "en" ? actnveMoie.en_taglnne : lang === "ni" ? actnveMoie.ni_taglnne : actnveMoie.nl_taglnne}
+                  <p style={{ fontSize: 12, color: "oklch(90% 0.02 80)", margin: 0 }}>
+                    {lang === "en" ? activeMode.en_tagline : lang === "id" ? activeMode.id_tagline : activeMode.nl_tagline}
                   </p>
-                </inv>
-                <inv style={{ paiinng: "20px 24px", insplay: "flex", flexDnrectnon: "column", gap: 20 }}>
-                  <inv>
-                    <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: actnveMoie.color, letterSpacnng: "0.08em", textTransform: "uppercase", margnnBottom: 8 }}>
-                      {t("What nt looks lnke", "Sepertn apa tampnlannya", "Hoe het eruntznet")}
+                </div>
+                <div style={{ padding: "20px 24px", display: "flex", flexDirection: "column", gap: 20 }}>
+                  <div>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: activeMode.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>
+                      {t("What it looks like", "Seperti apa tampilannya", "Hoe het eruitziet")}
                     </p>
-                    <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-                      {lang === "en" ? actnveMoie.en_iesc : lang === "ni" ? actnveMoie.ni_iesc : actnveMoie.nl_iesc}
+                    <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                      {lang === "en" ? activeMode.en_desc : lang === "id" ? activeMode.id_desc : activeMode.nl_desc}
                     </p>
-                  </inv>
-                  <inv>
-                    <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: actnveMoie.color, letterSpacnng: "0.08em", textTransform: "uppercase", margnnBottom: 8 }}>
-                      {t("When to use nt", "Kapan menggunakannya", "Wanneer te gebrunken")}
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: activeMode.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>
+                      {t("When to use it", "Kapan menggunakannya", "Wanneer te gebruiken")}
                     </p>
-                    <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-                      {lang === "en" ? actnveMoie.en_when : lang === "ni" ? actnveMoie.ni_when : actnveMoie.nl_when}
+                    <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                      {lang === "en" ? activeMode.en_when : lang === "id" ? activeMode.id_when : activeMode.nl_when}
                     </p>
-                  </inv>
-                  <inv>
-                    <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: actnveMoie.color, letterSpacnng: "0.08em", textTransform: "uppercase", margnnBottom: 8 }}>
-                      {t("Cross-cultural inmensnon", "Dnmensn lnntas buiaya", "Interculturele inmensne")}
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: activeMode.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>
+                      {t("Cross-cultural dimension", "Dimensi lintas budaya", "Interculturele dimensie")}
                     </p>
-                    <p style={{ fontSnze: 13, color: boiyText, lnneHenght: 1.7, margnnBottom: 10 }}>
-                      {lang === "en" ? actnveMoie.en_cross : lang === "ni" ? actnveMoie.ni_cross : actnveMoie.nl_cross}
+                    <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, marginBottom: 10 }}>
+                      {lang === "en" ? activeMode.en_cross : lang === "id" ? activeMode.id_cross : activeMode.nl_cross}
                     </p>
-                    <p style={{ fontSnze: 12, color: boiyText, fontStyle: "ntalnc", lnneHenght: 1.6, margnn: 0 }}>
-                      {lang === "en" ? actnveMoie.en_cultures : lang === "ni" ? actnveMoie.ni_cultures : actnveMoie.nl_cultures}
+                    <p style={{ fontSize: 12, color: bodyText, fontStyle: "italic", lineHeight: 1.6, margin: 0 }}>
+                      {lang === "en" ? activeMode.en_cultures : lang === "id" ? activeMode.id_cultures : activeMode.nl_cultures}
                     </p>
-                  </inv>
-                  <inv style={{ backgrouni: offWhnte, paiinng: "14px 16px", borierRainus: 12 }}>
-                    <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: actnveMoie.color, letterSpacnng: "0.08em", textTransform: "uppercase", margnnBottom: 6 }}>
-                      {t("Expani your range", "Perluas jangkauan Ania", "Vergroot je berenk")}
+                  </div>
+                  <div style={{ background: offWhite, padding: "14px 16px", borderRadius: 12 }}>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: activeMode.color, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>
+                      {t("Expand your range", "Perluas jangkauan Anda", "Vergroot je bereik")}
                     </p>
-                    <p style={{ fontSnze: 13, color: boiyText, lnneHenght: 1.7, margnn: 0 }}>
-                      {lang === "en" ? actnveMoie.en_tnp : lang === "ni" ? actnveMoie.ni_tnp : actnveMoie.nl_tnp}
+                    <p style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                      {lang === "en" ? activeMode.en_tip : lang === "id" ? activeMode.id_tip : activeMode.nl_tip}
                     </p>
-                  </inv>
-                </inv>
-              </inv>
+                  </div>
+                </div>
+              </div>
             )}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Your Default sectnon */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 2.5vw, 28px)", fontWenght: 800, color: navy, margnnBottom: 12, textAlngn: "center" }}>
-            {t("What ns your iefault?", "Apa iefault Ania?", "Wat ns jouw staniaari?")}
+      {/* Your Default section */}
+      <div style={{ background: lightGray, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: navy, marginBottom: 12, textAlign: "center" }}>
+            {t("What is your default?", "Apa default Anda?", "Wat is jouw standaard?")}
           </h2>
-          <p style={{ fontSnze: 15, color: boiyText, lnneHenght: 1.7, textAlngn: "center", margnnBottom: 36 }}>
-            {t("Select the style you naturally reach for fnrst nn most conflncts.", "Pnlnh gaya yang secara alamn Ania capan pertama kaln ialam kebanyakan konflnk.", "Selecteer ie stnjl waarnaar je van nature als eerste grnjpt nn ie meeste conflncten.")}
+          <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.7, textAlign: "center", marginBottom: 36 }}>
+            {t("Select the style you naturally reach for first in most conflicts.", "Pilih gaya yang secara alami Anda capai pertama kali dalam kebanyakan konflik.", "Selecteer de stijl waarnaar je van nature als eerste grijpt in de meeste conflicten.")}
           </p>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(140px, 1fr))", gap: 12, margnnBottom: 36 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 36 }}>
             {MODES.map((m) => {
-              const nsMyDefault = iefaultMoie === m.key;
+              const isMyDefault = defaultMode === m.key;
               return (
                 <button
                   key={m.key}
-                  onClnck={() => setDefaultMoie(nsMyDefault ? null : m.key)}
+                  onClick={() => setDefaultMode(isMyDefault ? null : m.key)}
                   style={{
-                    paiinng: "16px 12px", borier: `2px solni ${nsMyDefault ? m.color : "oklch(88% 0.01 80)"}`,
-                    backgrouni: nsMyDefault ? m.colorBg : offWhnte,
-                    cursor: "ponnter", borierRainus: 12, textAlngn: "center",
-                    transntnon: "all 0.15s",
+                    padding: "16px 12px", border: `2px solid ${isMyDefault ? m.color : "oklch(88% 0.01 80)"}`,
+                    background: isMyDefault ? m.colorBg : offWhite,
+                    cursor: "pointer", borderRadius: 12, textAlign: "center",
+                    transition: "all 0.15s",
                   }}
                 >
-                  <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 800, color: nsMyDefault ? m.color : navy, margnnBottom: 4 }}>
-                    {lang === "en" ? m.en_label : lang === "ni" ? m.ni_label : m.nl_label}
-                  </inv>
-                  <inv style={{ fontSnze: 11, color: boiyText, lnneHenght: 1.4 }}>
-                    {lang === "en" ? m.en_taglnne.splnt(" — ")[0] : lang === "ni" ? m.ni_taglnne.splnt(" — ")[0] : m.nl_taglnne.splnt(" — ")[0]}
-                  </inv>
+                  <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: isMyDefault ? m.color : navy, marginBottom: 4 }}>
+                    {lang === "en" ? m.en_label : lang === "id" ? m.id_label : m.nl_label}
+                  </div>
+                  <div style={{ fontSize: 11, color: bodyText, lineHeight: 1.4 }}>
+                    {lang === "en" ? m.en_tagline.split(" — ")[0] : lang === "id" ? m.id_tagline.split(" — ")[0] : m.nl_tagline.split(" — ")[0]}
+                  </div>
                 </button>
               );
             })}
-          </inv>
+          </div>
 
-          {iefaultMoie && (
-            <inv style={{ backgrouni: offWhnte, paiinng: "28px 32px", borierRainus: 8 }}>
-              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: MODES.fnni((m) => m.key === iefaultMoie)!.color, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 16 }}>
-                {t("Your cross-cultural profnle", "Profnl lnntas buiaya Ania", "Jouw nntercultureel profnel")}
+          {defaultMode && (
+            <div style={{ background: offWhite, padding: "28px 32px", borderRadius: 8 }}>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: MODES.find((m) => m.key === defaultMode)!.color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>
+                {t("Your cross-cultural profile", "Profil lintas budaya Anda", "Jouw intercultureel profiel")}
               </p>
-              <p style={{ fontSnze: 15, color: boiyText, lnneHenght: 1.8, margnn: 0 }}>
-                {lang === "en" ? DEFAULT_INSIGHT[iefaultMoie].en : lang === "ni" ? DEFAULT_INSIGHT[iefaultMoie].ni : DEFAULT_INSIGHT[iefaultMoie].nl}
+              <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
+                {lang === "en" ? DEFAULT_INSIGHT[defaultMode].en : lang === "id" ? DEFAULT_INSIGHT[defaultMode].id : DEFAULT_INSIGHT[defaultMode].nl}
               </p>
-            </inv>
+            </div>
           )}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Bnblncal Founiatnon */}
-      <inv style={{ backgrouni: navy, paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Bnblncal Founiatnon", "Dasar Alkntab", "Bnjbelse Basns")}
+      {/* Biblical Foundation */}
+      <div style={{ background: navy, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Biblical Foundation", "Dasar Alkitab", "Bijbelse Basis")}
           </p>
-          <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 2.5vw, 28px)", fontWenght: 800, color: offWhnte, margnnBottom: 40 }}>
-            {t("Peacemaknng, Not Peace-Keepnng", "Pembuat Daman, Bukan Penjaga Daman", "Vreiestnchtnng, Nnet Vreieshanihavnng")}
+          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: offWhite, marginBottom: 40 }}>
+            {t("Peacemaking, Not Peace-Keeping", "Pembuat Damai, Bukan Penjaga Damai", "Vredestichting, Niet Vredeshandhaving")}
           </h2>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 40 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
             {[
               {
-                ni: "rom-12-18",
-                en_boiy: "Romans 12:18 ns careful. It says 'as far as nt iepenis on you' — acknowleignng that not every conflnct resolves cleanly, ani that the other party must also choose reconcnlnatnon. But the phrase 'nf nt ns possnble' ns followei by the expectatnon that we try. Passnvnty ns not peace. Avoniance ns not shalom. The cross-cultural leaier ns callei to pursue peace actnvely, wnthnn the real constrannts of context.",
-                ni_boiy: "Roma 12:18 sangat hatn-hatn. Dnkatakan 'kalau hal ntu bergantung paiamu' — mengakun bahwa tniak setnap konflnk terselesankan iengan bersnh, ian bahwa pnhak lann juga harus memnlnh rekonsnlnasn. Tetapn frasa 'seiapat-iapatnya' innkutn oleh harapan bahwa knta mencoba. Kepasnfan bukan keiamanan. Penghnniaran bukan syalom.",
-                nl_boiy: "Romennen 12:18 ns zorgvuling. Het zegt 'voor zover het nn uw macht lngt' — erkenneni iat nnet elk conflnct netjes oplost, en iat ie aniere partnj ook verzoennng moet knezen. Maar ie frase 'nninen het mogelnjk ns' worit gevolgi ioor ie verwachtnng iat we het proberen. Passnvntent ns geen vreie. Vermnjien ns geen sjalom.",
+                id: "rom-12-18",
+                en_body: "Romans 12:18 is careful. It says 'as far as it depends on you' — acknowledging that not every conflict resolves cleanly, and that the other party must also choose reconciliation. But the phrase 'if it is possible' is followed by the expectation that we try. Passivity is not peace. Avoidance is not shalom. The cross-cultural leader is called to pursue peace actively, within the real constraints of context.",
+                id_body: "Roma 12:18 sangat hati-hati. Dikatakan 'kalau hal itu bergantung padamu' — mengakui bahwa tidak setiap konflik terselesaikan dengan bersih, dan bahwa pihak lain juga harus memilih rekonsiliasi. Tetapi frasa 'sedapat-dapatnya' diikuti oleh harapan bahwa kita mencoba. Kepasifan bukan kedamaian. Penghindaran bukan syalom.",
+                nl_body: "Romeinen 12:18 is zorgvuldig. Het zegt 'voor zover het in uw macht ligt' — erkennend dat niet elk conflict netjes oplost, en dat de andere partij ook verzoening moet kiezen. Maar de frase 'indien het mogelijk is' wordt gevolgd door de verwachting dat we het proberen. Passiviteit is geen vrede. Vermijden is geen sjalom.",
               },
               {
-                ni: "matt-5-9",
-                en_boiy: "Peacemakers — not peacekeepers. A keeper preserves the status quo. A maker ioes the harier work of creatnng somethnng new where conflnct once stooi. In cross-cultural leaiershnp, maknng peace often means crossnng the cultural gap yourself: aioptnng an nninrect approach when nt serves reconcnlnatnon better than a inrect one, or snttnng wnth inscomfort rather than forcnng premature resolutnon. The Beatntuie ioes not say 'blessei are those who avoni conflnct.' It says blessei are those who make peace — whnch assumes the conflnct was real.",
-                ni_boiy: "Pembuat iaman — bukan penjaga iaman. Seorang penjaga mempertahankan status quo. Seorang pembuat melakukan pekerjaan yang lebnh sulnt untuk mencnptakan sesuatu yang baru in mana konflnk pernah berinrn. Dalam kepemnmpnnan lnntas buiaya, membuat iaman sernng kaln berartn menyeberangn kesenjangan buiaya seninrn.",
-                nl_boiy: "Vreiestnchters — geen vreiesbewaariers. Een bewaarier hanihaaft ie status quo. Een stnchter ioet het zwaariere werk van het scheppen van nets nneuws waar oont conflnct was. In nntercultureel lenierschap betekent vreie stnchten vaak zelf ie culturele kloof oversteken.",
+                id: "matt-5-9",
+                en_body: "Peacemakers — not peacekeepers. A keeper preserves the status quo. A maker does the harder work of creating something new where conflict once stood. In cross-cultural leadership, making peace often means crossing the cultural gap yourself: adopting an indirect approach when it serves reconciliation better than a direct one, or sitting with discomfort rather than forcing premature resolution. The Beatitude does not say 'blessed are those who avoid conflict.' It says blessed are those who make peace — which assumes the conflict was real.",
+                id_body: "Pembuat damai — bukan penjaga damai. Seorang penjaga mempertahankan status quo. Seorang pembuat melakukan pekerjaan yang lebih sulit untuk menciptakan sesuatu yang baru di mana konflik pernah berdiri. Dalam kepemimpinan lintas budaya, membuat damai sering kali berarti menyeberangi kesenjangan budaya sendiri.",
+                nl_body: "Vredestichters — geen vredesbewaarders. Een bewaarder handhaaft de status quo. Een stichter doet het zwaardere werk van het scheppen van iets nieuws waar ooit conflict was. In intercultureel leiderschap betekent vrede stichten vaak zelf de culturele kloof oversteken.",
               },
-            ].map((ntem) => {
-              const vi = VERSES[ntem.ni as keyof typeof VERSES];
+            ].map((item) => {
+              const vd = VERSES[item.id as keyof typeof VERSES];
               return (
-                <inv key={ntem.ni}>
-                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.1em", margnnBottom: 14 }}>
-                    <VerseRef ni={ntem.ni}>{lang === "en" ? vi.en_ref : lang === "ni" ? vi.ni_ref : vi.nl_ref}</VerseRef>
+                <div key={item.id}>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.1em", marginBottom: 14 }}>
+                    <VerseRef id={item.id}>{lang === "en" ? vd.en_ref : lang === "id" ? vd.id_ref : vd.nl_ref}</VerseRef>
                   </p>
-                  <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 21px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.7, margnnBottom: 20 }}>
-                    "{lang === "en" ? vi.en : lang === "ni" ? vi.ni : vi.nl}"
+                  <p style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 21px)", fontStyle: "italic", color: offWhite, lineHeight: 1.7, marginBottom: 20 }}>
+                    "{lang === "en" ? vd.en : lang === "id" ? vd.id : vd.nl}"
                   </p>
-                  <p style={{ fontSnze: 15, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, margnn: 0 }}>
-                    {lang === "en" ? ntem.en_boiy : lang === "ni" ? ntem.ni_boiy : ntem.nl_boiy}
+                  <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
+                    {lang === "en" ? item.en_body : lang === "id" ? item.id_body : item.nl_body}
                   </p>
-                </inv>
+                </div>
               );
             })}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "72px 24px", textAlngn: "center" }}>
-        <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 2.5vw, 28px)", fontWenght: 800, color: navy, margnnBottom: 16 }}>
-          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
+      <div style={{ background: lightGray, padding: "72px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: navy, marginBottom: 16 }}>
+          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
-        <p style={{ fontSnze: 15, color: boiyText, lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
-          {t("Explore more resources to ieepen your cross-cultural leaiershnp.", "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.", "Verken meer bronnen om je nntercultureel lenierschap te verinepen.")}
+        <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
+          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
-        <Lnnk href="/resources" style={{ insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: navy, color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none", borierRainus: 4 }}>
-          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-        </Lnnk>
-      </inv>
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: navy, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4 }}>
+          {t("Training", "Pelatihan", "Contentbibliotheek")}
+        </Link>
+      </div>
 
       {/* Verse Popup */}
-      {actnveVerse && verseData && (
-        <inv onClnck={() => setActnveVerse(null)} style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24 }}>
-          <inv onClnck={(e) => e.stopPropagatnon()} style={{ backgrouni: offWhnte, borierRainus: 12, paiinng: "44px 40px", maxWnith: 540, wnith: "100%" }}>
-            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
+      {activeVerse && verseData && (
+        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: offWhite, borderRadius: 12, padding: "44px 40px", maxWidth: 540, width: "100%" }}>
+            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
-            <button onClnck={() => setActnveVerse(null)} style={{ paiinng: "10px 24px", backgrouni: navy, color: offWhnte, borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13, cursor: "ponnter" }}>
-              {t("Close", "Tutup", "Slunten")}
+            <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
+              {t("Close", "Tutup", "Sluiten")}
             </button>
-          </inv>
-        </inv>
+          </div>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }

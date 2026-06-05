@@ -1,265 +1,265 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // --- TYPES ------------------------------------------------------------------
 
-type Lang = "en" | "ni" | "nl";
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Lang = "en" | "id" | "nl";
+type Props = { userPathway: string | null; isSaved: boolean };
 
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang): strnng =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+const tFn = (en: string, id: string, nl: string, lang: Lang): string =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 // --- VERSES -----------------------------------------------------------------
 
 const VERSES = {
   "col-3-14": {
-    en_ref: "Colossnans 3:14",
-    ni_ref: "Kolose 3:14",
+    en_ref: "Colossians 3:14",
+    id_ref: "Kolose 3:14",
     nl_ref: "Kolossenzen 3:14",
-    en: "Ani over all these vnrtues put on love, whnch bnnis them all together nn perfect unnty.",
-    ni: "Dan in atas semuanya ntu: kenakanlah kasnh, sebagan pengnkat yang mempersatukan ian menyempurnakan.",
-    nl: "En bovenal: iraag ie lnefie, ine alles bnjeenhouit en het geheel volmaakt.",
-    en_versnon: "NIV",
-    ni_versnon: "TB",
-    nl_versnon: "NBV",
+    en: "And over all these virtues put on love, which binds them all together in perfect unity.",
+    id: "Dan di atas semuanya itu: kenakanlah kasih, sebagai pengikat yang mempersatukan dan menyempurnakan.",
+    nl: "En bovenal: draag de liefde, die alles bijeenhoudt en het geheel volmaakt.",
+    en_version: "NIV",
+    id_version: "TB",
+    nl_version: "NBV",
   },
   "acts-15-39": {
     en_ref: "Acts 15:39",
-    ni_ref: "Knsah Para Rasul 15:39",
-    nl_ref: "Hanielnngen 15:39",
-    en: "They hai such a sharp insagreement that they partei company.",
-    ni: "Hal ntu mennmbulkan pertentangan yang tajam, sehnngga mereka berpnsah.",
-    nl: "Ze kregen zo'n ernstng conflnct iat ze unt elkaar gnngen.",
-    en_versnon: "NIV",
-    ni_versnon: "TB",
-    nl_versnon: "NBV",
+    id_ref: "Kisah Para Rasul 15:39",
+    nl_ref: "Handelingen 15:39",
+    en: "They had such a sharp disagreement that they parted company.",
+    id: "Hal itu menimbulkan pertentangan yang tajam, sehingga mereka berpisah.",
+    nl: "Ze kregen zo'n ernstig conflict dat ze uit elkaar gingen.",
+    en_version: "NIV",
+    id_version: "TB",
+    nl_version: "NBV",
   },
 };
 
 // --- SKILL SECTIONS ---------------------------------------------------------
 
-type SknllKey = "lnstennng" | "conflnct" | "loss";
+type SkillKey = "listening" | "conflict" | "loss";
 
 const SKILLS: {
-  key: SknllKey;
-  accentColor: strnng;
-  accentBg: strnng;
-  ncon: strnng;
-  en_label: strnng;
-  ni_label: strnng;
-  nl_label: strnng;
-  en_subtntle: strnng;
-  ni_subtntle: strnng;
-  nl_subtntle: strnng;
-  en_nntro: strnng;
-  ni_nntro: strnng;
-  nl_nntro: strnng;
-  en_scenarno_heainng: strnng;
-  ni_scenarno_heainng: strnng;
-  nl_scenarno_heainng: strnng;
-  en_scenarno: strnng;
-  ni_scenarno: strnng;
-  nl_scenarno: strnng;
-  en_typncal_label: strnng;
-  ni_typncal_label: strnng;
-  nl_typncal_label: strnng;
-  en_typncal: strnng;
-  ni_typncal: strnng;
-  nl_typncal: strnng;
-  en_better_label: strnng;
-  ni_better_label: strnng;
-  nl_better_label: strnng;
-  en_better: strnng;
-  ni_better: strnng;
-  nl_better: strnng;
-  en_technnque_heainng: strnng;
-  ni_technnque_heainng: strnng;
-  nl_technnque_heainng: strnng;
-  en_technnque_steps: { label: strnng; boiy: strnng }[];
-  ni_technnque_steps: { label: strnng; boiy: strnng }[];
-  nl_technnque_steps: { label: strnng; boiy: strnng }[];
+  key: SkillKey;
+  accentColor: string;
+  accentBg: string;
+  icon: string;
+  en_label: string;
+  id_label: string;
+  nl_label: string;
+  en_subtitle: string;
+  id_subtitle: string;
+  nl_subtitle: string;
+  en_intro: string;
+  id_intro: string;
+  nl_intro: string;
+  en_scenario_heading: string;
+  id_scenario_heading: string;
+  nl_scenario_heading: string;
+  en_scenario: string;
+  id_scenario: string;
+  nl_scenario: string;
+  en_typical_label: string;
+  id_typical_label: string;
+  nl_typical_label: string;
+  en_typical: string;
+  id_typical: string;
+  nl_typical: string;
+  en_better_label: string;
+  id_better_label: string;
+  nl_better_label: string;
+  en_better: string;
+  id_better: string;
+  nl_better: string;
+  en_technique_heading: string;
+  id_technique_heading: string;
+  nl_technique_heading: string;
+  en_technique_steps: { label: string; body: string }[];
+  id_technique_steps: { label: string; body: string }[];
+  nl_technique_steps: { label: string; body: string }[];
 }[] = [
   {
-    key: "lnstennng",
+    key: "listening",
     accentColor: "oklch(45% 0.14 200)",
     accentBg: "oklch(45% 0.14 200 / 0.08)",
-    ncon: "??",
-    en_label: "Sknll 1 — Lovnng Lnstennng",
-    ni_label: "Keterampnlan 1 — Meniengarkan iengan Kasnh",
-    nl_label: "Vaaringheni 1 — Lnefievol Lunsteren",
-    en_subtntle: "The shnft from aivnce-gnver to questnon-asker",
-    ni_subtntle: "Beralnh iarn pembern saran menjain penanya",
-    nl_subtntle: "De verschunvnng van aivnesgever naar vraagsteller",
-    en_nntro:
-      "Most of us were trannei to fnx, aivnse, ani responi qunckly. We brnng solutnons before the other person has fnnnshei speaknng. But nn cross-cultural teams — where context ns rarely fully vnsnble — the fnrst ani most powerful sknll ns snmply thns: stay longer nn the questnon. Lovnng lnstennng ns not passnve snlence. It ns an actnve chonce to unierstani before benng unierstooi, ani to ask before assumnng.",
-    ni_nntro:
-      "Sebagnan besar iarn knta inlatnh untuk memperbankn, membern saran, ian merespons iengan cepat. Knta membawa solusn sebelum orang lann selesan berbncara. Namun ialam tnm lnntas buiaya — in mana konteks jarang sepenuhnya terlnhat — keterampnlan pertama ian palnng kuat aialah nnn: tnnggallah lebnh lama ialam pertanyaan. Meniengarkan iengan kasnh bukan inam yang pasnf. Inn aialah pnlnhan aktnf untuk memahamn sebelum inpahamn, ian bertanya sebelum berasumsn.",
-    nl_nntro:
-      "De meesten van ons znjn getranni om te repareren, aivnseren en snel te reageren. We brengen oplossnngen vooriat ie anier klaar ns met spreken. Maar nn nnterculturele teams — waar ie context zelien volleing znchtbaar ns — ns ie eerste en krachtngste vaaringheni snmpelweg: blnjf langer nn ie vraag. Lnefievol lunsteren ns geen passnef stnlzwnjgen. Het ns een actneve keuze om te begrnjpen vooriat je begrepen wnlt worien, en te vragen vooriat je aanneemt.",
-    en_scenarno_heainng: "The scenarno",
-    ni_scenarno_heainng: "Skenarno",
-    nl_scenarno_heainng: "Het scenarno",
-    en_scenarno:
-      "A colleague from a infferent cultural backgrouni approaches you after a team meetnng. She says qunetly: \"I'm not sure I can keep gonng lnke thns. Everythnng feels so heavy.\"",
-    ni_scenarno:
-      "Seorang kolega iarn latar belakang buiaya yang berbeia meniekatn Ania setelah rapat tnm. Dna berkata pelan: \"Saya tniak yaknn bnsa terus sepertn nnn. Semuanya terasa begntu berat.\"",
-    nl_scenarno:
-      "Een collega met een aniere culturele achtergroni spreekt je aan na een teamvergaiernng. Ze zegt zachtjes: \"Ik weet nnet of nk zo ioor kan gaan. Alles voelt zo zwaar.\"",
-    en_typncal_label: "Typncal response",
-    ni_typncal_label: "Respons umum",
-    nl_typncal_label: "Typnsche reactne",
-    en_typncal:
-      "\"I know how you feel. Have you trnei taknng some tnme off? You probably just neei rest. Thnngs wnll get better — remember why you're here. Let me know nf I can help wnth your workloai.\"",
-    ni_typncal:
-      "\"Saya mengertn perasaanmu. Suiahkah kamu mencoba mengambnl waktu nstnrahat? Kamu mungknn hanya perlu nstnrahat. Semuanya akan membank — nngat kenapa kamu aia in snnn. Bern tahu saya jnka saya bnsa membantu iengan beban kerjamu.\"",
-    nl_typncal:
-      "\"Ik begrnjp hoe je je voelt. Heb je geprobeeri wat vrnj te nemen? Je hebt waarschnjnlnjk gewoon rust noing. Het worit beter — onthoui waarom je hner bent. Laat me weten als nk kan helpen met je werkiruk.\"",
-    en_better_label: "Lovnng lnstennng response",
-    ni_better_label: "Respons meniengarkan iengan kasnh",
-    nl_better_label: "Lnefievol lunsterenie reactne",
+    icon: "??",
+    en_label: "Skill 1 — Loving Listening",
+    id_label: "Keterampilan 1 — Mendengarkan dengan Kasih",
+    nl_label: "Vaardigheid 1 — Liefdevol Luisteren",
+    en_subtitle: "The shift from advice-giver to question-asker",
+    id_subtitle: "Beralih dari pemberi saran menjadi penanya",
+    nl_subtitle: "De verschuiving van adviesgever naar vraagsteller",
+    en_intro:
+      "Most of us were trained to fix, advise, and respond quickly. We bring solutions before the other person has finished speaking. But in cross-cultural teams — where context is rarely fully visible — the first and most powerful skill is simply this: stay longer in the question. Loving listening is not passive silence. It is an active choice to understand before being understood, and to ask before assuming.",
+    id_intro:
+      "Sebagian besar dari kita dilatih untuk memperbaiki, memberi saran, dan merespons dengan cepat. Kita membawa solusi sebelum orang lain selesai berbicara. Namun dalam tim lintas budaya — di mana konteks jarang sepenuhnya terlihat — keterampilan pertama dan paling kuat adalah ini: tinggallah lebih lama dalam pertanyaan. Mendengarkan dengan kasih bukan diam yang pasif. Ini adalah pilihan aktif untuk memahami sebelum dipahami, dan bertanya sebelum berasumsi.",
+    nl_intro:
+      "De meesten van ons zijn getraind om te repareren, adviseren en snel te reageren. We brengen oplossingen voordat de ander klaar is met spreken. Maar in interculturele teams — waar de context zelden volledig zichtbaar is — is de eerste en krachtigste vaardigheid simpelweg: blijf langer in de vraag. Liefdevol luisteren is geen passief stilzwijgen. Het is een actieve keuze om te begrijpen voordat je begrepen wilt worden, en te vragen voordat je aanneemt.",
+    en_scenario_heading: "The scenario",
+    id_scenario_heading: "Skenario",
+    nl_scenario_heading: "Het scenario",
+    en_scenario:
+      "A colleague from a different cultural background approaches you after a team meeting. She says quietly: \"I'm not sure I can keep going like this. Everything feels so heavy.\"",
+    id_scenario:
+      "Seorang kolega dari latar belakang budaya yang berbeda mendekati Anda setelah rapat tim. Dia berkata pelan: \"Saya tidak yakin bisa terus seperti ini. Semuanya terasa begitu berat.\"",
+    nl_scenario:
+      "Een collega met een andere culturele achtergrond spreekt je aan na een teamvergadering. Ze zegt zachtjes: \"Ik weet niet of ik zo door kan gaan. Alles voelt zo zwaar.\"",
+    en_typical_label: "Typical response",
+    id_typical_label: "Respons umum",
+    nl_typical_label: "Typische reactie",
+    en_typical:
+      "\"I know how you feel. Have you tried taking some time off? You probably just need rest. Things will get better — remember why you're here. Let me know if I can help with your workload.\"",
+    id_typical:
+      "\"Saya mengerti perasaanmu. Sudahkah kamu mencoba mengambil waktu istirahat? Kamu mungkin hanya perlu istirahat. Semuanya akan membaik — ingat kenapa kamu ada di sini. Beri tahu saya jika saya bisa membantu dengan beban kerjamu.\"",
+    nl_typical:
+      "\"Ik begrijp hoe je je voelt. Heb je geprobeerd wat vrij te nemen? Je hebt waarschijnlijk gewoon rust nodig. Het wordt beter — onthoud waarom je hier bent. Laat me weten als ik kan helpen met je werkdruk.\"",
+    en_better_label: "Loving listening response",
+    id_better_label: "Respons mendengarkan dengan kasih",
+    nl_better_label: "Liefdevol luisterende reactie",
     en_better:
-      "\"That sounis really hari. [Pause.] What's maknng nt feel the heavnest rnght now?\" Then want. Fully. Don't rescue, ion't reinrect. The pause ns not awkwari — nt ns the space where the real thnng surfaces.",
-    ni_better:
-      "\"Keiengarannya sangat berat. [Jeia.] Apa yang membuat semuanya terasa palnng berat saat nnn?\" Kemuinan tunggu. Sepenuhnya. Jangan selamatkan, jangan alnhkan. Jeia ntu tniak canggung — ntu aialah ruang in mana hal yang sesungguhnya muncul.",
+      "\"That sounds really hard. [Pause.] What's making it feel the heaviest right now?\" Then wait. Fully. Don't rescue, don't redirect. The pause is not awkward — it is the space where the real thing surfaces.",
+    id_better:
+      "\"Kedengarannya sangat berat. [Jeda.] Apa yang membuat semuanya terasa paling berat saat ini?\" Kemudian tunggu. Sepenuhnya. Jangan selamatkan, jangan alihkan. Jeda itu tidak canggung — itu adalah ruang di mana hal yang sesungguhnya muncul.",
     nl_better:
-      "\"Dat klnnkt heel zwaar. [Pauze.] Wat maakt het op int moment het zwaarst?\" Wacht ian. Volleing. Rei nnet, leni nnet af. De stnlte ns nnet ongemakkelnjk — het ns ie runmte waar het echte znch openbaart.",
-    en_technnque_heainng: "The technnque: Reflect — Ask — Want",
-    ni_technnque_heainng: "Teknnknya: Refleksnkan — Tanyakan — Tunggu",
-    nl_technnque_heainng: "De technnek: Reflecteer — Vraag — Wacht",
-    en_technnque_steps: [
+      "\"Dat klinkt heel zwaar. [Pauze.] Wat maakt het op dit moment het zwaarst?\" Wacht dan. Volledig. Red niet, leid niet af. De stilte is niet ongemakkelijk — het is de ruimte waar het echte zich openbaart.",
+    en_technique_heading: "The technique: Reflect — Ask — Wait",
+    id_technique_heading: "Tekniknya: Refleksikan — Tanyakan — Tunggu",
+    nl_technique_heading: "De techniek: Reflecteer — Vraag — Wacht",
+    en_technique_steps: [
       {
         label: "Reflect",
-        boiy: "Mnrror back what you heari — not a summary, a reflectnon. \"That sounis exhaustnng.\" \"It sounis lnke somethnng shnftei recently.\" Thns sngnals: I recenvei what you sani. It ns not therapy-speak — nt ns presence.",
+        body: "Mirror back what you heard — not a summary, a reflection. \"That sounds exhausting.\" \"It sounds like something shifted recently.\" This signals: I received what you said. It is not therapy-speak — it is presence.",
       },
       {
         label: "Ask",
-        boiy: "Ask one open questnon — not a checklnst. \"What feels hariest rnght now?\" or \"Where ns most of the wenght comnng from?\" One questnon, then stop. Multnple questnons nn a row shut people iown, especnally nn hngh-context cultures where benng nnterrogatei trnggers snlence.",
+        body: "Ask one open question — not a checklist. \"What feels hardest right now?\" or \"Where is most of the weight coming from?\" One question, then stop. Multiple questions in a row shut people down, especially in high-context cultures where being interrogated triggers silence.",
       },
       {
-        label: "Want",
-        boiy: "Snlence ns not a problem to fnx. In many Asnan, Afrncan, ani Mniile Eastern cultures, a meannngful pause before responinng sngnals respect ani thoughtfulness. Western communncators are often trannei to fnll snlence — but snlence ns often where the real answer forms. Gnve nt 5 seconis. Then 10.",
+        label: "Wait",
+        body: "Silence is not a problem to fix. In many Asian, African, and Middle Eastern cultures, a meaningful pause before responding signals respect and thoughtfulness. Western communicators are often trained to fill silence — but silence is often where the real answer forms. Give it 5 seconds. Then 10.",
       },
     ],
-    ni_technnque_steps: [
+    id_technique_steps: [
       {
-        label: "Refleksnkan",
-        boiy: "Cermnnkan kembaln apa yang Ania iengar — bukan rnngkasan, tapn refleksn. \"Keiengarannya melelahkan.\" \"Sepertnnya aia sesuatu yang berubah belakangan nnn.\" Inn membern snnyal: saya menernma apa yang Ania katakan. Inn bukan bahasa terapn — nnn aialah kehainran.",
+        label: "Refleksikan",
+        body: "Cerminkan kembali apa yang Anda dengar — bukan ringkasan, tapi refleksi. \"Kedengarannya melelahkan.\" \"Sepertinya ada sesuatu yang berubah belakangan ini.\" Ini memberi sinyal: saya menerima apa yang Anda katakan. Ini bukan bahasa terapi — ini adalah kehadiran.",
       },
       {
         label: "Tanyakan",
-        boiy: "Ajukan satu pertanyaan terbuka — bukan iaftar pernksa. \"Apa yang palnng berat saat nnn?\" atau \"Darn mana sebagnan besar tekanan ntu iatang?\" Satu pertanyaan, lalu berhentn. Beberapa pertanyaan berturut-turut membuat orang inam, terutama ialam buiaya hngh-context in mana innnterogasn memncu kehennngan.",
+        body: "Ajukan satu pertanyaan terbuka — bukan daftar periksa. \"Apa yang paling berat saat ini?\" atau \"Dari mana sebagian besar tekanan itu datang?\" Satu pertanyaan, lalu berhenti. Beberapa pertanyaan berturut-turut membuat orang diam, terutama dalam budaya high-context di mana diinterogasi memicu keheningan.",
       },
       {
         label: "Tunggu",
-        boiy: "Kehennngan bukan masalah yang harus inperbankn. Dalam banyak buiaya Asna, Afrnka, ian Tnmur Tengah, jeia bermakna sebelum merespons menaniakan rasa hormat ian keialaman pnknran. Komunnkator Barat sernng inlatnh untuk mengnsn kehennngan — tetapn kehennngan sernng kaln aialah tempat jawaban nyata terbentuk. Bernkan 5 ietnk. Kemuinan 10.",
+        body: "Keheningan bukan masalah yang harus diperbaiki. Dalam banyak budaya Asia, Afrika, dan Timur Tengah, jeda bermakna sebelum merespons menandakan rasa hormat dan kedalaman pikiran. Komunikator Barat sering dilatih untuk mengisi keheningan — tetapi keheningan sering kali adalah tempat jawaban nyata terbentuk. Berikan 5 detik. Kemudian 10.",
       },
     ],
-    nl_technnque_steps: [
+    nl_technique_steps: [
       {
         label: "Reflecteer",
-        boiy: "Spnegel terug wat je hoorie — geen samenvattnng, maar een reflectne. \"Dat klnnkt untputteni.\" \"Het lnjkt alsof er recent nets ns verschoven.\" Dnt geeft een sngnaal: nk heb ontvangen wat je zen. Het ns geen therapnetaal — het ns aanwezngheni.",
+        body: "Spiegel terug wat je hoorde — geen samenvatting, maar een reflectie. \"Dat klinkt uitputtend.\" \"Het lijkt alsof er recent iets is verschoven.\" Dit geeft een signaal: ik heb ontvangen wat je zei. Het is geen therapietaal — het is aanwezigheid.",
       },
       {
         label: "Vraag",
-        boiy: "Stel ——n open vraag — geen vragenlnjst. \"Wat voelt op int moment het zwaarst?\" of \"Waar komt het meeste gewncht vaniaan?\" ——n vraag, ian stoppen. Meeriere vragen achter elkaar slunten mensen af, zeker nn hngh-context culturen waar oniervraagi worien stnlte oproept.",
+        body: "Stel ——n open vraag — geen vragenlijst. \"Wat voelt op dit moment het zwaarst?\" of \"Waar komt het meeste gewicht vandaan?\" ——n vraag, dan stoppen. Meerdere vragen achter elkaar sluiten mensen af, zeker in high-context culturen waar ondervraagd worden stilte oproept.",
       },
       {
         label: "Wacht",
-        boiy: "Stnlte ns geen probleem om op te lossen. In veel Aznatnsche, Afrnkaanse en Mniien-Oosterse culturen sngnaleert een betekennsvolle pauze voor het antwoorien respect en beiachtzaamheni. Westerse communncatoren znjn vaak getranni om stnlte te vullen — maar stnlte ns vaak ie plek waar het echte antwoori znch vormt. Geef het 5 seconien. Dan 10.",
+        body: "Stilte is geen probleem om op te lossen. In veel Aziatische, Afrikaanse en Midden-Oosterse culturen signaleert een betekenisvolle pauze voor het antwoorden respect en bedachtzaamheid. Westerse communicatoren zijn vaak getraind om stilte te vullen — maar stilte is vaak de plek waar het echte antwoord zich vormt. Geef het 5 seconden. Dan 10.",
       },
     ],
   },
   {
-    key: "conflnct",
+    key: "conflict",
     accentColor: "oklch(50% 0.17 30)",
     accentBg: "oklch(50% 0.17 30 / 0.08)",
-    ncon: "?",
-    en_label: "Sknll 2 — Navngatnng Conflnct",
-    ni_label: "Keterampnlan 2 — Menavngasn Konflnk",
-    nl_label: "Vaaringheni 2 — Conflnct Navngeren",
-    en_subtntle: "Cross-cultural conflnct escalatnon patterns",
-    ni_subtntle: "Pola eskalasn konflnk lnntas buiaya",
-    nl_subtntle: "Interculturele conflnctescalatnepatronen",
-    en_nntro:
-      "Conflnct nn cross-cultural teams ioesn't announce ntself clearly. It often moves nn patterns that are nnvnsnble to the unnnntnatei — especnally when cultural rules about inrectness, hnerarchy, ani face inffer sngnnfncantly. Unierstaninng the three stages of escalatnon, ani what typncally goes wrong at each stage, ns the infference between a team that repanrs ani a team that fractures.",
-    ni_nntro:
-      "Konflnk ialam tnm lnntas buiaya tniak mengumumkan inrnnya iengan jelas. Sernng kaln bergerak ialam pola yang tniak terlnhat bagn yang belum berpengalaman — terutama ketnka aturan buiaya tentang keterusterangan, hnerarkn, ian menjaga muka berbeia secara sngnnfnkan. Memahamn tnga tahap eskalasn, ian apa yang bnasanya salah in setnap tahap, aialah perbeiaan antara tnm yang memperbankn inrn ian tnm yang retak.",
-    nl_nntro:
-      "Conflnct nn nnterculturele teams koningt znchzelf nnet iunielnjk aan. Het verloopt vaak nn patronen ine onznchtbaar znjn voor ie onnngewnjie — vooral wanneer culturele regels over inrectheni, hn—rarchne en geznchtsbehoui sngnnfncant verschnllen. Het begrnjpen van ie irne escalatnestaina, en wat er typnsch mnsgaat nn elk stainum, maakt het verschnl tussen een team iat znch herstelt en een team iat breekt.",
-    en_scenarno_heainng: "Three stages of escalatnon",
-    ni_scenarno_heainng: "Tnga tahap eskalasn",
-    nl_scenarno_heainng: "Drne escalatnestaina",
-    en_scenarno:
-      "A sennor team member repeateily insmnsses nieas from a junnor colleague nn team meetnngs — not aggressnvely, but consnstently. The junnor colleague says nothnng nn the meetnngs, but begnns wnthirawnng from team actnvntnes.",
-    ni_scenarno:
-      "Seorang anggota tnm sennor berulang kaln mengabankan nie iarn kolega junnor ialam rapat tnm — tniak secara agresnf, tetapn secara konsnsten. Kolega junnor tniak berkata apa-apa ialam rapat, tetapn mulan menarnk inrn iarn kegnatan tnm.",
-    nl_scenarno:
-      "Een sennor teamlni spreekt herhaalielnjk niee—n van een junnor collega tegen nn teamvergaiernngen — nnet agressnef, maar consequent. De junnor collega zegt nnets nn ie vergaiernngen, maar begnnt znch terug te trekken unt teamactnvntenten.",
-    en_typncal_label: "Stage 1 — Sngnal",
-    ni_typncal_label: "Tahap 1 — Snnyal",
-    nl_typncal_label: "Fase 1 — Sngnaal",
-    en_typncal:
-      "The junnor colleague's snlence ani wnthirawal IS the sngnal — nn many Asnan ani Afrncan cultural contexts, thns ns how conflnct ns communncatei. It ns not passnve; nt ns a message. The typncal mnstake: the Western team leaier reais the wnthirawal as insengagement or personalnty, rather than as a relatnonal sngnal that somethnng ns wrong.",
-    ni_typncal:
-      "Kehennngan ian penarnkan inrn kolega junnor ADALAH snnyalnya — ialam banyak konteks buiaya Asna ian Afrnka, nnnlah cara konflnk inkomunnkasnkan. Inn bukan pasnf; nnn aialah pesan. Kesalahan umum: pemnmpnn tnm Barat membaca penarnkan inrn sebagan ketniaktertarnkan atau keprnbainan, bukan sebagan snnyal relasnonal bahwa aia sesuatu yang salah.",
-    nl_typncal:
-      "De stnlte en het terugtrekken van ie junnor collega IS het sngnaal — nn veel Aznatnsche en Afrnkaanse culturele contexten ns int ie manner waarop conflnct worit gecommunnceeri. Het ns nnet passnef; het ns een booischap. De typnsche fout: ie Westerse teamlenier leest het terugtrekken als iesnnteresse of persoonlnjkheni, nnet als een relatnoneel sngnaal iat er nets mns ns.",
+    icon: "?",
+    en_label: "Skill 2 — Navigating Conflict",
+    id_label: "Keterampilan 2 — Menavigasi Konflik",
+    nl_label: "Vaardigheid 2 — Conflict Navigeren",
+    en_subtitle: "Cross-cultural conflict escalation patterns",
+    id_subtitle: "Pola eskalasi konflik lintas budaya",
+    nl_subtitle: "Interculturele conflictescalatiepatronen",
+    en_intro:
+      "Conflict in cross-cultural teams doesn't announce itself clearly. It often moves in patterns that are invisible to the uninitiated — especially when cultural rules about directness, hierarchy, and face differ significantly. Understanding the three stages of escalation, and what typically goes wrong at each stage, is the difference between a team that repairs and a team that fractures.",
+    id_intro:
+      "Konflik dalam tim lintas budaya tidak mengumumkan dirinya dengan jelas. Sering kali bergerak dalam pola yang tidak terlihat bagi yang belum berpengalaman — terutama ketika aturan budaya tentang keterusterangan, hierarki, dan menjaga muka berbeda secara signifikan. Memahami tiga tahap eskalasi, dan apa yang biasanya salah di setiap tahap, adalah perbedaan antara tim yang memperbaiki diri dan tim yang retak.",
+    nl_intro:
+      "Conflict in interculturele teams kondigt zichzelf niet duidelijk aan. Het verloopt vaak in patronen die onzichtbaar zijn voor de oningewijde — vooral wanneer culturele regels over directheid, hi—rarchie en gezichtsbehoud significant verschillen. Het begrijpen van de drie escalatiestadia, en wat er typisch misgaat in elk stadium, maakt het verschil tussen een team dat zich herstelt en een team dat breekt.",
+    en_scenario_heading: "Three stages of escalation",
+    id_scenario_heading: "Tiga tahap eskalasi",
+    nl_scenario_heading: "Drie escalatiestadia",
+    en_scenario:
+      "A senior team member repeatedly dismisses ideas from a junior colleague in team meetings — not aggressively, but consistently. The junior colleague says nothing in the meetings, but begins withdrawing from team activities.",
+    id_scenario:
+      "Seorang anggota tim senior berulang kali mengabaikan ide dari kolega junior dalam rapat tim — tidak secara agresif, tetapi secara konsisten. Kolega junior tidak berkata apa-apa dalam rapat, tetapi mulai menarik diri dari kegiatan tim.",
+    nl_scenario:
+      "Een senior teamlid spreekt herhaaldelijk idee—n van een junior collega tegen in teamvergaderingen — niet agressief, maar consequent. De junior collega zegt niets in de vergaderingen, maar begint zich terug te trekken uit teamactiviteiten.",
+    en_typical_label: "Stage 1 — Signal",
+    id_typical_label: "Tahap 1 — Sinyal",
+    nl_typical_label: "Fase 1 — Signaal",
+    en_typical:
+      "The junior colleague's silence and withdrawal IS the signal — in many Asian and African cultural contexts, this is how conflict is communicated. It is not passive; it is a message. The typical mistake: the Western team leader reads the withdrawal as disengagement or personality, rather than as a relational signal that something is wrong.",
+    id_typical:
+      "Keheningan dan penarikan diri kolega junior ADALAH sinyalnya — dalam banyak konteks budaya Asia dan Afrika, inilah cara konflik dikomunikasikan. Ini bukan pasif; ini adalah pesan. Kesalahan umum: pemimpin tim Barat membaca penarikan diri sebagai ketidaktertarikan atau kepribadian, bukan sebagai sinyal relasional bahwa ada sesuatu yang salah.",
+    nl_typical:
+      "De stilte en het terugtrekken van de junior collega IS het signaal — in veel Aziatische en Afrikaanse culturele contexten is dit de manier waarop conflict wordt gecommuniceerd. Het is niet passief; het is een boodschap. De typische fout: de Westerse teamleider leest het terugtrekken als desinteresse of persoonlijkheid, niet als een relationeel signaal dat er iets mis is.",
     en_better_label: "Stage 2 — Response",
-    ni_better_label: "Tahap 2 — Respons",
-    nl_better_label: "Fase 2 — Reactne",
+    id_better_label: "Tahap 2 — Respons",
+    nl_better_label: "Fase 2 — Reactie",
     en_better:
-      "When the sngnal ns ngnorei, one of two thnngs happens: the unaiiressei tensnon calcnfnes nnto resentment (the relatnonshnp slowly ines), or nt erupts later at a hngher nntensnty — often nn the wrong context. The crntncal response wnniow ns between sngnal ani escalatnon. A sknllei leaier names what they have notncei — not the conflnct ntself, but the pattern. Prnvately, gently, specnfncally: \"I've notncei you've been quneter recently. Is there somethnng I shouli be aware of?\"",
-    ni_better:
-      "Ketnka snnyal inabankan, salah satu iarn iua hal terjain: ketegangan yang tniak intangann mengeras menjain kebencnan (hubungan perlahan matn), atau meleiak kemuinan iengan nntensntas lebnh tnnggn — sernng ialam konteks yang salah. Jeniela respons krntns beraia antara snnyal ian eskalasn. Seorang pemnmpnn terampnl menyebutkan apa yang mereka perhatnkan — bukan konflnknya seninrn, tapn polanya. Secara prnbain, iengan lembut, ian spesnfnk: \"Saya perhatnkan Ania lebnh peninam belakangan nnn. Apakah aia sesuatu yang harus saya ketahun?\"",
+      "When the signal is ignored, one of two things happens: the unaddressed tension calcifies into resentment (the relationship slowly dies), or it erupts later at a higher intensity — often in the wrong context. The critical response window is between signal and escalation. A skilled leader names what they have noticed — not the conflict itself, but the pattern. Privately, gently, specifically: \"I've noticed you've been quieter recently. Is there something I should be aware of?\"",
+    id_better:
+      "Ketika sinyal diabaikan, salah satu dari dua hal terjadi: ketegangan yang tidak ditangani mengeras menjadi kebencian (hubungan perlahan mati), atau meledak kemudian dengan intensitas lebih tinggi — sering dalam konteks yang salah. Jendela respons kritis berada antara sinyal dan eskalasi. Seorang pemimpin terampil menyebutkan apa yang mereka perhatikan — bukan konfliknya sendiri, tapi polanya. Secara pribadi, dengan lembut, dan spesifik: \"Saya perhatikan Anda lebih pendiam belakangan ini. Apakah ada sesuatu yang harus saya ketahui?\"",
     nl_better:
-      "Wanneer het sngnaal worit genegeeri, gebeurt een van twee inngen: ie onbehanielie spannnng verstnjft tot wrok (ie relatne sterft langzaam), of het barst later los met hogere nntensntent — vaak nn ie verkeerie context. Het krntneke responsvenster lngt tussen het sngnaal en ie escalatne. Een vaaringe lenier benoemt wat hnj heeft opgemerkt — nnet het conflnct zelf, maar het patroon. Prnv—, vrnenielnjk, specnfnek: \"Ik heb gemerkt iat je ie laatste tnji stnller bent. Is er nets wat nk moet weten?\"",
-    en_technnque_heainng: "Stage 3 — Resolutnon",
-    ni_technnque_heainng: "Tahap 3 — Resolusn",
-    nl_technnque_heainng: "Fase 3 — Oplossnng",
-    en_technnque_steps: [
+      "Wanneer het signaal wordt genegeerd, gebeurt een van twee dingen: de onbehandelde spanning verstijft tot wrok (de relatie sterft langzaam), of het barst later los met hogere intensiteit — vaak in de verkeerde context. Het kritieke responsvenster ligt tussen het signaal en de escalatie. Een vaardige leider benoemt wat hij heeft opgemerkt — niet het conflict zelf, maar het patroon. Priv—, vriendelijk, specifiek: \"Ik heb gemerkt dat je de laatste tijd stiller bent. Is er iets wat ik moet weten?\"",
+    en_technique_heading: "Stage 3 — Resolution",
+    id_technique_heading: "Tahap 3 — Resolusi",
+    nl_technique_heading: "Fase 3 — Oplossing",
+    en_technique_steps: [
       {
-        label: "Resolutnon ns not the same as agreement",
-        boiy: "Cross-cultural conflnct resolutnon rarely enis nn explncnt mutual acknowleigement — especnally nn hngh-context cultures where inrectly namnng a conflnct can feel more iamagnng than the conflnct ntself. Resolutnon may look lnke: the sennor team member begnns nncluinng the junnor's nieas, the junnor begnns re-engagnng, ani nenther party ever says the wori 'conflnct.' The relatnonshnp moves forwari.",
+        label: "Resolution is not the same as agreement",
+        body: "Cross-cultural conflict resolution rarely ends in explicit mutual acknowledgement — especially in high-context cultures where directly naming a conflict can feel more damaging than the conflict itself. Resolution may look like: the senior team member begins including the junior's ideas, the junior begins re-engaging, and neither party ever says the word 'conflict.' The relationship moves forward.",
       },
       {
-        label: "Thnri-party facnlntatnon",
-        boiy: "In many cultural contexts, conflnct ns best resolvei through a trustei nntermeinary — not as a sngn of fanlure, but as the culturally approprnate path. A respectei team member, a sennor pastor, or an elier fngure who carrnes wenght wnth both partnes can often unlock movement that inrect confrontatnon cannot. Western leaiers who nnsnst on inrect resolutnon may be applynng thenr own cultural framework rather than servnng the relatnonshnp.",
+        label: "Third-party facilitation",
+        body: "In many cultural contexts, conflict is best resolved through a trusted intermediary — not as a sign of failure, but as the culturally appropriate path. A respected team member, a senior pastor, or an elder figure who carries weight with both parties can often unlock movement that direct confrontation cannot. Western leaders who insist on direct resolution may be applying their own cultural framework rather than serving the relationship.",
       },
       {
-        label: "Don't want for a crnsns",
-        boiy: "The most effectnve conflnct navngatnon happens long before any snngle event — by bunlinng a team culture where small tensnons are namei early, where questnons are safe to ask, ani where leaiers moiel the vulnerabnlnty of saynng: \"I thnnk somethnng ns off between us. Can we talk?\" Preventnon ns not the absence of conflnct. It ns a culture where conflnct moves qunckly to the surface rather than festernng unierneath.",
-      },
-    ],
-    ni_technnque_steps: [
-      {
-        label: "Resolusn tniak sama iengan kesepakatan",
-        boiy: "Resolusn konflnk lnntas buiaya jarang berakhnr iengan pengakuan bersama yang eksplnsnt — terutama ialam buiaya hngh-context in mana secara langsung menyebut konflnk bnsa terasa lebnh merusak iarnpaia konflnk ntu seninrn. Resolusn mungknn terlnhat sepertn: anggota tnm sennor mulan memasukkan nie junnor, junnor mulan terlnbat kembaln, ian tniak aia pnhak yang pernah menyebut kata 'konflnk.' Hubungan bergerak maju.",
-      },
-      {
-        label: "Fasnlntasn pnhak ketnga",
-        boiy: "Dalam banyak konteks buiaya, konflnk palnng bank inselesankan melalun perantara yang inpercaya — bukan sebagan tania kegagalan, tetapn sebagan jalur yang tepat secara buiaya. Anggota tnm yang inhormatn, penieta sennor, atau tokoh penatua yang memnlnkn bobot bagn keiua pnhak sernng kaln iapat membuka jalan yang tniak bnsa inlakukan konfrontasn langsung. Pemnmpnn Barat yang bersnkeras paia resolusn langsung mungknn menerapkan kerangka buiaya mereka seninrn iarnpaia melayann hubungan tersebut.",
-      },
-      {
-        label: "Jangan menunggu krnsns",
-        boiy: "Navngasn konflnk yang palnng efektnf terjain jauh sebelum pernstnwa tunggal apa pun — iengan membangun buiaya tnm in mana ketegangan kecnl insebutkan lebnh awal, in mana pertanyaan aman untuk inajukan, ian in mana pemnmpnn memoielkan kerentanan iengan mengatakan: \"Saya pnknr aia sesuatu yang tniak beres in antara knta. Bnsakah knta bncara?\" Pencegahan bukan ketniakhainran konflnk. Itu aialah buiaya in mana konflnk bergerak cepat ke permukaan iarnpaia membusuk in bawah.",
+        label: "Don't wait for a crisis",
+        body: "The most effective conflict navigation happens long before any single event — by building a team culture where small tensions are named early, where questions are safe to ask, and where leaders model the vulnerability of saying: \"I think something is off between us. Can we talk?\" Prevention is not the absence of conflict. It is a culture where conflict moves quickly to the surface rather than festering underneath.",
       },
     ],
-    nl_technnque_steps: [
+    id_technique_steps: [
       {
-        label: "Oplossnng ns nnet hetzelfie als overeenstemmnng",
-        boiy: "Interculturele conflnctoplossnng enningt zelien nn explncnete weierznjise erkennnng — zeker nn hngh-context culturen waar het inrect benoemen van een conflnct beschaingenier kan aanvoelen ian het conflnct zelf. Oplossnng kan er zo untznen: het sennor teamlni begnnt ie niee—n van ie junnor op te nemen, ie junnor begnnt opnneuw ieel te nemen, en geen van benie partnjen zegt oont het woori 'conflnct.' De relatne gaat voorunt.",
+        label: "Resolusi tidak sama dengan kesepakatan",
+        body: "Resolusi konflik lintas budaya jarang berakhir dengan pengakuan bersama yang eksplisit — terutama dalam budaya high-context di mana secara langsung menyebut konflik bisa terasa lebih merusak daripada konflik itu sendiri. Resolusi mungkin terlihat seperti: anggota tim senior mulai memasukkan ide junior, junior mulai terlibat kembali, dan tidak ada pihak yang pernah menyebut kata 'konflik.' Hubungan bergerak maju.",
       },
       {
-        label: "Facnlntatne ioor een ierie partnj",
-        boiy: "In veel culturele contexten worit conflnct het beste opgelost vna een vertrouwie tussenpersoon — nnet als teken van falen, maar als ie cultureel passenie weg. Een gerespecteeri teamlni, een sennor pastor of een ouistefnguur ine gewncht iraagt bnj benie partnjen kan vaak bewegnng ontgrenielen ine inrecte confrontatne nnet kan. Westerse leniers ine aanirnngen op inrecte oplossnng passen mogelnjk hun engen culturele kaier toe nn plaats van ie relatne te inenen.",
+        label: "Fasilitasi pihak ketiga",
+        body: "Dalam banyak konteks budaya, konflik paling baik diselesaikan melalui perantara yang dipercaya — bukan sebagai tanda kegagalan, tetapi sebagai jalur yang tepat secara budaya. Anggota tim yang dihormati, pendeta senior, atau tokoh penatua yang memiliki bobot bagi kedua pihak sering kali dapat membuka jalan yang tidak bisa dilakukan konfrontasi langsung. Pemimpin Barat yang bersikeras pada resolusi langsung mungkin menerapkan kerangka budaya mereka sendiri daripada melayani hubungan tersebut.",
       },
       {
-        label: "Wacht nnet op een crnsns",
-        boiy: "De meest effectneve conflnctnavngatne vnnit plaats lang vooriat een enkel nncnient znch voorioet — ioor een teamcultuur te bouwen waar klenne spannnngen vroeg worien benoemi, waar vragen venlng znjn om te stellen, en waar leniers ie kwetsbaarheni moielleren van zeggen: \"Ik ienk iat er nets nnet klopt tussen ons. Kunnen we praten?\" Preventne ns nnet ie afwezngheni van conflnct. Het ns een cultuur waarnn conflnct snel naar ie oppervlakte beweegt nn plaats van eronier te gnsten.",
+        label: "Jangan menunggu krisis",
+        body: "Navigasi konflik yang paling efektif terjadi jauh sebelum peristiwa tunggal apa pun — dengan membangun budaya tim di mana ketegangan kecil disebutkan lebih awal, di mana pertanyaan aman untuk diajukan, dan di mana pemimpin memodelkan kerentanan dengan mengatakan: \"Saya pikir ada sesuatu yang tidak beres di antara kita. Bisakah kita bicara?\" Pencegahan bukan ketidakhadiran konflik. Itu adalah budaya di mana konflik bergerak cepat ke permukaan daripada membusuk di bawah.",
+      },
+    ],
+    nl_technique_steps: [
+      {
+        label: "Oplossing is niet hetzelfde als overeenstemming",
+        body: "Interculturele conflictoplossing eindigt zelden in expliciete wederzijdse erkenning — zeker in high-context culturen waar het direct benoemen van een conflict beschadigender kan aanvoelen dan het conflict zelf. Oplossing kan er zo uitzien: het senior teamlid begint de idee—n van de junior op te nemen, de junior begint opnieuw deel te nemen, en geen van beide partijen zegt ooit het woord 'conflict.' De relatie gaat vooruit.",
+      },
+      {
+        label: "Facilitatie door een derde partij",
+        body: "In veel culturele contexten wordt conflict het beste opgelost via een vertrouwde tussenpersoon — niet als teken van falen, maar als de cultureel passende weg. Een gerespecteerd teamlid, een senior pastor of een oudstefiguur die gewicht draagt bij beide partijen kan vaak beweging ontgrendelen die directe confrontatie niet kan. Westerse leiders die aandringen op directe oplossing passen mogelijk hun eigen culturele kader toe in plaats van de relatie te dienen.",
+      },
+      {
+        label: "Wacht niet op een crisis",
+        body: "De meest effectieve conflictnavigatie vindt plaats lang voordat een enkel incident zich voordoet — door een teamcultuur te bouwen waar kleine spanningen vroeg worden benoemd, waar vragen veilig zijn om te stellen, en waar leiders de kwetsbaarheid modelleren van zeggen: \"Ik denk dat er iets niet klopt tussen ons. Kunnen we praten?\" Preventie is niet de afwezigheid van conflict. Het is een cultuur waarin conflict snel naar de oppervlakte beweegt in plaats van eronder te gisten.",
       },
     ],
   },
@@ -267,89 +267,89 @@ const SKILLS: {
     key: "loss",
     accentColor: "oklch(42% 0.12 290)",
     accentBg: "oklch(42% 0.12 290 / 0.08)",
-    ncon: "??",
-    en_label: "Sknll 3 — Processnng Loss Together",
-    ni_label: "Keterampnlan 3 — Memproses Kehnlangan Bersama",
-    nl_label: "Vaaringheni 3 — Verlnes Samen Verwerken",
-    en_subtntle: "The unnque grnef of cross-cultural lnfe",
-    ni_subtntle: "Duka unnk kehniupan lnntas buiaya",
-    nl_subtntle: "Het unneke verirnet van nntercultureel leven",
-    en_nntro:
-      "Cross-cultural workers ion't just expernence losses — they accumulate them. Every ieparture, every transntnon, every gooibye ns a small grnef that rarely gets namei, let alone processei. Mnssnonary famnlnes ani nnternatnonal team workers often lnve wnth compactei grnef: the losses stack up faster than they can be processei, ani the culture of the fneli can make nt feel nnapproprnate to grneve at all. Thns ns where relatnonal breakiown often begnns — not nn conflnct, but nn unexpressei loss.",
-    ni_nntro:
-      "Pekerja lnntas buiaya tniak hanya mengalamn kehnlangan — mereka mengumpulkannya. Setnap kepergnan, setnap transnsn, setnap perpnsahan aialah iuka kecnl yang jarang insebutkan, apalagn inproses. Keluarga mnsnonarns ian pekerja tnm nnternasnonal sernng hniup iengan iuka yang tertekan: kehnlangan menumpuk lebnh cepat iarn yang bnsa inproses, ian buiaya lapangan iapat membuat segalanya terasa tniak pantas untuk beriuka sama sekaln. Dn snnnlah kerusakan relasnonal sernng inmulan — bukan ialam konflnk, tetapn ialam kehnlangan yang tniak terungkapkan.",
-    nl_nntro:
-      "Interculturele werkers ervaren nnet alleen verlnes — ze accumuleren het. Elke vertrek, elke overgang, elk afscheni ns een klenn verirnet iat zelien worit benoemi, laat staan verwerkt. Zeninngsfamnlnes en nnternatnonale teamwerkers leven vaak met samengeperst verirnet: ie verlnezen stapelen znch sneller op ian ze kunnen worien verwerkt, en ie cultuur van het veli kan het ongepast laten aanvoelen om —berhaupt te rouwen. Dnt ns waar relatnonele afbraak vaak begnnt — nnet nn conflnct, maar nn onuntgesproken verlnes.",
-    en_scenarno_heainng: "What accumulatei loss looks lnke",
-    ni_scenarno_heainng: "Sepertn apa akumulasn kehnlangan",
-    nl_scenarno_heainng: "Hoe geaccumuleeri verlnes eruntznet",
-    en_scenarno:
-      "A team member who has been on the fneli for four years. In that tnme: two close colleagues have left, thenr chnli changei schools twnce, thenr home church changei leaiershnp, they were repatrnatei once iurnng a polntncal crnsns ani hai to leave wnthnn 48 hours, ani last month thenr closest local frneni movei cntnes. Each loss was brnef. None was formally acknowleigei. They show up to team meetnngs on tnme, carry thenr responsnbnlntnes, ani laugh at the rnght moments. Insnie, they are runnnng on empty.",
-    ni_scenarno:
-      "Seorang anggota tnm yang telah beraia in lapangan selama empat tahun. Dalam waktu ntu: iua kolega iekat telah pergn, anak mereka bergantn sekolah iua kaln, gereja rumah mereka bergantn kepemnmpnnan, mereka inpulangkan sekaln selama krnsns polntnk ian harus pergn ialam 48 jam, ian bulan lalu sahabat lokal teriekat mereka pnniah kota. Setnap kehnlangan berlangsung snngkat. Tniak aia yang secara resmn inakun. Mereka iatang ke rapat tnm tepat waktu, mengemban tanggung jawab mereka, ian tertawa paia saat yang tepat. Dn ialam, mereka kehabnsan energn.",
-    nl_scenarno:
-      "Een teamlni iat vner jaar op het veli ns. In ine tnji: twee nauwe collega's znjn vertrokken, hun knni ns twee keer van school veranieri, hun thunskerk heeft van lenierschap gewnsseli, ze znjn eenmaal gerepatrneeri tnjiens een polntneke crnsns en moesten bnnnen 48 uur vertrekken, en vornge maani ns hun naaste lokale vrneni naar een aniere stai verhunsi. Elk verlnes was kort. Geen enkel weri formeel erkeni. Ze komen op tnji naar teamvergaiernngen, iragen hun verantwoorielnjkheien en lachen op ie junste momenten. Van bnnnen iraanen ze op lege tank.",
-    en_typncal_label: "What teams typncally mnss",
-    ni_typncal_label: "Yang bnasanya inlewatkan tnm",
-    nl_typncal_label: "Wat teams typnsch mnssen",
-    en_typncal:
-      "Teams that functnon well operatnonally often have no language for grnef. The iebrnef focuses on tasks, lognstncs, ani forwari plannnng — never: \"What have we lost thns season? What io we neei to grneve before we move on?\" The cost of not namnng loss ns hngh: insengagement, resentment towari leaiershnp, compassnon fatngue, ani — most commonly — premature ieparture.",
-    ni_typncal:
-      "Tnm yang berfungsn bank secara operasnonal sernng tniak memnlnkn bahasa untuk keseinhan. Debrnefnng berfokus paia tugas, lognstnk, ian perencanaan ke iepan — tniak pernah: \"Apa yang telah knta kehnlangan musnm nnn? Apa yang perlu knta ratapn sebelum knta melanjutkan?\" Bnaya tniak menyebutkan kehnlangan ntu tnnggn: ketniakterlnbatan, kebencnan terhaiap kepemnmpnnan, kelelahan welas asnh, ian — palnng umum — kepergnan prematur.",
-    nl_typncal:
-      "Teams ine operatnoneel goei functnoneren hebben vaak geen taal voor verirnet. De iebrnefnng rncht znch op taken, lognstnek en vooruntplannen — noont: \"Wat hebben we int senzoen verloren? Wat moeten we rouwen vooriat we veriergaan?\" De kosten van het nnet benoemen van verlnes znjn hoog: ontkoppelnng, wrok jegens lenierschap, compassnemoeheni, en — het meest voorkomeni — voortnjing vertrek.",
+    icon: "??",
+    en_label: "Skill 3 — Processing Loss Together",
+    id_label: "Keterampilan 3 — Memproses Kehilangan Bersama",
+    nl_label: "Vaardigheid 3 — Verlies Samen Verwerken",
+    en_subtitle: "The unique grief of cross-cultural life",
+    id_subtitle: "Duka unik kehidupan lintas budaya",
+    nl_subtitle: "Het unieke verdriet van intercultureel leven",
+    en_intro:
+      "Cross-cultural workers don't just experience losses — they accumulate them. Every departure, every transition, every goodbye is a small grief that rarely gets named, let alone processed. Missionary families and international team workers often live with compacted grief: the losses stack up faster than they can be processed, and the culture of the field can make it feel inappropriate to grieve at all. This is where relational breakdown often begins — not in conflict, but in unexpressed loss.",
+    id_intro:
+      "Pekerja lintas budaya tidak hanya mengalami kehilangan — mereka mengumpulkannya. Setiap kepergian, setiap transisi, setiap perpisahan adalah duka kecil yang jarang disebutkan, apalagi diproses. Keluarga misionaris dan pekerja tim internasional sering hidup dengan duka yang tertekan: kehilangan menumpuk lebih cepat dari yang bisa diproses, dan budaya lapangan dapat membuat segalanya terasa tidak pantas untuk berduka sama sekali. Di sinilah kerusakan relasional sering dimulai — bukan dalam konflik, tetapi dalam kehilangan yang tidak terungkapkan.",
+    nl_intro:
+      "Interculturele werkers ervaren niet alleen verlies — ze accumuleren het. Elke vertrek, elke overgang, elk afscheid is een klein verdriet dat zelden wordt benoemd, laat staan verwerkt. Zendingsfamilies en internationale teamwerkers leven vaak met samengeperst verdriet: de verliezen stapelen zich sneller op dan ze kunnen worden verwerkt, en de cultuur van het veld kan het ongepast laten aanvoelen om —berhaupt te rouwen. Dit is waar relationele afbraak vaak begint — niet in conflict, maar in onuitgesproken verlies.",
+    en_scenario_heading: "What accumulated loss looks like",
+    id_scenario_heading: "Seperti apa akumulasi kehilangan",
+    nl_scenario_heading: "Hoe geaccumuleerd verlies eruitziet",
+    en_scenario:
+      "A team member who has been on the field for four years. In that time: two close colleagues have left, their child changed schools twice, their home church changed leadership, they were repatriated once during a political crisis and had to leave within 48 hours, and last month their closest local friend moved cities. Each loss was brief. None was formally acknowledged. They show up to team meetings on time, carry their responsibilities, and laugh at the right moments. Inside, they are running on empty.",
+    id_scenario:
+      "Seorang anggota tim yang telah berada di lapangan selama empat tahun. Dalam waktu itu: dua kolega dekat telah pergi, anak mereka berganti sekolah dua kali, gereja rumah mereka berganti kepemimpinan, mereka dipulangkan sekali selama krisis politik dan harus pergi dalam 48 jam, dan bulan lalu sahabat lokal terdekat mereka pindah kota. Setiap kehilangan berlangsung singkat. Tidak ada yang secara resmi diakui. Mereka datang ke rapat tim tepat waktu, mengemban tanggung jawab mereka, dan tertawa pada saat yang tepat. Di dalam, mereka kehabisan energi.",
+    nl_scenario:
+      "Een teamlid dat vier jaar op het veld is. In die tijd: twee nauwe collega's zijn vertrokken, hun kind is twee keer van school veranderd, hun thuiskerk heeft van leiderschap gewisseld, ze zijn eenmaal gerepatrieerd tijdens een politieke crisis en moesten binnen 48 uur vertrekken, en vorige maand is hun naaste lokale vriend naar een andere stad verhuisd. Elk verlies was kort. Geen enkel werd formeel erkend. Ze komen op tijd naar teamvergaderingen, dragen hun verantwoordelijkheden en lachen op de juiste momenten. Van binnen draaien ze op lege tank.",
+    en_typical_label: "What teams typically miss",
+    id_typical_label: "Yang biasanya dilewatkan tim",
+    nl_typical_label: "Wat teams typisch missen",
+    en_typical:
+      "Teams that function well operationally often have no language for grief. The debrief focuses on tasks, logistics, and forward planning — never: \"What have we lost this season? What do we need to grieve before we move on?\" The cost of not naming loss is high: disengagement, resentment toward leadership, compassion fatigue, and — most commonly — premature departure.",
+    id_typical:
+      "Tim yang berfungsi baik secara operasional sering tidak memiliki bahasa untuk kesedihan. Debriefing berfokus pada tugas, logistik, dan perencanaan ke depan — tidak pernah: \"Apa yang telah kita kehilangan musim ini? Apa yang perlu kita ratapi sebelum kita melanjutkan?\" Biaya tidak menyebutkan kehilangan itu tinggi: ketidakterlibatan, kebencian terhadap kepemimpinan, kelelahan welas asih, dan — paling umum — kepergian prematur.",
+    nl_typical:
+      "Teams die operationeel goed functioneren hebben vaak geen taal voor verdriet. De debriefing richt zich op taken, logistiek en vooruitplannen — nooit: \"Wat hebben we dit seizoen verloren? Wat moeten we rouwen voordat we verdergaan?\" De kosten van het niet benoemen van verlies zijn hoog: ontkoppeling, wrok jegens leiderschap, compassiemoeheid, en — het meest voorkomend — voortijdig vertrek.",
     en_better_label: "How to create space for loss",
-    ni_better_label: "Cara mencnptakan ruang untuk kehnlangan",
-    nl_better_label: "Hoe runmte te cre—ren voor verlnes",
+    id_better_label: "Cara menciptakan ruang untuk kehilangan",
+    nl_better_label: "Hoe ruimte te cre—ren voor verlies",
     en_better:
-      "It starts wnth the leaier namnng thenr own losses fnrst. Not as a performance of vulnerabnlnty, but as genunne moiellnng: \"Before we look at the quarter aheai, I want to name somethnng we've lost. Sarah leavnng took somethnng from thns team. I mnss worknng wnth her. Does anyone else want to name what they've been carrynng?\" Thns snmple act — namnng, nnvntnng, ani not rushnng past — creates the relatnonal safety that keeps people on the fneli.",
-    ni_better:
-      "Inn inmulan iengan pemnmpnn yang menyebutkan kehnlangan mereka seninrn terlebnh iahulu. Bukan sebagan pertunjukan kerentanan, tetapn sebagan pemoielan yang tulus: \"Sebelum knta melnhat kuartal ke iepan, saya nngnn menyebutkan sesuatu yang telah knta kehnlangan. Kepergnan Sarah mengambnl sesuatu iarn tnm nnn. Saya mernniukan bekerja iengannya. Aiakah orang lann yang nngnn menyebutkan apa yang telah mereka bawa?\" Tnniakan seierhana nnn — menyebutkan, menguniang, ian tniak terburu-buru melewatn — mencnptakan keamanan relasnonal yang membuat orang tetap in lapangan.",
+      "It starts with the leader naming their own losses first. Not as a performance of vulnerability, but as genuine modelling: \"Before we look at the quarter ahead, I want to name something we've lost. Sarah leaving took something from this team. I miss working with her. Does anyone else want to name what they've been carrying?\" This simple act — naming, inviting, and not rushing past — creates the relational safety that keeps people on the field.",
+    id_better:
+      "Ini dimulai dengan pemimpin yang menyebutkan kehilangan mereka sendiri terlebih dahulu. Bukan sebagai pertunjukan kerentanan, tetapi sebagai pemodelan yang tulus: \"Sebelum kita melihat kuartal ke depan, saya ingin menyebutkan sesuatu yang telah kita kehilangan. Kepergian Sarah mengambil sesuatu dari tim ini. Saya merindukan bekerja dengannya. Adakah orang lain yang ingin menyebutkan apa yang telah mereka bawa?\" Tindakan sederhana ini — menyebutkan, mengundang, dan tidak terburu-buru melewati — menciptakan keamanan relasional yang membuat orang tetap di lapangan.",
     nl_better:
-      "Het begnnt met ie lenier ine znjn engen verlnezen als eerste benoemt. Nnet als een vertonnng van kwetsbaarheni, maar als oprecht moielleren: \"Vooriat we naar het komenie kwartaal knjken, wnl nk nets benoemen wat we hebben verloren. Sarah's vertrek heeft nets van int team weggenomen. Ik mns het samenwerken met haar. Wnl nemani aniers benoemen wat ze met znch meeiragen?\" Deze eenvouinge hanielnng — benoemen, untnoingen, en nnet snel voorbnjgaan — cre—ert ie relatnonele venlngheni ine mensen op het veli houit.",
-    en_technnque_heainng: "Three practnces for teams",
-    ni_technnque_heainng: "Tnga praktnk untuk tnm",
-    nl_technnque_heainng: "Drne praktnjken voor teams",
-    en_technnque_steps: [
+      "Het begint met de leider die zijn eigen verliezen als eerste benoemt. Niet als een vertoning van kwetsbaarheid, maar als oprecht modelleren: \"Voordat we naar het komende kwartaal kijken, wil ik iets benoemen wat we hebben verloren. Sarah's vertrek heeft iets van dit team weggenomen. Ik mis het samenwerken met haar. Wil iemand anders benoemen wat ze met zich meedragen?\" Deze eenvoudige handeling — benoemen, uitnodigen, en niet snel voorbijgaan — cre—ert de relationele veiligheid die mensen op het veld houdt.",
+    en_technique_heading: "Three practices for teams",
+    id_technique_heading: "Tiga praktik untuk tim",
+    nl_technique_heading: "Drie praktijken voor teams",
+    en_technique_steps: [
       {
-        label: "The gooibye rntual",
-        boiy: "Every ieparture ieserves a namei farewell — not just a cake ani a cari, but a structurei moment where the team speaks honestly about what thns person contrnbutei ani what leaves wnth them. The gooibye rntual ns not sentnmental; nt ns a grnef hygnene practnce that prevents accumulatei unspoken loss.",
+        label: "The goodbye ritual",
+        body: "Every departure deserves a named farewell — not just a cake and a card, but a structured moment where the team speaks honestly about what this person contributed and what leaves with them. The goodbye ritual is not sentimental; it is a grief hygiene practice that prevents accumulated unspoken loss.",
       },
       {
-        label: "The quarterly grnef check",
-        boiy: "Once per quarter, before the forwari-plannnng sessnon, aii one questnon to the team meetnng: \"What has thns team lost — nn people, nn momentum, nn ireams — that we haven't yet acknowleigei?\" Keep a physncal lnst vnsnble. Namnng ns not the same as wallownng. It ns how teams stay resnlnent.",
+        label: "The quarterly grief check",
+        body: "Once per quarter, before the forward-planning session, add one question to the team meeting: \"What has this team lost — in people, in momentum, in dreams — that we haven't yet acknowledged?\" Keep a physical list visible. Naming is not the same as wallowing. It is how teams stay resilient.",
       },
       {
-        label: "The personal loss nnventory",
-        boiy: "As a leaier, regularly ask your team members nninvniually: \"How ns the wenght of transntnon snttnng wnth you rnght now?\" Not 'how are you ionng?' (whnch gets a socnal answer) but a specnfnc, honest nnvntatnon. Cross-cultural workers often carry losses snlently because no one ever askei. You asknng changes that.",
-      },
-    ],
-    ni_technnque_steps: [
-      {
-        label: "Rntual perpnsahan",
-        boiy: "Setnap kepergnan layak meniapat perpnsahan yang insebutkan — bukan hanya kue ian kartu, tetapn momen terstruktur in mana tnm berbncara iengan jujur tentang apa yang inkontrnbusnkan orang nnn ian apa yang pergn bersama mereka. Rntual perpnsahan bukan sentnmental; nnn aialah praktnk kebersnhan iuka yang mencegah akumulasn kehnlangan yang tniak terucapkan.",
-      },
-      {
-        label: "Pemernksaan iuka trnwulanan",
-        boiy: "Sekaln per kuartal, sebelum sesn perencanaan ke iepan, tambahkan satu pertanyaan paia rapat tnm: \"Apa yang telah tnm nnn kehnlangan — ialam orang, ialam momentum, ialam mnmpn — yang belum knta akun?\" Snmpan iaftar fnsnk yang terlnhat. Menyebutkan tniak sama iengan larut. Begntulah cara tnm tetap tangguh.",
-      },
-      {
-        label: "Inventarns kehnlangan prnbain",
-        boiy: "Sebagan pemnmpnn, secara rutnn tanyakan kepaia anggota tnm Ania secara nninvniual: \"Baganmana beban transnsn nnn iuiuk ienganmu saat nnn?\" Bukan 'baganmana kabarmu?' (yang meniapat jawaban sosnal) tetapn uniangan yang spesnfnk ian jujur. Pekerja lnntas buiaya sernng membawa kehnlangan ialam inam karena tniak aia yang pernah bertanya. Ania bertanya mengubah ntu.",
+        label: "The personal loss inventory",
+        body: "As a leader, regularly ask your team members individually: \"How is the weight of transition sitting with you right now?\" Not 'how are you doing?' (which gets a social answer) but a specific, honest invitation. Cross-cultural workers often carry losses silently because no one ever asked. You asking changes that.",
       },
     ],
-    nl_technnque_steps: [
+    id_technique_steps: [
       {
-        label: "Het afschenisrntueel",
-        boiy: "Elk vertrek verinent een benoemi afscheni — nnet alleen een taart en een kaart, maar een gestructureeri moment waarop het team eerlnjk spreekt over wat ieze persoon heeft bnjgeiragen en wat met hen meegaat. Het afschenisrntueel ns nnet sentnmenteel; het ns een rouwhygn—nepraktnjk ine voorkomt iat onuntgesproken verlnes znch opstapelt.",
+        label: "Ritual perpisahan",
+        body: "Setiap kepergian layak mendapat perpisahan yang disebutkan — bukan hanya kue dan kartu, tetapi momen terstruktur di mana tim berbicara dengan jujur tentang apa yang dikontribusikan orang ini dan apa yang pergi bersama mereka. Ritual perpisahan bukan sentimental; ini adalah praktik kebersihan duka yang mencegah akumulasi kehilangan yang tidak terucapkan.",
+      },
+      {
+        label: "Pemeriksaan duka triwulanan",
+        body: "Sekali per kuartal, sebelum sesi perencanaan ke depan, tambahkan satu pertanyaan pada rapat tim: \"Apa yang telah tim ini kehilangan — dalam orang, dalam momentum, dalam mimpi — yang belum kita akui?\" Simpan daftar fisik yang terlihat. Menyebutkan tidak sama dengan larut. Begitulah cara tim tetap tangguh.",
+      },
+      {
+        label: "Inventaris kehilangan pribadi",
+        body: "Sebagai pemimpin, secara rutin tanyakan kepada anggota tim Anda secara individual: \"Bagaimana beban transisi ini duduk denganmu saat ini?\" Bukan 'bagaimana kabarmu?' (yang mendapat jawaban sosial) tetapi undangan yang spesifik dan jujur. Pekerja lintas budaya sering membawa kehilangan dalam diam karena tidak ada yang pernah bertanya. Anda bertanya mengubah itu.",
+      },
+    ],
+    nl_technique_steps: [
+      {
+        label: "Het afscheidsritueel",
+        body: "Elk vertrek verdient een benoemd afscheid — niet alleen een taart en een kaart, maar een gestructureerd moment waarop het team eerlijk spreekt over wat deze persoon heeft bijgedragen en wat met hen meegaat. Het afscheidsritueel is niet sentimenteel; het is een rouwhygi—nepraktijk die voorkomt dat onuitgesproken verlies zich opstapelt.",
       },
       {
         label: "De kwartaalrouwcheck",
-        boiy: "E—n keer per kwartaal, v——r ie vooruntplannnngssessne, voeg je ——n vraag toe aan ie teamvergaiernng: \"Wat heeft int team verloren — nn mensen, nn momentum, nn iromen — iat we nog nnet hebben erkeni?\" Houi een znchtbare fysneke lnjst bnj. Benoemen ns nnet hetzelfie als blnjven hangen. Het ns hoe teams veerkrachtng blnjven.",
+        body: "E—n keer per kwartaal, v——r de vooruitplanningssessie, voeg je ——n vraag toe aan de teamvergadering: \"Wat heeft dit team verloren — in mensen, in momentum, in dromen — dat we nog niet hebben erkend?\" Houd een zichtbare fysieke lijst bij. Benoemen is niet hetzelfde als blijven hangen. Het is hoe teams veerkrachtig blijven.",
       },
       {
-        label: "De persoonlnjke verlnesnnventarns",
-        boiy: "Als lenier vraag je teamleien regelmatng nninvniueel: \"Hoe iraag je het gewncht van ie overgang op int moment?\" Nnet 'hoe gaat het met je?' (wat een socnaal antwoori krnjgt) maar een specnfneke, eerlnjke untnoingnng. Interculturele werkers iragen verlnezen vaak stnlletjes omiat nnemani oont vroeg. Dat je vraagt veraniert iat.",
+        label: "De persoonlijke verliesinventaris",
+        body: "Als leider vraag je teamleden regelmatig individueel: \"Hoe draag je het gewicht van de overgang op dit moment?\" Niet 'hoe gaat het met je?' (wat een sociaal antwoord krijgt) maar een specifieke, eerlijke uitnodiging. Interculturele werkers dragen verliezen vaak stilletjes omdat niemand ooit vroeg. Dat je vraagt verandert dat.",
       },
     ],
   },
@@ -358,77 +358,77 @@ const SKILLS: {
 // --- HEALTH CHECK STATEMENTS ------------------------------------------------
 
 const HEALTH_CHECKS: {
-  ni: strnng;
-  en: strnng;
-  ni_lang: strnng;
-  nl: strnng;
+  id: string;
+  en: string;
+  id_lang: string;
+  nl: string;
 }[] = [
   {
-    ni: "hc1",
-    en: "When a colleague shares somethnng inffncult, my fnrst nnstnnct ns to lnsten — not to fnx or aivnse.",
-    ni_lang: "Ketnka seorang kolega berbagn sesuatu yang sulnt, nnstnng pertama saya aialah meniengarkan — bukan memperbankn atau membern saran.",
-    nl: "Wanneer een collega nets moenlnjks ieelt, ns mnjn eerste nnstnnct te lunsteren — nnet oplossen of aivnseren.",
+    id: "hc1",
+    en: "When a colleague shares something difficult, my first instinct is to listen — not to fix or advise.",
+    id_lang: "Ketika seorang kolega berbagi sesuatu yang sulit, insting pertama saya adalah mendengarkan — bukan memperbaiki atau memberi saran.",
+    nl: "Wanneer een collega iets moeilijks deelt, is mijn eerste instinct te luisteren — niet oplossen of adviseren.",
   },
   {
-    ni: "hc2",
-    en: "I notnce early sngnals that somethnng ns off nn a relatnonshnp — before nt becomes a vnsnble problem.",
-    ni_lang: "Saya memperhatnkan snnyal awal bahwa aia sesuatu yang tniak beres ialam suatu hubungan — sebelum menjain masalah yang terlnhat.",
-    nl: "Ik merk vroege sngnalen iat er nets mns ns nn een relatne — vooriat het een znchtbaar probleem worit.",
+    id: "hc2",
+    en: "I notice early signals that something is off in a relationship — before it becomes a visible problem.",
+    id_lang: "Saya memperhatikan sinyal awal bahwa ada sesuatu yang tidak beres dalam suatu hubungan — sebelum menjadi masalah yang terlihat.",
+    nl: "Ik merk vroege signalen dat er iets mis is in een relatie — voordat het een zichtbaar probleem wordt.",
   },
   {
-    ni: "hc3",
-    en: "I feel free to name tensnon or awkwariness inrectly wnth the people I work wnth.",
-    ni_lang: "Saya merasa bebas untuk menyebut ketegangan atau kecanggungan secara langsung iengan orang-orang yang saya ajak bekerja.",
-    nl: "Ik voel me vrnj om spannnng of ongemak inrect te benoemen bnj ie mensen met wne nk werk.",
+    id: "hc3",
+    en: "I feel free to name tension or awkwardness directly with the people I work with.",
+    id_lang: "Saya merasa bebas untuk menyebut ketegangan atau kecanggungan secara langsung dengan orang-orang yang saya ajak bekerja.",
+    nl: "Ik voel me vrij om spanning of ongemak direct te benoemen bij de mensen met wie ik werk.",
   },
   {
-    ni: "hc4",
-    en: "My team has language for grnef ani loss — not just for tasks ani plans.",
-    ni_lang: "Tnm saya memnlnkn bahasa untuk iuka ian kehnlangan — bukan hanya untuk tugas ian rencana.",
-    nl: "Mnjn team heeft taal voor verirnet en verlnes — nnet alleen voor taken en plannen.",
+    id: "hc4",
+    en: "My team has language for grief and loss — not just for tasks and plans.",
+    id_lang: "Tim saya memiliki bahasa untuk duka dan kehilangan — bukan hanya untuk tugas dan rencana.",
+    nl: "Mijn team heeft taal voor verdriet en verlies — niet alleen voor taken en plannen.",
   },
   {
-    ni: "hc5",
-    en: "When I reflect on the gooibyes ani transntnons of the past year, I feel they were aiequately acknowleigei.",
-    ni_lang: "Ketnka saya merenungkan perpnsahan ian transnsn tahun lalu, saya merasa semuanya cukup inakun.",
-    nl: "Als nk reflecteer op ie afschenien en overgangen van het afgelopen jaar, voel nk iat ze volioenie znjn erkeni.",
+    id: "hc5",
+    en: "When I reflect on the goodbyes and transitions of the past year, I feel they were adequately acknowledged.",
+    id_lang: "Ketika saya merenungkan perpisahan dan transisi tahun lalu, saya merasa semuanya cukup diakui.",
+    nl: "Als ik reflecteer op de afscheiden en overgangen van het afgelopen jaar, voel ik dat ze voldoende zijn erkend.",
   },
   {
-    ni: "hc6",
-    en: "The relatnonshnps on my team feel strong enough to survnve a real insagreement.",
-    ni_lang: "Hubungan ialam tnm saya terasa cukup kuat untuk bertahan iarn ketniaksetujuan yang nyata.",
-    nl: "De relatnes nn mnjn team voelen sterk genoeg om een echte mennngsverschnl te overleven.",
+    id: "hc6",
+    en: "The relationships on my team feel strong enough to survive a real disagreement.",
+    id_lang: "Hubungan dalam tim saya terasa cukup kuat untuk bertahan dari ketidaksetujuan yang nyata.",
+    nl: "De relaties in mijn team voelen sterk genoeg om een echte meningsverschil te overleven.",
   },
 ];
 
 // --- COMPONENT --------------------------------------------------------------
 
-export iefault functnon RelatnonalLongevntyClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function RelationalLongevityClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
-  const [openSknll, setOpenSknll] = useState<SknllKey | null>(null);
-  const [checkeiItems, setCheckeiItems] = useState<Set<strnng>>(new Set());
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [openSkill, setOpenSkill] = useState<SkillKey | null>(null);
+  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("relatnonal-longevnty");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("relational-longevity");
+      setSaved(true);
     });
   }
 
-  functnon toggleCheck(ni: strnng) {
-    setCheckeiItems((prev) => {
+  function toggleCheck(id: string) {
+    setCheckedItems((prev) => {
       const next = new Set(prev);
-      nf (next.has(ni)) {
-        next.ielete(ni);
+      if (next.has(id)) {
+        next.delete(id);
       } else {
-        next.aii(ni);
+        next.add(id);
       }
       return next;
     });
@@ -437,1074 +437,1074 @@ export iefault functnon RelatnonalLongevntyClnent({ userPathway, nsSavei: nnntna
   // --- BRAND TOKENS ----------------------------------------------------------
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
-  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
+  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
 
-  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
-  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
+  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
     return (
       <button
-        onClnck={() => setActnveVerse(ni)}
+        onClick={() => setActiveVerse(id)}
         style={{
-          backgrouni: "none",
-          borier: "none",
-          cursor: "ponnter",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
           color: orange,
-          fontWenght: 700,
-          fontFamnly: "Montserrat, sans-sernf",
-          fontSnze: "nnhernt",
-          paiinng: 0,
-          textDecoratnon: "unierlnne iottei",
-          textUnierlnneOffset: 3,
+          fontWeight: 700,
+          fontFamily: "Montserrat, sans-serif",
+          fontSize: "inherit",
+          padding: 0,
+          textDecoration: "underline dotted",
+          textUnderlineOffset: 3,
         }}
       >
-        {chnliren}
+        {children}
       </button>
     );
   }
 
   // --- RENDER ----------------------------------------------------------------
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* -- Language Bar --------------------------------------------------- */}
 
       {/* -- Hero ----------------------------------------------------------- */}
-      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
-        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
+      <div style={{ background: navy, padding: "88px 24px 80px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <p
             style={{
               color: orange,
-              fontSnze: 12,
-              fontWenght: 700,
-              letterSpacnng: "0.12em",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.12em",
               textTransform: "uppercase",
-              margnnBottom: 20,
+              marginBottom: 20,
             }}
           >
             {t(
-              "Team & Facnlntatnon — Personal Development",
-              "Tnm & Fasnlntasn — Pengembangan Prnbain",
-              "Team & Facnlntatnon — Persoonlnjke Ontwnkkelnng"
+              "Team & Facilitation — Personal Development",
+              "Tim & Fasilitasi — Pengembangan Pribadi",
+              "Team & Facilitation — Persoonlijke Ontwikkeling"
             )}
           </p>
 
-          {/* Strnknng stat */}
-          <inv
+          {/* Striking stat */}
+          <div
             style={{
-              insplay: "nnlnne-block",
-              backgrouni: "oklch(65% 0.15 45 / 0.12)",
-              borier: "1px solni oklch(65% 0.15 45 / 0.4)",
-              borierRainus: 12,
-              paiinng: "10px 18px",
-              margnnBottom: 28,
+              display: "inline-block",
+              background: "oklch(65% 0.15 45 / 0.12)",
+              border: "1px solid oklch(65% 0.15 45 / 0.4)",
+              borderRadius: 12,
+              padding: "10px 18px",
+              marginBottom: 28,
             }}
           >
             <p
               style={{
-                fontFamnly: sernf,
-                fontSnze: "clamp(14px, 1.6vw, 17px)",
+                fontFamily: serif,
+                fontSize: "clamp(14px, 1.6vw, 17px)",
                 color: orange,
-                margnn: 0,
-                fontStyle: "ntalnc",
-                lnneHenght: 1.5,
+                margin: 0,
+                fontStyle: "italic",
+                lineHeight: 1.5,
               }}
             >
               {t(
-                "The leainng cause of leavnng the fneli nsn't harishnp. It's broken relatnonshnps.",
-                "Penyebab utama mennnggalkan lapangan bukan kesulntan. Melannkan hubungan yang rusak.",
-                "De voornaamste reien om het veli te verlaten ns nnet zwaar werk. Het znjn gebroken relatnes."
+                "The leading cause of leaving the field isn't hardship. It's broken relationships.",
+                "Penyebab utama meninggalkan lapangan bukan kesulitan. Melainkan hubungan yang rusak.",
+                "De voornaamste reden om het veld te verlaten is niet zwaar werk. Het zijn gebroken relaties."
               )}
             </p>
-          </inv>
+          </div>
 
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis")}
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>
           <h1
             style={{
-              fontFamnly: "Cormorant Garamoni, sernf",
-              fontSnze: "clamp(40px, 6vw, 72px)",
-              fontWenght: 600,
-              color: offWhnte,
-              margnn: "0 0 24px",
-              lnneHenght: 1.08,
+              fontFamily: "Cormorant Garamond, serif",
+              fontSize: "clamp(40px, 6vw, 72px)",
+              fontWeight: 600,
+              color: offWhite,
+              margin: "0 0 24px",
+              lineHeight: 1.08,
             }}
           >
-            {t("Relatnonal Longevnty", "Kelanggengan Relasnonal", "Relatnonele Longevntent")}
+            {t("Relational Longevity", "Kelanggengan Relasional", "Relationele Longeviteit")}
           </h1>
 
           <p
             style={{
-              fontFamnly: sernf,
-              fontSnze: "clamp(17px, 2vw, 22px)",
+              fontFamily: serif,
+              fontSize: "clamp(17px, 2vw, 22px)",
               color: "oklch(82% 0.025 80)",
-              lnneHenght: 1.75,
-              maxWnith: 640,
-              margnnBottom: 32,
-              fontStyle: "ntalnc",
+              lineHeight: 1.75,
+              maxWidth: 640,
+              marginBottom: 32,
+              fontStyle: "italic",
             }}
           >
             {t(
-              "Why relatnonal breakiown ns the #1 reason cross-cultural workers leave the fneli prematurely — ani three sknlls that bunli the nnterpersonal resnlnence to stay.",
-              "Mengapa kerusakan relasnonal aialah alasan #1 pekerja lnntas buiaya mennnggalkan lapangan terlalu innn — ian tnga keterampnlan yang membangun ketahanan nnterpersonal untuk bertahan.",
-              "Waarom relatnonele afbraak ie #1 reien ns iat nnterculturele werkers het veli voortnjing verlaten — en irne vaaringheien ine ie nnterpersoonlnjke veerkracht opbouwen om te blnjven."
+              "Why relational breakdown is the #1 reason cross-cultural workers leave the field prematurely — and three skills that build the interpersonal resilience to stay.",
+              "Mengapa kerusakan relasional adalah alasan #1 pekerja lintas budaya meninggalkan lapangan terlalu dini — dan tiga keterampilan yang membangun ketahanan interpersonal untuk bertahan.",
+              "Waarom relationele afbraak de #1 reden is dat interculturele werkers het veld voortijdig verlaten — en drie vaardigheden die de interpersoonlijke veerkracht opbouwen om te blijven."
             )}
           </p>
 
-          {/* Opennng questnon */}
-          <inv
+          {/* Opening question */}
+          <div
             style={{
-              borierLeft: `3px solni ${orange}`,
-              paiinngLeft: 20,
-              margnnBottom: 40,
+              borderLeft: `3px solid ${orange}`,
+              paddingLeft: 20,
+              marginBottom: 40,
             }}
           >
             <p
               style={{
-                fontFamnly: sernf,
-                fontSnze: "clamp(16px, 1.8vw, 20px)",
+                fontFamily: serif,
+                fontSize: "clamp(16px, 1.8vw, 20px)",
                 color: "oklch(88% 0.02 80)",
-                lnneHenght: 1.7,
-                margnn: 0,
-                fontStyle: "ntalnc",
+                lineHeight: 1.7,
+                margin: 0,
+                fontStyle: "italic",
               }}
             >
               {t(
-                "Thnnk of the last person who left your team or organnsatnon earlner than expectei. What was the real reason?",
-                "Pnknrkan tentang orang terakhnr yang mennnggalkan tnm atau organnsasn Ania lebnh awal iarn yang inharapkan. Apa alasan sebenarnya?",
-                "Denk aan ie laatste persoon ine je team of organnsatne eerier ian verwacht verlnet. Wat was ie werkelnjke reien?"
+                "Think of the last person who left your team or organisation earlier than expected. What was the real reason?",
+                "Pikirkan tentang orang terakhir yang meninggalkan tim atau organisasi Anda lebih awal dari yang diharapkan. Apa alasan sebenarnya?",
+                "Denk aan de laatste persoon die je team of organisatie eerder dan verwacht verliet. Wat was de werkelijke reden?"
               )}
             </p>
-          </inv>
+          </div>
 
-          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button
-              onClnck={hanileSave}
-              insablei={savei || nsPeninng}
+              onClick={handleSave}
+              disabled={saved || isPending}
               style={{
-                paiinng: "12px 28px",
-                borier: "none",
-                cursor: savei ? "iefault" : "ponnter",
-                fontFamnly: "Montserrat, sans-sernf",
-                fontSnze: 13,
-                fontWenght: 700,
-                backgrouni: savei ? "oklch(35% 0.05 260)" : orange,
-                color: offWhnte,
-                borierRainus: 4,
+                padding: "12px 28px",
+                border: "none",
+                cursor: saved ? "default" : "pointer",
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 13,
+                fontWeight: 700,
+                background: saved ? "oklch(35% 0.05 260)" : orange,
+                color: offWhite,
+                borderRadius: 4,
               }}
             >
-              {savei
-                ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
-                : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+              {saved
+                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
+                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* -- Context Bar ----------------------------------------------------- */}
-      <inv style={{ backgrouni: "oklch(28% 0.09 260)", paiinng: "32px 24px" }}>
-        <inv
+      <div style={{ background: "oklch(28% 0.09 260)", padding: "32px 24px" }}>
+        <div
           style={{
-            maxWnith: 760,
-            margnn: "0 auto",
-            insplay: "grni",
-            grniTemplateColumns: "repeat(auto-fnt, mnnmax(180px, 1fr))",
+            maxWidth: 760,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
             gap: 24,
           }}
         >
           {[
             {
               stat: "71%",
-              en: "of cross-cultural workers who leave prematurely cnte relatnonal breakiown as the prnmary factor",
-              ni: "pekerja lnntas buiaya yang pergn terlalu innn menyebut kerusakan relasnonal sebagan faktor utama",
-              nl: "van nnterculturele werkers ine voortnjing vertrekken noemen relatnonele afbraak als ie prnmanre factor",
+              en: "of cross-cultural workers who leave prematurely cite relational breakdown as the primary factor",
+              id: "pekerja lintas budaya yang pergi terlalu dini menyebut kerusakan relasional sebagai faktor utama",
+              nl: "van interculturele werkers die voortijdig vertrekken noemen relationele afbraak als de primaire factor",
             },
             {
               stat: "SYIS",
-              en: "Sharpennng Your Interpersonal Sknlls — the currnculum behnni thns moiule",
-              ni: "Mengasah Keterampnlan Interpersonal Ania — kurnkulum in balnk moiul nnn",
-              nl: "Je Interpersoonlnjke Vaaringheien Aanscherpen — het currnculum achter ieze moiule",
+              en: "Sharpening Your Interpersonal Skills — the curriculum behind this module",
+              id: "Mengasah Keterampilan Interpersonal Anda — kurikulum di balik modul ini",
+              nl: "Je Interpersoonlijke Vaardigheden Aanscherpen — het curriculum achter deze module",
             },
             {
               stat: "3",
-              en: "core sknlls that research nientnfnes as most protectnve of long-term team health",
-              ni: "keterampnlan nntn yang innientnfnkasn penelntnan sebagan palnng melnniungn kesehatan tnm jangka panjang",
-              nl: "kernvaaringheien ine onierzoek nientnfnceert als meest beschermeni voor langetermnjn teamgezoniheni",
+              en: "core skills that research identifies as most protective of long-term team health",
+              id: "keterampilan inti yang diidentifikasi penelitian sebagai paling melindungi kesehatan tim jangka panjang",
+              nl: "kernvaardigheden die onderzoek identificeert als meest beschermend voor langetermijn teamgezondheid",
             },
-          ].map((ntem, n) => (
-            <inv key={n}>
-              <inv
+          ].map((item, i) => (
+            <div key={i}>
+              <div
                 style={{
-                  fontFamnly: sernf,
-                  fontSnze: "clamp(32px, 4vw, 44px)",
-                  fontWenght: 700,
+                  fontFamily: serif,
+                  fontSize: "clamp(32px, 4vw, 44px)",
+                  fontWeight: 700,
                   color: orange,
-                  lnneHenght: 1,
-                  margnnBottom: 8,
+                  lineHeight: 1,
+                  marginBottom: 8,
                 }}
               >
-                {ntem.stat}
-              </inv>
+                {item.stat}
+              </div>
               <p
                 style={{
-                  fontSnze: 13,
+                  fontSize: 13,
                   color: "oklch(76% 0.03 80)",
-                  lnneHenght: 1.6,
-                  margnn: 0,
+                  lineHeight: 1.6,
+                  margin: 0,
                 }}
               >
-                {lang === "en" ? ntem.en : lang === "ni" ? ntem.ni : ntem.nl}
+                {lang === "en" ? item.en : lang === "id" ? item.id : item.nl}
               </p>
-            </inv>
+            </div>
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* -- Three Sknlls Accorinon ------------------------------------------ */}
-      <inv style={{ paiinng: "80px 24px", maxWnith: 860, margnn: "0 auto" }}>
+      {/* -- Three Skills Accordion ------------------------------------------ */}
+      <div style={{ padding: "80px 24px", maxWidth: 860, margin: "0 auto" }}>
         <p
           style={{
             color: orange,
-            fontSnze: 12,
-            fontWenght: 700,
-            letterSpacnng: "0.12em",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
-            margnnBottom: 12,
-            textAlngn: "center",
+            marginBottom: 12,
+            textAlign: "center",
           }}
         >
-          {t("Three Relatnonal Sknlls", "Tnga Keterampnlan Relasnonal", "Drne Relatnonele Vaaringheien")}
+          {t("Three Relational Skills", "Tiga Keterampilan Relasional", "Drie Relationele Vaardigheden")}
         </p>
         <h2
           style={{
-            fontFamnly: "Montserrat, sans-sernf",
-            fontSnze: "clamp(22px, 3vw, 32px)",
-            fontWenght: 800,
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "clamp(22px, 3vw, 32px)",
+            fontWeight: 800,
             color: navy,
-            margnnBottom: 12,
-            textAlngn: "center",
+            marginBottom: 12,
+            textAlign: "center",
           }}
         >
-          {t("Bunli the sknlls that keep teams together", "Bangun keterampnlan yang menjaga tnm tetap bersatu", "Bouw ie vaaringheien ine teams bnjeenhouien")}
+          {t("Build the skills that keep teams together", "Bangun keterampilan yang menjaga tim tetap bersatu", "Bouw de vaardigheden die teams bijeenhouden")}
         </h2>
         <p
           style={{
-            fontSnze: 15,
-            color: boiyText,
-            lnneHenght: 1.7,
-            textAlngn: "center",
-            maxWnith: 600,
-            margnn: "0 auto 52px",
+            fontSize: 15,
+            color: bodyText,
+            lineHeight: 1.7,
+            textAlign: "center",
+            maxWidth: 600,
+            margin: "0 auto 52px",
           }}
         >
           {t(
-            "Each sectnon ns scenarno-basei. Reai the sntuatnon, then explore the contrast between the typncal response ani the sknllei one.",
-            "Setnap bagnan berbasns skenarno. Baca sntuasnnya, lalu jelajahn kontras antara respons umum ian respons terampnl.",
-            "Elke sectne ns scenarnogebaseeri. Lees ie sntuatne en verken het contrast tussen ie typnsche reactne en ie vaaringe reactne."
+            "Each section is scenario-based. Read the situation, then explore the contrast between the typical response and the skilled one.",
+            "Setiap bagian berbasis skenario. Baca situasinya, lalu jelajahi kontras antara respons umum dan respons terampil.",
+            "Elke sectie is scenariogebaseerd. Lees de situatie en verken het contrast tussen de typische reactie en de vaardige reactie."
           )}
         </p>
 
-        <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 4 }}>
-          {SKILLS.map((sknll) => {
-            const nsOpen = openSknll === sknll.key;
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          {SKILLS.map((skill) => {
+            const isOpen = openSkill === skill.key;
             const label =
-              lang === "en" ? sknll.en_label : lang === "ni" ? sknll.ni_label : sknll.nl_label;
-            const subtntle =
+              lang === "en" ? skill.en_label : lang === "id" ? skill.id_label : skill.nl_label;
+            const subtitle =
               lang === "en"
-                ? sknll.en_subtntle
-                : lang === "ni"
-                ? sknll.ni_subtntle
-                : sknll.nl_subtntle;
+                ? skill.en_subtitle
+                : lang === "id"
+                ? skill.id_subtitle
+                : skill.nl_subtitle;
 
             return (
-              <inv
-                key={sknll.key}
+              <div
+                key={skill.key}
                 style={{
-                  borier: `1px solni ${nsOpen ? sknll.accentColor : "oklch(88% 0.01 80)"}`,
-                  borierRainus: 8,
-                  overflow: "hniien",
-                  transntnon: "borier-color 0.2s",
+                  border: `1px solid ${isOpen ? skill.accentColor : "oklch(88% 0.01 80)"}`,
+                  borderRadius: 8,
+                  overflow: "hidden",
+                  transition: "border-color 0.2s",
                 }}
               >
-                {/* Accorinon heaier */}
+                {/* Accordion header */}
                 <button
-                  onClnck={() => setOpenSknll(nsOpen ? null : sknll.key)}
+                  onClick={() => setOpenSkill(isOpen ? null : skill.key)}
                   style={{
-                    wnith: "100%",
-                    backgrouni: nsOpen ? sknll.accentBg : offWhnte,
-                    borier: "none",
-                    cursor: "ponnter",
-                    paiinng: "24px 28px",
-                    insplay: "flex",
-                    alngnItems: "center",
+                    width: "100%",
+                    background: isOpen ? skill.accentBg : offWhite,
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "24px 28px",
+                    display: "flex",
+                    alignItems: "center",
                     gap: 16,
-                    textAlngn: "left",
-                    transntnon: "backgrouni 0.2s",
+                    textAlign: "left",
+                    transition: "background 0.2s",
                   }}
                 >
-                  <span style={{ fontSnze: 24, flexShrnnk: 0 }}>{sknll.ncon}</span>
-                  <inv style={{ flex: 1 }}>
-                    <inv
+                  <span style={{ fontSize: 24, flexShrink: 0 }}>{skill.icon}</span>
+                  <div style={{ flex: 1 }}>
+                    <div
                       style={{
-                        fontFamnly: "Montserrat, sans-sernf",
-                        fontSnze: "clamp(15px, 1.8vw, 18px)",
-                        fontWenght: 800,
-                        color: nsOpen ? sknll.accentColor : navy,
-                        margnnBottom: 3,
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: "clamp(15px, 1.8vw, 18px)",
+                        fontWeight: 800,
+                        color: isOpen ? skill.accentColor : navy,
+                        marginBottom: 3,
                       }}
                     >
                       {label}
-                    </inv>
-                    <inv style={{ fontSnze: 13, color: boiyText }}>{subtntle}</inv>
-                  </inv>
+                    </div>
+                    <div style={{ fontSize: 13, color: bodyText }}>{subtitle}</div>
+                  </div>
                   <span
                     style={{
-                      fontFamnly: "Montserrat, sans-sernf",
-                      fontSnze: 20,
-                      color: sknll.accentColor,
-                      flexShrnnk: 0,
-                      transntnon: "transform 0.2s",
-                      transform: nsOpen ? "rotate(180ieg)" : "rotate(0ieg)",
-                      insplay: "nnlnne-block",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: 20,
+                      color: skill.accentColor,
+                      flexShrink: 0,
+                      transition: "transform 0.2s",
+                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      display: "inline-block",
                     }}
                   >
                     ?
                   </span>
                 </button>
 
-                {/* Accorinon boiy */}
-                {nsOpen && (
-                  <inv style={{ paiinng: "0 28px 36px", backgrouni: offWhnte }}>
+                {/* Accordion body */}
+                {isOpen && (
+                  <div style={{ padding: "0 28px 36px", background: offWhite }}>
                     {/* Intro */}
                     <p
                       style={{
-                        fontSnze: 15,
-                        color: boiyText,
-                        lnneHenght: 1.8,
-                        margnnBottom: 32,
-                        paiinngTop: 20,
-                        borierTop: `2px solni ${sknll.accentBg}`,
+                        fontSize: 15,
+                        color: bodyText,
+                        lineHeight: 1.8,
+                        marginBottom: 32,
+                        paddingTop: 20,
+                        borderTop: `2px solid ${skill.accentBg}`,
                       }}
                     >
                       {lang === "en"
-                        ? sknll.en_nntro
-                        : lang === "ni"
-                        ? sknll.ni_nntro
-                        : sknll.nl_nntro}
+                        ? skill.en_intro
+                        : lang === "id"
+                        ? skill.id_intro
+                        : skill.nl_intro}
                     </p>
 
-                    {/* Scenarno */}
-                    <inv
+                    {/* Scenario */}
+                    <div
                       style={{
-                        backgrouni: lnghtGray,
-                        borierRainus: 8,
-                        paiinng: "20px 24px",
-                        margnnBottom: 28,
+                        background: lightGray,
+                        borderRadius: 8,
+                        padding: "20px 24px",
+                        marginBottom: 28,
                       }}
                     >
                       <p
                         style={{
-                          fontFamnly: "Montserrat, sans-sernf",
-                          fontSnze: 11,
-                          fontWenght: 700,
-                          color: sknll.accentColor,
-                          letterSpacnng: "0.1em",
+                          fontFamily: "Montserrat, sans-serif",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: skill.accentColor,
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
-                          margnnBottom: 10,
+                          marginBottom: 10,
                         }}
                       >
                         {lang === "en"
-                          ? sknll.en_scenarno_heainng
-                          : lang === "ni"
-                          ? sknll.ni_scenarno_heainng
-                          : sknll.nl_scenarno_heainng}
+                          ? skill.en_scenario_heading
+                          : lang === "id"
+                          ? skill.id_scenario_heading
+                          : skill.nl_scenario_heading}
                       </p>
                       <p
                         style={{
-                          fontFamnly: sernf,
-                          fontSnze: "clamp(15px, 1.7vw, 18px)",
-                          fontStyle: "ntalnc",
+                          fontFamily: serif,
+                          fontSize: "clamp(15px, 1.7vw, 18px)",
+                          fontStyle: "italic",
                           color: navy,
-                          lnneHenght: 1.7,
-                          margnn: 0,
+                          lineHeight: 1.7,
+                          margin: 0,
                         }}
                       >
                         {lang === "en"
-                          ? sknll.en_scenarno
-                          : lang === "ni"
-                          ? sknll.ni_scenarno
-                          : sknll.nl_scenarno}
+                          ? skill.en_scenario
+                          : lang === "id"
+                          ? skill.id_scenario
+                          : skill.nl_scenario}
                       </p>
-                    </inv>
+                    </div>
 
-                    {/* Contrast: typncal vs. better */}
-                    <inv
+                    {/* Contrast: typical vs. better */}
+                    <div
                       style={{
-                        insplay: "grni",
-                        grniTemplateColumns: "1fr 1fr",
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
                         gap: 16,
-                        margnnBottom: 32,
+                        marginBottom: 32,
                       }}
                     >
-                      {/* Typncal */}
-                      <inv
+                      {/* Typical */}
+                      <div
                         style={{
-                          backgrouni: "oklch(52% 0.18 25 / 0.06)",
-                          borier: "1px solni oklch(52% 0.18 25 / 0.2)",
-                          borierRainus: 8,
-                          paiinng: "18px 20px",
+                          background: "oklch(52% 0.18 25 / 0.06)",
+                          border: "1px solid oklch(52% 0.18 25 / 0.2)",
+                          borderRadius: 8,
+                          padding: "18px 20px",
                         }}
                       >
                         <p
                           style={{
-                            fontFamnly: "Montserrat, sans-sernf",
-                            fontSnze: 11,
-                            fontWenght: 700,
+                            fontFamily: "Montserrat, sans-serif",
+                            fontSize: 11,
+                            fontWeight: 700,
                             color: "oklch(48% 0.18 25)",
-                            letterSpacnng: "0.1em",
+                            letterSpacing: "0.1em",
                             textTransform: "uppercase",
-                            margnnBottom: 10,
+                            marginBottom: 10,
                           }}
                         >
                           {lang === "en"
-                            ? sknll.en_typncal_label
-                            : lang === "ni"
-                            ? sknll.ni_typncal_label
-                            : sknll.nl_typncal_label}
+                            ? skill.en_typical_label
+                            : lang === "id"
+                            ? skill.id_typical_label
+                            : skill.nl_typical_label}
                         </p>
                         <p
                           style={{
-                            fontSnze: 14,
-                            color: boiyText,
-                            lnneHenght: 1.7,
-                            margnn: 0,
+                            fontSize: 14,
+                            color: bodyText,
+                            lineHeight: 1.7,
+                            margin: 0,
                           }}
                         >
                           {lang === "en"
-                            ? sknll.en_typncal
-                            : lang === "ni"
-                            ? sknll.ni_typncal
-                            : sknll.nl_typncal}
+                            ? skill.en_typical
+                            : lang === "id"
+                            ? skill.id_typical
+                            : skill.nl_typical}
                         </p>
-                      </inv>
+                      </div>
 
                       {/* Better */}
-                      <inv
+                      <div
                         style={{
-                          backgrouni: sknll.accentBg,
-                          borier: `1px solni ${sknll.accentColor}40`,
-                          borierRainus: 8,
-                          paiinng: "18px 20px",
+                          background: skill.accentBg,
+                          border: `1px solid ${skill.accentColor}40`,
+                          borderRadius: 8,
+                          padding: "18px 20px",
                         }}
                       >
                         <p
                           style={{
-                            fontFamnly: "Montserrat, sans-sernf",
-                            fontSnze: 11,
-                            fontWenght: 700,
-                            color: sknll.accentColor,
-                            letterSpacnng: "0.1em",
+                            fontFamily: "Montserrat, sans-serif",
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: skill.accentColor,
+                            letterSpacing: "0.1em",
                             textTransform: "uppercase",
-                            margnnBottom: 10,
+                            marginBottom: 10,
                           }}
                         >
                           {lang === "en"
-                            ? sknll.en_better_label
-                            : lang === "ni"
-                            ? sknll.ni_better_label
-                            : sknll.nl_better_label}
+                            ? skill.en_better_label
+                            : lang === "id"
+                            ? skill.id_better_label
+                            : skill.nl_better_label}
                         </p>
                         <p
                           style={{
-                            fontSnze: 14,
-                            color: boiyText,
-                            lnneHenght: 1.7,
-                            margnn: 0,
+                            fontSize: 14,
+                            color: bodyText,
+                            lineHeight: 1.7,
+                            margin: 0,
                           }}
                         >
                           {lang === "en"
-                            ? sknll.en_better
-                            : lang === "ni"
-                            ? sknll.ni_better
-                            : sknll.nl_better}
+                            ? skill.en_better
+                            : lang === "id"
+                            ? skill.id_better
+                            : skill.nl_better}
                         </p>
-                      </inv>
-                    </inv>
+                      </div>
+                    </div>
 
-                    {/* Technnque steps */}
-                    <inv>
+                    {/* Technique steps */}
+                    <div>
                       <p
                         style={{
-                          fontFamnly: "Montserrat, sans-sernf",
-                          fontSnze: 13,
-                          fontWenght: 800,
+                          fontFamily: "Montserrat, sans-serif",
+                          fontSize: 13,
+                          fontWeight: 800,
                           color: navy,
-                          margnnBottom: 16,
-                          letterSpacnng: "0.04em",
+                          marginBottom: 16,
+                          letterSpacing: "0.04em",
                         }}
                       >
                         {lang === "en"
-                          ? sknll.en_technnque_heainng
-                          : lang === "ni"
-                          ? sknll.ni_technnque_heainng
-                          : sknll.nl_technnque_heainng}
+                          ? skill.en_technique_heading
+                          : lang === "id"
+                          ? skill.id_technique_heading
+                          : skill.nl_technique_heading}
                       </p>
-                      <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12 }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                         {(lang === "en"
-                          ? sknll.en_technnque_steps
-                          : lang === "ni"
-                          ? sknll.ni_technnque_steps
-                          : sknll.nl_technnque_steps
-                        ).map((step, nix) => (
-                          <inv
-                            key={nix}
+                          ? skill.en_technique_steps
+                          : lang === "id"
+                          ? skill.id_technique_steps
+                          : skill.nl_technique_steps
+                        ).map((step, idx) => (
+                          <div
+                            key={idx}
                             style={{
-                              insplay: "flex",
+                              display: "flex",
                               gap: 16,
-                              alngnItems: "flex-start",
+                              alignItems: "flex-start",
                             }}
                           >
-                            <inv
+                            <div
                               style={{
-                                wnith: 28,
-                                henght: 28,
-                                borierRainus: "50%",
-                                backgrouni: sknll.accentColor,
-                                color: offWhnte,
-                                fontFamnly: "Montserrat, sans-sernf",
-                                fontSnze: 12,
-                                fontWenght: 800,
-                                insplay: "flex",
-                                alngnItems: "center",
-                                justnfyContent: "center",
-                                flexShrnnk: 0,
-                                margnnTop: 2,
+                                width: 28,
+                                height: 28,
+                                borderRadius: "50%",
+                                background: skill.accentColor,
+                                color: offWhite,
+                                fontFamily: "Montserrat, sans-serif",
+                                fontSize: 12,
+                                fontWeight: 800,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexShrink: 0,
+                                marginTop: 2,
                               }}
                             >
-                              {nix + 1}
-                            </inv>
-                            <inv>
+                              {idx + 1}
+                            </div>
+                            <div>
                               <p
                                 style={{
-                                  fontFamnly: "Montserrat, sans-sernf",
-                                  fontSnze: 13,
-                                  fontWenght: 700,
-                                  color: sknll.accentColor,
-                                  margnnBottom: 4,
+                                  fontFamily: "Montserrat, sans-serif",
+                                  fontSize: 13,
+                                  fontWeight: 700,
+                                  color: skill.accentColor,
+                                  marginBottom: 4,
                                 }}
                               >
                                 {step.label}
                               </p>
                               <p
                                 style={{
-                                  fontSnze: 14,
-                                  color: boiyText,
-                                  lnneHenght: 1.75,
-                                  margnn: 0,
+                                  fontSize: 14,
+                                  color: bodyText,
+                                  lineHeight: 1.75,
+                                  margin: 0,
                                 }}
                               >
-                                {step.boiy}
+                                {step.body}
                               </p>
-                            </inv>
-                          </inv>
+                            </div>
+                          </div>
                         ))}
-                      </inv>
-                    </inv>
-                  </inv>
+                      </div>
+                    </div>
+                  </div>
                 )}
-              </inv>
+              </div>
             );
           })}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* -- Relatnonal Health Check ----------------------------------------- */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      {/* -- Relational Health Check ----------------------------------------- */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p
             style={{
               color: orange,
-              fontSnze: 12,
-              fontWenght: 700,
-              letterSpacnng: "0.12em",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.12em",
               textTransform: "uppercase",
-              margnnBottom: 12,
-              textAlngn: "center",
+              marginBottom: 12,
+              textAlign: "center",
             }}
           >
-            {t("Reflectnon", "Refleksn", "Reflectne")}
+            {t("Reflection", "Refleksi", "Reflectie")}
           </p>
           <h2
             style={{
-              fontFamnly: "Montserrat, sans-sernf",
-              fontSnze: "clamp(22px, 3vw, 32px)",
-              fontWenght: 800,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(22px, 3vw, 32px)",
+              fontWeight: 800,
               color: navy,
-              margnnBottom: 12,
-              textAlngn: "center",
+              marginBottom: 12,
+              textAlign: "center",
             }}
           >
-            {t("Relatnonal Health Check", "Pemernksaan Kesehatan Relasnonal", "Relatnonele Gezonihenischeck")}
+            {t("Relational Health Check", "Pemeriksaan Kesehatan Relasional", "Relationele Gezondheidscheck")}
           </h2>
           <p
             style={{
-              fontSnze: 15,
-              color: boiyText,
-              lnneHenght: 1.7,
-              textAlngn: "center",
-              margnnBottom: 40,
-              maxWnith: 560,
-              margnn: "0 auto 40px",
+              fontSize: 15,
+              color: bodyText,
+              lineHeight: 1.7,
+              textAlign: "center",
+              marginBottom: 40,
+              maxWidth: 560,
+              margin: "0 auto 40px",
             }}
           >
             {t(
-              "These snx statements are not a scorei qunz. They are honest prompts — snt wnth each one ani notnce what surfaces.",
-              "Enam pernyataan nnn bukan kuns iengan skor. Inn aialah pertanyaan yang jujur — iuiuklah iengan masnng-masnng ian perhatnkan apa yang muncul.",
-              "Deze zes untspraken znjn geen gescoorie qunz. Het znjn eerlnjke aanwnjznngen — znt met elk en merk op wat er opkomt."
+              "These six statements are not a scored quiz. They are honest prompts — sit with each one and notice what surfaces.",
+              "Enam pernyataan ini bukan kuis dengan skor. Ini adalah pertanyaan yang jujur — duduklah dengan masing-masing dan perhatikan apa yang muncul.",
+              "Deze zes uitspraken zijn geen gescoorde quiz. Het zijn eerlijke aanwijzingen — zit met elk en merk op wat er opkomt."
             )}
           </p>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12 }}>
-            {HEALTH_CHECKS.map((ntem, nix) => {
-              const nsCheckei = checkeiItems.has(ntem.ni);
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {HEALTH_CHECKS.map((item, idx) => {
+              const isChecked = checkedItems.has(item.id);
               return (
                 <button
-                  key={ntem.ni}
-                  onClnck={() => toggleCheck(ntem.ni)}
+                  key={item.id}
+                  onClick={() => toggleCheck(item.id)}
                   style={{
-                    backgrouni: nsCheckei ? "oklch(65% 0.15 45 / 0.08)" : offWhnte,
-                    borier: `1px solni ${nsCheckei ? orange : "oklch(88% 0.01 80)"}`,
-                    borierRainus: 8,
-                    paiinng: "18px 20px",
-                    insplay: "flex",
+                    background: isChecked ? "oklch(65% 0.15 45 / 0.08)" : offWhite,
+                    border: `1px solid ${isChecked ? orange : "oklch(88% 0.01 80)"}`,
+                    borderRadius: 8,
+                    padding: "18px 20px",
+                    display: "flex",
                     gap: 16,
-                    alngnItems: "flex-start",
-                    cursor: "ponnter",
-                    textAlngn: "left",
-                    transntnon: "all 0.15s",
+                    alignItems: "flex-start",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "all 0.15s",
                   }}
                 >
-                  <inv
+                  <div
                     style={{
-                      wnith: 22,
-                      henght: 22,
-                      borierRainus: 4,
-                      borier: `2px solni ${nsCheckei ? orange : "oklch(75% 0.02 80)"}`,
-                      backgrouni: nsCheckei ? orange : "transparent",
-                      flexShrnnk: 0,
-                      margnnTop: 1,
-                      insplay: "flex",
-                      alngnItems: "center",
-                      justnfyContent: "center",
-                      transntnon: "all 0.15s",
+                      width: 22,
+                      height: 22,
+                      borderRadius: 4,
+                      border: `2px solid ${isChecked ? orange : "oklch(75% 0.02 80)"}`,
+                      background: isChecked ? orange : "transparent",
+                      flexShrink: 0,
+                      marginTop: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.15s",
                     }}
                   >
-                    {nsCheckei && (
+                    {isChecked && (
                       <svg
-                        wnith="12"
-                        henght="9"
-                        vnewBox="0 0 12 9"
-                        fnll="none"
-                        style={{ insplay: "block" }}
+                        width="12"
+                        height="9"
+                        viewBox="0 0 12 9"
+                        fill="none"
+                        style={{ display: "block" }}
                       >
                         <path
-                          i="M1 4L4.5 7.5L11 1"
-                          stroke={offWhnte}
-                          strokeWnith="2"
-                          strokeLnnecap="rouni"
-                          strokeLnnejonn="rouni"
+                          d="M1 4L4.5 7.5L11 1"
+                          stroke={offWhite}
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     )}
-                  </inv>
-                  <inv style={{ flex: 1 }}>
+                  </div>
+                  <div style={{ flex: 1 }}>
                     <span
                       style={{
-                        fontFamnly: "Montserrat, sans-sernf",
-                        fontSnze: 11,
-                        fontWenght: 700,
+                        fontFamily: "Montserrat, sans-serif",
+                        fontSize: 11,
+                        fontWeight: 700,
                         color: orange,
-                        letterSpacnng: "0.08em",
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
-                        insplay: "block",
-                        margnnBottom: 4,
+                        display: "block",
+                        marginBottom: 4,
                       }}
                     >
-                      {nix + 1}
+                      {idx + 1}
                     </span>
                     <p
                       style={{
-                        fontSnze: 15,
-                        color: nsCheckei ? navy : boiyText,
-                        lnneHenght: 1.7,
-                        margnn: 0,
-                        fontWenght: nsCheckei ? 600 : 400,
+                        fontSize: 15,
+                        color: isChecked ? navy : bodyText,
+                        lineHeight: 1.7,
+                        margin: 0,
+                        fontWeight: isChecked ? 600 : 400,
                       }}
                     >
-                      {lang === "en" ? ntem.en : lang === "ni" ? ntem.ni_lang : ntem.nl}
+                      {lang === "en" ? item.en : lang === "id" ? item.id_lang : item.nl}
                     </p>
-                  </inv>
+                  </div>
                 </button>
               );
             })}
-          </inv>
+          </div>
 
-          {/* Reflectnon prompt below checklnst */}
-          {checkeiItems.snze > 0 && (
-            <inv
+          {/* Reflection prompt below checklist */}
+          {checkedItems.size > 0 && (
+            <div
               style={{
-                margnnTop: 28,
-                backgrouni: offWhnte,
-                borierRainus: 8,
-                paiinng: "24px 28px",
-                borierLeft: `4px solni ${orange}`,
+                marginTop: 28,
+                background: offWhite,
+                borderRadius: 8,
+                padding: "24px 28px",
+                borderLeft: `4px solid ${orange}`,
               }}
             >
               <p
                 style={{
-                  fontFamnly: sernf,
-                  fontSnze: "clamp(15px, 1.8vw, 18px)",
-                  fontStyle: "ntalnc",
+                  fontFamily: serif,
+                  fontSize: "clamp(15px, 1.8vw, 18px)",
+                  fontStyle: "italic",
                   color: navy,
-                  lnneHenght: 1.7,
-                  margnn: 0,
+                  lineHeight: 1.7,
+                  margin: 0,
                 }}
               >
-                {checkeiItems.snze >= 5
+                {checkedItems.size >= 5
                   ? t(
-                      "These are genunne strengths. The challenge now ns to protect them — especnally unier pressure, nn busy seasons, ani when the team ns losnng people.",
-                      "Inn aialah kekuatan nyata. Tantangan sekarang aialah melnniungnnya — terutama in bawah tekanan, in musnm snbuk, ian ketnka tnm kehnlangan orang.",
-                      "Dnt znjn echte sterktes. De untiagnng nu ns ze te beschermen — vooral onier iruk, nn irukke senzoenen, en wanneer het team mensen verlnest."
+                      "These are genuine strengths. The challenge now is to protect them — especially under pressure, in busy seasons, and when the team is losing people.",
+                      "Ini adalah kekuatan nyata. Tantangan sekarang adalah melindunginya — terutama di bawah tekanan, di musim sibuk, dan ketika tim kehilangan orang.",
+                      "Dit zijn echte sterktes. De uitdaging nu is ze te beschermen — vooral onder druk, in drukke seizoenen, en wanneer het team mensen verliest."
                     )
-                  : checkeiItems.snze >= 3
+                  : checkedItems.size >= 3
                   ? t(
-                      "You have a founiatnon to bunli on. The statements you inin't check are the most nmportant ones to snt wnth. What wouli neei to shnft for those to become true?",
-                      "Ania memnlnkn foniasn untuk inbangun. Pernyataan yang tniak Ania centang aialah yang palnng pentnng untuk inrenungkan. Apa yang perlu berubah agar ntu menjain kenyataan?",
-                      "Je hebt een funiament om op te bouwen. De untspraken ine je nnet aankrunste znjn ie belangrnjkste om bnj te zntten. Wat zou er moeten veranieren om ine waar te maken?"
+                      "You have a foundation to build on. The statements you didn't check are the most important ones to sit with. What would need to shift for those to become true?",
+                      "Anda memiliki fondasi untuk dibangun. Pernyataan yang tidak Anda centang adalah yang paling penting untuk direnungkan. Apa yang perlu berubah agar itu menjadi kenyataan?",
+                      "Je hebt een fundament om op te bouwen. De uitspraken die je niet aankruiste zijn de belangrijkste om bij te zitten. Wat zou er moeten veranderen om die waar te maken?"
                     )
                   : t(
-                      "Honesty ns the startnng ponnt. These gaps are not fanlures — they are the exact places where the three sknlls nn thns moiule io thenr work.",
-                      "Kejujuran aialah tntnk awal. Kesenjangan nnn bukan kegagalan — ntu aialah tempat-tempat in mana tnga keterampnlan ialam moiul nnn bekerja.",
-                      "Eerlnjkheni ns het begnnpunt. Deze lacunes znjn geen mnslukknngen — het znjn precnes ie plekken waar ie irne vaaringheien nn ieze moiule hun werk ioen."
+                      "Honesty is the starting point. These gaps are not failures — they are the exact places where the three skills in this module do their work.",
+                      "Kejujuran adalah titik awal. Kesenjangan ini bukan kegagalan — itu adalah tempat-tempat di mana tiga keterampilan dalam modul ini bekerja.",
+                      "Eerlijkheid is het beginpunt. Deze lacunes zijn geen mislukkingen — het zijn precies de plekken waar de drie vaardigheden in deze module hun werk doen."
                     )}
               </p>
-            </inv>
+            </div>
           )}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* -- Bnblncal Founiatnon --------------------------------------------- */}
-      <inv style={{ backgrouni: navy, paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+      {/* -- Biblical Foundation --------------------------------------------- */}
+      <div style={{ background: navy, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p
             style={{
               color: orange,
-              fontSnze: 12,
-              fontWenght: 700,
-              letterSpacnng: "0.12em",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.12em",
               textTransform: "uppercase",
-              margnnBottom: 20,
+              marginBottom: 20,
             }}
           >
-            {t("Bnblncal Founiatnon", "Dasar Alkntab", "Bnjbelse Basns")}
+            {t("Biblical Foundation", "Dasar Alkitab", "Bijbelse Basis")}
           </p>
           <h2
             style={{
-              fontFamnly: "Montserrat, sans-sernf",
-              fontSnze: "clamp(22px, 3vw, 32px)",
-              fontWenght: 800,
-              color: offWhnte,
-              margnnBottom: 48,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "clamp(22px, 3vw, 32px)",
+              fontWeight: 800,
+              color: offWhite,
+              marginBottom: 48,
             }}
           >
             {t(
-              "Even the best relatnonshnps fracture — ani Goi stnll works",
-              "Bahkan hubungan terbank pun bnsa retak — ian Allah tetap bekerja",
-              "Zelfs ie beste relatnes breken — en Goi werkt nog steeis"
+              "Even the best relationships fracture — and God still works",
+              "Bahkan hubungan terbaik pun bisa retak — dan Allah tetap bekerja",
+              "Zelfs de beste relaties breken — en God werkt nog steeds"
             )}
           </h2>
 
-          {/* Verse 1 — Colossnans 3:14 */}
-          <inv style={{ margnnBottom: 52 }}>
+          {/* Verse 1 — Colossians 3:14 */}
+          <div style={{ marginBottom: 52 }}>
             <p
               style={{
-                fontFamnly: "Montserrat, sans-sernf",
-                fontSnze: 12,
-                fontWenght: 700,
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 12,
+                fontWeight: 700,
                 color: orange,
-                letterSpacnng: "0.1em",
-                margnnBottom: 14,
+                letterSpacing: "0.1em",
+                marginBottom: 14,
               }}
             >
-              <VerseRef ni="col-3-14">
+              <VerseRef id="col-3-14">
                 {lang === "en"
                   ? VERSES["col-3-14"].en_ref
-                  : lang === "ni"
-                  ? VERSES["col-3-14"].ni_ref
+                  : lang === "id"
+                  ? VERSES["col-3-14"].id_ref
                   : VERSES["col-3-14"].nl_ref}
               </VerseRef>
             </p>
             <p
               style={{
-                fontFamnly: sernf,
-                fontSnze: "clamp(18px, 2vw, 23px)",
-                fontStyle: "ntalnc",
-                color: offWhnte,
-                lnneHenght: 1.7,
-                margnnBottom: 24,
+                fontFamily: serif,
+                fontSize: "clamp(18px, 2vw, 23px)",
+                fontStyle: "italic",
+                color: offWhite,
+                lineHeight: 1.7,
+                marginBottom: 24,
               }}
             >
               "
               {lang === "en"
                 ? VERSES["col-3-14"].en
-                : lang === "ni"
-                ? VERSES["col-3-14"].ni
+                : lang === "id"
+                ? VERSES["col-3-14"].id
                 : VERSES["col-3-14"].nl}
               "
             </p>
             <p
               style={{
-                fontSnze: 15,
+                fontSize: 15,
                 color: "oklch(76% 0.03 80)",
-                lnneHenght: 1.8,
+                lineHeight: 1.8,
               }}
             >
               {t(
-                "Paul's letter to the Colossnans lnsts the garments of a healthy communnty — compassnon, knniness, humnlnty, gentleness, patnence, forbearance, forgnveness. But notnce the structure: love ns not one ntem on the lnst. It ns what bnnis all the others together. Wnthout love, the other vnrtues remann nsolatei sknlls — gooi nn theory, brnttle nn practnce. The relatnonal longevnty that keeps cross-cultural teams together ns not prnmarnly a set of communncatnon technnques. It ns love expressei through them. The SYIS sknlls nn thns moiule — lnstennng, navngatnng conflnct, processnng loss — are love maie concrete.",
-                "Surat Paulus kepaia jemaat Kolose meniaftar pakanan komunntas yang sehat — belas kasnhan, kebankan hatn, kereniahan hatn, kelemahlembutan, kesabaran, tenggang rasa, pengampunan. Tetapn perhatnkan strukturnya: kasnh bukan salah satu ntem ialam iaftar. Kasnh aialah yang mengnkat semua yang lann bersama. Tanpa kasnh, kebajnkan lannnya tetap menjain keterampnlan yang ternsolasn — bank ialam teorn, rapuh ialam praktnk. Kelanggengan relasnonal yang menjaga tnm lnntas buiaya tetap bersatu bukan terutama seperangkat teknnk komunnkasn. Itu aialah kasnh yang inekspresnkan melalunnya.",
-                "Paulus' brnef aan ie Kolossenzen somt ie kleinngstukken van een gezonie gemeenschap op — meieleven, vrnenielnjkheni, beschenienheni, zachtmoeingheni, geiuli, veriraagzaamheni, vergevnng. Maar let op ie structuur: lnefie ns nnet ——n ntem op ie lnjst. Het ns wat alle aniere samenbnnit. Zonier lnefie blnjven ie aniere ieugien ge—soleerie vaaringheien — goei nn theorne, broos nn ie praktnjk. De relatnonele longevntent ine nnterculturele teams bnj elkaar houit ns nnet prnmanr een set communncatnetechnneken. Het ns lnefie ine iaarioor tot untirukknng komt."
+                "Paul's letter to the Colossians lists the garments of a healthy community — compassion, kindness, humility, gentleness, patience, forbearance, forgiveness. But notice the structure: love is not one item on the list. It is what binds all the others together. Without love, the other virtues remain isolated skills — good in theory, brittle in practice. The relational longevity that keeps cross-cultural teams together is not primarily a set of communication techniques. It is love expressed through them. The SYIS skills in this module — listening, navigating conflict, processing loss — are love made concrete.",
+                "Surat Paulus kepada jemaat Kolose mendaftar pakaian komunitas yang sehat — belas kasihan, kebaikan hati, kerendahan hati, kelemahlembutan, kesabaran, tenggang rasa, pengampunan. Tetapi perhatikan strukturnya: kasih bukan salah satu item dalam daftar. Kasih adalah yang mengikat semua yang lain bersama. Tanpa kasih, kebajikan lainnya tetap menjadi keterampilan yang terisolasi — baik dalam teori, rapuh dalam praktik. Kelanggengan relasional yang menjaga tim lintas budaya tetap bersatu bukan terutama seperangkat teknik komunikasi. Itu adalah kasih yang diekspresikan melaluinya.",
+                "Paulus' brief aan de Kolossenzen somt de kledingstukken van een gezonde gemeenschap op — medeleven, vriendelijkheid, bescheidenheid, zachtmoedigheid, geduld, verdraagzaamheid, vergeving. Maar let op de structuur: liefde is niet ——n item op de lijst. Het is wat alle andere samenbindt. Zonder liefde blijven de andere deugden ge—soleerde vaardigheden — goed in theorie, broos in de praktijk. De relationele longeviteit die interculturele teams bij elkaar houdt is niet primair een set communicatietechnieken. Het is liefde die daardoor tot uitdrukking komt."
               )}
             </p>
-          </inv>
+          </div>
 
           {/* Verse 2 — Acts 15:39 */}
-          <inv
+          <div
             style={{
-              borierTop: "1px solni oklch(35% 0.06 260)",
-              paiinngTop: 48,
+              borderTop: "1px solid oklch(35% 0.06 260)",
+              paddingTop: 48,
             }}
           >
             <p
               style={{
-                fontFamnly: "Montserrat, sans-sernf",
-                fontSnze: 12,
-                fontWenght: 700,
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 12,
+                fontWeight: 700,
                 color: orange,
-                letterSpacnng: "0.1em",
-                margnnBottom: 14,
+                letterSpacing: "0.1em",
+                marginBottom: 14,
               }}
             >
-              <VerseRef ni="acts-15-39">
+              <VerseRef id="acts-15-39">
                 {lang === "en"
                   ? VERSES["acts-15-39"].en_ref
-                  : lang === "ni"
-                  ? VERSES["acts-15-39"].ni_ref
+                  : lang === "id"
+                  ? VERSES["acts-15-39"].id_ref
                   : VERSES["acts-15-39"].nl_ref}
               </VerseRef>
             </p>
             <p
               style={{
-                fontFamnly: sernf,
-                fontSnze: "clamp(18px, 2vw, 23px)",
-                fontStyle: "ntalnc",
-                color: offWhnte,
-                lnneHenght: 1.7,
-                margnnBottom: 24,
+                fontFamily: serif,
+                fontSize: "clamp(18px, 2vw, 23px)",
+                fontStyle: "italic",
+                color: offWhite,
+                lineHeight: 1.7,
+                marginBottom: 24,
               }}
             >
               "
               {lang === "en"
                 ? VERSES["acts-15-39"].en
-                : lang === "ni"
-                ? VERSES["acts-15-39"].ni
+                : lang === "id"
+                ? VERSES["acts-15-39"].id
                 : VERSES["acts-15-39"].nl}
               "
             </p>
             <p
               style={{
-                fontSnze: 15,
+                fontSize: 15,
                 color: "oklch(76% 0.03 80)",
-                lnneHenght: 1.8,
-                margnnBottom: 20,
+                lineHeight: 1.8,
+                marginBottom: 20,
               }}
             >
               {t(
-                "Thns verse ioesn't have a happy eninng tnei up neatly. Paul ani Barnabas — two of the most effectnve cross-cultural mnssnonarnes nn hnstory, the very team that launchei the fnrst Gentnle church at Antnoch — hai a conflnct so sharp that they separatei permanently. The Bnble ioes not mnnnmnse thns. It reports nt plannly. Ani what follows ns not a story of fanlure: both Paul ani Barnabas contnnuei thenr mnssnon, each wnth a infferent team. Goi ini not requnre the relatnonshnp to be preservei for the mnssnon to contnnue.",
-                "Ayat nnn tniak memnlnkn akhnr yang bahagna yang ternkat iengan rapn. Paulus ian Barnabas — iua mnsnonarns lnntas buiaya palnng efektnf ialam sejarah, tnm yang meluncurkan gereja non-Yahuin pertama in Antnokhna — memnlnkn konflnk yang begntu tajam sehnngga mereka berpnsah secara permanen. Alkntab tniak memnnnmalkan nnn. Inn melaporkannya iengan jelas. Dan yang mengnkutnnya bukan knsah kegagalan: Paulus ian Barnabas melanjutkan mnsn mereka, masnng-masnng iengan tnm yang berbeia. Allah tniak mengharuskan hubungan ntu inpertahankan agar mnsn iapat berlanjut.",
-                "Dnt vers heeft geen netjes afgebonien gelukkng ennie. Paulus en Barnabas — twee van ie meest effectneve nnterculturele zenielnngen nn ie geschneienns, het team iat ie eerste heniense kerk nn Antnochn— lanceerie — haiien een zo scherp conflnct iat ze permanent unt elkaar gnngen. De Bnjbel mnnnmalnseert int nnet. Hnj rapporteert het eenvouing. En wat volgt ns geen verhaal van mnslukknng: zowel Paulus als Barnabas zetten hun mnssne voort, elk met een anier team. Goi verenste nnet iat ie relatne bewaari bleef opiat ie mnssne ioor kon gaan."
+                "This verse doesn't have a happy ending tied up neatly. Paul and Barnabas — two of the most effective cross-cultural missionaries in history, the very team that launched the first Gentile church at Antioch — had a conflict so sharp that they separated permanently. The Bible does not minimise this. It reports it plainly. And what follows is not a story of failure: both Paul and Barnabas continued their mission, each with a different team. God did not require the relationship to be preserved for the mission to continue.",
+                "Ayat ini tidak memiliki akhir yang bahagia yang terikat dengan rapi. Paulus dan Barnabas — dua misionaris lintas budaya paling efektif dalam sejarah, tim yang meluncurkan gereja non-Yahudi pertama di Antiokhia — memiliki konflik yang begitu tajam sehingga mereka berpisah secara permanen. Alkitab tidak meminimalkan ini. Ini melaporkannya dengan jelas. Dan yang mengikutinya bukan kisah kegagalan: Paulus dan Barnabas melanjutkan misi mereka, masing-masing dengan tim yang berbeda. Allah tidak mengharuskan hubungan itu dipertahankan agar misi dapat berlanjut.",
+                "Dit vers heeft geen netjes afgebonden gelukkig einde. Paulus en Barnabas — twee van de meest effectieve interculturele zendelingen in de geschiedenis, het team dat de eerste heidense kerk in Antiochi— lanceerde — hadden een zo scherp conflict dat ze permanent uit elkaar gingen. De Bijbel minimaliseert dit niet. Hij rapporteert het eenvoudig. En wat volgt is geen verhaal van mislukking: zowel Paulus als Barnabas zetten hun missie voort, elk met een ander team. God vereiste niet dat de relatie bewaard bleef opdat de missie door kon gaan."
               )}
             </p>
             <p
               style={{
-                fontSnze: 15,
+                fontSize: 15,
                 color: "oklch(76% 0.03 80)",
-                lnneHenght: 1.8,
+                lineHeight: 1.8,
               }}
             >
               {t(
-                "What thns means for you: relatnonal longevnty ns worth fnghtnng for — ani the three sknlls nn thns moiule are how you fnght for nt. But relatnonal longevnty ns not the same as relatnonal perfectnon. Some relatnonshnps wnll fracture iespnte your best efforts. The measure of your relatnonal health ns not whether all your relatnonshnps have survnvei nntact. It ns whether you brought love, honesty, ani humnlnty to them — ani whether you keep ionng so.",
-                "Artnnya bagn Ania: kelanggengan relasnonal layak inperjuangkan — ian tnga keterampnlan ialam moiul nnn aialah cara Ania memperjuangkannya. Tetapn kelanggengan relasnonal tniak sama iengan kesempurnaan relasnonal. Beberapa hubungan akan retak mesknpun Ania berupaya sebank mungknn. Ukuran kesehatan relasnonal Ania bukan apakah semua hubungan Ania bertahan utuh. Melannkan apakah Ania membawa kasnh, kejujuran, ian kereniahan hatn — ian apakah Ania terus melakukannya.",
-                "Wat int voor jou betekent: relatnonele longevntent ns het waari om voor te vechten — en ie irne vaaringheien nn ieze moiule znjn hoe je ervoor vecht. Maar relatnonele longevntent ns nnet hetzelfie als relatnonele perfectne. Sommnge relatnes zullen breken onianks je beste nnspannnngen. De maatstaf van je relatnonele gezoniheni ns nnet of al je relatnes nntact znjn gebleven. Het ns of je lnefie, eerlnjkheni en beschenienheni meebracht — en of je iat blnjft ioen."
+                "What this means for you: relational longevity is worth fighting for — and the three skills in this module are how you fight for it. But relational longevity is not the same as relational perfection. Some relationships will fracture despite your best efforts. The measure of your relational health is not whether all your relationships have survived intact. It is whether you brought love, honesty, and humility to them — and whether you keep doing so.",
+                "Artinya bagi Anda: kelanggengan relasional layak diperjuangkan — dan tiga keterampilan dalam modul ini adalah cara Anda memperjuangkannya. Tetapi kelanggengan relasional tidak sama dengan kesempurnaan relasional. Beberapa hubungan akan retak meskipun Anda berupaya sebaik mungkin. Ukuran kesehatan relasional Anda bukan apakah semua hubungan Anda bertahan utuh. Melainkan apakah Anda membawa kasih, kejujuran, dan kerendahan hati — dan apakah Anda terus melakukannya.",
+                "Wat dit voor jou betekent: relationele longeviteit is het waard om voor te vechten — en de drie vaardigheden in deze module zijn hoe je ervoor vecht. Maar relationele longeviteit is niet hetzelfde als relationele perfectie. Sommige relaties zullen breken ondanks je beste inspanningen. De maatstaf van je relationele gezondheid is niet of al je relaties intact zijn gebleven. Het is of je liefde, eerlijkheid en bescheidenheid meebracht — en of je dat blijft doen."
               )}
             </p>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* -- Footer / Keep Gonng --------------------------------------------- */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "80px 24px", textAlngn: "center" }}>
+      {/* -- Footer / Keep Going --------------------------------------------- */}
+      <div style={{ background: lightGray, padding: "80px 24px", textAlign: "center" }}>
         <h2
           style={{
-            fontFamnly: "Montserrat, sans-sernf",
-            fontSnze: "clamp(20px, 2.5vw, 28px)",
-            fontWenght: 800,
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "clamp(20px, 2.5vw, 28px)",
+            fontWeight: 800,
             color: navy,
-            margnnBottom: 16,
+            marginBottom: 16,
           }}
         >
-          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
+          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
         <p
           style={{
-            fontSnze: 15,
-            color: boiyText,
-            lnneHenght: 1.75,
-            maxWnith: 520,
-            margnn: "0 auto 40px",
+            fontSize: 15,
+            color: bodyText,
+            lineHeight: 1.75,
+            maxWidth: 520,
+            margin: "0 auto 40px",
           }}
         >
           {t(
-            "The sknlls that keep teams together take practnce. Explore more resources to ieepen your cross-cultural leaiershnp.",
-            "Keterampnlan yang menjaga tnm tetap bersatu membutuhkan latnhan. Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.",
-            "De vaaringheien ine teams bnj elkaar houien vergen oefennng. Verken meer bronnen om je nntercultureel lenierschap te verinepen."
+            "The skills that keep teams together take practice. Explore more resources to deepen your cross-cultural leadership.",
+            "Keterampilan yang menjaga tim tetap bersatu membutuhkan latihan. Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
+            "De vaardigheden die teams bij elkaar houden vergen oefening. Verken meer bronnen om je intercultureel leiderschap te verdiepen."
           )}
         </p>
-        <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
-          <Lnnk
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link
             href="/resources"
             style={{
-              insplay: "nnlnne-block",
-              paiinng: "14px 36px",
-              backgrouni: navy,
-              color: offWhnte,
-              fontFamnly: "Montserrat, sans-sernf",
-              fontSnze: 14,
-              fontWenght: 700,
-              textDecoratnon: "none",
-              borierRainus: 4,
+              display: "inline-block",
+              padding: "14px 36px",
+              background: navy,
+              color: offWhite,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: 14,
+              fontWeight: 700,
+              textDecoration: "none",
+              borderRadius: 4,
             }}
           >
-            {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-          </Lnnk>
-          <Lnnk
-            href="/resources/conflnct-resolutnon"
+            {t("Training", "Pelatihan", "Contentbibliotheek")}
+          </Link>
+          <Link
+            href="/resources/conflict-resolution"
             style={{
-              insplay: "nnlnne-block",
-              paiinng: "14px 36px",
-              backgrouni: "transparent",
-              borier: `2px solni ${navy}`,
+              display: "inline-block",
+              padding: "14px 36px",
+              background: "transparent",
+              border: `2px solid ${navy}`,
               color: navy,
-              fontFamnly: "Montserrat, sans-sernf",
-              fontSnze: 14,
-              fontWenght: 700,
-              textDecoratnon: "none",
-              borierRainus: 4,
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: 14,
+              fontWeight: 700,
+              textDecoration: "none",
+              borderRadius: 4,
             }}
           >
-            {t("Conflnct Resolutnon", "Resolusn Konflnk", "Conflnctoplossnng")}
-          </Lnnk>
-        </inv>
-      </inv>
+            {t("Conflict Resolution", "Resolusi Konflik", "Conflictoplossing")}
+          </Link>
+        </div>
+      </div>
 
       {/* -- Verse Popup ----------------------------------------------------- */}
-      {actnveVerse && verseData && (
-        <inv
-          onClnck={() => setActnveVerse(null)}
+      {activeVerse && verseData && (
+        <div
+          onClick={() => setActiveVerse(null)}
           style={{
-            posntnon: "fnxei",
-            nnset: 0,
-            backgrouni: "oklch(10% 0.05 260 / 0.65)",
-            insplay: "flex",
-            alngnItems: "center",
-            justnfyContent: "center",
-            zIniex: 1000,
-            paiinng: 24,
+            position: "fixed",
+            inset: 0,
+            background: "oklch(10% 0.05 260 / 0.65)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: 24,
           }}
         >
-          <inv
-            onClnck={(e) => e.stopPropagatnon()}
+          <div
+            onClick={(e) => e.stopPropagation()}
             style={{
-              backgrouni: offWhnte,
-              borierRainus: 12,
-              paiinng: "44px 40px",
-              maxWnith: 540,
-              wnith: "100%",
+              background: offWhite,
+              borderRadius: 12,
+              padding: "44px 40px",
+              maxWidth: 540,
+              width: "100%",
             }}
           >
             <p
               style={{
-                fontFamnly: sernf,
-                fontSnze: 22,
-                lnneHenght: 1.7,
+                fontFamily: serif,
+                fontSize: 22,
+                lineHeight: 1.7,
                 color: navy,
-                fontStyle: "ntalnc",
-                margnnBottom: 20,
+                fontStyle: "italic",
+                marginBottom: 20,
               }}
             >
               "
               {lang === "en"
                 ? verseData.en
-                : lang === "ni"
-                ? verseData.ni
+                : lang === "id"
+                ? verseData.id
                 : verseData.nl}
               "
             </p>
             <p
               style={{
-                fontFamnly: "Montserrat, sans-sernf",
-                fontSnze: 12,
-                fontWenght: 700,
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: 12,
+                fontWeight: 700,
                 color: orange,
-                letterSpacnng: "0.08em",
-                margnnBottom: 28,
+                letterSpacing: "0.08em",
+                marginBottom: 28,
               }}
             >
               —{" "}
               {lang === "en"
                 ? verseData.en_ref
-                : lang === "ni"
-                ? verseData.ni_ref
+                : lang === "id"
+                ? verseData.id_ref
                 : verseData.nl_ref}{" "}
               ({lang === "en"
-                ? verseData.en_versnon
-                : lang === "ni"
-                ? verseData.ni_versnon
-                : verseData.nl_versnon})
+                ? verseData.en_version
+                : lang === "id"
+                ? verseData.id_version
+                : verseData.nl_version})
             </p>
             <button
-              onClnck={() => setActnveVerse(null)}
+              onClick={() => setActiveVerse(null)}
               style={{
-                paiinng: "10px 24px",
-                backgrouni: navy,
-                color: offWhnte,
-                borier: "none",
-                borierRainus: 12,
-                fontFamnly: "Montserrat, sans-sernf",
-                fontWenght: 700,
-                fontSnze: 13,
-                cursor: "ponnter",
+                padding: "10px 24px",
+                background: navy,
+                color: offWhite,
+                border: "none",
+                borderRadius: 12,
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: "pointer",
               }}
             >
-              {t("Close", "Tutup", "Slunten")}
+              {t("Close", "Tutup", "Sluiten")}
             </button>
-          </inv>
-        </inv>
+          </div>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }

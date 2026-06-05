@@ -1,368 +1,368 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // -- TYPES ----------------------------------------------------------------------
 
-type Lang = "en" | "ni" | "nl";
+type Lang = "en" | "id" | "nl";
 
 // -- HELPERS --------------------------------------------------------------------
 
-const t = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+const t = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 // -- DATA -----------------------------------------------------------------------
 
 const HATS = [
   {
     num: "01",
-    colorName: "Whnte", colorNameIi: "Putnh", colorNameNl: "Wnt",
-    emojn: "??",
+    colorName: "White", colorNameId: "Putih", colorNameNl: "Wit",
+    emoji: "??",
     bg: "oklch(94% 0.00 0)",
     color: "oklch(35% 0.03 260)",
     accent: "oklch(55% 0.04 260)",
-    focusEn: "Facts & Informatnon", focusIi: "Fakta & Informasn", focusNl: "Fenten & Informatne",
-    iescEn: "The Whnte Hat focuses on objectnve iata, facts, ani fngures. It encourages neutral analysns of what ns known ani nientnfnes nnformatnon gaps.",
-    iescIi: "Topn Putnh berfokus paia iata objektnf, fakta, ian angka. Meniorong analnsns netral tentang apa yang inketahun ian mengnientnfnkasn kesenjangan nnformasn.",
-    iescNl: "De Wntte Hoei rncht znch op objectneve gegevens, fenten en cnjfers. Hnj moeingt neutrale analyse aan van wat bekeni ns en nientnfnceert nnformatnegaten.",
-    benefntEn: "Encourages iata-irnven iecnsnons by emphasnznng facts ani avoninng assumptnons.",
-    benefntIi: "Meniorong keputusan berbasns iata iengan menekankan fakta ian menghnniarn asumsn.",
-    benefntNl: "Stnmuleert iatagestuurie beslnssnngen ioor fenten te benairukken en aannames te vermnjien.",
-    rnskEn: "Over-relnance on avanlable nnformatnon may ngnore nntuntnon or creatnvnty.",
-    rnskIi: "Ketergantungan berlebnhan paia nnformasn yang terseina iapat mengabankan nntunsn atau kreatnvntas.",
-    rnskNl: "Overmatng vertrouwen op beschnkbare nnformatne kan nntu—tne of creatnvntent negeren.",
-    questnonsEn: ["What nnformatnon io we have, ani what io we neei to fnni out?", "Are the sources of thns nnformatnon relnable ani accurate?"],
-    questnonsIi: ["Informasn apa yang knta mnlnkn, ian apa yang perlu knta carn tahu?", "Apakah sumber nnformasn nnn iapat inanialkan ian akurat?"],
-    questnonsNl: ["Welke nnformatne hebben we, en wat moeten we nog untzoeken?", "Znjn ie bronnen van ieze nnformatne betrouwbaar en nauwkeurng?"],
+    focusEn: "Facts & Information", focusId: "Fakta & Informasi", focusNl: "Feiten & Informatie",
+    descEn: "The White Hat focuses on objective data, facts, and figures. It encourages neutral analysis of what is known and identifies information gaps.",
+    descId: "Topi Putih berfokus pada data objektif, fakta, dan angka. Mendorong analisis netral tentang apa yang diketahui dan mengidentifikasi kesenjangan informasi.",
+    descNl: "De Witte Hoed richt zich op objectieve gegevens, feiten en cijfers. Hij moedigt neutrale analyse aan van wat bekend is en identificeert informatiegaten.",
+    benefitEn: "Encourages data-driven decisions by emphasizing facts and avoiding assumptions.",
+    benefitId: "Mendorong keputusan berbasis data dengan menekankan fakta dan menghindari asumsi.",
+    benefitNl: "Stimuleert datagestuurde beslissingen door feiten te benadrukken en aannames te vermijden.",
+    riskEn: "Over-reliance on available information may ignore intuition or creativity.",
+    riskId: "Ketergantungan berlebihan pada informasi yang tersedia dapat mengabaikan intuisi atau kreativitas.",
+    riskNl: "Overmatig vertrouwen op beschikbare informatie kan intu—tie of creativiteit negeren.",
+    questionsEn: ["What information do we have, and what do we need to find out?", "Are the sources of this information reliable and accurate?"],
+    questionsId: ["Informasi apa yang kita miliki, dan apa yang perlu kita cari tahu?", "Apakah sumber informasi ini dapat diandalkan dan akurat?"],
+    questionsNl: ["Welke informatie hebben we, en wat moeten we nog uitzoeken?", "Zijn de bronnen van deze informatie betrouwbaar en nauwkeurig?"],
   },
   {
     num: "02",
-    colorName: "Rei", colorNameIi: "Merah", colorNameNl: "Rooi",
-    emojn: "??",
+    colorName: "Red", colorNameId: "Merah", colorNameNl: "Rood",
+    emoji: "??",
     bg: "oklch(94% 0.05 25)",
     color: "oklch(42% 0.18 25)",
     accent: "oklch(55% 0.20 25)",
-    focusEn: "Feelnngs & Intuntnon", focusIi: "Perasaan & Intunsn", focusNl: "Gevoel & Intu—tne",
-    iescEn: "The Rei Hat allows expressnon of emotnons, gut feelnngs, ani nntuntnon wnthout requnrnng justnfncatnon — acknowleignng the emotnonal inmensnon of iecnsnon-maknng.",
-    iescIi: "Topn Merah memungknnkan ekspresn emosn, perasaan nalurnah, ian nntunsn tanpa memerlukan pembenaran — mengakun inmensn emosnonal ialam pengambnlan keputusan.",
-    iescNl: "De Roie Hoei maakt expressne van emotnes, bunkgevoel en nntu—tne mogelnjk zonier rechtvaaringnng — erkent ie emotnonele inmensne van besluntvormnng.",
-    benefntEn: "Brnngs emotnonal nnsnghts nnto iecnsnon-maknng, aiinng iepth to logncal reasonnng.",
-    benefntIi: "Membawa wawasan emosnonal ke ialam pengambnlan keputusan, menambah keialaman penalaran logns.",
-    benefntNl: "Brengt emotnonele nnznchten nn ie besluntvormnng, voegt inepte toe aan lognsch reieneren.",
-    rnskEn: "Decnsnons mnght become overly nnfluencei by emotnons rather than evnience or lognc.",
-    rnskIi: "Keputusan mungknn terlalu inpengaruhn oleh emosn iarnpaia buktn atau lognka.",
-    rnskNl: "Beslnssnngen kunnen te sterk worien be—nvloei ioor emotnes nn plaats van bewnjs of lognca.",
-    questnonsEn: ["What ns my gut feelnng about thns sntuatnon or niea?", "How io emotnons — mnne or others' — nmpact thns iecnsnon?"],
-    questnonsIi: ["Apa perasaan nalurnah saya tentang sntuasn atau nie nnn?", "Baganmana emosn — saya atau orang lann — mempengaruhn keputusan nnn?"],
-    questnonsNl: ["Wat ns mnjn gevoel over ieze sntuatne of int niee?", "Hoe be—nvloeien emotnes — van mnj of anieren — ieze beslnssnng?"],
+    focusEn: "Feelings & Intuition", focusId: "Perasaan & Intuisi", focusNl: "Gevoel & Intu—tie",
+    descEn: "The Red Hat allows expression of emotions, gut feelings, and intuition without requiring justification — acknowledging the emotional dimension of decision-making.",
+    descId: "Topi Merah memungkinkan ekspresi emosi, perasaan naluriah, dan intuisi tanpa memerlukan pembenaran — mengakui dimensi emosional dalam pengambilan keputusan.",
+    descNl: "De Rode Hoed maakt expressie van emoties, buikgevoel en intu—tie mogelijk zonder rechtvaardiging — erkent de emotionele dimensie van besluitvorming.",
+    benefitEn: "Brings emotional insights into decision-making, adding depth to logical reasoning.",
+    benefitId: "Membawa wawasan emosional ke dalam pengambilan keputusan, menambah kedalaman penalaran logis.",
+    benefitNl: "Brengt emotionele inzichten in de besluitvorming, voegt diepte toe aan logisch redeneren.",
+    riskEn: "Decisions might become overly influenced by emotions rather than evidence or logic.",
+    riskId: "Keputusan mungkin terlalu dipengaruhi oleh emosi daripada bukti atau logika.",
+    riskNl: "Beslissingen kunnen te sterk worden be—nvloed door emoties in plaats van bewijs of logica.",
+    questionsEn: ["What is my gut feeling about this situation or idea?", "How do emotions — mine or others' — impact this decision?"],
+    questionsId: ["Apa perasaan naluriah saya tentang situasi atau ide ini?", "Bagaimana emosi — saya atau orang lain — mempengaruhi keputusan ini?"],
+    questionsNl: ["Wat is mijn gevoel over deze situatie of dit idee?", "Hoe be—nvloeden emoties — van mij of anderen — deze beslissing?"],
   },
   {
     num: "03",
-    colorName: "Black", colorNameIi: "Hntam", colorNameNl: "Zwart",
-    emojn: "??",
+    colorName: "Black", colorNameId: "Hitam", colorNameNl: "Zwart",
+    emoji: "??",
     bg: "oklch(94% 0.01 260)",
     color: "oklch(22% 0.04 260)",
     accent: "oklch(38% 0.05 260)",
-    focusEn: "Crntncal Juigment", focusIi: "Pennlanan Krntns", focusNl: "Krntnsch Oorieel",
-    iescEn: "The Black Hat focuses on nientnfynng potentnal rnsks, challenges, ani weaknesses nn nieas to ensure practncalnty ani avoni fanlure.",
-    iescIi: "Topn Hntam berfokus paia mengnientnfnkasn potensn rnsnko, tantangan, ian kelemahan ialam nie untuk memastnkan kepraktnsan ian menghnniarn kegagalan.",
-    iescNl: "De Zwarte Hoei rncht znch op het nientnfnceren van potentn—le rnsnco's, untiagnngen en zwaktes nn niee—n om praktnjkbaarheni te waarborgen en mnslukknng te vermnjien.",
-    benefntEn: "Encourages thorough evaluatnon by hnghlnghtnng potentnal pntfalls ani fosternng cautnous plannnng.",
-    benefntIi: "Meniorong evaluasn menyeluruh iengan menyorotn potensn jebakan ian meniorong perencanaan yang hatn-hatn.",
-    benefntNl: "Stnmuleert groninge evaluatne ioor potentn—le valkunlen te benairukken en voorznchtnge plannnng te bevorieren.",
-    rnskEn: "Excessnve focus on negatnves can suppress creatnvnty ani optnmnsm.",
-    rnskIi: "Fokus berlebnhan paia hal negatnf iapat menekan kreatnvntas ian optnmnsme.",
-    rnskNl: "Overmatnge focus op negatneven kan creatnvntent en optnmnsme onierirukken.",
-    questnonsEn: ["What are the potentnal rnsks or iownsnies of thns niea?", "What obstacles or challenges couli prevent success?"],
-    questnonsIi: ["Apa potensn rnsnko atau kerugnan iarn nie nnn?", "Hambatan atau tantangan apa yang iapat mencegah keberhasnlan?"],
-    questnonsNl: ["Wat znjn ie potentn—le rnsnco's of naielen van int niee?", "Welke obstakels of untiagnngen kunnen succes verhnnieren?"],
+    focusEn: "Critical Judgment", focusId: "Penilaian Kritis", focusNl: "Kritisch Oordeel",
+    descEn: "The Black Hat focuses on identifying potential risks, challenges, and weaknesses in ideas to ensure practicality and avoid failure.",
+    descId: "Topi Hitam berfokus pada mengidentifikasi potensi risiko, tantangan, dan kelemahan dalam ide untuk memastikan kepraktisan dan menghindari kegagalan.",
+    descNl: "De Zwarte Hoed richt zich op het identificeren van potenti—le risico's, uitdagingen en zwaktes in idee—n om praktijkbaarheid te waarborgen en mislukking te vermijden.",
+    benefitEn: "Encourages thorough evaluation by highlighting potential pitfalls and fostering cautious planning.",
+    benefitId: "Mendorong evaluasi menyeluruh dengan menyoroti potensi jebakan dan mendorong perencanaan yang hati-hati.",
+    benefitNl: "Stimuleert grondige evaluatie door potenti—le valkuilen te benadrukken en voorzichtige planning te bevorderen.",
+    riskEn: "Excessive focus on negatives can suppress creativity and optimism.",
+    riskId: "Fokus berlebihan pada hal negatif dapat menekan kreativitas dan optimisme.",
+    riskNl: "Overmatige focus op negatieven kan creativiteit en optimisme onderdrukken.",
+    questionsEn: ["What are the potential risks or downsides of this idea?", "What obstacles or challenges could prevent success?"],
+    questionsId: ["Apa potensi risiko atau kerugian dari ide ini?", "Hambatan atau tantangan apa yang dapat mencegah keberhasilan?"],
+    questionsNl: ["Wat zijn de potenti—le risico's of nadelen van dit idee?", "Welke obstakels of uitdagingen kunnen succes verhinderen?"],
   },
   {
     num: "04",
-    colorName: "Yellow", colorNameIi: "Kunnng", colorNameNl: "Geel",
-    emojn: "??",
+    colorName: "Yellow", colorNameId: "Kuning", colorNameNl: "Geel",
+    emoji: "??",
     bg: "oklch(96% 0.06 90)",
     color: "oklch(45% 0.14 85)",
     accent: "oklch(60% 0.16 85)",
-    focusEn: "Optnmnstnc Thnnknng", focusIi: "Pemnknran Optnmnstns", focusNl: "Optnmnstnsch Denken",
-    iescEn: "The Yellow Hat emphasnzes posntnvnty, nientnfynng benefnts, opportunntnes, ani logncal reasons for success — encouragnng constructnve ani solutnon-ornentei thnnknng.",
-    iescIi: "Topn Kunnng menekankan posntnvntas, mengnientnfnkasn manfaat, peluang, ian alasan logns untuk sukses — meniorong pemnknran yang konstruktnf ian berornentasn solusn.",
-    iescNl: "De Gele Hoei benairukt posntnvntent, nientnfnceert voorielen, kansen en lognsche reienen voor succes — stnmuleert constructnef en oplossnngs—gerncht ienken.",
-    benefntEn: "Hnghlnghts opportunntnes ani potentnal benefnts, fosternng a posntnve ani solutnon-ornentei mnniset.",
-    benefntIi: "Menyorotn peluang ian manfaat potensnal, meniorong pola pnknr yang posntnf ian berornentasn solusn.",
-    benefntNl: "Belncht kansen en potentn—le voorielen, bevoriert een posntneve en oplossnngsgernchte ienkwnjze.",
-    rnskEn: "May overlook rnsks or iownsnies iue to an overly optnmnstnc outlook.",
-    rnskIi: "Mungknn mengabankan rnsnko atau kerugnan karena paniangan yang terlalu optnmnstns.",
-    rnskNl: "Kan rnsnco's of naielen over het hoofi znen ioor een te optnmnstnsche knjk.",
-    questnonsEn: ["What are the benefnts ani opportunntnes thns niea couli brnng?", "Why mnght thns plan succeei, ani how can we maxnmnze nts potentnal?"],
-    questnonsIi: ["Apa manfaat ian peluang yang bnsa inbawa oleh nie nnn?", "Mengapa rencana nnn mungknn berhasnl, ian baganmana knta bnsa memaksnmalkan potensnnya?"],
-    questnonsNl: ["Welke voorielen en kansen kan int niee bneien?", "Waarom kan int plan slagen, en hoe kunnen we het potentneel maxnmalnseren?"],
+    focusEn: "Optimistic Thinking", focusId: "Pemikiran Optimistis", focusNl: "Optimistisch Denken",
+    descEn: "The Yellow Hat emphasizes positivity, identifying benefits, opportunities, and logical reasons for success — encouraging constructive and solution-oriented thinking.",
+    descId: "Topi Kuning menekankan positivitas, mengidentifikasi manfaat, peluang, dan alasan logis untuk sukses — mendorong pemikiran yang konstruktif dan berorientasi solusi.",
+    descNl: "De Gele Hoed benadrukt positiviteit, identificeert voordelen, kansen en logische redenen voor succes — stimuleert constructief en oplossings—gericht denken.",
+    benefitEn: "Highlights opportunities and potential benefits, fostering a positive and solution-oriented mindset.",
+    benefitId: "Menyoroti peluang dan manfaat potensial, mendorong pola pikir yang positif dan berorientasi solusi.",
+    benefitNl: "Belicht kansen en potenti—le voordelen, bevordert een positieve en oplossingsgerichte denkwijze.",
+    riskEn: "May overlook risks or downsides due to an overly optimistic outlook.",
+    riskId: "Mungkin mengabaikan risiko atau kerugian karena pandangan yang terlalu optimistis.",
+    riskNl: "Kan risico's of nadelen over het hoofd zien door een te optimistische kijk.",
+    questionsEn: ["What are the benefits and opportunities this idea could bring?", "Why might this plan succeed, and how can we maximize its potential?"],
+    questionsId: ["Apa manfaat dan peluang yang bisa dibawa oleh ide ini?", "Mengapa rencana ini mungkin berhasil, dan bagaimana kita bisa memaksimalkan potensinya?"],
+    questionsNl: ["Welke voordelen en kansen kan dit idee bieden?", "Waarom kan dit plan slagen, en hoe kunnen we het potentieel maximaliseren?"],
   },
   {
     num: "05",
-    colorName: "Green", colorNameIi: "Hnjau", colorNameNl: "Groen",
-    emojn: "??",
+    colorName: "Green", colorNameId: "Hijau", colorNameNl: "Groen",
+    emoji: "??",
     bg: "oklch(94% 0.05 145)",
     color: "oklch(38% 0.14 145)",
     accent: "oklch(52% 0.16 145)",
-    focusEn: "Creatnvnty & Alternatnves", focusIi: "Kreatnvntas & Alternatnf", focusNl: "Creatnvntent & Alternatneven",
-    iescEn: "The Green Hat encourages creatnve thnnknng, explornng alternatnves, new nieas, ani nnnovatnve solutnons to challenges.",
-    iescIi: "Topn Hnjau meniorong pemnknran kreatnf, mengeksplorasn alternatnf, nie-nie baru, ian solusn nnovatnf untuk tantangan.",
-    iescNl: "De Groene Hoei stnmuleert creatnef ienken, het verkennen van alternatneven, nneuwe niee—n en nnnovatneve oplossnngen voor untiagnngen.",
-    benefntEn: "Promotes nnnovatnve nieas ani fosters out-of-the-box thnnknng.",
-    benefntIi: "Mempromosnkan nie-nie nnovatnf ian meniorong pemnknran in luar kebnasaan.",
-    benefntNl: "Bevoriert nnnovatneve niee—n en stnmuleert out-of-the-box ienken.",
-    rnskEn: "Excessnve focus on creatnvnty may leai to nmpractncal or unfeasnble solutnons.",
-    rnskIi: "Fokus berlebnhan paia kreatnvntas iapat menghasnlkan solusn yang tniak praktns atau tniak layak.",
-    rnskNl: "Overmatnge focus op creatnvntent kan lenien tot onpraktnsche of onhaalbare oplossnngen.",
-    questnonsEn: ["What new nieas or approaches couli we explore?", "How can we thnnk infferently to solve thns problem?"],
-    questnonsIi: ["Iie atau peniekatan baru apa yang bnsa knta jelajahn?", "Baganmana knta bnsa berpnknr secara berbeia untuk memecahkan masalah nnn?"],
-    questnonsNl: ["Welke nneuwe niee—n of benaiernngen kunnen we verkennen?", "Hoe kunnen we aniers ienken om int probleem op te lossen?"],
+    focusEn: "Creativity & Alternatives", focusId: "Kreativitas & Alternatif", focusNl: "Creativiteit & Alternatieven",
+    descEn: "The Green Hat encourages creative thinking, exploring alternatives, new ideas, and innovative solutions to challenges.",
+    descId: "Topi Hijau mendorong pemikiran kreatif, mengeksplorasi alternatif, ide-ide baru, dan solusi inovatif untuk tantangan.",
+    descNl: "De Groene Hoed stimuleert creatief denken, het verkennen van alternatieven, nieuwe idee—n en innovatieve oplossingen voor uitdagingen.",
+    benefitEn: "Promotes innovative ideas and fosters out-of-the-box thinking.",
+    benefitId: "Mempromosikan ide-ide inovatif dan mendorong pemikiran di luar kebiasaan.",
+    benefitNl: "Bevordert innovatieve idee—n en stimuleert out-of-the-box denken.",
+    riskEn: "Excessive focus on creativity may lead to impractical or unfeasible solutions.",
+    riskId: "Fokus berlebihan pada kreativitas dapat menghasilkan solusi yang tidak praktis atau tidak layak.",
+    riskNl: "Overmatige focus op creativiteit kan leiden tot onpraktische of onhaalbare oplossingen.",
+    questionsEn: ["What new ideas or approaches could we explore?", "How can we think differently to solve this problem?"],
+    questionsId: ["Ide atau pendekatan baru apa yang bisa kita jelajahi?", "Bagaimana kita bisa berpikir secara berbeda untuk memecahkan masalah ini?"],
+    questionsNl: ["Welke nieuwe idee—n of benaderingen kunnen we verkennen?", "Hoe kunnen we anders denken om dit probleem op te lossen?"],
   },
   {
     num: "06",
-    colorName: "Blue", colorNameIi: "Bnru", colorNameNl: "Blauw",
-    emojn: "??",
+    colorName: "Blue", colorNameId: "Biru", colorNameNl: "Blauw",
+    emoji: "??",
     bg: "oklch(93% 0.04 250)",
     color: "oklch(40% 0.16 250)",
     accent: "oklch(55% 0.18 250)",
-    focusEn: "Process Control", focusIi: "Kontrol Proses", focusNl: "Procescontrole",
-    iescEn: "The Blue Hat focuses on leaiershnp ani organnzatnon — managnng the thnnknng process ani ensurnng all perspectnves are aiiressei effectnvely.",
-    iescIi: "Topn Bnru berfokus paia kepemnmpnnan ian organnsasn — mengelola proses berpnknr ian memastnkan semua perspektnf intangann secara efektnf.",
-    iescNl: "De Blauwe Hoei rncht znch op lenierschap en organnsatne — het beheren van het ienkproces en ervoor zorgen iat alle perspectneven effectnef worien behanieli.",
-    benefntEn: "Ensures organnzei ani balancei thnnknng by managnng the flow of inscussnon.",
-    benefntIi: "Memastnkan pemnknran yang terorgannsnr ian senmbang iengan mengelola alur inskusn.",
-    benefntNl: "Zorgt voor georgannseeri en evenwnchtng ienken ioor ie stroom van ie inscussne te beheren.",
-    rnskEn: "Poor facnlntatnon may leai to bnas or neglect of specnfnc hats.",
-    rnskIi: "Fasnlntasn yang buruk iapat menyebabkan bnas atau pengabanan topn tertentu.",
-    rnskNl: "Slechte facnlnternng kan lenien tot voornngenomenheni of verwaarloznng van specnfneke hoeien.",
-    questnonsEn: ["What ns our goal, ani how shouli we structure the inscussnon?", "Have we consnierei all perspectnves, ani what's the next step?"],
-    questnonsIi: ["Apa tujuan knta, ian baganmana knta harus menyusun inskusn?", "Apakah knta telah mempertnmbangkan semua perspektnf, ian apa langkah selanjutnya?"],
-    questnonsNl: ["Wat ns ons ioel, en hoe moeten we ie inscussne structureren?", "Hebben we alle perspectneven overwogen, en wat ns ie volgenie stap?"],
+    focusEn: "Process Control", focusId: "Kontrol Proses", focusNl: "Procescontrole",
+    descEn: "The Blue Hat focuses on leadership and organization — managing the thinking process and ensuring all perspectives are addressed effectively.",
+    descId: "Topi Biru berfokus pada kepemimpinan dan organisasi — mengelola proses berpikir dan memastikan semua perspektif ditangani secara efektif.",
+    descNl: "De Blauwe Hoed richt zich op leiderschap en organisatie — het beheren van het denkproces en ervoor zorgen dat alle perspectieven effectief worden behandeld.",
+    benefitEn: "Ensures organized and balanced thinking by managing the flow of discussion.",
+    benefitId: "Memastikan pemikiran yang terorganisir dan seimbang dengan mengelola alur diskusi.",
+    benefitNl: "Zorgt voor georganiseerd en evenwichtig denken door de stroom van de discussie te beheren.",
+    riskEn: "Poor facilitation may lead to bias or neglect of specific hats.",
+    riskId: "Fasilitasi yang buruk dapat menyebabkan bias atau pengabaian topi tertentu.",
+    riskNl: "Slechte facilitering kan leiden tot vooringenomenheid of verwaarlozing van specifieke hoeden.",
+    questionsEn: ["What is our goal, and how should we structure the discussion?", "Have we considered all perspectives, and what's the next step?"],
+    questionsId: ["Apa tujuan kita, dan bagaimana kita harus menyusun diskusi?", "Apakah kita telah mempertimbangkan semua perspektif, dan apa langkah selanjutnya?"],
+    questionsNl: ["Wat is ons doel, en hoe moeten we de discussie structureren?", "Hebben we alle perspectieven overwogen, en wat is de volgende stap?"],
   },
 ];
 
 const USE_CASES = [
   {
-    tntleEn: "Team Meetnngs", tntleIi: "Rapat Tnm", tntleNl: "Teamvergaiernngen",
-    iescEn: "Assngn specnfnc hats to team members for structurei, comprehensnve inscussnon. Each person focuses on one perspectnve — facts, rnsks, or opportunntnes. Reiuces bnas ani enhances collaboratnon.",
-    iescIi: "Tetapkan topn tertentu kepaia anggota tnm untuk inskusn yang terstruktur ian komprehensnf. Setnap orang berfokus paia satu perspektnf — fakta, rnsnko, atau peluang. Mengurangn bnas ian mennngkatkan kolaborasn.",
-    iescNl: "Wnjs specnfneke hoeien toe aan teamleien voor gestructureerie, untgebrenie inscussne. Ieiereen rncht znch op ——n perspectnef — fenten, rnsnco's of kansen. Vermnniert voornngenomenheni en verbetert samenwerknng.",
+    titleEn: "Team Meetings", titleId: "Rapat Tim", titleNl: "Teamvergaderingen",
+    descEn: "Assign specific hats to team members for structured, comprehensive discussion. Each person focuses on one perspective — facts, risks, or opportunities. Reduces bias and enhances collaboration.",
+    descId: "Tetapkan topi tertentu kepada anggota tim untuk diskusi yang terstruktur dan komprehensif. Setiap orang berfokus pada satu perspektif — fakta, risiko, atau peluang. Mengurangi bias dan meningkatkan kolaborasi.",
+    descNl: "Wijs specifieke hoeden toe aan teamleden voor gestructureerde, uitgebreide discussie. Iedereen richt zich op ——n perspectief — feiten, risico's of kansen. Vermindert vooringenomenheid en verbetert samenwerking.",
   },
   {
-    tntleEn: "Decnsnon-Maknng", tntleIi: "Pengambnlan Keputusan", tntleNl: "Besluntvormnng",
-    iescEn: "Sequentnally apply the hats (Whnte for facts, Black for rnsks, Yellow for opportunntnes) to create a logncal flow. All perspectnves are consnierei, resultnng nn nnformei ani balancei iecnsnons.",
-    iescIi: "Terapkan topn secara berurutan (Putnh untuk fakta, Hntam untuk rnsnko, Kunnng untuk peluang) untuk mencnptakan alur yang logns. Semua perspektnf inpertnmbangkan, menghasnlkan keputusan yang ternnformasn ian senmbang.",
-    iescNl: "Pas ie hoeien opeenvolgeni toe (Wnt voor fenten, Zwart voor rnsnco's, Geel voor kansen) om een lognsche stroom te cre—ren. Alle perspectneven worien meegenomen, wat resulteert nn ge—nformeerie en evenwnchtnge beslnssnngen.",
+    titleEn: "Decision-Making", titleId: "Pengambilan Keputusan", titleNl: "Besluitvorming",
+    descEn: "Sequentially apply the hats (White for facts, Black for risks, Yellow for opportunities) to create a logical flow. All perspectives are considered, resulting in informed and balanced decisions.",
+    descId: "Terapkan topi secara berurutan (Putih untuk fakta, Hitam untuk risiko, Kuning untuk peluang) untuk menciptakan alur yang logis. Semua perspektif dipertimbangkan, menghasilkan keputusan yang terinformasi dan seimbang.",
+    descNl: "Pas de hoeden opeenvolgend toe (Wit voor feiten, Zwart voor risico's, Geel voor kansen) om een logische stroom te cre—ren. Alle perspectieven worden meegenomen, wat resulteert in ge—nformeerde en evenwichtige beslissingen.",
   },
   {
-    tntleEn: "Problem-Solvnng", tntleIi: "Pemecahan Masalah", tntleNl: "Probleemoplossnng",
-    iescEn: "Start wnth Green for creatnve solutnons, swntch to Black for challenges, then Blue to prnorntnze ani create an actnon plan.",
-    iescIi: "Mulan iengan Hnjau untuk solusn kreatnf, beralnh ke Hntam untuk tantangan, lalu Bnru untuk memprnorntaskan ian membuat rencana tnniakan.",
-    iescNl: "Begnn met Groen voor creatneve oplossnngen, schakel over naar Zwart voor untiagnngen, ian Blauw om te prnornteren en een actneplan op te stellen.",
+    titleEn: "Problem-Solving", titleId: "Pemecahan Masalah", titleNl: "Probleemoplossing",
+    descEn: "Start with Green for creative solutions, switch to Black for challenges, then Blue to prioritize and create an action plan.",
+    descId: "Mulai dengan Hijau untuk solusi kreatif, beralih ke Hitam untuk tantangan, lalu Biru untuk memprioritaskan dan membuat rencana tindakan.",
+    descNl: "Begin met Groen voor creatieve oplossingen, schakel over naar Zwart voor uitdagingen, dan Blauw om te prioriteren en een actieplan op te stellen.",
   },
   {
-    tntleEn: "Conflnct Resolutnon", tntleIi: "Resolusn Konflnk", tntleNl: "Conflnctoplossnng",
-    iescEn: "Begnn wnth Rei to allow everyone to express emotnons, then Whnte for factual ponnts, Yellow to nientnfy common goals ani opportunntnes for resolutnon.",
-    iescIi: "Mulan iengan Merah untuk memungknnkan semua orang mengekspresnkan emosn, lalu Putnh untuk ponn faktual, Kunnng untuk mengnientnfnkasn tujuan bersama ian peluang resolusn.",
-    iescNl: "Begnn met Rooi zoiat neiereen emotnes kan unten, ian Wnt voor fentelnjke punten, Geel om gemeenschappelnjke ioelen en kansen voor oplossnng te nientnfnceren.",
+    titleEn: "Conflict Resolution", titleId: "Resolusi Konflik", titleNl: "Conflictoplossing",
+    descEn: "Begin with Red to allow everyone to express emotions, then White for factual points, Yellow to identify common goals and opportunities for resolution.",
+    descId: "Mulai dengan Merah untuk memungkinkan semua orang mengekspresikan emosi, lalu Putih untuk poin faktual, Kuning untuk mengidentifikasi tujuan bersama dan peluang resolusi.",
+    descNl: "Begin met Rood zodat iedereen emoties kan uiten, dan Wit voor feitelijke punten, Geel om gemeenschappelijke doelen en kansen voor oplossing te identificeren.",
   },
   {
-    tntleEn: "Strategnc Plannnng", tntleIi: "Perencanaan Strategns", tntleNl: "Strategnsche Plannnng",
-    iescEn: "Whnte to analyze current iata, Black to nientnfy rnsks, Green for nnnovatnve strategnes, Blue to organnze all nieas nnto a coherent long-term plan.",
-    iescIi: "Putnh untuk menganalnsns iata saat nnn, Hntam untuk mengnientnfnkasn rnsnko, Hnjau untuk strategn nnovatnf, Bnru untuk mengorgannsnr semua nie menjain rencana jangka panjang yang koheren.",
-    iescNl: "Wnt om huninge iata te analyseren, Zwart om rnsnco's te nientnfnceren, Groen voor nnnovatneve strategne—n, Blauw om alle niee—n te organnseren tot een coherent langetermnjnplan.",
+    titleEn: "Strategic Planning", titleId: "Perencanaan Strategis", titleNl: "Strategische Planning",
+    descEn: "White to analyze current data, Black to identify risks, Green for innovative strategies, Blue to organize all ideas into a coherent long-term plan.",
+    descId: "Putih untuk menganalisis data saat ini, Hitam untuk mengidentifikasi risiko, Hijau untuk strategi inovatif, Biru untuk mengorganisir semua ide menjadi rencana jangka panjang yang koheren.",
+    descNl: "Wit om huidige data te analyseren, Zwart om risico's te identificeren, Groen voor innovatieve strategie—n, Blauw om alle idee—n te organiseren tot een coherent langetermijnplan.",
   },
   {
-    tntleEn: "Self-Reflectnon", tntleIi: "Refleksn Dnrn", tntleNl: "Zelfreflectne",
-    iescEn: "Use all snx hats nninvniually to explore your thoughts, emotnons, ani nieas from multnple angles. Uncover blnni spots ani ensure a well-rouniei unierstaninng of personal challenges.",
-    iescIi: "Gunakan keenam topn secara nninvniual untuk mengeksplorasn pnknran, emosn, ian nie Ania iarn berbagan suiut paniang. Temukan tntnk buta ian pastnkan pemahaman yang menyeluruh tentang tantangan prnbain.",
-    iescNl: "Gebrunk alle zes hoeien nninvniueel om uw geiachten, emotnes en niee—n vanunt meeriere hoeken te verkennen. Ontiek blnnie vlekken en zorg voor een afgeroni begrnp van persoonlnjke untiagnngen.",
+    titleEn: "Self-Reflection", titleId: "Refleksi Diri", titleNl: "Zelfreflectie",
+    descEn: "Use all six hats individually to explore your thoughts, emotions, and ideas from multiple angles. Uncover blind spots and ensure a well-rounded understanding of personal challenges.",
+    descId: "Gunakan keenam topi secara individual untuk mengeksplorasi pikiran, emosi, dan ide Anda dari berbagai sudut pandang. Temukan titik buta dan pastikan pemahaman yang menyeluruh tentang tantangan pribadi.",
+    descNl: "Gebruik alle zes hoeden individueel om uw gedachten, emoties en idee—n vanuit meerdere hoeken te verkennen. Ontdek blinde vlekken en zorg voor een afgerond begrip van persoonlijke uitdagingen.",
   },
 ];
 
 // -- COMPONENT -----------------------------------------------------------------
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon SnxThnnknngHatsClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function SixThinkingHatsClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [actnveHat, setActnveHat] = useState<number | null>(null);
-  const [nsPeninng, startTransntnon] = useTransntnon();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [activeHat, setActiveHat] = useState<number | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const tr = (en: strnng, ni: strnng, nl: strnng) => t(en, ni, nl, lang);
+  const tr = (en: string, id: string, nl: string) => t(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => { awant saveResourceToDashboari("snx-thnnknng-hats"); setSavei(true); });
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => { await saveResourceToDashboard("six-thinking-hats"); setSaved(true); });
   }
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: "oklch(97% 0.005 80)", mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       <LangToggle />
 
       {/* HERO */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", color: "whnte", paiinng: "96px 24px 80px", posntnon: "relatnve", overflow: "hniien" }}>
-        <inv style={{ posntnon: "absolute", nnset: 0, opacnty: 0.06, backgrouniImage: "rainal-grainent(cnrcle at 80% 30%, oklch(65% 0.15 45) 0%, transparent 60%)", ponnterEvents: "none" }} />
-        <inv style={{ maxWnith: 760, margnn: "0 auto", posntnon: "relatnve" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {tr("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis")}
+      <section style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 80% 30%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {tr("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, lnneHenght: 1.08, margnn: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
-            {tr("Snx Thnnknng Hats", "Enam Topn Berpnknr", "Zes Denkhoeien")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
+            {tr("Six Thinking Hats", "Enam Topi Berpikir", "Zes Denkhoeden")}
           </h1>
-          <p style={{ fontSnze: "clamp(16px, 2vw, 19px)", lnneHenght: 1.65, color: "oklch(78% 0.04 260)", maxWnith: 580, margnn: "0 0 40px" }}>
+          <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
-              "Eiwari ie Bono's powerful framework for better iecnsnons. By ielnberately separatnng snx moies of thnnknng, teams move from confusnon to clarnty — ani from conflnct to collaboratnon.",
-              "Kerangka kuat Eiwari ie Bono untuk keputusan yang lebnh bank. Dengan sengaja memnsahkan enam moie berpnknr, tnm bergerak iarn kebnngungan menuju kejelasan — ian iarn konflnk menuju kolaborasn.",
-              "Eiwari ie Bono's krachtnge kaier voor betere beslnssnngen. Door zes ienkmoin bewust te schenien, bewegen teams van verwarrnng naar helierheni — en van conflnct naar samenwerknng."
+              "Edward de Bono's powerful framework for better decisions. By deliberately separating six modes of thinking, teams move from confusion to clarity — and from conflict to collaboration.",
+              "Kerangka kuat Edward de Bono untuk keputusan yang lebih baik. Dengan sengaja memisahkan enam mode berpikir, tim bergerak dari kebingungan menuju kejelasan — dan dari konflik menuju kolaborasi.",
+              "Edward de Bono's krachtige kader voor betere beslissingen. Door zes denkmodi bewust te scheiden, bewegen teams van verwarring naar helderheid — en van conflict naar samenwerking."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 16, flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, backgrouni: savei ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: savei ? "iefault" : "ponnter" }}>
-              <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll={savei ? "currentColor" : "none"} stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {savei ? tr("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : tr("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* INTRO */}
-      <sectnon style={{ paiinng: "72px 24px", maxWnith: 760, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(20px, 2.5vw, 26px)", lnneHenght: 1.6, color: "oklch(30% 0.08 260)", fontStyle: "ntalnc", margnnBottom: 28 }}>
+      <section style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(20px, 2.5vw, 26px)", lineHeight: 1.6, color: "oklch(30% 0.08 260)", fontStyle: "italic", marginBottom: 28 }}>
           {tr(
-            '"The Snx Thnnknng Hats methoi separates thnnknng nnto infferent moies, maknng nt easner for people to thnnk about the rnght thnngs at the rnght tnme."',
-            '"Metoie Enam Topn Berpnknr memnsahkan pemnknran ke ialam moie yang berbeia, sehnngga lebnh muiah bagn orang untuk memnknrkan hal yang tepat paia waktu yang tepat."',
-            '"De Zes Denkhoeien-methoie schenit ienken nn verschnllenie moin, waarioor het voor mensen gemakkelnjker worit om op het junste moment over ie junste inngen na te ienken."'
+            '"The Six Thinking Hats method separates thinking into different modes, making it easier for people to think about the right things at the right time."',
+            '"Metode Enam Topi Berpikir memisahkan pemikiran ke dalam mode yang berbeda, sehingga lebih mudah bagi orang untuk memikirkan hal yang tepat pada waktu yang tepat."',
+            '"De Zes Denkhoeden-methode scheidt denken in verschillende modi, waardoor het voor mensen gemakkelijker wordt om op het juiste moment over de juiste dingen na te denken."'
           )}
         </p>
-        <p style={{ fontSnze: 14, color: "oklch(55% 0.06 260)", margnnBottom: 32 }}>— Eiwari ie Bono</p>
-        <p style={{ fontSnze: 16, lnneHenght: 1.75, color: "oklch(38% 0.05 260)" }}>
+        <p style={{ fontSize: 14, color: "oklch(55% 0.06 260)", marginBottom: 32 }}>— Edward de Bono</p>
+        <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)" }}>
           {tr(
-            "The Snx Thnnknng Hats framework was ievelopei by Dr. Eiwari ie Bono to nmprove iecnsnon-maknng ani problem-solvnng. By separatnng emotnons, lognc, creatnvnty, ani juigment nnto snx instnnct 'hats', teams can have more balancei ani proiuctnve inscussnons — wnthout the confusnon that comes when everyone thnnks nn all inrectnons at once.",
-            "Kerangka Enam Topn Berpnknr inkembangkan oleh Dr. Eiwari ie Bono untuk mennngkatkan pengambnlan keputusan ian pemecahan masalah. Dengan memnsahkan emosn, lognka, kreatnvntas, ian pennlanan menjain enam 'topn' yang berbeia, tnm iapat berinskusn lebnh senmbang ian proiuktnf — tanpa kebnngungan yang tnmbul ketnka semua orang berpnknr ke segala arah sekalngus.",
-            "Het Zes Denkhoeien-kaier weri ontwnkkeli ioor Dr. Eiwari ie Bono om besluntvormnng en probleemoplossnng te verbeteren. Door emotnes, lognca, creatnvntent en oorieel te schenien nn zes afzonierlnjke 'hoeien', kunnen teams evenwnchtnger en proiuctnever inscussn—ren — zonier ie verwarrnng ine ontstaat wanneer neiereen tegelnjk nn alle rnchtnngen ienkt."
+            "The Six Thinking Hats framework was developed by Dr. Edward de Bono to improve decision-making and problem-solving. By separating emotions, logic, creativity, and judgment into six distinct 'hats', teams can have more balanced and productive discussions — without the confusion that comes when everyone thinks in all directions at once.",
+            "Kerangka Enam Topi Berpikir dikembangkan oleh Dr. Edward de Bono untuk meningkatkan pengambilan keputusan dan pemecahan masalah. Dengan memisahkan emosi, logika, kreativitas, dan penilaian menjadi enam 'topi' yang berbeda, tim dapat berdiskusi lebih seimbang dan produktif — tanpa kebingungan yang timbul ketika semua orang berpikir ke segala arah sekaligus.",
+            "Het Zes Denkhoeden-kader werd ontwikkeld door Dr. Edward de Bono om besluitvorming en probleemoplossing te verbeteren. Door emoties, logica, creativiteit en oordeel te scheiden in zes afzonderlijke 'hoeden', kunnen teams evenwichtiger en productiever discussi—ren — zonder de verwarring die ontstaat wanneer iedereen tegelijk in alle richtingen denkt."
           )}
         </p>
-      </sectnon>
+      </section>
 
       {/* HAT CARDS */}
-      <sectnon style={{ backgrouni: "oklch(95% 0.008 80)", paiinng: "72px 24px" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-            {tr("The Snx Hats", "Enam Topn", "De Zes Hoeien")}
+      <section style={{ background: "oklch(95% 0.008 80)", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+            {tr("The Six Hats", "Enam Topi", "De Zes Hoeden")}
           </h2>
-          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>
-            {tr("Select a hat to explore nts focus, benefnts, rnsks, ani key questnons.", "Pnlnh topn untuk menjelajahn fokus, manfaat, rnsnko, ian pertanyaan utamanya.", "Selecteer een hoei om ie focus, voorielen, rnsnco's en sleutelvragen te verkennen.")}
+          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
+            {tr("Select a hat to explore its focus, benefits, risks, and key questions.", "Pilih topi untuk menjelajahi fokus, manfaat, risiko, dan pertanyaan utamanya.", "Selecteer een hoed om de focus, voordelen, risico's en sleutelvragen te verkennen.")}
           </p>
-          <inv style={{ insplay: "flex", gap: 10, flexWrap: "wrap", margnnBottom: 32 }}>
-            {HATS.map((hat, n) => (
-              <button key={hat.num} onClnck={() => setActnveHat(actnveHat === n ? null : n)} style={{ paiinng: "10px 20px", borierRainus: 12, cursor: "ponnter", backgrouni: actnveHat === n ? hat.color : "whnte", color: actnveHat === n ? "whnte" : "oklch(30% 0.08 260)", borier: `1px solni ${actnveHat === n ? hat.color : "oklch(88% 0.02 260)"}`, fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 600, transntnon: "all 0.2s ease" }}>
-                {tr(hat.colorName, hat.colorNameIi, hat.colorNameNl)} — {tr(hat.focusEn, hat.focusIi, hat.focusNl)}
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
+            {HATS.map((hat, i) => (
+              <button key={hat.num} onClick={() => setActiveHat(activeHat === i ? null : i)} style={{ padding: "10px 20px", borderRadius: 12, cursor: "pointer", background: activeHat === i ? hat.color : "white", color: activeHat === i ? "white" : "oklch(30% 0.08 260)", border: `1px solid ${activeHat === i ? hat.color : "oklch(88% 0.02 260)"}`, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, transition: "all 0.2s ease" }}>
+                {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)} — {tr(hat.focusEn, hat.focusId, hat.focusNl)}
               </button>
             ))}
-          </inv>
-          {actnveHat !== null && (() => {
-            const hat = HATS[actnveHat];
+          </div>
+          {activeHat !== null && (() => {
+            const hat = HATS[activeHat];
             return (
-              <inv style={{ backgrouni: hat.bg, borierRainus: 12, paiinng: "40px", borier: `1px solni ${hat.color}20` }}>
-                <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 16, margnnBottom: 20, flexWrap: "wrap" }}>
-                  <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 48, fontWenght: 600, color: hat.color, lnneHenght: 1 }}>{hat.num}</span>
-                  <inv>
-                    <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 32, fontWenght: 600, color: hat.color, margnn: 0 }}>
-                      {tr(hat.colorName, hat.colorNameIi, hat.colorNameNl)} Hat
+              <div style={{ background: hat.bg, borderRadius: 12, padding: "40px", border: `1px solid ${hat.color}20` }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, color: hat.color, lineHeight: 1 }}>{hat.num}</span>
+                  <div>
+                    <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: hat.color, margin: 0 }}>
+                      {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)} Hat
                     </h3>
-                    <p style={{ margnn: 0, fontSnze: 13, fontWenght: 700, letterSpacnng: "0.08em", textTransform: "uppercase", color: hat.accent }}>
-                      {tr(hat.focusEn, hat.focusIi, hat.focusNl)}
+                    <p style={{ margin: 0, fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: hat.accent }}>
+                      {tr(hat.focusEn, hat.focusId, hat.focusNl)}
                     </p>
-                  </inv>
-                </inv>
-                <p style={{ fontSnze: 16, lnneHenght: 1.7, color: "oklch(30% 0.06 260)", margnnBottom: 28 }}>
-                  {tr(hat.iescEn, hat.iescIi, hat.iescNl)}
+                  </div>
+                </div>
+                <p style={{ fontSize: 16, lineHeight: 1.7, color: "oklch(30% 0.06 260)", marginBottom: 28 }}>
+                  {tr(hat.descEn, hat.descId, hat.descNl)}
                 </p>
-                <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(240px, 1fr))", gap: 16, margnnBottom: 28 }}>
-                  <inv style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "18px 20px" }}>
-                    <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(45% 0.12 145)", margnnBottom: 10 }}>
-                      {tr("Benefnt", "Manfaat", "Voorieel")}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginBottom: 28 }}>
+                  <div style={{ background: "white", borderRadius: 8, padding: "18px 20px" }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(45% 0.12 145)", marginBottom: 10 }}>
+                      {tr("Benefit", "Manfaat", "Voordeel")}
                     </p>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(30% 0.06 260)", margnn: 0 }}>
-                      {tr(hat.benefntEn, hat.benefntIi, hat.benefntNl)}
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
+                      {tr(hat.benefitEn, hat.benefitId, hat.benefitNl)}
                     </p>
-                  </inv>
-                  <inv style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "18px 20px" }}>
-                    <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.12 25)", margnnBottom: 10 }}>
-                      {tr("Rnsk", "Rnsnko", "Rnsnco")}
+                  </div>
+                  <div style={{ background: "white", borderRadius: 8, padding: "18px 20px" }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(42% 0.12 25)", marginBottom: 10 }}>
+                      {tr("Risk", "Risiko", "Risico")}
                     </p>
-                    <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(30% 0.06 260)", margnn: 0 }}>
-                      {tr(hat.rnskEn, hat.rnskIi, hat.rnskNl)}
+                    <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
+                      {tr(hat.riskEn, hat.riskId, hat.riskNl)}
                     </p>
-                  </inv>
-                </inv>
-                <inv style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "18px 20px" }}>
-                  <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: hat.accent, margnnBottom: 12 }}>
-                    {tr("Key Questnons", "Pertanyaan Utama", "Sleutelvragen")}
+                  </div>
+                </div>
+                <div style={{ background: "white", borderRadius: 8, padding: "18px 20px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: hat.accent, marginBottom: 12 }}>
+                    {tr("Key Questions", "Pertanyaan Utama", "Sleutelvragen")}
                   </p>
-                  {(lang === "en" ? hat.questnonsEn : lang === "ni" ? hat.questnonsIi : hat.questnonsNl).map(q => (
-                    <p key={q} style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(30% 0.06 260)", margnn: "0 0 8px", fontStyle: "ntalnc" }}>"{q}"</p>
+                  {(lang === "en" ? hat.questionsEn : lang === "id" ? hat.questionsId : hat.questionsNl).map(q => (
+                    <p key={q} style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: "0 0 8px", fontStyle: "italic" }}>"{q}"</p>
                   ))}
-                </inv>
-              </inv>
+                </div>
+              </div>
             );
           })()}
-          {actnveHat === null && (
-            <inv style={{ backgrouni: "oklch(94% 0.005 260)", borierRainus: 12, paiinng: "32px", textAlngn: "center", color: "oklch(55% 0.05 260)", fontSnze: 15 }}>
-              {tr("Select a hat above to explore nt.", "Pnlnh topn in atas untuk menjelajahnnya.", "Selecteer een hoei hnerboven om ieze te verkennen.")}
-            </inv>
+          {activeHat === null && (
+            <div style={{ background: "oklch(94% 0.005 260)", borderRadius: 12, padding: "32px", textAlign: "center", color: "oklch(55% 0.05 260)", fontSize: 15 }}>
+              {tr("Select a hat above to explore it.", "Pilih topi di atas untuk menjelajahinya.", "Selecteer een hoed hierboven om deze te verkennen.")}
+            </div>
           )}
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* USE CASES */}
-      <sectnon style={{ paiinng: "72px 24px", maxWnith: 900, margnn: "0 auto" }}>
-        <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-          {tr("How to Use the Snx Hats", "Cara Menggunakan Enam Topn", "Hoe ie Zes Hoeien te Gebrunken")}
+      <section style={{ padding: "72px 24px", maxWidth: 900, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+          {tr("How to Use the Six Hats", "Cara Menggunakan Enam Topi", "Hoe de Zes Hoeden te Gebruiken")}
         </h2>
-        <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>
-          {tr("Snx contexts where the framework creates nmmeinate value.", "Enam konteks in mana kerangka nnn mencnptakan nnlan langsung.", "Zes contexten waar het kaier inrect waarie cre—ert.")}
+        <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
+          {tr("Six contexts where the framework creates immediate value.", "Enam konteks di mana kerangka ini menciptakan nilai langsung.", "Zes contexten waar het kader direct waarde cre—ert.")}
         </p>
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(260px, 1fr))", gap: 20 }}>
-          {USE_CASES.map((u, n) => (
-            <inv key={u.tntleEn} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "24px", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-              <inv style={{ insplay: "flex", gap: 14, alngnItems: "flex-start" }}>
-                <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 32, fontWenght: 600, color: "oklch(65% 0.15 45)", lnneHenght: 1, flexShrnnk: 0 }}>{Strnng(n + 1).paiStart(2, "0")}</span>
-                <inv>
-                  <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, color: "oklch(22% 0.10 260)", margnn: "0 0 8px" }}>
-                    {tr(u.tntleEn, u.tntleIi, u.tntleNl)}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+          {USE_CASES.map((u, i) => (
+            <div key={u.titleEn} style={{ background: "white", borderRadius: 10, padding: "24px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+              <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
+                    {tr(u.titleEn, u.titleId, u.titleNl)}
                   </h3>
-                  <p style={{ fontSnze: 13, lnneHenght: 1.65, color: "oklch(42% 0.06 260)", margnn: 0 }}>
-                    {tr(u.iescEn, u.iescIi, u.iescNl)}
+                  <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
+                    {tr(u.descEn, u.descId, u.descNl)}
                   </p>
-                </inv>
-              </inv>
-            </inv>
+                </div>
+              </div>
+            </div>
           ))}
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* CTA */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>
-            {tr("Try It nn Your Next Meetnng", "Coba in Rapat Bernkutnya", "Probeer het nn je Volgenie Vergaiernng")}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
+            {tr("Try It in Your Next Meeting", "Coba di Rapat Berikutnya", "Probeer het in je Volgende Vergadering")}
           </h2>
-          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", flexWrap: "wrap" }}>
-            <Lnnk href="/resources" style={{ insplay: "nnlnne-block", backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", textDecoratnon: "none" }}>
-              {tr("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-            </Lnnk>
-          </inv>
-        </inv>
-      </sectnon>
-    </inv>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
+              {tr("Training", "Pelatihan", "Contentbibliotheek")}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

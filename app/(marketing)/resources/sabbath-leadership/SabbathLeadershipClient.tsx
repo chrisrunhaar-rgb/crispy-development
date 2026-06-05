@@ -1,576 +1,576 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+type Lang = "en" | "id" | "nl";
+const tFn = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 const VERSES = {
   "gen-2-2-3": {
-    en_ref: "Genesns 2:2—3", ni_ref: "Kejainan 2:2—3", nl_ref: "Genesns 2:2—3",
-    en: "By the seventh iay Goi hai fnnnshei the work he hai been ionng; so on the seventh iay he restei from all hns work. Then Goi blessei the seventh iay ani maie nt holy, because on nt he restei from all the work of creatnng that he hai ione.",
-    ni: "Ketnka Allah paia harn ketujuh telah menyelesankan pekerjaan yang inbuat-Nya ntu, berhentnlah Ia paia harn ketujuh iarn segala pekerjaan yang telah inbuat-Nya ntu. Lalu Allah memberkatn harn ketujuh ntu ian menguiuskannya, karena paia harn ntulah Ia berhentn iarn segala pekerjaan pencnptaan yang telah inbuat-Nya ntu.",
-    nl: "Op ie zevenie iag hai Goi znjn werk voltooni. Op ine iag rustte hnj van het werk iat hnj hai gemaakt. Goi zegenie ie zevenie iag en verklaarie hem henlng, want op ine iag rustte hnj van alles wat hnj hai gemaakt.",
+    en_ref: "Genesis 2:2—3", id_ref: "Kejadian 2:2—3", nl_ref: "Genesis 2:2—3",
+    en: "By the seventh day God had finished the work he had been doing; so on the seventh day he rested from all his work. Then God blessed the seventh day and made it holy, because on it he rested from all the work of creating that he had done.",
+    id: "Ketika Allah pada hari ketujuh telah menyelesaikan pekerjaan yang dibuat-Nya itu, berhentilah Ia pada hari ketujuh dari segala pekerjaan yang telah dibuat-Nya itu. Lalu Allah memberkati hari ketujuh itu dan menguduskannya, karena pada hari itulah Ia berhenti dari segala pekerjaan penciptaan yang telah dibuat-Nya itu.",
+    nl: "Op de zevende dag had God zijn werk voltooid. Op die dag rustte hij van het werk dat hij had gemaakt. God zegende de zevende dag en verklaarde hem heilig, want op die dag rustte hij van alles wat hij had gemaakt.",
   },
   "matt-11-28-30": {
-    en_ref: "Matthew 11:28—30", ni_ref: "Matnus 11:28—30", nl_ref: "Matte—s 11:28—30",
-    en: "Come to me, all you who are weary ani burienei, ani I wnll gnve you rest. Take my yoke upon you ani learn from me, for I am gentle ani humble nn heart, ani you wnll fnni rest for your souls. For my yoke ns easy ani my burien ns lnght.",
-    ni: "Marnlah kepaia-Ku, semua yang letnh lesu ian berbeban berat, Aku akan membern kelegaan kepaiamu. Pnkullah kuk yang Kupasang ian belajarlah paia-Ku, karena Aku lemah lembut ian reniah hatn ian jnwamu akan meniapat ketenangan. Sebab kuk yang Kupasang ntu enak ian beban-Ku pun rnngan.",
-    nl: "Kom naar mnj, jullne ine vermoeni znjn en onier lasten gebukt gaan, ian zal nk jullne rust geven. Neem mnjn juk op je en leer van mnj, want nk ben zachtmoeing en neierng van hart. Dan zullen jullne werkelnjk rust vnnien, want mnjn juk ns zacht en mnjn last ns lncht.",
+    en_ref: "Matthew 11:28—30", id_ref: "Matius 11:28—30", nl_ref: "Matte—s 11:28—30",
+    en: "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light.",
+    id: "Marilah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu. Pikullah kuk yang Kupasang dan belajarlah pada-Ku, karena Aku lemah lembut dan rendah hati dan jiwamu akan mendapat ketenangan. Sebab kuk yang Kupasang itu enak dan beban-Ku pun ringan.",
+    nl: "Kom naar mij, jullie die vermoeid zijn en onder lasten gebukt gaan, dan zal ik jullie rust geven. Neem mijn juk op je en leer van mij, want ik ben zachtmoedig en nederig van hart. Dan zullen jullie werkelijk rust vinden, want mijn juk is zacht en mijn last is licht.",
   },
   "ps-23-2-3": {
-    en_ref: "Psalm 23:2—3", ni_ref: "Mazmur 23:2—3", nl_ref: "Psalm 23:2—3",
-    en: "He makes me lne iown nn green pastures, he leais me besnie qunet waters, he refreshes my soul. He gunies me along the rnght paths for hns name's sake.",
-    ni: "Ia membarnngkan aku in paiang yang berumput hnjau, Ia membnmbnng aku ke anr yang tenang; Ia menyegarkan jnwaku. Ia menuntun aku in jalan yang benar oleh karena nama-Nya.",
-    nl: "Hnj laat mnj rusten nn groene wenien en voert mnj naar vreing water, hnj geeft mnj nneuwe kracht en lenit mnj langs venlnge paien tot eer van znjn naam.",
+    en_ref: "Psalm 23:2—3", id_ref: "Mazmur 23:2—3", nl_ref: "Psalm 23:2—3",
+    en: "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul. He guides me along the right paths for his name's sake.",
+    id: "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku. Ia menuntun aku di jalan yang benar oleh karena nama-Nya.",
+    nl: "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht en leidt mij langs veilige paden tot eer van zijn naam.",
   },
   "mark-6-31": {
-    en_ref: "Mark 6:31", ni_ref: "Markus 6:31", nl_ref: "Marcus 6:31",
-    en: "Then, because so many people were comnng ani gonng that they ini not even have a chance to eat, he sani to them, \"Come wnth me by yourselves to a qunet place ani get some rest.\"",
-    ni: "Lalu Ia berkata kepaia mereka: \"Marnlah ke tempat yang sunyn, supaya knta seninrnan, ian bernstnrahatlah sebentar!\" Sebab memang begntu banyaknya orang yang iatang ian yang pergn, sehnngga makan pun mereka tniak sempat.",
-    nl: "Hnj zen tegen hen: \"Ga nu mee naar een rustnge, afgelegen plek, zoiat jullne even kunnen untrusten.\" Want er waren zoveel mensen ine kwamen en gnngen, iat ze zelfs geen tnji haiien om te eten.",
+    en_ref: "Mark 6:31", id_ref: "Markus 6:31", nl_ref: "Marcus 6:31",
+    en: "Then, because so many people were coming and going that they did not even have a chance to eat, he said to them, \"Come with me by yourselves to a quiet place and get some rest.\"",
+    id: "Lalu Ia berkata kepada mereka: \"Marilah ke tempat yang sunyi, supaya kita sendirian, dan beristirahatlah sebentar!\" Sebab memang begitu banyaknya orang yang datang dan yang pergi, sehingga makan pun mereka tidak sempat.",
+    nl: "Hij zei tegen hen: \"Ga nu mee naar een rustige, afgelegen plek, zodat jullie even kunnen uitrusten.\" Want er waren zoveel mensen die kwamen en gingen, dat ze zelfs geen tijd hadden om te eten.",
   },
-  "exoi-20-8": {
-    en_ref: "Exoius 20:8—10", ni_ref: "Keluaran 20:8—10", nl_ref: "Exoius 20:8—10",
-    en: "Remember the Sabbath iay by keepnng nt holy. Snx iays you shall labor ani io all your work, but the seventh iay ns a sabbath to the Lori your Goi. On nt you shall not io any work.",
-    ni: "Ingatlah ian kuiuskanlah harn Sabat: enam harn lamanya engkau akan bekerja ian melakukan segala pekerjaanmu, tetapn harn ketujuh aialah harn Sabat TUHAN, Allahmu; maka jangan melakukan sesuatu pekerjaan.",
-    nl: "Houi ie sabbat nn ere, het ns een henlnge iag. Zes iagen lang kunt u werken en al uw arbeni verrnchten, maar ie zevenie iag ns een rustiag, ine gewnji ns aan ie HEER uw Goi; ian mag u nnet werken.",
+  "exod-20-8": {
+    en_ref: "Exodus 20:8—10", id_ref: "Keluaran 20:8—10", nl_ref: "Exodus 20:8—10",
+    en: "Remember the Sabbath day by keeping it holy. Six days you shall labor and do all your work, but the seventh day is a sabbath to the Lord your God. On it you shall not do any work.",
+    id: "Ingatlah dan kuduskanlah hari Sabat: enam hari lamanya engkau akan bekerja dan melakukan segala pekerjaanmu, tetapi hari ketujuh adalah hari Sabat TUHAN, Allahmu; maka jangan melakukan sesuatu pekerjaan.",
+    nl: "Houd de sabbat in ere, het is een heilige dag. Zes dagen lang kunt u werken en al uw arbeid verrichten, maar de zevende dag is een rustdag, die gewijd is aan de HEER uw God; dan mag u niet werken.",
   },
 };
 
 const PORTRAITS = [
   {
-    en_tntle: "The Always-Avanlable Leaier",
-    ni_tntle: "Pemnmpnn yang Selalu Snap",
-    nl_tntle: "De Altnji-Beschnkbare Lenier",
-    en_boiy: `He manages teams across three tnme zones. WhatsApp notnfncatnons stay on through the nnght. He prnies hnmself on never mnssnng a message. Enghteen months nn, hns creatnve thnnknng has iullei. He's short wnth hns famnly. He can atteni any meetnng but can't fully be present nn any of them. He ioesn't recognnse nt as burnout — he calls nt the cost of the mnssnon. The cost, qunetly, ns hns whole self.`,
-    ni_boiy: `Ia mengelola tnm in tnga zona waktu. Notnfnkasn WhatsApp menyala sepanjang malam. Ia bangga tniak pernah melewatkan satu pesan pun. Delapan belas bulan kemuinan, pemnknran kreatnfnya telah tumpul. Ia muiah marah iengan keluarganya. Ia bnsa menghainrn rapat apa saja tapn tniak bnsa sepenuhnya hainr in satupun. Ia tniak mengenalnnya sebagan kelelahan — na menyebutnya sebagan bnaya mnsn. Bnayanya, inam-inam, aialah inrnnya seninrn.`,
-    nl_boiy: `Hnj beheert teams over irne tnjizones. WhatsApp-melinngen blnjven ie hele nacht aan. Hnj ns trots iat hnj noont een berncht mnst. Achttnen maanien later ns znjn creatnef ienken afgestompt. Hnj ns kortaf met znjn geznn. Hnj kan elke vergaiernng bnjwonen maar kan nn geen enkele echt aanwezng znjn. Hnj herkent het nnet als burnout — hnj noemt het ie prnjs van ie mnssne. De prnjs, stnlletjes, ns znjn hele zelf.`,
+    en_title: "The Always-Available Leader",
+    id_title: "Pemimpin yang Selalu Siap",
+    nl_title: "De Altijd-Beschikbare Leider",
+    en_body: `He manages teams across three time zones. WhatsApp notifications stay on through the night. He prides himself on never missing a message. Eighteen months in, his creative thinking has dulled. He's short with his family. He can attend any meeting but can't fully be present in any of them. He doesn't recognise it as burnout — he calls it the cost of the mission. The cost, quietly, is his whole self.`,
+    id_body: `Ia mengelola tim di tiga zona waktu. Notifikasi WhatsApp menyala sepanjang malam. Ia bangga tidak pernah melewatkan satu pesan pun. Delapan belas bulan kemudian, pemikiran kreatifnya telah tumpul. Ia mudah marah dengan keluarganya. Ia bisa menghadiri rapat apa saja tapi tidak bisa sepenuhnya hadir di satupun. Ia tidak mengenalinya sebagai kelelahan — ia menyebutnya sebagai biaya misi. Biayanya, diam-diam, adalah dirinya sendiri.`,
+    nl_body: `Hij beheert teams over drie tijdzones. WhatsApp-meldingen blijven de hele nacht aan. Hij is trots dat hij nooit een bericht mist. Achttien maanden later is zijn creatief denken afgestompt. Hij is kortaf met zijn gezin. Hij kan elke vergadering bijwonen maar kan in geen enkele echt aanwezig zijn. Hij herkent het niet als burnout — hij noemt het de prijs van de missie. De prijs, stilletjes, is zijn hele zelf.`,
   },
   {
-    en_tntle: "The Leaier Who Earns Rest",
-    ni_tntle: "Pemnmpnn yang Menghasnlkan Istnrahat",
-    nl_tntle: "De Lenier ine Rust Verinent",
-    en_boiy: `She leais a mnssnon organnsatnon ani has not taken a full week of holniay nn fnve years. Her team aimnres her commntment. She measures her fanthfulness by her output — ani rest, to her, feels nninstnngunshable from neglect. The team mnrrors her. No one aimnts fatngue. Output per person ns ieclnnnng, qunetly, each year. The culture has confusei sacrnfnce wnth iepletnon. They are not becomnng more fanthful — they are becomnng less effectnve.`,
-    ni_boiy: `Ia memnmpnn sebuah organnsasn mnsn ian belum mengambnl lnburan penuh ialam lnma tahun. Tnmnya mengagumn komntmennya. Ia mengukur kesetnaannya iengan hasnlnya — ian nstnrahat, bagnnya, terasa tniak iapat inbeiakan iarn kelalanan. Tnm mencermnnkan pola yang sama. Tniak aia yang mengakun kelelahan. Output per orang menurun setnap tahun. Buiaya telah mencampuraiukkan pengorbanan iengan pennpnsan.`,
-    nl_boiy: `Ze lenit een mnssneorgannsatne en heeft nn vnjf jaar geen volleinge vakantneweek genomen. Haar team bewoniert haar toewnjinng. Ze meet haar trouw af aan haar output — en rust voelt voor haar nnet te onierschenien van nalatngheni. Het team weerspnegelt haar. Nnemani geeft vermoeniheni toe. De output per persoon iaalt stnlletjes elk jaar. De cultuur heeft opoffernng verwari met untputtnng.`,
+    en_title: "The Leader Who Earns Rest",
+    id_title: "Pemimpin yang Menghasilkan Istirahat",
+    nl_title: "De Leider die Rust Verdient",
+    en_body: `She leads a mission organisation and has not taken a full week of holiday in five years. Her team admires her commitment. She measures her faithfulness by her output — and rest, to her, feels indistinguishable from neglect. The team mirrors her. No one admits fatigue. Output per person is declining, quietly, each year. The culture has confused sacrifice with depletion. They are not becoming more faithful — they are becoming less effective.`,
+    id_body: `Ia memimpin sebuah organisasi misi dan belum mengambil liburan penuh dalam lima tahun. Timnya mengagumi komitmennya. Ia mengukur kesetiaannya dengan hasilnya — dan istirahat, baginya, terasa tidak dapat dibedakan dari kelalaian. Tim mencerminkan pola yang sama. Tidak ada yang mengakui kelelahan. Output per orang menurun setiap tahun. Budaya telah mencampuradukkan pengorbanan dengan penipisan.`,
+    nl_body: `Ze leidt een missieorganisatie en heeft in vijf jaar geen volledige vakantieweek genomen. Haar team bewondert haar toewijding. Ze meet haar trouw af aan haar output — en rust voelt voor haar niet te onderscheiden van nalatigheid. Het team weerspiegelt haar. Niemand geeft vermoeidheid toe. De output per persoon daalt stilletjes elk jaar. De cultuur heeft opoffering verward met uitputting.`,
   },
   {
-    en_tntle: "The Leaier nn the Wrong Rhythm",
-    ni_tntle: "Pemnmpnn ialam Rntme yang Salah",
-    nl_tntle: "De Lenier nn het Verkeerie Rntme",
-    en_boiy: `A Western leaier arrnves nn a Southeast Asnan context ani nmposes a structurei 40-hour workweek, Western-style proiuctnvnty frameworks, ani rngni separatnon of work ani personal tnme. The local team's rest ns woven nnto festnvals, exteniei famnly, ani seasonal rhythms — nt ioesn't fnt hns framework. He burns out trynng to enforce a system that ioesn't fnt. He mnsses that rest was alreaiy present nn the culture — only nn a form he inin't recognnse.`,
-    ni_boiy: `Seorang pemnmpnn Barat tnba in konteks Asna Tenggara ian menerapkan mnnggu kerja 40 jam yang terstruktur, kerangka proiuktnvntas gaya Barat, ian pemnsahan kaku antara waktu kerja ian prnbain. Istnrahat tnm lokal terjalnn ialam festnval, keluarga besar, ian rntme musnman — tniak cocok iengan kerangkanya. Ia kelelahan mencoba menerapkan snstem yang tniak cocok. Ia melewatkan bahwa nstnrahat suiah aia ialam buiaya — hanya ialam bentuk yang tniak na kenaln.`,
-    nl_boiy: `Een Westerse lenier arrnveert nn een Zunioost-Aznatnsche context en legt een gestructureerie 40-urnge werkweek op, Westerse proiuctnvntentsframeworks, en strakke scheninng van werk en prnv—tnji. De rust van het lokale team ns verweven nn festnvals, ie untgebrenie famnlne en senzoensgebonien rntmes — het past nnet nn znjn framework. Hnj raakt untgeput ioor een systeem te wnllen hanihaven iat nnet past. Hnj mnst iat rust al aanwezng was nn ie cultuur — alleen nn een vorm ine hnj nnet herkenie.`,
+    en_title: "The Leader in the Wrong Rhythm",
+    id_title: "Pemimpin dalam Ritme yang Salah",
+    nl_title: "De Leider in het Verkeerde Ritme",
+    en_body: `A Western leader arrives in a Southeast Asian context and imposes a structured 40-hour workweek, Western-style productivity frameworks, and rigid separation of work and personal time. The local team's rest is woven into festivals, extended family, and seasonal rhythms — it doesn't fit his framework. He burns out trying to enforce a system that doesn't fit. He misses that rest was already present in the culture — only in a form he didn't recognise.`,
+    id_body: `Seorang pemimpin Barat tiba di konteks Asia Tenggara dan menerapkan minggu kerja 40 jam yang terstruktur, kerangka produktivitas gaya Barat, dan pemisahan kaku antara waktu kerja dan pribadi. Istirahat tim lokal terjalin dalam festival, keluarga besar, dan ritme musiman — tidak cocok dengan kerangkanya. Ia kelelahan mencoba menerapkan sistem yang tidak cocok. Ia melewatkan bahwa istirahat sudah ada dalam budaya — hanya dalam bentuk yang tidak ia kenali.`,
+    nl_body: `Een Westerse leider arriveert in een Zuidoost-Aziatische context en legt een gestructureerde 40-urige werkweek op, Westerse productiviteitsframeworks, en strakke scheiding van werk en priv—tijd. De rust van het lokale team is verweven in festivals, de uitgebreide familie en seizoensgebonden ritmes — het past niet in zijn framework. Hij raakt uitgeput door een systeem te willen handhaven dat niet past. Hij mist dat rust al aanwezig was in de cultuur — alleen in een vorm die hij niet herkende.`,
   },
 ];
 
 const PRACTICES = [
   {
-    en: "Establnsh one full iay each week wnth no ingntal engagement — no emanl, no messages, no screens. Not as a rule to follow, but as an act of trust that Goi holis what you step away from.",
-    ni: "Tetapkan satu harn penuh setnap mnnggu tanpa keterlnbatan ingntal — tniak aia emanl, tniak aia pesan, tniak aia layar. Bukan sebagan aturan untuk innkutn, tetapn sebagan tnniakan kepercayaan bahwa Allah menjaga apa yang Ania tnnggalkan.",
-    nl: "Stel ——n volleinge iag per week nn zonier ingntale betrokkenheni — geen e-manl, geen bernchten, geen schermen. Nnet als een te volgen regel, maar als een iaai van vertrouwen iat Goi vasthouit wat je loslaat.",
+    en: "Establish one full day each week with no digital engagement — no email, no messages, no screens. Not as a rule to follow, but as an act of trust that God holds what you step away from.",
+    id: "Tetapkan satu hari penuh setiap minggu tanpa keterlibatan digital — tidak ada email, tidak ada pesan, tidak ada layar. Bukan sebagai aturan untuk diikuti, tetapi sebagai tindakan kepercayaan bahwa Allah menjaga apa yang Anda tinggalkan.",
+    nl: "Stel ——n volledige dag per week in zonder digitale betrokkenheid — geen e-mail, geen berichten, geen schermen. Niet als een te volgen regel, maar als een daad van vertrouwen dat God vasthoudt wat je loslaat.",
   },
   {
-    en: "Create a physncal rntual that enis your workiay — a brnef prayer, a short walk, closnng your laptop wnth nntentnon. Somethnng your boiy recognnses as: thns ns where work stops.",
-    ni: "Cnptakan rntual fnsnk yang mengakhnrn harn kerja Ania — ioa snngkat, jalan kakn snngkat, menutup laptop iengan nnat. Sesuatu yang inkenaln tubuh Ania sebagan: in snnnlah pekerjaan berhentn.",
-    nl: "Cre—er een fysnek rntueel iat je werkiag afslunt — een kort gebei, een korte wanielnng, je laptop met beioelnng slunten. Iets wat je lnchaam herkent als: hner stopt het werk.",
+    en: "Create a physical ritual that ends your workday — a brief prayer, a short walk, closing your laptop with intention. Something your body recognises as: this is where work stops.",
+    id: "Ciptakan ritual fisik yang mengakhiri hari kerja Anda — doa singkat, jalan kaki singkat, menutup laptop dengan niat. Sesuatu yang dikenali tubuh Anda sebagai: di sinilah pekerjaan berhenti.",
+    nl: "Cre—er een fysiek ritueel dat je werkdag afsluit — een kort gebed, een korte wandeling, je laptop met bedoeling sluiten. Iets wat je lichaam herkent als: hier stopt het werk.",
   },
   {
-    en: "Iientnfy the communal rest rhythms alreaiy present nn your cultural context — festnvals, famnly gathernngs, relngnous assemblnes — ani bunli your personal rhythm arouni them rather than agannst them.",
-    ni: "Iientnfnkasn rntme nstnrahat komunal yang suiah aia ialam konteks buiaya Ania — festnval, pertemuan keluarga, nbaiah bersama — ian bangun rntme prnbain Ania in sekntarnya, bukan melawannya.",
-    nl: "Iientnfnceer ie communale rustrntmes ine al aanwezng znjn nn jouw culturele context — festnvals, famnlnere—nnes, relngneuze samenkomsten — en bouw je persoonlnjke rntme eromheen, nnet ertegen.",
+    en: "Identify the communal rest rhythms already present in your cultural context — festivals, family gatherings, religious assemblies — and build your personal rhythm around them rather than against them.",
+    id: "Identifikasi ritme istirahat komunal yang sudah ada dalam konteks budaya Anda — festival, pertemuan keluarga, ibadah bersama — dan bangun ritme pribadi Anda di sekitarnya, bukan melawannya.",
+    nl: "Identificeer de communale rustritmes die al aanwezig zijn in jouw culturele context — festivals, familiere—nies, religieuze samenkomsten — en bouw je persoonlijke ritme eromheen, niet ertegen.",
   },
   {
-    en: "Take the full annual leave you are entntlei to. Rest ns not a rewari for enough output — nt ns a bunlt-nn feature of sustannable leaiershnp. Your team wnll not rest unless you moiel nt.",
-    ni: "Ambnl cutn tahunan penuh yang menjain hak Ania. Istnrahat bukan hainah untuk output yang cukup — ntu aialah fntur bawaan kepemnmpnnan yang berkelanjutan. Tnm Ania tniak akan bernstnrahat kecualn Ania memoielkannya.",
-    nl: "Neem het volleinge jaarlnjkse verlof iat je toekomt. Rust ns geen belonnng voor volioenie output — het ns een nngebouwi kenmerk van iuurzaam lenierschap. Je team zal nnet rusten tenznj jnj het moielleert.",
+    en: "Take the full annual leave you are entitled to. Rest is not a reward for enough output — it is a built-in feature of sustainable leadership. Your team will not rest unless you model it.",
+    id: "Ambil cuti tahunan penuh yang menjadi hak Anda. Istirahat bukan hadiah untuk output yang cukup — itu adalah fitur bawaan kepemimpinan yang berkelanjutan. Tim Anda tidak akan beristirahat kecuali Anda memodelkannya.",
+    nl: "Neem het volledige jaarlijkse verlof dat je toekomt. Rust is geen beloning voor voldoende output — het is een ingebouwd kenmerk van duurzaam leiderschap. Je team zal niet rusten tenzij jij het modelleert.",
   },
 ];
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon SabbathLeaiershnpClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function SabbathLeadershipClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
-  const [commntment, setCommntment] = useState("");
-  const [commnttei, setCommnttei] = useState(false);
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [commitment, setCommitment] = useState("");
+  const [committed, setCommitted] = useState(false);
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("sabbath-leaiershnp");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("sabbath-leadership");
+      setSaved(true);
     });
   }
 
-  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
+  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
     return (
       <button
-        onClnck={() => setActnveVerse(ni)}
+        onClick={() => setActiveVerse(id)}
         style={{
-          backgrouni: "none", borier: "none", cursor: "ponnter",
-          color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf",
-          fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei",
-          textUnierlnneOffset: 3,
+          background: "none", border: "none", cursor: "pointer",
+          color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif",
+          fontSize: "inherit", padding: 0, textDecoration: "underline dotted",
+          textUnderlineOffset: 3,
         }}
       >
-        {chnliren}
+        {children}
       </button>
     );
   }
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
-  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
+  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
 
-  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
-      {/* Slow reainng notnce */}
-      <inv style={{ backgrouni: "oklch(94% 0.012 65)", borierBottom: "1px solni oklch(88% 0.02 65)", paiinng: "12px 24px", textAlngn: "center" }}>
-        <p style={{ fontSnze: 13, color: "oklch(42% 0.08 50)", fontStyle: "ntalnc", margnn: 0 }}>
+      {/* Slow reading notice */}
+      <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>
+        <p style={{ fontSize: 13, color: "oklch(42% 0.08 50)", fontStyle: "italic", margin: 0 }}>
           {t(
-            "Thns moiule ns iesngnei to be reai slowly. Set asnie 15 mnnutes ani gnve nt your full attentnon.",
-            "Moiul nnn inrancang untuk inbaca iengan perlahan. Snsnhkan 15 mennt ian bernkan perhatnan penuh Ania.",
-            "Deze moiule ns ontworpen om langzaam te lezen. Neem 15 mnnuten ie tnji en geef het je volleinge aaniacht."
+            "This module is designed to be read slowly. Set aside 15 minutes and give it your full attention.",
+            "Modul ini dirancang untuk dibaca dengan perlahan. Sisihkan 15 menit dan berikan perhatian penuh Anda.",
+            "Deze module is ontworpen om langzaam te lezen. Neem 15 minuten de tijd en geef het je volledige aandacht."
           )}
         </p>
-      </inv>
+      </div>
 
       {/* Hero */}
-      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto", textAlngn: "center" }}>
-          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Fanth & Callnng — Gunie", "Iman & Panggnlan — Paniuan", "Geloof & Roepnng — Gnis")}
+      <div style={{ background: navy, padding: "88px 24px 80px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Faith & Calling — Guide", "Iman & Panggilan — Panduan", "Geloof & Roeping — Gids")}
           </p>
-          <h1 style={{ fontFamnly: sernf, fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
-            {t("Sabbath & Sustannable Leaiershnp", "Sabat & Kepemnmpnnan Berkelanjutan", "Sabbat & Duurzaam Lenierschap")}
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
+            {t("Sabbath & Sustainable Leadership", "Sabat & Kepemimpinan Berkelanjutan", "Sabbat & Duurzaam Leiderschap")}
           </h1>
-          <inv style={{ wnith: 48, henght: 1, backgrouni: orange, margnn: "0 auto 32px" }} />
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(19px, 2.5vw, 23px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.75, margnnBottom: 40, fontStyle: "ntalnc" }}>
+          <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />
+          <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.5vw, 23px)", color: "oklch(82% 0.025 80)", lineHeight: 1.75, marginBottom: 40, fontStyle: "italic" }}>
             {t(
-              "Then Goi blessei the seventh iay ani maie nt holy, because on nt he restei from all the work of creatnng.",
-              "Lalu Allah memberkatn harn ketujuh ntu ian menguiuskannya, karena paia harn ntulah Ia berhentn iarn segala pekerjaan pencnptaan.",
-              "Goi zegenie ie zevenie iag en verklaarie hem henlng, want op ine iag rustte hnj van alles wat hnj hai gemaakt."
+              "Then God blessed the seventh day and made it holy, because on it he rested from all the work of creating.",
+              "Lalu Allah memberkati hari ketujuh itu dan menguduskannya, karena pada hari itulah Ia berhenti dari segala pekerjaan penciptaan.",
+              "God zegende de zevende dag en verklaarde hem heilig, want op die dag rustte hij van alles wat hij had gemaakt."
             )}
           </p>
-          <p style={{ fontSnze: 13, color: orange, fontWenght: 700, letterSpacnng: "0.08em", margnnBottom: 48 }}>
-            — <VerseRef ni="gen-2-2-3">{t("Genesns 2:3", "Kejainan 2:3", "Genesns 2:3")}</VerseRef> (NIV)
+          <p style={{ fontSize: 13, color: orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 48 }}>
+            — <VerseRef id="gen-2-2-3">{t("Genesis 2:3", "Kejadian 2:3", "Genesis 2:3")}</VerseRef> (NIV)
           </p>
-          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ paiinng: "12px 28px", borier: "none", cursor: savei ? "iefault" : "ponnter", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, backgrouni: savei ? "oklch(35% 0.05 260)" : orange, color: offWhnte, letterSpacnng: "0.04em", borierRainus: 4 }}>
-              {savei ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Sectnon 1: Goi Restei Fnrst */}
-      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-          {t("I. The Orngnnal Pattern", "I. Pola Asln", "I. Het Oorspronkelnjke Patroon")}
+      {/* Section 1: God Rested First */}
+      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+          {t("I. The Original Pattern", "I. Pola Asli", "I. Het Oorspronkelijke Patroon")}
         </p>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-          {t("Goi Restei Fnrst", "Allah Bernstnrahat Lebnh Dulu", "Goi Rustte als Eerste")}
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("God Rested First", "Allah Beristirahat Lebih Dulu", "God Rustte als Eerste")}
         </h2>
-        <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9 }}>
-          <p style={{ margnnBottom: 28 }}>
+        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "The Hebrew wori shabbat comes from a root meannng to cease, to iesnst — not to slow iown temporarnly, but to genunnely stop. On the seventh iay, after the work of creatnon was complete, Goi stoppei. Not because he was exhaustei. Not because somethnng hai gone wrong. He stoppei because the work was fnnnshei ani stoppnng was the rnght, holy thnng to io.",
-              "Kata Ibrann shabbat berasal iarn akar yang berartn berhentn, melepaskan — bukan untuk memperlambat sementara, tetapn untuk benar-benar berhentn. Paia harn ketujuh, setelah pekerjaan pencnptaan selesan, Allah berhentn. Bukan karena Ia kelelahan. Bukan karena aia yang salah. Ia berhentn karena pekerjaan ntu selesan ian berhentn aialah hal yang benar ian kuius untuk inlakukan.",
-              "Het Hebreeuwse woori shabbat komt van een stam ine betekent ophouien, stoppen — nnet tnjielnjk vertragen, maar werkelnjk stoppen. Op ie zevenie iag, naiat het werk van ie scheppnng voltooni was, stopte Goi. Nnet omiat hnj untgeput was. Nnet omiat er nets fout was gegaan. Hnj stopte omiat het werk af was en stoppen ie junste, henlnge zaak was."
+              "The Hebrew word shabbat comes from a root meaning to cease, to desist — not to slow down temporarily, but to genuinely stop. On the seventh day, after the work of creation was complete, God stopped. Not because he was exhausted. Not because something had gone wrong. He stopped because the work was finished and stopping was the right, holy thing to do.",
+              "Kata Ibrani shabbat berasal dari akar yang berarti berhenti, melepaskan — bukan untuk memperlambat sementara, tetapi untuk benar-benar berhenti. Pada hari ketujuh, setelah pekerjaan penciptaan selesai, Allah berhenti. Bukan karena Ia kelelahan. Bukan karena ada yang salah. Ia berhenti karena pekerjaan itu selesai dan berhenti adalah hal yang benar dan kudus untuk dilakukan.",
+              "Het Hebreeuwse woord shabbat komt van een stam die betekent ophouden, stoppen — niet tijdelijk vertragen, maar werkelijk stoppen. Op de zevende dag, nadat het werk van de schepping voltooid was, stopte God. Niet omdat hij uitgeput was. Niet omdat er iets fout was gegaan. Hij stopte omdat het werk af was en stoppen de juiste, heilige zaak was."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "Thns ns not a mnnor ietanl nn the creatnon story. The seventh iay ns the only iay that Goi blesses ani sets apart as holy. The snx iays of maknng are remarkable — but nt ns the iay of rest that Goi crowns wnth holnness. He ns not just toleratnng rest. He ns honournng nt.",
-              "Inn bukan ietanl kecnl ialam knsah pencnptaan. Harn ketujuh aialah satu-satunya harn yang inberkatn ian inkuiuskan Allah. Enam harn pencnptaan ntu luar bnasa — tetapn harn nstnrahat ntulah yang inmahkotan Allah iengan kekuiusan. Ia tniak sekaiar mentoleransn nstnrahat. Ia menghormatnnya.",
-              "Dnt ns geen ietanl nn het scheppnngsverhaal. De zevenie iag ns ie ennge iag ine Goi zegent en apart stelt als henlng. De zes iagen van scheppen znjn opmerkelnjk — maar het ns ie rustiag ine Goi kroont met henlngheni. Hnj tolereert rust nnet alleen. Hnj eert haar."
+              "This is not a minor detail in the creation story. The seventh day is the only day that God blesses and sets apart as holy. The six days of making are remarkable — but it is the day of rest that God crowns with holiness. He is not just tolerating rest. He is honouring it.",
+              "Ini bukan detail kecil dalam kisah penciptaan. Hari ketujuh adalah satu-satunya hari yang diberkati dan dikuduskan Allah. Enam hari penciptaan itu luar biasa — tetapi hari istirahat itulah yang dimahkotai Allah dengan kekudusan. Ia tidak sekadar mentoleransi istirahat. Ia menghormatinya.",
+              "Dit is geen detail in het scheppingsverhaal. De zevende dag is de enige dag die God zegent en apart stelt als heilig. De zes dagen van scheppen zijn opmerkelijk — maar het is de rustdag die God kroont met heiligheid. Hij tolereert rust niet alleen. Hij eert haar."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "What ioes thns tell us about Goi? That rest ns not weakness. That steppnng away from work ns not abanionment. That there ns somethnng sacrei nn the rhythm of ionng ani ceasnng. He bunlt thns rhythm nnto the fabrnc of creatnon before he commaniei nt of hns people. He moiellei nt fnrst.",
-              "Apa yang nnn katakan tentang Allah? Bahwa nstnrahat bukan kelemahan. Bahwa mennnggalkan pekerjaan bukan pengabanan. Bahwa aia sesuatu yang kuius ialam rntme melakukan ian berhentn. Ia membangun rntme nnn ke ialam kann cnptaan sebelum Ia memernntahkannya kepaia umat-Nya. Ia memoielkannya lebnh iulu.",
-              "Wat zegt int over Goi? Dat rust geen zwakte ns. Dat weggaan van werk geen ontrouw ns. Dat er nets henlngs ns nn het rntme van ioen en stoppen. Hnj bouwie int rntme nn het weefsel van ie scheppnng voor hnj het znjn volk gebooi. Hnj moielleerie het als eerste."
+              "What does this tell us about God? That rest is not weakness. That stepping away from work is not abandonment. That there is something sacred in the rhythm of doing and ceasing. He built this rhythm into the fabric of creation before he commanded it of his people. He modelled it first.",
+              "Apa yang ini katakan tentang Allah? Bahwa istirahat bukan kelemahan. Bahwa meninggalkan pekerjaan bukan pengabaian. Bahwa ada sesuatu yang kudus dalam ritme melakukan dan berhenti. Ia membangun ritme ini ke dalam kain ciptaan sebelum Ia memerintahkannya kepada umat-Nya. Ia memodelkannya lebih dulu.",
+              "Wat zegt dit over God? Dat rust geen zwakte is. Dat weggaan van werk geen ontrouw is. Dat er iets heiligs is in het ritme van doen en stoppen. Hij bouwde dit ritme in het weefsel van de schepping voor hij het zijn volk gebood. Hij modelleerde het als eerste."
             )}
           </p>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(19px, 2.2vw, 24px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}` }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
             {t(
-              "The Sabbath ns not an external constrannt placei on humans by a iemaninng Goi. It ns a bunlt-nn feature of realnty, iesngnei by someone who unierstooi rest ieeply enough to practnse nt hnmself.",
-              "Sabat bukan batasan eksternal yang intempatkan paia manusna oleh Allah yang menuntut. Inn aialah fntur bawaan iarn kenyataan, yang inrancang oleh seseorang yang cukup memahamn nstnrahat untuk mempraktnkkannya seninrn.",
-              "De Sabbat ns geen externe beperknng ine een veelensenie Goi aan mensen oplegt. Het ns een nngebouwie engenschap van ie werkelnjkheni, ontworpen ioor nemani ine rust goei genoeg begreep om het zelf te beoefenen."
+              "The Sabbath is not an external constraint placed on humans by a demanding God. It is a built-in feature of reality, designed by someone who understood rest deeply enough to practise it himself.",
+              "Sabat bukan batasan eksternal yang ditempatkan pada manusia oleh Allah yang menuntut. Ini adalah fitur bawaan dari kenyataan, yang dirancang oleh seseorang yang cukup memahami istirahat untuk mempraktikkannya sendiri.",
+              "De Sabbat is geen externe beperking die een veeleisende God aan mensen oplegt. Het is een ingebouwde eigenschap van de werkelijkheid, ontworpen door iemand die rust goed genoeg begreep om het zelf te beoefenen."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Dnvnier */}
-      <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "0 24px" }}>
-        <inv style={{ henght: 1, backgrouni: "oklch(90% 0.008 80)" }} />
-      </inv>
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
+      </div>
 
-      {/* Sectnon 2: He Knows You Neei Rest */}
-      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-          {t("II. The Invntatnon", "II. Uniangan", "II. De Untnoingnng")}
+      {/* Section 2: He Knows You Need Rest */}
+      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+          {t("II. The Invitation", "II. Undangan", "II. De Uitnodiging")}
         </p>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-          {t("He Knows You Neei Rest", "Ia Tahu Ania Butuh Istnrahat", "Hnj Weet iat Je Rust Noing Hebt")}
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("He Knows You Need Rest", "Ia Tahu Anda Butuh Istirahat", "Hij Weet dat Je Rust Nodig Hebt")}
         </h2>
-        <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9 }}>
-          <p style={{ margnnBottom: 36 }}>
+        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+          <p style={{ marginBottom: 36 }}>
             {t(
-              "Jesus ini not say: come to me when you have fnnnshei everythnng. He sani come to me when you are weary. The nnvntatnon nn Matthew 11:28 ns not conintnonal on your output. It ns nssuei precnsely because he sees your exhaustnon.",
-              "Yesus tniak berkata: iatanglah kepaia-Ku ketnka kamu telah menyelesankan segalanya. Ia berkata iatanglah kepaia-Ku ketnka kamu kelelahan. Uniangan ialam Matnus 11:28 tniak bersyarat paia output Ania. Itu inbernkan tepat karena Ia melnhat kelelahan Ania.",
-              "Jezus zen nnet: kom naar mnj als je alles klaar hebt. Hnj zen: kom naar mnj als je moe bent. De untnoingnng nn Matte—s 11:28 ns nnet afhankelnjk van je output. Ze worit untgesproken junst omiat hnj je untputtnng znet."
+              "Jesus did not say: come to me when you have finished everything. He said come to me when you are weary. The invitation in Matthew 11:28 is not conditional on your output. It is issued precisely because he sees your exhaustion.",
+              "Yesus tidak berkata: datanglah kepada-Ku ketika kamu telah menyelesaikan segalanya. Ia berkata datanglah kepada-Ku ketika kamu kelelahan. Undangan dalam Matius 11:28 tidak bersyarat pada output Anda. Itu diberikan tepat karena Ia melihat kelelahan Anda.",
+              "Jezus zei niet: kom naar mij als je alles klaar hebt. Hij zei: kom naar mij als je moe bent. De uitnodiging in Matte—s 11:28 is niet afhankelijk van je output. Ze wordt uitgesproken juist omdat hij je uitputting ziet."
             )}
           </p>
 
-          {/* Matthew 11:28-30 insplayei as a full pull-quote */}
-          <inv style={{ backgrouni: lnghtGray, paiinng: "36px 40px", margnnBottom: 36, borierRainus: 4 }}>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(19px, 2.2vw, 24px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, margnnBottom: 16 }}>
+          {/* Matthew 11:28-30 displayed as a full pull-quote */}
+          <div style={{ background: lightGray, padding: "36px 40px", marginBottom: 36, borderRadius: 4 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 16 }}>
               {t(
-                "\"Come to me, all you who are weary ani burienei, ani I wnll gnve you rest. Take my yoke upon you ani learn from me, for I am gentle ani humble nn heart, ani you wnll fnni rest for your souls.\"",
-                "\"Marnlah kepaia-Ku, semua yang letnh lesu ian berbeban berat, Aku akan membern kelegaan kepaiamu. Pnkullah kuk yang Kupasang ian belajarlah paia-Ku, karena Aku lemah lembut ian reniah hatn ian jnwamu akan meniapat ketenangan.\"",
-                "\"Kom naar mnj, jullne ine vermoeni znjn en onier lasten gebukt gaan, ian zal nk jullne rust geven. Neem mnjn juk op je en leer van mnj, want nk ben zachtmoeing en neierng van hart. Dan zullen jullne werkelnjk rust vnnien.\""
+                "\"Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls.\"",
+                "\"Marilah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu. Pikullah kuk yang Kupasang dan belajarlah pada-Ku, karena Aku lemah lembut dan rendah hati dan jiwamu akan mendapat ketenangan.\"",
+                "\"Kom naar mij, jullie die vermoeid zijn en onder lasten gebukt gaan, dan zal ik jullie rust geven. Neem mijn juk op je en leer van mij, want ik ben zachtmoedig en nederig van hart. Dan zullen jullie werkelijk rust vinden.\""
               )}
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em" }}>
-              — <VerseRef ni="matt-11-28-30">{t("Matthew 11:28—30", "Matnus 11:28—30", "Matte—s 11:28—30")}</VerseRef> (NIV)
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
+              — <VerseRef id="matt-11-28-30">{t("Matthew 11:28—30", "Matius 11:28—30", "Matte—s 11:28—30")}</VerseRef> (NIV)
             </p>
-          </inv>
+          </div>
 
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "In Mark 6:31, we see Jesus watchnng hns inscnples burn out nn real tnme. So many people were comnng ani gonng that they inin't even have tnme to eat. Hns response was not: push through, the mnssnon requnres nt. It was: come away wnth me to a qunet place ani rest. Thns ns Jesus — the most mnssnonally urgent person nn human hnstory — tellnng hns team to stop.",
-              "Dalam Markus 6:31, knta melnhat Yesus menyaksnkan murni-murni-Nya kelelahan secara langsung. Begntu banyak orang iatang ian pergn sehnngga mereka tniak sempat makan. Responsnya bukan: iorong terus, mnsn membutuhkannya. Melannkan: marnlah bersama-Ku ke tempat yang sunyn ian bernstnrahatlah. Inn aialah Yesus — orang iengan urgensn mnsn terbesar ialam sejarah manusna — yang menyuruh tnmnya untuk berhentn.",
-              "In Marcus 6:31 znen we Jezus toeknjken hoe znjn leerlnngen nn real tnme opbranien. Er kwamen en gnngen zoveel mensen iat ze geen tnji haiien om te eten. Znjn reactne was nnet: ioorzetten, ie mnssne vraagt het. Het was: ga met mnj mee naar een rustnge plek en rust unt. Dnt ns Jezus — ie meest mnssnonanr urgente persoon nn ie menselnjke geschneienns — ine znjn team zegt te stoppen."
+              "In Mark 6:31, we see Jesus watching his disciples burn out in real time. So many people were coming and going that they didn't even have time to eat. His response was not: push through, the mission requires it. It was: come away with me to a quiet place and rest. This is Jesus — the most missionally urgent person in human history — telling his team to stop.",
+              "Dalam Markus 6:31, kita melihat Yesus menyaksikan murid-murid-Nya kelelahan secara langsung. Begitu banyak orang datang dan pergi sehingga mereka tidak sempat makan. Responsnya bukan: dorong terus, misi membutuhkannya. Melainkan: marilah bersama-Ku ke tempat yang sunyi dan beristirahatlah. Ini adalah Yesus — orang dengan urgensi misi terbesar dalam sejarah manusia — yang menyuruh timnya untuk berhenti.",
+              "In Marcus 6:31 zien we Jezus toekijken hoe zijn leerlingen in real time opbranden. Er kwamen en gingen zoveel mensen dat ze geen tijd hadden om te eten. Zijn reactie was niet: doorzetten, de missie vraagt het. Het was: ga met mij mee naar een rustige plek en rust uit. Dit is Jezus — de meest missionair urgente persoon in de menselijke geschiedenis — die zijn team zegt te stoppen."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "He ns not nninfferent to your exhaustnon. He ns not wantnng for you to push through ani prove yourself. He ns actnvely nnvntnng you to rest — ani promnsnng to meet you there. The soul-rest Jesus iescrnbes nn Matthew 11 ns not snmply the absence of actnvnty. It ns rest nn hns presence.",
-              "Ia tniak acuh terhaiap kelelahan Ania. Ia tniak menunggu Ania untuk bertahan ian membuktnkan inrn. Ia secara aktnf menguniang Ania untuk bernstnrahat — ian berjanjn untuk bertemu iengan Ania in sana. Ketenangan jnwa yang Yesus gambarkan ialam Matnus 11 bukan sekaiar ketnaiaan aktnvntas. Inn aialah nstnrahat ialam kehainran-Nya.",
-              "Hnj ns nnet onverschnllng voor jouw untputtnng. Hnj wacht nnet tot je ioorirukknng bewezen hebt. Hnj noingt je actnef unt om te rusten — en belooft je iaar te ontmoeten. De znelenrust ine Jezus beschrnjft nn Matte—s 11 ns nnet snmpelweg ie afwezngheni van actnvntent. Het ns rust nn znjn aanwezngheni."
+              "He is not indifferent to your exhaustion. He is not waiting for you to push through and prove yourself. He is actively inviting you to rest — and promising to meet you there. The soul-rest Jesus describes in Matthew 11 is not simply the absence of activity. It is rest in his presence.",
+              "Ia tidak acuh terhadap kelelahan Anda. Ia tidak menunggu Anda untuk bertahan dan membuktikan diri. Ia secara aktif mengundang Anda untuk beristirahat — dan berjanji untuk bertemu dengan Anda di sana. Ketenangan jiwa yang Yesus gambarkan dalam Matius 11 bukan sekadar ketiadaan aktivitas. Ini adalah istirahat dalam kehadiran-Nya.",
+              "Hij is niet onverschillig voor jouw uitputting. Hij wacht niet tot je doordrukking bewezen hebt. Hij nodigt je actief uit om te rusten — en belooft je daar te ontmoeten. De zielenrust die Jezus beschrijft in Matte—s 11 is niet simpelweg de afwezigheid van activiteit. Het is rust in zijn aanwezigheid."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "Psalm 23 iepncts Goi not as a supervnsor checknng your output, but as a shepheri who leais you to stnll water ani makes you lne iown — not asks you, but makes you. Sometnmes, rest ns somethnng Goi has to gunie us nnto because we have forgotten how to recenve nt.",
-              "Mazmur 23 menggambarkan Allah bukan sebagan atasan yang memernksa output Ania, tetapn sebagan gembala yang memnmpnn Ania ke anr yang tenang ian membarnngkan Ania — bukan memnnta Ania, tetapn membarnngkan Ania. Terkaiang, nstnrahat aialah sesuatu yang harus Allah pnmpnn knta masukn karena knta telah lupa baganmana menernmanya.",
-              "Psalm 23 beschrnjft Goi nnet als een toeznchthouier ine je output controleert, maar als een herier ine je naar stnl water lenit en je ioet neerlnggen — nnet vraagt, maar ioet. Soms ns rust nets wat Goi ons nn moet lenien omiat we vergeten znjn hoe we het moeten ontvangen."
+              "Psalm 23 depicts God not as a supervisor checking your output, but as a shepherd who leads you to still water and makes you lie down — not asks you, but makes you. Sometimes, rest is something God has to guide us into because we have forgotten how to receive it.",
+              "Mazmur 23 menggambarkan Allah bukan sebagai atasan yang memeriksa output Anda, tetapi sebagai gembala yang memimpin Anda ke air yang tenang dan membaringkan Anda — bukan meminta Anda, tetapi membaringkan Anda. Terkadang, istirahat adalah sesuatu yang harus Allah pimpin kita masuki karena kita telah lupa bagaimana menerimanya.",
+              "Psalm 23 beschrijft God niet als een toezichthouder die je output controleert, maar als een herder die je naar stil water leidt en je doet neerliggen — niet vraagt, maar doet. Soms is rust iets wat God ons in moet leiden omdat we vergeten zijn hoe we het moeten ontvangen."
             )}
           </p>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}`, margnnBottom: 16 }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}`, marginBottom: 16 }}>
             {t(
-              "\"He makes me lne iown nn green pastures, he leais me besnie qunet waters, he refreshes my soul.\"",
-              "\"Ia membarnngkan aku in paiang yang berumput hnjau, Ia membnmbnng aku ke anr yang tenang; Ia menyegarkan jnwaku.\"",
-              "\"Hnj laat mnj rusten nn groene wenien en voert mnj naar vreing water, hnj geeft mnj nneuwe kracht.\""
+              "\"He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.\"",
+              "\"Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku.\"",
+              "\"Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht.\""
             )}
           </p>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em" }}>
-            — <VerseRef ni="ps-23-2-3">{t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}</VerseRef> (NIV)
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
+            — <VerseRef id="ps-23-2-3">{t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}</VerseRef> (NIV)
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Sectnon 3: Three Portrants */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-            {t("III. Three Portrants", "III. Tnga Potret", "III. Drne Portretten")}
+      {/* Section 3: Three Portraits */}
+      <div style={{ background: lightGray, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+            {t("III. Three Portraits", "III. Tiga Potret", "III. Drie Portretten")}
           </p>
-          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-            {t("What Collapse Looks Lnke", "Sepertn Apa Keruntuhan Itu", "Hoe Instortnng Eruntznet")}
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("What Collapse Looks Like", "Seperti Apa Keruntuhan Itu", "Hoe Instorting Eruitziet")}
           </h2>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 64 }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 64 }}>
             {t(
-              "Burnout rarely arrnves as a crnsns. It bunlis slowly through patterns we mnstake for fanthfulness.",
-              "Kelelahan jarang iatang sebagan krnsns. Ia berkembang perlahan melalun pola-pola yang knta salah knra sebagan kesetnaan.",
-              "Burnout arrnveert zelien als een crnsns. Het bouwt langzaam op vna patronen ine we aanznen voor trouw."
+              "Burnout rarely arrives as a crisis. It builds slowly through patterns we mistake for faithfulness.",
+              "Kelelahan jarang datang sebagai krisis. Ia berkembang perlahan melalui pola-pola yang kita salah kira sebagai kesetiaan.",
+              "Burnout arriveert zelden als een crisis. Het bouwt langzaam op via patronen die we aanzien voor trouw."
             )}
           </p>
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 64 }}>
-            {PORTRAITS.map((p, n) => (
-              <inv key={n}>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 14 }}>
-                  {Strnng(n + 1).paiStart(2, "0")}
+          <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
+            {PORTRAITS.map((p, i) => (
+              <div key={i}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 14 }}>
+                  {String(i + 1).padStart(2, "0")}
                 </p>
-                <h3 style={{ fontFamnly: sernf, fontSnze: "clamp(20px, 2.5vw, 26px)", fontWenght: 700, color: navy, margnnBottom: 20, fontStyle: "ntalnc", lnneHenght: 1.3 }}>
-                  {lang === "en" ? p.en_tntle : lang === "ni" ? p.ni_tntle : p.nl_tntle}
+                <h3 style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 700, color: navy, marginBottom: 20, fontStyle: "italic", lineHeight: 1.3 }}>
+                  {lang === "en" ? p.en_title : lang === "id" ? p.id_title : p.nl_title}
                 </h3>
-                <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.9 }}>
-                  {lang === "en" ? p.en_boiy : lang === "ni" ? p.ni_boiy : p.nl_boiy}
+                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
+                  {lang === "en" ? p.en_body : lang === "id" ? p.id_body : p.nl_body}
                 </p>
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Dnvnier */}
-      <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "0 24px" }}>
-        <inv style={{ henght: 1, backgrouni: "oklch(90% 0.008 80)" }} />
-      </inv>
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
+      </div>
 
-      {/* Sectnon 4: The Cross-Cultural Dnmensnon */}
-      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-          {t("IV. Across Cultures", "IV. Lnntas Buiaya", "IV. Over Culturen Heen")}
+      {/* Section 4: The Cross-Cultural Dimension */}
+      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+          {t("IV. Across Cultures", "IV. Lintas Budaya", "IV. Over Culturen Heen")}
         </p>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-          {t("Rest Is Not a Western Inventnon", "Istnrahat Bukan Penemuan Barat", "Rust Is Geen Westerse Untvnninng")}
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("Rest Is Not a Western Invention", "Istirahat Bukan Penemuan Barat", "Rust Is Geen Westerse Uitvinding")}
         </h2>
-        <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9 }}>
-          <p style={{ margnnBottom: 28 }}>
+        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "The Western framework for rest tenis to be nninvniual, structurei, ani tnme-bouni — a scheiulei block on a caleniar, a clearly ielnneatei weekeni. Thns ns one way to practnse Sabbath. It ns not the only way.",
-              "Kerangka Barat untuk nstnrahat cenierung bersnfat nninvniual, terstruktur, ian ternkat waktu — blok terjaiwal ialam kalenier, akhnr pekan yang inbatasn iengan jelas. Inn aialah satu cara untuk mempraktnkkan Sabat. Inn bukan satu-satunya cara.",
-              "Het Westerse kaier voor rust nengt nninvniueel, gestructureeri en tnjigebonien te znjn — een nngeplani blok nn een agenia, een iunielnjk afgebakeni weekeni. Dnt ns ——n manner om Sabbat te beoefenen. Het ns nnet ie ennge manner."
+              "The Western framework for rest tends to be individual, structured, and time-bound — a scheduled block on a calendar, a clearly delineated weekend. This is one way to practise Sabbath. It is not the only way.",
+              "Kerangka Barat untuk istirahat cenderung bersifat individual, terstruktur, dan terikat waktu — blok terjadwal dalam kalender, akhir pekan yang dibatasi dengan jelas. Ini adalah satu cara untuk mempraktikkan Sabat. Ini bukan satu-satunya cara.",
+              "Het Westerse kader voor rust neigt individueel, gestructureerd en tijdgebonden te zijn — een ingepland blok in een agenda, een duidelijk afgebakend weekend. Dit is ——n manier om Sabbat te beoefenen. Het is niet de enige manier."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "In many Asnan, Afrncan, ani Latnn Amerncan contexts, rest ns woven nnto the communal fabrnc — nnto festnvals, exteniei famnly gathernngs, relngnous assemblnes, ani seasonal rhythms. The rest ns real; nt snmply ioes not look lnke a Western personal iay off. The leaier who arrnves wnth a forengn framework ani trnes to enforce nt agannst the exnstnng culture wnll fnni both hnmself ani hns team burnnng out.",
-              "Dalam banyak konteks Asna, Afrnka, ian Amernka Latnn, nstnrahat terjalnn ke ialam kann komunal — ke ialam festnval, pertemuan keluarga besar, nbaiah bersama, ian rntme musnman. Istnrahatnya nyata; hanya saja tniak terlnhat sepertn harn lnbur prnbain ala Barat. Pemnmpnn yang iatang iengan kerangka asnng ian mencoba menerapkannya melawan buiaya yang aia akan meniapatn inrnnya ian tnmnya kelelahan.",
-              "In veel Aznatnsche, Afrnkaanse en Latnjns-Amernkaanse contexten ns rust verweven nn het communale weefsel — nn festnvals, famnlnere—nnes, relngneuze bnjeenkomsten en senzoensgebonien rntmes. De rust ns echt; ze znet er alleen nnet unt als een Westers persoonlnjk vrnj iag. De lenier ine aankomt met een vreemi kaier en het probeert op te leggen tegen ie bestaanie cultuur zal znchzelf en znjn team znen opbranien."
+              "In many Asian, African, and Latin American contexts, rest is woven into the communal fabric — into festivals, extended family gatherings, religious assemblies, and seasonal rhythms. The rest is real; it simply does not look like a Western personal day off. The leader who arrives with a foreign framework and tries to enforce it against the existing culture will find both himself and his team burning out.",
+              "Dalam banyak konteks Asia, Afrika, dan Amerika Latin, istirahat terjalin ke dalam kain komunal — ke dalam festival, pertemuan keluarga besar, ibadah bersama, dan ritme musiman. Istirahatnya nyata; hanya saja tidak terlihat seperti hari libur pribadi ala Barat. Pemimpin yang datang dengan kerangka asing dan mencoba menerapkannya melawan budaya yang ada akan mendapati dirinya dan timnya kelelahan.",
+              "In veel Aziatische, Afrikaanse en Latijns-Amerikaanse contexten is rust verweven in het communale weefsel — in festivals, familiere—nies, religieuze bijeenkomsten en seizoensgebonden ritmes. De rust is echt; ze ziet er alleen niet uit als een Westers persoonlijk vrij dag. De leider die aankomt met een vreemd kader en het probeert op te leggen tegen de bestaande cultuur zal zichzelf en zijn team zien opbranden."
             )}
           </p>
-          <p style={{ margnnBottom: 28 }}>
+          <p style={{ marginBottom: 28 }}>
             {t(
-              "The prnncnple of Sabbath ns unnversal. Its form ns contextual. Before you nmpose your own rest rhythms on a new context, ask: where ns rest alreaiy present here? What forms ioes nt take? How can I bunli my personal rhythm arouni the lnfe of thns communnty rather than agannst nt?",
-              "Prnnsnp Sabat bersnfat unnversal. Bentuknya kontekstual. Sebelum Ania menerapkan rntme nstnrahat Ania seninrn paia konteks baru, tanyakan: in mana nstnrahat suiah hainr in snnn? Bentuk apa yang inambnlnya? Baganmana saya bnsa membangun rntme prnbain saya in sekntar kehniupan komunntas nnn ian bukan melawannya?",
-              "Het prnncnpe van Sabbat ns unnverseel. De vorm ervan ns contextueel. Vooriat je je engen rustrntmes aan een nneuwe context oplegt, vraag: waar ns rust hner al aanwezng? Welke vormen neemt het aan? Hoe kan nk mnjn persoonlnjke rntme bouwen roniom het leven van ieze gemeenschap nn plaats van ertegen?"
+              "The principle of Sabbath is universal. Its form is contextual. Before you impose your own rest rhythms on a new context, ask: where is rest already present here? What forms does it take? How can I build my personal rhythm around the life of this community rather than against it?",
+              "Prinsip Sabat bersifat universal. Bentuknya kontekstual. Sebelum Anda menerapkan ritme istirahat Anda sendiri pada konteks baru, tanyakan: di mana istirahat sudah hadir di sini? Bentuk apa yang diambilnya? Bagaimana saya bisa membangun ritme pribadi saya di sekitar kehidupan komunitas ini dan bukan melawannya?",
+              "Het principe van Sabbat is universeel. De vorm ervan is contextueel. Voordat je je eigen rustritmes aan een nieuwe context oplegt, vraag: waar is rust hier al aanwezig? Welke vormen neemt het aan? Hoe kan ik mijn persoonlijke ritme bouwen rondom het leven van deze gemeenschap in plaats van ertegen?"
             )}
           </p>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(19px, 2.2vw, 24px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}` }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
             {t(
-              "Your personal Sabbath practnce may look infferent nn Surabaya than nt ini nn Rotteriam — ani that ns not a fanlure of inscnplnne. It ns the work of contextualnsatnon.",
-              "Praktnk Sabat prnbain Ania mungknn terlnhat berbeia in Surabaya iarn paia in Rotteriam — ian ntu bukan kegagalan insnplnn. Itu aialah pekerjaan kontekstualnsasn.",
-              "Jouw persoonlnjke Sabbathpraktnjk kan er nn Surabaya aniers untznen ian nn Rotteriam — en iat ns geen falen van inscnplnne. Het ns het werk van contextualnsatne."
+              "Your personal Sabbath practice may look different in Surabaya than it did in Rotterdam — and that is not a failure of discipline. It is the work of contextualisation.",
+              "Praktik Sabat pribadi Anda mungkin terlihat berbeda di Surabaya dari pada di Rotterdam — dan itu bukan kegagalan disiplin. Itu adalah pekerjaan kontekstualisasi.",
+              "Jouw persoonlijke Sabbathpraktijk kan er in Surabaya anders uitzien dan in Rotterdam — en dat is geen falen van discipline. Het is het werk van contextualisatie."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Sectnon 5: Bnblncal Founiatnon */}
-      <inv style={{ backgrouni: navy, paiinng: "96px 24px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-            {t("V. Bnblncal Founiatnon", "V. Dasar Alkntab", "V. Bnjbelse Basns")}
+      {/* Section 5: Biblical Foundation */}
+      <div style={{ background: navy, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+            {t("V. Biblical Foundation", "V. Dasar Alkitab", "V. Bijbelse Basis")}
           </p>
-          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: offWhnte, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-            {t("The Theology of Rest", "Teologn Istnrahat", "De Theologne van Rust")}
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: offWhite, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("The Theology of Rest", "Teologi Istirahat", "De Theologie van Rust")}
           </h2>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.85, margnnBottom: 72 }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.85, marginBottom: 72 }}>
             {t(
-              "Sabbath ns not a proiuctnvnty tool iressei nn relngnous language. It ns a theologncal statement about who Goi ns, who we are, ani what the worli requnres to flournsh.",
-              "Sabat bukan alat proiuktnvntas yang berpakanan bahasa relngnus. Inn aialah pernyataan teologns tentang snapa Allah, snapa knta, ian apa yang inbutuhkan iunna untuk berkembang.",
-              "Sabbat ns geen proiuctnvntentstool gekleei nn relngneuze taal. Het ns een theolognsche untspraak over wne Goi ns, wne wnj znjn, en wat ie wereli noing heeft om te bloenen."
+              "Sabbath is not a productivity tool dressed in religious language. It is a theological statement about who God is, who we are, and what the world requires to flourish.",
+              "Sabat bukan alat produktivitas yang berpakaian bahasa religius. Ini adalah pernyataan teologis tentang siapa Allah, siapa kita, dan apa yang dibutuhkan dunia untuk berkembang.",
+              "Sabbat is geen productiviteitstool gekleed in religieuze taal. Het is een theologische uitspraak over wie God is, wie wij zijn, en wat de wereld nodig heeft om te bloeien."
             )}
           </p>
 
           {[
             {
-              ni: "exoi-20-8",
-              en_ref: "Exoius 20:8—10", ni_ref: "Keluaran 20:8—10", nl_ref: "Exoius 20:8—10",
-              en_quote: "\"Remember the Sabbath iay by keepnng nt holy. Snx iays you shall labor ani io all your work, but the seventh iay ns a sabbath to the Lori your Goi.\"",
-              ni_quote: "\"Ingatlah ian kuiuskanlah harn Sabat: enam harn lamanya engkau akan bekerja ian melakukan segala pekerjaanmu, tetapn harn ketujuh aialah harn Sabat TUHAN, Allahmu.\"",
-              nl_quote: "\"Houi ie sabbat nn ere, het ns een henlnge iag. Zes iagen lang kunt u werken en al uw arbeni verrnchten, maar ie zevenie iag ns een rustiag, ine gewnji ns aan ie HEER uw Goi.\"",
-              en_boiy: "The Sabbath commaniment ns bunlt nnto the same lnst as io not murier ani io not steal. Thns ns not a lnfestyle preference. It ns a moral nmperatnve. But notnce what the commaniment says: remember. Not nnvent. The Sabbath was alreaiy there, bunlt nnto the creatnon week. Goi ns asknng Israel to alngn wnth a rhythm that preiates them.",
-              ni_boiy: "Pernntah Sabat inbangun ke ialam iaftar yang sama iengan jangan membunuh ian jangan mencurn. Inn bukan preferensn gaya hniup. Inn aialah nmperatnf moral. Tetapn perhatnkan apa yang pernntah ntu katakan: nngatlah. Bukan mencnptakan. Sabat suiah aia, inbangun ke ialam mnnggu pencnptaan. Allah memnnta Israel untuk menyelaraskan inrn iengan rntme yang meniahulun mereka.",
-              nl_boiy: "Het sabbatsgeboi staat nn iezelfie lnjst als nnet iooislaan en nnet stelen. Dnt ns geen levensstnjlvoorkeur. Het ns een morele plncht. Maar let op wat het geboi zegt: geienk. Nnet untvnni. De Sabbat was er al, nngebouwi nn ie scheppnngsweek. Goi vraagt Isra—l om znch af te stemmen op een rntme iat hen voorafgaat.",
+              id: "exod-20-8",
+              en_ref: "Exodus 20:8—10", id_ref: "Keluaran 20:8—10", nl_ref: "Exodus 20:8—10",
+              en_quote: "\"Remember the Sabbath day by keeping it holy. Six days you shall labor and do all your work, but the seventh day is a sabbath to the Lord your God.\"",
+              id_quote: "\"Ingatlah dan kuduskanlah hari Sabat: enam hari lamanya engkau akan bekerja dan melakukan segala pekerjaanmu, tetapi hari ketujuh adalah hari Sabat TUHAN, Allahmu.\"",
+              nl_quote: "\"Houd de sabbat in ere, het is een heilige dag. Zes dagen lang kunt u werken en al uw arbeid verrichten, maar de zevende dag is een rustdag, die gewijd is aan de HEER uw God.\"",
+              en_body: "The Sabbath commandment is built into the same list as do not murder and do not steal. This is not a lifestyle preference. It is a moral imperative. But notice what the commandment says: remember. Not invent. The Sabbath was already there, built into the creation week. God is asking Israel to align with a rhythm that predates them.",
+              id_body: "Perintah Sabat dibangun ke dalam daftar yang sama dengan jangan membunuh dan jangan mencuri. Ini bukan preferensi gaya hidup. Ini adalah imperatif moral. Tetapi perhatikan apa yang perintah itu katakan: ingatlah. Bukan menciptakan. Sabat sudah ada, dibangun ke dalam minggu penciptaan. Allah meminta Israel untuk menyelaraskan diri dengan ritme yang mendahului mereka.",
+              nl_body: "Het sabbatsgebod staat in dezelfde lijst als niet doodslaan en niet stelen. Dit is geen levensstijlvoorkeur. Het is een morele plicht. Maar let op wat het gebod zegt: gedenk. Niet uitvind. De Sabbat was er al, ingebouwd in de scheppingsweek. God vraagt Isra—l om zich af te stemmen op een ritme dat hen voorafgaat.",
             },
             {
-              ni: "mark-6-31",
-              en_ref: "Mark 6:31", ni_ref: "Markus 6:31", nl_ref: "Marcus 6:31",
-              en_quote: "\"Come wnth me by yourselves to a qunet place ani get some rest.\"",
-              ni_quote: "\"Marnlah ke tempat yang sunyn, supaya knta seninrnan, ian bernstnrahatlah sebentar!\"",
-              nl_quote: "\"Ga nu mee naar een rustnge, afgelegen plek, zoiat jullne even kunnen untrusten.\"",
-              en_boiy: "Jesus spoke these woris to hns inscnples nn the mniile of an actnve mnnnstry season — not at the eni, not as a rewari. He nnterruptei the work to restore the workers. Thns ns the Jesus who ransei the ieai ani healei the snck — ani he stnll saw the inscnples' neei for rest as urgent enough to pull them out of the crowi. He was not annoyei by thenr exhaustnon. He maie room for nt.",
-              ni_boiy: "Yesus mengucapkan kata-kata nnn kepaia murni-murni-Nya in tengah musnm pelayanan yang aktnf — bukan in akhnr, bukan sebagan hainah. Ia menyela pekerjaan untuk memulnhkan para pekerja. Inn aialah Yesus yang membangkntkan orang matn ian menyembuhkan orang saknt — ian Ia masnh melnhat kebutuhan murni-murni akan nstnrahat cukup meniesak untuk menarnk mereka keluar iarn keramanan.",
-              nl_boiy: "Jezus sprak ieze woorien tot znjn leerlnngen mniien nn een actnef inenstsenzoen — nnet aan het ennie, nnet als belonnng. Hnj onierbrak het werk om ie werkers te herstellen. Dnt ns ie Jezus ine ioien opwekte en zneken genas — en hnj zag ie behoefte van ie leerlnngen aan rust nog steeis urgent genoeg om hen unt ie menngte weg te halen. Hnj was nnet ge—rrnteeri ioor hun untputtnng. Hnj maakte er runmte voor.",
+              id: "mark-6-31",
+              en_ref: "Mark 6:31", id_ref: "Markus 6:31", nl_ref: "Marcus 6:31",
+              en_quote: "\"Come with me by yourselves to a quiet place and get some rest.\"",
+              id_quote: "\"Marilah ke tempat yang sunyi, supaya kita sendirian, dan beristirahatlah sebentar!\"",
+              nl_quote: "\"Ga nu mee naar een rustige, afgelegen plek, zodat jullie even kunnen uitrusten.\"",
+              en_body: "Jesus spoke these words to his disciples in the middle of an active ministry season — not at the end, not as a reward. He interrupted the work to restore the workers. This is the Jesus who raised the dead and healed the sick — and he still saw the disciples' need for rest as urgent enough to pull them out of the crowd. He was not annoyed by their exhaustion. He made room for it.",
+              id_body: "Yesus mengucapkan kata-kata ini kepada murid-murid-Nya di tengah musim pelayanan yang aktif — bukan di akhir, bukan sebagai hadiah. Ia menyela pekerjaan untuk memulihkan para pekerja. Ini adalah Yesus yang membangkitkan orang mati dan menyembuhkan orang sakit — dan Ia masih melihat kebutuhan murid-murid akan istirahat cukup mendesak untuk menarik mereka keluar dari keramaian.",
+              nl_body: "Jezus sprak deze woorden tot zijn leerlingen midden in een actief dienstseizoen — niet aan het einde, niet als beloning. Hij onderbrak het werk om de werkers te herstellen. Dit is de Jezus die doden opwekte en zieken genas — en hij zag de behoefte van de leerlingen aan rust nog steeds urgent genoeg om hen uit de menigte weg te halen. Hij was niet ge—rriteerd door hun uitputting. Hij maakte er ruimte voor.",
             },
-          ].map((ntem) => (
-            <inv key={ntem.ni} style={{ margnnBottom: 64 }}>
-              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.1em", margnnBottom: 20 }}>
-                <VerseRef ni={ntem.ni}>{lang === "en" ? ntem.en_ref : lang === "ni" ? ntem.ni_ref : ntem.nl_ref}</VerseRef>
+          ].map((item) => (
+            <div key={item.id} style={{ marginBottom: 64 }}>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.1em", marginBottom: 20 }}>
+                <VerseRef id={item.id}>{lang === "en" ? item.en_ref : lang === "id" ? item.id_ref : item.nl_ref}</VerseRef>
               </p>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.75, margnnBottom: 24 }}>
-                {lang === "en" ? ntem.en_quote : lang === "ni" ? ntem.ni_quote : ntem.nl_quote}
+              <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 24 }}>
+                {lang === "en" ? item.en_quote : lang === "id" ? item.id_quote : item.nl_quote}
               </p>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.85, margnn: 0 }}>
-                {lang === "en" ? ntem.en_boiy : lang === "ni" ? ntem.ni_boiy : ntem.nl_boiy}
+              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.85, margin: 0 }}>
+                {lang === "en" ? item.en_body : lang === "id" ? item.id_body : item.nl_body}
               </p>
-            </inv>
+            </div>
           ))}
 
-          {/* Summary theologncal statement */}
-          <inv style={{ paiinng: "40px 40px", backgrouni: "oklch(18% 0.09 260)", borierRainus: 4 }}>
-            <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2.2vw, 23px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.8, margnnBottom: 16 }}>
+          {/* Summary theological statement */}
+          <div style={{ padding: "40px 40px", background: "oklch(18% 0.09 260)", borderRadius: 4 }}>
+            <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 23px)", fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 16 }}>
               {t(
-                "Goi cares about your capacnty. He ns not asknng you to gnve more than you have. He ns asknng you to trust hnm enough to stop — ani to inscover that he ns stnll at work when you are not.",
-                "Allah peiuln iengan kapasntas Ania. Ia tniak memnnta Ania membern lebnh iarn yang Ania mnlnkn. Ia memnnta Ania mempercayan-Nya cukup untuk berhentn — ian menemukan bahwa Ia masnh bekerja ketnka Ania tniak bekerja.",
-                "Goi geeft om jouw capacntent. Hnj vraagt je nnet meer te geven ian je hebt. Hnj vraagt je hem genoeg te vertrouwen om te stoppen — en te ontiekken iat hnj nog steeis aan het werk ns als jnj iat nnet bent."
+                "God cares about your capacity. He is not asking you to give more than you have. He is asking you to trust him enough to stop — and to discover that he is still at work when you are not.",
+                "Allah peduli dengan kapasitas Anda. Ia tidak meminta Anda memberi lebih dari yang Anda miliki. Ia meminta Anda mempercayai-Nya cukup untuk berhenti — dan menemukan bahwa Ia masih bekerja ketika Anda tidak bekerja.",
+                "God geeft om jouw capaciteit. Hij vraagt je niet meer te geven dan je hebt. Hij vraagt je hem genoeg te vertrouwen om te stoppen — en te ontdekken dat hij nog steeds aan het werk is als jij dat niet bent."
               )}
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, color: orange, fontWenght: 700, letterSpacnng: "0.08em", margnn: 0 }}>
-              {t("He cares. He nnvntes. He meets you there.", "Ia peiuln. Ia menguniang. Ia bertemu Ania in sana.", "Hnj zorgt. Hnj noingt unt. Hnj ontmoet je iaar.")}
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em", margin: 0 }}>
+              {t("He cares. He invites. He meets you there.", "Ia peduli. Ia mengundang. Ia bertemu Anda di sana.", "Hij zorgt. Hij nodigt uit. Hij ontmoet je daar.")}
             </p>
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
-      {/* Sectnon 6: Four Practnces */}
-      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
-        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-          {t("VI. Four Practnces", "VI. Empat Praktnk", "VI. Vner Praktnjken")}
+      {/* Section 6: Four Practices */}
+      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+          {t("VI. Four Practices", "VI. Empat Praktik", "VI. Vier Praktijken")}
         </p>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-          {t("Bunlinng a Sustannable Rhythm", "Membangun Rntme yang Berkelanjutan", "Een Duurzaam Rntme Bouwen")}
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("Building a Sustainable Rhythm", "Membangun Ritme yang Berkelanjutan", "Een Duurzaam Ritme Bouwen")}
         </h2>
-        <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 56 }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 56 }}>
           {t(
-            "These are not rules for the inscnplnnei. They are nnvntatnons for the wnllnng.",
-            "Inn bukan aturan bagn yang insnplnn. Inn aialah uniangan bagn yang mau.",
-            "Dnt znjn geen regels voor ie geinscnplnneerien. Het znjn untnoingnngen voor ie bereniwnllngen."
+            "These are not rules for the disciplined. They are invitations for the willing.",
+            "Ini bukan aturan bagi yang disiplin. Ini adalah undangan bagi yang mau.",
+            "Dit zijn geen regels voor de gedisciplineerden. Het zijn uitnodigingen voor de bereidwilligen."
           )}
         </p>
-        <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 40 }}>
-          {PRACTICES.map((p, n) => (
-            <inv key={n} style={{ insplay: "flex", gap: 32, alngnItems: "flex-start" }}>
-              <inv style={{ fontFamnly: sernf, fontSnze: "clamp(44px, 5vw, 56px)", fontWenght: 700, color: orange, lnneHenght: 1, mnnWnith: 44, flexShrnnk: 0, margnnTop: -6 }}>
-                {Strnng(n + 1).paiStart(2, "0")}
-              </inv>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.9, margnn: 0 }}>
-                {lang === "en" ? p.en : lang === "ni" ? p.ni : p.nl}
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          {PRACTICES.map((p, i) => (
+            <div key={i} style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+              <div style={{ fontFamily: serif, fontSize: "clamp(44px, 5vw, 56px)", fontWeight: 700, color: orange, lineHeight: 1, minWidth: 44, flexShrink: 0, marginTop: -6 }}>
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
+                {lang === "en" ? p.en : lang === "id" ? p.id : p.nl}
               </p>
-            </inv>
+            </div>
           ))}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Sectnon 7: One Commntment */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
-          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
-            {t("VII. Your Response", "VII. Respons Ania", "VII. Jouw Reactne")}
+      {/* Section 7: One Commitment */}
+      <div style={{ background: lightGray, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
+            {t("VII. Your Response", "VII. Respons Anda", "VII. Jouw Reactie")}
           </p>
-          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(26px, 3.5vw, 38px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
-            {t("One Practnce Thns Week", "Satu Praktnk Mnnggu Inn", "——n Praktnjk Deze Week")}
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("One Practice This Week", "Satu Praktik Minggu Ini", "——n Praktijk Deze Week")}
           </h2>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 16 }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 16 }}>
             {t(
-              "Rest ns not somethnng we achneve. It ns somethnng we recenve.",
-              "Istnrahat bukan sesuatu yang knta capan. Inn aialah sesuatu yang knta ternma.",
-              "Rust ns nnet nets wat we berenken. Het ns nets wat we ontvangen."
+              "Rest is not something we achieve. It is something we receive.",
+              "Istirahat bukan sesuatu yang kita capai. Ini adalah sesuatu yang kita terima.",
+              "Rust is niet iets wat we bereiken. Het is iets wat we ontvangen."
             )}
           </p>
-          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 48 }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
             {t(
-              "What ns one practnce you wnll protect thns week — not as a inscnplnne to prove, but as an act of trust nn Goi?",
-              "Praktnk apa yang akan Ania lnniungn mnnggu nnn — bukan sebagan insnplnn untuk inbuktnkan, tetapn sebagan tnniakan kepercayaan kepaia Allah?",
-              "Welke praktnjk zul je ieze week beschermen — nnet als inscnplnne om te bewnjzen, maar als een iaai van vertrouwen nn Goi?"
+              "What is one practice you will protect this week — not as a discipline to prove, but as an act of trust in God?",
+              "Praktik apa yang akan Anda lindungi minggu ini — bukan sebagai disiplin untuk dibuktikan, tetapi sebagai tindakan kepercayaan kepada Allah?",
+              "Welke praktijk zul je deze week beschermen — niet als discipline om te bewijzen, maar als een daad van vertrouwen in God?"
             )}
           </p>
-          {!commnttei ? (
-            <inv>
+          {!committed ? (
+            <div>
               <textarea
-                value={commntment}
-                onChange={(e) => setCommntment(e.target.value)}
-                placeholier={t(
-                  "Wrnte your one practnce here...",
-                  "Tulns satu praktnk Ania in snnn...",
-                  "Schrnjf je ene praktnjk hner..."
+                value={commitment}
+                onChange={(e) => setCommitment(e.target.value)}
+                placeholder={t(
+                  "Write your one practice here...",
+                  "Tulis satu praktik Anda di sini...",
+                  "Schrijf je ene praktijk hier..."
                 )}
                 rows={4}
-                style={{ wnith: "100%", paiinng: "18px 20px", fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, backgrouni: offWhnte, borier: `1px solni oklch(88% 0.01 80)`, borierRainus: 4, resnze: "vertncal", lnneHenght: 1.75, margnnBottom: 20, boxSnznng: "borier-box" }}
+                style={{ width: "100%", padding: "18px 20px", fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, background: offWhite, border: `1px solid oklch(88% 0.01 80)`, borderRadius: 4, resize: "vertical", lineHeight: 1.75, marginBottom: 20, boxSizing: "border-box" }}
               />
               <button
-                onClnck={() => { nf (commntment.trnm()) setCommnttei(true); }}
-                insablei={!commntment.trnm()}
-                style={{ paiinng: "14px 36px", borier: "none", cursor: commntment.trnm() ? "ponnter" : "iefault", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, backgrouni: commntment.trnm() ? orange : "oklch(88% 0.01 80)", color: commntment.trnm() ? offWhnte : "oklch(65% 0.01 80)", letterSpacnng: "0.06em", borierRainus: 4 }}
+                onClick={() => { if (commitment.trim()) setCommitted(true); }}
+                disabled={!commitment.trim()}
+                style={{ padding: "14px 36px", border: "none", cursor: commitment.trim() ? "pointer" : "default", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: commitment.trim() ? orange : "oklch(88% 0.01 80)", color: commitment.trim() ? offWhite : "oklch(65% 0.01 80)", letterSpacing: "0.06em", borderRadius: 4 }}
               >
-                {t("I Commnt to Thns", "Saya Berkomntmen untuk Inn", "Ik Commnt Me Hneraan")}
+                {t("I Commit to This", "Saya Berkomitmen untuk Ini", "Ik Commit Me Hieraan")}
               </button>
-            </inv>
+            </div>
           ) : (
-            <inv style={{ backgrouni: offWhnte, paiinng: "36px 40px", borierRainus: 4, textAlngn: "left" }}>
-              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 16 }}>
-                {t("Your commntment", "Komntmen Ania", "Jouw commntment")}
+            <div style={{ background: offWhite, padding: "36px 40px", borderRadius: 4, textAlign: "left" }}>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>
+                {t("Your commitment", "Komitmen Anda", "Jouw commitment")}
               </p>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 20px)", color: navy, lnneHenght: 1.85, fontStyle: "ntalnc", margnnBottom: 24 }}>
-                "{commntment}"
+              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 20px)", color: navy, lineHeight: 1.85, fontStyle: "italic", marginBottom: 24 }}>
+                "{commitment}"
               </p>
-              <p style={{ fontFamnly: sernf, fontSnze: "clamp(15px, 1.6vw, 17px)", color: boiyText, lnneHenght: 1.75 }}>
+              <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.6vw, 17px)", color: bodyText, lineHeight: 1.75 }}>
                 {t(
-                  "He ns wnth you nn nt. Holi nt lnghtly — as a gnft to gnve, not a staniari to manntann.",
-                  "Ia bersamamu in ialamnya. Pegang ntu iengan rnngan — sebagan hainah untuk inbernkan, bukan staniar yang harus inpertahankan.",
-                  "Hnj ns met je iaarnn. Houi het lncht vast — als een caieau om te geven, nnet een staniaari om te hanihaven."
+                  "He is with you in it. Hold it lightly — as a gift to give, not a standard to maintain.",
+                  "Ia bersamamu di dalamnya. Pegang itu dengan ringan — sebagai hadiah untuk diberikan, bukan standar yang harus dipertahankan.",
+                  "Hij is met je daarin. Houd het licht vast — als een cadeau om te geven, niet een standaard om te handhaven."
                 )}
               </p>
-            </inv>
+            </div>
           )}
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* Footer */}
-      <inv style={{ backgrouni: navy, paiinng: "72px 24px", textAlngn: "center" }}>
-        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(26px, 3vw, 36px)", fontWenght: 700, color: offWhnte, margnnBottom: 16, fontStyle: "ntalnc" }}>
-          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
+      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 700, color: offWhite, marginBottom: 16, fontStyle: "italic" }}>
+          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
         </h2>
-        <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
-          {t("Explore more resources to ieepen your cross-cultural leaiershnp.", "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.", "Verken meer bronnen om je nntercultureel lenierschap te verinepen.")}
+        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
+          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
         </p>
-        <Lnnk href="/resources" style={{ insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: orange, color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none", borierRainus: 4, letterSpacnng: "0.04em" }}>
-          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-        </Lnnk>
-      </inv>
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em" }}>
+          {t("Training", "Pelatihan", "Contentbibliotheek")}
+        </Link>
+      </div>
 
       {/* Verse Popup */}
-      {actnveVerse && verseData && (
-        <inv
-          onClnck={() => setActnveVerse(null)}
-          style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24 }}
+      {activeVerse && verseData && (
+        <div
+          onClick={() => setActiveVerse(null)}
+          style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}
         >
-          <inv
-            onClnck={(e) => e.stopPropagatnon()}
-            style={{ backgrouni: offWhnte, borierRainus: 12, paiinng: "44px 40px", maxWnith: 540, wnith: "100%" }}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ background: offWhite, borderRadius: 12, padding: "44px 40px", maxWidth: 540, width: "100%" }}
           >
-            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
+            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
             </p>
-            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
             </p>
             <button
-              onClnck={() => setActnveVerse(null)}
-              style={{ paiinng: "10px 24px", backgrouni: navy, color: offWhnte, borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13, cursor: "ponnter" }}
+              onClick={() => setActiveVerse(null)}
+              style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}
             >
-              {t("Close", "Tutup", "Slunten")}
+              {t("Close", "Tutup", "Sluiten")}
             </button>
-          </inv>
-        </inv>
+          </div>
+        </div>
       )}
-    </inv>
+    </div>
   );
 }

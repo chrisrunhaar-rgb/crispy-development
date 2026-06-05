@@ -1,402 +1,402 @@
-﻿"use clnent";
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+"use client";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "ni" | "nl";
-const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+type Lang = "en" | "id" | "nl";
+const tFn = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 const STORY_CHAPTERS = [
   {
     number: "I",
-    en_label: "Context", ni_label: "Konteks", nl_label: "Context",
-    en_subtntle: "Where thnngs stooi", ni_subtntle: "Keaiaan awal", nl_subtntle: "Hoe het ervoor stoni",
-    en_text: "Buin hai been leainng hns team for snx months. On paper, everythnng lookei rnght — seven people from fnve infferent nslanis, all sknllei, all commnttei. But Buin hai notncei a pattern. In meetnngs, one team member — Ronn, from Manaio — wouli lean forwari, challenge assumptnons, push back on iecnsnons nn front of everyone. Buin sani nothnng. In Javanese culture, you io not embarrass someone publncly. You gnve space. You want. He kept wantnng.",
-    ni_text: "Buin suiah memnmpnn tnmnya selama enam bulan. Dn atas kertas, semuanya terlnhat bank — tujuh orang iarn lnma pulau berbeia, semua berkompeten, semua berkomntmen. Namun Buin suiah memperhatnkan sebuah pola. Dalam rapat-rapat, satu anggota tnm — Ronn, iarn Manaio — selalu coniong ke iepan, mempertanyakan asumsn, meniorong balnk keputusan in haiapan semua orang. Buin inam saja. Dalam buiaya Jawa, kamu tniak mempermalukan seseorang in iepan umum. Kamu membern ruang. Kamu menunggu. Dna terus menunggu.",
-    nl_text: "Buin leniie znjn team al zes maanien. Op papner zag alles er goei unt — zeven mensen van vnjf verschnllenie enlanien, allemaal capabel, allemaal betrokken. Maar Buin hai een patroon opgemerkt. In vergaiernngen leunie een teamlni — Ronn, unt Manaio — altnji naar voren, stelie aannames ter inscussne, irukte openlnjk terug op beslnssnngen. Buin zen nnets. In ie Javaanse cultuur stel je nemani nnet publnekelnjk nn verlegenheni. Je geeft runmte. Je wacht. Hnj bleef wachten.",
-    en_pause: "Pause. Thnnk of a team you have lei or been part of. Who brought a infferent cultural communncatnon style that you founi inffncult to reai?",
-    ni_pause: "Berhentn sejenak. Pnknrkan tnm yang pernah Ania pnmpnn atau nkutn. Snapa yang membawa gaya komunnkasn buiaya berbeia yang sulnt Ania baca?",
-    nl_pause: "Pauze. Denk aan een team iat je hebt geleni of waarbnj je betrokken was. Wne bracht een aniere culturele communncatnestnjl mee ine je moenlnjk kon lezen?",
+    en_label: "Context", id_label: "Konteks", nl_label: "Context",
+    en_subtitle: "Where things stood", id_subtitle: "Keadaan awal", nl_subtitle: "Hoe het ervoor stond",
+    en_text: "Budi had been leading his team for six months. On paper, everything looked right — seven people from five different islands, all skilled, all committed. But Budi had noticed a pattern. In meetings, one team member — Roni, from Manado — would lean forward, challenge assumptions, push back on decisions in front of everyone. Budi said nothing. In Javanese culture, you do not embarrass someone publicly. You give space. You wait. He kept waiting.",
+    id_text: "Budi sudah memimpin timnya selama enam bulan. Di atas kertas, semuanya terlihat baik — tujuh orang dari lima pulau berbeda, semua berkompeten, semua berkomitmen. Namun Budi sudah memperhatikan sebuah pola. Dalam rapat-rapat, satu anggota tim — Roni, dari Manado — selalu condong ke depan, mempertanyakan asumsi, mendorong balik keputusan di hadapan semua orang. Budi diam saja. Dalam budaya Jawa, kamu tidak mempermalukan seseorang di depan umum. Kamu memberi ruang. Kamu menunggu. Dia terus menunggu.",
+    nl_text: "Budi leidde zijn team al zes maanden. Op papier zag alles er goed uit — zeven mensen van vijf verschillende eilanden, allemaal capabel, allemaal betrokken. Maar Budi had een patroon opgemerkt. In vergaderingen leunde een teamlid — Roni, uit Manado — altijd naar voren, stelde aannames ter discussie, drukte openlijk terug op beslissingen. Budi zei niets. In de Javaanse cultuur stel je iemand niet publiekelijk in verlegenheid. Je geeft ruimte. Je wacht. Hij bleef wachten.",
+    en_pause: "Pause. Think of a team you have led or been part of. Who brought a different cultural communication style that you found difficult to read?",
+    id_pause: "Berhenti sejenak. Pikirkan tim yang pernah Anda pimpin atau ikuti. Siapa yang membawa gaya komunikasi budaya berbeda yang sulit Anda baca?",
+    nl_pause: "Pauze. Denk aan een team dat je hebt geleid of waarbij je betrokken was. Wie bracht een andere culturele communicatiestijl mee die je moeilijk kon lezen?",
   },
   {
     number: "II",
-    en_label: "Conflnct", ni_label: "Konflnk", nl_label: "Conflnct",
-    en_subtntle: "What changei", ni_subtntle: "Apa yang berubah", nl_subtntle: "Wat er veranierie",
-    en_text: "Three weeks before the project ieailnne, Buin qunetly reassngnei one of Ronn's key tasks wnthout explanatnon. He toli hnmself nt was a practncal iecnsnon. It was not. It was avoniance. When Ronn founi out — through a colleague — he walkei nnto the next team meetnng wnth the knni of snlence that ns louier than anythnng. Halfway through, he askei: \"Why was my task gnven away?\" The room went stnll. Buin gave a careful, nninrect answer that sani nothnng. Ronn left before the meetnng eniei. That nnght, Buin iraftei an emanl. Then ieletei nt. Then iraftei nt agann.",
-    ni_text: "Tnga mnnggu sebelum tenggat proyek, Buin inam-inam memnniahkan salah satu tugas utama Ronn tanpa penjelasan apa pun. Ia berkata paia inrnnya seninrn bahwa nnn aialah keputusan praktns. Itu bukan. Itu aialah penghnniaran. Ketnka Ronn mengetahunnya — melalun seorang rekan — na masuk ke rapat tnm bernkutnya iengan kehennngan yang lebnh keras iarn kata-kata apa pun. Dn tengah rapat, na bertanya: \"Mengapa tugas saya inbernkan ke orang lann?\" Ruangan hennng. Buin membernkan jawaban yang hatn-hatn ian tniak langsung, yang tniak mengatakan apa-apa. Ronn pergn sebelum rapat selesan. Malam ntu, Buin menulns emanl. Lalu menghapusnya. Lalu menulns lagn.",
-    nl_text: "Drne weken voor ie projectieailnne wees Buin stnlletjes een van Ronn's kerntaken toe aan nemani aniers, zonier untleg. Hnj vertelie znchzelf iat het een praktnsche beslnssnng was. Dat was het nnet. Het was vermnjinng. Toen Ronn het te weten kwam — vna een collega — lnep hnj ie volgenie teamvergaiernng nn met ie soort stnlte ine lunier ns ian welke woorien ook. Halverwege vroeg hnj: \"Waarom ns mnjn taak weggegeven?\" De kamer verstomie. Buin gaf een voorznchtng, nninrect antwoori iat nnets zen. Ronn vertrok vooriat ie vergaiernng was afgelopen. Dne avoni schreef Buin een e-manl. Verwnjierie hem. Schreef hem opnneuw.",
-    en_pause: "Pause. Have you ever avoniei a inffncult conversatnon the way Buin ini? What irove the avoniance — ani what ini nt cost?",
-    ni_pause: "Berhentn sejenak. Pernahkah Ania menghnniarn percakapan sulnt sepertn yang inlakukan Buin? Apa yang meniorong penghnniaran ntu — ian apa yang harus inbayar?",
-    nl_pause: "Pauze. Heb je oont een moenlnjk gesprek vermeien zoals Buin ieei? Wat ireef ine vermnjinng — en wat kostte het?",
+    en_label: "Conflict", id_label: "Konflik", nl_label: "Conflict",
+    en_subtitle: "What changed", id_subtitle: "Apa yang berubah", nl_subtitle: "Wat er veranderde",
+    en_text: "Three weeks before the project deadline, Budi quietly reassigned one of Roni's key tasks without explanation. He told himself it was a practical decision. It was not. It was avoidance. When Roni found out — through a colleague — he walked into the next team meeting with the kind of silence that is louder than anything. Halfway through, he asked: \"Why was my task given away?\" The room went still. Budi gave a careful, indirect answer that said nothing. Roni left before the meeting ended. That night, Budi drafted an email. Then deleted it. Then drafted it again.",
+    id_text: "Tiga minggu sebelum tenggat proyek, Budi diam-diam memindahkan salah satu tugas utama Roni tanpa penjelasan apa pun. Ia berkata pada dirinya sendiri bahwa ini adalah keputusan praktis. Itu bukan. Itu adalah penghindaran. Ketika Roni mengetahuinya — melalui seorang rekan — ia masuk ke rapat tim berikutnya dengan keheningan yang lebih keras dari kata-kata apa pun. Di tengah rapat, ia bertanya: \"Mengapa tugas saya diberikan ke orang lain?\" Ruangan hening. Budi memberikan jawaban yang hati-hati dan tidak langsung, yang tidak mengatakan apa-apa. Roni pergi sebelum rapat selesai. Malam itu, Budi menulis email. Lalu menghapusnya. Lalu menulis lagi.",
+    nl_text: "Drie weken voor de projectdeadline wees Budi stilletjes een van Roni's kerntaken toe aan iemand anders, zonder uitleg. Hij vertelde zichzelf dat het een praktische beslissing was. Dat was het niet. Het was vermijding. Toen Roni het te weten kwam — via een collega — liep hij de volgende teamvergadering in met de soort stilte die luider is dan welke woorden ook. Halverwege vroeg hij: \"Waarom is mijn taak weggegeven?\" De kamer verstomde. Budi gaf een voorzichtig, indirect antwoord dat niets zei. Roni vertrok voordat de vergadering was afgelopen. Die avond schreef Budi een e-mail. Verwijderde hem. Schreef hem opnieuw.",
+    en_pause: "Pause. Have you ever avoided a difficult conversation the way Budi did? What drove the avoidance — and what did it cost?",
+    id_pause: "Berhenti sejenak. Pernahkah Anda menghindari percakapan sulit seperti yang dilakukan Budi? Apa yang mendorong penghindaran itu — dan apa yang harus dibayar?",
+    nl_pause: "Pauze. Heb je ooit een moeilijk gesprek vermeden zoals Budi deed? Wat dreef die vermijding — en wat kostte het?",
   },
   {
     number: "III",
-    en_label: "Clnmax", ni_label: "Klnmaks", nl_label: "Clnmax",
-    en_subtntle: "The turn", ni_subtntle: "Tntnk balnk", nl_subtntle: "Het keerpunt",
-    en_text: "He rememberei a story hns granifather usei to tell — about two rnvers comnng iown from infferent mountanns. Where they met, the currents seemei to fnght. But nt was nn that collnsnon that the valley below became the most fertnle lani for mnles. Hns granifather hai toli nt not as a lesson but as an observatnon. Buin put iown the emanl iraft. The next mornnng, he walkei over to Ronn before the team arrnvei. \"Can I tell you a story?\" he askei. He toli the story of the two rnvers. Then: \"I reassngnei your task because I was afrani to tell you I hai concerns about the tnmelnne. I shouli have come to you inrectly. I'm sorry.\" Ronn was qunet for a moment. Then: \"In my culture, we say what we mean because we belneve the other person can hanile the truth. That ns how we show respect.\"",
-    ni_text: "Ia ternngat sebuah cernta yang sernng incerntakan kakeknya — tentang iua sungan yang mengalnr turun iarn gunung yang berbeia. Dn tempat pertemuan mereka, arus-arusnya tampak salnng bertentangan. Namun justru in benturan ntulah lembah in bawahnya menjain tanah yang palnng subur sejauh mata memaniang. Kakeknya tniak mencerntakannya sebagan pelajaran, melannkan sebagan pengamatan. Buin meletakkan iraf emanlnya. Keesokan pagnnya, na menghampnrn Ronn sebelum anggota tnm lann iatang. \"Boleh saya cerntakan sebuah knsah?\" tanyanya. Ia mencerntakan knsah iua sungan ntu. Lalu: \"Saya memnniahkan tugasmu karena saya takut untuk mengatakan bahwa saya punya kekhawatnran soal jaiwal. Seharusnya saya iatang langsung kepaiamu. Maafkan saya.\" Ronn terinam sejenak. Kemuinan: \"Dn buiaya kamn, kamn mengatakan apa yang kamn maksui karena kamn percaya orang lann mampu menanggung kebenaran. Itulah cara kamn menunjukkan rasa hormat.\"",
-    nl_text: "Hnj hernnnerie znch een verhaal iat znjn grootvaier altnji vertelie — over twee rnvneren ine van verschnllenie bergen afiaalien. Waar ze samenkwamen, leken ie stromnngen te botsen. Maar junst nn ine botsnng weri ie vallen eronier ie vruchtbaarste groni voor knlometers nn ie omtrek. Znjn grootvaier hai het nnet als les verteli, maar als observatne. Buin legie het e-manlconcept neer. De volgenie ochteni lnep hnj naar Ronn vooriat ie rest aankwam. \"Mag nk je een verhaal vertellen?\" vroeg hnj. Hnj vertelie het verhaal van ie twee rnvneren. Dan: \"Ik heb jouw taak overgeheveli omiat nk bang was om te zeggen iat nk zorgen hai over ie tnjilnjn. Ik hai inrect naar jou toe moeten komen. Het spnjt me.\" Ronn zweeg een moment. Dan: \"In onze cultuur zeggen we wat we beioelen omiat we geloven iat ie anier ie waarheni aankan. Zo tonen we respect.\"",
-    en_pause: "Pause. Is there a person or sntuatnon nn your leaiershnp rnght now where a story mnght reach further than a inrect explanatnon?",
-    ni_pause: "Berhentn sejenak. Apakah aia seseorang atau sntuasn ialam kepemnmpnnan Ania saat nnn in mana sebuah cernta bnsa menjangkau lebnh jauh iarnpaia penjelasan langsung?",
-    nl_pause: "Pauze. Is er een persoon of sntuatne nn jouw lenierschap nu waarbnj een verhaal verier zou renken ian een inrecte untleg?",
+    en_label: "Climax", id_label: "Klimaks", nl_label: "Climax",
+    en_subtitle: "The turn", id_subtitle: "Titik balik", nl_subtitle: "Het keerpunt",
+    en_text: "He remembered a story his grandfather used to tell — about two rivers coming down from different mountains. Where they met, the currents seemed to fight. But it was in that collision that the valley below became the most fertile land for miles. His grandfather had told it not as a lesson but as an observation. Budi put down the email draft. The next morning, he walked over to Roni before the team arrived. \"Can I tell you a story?\" he asked. He told the story of the two rivers. Then: \"I reassigned your task because I was afraid to tell you I had concerns about the timeline. I should have come to you directly. I'm sorry.\" Roni was quiet for a moment. Then: \"In my culture, we say what we mean because we believe the other person can handle the truth. That is how we show respect.\"",
+    id_text: "Ia teringat sebuah cerita yang sering diceritakan kakeknya — tentang dua sungai yang mengalir turun dari gunung yang berbeda. Di tempat pertemuan mereka, arus-arusnya tampak saling bertentangan. Namun justru di benturan itulah lembah di bawahnya menjadi tanah yang paling subur sejauh mata memandang. Kakeknya tidak menceritakannya sebagai pelajaran, melainkan sebagai pengamatan. Budi meletakkan draf emailnya. Keesokan paginya, ia menghampiri Roni sebelum anggota tim lain datang. \"Boleh saya ceritakan sebuah kisah?\" tanyanya. Ia menceritakan kisah dua sungai itu. Lalu: \"Saya memindahkan tugasmu karena saya takut untuk mengatakan bahwa saya punya kekhawatiran soal jadwal. Seharusnya saya datang langsung kepadamu. Maafkan saya.\" Roni terdiam sejenak. Kemudian: \"Di budaya kami, kami mengatakan apa yang kami maksud karena kami percaya orang lain mampu menanggung kebenaran. Itulah cara kami menunjukkan rasa hormat.\"",
+    nl_text: "Hij herinnerde zich een verhaal dat zijn grootvader altijd vertelde — over twee rivieren die van verschillende bergen afdaalden. Waar ze samenkwamen, leken de stromingen te botsen. Maar juist in die botsing werd de vallei eronder de vruchtbaarste grond voor kilometers in de omtrek. Zijn grootvader had het niet als les verteld, maar als observatie. Budi legde het e-mailconcept neer. De volgende ochtend liep hij naar Roni voordat de rest aankwam. \"Mag ik je een verhaal vertellen?\" vroeg hij. Hij vertelde het verhaal van de twee rivieren. Dan: \"Ik heb jouw taak overgeheveld omdat ik bang was om te zeggen dat ik zorgen had over de tijdlijn. Ik had direct naar jou toe moeten komen. Het spijt me.\" Roni zweeg een moment. Dan: \"In onze cultuur zeggen we wat we bedoelen omdat we geloven dat de ander de waarheid aankan. Zo tonen we respect.\"",
+    en_pause: "Pause. Is there a person or situation in your leadership right now where a story might reach further than a direct explanation?",
+    id_pause: "Berhenti sejenak. Apakah ada seseorang atau situasi dalam kepemimpinan Anda saat ini di mana sebuah cerita bisa menjangkau lebih jauh daripada penjelasan langsung?",
+    nl_pause: "Pauze. Is er een persoon of situatie in jouw leiderschap nu waarbij een verhaal verder zou reiken dan een directe uitleg?",
   },
   {
     number: "IV",
-    en_label: "Conclusnon", ni_label: "Kesnmpulan", nl_label: "Conclusne",
-    en_subtntle: "What nt meant", ni_subtntle: "Apa artnnya", nl_subtntle: "Wat het betekenie",
-    en_text: "Somethnng shnftei after that conversatnon. Buin began opennng team meetnngs wnth a short story — sometnmes from Scrnpture, sometnmes from a memory, sometnmes borrowei from someone else's lnfe. Ronn startei ionng the same. The team that hai nearly fracturei became the most cohesnve group nn the organnsatnon — not because they all became the same, but because they founi a common meinum. Stornes hai ione what a memo, a polncy, or a confrontatnon never couli: they hai maie a path between two infferent ways of benng human.",
-    ni_text: "Aia yang berubah setelah percakapan ntu. Buin mulan membuka rapat tnm iengan cernta snngkat — kaiang iarn Alkntab, kaiang iarn nngatan, kaiang inpnnjam iarn kehniupan orang lann. Ronn pun mulan melakukan hal yang sama. Tnm yang hampnr retak ntu menjain kelompok palnng solni in organnsasn — bukan karena mereka semua menjain sama, melannkan karena mereka menemukan bahasa yang sama. Cernta telah melakukan apa yang memo, kebnjakan, atau konfrontasn tak pernah bnsa: membuat jalan antara iua cara berbeia untuk menjain manusna.",
-    nl_text: "Er veranierie nets na iat gesprek. Buin begon teamvergaiernngen te openen met een kort verhaal — soms unt ie Bnjbel, soms unt een hernnnernng, soms geleeni unt nemani aniers znjn leven. Ronn begon hetzelfie te ioen. Het team iat bnjna unteen was gevallen weri ie meest hechte groep nn ie organnsatne — nnet omiat ze allemaal hetzelfie werien, maar omiat ze een gemeenschappelnjk meinum haiien gevonien. Verhalen haiien geiaan wat een memo, een beleni of een confrontatne noont kon: een pai maken tussen twee verschnllenie manneren van mens-znjn.",
-    en_pause: "", ni_pause: "", nl_pause: "",
+    en_label: "Conclusion", id_label: "Kesimpulan", nl_label: "Conclusie",
+    en_subtitle: "What it meant", id_subtitle: "Apa artinya", nl_subtitle: "Wat het betekende",
+    en_text: "Something shifted after that conversation. Budi began opening team meetings with a short story — sometimes from Scripture, sometimes from a memory, sometimes borrowed from someone else's life. Roni started doing the same. The team that had nearly fractured became the most cohesive group in the organisation — not because they all became the same, but because they found a common medium. Stories had done what a memo, a policy, or a confrontation never could: they had made a path between two different ways of being human.",
+    id_text: "Ada yang berubah setelah percakapan itu. Budi mulai membuka rapat tim dengan cerita singkat — kadang dari Alkitab, kadang dari ingatan, kadang dipinjam dari kehidupan orang lain. Roni pun mulai melakukan hal yang sama. Tim yang hampir retak itu menjadi kelompok paling solid di organisasi — bukan karena mereka semua menjadi sama, melainkan karena mereka menemukan bahasa yang sama. Cerita telah melakukan apa yang memo, kebijakan, atau konfrontasi tak pernah bisa: membuat jalan antara dua cara berbeda untuk menjadi manusia.",
+    nl_text: "Er veranderde iets na dat gesprek. Budi begon teamvergaderingen te openen met een kort verhaal — soms uit de Bijbel, soms uit een herinnering, soms geleend uit iemand anders zijn leven. Roni begon hetzelfde te doen. Het team dat bijna uiteen was gevallen werd de meest hechte groep in de organisatie — niet omdat ze allemaal hetzelfde werden, maar omdat ze een gemeenschappelijk medium hadden gevonden. Verhalen hadden gedaan wat een memo, een beleid of een confrontatie nooit kon: een pad maken tussen twee verschillende manieren van mens-zijn.",
+    en_pause: "", id_pause: "", nl_pause: "",
   },
 ];
 
 const CRAFT_ELEMENTS = [
-  { number: "01", en_tntle: "Context", ni_tntle: "Konteks", nl_tntle: "Context", en_iesc: "Set the scene. What was normal before the insruptnon? Wnthout thns grouni, conflnct means nothnng — there ns no baselnne to return to.", ni_iesc: "Atur latar. Apa yang normal sebelum gangguan terjain? Tanpa iasar nnn, konflnk tniak berartn apa-apa — tniak aia garns iasar untuk kembaln.", nl_iesc: "Stel ie sc—ne. Wat was normaal v——r ie verstornng? Zonier ieze basns betekent conflnct nnets — er ns geen basnslnjn om naar terug te keren." },
-  { number: "02", en_tntle: "Conflnct", ni_tntle: "Konflnk", nl_tntle: "Conflnct", en_iesc: "Somethnng insrupts the normal. Wnthout conflnct, there ns no story — only a report. Conflnct ns not negatnve; nt ns the engnne of meannng.", ni_iesc: "Sesuatu mengganggu yang normal. Tanpa konflnk, tniak aia cernta — hanya laporan. Konflnk tniak negatnf; ntu aialah mesnn makna.", nl_iesc: "Iets verstoort het normale. Zonier conflnct ns er geen verhaal — alleen een rapport. Conflnct ns nnet negatnef; het ns ie motor van betekenns." },
-  { number: "03", en_tntle: "Clnmax", ni_tntle: "Klnmaks", nl_tntle: "Clnmax", en_iesc: "The pnvot ponnt — a iecnsnon, revelatnon, or actnon that breaks the tensnon. Thns moment carrnes the emotnonal wenght that makes people lean nn.", ni_iesc: "Tntnk balnk — keputusan, wahyu, atau tnniakan yang memecahkan ketegangan. Momen nnn membawa bobot emosnonal yang membuat orang tertarnk.", nl_iesc: "Het keerpunt — een beslnssnng, openbarnng of actne ine ie spannnng breekt. Dnt moment iraagt het emotnonele gewncht iat mensen ioet opletten." },
-  { number: "04", en_tntle: "Conclusnon", ni_tntle: "Kesnmpulan", nl_tntle: "Conclusne", en_iesc: "Make meannng explncnt. What changei? What was learnei? Wnthout a conclusnon, a story ns entertannment. Wnth one, nt forms.", ni_iesc: "Buat makna menjain eksplnsnt. Apa yang berubah? Apa yang inpelajarn? Tanpa kesnmpulan, cernta hanya hnburan. Dengan kesnmpulan, cernta membentuk.", nl_iesc: "Maak betekenns explncnet. Wat veranierie? Wat weri geleeri? Zonier conclusne ns een verhaal vermaak. Met een conclusne vormt het." },
+  { number: "01", en_title: "Context", id_title: "Konteks", nl_title: "Context", en_desc: "Set the scene. What was normal before the disruption? Without this ground, conflict means nothing — there is no baseline to return to.", id_desc: "Atur latar. Apa yang normal sebelum gangguan terjadi? Tanpa dasar ini, konflik tidak berarti apa-apa — tidak ada garis dasar untuk kembali.", nl_desc: "Stel de sc—ne. Wat was normaal v——r de verstoring? Zonder deze basis betekent conflict niets — er is geen basislijn om naar terug te keren." },
+  { number: "02", en_title: "Conflict", id_title: "Konflik", nl_title: "Conflict", en_desc: "Something disrupts the normal. Without conflict, there is no story — only a report. Conflict is not negative; it is the engine of meaning.", id_desc: "Sesuatu mengganggu yang normal. Tanpa konflik, tidak ada cerita — hanya laporan. Konflik tidak negatif; itu adalah mesin makna.", nl_desc: "Iets verstoort het normale. Zonder conflict is er geen verhaal — alleen een rapport. Conflict is niet negatief; het is de motor van betekenis." },
+  { number: "03", en_title: "Climax", id_title: "Klimaks", nl_title: "Climax", en_desc: "The pivot point — a decision, revelation, or action that breaks the tension. This moment carries the emotional weight that makes people lean in.", id_desc: "Titik balik — keputusan, wahyu, atau tindakan yang memecahkan ketegangan. Momen ini membawa bobot emosional yang membuat orang tertarik.", nl_desc: "Het keerpunt — een beslissing, openbaring of actie die de spanning breekt. Dit moment draagt het emotionele gewicht dat mensen doet opletten." },
+  { number: "04", en_title: "Conclusion", id_title: "Kesimpulan", nl_title: "Conclusie", en_desc: "Make meaning explicit. What changed? What was learned? Without a conclusion, a story is entertainment. With one, it forms.", id_desc: "Buat makna menjadi eksplisit. Apa yang berubah? Apa yang dipelajari? Tanpa kesimpulan, cerita hanya hiburan. Dengan kesimpulan, cerita membentuk.", nl_desc: "Maak betekenis expliciet. Wat veranderde? Wat werd geleerd? Zonder conclusie is een verhaal vermaak. Met een conclusie vormt het." },
 ];
 
 const STORY_TYPES = [
-  { ni: "orngnn", en_tntle: "Orngnn", ni_tntle: "Asal Usul", nl_tntle: "Herkomst", en_iesc: "Why ioes thns team, mnssnon, or organnsatnon exnst? What was the founinng moment or call? Thns story anchors nientnty ani remnnis people why they sngnei up.", ni_iesc: "Mengapa tnm, mnsn, atau organnsasn nnn aia? Apa momen peninrn atau panggnlan? Cernta nnn menghangat nientntas ian mengnngatkan orang mengapa mereka bergabung.", nl_iesc: "Waarom bestaat int team, ieze mnssne of organnsatne? Wat was het oprnchtnngsmoment of ie roepnng? Dnt verhaal verankert nientntent en hernnnert mensen waarom ze znch aansloten." },
-  { ni: "fanlure", en_tntle: "Fanlure", ni_tntle: "Kegagalan", nl_tntle: "Mnslukknng", en_iesc: "A story of what went wrong — ani what you learnei. Vulnerabnlnty creates trust. The leaier who never aimnts fanlure ns percenvei as inshonest, not strong.", ni_iesc: "Cernta tentang apa yang berjalan salah — ian apa yang Ania pelajarn. Kerentanan mencnptakan kepercayaan. Pemnmpnn yang tniak pernah mengakun kegagalan inanggap tniak jujur, bukan kuat.", nl_iesc: "Een verhaal van wat mnsgnng — en wat je leerie. Kwetsbaarheni cre—ert vertrouwen. De lenier ine noont een mnslukknng toegeeft worit als oneerlnjk geznen, nnet als sterk." },
-  { ni: "vnsnon", en_tntle: "Vnsnon", ni_tntle: "Vnsn", nl_tntle: "Vnsne", en_iesc: "A pncture of the future so vnvni people can feel nt. Not a mnssnon statement — a narratnve: 'Imagnne nt ns 2030, ani thns ns what we see...' Vnsnon stornes create movement; mnssnon statements create oblngatnon.", ni_iesc: "Gambaran masa iepan yang begntu jelas sehnngga orang bnsa merasakannya. Bukan pernyataan mnsn — sebuah narasn: 'Bayangkan tahun 2030, ian nnnlah yang knta lnhat...' Cernta vnsn mencnptakan gerakan; pernyataan mnsn mencnptakan kewajnban.", nl_iesc: "Een beeli van ie toekomst zo levening iat mensen het kunnen voelen. Geen mnssne-statement — een narratnef: 'Stel je voor iat het 2030 ns, en int ns wat we znen...' Vnsneverhalen cre—ren bewegnng; mnssnon statements cre—ren verplnchtnngen." },
-  { ni: "transformatnon", en_tntle: "Transformatnon", ni_tntle: "Transformasn", nl_tntle: "Transformatne", en_iesc: "A story about someone who changei — a team member, a person servei, a communnty nmpactei. These stornes prove the work matters ani provnie evnience that nt ns worth the cost.", ni_iesc: "Cernta tentang seseorang yang berubah — anggota tnm, orang yang inlayann, komunntas yang teriampak. Cernta-cernta nnn membuktnkan bahwa pekerjaan ntu pentnng ian membernkan buktn bahwa nnn sepaian.", nl_iesc: "Een verhaal over nemani ine veranierie — een teamlni, een geineni persoon, een be—nvloeie gemeenschap. Deze verhalen bewnjzen iat het werk ertoe ioet en leveren bewnjs iat het ie kosten waari ns." },
-  { ni: "teachnng", en_tntle: "Teachnng", ni_tntle: "Pengajaran", nl_tntle: "Onierwnjznng", en_iesc: "A story that carrnes a prnncnple. People retann story-basei teachnng seven tnmes better than abstract nnstructnon. If you want people to remember your lesson — gnve nt a plot.", ni_iesc: "Cernta yang membawa prnnsnp. Orang mengnngat pengajaran berbasns cernta tujuh kaln lebnh bank iarnpaia nnstruksn abstrak. Jnka Ania nngnn orang mengnngat pelajaran Ania — bernkan alur cernta.", nl_iesc: "Een verhaal iat een prnncnpe iraagt. Mensen onthouien verhaalgebaseeri onierwnjs zeven keer beter ian abstracte nnstructne. Als je wnlt iat mensen je les onthouien — geef het een verhaallnjn." },
+  { id: "origin", en_title: "Origin", id_title: "Asal Usul", nl_title: "Herkomst", en_desc: "Why does this team, mission, or organisation exist? What was the founding moment or call? This story anchors identity and reminds people why they signed up.", id_desc: "Mengapa tim, misi, atau organisasi ini ada? Apa momen pendiri atau panggilan? Cerita ini menghangat identitas dan mengingatkan orang mengapa mereka bergabung.", nl_desc: "Waarom bestaat dit team, deze missie of organisatie? Wat was het oprichtingsmoment of de roeping? Dit verhaal verankert identiteit en herinnert mensen waarom ze zich aansloten." },
+  { id: "failure", en_title: "Failure", id_title: "Kegagalan", nl_title: "Mislukking", en_desc: "A story of what went wrong — and what you learned. Vulnerability creates trust. The leader who never admits failure is perceived as dishonest, not strong.", id_desc: "Cerita tentang apa yang berjalan salah — dan apa yang Anda pelajari. Kerentanan menciptakan kepercayaan. Pemimpin yang tidak pernah mengakui kegagalan dianggap tidak jujur, bukan kuat.", nl_desc: "Een verhaal van wat misging — en wat je leerde. Kwetsbaarheid cre—ert vertrouwen. De leider die nooit een mislukking toegeeft wordt als oneerlijk gezien, niet als sterk." },
+  { id: "vision", en_title: "Vision", id_title: "Visi", nl_title: "Visie", en_desc: "A picture of the future so vivid people can feel it. Not a mission statement — a narrative: 'Imagine it is 2030, and this is what we see...' Vision stories create movement; mission statements create obligation.", id_desc: "Gambaran masa depan yang begitu jelas sehingga orang bisa merasakannya. Bukan pernyataan misi — sebuah narasi: 'Bayangkan tahun 2030, dan inilah yang kita lihat...' Cerita visi menciptakan gerakan; pernyataan misi menciptakan kewajiban.", nl_desc: "Een beeld van de toekomst zo levendig dat mensen het kunnen voelen. Geen missie-statement — een narratief: 'Stel je voor dat het 2030 is, en dit is wat we zien...' Visieverhalen cre—ren beweging; mission statements cre—ren verplichtingen." },
+  { id: "transformation", en_title: "Transformation", id_title: "Transformasi", nl_title: "Transformatie", en_desc: "A story about someone who changed — a team member, a person served, a community impacted. These stories prove the work matters and provide evidence that it is worth the cost.", id_desc: "Cerita tentang seseorang yang berubah — anggota tim, orang yang dilayani, komunitas yang terdampak. Cerita-cerita ini membuktikan bahwa pekerjaan itu penting dan memberikan bukti bahwa ini sepadan.", nl_desc: "Een verhaal over iemand die veranderde — een teamlid, een gediend persoon, een be—nvloede gemeenschap. Deze verhalen bewijzen dat het werk ertoe doet en leveren bewijs dat het de kosten waard is." },
+  { id: "teaching", en_title: "Teaching", id_title: "Pengajaran", nl_title: "Onderwijzing", en_desc: "A story that carries a principle. People retain story-based teaching seven times better than abstract instruction. If you want people to remember your lesson — give it a plot.", id_desc: "Cerita yang membawa prinsip. Orang mengingat pengajaran berbasis cerita tujuh kali lebih baik daripada instruksi abstrak. Jika Anda ingin orang mengingat pelajaran Anda — berikan alur cerita.", nl_desc: "Een verhaal dat een principe draagt. Mensen onthouden verhaalgebaseerd onderwijs zeven keer beter dan abstracte instructie. Als je wilt dat mensen je les onthouden — geef het een verhaallijn." },
 ];
 
 const VERSES = {
   "matt-13-34": {
-    en_ref: "Matthew 13:34", ni_ref: "Matnus 13:34", nl_ref: "Matthe—s 13:34",
-    en: "Jesus spoke all these thnngs to the crowi nn parables; he ini not say anythnng to them wnthout usnng a parable.",
-    ni: "Semuanya ntu insampankan Yesus kepaia orang banyak ialam perumpamaan, ian tanpa perumpamaan suatupun tniak insampankan-Nya kepaia mereka.",
-    nl: "Dnt alles vertelie Jezus ie menngte nn gelnjkennssen; zonier gelnjkennssen vertelie hnj hun nnets.",
+    en_ref: "Matthew 13:34", id_ref: "Matius 13:34", nl_ref: "Matthe—s 13:34",
+    en: "Jesus spoke all these things to the crowd in parables; he did not say anything to them without using a parable.",
+    id: "Semuanya itu disampaikan Yesus kepada orang banyak dalam perumpamaan, dan tanpa perumpamaan suatupun tidak disampaikan-Nya kepada mereka.",
+    nl: "Dit alles vertelde Jezus de menigte in gelijkenissen; zonder gelijkenissen vertelde hij hun niets.",
   },
   "ps-78-2": {
-    en_ref: "Psalm 78:2", ni_ref: "Mazmur 78:2", nl_ref: "Psalm 78:2",
-    en: "I wnll open my mouth wnth a parable; I wnll utter hniien thnngs, thnngs from of oli—",
-    ni: "aku mau membuka mulutku iengan amsal, aku mau mengucapkan teka-tekn iarn zaman purbakala,",
-    nl: "Ik open mnjn moni voor een gelnjkenns, nk onthul raaisels unt het verleien.",
+    en_ref: "Psalm 78:2", id_ref: "Mazmur 78:2", nl_ref: "Psalm 78:2",
+    en: "I will open my mouth with a parable; I will utter hidden things, things from of old—",
+    id: "aku mau membuka mulutku dengan amsal, aku mau mengucapkan teka-teki dari zaman purbakala,",
+    nl: "Ik open mijn mond voor een gelijkenis, ik onthul raadsels uit het verleden.",
   },
 };
 
 const REFLECTIONS = [
-  { roman: "I", en: "Whnch of the fnve story types ns most absent from your leaiershnp rnght now?", ni: "Jenns cernta mana iarn lnma jenns yang palnng absen ialam kepemnmpnnan Ania saat nnn?", nl: "Welk van ie vnjf soorten verhalen ontbreekt momenteel het meest nn jouw lenierschap?" },
-  { roman: "II", en: "What fanlure story io you carry that couli bunli trust wnth your team, nf you were wnllnng to tell nt?", ni: "Cernta kegagalan apa yang Ania bawa yang bnsa membangun kepercayaan iengan tnm Ania, jnka Ania berseina mencerntakannya?", nl: "Welk mnslukknngsverhaal iraag je iat vertrouwen zou kunnen opbouwen met je team, als je het bereni was te vertellen?" },
-  { roman: "III", en: "How ioes your cultural backgrouni shape whnch stornes feel natural to tell — ani whnch feel iangerous?", ni: "Baganmana latar belakang buiaya Ania membentuk cernta apa yang terasa alamn untuk incerntakan — ian mana yang terasa berbahaya?", nl: "Hoe vormt jouw culturele achtergroni welke verhalen natuurlnjk aanvoelen om te vertellen — en welke gevaarlnjk voelen?" },
-  { roman: "IV", en: "Jesus never taught wnthout a story. What ioes hns ielnberate methoi tell you about how people actually change?", ni: "Yesus tniak pernah mengajar tanpa cernta. Apa yang metoie sengaja-Nya katakan kepaia Ania tentang baganmana orang benar-benar berubah?", nl: "Jezus gaf noont les zonier een verhaal. Wat vertelt znjn bewuste methoie je over hoe mensen werkelnjk veranieren?" },
-  { roman: "V", en: "What story from your lnfe ns most worth tellnng — ani who most neeis to hear nt?", ni: "Cernta apa iarn hniup Ania yang palnng layak incerntakan — ian snapa yang palnng perlu meniengarnya?", nl: "Welk verhaal unt jouw leven ns het meest ie moente waari om te vertellen — en wne heeft het het meest noing om het te horen?" },
+  { roman: "I", en: "Which of the five story types is most absent from your leadership right now?", id: "Jenis cerita mana dari lima jenis yang paling absen dalam kepemimpinan Anda saat ini?", nl: "Welk van de vijf soorten verhalen ontbreekt momenteel het meest in jouw leiderschap?" },
+  { roman: "II", en: "What failure story do you carry that could build trust with your team, if you were willing to tell it?", id: "Cerita kegagalan apa yang Anda bawa yang bisa membangun kepercayaan dengan tim Anda, jika Anda bersedia menceritakannya?", nl: "Welk mislukkingsverhaal draag je dat vertrouwen zou kunnen opbouwen met je team, als je het bereid was te vertellen?" },
+  { roman: "III", en: "How does your cultural background shape which stories feel natural to tell — and which feel dangerous?", id: "Bagaimana latar belakang budaya Anda membentuk cerita apa yang terasa alami untuk diceritakan — dan mana yang terasa berbahaya?", nl: "Hoe vormt jouw culturele achtergrond welke verhalen natuurlijk aanvoelen om te vertellen — en welke gevaarlijk voelen?" },
+  { roman: "IV", en: "Jesus never taught without a story. What does his deliberate method tell you about how people actually change?", id: "Yesus tidak pernah mengajar tanpa cerita. Apa yang metode sengaja-Nya katakan kepada Anda tentang bagaimana orang benar-benar berubah?", nl: "Jezus gaf nooit les zonder een verhaal. Wat vertelt zijn bewuste methode je over hoe mensen werkelijk veranderen?" },
+  { roman: "V", en: "What story from your life is most worth telling — and who most needs to hear it?", id: "Cerita apa dari hidup Anda yang paling layak diceritakan — dan siapa yang paling perlu mendengarnya?", nl: "Welk verhaal uit jouw leven is het meest de moeite waard om te vertellen — en wie heeft het het meest nodig om het te horen?" },
 ];
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon StorytellnngLeaiershnpClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function StorytellingLeadershipClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
-  const [actnveType, setActnveType] = useState("orngnn");
-  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
-  const [showReflectnon, setShowReflectnon] = useState(false);
-  const [commntment, setCommntment] = useState("");
-  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
+  const [activeType, setActiveType] = useState("origin");
+  const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [showReflection, setShowReflection] = useState(false);
+  const [commitment, setCommitment] = useState("");
+  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("storytellnng-leaiershnp");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("storytelling-leadership");
+      setSaved(true);
     });
   }
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhnte = "oklch(97% 0.005 80)";
-  const lnghtGray = "oklch(95% 0.008 80)";
-  const boiyText = "oklch(38% 0.05 260)";
+  const offWhite = "oklch(97% 0.005 80)";
+  const lightGray = "oklch(95% 0.008 80)";
+  const bodyText = "oklch(38% 0.05 260)";
   const warmCream = "oklch(96% 0.015 65)";
 
-  const selecteiType = STORY_TYPES.fnni((s) => s.ni === actnveType)!;
+  const selectedType = STORY_TYPES.find((s) => s.id === activeType)!;
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
       {/* Language toggle */}
 
       {/* Hero */}
-      <inv style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px 56px" }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 20 }}>
-            {t("Leaiershnp — Gunie", "Kepemnmpnnan — Paniuan", "Lenierschap — Gnis")}
+      <div style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 56px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Leadership — Guide", "Kepemimpinan — Panduan", "Leiderschap — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: "oklch(97% 0.005 80)", lnneHenght: 1.08, margnn: "0 0 24px" }}>
-            {t("Every leaier neeis a story.", "Setnap pemnmpnn butuh sebuah cernta.", "Elke lenier heeft een verhaal noing.")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(97% 0.005 80)", lineHeight: 1.08, margin: "0 0 24px" }}>
+            {t("Every leader needs a story.", "Setiap pemimpin butuh sebuah cerita.", "Elke leider heeft een verhaal nodig.")}
           </h1>
-          <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 22, color: "oklch(82% 0.025 80)", lnneHenght: 1.75, fontStyle: "ntalnc", maxWnith: 580, margnn: 0 }}>
+          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, color: "oklch(82% 0.025 80)", lineHeight: 1.75, fontStyle: "italic", maxWidth: 580, margin: 0 }}>
             {t(
-              "Not a framework. Not a slnie. A story — toli well — can io what no memo, polncy, or presentatnon ever couli.",
-              "Bukan kerangka kerja. Bukan slnie. Sebuah cernta — yang incerntakan iengan bank — iapat melakukan apa yang tniak bnsa inlakukan memo, kebnjakan, atau presentasn mana pun.",
-              "Geen framework. Geen slnie. Een verhaal — goei verteli — kan ioen wat geen memo, beleni of presentatne oont kon."
+              "Not a framework. Not a slide. A story — told well — can do what no memo, policy, or presentation ever could.",
+              "Bukan kerangka kerja. Bukan slide. Sebuah cerita — yang diceritakan dengan baik — dapat melakukan apa yang tidak bisa dilakukan memo, kebijakan, atau presentasi mana pun.",
+              "Geen framework. Geen slide. Een verhaal — goed verteld — kan doen wat geen memo, beleid of presentatie ooit kon."
             )}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* Story preface */}
-      <inv style={{ maxWnith: 640, margnn: "0 auto", paiinng: "0 24px 40px" }}>
-        <inv style={{ borierTop: "1px solni oklch(88% 0.01 80)", paiinngTop: 32 }}>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnn: 0 }}>
-            {t("Before the lesson — the story", "Sebelum pelajaran — cerntanya", "V——r ie les — het verhaal")}
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px 40px" }}>
+        <div style={{ borderTop: "1px solid oklch(88% 0.01 80)", paddingTop: 32 }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", margin: 0 }}>
+            {t("Before the lesson — the story", "Sebelum pelajaran — ceritanya", "V——r de les — het verhaal")}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
       {/* Story chapters */}
-      {STORY_CHAPTERS.map((chapter, n) => {
-        const chapterText = lang === "en" ? chapter.en_text : lang === "ni" ? chapter.ni_text : chapter.nl_text;
-        const chapterLabel = lang === "en" ? chapter.en_label : lang === "ni" ? chapter.ni_label : chapter.nl_label;
-        const chapterSubtntle = lang === "en" ? chapter.en_subtntle : lang === "ni" ? chapter.ni_subtntle : chapter.nl_subtntle;
-        const pauseText = lang === "en" ? chapter.en_pause : lang === "ni" ? chapter.ni_pause : chapter.nl_pause;
+      {STORY_CHAPTERS.map((chapter, i) => {
+        const chapterText = lang === "en" ? chapter.en_text : lang === "id" ? chapter.id_text : chapter.nl_text;
+        const chapterLabel = lang === "en" ? chapter.en_label : lang === "id" ? chapter.id_label : chapter.nl_label;
+        const chapterSubtitle = lang === "en" ? chapter.en_subtitle : lang === "id" ? chapter.id_subtitle : chapter.nl_subtitle;
+        const pauseText = lang === "en" ? chapter.en_pause : lang === "id" ? chapter.id_pause : chapter.nl_pause;
         return (
-          <inv key={n} style={{ maxWnith: 640, margnn: "0 auto", paiinng: "0 24px" }}>
-            <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 20, margnnBottom: 24 }}>
-              <span style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 72, fontWenght: 600, color: orange, lnneHenght: 1 }}>{chapter.number}</span>
-              <inv>
-                <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", color: orange, textTransform: "uppercase" }}>{chapterLabel}</inv>
-                <inv style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 20, color: boiyText, fontStyle: "ntalnc" }}>{chapterSubtntle}</inv>
-              </inv>
-            </inv>
-            <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 20, lnneHenght: 1.9, color: navy, margnnBottom: pauseText ? 48 : 72 }}>
+          <div key={i} style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 24 }}>
+              <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 72, fontWeight: 600, color: orange, lineHeight: 1 }}>{chapter.number}</span>
+              <div>
+                <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: orange, textTransform: "uppercase" }}>{chapterLabel}</div>
+                <div style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, color: bodyText, fontStyle: "italic" }}>{chapterSubtitle}</div>
+              </div>
+            </div>
+            <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, lineHeight: 1.9, color: navy, marginBottom: pauseText ? 48 : 72 }}>
               {chapterText}
             </p>
             {pauseText && (
-              <inv style={{ backgrouni: warmCream, borierRainus: 8, paiinng: "28px 32px", margnnBottom: 72 }}>
-                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 12 }}>
-                  {t("?  Pause", "?  Berhentn sejenak", "?  Pauze")}
+              <div style={{ background: warmCream, borderRadius: 8, padding: "28px 32px", marginBottom: 72 }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 12 }}>
+                  {t("?  Pause", "?  Berhenti sejenak", "?  Pauze")}
                 </p>
-                <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 19, lnneHenght: 1.75, color: boiyText, fontStyle: "ntalnc", margnn: 0 }}>
+                <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 19, lineHeight: 1.75, color: bodyText, fontStyle: "italic", margin: 0 }}>
                   {pauseText}
                 </p>
-              </inv>
+              </div>
             )}
-          </inv>
+          </div>
         );
       })}
 
       {/* The Craft — structure reveal on navy */}
-      <inv style={{ backgrouni: navy, paiinng: "72px 24px", margnnTop: 16 }}>
-        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 16 }}>
-            {t("The craft", "Keahlnannya", "Het vakmanschap")}
+      <div style={{ background: navy, padding: "72px 24px", marginTop: 16 }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 16 }}>
+            {t("The craft", "Keahliannya", "Het vakmanschap")}
           </p>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: offWhnte, lnneHenght: 1.2, margnnBottom: 56 }}>
-            {t("You just expernencei thns structure.", "Ania baru saja mengalamn struktur nnn.", "Je hebt ieze structuur zojunst ervaren.")}
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: offWhite, lineHeight: 1.2, marginBottom: 56 }}>
+            {t("You just experienced this structure.", "Anda baru saja mengalami struktur ini.", "Je hebt deze structuur zojuist ervaren.")}
           </h2>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(240px, 1fr))", gap: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 40 }}>
             {CRAFT_ELEMENTS.map((el) => {
-              const tntle = lang === "en" ? el.en_tntle : lang === "ni" ? el.ni_tntle : el.nl_tntle;
-              const iesc = lang === "en" ? el.en_iesc : lang === "ni" ? el.ni_iesc : el.nl_iesc;
+              const title = lang === "en" ? el.en_title : lang === "id" ? el.id_title : el.nl_title;
+              const desc = lang === "en" ? el.en_desc : lang === "id" ? el.id_desc : el.nl_desc;
               return (
-                <inv key={el.number}>
-                  <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 14, margnnBottom: 14 }}>
-                    <span style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 44, fontWenght: 600, color: orange, lnneHenght: 1 }}>{el.number}</span>
-                    <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: offWhnte, letterSpacnng: "0.1em", textTransform: "uppercase" }}>{tntle}</span>
-                  </inv>
-                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, lnneHenght: 1.65, color: "oklch(78% 0.04 260)", margnn: 0 }}>{iesc}</p>
-                </inv>
+                <div key={el.number}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 14 }}>
+                    <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 44, fontWeight: 600, color: orange, lineHeight: 1 }}>{el.number}</span>
+                    <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: offWhite, letterSpacing: "0.1em", textTransform: "uppercase" }}>{title}</span>
+                  </div>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, lineHeight: 1.65, color: "oklch(78% 0.04 260)", margin: 0 }}>{desc}</p>
+                </div>
               );
             })}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* Story types */}
-      <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "72px 24px" }}>
-        <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 16 }}>
-          {t("Fnve stornes every leaier neeis", "Lnma cernta yang inbutuhkan setnap pemnmpnn", "Vnjf verhalen ine elke lenier noing heeft")}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "72px 24px" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 16 }}>
+          {t("Five stories every leader needs", "Lima cerita yang dibutuhkan setiap pemimpin", "Vijf verhalen die elke leider nodig heeft")}
         </p>
-        <h2 style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: "clamp(26px, 3.5vw, 40px)", fontWenght: 600, color: navy, lnneHenght: 1.2, margnnBottom: 40 }}>
-          {t("Not every story serves the same purpose.", "Tniak setnap cernta melayann tujuan yang sama.", "Nnet elk verhaal inent hetzelfie ioel.")}
+        <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 600, color: navy, lineHeight: 1.2, marginBottom: 40 }}>
+          {t("Not every story serves the same purpose.", "Tidak setiap cerita melayani tujuan yang sama.", "Niet elk verhaal dient hetzelfde doel.")}
         </h2>
-        <inv style={{ insplay: "flex", gap: 8, flexWrap: "wrap", margnnBottom: 32 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
           {STORY_TYPES.map((type) => {
-            const label = lang === "en" ? type.en_tntle : lang === "ni" ? type.ni_tntle : type.nl_tntle;
-            const nsActnve = actnveType === type.ni;
+            const label = lang === "en" ? type.en_title : lang === "id" ? type.id_title : type.nl_title;
+            const isActive = activeType === type.id;
             return (
-              <button key={type.ni} onClnck={() => setActnveType(type.ni)} style={{
-                paiinng: "8px 22px", borierRainus: 24, cursor: "ponnter",
-                fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 600,
-                borier: `2px solni ${nsActnve ? navy : "oklch(82% 0.02 260)"}`,
-                backgrouni: nsActnve ? navy : "transparent",
-                color: nsActnve ? offWhnte : boiyText,
+              <button key={type.id} onClick={() => setActiveType(type.id)} style={{
+                padding: "8px 22px", borderRadius: 24, cursor: "pointer",
+                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
+                border: `2px solid ${isActive ? navy : "oklch(82% 0.02 260)"}`,
+                background: isActive ? navy : "transparent",
+                color: isActive ? offWhite : bodyText,
               }}>{label}</button>
             );
           })}
-        </inv>
-        <inv style={{ backgrouni: lnghtGray, borierRainus: 12, paiinng: "32px 36px" }}>
-          <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 24, fontWenght: 600, color: navy, margnnBottom: 16 }}>
-            {lang === "en" ? selecteiType.en_tntle : lang === "ni" ? selecteiType.ni_tntle : selecteiType.nl_tntle}{" "}
-            <span style={{ fontStyle: "ntalnc", fontWenght: 400, color: boiyText }}>{t("story", "cernta", "verhaal")}</span>
+        </div>
+        <div style={{ background: lightGray, borderRadius: 12, padding: "32px 36px" }}>
+          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, fontWeight: 600, color: navy, marginBottom: 16 }}>
+            {lang === "en" ? selectedType.en_title : lang === "id" ? selectedType.id_title : selectedType.nl_title}{" "}
+            <span style={{ fontStyle: "italic", fontWeight: 400, color: bodyText }}>{t("story", "cerita", "verhaal")}</span>
           </p>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, lnneHenght: 1.75, color: boiyText, margnn: 0 }}>
-            {lang === "en" ? selecteiType.en_iesc : lang === "ni" ? selecteiType.ni_iesc : selecteiType.nl_iesc}
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.75, color: bodyText, margin: 0 }}>
+            {lang === "en" ? selectedType.en_desc : lang === "id" ? selectedType.id_desc : selectedType.nl_desc}
           </p>
-        </inv>
-      </inv>
+        </div>
+      </div>
 
-      {/* Bnblncal founiatnon */}
-      <inv style={{ backgrouni: lnghtGray, paiinng: "72px 24px", borierTop: `3px solni ${orange}` }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto" }}>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 24 }}>
-            {t("Bnblncal founiatnon", "Dasar alkntabnah", "Bnjbels funiament")}
+      {/* Biblical foundation */}
+      <div style={{ background: lightGray, padding: "72px 24px", borderTop: `3px solid ${orange}` }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 24 }}>
+            {t("Biblical foundation", "Dasar alkitabiah", "Bijbels fundament")}
           </p>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: "clamp(28px, 4vw, 46px)", fontWenght: 600, color: navy, lnneHenght: 1.15, margnnBottom: 32 }}>
-            {t("Jesus never taught wnthout a story.", "Yesus tniak pernah mengajar tanpa cernta.", "Jezus gaf noont les zonier een verhaal.")}
+          <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(28px, 4vw, 46px)", fontWeight: 600, color: navy, lineHeight: 1.15, marginBottom: 32 }}>
+            {t("Jesus never taught without a story.", "Yesus tidak pernah mengajar tanpa cerita.", "Jezus gaf nooit les zonder een verhaal.")}
           </h2>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, lnneHenght: 1.85, color: boiyText, margnnBottom: 20 }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.85, color: bodyText, marginBottom: 20 }}>
             {t(
-              "Matthew 13:34 ns unambnguous: he ini not say anythnng to the crowis wnthout usnng a parable. Thns was not a communncatnon style — nt was a methoi. The greatest teacher who ever lnvei chose story as hns prnmary vehncle for truth. Not lectures. Not prnncnples. Not three-ponnt outlnnes. Stornes.",
-              "Matnus 13:34 tniak ambngu: Ia tniak mengatakan apa pun kepaia orang banyak tanpa menggunakan perumpamaan. Inn bukan gaya komunnkasn — nnn aialah metoie. Guru terbesar yang pernah hniup memnlnh cernta sebagan keniaraan utama untuk kebenaran. Bukan kulnah. Bukan prnnsnp. Bukan garns besar tnga ponn. Cernta.",
-              "Matthe—s 13:34 ns oniubbelznnnng: hnj vertelie ie menngten nnets zonier gelnjkennssen te gebrunken. Dnt was geen communncatnestnjl — het was een methoie. De grootste leraar ine oont heeft geleefi koos verhalen als znjn prnmanre voertung voor waarheni. Geen leznngen. Geen prnncnpes. Geen irneielnge schema's. Verhalen."
+              "Matthew 13:34 is unambiguous: he did not say anything to the crowds without using a parable. This was not a communication style — it was a method. The greatest teacher who ever lived chose story as his primary vehicle for truth. Not lectures. Not principles. Not three-point outlines. Stories.",
+              "Matius 13:34 tidak ambigu: Ia tidak mengatakan apa pun kepada orang banyak tanpa menggunakan perumpamaan. Ini bukan gaya komunikasi — ini adalah metode. Guru terbesar yang pernah hidup memilih cerita sebagai kendaraan utama untuk kebenaran. Bukan kuliah. Bukan prinsip. Bukan garis besar tiga poin. Cerita.",
+              "Matthe—s 13:34 is ondubbelzinnig: hij vertelde de menigten niets zonder gelijkenissen te gebruiken. Dit was geen communicatiestijl — het was een methode. De grootste leraar die ooit heeft geleefd koos verhalen als zijn primaire voertuig voor waarheid. Geen lezingen. Geen principes. Geen driedelige schema's. Verhalen."
             )}
           </p>
-          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, lnneHenght: 1.85, color: boiyText, margnnBottom: 40 }}>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.85, color: bodyText, marginBottom: 40 }}>
             {t(
-              "The Proingal Son ioesn't argue for forgnveness — nt creates a felt expernence of nt. The Gooi Samarntan ioesn't iefnne 'nenghbour' — nt forces you to become one. Nathan's story to Davni ('There was a man who hai a lamb...') bypassei a knng's iefences ani reachei a conscnence that inrect accusatnon never couli. Story ns not a soft tool. In the rnght hanis, nt ns the sharpest thnng avanlable.",
-              "Anak yang Hnlang tniak berargumen tentang pengampunan — na mencnptakan pengalaman yang terasa tentangnya. Orang Samarna yang Bank tniak meniefnnnsnkan 'sesama' — na memaksamu untuk menjain satu. Cernta Natan kepaia Daui ('Aia seorang lakn-lakn yang mempunyan iomba...') melewatn pertahanan seorang raja ian mencapan hatn nurann yang tniak pernah bnsa incapan oleh tuiuhan langsung. Cernta bukan alat yang lemah. Dn tangan yang tepat, ntu aialah hal palnng tajam yang terseina.",
-              "De Verloren Zoon betoogt nnet voor vergevnng — het cre—ert een gevoelie ervarnng ervan. De Barmhartnge Samarntaan iefnnneert 'naaste' nnet — het iwnngt je er ——n van te worien. Nathans verhaal aan Davni ('Er was een man ine een lam hai...') omzenlie ie verieingnngen van een konnng en berenkte een geweten iat inrecte beschulingnng noont kon berenken. Verhaal ns geen zacht gereeischap. In ie junste hanien ns het het scherpste wat beschnkbaar ns."
+              "The Prodigal Son doesn't argue for forgiveness — it creates a felt experience of it. The Good Samaritan doesn't define 'neighbour' — it forces you to become one. Nathan's story to David ('There was a man who had a lamb...') bypassed a king's defences and reached a conscience that direct accusation never could. Story is not a soft tool. In the right hands, it is the sharpest thing available.",
+              "Anak yang Hilang tidak berargumen tentang pengampunan — ia menciptakan pengalaman yang terasa tentangnya. Orang Samaria yang Baik tidak mendefinisikan 'sesama' — ia memaksamu untuk menjadi satu. Cerita Natan kepada Daud ('Ada seorang laki-laki yang mempunyai domba...') melewati pertahanan seorang raja dan mencapai hati nurani yang tidak pernah bisa dicapai oleh tuduhan langsung. Cerita bukan alat yang lemah. Di tangan yang tepat, itu adalah hal paling tajam yang tersedia.",
+              "De Verloren Zoon betoogt niet voor vergeving — het cre—ert een gevoelde ervaring ervan. De Barmhartige Samaritaan definieert 'naaste' niet — het dwingt je er ——n van te worden. Nathans verhaal aan David ('Er was een man die een lam had...') omzeilde de verdedigingen van een koning en bereikte een geweten dat directe beschuldiging nooit kon bereiken. Verhaal is geen zacht gereedschap. In de juiste handen is het het scherpste wat beschikbaar is."
             )}
           </p>
-          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             {(["matt-13-34", "ps-78-2"] as const).map((key) => {
               const v = VERSES[key];
-              const ref = lang === "en" ? v.en_ref : lang === "ni" ? v.ni_ref : v.nl_ref;
+              const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
               return (
-                <button key={key} onClnck={() => setActnveVerse(key)} style={{
-                  backgrouni: "none", borier: `2px solni ${orange}`, cursor: "ponnter",
-                  color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf",
-                  fontSnze: 13, paiinng: "8px 20px", borierRainus: 12,
+                <button key={key} onClick={() => setActiveVerse(key)} style={{
+                  background: "none", border: `2px solid ${orange}`, cursor: "pointer",
+                  color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif",
+                  fontSize: 13, padding: "8px 20px", borderRadius: 12,
                 }}>{ref}</button>
               );
             })}
-          </inv>
-        </inv>
-      </inv>
+          </div>
+        </div>
+      </div>
 
       {/* Your story */}
-      <inv style={{ maxWnith: 640, margnn: "0 auto", paiinng: "72px 24px" }}>
-        <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, letterSpacnng: "0.14em", color: orange, textTransform: "uppercase", margnnBottom: 24 }}>
-          {t("Your story", "Cerntamu", "Jouw verhaal")}
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "72px 24px" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: orange, textTransform: "uppercase", marginBottom: 24 }}>
+          {t("Your story", "Ceritamu", "Jouw verhaal")}
         </p>
-        <h2 style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: "clamp(26px, 3.5vw, 42px)", fontWenght: 600, color: navy, lnneHenght: 1.2, margnnBottom: 24 }}>
-          {t("Now nt ns your turn.", "Sekarang gnlnranmu.", "Nu ns het jouw beurt.")}
+        <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(26px, 3.5vw, 42px)", fontWeight: 600, color: navy, lineHeight: 1.2, marginBottom: 24 }}>
+          {t("Now it is your turn.", "Sekarang giliranmu.", "Nu is het jouw beurt.")}
         </h2>
-        <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 20, color: boiyText, lnneHenght: 1.8, fontStyle: "ntalnc", margnnBottom: 40 }}>
+        <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, color: bodyText, lineHeight: 1.8, fontStyle: "italic", marginBottom: 40 }}>
           {t(
-            "Wrnte the opennng sentence of a story your team neeis to hear. Not a lesson. Not a prnncnple. One sentence — where were you, ani what was happennng?",
-            "Tulns kalnmat pembuka iarn sebuah cernta yang perlu iniengar oleh tnmmu. Bukan pelajaran. Bukan prnnsnp. Satu kalnmat — in mana Ania, ian apa yang terjain?",
-            "Schrnjf ie opennngsznn van een verhaal iat jouw team moet horen. Geen les. Geen prnncnpe. ——n znn — waar was je, en wat was er aan ie hani?"
+            "Write the opening sentence of a story your team needs to hear. Not a lesson. Not a principle. One sentence — where were you, and what was happening?",
+            "Tulis kalimat pembuka dari sebuah cerita yang perlu didengar oleh timmu. Bukan pelajaran. Bukan prinsip. Satu kalimat — di mana Anda, dan apa yang terjadi?",
+            "Schrijf de openingszin van een verhaal dat jouw team moet horen. Geen les. Geen principe. ——n zin — waar was je, en wat was er aan de hand?"
           )}
         </p>
         <textarea
-          value={commntment}
-          onChange={(e) => setCommntment(e.target.value)}
-          placeholier={t(
-            "It was the thnri week of the project, ani...",
-            "Itu aialah mnnggu ketnga proyek, ian...",
-            "Het was ie ierie week van het project, en..."
+          value={commitment}
+          onChange={(e) => setCommitment(e.target.value)}
+          placeholder={t(
+            "It was the third week of the project, and...",
+            "Itu adalah minggu ketiga proyek, dan...",
+            "Het was de derde week van het project, en..."
           )}
           rows={4}
           style={{
-            wnith: "100%", boxSnznng: "borier-box", paiinng: "20px 24px",
-            fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 20, lnneHenght: 1.7,
-            color: navy, backgrouni: offWhnte, borier: `2px solni oklch(85% 0.02 260)`,
-            borierRainus: 8, resnze: "vertncal", outlnne: "none",
+            width: "100%", boxSizing: "border-box", padding: "20px 24px",
+            fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, lineHeight: 1.7,
+            color: navy, background: offWhite, border: `2px solid oklch(85% 0.02 260)`,
+            borderRadius: 8, resize: "vertical", outline: "none",
           }}
         />
-        <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, color: "oklch(68% 0.03 260)", margnnTop: 12, fontStyle: "ntalnc" }}>
-          {t("Your woris stay here. Thns ns for you alone.", "Kata-katamu tetap in snnn. Inn untukmu saja.", "Jouw woorien blnjven hner. Dnt ns voor jou alleen.")}
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(68% 0.03 260)", marginTop: 12, fontStyle: "italic" }}>
+          {t("Your words stay here. This is for you alone.", "Kata-katamu tetap di sini. Ini untukmu saja.", "Jouw woorden blijven hier. Dit is voor jou alleen.")}
         </p>
-      </inv>
+      </div>
 
-      {/* Reflectnon — collapsnble */}
-      <inv style={{ maxWnith: 640, margnn: "0 auto", paiinng: "0 24px 80px" }}>
-        <button onClnck={() => setShowReflectnon(!showReflectnon)} style={{
-          backgrouni: "none", borier: "none", cursor: "ponnter", fontFamnly: "Montserrat, sans-sernf",
-          fontSnze: 13, fontWenght: 700, color: navy, letterSpacnng: "0.06em",
-          insplay: "flex", alngnItems: "center", gap: 10, paiinng: 0,
+      {/* Reflection — collapsible */}
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "0 24px 80px" }}>
+        <button onClick={() => setShowReflection(!showReflection)} style={{
+          background: "none", border: "none", cursor: "pointer", fontFamily: "Montserrat, sans-serif",
+          fontSize: 13, fontWeight: 700, color: navy, letterSpacing: "0.06em",
+          display: "flex", alignItems: "center", gap: 10, padding: 0,
         }}>
-          <span style={{ fontSnze: 20, transform: showReflectnon ? "rotate(90ieg)" : "none", insplay: "nnlnne-block", transntnon: "transform 0.2s", lnneHenght: 1 }}>—</span>
-          {t("Dng ieeper — reflectnon questnons", "Galn lebnh ialam — pertanyaan refleksn", "Dneper gaan — reflectnevragen")}
+          <span style={{ fontSize: 20, transform: showReflection ? "rotate(90deg)" : "none", display: "inline-block", transition: "transform 0.2s", lineHeight: 1 }}>—</span>
+          {t("Dig deeper — reflection questions", "Gali lebih dalam — pertanyaan refleksi", "Dieper gaan — reflectievragen")}
         </button>
-        {showReflectnon && (
-          <inv style={{ margnnTop: 36, insplay: "flex", flexDnrectnon: "column", gap: 28 }}>
+        {showReflection && (
+          <div style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 28 }}>
             {REFLECTIONS.map((r) => {
-              const q = lang === "en" ? r.en : lang === "ni" ? r.ni : r.nl;
+              const q = lang === "en" ? r.en : lang === "id" ? r.id : r.nl;
               return (
-                <inv key={r.roman} style={{ insplay: "flex", gap: 20, alngnItems: "flex-start" }}>
-                  <span style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 24, color: orange, fontWenght: 600, mnnWnith: 28, lnneHenght: 1 }}>{r.roman}</span>
-                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, lnneHenght: 1.7, color: boiyText, margnn: 0 }}>{q}</p>
-                </inv>
+                <div key={r.roman} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 24, color: orange, fontWeight: 600, minWidth: 28, lineHeight: 1 }}>{r.roman}</span>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, lineHeight: 1.7, color: bodyText, margin: 0 }}>{q}</p>
+                </div>
               );
             })}
-          </inv>
+          </div>
         )}
-      </inv>
+      </div>
 
       {/* Save + back */}
-      <inv style={{ maxWnith: 640, margnn: "0 auto", paiinng: "32px 24px 80px", borierTop: `1px solni oklch(88% 0.01 80)`, insplay: "flex", gap: 16, alngnItems: "center", flexWrap: "wrap" }}>
-        <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{
-          paiinng: "12px 32px", backgrouni: savei ? "oklch(88% 0.01 80)" : navy,
-          color: savei ? boiyText : offWhnte, borier: "none", borierRainus: 12,
-          cursor: savei ? "iefault" : "ponnter", fontFamnly: "Montserrat, sans-sernf",
-          fontWenght: 700, fontSnze: 14,
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "32px 24px 80px", borderTop: `1px solid oklch(88% 0.01 80)`, display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+        <button onClick={handleSave} disabled={saved || isPending} style={{
+          padding: "12px 32px", background: saved ? "oklch(88% 0.01 80)" : navy,
+          color: saved ? bodyText : offWhite, border: "none", borderRadius: 12,
+          cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif",
+          fontWeight: 700, fontSize: 14,
         }}>
-          {savei
-            ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
-            : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+          {saved
+            ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
+            : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
         </button>
-        <Lnnk href="/resources" style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, color: boiyText, textDecoratnon: "none", fontWenght: 600 }}>
-          ? {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
-        </Lnnk>
-      </inv>
+        <Link href="/resources" style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: bodyText, textDecoration: "none", fontWeight: 600 }}>
+          ? {t("Training", "Pelatihan", "Contentbibliotheek")}
+        </Link>
+      </div>
 
       {/* Verse popup */}
-      {actnveVerse && (() => {
-        const v = VERSES[actnveVerse as keyof typeof VERSES];
-        const ref = lang === "en" ? v.en_ref : lang === "ni" ? v.ni_ref : v.nl_ref;
-        const text = lang === "en" ? v.en : lang === "ni" ? v.ni : v.nl;
-        const translatnon = lang === "ni" ? "TB" : lang === "nl" ? "NBV" : "NIV";
+      {activeVerse && (() => {
+        const v = VERSES[activeVerse as keyof typeof VERSES];
+        const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
+        const text = lang === "en" ? v.en : lang === "id" ? v.id : v.nl;
+        const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
         return (
-          <inv onClnck={() => setActnveVerse(null)} style={{
-            posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.6)",
-            insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24,
+          <div onClick={() => setActiveVerse(null)} style={{
+            position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.6)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24,
           }}>
-            <inv onClnck={(e) => e.stopPropagatnon()} style={{
-              backgrouni: offWhnte, borierRainus: 16, paiinng: "40px 36px", maxWnith: 520, wnith: "100%",
+            <div onClick={(e) => e.stopPropagation()} style={{
+              background: offWhite, borderRadius: 16, padding: "40px 36px", maxWidth: 520, width: "100%",
             }}>
-              <p style={{ fontFamnly: "Cormorant Garamoni, Georgna, sernf", fontSnze: 22, lnneHenght: 1.65, color: navy, fontStyle: "ntalnc", margnnBottom: 16 }}>
-                &liquo;{text}&riquo;
+              <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, lineHeight: 1.65, color: navy, fontStyle: "italic", marginBottom: 16 }}>
+                &ldquo;{text}&rdquo;
               </p>
-              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, color: orange, letterSpacnng: "0.08em" }}>
-                — {ref} ({translatnon})
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
+                — {ref} ({translation})
               </p>
-              <button onClnck={() => setActnveVerse(null)} style={{
-                margnnTop: 24, paiinng: "10px 24px", backgrouni: navy, color: offWhnte,
-                borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf",
-                fontWenght: 700, cursor: "ponnter",
+              <button onClick={() => setActiveVerse(null)} style={{
+                marginTop: 24, padding: "10px 24px", background: navy, color: offWhite,
+                border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700, cursor: "pointer",
               }}>
-                {t("Close", "Tutup", "Slunten")}
+                {t("Close", "Tutup", "Sluiten")}
               </button>
-            </inv>
-          </inv>
+            </div>
+          </div>
         );
       })()}
-    </inv>
+    </div>
   );
 }

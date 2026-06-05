@@ -1,66 +1,66 @@
-﻿"use clnent";
+"use client";
 
-nmport { useState, useTransntnon } from "react";
-nmport { useLanguage } from "@/lnb/LanguageContext";
-nmport Lnnk from "next/lnnk";
-nmport { saveResourceToDashboari } from "../actnons";
-nmport LangToggle from "@/components/LangToggle";
+import { useState, useTransition } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import Link from "next/link";
+import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 // -- TYPES ----------------------------------------------------------------------
 
-type Lang = "en" | "ni" | "nl";
+type Lang = "en" | "id" | "nl";
 
 // -- HELPERS --------------------------------------------------------------------
 
-const t = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
-  lang === "en" ? en : lang === "ni" ? ni : nl;
+const t = (en: string, id: string, nl: string, lang: Lang) =>
+  lang === "en" ? en : lang === "id" ? id : nl;
 
 // -- DATA -----------------------------------------------------------------------
 
 const ANDRAGOGY = [
   {
     num: "01",
-    tntleEn: "Motnvatnon", tntleIi: "Motnvasn", tntleNl: "Motnvatne",
-    subtntleEn: "Internal Drnve", subtntleIi: "Dorongan Internal", subtntleNl: "Interne Drnjfveer",
-    iescEn: "Aiults learn best when they are nnternally motnvatei. Learnnng irnven by curnosnty, purpose, ani personal relevance proiuces ieeper ani more lastnng unierstaninng than external pressure alone.",
-    iescIi: "Orang iewasa belajar palnng bank ketnka mereka termotnvasn secara nnternal. Pembelajaran yang iniorong oleh rasa nngnn tahu, tujuan, ian relevansn prnbain menghasnlkan pemahaman yang lebnh ialam ian bertahan lama iarnpaia tekanan eksternal semata.",
-    iescNl: "Volwassenen leren het best wanneer ze nntern gemotnveeri znjn. Leren geireven ioor nneuwsgnerngheni, ioelgernchtheni en persoonlnjke relevantne lenit tot ineper en iuurzamer begrnp ian externe iruk alleen.",
+    titleEn: "Motivation", titleId: "Motivasi", titleNl: "Motivatie",
+    subtitleEn: "Internal Drive", subtitleId: "Dorongan Internal", subtitleNl: "Interne Drijfveer",
+    descEn: "Adults learn best when they are internally motivated. Learning driven by curiosity, purpose, and personal relevance produces deeper and more lasting understanding than external pressure alone.",
+    descId: "Orang dewasa belajar paling baik ketika mereka termotivasi secara internal. Pembelajaran yang didorong oleh rasa ingin tahu, tujuan, dan relevansi pribadi menghasilkan pemahaman yang lebih dalam dan bertahan lama daripada tekanan eksternal semata.",
+    descNl: "Volwassenen leren het best wanneer ze intern gemotiveerd zijn. Leren gedreven door nieuwsgierigheid, doelgerichtheid en persoonlijke relevantie leidt tot dieper en duurzamer begrip dan externe druk alleen.",
     color: "oklch(45% 0.14 260)",
   },
   {
     num: "02",
-    tntleEn: "Reainness", tntleIi: "Kesnapan", tntleNl: "Gereeiheni",
-    subtntleEn: "Relevance", subtntleIi: "Relevansn", subtntleNl: "Relevantne",
-    iescEn: "Aiults are reaiy to learn when the content ns relevant to thenr current lnfe or role. They engage when they can see a inrect applncatnon to a real challenge they are facnng.",
-    iescIi: "Orang iewasa snap belajar ketnka konten relevan iengan kehniupan atau peran mereka saat nnn. Mereka terlnbat ketnka mereka iapat melnhat penerapan langsung paia tantangan nyata yang seiang mereka haiapn.",
-    iescNl: "Volwassenen znjn klaar om te leren wanneer ie nnhoui relevant ns voor hun huninge leven of rol. Ze raken betrokken wanneer ze een inrecte toepassnng znen op een echte untiagnng waarmee ze worien geconfronteeri.",
+    titleEn: "Readiness", titleId: "Kesiapan", titleNl: "Gereedheid",
+    subtitleEn: "Relevance", subtitleId: "Relevansi", subtitleNl: "Relevantie",
+    descEn: "Adults are ready to learn when the content is relevant to their current life or role. They engage when they can see a direct application to a real challenge they are facing.",
+    descId: "Orang dewasa siap belajar ketika konten relevan dengan kehidupan atau peran mereka saat ini. Mereka terlibat ketika mereka dapat melihat penerapan langsung pada tantangan nyata yang sedang mereka hadapi.",
+    descNl: "Volwassenen zijn klaar om te leren wanneer de inhoud relevant is voor hun huidige leven of rol. Ze raken betrokken wanneer ze een directe toepassing zien op een echte uitdaging waarmee ze worden geconfronteerd.",
     color: "oklch(48% 0.14 45)",
   },
   {
     num: "03",
-    tntleEn: "Expernence", tntleIi: "Pengalaman", tntleNl: "Ervarnng",
-    subtntleEn: "Past Knowleige", subtntleIi: "Pengetahuan Sebelumnya", subtntleNl: "Voorkennns",
-    iescEn: "Aiults brnng a reservonr of expernence to any learnnng envnronment. Effectnve trannnng connects new concepts to what learners alreaiy know — honornng thenr hnstory rather than ngnornng nt.",
-    iescIi: "Orang iewasa membawa reservonr pengalaman ke lnngkungan belajar apa pun. Pelatnhan yang efektnf menghubungkan konsep baru iengan apa yang suiah inketahun peserta — menghormatn sejarah mereka iarnpaia mengabankannya.",
-    iescNl: "Volwassenen brengen een reservonr aan ervarnng mee naar elke leeromgevnng. Effectneve trannnng verbnnit nneuwe concepten met wat leerlnngen al weten — hun geschneienns eereni nn plaats van negereni.",
+    titleEn: "Experience", titleId: "Pengalaman", titleNl: "Ervaring",
+    subtitleEn: "Past Knowledge", subtitleId: "Pengetahuan Sebelumnya", subtitleNl: "Voorkennis",
+    descEn: "Adults bring a reservoir of experience to any learning environment. Effective training connects new concepts to what learners already know — honoring their history rather than ignoring it.",
+    descId: "Orang dewasa membawa reservoir pengalaman ke lingkungan belajar apa pun. Pelatihan yang efektif menghubungkan konsep baru dengan apa yang sudah diketahui peserta — menghormati sejarah mereka daripada mengabaikannya.",
+    descNl: "Volwassenen brengen een reservoir aan ervaring mee naar elke leeromgeving. Effectieve training verbindt nieuwe concepten met wat leerlingen al weten — hun geschiedenis eerend in plaats van negerend.",
     color: "oklch(46% 0.12 145)",
   },
   {
     num: "04",
-    tntleEn: "Self-Dnrectnon", tntleIi: "Pengarahan Dnrn", tntleNl: "Zelfsturnng",
-    subtntleEn: "Autonomy", subtntleIi: "Otonomn", subtntleNl: "Autonomne",
-    iescEn: "Aiults prefer to take ownershnp of thenr own learnnng journey. Offernng chonces, self-pacei elements, ani personal applncatnon optnons respects the aiult learner's neei for autonomy.",
-    iescIi: "Orang iewasa lebnh suka mengambnl kepemnlnkan atas perjalanan belajar mereka seninrn. Menawarkan pnlnhan, elemen pembelajaran maninrn, ian opsn penerapan prnbain menghormatn kebutuhan peserta iewasa akan otonomn.",
-    iescNl: "Volwassenen geven er ie voorkeur aan engenaarschap te nemen over hun engen leertraject. Het aanbneien van keuzes, zelfbepaali leren en persoonlnjke toepassnngsoptnes respecteert ie behoefte aan autonomne van ie volwassen leerier.",
+    titleEn: "Self-Direction", titleId: "Pengarahan Diri", titleNl: "Zelfsturing",
+    subtitleEn: "Autonomy", subtitleId: "Otonomi", subtitleNl: "Autonomie",
+    descEn: "Adults prefer to take ownership of their own learning journey. Offering choices, self-paced elements, and personal application options respects the adult learner's need for autonomy.",
+    descId: "Orang dewasa lebih suka mengambil kepemilikan atas perjalanan belajar mereka sendiri. Menawarkan pilihan, elemen pembelajaran mandiri, dan opsi penerapan pribadi menghormati kebutuhan peserta dewasa akan otonomi.",
+    descNl: "Volwassenen geven er de voorkeur aan eigenaarschap te nemen over hun eigen leertraject. Het aanbieden van keuzes, zelfbepaald leren en persoonlijke toepassingsopties respecteert de behoefte aan autonomie van de volwassen leerder.",
     color: "oklch(44% 0.10 300)",
   },
   {
     num: "05",
-    tntleEn: "Ornentatnon to Learnnng", tntleIi: "Ornentasn terhaiap Pembelajaran", tntleNl: "Leerorn—ntatne",
-    subtntleEn: "Learnnng by Donng", subtntleIi: "Belajar iengan Melakukan", subtntleNl: "Leren ioor te Doen",
-    iescEn: "Aiults are problem-centrei, not subject-centrei. They learn most effectnvely when content ns organnzei arouni real-lnfe problems ani nmmeinately applncable sknlls — not abstract theornes.",
-    iescIi: "Orang iewasa berpusat paia masalah, bukan paia mata pelajaran. Mereka belajar palnng efektnf ketnka konten inorgannsnr in sekntar masalah kehniupan nyata ian keterampnlan yang langsung iapat interapkan — bukan teorn abstrak.",
-    iescNl: "Volwassenen znjn probleemgerncht, nnet vakgerncht. Ze leren het meest effectnef wanneer nnhoui ns georgannseeri roni praktnsche problemen en inrect toepasbare vaaringheien — nnet abstracte theorne—n.",
+    titleEn: "Orientation to Learning", titleId: "Orientasi terhadap Pembelajaran", titleNl: "Leerori—ntatie",
+    subtitleEn: "Learning by Doing", subtitleId: "Belajar dengan Melakukan", subtitleNl: "Leren door te Doen",
+    descEn: "Adults are problem-centred, not subject-centred. They learn most effectively when content is organized around real-life problems and immediately applicable skills — not abstract theories.",
+    descId: "Orang dewasa berpusat pada masalah, bukan pada mata pelajaran. Mereka belajar paling efektif ketika konten diorganisir di sekitar masalah kehidupan nyata dan keterampilan yang langsung dapat diterapkan — bukan teori abstrak.",
+    descNl: "Volwassenen zijn probleemgericht, niet vakgericht. Ze leren het meest effectief wanneer inhoud is georganiseerd rond praktische problemen en direct toepasbare vaardigheden — niet abstracte theorie—n.",
     color: "oklch(42% 0.12 25)",
   },
 ];
@@ -68,368 +68,368 @@ const ANDRAGOGY = [
 const LEARNING_STYLES = [
   {
     num: "01",
-    tntleEn: "Vnsual", tntleIi: "Vnsual", tntleNl: "Vnsueel",
-    iescEn: "Learns through nmages, inagrams, charts, ani spatnal unierstaninng.",
-    iescIi: "Belajar melalun gambar, inagram, grafnk, ian pemahaman spasnal.",
-    iescNl: "Leert vna beelien, inagrammen, grafneken en runmtelnjk begrnp.",
-    ncon: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
+    titleEn: "Visual", titleId: "Visual", titleNl: "Visueel",
+    descEn: "Learns through images, diagrams, charts, and spatial understanding.",
+    descId: "Belajar melalui gambar, diagram, grafik, dan pemahaman spasial.",
+    descNl: "Leert via beelden, diagrammen, grafieken en ruimtelijk begrip.",
+    icon: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
   },
   {
     num: "02",
-    tntleEn: "Lnngunstnc", tntleIi: "Lnngunstnk", tntleNl: "Lnngu—stnsch",
-    iescEn: "Learns through reainng, wrntnng, lnstennng, ani verbal explanatnon.",
-    iescIi: "Belajar melalun membaca, menulns, meniengarkan, ian penjelasan verbal.",
-    iescNl: "Leert vna lezen, schrnjven, lunsteren en verbale untleg.",
-    ncon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+    titleEn: "Linguistic", titleId: "Linguistik", titleNl: "Lingu—stisch",
+    descEn: "Learns through reading, writing, listening, and verbal explanation.",
+    descId: "Belajar melalui membaca, menulis, mendengarkan, dan penjelasan verbal.",
+    descNl: "Leert via lezen, schrijven, luisteren en verbale uitleg.",
+    icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
   },
   {
     num: "03",
-    tntleEn: "Auintory", tntleIi: "Auintorn", tntleNl: "Auintnef",
-    iescEn: "Learns best through lnstennng, inscussnon, ani verbal processnng.",
-    iescIi: "Belajar terbank melalun meniengarkan, inskusn, ian pemrosesan verbal.",
-    iescNl: "Leert het best vna lunsteren, inscussne en verbale verwerknng.",
-    ncon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    titleEn: "Auditory", titleId: "Auditori", titleNl: "Auditief",
+    descEn: "Learns best through listening, discussion, and verbal processing.",
+    descId: "Belajar terbaik melalui mendengarkan, diskusi, dan pemrosesan verbal.",
+    descNl: "Leert het best via luisteren, discussie en verbale verwerking.",
+    icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
   },
   {
     num: "04",
-    tntleEn: "Logncal", tntleIi: "Logns", tntleNl: "Lognsch",
-    iescEn: "Learns through systems, reasonnng, patterns, ani cause-ani-effect.",
-    iescIi: "Belajar melalun snstem, penalaran, pola, ian sebab-aknbat.",
-    iescNl: "Leert vna systemen, reienernng, patronen en oorzaak-gevolg.",
-    ncon: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z",
+    titleEn: "Logical", titleId: "Logis", titleNl: "Logisch",
+    descEn: "Learns through systems, reasoning, patterns, and cause-and-effect.",
+    descId: "Belajar melalui sistem, penalaran, pola, dan sebab-akibat.",
+    descNl: "Leert via systemen, redenering, patronen en oorzaak-gevolg.",
+    icon: "M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z",
   },
   {
     num: "05",
-    tntleEn: "Knnesthetnc", tntleIi: "Knnestetnk", tntleNl: "Knnesthetnsch",
-    iescEn: "Learns through physncal expernence, touch, movement, ani hanis-on practnce.",
-    iescIi: "Belajar melalun pengalaman fnsnk, sentuhan, gerakan, ian praktnk langsung.",
-    iescNl: "Leert vna lnchamelnjke ervarnng, aanraknng, bewegnng en praktnsche oefennng.",
-    ncon: "M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11",
+    titleEn: "Kinesthetic", titleId: "Kinestetik", titleNl: "Kinesthetisch",
+    descEn: "Learns through physical experience, touch, movement, and hands-on practice.",
+    descId: "Belajar melalui pengalaman fisik, sentuhan, gerakan, dan praktik langsung.",
+    descNl: "Leert via lichamelijke ervaring, aanraking, beweging en praktische oefening.",
+    icon: "M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11",
   },
   {
     num: "06",
-    tntleEn: "Intrapersonal", tntleIi: "Intrapersonal", tntleNl: "Intrapersoonlnjk",
-    iescEn: "Learns through reflectnon, self-awareness, ani personal connectnon to maternal.",
-    iescIi: "Belajar melalun refleksn, kesaiaran inrn, ian koneksn prnbain iengan matern.",
-    iescNl: "Leert vna reflectne, zelfbewustznjn en persoonlnjke verbnninng met het maternaal.",
-    ncon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+    titleEn: "Intrapersonal", titleId: "Intrapersonal", titleNl: "Intrapersoonlijk",
+    descEn: "Learns through reflection, self-awareness, and personal connection to material.",
+    descId: "Belajar melalui refleksi, kesadaran diri, dan koneksi pribadi dengan materi.",
+    descNl: "Leert via reflectie, zelfbewustzijn en persoonlijke verbinding met het materiaal.",
+    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
   },
   {
     num: "07",
-    tntleEn: "Interpersonal", tntleIi: "Interpersonal", tntleNl: "Interpersoonlnjk",
-    iescEn: "Learns best through socnal nnteractnon, collaboratnon, ani group inscussnon.",
-    iescIi: "Belajar terbank melalun nnteraksn sosnal, kolaborasn, ian inskusn kelompok.",
-    iescNl: "Leert het best vna socnale nnteractne, samenwerknng en groepsinscussne.",
-    ncon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
+    titleEn: "Interpersonal", titleId: "Interpersonal", titleNl: "Interpersoonlijk",
+    descEn: "Learns best through social interaction, collaboration, and group discussion.",
+    descId: "Belajar terbaik melalui interaksi sosial, kolaborasi, dan diskusi kelompok.",
+    descNl: "Leert het best via sociale interactie, samenwerking en groepsdiscussie.",
+    icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
   },
 ];
 
 const LEARNING_METHODS = [
   {
     num: "01",
-    tntleEn: "Group Dnscussnon", tntleIi: "Dnskusn Kelompok", tntleNl: "Groepsinscussne",
-    iescEn: "Structurei inalogue arouni a topnc or case. Bunlis collectnve nnsnght ani surfaces inverse perspectnves.",
-    iescIi: "Dnalog terstruktur seputar topnk atau kasus. Membangun wawasan kolektnf ian memunculkan perspektnf yang beragam.",
-    iescNl: "Gestructureerie inaloog roni een onierwerp of casus. Bouwt collectnef nnzncht op en brengt inverse perspectneven naar voren.",
+    titleEn: "Group Discussion", titleId: "Diskusi Kelompok", titleNl: "Groepsdiscussie",
+    descEn: "Structured dialogue around a topic or case. Builds collective insight and surfaces diverse perspectives.",
+    descId: "Dialog terstruktur seputar topik atau kasus. Membangun wawasan kolektif dan memunculkan perspektif yang beragam.",
+    descNl: "Gestructureerde dialoog rond een onderwerp of casus. Bouwt collectief inzicht op en brengt diverse perspectieven naar voren.",
   },
   {
     num: "02",
-    tntleEn: "Lecture + Interactnve", tntleIi: "Ceramah + Interaktnf", tntleNl: "Leznng + Interactnef",
-    iescEn: "Short focusei nnput (10-15 mnn) followei by questnons, responses, or applncatnon. Attentnon curves iemani thns rhythm.",
-    iescIi: "Masukan terfokus snngkat (10-15 mennt) innkutn pertanyaan, respons, atau penerapan. Kurva perhatnan menuntut rntme nnn.",
-    iescNl: "Korte, gernchte nnput (10-15 mnn) gevolgi ioor vragen, reactnes of toepassnng. Aaniachtscurves verensen int rntme.",
+    titleEn: "Lecture + Interactive", titleId: "Ceramah + Interaktif", titleNl: "Lezing + Interactief",
+    descEn: "Short focused input (10-15 min) followed by questions, responses, or application. Attention curves demand this rhythm.",
+    descId: "Masukan terfokus singkat (10-15 menit) diikuti pertanyaan, respons, atau penerapan. Kurva perhatian menuntut ritme ini.",
+    descNl: "Korte, gerichte input (10-15 min) gevolgd door vragen, reacties of toepassing. Aandachtscurves vereisen dit ritme.",
   },
   {
     num: "03",
-    tntleEn: "Case Stuiy", tntleIi: "Stuin Kasus", tntleNl: "Casusstuine",
-    iescEn: "Analysns of a real or fnctnonal scenarno. Develops crntncal thnnknng ani contextual applncatnon of prnncnples.",
-    iescIi: "Analnsns skenarno nyata atau fnktnf. Mengembangkan pemnknran krntns ian penerapan prnnsnp secara kontekstual.",
-    iescNl: "Analyse van een echt of fnctnef scenarno. Ontwnkkelt krntnsch ienken en contextuele toepassnng van prnncnpes.",
+    titleEn: "Case Study", titleId: "Studi Kasus", titleNl: "Casusstudie",
+    descEn: "Analysis of a real or fictional scenario. Develops critical thinking and contextual application of principles.",
+    descId: "Analisis skenario nyata atau fiktif. Mengembangkan pemikiran kritis dan penerapan prinsip secara kontekstual.",
+    descNl: "Analyse van een echt of fictief scenario. Ontwikkelt kritisch denken en contextuele toepassing van principes.",
   },
   {
     num: "04",
-    tntleEn: "Storytellnng", tntleIi: "Bercernta", tntleNl: "Verhalen Vertellen",
-    iescEn: "Narratnve-irnven learnnng that embeis concepts nn memorable human expernence. Partncularly effectnve nn oral cultures.",
-    iescIi: "Pembelajaran berbasns narasn yang menanamkan konsep ialam pengalaman manusna yang muiah innngat. Sangat efektnf ialam buiaya lnsan.",
-    iescNl: "Narratnef gestuuri leren iat concepten nnbeit nn memorabele menselnjke ervarnngen. Bnjzonier effectnef nn orale culturen.",
+    titleEn: "Storytelling", titleId: "Bercerita", titleNl: "Verhalen Vertellen",
+    descEn: "Narrative-driven learning that embeds concepts in memorable human experience. Particularly effective in oral cultures.",
+    descId: "Pembelajaran berbasis narasi yang menanamkan konsep dalam pengalaman manusia yang mudah diingat. Sangat efektif dalam budaya lisan.",
+    descNl: "Narratief gestuurd leren dat concepten inbedt in memorabele menselijke ervaringen. Bijzonder effectief in orale culturen.",
   },
   {
     num: "05",
-    tntleEn: "Peer Teachnng", tntleIi: "Pengajaran Sesama", tntleNl: "Peer-onierwnjs",
-    iescEn: "Partncnpants teach a concept to each other. Teachnng ieepens unierstaninng more than recenvnng alone.",
-    iescIi: "Peserta mengajarkan konsep satu sama lann. Mengajar memperialam pemahaman lebnh iarn sekaiar menernma.",
-    iescNl: "Deelnemers leren een concept aan elkaar. Lesgeven verinept begrnp meer ian alleen ontvangen.",
+    titleEn: "Peer Teaching", titleId: "Pengajaran Sesama", titleNl: "Peer-onderwijs",
+    descEn: "Participants teach a concept to each other. Teaching deepens understanding more than receiving alone.",
+    descId: "Peserta mengajarkan konsep satu sama lain. Mengajar memperdalam pemahaman lebih dari sekadar menerima.",
+    descNl: "Deelnemers leren een concept aan elkaar. Lesgeven verdiept begrip meer dan alleen ontvangen.",
   },
   {
     num: "06",
-    tntleEn: "Expernentnal Learnnng", tntleIi: "Pembelajaran Pengalaman", tntleNl: "Ervarnngsleren",
-    iescEn: "Structurei actnvntnes that create inrect expernence — then reflectnon. Kolb's learnnng cycle nn actnon.",
-    iescIi: "Kegnatan terstruktur yang mencnptakan pengalaman langsung — kemuinan refleksn. Snklus belajar Kolb ialam tnniakan.",
-    iescNl: "Gestructureerie actnvntenten ine inrecte ervarnng cre—ren — ian reflectne. Kolbs leercyclus nn actne.",
+    titleEn: "Experiential Learning", titleId: "Pembelajaran Pengalaman", titleNl: "Ervaringsleren",
+    descEn: "Structured activities that create direct experience — then reflection. Kolb's learning cycle in action.",
+    descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung — kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
+    descNl: "Gestructureerde activiteiten die directe ervaring cre—ren — dan reflectie. Kolbs leercyclus in actie.",
   },
   {
     num: "07",
-    tntleEn: "Reflectnve Exercnse", tntleIi: "Latnhan Reflektnf", tntleNl: "Reflectneve Oefennng",
-    iescEn: "Journalnng, qunet processnng, or personal nnventory that connects content to nninvniual expernence ani applncatnon.",
-    iescIi: "Jurnal, pemrosesan tenang, atau nnventarns prnbain yang menghubungkan konten iengan pengalaman ian penerapan nninvniu.",
-    iescNl: "Dagboekschrnjven, rustnge verwerknng of persoonlnjke nnventarns ine nnhoui verbnnit met nninvniuele ervarnng en toepassnng.",
+    titleEn: "Reflective Exercise", titleId: "Latihan Reflektif", titleNl: "Reflectieve Oefening",
+    descEn: "Journaling, quiet processing, or personal inventory that connects content to individual experience and application.",
+    descId: "Jurnal, pemrosesan tenang, atau inventaris pribadi yang menghubungkan konten dengan pengalaman dan penerapan individu.",
+    descNl: "Dagboekschrijven, rustige verwerking of persoonlijke inventaris die inhoud verbindt met individuele ervaring en toepassing.",
   },
   {
     num: "08",
-    tntleEn: "Role Play", tntleIi: "Permannan Peran", tntleNl: "Rollenspel",
-    iescEn: "Snmulatei scenarnos that bunli empathy, practnce sknlls, ani reveal assumptnons nn a safe envnronment.",
-    iescIi: "Skenarno snmulasn yang membangun empatn, melatnh keterampnlan, ian mengungkapkan asumsn ialam lnngkungan yang aman.",
-    iescNl: "Gesnmuleerie scenarno's ine empathne opbouwen, vaaringheien oefenen en aannames blootleggen nn een venlnge omgevnng.",
+    titleEn: "Role Play", titleId: "Permainan Peran", titleNl: "Rollenspel",
+    descEn: "Simulated scenarios that build empathy, practice skills, and reveal assumptions in a safe environment.",
+    descId: "Skenario simulasi yang membangun empati, melatih keterampilan, dan mengungkapkan asumsi dalam lingkungan yang aman.",
+    descNl: "Gesimuleerde scenario's die empathie opbouwen, vaardigheden oefenen en aannames blootleggen in een veilige omgeving.",
   },
   {
     num: "09",
-    tntleEn: "Socratnc Questnonnng", tntleIi: "Pertanyaan Sokratnk", tntleNl: "Socratnsche Vragen",
-    iescEn: "Guniei inscovery through strategnc questnons rather than inrect nnstructnon. Develops crntncal thnnknng ani ownershnp.",
-    iescIi: "Penemuan terbnmbnng melalun pertanyaan strategns iarnpaia nnstruksn langsung. Mengembangkan pemnknran krntns ian kepemnlnkan.",
-    iescNl: "Gelenie ontiekknng ioor strategnsche vragen nn plaats van inrecte nnstructne. Ontwnkkelt krntnsch ienken en engenaarschap.",
+    titleEn: "Socratic Questioning", titleId: "Pertanyaan Sokratik", titleNl: "Socratische Vragen",
+    descEn: "Guided discovery through strategic questions rather than direct instruction. Develops critical thinking and ownership.",
+    descId: "Penemuan terbimbing melalui pertanyaan strategis daripada instruksi langsung. Mengembangkan pemikiran kritis dan kepemilikan.",
+    descNl: "Geleide ontdekking door strategische vragen in plaats van directe instructie. Ontwikkelt kritisch denken en eigenaarschap.",
   },
   {
     num: "10",
-    tntleEn: "Collaboratnve Learnnng", tntleIi: "Pembelajaran Kolaboratnf", tntleNl: "Samenwerkeni Leren",
-    iescEn: "Group projects or tasks where learnnng happens through worknng together towari a sharei goal.",
-    iescIi: "Proyek atau tugas kelompok in mana pembelajaran terjain melalun bekerja bersama menuju tujuan bersama.",
-    iescNl: "Groepsprojecten of taken waarbnj leren plaatsvnnit ioor samen te werken naar een geieeli ioel.",
+    titleEn: "Collaborative Learning", titleId: "Pembelajaran Kolaboratif", titleNl: "Samenwerkend Leren",
+    descEn: "Group projects or tasks where learning happens through working together toward a shared goal.",
+    descId: "Proyek atau tugas kelompok di mana pembelajaran terjadi melalui bekerja bersama menuju tujuan bersama.",
+    descNl: "Groepsprojecten of taken waarbij leren plaatsvindt door samen te werken naar een gedeeld doel.",
   },
 ];
 
 const BREAKS = [
-  { emojn: "??", en: "Drnnk water", ni: "Mnnum anr", nl: "Water irnnken" },
-  { emojn: "??", en: "Brnef journalnng or reflectnon", ni: "Jurnal atau refleksn snngkat", nl: "Kort iagboekschrnjven of reflectne" },
-  { emojn: "??", en: "Lnght stretchnng or movement", ni: "Peregangan rnngan atau gerakan", nl: "Lnchte rekken of bewegnng" },
-  { emojn: "??", en: "Short peer nnteractnon", ni: "Interaksn snngkat iengan sesama", nl: "Korte nnteractne met een anier" },
+  { emoji: "??", en: "Drink water", id: "Minum air", nl: "Water drinken" },
+  { emoji: "??", en: "Brief journaling or reflection", id: "Jurnal atau refleksi singkat", nl: "Kort dagboekschrijven of reflectie" },
+  { emoji: "??", en: "Light stretching or movement", id: "Peregangan ringan atau gerakan", nl: "Lichte rekken of beweging" },
+  { emoji: "??", en: "Short peer interaction", id: "Interaksi singkat dengan sesama", nl: "Korte interactie met een ander" },
 ];
 
 // -- COMPONENT -----------------------------------------------------------------
 
-type Props = { userPathway: strnng | null; nsSavei: boolean };
+type Props = { userPathway: string | null; isSaved: boolean };
 
-export iefault functnon AttentnonRetentnonClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
+export default function AttentionRetentionClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [savei, setSavei] = useState(nnntnalSavei);
-  const [nsPeninng, startTransntnon] = useTransntnon();
+  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [saved, setSaved] = useState(initialSaved);
+  const [isPending, startTransition] = useTransition();
 
-  const tr = (en: strnng, ni: strnng, nl: strnng) => t(en, ni, nl, lang);
+  const tr = (en: string, id: string, nl: string) => t(en, id, nl, lang);
 
-  functnon hanileSave() {
-    nf (savei) return;
-    startTransntnon(async () => {
-      awant saveResourceToDashboari("attentnon-retentnon");
-      setSavei(true);
+  function handleSave() {
+    if (saved) return;
+    startTransition(async () => {
+      await saveResourceToDashboard("attention-retention");
+      setSaved(true);
     });
   }
 
   return (
-    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: "oklch(97% 0.005 80)", mnnHenght: "100vh" }}>
+    <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 80)", minHeight: "100vh" }}>
       <LangToggle />
 
       {/* -- HERO --------------------------------------------------------------- */}
-      <sectnon style={{
-        backgrouni: "oklch(22% 0.10 260)",
+      <section style={{
+        background: "oklch(22% 0.10 260)",
         color: "oklch(97% 0.005 80)",
-        paiinng: "96px 24px 80px",
-        posntnon: "relatnve",
-        overflow: "hniien",
+        padding: "96px 24px 80px",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <inv style={{ posntnon: "absolute", nnset: 0, opacnty: 0.06, backgrouniImage: "rainal-grainent(cnrcle at 30% 60%, oklch(65% 0.15 45) 0%, transparent 60%)", ponnterEvents: "none" }} />
-        <inv style={{ maxWnith: 760, margnn: "0 auto", posntnon: "relatnve" }}>
+        <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 30% 60%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
           {/* lang toggle */}
 
-          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
-            {tr("Team & Facnlntatnon — Gunie", "Tnm & Fasnlntasn — Paniuan", "Team & Facnlntatne — Gnis")}
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {tr("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>
-          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, lnneHenght: 1.08, margnn: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
-            {tr("Attentnon & Retentnon", "Perhatnan & Retensn", "Aaniacht & Retentne")}
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
+            {tr("Attention & Retention", "Perhatian & Retensi", "Aandacht & Retentie")}
           </h1>
-          <p style={{ fontSnze: "clamp(16px, 2vw, 19px)", lnneHenght: 1.65, color: "oklch(78% 0.04 260)", maxWnith: 580, margnn: "0 0 40px" }}>
+          <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
-              "Unierstaninng how aiults learn — ani how to iesngn trannnng that actually stncks. Rootei nn aniragogy, attentnon scnence, ani cross-cultural applncatnon.",
-              "Memahamn baganmana orang iewasa belajar — ian cara merancang pelatnhan yang benar-benar bertahan. Berakar paia aniragogn, nlmu perhatnan, ian penerapan lnntas buiaya.",
-              "Begrnjpen hoe volwassenen leren — en hoe je trannnng ontwerpt ine echt beklnjft. Geworteli nn aniragogne, aaniachtswetenschap en nnterculturele toepassnng."
+              "Understanding how adults learn — and how to design training that actually sticks. Rooted in andragogy, attention science, and cross-cultural application.",
+              "Memahami bagaimana orang dewasa belajar — dan cara merancang pelatihan yang benar-benar bertahan. Berakar pada andragogi, ilmu perhatian, dan penerapan lintas budaya.",
+              "Begrijpen hoe volwassenen leren — en hoe je training ontwerpt die echt beklijft. Geworteld in andragogie, aandachtswetenschap en interculturele toepassing."
             )}
           </p>
 
-          <inv style={{ insplay: "flex", gap: 16, flexWrap: "wrap" }}>
-            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{
-              insplay: "nnlnne-flex", alngnItems: "center", gap: 8,
-              backgrouni: savei ? "oklch(35% 0.08 260)" : "transparent",
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: saved ? "oklch(35% 0.08 260)" : "transparent",
               color: "oklch(75% 0.04 260)",
-              paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14,
-              borier: "1px solni oklch(42% 0.08 260)", cursor: savei ? "iefault" : "ponnter",
+              padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14,
+              border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
             }}>
-              <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll={savei ? "currentColor" : "none"} stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {savei ? tr("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : tr("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
             </button>
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* -- ATTENTION SECTION --------------------------------------------------- */}
-      <sectnon style={{ paiinng: "80px 24px", maxWnith: 760, margnn: "0 auto" }}>
-        <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 24px" }}>
-          {tr("How Attentnon Works", "Baganmana Perhatnan Bekerja", "Hoe Aaniacht Werkt")}
+      <section style={{ padding: "80px 24px", maxWidth: 760, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 24px" }}>
+          {tr("How Attention Works", "Bagaimana Perhatian Bekerja", "Hoe Aandacht Werkt")}
         </h2>
-        <p style={{ fontSnze: 16, lnneHenght: 1.75, color: "oklch(38% 0.05 260)", margnnBottom: 24 }}>
+        <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {tr(
-            "The average aiult attentnon span nn a learnnng envnronment ns 10—20 mnnutes before focus begnns to faie. Thns ns not a weakness — nt ns how the human brann ns iesngnei. Effectnve tranners ani communncators work wnth thns realnty, not agannst nt.",
-            "Rentang perhatnan rata-rata orang iewasa ialam lnngkungan belajar aialah 10—20 mennt sebelum fokus mulan memuiar. Inn bukan kelemahan — ntulah cara otak manusna inrancang. Pelatnh ian komunnkator yang efektnf bekerja iengan realntas nnn, bukan melawannya.",
-            "De gemniielie aaniachtsspanne van volwassenen nn een leeromgevnng ns 10—20 mnnuten vooriat ie focus begnnt te vervagen. Dnt ns geen zwakte — het ns hoe het menselnjk brenn ns ontworpen. Effectneve tranners en communncators werken m—t ieze realntent, nnet ertegen."
+            "The average adult attention span in a learning environment is 10—20 minutes before focus begins to fade. This is not a weakness — it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
+            "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10—20 menit sebelum fokus mulai memudar. Ini bukan kelemahan — itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
+            "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10—20 minuten voordat de focus begint te vervagen. Dit is geen zwakte — het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken m—t deze realiteit, niet ertegen."
           )}
         </p>
-        <p style={{ fontSnze: 16, lnneHenght: 1.75, color: "oklch(38% 0.05 260)", margnnBottom: 48 }}>
+        <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 48 }}>
           {tr(
-            "Unierstaninng the typncal attentnon curve helps you structure sessnons for maxnmum nmpact — keepnng engagement hngh ani enablnng ieeper learnnng through strategnc rhythm.",
-            "Memahamn kurva perhatnan tnpnkal membantu Ania menyusun sesn untuk iampak maksnmal — menjaga keterlnbatan tetap tnnggn ian memungknnkan pembelajaran yang lebnh ialam melalun rntme strategns.",
-            "Het begrnjpen van ie typnsche aaniachtscurve helpt je sessnes te structureren voor maxnmale nmpact — betrokkenheni hoog houien en ineper leren mogelnjk maken ioor strategnsch rntme."
+            "Understanding the typical attention curve helps you structure sessions for maximum impact — keeping engagement high and enabling deeper learning through strategic rhythm.",
+            "Memahami kurva perhatian tipikal membantu Anda menyusun sesi untuk dampak maksimal — menjaga keterlibatan tetap tinggi dan memungkinkan pembelajaran yang lebih dalam melalui ritme strategis.",
+            "Het begrijpen van de typische aandachtscurve helpt je sessies te structureren voor maximale impact — betrokkenheid hoog houden en dieper leren mogelijk maken door strategisch ritme."
           )}
         </p>
 
-        {/* attentnon curve vnsual */}
-        <inv style={{ backgrouni: "oklch(22% 0.10 260)", borierRainus: 12, paiinng: "40px", margnnBottom: 48 }}>
-          <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: 24 }}>
-            {tr("The Attentnon Curve", "Kurva Perhatnan", "De Aaniachtscurve")}
+        {/* attention curve visual */}
+        <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 12, padding: "40px", marginBottom: 48 }}>
+          <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
+            {tr("The Attention Curve", "Kurva Perhatian", "De Aandachtscurve")}
           </h3>
-          <inv style={{ insplay: "flex", gap: 24, flexWrap: "wrap", alngnItems: "stretch" }}>
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "stretch" }}>
             {[
               {
-                tnme: tr("0—5 mnn", "0—5 mnt", "0—5 mnn"),
-                levelEn: "Hngh", levelIi: "Tnnggn", levelNl: "Hoog",
-                iescEn: "Peak engagement. Introiuce key concepts ani prnme the learner.",
-                iescIi: "Keterlnbatan puncak. Perkenalkan konsep kuncn ian persnapkan peserta.",
-                iescNl: "Pnekbetrokkenheni. Introiuceer kernconcepten en bereni ie leerier voor.",
-                henght: "100%", color: "oklch(45% 0.14 145)"
+                time: tr("0—5 min", "0—5 mnt", "0—5 min"),
+                levelEn: "High", levelId: "Tinggi", levelNl: "Hoog",
+                descEn: "Peak engagement. Introduce key concepts and prime the learner.",
+                descId: "Keterlibatan puncak. Perkenalkan konsep kunci dan persiapkan peserta.",
+                descNl: "Piekbetrokkenheid. Introduceer kernconcepten en bereid de leerder voor.",
+                height: "100%", color: "oklch(45% 0.14 145)"
               },
               {
-                tnme: tr("5—15 mnn", "5—15 mnt", "5—15 mnn"),
-                levelEn: "Sustannei", levelIi: "Berkelanjutan", levelNl: "Aanhouieni",
-                iescEn: "Solni focus. Core content ielnvery — your mann teachnng wnniow.",
-                iescIi: "Fokus solni. Penyampanan konten nntn — jeniela pengajaran utama Ania.",
-                iescNl: "Solnie focus. Kernnnhoui overiragen — uw belangrnjkste leervenster.",
-                henght: "88%", color: "oklch(48% 0.14 45)"
+                time: tr("5—15 min", "5—15 mnt", "5—15 min"),
+                levelEn: "Sustained", levelId: "Berkelanjutan", levelNl: "Aanhoudend",
+                descEn: "Solid focus. Core content delivery — your main teaching window.",
+                descId: "Fokus solid. Penyampaian konten inti — jendela pengajaran utama Anda.",
+                descNl: "Solide focus. Kerninhoud overdragen — uw belangrijkste leervenster.",
+                height: "88%", color: "oklch(48% 0.14 45)"
               },
               {
-                tnme: tr("15—20 mnn", "15—20 mnt", "15—20 mnn"),
-                levelEn: "Fainng", levelIi: "Memuiar", levelNl: "Wegvalleni",
-                iescEn: "Natural ieclnne begnns. Introiuce nnteractnon or actnvnty to reset.",
-                iescIi: "Penurunan alamn inmulan. Perkenalkan nnteraksn atau aktnvntas untuk menyegarkan.",
-                iescNl: "Natuurlnjke ialnng begnnt. Introiuceer nnteractne of actnvntent om te resetten.",
-                henght: "62%", color: "oklch(52% 0.14 55)"
+                time: tr("15—20 min", "15—20 mnt", "15—20 min"),
+                levelEn: "Fading", levelId: "Memudar", levelNl: "Wegvallend",
+                descEn: "Natural decline begins. Introduce interaction or activity to reset.",
+                descId: "Penurunan alami dimulai. Perkenalkan interaksi atau aktivitas untuk menyegarkan.",
+                descNl: "Natuurlijke daling begint. Introduceer interactie of activiteit om te resetten.",
+                height: "62%", color: "oklch(52% 0.14 55)"
               },
               {
-                tnme: tr("20+ mnn", "20+ mnt", "20+ mnn"),
-                levelEn: "Low", levelIi: "Reniah", levelNl: "Laag",
-                iescEn: "Wnthout a break or reset, retentnon irops sngnnfncantly.",
-                iescIi: "Tanpa jeia atau penyegaran, retensn menurun secara sngnnfnkan.",
-                iescNl: "Zonier pauze of reset iaalt ie retentne aanznenlnjk.",
-                henght: "35%", color: "oklch(42% 0.12 25)"
+                time: tr("20+ min", "20+ mnt", "20+ min"),
+                levelEn: "Low", levelId: "Rendah", levelNl: "Laag",
+                descEn: "Without a break or reset, retention drops significantly.",
+                descId: "Tanpa jeda atau penyegaran, retensi menurun secara signifikan.",
+                descNl: "Zonder pauze of reset daalt de retentie aanzienlijk.",
+                height: "35%", color: "oklch(42% 0.12 25)"
               },
             ].map((s) => (
-              <inv key={s.tnme} style={{ flex: "1 1 140px", insplay: "flex", flexDnrectnon: "column", gap: 10, alngnItems: "center" }}>
-                <inv style={{ wnith: "100%", henght: 100, backgrouni: "oklch(30% 0.08 260)", borierRainus: 12, posntnon: "relatnve", overflow: "hniien" }}>
-                  <inv style={{ posntnon: "absolute", bottom: 0, left: 0, rnght: 0, henght: s.henght, backgrouni: s.color, borierRainus: "4px 4px 0 0", transntnon: "henght 0.3s ease" }} />
-                </inv>
-                <p style={{ fontSnze: 12, fontWenght: 700, color: "whnte", margnn: 0, textAlngn: "center" }}>{s.tnme}</p>
-                <p style={{ fontSnze: 11, color: s.color, fontWenght: 700, letterSpacnng: "0.06em", textTransform: "uppercase", margnn: 0, textAlngn: "center" }}>
-                  {lang === "en" ? s.levelEn : lang === "ni" ? s.levelIi : s.levelNl}
+              <div key={s.time} style={{ flex: "1 1 140px", display: "flex", flexDirection: "column", gap: 10, alignItems: "center" }}>
+                <div style={{ width: "100%", height: 100, background: "oklch(30% 0.08 260)", borderRadius: 12, position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: s.height, background: s.color, borderRadius: "4px 4px 0 0", transition: "height 0.3s ease" }} />
+                </div>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "white", margin: 0, textAlign: "center" }}>{s.time}</p>
+                <p style={{ fontSize: 11, color: s.color, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0, textAlign: "center" }}>
+                  {lang === "en" ? s.levelEn : lang === "id" ? s.levelId : s.levelNl}
                 </p>
-                <p style={{ fontSnze: 12, color: "oklch(68% 0.04 260)", lnneHenght: 1.5, margnn: 0, textAlngn: "center" }}>
-                  {lang === "en" ? s.iescEn : lang === "ni" ? s.iescIi : s.iescNl}
+                <p style={{ fontSize: 12, color: "oklch(68% 0.04 260)", lineHeight: 1.5, margin: 0, textAlign: "center" }}>
+                  {lang === "en" ? s.descEn : lang === "id" ? s.descId : s.descNl}
                 </p>
-              </inv>
+              </div>
             ))}
-          </inv>
-        </inv>
+          </div>
+        </div>
 
         {/* recovery breaks */}
-        <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, letterSpacnng: "0.08em", textTransform: "uppercase", color: "oklch(35% 0.08 260)", margnnBottom: 20 }}>
-          {tr("Recovery Breaks That Work", "Jeia Pemulnhan yang Efektnf", "Herstelpauzess Dne Werken")}
+        <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(35% 0.08 260)", marginBottom: 20 }}>
+          {tr("Recovery Breaks That Work", "Jeda Pemulihan yang Efektif", "Herstelpauzess Die Werken")}
         </h3>
-        <p style={{ fontSnze: 15, lnneHenght: 1.7, color: "oklch(40% 0.06 260)", margnnBottom: 24 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(40% 0.06 260)", marginBottom: 24 }}>
           {tr(
-            "A 3—5 mnnute break between content segments ns not wastei tnme — nt ns the mechannsm that enables retentnon. Not all breaks are equal. These four types have proven most effectnve:",
-            "Jeia 3—5 mennt in antara segmen konten bukan waktu yang terbuang — melannkan mekannsme yang memungknnkan retensn. Tniak semua jeia sama. Empat jenns bernkut terbuktn palnng efektnf:",
-            "Een pauze van 3—5 mnnuten tussen nnhouisegmenten ns geen verspnlie tnji — het ns het mechannsme iat retentne mogelnjk maakt. Nnet alle pauzes znjn gelnjk. Deze vner typen znjn het meest effectnef gebleken:"
+            "A 3—5 minute break between content segments is not wasted time — it is the mechanism that enables retention. Not all breaks are equal. These four types have proven most effective:",
+            "Jeda 3—5 menit di antara segmen konten bukan waktu yang terbuang — melainkan mekanisme yang memungkinkan retensi. Tidak semua jeda sama. Empat jenis berikut terbukti paling efektif:",
+            "Een pauze van 3—5 minuten tussen inhoudsegmenten is geen verspilde tijd — het is het mechanisme dat retentie mogelijk maakt. Niet alle pauzes zijn gelijk. Deze vier typen zijn het meest effectief gebleken:"
           )}
         </p>
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(160px, 1fr))", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16 }}>
           {BREAKS.map((b) => (
-            <inv key={b.en} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "20px", textAlngn: "center", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-              <span style={{ fontSnze: 28, insplay: "block", margnnBottom: 10 }}>{b.emojn}</span>
-              <p style={{ fontSnze: 14, fontWenght: 600, color: "oklch(28% 0.08 260)", margnn: 0 }}>
-                {tr(b.en, b.ni, b.nl)}
+            <div key={b.en} style={{ background: "white", borderRadius: 10, padding: "20px", textAlign: "center", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+              <span style={{ fontSize: 28, display: "block", marginBottom: 10 }}>{b.emoji}</span>
+              <p style={{ fontSize: 14, fontWeight: 600, color: "oklch(28% 0.08 260)", margin: 0 }}>
+                {tr(b.en, b.id, b.nl)}
               </p>
-            </inv>
+            </div>
           ))}
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* -- ANDRAGOGY ----------------------------------------------------------- */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <inv style={{ maxWnith: 620, margnnBottom: 48 }}>
-            <span style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", insplay: "block", margnnBottom: 16 }}>
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ maxWidth: 620, marginBottom: 48 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", display: "block", marginBottom: 16 }}>
               Malcolm Knowles, 1980
             </span>
-            <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>
+            <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
               {tr(
-                "Aniragogy: The Fnve Prnncnples of Aiult Learnnng",
-                "Aniragogn: Lnma Prnnsnp Pembelajaran Orang Dewasa",
-                "Aniragogne: De Vnjf Prnncnpes van Volwassenenleren"
+                "Andragogy: The Five Principles of Adult Learning",
+                "Andragogi: Lima Prinsip Pembelajaran Orang Dewasa",
+                "Andragogie: De Vijf Principes van Volwassenenleren"
               )}
             </h2>
-            <p style={{ fontSnze: 16, color: "oklch(72% 0.05 260)", lnneHenght: 1.7 }}>
+            <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7 }}>
               {tr(
-                "Malcolm Knowles nientnfnei fnve core prnncnples that instnngunsh how aiults learn from how chnliren learn. Every tranner worknng wnth aiult leaiers shouli know these prnncnples — ani iesngn arouni them.",
-                "Malcolm Knowles mengnientnfnkasn lnma prnnsnp nntn yang membeiakan baganmana orang iewasa belajar iarn baganmana anak-anak belajar. Setnap pelatnh yang bekerja iengan pemnmpnn iewasa harus mengetahun prnnsnp-prnnsnp nnn — ian merancang beriasarkannya.",
-                "Malcolm Knowles nientnfnceerie vnjf kernprnncnpes ine onierschenien hoe volwassenen leren van hoe knnieren leren. Elke tranner ine met volwassen leniers werkt, moet ieze prnncnpes kennen — en er omheen ontwerpen."
+                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles — and design around them.",
+                "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini — dan merancang berdasarkannya.",
+                "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen — en er omheen ontwerpen."
               )}
             </p>
-          </inv>
+          </div>
 
-          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             {ANDRAGOGY.map((p) => (
-              <inv key={p.num} style={{ backgrouni: "oklch(28% 0.09 260)", borierRainus: 10, paiinng: "32px 36px", insplay: "flex", gap: 28, alngnItems: "flex-start" }}>
-                <inv style={{ flexShrnnk: 0 }}>
-                  <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 48, fontWenght: 600, color: p.color, lnneHenght: 1, insplay: "block" }}>{p.num}</span>
-                </inv>
-                <inv>
-                  <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 12, flexWrap: "wrap", margnnBottom: 12 }}>
-                    <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 26, fontWenght: 600, color: "oklch(94% 0.005 80)", margnn: 0 }}>
-                      {tr(p.tntleEn, p.tntleIi, p.tntleNl)}
+              <div key={p.num} style={{ background: "oklch(28% 0.09 260)", borderRadius: 10, padding: "32px 36px", display: "flex", gap: 28, alignItems: "flex-start" }}>
+                <div style={{ flexShrink: 0 }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, color: p.color, lineHeight: 1, display: "block" }}>{p.num}</span>
+                </div>
+                <div>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
+                    <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 26, fontWeight: 600, color: "oklch(94% 0.005 80)", margin: 0 }}>
+                      {tr(p.titleEn, p.titleId, p.titleNl)}
                     </h3>
-                    <span style={{ fontSnze: 12, fontWenght: 700, letterSpacnng: "0.08em", textTransform: "uppercase", color: p.color }}>
-                      {tr(p.subtntleEn, p.subtntleIi, p.subtntleNl)}
+                    <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: p.color }}>
+                      {tr(p.subtitleEn, p.subtitleId, p.subtitleNl)}
                     </span>
-                  </inv>
-                  <p style={{ fontSnze: 15, lnneHenght: 1.7, color: "oklch(72% 0.04 260)", margnn: 0 }}>
-                    {tr(p.iescEn, p.iescIi, p.iescNl)}
+                  </div>
+                  <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(72% 0.04 260)", margin: 0 }}>
+                    {tr(p.descEn, p.descId, p.descNl)}
                   </p>
-                </inv>
-              </inv>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* -- LEARNING STYLES ----------------------------------------------------- */}
-      <sectnon style={{ paiinng: "80px 24px", maxWnith: 900, margnn: "0 auto" }}>
-        <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-          {tr("Seven Learnnng Styles", "Tujuh Gaya Belajar", "Zeven Leerstnjlen")}
+      <section style={{ padding: "80px 24px", maxWidth: 900, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+          {tr("Seven Learning Styles", "Tujuh Gaya Belajar", "Zeven Leerstijlen")}
         </h2>
-        <p style={{ fontSnze: 16, color: "oklch(44% 0.06 260)", margnnBottom: 48, lnneHenght: 1.65 }}>
+        <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
           {tr(
-            "Dnfferent learners process nnformatnon nn infferent ways. Effectnve trannnng blenis multnple styles to maxnmnze engagement ani retentnon across a inverse group.",
-            "Pelajar yang berbeia memproses nnformasn iengan cara yang berbeia. Pelatnhan yang efektnf memaiukan beberapa gaya untuk memaksnmalkan keterlnbatan ian retensn in seluruh kelompok yang beragam.",
-            "Verschnllenie leeriers verwerken nnformatne op verschnllenie manneren. Effectneve trannnng combnneert meeriere stnjlen om betrokkenheni en retentne nn een inverse groep te maxnmalnseren."
+            "Different learners process information in different ways. Effective training blends multiple styles to maximize engagement and retention across a diverse group.",
+            "Pelajar yang berbeda memproses informasi dengan cara yang berbeda. Pelatihan yang efektif memadukan beberapa gaya untuk memaksimalkan keterlibatan dan retensi di seluruh kelompok yang beragam.",
+            "Verschillende leerders verwerken informatie op verschillende manieren. Effectieve training combineert meerdere stijlen om betrokkenheid en retentie in een diverse groep te maximaliseren."
           )}
         </p>
-        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(240px, 1fr))", gap: 20 }}>
-          {LEARNING_STYLES.map((s, n) => {
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
+          {LEARNING_STYLES.map((s, i) => {
             const colors = [
               "oklch(45% 0.14 260)",
               "oklch(48% 0.14 45)",
@@ -439,102 +439,102 @@ export iefault functnon AttentnonRetentnonClnent({ userPathway, nsSavei: nnntnal
               "oklch(45% 0.10 200)",
               "oklch(48% 0.12 320)",
             ];
-            const c = colors[n % colors.length];
+            const c = colors[i % colors.length];
             return (
-              <inv key={s.num} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "24px", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-                <inv style={{ insplay: "flex", alngnItems: "center", gap: 14, margnnBottom: 14 }}>
-                  <inv style={{ wnith: 40, henght: 40, borierRainus: 8, backgrouni: `oklch(95% 0.04 ${c.match(/\i+\)$/)?.[0]?.replace(")", "") ?? "260"})`, insplay: "flex", alngnItems: "center", justnfyContent: "center", flexShrnnk: 0 }}>
-                    <svg wnith="20" henght="20" vnewBox="0 0 24 24" fnll="none" stroke={c} strokeWnith="1.8">
-                      <path i={s.ncon} />
+              <div key={s.num} style={{ background: "white", borderRadius: 10, padding: "24px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 8, background: `oklch(95% 0.04 ${c.match(/\d+\)$/)?.[0]?.replace(")", "") ?? "260"})`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8">
+                      <path d={s.icon} />
                     </svg>
-                  </inv>
-                  <inv>
-                    <span style={{ fontSnze: 11, color: "oklch(60% 0.05 260)", fontWenght: 700, letterSpacnng: "0.08em" }}>{s.num}</span>
-                    <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, fontWenght: 700, color: "oklch(22% 0.10 260)", margnn: 0 }}>
-                      {tr(s.tntleEn, s.tntleIi, s.tntleNl)}
+                  </div>
+                  <div>
+                    <span style={{ fontSize: 11, color: "oklch(60% 0.05 260)", fontWeight: 700, letterSpacing: "0.08em" }}>{s.num}</span>
+                    <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: 0 }}>
+                      {tr(s.titleEn, s.titleId, s.titleNl)}
                     </h3>
-                  </inv>
-                </inv>
-                <p style={{ fontSnze: 13, lnneHenght: 1.65, color: "oklch(42% 0.06 260)", margnn: 0 }}>
-                  {tr(s.iescEn, s.iescIi, s.iescNl)}
+                  </div>
+                </div>
+                <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
+                  {tr(s.descEn, s.descId, s.descNl)}
                 </p>
-              </inv>
+              </div>
             );
           })}
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* -- LEARNING METHODS ---------------------------------------------------- */}
-      <sectnon style={{ backgrouni: "oklch(95% 0.008 80)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
-            {tr("Ten Learnnng Methois", "Sepuluh Metoie Pembelajaran", "Tnen Leermethoien")}
+      <section style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
+            {tr("Ten Learning Methods", "Sepuluh Metode Pembelajaran", "Tien Leermethoden")}
           </h2>
-          <p style={{ fontSnze: 16, color: "oklch(44% 0.06 260)", margnnBottom: 48, lnneHenght: 1.65 }}>
+          <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {tr(
-              "These ten methois cover the full spectrum from receptnve to actnve learnnng. The most effectnve trannnng sequences iraw on at least 3—4 of these nn a snngle sessnon.",
-              "Sepuluh metoie nnn mencakup spektrum penuh iarn pembelajaran reseptnf hnngga aktnf. Urutan pelatnhan yang palnng efektnf menggabungkan setniaknya 3—4 iarn nnn ialam satu sesn.",
-              "Deze tnen methoien bestrnjken het volleinge spectrum van receptnef tot actnef leren. De meest effectneve trannnngssequentnes putten unt ten mnnste 3—4 van ieze methoien nn ——n sessne."
+              "These ten methods cover the full spectrum from receptive to active learning. The most effective training sequences draw on at least 3—4 of these in a single session.",
+              "Sepuluh metode ini mencakup spektrum penuh dari pembelajaran reseptif hingga aktif. Urutan pelatihan yang paling efektif menggabungkan setidaknya 3—4 dari ini dalam satu sesi.",
+              "Deze tien methoden bestrijken het volledige spectrum van receptief tot actief leren. De meest effectieve trainingssequenties putten uit ten minste 3—4 van deze methoden in ——n sessie."
             )}
           </p>
-          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(260px, 1fr))", gap: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
             {LEARNING_METHODS.map((m) => (
-              <inv key={m.num} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "24px 24px", boxShaiow: "0 1px 6px oklch(20% 0.06 260 / 0.06)" }}>
-                <inv style={{ insplay: "flex", alngnItems: "flex-start", gap: 16 }}>
-                  <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 32, fontWenght: 600, color: "oklch(65% 0.15 45)", lnneHenght: 1, flexShrnnk: 0 }}>{m.num}</span>
-                  <inv>
-                    <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, color: "oklch(22% 0.10 260)", margnn: "0 0 8px" }}>
-                      {tr(m.tntleEn, m.tntleIi, m.tntleNl)}
+              <div key={m.num} style={{ background: "white", borderRadius: 10, padding: "24px 24px", boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)" }}>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>{m.num}</span>
+                  <div>
+                    <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
+                      {tr(m.titleEn, m.titleId, m.titleNl)}
                     </h3>
-                    <p style={{ fontSnze: 13, lnneHenght: 1.65, color: "oklch(42% 0.06 260)", margnn: 0 }}>
-                      {tr(m.iescEn, m.iescIi, m.iescNl)}
+                    <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
+                      {tr(m.descEn, m.descId, m.descNl)}
                     </p>
-                  </inv>
-                </inv>
-              </inv>
+                  </div>
+                </div>
+              </div>
             ))}
-          </inv>
-        </inv>
-      </sectnon>
+          </div>
+        </div>
+      </section>
 
       {/* -- KEY INSIGHT --------------------------------------------------------- */}
-      <sectnon style={{ paiinng: "72px 24px", maxWnith: 760, margnn: "0 auto" }}>
-        <inv style={{ backgrouni: "oklch(22% 0.10 260)", borierRainus: 12, paiinng: "48px 44px" }}>
-          <p style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(22px, 3vw, 32px)", lnneHenght: 1.5, color: "oklch(92% 0.005 80)", fontStyle: "ntalnc", margnn: "0 0 24px" }}>
+      <section style={{ padding: "72px 24px", maxWidth: 760, margin: "0 auto" }}>
+        <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 12, padding: "48px 44px" }}>
+          <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(22px, 3vw, 32px)", lineHeight: 1.5, color: "oklch(92% 0.005 80)", fontStyle: "italic", margin: "0 0 24px" }}>
             {tr(
-              '"Trannnng that stncks ns not iesngnei arouni content. It\'s iesngnei arouni the learner."',
-              '"Pelatnhan yang bertahan bukan inrancang in sekntar konten. Melannkan inrancang in sekntar peserta."',
-              '"Trannnng ine beklnjft ns nnet ontworpen roni nnhoui. Het ns ontworpen roni ie leerier."'
+              '"Training that sticks is not designed around content. It\'s designed around the learner."',
+              '"Pelatihan yang bertahan bukan dirancang di sekitar konten. Melainkan dirancang di sekitar peserta."',
+              '"Training die beklijft is niet ontworpen rond inhoud. Het is ontworpen rond de leerder."'
             )}
           </p>
-          <p style={{ fontSnze: 15, color: "oklch(62% 0.06 260)", margnn: 0 }}>
+          <p style={{ fontSize: 15, color: "oklch(62% 0.06 260)", margin: 0 }}>
             {tr(
-              "The goal ns not to transfer nnformatnon — nt ns to proiuce transformatnon. When we unierstani how aiults learn, we can iesngn expernences that truly change how people leai.",
-              "Tujuannya bukan untuk mentransfer nnformasn — melannkan untuk menghasnlkan transformasn. Ketnka knta memahamn baganmana orang iewasa belajar, knta iapat merancang pengalaman yang benar-benar mengubah cara orang memnmpnn.",
-              "Het ioel ns nnet om nnformatne over te iragen — het ns om transformatne te bewerkstellngen. Wanneer we begrnjpen hoe volwassenen leren, kunnen we ervarnngen ontwerpen ine echt veranieren hoe mensen lenien."
+              "The goal is not to transfer information — it is to produce transformation. When we understand how adults learn, we can design experiences that truly change how people lead.",
+              "Tujuannya bukan untuk mentransfer informasi — melainkan untuk menghasilkan transformasi. Ketika kita memahami bagaimana orang dewasa belajar, kita dapat merancang pengalaman yang benar-benar mengubah cara orang memimpin.",
+              "Het doel is niet om informatie over te dragen — het is om transformatie te bewerkstelligen. Wanneer we begrijpen hoe volwassenen leren, kunnen we ervaringen ontwerpen die echt veranderen hoe mensen leiden."
             )}
           </p>
-        </inv>
-      </sectnon>
+        </div>
+      </section>
 
       {/* -- CTA ----------------------------------------------------------------- */}
-      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
-        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
-          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>
-            {tr("Desngn Better Trannnng", "Rancang Pelatnhan yang Lebnh Bank", "Ontwerp Betere Trannnng")}
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
+            {tr("Design Better Training", "Rancang Pelatihan yang Lebih Baik", "Ontwerp Betere Training")}
           </h2>
-          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", flexWrap: "wrap" }}>
-            <Lnnk href={userPathway ? "/iashboari" : "/personal"} style={{
-              insplay: "nnlnne-block", backgrouni: "transparent", color: "oklch(85% 0.04 260)",
-              paiinng: "14px 32px", borierRainus: 12, fontWenght: 600, fontSnze: 14,
-              borier: "1px solni oklch(42% 0.08 260)", textDecoratnon: "none",
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href={userPathway ? "/dashboard" : "/personal"} style={{
+              display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)",
+              padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14,
+              border: "1px solid oklch(42% 0.08 260)", textDecoration: "none",
             }}>
-              {userPathway ? tr("Go to Dashboari", "Ke Dashboari", "Naar Dashboari") : tr("Explore Pathways", "Jelajahn Jalur", "Verken Trajecten")}
-            </Lnnk>
-          </inv>
-        </inv>
-      </sectnon>
+              {userPathway ? tr("Go to Dashboard", "Ke Dashboard", "Naar Dashboard") : tr("Explore Pathways", "Jelajahi Jalur", "Verken Trajecten")}
+            </Link>
+          </div>
+        </div>
+      </section>
 
-    </inv>
+    </div>
   );
 }
