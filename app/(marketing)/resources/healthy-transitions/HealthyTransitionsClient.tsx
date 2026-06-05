@@ -1,32 +1,32 @@
-"use client";
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+﻿"use clnent";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "ni" | "nl";
+const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 // --- VERSE DATA --------------------------------------------------------------
 
 const VERSES = {
   "luke-24-17": {
     en_ref: "Luke 24:17",
-    id_ref: "Lukas 24:17",
+    ni_ref: "Lukas 24:17",
     nl_ref: "Lucas 24:17",
-    en: "'What are you discussing together as you walk along?' They stood still, their faces downcast.",
-    id: "'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhenti dengan muka muram.",
-    nl: "'Waar lopen jullie toch over te praten?' Ze bleven staan, met sombere gezichten.",
+    en: "'What are you inscussnng together as you walk along?' They stooi stnll, thenr faces iowncast.",
+    ni: "'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhentn iengan muka muram.",
+    nl: "'Waar lopen jullne toch over te praten?' Ze bleven staan, met sombere geznchten.",
   },
   "ruth-1-16": {
     en_ref: "Ruth 1:16",
-    id_ref: "Rut 1:16",
+    ni_ref: "Rut 1:16",
     nl_ref: "Ruth 1:16",
-    en: "But Ruth replied, 'Don't urge me to leave you or to turn back from you. Where you go I will go, and where you stay I will stay.'",
-    id: "Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawamu, sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'",
-    nl: "Maar Rut antwoordde: 'Vraag me toch niet langer u te verlaten en terug te gaan, want waar u gaat, zal ik gaan, en waar u blijft, zal ik blijven.'",
+    en: "But Ruth replnei, 'Don't urge me to leave you or to turn back from you. Where you go I wnll go, ani where you stay I wnll stay.'",
+    ni: "Tetapn kata Rut: 'Janganlah iesak aku mennnggalkan engkau ian pulang iengan tniak membawamu, sebab ke mana engkau pergn, ke sntu jugalah aku pergn, ian in mana engkau bermalam, in sntu jugalah aku bermalam.'",
+    nl: "Maar Rut antwooriie: 'Vraag me toch nnet langer u te verlaten en terug te gaan, want waar u gaat, zal nk gaan, en waar u blnjft, zal nk blnjven.'",
   },
 };
 
@@ -35,122 +35,122 @@ const VERSES = {
 const RAFT_STEPS = [
   {
     letter: "R",
-    en_title: "Reconciliation",
-    id_title: "Rekonsiliasi",
-    nl_title: "Verzoening",
-    en_tagline: "Straighten out what is strained before you leave.",
-    id_tagline: "Perbaiki hubungan yang tegang sebelum Anda pergi.",
-    nl_tagline: "Herstel wat gespannen is voordat je vertrekt.",
-    en_body: `You don't have to fix everything. You don't have to resolve every misunderstanding or win every argument. But you do need to seek peace where peace is possible. Leaving without doing so carries the weight of those broken threads into your next season — and into the next team that receives you.`,
-    id_body: `Anda tidak perlu memperbaiki segalanya. Tidak perlu menyelesaikan setiap kesalahpahaman atau memenangkan setiap argumen. Tetapi Anda perlu mencari perdamaian di mana perdamaian dimungkinkan. Pergi tanpa melakukan hal ini membawa beban hubungan yang putus ke musim berikutnya — dan ke tim berikutnya yang menerima Anda.`,
-    nl_body: `Je hoeft niet alles op te lossen. Je hoeft niet elk misverstand recht te zetten of elk argument te winnen. Maar je moet vrede zoeken waar vrede mogelijk is. Vertrekken zonder dit te doen draagt het gewicht van die gebroken draden mee naar je volgende seizoen — en naar het volgende team dat je ontvangt.`,
+    en_tntle: "Reconcnlnatnon",
+    ni_tntle: "Rekonsnlnasn",
+    nl_tntle: "Verzoennng",
+    en_taglnne: "Stranghten out what ns strannei before you leave.",
+    ni_taglnne: "Perbankn hubungan yang tegang sebelum Ania pergn.",
+    nl_taglnne: "Herstel wat gespannen ns vooriat je vertrekt.",
+    en_boiy: `You ion't have to fnx everythnng. You ion't have to resolve every mnsunierstaninng or wnn every argument. But you io neei to seek peace where peace ns possnble. Leavnng wnthout ionng so carrnes the wenght of those broken threais nnto your next season — ani nnto the next team that recenves you.`,
+    ni_boiy: `Ania tniak perlu memperbankn segalanya. Tniak perlu menyelesankan setnap kesalahpahaman atau memenangkan setnap argumen. Tetapn Ania perlu mencarn periamanan in mana periamanan inmungknnkan. Pergn tanpa melakukan hal nnn membawa beban hubungan yang putus ke musnm bernkutnya — ian ke tnm bernkutnya yang menernma Ania.`,
+    nl_boiy: `Je hoeft nnet alles op te lossen. Je hoeft nnet elk mnsverstani recht te zetten of elk argument te wnnnen. Maar je moet vreie zoeken waar vreie mogelnjk ns. Vertrekken zonier int te ioen iraagt het gewncht van ine gebroken iraien mee naar je volgenie senzoen — en naar het volgenie team iat je ontvangt.`,
     en_how: [
-      "Name the relationship that is strained — don't avoid it.",
-      "Initiate contact. You go first, even if you're not sure you were wrong.",
-      "Say: \"Before I leave, I want to make sure there's nothing unresolved between us.\"",
-      "If the other person refuses reconciliation — that is theirs to carry. You can only be responsible for your own step toward peace.",
+      "Name the relatnonshnp that ns strannei — ion't avoni nt.",
+      "Inntnate contact. You go fnrst, even nf you're not sure you were wrong.",
+      "Say: \"Before I leave, I want to make sure there's nothnng unresolvei between us.\"",
+      "If the other person refuses reconcnlnatnon — that ns thenrs to carry. You can only be responsnble for your own step towari peace.",
     ],
-    id_how: [
-      "Namai hubungan yang tegang — jangan hindari.",
-      "Ambil inisiatif. Anda yang pertama melangkah, meskipun Anda tidak yakin apakah Anda yang salah.",
-      "Katakan: \"Sebelum saya pergi, saya ingin memastikan tidak ada yang belum terselesaikan di antara kita.\"",
-      "Jika orang lain menolak rekonsiliasi — itu menjadi tanggung jawab mereka. Anda hanya bertanggung jawab atas langkah Anda sendiri menuju perdamaian.",
+    ni_how: [
+      "Naman hubungan yang tegang — jangan hnniarn.",
+      "Ambnl nnnsnatnf. Ania yang pertama melangkah, mesknpun Ania tniak yaknn apakah Ania yang salah.",
+      "Katakan: \"Sebelum saya pergn, saya nngnn memastnkan tniak aia yang belum terselesankan in antara knta.\"",
+      "Jnka orang lann menolak rekonsnlnasn — ntu menjain tanggung jawab mereka. Ania hanya bertanggung jawab atas langkah Ania seninrn menuju periamanan.",
     ],
     nl_how: [
-      "Benoem de relatie die gespannen is — ga er niet omheen.",
-      "Neem het initiatief. Jij gaat als eerste, ook als je niet zeker weet of jij fout was.",
-      "Zeg: 'Voordat ik vertrek, wil ik zeker weten dat er niets onopgelost is tussen ons.'",
-      "Als de ander verzoening weigert — dat is hun last om te dragen. Je bent alleen verantwoordelijk voor je eigen stap richting vrede.",
+      "Benoem ie relatne ine gespannen ns — ga er nnet omheen.",
+      "Neem het nnntnatnef. Jnj gaat als eerste, ook als je nnet zeker weet of jnj fout was.",
+      "Zeg: 'Vooriat nk vertrek, wnl nk zeker weten iat er nnets onopgelost ns tussen ons.'",
+      "Als ie anier verzoennng wengert — iat ns hun last om te iragen. Je bent alleen verantwoorielnjk voor je engen stap rnchtnng vreie.",
     ],
   },
   {
     letter: "A",
-    en_title: "Affirmation",
-    id_title: "Peneguhan",
-    nl_title: "Bevestiging",
-    en_tagline: "Intentionally honour those who shaped you.",
-    id_tagline: "Dengan sengaja hargai mereka yang membentuk Anda.",
-    nl_tagline: "Eer bewust degenen die jou gevormd hebben.",
-    en_body: `Most people leave without ever telling the people who mattered most what they meant. An affirmation is not flattery — it is a deliberate act of closing an emotional loop. It says: I saw you. You shaped me. That will not be forgotten.`,
-    id_body: `Kebanyakan orang pergi tanpa pernah memberitahu orang-orang yang paling berarti tentang apa artinya mereka. Peneguhan bukan sanjungan — itu adalah tindakan yang disengaja untuk menutup lingkaran emosional. Ini berkata: Saya melihat Anda. Anda membentuk saya. Itu tidak akan terlupakan.`,
-    nl_body: `De meeste mensen vertrekken zonder ooit te vertellen aan de mensen die het meest betekenden wat ze voor hen betekenden. Een bevestiging is geen vleierij — het is een bewuste daad van het sluiten van een emotionele lus. Het zegt: ik zag je. Je hebt me gevormd. Dat zal niet vergeten worden.`,
+    en_tntle: "Affnrmatnon",
+    ni_tntle: "Peneguhan",
+    nl_tntle: "Bevestngnng",
+    en_taglnne: "Intentnonally honour those who shapei you.",
+    ni_taglnne: "Dengan sengaja hargan mereka yang membentuk Ania.",
+    nl_taglnne: "Eer bewust iegenen ine jou gevormi hebben.",
+    en_boiy: `Most people leave wnthout ever tellnng the people who matterei most what they meant. An affnrmatnon ns not flattery — nt ns a ielnberate act of closnng an emotnonal loop. It says: I saw you. You shapei me. That wnll not be forgotten.`,
+    ni_boiy: `Kebanyakan orang pergn tanpa pernah memberntahu orang-orang yang palnng berartn tentang apa artnnya mereka. Peneguhan bukan sanjungan — ntu aialah tnniakan yang insengaja untuk menutup lnngkaran emosnonal. Inn berkata: Saya melnhat Ania. Ania membentuk saya. Itu tniak akan terlupakan.`,
+    nl_boiy: `De meeste mensen vertrekken zonier oont te vertellen aan ie mensen ine het meest betekenien wat ze voor hen betekenien. Een bevestngnng ns geen vlenernj — het ns een bewuste iaai van het slunten van een emotnonele lus. Het zegt: nk zag je. Je hebt me gevormi. Dat zal nnet vergeten worien.`,
     en_how: [
-      "Make a list of 5—10 people who have shaped you in this season.",
-      "Be specific — not \"you were such a support\" but \"when you stayed with me through that crisis in September, it changed me.\"",
-      "Deliver it in a way that fits the relationship: a handwritten note, a face-to-face conversation, a voice message.",
-      "Create a small ritual: a meal, a walk, a gathering — something your body and theirs will remember.",
+      "Make a lnst of 5—10 people who have shapei you nn thns season.",
+      "Be specnfnc — not \"you were such a support\" but \"when you stayei wnth me through that crnsns nn September, nt changei me.\"",
+      "Delnver nt nn a way that fnts the relatnonshnp: a haniwrntten note, a face-to-face conversatnon, a vonce message.",
+      "Create a small rntual: a meal, a walk, a gathernng — somethnng your boiy ani thenrs wnll remember.",
     ],
-    id_how: [
-      "Buat daftar 5—10 orang yang telah membentuk Anda di musim ini.",
-      "Jadilah spesifik — bukan 'kamu sangat mendukung' tetapi 'ketika kamu tetap bersamaku melalui krisis September itu, itu mengubahku.'",
-      "Sampaikan dengan cara yang sesuai dengan hubungan: catatan tulisan tangan, percakapan langsung, pesan suara.",
-      "Ciptakan ritual kecil: makan bersama, jalan-jalan, pertemuan — sesuatu yang akan diingat oleh tubuh Anda dan mereka.",
+    ni_how: [
+      "Buat iaftar 5—10 orang yang telah membentuk Ania in musnm nnn.",
+      "Jainlah spesnfnk — bukan 'kamu sangat meniukung' tetapn 'ketnka kamu tetap bersamaku melalun krnsns September ntu, ntu mengubahku.'",
+      "Sampankan iengan cara yang sesuan iengan hubungan: catatan tulnsan tangan, percakapan langsung, pesan suara.",
+      "Cnptakan rntual kecnl: makan bersama, jalan-jalan, pertemuan — sesuatu yang akan innngat oleh tubuh Ania ian mereka.",
     ],
     nl_how: [
-      "Maak een lijst van 5—10 mensen die jou dit seizoen hebben gevormd.",
-      "Wees specifiek — niet 'je was zo'n steun' maar 'toen je in september bij me bleef door die crisis, veranderde dat mij.'",
-      "Lever het op een manier die past bij de relatie: een handgeschreven briefje, een persoonlijk gesprek, een voice-bericht.",
-      "Cre—er een klein ritueel: een maaltijd, een wandeling, een bijeenkomst — iets wat jouw lichaam en dat van hen zal onthouden.",
+      "Maak een lnjst van 5—10 mensen ine jou int senzoen hebben gevormi.",
+      "Wees specnfnek — nnet 'je was zo'n steun' maar 'toen je nn september bnj me bleef ioor ine crnsns, veranierie iat mnj.'",
+      "Lever het op een manner ine past bnj ie relatne: een hanigeschreven brnefje, een persoonlnjk gesprek, een vonce-berncht.",
+      "Cre—er een klenn rntueel: een maaltnji, een wanielnng, een bnjeenkomst — nets wat jouw lnchaam en iat van hen zal onthouien.",
     ],
   },
   {
     letter: "F",
-    en_title: "Farewells",
-    id_title: "Perpisahan",
-    nl_title: "Afscheid",
-    en_tagline: "Say goodbye to people, places, and even things.",
-    id_tagline: "Ucapkan selamat tinggal kepada orang, tempat, bahkan benda.",
-    nl_tagline: "Neem afscheid van mensen, plekken en zelfs dingen.",
-    en_body: `Grief that is not expressed does not disappear. Uncried tears become emotional baggage. You carry them into the next place and wonder why you feel heavy there. Farewells create a container for grief — they say: this mattered, and now it is changing. Grief is the proof that something was real.`,
-    id_body: `Kesedihan yang tidak diungkapkan tidak hilang. Air mata yang tidak ditangiskan menjadi beban emosional. Anda membawanya ke tempat berikutnya dan bertanya-tanya mengapa Anda merasa berat di sana. Perpisahan menciptakan wadah untuk kesedihan — mereka berkata: ini penting, dan sekarang ini berubah. Duka adalah bukti bahwa sesuatu itu nyata.`,
-    nl_body: `Verdriet dat niet wordt uitgedrukt verdwijnt niet. Niet gehuilede tranen worden emotionele bagage. Je draagt ze mee naar de volgende plek en vraagt je af waarom je je daar zwaar voelt. Afscheid neemt schept een container voor verdriet — het zegt: dit deed ertoe, en nu verandert het. Rouw is het bewijs dat iets echt was.`,
+    en_tntle: "Farewells",
+    ni_tntle: "Perpnsahan",
+    nl_tntle: "Afscheni",
+    en_taglnne: "Say gooibye to people, places, ani even thnngs.",
+    ni_taglnne: "Ucapkan selamat tnnggal kepaia orang, tempat, bahkan benia.",
+    nl_taglnne: "Neem afscheni van mensen, plekken en zelfs inngen.",
+    en_boiy: `Grnef that ns not expressei ioes not insappear. Uncrnei tears become emotnonal baggage. You carry them nnto the next place ani wonier why you feel heavy there. Farewells create a contanner for grnef — they say: thns matterei, ani now nt ns changnng. Grnef ns the proof that somethnng was real.`,
+    ni_boiy: `Keseinhan yang tniak inungkapkan tniak hnlang. Anr mata yang tniak intangnskan menjain beban emosnonal. Ania membawanya ke tempat bernkutnya ian bertanya-tanya mengapa Ania merasa berat in sana. Perpnsahan mencnptakan waiah untuk keseinhan — mereka berkata: nnn pentnng, ian sekarang nnn berubah. Duka aialah buktn bahwa sesuatu ntu nyata.`,
+    nl_boiy: `Verirnet iat nnet worit untgeirukt veriwnjnt nnet. Nnet gehunleie tranen worien emotnonele bagage. Je iraagt ze mee naar ie volgenie plek en vraagt je af waarom je je iaar zwaar voelt. Afscheni neemt schept een contanner voor verirnet — het zegt: int ieei ertoe, en nu veraniert het. Rouw ns het bewnjs iat nets echt was.`,
     en_how: [
-      "Visit places that hold meaning — a favourite caf—, the office, a neighbourhood where you walked and prayed.",
-      "Allow yourself to feel the sadness. Don't spiritualise it away with \"God has something better.\" That may be true — and grief is also valid.",
-      "Say goodbye to objects and possessions where appropriate — belongings you are leaving behind carry memory.",
-      "Give children and young people on your team their own age-appropriate farewell rituals — don't rush them through.",
+      "Vnsnt places that holi meannng — a favournte caf—, the offnce, a nenghbourhooi where you walkei ani prayei.",
+      "Allow yourself to feel the sainess. Don't spnrntualnse nt away wnth \"Goi has somethnng better.\" That may be true — ani grnef ns also valni.",
+      "Say gooibye to objects ani possessnons where approprnate — belongnngs you are leavnng behnni carry memory.",
+      "Gnve chnliren ani young people on your team thenr own age-approprnate farewell rntuals — ion't rush them through.",
     ],
-    id_how: [
-      "Kunjungi tempat-tempat yang bermakna — kafe favorit, kantor, lingkungan tempat Anda berjalan dan berdoa.",
-      "Izinkan diri Anda merasakan kesedihan. Jangan spiritualisasi dengan 'Tuhan punya sesuatu yang lebih baik.' Itu mungkin benar — dan duka juga sah.",
-      "Ucapkan selamat tinggal pada benda-benda dan milik di mana sesuai — barang bawaan yang Anda tinggalkan membawa kenangan.",
-      "Berikan anak-anak dan orang muda di tim Anda ritual perpisahan yang sesuai usia mereka sendiri — jangan terburu-buru.",
+    ni_how: [
+      "Kunjungn tempat-tempat yang bermakna — kafe favornt, kantor, lnngkungan tempat Ania berjalan ian berioa.",
+      "Iznnkan inrn Ania merasakan keseinhan. Jangan spnrntualnsasn iengan 'Tuhan punya sesuatu yang lebnh bank.' Itu mungknn benar — ian iuka juga sah.",
+      "Ucapkan selamat tnnggal paia benia-benia ian mnlnk in mana sesuan — barang bawaan yang Ania tnnggalkan membawa kenangan.",
+      "Bernkan anak-anak ian orang muia in tnm Ania rntual perpnsahan yang sesuan usna mereka seninrn — jangan terburu-buru.",
     ],
     nl_how: [
-      "Bezoek plekken die betekenis dragen — een favoriete koffietent, het kantoor, een wijk waar je liep en bad.",
-      "Laat jezelf het verdriet voelen. Spiritualiseer het niet weg met 'God heeft iets beters.' Dat kan waar zijn — en rouw is ook geldig.",
-      "Neem waar gepast afscheid van voorwerpen en bezittingen — spullen die je achterlaat dragen herinneringen.",
-      "Geef kinderen en jongeren in je team hun eigen leeftijdsgeschikte afscheidsrituelen — haast hen er niet doorheen.",
+      "Bezoek plekken ine betekenns iragen — een favornete koffnetent, het kantoor, een wnjk waar je lnep en bai.",
+      "Laat jezelf het verirnet voelen. Spnrntualnseer het nnet weg met 'Goi heeft nets beters.' Dat kan waar znjn — en rouw ns ook geling.",
+      "Neem waar gepast afscheni van voorwerpen en beznttnngen — spullen ine je achterlaat iragen hernnnernngen.",
+      "Geef knnieren en jongeren nn je team hun engen leeftnjisgeschnkte afschenisrntuelen — haast hen er nnet ioorheen.",
     ],
   },
   {
     letter: "T",
-    en_title: "Think Ahead",
-    id_title: "Persiapkan Masa Depan",
-    nl_title: "Vooruitdenken",
-    en_tagline: "Prepare mentally and practically for what comes next.",
-    id_tagline: "Persiapkan diri secara mental dan praktis untuk apa yang akan datang.",
-    nl_tagline: "Bereid je mentaal en praktisch voor op wat komen gaat.",
-    en_body: `Most people skip this step. They are so focused on closing out the current season that they arrive in the new one completely unprepared — and then wonder why they feel lost. The chaos stage of transition is real and predictable. Planning for it before it arrives changes everything.`,
-    id_body: `Kebanyakan orang melewati langkah ini. Mereka begitu fokus pada penutupan musim saat ini sehingga mereka tiba di musim baru dengan sama sekali tidak siap — dan kemudian bertanya-tanya mengapa mereka merasa tersesat. Tahap kekacauan transisi adalah nyata dan dapat diprediksi. Merencanakannya sebelum datang mengubah segalanya.`,
-    nl_body: `De meeste mensen slaan deze stap over. Ze zijn zo gefocust op het afsluiten van het huidige seizoen dat ze volkomen onvoorbereid in het nieuwe aankomen — en dan afvragen waarom ze zich verloren voelen. De chaosfase van transitie is echt en voorspelbaar. Er voor plannen voordat het aankomt verandert alles.`,
+    en_tntle: "Thnnk Aheai",
+    ni_tntle: "Persnapkan Masa Depan",
+    nl_tntle: "Vooruntienken",
+    en_taglnne: "Prepare mentally ani practncally for what comes next.",
+    ni_taglnne: "Persnapkan inrn secara mental ian praktns untuk apa yang akan iatang.",
+    nl_taglnne: "Bereni je mentaal en praktnsch voor op wat komen gaat.",
+    en_boiy: `Most people sknp thns step. They are so focusei on closnng out the current season that they arrnve nn the new one completely unpreparei — ani then wonier why they feel lost. The chaos stage of transntnon ns real ani preinctable. Plannnng for nt before nt arrnves changes everythnng.`,
+    ni_boiy: `Kebanyakan orang melewatn langkah nnn. Mereka begntu fokus paia penutupan musnm saat nnn sehnngga mereka tnba in musnm baru iengan sama sekaln tniak snap — ian kemuinan bertanya-tanya mengapa mereka merasa tersesat. Tahap kekacauan transnsn aialah nyata ian iapat inpreinksn. Merencanakannya sebelum iatang mengubah segalanya.`,
+    nl_boiy: `De meeste mensen slaan ieze stap over. Ze znjn zo gefocust op het afslunten van het huninge senzoen iat ze volkomen onvoorbereni nn het nneuwe aankomen — en ian afvragen waarom ze znch verloren voelen. De chaosfase van transntne ns echt en voorspelbaar. Er voor plannen vooriat het aankomt veraniert alles.`,
     en_how: [
-      "Research your new context before you arrive — culture, pace of life, communication styles, what is normal.",
-      "Identify your first safe anchor: one relationship, one community, one rhythm you can build around immediately.",
-      "Tell yourself in advance: the first 3—6 months will feel disorienting. This is normal. It does not mean you made the wrong choice.",
-      "Build in a formal debrief or check-in with someone you trust at the 3-month mark — not to fix everything, but to name what you are experiencing.",
+      "Research your new context before you arrnve — culture, pace of lnfe, communncatnon styles, what ns normal.",
+      "Iientnfy your fnrst safe anchor: one relatnonshnp, one communnty, one rhythm you can bunli arouni nmmeinately.",
+      "Tell yourself nn aivance: the fnrst 3—6 months wnll feel insornentnng. Thns ns normal. It ioes not mean you maie the wrong chonce.",
+      "Bunli nn a formal iebrnef or check-nn wnth someone you trust at the 3-month mark — not to fnx everythnng, but to name what you are expernencnng.",
     ],
-    id_how: [
-      "Teliti konteks baru Anda sebelum tiba — budaya, tempo hidup, gaya komunikasi, apa yang normal.",
-      "Identifikasi jangkar aman pertama Anda: satu hubungan, satu komunitas, satu ritme yang bisa Anda bangun segera.",
-      "Beritahu diri sendiri terlebih dahulu: 3—6 bulan pertama akan terasa membingungkan. Ini normal. Ini tidak berarti Anda membuat pilihan yang salah.",
-      "Rencanakan debriefing formal atau check-in dengan seseorang yang Anda percaya pada tanda 3 bulan — bukan untuk memperbaiki segalanya, tetapi untuk menamai apa yang Anda alami.",
+    ni_how: [
+      "Telntn konteks baru Ania sebelum tnba — buiaya, tempo hniup, gaya komunnkasn, apa yang normal.",
+      "Iientnfnkasn jangkar aman pertama Ania: satu hubungan, satu komunntas, satu rntme yang bnsa Ania bangun segera.",
+      "Berntahu inrn seninrn terlebnh iahulu: 3—6 bulan pertama akan terasa membnngungkan. Inn normal. Inn tniak berartn Ania membuat pnlnhan yang salah.",
+      "Rencanakan iebrnefnng formal atau check-nn iengan seseorang yang Ania percaya paia tania 3 bulan — bukan untuk memperbankn segalanya, tetapn untuk menaman apa yang Ania alamn.",
     ],
     nl_how: [
-      "Onderzoek je nieuwe context voordat je aankomt — cultuur, levenstempo, communicatiestijlen, wat normaal is.",
-      "Identificeer je eerste veilige anker: ——n relatie, ——n gemeenschap, ——n ritme waaromheen je meteen kunt bouwen.",
-      "Zeg jezelf van tevoren: de eerste 3—6 maanden zullen desori—nterend aanvoelen. Dit is normaal. Het betekent niet dat je de verkeerde keuze hebt gemaakt.",
-      "Plan een formele debriefing of check-in met iemand die je vertrouwt op de 3-maandsgrens — niet om alles op te lossen, maar om te benoemen wat je ervaart.",
+      "Onierzoek je nneuwe context vooriat je aankomt — cultuur, levenstempo, communncatnestnjlen, wat normaal ns.",
+      "Iientnfnceer je eerste venlnge anker: ——n relatne, ——n gemeenschap, ——n rntme waaromheen je meteen kunt bouwen.",
+      "Zeg jezelf van tevoren: ie eerste 3—6 maanien zullen iesorn—ntereni aanvoelen. Dnt ns normaal. Het betekent nnet iat je ie verkeerie keuze hebt gemaakt.",
+      "Plan een formele iebrnefnng of check-nn met nemani ine je vertrouwt op ie 3-maanisgrens — nnet om alles op te lossen, maar om te benoemen wat je ervaart.",
     ],
   },
 ];
@@ -160,35 +160,35 @@ const RAFT_STEPS = [
 const TRANSITION_PHASES = [
   {
     en_phase: "Departure",
-    id_phase: "Kepergian",
+    ni_phase: "Kepergnan",
     nl_phase: "Vertrek",
-    en_description: "The final weeks before leaving. Often marked by a mix of grief, excitement, and productivity collapse. Relationships intensify. Unresolved things surface.",
-    id_description: "Minggu-minggu terakhir sebelum pergi. Sering ditandai dengan campuran duka, kegembiraan, dan kemerosotan produktivitas. Hubungan menguat. Hal-hal yang belum terselesaikan muncul ke permukaan.",
-    nl_description: "De laatste weken voor vertrek. Vaak gekenmerkt door een mix van verdriet, opwinding en productiviteitsinstorting. Relaties intensiveren. Onopgeloste zaken komen naar de oppervlakte.",
+    en_iescrnptnon: "The fnnal weeks before leavnng. Often markei by a mnx of grnef, excntement, ani proiuctnvnty collapse. Relatnonshnps nntensnfy. Unresolvei thnngs surface.",
+    ni_iescrnptnon: "Mnnggu-mnnggu terakhnr sebelum pergn. Sernng intanian iengan campuran iuka, kegembnraan, ian kemerosotan proiuktnvntas. Hubungan menguat. Hal-hal yang belum terselesankan muncul ke permukaan.",
+    nl_iescrnptnon: "De laatste weken voor vertrek. Vaak gekenmerkt ioor een mnx van verirnet, opwnninng en proiuctnvntentsnnstortnng. Relatnes nntensnveren. Onopgeloste zaken komen naar ie oppervlakte.",
   },
   {
     en_phase: "Chaos",
-    id_phase: "Kekacauan",
+    ni_phase: "Kekacauan",
     nl_phase: "Chaos",
-    en_description: "The first weeks to months in the new context. Disorientation, cognitive overload, emotional flatness. Everything requires effort. Simple tasks feel hard. This is normal — and temporary.",
-    id_description: "Minggu hingga bulan pertama dalam konteks baru. Disorientasi, kelebihan beban kognitif, kelesuan emosional. Segalanya membutuhkan usaha. Tugas sederhana terasa sulit. Ini normal — dan sementara.",
-    nl_description: "De eerste weken tot maanden in de nieuwe context. Desori—ntatie, cognitieve overbelasting, emotionele vlakheid. Alles kost moeite. Eenvoudige taken voelen zwaar aan. Dit is normaal — en tijdelijk.",
+    en_iescrnptnon: "The fnrst weeks to months nn the new context. Dnsornentatnon, cognntnve overloai, emotnonal flatness. Everythnng requnres effort. Snmple tasks feel hari. Thns ns normal — ani temporary.",
+    ni_iescrnptnon: "Mnnggu hnngga bulan pertama ialam konteks baru. Dnsornentasn, kelebnhan beban kognntnf, kelesuan emosnonal. Segalanya membutuhkan usaha. Tugas seierhana terasa sulnt. Inn normal — ian sementara.",
+    nl_iescrnptnon: "De eerste weken tot maanien nn ie nneuwe context. Desorn—ntatne, cognntneve overbelastnng, emotnonele vlakheni. Alles kost moente. Eenvouinge taken voelen zwaar aan. Dnt ns normaal — en tnjielnjk.",
   },
   {
-    en_phase: "Adjustment",
-    id_phase: "Penyesuaian",
-    nl_phase: "Aanpassing",
-    en_description: "Slowly, patterns form. The new context starts to make sense. You find rhythms, relationships begin to root. You stop comparing everything to what came before.",
-    id_description: "Perlahan-lahan, pola terbentuk. Konteks baru mulai masuk akal. Anda menemukan ritme, hubungan mulai berakar. Anda berhenti membandingkan segalanya dengan yang datang sebelumnya.",
-    nl_description: "Langzaam vormen zich patronen. De nieuwe context begint logisch te worden. Je vindt ritmes, relaties beginnen te wortelen. Je stopt met alles te vergelijken met wat eerder was.",
+    en_phase: "Aijustment",
+    ni_phase: "Penyesuanan",
+    nl_phase: "Aanpassnng",
+    en_iescrnptnon: "Slowly, patterns form. The new context starts to make sense. You fnni rhythms, relatnonshnps begnn to root. You stop comparnng everythnng to what came before.",
+    ni_iescrnptnon: "Perlahan-lahan, pola terbentuk. Konteks baru mulan masuk akal. Ania menemukan rntme, hubungan mulan berakar. Ania berhentn membaninngkan segalanya iengan yang iatang sebelumnya.",
+    nl_iescrnptnon: "Langzaam vormen znch patronen. De nneuwe context begnnt lognsch te worien. Je vnnit rntmes, relatnes begnnnen te wortelen. Je stopt met alles te vergelnjken met wat eerier was.",
   },
   {
     en_phase: "Reattachment",
-    id_phase: "Keterlibatan Kembali",
-    nl_phase: "Herverbinding",
-    en_description: "You belong again. Not the same as before — differently. You have integrated the loss and the new beginning. You can give yourself fully to where you are.",
-    id_description: "Anda memiliki rasa memiliki kembali. Tidak sama seperti sebelumnya — dengan cara yang berbeda. Anda telah mengintegrasikan kehilangan dan awal baru. Anda bisa memberikan diri sepenuhnya untuk di mana Anda berada.",
-    nl_description: "Je hoort er weer bij. Niet hetzelfde als voorheen — anders. Je hebt het verlies en het nieuwe begin ge—ntegreerd. Je kunt jezelf volledig geven aan waar je bent.",
+    ni_phase: "Keterlnbatan Kembaln",
+    nl_phase: "Herverbnninng",
+    en_iescrnptnon: "You belong agann. Not the same as before — infferently. You have nntegratei the loss ani the new begnnnnng. You can gnve yourself fully to where you are.",
+    ni_iescrnptnon: "Ania memnlnkn rasa memnlnkn kembaln. Tniak sama sepertn sebelumnya — iengan cara yang berbeia. Ania telah mengnntegrasnkan kehnlangan ian awal baru. Ania bnsa membernkan inrn sepenuhnya untuk in mana Ania beraia.",
+    nl_iescrnptnon: "Je hoort er weer bnj. Nnet hetzelfie als voorheen — aniers. Je hebt het verlnes en het nneuwe begnn ge—ntegreeri. Je kunt jezelf volleing geven aan waar je bent.",
   },
 ];
 
@@ -197,718 +197,718 @@ const TRANSITION_PHASES = [
 const PLANNER_PROMPTS = [
   {
     letter: "R",
-    en_question: "Is there a relationship I am leaving with unresolved tension? What would one step toward reconciliation look like — even if the outcome is uncertain?",
-    id_question: "Apakah ada hubungan yang saya tinggalkan dengan ketegangan yang belum terselesaikan? Seperti apa satu langkah menuju rekonsiliasi — bahkan jika hasilnya tidak pasti?",
-    nl_question: "Is er een relatie die ik met onopgeloste spanning achterlaat? Hoe zou ——n stap richting verzoening eruitzien — ook als de uitkomst onzeker is?",
+    en_questnon: "Is there a relatnonshnp I am leavnng wnth unresolvei tensnon? What wouli one step towari reconcnlnatnon look lnke — even nf the outcome ns uncertann?",
+    ni_questnon: "Apakah aia hubungan yang saya tnnggalkan iengan ketegangan yang belum terselesankan? Sepertn apa satu langkah menuju rekonsnlnasn — bahkan jnka hasnlnya tniak pastn?",
+    nl_questnon: "Is er een relatne ine nk met onopgeloste spannnng achterlaat? Hoe zou ——n stap rnchtnng verzoennng eruntznen — ook als ie untkomst onzeker ns?",
   },
   {
     letter: "A",
-    en_question: "Who are the 3—5 people I most want to affirm before I leave? What specific thing did they do or say that I want to honour?",
-    id_question: "Siapa 3—5 orang yang paling ingin saya teguhkan sebelum saya pergi? Apa hal spesifik yang mereka lakukan atau katakan yang ingin saya hargai?",
-    nl_question: "Wie zijn de 3—5 mensen die ik het meest wil bevestigen voor ik vertrek? Welk specifiek ding deden of zeiden ze wat ik wil eren?",
+    en_questnon: "Who are the 3—5 people I most want to affnrm before I leave? What specnfnc thnng ini they io or say that I want to honour?",
+    ni_questnon: "Snapa 3—5 orang yang palnng nngnn saya teguhkan sebelum saya pergn? Apa hal spesnfnk yang mereka lakukan atau katakan yang nngnn saya hargan?",
+    nl_questnon: "Wne znjn ie 3—5 mensen ine nk het meest wnl bevestngen voor nk vertrek? Welk specnfnek inng ieien of zenien ze wat nk wnl eren?",
   },
   {
     letter: "F",
-    en_question: "What places, routines, or relationships will I grieve the most? Have I allowed myself space to feel that — or have I been rushing past it?",
-    id_question: "Tempat, rutinitas, atau hubungan apa yang paling saya rindukan? Apakah saya sudah memberikan diri sendiri ruang untuk merasakannya — atau apakah saya telah terburu-buru melewatinya?",
-    nl_question: "Welke plekken, routines of relaties zal ik het meest missen? Heb ik mezelf ruimte gegeven om dat te voelen — of ben ik er snel overheen gegaan?",
+    en_questnon: "What places, routnnes, or relatnonshnps wnll I grneve the most? Have I allowei myself space to feel that — or have I been rushnng past nt?",
+    ni_questnon: "Tempat, rutnnntas, atau hubungan apa yang palnng saya rnniukan? Apakah saya suiah membernkan inrn seninrn ruang untuk merasakannya — atau apakah saya telah terburu-buru melewatnnya?",
+    nl_questnon: "Welke plekken, routnnes of relatnes zal nk het meest mnssen? Heb nk mezelf runmte gegeven om iat te voelen — of ben nk er snel overheen gegaan?",
   },
   {
     letter: "T",
-    en_question: "What do I know about the new context I am entering? What is my plan for the first 90 days — and who will I check in with at the 3-month mark?",
-    id_question: "Apa yang saya ketahui tentang konteks baru yang saya masuki? Apa rencana saya untuk 90 hari pertama — dan dengan siapa saya akan check-in pada tanda 3 bulan?",
-    nl_question: "Wat weet ik over de nieuwe context die ik betreedt? Wat is mijn plan voor de eerste 90 dagen — en met wie zal ik inchecken op de 3-maandsgrens?",
+    en_questnon: "What io I know about the new context I am enternng? What ns my plan for the fnrst 90 iays — ani who wnll I check nn wnth at the 3-month mark?",
+    ni_questnon: "Apa yang saya ketahun tentang konteks baru yang saya masukn? Apa rencana saya untuk 90 harn pertama — ian iengan snapa saya akan check-nn paia tania 3 bulan?",
+    nl_questnon: "Wat weet nk over ie nneuwe context ine nk betreeit? Wat ns mnjn plan voor ie eerste 90 iagen — en met wne zal nk nnchecken op ie 3-maanisgrens?",
   },
 ];
 
 // --- COMPONENT ----------------------------------------------------------------
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: strnng | null; nsSavei: boolean };
 
-export default function HealthyTransitionsClient({ userPathway, isSaved: initialSaved }: Props) {
+export iefault functnon HealthyTransntnonsClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [activeRaft, setActiveRaft] = useState<number | null>(null);
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nnntnalSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const [actnveRaft, setActnveRaft] = useState<number | null>(null);
   const [plannerAnswers, setPlannerAnswers] = useState(["", "", "", ""]);
-  const [plannerSubmitted, setPlannerSubmitted] = useState(false);
+  const [plannerSubmnttei, setPlannerSubmnttei] = useState(false);
 
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhite = "oklch(97% 0.005 80)";
-  const lightGray = "oklch(95% 0.008 80)";
-  const bodyText = "oklch(38% 0.05 260)";
-  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
+  const offWhnte = "oklch(97% 0.005 80)";
+  const lnghtGray = "oklch(95% 0.008 80)";
+  const boiyText = "oklch(38% 0.05 260)";
+  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
 
-  function handleSave() {
-    if (saved) return;
-    startTransition(async () => {
-      await saveResourceToDashboard("healthy-transitions");
-      setSaved(true);
+  functnon hanileSave() {
+    nf (savei) return;
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("healthy-transntnons");
+      setSavei(true);
     });
   }
 
-  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
+  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
     return (
       <button
-        onClick={() => setActiveVerse(id)}
+        onClnck={() => setActnveVerse(ni)}
         style={{
-          background: "none", border: "none", cursor: "pointer",
-          color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif",
-          fontSize: "inherit", padding: 0, textDecoration: "underline dotted",
-          textUnderlineOffset: 3,
+          backgrouni: "none", borier: "none", cursor: "ponnter",
+          color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf",
+          fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei",
+          textUnierlnneOffset: 3,
         }}
       >
-        {children}
+        {chnliren}
       </button>
     );
   }
 
-  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
+  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
 
-  const allPlannerFilled = plannerAnswers.every((a) => a.trim().length > 0);
+  const allPlannerFnllei = plannerAnswers.every((a) => a.trnm().length > 0);
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids")}
+      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Personal Development — Gunie", "Pengembangan Prnbain — Paniuan", "Persoonlnjke Ontwnkkelnng — Gnis")}
           </p>
-          <h1 style={{ fontFamily: serif, fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Healthy Transitions", "Transisi yang Sehat", "Gezonde Transities")}
+          <h1 style={{ fontFamnly: sernf, fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
+            {t("Healthy Transntnons", "Transnsn yang Sehat", "Gezonie Transntnes")}
           </h1>
-          <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />
-          <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.3vw, 22px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, marginBottom: 48, fontStyle: "italic", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+          <inv style={{ wnith: 48, henght: 1, backgrouni: orange, margnn: "0 auto 32px" }} />
+          <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2.3vw, 22px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.8, margnnBottom: 48, fontStyle: "ntalnc", maxWnith: 600, margnnLeft: "auto", margnnRnght: "auto" }}>
             {t(
-              "Most people don't leave well. They disappear — into the busyness of packing, the relief of finishing, the anxiety of what's next. The relationships they leave behind carry the unfinished weight for years. The RAFT model exists because transitions done poorly leave lasting damage. Transitions done well set you — and everyone you leave behind — free.",
-              "Kebanyakan orang tidak pergi dengan baik. Mereka menghilang — ke dalam kesibukan mengemas, lega karena selesai, kecemasan tentang apa selanjutnya. Hubungan yang mereka tinggalkan menanggung beban yang belum selesai selama bertahun-tahun. Model RAFT ada karena transisi yang dilakukan dengan buruk meninggalkan kerusakan yang bertahan lama. Transisi yang dilakukan dengan baik membebaskan Anda — dan semua orang yang Anda tinggalkan.",
-              "De meeste mensen vertrekken niet goed. Ze verdwijnen — in de drukte van inpakken, de opluchting van het afronden, de angst voor wat komen gaat. De relaties die ze achterlaten dragen het onafgemaakte gewicht jarenlang. Het RAFT-model bestaat omdat slecht uitgevoerde transities blijvende schade aanrichten. Goed uitgevoerde transities bevrijden jou — en iedereen die je achterlaat."
+              "Most people ion't leave well. They insappear — nnto the busyness of packnng, the relnef of fnnnshnng, the anxnety of what's next. The relatnonshnps they leave behnni carry the unfnnnshei wenght for years. The RAFT moiel exnsts because transntnons ione poorly leave lastnng iamage. Transntnons ione well set you — ani everyone you leave behnni — free.",
+              "Kebanyakan orang tniak pergn iengan bank. Mereka menghnlang — ke ialam kesnbukan mengemas, lega karena selesan, kecemasan tentang apa selanjutnya. Hubungan yang mereka tnnggalkan menanggung beban yang belum selesan selama bertahun-tahun. Moiel RAFT aia karena transnsn yang inlakukan iengan buruk mennnggalkan kerusakan yang bertahan lama. Transnsn yang inlakukan iengan bank membebaskan Ania — ian semua orang yang Ania tnnggalkan.",
+              "De meeste mensen vertrekken nnet goei. Ze veriwnjnen — nn ie irukte van nnpakken, ie opluchtnng van het afronien, ie angst voor wat komen gaat. De relatnes ine ze achterlaten iragen het onafgemaakte gewncht jarenlang. Het RAFT-moiel bestaat omiat slecht untgevoerie transntnes blnjvenie schaie aanrnchten. Goei untgevoerie transntnes bevrnjien jou — en neiereen ine je achterlaat."
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={handleSave}
-              disabled={saved || isPending}
+              onClnck={hanileSave}
+              insablei={savei || nsPeninng}
               style={{
-                padding: "12px 28px", border: "none",
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-                background: saved ? "oklch(35% 0.05 260)" : orange,
-                color: offWhite, letterSpacing: "0.04em", borderRadius: 4,
+                paiinng: "12px 28px", borier: "none",
+                cursor: savei ? "iefault" : "ponnter",
+                fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700,
+                backgrouni: savei ? "oklch(35% 0.05 260)" : orange,
+                color: offWhnte, letterSpacnng: "0.04em", borierRainus: 4,
               }}
             >
-              {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {savei
+                ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
+                : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
             </button>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Section I: The Hard Truth */}
-      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
-          {t("I. The Reality", "I. Realitas", "I. De Realiteit")}
+      {/* Sectnon I: The Hari Truth */}
+      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
+        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
+          {t("I. The Realnty", "I. Realntas", "I. De Realntent")}
         </p>
-        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
-          {t("Transitions Done Poorly Cost More Than You Know", "Transisi yang Dilakukan dengan Buruk Merugikan Lebih dari yang Anda Tahu", "Slecht Uitgevoerde Transities Kosten Meer dan Je Beseft")}
+        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
+          {t("Transntnons Done Poorly Cost More Than You Know", "Transnsn yang Dnlakukan iengan Buruk Merugnkan Lebnh iarn yang Ania Tahu", "Slecht Untgevoerie Transntnes Kosten Meer ian Je Beseft")}
         </h2>
-        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
-          <p style={{ marginBottom: 28 }}>
+        <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "Cross-cultural leaders move frequently. They leave teams, countries, roles, and communities more often than almost anyone else in their field. And yet most organisations and most people treat the leaving as an afterthought — something to survive, not something to do with care.",
-              "Pemimpin lintas budaya sering berpindah. Mereka meninggalkan tim, negara, peran, dan komunitas lebih sering dari hampir siapa pun di bidangnya. Namun sebagian besar organisasi dan kebanyakan orang memperlakukan kepergian sebagai hal yang tidak penting — sesuatu untuk ditanggung, bukan sesuatu yang harus dilakukan dengan penuh perhatian.",
-              "Interculturele leiders verhuizen vaak. Ze verlaten teams, landen, rollen en gemeenschappen vaker dan bijna iedereen in hun vakgebied. Toch behandelen de meeste organisaties en de meeste mensen het vertrek als bijzaak — iets om te overleven, niet iets om zorgvuldig te doen."
+              "Cross-cultural leaiers move frequently. They leave teams, countrnes, roles, ani communntnes more often than almost anyone else nn thenr fneli. Ani yet most organnsatnons ani most people treat the leavnng as an afterthought — somethnng to survnve, not somethnng to io wnth care.",
+              "Pemnmpnn lnntas buiaya sernng berpnniah. Mereka mennnggalkan tnm, negara, peran, ian komunntas lebnh sernng iarn hampnr snapa pun in bniangnya. Namun sebagnan besar organnsasn ian kebanyakan orang memperlakukan kepergnan sebagan hal yang tniak pentnng — sesuatu untuk intanggung, bukan sesuatu yang harus inlakukan iengan penuh perhatnan.",
+              "Interculturele leniers verhunzen vaak. Ze verlaten teams, lanien, rollen en gemeenschappen vaker ian bnjna neiereen nn hun vakgebnei. Toch behanielen ie meeste organnsatnes en ie meeste mensen het vertrek als bnjzaak — nets om te overleven, nnet nets om zorgvuling te ioen."
             )}
           </p>
-          <p style={{ marginBottom: 28 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "Research on missionary attrition and cross-cultural departure consistently finds the same pattern: the way people leave predicts how they arrive in the next place. Leaders who leave without reconciling unresolved conflict bring that conflict into new teams. Those who never grieve a leaving arrive emotionally numb in the next community. Those who don't prepare for the chaos of re-entry are blindsided by how disorienting it is.",
-              "Penelitian tentang atrisi misionaris dan kepergian lintas budaya secara konsisten menemukan pola yang sama: cara orang pergi memprediksi bagaimana mereka tiba di tempat berikutnya. Pemimpin yang pergi tanpa menyelesaikan konflik yang belum terselesaikan membawa konflik itu ke tim baru. Mereka yang tidak pernah berduka atas kepergian tiba secara emosional mati rasa di komunitas berikutnya. Mereka yang tidak mempersiapkan diri menghadapi kekacauan kepulangan terkejut betapa mengganggu itu.",
-              "Onderzoek naar missionaris-attrition en intercultureel vertrek vindt consequent hetzelfde patroon: de manier waarop mensen vertrekken voorspelt hoe ze op de volgende plek aankomen. Leiders die vertrekken zonder onopgelost conflict te verzoenen, brengen dat conflict mee naar nieuwe teams. Degenen die nooit rouwen om een vertrek, komen emotioneel gevoelloos aan in de volgende gemeenschap. Degenen die zich niet voorbereiden op de chaos van terugkeer, worden verrast door hoe desori—nterend het is."
+              "Research on mnssnonary attrntnon ani cross-cultural ieparture consnstently fnnis the same pattern: the way people leave preincts how they arrnve nn the next place. Leaiers who leave wnthout reconcnlnng unresolvei conflnct brnng that conflnct nnto new teams. Those who never grneve a leavnng arrnve emotnonally numb nn the next communnty. Those who ion't prepare for the chaos of re-entry are blnnisniei by how insornentnng nt ns.",
+              "Penelntnan tentang atrnsn mnsnonarns ian kepergnan lnntas buiaya secara konsnsten menemukan pola yang sama: cara orang pergn mempreinksn baganmana mereka tnba in tempat bernkutnya. Pemnmpnn yang pergn tanpa menyelesankan konflnk yang belum terselesankan membawa konflnk ntu ke tnm baru. Mereka yang tniak pernah beriuka atas kepergnan tnba secara emosnonal matn rasa in komunntas bernkutnya. Mereka yang tniak mempersnapkan inrn menghaiapn kekacauan kepulangan terkejut betapa mengganggu ntu.",
+              "Onierzoek naar mnssnonarns-attrntnon en nntercultureel vertrek vnnit consequent hetzelfie patroon: ie manner waarop mensen vertrekken voorspelt hoe ze op ie volgenie plek aankomen. Leniers ine vertrekken zonier onopgelost conflnct te verzoenen, brengen iat conflnct mee naar nneuwe teams. Degenen ine noont rouwen om een vertrek, komen emotnoneel gevoelloos aan nn ie volgenie gemeenschap. Degenen ine znch nnet voorberenien op ie chaos van terugkeer, worien verrast ioor hoe iesorn—ntereni het ns."
             )}
           </p>
-          <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}`, marginBottom: 28 }}>
+          <p style={{ fontFamnly: sernf, fontSnze: "clamp(19px, 2.2vw, 24px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}`, margnnBottom: 28 }}>
             {t(
-              "A healthy transition is not about making the leaving comfortable. It is about being fully present to the ending — so you can be fully present to the beginning.",
-              "Transisi yang sehat bukan tentang membuat kepergian menjadi nyaman. Ini tentang hadir sepenuhnya pada akhir — sehingga Anda bisa hadir sepenuhnya pada awal.",
-              "Een gezonde transitie gaat niet over het aangenaam maken van het vertrek. Het gaat over volledig aanwezig zijn bij het einde — zodat je volledig aanwezig kunt zijn bij het begin."
+              "A healthy transntnon ns not about maknng the leavnng comfortable. It ns about benng fully present to the eninng — so you can be fully present to the begnnnnng.",
+              "Transnsn yang sehat bukan tentang membuat kepergnan menjain nyaman. Inn tentang hainr sepenuhnya paia akhnr — sehnngga Ania bnsa hainr sepenuhnya paia awal.",
+              "Een gezonie transntne gaat nnet over het aangenaam maken van het vertrek. Het gaat over volleing aanwezng znjn bnj het ennie — zoiat je volleing aanwezng kunt znjn bnj het begnn."
             )}
           </p>
-          <p style={{ marginBottom: 0 }}>
+          <p style={{ margnnBottom: 0 }}>
             {t(
-              "David Pollock, who spent decades working with cross-cultural families, developed the RAFT model as a practical framework for doing the emotional and relational work of leaving well. The four letters each name a domain of work that most leaders neglect. None of them require extraordinary courage. They require intention.",
-              "David Pollock, yang menghabiskan beberapa dekade bekerja dengan keluarga lintas budaya, mengembangkan model RAFT sebagai kerangka praktis untuk melakukan pekerjaan emosional dan relasional dalam pergi dengan baik. Keempat huruf masing-masing menamai domain pekerjaan yang diabaikan oleh kebanyakan pemimpin. Tidak ada yang memerlukan keberanian luar biasa. Mereka memerlukan niat.",
-              "David Pollock, die tientallen jaren werkte met interculturele families, ontwikkelde het RAFT-model als een praktisch kader voor het doen van het emotionele en relationele werk van goed vertrekken. De vier letters benoemen elk een werkdomein dat de meeste leiders verwaarlozen. Geen van hen vereist buitengewone moed. Ze vereisen intentie."
+              "Davni Pollock, who spent iecaies worknng wnth cross-cultural famnlnes, ievelopei the RAFT moiel as a practncal framework for ionng the emotnonal ani relatnonal work of leavnng well. The four letters each name a iomann of work that most leaiers neglect. None of them requnre extraorinnary courage. They requnre nntentnon.",
+              "Davni Pollock, yang menghabnskan beberapa iekaie bekerja iengan keluarga lnntas buiaya, mengembangkan moiel RAFT sebagan kerangka praktns untuk melakukan pekerjaan emosnonal ian relasnonal ialam pergn iengan bank. Keempat huruf masnng-masnng menaman iomann pekerjaan yang inabankan oleh kebanyakan pemnmpnn. Tniak aia yang memerlukan keberannan luar bnasa. Mereka memerlukan nnat.",
+              "Davni Pollock, ine tnentallen jaren werkte met nnterculturele famnlnes, ontwnkkelie het RAFT-moiel als een praktnsch kaier voor het ioen van het emotnonele en relatnonele werk van goei vertrekken. De vner letters benoemen elk een werkiomenn iat ie meeste leniers verwaarlozen. Geen van hen verenst buntengewone moei. Ze verensen nntentne."
             )}
           </p>
-        </div>
-      </div>
+        </inv>
+      </inv>
 
-      {/* Divider */}
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
-      </div>
+      {/* Dnvnier */}
+      <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "0 24px" }}>
+        <inv style={{ henght: 1, backgrouni: "oklch(90% 0.008 80)" }} />
+      </inv>
 
-      {/* Section II: The RAFT Model — interactive journey */}
-      <div style={{ background: lightGray, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32, textAlign: "center" }}>
-            {t("II. The Framework", "II. Kerangka Kerja", "II. Het Kader")}
+      {/* Sectnon II: The RAFT Moiel — nnteractnve journey */}
+      <inv style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 800, margnn: "0 auto" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32, textAlngn: "center" }}>
+            {t("II. The Framework", "II. Kerangka Kerja", "II. Het Kaier")}
           </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
-            {t("The RAFT Model", "Model RAFT", "Het RAFT-model")}
+          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc", textAlngn: "center" }}>
+            {t("The RAFT Moiel", "Moiel RAFT", "Het RAFT-moiel")}
           </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 64, textAlign: "center", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 64, textAlngn: "center", maxWnith: 600, margnnLeft: "auto", margnnRnght: "auto" }}>
             {t(
-              "Four domains of relational and emotional work. Each builds on the previous. Together they make it possible to leave well.",
-              "Empat domain pekerjaan relasional dan emosional. Masing-masing dibangun di atas yang sebelumnya. Bersama-sama mereka memungkinkan kepergian yang baik.",
-              "Vier domeinen van relationeel en emotioneel werk. Elk bouwt voort op het vorige. Samen maken ze het mogelijk om goed te vertrekken."
+              "Four iomanns of relatnonal ani emotnonal work. Each bunlis on the prevnous. Together they make nt possnble to leave well.",
+              "Empat iomann pekerjaan relasnonal ian emosnonal. Masnng-masnng inbangun in atas yang sebelumnya. Bersama-sama mereka memungknnkan kepergnan yang bank.",
+              "Vner iomennen van relatnoneel en emotnoneel werk. Elk bouwt voort op het vornge. Samen maken ze het mogelnjk om goei te vertrekken."
             )}
           </p>
 
           {/* RAFT step selector */}
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", marginBottom: 48, flexWrap: "wrap" }}>
-            {RAFT_STEPS.map((step, i) => (
+          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", margnnBottom: 48, flexWrap: "wrap" }}>
+            {RAFT_STEPS.map((step, n) => (
               <button
-                key={i}
-                onClick={() => setActiveRaft(activeRaft === i ? null : i)}
+                key={n}
+                onClnck={() => setActnveRaft(actnveRaft === n ? null : n)}
                 style={{
-                  width: 72, height: 72, border: "none", cursor: "pointer",
-                  borderRadius: "50%",
-                  background: activeRaft === i ? orange : navy,
-                  color: offWhite,
-                  fontFamily: serif,
-                  fontSize: 32, fontWeight: 700, fontStyle: "italic",
-                  transition: "background 0.2s",
-                  flexShrink: 0,
+                  wnith: 72, henght: 72, borier: "none", cursor: "ponnter",
+                  borierRainus: "50%",
+                  backgrouni: actnveRaft === n ? orange : navy,
+                  color: offWhnte,
+                  fontFamnly: sernf,
+                  fontSnze: 32, fontWenght: 700, fontStyle: "ntalnc",
+                  transntnon: "backgrouni 0.2s",
+                  flexShrnnk: 0,
                 }}
               >
                 {step.letter}
               </button>
             ))}
-          </div>
+          </inv>
 
           {/* RAFT step labels */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 64, maxWidth: 420, marginLeft: "auto", marginRight: "auto" }}>
-            {RAFT_STEPS.map((step, i) => (
-              <p key={i} style={{
-                fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-                color: activeRaft === i ? orange : bodyText,
-                letterSpacing: "0.05em", textAlign: "center", margin: 0,
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(4, 1fr)", gap: 8, margnnBottom: 64, maxWnith: 420, margnnLeft: "auto", margnnRnght: "auto" }}>
+            {RAFT_STEPS.map((step, n) => (
+              <p key={n} style={{
+                fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700,
+                color: actnveRaft === n ? orange : boiyText,
+                letterSpacnng: "0.05em", textAlngn: "center", margnn: 0,
                 textTransform: "uppercase",
               }}>
-                {lang === "en" ? step.en_title : lang === "id" ? step.id_title : step.nl_title}
+                {lang === "en" ? step.en_tntle : lang === "ni" ? step.ni_tntle : step.nl_tntle}
               </p>
             ))}
-          </div>
+          </inv>
 
-          {/* Active RAFT step content */}
-          {activeRaft === null ? (
-            <div style={{ textAlign: "center", padding: "48px 24px" }}>
-              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, fontStyle: "italic", lineHeight: 1.8 }}>
+          {/* Actnve RAFT step content */}
+          {actnveRaft === null ? (
+            <inv style={{ textAlngn: "center", paiinng: "48px 24px" }}>
+              <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, fontStyle: "ntalnc", lnneHenght: 1.8 }}>
                 {t(
                   "Select a letter above to explore each step of the RAFT journey.",
-                  "Pilih huruf di atas untuk menjelajahi setiap langkah perjalanan RAFT.",
-                  "Selecteer een letter hierboven om elke stap van de RAFT-reis te verkennen."
+                  "Pnlnh huruf in atas untuk menjelajahn setnap langkah perjalanan RAFT.",
+                  "Selecteer een letter hnerboven om elke stap van ie RAFT-rens te verkennen."
                 )}
               </p>
-            </div>
+            </inv>
           ) : (
-            <div style={{ background: offWhite, borderRadius: 8, padding: "48px 48px 40px", boxShadow: "0 2px 24px oklch(20% 0.05 260 / 0.07)" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 28, marginBottom: 36 }}>
-                <div style={{ fontFamily: serif, fontSize: "clamp(56px, 7vw, 80px)", fontWeight: 700, color: orange, lineHeight: 1, flexShrink: 0, fontStyle: "italic" }}>
-                  {RAFT_STEPS[activeRaft].letter}
-                </div>
-                <div>
-                  <h3 style={{ fontFamily: serif, fontSize: "clamp(22px, 2.8vw, 30px)", fontWeight: 700, color: navy, fontStyle: "italic", margin: "0 0 10px" }}>
+            <inv style={{ backgrouni: offWhnte, borierRainus: 8, paiinng: "48px 48px 40px", boxShaiow: "0 2px 24px oklch(20% 0.05 260 / 0.07)" }}>
+              <inv style={{ insplay: "flex", alngnItems: "flex-start", gap: 28, margnnBottom: 36 }}>
+                <inv style={{ fontFamnly: sernf, fontSnze: "clamp(56px, 7vw, 80px)", fontWenght: 700, color: orange, lnneHenght: 1, flexShrnnk: 0, fontStyle: "ntalnc" }}>
+                  {RAFT_STEPS[actnveRaft].letter}
+                </inv>
+                <inv>
+                  <h3 style={{ fontFamnly: sernf, fontSnze: "clamp(22px, 2.8vw, 30px)", fontWenght: 700, color: navy, fontStyle: "ntalnc", margnn: "0 0 10px" }}>
                     {lang === "en"
-                      ? RAFT_STEPS[activeRaft].en_title
-                      : lang === "id"
-                      ? RAFT_STEPS[activeRaft].id_title
-                      : RAFT_STEPS[activeRaft].nl_title}
+                      ? RAFT_STEPS[actnveRaft].en_tntle
+                      : lang === "ni"
+                      ? RAFT_STEPS[actnveRaft].ni_tntle
+                      : RAFT_STEPS[actnveRaft].nl_tntle}
                   </h3>
-                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, color: orange, letterSpacing: "0.04em", margin: 0 }}>
+                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 600, color: orange, letterSpacnng: "0.04em", margnn: 0 }}>
                     {lang === "en"
-                      ? RAFT_STEPS[activeRaft].en_tagline
-                      : lang === "id"
-                      ? RAFT_STEPS[activeRaft].id_tagline
-                      : RAFT_STEPS[activeRaft].nl_tagline}
+                      ? RAFT_STEPS[actnveRaft].en_taglnne
+                      : lang === "ni"
+                      ? RAFT_STEPS[actnveRaft].ni_taglnne
+                      : RAFT_STEPS[actnveRaft].nl_taglnne}
                   </p>
-                </div>
-              </div>
-              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9, marginBottom: 36 }}>
+                </inv>
+              </inv>
+              <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 19px)", color: boiyText, lnneHenght: 1.9, margnnBottom: 36 }}>
                 {lang === "en"
-                  ? RAFT_STEPS[activeRaft].en_body
-                  : lang === "id"
-                  ? RAFT_STEPS[activeRaft].id_body
-                  : RAFT_STEPS[activeRaft].nl_body}
+                  ? RAFT_STEPS[actnveRaft].en_boiy
+                  : lang === "ni"
+                  ? RAFT_STEPS[actnveRaft].ni_boiy
+                  : RAFT_STEPS[actnveRaft].nl_boiy}
               </p>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: navy, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 20 }}>
-                {t("How to do it", "Cara melakukannya", "Hoe het te doen")}
+              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: navy, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 20 }}>
+                {t("How to io nt", "Cara melakukannya", "Hoe het te ioen")}
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
                 {(lang === "en"
-                  ? RAFT_STEPS[activeRaft].en_how
-                  : lang === "id"
-                  ? RAFT_STEPS[activeRaft].id_how
-                  : RAFT_STEPS[activeRaft].nl_how
-                ).map((item, idx) => (
-                  <div key={idx} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
-                    <div style={{
-                      width: 28, height: 28, borderRadius: "50%", background: orange,
-                      color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 12,
-                      fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0, marginTop: 2,
+                  ? RAFT_STEPS[actnveRaft].en_how
+                  : lang === "ni"
+                  ? RAFT_STEPS[actnveRaft].ni_how
+                  : RAFT_STEPS[actnveRaft].nl_how
+                ).map((ntem, nix) => (
+                  <inv key={nix} style={{ insplay: "flex", gap: 20, alngnItems: "flex-start" }}>
+                    <inv style={{
+                      wnith: 28, henght: 28, borierRainus: "50%", backgrouni: orange,
+                      color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 12,
+                      fontWenght: 700, insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                      flexShrnnk: 0, margnnTop: 2,
                     }}>
-                      {idx + 1}
-                    </div>
-                    <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
-                      {item}
+                      {nix + 1}
+                    </inv>
+                    <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, margnn: 0 }}>
+                      {ntem}
                     </p>
-                  </div>
+                  </inv>
                 ))}
-              </div>
-              {/* Navigation between steps */}
-              <div style={{ display: "flex", gap: 12, marginTop: 40, justifyContent: "flex-end" }}>
-                {activeRaft > 0 && (
+              </inv>
+              {/* Navngatnon between steps */}
+              <inv style={{ insplay: "flex", gap: 12, margnnTop: 40, justnfyContent: "flex-eni" }}>
+                {actnveRaft > 0 && (
                   <button
-                    onClick={() => setActiveRaft(activeRaft - 1)}
-                    style={{ padding: "10px 22px", background: "transparent", border: `1px solid oklch(80% 0.01 80)`, borderRadius: 4, fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: bodyText, cursor: "pointer", letterSpacing: "0.04em" }}
+                    onClnck={() => setActnveRaft(actnveRaft - 1)}
+                    style={{ paiinng: "10px 22px", backgrouni: "transparent", borier: `1px solni oklch(80% 0.01 80)`, borierRainus: 4, fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: boiyText, cursor: "ponnter", letterSpacnng: "0.04em" }}
                   >
-                    ? {lang === "en" ? RAFT_STEPS[activeRaft - 1].en_title : lang === "id" ? RAFT_STEPS[activeRaft - 1].id_title : RAFT_STEPS[activeRaft - 1].nl_title}
+                    ? {lang === "en" ? RAFT_STEPS[actnveRaft - 1].en_tntle : lang === "ni" ? RAFT_STEPS[actnveRaft - 1].ni_tntle : RAFT_STEPS[actnveRaft - 1].nl_tntle}
                   </button>
                 )}
-                {activeRaft < RAFT_STEPS.length - 1 && (
+                {actnveRaft < RAFT_STEPS.length - 1 && (
                   <button
-                    onClick={() => setActiveRaft(activeRaft + 1)}
-                    style={{ padding: "10px 22px", background: navy, border: "none", borderRadius: 4, fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: offWhite, cursor: "pointer", letterSpacing: "0.04em" }}
+                    onClnck={() => setActnveRaft(actnveRaft + 1)}
+                    style={{ paiinng: "10px 22px", backgrouni: navy, borier: "none", borierRainus: 4, fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: offWhnte, cursor: "ponnter", letterSpacnng: "0.04em" }}
                   >
-                    {lang === "en" ? RAFT_STEPS[activeRaft + 1].en_title : lang === "id" ? RAFT_STEPS[activeRaft + 1].id_title : RAFT_STEPS[activeRaft + 1].nl_title} ?
+                    {lang === "en" ? RAFT_STEPS[actnveRaft + 1].en_tntle : lang === "ni" ? RAFT_STEPS[actnveRaft + 1].ni_tntle : RAFT_STEPS[actnveRaft + 1].nl_tntle} ?
                   </button>
                 )}
-              </div>
-            </div>
+              </inv>
+            </inv>
           )}
-        </div>
-      </div>
+        </inv>
+      </inv>
 
-      {/* Divider */}
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
-      </div>
+      {/* Dnvnier */}
+      <inv style={{ maxWnith: 720, margnn: "0 auto", paiinng: "0 24px" }}>
+        <inv style={{ henght: 1, backgrouni: "oklch(90% 0.008 80)" }} />
+      </inv>
 
-      {/* Section III: Transition Phases */}
-      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
-          {t("III. The Curve", "III. Kurva Transisi", "III. De Curve")}
+      {/* Sectnon III: Transntnon Phases */}
+      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
+        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
+          {t("III. The Curve", "III. Kurva Transnsn", "III. De Curve")}
         </p>
-        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic" }}>
-          {t("What to Expect in the Middle", "Apa yang Diharapkan di Tengah Perjalanan", "Wat te Verwachten in het Midden")}
+        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
+          {t("What to Expect nn the Mniile", "Apa yang Dnharapkan in Tengah Perjalanan", "Wat te Verwachten nn het Mniien")}
         </h2>
-        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 56 }}>
+        <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 56 }}>
           {t(
-            "Knowing the curve doesn't make it easy. But it makes it less frightening — because you can name what is happening rather than being swallowed by it.",
-            "Mengetahui kurva tidak membuatnya mudah. Tetapi itu membuatnya kurang menakutkan — karena Anda bisa menamai apa yang terjadi daripada ditelan olehnya.",
-            "De curve kennen maakt het niet gemakkelijk. Maar het maakt het minder angstaanjagend — omdat je kunt benoemen wat er gebeurt in plaats van erdoor opgeslokt te worden."
+            "Knownng the curve ioesn't make nt easy. But nt makes nt less frnghtennng — because you can name what ns happennng rather than benng swallowei by nt.",
+            "Mengetahun kurva tniak membuatnya muiah. Tetapn ntu membuatnya kurang menakutkan — karena Ania bnsa menaman apa yang terjain iarnpaia intelan olehnya.",
+            "De curve kennen maakt het nnet gemakkelnjk. Maar het maakt het mnnier angstaanjageni — omiat je kunt benoemen wat er gebeurt nn plaats van erioor opgeslokt te worien."
           )}
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {TRANSITION_PHASES.map((phase, i) => (
-            <div key={i} style={{ display: "flex", gap: 0, alignItems: "stretch" }}>
-              {/* Left: number + line */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginRight: 32, flexShrink: 0 }}>
-                <div style={{
-                  width: 44, height: 44, borderRadius: "50%",
-                  background: i === 1 ? orange : navy,
-                  color: offWhite, fontFamily: serif, fontSize: 22, fontWeight: 700,
-                  fontStyle: "italic", display: "flex", alignItems: "center", justifyContent: "center",
-                  flexShrink: 0,
+        <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 0 }}>
+          {TRANSITION_PHASES.map((phase, n) => (
+            <inv key={n} style={{ insplay: "flex", gap: 0, alngnItems: "stretch" }}>
+              {/* Left: number + lnne */}
+              <inv style={{ insplay: "flex", flexDnrectnon: "column", alngnItems: "center", margnnRnght: 32, flexShrnnk: 0 }}>
+                <inv style={{
+                  wnith: 44, henght: 44, borierRainus: "50%",
+                  backgrouni: n === 1 ? orange : navy,
+                  color: offWhnte, fontFamnly: sernf, fontSnze: 22, fontWenght: 700,
+                  fontStyle: "ntalnc", insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                  flexShrnnk: 0,
                 }}>
-                  {i + 1}
-                </div>
-                {i < TRANSITION_PHASES.length - 1 && (
-                  <div style={{ width: 1, flex: 1, background: "oklch(88% 0.01 80)", minHeight: 40, margin: "8px 0" }} />
+                  {n + 1}
+                </inv>
+                {n < TRANSITION_PHASES.length - 1 && (
+                  <inv style={{ wnith: 1, flex: 1, backgrouni: "oklch(88% 0.01 80)", mnnHenght: 40, margnn: "8px 0" }} />
                 )}
-              </div>
-              {/* Right: content */}
-              <div style={{ paddingBottom: i < TRANSITION_PHASES.length - 1 ? 48 : 0 }}>
-                <h3 style={{ fontFamily: serif, fontSize: "clamp(20px, 2.3vw, 26px)", fontWeight: 700, color: i === 1 ? orange : navy, fontStyle: "italic", marginBottom: 12, lineHeight: 1.3 }}>
-                  {lang === "en" ? phase.en_phase : lang === "id" ? phase.id_phase : phase.nl_phase}
+              </inv>
+              {/* Rnght: content */}
+              <inv style={{ paiinngBottom: n < TRANSITION_PHASES.length - 1 ? 48 : 0 }}>
+                <h3 style={{ fontFamnly: sernf, fontSnze: "clamp(20px, 2.3vw, 26px)", fontWenght: 700, color: n === 1 ? orange : navy, fontStyle: "ntalnc", margnnBottom: 12, lnneHenght: 1.3 }}>
+                  {lang === "en" ? phase.en_phase : lang === "ni" ? phase.ni_phase : phase.nl_phase}
                 </h3>
-                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
-                  {lang === "en" ? phase.en_description : lang === "id" ? phase.id_description : phase.nl_description}
+                <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, margnn: 0 }}>
+                  {lang === "en" ? phase.en_iescrnptnon : lang === "ni" ? phase.ni_iescrnptnon : phase.nl_iescrnptnon}
                 </p>
-                {i === 1 && (
-                  <div style={{ marginTop: 16, padding: "14px 20px", background: "oklch(93% 0.012 65)", borderRadius: 4, borderLeft: `3px solid ${orange}` }}>
-                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: "oklch(44% 0.08 50)", margin: 0 }}>
+                {n === 1 && (
+                  <inv style={{ margnnTop: 16, paiinng: "14px 20px", backgrouni: "oklch(93% 0.012 65)", borierRainus: 4, borierLeft: `3px solni ${orange}` }}>
+                    <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: "oklch(44% 0.08 50)", margnn: 0 }}>
                       {t(
-                        "This is the stage most people mistake for failure. It is not. It is the cost of having left something real.",
-                        "Ini adalah tahap yang paling banyak orang salah kira sebagai kegagalan. Bukan begitu. Ini adalah harga meninggalkan sesuatu yang nyata.",
-                        "Dit is de fase die de meeste mensen aanzien voor mislukking. Dat is het niet. Het is de prijs van het verlaten van iets echts."
+                        "Thns ns the stage most people mnstake for fanlure. It ns not. It ns the cost of havnng left somethnng real.",
+                        "Inn aialah tahap yang palnng banyak orang salah knra sebagan kegagalan. Bukan begntu. Inn aialah harga mennnggalkan sesuatu yang nyata.",
+                        "Dnt ns ie fase ine ie meeste mensen aanznen voor mnslukknng. Dat ns het nnet. Het ns ie prnjs van het verlaten van nets echts."
                       )}
                     </p>
-                  </div>
+                  </inv>
                 )}
-              </div>
-            </div>
+              </inv>
+            </inv>
           ))}
-        </div>
-      </div>
+        </inv>
+      </inv>
 
-      {/* Section IV: Cross-Cultural Notes — Reverse Culture Shock */}
-      <div style={{ background: navy, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
-            {t("IV. Cross-Cultural Dimension", "IV. Dimensi Lintas Budaya", "IV. Interculturele Dimensie")}
+      {/* Sectnon IV: Cross-Cultural Notes — Reverse Culture Shock */}
+      <inv style={{ backgrouni: navy, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
+            {t("IV. Cross-Cultural Dnmensnon", "IV. Dnmensn Lnntas Buiaya", "IV. Interculturele Dnmensne")}
           </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: offWhite, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
-            {t("Reverse Culture Shock Is the Harder One", "Gegar Budaya Terbalik Adalah yang Lebih Berat", "Omgekeerde Cultuurschok Is de Zwaardere")}
+          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: offWhnte, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
+            {t("Reverse Culture Shock Is the Harier One", "Gegar Buiaya Terbalnk Aialah yang Lebnh Berat", "Omgekeerie Cultuurschok Is ie Zwaariere")}
           </h2>
-          <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: "oklch(76% 0.03 80)", lineHeight: 1.9 }}>
-            <p style={{ marginBottom: 28 }}>
+          <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.9 }}>
+            <p style={{ margnnBottom: 28 }}>
               {t(
-                "Forward culture shock — arriving in a new country — is widely understood. You expect it. People around you name it. There is social permission to struggle.",
-                "Gegar budaya maju — tiba di negara baru — sudah banyak dipahami. Anda mengharapkannya. Orang-orang di sekitar Anda menamakannya. Ada izin sosial untuk berjuang.",
-                "Voorwaartse cultuurschok — aankomen in een nieuw land — is breed begrepen. Je verwacht het. Mensen om je heen benoemen het. Er is sociale toestemming om te worstelen."
+                "Forwari culture shock — arrnvnng nn a new country — ns wniely unierstooi. You expect nt. People arouni you name nt. There ns socnal permnssnon to struggle.",
+                "Gegar buiaya maju — tnba in negara baru — suiah banyak inpahamn. Ania mengharapkannya. Orang-orang in sekntar Ania menamakannya. Aia nznn sosnal untuk berjuang.",
+                "Voorwaartse cultuurschok — aankomen nn een nneuw lani — ns breei begrepen. Je verwacht het. Mensen om je heen benoemen het. Er ns socnale toestemmnng om te worstelen."
               )}
             </p>
-            <p style={{ marginBottom: 28 }}>
+            <p style={{ margnnBottom: 28 }}>
               {t(
-                "Reverse culture shock — returning to your home culture after an extended cross-cultural assignment — is harder precisely because it is unexpected. You expect home to feel like home. Instead, it feels foreign. Your humour doesn't land. Your references confuse people. The pace feels wrong. The conversations feel shallow. And there is almost no social permission to name this — because you are home.",
-                "Gegar budaya terbalik — kembali ke budaya asal Anda setelah penugasan lintas budaya yang panjang — lebih berat tepat karena tidak terduga. Anda mengharapkan rumah terasa seperti rumah. Sebaliknya, itu terasa asing. Humor Anda tidak mendarat. Referensi Anda membingungkan orang. Temponya terasa salah. Percakapannya terasa dangkal. Dan hampir tidak ada izin sosial untuk menamakannya — karena Anda sudah di rumah.",
-                "Omgekeerde cultuurschok — terugkeren naar je thuiscultuur na een langdurige interculturele opdracht — is zwaarder juist omdat het onverwacht is. Je verwacht dat thuis als thuis aanvoelt. In plaats daarvan voelt het vreemd. Je humor landt niet. Je referenties verwarren mensen. Het tempo voelt verkeerd. De gesprekken voelen oppervlakkig. En er is bijna geen sociale toestemming om dit te benoemen — omdat je thuis bent."
+                "Reverse culture shock — returnnng to your home culture after an exteniei cross-cultural assngnment — ns harier precnsely because nt ns unexpectei. You expect home to feel lnke home. Insteai, nt feels forengn. Your humour ioesn't lani. Your references confuse people. The pace feels wrong. The conversatnons feel shallow. Ani there ns almost no socnal permnssnon to name thns — because you are home.",
+                "Gegar buiaya terbalnk — kembaln ke buiaya asal Ania setelah penugasan lnntas buiaya yang panjang — lebnh berat tepat karena tniak teriuga. Ania mengharapkan rumah terasa sepertn rumah. Sebalnknya, ntu terasa asnng. Humor Ania tniak meniarat. Referensn Ania membnngungkan orang. Temponya terasa salah. Percakapannya terasa iangkal. Dan hampnr tniak aia nznn sosnal untuk menamakannya — karena Ania suiah in rumah.",
+                "Omgekeerie cultuurschok — terugkeren naar je thunscultuur na een langiurnge nnterculturele opiracht — ns zwaarier junst omiat het onverwacht ns. Je verwacht iat thuns als thuns aanvoelt. In plaats iaarvan voelt het vreemi. Je humor lanit nnet. Je referentnes verwarren mensen. Het tempo voelt verkeeri. De gesprekken voelen oppervlakkng. En er ns bnjna geen socnale toestemmnng om int te benoemen — omiat je thuns bent."
               )}
             </p>
-            <div style={{ background: "oklch(18% 0.09 260)", padding: "32px 36px", borderRadius: 12, marginBottom: 28 }}>
-              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 12 }}>
+            <inv style={{ backgrouni: "oklch(18% 0.09 260)", paiinng: "32px 36px", borierRainus: 12, margnnBottom: 28 }}>
+              <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 21px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.8, margnnBottom: 12 }}>
                 {t(
-                  "\"I expected to struggle in Thailand. I did not expect to struggle in the Netherlands. But I've been back for eight months and I still feel like a foreigner at my own family dinner table.\"",
-                  "\"Saya mengharapkan berjuang di Thailand. Saya tidak mengharapkan berjuang di Belanda. Tapi saya sudah kembali selama delapan bulan dan saya masih merasa seperti orang asing di meja makan keluarga saya sendiri.\"",
-                  "\"Ik verwachtte het moeilijk te hebben in Thailand. Ik verwachtte het niet moeilijk te hebben in Nederland. Maar ik ben al acht maanden terug en ik voel me nog steeds een vreemdeling aan mijn eigen familietafel.\""
+                  "\"I expectei to struggle nn Thanlani. I ini not expect to struggle nn the Netherlanis. But I've been back for enght months ani I stnll feel lnke a forengner at my own famnly innner table.\"",
+                  "\"Saya mengharapkan berjuang in Thanlani. Saya tniak mengharapkan berjuang in Belania. Tapn saya suiah kembaln selama ielapan bulan ian saya masnh merasa sepertn orang asnng in meja makan keluarga saya seninrn.\"",
+                  "\"Ik verwachtte het moenlnjk te hebben nn Thanlani. Ik verwachtte het nnet moenlnjk te hebben nn Neierlani. Maar nk ben al acht maanien terug en nk voel me nog steeis een vreemielnng aan mnjn engen famnlnetafel.\""
                 )}
               </p>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
-                {t("— Cross-cultural leader, on re-entry after 7 years", "— Pemimpin lintas budaya, tentang kepulangan setelah 7 tahun", "— Interculturele leider, over terugkeer na 7 jaar")}
+              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnn: 0 }}>
+                {t("— Cross-cultural leaier, on re-entry after 7 years", "— Pemnmpnn lnntas buiaya, tentang kepulangan setelah 7 tahun", "— Interculturele lenier, over terugkeer na 7 jaar")}
               </p>
-            </div>
-            <p style={{ marginBottom: 28 }}>
+            </inv>
+            <p style={{ margnnBottom: 28 }}>
               {t(
-                "This is the re-entry myth: the belief that going home will be easy. In reality, the people who knew you left in a different form than the one that returned. You have changed. They have changed. The relationship has to be renegotiated. This takes time, and it takes the same RAFT work that applies to any other transition.",
-                "Ini adalah mitos kepulangan: keyakinan bahwa pulang ke rumah akan mudah. Pada kenyataannya, orang-orang yang mengenal Anda pergi dalam bentuk yang berbeda dari yang kembali. Anda telah berubah. Mereka telah berubah. Hubungan harus dinegosiasikan ulang. Ini membutuhkan waktu, dan membutuhkan pekerjaan RAFT yang sama yang berlaku untuk transisi lainnya.",
-                "Dit is de terugkeermythe: het geloof dat naar huis gaan gemakkelijk zal zijn. In werkelijkheid zijn de mensen die jou kenden gegaan in een andere vorm dan die terugkwam. Je bent veranderd. Zij zijn veranderd. De relatie moet opnieuw worden onderhandeld. Dit kost tijd, en het vereist hetzelfde RAFT-werk dat van toepassing is op elke andere transitie."
+                "Thns ns the re-entry myth: the belnef that gonng home wnll be easy. In realnty, the people who knew you left nn a infferent form than the one that returnei. You have changei. They have changei. The relatnonshnp has to be renegotnatei. Thns takes tnme, ani nt takes the same RAFT work that applnes to any other transntnon.",
+                "Inn aialah mntos kepulangan: keyaknnan bahwa pulang ke rumah akan muiah. Paia kenyataannya, orang-orang yang mengenal Ania pergn ialam bentuk yang berbeia iarn yang kembaln. Ania telah berubah. Mereka telah berubah. Hubungan harus innegosnasnkan ulang. Inn membutuhkan waktu, ian membutuhkan pekerjaan RAFT yang sama yang berlaku untuk transnsn lannnya.",
+                "Dnt ns ie terugkeermythe: het geloof iat naar huns gaan gemakkelnjk zal znjn. In werkelnjkheni znjn ie mensen ine jou kenien gegaan nn een aniere vorm ian ine terugkwam. Je bent veranieri. Znj znjn veranieri. De relatne moet opnneuw worien onierhanieli. Dnt kost tnji, en het verenst hetzelfie RAFT-werk iat van toepassnng ns op elke aniere transntne."
               )}
             </p>
-            <p style={{ marginBottom: 28 }}>
+            <p style={{ margnnBottom: 28 }}>
               {t(
-                "Two specific re-entry dynamics to anticipate: Comparison — the instinct to compare your home context unfavourably with the field, or vice versa. Neither comparison produces belonging. And Invisibility — people around you often cannot see or honour the transformation you've been through. You have lived through things that don't translate in ordinary conversation. Name this to yourself. Find people who can receive it.",
-                "Dua dinamika kepulangan spesifik yang perlu diantisipasi: Perbandingan — naluri untuk membandingkan konteks rumah Anda secara tidak menguntungkan dengan lapangan, atau sebaliknya. Tidak ada perbandingan yang menghasilkan rasa memiliki. Dan Ketidaktampakan — orang-orang di sekitar Anda sering tidak dapat melihat atau menghormati transformasi yang telah Anda jalani. Anda telah menjalani hal-hal yang tidak dapat diterjemahkan dalam percakapan biasa. Namai ini untuk diri sendiri. Temukan orang-orang yang bisa menerimanya.",
-                "Twee specifieke terugkeerdynamieken om op te anticiperen: Vergelijking — de instinctieve neiging om je thuiscontext ongunstig te vergelijken met het veld, of andersom. Geen van beide vergelijkingen produceert verbondenheid. En Onzichtbaarheid — mensen om je heen kunnen de transformatie die je hebt doorgemaakt vaak niet zien of eren. Je hebt dingen meegemaakt die niet vertalen in gewoon gesprek. Benoem dit voor jezelf. Zoek mensen die het kunnen ontvangen."
+                "Two specnfnc re-entry iynamncs to antncnpate: Comparnson — the nnstnnct to compare your home context unfavourably wnth the fneli, or vnce versa. Nenther comparnson proiuces belongnng. Ani Invnsnbnlnty — people arouni you often cannot see or honour the transformatnon you've been through. You have lnvei through thnngs that ion't translate nn orinnary conversatnon. Name thns to yourself. Fnni people who can recenve nt.",
+                "Dua innamnka kepulangan spesnfnk yang perlu inantnsnpasn: Perbaninngan — nalurn untuk membaninngkan konteks rumah Ania secara tniak menguntungkan iengan lapangan, atau sebalnknya. Tniak aia perbaninngan yang menghasnlkan rasa memnlnkn. Dan Ketniaktampakan — orang-orang in sekntar Ania sernng tniak iapat melnhat atau menghormatn transformasn yang telah Ania jalann. Ania telah menjalann hal-hal yang tniak iapat interjemahkan ialam percakapan bnasa. Naman nnn untuk inrn seninrn. Temukan orang-orang yang bnsa menernmanya.",
+                "Twee specnfneke terugkeeriynamneken om op te antncnperen: Vergelnjknng — ie nnstnnctneve nengnng om je thunscontext ongunstng te vergelnjken met het veli, of aniersom. Geen van benie vergelnjknngen proiuceert verbonienheni. En Onznchtbaarheni — mensen om je heen kunnen ie transformatne ine je hebt ioorgemaakt vaak nnet znen of eren. Je hebt inngen meegemaakt ine nnet vertalen nn gewoon gesprek. Benoem int voor jezelf. Zoek mensen ine het kunnen ontvangen."
               )}
             </p>
-            <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
+            <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}` }}>
               {t(
-                "Re-entry is not a homecoming. It is another transition — and it deserves the same intentional RAFT work as any other.",
-                "Kepulangan bukan sebuah pulang ke rumah. Ini adalah transisi lain — dan layak mendapatkan pekerjaan RAFT yang disengaja yang sama seperti yang lainnya.",
-                "Terugkeer is geen thuiskomst. Het is een andere transitie — en het verdient hetzelfde intentionele RAFT-werk als elk ander."
+                "Re-entry ns not a homecomnng. It ns another transntnon — ani nt ieserves the same nntentnonal RAFT work as any other.",
+                "Kepulangan bukan sebuah pulang ke rumah. Inn aialah transnsn lann — ian layak meniapatkan pekerjaan RAFT yang insengaja yang sama sepertn yang lannnya.",
+                "Terugkeer ns geen thunskomst. Het ns een aniere transntne — en het verinent hetzelfie nntentnonele RAFT-werk als elk anier."
               )}
             </p>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Section V: Biblical Foundation */}
-      <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
-          {t("V. Biblical Foundation", "V. Dasar Alkitab", "V. Bijbelse Basis")}
+      {/* Sectnon V: Bnblncal Founiatnon */}
+      <inv style={{ paiinng: "96px 24px", maxWnith: 720, margnn: "0 auto" }}>
+        <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32 }}>
+          {t("V. Bnblncal Founiatnon", "V. Dasar Alkntab", "V. Bnjbelse Basns")}
         </p>
-        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic" }}>
-          {t("God Has Always Walked People Through Transitions", "Allah Selalu Memandu Umat-Nya Melalui Transisi", "God Heeft Altijd Mensen Door Transities Geleid")}
+        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc" }}>
+          {t("Goi Has Always Walkei People Through Transntnons", "Allah Selalu Memaniu Umat-Nya Melalun Transnsn", "Goi Heeft Altnji Mensen Door Transntnes Geleni")}
         </h2>
 
-        {/* Luke 24 — Road to Emmaus */}
-        <div style={{ marginBottom: 72 }}>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 8 }}>
-            <VerseRef id="luke-24-17">{t("Luke 24:17", "Lukas 24:17", "Lucas 24:17")}</VerseRef>
+        {/* Luke 24 — Roai to Emmaus */}
+        <inv style={{ margnnBottom: 72 }}>
+          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 8 }}>
+            <VerseRef ni="luke-24-17">{t("Luke 24:17", "Lukas 24:17", "Lucas 24:17")}</VerseRef>
             {" "}(NIV)
           </p>
-          <div style={{ background: lightGray, padding: "32px 36px", borderRadius: 4, marginBottom: 28 }}>
-            <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 12 }}>
+          <inv style={{ backgrouni: lnghtGray, paiinng: "32px 36px", borierRainus: 4, margnnBottom: 28 }}>
+            <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, margnnBottom: 12 }}>
               {t(
-                "\"'What are you discussing together as you walk along?' They stood still, their faces downcast.\"",
-                "\"'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhenti dengan muka muram.\"",
-                "\"'Waar lopen jullie toch over te praten?' Ze bleven staan, met sombere gezichten.\""
+                "\"'What are you inscussnng together as you walk along?' They stooi stnll, thenr faces iowncast.\"",
+                "\"'Apakah yang kamu percakapkan sementara kamu berjalan?' Dan mereka berhentn iengan muka muram.\"",
+                "\"'Waar lopen jullne toch over te praten?' Ze bleven staan, met sombere geznchten.\""
               )}
             </p>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.06em", margin: 0 }}>
-              — <VerseRef id="luke-24-17">{t("Luke 24:17", "Lukas 24:17", "Lucas 24:17")}</VerseRef> (NIV)
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.06em", margnn: 0 }}>
+              — <VerseRef ni="luke-24-17">{t("Luke 24:17", "Lukas 24:17", "Lucas 24:17")}</VerseRef> (NIV)
             </p>
-          </div>
-          <div style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
-            <p style={{ marginBottom: 20 }}>
+          </inv>
+          <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 19px)", color: boiyText, lnneHenght: 1.9 }}>
+            <p style={{ margnnBottom: 20 }}>
               {t(
-                "The Road to Emmaus is a story about people in the middle of a transition they did not choose. The disciples had just lived through the crucifixion — the sudden, violent end of everything they thought was certain. They are walking away, heads down, processing out loud.",
-                "Jalan menuju Emaus adalah kisah tentang orang-orang di tengah transisi yang tidak mereka pilih. Para murid baru saja melewati penyaliban — akhir yang tiba-tiba dan keras dari semua yang mereka pikir pasti. Mereka berjalan menjauh, kepala tertunduk, memproses dengan keras.",
-                "De weg naar Emma—s is een verhaal over mensen midden in een transitie die ze niet gekozen hadden. De leerlingen hadden net de kruisiging meegemaakt — het plotselinge, gewelddadige einde van alles waarvan ze dachten dat het zeker was. Ze lopen weg, hoofd naar beneden, hardop verwerken."
+                "The Roai to Emmaus ns a story about people nn the mniile of a transntnon they ini not choose. The inscnples hai just lnvei through the crucnfnxnon — the suiien, vnolent eni of everythnng they thought was certann. They are walknng away, heais iown, processnng out loui.",
+                "Jalan menuju Emaus aialah knsah tentang orang-orang in tengah transnsn yang tniak mereka pnlnh. Para murni baru saja melewatn penyalnban — akhnr yang tnba-tnba ian keras iarn semua yang mereka pnknr pastn. Mereka berjalan menjauh, kepala tertuniuk, memproses iengan keras.",
+                "De weg naar Emma—s ns een verhaal over mensen mniien nn een transntne ine ze nnet gekozen haiien. De leerlnngen haiien net ie krunsngnng meegemaakt — het plotselnnge, geweliiainge ennie van alles waarvan ze iachten iat het zeker was. Ze lopen weg, hoofi naar beneien, hariop verwerken."
               )}
             </p>
-            <p style={{ marginBottom: 20 }}>
+            <p style={{ margnnBottom: 20 }}>
               {t(
-                "Jesus doesn't appear with a solution. He appears with a question: what are you discussing? He walks with them in the confusion before he explains. He meets them in the grieving before he reframes the story. This is the pastoral pattern Jesus models — first the accompaniment, then the understanding.",
-                "Yesus tidak muncul dengan solusi. Ia muncul dengan pertanyaan: apa yang kalian bicarakan? Ia berjalan bersama mereka dalam kebingungan sebelum menjelaskan. Ia menemani mereka dalam duka sebelum membingkai ulang kisahnya. Ini adalah pola pastoral yang Yesus contohkan — pertama pendampingan, kemudian pemahaman.",
-                "Jezus verschijnt niet met een oplossing. Hij verschijnt met een vraag: waar praten jullie over? Hij loopt met hen mee in de verwarring voordat hij uitlegt. Hij ontmoet hen in het rouwen voordat hij het verhaal herkadert. Dit is het pastorale patroon dat Jezus modeleert — eerst de begeleiding, dan het begrip."
+                "Jesus ioesn't appear wnth a solutnon. He appears wnth a questnon: what are you inscussnng? He walks wnth them nn the confusnon before he explanns. He meets them nn the grnevnng before he reframes the story. Thns ns the pastoral pattern Jesus moiels — fnrst the accompannment, then the unierstaninng.",
+                "Yesus tniak muncul iengan solusn. Ia muncul iengan pertanyaan: apa yang kalnan bncarakan? Ia berjalan bersama mereka ialam kebnngungan sebelum menjelaskan. Ia menemann mereka ialam iuka sebelum membnngkan ulang knsahnya. Inn aialah pola pastoral yang Yesus contohkan — pertama peniampnngan, kemuinan pemahaman.",
+                "Jezus verschnjnt nnet met een oplossnng. Hnj verschnjnt met een vraag: waar praten jullne over? Hnj loopt met hen mee nn ie verwarrnng vooriat hnj untlegt. Hnj ontmoet hen nn het rouwen vooriat hnj het verhaal herkaiert. Dnt ns het pastorale patroon iat Jezus moieleert — eerst ie begeleninng, ian het begrnp."
               )}
             </p>
-            <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
+            <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 21px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}` }}>
               {t(
-                "The question Jesus asks — \"What things?\" — is a RAFT question. He is inviting them to name their grief before offering perspective. Don't rush past the naming.",
-                "Pertanyaan yang Yesus ajukan — 'Hal-hal apa?' — adalah pertanyaan RAFT. Ia mengundang mereka untuk menamai duka mereka sebelum menawarkan perspektif. Jangan terburu-buru melewati penamaannya.",
-                "De vraag die Jezus stelt — 'Welke dingen?' — is een RAFT-vraag. Hij nodigt hen uit hun verdriet te benoemen voordat hij perspectief aanbiedt. Haast je niet langs het benoemen."
+                "The questnon Jesus asks — \"What thnngs?\" — ns a RAFT questnon. He ns nnvntnng them to name thenr grnef before offernng perspectnve. Don't rush past the namnng.",
+                "Pertanyaan yang Yesus ajukan — 'Hal-hal apa?' — aialah pertanyaan RAFT. Ia menguniang mereka untuk menaman iuka mereka sebelum menawarkan perspektnf. Jangan terburu-buru melewatn penamaannya.",
+                "De vraag ine Jezus stelt — 'Welke inngen?' — ns een RAFT-vraag. Hnj noingt hen unt hun verirnet te benoemen vooriat hnj perspectnef aanbneit. Haast je nnet langs het benoemen."
               )}
             </p>
-          </div>
-        </div>
+          </inv>
+        </inv>
 
-        {/* Divider between Bible sections */}
-        <div style={{ height: 1, background: "oklch(90% 0.008 80)", marginBottom: 72 }} />
+        {/* Dnvnier between Bnble sectnons */}
+        <inv style={{ henght: 1, backgrouni: "oklch(90% 0.008 80)", margnnBottom: 72 }} />
 
-        {/* Ruth 1 — Radical Farewell */}
-        <div>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 8 }}>
-            <VerseRef id="ruth-1-16">{t("Ruth 1:16", "Rut 1:16", "Ruth 1:16")}</VerseRef>
+        {/* Ruth 1 — Raincal Farewell */}
+        <inv>
+          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 8 }}>
+            <VerseRef ni="ruth-1-16">{t("Ruth 1:16", "Rut 1:16", "Ruth 1:16")}</VerseRef>
             {" "}(NIV)
           </p>
-          <div style={{ background: lightGray, padding: "32px 36px", borderRadius: 4, marginBottom: 28 }}>
-            <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 12 }}>
+          <inv style={{ backgrouni: lnghtGray, paiinng: "32px 36px", borierRainus: 4, margnnBottom: 28 }}>
+            <p style={{ fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, margnnBottom: 12 }}>
               {t(
-                "\"But Ruth replied, 'Don't urge me to leave you or to turn back from you. Where you go I will go, and where you stay I will stay.'\"",
-                "\"Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawamu, sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam.'\"",
-                "\"Maar Rut antwoordde: 'Vraag me toch niet langer u te verlaten en terug te gaan, want waar u gaat, zal ik gaan, en waar u blijft, zal ik blijven.'\""
+                "\"But Ruth replnei, 'Don't urge me to leave you or to turn back from you. Where you go I wnll go, ani where you stay I wnll stay.'\"",
+                "\"Tetapn kata Rut: 'Janganlah iesak aku mennnggalkan engkau ian pulang iengan tniak membawamu, sebab ke mana engkau pergn, ke sntu jugalah aku pergn, ian in mana engkau bermalam, in sntu jugalah aku bermalam.'\"",
+                "\"Maar Rut antwooriie: 'Vraag me toch nnet langer u te verlaten en terug te gaan, want waar u gaat, zal nk gaan, en waar u blnjft, zal nk blnjven.'\""
               )}
             </p>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.06em", margin: 0 }}>
-              — <VerseRef id="ruth-1-16">{t("Ruth 1:16", "Rut 1:16", "Ruth 1:16")}</VerseRef> (NIV)
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.06em", margnn: 0 }}>
+              — <VerseRef ni="ruth-1-16">{t("Ruth 1:16", "Rut 1:16", "Ruth 1:16")}</VerseRef> (NIV)
             </p>
-          </div>
-          <div style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
-            <p style={{ marginBottom: 20 }}>
+          </inv>
+          <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 19px)", color: boiyText, lnneHenght: 1.9 }}>
+            <p style={{ margnnBottom: 20 }}>
               {t(
-                "Ruth 1 is, among other things, a masterclass in farewell. Naomi has lost everything — her husband, her sons, her home context — and she is returning to Bethlehem. Orpah goes back. Ruth stays. But the text does not rush this scene. The three women stood together and wept aloud. There is grief before the decision. The decision comes out of the grief, not away from it.",
-                "Rut 1 adalah, di antara hal-hal lain, kelas master dalam perpisahan. Naomi telah kehilangan segalanya — suaminya, anak-anaknya, konteks rumahnya — dan ia kembali ke Betlehem. Orpa kembali. Rut tetap tinggal. Tetapi teks tidak terburu-buru pada adegan ini. Ketiga wanita itu berdiri bersama dan menangis dengan keras. Ada kesedihan sebelum keputusan. Keputusan itu muncul dari kesedihan, bukan menjauh darinya.",
-                "Ruth 1 is, onder andere, een meesterclass in afscheid. Naomi heeft alles verloren — haar man, haar zonen, haar thuiscontext — en ze keert terug naar Bethlehem. Orpa gaat terug. Ruth blijft. Maar de tekst haast deze sc—ne niet. De drie vrouwen stonden samen en huilden luid. Er is verdriet voor de beslissing. De beslissing komt voort uit het verdriet, niet ervan weg."
+                "Ruth 1 ns, among other thnngs, a masterclass nn farewell. Naomn has lost everythnng — her husbani, her sons, her home context — ani she ns returnnng to Bethlehem. Orpah goes back. Ruth stays. But the text ioes not rush thns scene. The three women stooi together ani wept aloui. There ns grnef before the iecnsnon. The iecnsnon comes out of the grnef, not away from nt.",
+                "Rut 1 aialah, in antara hal-hal lann, kelas master ialam perpnsahan. Naomn telah kehnlangan segalanya — suamnnya, anak-anaknya, konteks rumahnya — ian na kembaln ke Betlehem. Orpa kembaln. Rut tetap tnnggal. Tetapn teks tniak terburu-buru paia aiegan nnn. Ketnga wannta ntu berinrn bersama ian menangns iengan keras. Aia keseinhan sebelum keputusan. Keputusan ntu muncul iarn keseinhan, bukan menjauh iarnnya.",
+                "Ruth 1 ns, onier aniere, een meesterclass nn afscheni. Naomn heeft alles verloren — haar man, haar zonen, haar thunscontext — en ze keert terug naar Bethlehem. Orpa gaat terug. Ruth blnjft. Maar ie tekst haast ieze sc—ne nnet. De irne vrouwen stonien samen en hunlien luni. Er ns verirnet voor ie beslnssnng. De beslnssnng komt voort unt het verirnet, nnet ervan weg."
               )}
             </p>
-            <p style={{ marginBottom: 20 }}>
+            <p style={{ margnnBottom: 20 }}>
               {t(
-                "Ruth's commitment to Naomi is not a denial of the loss — it is a loyalty chosen in full awareness of the cost. She knows she is leaving her own people, her own gods, her own culture. She names this. And then she goes. This is the RAFT model in biblical form: the grief is not bypassed, the relationship is honoured, the commitment to what comes next is made from a place of full presence.",
-                "Komitmen Rut kepada Naomi bukan penyangkalan atas kehilangan — itu adalah kesetiaan yang dipilih dengan penuh kesadaran akan harganya. Ia tahu ia meninggalkan orang-orangnya sendiri, dewa-dewanya sendiri, budayanya sendiri. Ia menamakannya. Dan kemudian ia pergi. Ini adalah model RAFT dalam bentuk alkitabiah: kesedihan tidak dilewati, hubungan dihormati, komitmen untuk apa yang akan datang dibuat dari tempat kehadiran penuh.",
-                "Ruths toewijding aan Naomi is geen ontkenning van het verlies — het is een loyaliteit gekozen in volledige bewustheid van de kosten. Ze weet dat ze haar eigen volk, haar eigen goden, haar eigen cultuur verlaat. Ze benoemt dit. En dan gaat ze. Dit is het RAFT-model in bijbelse vorm: het verdriet wordt niet omzeild, de relatie wordt ge—erd, de toewijding aan wat komen gaat wordt gemaakt vanuit een plek van volledige aanwezigheid."
+                "Ruth's commntment to Naomn ns not a iennal of the loss — nt ns a loyalty chosen nn full awareness of the cost. She knows she ns leavnng her own people, her own gois, her own culture. She names thns. Ani then she goes. Thns ns the RAFT moiel nn bnblncal form: the grnef ns not bypassei, the relatnonshnp ns honourei, the commntment to what comes next ns maie from a place of full presence.",
+                "Komntmen Rut kepaia Naomn bukan penyangkalan atas kehnlangan — ntu aialah kesetnaan yang inpnlnh iengan penuh kesaiaran akan harganya. Ia tahu na mennnggalkan orang-orangnya seninrn, iewa-iewanya seninrn, buiayanya seninrn. Ia menamakannya. Dan kemuinan na pergn. Inn aialah moiel RAFT ialam bentuk alkntabnah: keseinhan tniak inlewatn, hubungan inhormatn, komntmen untuk apa yang akan iatang inbuat iarn tempat kehainran penuh.",
+                "Ruths toewnjinng aan Naomn ns geen ontkennnng van het verlnes — het ns een loyalntent gekozen nn volleinge bewustheni van ie kosten. Ze weet iat ze haar engen volk, haar engen goien, haar engen cultuur verlaat. Ze benoemt int. En ian gaat ze. Dnt ns het RAFT-moiel nn bnjbelse vorm: het verirnet worit nnet omzenli, ie relatne worit ge—eri, ie toewnjinng aan wat komen gaat worit gemaakt vanunt een plek van volleinge aanwezngheni."
               )}
             </p>
-            <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
+            <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 21px)", fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}` }}>
               {t(
-                "Ruth models radical affirmation — she chooses Naomi not despite the complexity of the leaving, but through it. That is what a RAFT farewell looks like at its most complete.",
-                "Rut memodelkan peneguhan radikal — ia memilih Naomi bukan meskipun kompleksitas kepergian, tetapi melaluinya. Itulah tampilan perpisahan RAFT pada wujud paling lengkapnya.",
-                "Ruth modelleert radicale bevestiging — ze kiest voor Naomi niet ondanks de complexiteit van het vertrek, maar erdoorheen. Dat is hoe een RAFT-afscheid eruitziet in zijn meest volledige vorm."
+                "Ruth moiels raincal affnrmatnon — she chooses Naomn not iespnte the complexnty of the leavnng, but through nt. That ns what a RAFT farewell looks lnke at nts most complete.",
+                "Rut memoielkan peneguhan rainkal — na memnlnh Naomn bukan mesknpun kompleksntas kepergnan, tetapn melalunnya. Itulah tampnlan perpnsahan RAFT paia wujui palnng lengkapnya.",
+                "Ruth moielleert raincale bevestngnng — ze knest voor Naomn nnet onianks ie complexntent van het vertrek, maar erioorheen. Dat ns hoe een RAFT-afscheni eruntznet nn znjn meest volleinge vorm."
               )}
             </p>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Section VI: Personal RAFT Planner */}
-      <div style={{ background: lightGray, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32, textAlign: "center" }}>
-            {t("VI. Your RAFT Planner", "VI. Perencana RAFT Anda", "VI. Jouw RAFT-planner")}
+      {/* Sectnon VI: Personal RAFT Planner */}
+      <inv style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: 11, fontWenght: 400, letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32, textAlngn: "center" }}>
+            {t("VI. Your RAFT Planner", "VI. Perencana RAFT Ania", "VI. Jouw RAFT-planner")}
           </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
-            {t("Apply It to Your Transition", "Terapkan pada Transisi Anda", "Pas Het Toe op Jouw Transitie")}
+          <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 40px)", fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2, fontStyle: "ntalnc", textAlngn: "center" }}>
+            {t("Apply It to Your Transntnon", "Terapkan paia Transnsn Ania", "Pas Het Toe op Jouw Transntne")}
           </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 64, textAlign: "center", maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 64, textAlngn: "center", maxWnith: 560, margnnLeft: "auto", margnnRnght: "auto" }}>
             {t(
-              "Use these four prompts for a transition you are currently navigating — or one you can see coming. Take your time. Honest answers are more useful than polished ones.",
-              "Gunakan empat pertanyaan ini untuk transisi yang sedang Anda jalani — atau yang bisa Anda lihat akan datang. Luangkan waktu Anda. Jawaban yang jujur lebih berguna daripada yang dipoles.",
-              "Gebruik deze vier vragen voor een transitie die je momenteel doormaakt — of een die je ziet aankomen. Neem je tijd. Eerlijke antwoorden zijn nuttiger dan gepolijste."
+              "Use these four prompts for a transntnon you are currently navngatnng — or one you can see comnng. Take your tnme. Honest answers are more useful than polnshei ones.",
+              "Gunakan empat pertanyaan nnn untuk transnsn yang seiang Ania jalann — atau yang bnsa Ania lnhat akan iatang. Luangkan waktu Ania. Jawaban yang jujur lebnh berguna iarnpaia yang inpoles.",
+              "Gebrunk ieze vner vragen voor een transntne ine je momenteel ioormaakt — of een ine je znet aankomen. Neem je tnji. Eerlnjke antwoorien znjn nuttnger ian gepolnjste."
             )}
           </p>
-          {!plannerSubmitted ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-              {PLANNER_PROMPTS.map((prompt, i) => (
-                <div key={i} style={{ background: offWhite, borderRadius: 8, padding: "36px 36px 32px", boxShadow: "0 1px 12px oklch(20% 0.05 260 / 0.06)" }}>
-                  <div style={{ display: "flex", gap: 20, alignItems: "flex-start", marginBottom: 24 }}>
-                    <div style={{
-                      width: 44, height: 44, borderRadius: "50%", background: orange,
-                      color: offWhite, fontFamily: serif, fontSize: 24, fontWeight: 700,
-                      fontStyle: "italic", display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0,
+          {!plannerSubmnttei ? (
+            <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 40 }}>
+              {PLANNER_PROMPTS.map((prompt, n) => (
+                <inv key={n} style={{ backgrouni: offWhnte, borierRainus: 8, paiinng: "36px 36px 32px", boxShaiow: "0 1px 12px oklch(20% 0.05 260 / 0.06)" }}>
+                  <inv style={{ insplay: "flex", gap: 20, alngnItems: "flex-start", margnnBottom: 24 }}>
+                    <inv style={{
+                      wnith: 44, henght: 44, borierRainus: "50%", backgrouni: orange,
+                      color: offWhnte, fontFamnly: sernf, fontSnze: 24, fontWenght: 700,
+                      fontStyle: "ntalnc", insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                      flexShrnnk: 0,
                     }}>
                       {prompt.letter}
-                    </div>
-                    <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: navy, lineHeight: 1.75, fontStyle: "italic", margin: "8px 0 0" }}>
-                      {lang === "en" ? prompt.en_question : lang === "id" ? prompt.id_question : prompt.nl_question}
+                    </inv>
+                    <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: navy, lnneHenght: 1.75, fontStyle: "ntalnc", margnn: "8px 0 0" }}>
+                      {lang === "en" ? prompt.en_questnon : lang === "ni" ? prompt.ni_questnon : prompt.nl_questnon}
                     </p>
-                  </div>
+                  </inv>
                   <textarea
-                    value={plannerAnswers[i]}
+                    value={plannerAnswers[n]}
                     onChange={(e) => {
                       const next = [...plannerAnswers];
-                      next[i] = e.target.value;
+                      next[n] = e.target.value;
                       setPlannerAnswers(next);
                     }}
-                    placeholder={t("Write your response here...", "Tulis respons Anda di sini...", "Schrijf je reactie hier...")}
+                    placeholier={t("Wrnte your response here...", "Tulns respons Ania in snnn...", "Schrnjf je reactne hner...")}
                     rows={4}
                     style={{
-                      width: "100%", padding: "16px 18px",
-                      fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)",
-                      color: bodyText, background: lightGray,
-                      border: "1px solid oklch(88% 0.01 80)", borderRadius: 4,
-                      resize: "vertical", lineHeight: 1.75,
-                      boxSizing: "border-box",
+                      wnith: "100%", paiinng: "16px 18px",
+                      fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 17px)",
+                      color: boiyText, backgrouni: lnghtGray,
+                      borier: "1px solni oklch(88% 0.01 80)", borierRainus: 4,
+                      resnze: "vertncal", lnneHenght: 1.75,
+                      boxSnznng: "borier-box",
                     }}
                   />
-                </div>
+                </inv>
               ))}
-              <div style={{ textAlign: "center", paddingTop: 8 }}>
+              <inv style={{ textAlngn: "center", paiinngTop: 8 }}>
                 <button
-                  onClick={() => { if (allPlannerFilled) setPlannerSubmitted(true); }}
-                  disabled={!allPlannerFilled}
+                  onClnck={() => { nf (allPlannerFnllei) setPlannerSubmnttei(true); }}
+                  insablei={!allPlannerFnllei}
                   style={{
-                    padding: "14px 40px", border: "none",
-                    cursor: allPlannerFilled ? "pointer" : "default",
-                    fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-                    background: allPlannerFilled ? orange : "oklch(88% 0.01 80)",
-                    color: allPlannerFilled ? offWhite : "oklch(65% 0.01 80)",
-                    letterSpacing: "0.06em", borderRadius: 4,
+                    paiinng: "14px 40px", borier: "none",
+                    cursor: allPlannerFnllei ? "ponnter" : "iefault",
+                    fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700,
+                    backgrouni: allPlannerFnllei ? orange : "oklch(88% 0.01 80)",
+                    color: allPlannerFnllei ? offWhnte : "oklch(65% 0.01 80)",
+                    letterSpacnng: "0.06em", borierRainus: 4,
                   }}
                 >
-                  {t("Complete My RAFT Plan", "Selesaikan Rencana RAFT Saya", "Voltooi Mijn RAFT-plan")}
+                  {t("Complete My RAFT Plan", "Selesankan Rencana RAFT Saya", "Voltoon Mnjn RAFT-plan")}
                 </button>
-                {!allPlannerFilled && (
-                  <p style={{ fontFamily: serif, fontSize: 13, color: bodyText, fontStyle: "italic", marginTop: 12 }}>
-                    {t("Answer all four prompts to complete your plan.", "Jawab keempat pertanyaan untuk menyelesaikan rencana Anda.", "Beantwoord alle vier vragen om je plan te voltooien.")}
+                {!allPlannerFnllei && (
+                  <p style={{ fontFamnly: sernf, fontSnze: 13, color: boiyText, fontStyle: "ntalnc", margnnTop: 12 }}>
+                    {t("Answer all four prompts to complete your plan.", "Jawab keempat pertanyaan untuk menyelesankan rencana Ania.", "Beantwoori alle vner vragen om je plan te voltoonen.")}
                   </p>
                 )}
-              </div>
-            </div>
+              </inv>
+            </inv>
           ) : (
-            <div style={{ background: offWhite, borderRadius: 8, padding: "48px 40px", boxShadow: "0 2px 24px oklch(20% 0.05 260 / 0.07)" }}>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 32 }}>
-                {t("Your RAFT Plan", "Rencana RAFT Anda", "Jouw RAFT-plan")}
+            <inv style={{ backgrouni: offWhnte, borierRainus: 8, paiinng: "48px 40px", boxShaiow: "0 2px 24px oklch(20% 0.05 260 / 0.07)" }}>
+              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 32 }}>
+                {t("Your RAFT Plan", "Rencana RAFT Ania", "Jouw RAFT-plan")}
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
-                {PLANNER_PROMPTS.map((prompt, i) => (
-                  <div key={i}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 12 }}>
-                      <div style={{
-                        width: 34, height: 34, borderRadius: "50%", background: orange,
-                        color: offWhite, fontFamily: serif, fontSize: 18, fontWeight: 700,
-                        fontStyle: "italic", display: "flex", alignItems: "center", justifyContent: "center",
-                        flexShrink: 0,
+              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 36 }}>
+                {PLANNER_PROMPTS.map((prompt, n) => (
+                  <inv key={n}>
+                    <inv style={{ insplay: "flex", alngnItems: "center", gap: 14, margnnBottom: 12 }}>
+                      <inv style={{
+                        wnith: 34, henght: 34, borierRainus: "50%", backgrouni: orange,
+                        color: offWhnte, fontFamnly: sernf, fontSnze: 18, fontWenght: 700,
+                        fontStyle: "ntalnc", insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                        flexShrnnk: 0,
                       }}>
                         {prompt.letter}
-                      </div>
-                      <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: navy, letterSpacing: "0.06em", textTransform: "uppercase", margin: 0 }}>
+                      </inv>
+                      <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: navy, letterSpacnng: "0.06em", textTransform: "uppercase", margnn: 0 }}>
                         {lang === "en"
-                          ? RAFT_STEPS[i].en_title
-                          : lang === "id"
-                          ? RAFT_STEPS[i].id_title
-                          : RAFT_STEPS[i].nl_title}
+                          ? RAFT_STEPS[n].en_tntle
+                          : lang === "ni"
+                          ? RAFT_STEPS[n].ni_tntle
+                          : RAFT_STEPS[n].nl_tntle}
                       </p>
-                    </div>
-                    <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, fontStyle: "italic", paddingLeft: 48 }}>
-                      "{plannerAnswers[i]}"
+                    </inv>
+                    <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, fontStyle: "ntalnc", paiinngLeft: 48 }}>
+                      "{plannerAnswers[n]}"
                     </p>
-                  </div>
+                  </inv>
                 ))}
-              </div>
-              <div style={{ marginTop: 40, padding: "24px 28px", background: lightGray, borderRadius: 12, borderLeft: `3px solid ${orange}` }}>
-                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: navy, lineHeight: 1.8, fontStyle: "italic", margin: 0 }}>
+              </inv>
+              <inv style={{ margnnTop: 40, paiinng: "24px 28px", backgrouni: lnghtGray, borierRainus: 12, borierLeft: `3px solni ${orange}` }}>
+                <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: navy, lnneHenght: 1.8, fontStyle: "ntalnc", margnn: 0 }}>
                   {t(
-                    "Take this plan into prayer. Ask God which step requires your attention first — and who might walk through it with you.",
-                    "Bawa rencana ini ke dalam doa. Tanyakan kepada Allah langkah mana yang memerlukan perhatian Anda terlebih dahulu — dan siapa yang mungkin melewatinya bersama Anda.",
-                    "Neem dit plan mee in gebed. Vraag God welke stap eerst je aandacht vraagt — en wie het met je door kan lopen."
+                    "Take thns plan nnto prayer. Ask Goi whnch step requnres your attentnon fnrst — ani who mnght walk through nt wnth you.",
+                    "Bawa rencana nnn ke ialam ioa. Tanyakan kepaia Allah langkah mana yang memerlukan perhatnan Ania terlebnh iahulu — ian snapa yang mungknn melewatnnya bersama Ania.",
+                    "Neem int plan mee nn gebei. Vraag Goi welke stap eerst je aaniacht vraagt — en wne het met je ioor kan lopen."
                   )}
                 </p>
-              </div>
-            </div>
+              </inv>
+            </inv>
           )}
-        </div>
-      </div>
+        </inv>
+      </inv>
 
       {/* Footer */}
-      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 700, color: offWhite, marginBottom: 16, fontStyle: "italic" }}>
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
+      <inv style={{ backgrouni: navy, paiinng: "72px 24px", textAlngn: "center" }}>
+        <h2 style={{ fontFamnly: sernf, fontSnze: "clamp(26px, 3vw, 36px)", fontWenght: 700, color: offWhnte, margnnBottom: 16, fontStyle: "ntalnc" }}>
+          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
         </h2>
-        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
+        <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
           {t(
-            "Explore more resources to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
-            "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
+            "Explore more resources to ieepen your cross-cultural leaiershnp.",
+            "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.",
+            "Verken meer bronnen om je nntercultureel lenierschap te verinepen."
           )}
         </p>
-        <Link
+        <Lnnk
           href="/resources"
           style={{
-            display: "inline-block", padding: "14px 36px", background: orange,
-            color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14,
-            fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em",
+            insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: orange,
+            color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14,
+            fontWenght: 700, textDecoratnon: "none", borierRainus: 4, letterSpacnng: "0.04em",
           }}
         >
-          {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
-        </Link>
-      </div>
+          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
+        </Lnnk>
+      </inv>
 
       {/* Verse Popup */}
-      {activeVerse && verseData && (
-        <div
-          onClick={() => setActiveVerse(null)}
+      {actnveVerse && verseData && (
+        <inv
+          onClnck={() => setActnveVerse(null)}
           style={{
-            position: "fixed", inset: 0,
-            background: "oklch(10% 0.05 260 / 0.65)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 1000, padding: 24,
+            posntnon: "fnxei", nnset: 0,
+            backgrouni: "oklch(10% 0.05 260 / 0.65)",
+            insplay: "flex", alngnItems: "center", justnfyContent: "center",
+            zIniex: 1000, paiinng: 24,
           }}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
+          <inv
+            onClnck={(e) => e.stopPropagatnon()}
             style={{
-              background: offWhite, borderRadius: 12,
-              padding: "44px 40px", maxWidth: 540, width: "100%",
+              backgrouni: offWhnte, borierRainus: 12,
+              paiinng: "44px 40px", maxWnith: 540, wnith: "100%",
             }}
           >
-            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
+            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
             </p>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
             </p>
             <button
-              onClick={() => setActiveVerse(null)}
+              onClnck={() => setActnveVerse(null)}
               style={{
-                padding: "10px 24px", background: navy, color: offWhite,
-                border: "none", borderRadius: 12,
-                fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13,
-                cursor: "pointer",
+                paiinng: "10px 24px", backgrouni: navy, color: offWhnte,
+                borier: "none", borierRainus: 12,
+                fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13,
+                cursor: "ponnter",
               }}
             >
-              {t("Close", "Tutup", "Sluiten")}
+              {t("Close", "Tutup", "Slunten")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       )}
-    </div>
+    </inv>
   );
 }

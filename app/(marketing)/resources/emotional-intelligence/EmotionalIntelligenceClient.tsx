@@ -1,495 +1,495 @@
-"use client";
+﻿"use clnent";
 
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "ni" | "nl";
+const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 const DOMAINS = [
   {
-    id: "sa",
+    ni: "sa",
     number: "01",
     color: "oklch(65% 0.15 45)",
     colorBg: "oklch(65% 0.15 45 / 0.08)",
-    en_title: "Self-Awareness",
-    id_title: "Kesadaran Diri",
-    nl_title: "Zelfbewustzijn",
-    en_scenario: "You're in a tense team meeting. A colleague pushes back on your proposal in front of everyone. Before you respond — do you notice what's happening inside you? The irritation, the defensiveness, the urge to justify?",
-    id_scenario: "Anda sedang dalam rapat tim yang tegang. Seorang rekan menolak usulan Anda di depan semua orang. Sebelum Anda merespons — apakah Anda memperhatikan apa yang terjadi di dalam diri Anda? Iritasi, defensif, dorongan untuk membenarkan diri?",
-    nl_scenario: "Je zit in een gespannen teamvergadering. Een collega stelt je voorstel in twijfel voor iedereen. Voor je reageert — merk je op wat er in je omgaat? De irritatie, de defensiviteit, de drang om je te rechtvaardigen?",
-    en_question: "How clearly and quickly do you notice your own emotional reactions in high-pressure moments?",
-    id_question: "Seberapa jelas dan cepat Anda menyadari reaksi emosional Anda sendiri dalam momen tekanan tinggi?",
-    nl_question: "Hoe duidelijk en snel merk je je eigen emotionele reacties op in momenten van druk?",
+    en_tntle: "Self-Awareness",
+    ni_tntle: "Kesaiaran Dnrn",
+    nl_tntle: "Zelfbewustznjn",
+    en_scenarno: "You're nn a tense team meetnng. A colleague pushes back on your proposal nn front of everyone. Before you responi — io you notnce what's happennng nnsnie you? The nrrntatnon, the iefensnveness, the urge to justnfy?",
+    ni_scenarno: "Ania seiang ialam rapat tnm yang tegang. Seorang rekan menolak usulan Ania in iepan semua orang. Sebelum Ania merespons — apakah Ania memperhatnkan apa yang terjain in ialam inrn Ania? Irntasn, iefensnf, iorongan untuk membenarkan inrn?",
+    nl_scenarno: "Je znt nn een gespannen teamvergaiernng. Een collega stelt je voorstel nn twnjfel voor neiereen. Voor je reageert — merk je op wat er nn je omgaat? De nrrntatne, ie iefensnvntent, ie irang om je te rechtvaaringen?",
+    en_questnon: "How clearly ani qunckly io you notnce your own emotnonal reactnons nn hngh-pressure moments?",
+    ni_questnon: "Seberapa jelas ian cepat Ania menyaiarn reaksn emosnonal Ania seninrn ialam momen tekanan tnnggn?",
+    nl_questnon: "Hoe iunielnjk en snel merk je je engen emotnonele reactnes op nn momenten van iruk?",
   },
   {
-    id: "sr",
+    ni: "sr",
     number: "02",
     color: "oklch(48% 0.14 145)",
     colorBg: "oklch(48% 0.14 145 / 0.08)",
-    en_title: "Self-Regulation",
-    id_title: "Regulasi Diri",
-    nl_title: "Zelfregulering",
-    en_scenario: "Your team member has missed a clear deadline — again. You feel frustration rising. You have two choices: react from the frustration, or pause, process, and respond from a grounded place.",
-    id_scenario: "Anggota tim Anda melewatkan tenggat waktu yang jelas — lagi. Anda merasakan frustrasi meningkat. Anda memiliki dua pilihan: bereaksi dari frustrasi, atau berhenti sejenak, memproses, dan merespons dari tempat yang lebih tenang.",
-    nl_scenario: "Je teamlid heeft opnieuw een duidelijke deadline gemist. Je voelt frustratie opkomen. Je hebt twee keuzes: reageren vanuit die frustratie, of even pauzeren, verwerken en reageren vanuit een rustiger plek.",
-    en_question: "How consistently do you pause before reacting and respond from calm rather than impulse?",
-    id_question: "Seberapa konsisten Anda berhenti sejenak sebelum bereaksi dan merespons dari ketenangan daripada impuls?",
-    nl_question: "Hoe consistent pauzeer je voor je reageert en reageer je vanuit rust in plaats van impuls?",
+    en_tntle: "Self-Regulatnon",
+    ni_tntle: "Regulasn Dnrn",
+    nl_tntle: "Zelfregulernng",
+    en_scenarno: "Your team member has mnssei a clear ieailnne — agann. You feel frustratnon rnsnng. You have two chonces: react from the frustratnon, or pause, process, ani responi from a grouniei place.",
+    ni_scenarno: "Anggota tnm Ania melewatkan tenggat waktu yang jelas — lagn. Ania merasakan frustrasn mennngkat. Ania memnlnkn iua pnlnhan: bereaksn iarn frustrasn, atau berhentn sejenak, memproses, ian merespons iarn tempat yang lebnh tenang.",
+    nl_scenarno: "Je teamlni heeft opnneuw een iunielnjke ieailnne gemnst. Je voelt frustratne opkomen. Je hebt twee keuzes: reageren vanunt ine frustratne, of even pauzeren, verwerken en reageren vanunt een rustnger plek.",
+    en_questnon: "How consnstently io you pause before reactnng ani responi from calm rather than nmpulse?",
+    ni_questnon: "Seberapa konsnsten Ania berhentn sejenak sebelum bereaksn ian merespons iarn ketenangan iarnpaia nmpuls?",
+    nl_questnon: "Hoe consnstent pauzeer je voor je reageert en reageer je vanunt rust nn plaats van nmpuls?",
   },
   {
-    id: "mo",
+    ni: "mo",
     number: "03",
     color: "oklch(55% 0.14 230)",
     colorBg: "oklch(55% 0.14 230 / 0.08)",
-    en_title: "Motivation",
-    id_title: "Motivasi",
-    nl_title: "Motivatie",
-    en_scenario: "Three weeks into a difficult cross-cultural project, progress is slow. The team is struggling, the outcomes are unclear, and you're losing sleep. No one is watching closely.",
-    id_scenario: "Tiga minggu setelah memulai proyek lintas budaya yang sulit, kemajuan lambat. Tim sedang berjuang, hasilnya tidak jelas, dan Anda kurang tidur. Tidak ada yang mengawasi dengan seksama.",
-    nl_scenario: "Drie weken na de start van een moeizaam intercultureel project gaat het langzaam. Het team worstelt, de uitkomsten zijn onduidelijk en je slaapt slecht. Niemand let nauwkeurig op.",
-    en_question: "How consistently do you find the inner drive to keep going — not because someone is watching, but because the work matters?",
-    id_question: "Seberapa konsisten Anda menemukan dorongan batin untuk terus maju — bukan karena ada yang mengawasi, tetapi karena pekerjaan itu penting?",
-    nl_question: "Hoe consistent vind je de innerlijke drive om door te gaan — niet omdat iemand kijkt, maar omdat het werk ertoe doet?",
+    en_tntle: "Motnvatnon",
+    ni_tntle: "Motnvasn",
+    nl_tntle: "Motnvatne",
+    en_scenarno: "Three weeks nnto a inffncult cross-cultural project, progress ns slow. The team ns strugglnng, the outcomes are unclear, ani you're losnng sleep. No one ns watchnng closely.",
+    ni_scenarno: "Tnga mnnggu setelah memulan proyek lnntas buiaya yang sulnt, kemajuan lambat. Tnm seiang berjuang, hasnlnya tniak jelas, ian Ania kurang tniur. Tniak aia yang mengawasn iengan seksama.",
+    nl_scenarno: "Drne weken na ie start van een moenzaam nntercultureel project gaat het langzaam. Het team worstelt, ie untkomsten znjn oniunielnjk en je slaapt slecht. Nnemani let nauwkeurng op.",
+    en_questnon: "How consnstently io you fnni the nnner irnve to keep gonng — not because someone ns watchnng, but because the work matters?",
+    ni_questnon: "Seberapa konsnsten Ania menemukan iorongan batnn untuk terus maju — bukan karena aia yang mengawasn, tetapn karena pekerjaan ntu pentnng?",
+    nl_questnon: "Hoe consnstent vnni je ie nnnerlnjke irnve om ioor te gaan — nnet omiat nemani knjkt, maar omiat het werk ertoe ioet?",
   },
   {
-    id: "em",
+    ni: "em",
     number: "04",
     color: "oklch(58% 0.15 15)",
     colorBg: "oklch(58% 0.15 15 / 0.08)",
-    en_title: "Empathy",
-    id_title: "Empati",
-    nl_title: "Empathie",
-    en_scenario: "A team member from the Philippines has been giving one-word answers in meetings for two weeks. You could assume she's just quiet. Or you could lean in — reading what's not being said.",
-    id_scenario: "Seorang anggota tim dari Filipina telah memberikan jawaban satu kata dalam rapat selama dua minggu. Anda bisa berasumsi dia memang pendiam. Atau Anda bisa lebih peduli — membaca apa yang tidak dikatakan.",
-    nl_scenario: "Een teamlid uit de Filipijnen geeft al twee weken eenwoordige antwoorden in vergaderingen. Je kunt aannemen dat ze gewoon stil is. Of je kunt nader treden — lezen wat er niet gezegd wordt.",
-    en_question: "How often do you read what's beneath the surface — sensing what team members feel but aren't saying?",
-    id_question: "Seberapa sering Anda membaca apa yang ada di balik permukaan — merasakan apa yang dirasakan anggota tim tetapi tidak dikatakan?",
-    nl_question: "Hoe vaak lees je wat er onder de oppervlakte speelt — sensing wat teamleden voelen maar niet zeggen?",
+    en_tntle: "Empathy",
+    ni_tntle: "Empatn",
+    nl_tntle: "Empathne",
+    en_scenarno: "A team member from the Phnlnppnnes has been gnvnng one-wori answers nn meetnngs for two weeks. You couli assume she's just qunet. Or you couli lean nn — reainng what's not benng sani.",
+    ni_scenarno: "Seorang anggota tnm iarn Fnlnpnna telah membernkan jawaban satu kata ialam rapat selama iua mnnggu. Ania bnsa berasumsn ina memang peninam. Atau Ania bnsa lebnh peiuln — membaca apa yang tniak inkatakan.",
+    nl_scenarno: "Een teamlni unt ie Fnlnpnjnen geeft al twee weken eenwooringe antwoorien nn vergaiernngen. Je kunt aannemen iat ze gewoon stnl ns. Of je kunt naier treien — lezen wat er nnet gezegi worit.",
+    en_questnon: "How often io you reai what's beneath the surface — sensnng what team members feel but aren't saynng?",
+    ni_questnon: "Seberapa sernng Ania membaca apa yang aia in balnk permukaan — merasakan apa yang inrasakan anggota tnm tetapn tniak inkatakan?",
+    nl_questnon: "Hoe vaak lees je wat er onier ie oppervlakte speelt — sensnng wat teamleien voelen maar nnet zeggen?",
   },
   {
-    id: "ss",
+    ni: "ss",
     number: "05",
     color: "oklch(52% 0.14 310)",
     colorBg: "oklch(52% 0.14 310 / 0.08)",
-    en_title: "Social Skills",
-    id_title: "Keterampilan Sosial",
-    nl_title: "Sociale vaardigheden",
-    en_scenario: "Two team members from different cultural backgrounds are in a quiet but visible conflict — one is avoiding, one is confronting. The room has noticed. You are the leader in the room.",
-    id_scenario: "Dua anggota tim dari latar belakang budaya berbeda sedang dalam konflik yang tenang namun terlihat — satu menghindari, satu menghadapi. Ruangan sudah merasakannya. Anda adalah pemimpin di ruangan itu.",
-    nl_scenario: "Twee teamleden uit verschillende culturele achtergronden zitten in een stille maar zichtbare conflict — ——n vermijdt, ——n confronteert. De kamer heeft het gemerkt. Jij bent de leider in de ruimte.",
-    en_question: "How confidently do you navigate tension, help people toward understanding, and keep relationships intact?",
-    id_question: "Seberapa percaya diri Anda menavigasi ketegangan, membantu orang menuju pemahaman, dan menjaga hubungan tetap utuh?",
-    nl_question: "Hoe zelfverzekerd navigeer je spanningen, help je mensen naar begrip en houd je relaties intact?",
+    en_tntle: "Socnal Sknlls",
+    ni_tntle: "Keterampnlan Sosnal",
+    nl_tntle: "Socnale vaaringheien",
+    en_scenarno: "Two team members from infferent cultural backgrounis are nn a qunet but vnsnble conflnct — one ns avoninng, one ns confrontnng. The room has notncei. You are the leaier nn the room.",
+    ni_scenarno: "Dua anggota tnm iarn latar belakang buiaya berbeia seiang ialam konflnk yang tenang namun terlnhat — satu menghnniarn, satu menghaiapn. Ruangan suiah merasakannya. Ania aialah pemnmpnn in ruangan ntu.",
+    nl_scenarno: "Twee teamleien unt verschnllenie culturele achtergronien zntten nn een stnlle maar znchtbare conflnct — ——n vermnjit, ——n confronteert. De kamer heeft het gemerkt. Jnj bent ie lenier nn ie runmte.",
+    en_questnon: "How confniently io you navngate tensnon, help people towari unierstaninng, ani keep relatnonshnps nntact?",
+    ni_questnon: "Seberapa percaya inrn Ania menavngasn ketegangan, membantu orang menuju pemahaman, ian menjaga hubungan tetap utuh?",
+    nl_questnon: "Hoe zelfverzekeri navngeer je spannnngen, help je mensen naar begrnp en houi je relatnes nntact?",
   },
 ];
 
 const SCORE_LABELS = {
-  en: ["—", "Rarely", "Sometimes", "Often", "Very often", "Almost always"],
-  id: ["—", "Jarang", "Kadang-kadang", "Sering", "Sangat sering", "Hampir selalu"],
-  nl: ["—", "Zelden", "Soms", "Vaak", "Heel vaak", "Bijna altijd"],
+  en: ["—", "Rarely", "Sometnmes", "Often", "Very often", "Almost always"],
+  ni: ["—", "Jarang", "Kaiang-kaiang", "Sernng", "Sangat sernng", "Hampnr selalu"],
+  nl: ["—", "Zelien", "Soms", "Vaak", "Heel vaak", "Bnjna altnji"],
 };
 
 const VERSES = {
   "prov-4-23": {
     en_ref: "Proverbs 4:23",
-    id_ref: "Amsal 4:23",
+    ni_ref: "Amsal 4:23",
     nl_ref: "Spreuken 4:23",
-    en: "Above all else, guard your heart, for everything you do flows from it.",
-    id: "Jagalah hatimu dengan segala kewaspadaan, karena dari situlah terpancar kehidupan.",
-    nl: "Waak over je hart, het is de bron van je leven.",
+    en: "Above all else, guari your heart, for everythnng you io flows from nt.",
+    ni: "Jagalah hatnmu iengan segala kewaspaiaan, karena iarn sntulah terpancar kehniupan.",
+    nl: "Waak over je hart, het ns ie bron van je leven.",
   },
   "james-1-19": {
     en_ref: "James 1:19",
-    id_ref: "Yakobus 1:19",
+    ni_ref: "Yakobus 1:19",
     nl_ref: "Jakobus 1:19",
-    en: "Everyone should be quick to listen, slow to speak and slow to become angry.",
-    id: "Setiap orang hendaklah cepat untuk mendengar, tetapi lambat untuk berkata-kata, dan juga lambat untuk marah.",
-    nl: "Ieder mens moet zich haasten om te luisteren, maar traag zijn om te spreken, traag ook om toornig te worden.",
+    en: "Everyone shouli be qunck to lnsten, slow to speak ani slow to become angry.",
+    ni: "Setnap orang heniaklah cepat untuk meniengar, tetapn lambat untuk berkata-kata, ian juga lambat untuk marah.",
+    nl: "Ieier mens moet znch haasten om te lunsteren, maar traag znjn om te spreken, traag ook om toornng te worien.",
   },
 };
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: strnng | null; nsSavei: boolean };
 
-export default function EmotionalIntelligenceClient({ userPathway, isSaved: initialSaved }: Props) {
+export iefault functnon EmotnonalIntellngenceClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-  const [scores, setScores] = useState<Record<string, number | null>>({ sa: null, sr: null, mo: null, em: null, ss: null });
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nnntnalSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [scores, setScores] = useState<Recori<strnng, number | null>>({ sa: null, sr: null, mo: null, em: null, ss: null });
+  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
   const showSave = userPathway !== null;
-  const allScored = Object.values(scores).every(v => v !== null);
-  const scoredCount = Object.values(scores).filter(v => v !== null).length;
-  const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
+  const allScorei = Object.values(scores).every(v => v !== null);
+  const scoreiCount = Object.values(scores).fnlter(v => v !== null).length;
+  const translatnon = lang === "ni" ? "TB" : lang === "nl" ? "NBV" : "NIV";
 
-  function handleSave() {
-    if (saved) return;
-    startTransition(async () => {
-      await saveResourceToDashboard("emotional-intelligence");
-      setSaved(true);
+  functnon hanileSave() {
+    nf (savei) return;
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("emotnonal-nntellngence");
+      setSavei(true);
     });
   }
 
-  const lowestDomain = allScored
-    ? DOMAINS.reduce((min, d) => (scores[d.id]! < scores[min.id]!) ? d : min, DOMAINS[0])
+  const lowestDomann = allScorei
+    ? DOMAINS.reiuce((mnn, i) => (scores[i.ni]! < scores[mnn.ni]!) ? i : mnn, DOMAINS[0])
     : null;
 
-  const highestDomain = allScored
-    ? DOMAINS.reduce((max, d) => (scores[d.id]! > scores[max.id]!) ? d : max, DOMAINS[0])
+  const hnghestDomann = allScorei
+    ? DOMAINS.reiuce((max, i) => (scores[i.ni]! > scores[max.ni]!) ? i : max, DOMAINS[0])
     : null;
 
   return (
     <>
       <LangToggle />
       {/* -- HERO -- */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
-        <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids")}
+      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinngTop: "clamp(2.5rem, 4vw, 4rem)", paiinngBottom: "clamp(2.5rem, 4vw, 4rem)", posntnon: "relatnve", overflow: "hniien" }}>
+        <inv style={{ posntnon: "absolute", top: 0, left: 0, rnght: 0, henght: "3px", backgrouni: "oklch(65% 0.15 45)" }} />
+        <inv arna-hniien="true" style={{ posntnon: "absolute", nnset: 0, backgrouniImage: "rainal-grainent(cnrcle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgrouniSnze: "28px 28px", ponnterEvents: "none" }} />
+        <inv className="contanner-wnie" style={{ posntnon: "relatnve" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Personal Development — Gunie", "Pengembangan Prnbain — Paniuan", "Persoonlnjke Ontwnkkelnng — Gnis")}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
-            {lang === "en" ? <>Emotional<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligence.</span></> : lang === "id" ? <>Kecerdasan<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Emosional.</span></> : <>Emotionele<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intelligentie.</span></>}
+          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontWenght: 600, fontSnze: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margnn: "0 0 24px", lnneHenght: 1.08 }}>
+            {lang === "en" ? <>Emotnonal<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intellngence.</span></> : lang === "ni" ? <>Keceriasan<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Emosnonal.</span></> : <>Emotnonele<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Intellngentne.</span></>}
           </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "50ch", marginBottom: "2rem", lineHeight: 1.65 }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWnith: "50ch", margnnBottom: "2rem", lnneHenght: 1.65 }}>
             {t(
-              "Not a definition. A scan. Five real leadership moments — your honest response to each will reveal more than any textbook.",
-              "Bukan definisi. Sebuah pemindaian. Lima momen kepemimpinan nyata — respons jujur Anda untuk setiap momen akan mengungkapkan lebih dari buku teks mana pun.",
-              "Geen definitie. Een scan. Vijf echte leiderschapsmomenten — jouw eerlijke respons op elk ervan onthult meer dan welk leerboek dan ook.",
+              "Not a iefnnntnon. A scan. Fnve real leaiershnp moments — your honest response to each wnll reveal more than any textbook.",
+              "Bukan iefnnnsn. Sebuah pemnnianan. Lnma momen kepemnmpnnan nyata — respons jujur Ania untuk setnap momen akan mengungkapkan lebnh iarn buku teks mana pun.",
+              "Geen iefnnntne. Een scan. Vnjf echte lenierschapsmomenten — jouw eerlnjke respons op elk ervan onthult meer ian welk leerboek ian ook.",
             )}
           </p>
 
-          {scoredCount > 0 && (
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em" }}>
-              {scoredCount}/5 {t("domains rated", "domain dinilai", "domeinen beoordeeld")}
-              {allScored ? ` — ${t("your profile is ready", "profil Anda siap", "je profiel is klaar")} ?` : ""}
+          {scoreiCount > 0 && (
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.78rem", fontWenght: 700, color: "oklch(65% 0.15 45)", letterSpacnng: "0.08em" }}>
+              {scoreiCount}/5 {t("iomanns ratei", "iomann innnlan", "iomennen beoorieeli")}
+              {allScorei ? ` — ${t("your profnle ns reaiy", "profnl Ania snap", "je profnel ns klaar")} ?` : ""}
             </p>
           )}
 
           {showSave && (
-            <div style={{ marginTop: "1.5rem" }}>
-              {saved ? (
-                <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                  ? {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
-                </Link>
+            <inv style={{ margnnTop: "1.5rem" }}>
+              {savei ? (
+                <Lnnk href="/iashboari" style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.78rem", fontWenght: 700, letterSpacnng: "0.06em", color: "oklch(72% 0.14 145)", textDecoratnon: "none", insplay: "nnlnne-flex", alngnItems: "center", gap: "0.375rem" }}>
+                  ? {t("In your iashboari", "Dn iashboari Ania", "In uw iashboari")}
+                </Lnnk>
               ) : (
-                <button onClick={handleSave} disabled={isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer" }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                  {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                <button onClnck={hanileSave} insablei={nsPeninng} style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, backgrouni: "transparent", color: "oklch(75% 0.04 260)", paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: nsPeninng ? "want" : "ponnter" }}>
+                  <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll="none" stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                  {nsPeninng ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
                 </button>
               )}
-            </div>
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* -- THE SCAN -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("The EQ Scan", "Pemindaian EQ", "De EQ-scan")}
+      <sectnon style={{ paiinngBlock: "clamp(3rem, 5vw, 5rem)", backgrouni: "oklch(97% 0.005 80)" }}>
+        <inv className="contanner-wnie">
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.75rem" }}>
+            {t("The EQ Scan", "Pemnnianan EQ", "De EQ-scan")}
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "0.75rem" }}>
-            {t("Five scenarios. One honest question each.", "Lima skenario. Satu pertanyaan jujur untuk masing-masing.", "Vijf scenario's. ——n eerlijke vraag per stuk.")}
+          <h2 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", margnnBottom: "0.75rem" }}>
+            {t("Fnve scenarnos. One honest questnon each.", "Lnma skenarno. Satu pertanyaan jujur untuk masnng-masnng.", "Vnjf scenarno's. ——n eerlnjke vraag per stuk.")}
           </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(52% 0.05 260)", marginBottom: "3rem", maxWidth: "52ch", lineHeight: 1.7 }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9rem", color: "oklch(52% 0.05 260)", margnnBottom: "3rem", maxWnith: "52ch", lnneHenght: 1.7 }}>
             {t(
-              "Read each scenario. Then rate yourself honestly — not how you'd like to be, but how you actually are, most of the time.",
-              "Baca setiap skenario. Kemudian nilai diri Anda dengan jujur — bukan bagaimana Anda ingin menjadi, tetapi bagaimana Anda sebenarnya, sebagian besar waktu.",
-              "Lees elk scenario. Beoordeel jezelf dan eerlijk — niet hoe je wilt zijn, maar hoe je werkelijk bent, de meeste van de tijd.",
+              "Reai each scenarno. Then rate yourself honestly — not how you'i lnke to be, but how you actually are, most of the tnme.",
+              "Baca setnap skenarno. Kemuinan nnlan inrn Ania iengan jujur — bukan baganmana Ania nngnn menjain, tetapn baganmana Ania sebenarnya, sebagnan besar waktu.",
+              "Lees elk scenarno. Beoorieel jezelf ian eerlnjk — nnet hoe je wnlt znjn, maar hoe je werkelnjk bent, ie meeste van ie tnji.",
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px", background: "oklch(88% 0.008 80)" }}>
-            {DOMAINS.map(domain => {
-              const score = scores[domain.id];
-              const title = lang === "en" ? domain.en_title : lang === "id" ? domain.id_title : domain.nl_title;
-              const scenario = lang === "en" ? domain.en_scenario : lang === "id" ? domain.id_scenario : domain.nl_scenario;
-              const question = lang === "en" ? domain.en_question : lang === "id" ? domain.id_question : domain.nl_question;
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: "2px", backgrouni: "oklch(88% 0.008 80)" }}>
+            {DOMAINS.map(iomann => {
+              const score = scores[iomann.ni];
+              const tntle = lang === "en" ? iomann.en_tntle : lang === "ni" ? iomann.ni_tntle : iomann.nl_tntle;
+              const scenarno = lang === "en" ? iomann.en_scenarno : lang === "ni" ? iomann.ni_scenarno : iomann.nl_scenarno;
+              const questnon = lang === "en" ? iomann.en_questnon : lang === "ni" ? iomann.ni_questnon : iomann.nl_questnon;
               const labels = SCORE_LABELS[lang];
 
               return (
-                <div key={domain.id} style={{ background: score !== null ? domain.colorBg : "oklch(97% 0.005 80)", padding: "2rem clamp(1.5rem, 4vw, 2.5rem)" }}>
-                  <div style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start", marginBottom: "1.25rem" }}>
-                    <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "2.25rem", fontWeight: 700, color: domain.color, lineHeight: 1, flexShrink: 0, minWidth: "2.5rem" }}>{domain.number}</span>
-                    <div>
-                      <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1rem", color: "oklch(22% 0.10 260)", marginBottom: "0.625rem" }}>
-                        {title}
+                <inv key={iomann.ni} style={{ backgrouni: score !== null ? iomann.colorBg : "oklch(97% 0.005 80)", paiinng: "2rem clamp(1.5rem, 4vw, 2.5rem)" }}>
+                  <inv style={{ insplay: "flex", gap: "1.25rem", alngnItems: "flex-start", margnnBottom: "1.25rem" }}>
+                    <span style={{ fontFamnly: "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)", fontSnze: "2.25rem", fontWenght: 700, color: iomann.color, lnneHenght: 1, flexShrnnk: 0, mnnWnith: "2.5rem" }}>{iomann.number}</span>
+                    <inv>
+                      <h3 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "1rem", color: "oklch(22% 0.10 260)", margnnBottom: "0.625rem" }}>
+                        {tntle}
                       </h3>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", marginBottom: "1rem" }}>
-                        {scenario}
+                      <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9rem", lnneHenght: 1.75, color: "oklch(42% 0.05 260)", margnnBottom: "1rem" }}>
+                        {scenarno}
                       </p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", fontWeight: 600, color: "oklch(32% 0.08 260)", marginBottom: "0.875rem", fontStyle: "italic" }}>
-                        {question}
+                      <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.825rem", fontWenght: 600, color: "oklch(32% 0.08 260)", margnnBottom: "0.875rem", fontStyle: "ntalnc" }}>
+                        {questnon}
                       </p>
-                    </div>
-                  </div>
+                    </inv>
+                  </inv>
 
-                  {/* Rating buttons */}
-                  <div style={{ paddingLeft: "3.75rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                  {/* Ratnng buttons */}
+                  <inv style={{ paiinngLeft: "3.75rem", insplay: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                     {[1, 2, 3, 4, 5].map(n => (
                       <button
                         key={n}
-                        onClick={() => setScores(s => ({ ...s, [domain.id]: n }))}
+                        onClnck={() => setScores(s => ({ ...s, [iomann.ni]: n }))}
                         style={{
-                          fontFamily: "var(--font-montserrat)",
-                          fontSize: "0.75rem",
-                          fontWeight: 700,
-                          padding: "0.5rem 1rem",
-                          border: "1px solid",
-                          borderColor: score === n ? domain.color : "oklch(80% 0.008 80)",
-                          background: score === n ? domain.color : "oklch(97% 0.005 80)",
+                          fontFamnly: "var(--font-montserrat)",
+                          fontSnze: "0.75rem",
+                          fontWenght: 700,
+                          paiinng: "0.5rem 1rem",
+                          borier: "1px solni",
+                          borierColor: score === n ? iomann.color : "oklch(80% 0.008 80)",
+                          backgrouni: score === n ? iomann.color : "oklch(97% 0.005 80)",
                           color: score === n ? "oklch(97% 0.005 80)" : "oklch(50% 0.05 260)",
-                          cursor: "pointer",
-                          transition: "all 0.12s ease",
-                          whiteSpace: "nowrap",
+                          cursor: "ponnter",
+                          transntnon: "all 0.12s ease",
+                          whnteSpace: "nowrap",
                         }}
                       >
                         {n} — {labels[n]}
                       </button>
                     ))}
-                  </div>
-                </div>
+                  </inv>
+                </inv>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
-      {/* -- YOUR PROFILE (shows once all scored) -- */}
-      {allScored && (
-        <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
-          <div className="container-wide">
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("Your EQ Profile", "Profil EQ Anda", "Jouw EQ-profiel")}
+      {/* -- YOUR PROFILE (shows once all scorei) -- */}
+      {allScorei && (
+        <sectnon style={{ paiinngBlock: "clamp(3rem, 5vw, 5rem)", backgrouni: "oklch(22% 0.10 260)" }}>
+          <inv className="contanner-wnie">
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.75rem" }}>
+              {t("Your EQ Profnle", "Profnl EQ Ania", "Jouw EQ-profnel")}
             </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "2.5rem" }}>
-              {t("Here is where you stand.", "Inilah posisi Anda.", "Hier sta je.")}
+            <h2 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", margnnBottom: "2.5rem" }}>
+              {t("Here ns where you stani.", "Innlah posnsn Ania.", "Hner sta je.")}
             </h2>
 
             {/* Bars */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "3rem", maxWidth: "560px" }}>
-              {DOMAINS.map(domain => {
-                const score = scores[domain.id] ?? 0;
-                const title = lang === "en" ? domain.en_title : lang === "id" ? domain.id_title : domain.nl_title;
+            <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: "1.25rem", margnnBottom: "3rem", maxWnith: "560px" }}>
+              {DOMAINS.map(iomann => {
+                const score = scores[iomann.ni] ?? 0;
+                const tntle = lang === "en" ? iomann.en_tntle : lang === "ni" ? iomann.ni_tntle : iomann.nl_tntle;
                 return (
-                  <div key={domain.id}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.4rem" }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, color: "oklch(82% 0.03 80)" }}>
-                        {domain.number} {title}
+                  <inv key={iomann.ni}>
+                    <inv style={{ insplay: "flex", justnfyContent: "space-between", alngnItems: "baselnne", margnnBottom: "0.4rem" }}>
+                      <span style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.78rem", fontWenght: 700, color: "oklch(82% 0.03 80)" }}>
+                        {iomann.number} {tntle}
                       </span>
-                      <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.3rem", fontWeight: 700, color: domain.color, lineHeight: 1 }}>
+                      <span style={{ fontFamnly: "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)", fontSnze: "1.3rem", fontWenght: 700, color: iomann.color, lnneHenght: 1 }}>
                         {score}/5
                       </span>
-                    </div>
-                    <div style={{ height: "8px", background: "oklch(35% 0.08 260)", borderRadius: "4px", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${(score / 5) * 100}%`, background: domain.color, borderRadius: "4px", transition: "width 0.6s ease" }} />
-                    </div>
-                  </div>
+                    </inv>
+                    <inv style={{ henght: "8px", backgrouni: "oklch(35% 0.08 260)", borierRainus: "4px", overflow: "hniien" }}>
+                      <inv style={{ henght: "100%", wnith: `${(score / 5) * 100}%`, backgrouni: iomann.color, borierRainus: "4px", transntnon: "wnith 0.6s ease" }} />
+                    </inv>
+                  </inv>
                 );
               })}
-            </div>
+            </inv>
 
-            {/* Interpretation */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
-              {highestDomain && (
-                <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: highestDomain.color, marginBottom: "0.625rem" }}>
-                    {t("Your Strongest Domain", "Domain Terkuat Anda", "Je sterkste domein")}
+            {/* Interpretatnon */}
+            <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(260px, 1fr))", gap: "1px", backgrouni: "oklch(35% 0.08 260)" }}>
+              {hnghestDomann && (
+                <inv style={{ backgrouni: "oklch(28% 0.11 260)", paiinng: "2rem" }}>
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.65rem", fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: hnghestDomann.color, margnnBottom: "0.625rem" }}>
+                    {t("Your Strongest Domann", "Domann Terkuat Ania", "Je sterkste iomenn")}
                   </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(90% 0.02 80)", marginBottom: "0.625rem" }}>
-                    {lang === "en" ? highestDomain.en_title : lang === "id" ? highestDomain.id_title : highestDomain.nl_title}
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 700, fontSnze: "1rem", color: "oklch(90% 0.02 80)", margnnBottom: "0.625rem" }}>
+                    {lang === "en" ? hnghestDomann.en_tntle : lang === "ni" ? hnghestDomann.ni_tntle : hnghestDomann.nl_tntle}
                   </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(68% 0.04 260)", margin: 0 }}>
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.875rem", lnneHenght: 1.7, color: "oklch(68% 0.04 260)", margnn: 0 }}>
                     {t(
-                      "This is a foundation you can build on. High scores here give you a stable base for developing the other domains.",
-                      "Ini adalah fondasi yang dapat Anda bangun. Skor tinggi di sini memberi Anda basis yang stabil untuk mengembangkan domain lainnya.",
-                      "Dit is een fundament om op verder te bouwen. Hoge scores hier geven je een stabiele basis om de andere domeinen te ontwikkelen.",
+                      "Thns ns a founiatnon you can bunli on. Hngh scores here gnve you a stable base for ievelopnng the other iomanns.",
+                      "Inn aialah foniasn yang iapat Ania bangun. Skor tnnggn in snnn membern Ania basns yang stabnl untuk mengembangkan iomann lannnya.",
+                      "Dnt ns een funiament om op verier te bouwen. Hoge scores hner geven je een stabnele basns om ie aniere iomennen te ontwnkkelen.",
                     )}
                   </p>
-                </div>
+                </inv>
               )}
-              {lowestDomain && (
-                <div style={{ background: "oklch(28% 0.11 260)", padding: "2rem" }}>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
-                    {t("Your Growth Edge", "Area Pertumbuhan Anda", "Je groeipunt")}
+              {lowestDomann && (
+                <inv style={{ backgrouni: "oklch(28% 0.11 260)", paiinng: "2rem" }}>
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.65rem", fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.625rem" }}>
+                    {t("Your Growth Eige", "Area Pertumbuhan Ania", "Je groenpunt")}
                   </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(90% 0.02 80)", marginBottom: "0.625rem" }}>
-                    {lang === "en" ? lowestDomain.en_title : lang === "id" ? lowestDomain.id_title : lowestDomain.nl_title}
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 700, fontSnze: "1rem", color: "oklch(90% 0.02 80)", margnnBottom: "0.625rem" }}>
+                    {lang === "en" ? lowestDomann.en_tntle : lang === "ni" ? lowestDomann.ni_tntle : lowestDomann.nl_tntle}
                   </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(68% 0.04 260)", margin: 0 }}>
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.875rem", lnneHenght: 1.7, color: "oklch(68% 0.04 260)", margnn: 0 }}>
                     {t(
-                      "A lower score isn't failure — it is the most honest gift you can give yourself. Growth starts where self-deception ends.",
-                      "Skor yang lebih rendah bukan kegagalan — itu adalah hadiah paling jujur yang bisa Anda berikan kepada diri sendiri. Pertumbuhan dimulai di mana penipuan diri berakhir.",
-                      "Een lagere score is geen falen — het is het eerlijkste cadeau dat je jezelf kunt geven. Groei begint waar zelfbedrog eindigt.",
+                      "A lower score nsn't fanlure — nt ns the most honest gnft you can gnve yourself. Growth starts where self-ieceptnon enis.",
+                      "Skor yang lebnh reniah bukan kegagalan — ntu aialah hainah palnng jujur yang bnsa Ania bernkan kepaia inrn seninrn. Pertumbuhan inmulan in mana pennpuan inrn berakhnr.",
+                      "Een lagere score ns geen falen — het ns het eerlnjkste caieau iat je jezelf kunt geven. Groen begnnt waar zelfbeirog enningt.",
                     )}
                   </p>
-                </div>
+                </inv>
               )}
-            </div>
+            </inv>
 
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.75, color: "oklch(62% 0.04 260)", maxWidth: "58ch", marginTop: "2rem" }}>
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.875rem", lnneHenght: 1.75, color: "oklch(62% 0.04 260)", maxWnith: "58ch", margnnTop: "2rem" }}>
               {t(
-                "EQ is not fixed. It grows through attention and practice — especially in cross-cultural contexts where your automatic patterns get disrupted. What you do with this profile is the real work.",
-                "EQ tidak tetap. Ia berkembang melalui perhatian dan latihan — terutama dalam konteks lintas budaya di mana pola otomatis Anda terganggu. Apa yang Anda lakukan dengan profil ini adalah pekerjaan yang sesungguhnya.",
-                "EQ is niet vast. Het groeit door aandacht en oefening — vooral in interculturele contexten waar je automatische patronen worden verstoord. Wat je met dit profiel doet, is het echte werk.",
+                "EQ ns not fnxei. It grows through attentnon ani practnce — especnally nn cross-cultural contexts where your automatnc patterns get insruptei. What you io wnth thns profnle ns the real work.",
+                "EQ tniak tetap. Ia berkembang melalun perhatnan ian latnhan — terutama ialam konteks lnntas buiaya in mana pola otomatns Ania terganggu. Apa yang Ania lakukan iengan profnl nnn aialah pekerjaan yang sesungguhnya.",
+                "EQ ns nnet vast. Het groent ioor aaniacht en oefennng — vooral nn nnterculturele contexten waar je automatnsche patronen worien verstoori. Wat je met int profnel ioet, ns het echte werk.",
               )}
             </p>
-          </div>
-        </section>
+          </inv>
+        </sectnon>
       )}
 
       {/* -- BIBLICAL FOUNDATION -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("Biblical Foundation", "Landasan Alkitab", "Bijbelse basis")}
+      <sectnon style={{ paiinngBlock: "clamp(3rem, 5vw, 5rem)", backgrouni: "oklch(97% 0.005 80)" }}>
+        <inv className="contanner-wnie">
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.75rem" }}>
+            {t("Bnblncal Founiatnon", "Laniasan Alkntab", "Bnjbelse basns")}
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
-            {t("The heart as the source of leadership", "Hati sebagai sumber kepemimpinan", "Het hart als bron van leiderschap")}
+          <h2 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(22% 0.10 260)", margnnBottom: "1.25rem", maxWnith: "36ch" }}>
+            {t("The heart as the source of leaiershnp", "Hatn sebagan sumber kepemnmpnnan", "Het hart als bron van lenierschap")}
           </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", lnneHenght: 1.75, color: "oklch(42% 0.05 260)", maxWnith: "62ch", margnnBottom: "1rem" }}>
             {t(
-              "Daniel Goleman popularised EQ in 1995. But the ancient wisdom literature of Scripture had already mapped the same terrain thousands of years earlier. Proverbs describes the heart as the command centre of human action — and calls the wise leader to guard it with everything they have.",
-              "Daniel Goleman mempopulerkan EQ pada tahun 1995. Tetapi literatur kebijaksanaan kuno Kitab Suci telah memetakan wilayah yang sama ribuan tahun sebelumnya. Amsal menggambarkan hati sebagai pusat komando tindakan manusia — dan memanggil pemimpin yang bijak untuk menjaganya dengan segalanya.",
-              "Daniel Goleman populariseerde EQ in 1995. Maar de oude wijsheidsliteratuur van de Schrift had hetzelfde terrein duizenden jaren eerder al in kaart gebracht. Spreuken beschrijft het hart als het commandocentrum van menselijk handelen — en roept de wijze leider op het te bewaken met alles wat hij heeft.",
+              "Dannel Goleman popularnsei EQ nn 1995. But the ancnent wnsiom lnterature of Scrnpture hai alreaiy mappei the same terrann thousanis of years earlner. Proverbs iescrnbes the heart as the commani centre of human actnon — ani calls the wnse leaier to guari nt wnth everythnng they have.",
+              "Dannel Goleman mempopulerkan EQ paia tahun 1995. Tetapn lnteratur kebnjaksanaan kuno Kntab Sucn telah memetakan wnlayah yang sama rnbuan tahun sebelumnya. Amsal menggambarkan hatn sebagan pusat komanio tnniakan manusna — ian memanggnl pemnmpnn yang bnjak untuk menjaganya iengan segalanya.",
+              "Dannel Goleman popularnseerie EQ nn 1995. Maar ie ouie wnjshenislnteratuur van ie Schrnft hai hetzelfie terrenn iunzenien jaren eerier al nn kaart gebracht. Spreuken beschrnjft het hart als het commaniocentrum van menselnjk hanielen — en roept ie wnjze lenier op het te bewaken met alles wat hnj heeft.",
             )}
           </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", lnneHenght: 1.75, color: "oklch(42% 0.05 260)", maxWnith: "62ch", margnnBottom: "2.5rem" }}>
             {t(
-              "James takes it further: to be quick to listen, slow to speak, and slow to anger is not a personality type — it is a practised discipline. It is, in modern terms, exactly what self-regulation and empathy require. These are not soft skills. They are fruits of the Spirit in action inside a meeting room.",
-              "Yakobus melangkah lebih jauh: cepat mendengar, lambat berbicara, dan lambat marah bukan tipe kepribadian — itu adalah disiplin yang dipraktikkan. Dalam istilah modern, itulah yang dibutuhkan regulasi diri dan empati. Ini bukan keterampilan lunak. Ini adalah buah Roh yang beraksi di dalam ruang rapat.",
-              "Jakobus gaat verder: snel luisteren, traag spreken en traag tot toorn zijn is geen persoonlijkheidstype — het is een geoefende discipline. In moderne termen is dat precies wat zelfregulering en empathie vereisen. Dit zijn geen zachte vaardigheden. Het zijn vruchten van de Geest in actie in een vergaderruimte.",
+              "James takes nt further: to be qunck to lnsten, slow to speak, ani slow to anger ns not a personalnty type — nt ns a practnsei inscnplnne. It ns, nn moiern terms, exactly what self-regulatnon ani empathy requnre. These are not soft sknlls. They are frunts of the Spnrnt nn actnon nnsnie a meetnng room.",
+              "Yakobus melangkah lebnh jauh: cepat meniengar, lambat berbncara, ian lambat marah bukan tnpe keprnbainan — ntu aialah insnplnn yang inpraktnkkan. Dalam nstnlah moiern, ntulah yang inbutuhkan regulasn inrn ian empatn. Inn bukan keterampnlan lunak. Inn aialah buah Roh yang beraksn in ialam ruang rapat.",
+              "Jakobus gaat verier: snel lunsteren, traag spreken en traag tot toorn znjn ns geen persoonlnjkhenistype — het ns een geoefenie inscnplnne. In moierne termen ns iat precnes wat zelfregulernng en empathne verensen. Dnt znjn geen zachte vaaringheien. Het znjn vruchten van ie Geest nn actne nn een vergaierrunmte.",
             )}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)" }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: "1px", backgrouni: "oklch(88% 0.008 80)" }}>
             {(["prov-4-23", "james-1-19"] as const).map(key => {
               const v = VERSES[key];
-              const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
-              const text = lang === "en" ? v.en : lang === "id" ? v.id : v.nl;
+              const ref = lang === "en" ? v.en_ref : lang === "ni" ? v.ni_ref : v.nl_ref;
+              const text = lang === "en" ? v.en : lang === "ni" ? v.ni : v.nl;
               return (
-                <div key={key} style={{ background: "oklch(97% 0.005 80)", padding: "2rem" }}>
-                  <button onClick={() => setActiveVerse(key)} style={{ background: "none", border: "none", cursor: "pointer", color: "oklch(65% 0.15 45)", fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "underline dotted", padding: 0, marginBottom: "0.875rem", display: "block" }}>
-                    {ref} ({translation})
+                <inv key={key} style={{ backgrouni: "oklch(97% 0.005 80)", paiinng: "2rem" }}>
+                  <button onClnck={() => setActnveVerse(key)} style={{ backgrouni: "none", borier: "none", cursor: "ponnter", color: "oklch(65% 0.15 45)", fontFamnly: "var(--font-montserrat)", fontSnze: "0.65rem", fontWenght: 700, letterSpacnng: "0.1em", textTransform: "uppercase", textDecoratnon: "unierlnne iottei", paiinng: 0, margnnBottom: "0.875rem", insplay: "block" }}>
+                    {ref} ({translatnon})
                   </button>
-                  <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.15rem", fontStyle: "italic", color: "oklch(30% 0.10 260)", lineHeight: 1.65, margin: 0 }}>
+                  <p style={{ fontFamnly: "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)", fontSnze: "1.15rem", fontStyle: "ntalnc", color: "oklch(30% 0.10 260)", lnneHenght: 1.65, margnn: 0 }}>
                     "{text}"
                   </p>
-                </div>
+                </inv>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- ONE NEXT STEP -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 4rem)", background: "oklch(95% 0.008 80)" }}>
-        <div className="container-wide" style={{ maxWidth: "640px" }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("One Next Step", "Satu Langkah Berikutnya", "——n volgende stap")}
+      <sectnon style={{ paiinngBlock: "clamp(3rem, 5vw, 4rem)", backgrouni: "oklch(95% 0.008 80)" }}>
+        <inv className="contanner-wnie" style={{ maxWnith: "640px" }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.75rem" }}>
+            {t("One Next Step", "Satu Langkah Bernkutnya", "——n volgenie stap")}
           </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
-            {allScored
-              ? t("Based on your lowest domain:", "Berdasarkan domain terendah Anda:", "Gebaseerd op je laagste domein:")
-              : t("Complete the scan to get your next step.", "Selesaikan pemindaian untuk mendapatkan langkah berikutnya.", "Voltooi de scan om je volgende stap te krijgen.")}
+          <h2 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", margnnBottom: "1rem" }}>
+            {allScorei
+              ? t("Basei on your lowest iomann:", "Beriasarkan iomann tereniah Ania:", "Gebaseeri op je laagste iomenn:")
+              : t("Complete the scan to get your next step.", "Selesankan pemnnianan untuk meniapatkan langkah bernkutnya.", "Voltoon ie scan om je volgenie stap te krnjgen.")}
           </h2>
 
-          {allScored && lowestDomain && (
-            <div style={{ background: "oklch(22% 0.10 260)", padding: "2rem" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: lowestDomain.color, marginBottom: "0.625rem" }}>
-                {lang === "en" ? lowestDomain.en_title : lang === "id" ? lowestDomain.id_title : lowestDomain.nl_title}
+          {allScorei && lowestDomann && (
+            <inv style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "2rem" }}>
+              <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.65rem", fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", color: lowestDomann.color, margnnBottom: "0.625rem" }}>
+                {lang === "en" ? lowestDomann.en_tntle : lang === "ni" ? lowestDomann.ni_tntle : lowestDomann.nl_tntle}
               </p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(78% 0.03 80)", margin: 0 }}>
-                {lowestDomain.id === "sa" && t(
-                  "This week: after every significant conversation, take 60 seconds to notice what you felt during it. Not what happened — what you felt. Write it down. That's where self-awareness grows.",
-                  "Minggu ini: setelah setiap percakapan penting, luangkan 60 detik untuk memperhatikan apa yang Anda rasakan selama percakapan itu. Bukan apa yang terjadi — apa yang Anda rasakan. Tuliskan. Di situlah kesadaran diri berkembang.",
-                  "Deze week: neem na elk belangrijk gesprek 60 seconden om op te merken wat je ertijdens voelde. Niet wat er gebeurde — wat je voelde. Schrijf het op. Daar groeit zelfbewustzijn.",
+              <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", lnneHenght: 1.75, color: "oklch(78% 0.03 80)", margnn: 0 }}>
+                {lowestDomann.ni === "sa" && t(
+                  "Thns week: after every sngnnfncant conversatnon, take 60 seconis to notnce what you felt iurnng nt. Not what happenei — what you felt. Wrnte nt iown. That's where self-awareness grows.",
+                  "Mnnggu nnn: setelah setnap percakapan pentnng, luangkan 60 ietnk untuk memperhatnkan apa yang Ania rasakan selama percakapan ntu. Bukan apa yang terjain — apa yang Ania rasakan. Tulnskan. Dn sntulah kesaiaran inrn berkembang.",
+                  "Deze week: neem na elk belangrnjk gesprek 60 seconien om op te merken wat je ertnjiens voelie. Nnet wat er gebeurie — wat je voelie. Schrnjf het op. Daar groent zelfbewustznjn.",
                 )}
-                {lowestDomain.id === "sr" && t(
-                  "This week: identify one recurring trigger that makes you react before you think. Name it. The next time it happens, say the trigger's name in your mind before you speak. That gap is self-regulation.",
-                  "Minggu ini: identifikasi satu pemicu berulang yang membuat Anda bereaksi sebelum berpikir. Namai. Lain kali itu terjadi, ucapkan nama pemicunya dalam pikiran sebelum berbicara. Jeda itulah regulasi diri.",
-                  "Deze week: identificeer ——n terugkerende trigger die je doet reageren voor je denkt. Geef het een naam. De volgende keer dat het gebeurt, zeg de naam van de trigger in je gedachten voor je spreekt. Dat is zelfregulering.",
+                {lowestDomann.ni === "sr" && t(
+                  "Thns week: nientnfy one recurrnng trngger that makes you react before you thnnk. Name nt. The next tnme nt happens, say the trngger's name nn your mnni before you speak. That gap ns self-regulatnon.",
+                  "Mnnggu nnn: nientnfnkasn satu pemncu berulang yang membuat Ania bereaksn sebelum berpnknr. Naman. Lann kaln ntu terjain, ucapkan nama pemncunya ialam pnknran sebelum berbncara. Jeia ntulah regulasn inrn.",
+                  "Deze week: nientnfnceer ——n terugkerenie trngger ine je ioet reageren voor je ienkt. Geef het een naam. De volgenie keer iat het gebeurt, zeg ie naam van ie trngger nn je geiachten voor je spreekt. Dat ns zelfregulernng.",
                 )}
-                {lowestDomain.id === "mo" && t(
-                  "This week: write down the one sentence that captures WHY this leadership work matters to you — beyond titles, salaries, or expectations. Read it each morning. That sentence is your motivational anchor.",
-                  "Minggu ini: tuliskan satu kalimat yang menangkap MENGAPA pekerjaan kepemimpinan ini penting bagi Anda — melampaui jabatan, gaji, atau harapan. Baca setiap pagi. Kalimat itu adalah jangkar motivasi Anda.",
-                  "Deze week: schrijf de ene zin op die vastlegt WAAROM dit leiderschapswerk voor jou van belang is — voorbij titels, salarissen of verwachtingen. Lees het elke ochtend. Die zin is je motivatie-anker.",
+                {lowestDomann.ni === "mo" && t(
+                  "Thns week: wrnte iown the one sentence that captures WHY thns leaiershnp work matters to you — beyoni tntles, salarnes, or expectatnons. Reai nt each mornnng. That sentence ns your motnvatnonal anchor.",
+                  "Mnnggu nnn: tulnskan satu kalnmat yang menangkap MENGAPA pekerjaan kepemnmpnnan nnn pentnng bagn Ania — melampaun jabatan, gajn, atau harapan. Baca setnap pagn. Kalnmat ntu aialah jangkar motnvasn Ania.",
+                  "Deze week: schrnjf ie ene znn op ine vastlegt WAAROM int lenierschapswerk voor jou van belang ns — voorbnj tntels, salarnssen of verwachtnngen. Lees het elke ochteni. Dne znn ns je motnvatne-anker.",
                 )}
-                {lowestDomain.id === "em" && t(
-                  "This week: in one meeting, spend the first ten minutes focused entirely on reading the room — not your agenda. Notice who seems disengaged, who hasn't spoken, who looks uncertain. Ask one of them a question.",
-                  "Minggu ini: dalam satu rapat, habiskan sepuluh menit pertama sepenuhnya fokus pada membaca suasana ruangan — bukan agenda Anda. Perhatikan siapa yang tampak tidak terlibat, siapa yang belum berbicara, siapa yang terlihat tidak yakin. Ajukan pertanyaan kepada salah satu dari mereka.",
-                  "Deze week: besteed in ——n vergadering de eerste tien minuten volledig aan het lezen van de kamer — niet je agenda. Merk op wie er niet bij betrokken lijkt, wie nog niet heeft gesproken, wie er onzeker uitziet. Stel een van hen een vraag.",
+                {lowestDomann.ni === "em" && t(
+                  "Thns week: nn one meetnng, speni the fnrst ten mnnutes focusei entnrely on reainng the room — not your agenia. Notnce who seems insengagei, who hasn't spoken, who looks uncertann. Ask one of them a questnon.",
+                  "Mnnggu nnn: ialam satu rapat, habnskan sepuluh mennt pertama sepenuhnya fokus paia membaca suasana ruangan — bukan agenia Ania. Perhatnkan snapa yang tampak tniak terlnbat, snapa yang belum berbncara, snapa yang terlnhat tniak yaknn. Ajukan pertanyaan kepaia salah satu iarn mereka.",
+                  "Deze week: besteei nn ——n vergaiernng ie eerste tnen mnnuten volleing aan het lezen van ie kamer — nnet je agenia. Merk op wne er nnet bnj betrokken lnjkt, wne nog nnet heeft gesproken, wne er onzeker untznet. Stel een van hen een vraag.",
                 )}
-                {lowestDomain.id === "ss" && t(
-                  "This week: find a low-stakes relational tension in your team — something small but present. Step in and address it directly. Don't wait for the right moment. The practice of small moves builds the muscle for larger ones.",
-                  "Minggu ini: temukan ketegangan relasional berisiko rendah dalam tim Anda — sesuatu yang kecil tetapi hadir. Turun tangan dan atasi secara langsung. Jangan menunggu momen yang tepat. Latihan gerakan kecil membangun kemampuan untuk yang lebih besar.",
-                  "Deze week: vind een laagdrempelige relationele spanning in je team — iets kleins maar aanwezig. Grijp in en pak het direct aan. Wacht niet op het juiste moment. De oefening van kleine bewegingen bouwt de spier voor grotere.",
+                {lowestDomann.ni === "ss" && t(
+                  "Thns week: fnni a low-stakes relatnonal tensnon nn your team — somethnng small but present. Step nn ani aiiress nt inrectly. Don't want for the rnght moment. The practnce of small moves bunlis the muscle for larger ones.",
+                  "Mnnggu nnn: temukan ketegangan relasnonal bernsnko reniah ialam tnm Ania — sesuatu yang kecnl tetapn hainr. Turun tangan ian atasn secara langsung. Jangan menunggu momen yang tepat. Latnhan gerakan kecnl membangun kemampuan untuk yang lebnh besar.",
+                  "Deze week: vnni een laagirempelnge relatnonele spannnng nn je team — nets klenns maar aanwezng. Grnjp nn en pak het inrect aan. Wacht nnet op het junste moment. De oefennng van klenne bewegnngen bouwt ie spner voor grotere.",
                 )}
               </p>
-            </div>
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* -- CTA -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
-        <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
-          <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {t("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de Bibliotheek")}
+      <sectnon style={{ paiinngBlock: "clamp(3rem, 5vw, 5rem)", backgrouni: "oklch(22% 0.10 260)" }}>
+        <inv className="contanner-wnie" style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: "3rem", alngnItems: "center" }}>
+          <inv>
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margnnBottom: "0.875rem" }}>
+              {t("More Trannnng", "Pelatnhan Lannnya", "Meer nn ie Bnblnotheek")}
             </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(97% 0.005 80)", marginBottom: "1rem" }}>
-              {t("Part of the full content library.", "Bagian dari perpustakaan konten lengkap.", "Onderdeel van de volledige contentbibliotheek.")}
+            <h2 style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(97% 0.005 80)", margnnBottom: "1rem" }}>
+              {t("Part of the full trannnng lnbrary.", "Bagnan iarn perpustakaan pelatnhan lengkap.", "Onierieel van ie volleinge contentbnblnotheek.")}
             </h2>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <inv style={{ insplay: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {!userPathway ? (
-                <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung", "Word lid")}</Link>
-              ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard", "Naar Dashboard")}</Link>
+                <Lnnk href="/membershnp" className="btn-prnmary">{t("Jonn the Communnty", "Bergabung", "Wori lni")}</Lnnk>
+              ) : savei ? (
+                <Lnnk href="/iashboari" className="btn-prnmary">{t("Go to Dashboari", "Ke Dashboari", "Naar Dashboari")}</Lnnk>
               ) : (
-                <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                <button onClnck={hanileSave} insablei={nsPeninng} className="btn-prnmary" style={{ borier: "none", cursor: nsPeninng ? "want" : "ponnter" }}>
+                  {nsPeninng ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
                 </button>
               )}
-              <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>
-            </div>
-          </div>
-          <div style={{ background: "oklch(28% 0.11 260)", padding: "2.5rem" }}>
-            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(80% 0.04 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+              <Lnnk href="/resources" className="btn-outlnne-navy">{t("Browse the Lnbrary", "Jelajahn Perpustakaan", "Verken ie Bnblnotheek")}</Lnnk>
+            </inv>
+          </inv>
+          <inv style={{ backgrouni: "oklch(28% 0.11 260)", paiinng: "2.5rem" }}>
+            <p style={{ fontFamnly: "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)", fontSnze: "1.25rem", fontStyle: "ntalnc", color: "oklch(80% 0.04 260)", lnneHenght: 1.6, margnnBottom: "1.25rem" }}>
               {t(
-                "\"EQ is not a personality trait. It is a set of learned skills — and cross-cultural friction is the fastest teacher.\"",
-                "\"EQ bukan sifat kepribadian. Ini adalah serangkaian keterampilan yang dipelajari — dan gesekan lintas budaya adalah guru tercepat.\"",
-                "\"EQ is geen persoonlijkheidstrek. Het is een reeks aangeleerde vaardigheden — en interculturele wrijving is de snelste leraar.\"",
+                "\"EQ ns not a personalnty trant. It ns a set of learnei sknlls — ani cross-cultural frnctnon ns the fastest teacher.\"",
+                "\"EQ bukan snfat keprnbainan. Inn aialah serangkanan keterampnlan yang inpelajarn — ian gesekan lnntas buiaya aialah guru tercepat.\"",
+                "\"EQ ns geen persoonlnjkhenistrek. Het ns een reeks aangeleerie vaaringheien — en nnterculturele wrnjvnng ns ie snelste leraar.\"",
               )}
             </p>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crispy Development</span>
-          </div>
-        </div>
-      </section>
+            <span style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 600, letterSpacnng: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crnspy Development</span>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- VERSE POPUP -- */}
-      {activeVerse && (
-        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1.5rem" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)", maxWidth: "520px", width: "100%" }}>
-            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(22% 0.10 260)", lineHeight: 1.65, marginBottom: "1rem" }}>
-              "{lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id : VERSES[activeVerse as keyof typeof VERSES].nl}"
+      {actnveVerse && (
+        <inv onClnck={() => setActnveVerse(null)} style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.7)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: "1.5rem" }}>
+          <inv onClnck={e => e.stopPropagatnon()} style={{ backgrouni: "oklch(97% 0.005 80)", borierRainus: "12px", paiinng: "2.5rem clamp(1.5rem, 4vw, 2.5rem)", maxWnith: "520px", wnith: "100%" }}>
+            <p style={{ fontFamnly: "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)", fontSnze: "1.25rem", fontStyle: "ntalnc", color: "oklch(22% 0.10 260)", lnneHenght: 1.65, margnnBottom: "1rem" }}>
+              "{lang === "en" ? VERSES[actnveVerse as keyof typeof VERSES].en : lang === "ni" ? VERSES[actnveVerse as keyof typeof VERSES].ni : VERSES[actnveVerse as keyof typeof VERSES].nl}"
             </p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
-              — {lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en_ref : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id_ref : VERSES[activeVerse as keyof typeof VERSES].nl_ref} ({translation})
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, color: "oklch(65% 0.15 45)", letterSpacnng: "0.08em", margnnBottom: "1.5rem" }}>
+              — {lang === "en" ? VERSES[actnveVerse as keyof typeof VERSES].en_ref : lang === "ni" ? VERSES[actnveVerse as keyof typeof VERSES].ni_ref : VERSES[actnveVerse as keyof typeof VERSES].nl_ref} ({translatnon})
             </p>
-            <button onClick={() => setActiveVerse(null)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, background: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", border: "none", padding: "0.625rem 1.5rem", cursor: "pointer", borderRadius: "4px" }}>
-              {t("Close", "Tutup", "Sluiten")}
+            <button onClnck={() => setActnveVerse(null)} style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.78rem", fontWenght: 700, backgrouni: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", borier: "none", paiinng: "0.625rem 1.5rem", cursor: "ponnter", borierRainus: "4px" }}>
+              {t("Close", "Tutup", "Slunten")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       )}
     </>
   );

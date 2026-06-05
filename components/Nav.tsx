@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 import type { Lang } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
+import AccountMenu from "@/components/AccountMenu";
 
 const LANGUAGES: { code: Lang; flag: string; label: string; available: boolean }[] = [
   { code: "en", flag: "🌐", label: "English", available: true },
@@ -20,13 +21,14 @@ const LANGUAGES: { code: Lang; flag: string; label: string; available: boolean }
 export default function Nav({ initialFirstName = null }: { initialFirstName?: string | null }) {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [avatarOpen, setAvatarOpen] = useState(false);
   const [pathwaysOpen, setPathwaysOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const avatarRef = useRef<HTMLDivElement>(null);
   const pathwaysRef = useRef<HTMLDivElement>(null);
   const resourcesRef = useRef<HTMLDivElement>(null);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>("");
+  const [contentLang, setContentLang] = useState<"en" | "id">("en");
   const { lang, setLang, t } = useLanguage();
   const [firstName, setFirstName] = useState<string | null>(initialFirstName);
 
@@ -34,9 +36,6 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
     function handleClick(e: MouseEvent) {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
         setLangOpen(false);
-      }
-      if (avatarRef.current && !avatarRef.current.contains(e.target as Node)) {
-        setAvatarOpen(false);
       }
       if (pathwaysRef.current && !pathwaysRef.current.contains(e.target as Node)) {
         setPathwaysOpen(false);
@@ -54,21 +53,28 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setFirstName(user.user_metadata?.first_name ?? user.email?.split("@")[0] ?? "Me");
+        setLastName(user.user_metadata?.last_name ?? null);
+        setEmail(user.email ?? "");
+        setContentLang((user.user_metadata?.language_preference as "en" | "id") ?? "en");
       }
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setFirstName(session.user.user_metadata?.first_name ?? session.user.email?.split("@")[0] ?? "Me");
+        setLastName(session.user.user_metadata?.last_name ?? null);
+        setEmail(session.user.email ?? "");
+        setContentLang((session.user.user_metadata?.language_preference as "en" | "id") ?? "en");
       } else {
         setFirstName(null);
+        setLastName(null);
+        setEmail("");
+        setContentLang("en");
       }
     });
     return () => subscription.unsubscribe();
   }, []);
 
   const pathname = usePathname();
-  const currentLang = LANGUAGES.find(l => l.code === lang) ?? LANGUAGES[0];
-  const initials = firstName ? firstName[0].toUpperCase() : "?";
 
   return (
     <header style={{
@@ -143,7 +149,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               {resourcesOpen && (
                 <div style={{ position: "absolute", top: "calc(100% + 10px)", left: 0, background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)", minWidth: "180px", zIndex: 100 }}>
                   {[
-                    { label: "Content Library", href: "/resources" },
+                    { label: "Training", href: "/resources" },
                     { label: "Courses", href: "/courses" },
                     { label: "Worth Reading", href: "/articles" },
                   ].map(item => (
@@ -168,53 +174,8 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
                 </Link>
 
                 {/* Profile avatar with dropdown */}
-                <div ref={avatarRef} style={{ position: "relative" }} className="hidden-mobile">
-                  <button
-                    onClick={() => setAvatarOpen(o => !o)}
-                    style={{ display: "flex", alignItems: "center", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-                    aria-label="Profile menu"
-                  >
-                    <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "oklch(65% 0.15 45)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(97% 0.005 80)", letterSpacing: "0.02em" }}>{initials}</span>
-                    </div>
-                  </button>
-
-                  {avatarOpen && (
-                    <div style={{ position: "absolute", right: 0, top: "calc(100% + 0.625rem)", background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", minWidth: "210px", zIndex: 100, boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)" }}>
-                      {/* Name */}
-                      <div style={{ padding: "0.75rem 1rem", borderBottom: "1px solid oklch(92% 0.006 80)" }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(22% 0.005 260)", margin: 0 }}>{firstName}</p>
-                      </div>
-
-                      {/* Language */}
-                      <div style={{ padding: "0.75rem 1rem" }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.008 260)", marginBottom: "0.5rem" }}>Site Language</p>
-                        <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)" }}>
-                          {LANGUAGES.filter(l => l.available).map(l => (
-                            <button
-                              key={l.code}
-                              onClick={() => { setLang(l.code); setAvatarOpen(false); }}
-                              style={{
-                                fontFamily: "var(--font-montserrat)",
-                                fontSize: "0.62rem",
-                                fontWeight: 700,
-                                letterSpacing: "0.08em",
-                                padding: "0.25rem 0.625rem",
-                                background: l.code === lang ? "oklch(65% 0.15 45)" : "transparent",
-                                color: l.code === lang ? "oklch(97% 0.005 80)" : "oklch(62% 0.06 260)",
-                                border: "none",
-                                cursor: "pointer",
-                                borderRadius: 999,
-                                transition: "background 0.15s, color 0.15s",
-                              }}
-                            >
-                              {l.code.toUpperCase()}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                <div className="hidden-mobile">
+                  <AccountMenu firstName={firstName!} lastName={lastName ?? undefined} email={email} currentLanguage={contentLang} />
                 </div>
               </>
             ) : (
@@ -284,7 +245,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Resources</p>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Content Library
+              Training
             </Link>
             <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Courses

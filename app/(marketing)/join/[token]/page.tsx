@@ -85,7 +85,7 @@ export default async function MemberInvitePage({
           maxWidth: "42ch",
         }}>
           You have been personally invited to join this platform for Christian cross-cultural leaders.
-          Create your account to access the full library and your personal dashboard.
+          Create your account to access all 53 training modules and your personal dashboard.
         </p>
 
         {invite.personal_note && (

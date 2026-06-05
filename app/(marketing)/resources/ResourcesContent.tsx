@@ -24,7 +24,7 @@ const FORMAT_COLORS: Record<string, string> = {
 };
 
 const SECTION_ORDER = [
-  { key: "assessments",        label: "Assessments",          labelId: "Penilaian" },
+  { key: "assessments",        label: "Assessments",          labelId: "Asesmen" },
   { key: "cross-cultural",     label: "Cross-Cultural",       labelId: "Lintas Budaya" },
   { key: "leadership",         label: "Leadership",           labelId: "Kepemimpinan" },
   { key: "team-facilitation",  label: "Team & Facilitation",  labelId: "Tim & Fasilitasi" },
@@ -457,12 +457,12 @@ export default function ResourcesContent({
             <div style={{ maxWidth: "560px", paddingLeft: "2.5rem" }}>
               <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>{r.label}</p>
               <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1.25rem" }}>
-                {lang === "id" ? "Akses perpustakaan lengkap." : "Get access to the full library."}
+                {lang === "id" ? "Jelajahi semua modul pelatihan." : "Explore all training modules."}
               </h2>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
                 {lang === "id"
-                  ? "Sumber daya kepemimpinan lintas budaya, penilaian, dan alat tim — untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
-                  : "Leadership resources, assessments, and team tools — all for Christian cross-cultural leaders. Apply to join."}
+                  ? "53 modul pelatihan mandiri untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
+                  : "53 self-paced training modules for Christian cross-cultural leaders. Apply to join."}
               </p>
               <Link href="/membership" className="btn-primary" style={{ display: "inline-flex" }}>
                 {lang === "id" ? "Daftar keanggotaan →" : "Apply for membership →"}

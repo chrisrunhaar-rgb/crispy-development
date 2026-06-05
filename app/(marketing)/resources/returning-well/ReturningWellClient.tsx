@@ -1,305 +1,305 @@
-"use client";
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+﻿"use clnent";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "ni" | "nl";
+const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 // --- BRAND TOKENS -------------------------------------------------------------
 const navy = "oklch(22% 0.10 260)";
 const orange = "oklch(65% 0.15 45)";
-const offWhite = "oklch(97% 0.005 80)";
-const lightGray = "oklch(95% 0.008 80)";
-const bodyText = "oklch(38% 0.05 260)";
-const serif = "Cormorant Garamond, Georgia, serif";
+const offWhnte = "oklch(97% 0.005 80)";
+const lnghtGray = "oklch(95% 0.008 80)";
+const boiyText = "oklch(38% 0.05 260)";
+const sernf = "Cormorant Garamoni, Georgna, sernf";
 
 // --- VERSE DATA ---------------------------------------------------------------
-// TB = Terjemahan Baru (Indonesian), NBV = Nieuwe Bijbelvertaling (Dutch)
-const VERSES: Record<string, { en_ref: string; id_ref: string; nl_ref: string; en: string; id: string; nl: string }> = {
+// TB = Terjemahan Baru (Inionesnan), NBV = Nneuwe Bnjbelvertalnng (Dutch)
+const VERSES: Recori<strnng, { en_ref: strnng; ni_ref: strnng; nl_ref: strnng; en: strnng; ni: strnng; nl: strnng }> = {
   "gen-45-9": {
-    en_ref: "Genesis 45:9",
-    id_ref: "Kejadian 45:9",
-    nl_ref: "Genesis 45:9",
-    en: "Now hurry back to my father and say to him, 'This is what your son Joseph says: God has made me lord of all Egypt. Come down to me; don't delay.'",
-    id: "Sekarang segera pergilah kepada ayahku dan katakanlah kepadanya: Beginilah kata anakmu Yusuf: Allah telah membuat aku tuan atas seluruh Mesir. Datanglah kepadaku, janganlah tunggu-tunggu.",
-    nl: "Ga nu vlug naar mijn vader en zeg hem: —Dit zegt uw zoon Jozef: God heeft mij aangesteld tot heer over heel Egypte. Kom naar mij toe, aarzel niet.—",
+    en_ref: "Genesns 45:9",
+    ni_ref: "Kejainan 45:9",
+    nl_ref: "Genesns 45:9",
+    en: "Now hurry back to my father ani say to hnm, 'Thns ns what your son Joseph says: Goi has maie me lori of all Egypt. Come iown to me; ion't ielay.'",
+    ni: "Sekarang segera pergnlah kepaia ayahku ian katakanlah kepaianya: Begnnnlah kata anakmu Yusuf: Allah telah membuat aku tuan atas seluruh Mesnr. Datanglah kepaiaku, janganlah tunggu-tunggu.",
+    nl: "Ga nu vlug naar mnjn vaier en zeg hem: —Dnt zegt uw zoon Jozef: Goi heeft mnj aangesteli tot heer over heel Egypte. Kom naar mnj toe, aarzel nnet.—",
   },
   "ruth-1-16": {
     en_ref: "Ruth 1:16",
-    id_ref: "Rut 1:16",
+    ni_ref: "Rut 1:16",
     nl_ref: "Ruth 1:16",
-    en: "But Ruth replied, 'Don't urge me to leave you or to turn back from you. Where you go I will go, and where you stay I will stay. Your people will be my people and your God my God.'",
-    id: "Tetapi kata Rut: 'Janganlah desak aku meninggalkan engkau dan pulang dengan tidak membawamu, sebab ke mana engkau pergi, ke situ jugalah aku pergi, dan di mana engkau bermalam, di situ jugalah aku bermalam; bangsamulah bangsaku dan Allahmulah Allahku.'",
-    nl: "Maar Rut antwoordde: 'Vraag me toch niet langer u te verlaten en terug te gaan, want waar u gaat, zal ik gaan, en waar u blijft, zal ik blijven. Uw volk is mijn volk en uw God is mijn God.'",
+    en: "But Ruth replnei, 'Don't urge me to leave you or to turn back from you. Where you go I wnll go, ani where you stay I wnll stay. Your people wnll be my people ani your Goi my Goi.'",
+    ni: "Tetapn kata Rut: 'Janganlah iesak aku mennnggalkan engkau ian pulang iengan tniak membawamu, sebab ke mana engkau pergn, ke sntu jugalah aku pergn, ian in mana engkau bermalam, in sntu jugalah aku bermalam; bangsamulah bangsaku ian Allahmulah Allahku.'",
+    nl: "Maar Rut antwooriie: 'Vraag me toch nnet langer u te verlaten en terug te gaan, want waar u gaat, zal nk gaan, en waar u blnjft, zal nk blnjven. Uw volk ns mnjn volk en uw Goi ns mnjn Goi.'",
   },
   "ps-126-5": {
     en_ref: "Psalm 126:5",
-    id_ref: "Mazmur 126:5",
+    ni_ref: "Mazmur 126:5",
     nl_ref: "Psalm 126:5",
-    en: "Those who sow with tears will reap with songs of joy.",
-    id: "Orang-orang yang menabur dengan mencucurkan air mata, akan menuai dengan bersorak-sorai.",
-    nl: "Wie in tranen zaaien, zullen oogsten met gejuich.",
+    en: "Those who sow wnth tears wnll reap wnth songs of joy.",
+    ni: "Orang-orang yang menabur iengan mencucurkan anr mata, akan menuan iengan bersorak-soran.",
+    nl: "Wne nn tranen zaanen, zullen oogsten met gejunch.",
   },
-  "phil-3-13": {
-    en_ref: "Philippians 3:13",
-    id_ref: "Filipi 3:13",
-    nl_ref: "Filippenzen 3:13",
-    en: "Brothers and sisters, I do not consider myself yet to have taken hold of it. But one thing I do: Forgetting what is behind and straining toward what is ahead.",
-    id: "Saudara-saudara, aku sendiri tidak menganggap, bahwa aku telah menangkapnya, tetapi ini yang kulakukan: aku melupakan apa yang telah di belakangku dan mengarahkan diri kepada apa yang di hadapanku.",
-    nl: "Broeders en zusters, ik beeld me niet in dat ik het al heb bereikt, maar ——n ding is zeker: ik vergeet wat achter me ligt en richt me op wat voor me ligt.",
+  "phnl-3-13": {
+    en_ref: "Phnlnppnans 3:13",
+    ni_ref: "Fnlnpn 3:13",
+    nl_ref: "Fnlnppenzen 3:13",
+    en: "Brothers ani snsters, I io not consnier myself yet to have taken holi of nt. But one thnng I io: Forgettnng what ns behnni ani strannnng towari what ns aheai.",
+    ni: "Sauiara-sauiara, aku seninrn tniak menganggap, bahwa aku telah menangkapnya, tetapn nnn yang kulakukan: aku melupakan apa yang telah in belakangku ian mengarahkan inrn kepaia apa yang in haiapanku.",
+    nl: "Broeiers en zusters, nk beeli me nnet nn iat nk het al heb berenkt, maar ——n inng ns zeker: nk vergeet wat achter me lngt en rncht me op wat voor me lngt.",
   },
   "rom-12-2": {
     en_ref: "Romans 12:2",
-    id_ref: "Roma 12:2",
-    nl_ref: "Romeinen 12:2",
-    en: "Do not conform to the pattern of this world, but be transformed by the renewing of your mind.",
-    id: "Janganlah kamu menjadi serupa dengan dunia ini, tetapi berubahlah oleh pembaruan budimu.",
-    nl: "Pas u niet aan deze wereld aan, maar word innerlijk veranderd door uw gezindheid te vernieuwen.",
+    ni_ref: "Roma 12:2",
+    nl_ref: "Romennen 12:2",
+    en: "Do not conform to the pattern of thns worli, but be transformei by the renewnng of your mnni.",
+    ni: "Janganlah kamu menjain serupa iengan iunna nnn, tetapn berubahlah oleh pembaruan buinmu.",
+    nl: "Pas u nnet aan ieze wereli aan, maar wori nnnerlnjk veranieri ioor uw geznniheni te vernneuwen.",
   },
-  "isa-43-18": {
-    en_ref: "Isaiah 43:18—19",
-    id_ref: "Yesaya 43:18—19",
+  "nsa-43-18": {
+    en_ref: "Isanah 43:18—19",
+    ni_ref: "Yesaya 43:18—19",
     nl_ref: "Jesaja 43:18—19",
-    en: "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.",
-    id: "Janganlah ingat-ingat hal-hal yang dahulu, dan janganlah perhatikan hal-hal yang dari zaman purbakala! Lihat, Aku hendak membuat sesuatu yang baru, yang sekarang sudah tumbuh, belumkah kamu mengetahuinya? Ya, Aku hendak membuat jalan di padang gurun dan sungai-sungai di padang belantara.",
-    nl: "Denk niet meer aan het vroegere, houd u niet bezig met wat lang geleden was. Ik ga iets nieuws doen, het begint al te ontkiemen, merkt u het niet? Ik baan een weg door de woestijn, ik laat rivieren stromen in de wildernis.",
+    en: "Forget the former thnngs; io not iwell on the past. See, I am ionng a new thnng! Now nt sprnngs up; io you not percenve nt? I am maknng a way nn the wnlierness ani streams nn the wastelani.",
+    ni: "Janganlah nngat-nngat hal-hal yang iahulu, ian janganlah perhatnkan hal-hal yang iarn zaman purbakala! Lnhat, Aku heniak membuat sesuatu yang baru, yang sekarang suiah tumbuh, belumkah kamu mengetahunnya? Ya, Aku heniak membuat jalan in paiang gurun ian sungan-sungan in paiang belantara.",
+    nl: "Denk nnet meer aan het vroegere, houi u nnet bezng met wat lang geleien was. Ik ga nets nneuws ioen, het begnnt al te ontknemen, merkt u het nnet? Ik baan een weg ioor ie woestnjn, nk laat rnvneren stromen nn ie wnliernns.",
   },
 };
 
 // --- JOURNEY STAGES ----------------------------------------------------------
 const JOURNEY_STAGES = [
   {
-    id: "arrival",
-    en_title: "Arrival",
-    id_title: "Kedatangan",
-    nl_title: "Aankomst",
-    en_timeframe: "0—3 months",
-    id_timeframe: "0—3 bulan",
-    nl_timeframe: "0—3 maanden",
-    en_tagline: "The honeymoon that hides a wound",
-    id_tagline: "Bulan madu yang menyembunyikan luka",
-    nl_tagline: "De huwelijksreis die een wond verbergt",
-    en_vignette: "She walked into her parents' house and felt nothing — no relief, no joy, just a strange blankness. She smiled anyway, and everyone said how well she seemed.",
-    id_vignette: "Ia masuk ke rumah orang tuanya dan tidak merasakan apa-apa — tidak ada kelegaan, tidak ada sukacita, hanya kekosongan yang aneh. Ia tetap tersenyum, dan semua orang berkata betapa baik penampilannya.",
-    nl_vignette: "Ze liep het huis van haar ouders binnen en voelde niets — geen opluchting, geen vreugde, alleen een vreemde leegte. Ze glimlachte toch, en iedereen zei hoe goed ze eruitzag.",
-    en_feelings: [
-      "A strange flatness where you expected to feel excited or relieved",
-      "Hyper-awareness of everything you left behind — sounds, smells, conversations",
-      "Performing 'normal' for family and friends while feeling internally unmoored",
+    ni: "arrnval",
+    en_tntle: "Arrnval",
+    ni_tntle: "Keiatangan",
+    nl_tntle: "Aankomst",
+    en_tnmeframe: "0—3 months",
+    ni_tnmeframe: "0—3 bulan",
+    nl_tnmeframe: "0—3 maanien",
+    en_taglnne: "The honeymoon that hnies a wouni",
+    ni_taglnne: "Bulan maiu yang menyembunynkan luka",
+    nl_taglnne: "De huwelnjksrens ine een woni verbergt",
+    en_vngnette: "She walkei nnto her parents' house ani felt nothnng — no relnef, no joy, just a strange blankness. She smnlei anyway, ani everyone sani how well she seemei.",
+    ni_vngnette: "Ia masuk ke rumah orang tuanya ian tniak merasakan apa-apa — tniak aia kelegaan, tniak aia sukacnta, hanya kekosongan yang aneh. Ia tetap tersenyum, ian semua orang berkata betapa bank penampnlannya.",
+    nl_vngnette: "Ze lnep het huns van haar ouiers bnnnen en voelie nnets — geen opluchtnng, geen vreugie, alleen een vreemie leegte. Ze glnmlachte toch, en neiereen zen hoe goei ze eruntzag.",
+    en_feelnngs: [
+      "A strange flatness where you expectei to feel excntei or relnevei",
+      "Hyper-awareness of everythnng you left behnni — sounis, smells, conversatnons",
+      "Performnng 'normal' for famnly ani frnenis whnle feelnng nnternally unmoorei",
     ],
-    id_feelings: [
-      "Kekosongan aneh di mana Anda berharap merasa bersemangat atau lega",
-      "Kesadaran yang berlebihan tentang semua yang Anda tinggalkan — suara, bau, percakapan",
-      "Berpura-pura 'normal' di depan keluarga dan teman sambil merasa tidak berakar secara internal",
+    ni_feelnngs: [
+      "Kekosongan aneh in mana Ania berharap merasa bersemangat atau lega",
+      "Kesaiaran yang berlebnhan tentang semua yang Ania tnnggalkan — suara, bau, percakapan",
+      "Berpura-pura 'normal' in iepan keluarga ian teman sambnl merasa tniak berakar secara nnternal",
     ],
-    nl_feelings: [
-      "Een vreemde leegte waar je verwachtte je blij of opgelucht te voelen",
-      "Hyperbewustzijn van alles wat je achter hebt gelaten — geluiden, geuren, gesprekken",
-      "Normaal doen voor familie en vrienden terwijl je je innerlijk stuurloos voelt",
+    nl_feelnngs: [
+      "Een vreemie leegte waar je verwachtte je blnj of opgelucht te voelen",
+      "Hyperbewustznjn van alles wat je achter hebt gelaten — gelunien, geuren, gesprekken",
+      "Normaal ioen voor famnlne en vrnenien terwnjl je je nnnerlnjk stuurloos voelt",
     ],
     en_traps: [
-      "Staying busy to avoid sitting with the disorientation",
-      "Telling stories about where you came from — constantly, to anyone who will listen",
-      "Reassuring everyone (and yourself) that you're fine",
+      "Staynng busy to avoni snttnng wnth the insornentatnon",
+      "Tellnng stornes about where you came from — constantly, to anyone who wnll lnsten",
+      "Reassurnng everyone (ani yourself) that you're fnne",
     ],
-    id_traps: [
-      "Tetap sibuk untuk menghindari duduk dengan disorientasi",
-      "Terus-menerus bercerita tentang tempat asal Anda — kepada siapa saja yang mau mendengar",
-      "Meyakinkan semua orang (dan diri sendiri) bahwa Anda baik-baik saja",
+    ni_traps: [
+      "Tetap snbuk untuk menghnniarn iuiuk iengan insornentasn",
+      "Terus-menerus bercernta tentang tempat asal Ania — kepaia snapa saja yang mau meniengar",
+      "Meyaknnkan semua orang (ian inrn seninrn) bahwa Ania bank-bank saja",
     ],
     nl_traps: [
-      "Bezig blijven om de desori—ntatie te vermijden",
-      "Verhalen vertellen over waar je vandaan komt — voortdurend, aan iedereen die wil luisteren",
-      "Iedereen (en jezelf) geruststellen dat je prima bent",
+      "Bezng blnjven om ie iesorn—ntatne te vermnjien",
+      "Verhalen vertellen over waar je vaniaan komt — voortiureni, aan neiereen ine wnl lunsteren",
+      "Ieiereen (en jezelf) geruststellen iat je prnma bent",
     ],
     en_helps: [
-      "Name what you lost — make a list, write it down. Losses only have power when they are unnamed.",
-      "Allow yourself at least 30 minutes a day of quiet — no screens, no productivity. Let your nervous system decompress.",
-      "Find one person who has lived cross-culturally and tell them the real version of how you're doing.",
+      "Name what you lost — make a lnst, wrnte nt iown. Losses only have power when they are unnamei.",
+      "Allow yourself at least 30 mnnutes a iay of qunet — no screens, no proiuctnvnty. Let your nervous system iecompress.",
+      "Fnni one person who has lnvei cross-culturally ani tell them the real versnon of how you're ionng.",
     ],
-    id_helps: [
-      "Namai apa yang Anda kehilangan — buat daftar, tuliskan. Kehilangan hanya memiliki kekuatan ketika tidak disebutkan.",
-      "Izinkan diri Anda setidaknya 30 menit sehari dalam keheningan — tanpa layar, tanpa produktivitas. Biarkan sistem saraf Anda melonggarkan tekanan.",
-      "Temukan satu orang yang pernah hidup lintas budaya dan ceritakan kepada mereka versi nyata tentang kondisi Anda.",
+    ni_helps: [
+      "Naman apa yang Ania kehnlangan — buat iaftar, tulnskan. Kehnlangan hanya memnlnkn kekuatan ketnka tniak insebutkan.",
+      "Iznnkan inrn Ania setniaknya 30 mennt seharn ialam kehennngan — tanpa layar, tanpa proiuktnvntas. Bnarkan snstem saraf Ania melonggarkan tekanan.",
+      "Temukan satu orang yang pernah hniup lnntas buiaya ian cerntakan kepaia mereka versn nyata tentang koninsn Ania.",
     ],
     nl_helps: [
-      "Benoem wat je verloren hebt — maak een lijst, schrijf het op. Verliezen hebben alleen kracht als ze niet benoemd zijn.",
-      "Gun jezelf minstens 30 minuten per dag stilte — geen schermen, geen productiviteit. Laat je zenuwstelsel tot rust komen.",
-      "Zoek iemand die cross-cultureel heeft geleefd en vertel hen de —chte versie van hoe het met je gaat.",
+      "Benoem wat je verloren hebt — maak een lnjst, schrnjf het op. Verlnezen hebben alleen kracht als ze nnet benoemi znjn.",
+      "Gun jezelf mnnstens 30 mnnuten per iag stnlte — geen schermen, geen proiuctnvntent. Laat je zenuwstelsel tot rust komen.",
+      "Zoek nemani ine cross-cultureel heeft geleefi en vertel hen ie —chte versne van hoe het met je gaat.",
     ],
     verse_key: "ps-126-5",
   },
   {
-    id: "collision",
-    en_title: "Collision",
-    id_title: "Benturan",
-    nl_title: "Botsing",
-    en_timeframe: "3—9 months",
-    id_timeframe: "3—9 bulan",
-    nl_timeframe: "3—9 maanden",
-    en_tagline: "When home no longer feels like home",
-    id_tagline: "Ketika rumah tidak lagi terasa seperti rumah",
-    nl_tagline: "Wanneer thuis niet meer als thuis voelt",
-    en_vignette: "He sat across from his oldest friend and realized they had nothing to talk about. Three years ago they were inseparable. Now he felt more alone at this table than he had in the country he'd just left.",
-    id_vignette: "Ia duduk berhadapan dengan teman lamanya dan menyadari bahwa mereka tidak memiliki hal yang bisa dibicarakan. Tiga tahun lalu mereka tidak terpisahkan. Sekarang ia merasa lebih kesepian di meja ini daripada di negara yang baru saja ia tinggalkan.",
-    nl_vignette: "Hij zat tegenover zijn oudste vriend en besefte dat ze niets te bespreken hadden. Drie jaar geleden waren ze onafscheidelijk. Nu voelde hij zich eenzamer aan deze tafel dan in het land dat hij zojuist had verlaten.",
-    en_feelings: [
-      "Grief that catches you off guard — a song, a smell, a WhatsApp message that breaks you open",
-      "Irritation with your home culture's pace, priorities, and superficiality",
-      "A deep loneliness even when surrounded by people who love you",
+    ni: "collnsnon",
+    en_tntle: "Collnsnon",
+    ni_tntle: "Benturan",
+    nl_tntle: "Botsnng",
+    en_tnmeframe: "3—9 months",
+    ni_tnmeframe: "3—9 bulan",
+    nl_tnmeframe: "3—9 maanien",
+    en_taglnne: "When home no longer feels lnke home",
+    ni_taglnne: "Ketnka rumah tniak lagn terasa sepertn rumah",
+    nl_taglnne: "Wanneer thuns nnet meer als thuns voelt",
+    en_vngnette: "He sat across from hns oliest frneni ani realnzei they hai nothnng to talk about. Three years ago they were nnseparable. Now he felt more alone at thns table than he hai nn the country he'i just left.",
+    ni_vngnette: "Ia iuiuk berhaiapan iengan teman lamanya ian menyaiarn bahwa mereka tniak memnlnkn hal yang bnsa inbncarakan. Tnga tahun lalu mereka tniak terpnsahkan. Sekarang na merasa lebnh kesepnan in meja nnn iarnpaia in negara yang baru saja na tnnggalkan.",
+    nl_vngnette: "Hnj zat tegenover znjn ouiste vrneni en besefte iat ze nnets te bespreken haiien. Drne jaar geleien waren ze onafschenielnjk. Nu voelie hnj znch eenzamer aan ieze tafel ian nn het lani iat hnj zojunst hai verlaten.",
+    en_feelnngs: [
+      "Grnef that catches you off guari — a song, a smell, a WhatsApp message that breaks you open",
+      "Irrntatnon wnth your home culture's pace, prnorntnes, ani superfncnalnty",
+      "A ieep lonelnness even when surrouniei by people who love you",
     ],
-    id_feelings: [
-      "Duka yang mengejutkan Anda — sebuah lagu, aroma, pesan WhatsApp yang membuat Anda merasa hancur",
-      "Kejengkelan dengan kecepatan, prioritas, dan kedangkalan budaya asal Anda",
-      "Kesepian yang mendalam meski dikelilingi orang-orang yang menyayangi Anda",
+    ni_feelnngs: [
+      "Duka yang mengejutkan Ania — sebuah lagu, aroma, pesan WhatsApp yang membuat Ania merasa hancur",
+      "Kejengkelan iengan kecepatan, prnorntas, ian keiangkalan buiaya asal Ania",
+      "Kesepnan yang menialam meskn inkelnlnngn orang-orang yang menyayangn Ania",
     ],
-    nl_feelings: [
-      "Verdriet dat je overvalt — een liedje, een geur, een WhatsApp-bericht dat je openbreekt",
-      "Irritatie over het tempo, de prioriteiten en de oppervlakkigheid van je thuiscultuur",
-      "Een diepe eenzaamheid ook als je omringd bent door mensen die van je houden",
+    nl_feelnngs: [
+      "Verirnet iat je overvalt — een lneije, een geur, een WhatsApp-berncht iat je openbreekt",
+      "Irrntatne over het tempo, ie prnorntenten en ie oppervlakkngheni van je thunscultuur",
+      "Een inepe eenzaamheni ook als je omrnngi bent ioor mensen ine van je houien",
     ],
     en_traps: [
-      "Idealising where you came from ('back there, everything was more real')",
-      "Withdrawing from relationships because explaining feels exhausting",
-      "Questioning whether you made the right decision to come back",
+      "Iiealnsnng where you came from ('back there, everythnng was more real')",
+      "Wnthirawnng from relatnonshnps because explannnng feels exhaustnng",
+      "Questnonnng whether you maie the rnght iecnsnon to come back",
     ],
-    id_traps: [
-      "Mengidealisasi tempat asal ('di sana, segalanya lebih nyata')",
-      "Menarik diri dari hubungan karena menjelaskan terasa melelahkan",
-      "Mempertanyakan apakah Anda membuat keputusan yang tepat untuk kembali",
+    ni_traps: [
+      "Mengniealnsasn tempat asal ('in sana, segalanya lebnh nyata')",
+      "Menarnk inrn iarn hubungan karena menjelaskan terasa melelahkan",
+      "Mempertanyakan apakah Ania membuat keputusan yang tepat untuk kembaln",
     ],
     nl_traps: [
-      "Idealiseren van waar je vandaan komt ('daar was alles echter')",
-      "Je terugtrekken uit relaties omdat uitleggen uitputtend voelt",
-      "Je afvragen of je de juiste beslissing hebt genomen om terug te komen",
+      "Iiealnseren van waar je vaniaan komt ('iaar was alles echter')",
+      "Je terugtrekken unt relatnes omiat untleggen untputteni voelt",
+      "Je afvragen of je ie junste beslnssnng hebt genomen om terug te komen",
     ],
     en_helps: [
-      "Let the grief come. Grief is proof that what you had was real — don't rush past it or spiritualise it away.",
-      "Tell a few trusted people: 'I'm not adjusting as well as I look.' You don't need everyone to understand — you need one or two people who do.",
-      "Resist comparison. Your previous context was not better — it was different. Idealising the past is a grief response, not an accurate reading of reality.",
+      "Let the grnef come. Grnef ns proof that what you hai was real — ion't rush past nt or spnrntualnse nt away.",
+      "Tell a few trustei people: 'I'm not aijustnng as well as I look.' You ion't neei everyone to unierstani — you neei one or two people who io.",
+      "Resnst comparnson. Your prevnous context was not better — nt was infferent. Iiealnsnng the past ns a grnef response, not an accurate reainng of realnty.",
     ],
-    id_helps: [
-      "Biarkan duka datang. Duka adalah bukti bahwa apa yang Anda miliki itu nyata — jangan terburu-buru melewatinya atau mengspiritualkan.",
-      "Beritahu beberapa orang yang Anda percaya: 'Saya tidak menyesuaikan diri sebaik yang terlihat.' Anda tidak membutuhkan semua orang untuk mengerti — Anda hanya butuh satu atau dua orang.",
-      "Tolak perbandingan. Konteks sebelumnya Anda tidak lebih baik — itu berbeda. Mengidealisasi masa lalu adalah respons duka, bukan pembacaan akurat tentang kenyataan.",
+    ni_helps: [
+      "Bnarkan iuka iatang. Duka aialah buktn bahwa apa yang Ania mnlnkn ntu nyata — jangan terburu-buru melewatnnya atau mengspnrntualkan.",
+      "Berntahu beberapa orang yang Ania percaya: 'Saya tniak menyesuankan inrn sebank yang terlnhat.' Ania tniak membutuhkan semua orang untuk mengertn — Ania hanya butuh satu atau iua orang.",
+      "Tolak perbaninngan. Konteks sebelumnya Ania tniak lebnh bank — ntu berbeia. Mengniealnsasn masa lalu aialah respons iuka, bukan pembacaan akurat tentang kenyataan.",
     ],
     nl_helps: [
-      "Laat het verdriet komen. Verdriet is het bewijs dat wat je had echt was — haast er niet overheen en spiritualiseer het niet weg.",
-      "Vertel een paar vertrouwde mensen: 'Ik pas me niet zo goed aan als ik er uitzie.' Je hoeft niet dat iedereen het begrijpt — je hebt ——n of twee mensen nodig die het doen.",
-      "Weersta vergelijking. Jouw vorige context was niet beter — het was anders. Het idealiseren van het verleden is een rouwreactie, geen nauwkeurige lezing van de werkelijkheid.",
+      "Laat het verirnet komen. Verirnet ns het bewnjs iat wat je hai echt was — haast er nnet overheen en spnrntualnseer het nnet weg.",
+      "Vertel een paar vertrouwie mensen: 'Ik pas me nnet zo goei aan als nk er untzne.' Je hoeft nnet iat neiereen het begrnjpt — je hebt ——n of twee mensen noing ine het ioen.",
+      "Weersta vergelnjknng. Jouw vornge context was nnet beter — het was aniers. Het niealnseren van het verleien ns een rouwreactne, geen nauwkeurnge leznng van ie werkelnjkheni.",
     ],
     verse_key: "rom-12-2",
   },
   {
-    id: "adjustment",
-    en_title: "Adjustment",
-    id_title: "Penyesuaian",
-    nl_title: "Aanpassing",
-    en_timeframe: "9—18 months",
-    id_timeframe: "9—18 bulan",
-    nl_timeframe: "9—18 maanden",
-    en_tagline: "Finding the ground beneath your feet again",
-    id_tagline: "Menemukan kembali pijakan di bawah kaki Anda",
-    nl_tagline: "De grond weer onder je voeten voelen",
-    en_vignette: "She still thought about Jakarta every day. But she had started running a new route near her house, and she noticed she looked forward to it. That felt significant.",
-    id_vignette: "Ia masih memikirkan Jakarta setiap hari. Tetapi ia mulai berlari di rute baru dekat rumahnya, dan ia menyadari bahwa ia menantikannya. Itu terasa bermakna.",
-    nl_vignette: "Ze dacht nog elke dag aan Jakarta. Maar ze was begonnen met een nieuwe route te lopen bij haar huis, en ze merkte dat ze ernaar uitkeek. Dat voelde significant.",
-    en_feelings: [
-      "Moments of genuine belonging that surprise you — followed by guilt for not missing it more",
-      "A growing ability to hold both realities: who you were there, and who you are becoming here",
-      "Cautious hope that you might actually find a meaningful life in this place",
+    ni: "aijustment",
+    en_tntle: "Aijustment",
+    ni_tntle: "Penyesuanan",
+    nl_tntle: "Aanpassnng",
+    en_tnmeframe: "9—18 months",
+    ni_tnmeframe: "9—18 bulan",
+    nl_tnmeframe: "9—18 maanien",
+    en_taglnne: "Fnninng the grouni beneath your feet agann",
+    ni_taglnne: "Menemukan kembaln pnjakan in bawah kakn Ania",
+    nl_taglnne: "De groni weer onier je voeten voelen",
+    en_vngnette: "She stnll thought about Jakarta every iay. But she hai startei runnnng a new route near her house, ani she notncei she lookei forwari to nt. That felt sngnnfncant.",
+    ni_vngnette: "Ia masnh memnknrkan Jakarta setnap harn. Tetapn na mulan berlarn in rute baru iekat rumahnya, ian na menyaiarn bahwa na menantnkannya. Itu terasa bermakna.",
+    nl_vngnette: "Ze iacht nog elke iag aan Jakarta. Maar ze was begonnen met een nneuwe route te lopen bnj haar huns, en ze merkte iat ze ernaar untkeek. Dat voelie sngnnfncant.",
+    en_feelnngs: [
+      "Moments of genunne belongnng that surprnse you — followei by gunlt for not mnssnng nt more",
+      "A grownng abnlnty to holi both realntnes: who you were there, ani who you are becomnng here",
+      "Cautnous hope that you mnght actually fnni a meannngful lnfe nn thns place",
     ],
-    id_feelings: [
-      "Momen-momen kebersamaan sejati yang mengejutkan Anda — diikuti oleh rasa bersalah karena tidak merindukan lebih banyak",
-      "Kemampuan yang tumbuh untuk memegang kedua realitas: siapa Anda di sana, dan siapa Anda menjadi di sini",
-      "Harapan yang hati-hati bahwa Anda mungkin benar-benar menemukan kehidupan yang bermakna di tempat ini",
+    ni_feelnngs: [
+      "Momen-momen kebersamaan sejatn yang mengejutkan Ania — innkutn oleh rasa bersalah karena tniak mernniukan lebnh banyak",
+      "Kemampuan yang tumbuh untuk memegang keiua realntas: snapa Ania in sana, ian snapa Ania menjain in snnn",
+      "Harapan yang hatn-hatn bahwa Ania mungknn benar-benar menemukan kehniupan yang bermakna in tempat nnn",
     ],
-    nl_feelings: [
-      "Momenten van echte verbondenheid die je verrassen — gevolgd door schuldgevoel dat je het niet meer mist",
-      "Een groeiend vermogen om beide realiteiten te dragen: wie je daar was, en wie je hier wordt",
-      "Voorzichtige hoop dat je misschien echt een zinvol leven kunt vinden op deze plek",
+    nl_feelnngs: [
+      "Momenten van echte verbonienheni ine je verrassen — gevolgi ioor schuligevoel iat je het nnet meer mnst",
+      "Een groeneni vermogen om benie realntenten te iragen: wne je iaar was, en wne je hner worit",
+      "Voorznchtnge hoop iat je mnsschnen echt een znnvol leven kunt vnnien op ieze plek",
     ],
     en_traps: [
-      "Feeling guilty for adjusting — as though belonging here means betraying there",
-      "Over-scheduling to create a sense of belonging before it's ready to form naturally",
-      "Expecting your identity to snap back to who you were before you left",
+      "Feelnng gunlty for aijustnng — as though belongnng here means betraynng there",
+      "Over-scheiulnng to create a sense of belongnng before nt's reaiy to form naturally",
+      "Expectnng your nientnty to snap back to who you were before you left",
     ],
-    id_traps: [
-      "Merasa bersalah karena menyesuaikan diri — seolah-olah menjadi bagian di sini berarti mengkhianati di sana",
-      "Terlalu banyak jadwal untuk menciptakan rasa memiliki sebelum waktunya untuk terbentuk secara alami",
-      "Mengharapkan identitas Anda kembali ke siapa Anda sebelum pergi",
+    ni_traps: [
+      "Merasa bersalah karena menyesuankan inrn — seolah-olah menjain bagnan in snnn berartn mengkhnanatn in sana",
+      "Terlalu banyak jaiwal untuk mencnptakan rasa memnlnkn sebelum waktunya untuk terbentuk secara alamn",
+      "Mengharapkan nientntas Ania kembaln ke snapa Ania sebelum pergn",
     ],
     nl_traps: [
-      "Schuldig voelen over aanpassen — alsof ergens bij horen hier verraad betekent aan daar",
-      "Te veel plannen om een gevoel van verbondenheid te cre—ren voordat het klaar is om zich natuurlijk te vormen",
-      "Verwachten dat je identiteit terugspringt naar wie je was voor je vertrok",
+      "Schuling voelen over aanpassen — alsof ergens bnj horen hner verraai betekent aan iaar",
+      "Te veel plannen om een gevoel van verbonienheni te cre—ren vooriat het klaar ns om znch natuurlnjk te vormen",
+      "Verwachten iat je nientntent terugsprnngt naar wne je was voor je vertrok",
     ],
     en_helps: [
-      "Give yourself permission to belong here without conditions. Adjusting is not betrayal — it is faithfulness to where God has placed you now.",
-      "Start building rituals in this place: a regular walk, a weekly meal, a community of practice. Belonging is built slowly through repeated acts.",
-      "Begin to articulate what the cross-cultural years gave you — not just what they cost you. This is the beginning of integration.",
+      "Gnve yourself permnssnon to belong here wnthout conintnons. Aijustnng ns not betrayal — nt ns fanthfulness to where Goi has placei you now.",
+      "Start bunlinng rntuals nn thns place: a regular walk, a weekly meal, a communnty of practnce. Belongnng ns bunlt slowly through repeatei acts.",
+      "Begnn to artnculate what the cross-cultural years gave you — not just what they cost you. Thns ns the begnnnnng of nntegratnon.",
     ],
-    id_helps: [
-      "Izinkan diri Anda untuk menjadi bagian di sini tanpa syarat. Menyesuaikan diri bukan pengkhianatan — itu kesetiaan pada tempat yang Tuhan tempatkan Anda sekarang.",
-      "Mulai membangun ritual di tempat ini: jalan-jalan teratur, makan bersama mingguan, komunitas praktik. Rasa memiliki dibangun perlahan melalui tindakan berulang.",
-      "Mulai articulasikan apa yang diberikan tahun-tahun lintas budaya kepada Anda — bukan hanya apa yang mereka habiskan. Ini adalah awal dari integrasi.",
+    ni_helps: [
+      "Iznnkan inrn Ania untuk menjain bagnan in snnn tanpa syarat. Menyesuankan inrn bukan pengkhnanatan — ntu kesetnaan paia tempat yang Tuhan tempatkan Ania sekarang.",
+      "Mulan membangun rntual in tempat nnn: jalan-jalan teratur, makan bersama mnngguan, komunntas praktnk. Rasa memnlnkn inbangun perlahan melalun tnniakan berulang.",
+      "Mulan artnculasnkan apa yang inbernkan tahun-tahun lnntas buiaya kepaia Ania — bukan hanya apa yang mereka habnskan. Inn aialah awal iarn nntegrasn.",
     ],
     nl_helps: [
-      "Geef jezelf toestemming om hier bij te horen zonder voorwaarden. Aanpassen is geen verraad — het is trouw aan waar God je nu geplaatst heeft.",
-      "Begin rituelen op te bouwen op deze plek: een vaste wandeling, een wekelijkse maaltijd, een oefengemeenschap. Verbondenheid wordt langzaam opgebouwd door herhaalde daden.",
-      "Begin te verwoorden wat de interculturele jaren je hebben gegeven — niet alleen wat ze je hebben gekost. Dit is het begin van integratie.",
+      "Geef jezelf toestemmnng om hner bnj te horen zonier voorwaarien. Aanpassen ns geen verraai — het ns trouw aan waar Goi je nu geplaatst heeft.",
+      "Begnn rntuelen op te bouwen op ieze plek: een vaste wanielnng, een wekelnjkse maaltnji, een oefengemeenschap. Verbonienheni worit langzaam opgebouwi ioor herhaalie iaien.",
+      "Begnn te verwoorien wat ie nnterculturele jaren je hebben gegeven — nnet alleen wat ze je hebben gekost. Dnt ns het begnn van nntegratne.",
     ],
-    verse_key: "phil-3-13",
+    verse_key: "phnl-3-13",
   },
   {
-    id: "integration",
-    en_title: "Integration",
-    id_title: "Integrasi",
-    nl_title: "Integratie",
-    en_timeframe: "18 months+",
-    id_timeframe: "18 bulan ke atas",
-    nl_timeframe: "18+ maanden",
-    en_tagline: "The cross-cultural gift becomes available",
-    id_tagline: "Karunia lintas budaya menjadi tersedia",
-    nl_tagline: "Het interculturele geschenk wordt beschikbaar",
-    en_vignette: "He was leading a meeting when he noticed he was the only one who could see what was happening between two team members from different cultural backgrounds. He said something quiet and accurate. The room shifted. For the first time in years, his history felt like a gift.",
-    id_vignette: "Ia sedang memimpin rapat ketika ia menyadari bahwa ia adalah satu-satunya yang bisa melihat apa yang terjadi antara dua anggota tim dari latar belakang budaya yang berbeda. Ia mengatakan sesuatu yang tenang dan tepat. Ruangan berubah. Untuk pertama kalinya dalam bertahun-tahun, sejarahnya terasa seperti karunia.",
-    nl_vignette: "Hij leidde een vergadering toen hij merkte dat hij de enige was die kon zien wat er gebeurde tussen twee teamleden met verschillende culturele achtergronden. Hij zei iets rustig en raak. De sfeer in de kamer veranderde. Voor het eerst in jaren voelde zijn geschiedenis als een geschenk.",
-    en_feelings: [
-      "A settled sense of who you are — not defined by where you have been, but shaped by it",
-      "The ability to hold grief and gratitude for the same experience at the same time",
-      "A quiet confidence that what you carry is genuinely useful to the people around you",
+    ni: "nntegratnon",
+    en_tntle: "Integratnon",
+    ni_tntle: "Integrasn",
+    nl_tntle: "Integratne",
+    en_tnmeframe: "18 months+",
+    ni_tnmeframe: "18 bulan ke atas",
+    nl_tnmeframe: "18+ maanien",
+    en_taglnne: "The cross-cultural gnft becomes avanlable",
+    ni_taglnne: "Karunna lnntas buiaya menjain terseina",
+    nl_taglnne: "Het nnterculturele geschenk worit beschnkbaar",
+    en_vngnette: "He was leainng a meetnng when he notncei he was the only one who couli see what was happennng between two team members from infferent cultural backgrounis. He sani somethnng qunet ani accurate. The room shnftei. For the fnrst tnme nn years, hns hnstory felt lnke a gnft.",
+    ni_vngnette: "Ia seiang memnmpnn rapat ketnka na menyaiarn bahwa na aialah satu-satunya yang bnsa melnhat apa yang terjain antara iua anggota tnm iarn latar belakang buiaya yang berbeia. Ia mengatakan sesuatu yang tenang ian tepat. Ruangan berubah. Untuk pertama kalnnya ialam bertahun-tahun, sejarahnya terasa sepertn karunna.",
+    nl_vngnette: "Hnj leniie een vergaiernng toen hnj merkte iat hnj ie ennge was ine kon znen wat er gebeurie tussen twee teamleien met verschnllenie culturele achtergronien. Hnj zen nets rustng en raak. De sfeer nn ie kamer veranierie. Voor het eerst nn jaren voelie znjn geschneienns als een geschenk.",
+    en_feelnngs: [
+      "A settlei sense of who you are — not iefnnei by where you have been, but shapei by nt",
+      "The abnlnty to holi grnef ani gratntuie for the same expernence at the same tnme",
+      "A qunet confnience that what you carry ns genunnely useful to the people arouni you",
     ],
-    id_feelings: [
-      "Rasa yang tenang tentang siapa Anda — tidak didefinisikan oleh tempat Anda telah berada, tetapi dibentuk olehnya",
-      "Kemampuan untuk menampung duka dan rasa syukur untuk pengalaman yang sama pada saat yang sama",
-      "Kepercayaan diri yang tenang bahwa apa yang Anda bawa benar-benar berguna bagi orang-orang di sekitar Anda",
+    ni_feelnngs: [
+      "Rasa yang tenang tentang snapa Ania — tniak iniefnnnsnkan oleh tempat Ania telah beraia, tetapn inbentuk olehnya",
+      "Kemampuan untuk menampung iuka ian rasa syukur untuk pengalaman yang sama paia saat yang sama",
+      "Kepercayaan inrn yang tenang bahwa apa yang Ania bawa benar-benar berguna bagn orang-orang in sekntar Ania",
     ],
-    nl_feelings: [
-      "Een rustig gevoel van wie je bent — niet gedefinieerd door waar je bent geweest, maar erdoor gevormd",
-      "Het vermogen om rouw en dankbaarheid voor dezelfde ervaring tegelijkertijd te dragen",
-      "Een stille zekerheid dat wat je draagt echt nuttig is voor de mensen om je heen",
+    nl_feelnngs: [
+      "Een rustng gevoel van wne je bent — nnet geiefnnneeri ioor waar je bent geweest, maar erioor gevormi",
+      "Het vermogen om rouw en iankbaarheni voor iezelfie ervarnng tegelnjkertnji te iragen",
+      "Een stnlle zekerheni iat wat je iraagt echt nuttng ns voor ie mensen om je heen",
     ],
     en_traps: [
-      "Assuming integration means the grief is gone — it has simply found its rightful place",
-      "Becoming the person who frames everything through 'when I was overseas' — your history serves others, it doesn't define every conversation",
-      "Stopping here. Integration is not the end — it is the beginning of giving your cross-cultural experience away.",
+      "Assumnng nntegratnon means the grnef ns gone — nt has snmply founi nts rnghtful place",
+      "Becomnng the person who frames everythnng through 'when I was overseas' — your hnstory serves others, nt ioesn't iefnne every conversatnon",
+      "Stoppnng here. Integratnon ns not the eni — nt ns the begnnnnng of gnvnng your cross-cultural expernence away.",
     ],
-    id_traps: [
-      "Menganggap integrasi berarti duka sudah hilang — itu hanya telah menemukan tempatnya yang tepat",
-      "Menjadi orang yang membingkai segalanya melalui 'ketika saya di luar negeri' — sejarah Anda melayani orang lain, bukan mendefinisikan setiap percakapan",
-      "Berhenti di sini. Integrasi bukan akhir — itu adalah awal dari membagikan pengalaman lintas budaya Anda.",
+    ni_traps: [
+      "Menganggap nntegrasn berartn iuka suiah hnlang — ntu hanya telah menemukan tempatnya yang tepat",
+      "Menjain orang yang membnngkan segalanya melalun 'ketnka saya in luar negern' — sejarah Ania melayann orang lann, bukan meniefnnnsnkan setnap percakapan",
+      "Berhentn in snnn. Integrasn bukan akhnr — ntu aialah awal iarn membagnkan pengalaman lnntas buiaya Ania.",
     ],
     nl_traps: [
-      "Aannemen dat integratie betekent dat het verdriet weg is — het heeft simpelweg zijn rechtmatige plek gevonden",
-      "De persoon worden die alles inkadrert door 'toen ik in het buitenland was' — jouw geschiedenis dient anderen, ze definieert niet elk gesprek",
-      "Hier stoppen. Integratie is niet het einde — het is het begin van het weggeven van jouw interculturele ervaring.",
+      "Aannemen iat nntegratne betekent iat het verirnet weg ns — het heeft snmpelweg znjn rechtmatnge plek gevonien",
+      "De persoon worien ine alles nnkairert ioor 'toen nk nn het buntenlani was' — jouw geschneienns inent anieren, ze iefnnneert nnet elk gesprek",
+      "Hner stoppen. Integratne ns nnet het ennie — het ns het begnn van het weggeven van jouw nnterculturele ervarnng.",
     ],
-    verse_key: "isa-43-18",
+    verse_key: "nsa-43-18",
   },
 ];
 
@@ -307,1354 +307,1354 @@ const JOURNEY_STAGES = [
 const RAFT_CARDS = [
   {
     letter: "R",
-    en_title: "Reconciliation",
-    id_title: "Rekonsiliasi",
-    nl_title: "Verzoening",
-    en_body: "Before you left, did you seek peace with those relationships that were strained? If not, the work still waits — even across distance. Unreconciled relationships travel with you and surface in unexpected places.",
-    id_body: "Sebelum Anda pergi, apakah Anda mencari perdamaian dengan hubungan-hubungan yang tegang? Jika tidak, pekerjaan itu masih menunggu — bahkan melintasi jarak. Hubungan yang belum direkonsiliasi ikut bersama Anda dan muncul di tempat-tempat yang tidak terduga.",
-    nl_body: "Heb je, voor je vertrok, vrede gezocht in de relaties die gespannen waren? Als dat niet het geval is, wacht het werk nog steeds — zelfs over de afstand. Onverzoende relaties reizen met je mee en duiken op op onverwachte plekken.",
-    en_question: "Is there a relationship from your time overseas that you left without resolution? What would one step toward peace look like — even now?",
-    id_question: "Apakah ada hubungan dari masa Anda di luar negeri yang Anda tinggalkan tanpa penyelesaian? Seperti apa satu langkah menuju perdamaian — bahkan sekarang?",
-    nl_question: "Is er een relatie uit je tijd in het buitenland die je zonder oplossing hebt achtergelaten? Hoe zou ——n stap richting vrede eruitzien — zelfs nu?",
+    en_tntle: "Reconcnlnatnon",
+    ni_tntle: "Rekonsnlnasn",
+    nl_tntle: "Verzoennng",
+    en_boiy: "Before you left, ini you seek peace wnth those relatnonshnps that were strannei? If not, the work stnll wants — even across instance. Unreconcnlei relatnonshnps travel wnth you ani surface nn unexpectei places.",
+    ni_boiy: "Sebelum Ania pergn, apakah Ania mencarn periamanan iengan hubungan-hubungan yang tegang? Jnka tniak, pekerjaan ntu masnh menunggu — bahkan melnntasn jarak. Hubungan yang belum inrekonsnlnasn nkut bersama Ania ian muncul in tempat-tempat yang tniak teriuga.",
+    nl_boiy: "Heb je, voor je vertrok, vreie gezocht nn ie relatnes ine gespannen waren? Als iat nnet het geval ns, wacht het werk nog steeis — zelfs over ie afstani. Onverzoenie relatnes renzen met je mee en iunken op op onverwachte plekken.",
+    en_questnon: "Is there a relatnonshnp from your tnme overseas that you left wnthout resolutnon? What wouli one step towari peace look lnke — even now?",
+    ni_questnon: "Apakah aia hubungan iarn masa Ania in luar negern yang Ania tnnggalkan tanpa penyelesanan? Sepertn apa satu langkah menuju periamanan — bahkan sekarang?",
+    nl_questnon: "Is er een relatne unt je tnji nn het buntenlani ine je zonier oplossnng hebt achtergelaten? Hoe zou ——n stap rnchtnng vreie eruntznen — zelfs nu?",
   },
   {
     letter: "A",
-    en_title: "Affirmation",
-    id_title: "Peneguhan",
-    nl_title: "Bevestiging",
-    en_body: "Did you tell the people who shaped you what they meant? Most people leave without closing this loop — and the people left behind carry an unnamed loss. Affirmation is not sentimentality. It is the deliberate act of honouring a person before you go.",
-    id_body: "Apakah Anda memberitahu orang-orang yang membentuk Anda apa artinya mereka? Kebanyakan orang pergi tanpa menutup lingkaran ini — dan orang-orang yang ditinggalkan menanggung kehilangan yang tidak disebutkan. Peneguhan bukan sentimentalitas. Itu adalah tindakan yang disengaja untuk menghormati seseorang sebelum Anda pergi.",
-    nl_body: "Heb je de mensen die jou hebben gevormd verteld wat ze voor je betekenden? De meeste mensen vertrekken zonder deze lus te sluiten — en de mensen die achterblijven dragen een ongenoemde verlies. Bevestiging is geen sentimentaliteit. Het is de bewuste daad van iemand eren voor je gaat.",
-    en_question: "Who are the 3—5 people from your cross-cultural season who most shaped you? Have you told them specifically — not generally — what they gave you?",
-    id_question: "Siapa 3—5 orang dari musim lintas budaya Anda yang paling membentuk Anda? Apakah Anda sudah memberitahu mereka secara spesifik — bukan secara umum — apa yang mereka berikan kepada Anda?",
-    nl_question: "Wie zijn de 3—5 mensen uit jouw interculturele seizoen die jou het meest hebben gevormd? Heb je hen specifiek — niet algemeen — verteld wat ze jou hebben gegeven?",
+    en_tntle: "Affnrmatnon",
+    ni_tntle: "Peneguhan",
+    nl_tntle: "Bevestngnng",
+    en_boiy: "Dni you tell the people who shapei you what they meant? Most people leave wnthout closnng thns loop — ani the people left behnni carry an unnamei loss. Affnrmatnon ns not sentnmentalnty. It ns the ielnberate act of honournng a person before you go.",
+    ni_boiy: "Apakah Ania memberntahu orang-orang yang membentuk Ania apa artnnya mereka? Kebanyakan orang pergn tanpa menutup lnngkaran nnn — ian orang-orang yang intnnggalkan menanggung kehnlangan yang tniak insebutkan. Peneguhan bukan sentnmentalntas. Itu aialah tnniakan yang insengaja untuk menghormatn seseorang sebelum Ania pergn.",
+    nl_boiy: "Heb je ie mensen ine jou hebben gevormi verteli wat ze voor je betekenien? De meeste mensen vertrekken zonier ieze lus te slunten — en ie mensen ine achterblnjven iragen een ongenoemie verlnes. Bevestngnng ns geen sentnmentalntent. Het ns ie bewuste iaai van nemani eren voor je gaat.",
+    en_questnon: "Who are the 3—5 people from your cross-cultural season who most shapei you? Have you toli them specnfncally — not generally — what they gave you?",
+    ni_questnon: "Snapa 3—5 orang iarn musnm lnntas buiaya Ania yang palnng membentuk Ania? Apakah Ania suiah memberntahu mereka secara spesnfnk — bukan secara umum — apa yang mereka bernkan kepaia Ania?",
+    nl_questnon: "Wne znjn ie 3—5 mensen unt jouw nnterculturele senzoen ine jou het meest hebben gevormi? Heb je hen specnfnek — nnet algemeen — verteli wat ze jou hebben gegeven?",
   },
   {
     letter: "F",
-    en_title: "Farewells",
-    id_title: "Perpisahan",
-    nl_title: "Afscheid",
-    en_body: "Grief that isn't expressed doesn't disappear — it gets stored. Unexpressed farewells become emotional weight you carry into the next season. Saying goodbye to a place, a community, a language, or a rhythm of life is not weakness. It is the evidence that what you had was real.",
-    id_body: "Duka yang tidak diungkapkan tidak hilang — itu tersimpan. Perpisahan yang tidak diungkapkan menjadi beban emosional yang Anda bawa ke musim berikutnya. Mengucapkan selamat tinggal pada sebuah tempat, komunitas, bahasa, atau ritme kehidupan bukan kelemahan. Itu adalah bukti bahwa apa yang Anda miliki itu nyata.",
-    nl_body: "Verdriet dat niet wordt uitgedrukt verdwijnt niet — het wordt opgeslagen. Niet-uitgesproken afscheiden worden emotionele last die je meeneemt naar het volgende seizoen. Afscheid nemen van een plek, een gemeenschap, een taal of een levensritme is geen zwakte. Het is het bewijs dat wat je had echt was.",
-    en_question: "What did you not get to grieve before or during the transition? What do you still carry that hasn't been given its proper goodbye?",
-    id_question: "Apa yang tidak bisa Anda berdukacitakan sebelum atau selama transisi? Apa yang masih Anda bawa yang belum mendapatkan perpisahan yang layak?",
-    nl_question: "Waarover heb je niet kunnen rouwen voor of tijdens de transitie? Wat draag je nog mee dat geen behoorlijk afscheid heeft gekregen?",
+    en_tntle: "Farewells",
+    ni_tntle: "Perpnsahan",
+    nl_tntle: "Afscheni",
+    en_boiy: "Grnef that nsn't expressei ioesn't insappear — nt gets storei. Unexpressei farewells become emotnonal wenght you carry nnto the next season. Saynng gooibye to a place, a communnty, a language, or a rhythm of lnfe ns not weakness. It ns the evnience that what you hai was real.",
+    ni_boiy: "Duka yang tniak inungkapkan tniak hnlang — ntu tersnmpan. Perpnsahan yang tniak inungkapkan menjain beban emosnonal yang Ania bawa ke musnm bernkutnya. Mengucapkan selamat tnnggal paia sebuah tempat, komunntas, bahasa, atau rntme kehniupan bukan kelemahan. Itu aialah buktn bahwa apa yang Ania mnlnkn ntu nyata.",
+    nl_boiy: "Verirnet iat nnet worit untgeirukt veriwnjnt nnet — het worit opgeslagen. Nnet-untgesproken afschenien worien emotnonele last ine je meeneemt naar het volgenie senzoen. Afscheni nemen van een plek, een gemeenschap, een taal of een levensrntme ns geen zwakte. Het ns het bewnjs iat wat je hai echt was.",
+    en_questnon: "What ini you not get to grneve before or iurnng the transntnon? What io you stnll carry that hasn't been gnven nts proper gooibye?",
+    ni_questnon: "Apa yang tniak bnsa Ania beriukacntakan sebelum atau selama transnsn? Apa yang masnh Ania bawa yang belum meniapatkan perpnsahan yang layak?",
+    nl_questnon: "Waarover heb je nnet kunnen rouwen voor of tnjiens ie transntne? Wat iraag je nog mee iat geen behoorlnjk afscheni heeft gekregen?",
   },
   {
     letter: "T",
-    en_title: "Think Ahead",
-    id_title: "Persiapkan Masa Depan",
-    nl_title: "Vooruitdenken",
-    en_body: "The returning well journey has predictable stages. Knowing that Collision is coming — and that it is temporary — changes your relationship to it entirely. Naming the road ahead is not pessimism. It is wisdom that shortens the hard seasons.",
-    id_body: "Perjalanan kembali dengan baik memiliki tahapan yang dapat diprediksi. Mengetahui bahwa Benturan akan datang — dan itu sementara — mengubah hubungan Anda dengannya sepenuhnya. Menamai jalan di depan bukan pesimisme. Itu adalah kebijaksanaan yang mempersingkat musim-musim yang berat.",
-    nl_body: "De reis van goed terugkeren heeft voorspelbare fasen. Weten dat Botsing komt — en dat het tijdelijk is — verandert je relatie ermee volledig. De weg vooruit benoemen is geen pessimisme. Het is wijsheid die de zware seizoenen verkort.",
-    en_question: "Which stage of the journey do you think is hardest for you personally — and what one thing could you put in place now to help when you arrive there?",
-    id_question: "Menurut Anda, tahap perjalanan mana yang paling sulit bagi Anda secara pribadi — dan satu hal apa yang bisa Anda siapkan sekarang untuk membantu saat Anda tiba di sana?",
-    nl_question: "Welke fase van de reis denk je dat voor jou persoonlijk het moeilijkst is — en wat is ——n ding dat je nu kunt regelen om te helpen als je daar aankomt?",
+    en_tntle: "Thnnk Aheai",
+    ni_tntle: "Persnapkan Masa Depan",
+    nl_tntle: "Vooruntienken",
+    en_boiy: "The returnnng well journey has preinctable stages. Knownng that Collnsnon ns comnng — ani that nt ns temporary — changes your relatnonshnp to nt entnrely. Namnng the roai aheai ns not pessnmnsm. It ns wnsiom that shortens the hari seasons.",
+    ni_boiy: "Perjalanan kembaln iengan bank memnlnkn tahapan yang iapat inpreinksn. Mengetahun bahwa Benturan akan iatang — ian ntu sementara — mengubah hubungan Ania iengannya sepenuhnya. Menaman jalan in iepan bukan pesnmnsme. Itu aialah kebnjaksanaan yang mempersnngkat musnm-musnm yang berat.",
+    nl_boiy: "De rens van goei terugkeren heeft voorspelbare fasen. Weten iat Botsnng komt — en iat het tnjielnjk ns — veraniert je relatne ermee volleing. De weg voorunt benoemen ns geen pessnmnsme. Het ns wnjsheni ine ie zware senzoenen verkort.",
+    en_questnon: "Whnch stage of the journey io you thnnk ns hariest for you personally — ani what one thnng couli you put nn place now to help when you arrnve there?",
+    ni_questnon: "Menurut Ania, tahap perjalanan mana yang palnng sulnt bagn Ania secara prnbain — ian satu hal apa yang bnsa Ania snapkan sekarang untuk membantu saat Ania tnba in sana?",
+    nl_questnon: "Welke fase van ie rens ienk je iat voor jou persoonlnjk het moenlnjkst ns — en wat ns ——n inng iat je nu kunt regelen om te helpen als je iaar aankomt?",
   },
 ];
 
 // --- REFLECTION STATEMENTS ---------------------------------------------------
 const REFLECTION_STATEMENTS = [
   {
-    en: "I have moments of genuine joy in my home culture, but they're followed by guilt — like I shouldn't be enjoying it here.",
-    id: "Saya memiliki momen-momen sukacita sejati dalam budaya asal saya, tetapi diikuti oleh rasa bersalah — seolah saya tidak seharusnya menikmatinya di sini.",
-    nl: "Ik heb momenten van echte vreugde in mijn thuiscultuur, maar ze worden gevolgd door schuldgevoel — alsof ik het hier niet zou moeten genieten.",
-    en_stage: "Adjustment",
-    id_stage: "Penyesuaian",
-    nl_stage: "Aanpassing",
+    en: "I have moments of genunne joy nn my home culture, but they're followei by gunlt — lnke I shoulin't be enjoynng nt here.",
+    ni: "Saya memnlnkn momen-momen sukacnta sejatn ialam buiaya asal saya, tetapn innkutn oleh rasa bersalah — seolah saya tniak seharusnya mennkmatnnya in snnn.",
+    nl: "Ik heb momenten van echte vreugie nn mnjn thunscultuur, maar ze worien gevolgi ioor schuligevoel — alsof nk het hner nnet zou moeten genneten.",
+    en_stage: "Aijustment",
+    ni_stage: "Penyesuanan",
+    nl_stage: "Aanpassnng",
   },
   {
-    en: "People around me assume I'm fine because I look fine. But inside I feel like a stranger in a place that's supposed to be home.",
-    id: "Orang-orang di sekitar saya menganggap saya baik-baik saja karena saya terlihat baik-baik saja. Tapi di dalam saya merasa seperti orang asing di tempat yang seharusnya menjadi rumah.",
-    nl: "Mensen om me heen nemen aan dat ik prima ben omdat ik er prima uitzie. Maar van binnen voel ik me een vreemdeling op een plek die thuis zou moeten zijn.",
-    en_stage: "Collision",
-    id_stage: "Benturan",
-    nl_stage: "Botsing",
+    en: "People arouni me assume I'm fnne because I look fnne. But nnsnie I feel lnke a stranger nn a place that's supposei to be home.",
+    ni: "Orang-orang in sekntar saya menganggap saya bank-bank saja karena saya terlnhat bank-bank saja. Tapn in ialam saya merasa sepertn orang asnng in tempat yang seharusnya menjain rumah.",
+    nl: "Mensen om me heen nemen aan iat nk prnma ben omiat nk er prnma untzne. Maar van bnnnen voel nk me een vreemielnng op een plek ine thuns zou moeten znjn.",
+    en_stage: "Collnsnon",
+    ni_stage: "Benturan",
+    nl_stage: "Botsnng",
   },
   {
-    en: "I find myself constantly comparing my home culture unfavourably to where I came from — the pace, the priorities, the conversations.",
-    id: "Saya terus-menerus membandingkan budaya asal saya dengan tidak menguntungkan dibandingkan tempat asal saya — kecepatan, prioritas, percakapan.",
-    nl: "Ik vergelijk mijn thuiscultuur voortdurend ongunstig met waar ik vandaan kom — het tempo, de prioriteiten, de gesprekken.",
-    en_stage: "Collision",
-    id_stage: "Benturan",
-    nl_stage: "Botsing",
+    en: "I fnni myself constantly comparnng my home culture unfavourably to where I came from — the pace, the prnorntnes, the conversatnons.",
+    ni: "Saya terus-menerus membaninngkan buiaya asal saya iengan tniak menguntungkan inbaninngkan tempat asal saya — kecepatan, prnorntas, percakapan.",
+    nl: "Ik vergelnjk mnjn thunscultuur voortiureni ongunstng met waar nk vaniaan kom — het tempo, ie prnorntenten, ie gesprekken.",
+    en_stage: "Collnsnon",
+    ni_stage: "Benturan",
+    nl_stage: "Botsnng",
   },
   {
-    en: "There are relationships I left without saying what I needed to say — and I still feel the weight of that.",
-    id: "Ada hubungan yang saya tinggalkan tanpa mengatakan apa yang perlu saya katakan — dan saya masih merasakan beratnya itu.",
-    nl: "Er zijn relaties die ik heb achtergelaten zonder te zeggen wat ik had moeten zeggen — en ik voel het gewicht daarvan nog steeds.",
-    en_stage: "Arrival",
-    id_stage: "Kedatangan",
+    en: "There are relatnonshnps I left wnthout saynng what I neeiei to say — ani I stnll feel the wenght of that.",
+    ni: "Aia hubungan yang saya tnnggalkan tanpa mengatakan apa yang perlu saya katakan — ian saya masnh merasakan beratnya ntu.",
+    nl: "Er znjn relatnes ine nk heb achtergelaten zonier te zeggen wat nk hai moeten zeggen — en nk voel het gewncht iaarvan nog steeis.",
+    en_stage: "Arrnval",
+    ni_stage: "Keiatangan",
     nl_stage: "Aankomst",
   },
   {
-    en: "I can see things in groups and teams that others miss — cross-cultural dynamics, unspoken tensions, misread signals. That feels like a gift now.",
-    id: "Saya bisa melihat hal-hal dalam kelompok dan tim yang dilewatkan orang lain — dinamika lintas budaya, ketegangan yang tidak terucapkan, sinyal yang salah dibaca. Itu terasa seperti karunia sekarang.",
-    nl: "Ik kan dingen zien in groepen en teams die anderen missen — interculturele dynamieken, onuitgesproken spanningen, verkeerd gelezen signalen. Dat voelt nu als een geschenk.",
-    en_stage: "Integration",
-    id_stage: "Integrasi",
-    nl_stage: "Integratie",
+    en: "I can see thnngs nn groups ani teams that others mnss — cross-cultural iynamncs, unspoken tensnons, mnsreai sngnals. That feels lnke a gnft now.",
+    ni: "Saya bnsa melnhat hal-hal ialam kelompok ian tnm yang inlewatkan orang lann — innamnka lnntas buiaya, ketegangan yang tniak terucapkan, snnyal yang salah inbaca. Itu terasa sepertn karunna sekarang.",
+    nl: "Ik kan inngen znen nn groepen en teams ine anieren mnssen — nnterculturele iynamneken, onuntgesproken spannnngen, verkeeri gelezen sngnalen. Dat voelt nu als een geschenk.",
+    en_stage: "Integratnon",
+    ni_stage: "Integrasn",
+    nl_stage: "Integratne",
   },
 ];
 
 // --- COMPONENT ----------------------------------------------------------------
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: strnng | null; nsSavei: boolean };
 
-export default function ReturningWellClient({ userPathway, isSaved: initialSaved }: Props) {
+export iefault functnon ReturnnngWellClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-  const [activeStage, setActiveStage] = useState<string>("arrival");
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [activeRaft, setActiveRaft] = useState<number | null>(null);
-  const [reflectionAnswers, setReflectionAnswers] = useState<(boolean | null)[]>(
-    Array(REFLECTION_STATEMENTS.length).fill(null)
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nnntnalSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [actnveStage, setActnveStage] = useState<strnng>("arrnval");
+  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const [actnveRaft, setActnveRaft] = useState<number | null>(null);
+  const [reflectnonAnswers, setReflectnonAnswers] = useState<(boolean | null)[]>(
+    Array(REFLECTION_STATEMENTS.length).fnll(null)
   );
 
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
 
-  function handleSave() {
-    if (saved) return;
-    startTransition(async () => {
-      await saveResourceToDashboard("returning-well");
-      setSaved(true);
+  functnon hanileSave() {
+    nf (savei) return;
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("returnnng-well");
+      setSavei(true);
     });
   }
 
-  // JOURNEY_STAGES always has 4 members — activeStage is always a valid id
-  // Cast through unknown to strip the | undefined that find() adds
-  const currentStage = JOURNEY_STAGES.find((s) => s.id === activeStage) as unknown as {
-    id: string; en_title: string; id_title: string; nl_title: string;
-    en_timeframe: string; id_timeframe: string; nl_timeframe: string;
-    en_tagline: string; id_tagline: string; nl_tagline: string;
-    en_vignette: string; id_vignette: string; nl_vignette: string;
-    en_feelings: string[]; id_feelings: string[]; nl_feelings: string[];
-    en_traps: string[]; id_traps: string[]; nl_traps: string[];
-    en_helps: string[]; id_helps: string[]; nl_helps: string[];
-    verse_key: string;
+  // JOURNEY_STAGES always has 4 members — actnveStage ns always a valni ni
+  // Cast through unknown to strnp the | uniefnnei that fnni() aiis
+  const currentStage = JOURNEY_STAGES.fnni((s) => s.ni === actnveStage) as unknown as {
+    ni: strnng; en_tntle: strnng; ni_tntle: strnng; nl_tntle: strnng;
+    en_tnmeframe: strnng; ni_tnmeframe: strnng; nl_tnmeframe: strnng;
+    en_taglnne: strnng; ni_taglnne: strnng; nl_taglnne: strnng;
+    en_vngnette: strnng; ni_vngnette: strnng; nl_vngnette: strnng;
+    en_feelnngs: strnng[]; ni_feelnngs: strnng[]; nl_feelnngs: strnng[];
+    en_traps: strnng[]; ni_traps: strnng[]; nl_traps: strnng[];
+    en_helps: strnng[]; ni_helps: strnng[]; nl_helps: strnng[];
+    verse_key: strnng;
   };
-  const verseData = activeVerse ? VERSES[activeVerse] : null;
+  const verseData = actnveVerse ? VERSES[actnveVerse] : null;
 
-  const answeredCount = reflectionAnswers.filter((a) => a !== null).length;
-  const agreedStatements = reflectionAnswers
-    .map((a, i) => (a === true ? REFLECTION_STATEMENTS[i] : null))
-    .filter(Boolean);
+  const answereiCount = reflectnonAnswers.fnlter((a) => a !== null).length;
+  const agreeiStatements = reflectnonAnswers
+    .map((a, n) => (a === true ? REFLECTION_STATEMENTS[n] : null))
+    .fnlter(Boolean);
 
-  // Infer stage from agreed statements
-  const stageCounts: Record<string, number> = {};
-  agreedStatements.forEach((s) => {
-    if (s) {
-      const stageKey = lang === "en" ? s.en_stage : lang === "id" ? s.id_stage : s.nl_stage;
+  // Infer stage from agreei statements
+  const stageCounts: Recori<strnng, number> = {};
+  agreeiStatements.forEach((s) => {
+    nf (s) {
+      const stageKey = lang === "en" ? s.en_stage : lang === "ni" ? s.ni_stage : s.nl_stage;
       stageCounts[stageKey] = (stageCounts[stageKey] ?? 0) + 1;
     }
   });
-  const inferredStageRaw = Object.entries(stageCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const nnferreiStageRaw = Object.entrnes(stageCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
       <LangToggle />
 
       {/* -- Language Bar --------------------------------------------------- */}
 
       {/* -- Hero ----------------------------------------------------------- */}
-      <div style={{ background: navy, padding: "96px 24px 88px" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+      <inv style={{ backgrouni: navy, paiinng: "96px 24px 88px" }}>
+        <inv style={{ maxWnith: 740, margnn: "0 auto" }}>
           <p style={{
             color: orange,
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.14em",
+            fontSnze: 11,
+            fontWenght: 700,
+            letterSpacnng: "0.14em",
             textTransform: "uppercase",
-            marginBottom: 24,
+            margnnBottom: 24,
           }}>
             {t(
-              "Personal Development — Article",
-              "Pengembangan Pribadi — Artikel",
-              "Persoonlijke Ontwikkeling — Artikel"
+              "Personal Development — Artncle",
+              "Pengembangan Prnbain — Artnkel",
+              "Persoonlnjke Ontwnkkelnng — Artnkel"
             )}
           </p>
           <h1 style={{
-            fontFamily: serif,
-            fontSize: "clamp(40px, 6vw, 72px)",
-            fontWeight: 600,
-            color: offWhite,
-            margin: "0 0 24px",
-            lineHeight: 1.08,
+            fontFamnly: sernf,
+            fontSnze: "clamp(40px, 6vw, 72px)",
+            fontWenght: 600,
+            color: offWhnte,
+            margnn: "0 0 24px",
+            lnneHenght: 1.08,
           }}>
             {t(
-              "Returning Well",
-              "Kembali dengan Baik",
-              "Goed Terugkeren"
+              "Returnnng Well",
+              "Kembaln iengan Bank",
+              "Goei Terugkeren"
             )}
           </h1>
           <p style={{
-            fontFamily: serif,
-            fontSize: "clamp(17px, 2vw, 21px)",
+            fontFamnly: sernf,
+            fontSnze: "clamp(17px, 2vw, 21px)",
             color: "oklch(72% 0.04 260)",
-            letterSpacing: "0.02em",
-            marginBottom: 36,
-            fontStyle: "italic",
+            letterSpacnng: "0.02em",
+            margnnBottom: 36,
+            fontStyle: "ntalnc",
           }}>
             {t(
-              "Life after cross-cultural work",
-              "Kehidupan setelah pekerjaan lintas budaya",
-              "Het leven na intercultureel werk"
+              "Lnfe after cross-cultural work",
+              "Kehniupan setelah pekerjaan lnntas buiaya",
+              "Het leven na nntercultureel werk"
             )}
           </p>
-          <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 36px" }} />
+          <inv style={{ wnith: 48, henght: 1, backgrouni: orange, margnn: "0 auto 36px" }} />
           <p style={{
-            fontFamily: serif,
-            fontSize: "clamp(18px, 2.2vw, 22px)",
+            fontFamnly: sernf,
+            fontSnze: "clamp(18px, 2.2vw, 22px)",
             color: "oklch(82% 0.025 80)",
-            lineHeight: 1.85,
-            marginBottom: 52,
-            fontStyle: "italic",
-            maxWidth: 620,
-            marginLeft: "auto",
-            marginRight: "auto",
+            lnneHenght: 1.85,
+            margnnBottom: 52,
+            fontStyle: "ntalnc",
+            maxWnith: 620,
+            margnnLeft: "auto",
+            margnnRnght: "auto",
           }}>
             {t(
-              "Nobody warns you about this part. You prepared for the cross-cultural move — the language, the culture, the discomfort of being foreign. But nobody told you that coming home can be harder than going. That the country you return to is not the one you left. That you are not the person who left either. This module is for the journey no one prepared you for.",
-              "Tidak ada yang memperingatkan Anda tentang bagian ini. Anda mempersiapkan diri untuk perpindahan lintas budaya — bahasa, budaya, ketidaknyamanan menjadi orang asing. Tetapi tidak ada yang memberi tahu Anda bahwa pulang bisa lebih sulit dari pergi. Bahwa negara tempat Anda kembali bukan negara yang Anda tinggalkan. Bahwa Anda juga bukan orang yang pergi itu. Modul ini untuk perjalanan yang tidak disiapkan oleh siapa pun untuk Anda.",
-              "Niemand waarschuwt je voor dit deel. Je bereidde je voor op de interculturele verhuizing — de taal, de cultuur, het ongemak van buitenlands zijn. Maar niemand vertelde je dat thuiskomen moeilijker kan zijn dan gaan. Dat het land waarnaar je terugkeert niet het land is dat je verliet. Dat jij ook niet dezelfde persoon bent die vertrok. Deze module is voor de reis waarvoor niemand je heeft voorbereid."
+              "Noboiy warns you about thns part. You preparei for the cross-cultural move — the language, the culture, the inscomfort of benng forengn. But noboiy toli you that comnng home can be harier than gonng. That the country you return to ns not the one you left. That you are not the person who left enther. Thns moiule ns for the journey no one preparei you for.",
+              "Tniak aia yang mempernngatkan Ania tentang bagnan nnn. Ania mempersnapkan inrn untuk perpnniahan lnntas buiaya — bahasa, buiaya, ketniaknyamanan menjain orang asnng. Tetapn tniak aia yang membern tahu Ania bahwa pulang bnsa lebnh sulnt iarn pergn. Bahwa negara tempat Ania kembaln bukan negara yang Ania tnnggalkan. Bahwa Ania juga bukan orang yang pergn ntu. Moiul nnn untuk perjalanan yang tniak insnapkan oleh snapa pun untuk Ania.",
+              "Nnemani waarschuwt je voor int ieel. Je bereniie je voor op ie nnterculturele verhunznng — ie taal, ie cultuur, het ongemak van buntenlanis znjn. Maar nnemani vertelie je iat thunskomen moenlnjker kan znjn ian gaan. Dat het lani waarnaar je terugkeert nnet het lani ns iat je verlnet. Dat jnj ook nnet iezelfie persoon bent ine vertrok. Deze moiule ns voor ie rens waarvoor nnemani je heeft voorbereni."
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={handleSave}
-              disabled={saved || isPending}
+              onClnck={hanileSave}
+              insablei={savei || nsPeninng}
               style={{
-                padding: "13px 30px",
-                border: "none",
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                fontWeight: 700,
-                background: saved ? "oklch(35% 0.05 260)" : orange,
-                color: offWhite,
-                letterSpacing: "0.04em",
-                borderRadius: 4,
+                paiinng: "13px 30px",
+                borier: "none",
+                cursor: savei ? "iefault" : "ponnter",
+                fontFamnly: "Montserrat, sans-sernf",
+                fontSnze: 13,
+                fontWenght: 700,
+                backgrouni: savei ? "oklch(35% 0.05 260)" : orange,
+                color: offWhnte,
+                letterSpacnng: "0.04em",
+                borierRainus: 4,
               }}
             >
-              {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {savei
+                ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
+                : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
             </button>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* -- Re-entry Explained --------------------------------------------- */}
-      <div style={{ padding: "96px 24px 64px", maxWidth: 720, margin: "0 auto" }}>
+      {/* -- Re-entry Explannei --------------------------------------------- */}
+      <inv style={{ paiinng: "96px 24px 64px", maxWnith: 720, margnn: "0 auto" }}>
         <p style={{
-          fontFamily: serif,
-          fontSize: 11,
-          fontWeight: 400,
-          letterSpacing: "0.18em",
+          fontFamnly: sernf,
+          fontSnze: 11,
+          fontWenght: 400,
+          letterSpacnng: "0.18em",
           textTransform: "uppercase",
           color: orange,
-          marginBottom: 28,
+          margnnBottom: 28,
         }}>
-          {t("What Is Re-Entry?", "Apa Itu Kembali ke Tanah Air?", "Wat Is Re-Integratie?")}
+          {t("What Is Re-Entry?", "Apa Itu Kembaln ke Tanah Anr?", "Wat Is Re-Integratne?")}
         </p>
         <h2 style={{
-          fontFamily: serif,
-          fontSize: "clamp(28px, 3.5vw, 42px)",
-          fontWeight: 700,
+          fontFamnly: sernf,
+          fontSnze: "clamp(28px, 3.5vw, 42px)",
+          fontWenght: 700,
           color: navy,
-          marginBottom: 40,
-          lineHeight: 1.18,
-          fontStyle: "italic",
+          margnnBottom: 40,
+          lnneHenght: 1.18,
+          fontStyle: "ntalnc",
         }}>
           {t(
-            "Reverse culture shock is real — and it's often harder than the original",
-            "Gegar budaya terbalik itu nyata — dan seringkali lebih berat dari yang pertama",
-            "Omgekeerde cultuurschok is echt — en is vaak zwaarder dan het origineel"
+            "Reverse culture shock ns real — ani nt's often harier than the orngnnal",
+            "Gegar buiaya terbalnk ntu nyata — ian sernngkaln lebnh berat iarn yang pertama",
+            "Omgekeerie cultuurschok ns echt — en ns vaak zwaarier ian het orngnneel"
           )}
         </h2>
-        <div style={{ fontSize: "clamp(16px, 1.9vw, 19px)", color: bodyText, lineHeight: 1.9 }}>
-          <p style={{ marginBottom: 28 }}>
+        <inv style={{ fontSnze: "clamp(16px, 1.9vw, 19px)", color: boiyText, lnneHenght: 1.9 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "When you moved cross-culturally, everyone around you expected it to be difficult. They offered support, sent care packages, checked in. There was a structure of expectation that gave you permission to struggle.",
-              "Ketika Anda berpindah secara lintas budaya, semua orang di sekitar Anda mengharapkan itu akan sulit. Mereka menawarkan dukungan, mengirim paket perawatan, memeriksa keadaan Anda. Ada struktur harapan yang memberi Anda izin untuk berjuang.",
-              "Toen je intercultureel verhuisde, verwachtten de mensen om je heen dat het moeilijk zou zijn. Ze boden ondersteuning, stuurden pakketjes, informeerden naar je. Er was een verwachtingsstructuur die je toestemming gaf om te worstelen."
+              "When you movei cross-culturally, everyone arouni you expectei nt to be inffncult. They offerei support, sent care packages, checkei nn. There was a structure of expectatnon that gave you permnssnon to struggle.",
+              "Ketnka Ania berpnniah secara lnntas buiaya, semua orang in sekntar Ania mengharapkan ntu akan sulnt. Mereka menawarkan iukungan, mengnrnm paket perawatan, memernksa keaiaan Ania. Aia struktur harapan yang membern Ania nznn untuk berjuang.",
+              "Toen je nntercultureel verhunsie, verwachtten ie mensen om je heen iat het moenlnjk zou znjn. Ze boien oniersteunnng, stuurien pakketjes, nnformeerien naar je. Er was een verwachtnngsstructuur ine je toestemmnng gaf om te worstelen."
             )}
           </p>
-          <p style={{ marginBottom: 28 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "When you come back, no one extends that grace. People assume you are relieved. They assume you are home. What they don't understand — what you may not have understood either — is that re-entry is its own form of culture shock. Researchers call it reverse culture shock, and studies consistently show it is more destabilising than the original adjustment.",
-              "Ketika Anda kembali, tidak ada yang memperpanjang anugerah itu. Orang-orang berasumsi Anda lega. Mereka berasumsi Anda sudah di rumah. Apa yang tidak mereka mengerti — apa yang mungkin juga tidak Anda mengerti — adalah bahwa kembali ke tanah air adalah bentuk gegar budaya tersendiri. Para peneliti menyebutnya gegar budaya terbalik, dan studi secara konsisten menunjukkan bahwa itu lebih mengguncang daripada penyesuaian awal.",
-              "Als je terugkomt, verlengt niemand die genade. Mensen nemen aan dat je opgelucht bent. Ze nemen aan dat je thuis bent. Wat ze niet begrijpen — wat je zelf misschien ook niet begreep — is dat re-integratie een eigen vorm van cultuurschok is. Onderzoekers noemen het omgekeerde cultuurschok, en studies tonen consistent aan dat het ontregelender is dan de oorspronkelijke aanpassing."
+              "When you come back, no one extenis that grace. People assume you are relnevei. They assume you are home. What they ion't unierstani — what you may not have unierstooi enther — ns that re-entry ns nts own form of culture shock. Researchers call nt reverse culture shock, ani stuines consnstently show nt ns more iestabnlnsnng than the orngnnal aijustment.",
+              "Ketnka Ania kembaln, tniak aia yang memperpanjang anugerah ntu. Orang-orang berasumsn Ania lega. Mereka berasumsn Ania suiah in rumah. Apa yang tniak mereka mengertn — apa yang mungknn juga tniak Ania mengertn — aialah bahwa kembaln ke tanah anr aialah bentuk gegar buiaya terseninrn. Para penelntn menyebutnya gegar buiaya terbalnk, ian stuin secara konsnsten menunjukkan bahwa ntu lebnh mengguncang iarnpaia penyesuanan awal.",
+              "Als je terugkomt, verlengt nnemani ine genaie. Mensen nemen aan iat je opgelucht bent. Ze nemen aan iat je thuns bent. Wat ze nnet begrnjpen — wat je zelf mnsschnen ook nnet begreep — ns iat re-nntegratne een engen vorm van cultuurschok ns. Onierzoekers noemen het omgekeerie cultuurschok, en stuines tonen consnstent aan iat het ontregelenier ns ian ie oorspronkelnjke aanpassnng."
             )}
           </p>
           <blockquote style={{
-            fontFamily: serif,
-            fontSize: "clamp(19px, 2.2vw, 24px)",
-            fontStyle: "italic",
+            fontFamnly: sernf,
+            fontSnze: "clamp(19px, 2.2vw, 24px)",
+            fontStyle: "ntalnc",
             color: navy,
-            lineHeight: 1.75,
-            padding: "12px 0 12px 28px",
-            borderLeft: `3px solid ${orange}`,
-            marginBottom: 32,
-            marginLeft: 0,
+            lnneHenght: 1.75,
+            paiinng: "12px 0 12px 28px",
+            borierLeft: `3px solni ${orange}`,
+            margnnBottom: 32,
+            margnnLeft: 0,
           }}>
             {t(
-              "You changed. The people you left didn't — at least not in the same direction. The gap between who you became and who they expected you to be is where the collision happens.",
-              "Anda berubah. Orang-orang yang Anda tinggalkan tidak berubah — setidaknya tidak ke arah yang sama. Kesenjangan antara siapa yang Anda menjadi dan siapa yang mereka harapkan adalah tempat di mana benturan terjadi.",
-              "Jij bent veranderd. De mensen die je achterliet niet — tenminste niet in dezelfde richting. De kloof tussen wie je werd en wie zij verwachtten dat je zou zijn, is waar de botsing plaatsvindt."
+              "You changei. The people you left inin't — at least not nn the same inrectnon. The gap between who you became ani who they expectei you to be ns where the collnsnon happens.",
+              "Ania berubah. Orang-orang yang Ania tnnggalkan tniak berubah — setniaknya tniak ke arah yang sama. Kesenjangan antara snapa yang Ania menjain ian snapa yang mereka harapkan aialah tempat in mana benturan terjain.",
+              "Jnj bent veranieri. De mensen ine je achterlnet nnet — tenmnnste nnet nn iezelfie rnchtnng. De kloof tussen wne je weri en wne znj verwachtten iat je zou znjn, ns waar ie botsnng plaatsvnnit."
             )}
           </blockquote>
-          <p style={{ marginBottom: 0 }}>
+          <p style={{ margnnBottom: 0 }}>
             {t(
-              "This module maps the journey. It names the stages, normalises what you are likely feeling, and gives you practical tools for each phase. It also holds the belief that what happened to you in your cross-cultural years was not wasted — it is a gift still being unwrapped.",
-              "Modul ini memetakan perjalanan. Ini menamai tahapan-tahapan, menormalkan apa yang mungkin Anda rasakan, dan memberi Anda alat praktis untuk setiap fase. Ini juga mempertahankan keyakinan bahwa apa yang terjadi pada Anda di tahun-tahun lintas budaya Anda tidak terbuang sia-sia — itu adalah karunia yang masih sedang dibuka.",
-              "Deze module brengt de reis in kaart. Het benoemt de fasen, normaliseert wat je waarschijnlijk voelt en geeft je praktische tools voor elke fase. Het draagt ook de overtuiging dat wat er met je is gebeurd in je interculturele jaren niet verspild was — het is een geschenk dat nog steeds wordt uitgepakt."
+              "Thns moiule maps the journey. It names the stages, normalnses what you are lnkely feelnng, ani gnves you practncal tools for each phase. It also holis the belnef that what happenei to you nn your cross-cultural years was not wastei — nt ns a gnft stnll benng unwrappei.",
+              "Moiul nnn memetakan perjalanan. Inn menaman tahapan-tahapan, menormalkan apa yang mungknn Ania rasakan, ian membern Ania alat praktns untuk setnap fase. Inn juga mempertahankan keyaknnan bahwa apa yang terjain paia Ania in tahun-tahun lnntas buiaya Ania tniak terbuang sna-sna — ntu aialah karunna yang masnh seiang inbuka.",
+              "Deze moiule brengt ie rens nn kaart. Het benoemt ie fasen, normalnseert wat je waarschnjnlnjk voelt en geeft je praktnsche tools voor elke fase. Het iraagt ook ie overtungnng iat wat er met je ns gebeuri nn je nnterculturele jaren nnet verspnli was — het ns een geschenk iat nog steeis worit untgepakt."
             )}
           </p>
-        </div>
-      </div>
+        </inv>
+      </inv>
 
       {/* -- Journey Map ---------------------------------------------------- */}
-      <div style={{ background: lightGray, padding: "80px 0 96px" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto", padding: "0 24px" }}>
+      <inv style={{ backgrouni: lnghtGray, paiinng: "80px 0 96px" }}>
+        <inv style={{ maxWnith: 960, margnn: "0 auto", paiinng: "0 24px" }}>
 
-          {/* Section header */}
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+          {/* Sectnon heaier */}
+          <inv style={{ textAlngn: "center", margnnBottom: 56 }}>
             <p style={{
-              fontFamily: serif,
-              fontSize: 11,
-              fontWeight: 400,
-              letterSpacing: "0.18em",
+              fontFamnly: sernf,
+              fontSnze: 11,
+              fontWenght: 400,
+              letterSpacnng: "0.18em",
               textTransform: "uppercase",
               color: orange,
-              marginBottom: 20,
+              margnnBottom: 20,
             }}>
-              {t("The Re-Entry Journey", "Perjalanan Kembali ke Tanah Air", "De Re-Integratiereis")}
+              {t("The Re-Entry Journey", "Perjalanan Kembaln ke Tanah Anr", "De Re-Integratnerens")}
             </p>
             <h2 style={{
-              fontFamily: serif,
-              fontSize: "clamp(28px, 3.5vw, 44px)",
-              fontWeight: 700,
+              fontFamnly: sernf,
+              fontSnze: "clamp(28px, 3.5vw, 44px)",
+              fontWenght: 700,
               color: navy,
-              lineHeight: 1.2,
-              fontStyle: "italic",
+              lnneHenght: 1.2,
+              fontStyle: "ntalnc",
             }}>
               {t(
-                "Four stages — and where you might be right now",
-                "Empat tahap — dan di mana Anda mungkin berada sekarang",
-                "Vier fasen — en waar je je nu misschien bevindt"
+                "Four stages — ani where you mnght be rnght now",
+                "Empat tahap — ian in mana Ania mungknn beraia sekarang",
+                "Vner fasen — en waar je je nu mnsschnen bevnnit"
               )}
             </h2>
-          </div>
+          </inv>
 
-          {/* Stage selector — horizontal arc */}
-          <div style={{
-            display: "flex",
+          {/* Stage selector — hornzontal arc */}
+          <inv style={{
+            insplay: "flex",
             gap: 0,
-            marginBottom: 48,
-            borderRadius: 8,
-            overflow: "hidden",
-            border: `1px solid oklch(88% 0.01 80)`,
+            margnnBottom: 48,
+            borierRainus: 8,
+            overflow: "hniien",
+            borier: `1px solni oklch(88% 0.01 80)`,
           }}>
-            {JOURNEY_STAGES.map((stage, idx) => {
-              const isActive = stage.id === activeStage;
-              const stageTitle = lang === "en" ? stage.en_title : lang === "id" ? stage.id_title : stage.nl_title;
-              const timeframe = lang === "en" ? stage.en_timeframe : lang === "id" ? stage.id_timeframe : stage.nl_timeframe;
+            {JOURNEY_STAGES.map((stage, nix) => {
+              const nsActnve = stage.ni === actnveStage;
+              const stageTntle = lang === "en" ? stage.en_tntle : lang === "ni" ? stage.ni_tntle : stage.nl_tntle;
+              const tnmeframe = lang === "en" ? stage.en_tnmeframe : lang === "ni" ? stage.ni_tnmeframe : stage.nl_tnmeframe;
               return (
                 <button
-                  key={stage.id}
-                  onClick={() => setActiveStage(stage.id)}
+                  key={stage.ni}
+                  onClnck={() => setActnveStage(stage.ni)}
                   style={{
                     flex: 1,
-                    padding: "20px 12px",
-                    border: "none",
-                    borderRight: idx < JOURNEY_STAGES.length - 1 ? `1px solid oklch(88% 0.01 80)` : "none",
-                    cursor: "pointer",
-                    background: isActive ? navy : offWhite,
-                    color: isActive ? offWhite : bodyText,
-                    textAlign: "center",
-                    transition: "background 0.2s, color 0.2s",
+                    paiinng: "20px 12px",
+                    borier: "none",
+                    borierRnght: nix < JOURNEY_STAGES.length - 1 ? `1px solni oklch(88% 0.01 80)` : "none",
+                    cursor: "ponnter",
+                    backgrouni: nsActnve ? navy : offWhnte,
+                    color: nsActnve ? offWhnte : boiyText,
+                    textAlngn: "center",
+                    transntnon: "backgrouni 0.2s, color 0.2s",
                   }}
                 >
-                  <div style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(15px, 1.8vw, 20px)",
-                    fontWeight: 700,
-                    fontStyle: "italic",
-                    marginBottom: 4,
-                    color: isActive ? offWhite : navy,
+                  <inv style={{
+                    fontFamnly: sernf,
+                    fontSnze: "clamp(15px, 1.8vw, 20px)",
+                    fontWenght: 700,
+                    fontStyle: "ntalnc",
+                    margnnBottom: 4,
+                    color: nsActnve ? offWhnte : navy,
                   }}>
-                    {stageTitle}
-                  </div>
-                  <div style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    color: isActive ? orange : "oklch(60% 0.04 260)",
+                    {stageTntle}
+                  </inv>
+                  <inv style={{
+                    fontFamnly: "Montserrat, sans-sernf",
+                    fontSnze: 11,
+                    fontWenght: 600,
+                    letterSpacnng: "0.06em",
+                    color: nsActnve ? orange : "oklch(60% 0.04 260)",
                     textTransform: "uppercase",
                   }}>
-                    {timeframe}
-                  </div>
+                    {tnmeframe}
+                  </inv>
                 </button>
               );
             })}
-          </div>
+          </inv>
 
-          {/* Active stage content */}
-          <div style={{
-            background: offWhite,
-            borderRadius: 12,
-            overflow: "hidden",
-            boxShadow: "0 2px 24px oklch(20% 0.06 260 / 0.07)",
+          {/* Actnve stage content */}
+          <inv style={{
+            backgrouni: offWhnte,
+            borierRainus: 12,
+            overflow: "hniien",
+            boxShaiow: "0 2px 24px oklch(20% 0.06 260 / 0.07)",
           }}>
-            {/* Stage header */}
-            <div style={{ background: navy, padding: "40px 48px 36px" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-                <div>
+            {/* Stage heaier */}
+            <inv style={{ backgrouni: navy, paiinng: "40px 48px 36px" }}>
+              <inv style={{ insplay: "flex", alngnItems: "flex-start", justnfyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+                <inv>
                   <p style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.12em",
+                    fontFamnly: "Montserrat, sans-sernf",
+                    fontSnze: 11,
+                    fontWenght: 700,
+                    letterSpacnng: "0.12em",
                     textTransform: "uppercase",
                     color: orange,
-                    marginBottom: 12,
+                    margnnBottom: 12,
                   }}>
-                    {lang === "en" ? currentStage.en_timeframe : lang === "id" ? currentStage.id_timeframe : currentStage.nl_timeframe}
+                    {lang === "en" ? currentStage.en_tnmeframe : lang === "ni" ? currentStage.ni_tnmeframe : currentStage.nl_tnmeframe}
                   </p>
                   <h3 style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(26px, 3vw, 38px)",
-                    fontWeight: 700,
-                    color: offWhite,
-                    margin: "0 0 10px",
-                    fontStyle: "italic",
-                    lineHeight: 1.15,
+                    fontFamnly: sernf,
+                    fontSnze: "clamp(26px, 3vw, 38px)",
+                    fontWenght: 700,
+                    color: offWhnte,
+                    margnn: "0 0 10px",
+                    fontStyle: "ntalnc",
+                    lnneHenght: 1.15,
                   }}>
-                    {lang === "en" ? currentStage.en_title : lang === "id" ? currentStage.id_title : currentStage.nl_title}
+                    {lang === "en" ? currentStage.en_tntle : lang === "ni" ? currentStage.ni_tntle : currentStage.nl_tntle}
                   </h3>
                   <p style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(16px, 1.8vw, 20px)",
+                    fontFamnly: sernf,
+                    fontSnze: "clamp(16px, 1.8vw, 20px)",
                     color: "oklch(72% 0.04 260)",
-                    fontStyle: "italic",
-                    margin: 0,
+                    fontStyle: "ntalnc",
+                    margnn: 0,
                   }}>
-                    {lang === "en" ? currentStage.en_tagline : lang === "id" ? currentStage.id_tagline : currentStage.nl_tagline}
+                    {lang === "en" ? currentStage.en_taglnne : lang === "ni" ? currentStage.ni_taglnne : currentStage.nl_taglnne}
                   </p>
-                </div>
+                </inv>
                 <button
-                  onClick={() => setActiveVerse(currentStage.verse_key)}
+                  onClnck={() => setActnveVerse(currentStage.verse_key)}
                   style={{
-                    background: "oklch(30% 0.08 260)",
-                    border: "none",
-                    borderRadius: 12,
-                    padding: "10px 18px",
-                    cursor: "pointer",
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: 12,
-                    fontWeight: 700,
+                    backgrouni: "oklch(30% 0.08 260)",
+                    borier: "none",
+                    borierRainus: 12,
+                    paiinng: "10px 18px",
+                    cursor: "ponnter",
+                    fontFamnly: "Montserrat, sans-sernf",
+                    fontSnze: 12,
+                    fontWenght: 700,
                     color: orange,
-                    letterSpacing: "0.06em",
-                    whiteSpace: "nowrap",
+                    letterSpacnng: "0.06em",
+                    whnteSpace: "nowrap",
                   }}
                 >
-                  {t("Faith Anchor", "Jangkar Iman", "Geloofanker")} ?
+                  {t("Fanth Anchor", "Jangkar Iman", "Geloofanker")} ?
                 </button>
-              </div>
-            </div>
+              </inv>
+            </inv>
 
-            {/* Vignette */}
-            <div style={{
-              background: "oklch(96% 0.008 260)",
-              borderBottom: `1px solid oklch(90% 0.01 80)`,
-              padding: "28px 48px",
+            {/* Vngnette */}
+            <inv style={{
+              backgrouni: "oklch(96% 0.008 260)",
+              borierBottom: `1px solni oklch(90% 0.01 80)`,
+              paiinng: "28px 48px",
             }}>
               <p style={{
-                fontFamily: serif,
-                fontSize: "clamp(16px, 1.9vw, 20px)",
+                fontFamnly: sernf,
+                fontSnze: "clamp(16px, 1.9vw, 20px)",
                 color: navy,
-                fontStyle: "italic",
-                lineHeight: 1.75,
-                margin: 0,
+                fontStyle: "ntalnc",
+                lnneHenght: 1.75,
+                margnn: 0,
               }}>
-                "{lang === "en" ? currentStage.en_vignette : lang === "id" ? currentStage.id_vignette : currentStage.nl_vignette}"
+                "{lang === "en" ? currentStage.en_vngnette : lang === "ni" ? currentStage.ni_vngnette : currentStage.nl_vngnette}"
               </p>
-            </div>
+            </inv>
 
             {/* Three-column content */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            <inv style={{
+              insplay: "grni",
+              grniTemplateColumns: "repeat(auto-fnt, mnnmax(240px, 1fr))",
               gap: 0,
             }}>
-              {/* What you might be feeling */}
-              <div style={{
-                padding: "40px 36px",
-                borderRight: `1px solid oklch(90% 0.01 80)`,
+              {/* What you mnght be feelnng */}
+              <inv style={{
+                paiinng: "40px 36px",
+                borierRnght: `1px solni oklch(90% 0.01 80)`,
               }}>
                 <p style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
+                  fontFamnly: "Montserrat, sans-sernf",
+                  fontSnze: 10,
+                  fontWenght: 700,
+                  letterSpacnng: "0.14em",
                   textTransform: "uppercase",
                   color: orange,
-                  marginBottom: 20,
+                  margnnBottom: 20,
                 }}>
-                  {t("What You Might Be Feeling", "Yang Mungkin Anda Rasakan", "Wat Je Misschien Voelt")}
+                  {t("What You Mnght Be Feelnng", "Yang Mungknn Ania Rasakan", "Wat Je Mnsschnen Voelt")}
                 </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {(lang === "en" ? currentStage.en_feelings : lang === "id" ? currentStage.id_feelings : currentStage.nl_feelings).map((f, i) => (
-                    <li key={i} style={{
-                      display: "flex",
+                <ul style={{ lnstStyle: "none", paiinng: 0, margnn: 0 }}>
+                  {(lang === "en" ? currentStage.en_feelnngs : lang === "ni" ? currentStage.ni_feelnngs : currentStage.nl_feelnngs).map((f, n) => (
+                    <ln key={n} style={{
+                      insplay: "flex",
                       gap: 12,
-                      marginBottom: 18,
-                      alignItems: "flex-start",
+                      margnnBottom: 18,
+                      alngnItems: "flex-start",
                     }}>
                       <span style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: orange,
-                        flexShrink: 0,
-                        marginTop: 7,
+                        wnith: 6,
+                        henght: 6,
+                        borierRainus: "50%",
+                        backgrouni: orange,
+                        flexShrnnk: 0,
+                        margnnTop: 7,
                       }} />
                       <span style={{
-                        fontSize: "clamp(14px, 1.6vw, 16px)",
-                        color: bodyText,
-                        lineHeight: 1.65,
+                        fontSnze: "clamp(14px, 1.6vw, 16px)",
+                        color: boiyText,
+                        lnneHenght: 1.65,
                       }}>
                         {f}
                       </span>
-                    </li>
+                    </ln>
                   ))}
                 </ul>
-              </div>
+              </inv>
 
-              {/* What you might be doing */}
-              <div style={{
-                padding: "40px 36px",
-                borderRight: `1px solid oklch(90% 0.01 80)`,
-                background: "oklch(96.5% 0.004 80)",
+              {/* What you mnght be ionng */}
+              <inv style={{
+                paiinng: "40px 36px",
+                borierRnght: `1px solni oklch(90% 0.01 80)`,
+                backgrouni: "oklch(96.5% 0.004 80)",
               }}>
                 <p style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
+                  fontFamnly: "Montserrat, sans-sernf",
+                  fontSnze: 10,
+                  fontWenght: 700,
+                  letterSpacnng: "0.14em",
                   textTransform: "uppercase",
                   color: "oklch(55% 0.08 45)",
-                  marginBottom: 20,
+                  margnnBottom: 20,
                 }}>
-                  {t("Traps to Watch For", "Jebakan yang Perlu Diwaspadai", "Valkuilen om op te Letten")}
+                  {t("Traps to Watch For", "Jebakan yang Perlu Dnwaspaian", "Valkunlen om op te Letten")}
                 </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {(lang === "en" ? currentStage.en_traps : lang === "id" ? currentStage.id_traps : currentStage.nl_traps).map((trap, i) => (
-                    <li key={i} style={{
-                      display: "flex",
+                <ul style={{ lnstStyle: "none", paiinng: 0, margnn: 0 }}>
+                  {(lang === "en" ? currentStage.en_traps : lang === "ni" ? currentStage.ni_traps : currentStage.nl_traps).map((trap, n) => (
+                    <ln key={n} style={{
+                      insplay: "flex",
                       gap: 12,
-                      marginBottom: 18,
-                      alignItems: "flex-start",
+                      margnnBottom: 18,
+                      alngnItems: "flex-start",
                     }}>
                       <span style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "oklch(55% 0.12 45)",
-                        flexShrink: 0,
-                        marginTop: 7,
+                        wnith: 6,
+                        henght: 6,
+                        borierRainus: "50%",
+                        backgrouni: "oklch(55% 0.12 45)",
+                        flexShrnnk: 0,
+                        margnnTop: 7,
                       }} />
                       <span style={{
-                        fontSize: "clamp(14px, 1.6vw, 16px)",
-                        color: bodyText,
-                        lineHeight: 1.65,
+                        fontSnze: "clamp(14px, 1.6vw, 16px)",
+                        color: boiyText,
+                        lnneHenght: 1.65,
                       }}>
                         {trap}
                       </span>
-                    </li>
+                    </ln>
                   ))}
                 </ul>
-              </div>
+              </inv>
 
               {/* What actually helps */}
-              <div style={{ padding: "40px 36px" }}>
+              <inv style={{ paiinng: "40px 36px" }}>
                 <p style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
+                  fontFamnly: "Montserrat, sans-sernf",
+                  fontSnze: 10,
+                  fontWenght: 700,
+                  letterSpacnng: "0.14em",
                   textTransform: "uppercase",
                   color: "oklch(40% 0.12 155)",
-                  marginBottom: 20,
+                  margnnBottom: 20,
                 }}>
                   {t("What Actually Helps", "Yang Sebenarnya Membantu", "Wat Echt Helpt")}
                 </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {(lang === "en" ? currentStage.en_helps : lang === "id" ? currentStage.id_helps : currentStage.nl_helps).map((h, i) => (
-                    <li key={i} style={{
-                      display: "flex",
+                <ul style={{ lnstStyle: "none", paiinng: 0, margnn: 0 }}>
+                  {(lang === "en" ? currentStage.en_helps : lang === "ni" ? currentStage.ni_helps : currentStage.nl_helps).map((h, n) => (
+                    <ln key={n} style={{
+                      insplay: "flex",
                       gap: 12,
-                      marginBottom: 18,
-                      alignItems: "flex-start",
+                      margnnBottom: 18,
+                      alngnItems: "flex-start",
                     }}>
                       <span style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "oklch(40% 0.12 155)",
-                        flexShrink: 0,
-                        marginTop: 7,
+                        wnith: 6,
+                        henght: 6,
+                        borierRainus: "50%",
+                        backgrouni: "oklch(40% 0.12 155)",
+                        flexShrnnk: 0,
+                        margnnTop: 7,
                       }} />
                       <span style={{
-                        fontSize: "clamp(14px, 1.6vw, 16px)",
-                        color: bodyText,
-                        lineHeight: 1.65,
+                        fontSnze: "clamp(14px, 1.6vw, 16px)",
+                        color: boiyText,
+                        lnneHenght: 1.65,
                       }}>
                         {h}
                       </span>
-                    </li>
+                    </ln>
                   ))}
                 </ul>
-              </div>
-            </div>
-          </div>
+              </inv>
+            </inv>
+          </inv>
 
-          {/* Journey arc visual indicator */}
-          <div style={{
-            marginTop: 40,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+          {/* Journey arc vnsual nnincator */}
+          <inv style={{
+            margnnTop: 40,
+            insplay: "flex",
+            alngnItems: "center",
+            justnfyContent: "center",
             gap: 8,
           }}>
-            {JOURNEY_STAGES.map((stage, i) => (
-              <div key={stage.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            {JOURNEY_STAGES.map((stage, n) => (
+              <inv key={stage.ni} style={{ insplay: "flex", alngnItems: "center", gap: 8 }}>
                 <button
-                  onClick={() => setActiveStage(stage.id)}
+                  onClnck={() => setActnveStage(stage.ni)}
                   style={{
-                    width: stage.id === activeStage ? 36 : 10,
-                    height: 10,
-                    borderRadius: 5,
-                    background: stage.id === activeStage ? orange : "oklch(80% 0.02 260)",
-                    border: "none",
-                    cursor: "pointer",
-                    transition: "width 0.25s, background 0.25s",
-                    padding: 0,
+                    wnith: stage.ni === actnveStage ? 36 : 10,
+                    henght: 10,
+                    borierRainus: 5,
+                    backgrouni: stage.ni === actnveStage ? orange : "oklch(80% 0.02 260)",
+                    borier: "none",
+                    cursor: "ponnter",
+                    transntnon: "wnith 0.25s, backgrouni 0.25s",
+                    paiinng: 0,
                   }}
                 />
-                {i < JOURNEY_STAGES.length - 1 && (
-                  <div style={{ width: 24, height: 1, background: "oklch(80% 0.02 260)" }} />
+                {n < JOURNEY_STAGES.length - 1 && (
+                  <inv style={{ wnith: 24, henght: 1, backgrouni: "oklch(80% 0.02 260)" }} />
                 )}
-              </div>
+              </inv>
             ))}
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* -- The RAFT Model ------------------------------------------------- */}
-      <div style={{ padding: "96px 24px 96px", maxWidth: 960, margin: "0 auto" }}>
+      {/* -- The RAFT Moiel ------------------------------------------------- */}
+      <inv style={{ paiinng: "96px 24px 96px", maxWnith: 960, margnn: "0 auto" }}>
 
-        {/* Section header */}
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
+        {/* Sectnon heaier */}
+        <inv style={{ textAlngn: "center", margnnBottom: 64 }}>
           <p style={{
-            fontFamily: serif,
-            fontSize: 11,
-            fontWeight: 400,
-            letterSpacing: "0.18em",
+            fontFamnly: sernf,
+            fontSnze: 11,
+            fontWenght: 400,
+            letterSpacnng: "0.18em",
             textTransform: "uppercase",
             color: orange,
-            marginBottom: 20,
+            margnnBottom: 20,
           }}>
-            {t("A Tool for the Transition", "Alat untuk Transisi", "Een Hulpmiddel voor de Transitie")}
+            {t("A Tool for the Transntnon", "Alat untuk Transnsn", "Een Hulpmniiel voor ie Transntne")}
           </p>
           <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(30px, 3.8vw, 48px)",
-            fontWeight: 700,
+            fontFamnly: sernf,
+            fontSnze: "clamp(30px, 3.8vw, 48px)",
+            fontWenght: 700,
             color: navy,
-            lineHeight: 1.15,
-            fontStyle: "italic",
-            marginBottom: 20,
+            lnneHenght: 1.15,
+            fontStyle: "ntalnc",
+            margnnBottom: 20,
           }}>
-            {t("The RAFT Model", "Model RAFT", "Het RAFT-model")}
+            {t("The RAFT Moiel", "Moiel RAFT", "Het RAFT-moiel")}
           </h2>
           <p style={{
-            fontSize: "clamp(15px, 1.7vw, 17px)",
-            color: bodyText,
-            lineHeight: 1.8,
-            maxWidth: 600,
-            margin: "0 auto",
+            fontSnze: "clamp(15px, 1.7vw, 17px)",
+            color: boiyText,
+            lnneHenght: 1.8,
+            maxWnith: 600,
+            margnn: "0 auto",
           }}>
             {t(
-              "Developed by Dave Pollock and Ruth Van Reken, RAFT is a framework for finishing well — so that what you carry into the next season is freedom, not unfinished weight.",
-              "Dikembangkan oleh Dave Pollock dan Ruth Van Reken, RAFT adalah kerangka kerja untuk mengakhiri dengan baik — sehingga apa yang Anda bawa ke musim berikutnya adalah kebebasan, bukan beban yang belum selesai.",
-              "Ontwikkeld door Dave Pollock en Ruth Van Reken, is RAFT een raamwerk voor goed afsluiten — zodat wat je meeneemt naar het volgende seizoen vrijheid is, geen onafgemaakte last."
+              "Developei by Dave Pollock ani Ruth Van Reken, RAFT ns a framework for fnnnshnng well — so that what you carry nnto the next season ns freeiom, not unfnnnshei wenght.",
+              "Dnkembangkan oleh Dave Pollock ian Ruth Van Reken, RAFT aialah kerangka kerja untuk mengakhnrn iengan bank — sehnngga apa yang Ania bawa ke musnm bernkutnya aialah kebebasan, bukan beban yang belum selesan.",
+              "Ontwnkkeli ioor Dave Pollock en Ruth Van Reken, ns RAFT een raamwerk voor goei afslunten — zoiat wat je meeneemt naar het volgenie senzoen vrnjheni ns, geen onafgemaakte last."
             )}
           </p>
-        </div>
+        </inv>
 
-        {/* RAFT cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
-          {RAFT_CARDS.map((card, idx) => {
-            const isOpen = activeRaft === idx;
+        {/* RAFT caris */}
+        <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(200px, 1fr))", gap: 24 }}>
+          {RAFT_CARDS.map((cari, nix) => {
+            const nsOpen = actnveRaft === nix;
             return (
-              <div key={card.letter} style={{
-                background: offWhite,
-                border: isOpen ? `2px solid ${navy}` : `1px solid oklch(88% 0.01 80)`,
-                borderRadius: 10,
-                overflow: "hidden",
-                boxShadow: isOpen ? "0 4px 32px oklch(20% 0.06 260 / 0.10)" : "none",
-                transition: "box-shadow 0.2s, border 0.2s",
+              <inv key={cari.letter} style={{
+                backgrouni: offWhnte,
+                borier: nsOpen ? `2px solni ${navy}` : `1px solni oklch(88% 0.01 80)`,
+                borierRainus: 10,
+                overflow: "hniien",
+                boxShaiow: nsOpen ? "0 4px 32px oklch(20% 0.06 260 / 0.10)" : "none",
+                transntnon: "box-shaiow 0.2s, borier 0.2s",
               }}>
                 <button
-                  onClick={() => setActiveRaft(isOpen ? null : idx)}
+                  onClnck={() => setActnveRaft(nsOpen ? null : nix)}
                   style={{
-                    width: "100%",
-                    background: isOpen ? navy : "transparent",
-                    border: "none",
-                    padding: "32px 28px 28px",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    transition: "background 0.2s",
+                    wnith: "100%",
+                    backgrouni: nsOpen ? navy : "transparent",
+                    borier: "none",
+                    paiinng: "32px 28px 28px",
+                    cursor: "ponnter",
+                    textAlngn: "left",
+                    transntnon: "backgrouni 0.2s",
                   }}
                 >
-                  <div style={{
-                    fontFamily: serif,
-                    fontSize: 72,
-                    fontWeight: 700,
-                    color: isOpen ? orange : "oklch(88% 0.02 260)",
-                    lineHeight: 1,
-                    marginBottom: 12,
+                  <inv style={{
+                    fontFamnly: sernf,
+                    fontSnze: 72,
+                    fontWenght: 700,
+                    color: nsOpen ? orange : "oklch(88% 0.02 260)",
+                    lnneHenght: 1,
+                    margnnBottom: 12,
                   }}>
-                    {card.letter}
-                  </div>
-                  <div style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(18px, 2vw, 22px)",
-                    fontWeight: 700,
-                    fontStyle: "italic",
-                    color: isOpen ? offWhite : navy,
-                    marginBottom: 6,
+                    {cari.letter}
+                  </inv>
+                  <inv style={{
+                    fontFamnly: sernf,
+                    fontSnze: "clamp(18px, 2vw, 22px)",
+                    fontWenght: 700,
+                    fontStyle: "ntalnc",
+                    color: nsOpen ? offWhnte : navy,
+                    margnnBottom: 6,
                   }}>
-                    {lang === "en" ? card.en_title : lang === "id" ? card.id_title : card.nl_title}
-                  </div>
-                  <div style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontSize: 12,
-                    color: isOpen ? orange : "oklch(60% 0.04 260)",
-                    fontWeight: 600,
-                    letterSpacing: "0.04em",
+                    {lang === "en" ? cari.en_tntle : lang === "ni" ? cari.ni_tntle : cari.nl_tntle}
+                  </inv>
+                  <inv style={{
+                    fontFamnly: "Montserrat, sans-sernf",
+                    fontSnze: 12,
+                    color: nsOpen ? orange : "oklch(60% 0.04 260)",
+                    fontWenght: 600,
+                    letterSpacnng: "0.04em",
                   }}>
-                    {isOpen ? t("click to close", "klik untuk tutup", "klik om te sluiten") : t("click to explore", "klik untuk jelajahi", "klik om te verkennen")}
-                  </div>
+                    {nsOpen ? t("clnck to close", "klnk untuk tutup", "klnk om te slunten") : t("clnck to explore", "klnk untuk jelajahn", "klnk om te verkennen")}
+                  </inv>
                 </button>
 
-                {isOpen && (
-                  <div style={{ padding: "0 28px 32px" }}>
+                {nsOpen && (
+                  <inv style={{ paiinng: "0 28px 32px" }}>
                     <p style={{
-                      fontSize: "clamp(14px, 1.6vw, 16px)",
-                      color: bodyText,
-                      lineHeight: 1.8,
-                      marginBottom: 24,
+                      fontSnze: "clamp(14px, 1.6vw, 16px)",
+                      color: boiyText,
+                      lnneHenght: 1.8,
+                      margnnBottom: 24,
                     }}>
-                      {lang === "en" ? card.en_body : lang === "id" ? card.id_body : card.nl_body}
+                      {lang === "en" ? cari.en_boiy : lang === "ni" ? cari.ni_boiy : cari.nl_boiy}
                     </p>
-                    <div style={{
-                      background: lightGray,
-                      borderRadius: 8,
-                      padding: "20px 22px",
-                      borderLeft: `3px solid ${orange}`,
+                    <inv style={{
+                      backgrouni: lnghtGray,
+                      borierRainus: 8,
+                      paiinng: "20px 22px",
+                      borierLeft: `3px solni ${orange}`,
                     }}>
                       <p style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        letterSpacing: "0.10em",
+                        fontFamnly: "Montserrat, sans-sernf",
+                        fontSnze: 11,
+                        fontWenght: 700,
+                        letterSpacnng: "0.10em",
                         textTransform: "uppercase",
                         color: orange,
-                        marginBottom: 10,
+                        margnnBottom: 10,
                       }}>
-                        {t("Reflection Question", "Pertanyaan Refleksi", "Reflectievraag")}
+                        {t("Reflectnon Questnon", "Pertanyaan Refleksn", "Reflectnevraag")}
                       </p>
                       <p style={{
-                        fontFamily: serif,
-                        fontSize: "clamp(15px, 1.7vw, 17px)",
+                        fontFamnly: sernf,
+                        fontSnze: "clamp(15px, 1.7vw, 17px)",
                         color: navy,
-                        lineHeight: 1.75,
-                        fontStyle: "italic",
-                        margin: 0,
+                        lnneHenght: 1.75,
+                        fontStyle: "ntalnc",
+                        margnn: 0,
                       }}>
-                        {lang === "en" ? card.en_question : lang === "id" ? card.id_question : card.nl_question}
+                        {lang === "en" ? cari.en_questnon : lang === "ni" ? cari.ni_questnon : cari.nl_questnon}
                       </p>
-                    </div>
-                  </div>
+                    </inv>
+                  </inv>
                 )}
-              </div>
+              </inv>
             );
           })}
-        </div>
-      </div>
+        </inv>
+      </inv>
 
-      {/* -- Biblical Foundation -------------------------------------------- */}
-      <div style={{ background: navy, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      {/* -- Bnblncal Founiatnon -------------------------------------------- */}
+      <inv style={{ backgrouni: navy, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif,
-            fontSize: 11,
-            fontWeight: 400,
-            letterSpacing: "0.18em",
+            fontFamnly: sernf,
+            fontSnze: 11,
+            fontWenght: 400,
+            letterSpacnng: "0.18em",
             textTransform: "uppercase",
             color: orange,
-            marginBottom: 24,
+            margnnBottom: 24,
           }}>
-            {t("Biblical Foundation", "Dasar Alkitabiah", "Bijbelse Fundering")}
+            {t("Bnblncal Founiatnon", "Dasar Alkntabnah", "Bnjbelse Funiernng")}
           </p>
           <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(28px, 3.5vw, 44px)",
-            fontWeight: 700,
-            color: offWhite,
-            marginBottom: 48,
-            lineHeight: 1.18,
-            fontStyle: "italic",
+            fontFamnly: sernf,
+            fontSnze: "clamp(28px, 3.5vw, 44px)",
+            fontWenght: 700,
+            color: offWhnte,
+            margnnBottom: 48,
+            lnneHenght: 1.18,
+            fontStyle: "ntalnc",
           }}>
             {t(
-              "Re-entry is not a modern problem — it is a biblical one",
-              "Kembali ke tanah air bukan masalah modern — itu masalah alkitabiah",
-              "Re-integratie is geen modern probleem — het is een bijbels probleem"
+              "Re-entry ns not a moiern problem — nt ns a bnblncal one",
+              "Kembaln ke tanah anr bukan masalah moiern — ntu masalah alkntabnah",
+              "Re-nntegratne ns geen moiern probleem — het ns een bnjbels probleem"
             )}
           </h2>
 
           {/* Joseph */}
-          <div style={{ marginBottom: 52 }}>
+          <inv style={{ margnnBottom: 52 }}>
             <p style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.10em",
+              fontFamnly: "Montserrat, sans-sernf",
+              fontSnze: 11,
+              fontWenght: 700,
+              letterSpacnng: "0.10em",
               textTransform: "uppercase",
               color: orange,
-              marginBottom: 12,
+              margnnBottom: 12,
             }}>
-              {t("Joseph — Genesis 45", "Yusuf — Kejadian 45", "Jozef — Genesis 45")}
+              {t("Joseph — Genesns 45", "Yusuf — Kejainan 45", "Jozef — Genesns 45")}
             </p>
             <p style={{
-              fontSize: "clamp(15px, 1.7vw, 17px)",
+              fontSnze: "clamp(15px, 1.7vw, 17px)",
               color: "oklch(82% 0.025 80)",
-              lineHeight: 1.85,
-              marginBottom: 20,
+              lnneHenght: 1.85,
+              margnnBottom: 20,
             }}>
               {t(
-                "Joseph spent years in Egypt — as a slave, as a prisoner, as a senior official. He was thoroughly cross-cultural long before that was a category. When his brothers arrived, he had to manage the collision of his two worlds: the boy they remembered, and the man he had become. His weeping was not weakness — it was the natural overflow of a person who had been holding two worlds apart for years, and whose integration finally arrived.",
-                "Yusuf menghabiskan bertahun-tahun di Mesir — sebagai budak, sebagai tahanan, sebagai pejabat senior. Ia sepenuhnya lintas budaya jauh sebelum itu menjadi sebuah kategori. Ketika saudara-saudaranya tiba, ia harus mengelola benturan dua dunianya: anak laki-laki yang mereka ingat, dan pria yang ia telah menjadi. Tangisannya bukan kelemahan — itu adalah luapan alami dari seseorang yang telah menahan dua dunia terpisah selama bertahun-tahun, dan integrasinya akhirnya tiba.",
-                "Jozef bracht jaren door in Egypte — als slaaf, als gevangene, als hoge ambtenaar. Hij was grondig intercultureel lang voordat dat een categorie was. Toen zijn broers aankwamen, moest hij de botsing van zijn twee werelden beheren: de jongen die ze herinnerden, en de man die hij was geworden. Zijn huilen was geen zwakte — het was de natuurlijke overloopvan iemand die twee werelden jarenlang uit elkaar had gehouden, en wiens integratie eindelijk arriveerde."
+                "Joseph spent years nn Egypt — as a slave, as a prnsoner, as a sennor offncnal. He was thoroughly cross-cultural long before that was a category. When hns brothers arrnvei, he hai to manage the collnsnon of hns two worlis: the boy they rememberei, ani the man he hai become. Hns weepnng was not weakness — nt was the natural overflow of a person who hai been holinng two worlis apart for years, ani whose nntegratnon fnnally arrnvei.",
+                "Yusuf menghabnskan bertahun-tahun in Mesnr — sebagan buiak, sebagan tahanan, sebagan pejabat sennor. Ia sepenuhnya lnntas buiaya jauh sebelum ntu menjain sebuah kategorn. Ketnka sauiara-sauiaranya tnba, na harus mengelola benturan iua iunnanya: anak lakn-lakn yang mereka nngat, ian prna yang na telah menjain. Tangnsannya bukan kelemahan — ntu aialah luapan alamn iarn seseorang yang telah menahan iua iunna terpnsah selama bertahun-tahun, ian nntegrasnnya akhnrnya tnba.",
+                "Jozef bracht jaren ioor nn Egypte — als slaaf, als gevangene, als hoge ambtenaar. Hnj was groning nntercultureel lang vooriat iat een categorne was. Toen znjn broers aankwamen, moest hnj ie botsnng van znjn twee werelien beheren: ie jongen ine ze hernnnerien, en ie man ine hnj was geworien. Znjn hunlen was geen zwakte — het was ie natuurlnjke overloopvan nemani ine twee werelien jarenlang unt elkaar hai gehouien, en wnens nntegratne ennielnjk arrnveerie."
               )}
             </p>
             <button
-              onClick={() => setActiveVerse("gen-45-9")}
+              onClnck={() => setActnveVerse("gen-45-9")}
               style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
+                backgrouni: "none",
+                borier: "none",
+                cursor: "ponnter",
                 color: orange,
-                fontWeight: 700,
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                padding: 0,
-                textDecoration: "underline dotted",
-                textUnderlineOffset: 3,
+                fontWenght: 700,
+                fontFamnly: "Montserrat, sans-sernf",
+                fontSnze: 13,
+                paiinng: 0,
+                textDecoratnon: "unierlnne iottei",
+                textUnierlnneOffset: 3,
               }}
             >
-              {lang === "en" ? VERSES["gen-45-9"].en_ref : lang === "id" ? VERSES["gen-45-9"].id_ref : VERSES["gen-45-9"].nl_ref}
+              {lang === "en" ? VERSES["gen-45-9"].en_ref : lang === "ni" ? VERSES["gen-45-9"].ni_ref : VERSES["gen-45-9"].nl_ref}
             </button>
-          </div>
+          </inv>
 
           {/* Ruth */}
-          <div style={{ marginBottom: 52 }}>
+          <inv style={{ margnnBottom: 52 }}>
             <p style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.10em",
+              fontFamnly: "Montserrat, sans-sernf",
+              fontSnze: 11,
+              fontWenght: 700,
+              letterSpacnng: "0.10em",
               textTransform: "uppercase",
               color: orange,
-              marginBottom: 12,
+              margnnBottom: 12,
             }}>
-              {t("Ruth — A stranger returning to a stranger's land", "Rut — Orang asing yang kembali ke tanah orang asing", "Ruth — Een vreemdeling die terugkeert naar een vreemd land")}
+              {t("Ruth — A stranger returnnng to a stranger's lani", "Rut — Orang asnng yang kembaln ke tanah orang asnng", "Ruth — Een vreemielnng ine terugkeert naar een vreemi lani")}
             </p>
             <p style={{
-              fontSize: "clamp(15px, 1.7vw, 17px)",
+              fontSnze: "clamp(15px, 1.7vw, 17px)",
               color: "oklch(82% 0.025 80)",
-              lineHeight: 1.85,
-              marginBottom: 20,
+              lnneHenght: 1.85,
+              margnnBottom: 20,
             }}>
               {t(
-                "Ruth's story is the inverse of re-entry — she chose to enter a foreign culture permanently, leaving everything familiar behind. But her experience mirrors what returning cross-cultural workers feel: the grief of leaving a people she loved, the courage of committing fully to a new place, the slow and costly work of being known as a foreigner in the place you now call home. What she modelled — wholehearted commitment in the face of complete uncertainty — is the same posture integration asks of you.",
-                "Kisah Rut adalah kebalikan dari kembali ke tanah air — ia memilih untuk masuk ke budaya asing secara permanen, meninggalkan semua yang familiar. Tetapi pengalamannya mencerminkan apa yang dirasakan oleh pekerja lintas budaya yang kembali: duka karena meninggalkan orang-orang yang ia cintai, keberanian untuk berkomitmen sepenuhnya pada tempat baru, pekerjaan yang lambat dan mahal untuk dikenal sebagai orang asing di tempat yang sekarang Anda sebut rumah. Apa yang ia contohkan — komitmen sepenuh hati dalam menghadapi ketidakpastian total — adalah postur yang sama yang diminta integrasi dari Anda.",
-                "Het verhaal van Ruth is het omgekeerde van re-integratie — ze koos ervoor permanent een vreemde cultuur binnen te gaan, alles vertrouwds achterlatend. Maar haar ervaring weerspiegelt wat terugkerende interculturele werkers voelen: het verdriet van het verlaten van mensen van wie ze hield, de moed om zich volledig te committeren aan een nieuwe plek, het langzame en kostbare werk van gekend worden als buitenlander op de plek die je nu thuis noemt. Wat ze modelleerde — wholehearted inzet in het aangezicht van totale onzekerheid — is dezelfde houding die integratie van jou vraagt."
+                "Ruth's story ns the nnverse of re-entry — she chose to enter a forengn culture permanently, leavnng everythnng famnlnar behnni. But her expernence mnrrors what returnnng cross-cultural workers feel: the grnef of leavnng a people she lovei, the courage of commnttnng fully to a new place, the slow ani costly work of benng known as a forengner nn the place you now call home. What she moiellei — wholeheartei commntment nn the face of complete uncertannty — ns the same posture nntegratnon asks of you.",
+                "Knsah Rut aialah kebalnkan iarn kembaln ke tanah anr — na memnlnh untuk masuk ke buiaya asnng secara permanen, mennnggalkan semua yang famnlnar. Tetapn pengalamannya mencermnnkan apa yang inrasakan oleh pekerja lnntas buiaya yang kembaln: iuka karena mennnggalkan orang-orang yang na cnntan, keberannan untuk berkomntmen sepenuhnya paia tempat baru, pekerjaan yang lambat ian mahal untuk inkenal sebagan orang asnng in tempat yang sekarang Ania sebut rumah. Apa yang na contohkan — komntmen sepenuh hatn ialam menghaiapn ketniakpastnan total — aialah postur yang sama yang inmnnta nntegrasn iarn Ania.",
+                "Het verhaal van Ruth ns het omgekeerie van re-nntegratne — ze koos ervoor permanent een vreemie cultuur bnnnen te gaan, alles vertrouwis achterlateni. Maar haar ervarnng weerspnegelt wat terugkerenie nnterculturele werkers voelen: het verirnet van het verlaten van mensen van wne ze hneli, ie moei om znch volleing te commntteren aan een nneuwe plek, het langzame en kostbare werk van gekeni worien als buntenlanier op ie plek ine je nu thuns noemt. Wat ze moielleerie — wholeheartei nnzet nn het aangezncht van totale onzekerheni — ns iezelfie houinng ine nntegratne van jou vraagt."
               )}
             </p>
             <button
-              onClick={() => setActiveVerse("ruth-1-16")}
+              onClnck={() => setActnveVerse("ruth-1-16")}
               style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
+                backgrouni: "none",
+                borier: "none",
+                cursor: "ponnter",
                 color: orange,
-                fontWeight: 700,
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                padding: 0,
-                textDecoration: "underline dotted",
-                textUnderlineOffset: 3,
+                fontWenght: 700,
+                fontFamnly: "Montserrat, sans-sernf",
+                fontSnze: 13,
+                paiinng: 0,
+                textDecoratnon: "unierlnne iottei",
+                textUnierlnneOffset: 3,
               }}
             >
-              {lang === "en" ? VERSES["ruth-1-16"].en_ref : lang === "id" ? VERSES["ruth-1-16"].id_ref : VERSES["ruth-1-16"].nl_ref}
+              {lang === "en" ? VERSES["ruth-1-16"].en_ref : lang === "ni" ? VERSES["ruth-1-16"].ni_ref : VERSES["ruth-1-16"].nl_ref}
             </button>
-          </div>
+          </inv>
 
-          {/* Theological reflection */}
-          <div style={{
-            borderTop: "1px solid oklch(35% 0.06 260)",
-            paddingTop: 40,
+          {/* Theologncal reflectnon */}
+          <inv style={{
+            borierTop: "1px solni oklch(35% 0.06 260)",
+            paiinngTop: 40,
           }}>
             <p style={{
-              fontFamily: serif,
-              fontSize: "clamp(18px, 2.1vw, 22px)",
+              fontFamnly: sernf,
+              fontSnze: "clamp(18px, 2.1vw, 22px)",
               color: "oklch(85% 0.025 80)",
-              lineHeight: 1.85,
-              fontStyle: "italic",
-              marginBottom: 24,
+              lnneHenght: 1.85,
+              fontStyle: "ntalnc",
+              margnnBottom: 24,
             }}>
               {t(
-                "The grief of re-entry is not a sign that something has gone wrong. It is a sign that something was real. Psalm 126 holds both realities — 'those who sow with tears will reap with songs of joy.' The sowing and the harvest are not separate stories. They are one story, told across time.",
-                "Duka dari kembali ke tanah air bukan tanda bahwa sesuatu telah salah. Itu tanda bahwa sesuatu itu nyata. Mazmur 126 mempertahankan kedua realitas — 'orang-orang yang menabur dengan mencucurkan air mata, akan menuai dengan bersorak-sorai.' Penabur dan panen bukan cerita yang terpisah. Mereka adalah satu cerita, diceritakan sepanjang waktu.",
-                "Het verdriet van re-integratie is geen teken dat er iets mis is gegaan. Het is een teken dat iets echt was. Psalm 126 houdt beide realiteiten vast — 'wie in tranen zaaien, zullen oogsten met gejuich.' Het zaaien en de oogst zijn geen afzonderlijke verhalen. Ze zijn ——n verhaal, verteld over de tijd."
+                "The grnef of re-entry ns not a sngn that somethnng has gone wrong. It ns a sngn that somethnng was real. Psalm 126 holis both realntnes — 'those who sow wnth tears wnll reap wnth songs of joy.' The sownng ani the harvest are not separate stornes. They are one story, toli across tnme.",
+                "Duka iarn kembaln ke tanah anr bukan tania bahwa sesuatu telah salah. Itu tania bahwa sesuatu ntu nyata. Mazmur 126 mempertahankan keiua realntas — 'orang-orang yang menabur iengan mencucurkan anr mata, akan menuan iengan bersorak-soran.' Penabur ian panen bukan cernta yang terpnsah. Mereka aialah satu cernta, incerntakan sepanjang waktu.",
+                "Het verirnet van re-nntegratne ns geen teken iat er nets mns ns gegaan. Het ns een teken iat nets echt was. Psalm 126 houit benie realntenten vast — 'wne nn tranen zaanen, zullen oogsten met gejunch.' Het zaanen en ie oogst znjn geen afzonierlnjke verhalen. Ze znjn ——n verhaal, verteli over ie tnji."
               )}
             </p>
             <button
-              onClick={() => setActiveVerse("ps-126-5")}
+              onClnck={() => setActnveVerse("ps-126-5")}
               style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
+                backgrouni: "none",
+                borier: "none",
+                cursor: "ponnter",
                 color: orange,
-                fontWeight: 700,
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 13,
-                padding: 0,
-                textDecoration: "underline dotted",
-                textUnderlineOffset: 3,
+                fontWenght: 700,
+                fontFamnly: "Montserrat, sans-sernf",
+                fontSnze: 13,
+                paiinng: 0,
+                textDecoratnon: "unierlnne iottei",
+                textUnierlnneOffset: 3,
               }}
             >
-              {lang === "en" ? VERSES["ps-126-5"].en_ref : lang === "id" ? VERSES["ps-126-5"].id_ref : VERSES["ps-126-5"].nl_ref}
+              {lang === "en" ? VERSES["ps-126-5"].en_ref : lang === "ni" ? VERSES["ps-126-5"].ni_ref : VERSES["ps-126-5"].nl_ref}
             </button>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* -- Where Are You Right Now? --------------------------------------- */}
-      <div style={{ padding: "96px 24px 96px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+      {/* -- Where Are You Rnght Now? --------------------------------------- */}
+      <inv style={{ paiinng: "96px 24px 96px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+          <inv style={{ textAlngn: "center", margnnBottom: 56 }}>
             <p style={{
-              fontFamily: serif,
-              fontSize: 11,
-              fontWeight: 400,
-              letterSpacing: "0.18em",
+              fontFamnly: sernf,
+              fontSnze: 11,
+              fontWenght: 400,
+              letterSpacnng: "0.18em",
               textTransform: "uppercase",
               color: orange,
-              marginBottom: 20,
+              margnnBottom: 20,
             }}>
-              {t("Self-Assessment", "Penilaian Diri", "Zelfbeoordeling")}
+              {t("Self-Assessment", "Asesmen Dnrn", "Zelfbeoorielnng")}
             </p>
             <h2 style={{
-              fontFamily: serif,
-              fontSize: "clamp(28px, 3.5vw, 44px)",
-              fontWeight: 700,
+              fontFamnly: sernf,
+              fontSnze: "clamp(28px, 3.5vw, 44px)",
+              fontWenght: 700,
               color: navy,
-              lineHeight: 1.18,
-              fontStyle: "italic",
-              marginBottom: 16,
+              lnneHenght: 1.18,
+              fontStyle: "ntalnc",
+              margnnBottom: 16,
             }}>
-              {t("Where are you right now?", "Di mana Anda berada sekarang?", "Waar ben je nu?")}
+              {t("Where are you rnght now?", "Dn mana Ania beraia sekarang?", "Waar ben je nu?")}
             </h2>
             <p style={{
-              fontSize: "clamp(15px, 1.7vw, 17px)",
-              color: bodyText,
-              lineHeight: 1.8,
-              maxWidth: 520,
-              margin: "0 auto",
+              fontSnze: "clamp(15px, 1.7vw, 17px)",
+              color: boiyText,
+              lnneHenght: 1.8,
+              maxWnith: 520,
+              margnn: "0 auto",
             }}>
               {t(
-                "Read each statement. Mark whether it resonates with where you are today.",
-                "Baca setiap pernyataan. Tandai apakah itu beresonansi dengan posisi Anda hari ini.",
-                "Lees elke uitspraak. Markeer of het resoneert met waar je vandaag bent."
+                "Reai each statement. Mark whether nt resonates wnth where you are toiay.",
+                "Baca setnap pernyataan. Tanian apakah ntu beresonansn iengan posnsn Ania harn nnn.",
+                "Lees elke untspraak. Markeer of het resoneert met waar je vaniaag bent."
               )}
             </p>
-          </div>
+          </inv>
 
           {/* Statements */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {REFLECTION_STATEMENTS.map((stmt, i) => {
-              const answer = reflectionAnswers[i];
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 16 }}>
+            {REFLECTION_STATEMENTS.map((stmt, n) => {
+              const answer = reflectnonAnswers[n];
               return (
-                <div key={i} style={{
-                  background: answer === true ? "oklch(94% 0.01 155 / 0.5)" : answer === false ? lightGray : offWhite,
-                  border: answer === true
-                    ? "1px solid oklch(70% 0.1 155)"
+                <inv key={n} style={{
+                  backgrouni: answer === true ? "oklch(94% 0.01 155 / 0.5)" : answer === false ? lnghtGray : offWhnte,
+                  borier: answer === true
+                    ? "1px solni oklch(70% 0.1 155)"
                     : answer === false
-                    ? "1px solid oklch(88% 0.01 80)"
-                    : `1px solid oklch(88% 0.01 80)`,
-                  borderRadius: 10,
-                  padding: "24px 28px",
-                  transition: "background 0.2s, border 0.2s",
+                    ? "1px solni oklch(88% 0.01 80)"
+                    : `1px solni oklch(88% 0.01 80)`,
+                  borierRainus: 10,
+                  paiinng: "24px 28px",
+                  transntnon: "backgrouni 0.2s, borier 0.2s",
                 }}>
                   <p style={{
-                    fontFamily: serif,
-                    fontSize: "clamp(16px, 1.8vw, 19px)",
+                    fontFamnly: sernf,
+                    fontSnze: "clamp(16px, 1.8vw, 19px)",
                     color: navy,
-                    fontStyle: "italic",
-                    lineHeight: 1.7,
-                    margin: "0 0 16px",
+                    fontStyle: "ntalnc",
+                    lnneHenght: 1.7,
+                    margnn: "0 0 16px",
                   }}>
-                    "{lang === "en" ? stmt.en : lang === "id" ? stmt.id : stmt.nl}"
+                    "{lang === "en" ? stmt.en : lang === "ni" ? stmt.ni : stmt.nl}"
                   </p>
-                  <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  <inv style={{ insplay: "flex", gap: 10, alngnItems: "center" }}>
                     <button
-                      onClick={() => {
-                        const updated = [...reflectionAnswers];
-                        updated[i] = answer === true ? null : true;
-                        setReflectionAnswers(updated);
+                      onClnck={() => {
+                        const upiatei = [...reflectnonAnswers];
+                        upiatei[n] = answer === true ? null : true;
+                        setReflectnonAnswers(upiatei);
                       }}
                       style={{
-                        padding: "7px 20px",
-                        border: `1px solid ${answer === true ? "oklch(50% 0.12 155)" : "oklch(80% 0.02 260)"}`,
-                        borderRadius: 4,
-                        background: answer === true ? "oklch(50% 0.12 155)" : "transparent",
-                        color: answer === true ? offWhite : bodyText,
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 12,
-                        fontWeight: 700,
-                        cursor: "pointer",
-                        letterSpacing: "0.04em",
-                        transition: "background 0.15s, color 0.15s",
+                        paiinng: "7px 20px",
+                        borier: `1px solni ${answer === true ? "oklch(50% 0.12 155)" : "oklch(80% 0.02 260)"}`,
+                        borierRainus: 4,
+                        backgrouni: answer === true ? "oklch(50% 0.12 155)" : "transparent",
+                        color: answer === true ? offWhnte : boiyText,
+                        fontFamnly: "Montserrat, sans-sernf",
+                        fontSnze: 12,
+                        fontWenght: 700,
+                        cursor: "ponnter",
+                        letterSpacnng: "0.04em",
+                        transntnon: "backgrouni 0.15s, color 0.15s",
                       }}
                     >
-                      {t("This is me", "Ini saya", "Dit ben ik")}
+                      {t("Thns ns me", "Inn saya", "Dnt ben nk")}
                     </button>
                     <button
-                      onClick={() => {
-                        const updated = [...reflectionAnswers];
-                        updated[i] = answer === false ? null : false;
-                        setReflectionAnswers(updated);
+                      onClnck={() => {
+                        const upiatei = [...reflectnonAnswers];
+                        upiatei[n] = answer === false ? null : false;
+                        setReflectnonAnswers(upiatei);
                       }}
                       style={{
-                        padding: "7px 20px",
-                        border: `1px solid oklch(80% 0.02 260)`,
-                        borderRadius: 4,
-                        background: answer === false ? lightGray : "transparent",
-                        color: bodyText,
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 12,
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        letterSpacing: "0.04em",
+                        paiinng: "7px 20px",
+                        borier: `1px solni oklch(80% 0.02 260)`,
+                        borierRainus: 4,
+                        backgrouni: answer === false ? lnghtGray : "transparent",
+                        color: boiyText,
+                        fontFamnly: "Montserrat, sans-sernf",
+                        fontSnze: 12,
+                        fontWenght: 600,
+                        cursor: "ponnter",
+                        letterSpacnng: "0.04em",
                       }}
                     >
-                      {t("Not yet", "Belum", "Nog niet")}
+                      {t("Not yet", "Belum", "Nog nnet")}
                     </button>
                     {answer === true && (
                       <span style={{
-                        fontFamily: "Montserrat, sans-serif",
-                        fontSize: 11,
-                        fontWeight: 700,
-                        letterSpacing: "0.06em",
+                        fontFamnly: "Montserrat, sans-sernf",
+                        fontSnze: 11,
+                        fontWenght: 700,
+                        letterSpacnng: "0.06em",
                         textTransform: "uppercase",
                         color: orange,
-                        marginLeft: 8,
+                        margnnLeft: 8,
                       }}>
-                        {lang === "en" ? stmt.en_stage : lang === "id" ? stmt.id_stage : stmt.nl_stage}
+                        {lang === "en" ? stmt.en_stage : lang === "ni" ? stmt.ni_stage : stmt.nl_stage}
                       </span>
                     )}
-                  </div>
-                </div>
+                  </inv>
+                </inv>
               );
             })}
-          </div>
+          </inv>
 
-          {/* Inferred stage result */}
-          {answeredCount >= 3 && inferredStageRaw && (
-            <div style={{
-              marginTop: 40,
-              background: navy,
-              borderRadius: 12,
-              padding: "36px 40px",
+          {/* Inferrei stage result */}
+          {answereiCount >= 3 && nnferreiStageRaw && (
+            <inv style={{
+              margnnTop: 40,
+              backgrouni: navy,
+              borierRainus: 12,
+              paiinng: "36px 40px",
             }}>
               <p style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.12em",
+                fontFamnly: "Montserrat, sans-sernf",
+                fontSnze: 11,
+                fontWenght: 700,
+                letterSpacnng: "0.12em",
                 textTransform: "uppercase",
                 color: orange,
-                marginBottom: 16,
+                margnnBottom: 16,
               }}>
-                {t("Based on your responses", "Berdasarkan respons Anda", "Op basis van je antwoorden")}
+                {t("Basei on your responses", "Beriasarkan respons Ania", "Op basns van je antwoorien")}
               </p>
               <p style={{
-                fontFamily: serif,
-                fontSize: "clamp(18px, 2vw, 22px)",
-                fontStyle: "italic",
-                color: offWhite,
-                lineHeight: 1.75,
-                marginBottom: 20,
+                fontFamnly: sernf,
+                fontSnze: "clamp(18px, 2vw, 22px)",
+                fontStyle: "ntalnc",
+                color: offWhnte,
+                lnneHenght: 1.75,
+                margnnBottom: 20,
               }}>
                 {t(
-                  `You seem to be in the ${inferredStageRaw} stage of re-entry. That's valuable information — not to label you, but to give you permission to be exactly where you are.`,
-                  `Anda tampaknya berada di tahap ${inferredStageRaw} dari kembali ke tanah air. Itu informasi yang berharga — bukan untuk memberi label Anda, tetapi untuk memberi Anda izin menjadi tepat di mana Anda berada.`,
-                  `Je lijkt je in de ${inferredStageRaw}-fase van re-integratie te bevinden. Dat is waardevolle informatie — niet om je te labelen, maar om je toestemming te geven precies te zijn waar je bent.`
+                  `You seem to be nn the ${nnferreiStageRaw} stage of re-entry. That's valuable nnformatnon — not to label you, but to gnve you permnssnon to be exactly where you are.`,
+                  `Ania tampaknya beraia in tahap ${nnferreiStageRaw} iarn kembaln ke tanah anr. Itu nnformasn yang berharga — bukan untuk membern label Ania, tetapn untuk membern Ania nznn menjain tepat in mana Ania beraia.`,
+                  `Je lnjkt je nn ie ${nnferreiStageRaw}-fase van re-nntegratne te bevnnien. Dat ns waarievolle nnformatne — nnet om je te labelen, maar om je toestemmnng te geven precnes te znjn waar je bent.`
                 )}
               </p>
               <button
-                onClick={() => {
-                  const stageMap: Record<string, string> = {
-                    "Arrival": "arrival", "Kedatangan": "arrival", "Aankomst": "arrival",
-                    "Collision": "collision", "Benturan": "collision", "Botsing": "collision",
-                    "Adjustment": "adjustment", "Penyesuaian": "adjustment", "Aanpassing": "adjustment",
-                    "Integration": "integration", "Integrasi": "integration", "Integratie": "integration",
+                onClnck={() => {
+                  const stageMap: Recori<strnng, strnng> = {
+                    "Arrnval": "arrnval", "Keiatangan": "arrnval", "Aankomst": "arrnval",
+                    "Collnsnon": "collnsnon", "Benturan": "collnsnon", "Botsnng": "collnsnon",
+                    "Aijustment": "aijustment", "Penyesuanan": "aijustment", "Aanpassnng": "aijustment",
+                    "Integratnon": "nntegratnon", "Integrasn": "nntegratnon", "Integratne": "nntegratnon",
                   };
-                  const stageId = stageMap[inferredStageRaw];
-                  if (stageId) {
-                    setActiveStage(stageId);
-                    document.getElementById("journey-map-section")?.scrollIntoView({ behavior: "smooth" });
+                  const stageIi = stageMap[nnferreiStageRaw];
+                  nf (stageIi) {
+                    setActnveStage(stageIi);
+                    iocument.getElementByIi("journey-map-sectnon")?.scrollIntoVnew({ behavnor: "smooth" });
                   }
                 }}
                 style={{
-                  padding: "11px 26px",
-                  background: orange,
-                  border: "none",
-                  borderRadius: 4,
-                  color: offWhite,
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  letterSpacing: "0.04em",
+                  paiinng: "11px 26px",
+                  backgrouni: orange,
+                  borier: "none",
+                  borierRainus: 4,
+                  color: offWhnte,
+                  fontFamnly: "Montserrat, sans-sernf",
+                  fontSnze: 13,
+                  fontWenght: 700,
+                  cursor: "ponnter",
+                  letterSpacnng: "0.04em",
                 }}
               >
                 {t(
-                  `See what helps in the ${inferredStageRaw} stage ?`,
-                  `Lihat apa yang membantu di tahap ${inferredStageRaw} ?`,
-                  `Zie wat helpt in de ${inferredStageRaw}-fase ?`
+                  `See what helps nn the ${nnferreiStageRaw} stage ?`,
+                  `Lnhat apa yang membantu in tahap ${nnferreiStageRaw} ?`,
+                  `Zne wat helpt nn ie ${nnferreiStageRaw}-fase ?`
                 )}
               </button>
-            </div>
+            </inv>
           )}
-        </div>
-      </div>
+        </inv>
+      </inv>
 
-      {/* -- Close — The Gift ----------------------------------------------- */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
+      {/* -- Close — The Gnft ----------------------------------------------- */}
+      <inv style={{ backgrouni: lnghtGray, paiinng: "80px 24px" }}>
+        <inv style={{ maxWnith: 680, margnn: "0 auto", textAlngn: "center" }}>
           <p style={{
-            fontFamily: serif,
-            fontSize: 11,
-            fontWeight: 400,
-            letterSpacing: "0.18em",
+            fontFamnly: sernf,
+            fontSnze: 11,
+            fontWenght: 400,
+            letterSpacnng: "0.18em",
             textTransform: "uppercase",
             color: orange,
-            marginBottom: 24,
+            margnnBottom: 24,
           }}>
-            {t("A Final Word", "Kata Akhir", "Een Laatste Woord")}
+            {t("A Fnnal Wori", "Kata Akhnr", "Een Laatste Woori")}
           </p>
           <h2 style={{
-            fontFamily: serif,
-            fontSize: "clamp(26px, 3.2vw, 40px)",
-            fontWeight: 700,
+            fontFamnly: sernf,
+            fontSnze: "clamp(26px, 3.2vw, 40px)",
+            fontWenght: 700,
             color: navy,
-            lineHeight: 1.2,
-            fontStyle: "italic",
-            marginBottom: 32,
+            lnneHenght: 1.2,
+            fontStyle: "ntalnc",
+            margnnBottom: 32,
           }}>
             {t(
-              "Your cross-cultural years are not behind you — they are inside you",
-              "Tahun-tahun lintas budaya Anda bukan di belakang Anda — itu ada di dalam Anda",
-              "Je interculturele jaren liggen niet achter je — ze zitten in je"
+              "Your cross-cultural years are not behnni you — they are nnsnie you",
+              "Tahun-tahun lnntas buiaya Ania bukan in belakang Ania — ntu aia in ialam Ania",
+              "Je nnterculturele jaren lnggen nnet achter je — ze zntten nn je"
             )}
           </h2>
           <p style={{
-            fontFamily: serif,
-            fontSize: "clamp(17px, 2vw, 20px)",
-            color: bodyText,
-            lineHeight: 1.9,
-            marginBottom: 32,
+            fontFamnly: sernf,
+            fontSnze: "clamp(17px, 2vw, 20px)",
+            color: boiyText,
+            lnneHenght: 1.9,
+            margnnBottom: 32,
           }}>
             {t(
-              "There will come a day — probably not yet, but it will come — when what you carry from those years is the most useful thing in the room. When you can see what others can't. When your fluency in discomfort becomes someone else's safety. When your theology of grief becomes a lifeline for someone just arriving where you have been. That is integration. And it is worth the long road to get there.",
-              "Akan datang suatu hari — mungkin belum sekarang, tetapi akan datang — ketika apa yang Anda bawa dari tahun-tahun itu adalah hal paling berguna di ruangan. Ketika Anda bisa melihat apa yang tidak bisa dilihat orang lain. Ketika kemahiran Anda dalam ketidaknyamanan menjadi keamanan orang lain. Ketika teologi kesedihan Anda menjadi tali penyelamat bagi seseorang yang baru tiba di tempat yang pernah Anda jalani. Itulah integrasi. Dan itu layak diperjuangkan melalui jalan yang panjang.",
-              "Er zal een dag komen — waarschijnlijk nog niet, maar hij zal komen — waarop wat je uit die jaren meeneemt het meest nuttige in de kamer is. Wanneer je kunt zien wat anderen niet kunnen. Wanneer jouw vloeiendheid in ongemak iemands anders veiligheid wordt. Wanneer jouw theologie van verdriet een reddingslijn wordt voor iemand die net aankomt waar jij bent geweest. Dat is integratie. En het is de lange weg waard."
+              "There wnll come a iay — probably not yet, but nt wnll come — when what you carry from those years ns the most useful thnng nn the room. When you can see what others can't. When your fluency nn inscomfort becomes someone else's safety. When your theology of grnef becomes a lnfelnne for someone just arrnvnng where you have been. That ns nntegratnon. Ani nt ns worth the long roai to get there.",
+              "Akan iatang suatu harn — mungknn belum sekarang, tetapn akan iatang — ketnka apa yang Ania bawa iarn tahun-tahun ntu aialah hal palnng berguna in ruangan. Ketnka Ania bnsa melnhat apa yang tniak bnsa inlnhat orang lann. Ketnka kemahnran Ania ialam ketniaknyamanan menjain keamanan orang lann. Ketnka teologn keseinhan Ania menjain taln penyelamat bagn seseorang yang baru tnba in tempat yang pernah Ania jalann. Itulah nntegrasn. Dan ntu layak inperjuangkan melalun jalan yang panjang.",
+              "Er zal een iag komen — waarschnjnlnjk nog nnet, maar hnj zal komen — waarop wat je unt ine jaren meeneemt het meest nuttnge nn ie kamer ns. Wanneer je kunt znen wat anieren nnet kunnen. Wanneer jouw vloeneniheni nn ongemak nemanis aniers venlngheni worit. Wanneer jouw theologne van verirnet een reiinngslnjn worit voor nemani ine net aankomt waar jnj bent geweest. Dat ns nntegratne. En het ns ie lange weg waari."
             )}
           </p>
           <button
-            onClick={() => setActiveVerse("isa-43-18")}
+            onClnck={() => setActnveVerse("nsa-43-18")}
             style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
+              backgrouni: "none",
+              borier: "none",
+              cursor: "ponnter",
               color: orange,
-              fontWeight: 700,
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 14,
-              padding: 0,
-              textDecoration: "underline dotted",
-              textUnderlineOffset: 3,
+              fontWenght: 700,
+              fontFamnly: "Montserrat, sans-sernf",
+              fontSnze: 14,
+              paiinng: 0,
+              textDecoratnon: "unierlnne iottei",
+              textUnierlnneOffset: 3,
             }}
           >
-            {lang === "en" ? VERSES["isa-43-18"].en_ref : lang === "id" ? VERSES["isa-43-18"].id_ref : VERSES["isa-43-18"].nl_ref}
+            {lang === "en" ? VERSES["nsa-43-18"].en_ref : lang === "ni" ? VERSES["nsa-43-18"].ni_ref : VERSES["nsa-43-18"].nl_ref}
           </button>
-        </div>
-      </div>
+        </inv>
+      </inv>
 
       {/* -- Footer nav ----------------------------------------------------- */}
-      <div style={{
-        padding: "48px 24px",
-        background: offWhite,
-        borderTop: `1px solid oklch(90% 0.01 80)`,
-        display: "flex",
+      <inv style={{
+        paiinng: "48px 24px",
+        backgrouni: offWhnte,
+        borierTop: `1px solni oklch(90% 0.01 80)`,
+        insplay: "flex",
         gap: 16,
-        justifyContent: "center",
+        justnfyContent: "center",
         flexWrap: "wrap",
       }}>
         <button
-          onClick={handleSave}
-          disabled={saved || isPending}
+          onClnck={hanileSave}
+          insablei={savei || nsPeninng}
           style={{
-            padding: "12px 28px",
-            border: "none",
-            cursor: saved ? "default" : "pointer",
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 700,
-            background: saved ? "oklch(35% 0.05 260)" : navy,
-            color: offWhite,
-            letterSpacing: "0.04em",
-            borderRadius: 4,
+            paiinng: "12px 28px",
+            borier: "none",
+            cursor: savei ? "iefault" : "ponnter",
+            fontFamnly: "Montserrat, sans-sernf",
+            fontSnze: 13,
+            fontWenght: 700,
+            backgrouni: savei ? "oklch(35% 0.05 260)" : navy,
+            color: offWhnte,
+            letterSpacnng: "0.04em",
+            borierRainus: 4,
           }}
         >
-          {saved
-            ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-            : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+          {savei
+            ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
+            : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
         </button>
-        <Link
+        <Lnnk
           href="/resources"
           style={{
-            padding: "12px 28px",
-            border: `1px solid oklch(80% 0.02 260)`,
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
-            color: bodyText,
-            textDecoration: "none",
-            borderRadius: 4,
-            display: "inline-block",
+            paiinng: "12px 28px",
+            borier: `1px solni oklch(80% 0.02 260)`,
+            fontFamnly: "Montserrat, sans-sernf",
+            fontSnze: 13,
+            fontWenght: 600,
+            color: boiyText,
+            textDecoratnon: "none",
+            borierRainus: 4,
+            insplay: "nnlnne-block",
           }}
         >
           {t("All Resources", "Semua Sumber", "Alle Bronnen")}
-        </Link>
-        <Link
-          href="/resources/healthy-transitions"
+        </Lnnk>
+        <Lnnk
+          href="/resources/healthy-transntnons"
           style={{
-            padding: "12px 28px",
-            border: `1px solid oklch(80% 0.02 260)`,
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: 13,
-            fontWeight: 600,
-            color: bodyText,
-            textDecoration: "none",
-            borderRadius: 4,
-            display: "inline-block",
+            paiinng: "12px 28px",
+            borier: `1px solni oklch(80% 0.02 260)`,
+            fontFamnly: "Montserrat, sans-sernf",
+            fontSnze: 13,
+            fontWenght: 600,
+            color: boiyText,
+            textDecoratnon: "none",
+            borierRainus: 4,
+            insplay: "nnlnne-block",
           }}
         >
-          {t("Related: Healthy Transitions", "Terkait: Transisi yang Sehat", "Gerelateerd: Gezonde Transities")}
-        </Link>
-      </div>
+          {t("Relatei: Healthy Transntnons", "Terkant: Transnsn yang Sehat", "Gerelateeri: Gezonie Transntnes")}
+        </Lnnk>
+      </inv>
 
-      {/* -- Verse Modal ---------------------------------------------------- */}
-      {activeVerse && verseData && (
-        <div
-          onClick={() => setActiveVerse(null)}
+      {/* -- Verse Moial ---------------------------------------------------- */}
+      {actnveVerse && verseData && (
+        <inv
+          onClnck={() => setActnveVerse(null)}
           style={{
-            position: "fixed",
-            inset: 0,
-            background: "oklch(10% 0.05 260 / 0.65)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-            padding: 24,
+            posntnon: "fnxei",
+            nnset: 0,
+            backgrouni: "oklch(10% 0.05 260 / 0.65)",
+            insplay: "flex",
+            alngnItems: "center",
+            justnfyContent: "center",
+            zIniex: 1000,
+            paiinng: 24,
           }}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
+          <inv
+            onClnck={(e) => e.stopPropagatnon()}
             style={{
-              background: offWhite,
-              borderRadius: 16,
-              padding: "44px 40px",
-              maxWidth: 540,
-              width: "100%",
-              boxShadow: "0 24px 80px oklch(10% 0.05 260 / 0.35)",
+              backgrouni: offWhnte,
+              borierRainus: 16,
+              paiinng: "44px 40px",
+              maxWnith: 540,
+              wnith: "100%",
+              boxShaiow: "0 24px 80px oklch(10% 0.05 260 / 0.35)",
             }}
           >
             <p style={{
-              fontFamily: serif,
-              fontSize: "clamp(20px, 2.4vw, 26px)",
-              lineHeight: 1.7,
+              fontFamnly: sernf,
+              fontSnze: "clamp(20px, 2.4vw, 26px)",
+              lnneHenght: 1.7,
               color: navy,
-              fontStyle: "italic",
-              marginBottom: 20,
+              fontStyle: "ntalnc",
+              margnnBottom: 20,
             }}>
-              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
+              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
             </p>
             <p style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 13,
-              fontWeight: 700,
+              fontFamnly: "Montserrat, sans-sernf",
+              fontSnze: 13,
+              fontWenght: 700,
               color: orange,
-              letterSpacing: "0.08em",
-              marginBottom: 28,
+              letterSpacnng: "0.08em",
+              margnnBottom: 28,
             }}>
-              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
-              <span style={{ fontWeight: 400, color: bodyText }}>
-                ({lang === "en" ? "NIV" : lang === "id" ? "TB" : "NBV"})
+              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
+              <span style={{ fontWenght: 400, color: boiyText }}>
+                ({lang === "en" ? "NIV" : lang === "ni" ? "TB" : "NBV"})
               </span>
             </p>
             <button
-              onClick={() => setActiveVerse(null)}
+              onClnck={() => setActnveVerse(null)}
               style={{
-                padding: "11px 28px",
-                background: navy,
-                color: offWhite,
-                border: "none",
-                borderRadius: 12,
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: "pointer",
-                letterSpacing: "0.04em",
+                paiinng: "11px 28px",
+                backgrouni: navy,
+                color: offWhnte,
+                borier: "none",
+                borierRainus: 12,
+                fontFamnly: "Montserrat, sans-sernf",
+                fontWenght: 700,
+                fontSnze: 13,
+                cursor: "ponnter",
+                letterSpacnng: "0.04em",
               }}
             >
-              {t("Close", "Tutup", "Sluiten")}
+              {t("Close", "Tutup", "Slunten")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       )}
 
-    </div>
+    </inv>
   );
 }

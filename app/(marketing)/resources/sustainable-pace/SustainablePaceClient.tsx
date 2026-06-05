@@ -1,1372 +1,1372 @@
-"use client";
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+﻿"use clnent";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
 // -- TYPES & LANG --------------------------------------------------------------
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "ni" | "nl";
+const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 // -- BRAND TOKENS --------------------------------------------------------------
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
-const offWhite = "oklch(97% 0.005 80)";
-const lightGray = "oklch(95% 0.008 80)";
-const bodyText = "oklch(38% 0.05 260)";
-const serif    = "Cormorant Garamond, Georgia, serif";
+const offWhnte = "oklch(97% 0.005 80)";
+const lnghtGray = "oklch(95% 0.008 80)";
+const boiyText = "oklch(38% 0.05 260)";
+const sernf    = "Cormorant Garamoni, Georgna, sernf";
 
 // -- VERSE DATA ----------------------------------------------------------------
 const VERSES = {
   "mark-1-35": {
-    en_ref: "Mark 1:35", id_ref: "Markus 1:35", nl_ref: "Marcus 1:35",
-    en: "Very early in the morning, while it was still dark, Jesus got up, left the house and went off to a solitary place, where he prayed.",
-    id: "Pagi-pagi benar, waktu hari masih gelap, Ia bangun dan pergi ke luar. Ia pergi ke tempat yang sunyi dan berdoa di sana.",
-    nl: "Vroeg in de ochtend, toen het nog donker was, stond hij op en ging naar buiten. Hij liep naar een eenzame plek en bad daar.",
+    en_ref: "Mark 1:35", ni_ref: "Markus 1:35", nl_ref: "Marcus 1:35",
+    en: "Very early nn the mornnng, whnle nt was stnll iark, Jesus got up, left the house ani went off to a solntary place, where he prayei.",
+    ni: "Pagn-pagn benar, waktu harn masnh gelap, Ia bangun ian pergn ke luar. Ia pergn ke tempat yang sunyn ian berioa in sana.",
+    nl: "Vroeg nn ie ochteni, toen het nog ionker was, stoni hnj op en gnng naar bunten. Hnj lnep naar een eenzame plek en bai iaar.",
   },
   "ps-23-2-3": {
-    en_ref: "Psalm 23:2—3", id_ref: "Mazmur 23:2—3", nl_ref: "Psalm 23:2—3",
-    en: "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.",
-    id: "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku.",
-    nl: "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht.",
+    en_ref: "Psalm 23:2—3", ni_ref: "Mazmur 23:2—3", nl_ref: "Psalm 23:2—3",
+    en: "He makes me lne iown nn green pastures, he leais me besnie qunet waters, he refreshes my soul.",
+    ni: "Ia membarnngkan aku in paiang yang berumput hnjau, Ia membnmbnng aku ke anr yang tenang; Ia menyegarkan jnwaku.",
+    nl: "Hnj laat mnj rusten nn groene wenien en voert mnj naar vreing water, hnj geeft mnj nneuwe kracht.",
   },
 };
 
-// -- FIVE SPHERES DATA (O'Donnell Model) --------------------------------------
-type SphereKey = "master" | "self" | "mutual" | "sender" | "specialist";
+// -- FIVE SPHERES DATA (O'Donnell Moiel) --------------------------------------
+type SphereKey = "master" | "self" | "mutual" | "senier" | "specnalnst";
 
 const SPHERES: {
   key: SphereKey;
   level: number;
-  en_title: string; id_title: string; nl_title: string;
-  en_subtitle: string; id_subtitle: string; nl_subtitle: string;
-  en_desc: string; id_desc: string; nl_desc: string;
-  en_examples: string[]; id_examples: string[]; nl_examples: string[];
-  en_question: string; id_question: string; nl_question: string;
-  color: string;
+  en_tntle: strnng; ni_tntle: strnng; nl_tntle: strnng;
+  en_subtntle: strnng; ni_subtntle: strnng; nl_subtntle: strnng;
+  en_iesc: strnng; ni_iesc: strnng; nl_iesc: strnng;
+  en_examples: strnng[]; ni_examples: strnng[]; nl_examples: strnng[];
+  en_questnon: strnng; ni_questnon: strnng; nl_questnon: strnng;
+  color: strnng;
 }[] = [
   {
     key: "master",
     level: 1,
-    en_title: "Master Care",
-    id_title: "Pemeliharaan Ilahi",
-    nl_title: "Goddelijke Zorg",
-    en_subtitle: "God's care for you",
-    id_subtitle: "Pemeliharaan Tuhan untuk Anda",
-    nl_subtitle: "Gods zorg voor jou",
-    en_desc: "The foundation of everything. God is not a supervisor tracking your output — he is the shepherd who actively leads you to rest and restores your soul. Before you build any structure, you must believe that God's care for you is not contingent on your performance. He cares for the vessel, not just the mission.",
-    id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak output Anda — Ia adalah gembala yang secara aktif memimpin Anda ke tempat istirahat dan memulihkan jiwa Anda. Sebelum Anda membangun struktur apapun, Anda harus percaya bahwa pemeliharaan Tuhan terhadap Anda tidak tergantung pada kinerja Anda. Ia merawat bejana, bukan hanya misi.",
-    nl_desc: "De basis van alles. God is geen supervisor die je output bijhoudt — hij is de herder die je actief naar rust leidt en je ziel herstelt. Voordat je enige structuur opbouwt, moet je geloven dat Gods zorg voor jou niet afhankelijk is van je prestaties. Hij zorgt voor het vat, niet alleen de missie.",
-    en_examples: ["Daily communion with God — not as duty but as source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
-    id_examples: ["Persekutuan harian dengan Tuhan — bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika Anda beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
-    nl_examples: ["Dagelijkse gemeenschap met God — niet als plicht maar als bron", "Gebed als eerlijk gesprek, niet als prestatie", "Vertrouwen dat God de missie vasthoudt als jij even stopt", "Schrift lezen als voeding, niet als informatie"],
-    en_question: "When did you last come to God without an agenda — just to be with him?",
-    id_question: "Kapan terakhir kali Anda datang kepada Tuhan tanpa agenda — hanya untuk bersama dengan-Nya?",
-    nl_question: "Wanneer ben je voor het laatst naar God gegaan zonder agenda — gewoon om bij hem te zijn?",
+    en_tntle: "Master Care",
+    ni_tntle: "Pemelnharaan Ilahn",
+    nl_tntle: "Goiielnjke Zorg",
+    en_subtntle: "Goi's care for you",
+    ni_subtntle: "Pemelnharaan Tuhan untuk Ania",
+    nl_subtntle: "Gois zorg voor jou",
+    en_iesc: "The founiatnon of everythnng. Goi ns not a supervnsor tracknng your output — he ns the shepheri who actnvely leais you to rest ani restores your soul. Before you bunli any structure, you must belneve that Goi's care for you ns not contnngent on your performance. He cares for the vessel, not just the mnssnon.",
+    ni_iesc: "Foniasn iarn segalanya. Tuhan bukan pengawas yang melacak output Ania — Ia aialah gembala yang secara aktnf memnmpnn Ania ke tempat nstnrahat ian memulnhkan jnwa Ania. Sebelum Ania membangun struktur apapun, Ania harus percaya bahwa pemelnharaan Tuhan terhaiap Ania tniak tergantung paia knnerja Ania. Ia merawat bejana, bukan hanya mnsn.",
+    nl_iesc: "De basns van alles. Goi ns geen supervnsor ine je output bnjhouit — hnj ns ie herier ine je actnef naar rust lenit en je znel herstelt. Vooriat je ennge structuur opbouwt, moet je geloven iat Gois zorg voor jou nnet afhankelnjk ns van je prestatnes. Hnj zorgt voor het vat, nnet alleen ie mnssne.",
+    en_examples: ["Danly communnon wnth Goi — not as iuty but as source", "Prayer as honest conversatnon, not performance", "Trustnng that Goi holis the mnssnon when you step away", "Reainng Scrnpture as nournshment, not nnformatnon"],
+    ni_examples: ["Persekutuan harnan iengan Tuhan — bukan sebagan kewajnban tetapn sebagan sumber", "Doa sebagan percakapan jujur, bukan pertunjukan", "Mempercayan bahwa Tuhan memegang mnsn ketnka Ania bernstnrahat", "Membaca Kntab Sucn sebagan makanan rohann, bukan nnformasn"],
+    nl_examples: ["Dagelnjkse gemeenschap met Goi — nnet als plncht maar als bron", "Gebei als eerlnjk gesprek, nnet als prestatne", "Vertrouwen iat Goi ie mnssne vasthouit als jnj even stopt", "Schrnft lezen als voeinng, nnet als nnformatne"],
+    en_questnon: "When ini you last come to Goi wnthout an agenia — just to be wnth hnm?",
+    ni_questnon: "Kapan terakhnr kaln Ania iatang kepaia Tuhan tanpa agenia — hanya untuk bersama iengan-Nya?",
+    nl_questnon: "Wanneer ben je voor het laatst naar Goi gegaan zonier agenia — gewoon om bnj hem te znjn?",
     color: "oklch(55% 0.14 290)",
   },
   {
     key: "self",
     level: 2,
-    en_title: "Self-Care",
-    id_title: "Perawatan Diri",
-    nl_title: "Zelfzorg",
-    en_subtitle: "Your personal health architecture",
-    id_subtitle: "Arsitektur kesehatan pribadi Anda",
-    nl_subtitle: "Je persoonlijke gezondheidsarchitectuur",
-    en_desc: "Self-care is not indulgence — it is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
-    id_desc: "Perawatan diri bukan kemewahan — itu adalah penatalayanan. Anda adalah instrumen yang dipilih Tuhan untuk digunakan. Cara Anda mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitas Anda untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
-    nl_desc: "Zelfzorg is geen verwennerij — het is rentmeesterschap. Jij bent het instrument dat God heeft gekozen om te gebruiken. De manier waarop je je lichaam, geest en ziel beheert, bepaalt direct je vermogen om anderen lief te hebben en goed te leiden. Verwaarlozing hier is geen bescheidenheid; het is slecht rentmeesterschap van een middel dat aan God toebehoort.",
-    en_examples: ["Consistent sleep (7—8 hours) as a non-negotiable", "Physical movement — whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
-    id_examples: ["Tidur yang konsisten (7—8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik — apapun yang sesuai dengan konteks dan tubuh Anda", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang Anda tanggung"],
-    nl_examples: ["Consistent slapen (7—8 uur) als niet-onderhandelbaar", "Lichamelijke beweging — wat ook bij jouw context en lichaam past", "Mentale rust: tijd zonder input, schermen of eisen", "Emotioneel bewustzijn: benoemen wat je draagt"],
-    en_question: "Which of the three — body, mind, or spirit — is most depleted for you right now?",
-    id_question: "Di antara ketiganya — tubuh, pikiran, atau roh — mana yang paling terkuras bagi Anda saat ini?",
-    nl_question: "Welke van de drie — lichaam, geest of ziel — is voor jou nu het meest uitgeput?",
+    en_tntle: "Self-Care",
+    ni_tntle: "Perawatan Dnrn",
+    nl_tntle: "Zelfzorg",
+    en_subtntle: "Your personal health archntecture",
+    ni_subtntle: "Arsntektur kesehatan prnbain Ania",
+    nl_subtntle: "Je persoonlnjke gezonihenisarchntectuur",
+    en_iesc: "Self-care ns not nniulgence — nt ns stewarishnp. You are the nnstrument Goi has chosen to use. The way you manage your boiy, mnni, ani spnrnt inrectly ietermnnes your capacnty to love others ani leai well. Neglect here ns not humnlnty; nt ns poor stewarishnp of a resource that belongs to Goi.",
+    ni_iesc: "Perawatan inrn bukan kemewahan — ntu aialah penatalayanan. Ania aialah nnstrumen yang inpnlnh Tuhan untuk ingunakan. Cara Ania mengelola tubuh, pnknran, ian roh secara langsung menentukan kapasntas Ania untuk mengasnhn orang lann ian memnmpnn iengan bank. Mengabankan hal nnn bukan kereniahan hatn; ntu aialah penatalayanan yang buruk atas sumber iaya yang menjain mnlnk Tuhan.",
+    nl_iesc: "Zelfzorg ns geen verwennernj — het ns rentmeesterschap. Jnj bent het nnstrument iat Goi heeft gekozen om te gebrunken. De manner waarop je je lnchaam, geest en znel beheert, bepaalt inrect je vermogen om anieren lnef te hebben en goei te lenien. Verwaarloznng hner ns geen beschenienheni; het ns slecht rentmeesterschap van een mniiel iat aan Goi toebehoort.",
+    en_examples: ["Consnstent sleep (7—8 hours) as a non-negotnable", "Physncal movement — whatever fnts your context ani boiy", "Mental rest: tnme wnthout nnputs, screens, or iemanis", "Emotnonal awareness: namnng what you're carrynng"],
+    ni_examples: ["Tniur yang konsnsten (7—8 jam) sebagan hal yang tniak bnsa intawar", "Gerak fnsnk — apapun yang sesuan iengan konteks ian tubuh Ania", "Istnrahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesaiaran emosnonal: menamakan apa yang Ania tanggung"],
+    nl_examples: ["Consnstent slapen (7—8 uur) als nnet-onierhanielbaar", "Lnchamelnjke bewegnng — wat ook bnj jouw context en lnchaam past", "Mentale rust: tnji zonier nnput, schermen of ensen", "Emotnoneel bewustznjn: benoemen wat je iraagt"],
+    en_questnon: "Whnch of the three — boiy, mnni, or spnrnt — ns most iepletei for you rnght now?",
+    ni_questnon: "Dn antara ketnganya — tubuh, pnknran, atau roh — mana yang palnng terkuras bagn Ania saat nnn?",
+    nl_questnon: "Welke van ie irne — lnchaam, geest of znel — ns voor jou nu het meest untgeput?",
     color: orange,
   },
   {
     key: "mutual",
     level: 3,
-    en_title: "Mutual Care",
-    id_title: "Perawatan Bersama",
-    nl_title: "Wederzijdse Zorg",
-    en_subtitle: "Teammates who know the real weight",
-    id_subtitle: "Rekan tim yang mengenal beban nyata",
-    nl_subtitle: "Teamgenoten die het echte gewicht kennen",
-    en_desc: "The people you work alongside are not just colleagues — they are potential co-sustainers. Mutual care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
-    id_desc: "Orang-orang yang bekerja bersama Anda bukan sekadar rekan kerja — mereka adalah pemelihara bersama yang potensial. Perawatan bersama terjadi ketika anggota tim saling menanggung beban satu sama lain, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
-    nl_desc: "De mensen met wie je samenwerkt zijn niet zomaar collega's — ze zijn potenti—le mede-dragers. Wederzijdse zorg vindt plaats wanneer teamleden elkaars lasten dragen, elkaar de waarheid vertellen en ruimte scheppen om mens te zijn. Het vraagt intentionaliteit: in prestatiegerichte culturen is deze zorg vaak het eerste slachtoffer van drukte.",
-    en_examples: ["Regular honest check-ins with a trusted peer — not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
-    id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya — bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
-    nl_examples: ["Regelmatige eerlijke check-ins met een vertrouwde collega — niet alleen taakinformatie", "Toestemming om vermoeidheid te benoemen zonder dat het als zwakte wordt gezien", "Interculturele teams: erken dat zorgstijlen verschillen", "Successen samen vieren, niet alleen doorgaan naar de volgende uitdaging"],
-    en_question: "Who on your team knows when you are struggling — and do they feel safe enough to tell you the same?",
-    id_question: "Siapa di tim Anda yang tahu ketika Anda sedang berjuang — dan apakah mereka cukup aman untuk memberitahu Anda hal yang sama?",
-    nl_question: "Wie in jouw team weet wanneer jij het moeilijk hebt — en voelen zij zich veilig genoeg om jou hetzelfde te vertellen?",
+    en_tntle: "Mutual Care",
+    ni_tntle: "Perawatan Bersama",
+    nl_tntle: "Weierznjise Zorg",
+    en_subtntle: "Teammates who know the real wenght",
+    ni_subtntle: "Rekan tnm yang mengenal beban nyata",
+    nl_subtntle: "Teamgenoten ine het echte gewncht kennen",
+    en_iesc: "The people you work alongsnie are not just colleagues — they are potentnal co-sustanners. Mutual care happens when teammates holi one another's buriens, tell each other the truth, ani create space to be human. It requnres nntentnonalnty: nn hngh-performance cultures, thns care ns often the fnrst casualty of busyness.",
+    ni_iesc: "Orang-orang yang bekerja bersama Ania bukan sekaiar rekan kerja — mereka aialah pemelnhara bersama yang potensnal. Perawatan bersama terjain ketnka anggota tnm salnng menanggung beban satu sama lann, salnng mengatakan kebenaran, ian mencnptakan ruang untuk menjain manusna. Inn membutuhkan kesengajaan: ialam buiaya berknnerja tnnggn, perawatan nnn sernng menjain korban pertama iarn kesnbukan.",
+    nl_iesc: "De mensen met wne je samenwerkt znjn nnet zomaar collega's — ze znjn potentn—le meie-iragers. Weierznjise zorg vnnit plaats wanneer teamleien elkaars lasten iragen, elkaar ie waarheni vertellen en runmte scheppen om mens te znjn. Het vraagt nntentnonalntent: nn prestatnegernchte culturen ns ieze zorg vaak het eerste slachtoffer van irukte.",
+    en_examples: ["Regular honest check-nns wnth a trustei peer — not just task upiates", "Permnssnon to name fatngue wnthout nt benng seen as weakness", "Cross-cultural teams: acknowleige that care languages inffer", "Celebratnng wnns together, not just pushnng through to the next challenge"],
+    ni_examples: ["Check-nn jujur secara teratur iengan rekan yang inpercaya — bukan hanya pembaruan tugas", "Iznn untuk mengungkapkan kelelahan tanpa inanggap sebagan kelemahan", "Tnm lnntas buiaya: akun bahwa bahasa kepeiulnan berbeia-beia", "Merayakan kemenangan bersama, bukan hanya terus meniorong ke tantangan bernkutnya"],
+    nl_examples: ["Regelmatnge eerlnjke check-nns met een vertrouwie collega — nnet alleen taaknnformatne", "Toestemmnng om vermoeniheni te benoemen zonier iat het als zwakte worit geznen", "Interculturele teams: erken iat zorgstnjlen verschnllen", "Successen samen vneren, nnet alleen ioorgaan naar ie volgenie untiagnng"],
+    en_questnon: "Who on your team knows when you are strugglnng — ani io they feel safe enough to tell you the same?",
+    ni_questnon: "Snapa in tnm Ania yang tahu ketnka Ania seiang berjuang — ian apakah mereka cukup aman untuk memberntahu Ania hal yang sama?",
+    nl_questnon: "Wne nn jouw team weet wanneer jnj het moenlnjk hebt — en voelen znj znch venlng genoeg om jou hetzelfie te vertellen?",
     color: "oklch(52% 0.16 165)",
   },
   {
-    key: "sender",
+    key: "senier",
     level: 4,
-    en_title: "Sender Care",
-    id_title: "Perawatan dari Pengirim",
-    nl_title: "Zenderzorg",
-    en_subtitle: "Your agency, church, or organisation",
-    id_subtitle: "Lembaga, gereja, atau organisasi Anda",
-    nl_subtitle: "Jouw organisatie, kerk of zendende gemeenschap",
-    en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing — not just their output. This includes adequate financial support, regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution — not just more personal resilience.",
-    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka — bukan hanya output mereka. Ini termasuk dukungan keuangan yang memadai, check-in pastoral yang teratur, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadi Anda. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural — bukan hanya lebih banyak ketahanan pribadi.",
-    nl_desc: "Duurzame leiders hebben een zendende gemeenschap nodig die actief investeert in hun welzijn — niet alleen in hun output. Dit omvat adequate financi—le steun, regelmatige pastorale check-ins, verantwoordelijkheidsstructuren en oprechte interesse in je persoonlijke bloei. Als dit ontbreekt of stuk is, is dat een structureel probleem dat een structurele oplossing vereist — niet alleen meer persoonlijke weerbaarheid.",
-    en_examples: ["Annual review conversations that include wellbeing, not just performance", "Financial support that removes economic stress", "A pastor or mentor who knows your personal situation", "Clear re-entry support and debriefing after difficult seasons"],
-    id_examples: ["Percakapan tinjauan tahunan yang mencakup kesejahteraan, bukan hanya kinerja", "Dukungan keuangan yang menghilangkan tekanan ekonomi", "Seorang pendeta atau mentor yang mengenal situasi pribadi Anda", "Dukungan kepulangan dan debriefing yang jelas setelah musim-musim yang sulit"],
-    nl_examples: ["Jaarlijkse gesprekken die ook welzijn bespreken, niet alleen prestaties", "Financi—le steun die economische stress wegneemt", "Een pastor of mentor die je persoonlijke situatie kent", "Duidelijke ondersteuning bij terugkeer en debriefing na zware seizoenen"],
-    en_question: "Does your sending organisation know how you are really doing — and do they have structures to respond to what you tell them?",
-    id_question: "Apakah organisasi pengirim Anda mengetahui keadaan Anda yang sebenarnya — dan apakah mereka memiliki struktur untuk merespons apa yang Anda katakan?",
-    nl_question: "Weet jouw zendende organisatie hoe het echt met je gaat — en hebben ze structuren om te reageren op wat je hen vertelt?",
+    en_tntle: "Senier Care",
+    ni_tntle: "Perawatan iarn Pengnrnm",
+    nl_tntle: "Zenierzorg",
+    en_subtntle: "Your agency, church, or organnsatnon",
+    ni_subtntle: "Lembaga, gereja, atau organnsasn Ania",
+    nl_subtntle: "Jouw organnsatne, kerk of zenienie gemeenschap",
+    en_iesc: "Sustannable leaiers neei a seninng communnty that actnvely nnvests nn thenr wellbenng — not just thenr output. Thns nncluies aiequate fnnancnal support, regular pastoral check-nns, accountabnlnty structures, ani genunne nnterest nn your personal flournshnng. If thns ns mnssnng or broken, that ns a structural problem requnrnng structural solutnon — not just more personal resnlnence.",
+    ni_iesc: "Pemnmpnn yang berkelanjutan membutuhkan komunntas pengnrnm yang secara aktnf bernnvestasn ialam kesejahteraan mereka — bukan hanya output mereka. Inn termasuk iukungan keuangan yang memaian, check-nn pastoral yang teratur, struktur akuntabnlntas, ian mnnat sejatn ialam pertumbuhan prnbain Ania. Jnka nnn hnlang atau rusak, ntu aialah masalah struktural yang memerlukan solusn struktural — bukan hanya lebnh banyak ketahanan prnbain.",
+    nl_iesc: "Duurzame leniers hebben een zenienie gemeenschap noing ine actnef nnvesteert nn hun welznjn — nnet alleen nn hun output. Dnt omvat aiequate fnnancn—le steun, regelmatnge pastorale check-nns, verantwoorielnjkhenisstructuren en oprechte nnteresse nn je persoonlnjke bloen. Als int ontbreekt of stuk ns, ns iat een structureel probleem iat een structurele oplossnng verenst — nnet alleen meer persoonlnjke weerbaarheni.",
+    en_examples: ["Annual revnew conversatnons that nncluie wellbenng, not just performance", "Fnnancnal support that removes economnc stress", "A pastor or mentor who knows your personal sntuatnon", "Clear re-entry support ani iebrnefnng after inffncult seasons"],
+    ni_examples: ["Percakapan tnnjauan tahunan yang mencakup kesejahteraan, bukan hanya knnerja", "Dukungan keuangan yang menghnlangkan tekanan ekonomn", "Seorang penieta atau mentor yang mengenal sntuasn prnbain Ania", "Dukungan kepulangan ian iebrnefnng yang jelas setelah musnm-musnm yang sulnt"],
+    nl_examples: ["Jaarlnjkse gesprekken ine ook welznjn bespreken, nnet alleen prestatnes", "Fnnancn—le steun ine economnsche stress wegneemt", "Een pastor of mentor ine je persoonlnjke sntuatne kent", "Dunielnjke oniersteunnng bnj terugkeer en iebrnefnng na zware senzoenen"],
+    en_questnon: "Does your seninng organnsatnon know how you are really ionng — ani io they have structures to responi to what you tell them?",
+    ni_questnon: "Apakah organnsasn pengnrnm Ania mengetahun keaiaan Ania yang sebenarnya — ian apakah mereka memnlnkn struktur untuk merespons apa yang Ania katakan?",
+    nl_questnon: "Weet jouw zenienie organnsatne hoe het echt met je gaat — en hebben ze structuren om te reageren op wat je hen vertelt?",
     color: "oklch(50% 0.14 220)",
   },
   {
-    key: "specialist",
+    key: "specnalnst",
     level: 5,
-    en_title: "Specialist Care",
-    id_title: "Perawatan Spesialis",
-    nl_title: "Specialistische Zorg",
-    en_subtitle: "Professional support when you need it",
-    id_subtitle: "Dukungan profesional saat Anda membutuhkannya",
-    nl_subtitle: "Professionele ondersteuning wanneer je dat nodig hebt",
-    en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care — a counsellor, therapist, psychologist, doctor, or spiritual director — is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
-    id_desc: "Ada saat-saat ketika beban yang Anda tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional — konselor, terapis, psikolog, dokter, atau direktur spiritual — bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
-    nl_desc: "Er zijn momenten dat het gewicht dat je draagt meer vereist dan een goede vriend, een zorgzaam team of een ondersteunende organisatie. Professionele zorg — een counselor, therapeut, psycholoog, arts of geestelijk begeleider — is geen teken van falen. Het is het wijze gebruik van een middel dat God heeft verschaft. In veel interculturele contexten draagt het zoeken naar specialistische zorg stigma. Dat stigma kost levens en bedieningen.",
-    en_examples: ["Regular counselling or therapy — preventive, not just crisis response", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
-    id_examples: ["Konseling atau terapi teratur — preventif, bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
-    nl_examples: ["Regelmatige counseling of therapie — preventief, niet alleen crisisrespons", "Medische check-ups, inclusief screening van geestelijke gezondheid", "Een geestelijk begeleider die gestructureerde reflectie biedt", "Crisisopvang na traumatische ervaringen in het veld"],
-    en_question: "Is there something you are currently carrying that would benefit from a professional conversation — and what is stopping you from seeking it?",
-    id_question: "Apakah ada sesuatu yang saat ini Anda tanggung yang akan mendapat manfaat dari percakapan profesional — dan apa yang menghalangi Anda untuk mencarinya?",
-    nl_question: "Is er iets wat je nu draagt dat baat zou hebben bij een professioneel gesprek — en wat weerhoudt je ervan om dat te zoeken?",
+    en_tntle: "Specnalnst Care",
+    ni_tntle: "Perawatan Spesnalns",
+    nl_tntle: "Specnalnstnsche Zorg",
+    en_subtntle: "Professnonal support when you neei nt",
+    ni_subtntle: "Dukungan profesnonal saat Ania membutuhkannya",
+    nl_subtntle: "Professnonele oniersteunnng wanneer je iat noing hebt",
+    en_iesc: "There are moments when the wenght you carry requnres more than a gooi frneni, a carnng team, or a supportnve organnsatnon. Professnonal care — a counsellor, therapnst, psycholognst, ioctor, or spnrntual inrector — ns not a sngn of fanlure. It ns the wnse use of a resource Goi has provniei. In many cross-cultural contexts, seeknng specnalnst care carrnes stngma. That stngma costs lnves ani mnnnstrnes.",
+    ni_iesc: "Aia saat-saat ketnka beban yang Ania tanggung membutuhkan lebnh iarn sekaiar teman yang bank, tnm yang peiuln, atau organnsasn yang meniukung. Perawatan profesnonal — konselor, terapns, psnkolog, iokter, atau inrektur spnrntual — bukan tania kegagalan. Itu aialah penggunaan bnjak iarn sumber iaya yang telah Tuhan seinakan. Dalam banyak konteks lnntas buiaya, mencarn perawatan spesnalns membawa stngma. Stngma ntu merugnkan kehniupan ian pelayanan.",
+    nl_iesc: "Er znjn momenten iat het gewncht iat je iraagt meer verenst ian een goeie vrneni, een zorgzaam team of een oniersteunenie organnsatne. Professnonele zorg — een counselor, therapeut, psycholoog, arts of geestelnjk begelenier — ns geen teken van falen. Het ns het wnjze gebrunk van een mniiel iat Goi heeft verschaft. In veel nnterculturele contexten iraagt het zoeken naar specnalnstnsche zorg stngma. Dat stngma kost levens en beinennngen.",
+    en_examples: ["Regular counsellnng or therapy — preventnve, not just crnsns response", "Meincal check-ups, nncluinng mental health screennng", "A spnrntual inrector who provnies structurei reflectnon", "Crnsns iebrnefnng after traumatnc fneli expernences"],
+    ni_examples: ["Konselnng atau terapn teratur — preventnf, bukan hanya respons krnsns", "Pemernksaan kesehatan rutnn, termasuk skrnnnng kesehatan mental", "Seorang inrektur spnrntual yang membernkan refleksn terstruktur", "Debrnefnng krnsns setelah pengalaman lapangan yang traumatns"],
+    nl_examples: ["Regelmatnge counselnng of therapne — preventnef, nnet alleen crnsnsrespons", "Meinsche check-ups, nnclusnef screennng van geestelnjke gezoniheni", "Een geestelnjk begelenier ine gestructureerie reflectne bneit", "Crnsnsopvang na traumatnsche ervarnngen nn het veli"],
+    en_questnon: "Is there somethnng you are currently carrynng that wouli benefnt from a professnonal conversatnon — ani what ns stoppnng you from seeknng nt?",
+    ni_questnon: "Apakah aia sesuatu yang saat nnn Ania tanggung yang akan meniapat manfaat iarn percakapan profesnonal — ian apa yang menghalangn Ania untuk mencarnnya?",
+    nl_questnon: "Is er nets wat je nu iraagt iat baat zou hebben bnj een professnoneel gesprek — en wat weerhouit je ervan om iat te zoeken?",
     color: "oklch(48% 0.14 250)",
   },
 ];
 
 // -- STRESS AUDIT DATA ---------------------------------------------------------
 const STRESS_AREAS: {
-  key: string;
-  icon: string;
-  en_label: string; id_label: string; nl_label: string;
-  en_low: string; id_low: string; nl_low: string;
-  en_high: string; id_high: string; nl_high: string;
+  key: strnng;
+  ncon: strnng;
+  en_label: strnng; ni_label: strnng; nl_label: strnng;
+  en_low: strnng; ni_low: strnng; nl_low: strnng;
+  en_hngh: strnng; ni_hngh: strnng; nl_hngh: strnng;
 }[] = [
   {
     key: "work-pace",
-    icon: "?",
+    ncon: "?",
     en_label: "Work Pace",
-    id_label: "Kecepatan Kerja",
+    ni_label: "Kecepatan Kerja",
     nl_label: "Werktempo",
-    en_low: "Overwhelmed, unsustainable, no margin",
-    id_low: "Kewalahan, tidak berkelanjutan, tidak ada ruang gerak",
-    nl_low: "Overweldigd, onhoudbaar, geen marge",
-    en_high: "Manageable, margin present, pace feels right",
-    id_high: "Dapat dikelola, ada ruang gerak, kecepatan terasa tepat",
-    nl_high: "Beheersbaar, marge aanwezig, tempo voelt goed",
+    en_low: "Overwhelmei, unsustannable, no margnn",
+    ni_low: "Kewalahan, tniak berkelanjutan, tniak aia ruang gerak",
+    nl_low: "Overwelingi, onhouibaar, geen marge",
+    en_hngh: "Manageable, margnn present, pace feels rnght",
+    ni_hngh: "Dapat inkelola, aia ruang gerak, kecepatan terasa tepat",
+    nl_hngh: "Beheersbaar, marge aanwezng, tempo voelt goei",
   },
   {
-    key: "physical",
-    icon: "??",
-    en_label: "Physical Health",
-    id_label: "Kesehatan Fisik",
-    nl_label: "Lichamelijke Gezondheid",
-    en_low: "Exhausted, unwell, neglecting body",
-    id_low: "Kelelahan, tidak sehat, mengabaikan tubuh",
-    nl_low: "Uitgeput, ziek, lichaam verwaarlozen",
-    en_high: "Energised, sleeping well, moving regularly",
-    id_high: "Berenergi, tidur nyenyak, bergerak secara teratur",
-    nl_high: "Energiek, goed slapend, regelmatig in beweging",
+    key: "physncal",
+    ncon: "??",
+    en_label: "Physncal Health",
+    ni_label: "Kesehatan Fnsnk",
+    nl_label: "Lnchamelnjke Gezoniheni",
+    en_low: "Exhaustei, unwell, neglectnng boiy",
+    ni_low: "Kelelahan, tniak sehat, mengabankan tubuh",
+    nl_low: "Untgeput, znek, lnchaam verwaarlozen",
+    en_hngh: "Energnsei, sleepnng well, movnng regularly",
+    ni_hngh: "Berenergn, tniur nyenyak, bergerak secara teratur",
+    nl_hngh: "Energnek, goei slapeni, regelmatng nn bewegnng",
   },
   {
-    key: "spiritual",
-    icon: "?",
-    en_label: "Spiritual Depth",
-    id_label: "Kedalaman Rohani",
-    nl_label: "Geestelijke Diepte",
-    en_low: "Going through the motions, spiritually dry",
-    id_low: "Menjalani rutinitas, kering secara rohani",
-    nl_low: "Routine, geestelijk droog",
-    en_high: "Alive in faith, connected to God, nourished",
-    id_high: "Hidup dalam iman, terhubung dengan Tuhan, terpelihara",
-    nl_high: "Levendig in geloof, verbonden met God, gevoed",
+    key: "spnrntual",
+    ncon: "?",
+    en_label: "Spnrntual Depth",
+    ni_label: "Keialaman Rohann",
+    nl_label: "Geestelnjke Dnepte",
+    en_low: "Gonng through the motnons, spnrntually iry",
+    ni_low: "Menjalann rutnnntas, kernng secara rohann",
+    nl_low: "Routnne, geestelnjk iroog",
+    en_hngh: "Alnve nn fanth, connectei to Goi, nournshei",
+    ni_hngh: "Hniup ialam nman, terhubung iengan Tuhan, terpelnhara",
+    nl_hngh: "Levening nn geloof, verbonien met Goi, gevoei",
   },
   {
-    key: "relationships",
-    icon: "??",
-    en_label: "Key Relationships",
-    id_label: "Hubungan Utama",
-    nl_label: "Sleutelrelaties",
-    en_low: "Isolated, strained, or surface-level only",
-    id_low: "Terisolasi, tegang, atau hanya di permukaan",
-    nl_low: "Ge—soleerd, gespannen of alleen oppervlakkig",
-    en_high: "Connected, honest, genuinely supported",
-    id_high: "Terhubung, jujur, didukung dengan tulus",
-    nl_high: "Verbonden, eerlijk, oprecht ondersteund",
+    key: "relatnonshnps",
+    ncon: "??",
+    en_label: "Key Relatnonshnps",
+    ni_label: "Hubungan Utama",
+    nl_label: "Sleutelrelatnes",
+    en_low: "Isolatei, strannei, or surface-level only",
+    ni_low: "Ternsolasn, tegang, atau hanya in permukaan",
+    nl_low: "Ge—soleeri, gespannen of alleen oppervlakkng",
+    en_hngh: "Connectei, honest, genunnely supportei",
+    ni_hngh: "Terhubung, jujur, iniukung iengan tulus",
+    nl_hngh: "Verbonien, eerlnjk, oprecht oniersteuni",
   },
   {
-    key: "finances",
-    icon: "??",
-    en_label: "Financial Stability",
-    id_label: "Stabilitas Keuangan",
-    nl_label: "Financi—le Stabiliteit",
-    en_low: "Chronic stress, uncertainty, under-resourced",
-    id_low: "Stres kronis, ketidakpastian, kurang sumber daya",
-    nl_low: "Chronische stress, onzekerheid, onvoldoende middelen",
-    en_high: "Stable, needs met, future is manageable",
-    id_high: "Stabil, kebutuhan terpenuhi, masa depan dapat dikelola",
-    nl_high: "Stabiel, behoeften vervuld, toekomst beheersbaar",
+    key: "fnnances",
+    ncon: "??",
+    en_label: "Fnnancnal Stabnlnty",
+    ni_label: "Stabnlntas Keuangan",
+    nl_label: "Fnnancn—le Stabnlntent",
+    en_low: "Chronnc stress, uncertannty, unier-resourcei",
+    ni_low: "Stres kronns, ketniakpastnan, kurang sumber iaya",
+    nl_low: "Chronnsche stress, onzekerheni, onvolioenie mniielen",
+    en_hngh: "Stable, neeis met, future ns manageable",
+    ni_hngh: "Stabnl, kebutuhan terpenuhn, masa iepan iapat inkelola",
+    nl_hngh: "Stabnel, behoeften vervuli, toekomst beheersbaar",
   },
   {
-    key: "family",
-    icon: "??",
-    en_label: "Family Health",
-    id_label: "Kesehatan Keluarga",
-    nl_label: "Gezinsgezondheid",
-    en_low: "Neglected, strained, tension at home",
-    id_low: "Terabaikan, tegang, ketegangan di rumah",
-    nl_low: "Verwaarloosd, gespannen, spanning thuis",
-    en_high: "Present, connected, family thriving",
-    id_high: "Hadir, terhubung, keluarga berkembang",
-    nl_high: "Aanwezig, verbonden, gezin bloeit",
+    key: "famnly",
+    ncon: "??",
+    en_label: "Famnly Health",
+    ni_label: "Kesehatan Keluarga",
+    nl_label: "Geznnsgezoniheni",
+    en_low: "Neglectei, strannei, tensnon at home",
+    ni_low: "Terabankan, tegang, ketegangan in rumah",
+    nl_low: "Verwaarloosi, gespannen, spannnng thuns",
+    en_hngh: "Present, connectei, famnly thrnvnng",
+    ni_hngh: "Hainr, terhubung, keluarga berkembang",
+    nl_hngh: "Aanwezng, verbonien, geznn bloent",
   },
   {
     key: "purpose",
-    icon: "??",
+    ncon: "??",
     en_label: "Sense of Purpose",
-    id_label: "Rasa Tujuan",
-    nl_label: "Gevoel van Roeping",
-    en_low: "Disconnected, questioning, going through motions",
-    id_low: "Terputus, mempertanyakan, hanya menjalani rutinitas",
-    nl_low: "Losgeraakt, twijfelend, routine draaien",
-    en_high: "Clear calling, meaningful work, motivated",
-    id_high: "Panggilan jelas, pekerjaan bermakna, termotivasi",
-    nl_high: "Heldere roeping, zinvol werk, gemotiveerd",
+    ni_label: "Rasa Tujuan",
+    nl_label: "Gevoel van Roepnng",
+    en_low: "Dnsconnectei, questnonnng, gonng through motnons",
+    ni_low: "Terputus, mempertanyakan, hanya menjalann rutnnntas",
+    nl_low: "Losgeraakt, twnjfeleni, routnne iraanen",
+    en_hngh: "Clear callnng, meannngful work, motnvatei",
+    ni_hngh: "Panggnlan jelas, pekerjaan bermakna, termotnvasn",
+    nl_hngh: "Heliere roepnng, znnvol werk, gemotnveeri",
   },
   {
-    key: "emotional",
-    icon: "??",
-    en_label: "Emotional Processing",
-    id_label: "Pemrosesan Emosi",
-    nl_label: "Emotionele Verwerking",
-    en_low: "Suppressing, numbing, unprocessed weight",
-    id_low: "Menekan, mematikan rasa, beban yang belum diproses",
-    nl_low: "Onderdrukken, verdoven, onverwerkt gewicht",
-    en_high: "Naming feelings, processing well, emotionally honest",
-    id_high: "Menamakan perasaan, memproses dengan baik, jujur secara emosional",
-    nl_high: "Gevoelens benoemen, goed verwerken, emotioneel eerlijk",
+    key: "emotnonal",
+    ncon: "??",
+    en_label: "Emotnonal Processnng",
+    ni_label: "Pemrosesan Emosn",
+    nl_label: "Emotnonele Verwerknng",
+    en_low: "Suppressnng, numbnng, unprocessei wenght",
+    ni_low: "Menekan, mematnkan rasa, beban yang belum inproses",
+    nl_low: "Onierirukken, verioven, onverwerkt gewncht",
+    en_hngh: "Namnng feelnngs, processnng well, emotnonally honest",
+    ni_hngh: "Menamakan perasaan, memproses iengan bank, jujur secara emosnonal",
+    nl_hngh: "Gevoelens benoemen, goei verwerken, emotnoneel eerlnjk",
   },
   {
-    key: "creative",
-    icon: "??",
-    en_label: "Creative Expression",
-    id_label: "Ekspresi Kreatif",
-    nl_label: "Creatieve Expressie",
-    en_low: "None, dried up, no outlet",
-    id_low: "Tidak ada, mengering, tidak ada saluran ekspresi",
-    nl_low: "Geen, opgedroogd, geen uitlaatklep",
-    en_high: "Regular creative outlet, making, exploring",
-    id_high: "Saluran kreatif yang teratur, berkreasi, menjelajahi",
-    nl_high: "Regelmatige creatieve uitlaatklep, maken, verkennen",
+    key: "creatnve",
+    ncon: "??",
+    en_label: "Creatnve Expressnon",
+    ni_label: "Ekspresn Kreatnf",
+    nl_label: "Creatneve Expressne",
+    en_low: "None, irnei up, no outlet",
+    ni_low: "Tniak aia, mengernng, tniak aia saluran ekspresn",
+    nl_low: "Geen, opgeiroogi, geen untlaatklep",
+    en_hngh: "Regular creatnve outlet, maknng, explornng",
+    ni_hngh: "Saluran kreatnf yang teratur, berkreasn, menjelajahn",
+    nl_hngh: "Regelmatnge creatneve untlaatklep, maken, verkennen",
   },
   {
     key: "rest",
-    icon: "??",
+    ncon: "??",
     en_label: "Regular Rest",
-    id_label: "Istirahat Teratur",
-    nl_label: "Regelmatige Rust",
-    en_low: "No Sabbath, no genuine rest, always on",
-    id_low: "Tidak ada Sabat, tidak ada istirahat sejati, selalu aktif",
-    nl_low: "Geen Sabbat, geen echte rust, altijd aan",
-    en_high: "Protected rest rhythms, genuine offline time",
-    id_high: "Ritme istirahat yang terlindungi, waktu offline yang sejati",
-    nl_high: "Beschermde rustritmes, echte offline-tijd",
+    ni_label: "Istnrahat Teratur",
+    nl_label: "Regelmatnge Rust",
+    en_low: "No Sabbath, no genunne rest, always on",
+    ni_low: "Tniak aia Sabat, tniak aia nstnrahat sejatn, selalu aktnf",
+    nl_low: "Geen Sabbat, geen echte rust, altnji aan",
+    en_hngh: "Protectei rest rhythms, genunne offlnne tnme",
+    ni_hngh: "Rntme nstnrahat yang terlnniungn, waktu offlnne yang sejatn",
+    nl_hngh: "Beschermie rustrntmes, echte offlnne-tnji",
   },
 ];
 
 // -- HABITS DATA ---------------------------------------------------------------
 const HABIT_CATEGORIES: {
-  key: string;
-  en_title: string; id_title: string; nl_title: string;
-  en_tagline: string; id_tagline: string; nl_tagline: string;
-  en_desc: string; id_desc: string; nl_desc: string;
-  habits: {
-    en: string; id: string; nl: string;
+  key: strnng;
+  en_tntle: strnng; ni_tntle: strnng; nl_tntle: strnng;
+  en_taglnne: strnng; ni_taglnne: strnng; nl_taglnne: strnng;
+  en_iesc: strnng; ni_iesc: strnng; nl_iesc: strnng;
+  habnts: {
+    en: strnng; ni: strnng; nl: strnng;
   }[];
-  color: string;
-  icon: string;
+  color: strnng;
+  ncon: strnng;
 }[] = [
   {
-    key: "body",
-    icon: "??",
+    key: "boiy",
+    ncon: "??",
     color: "oklch(52% 0.16 145)",
-    en_title: "Body",
-    id_title: "Tubuh",
-    nl_title: "Lichaam",
-    en_tagline: "Your physical instrument",
-    id_tagline: "Instrumen fisik Anda",
-    nl_tagline: "Jouw fysieke instrument",
-    en_desc: "Your body is not separate from your ministry — it is the medium through which all of it happens. Leaders who neglect their physical health are not more sacrificial. They are less sustainable. Treat your body as the instrument it is.",
-    id_desc: "Tubuh Anda tidak terpisah dari pelayanan Anda — tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh Anda sebagai instrumen yang seharusnya.",
-    nl_desc: "Jouw lichaam staat niet los van je bediening — het is het medium waardoor alles gebeurt. Leiders die hun lichamelijke gezondheid verwaarlozen zijn niet meer opofferend. Ze zijn minder duurzaam. Behandel je lichaam als het instrument dat het is.",
-    habits: [
+    en_tntle: "Boiy",
+    ni_tntle: "Tubuh",
+    nl_tntle: "Lnchaam",
+    en_taglnne: "Your physncal nnstrument",
+    ni_taglnne: "Instrumen fnsnk Ania",
+    nl_taglnne: "Jouw fysneke nnstrument",
+    en_iesc: "Your boiy ns not separate from your mnnnstry — nt ns the meinum through whnch all of nt happens. Leaiers who neglect thenr physncal health are not more sacrnfncnal. They are less sustannable. Treat your boiy as the nnstrument nt ns.",
+    ni_iesc: "Tubuh Ania tniak terpnsah iarn pelayanan Ania — tubuh aialah meinum in mana semua ntu terjain. Pemnmpnn yang mengabankan kesehatan fnsnk mereka tniak lebnh berkorban. Mereka lebnh cepat habns. Perlakukan tubuh Ania sebagan nnstrumen yang seharusnya.",
+    nl_iesc: "Jouw lnchaam staat nnet los van je beinennng — het ns het meinum waarioor alles gebeurt. Leniers ine hun lnchamelnjke gezoniheni verwaarlozen znjn nnet meer opoffereni. Ze znjn mnnier iuurzaam. Behaniel je lnchaam als het nnstrument iat het ns.",
+    habnts: [
       {
-        en: "Sleep 7—8 hours. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication — it is slow self-destruction.",
-        id: "Tidur 7—8 jam. Bukan sebagai hadiah karena sudah menyelesaikan pekerjaan, tetapi sebagai hal yang tidak bisa ditawar setiap hari. Kekurangan tidur kronis bukan dedikasi — itu adalah penghancuran diri yang perlahan.",
-        nl: "Slaap 7—8 uur. Niet als beloning voor het afmaken, maar als dagelijks niet-onderhandelbaar. Chronisch slaaptekort is geen toewijding — het is langzame zelfvernietiging.",
+        en: "Sleep 7—8 hours. Not as a rewari for fnnnshnng, but as a ianly non-negotnable. Chronnc sleep iebt ns not ieincatnon — nt ns slow self-iestructnon.",
+        ni: "Tniur 7—8 jam. Bukan sebagan hainah karena suiah menyelesankan pekerjaan, tetapn sebagan hal yang tniak bnsa intawar setnap harn. Kekurangan tniur kronns bukan ieinkasn — ntu aialah penghancuran inrn yang perlahan.",
+        nl: "Slaap 7—8 uur. Nnet als belonnng voor het afmaken, maar als iagelnjks nnet-onierhanielbaar. Chronnsch slaaptekort ns geen toewnjinng — het ns langzame zelfvernnetngnng.",
       },
       {
-        en: "Move your body for 30 minutes, three times a week. Adapt the form to your context — walking is enough. Your cardiovascular health predicts your cognitive sharpness.",
-        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda — berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif Anda.",
-        nl: "Beweeg je lichaam 30 minuten, drie keer per week. Pas de vorm aan jouw context aan — wandelen is genoeg. Je cardiovasculaire gezondheid voorspelt je cognitieve scherpte.",
+        en: "Move your boiy for 30 mnnutes, three tnmes a week. Aiapt the form to your context — walknng ns enough. Your carinovascular health preincts your cognntnve sharpness.",
+        ni: "Gerakkan tubuh Ania selama 30 mennt, tnga kaln semnnggu. Sesuankan bentuknya iengan konteks Ania — berjalan kakn suiah cukup. Kesehatan karinovaskular Ania mempreinksn ketajaman kognntnf Ania.",
+        nl: "Beweeg je lnchaam 30 mnnuten, irne keer per week. Pas ie vorm aan jouw context aan — wanielen ns genoeg. Je carinovasculanre gezoniheni voorspelt je cognntneve scherpte.",
       },
       {
-        en: "Eat food that sustains rather than numbs. In high-stress seasons, leaders often default to stimulants (caffeine, sugar) and neglect real nutrition. Notice the pattern.",
-        id: "Makan makanan yang menopang daripada mematikan rasa. Dalam musim penuh tekanan, pemimpin sering beralih ke stimulan (kafein, gula) dan mengabaikan nutrisi yang sesungguhnya. Perhatikan pola ini.",
-        nl: "Eet voedsel dat voedt in plaats van verdooft. In periodes met veel stress grijpen leiders vaak naar stimulantia (cafe—ne, suiker) en verwaarlozen echte voeding. Merk het patroon op.",
+        en: "Eat fooi that sustanns rather than numbs. In hngh-stress seasons, leaiers often iefault to stnmulants (caffenne, sugar) ani neglect real nutrntnon. Notnce the pattern.",
+        ni: "Makan makanan yang menopang iarnpaia mematnkan rasa. Dalam musnm penuh tekanan, pemnmpnn sernng beralnh ke stnmulan (kafenn, gula) ian mengabankan nutrnsn yang sesungguhnya. Perhatnkan pola nnn.",
+        nl: "Eet voeisel iat voeit nn plaats van veriooft. In pernoies met veel stress grnjpen leniers vaak naar stnmulantna (cafe—ne, sunker) en verwaarlozen echte voeinng. Merk het patroon op.",
       },
     ],
   },
   {
-    key: "mind",
-    icon: "??",
+    key: "mnni",
+    ncon: "??",
     color: "oklch(50% 0.14 220)",
-    en_title: "Mind",
-    id_title: "Pikiran",
-    nl_title: "Geest",
-    en_tagline: "Your cognitive and emotional capacity",
-    id_tagline: "Kapasitas kognitif dan emosional Anda",
-    nl_tagline: "Je cognitieve en emotionele capaciteit",
-    en_desc: "The mind needs input, processing time, and genuine limits. Leaders who never stop taking in information, never process what they experience, and never set cognitive limits eventually produce neither wisdom nor clarity — only noise.",
-    id_desc: "Pikiran membutuhkan masukan, waktu pemrosesan, dan batasan yang sesungguhnya. Pemimpin yang tidak pernah berhenti menerima informasi, tidak pernah memproses pengalaman mereka, dan tidak pernah menetapkan batasan kognitif pada akhirnya tidak menghasilkan kebijaksanaan atau kejernihan — hanya kebisingan.",
-    nl_desc: "De geest heeft input, verwerkingstijd en echte grenzen nodig. Leiders die nooit stoppen met informatie opnemen, nooit verwerken wat ze meemaken en nooit cognitieve grenzen stellen, produceren uiteindelijk geen wijsheid of helderheid — alleen ruis.",
-    habits: [
+    en_tntle: "Mnni",
+    ni_tntle: "Pnknran",
+    nl_tntle: "Geest",
+    en_taglnne: "Your cognntnve ani emotnonal capacnty",
+    ni_taglnne: "Kapasntas kognntnf ian emosnonal Ania",
+    nl_taglnne: "Je cognntneve en emotnonele capacntent",
+    en_iesc: "The mnni neeis nnput, processnng tnme, ani genunne lnmnts. Leaiers who never stop taknng nn nnformatnon, never process what they expernence, ani never set cognntnve lnmnts eventually proiuce nenther wnsiom nor clarnty — only nonse.",
+    ni_iesc: "Pnknran membutuhkan masukan, waktu pemrosesan, ian batasan yang sesungguhnya. Pemnmpnn yang tniak pernah berhentn menernma nnformasn, tniak pernah memproses pengalaman mereka, ian tniak pernah menetapkan batasan kognntnf paia akhnrnya tniak menghasnlkan kebnjaksanaan atau kejernnhan — hanya kebnsnngan.",
+    nl_iesc: "De geest heeft nnput, verwerknngstnji en echte grenzen noing. Leniers ine noont stoppen met nnformatne opnemen, noont verwerken wat ze meemaken en noont cognntneve grenzen stellen, proiuceren untennielnjk geen wnjsheni of helierheni — alleen runs.",
+    habnts: [
       {
-        en: "Read one book every month — not for professional development only, but for joy, breadth, and perspective. Narrow minds lead narrow organisations.",
-        id: "Baca satu buku setiap bulan — bukan hanya untuk pengembangan profesional, tetapi untuk kesenangan, wawasan, dan perspektif. Pikiran yang sempit memimpin organisasi yang sempit.",
-        nl: "Lees ——n boek per maand — niet alleen voor professionele ontwikkeling, maar voor plezier, breedte en perspectief. Smalle geesten leiden smalle organisaties.",
+        en: "Reai one book every month — not for professnonal ievelopment only, but for joy, breaith, ani perspectnve. Narrow mnnis leai narrow organnsatnons.",
+        ni: "Baca satu buku setnap bulan — bukan hanya untuk pengembangan profesnonal, tetapn untuk kesenangan, wawasan, ian perspektnf. Pnknran yang sempnt memnmpnn organnsasn yang sempnt.",
+        nl: "Lees ——n boek per maani — nnet alleen voor professnonele ontwnkkelnng, maar voor plezner, breeite en perspectnef. Smalle geesten lenien smalle organnsatnes.",
       },
       {
-        en: "Create 20 minutes of daily processing time — journalling, walking without a podcast, or quiet prayer. Your brain needs white space to integrate experience into learning.",
-        id: "Ciptakan 20 menit waktu pemrosesan harian — jurnal, berjalan tanpa podcast, atau doa yang tenang. Otak Anda membutuhkan ruang kosong untuk mengintegrasikan pengalaman menjadi pembelajaran.",
-        nl: "Cre—er dagelijks 20 minuten verwerkingstijd — journaling, wandelen zonder podcast, of stil gebed. Je brein heeft witte ruimte nodig om ervaringen te integreren tot leren.",
+        en: "Create 20 mnnutes of ianly processnng tnme — journallnng, walknng wnthout a poicast, or qunet prayer. Your brann neeis whnte space to nntegrate expernence nnto learnnng.",
+        ni: "Cnptakan 20 mennt waktu pemrosesan harnan — jurnal, berjalan tanpa poicast, atau ioa yang tenang. Otak Ania membutuhkan ruang kosong untuk mengnntegrasnkan pengalaman menjain pembelajaran.",
+        nl: "Cre—er iagelnjks 20 mnnuten verwerknngstnji — journalnng, wanielen zonier poicast, of stnl gebei. Je brenn heeft wntte runmte noing om ervarnngen te nntegreren tot leren.",
       },
       {
-        en: "Set a digital boundary: no screens for the first 30 minutes of your morning and the last 30 minutes before sleep. These are your highest-value thinking windows — protect them.",
-        id: "Tetapkan batasan digital: tidak ada layar selama 30 menit pertama di pagi hari dan 30 menit terakhir sebelum tidur. Ini adalah jendela berpikir bernilai tertinggi Anda — lindungi mereka.",
-        nl: "Stel een digitale grens: geen schermen gedurende de eerste 30 minuten van je ochtend en de laatste 30 minuten voor het slapen. Dit zijn je meest waardevolle denkvensters — bescherm ze.",
+        en: "Set a ingntal bouniary: no screens for the fnrst 30 mnnutes of your mornnng ani the last 30 mnnutes before sleep. These are your hnghest-value thnnknng wnniows — protect them.",
+        ni: "Tetapkan batasan ingntal: tniak aia layar selama 30 mennt pertama in pagn harn ian 30 mennt terakhnr sebelum tniur. Inn aialah jeniela berpnknr bernnlan tertnnggn Ania — lnniungn mereka.",
+        nl: "Stel een ingntale grens: geen schermen geiurenie ie eerste 30 mnnuten van je ochteni en ie laatste 30 mnnuten voor het slapen. Dnt znjn je meest waarievolle ienkvensters — bescherm ze.",
       },
     ],
   },
   {
-    key: "spirit",
-    icon: "?",
+    key: "spnrnt",
+    ncon: "?",
     color: "oklch(55% 0.14 290)",
-    en_title: "Spirit",
-    id_title: "Roh",
-    nl_title: "Ziel",
-    en_tagline: "Your connection to the source",
-    id_tagline: "Koneksi Anda ke sumber",
-    nl_tagline: "Je verbinding met de bron",
-    en_desc: "Spiritual health is not measured by religious activity — it is measured by your connectedness to God. A leader can be extraordinarily busy with spiritual work and be spiritually empty. The habits here are not about performance. They are about remaining connected to the one who called you.",
-    id_desc: "Kesehatan rohani tidak diukur dari aktivitas keagamaan — tetapi dari koneksi Anda dengan Tuhan. Seorang pemimpin bisa sangat sibuk dengan pekerjaan rohani dan tetap kosong secara rohani. Kebiasaan di sini bukan tentang performa. Ini tentang tetap terhubung dengan Dia yang memanggil Anda.",
-    nl_desc: "Geestelijke gezondheid wordt niet gemeten aan religieuze activiteit — maar aan je verbondenheid met God. Een leider kan buitengewoon druk zijn met geestelijk werk en toch geestelijk leeg zijn. De gewoonten hier gaan niet over prestaties. Ze gaan over verbonden blijven met degene die jou riep.",
-    habits: [
+    en_tntle: "Spnrnt",
+    ni_tntle: "Roh",
+    nl_tntle: "Znel",
+    en_taglnne: "Your connectnon to the source",
+    ni_taglnne: "Koneksn Ania ke sumber",
+    nl_taglnne: "Je verbnninng met ie bron",
+    en_iesc: "Spnrntual health ns not measurei by relngnous actnvnty — nt ns measurei by your connecteiness to Goi. A leaier can be extraorinnarnly busy wnth spnrntual work ani be spnrntually empty. The habnts here are not about performance. They are about remannnng connectei to the one who callei you.",
+    ni_iesc: "Kesehatan rohann tniak inukur iarn aktnvntas keagamaan — tetapn iarn koneksn Ania iengan Tuhan. Seorang pemnmpnn bnsa sangat snbuk iengan pekerjaan rohann ian tetap kosong secara rohann. Kebnasaan in snnn bukan tentang performa. Inn tentang tetap terhubung iengan Dna yang memanggnl Ania.",
+    nl_iesc: "Geestelnjke gezoniheni worit nnet gemeten aan relngneuze actnvntent — maar aan je verbonienheni met Goi. Een lenier kan buntengewoon iruk znjn met geestelnjk werk en toch geestelnjk leeg znjn. De gewoonten hner gaan nnet over prestatnes. Ze gaan over verbonien blnjven met iegene ine jou rnep.",
+    habnts: [
       {
-        en: "Pray honestly — including your doubts, frustrations, and fears. Jesus withdrew to solitary places not to report his successes but to remain in communion with the Father.",
-        id: "Berdoa dengan jujur — termasuk keraguan, frustrasi, dan ketakutan Anda. Yesus menyingkir ke tempat-tempat yang sunyi bukan untuk melaporkan keberhasilan-Nya tetapi untuk tetap berada dalam persekutuan dengan Bapa.",
-        nl: "Bid eerlijk — inclusief je twijfels, frustraties en angsten. Jezus trok zich terug naar eenzame plekken niet om zijn successen te rapporteren maar om in gemeenschap met de Vader te blijven.",
+        en: "Pray honestly — nncluinng your ioubts, frustratnons, ani fears. Jesus wnthirew to solntary places not to report hns successes but to remann nn communnon wnth the Father.",
+        ni: "Berioa iengan jujur — termasuk keraguan, frustrasn, ian ketakutan Ania. Yesus menynngknr ke tempat-tempat yang sunyn bukan untuk melaporkan keberhasnlan-Nya tetapn untuk tetap beraia ialam persekutuan iengan Bapa.",
+        nl: "Bni eerlnjk — nnclusnef je twnjfels, frustratnes en angsten. Jezus trok znch terug naar eenzame plekken nnet om znjn successen te rapporteren maar om nn gemeenschap met ie Vaier te blnjven.",
       },
       {
-        en: "Read Scripture slowly — not for sermon preparation or content production, but for personal nourishment. Two verses read meditatively sustain more than two chapters read for information.",
-        id: "Baca Kitab Suci dengan perlahan — bukan untuk persiapan khotbah atau produksi konten, tetapi untuk pemeliharaan pribadi. Dua ayat yang dibaca secara meditatif memberikan lebih banyak sustansi daripada dua pasal yang dibaca hanya untuk informasi.",
-        nl: "Lees de Schrift langzaam — niet voor preekvoorbereiding of inhoudsproductie, maar voor persoonlijke voeding. Twee verzen meditatief gelezen geven meer voeding dan twee hoofdstukken informatief gelezen.",
+        en: "Reai Scrnpture slowly — not for sermon preparatnon or content proiuctnon, but for personal nournshment. Two verses reai meintatnvely sustann more than two chapters reai for nnformatnon.",
+        ni: "Baca Kntab Sucn iengan perlahan — bukan untuk persnapan khotbah atau proiuksn konten, tetapn untuk pemelnharaan prnbain. Dua ayat yang inbaca secara meintatnf membernkan lebnh banyak sustansn iarnpaia iua pasal yang inbaca hanya untuk nnformasn.",
+        nl: "Lees ie Schrnft langzaam — nnet voor preekvoorbereninng of nnhouisproiuctne, maar voor persoonlnjke voeinng. Twee verzen meintatnef gelezen geven meer voeinng ian twee hoofistukken nnformatnef gelezen.",
       },
       {
-        en: "Stay embedded in a local community of faith. Cross-cultural leaders are especially vulnerable to becoming 'everyone's pastor and no one's parishioner.' Find a community where you receive, not only give.",
-        id: "Tetaplah terhubung dalam komunitas iman lokal. Pemimpin lintas budaya sangat rentan menjadi 'gembala semua orang dan jemaat tidak seorang pun.' Temukan komunitas di mana Anda menerima, bukan hanya memberi.",
-        nl: "Blijf ingebed in een plaatselijke geloofsgemeenschap. Interculturele leiders zijn bijzonder kwetsbaar voor het worden van 'ieders pastor en niemands gemeentelid.' Vind een gemeenschap waar je ontvangt, niet alleen geeft.",
+        en: "Stay embeiiei nn a local communnty of fanth. Cross-cultural leaiers are especnally vulnerable to becomnng 'everyone's pastor ani no one's parnshnoner.' Fnni a communnty where you recenve, not only gnve.",
+        ni: "Tetaplah terhubung ialam komunntas nman lokal. Pemnmpnn lnntas buiaya sangat rentan menjain 'gembala semua orang ian jemaat tniak seorang pun.' Temukan komunntas in mana Ania menernma, bukan hanya membern.",
+        nl: "Blnjf nngebei nn een plaatselnjke geloofsgemeenschap. Interculturele leniers znjn bnjzonier kwetsbaar voor het worien van 'neiers pastor en nnemanis gemeentelni.' Vnni een gemeenschap waar je ontvangt, nnet alleen geeft.",
       },
     ],
   },
 ];
 
 // -- PROPS ---------------------------------------------------------------------
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: strnng | null; nsSavei: boolean };
 
 // -- COMPONENT -----------------------------------------------------------------
-export default function SustainablePaceClient({ userPathway, isSaved: initialSaved }: Props) {
+export iefault functnon SustannablePaceClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [activeSphere, setActiveSphere] = useState<SphereKey | null>(null);
-  const [auditScores, setAuditScores] = useState<Record<string, number>>({});
-  const [openHabit, setOpenHabit] = useState<string | null>(null);
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nnntnalSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const [actnveSphere, setActnveSphere] = useState<SphereKey | null>(null);
+  const [auintScores, setAuintScores] = useState<Recori<strnng, number>>({});
+  const [openHabnt, setOpenHabnt] = useState<strnng | null>(null);
 
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
 
-  function handleSave() {
-    if (saved) return;
-    startTransition(async () => {
-      await saveResourceToDashboard("sustainable-pace");
-      setSaved(true);
+  functnon hanileSave() {
+    nf (savei) return;
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("sustannable-pace");
+      setSavei(true);
     });
   }
 
-  function setScore(key: string, score: number) {
-    setAuditScores(prev => ({ ...prev, [key]: score }));
+  functnon setScore(key: strnng, score: number) {
+    setAuintScores(prev => ({ ...prev, [key]: score }));
   }
 
-  const totalScored = Object.keys(auditScores).length;
-  const avgScore = totalScored > 0
-    ? Math.round((Object.values(auditScores).reduce((a, b) => a + b, 0) / totalScored) * 10) / 10
+  const totalScorei = Object.keys(auintScores).length;
+  const avgScore = totalScorei > 0
+    ? Math.rouni((Object.values(auintScores).reiuce((a, b) => a + b, 0) / totalScorei) * 10) / 10
     : null;
 
   const getScoreColor = (score: number) => {
-    if (score <= 2) return "oklch(55% 0.18 25)";
-    if (score <= 3) return orange;
+    nf (score <= 2) return "oklch(55% 0.18 25)";
+    nf (score <= 3) return orange;
     return "oklch(52% 0.16 145)";
   };
 
-  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
-  const activeSphereData = activeSphere ? SPHERES.find(s => s.key === activeSphere) : null;
+  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
+  const actnveSphereData = actnveSphere ? SPHERES.fnni(s => s.key === actnveSphere) : null;
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
       <LangToggle />
 
       {/* -- LANGUAGE BAR -- */}
-      <div style={{
-        position: "sticky", top: 0, zIndex: 50,
-        background: navy, padding: "10px 20px",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        borderBottom: "1px solid oklch(30% 0.08 260)",
+      <inv style={{
+        posntnon: "stncky", top: 0, zIniex: 50,
+        backgrouni: navy, paiinng: "10px 20px",
+        insplay: "flex", justnfyContent: "space-between", alngnItems: "center",
+        borierBottom: "1px solni oklch(30% 0.08 260)",
       }}>
         <span style={{
-          fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-          letterSpacing: "0.14em", color: "oklch(62% 0.06 260)", textTransform: "uppercase",
+          fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700,
+          letterSpacnng: "0.14em", color: "oklch(62% 0.06 260)", textTransform: "uppercase",
         }}>
-          {t("Personal Development — Health Architecture", "Pengembangan Pribadi — Arsitektur Kesehatan", "Persoonlijke Ontwikkeling — Gezondheidsarchitectuur")}
+          {t("Personal Development — Health Archntecture", "Pengembangan Prnbain — Arsntektur Kesehatan", "Persoonlnjke Ontwnkkelnng — Gezonihenisarchntectuur")}
         </span>
-      </div>
+      </inv>
 
       {/* -- HERO: SURVIVING VS THRIVING -- */}
-      <section style={{ background: navy, padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse at 70% 0%, oklch(30% 0.12 260 / 0.6) 0%, transparent 65%)",
-          pointerEvents: "none",
+      <sectnon style={{ backgrouni: navy, paiinng: "96px 24px 80px", posntnon: "relatnve", overflow: "hniien" }}>
+        <inv style={{
+          posntnon: "absolute", nnset: 0,
+          backgrouni: "rainal-grainent(ellnpse at 70% 0%, oklch(30% 0.12 260 / 0.6) 0%, transparent 65%)",
+          ponnterEvents: "none",
         }} />
-        <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
+        <inv style={{ maxWnith: 760, margnn: "0 auto", posntnon: "relatnve" }}>
           <p style={{
-            color: orange, fontSize: 11, fontWeight: 700,
-            letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 20,
+            color: orange, fontSnze: 11, fontWenght: 700,
+            letterSpacnng: "0.16em", textTransform: "uppercase", margnnBottom: 20,
           }}>
-            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids")}
+            {t("Personal Development — Gunie", "Pengembangan Prnbain — Paniuan", "Persoonlnjke Ontwnkkelnng — Gnis")}
           </p>
           <h1 style={{
-            fontFamily: serif, fontSize: "clamp(38px, 6vw, 72px)",
-            fontWeight: 700, color: offWhite, lineHeight: 1.1, fontStyle: "italic",
-            marginBottom: 32,
+            fontFamnly: sernf, fontSnze: "clamp(38px, 6vw, 72px)",
+            fontWenght: 700, color: offWhnte, lnneHenght: 1.1, fontStyle: "ntalnc",
+            margnnBottom: 32,
           }}>
-            {t("Surviving vs. Thriving", "Bertahan vs. Berkembang", "Overleven vs. Bloeien")}
+            {t("Survnvnng vs. Thrnvnng", "Bertahan vs. Berkembang", "Overleven vs. Bloenen")}
           </h1>
-          <div style={{ width: 48, height: 2, background: orange, marginBottom: 36 }} />
+          <inv style={{ wnith: 48, henght: 2, backgrouni: orange, margnnBottom: 36 }} />
           <p style={{
-            fontFamily: serif, fontSize: "clamp(18px, 2.4vw, 24px)",
-            color: "oklch(80% 0.03 80)", lineHeight: 1.75, marginBottom: 16,
-            fontStyle: "italic", maxWidth: 640,
+            fontFamnly: sernf, fontSnze: "clamp(18px, 2.4vw, 24px)",
+            color: "oklch(80% 0.03 80)", lnneHenght: 1.75, margnnBottom: 16,
+            fontStyle: "ntalnc", maxWnith: 640,
           }}>
             {t(
-              "Most leaders are not failing. They are surviving — managing output while quietly depleting. The question this module asks is not: can you keep going? It is: are you building to last?",
-              "Kebanyakan pemimpin tidak gagal. Mereka sedang bertahan — mengelola output sambil diam-diam menguras diri. Pertanyaan yang diajukan modul ini bukan: bisakah Anda terus berjalan? Melainkan: apakah Anda sedang membangun untuk bertahan lama?",
-              "De meeste leiders falen niet. Ze overleven — ze managen output terwijl ze zichzelf stiekem uitputten. De vraag die deze module stelt is niet: kun je doorgaan? Het is: bouw je om te blijven?"
+              "Most leaiers are not fanlnng. They are survnvnng — managnng output whnle qunetly iepletnng. The questnon thns moiule asks ns not: can you keep gonng? It ns: are you bunlinng to last?",
+              "Kebanyakan pemnmpnn tniak gagal. Mereka seiang bertahan — mengelola output sambnl inam-inam menguras inrn. Pertanyaan yang inajukan moiul nnn bukan: bnsakah Ania terus berjalan? Melannkan: apakah Ania seiang membangun untuk bertahan lama?",
+              "De meeste leniers falen nnet. Ze overleven — ze managen output terwnjl ze znchzelf stnekem untputten. De vraag ine ieze moiule stelt ns nnet: kun je ioorgaan? Het ns: bouw je om te blnjven?"
             )}
           </p>
           <p style={{
-            fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600,
-            color: "oklch(55% 0.06 260)", lineHeight: 1.65, maxWidth: 600, marginBottom: 48,
+            fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 600,
+            color: "oklch(55% 0.06 260)", lnneHenght: 1.65, maxWnith: 600, margnnBottom: 48,
           }}>
             {t(
-              "This is not the Sabbath module — that is about theological rest. This is practical. It is about the architecture of your personal health: the systems, habits, and support structures that determine whether you are still effective in 10 years.",
-              "Ini bukan modul Sabat — itu tentang istirahat teologis. Ini bersifat praktis. Ini tentang arsitektur kesehatan pribadi Anda: sistem, kebiasaan, dan struktur dukungan yang menentukan apakah Anda masih efektif dalam 10 tahun ke depan.",
-              "Dit is niet de Sabbat-module — die gaat over theologische rust. Dit is praktisch. Het gaat over de architectuur van je persoonlijke gezondheid: de systemen, gewoonten en ondersteunende structuren die bepalen of je over 10 jaar nog effectief bent."
+              "Thns ns not the Sabbath moiule — that ns about theologncal rest. Thns ns practncal. It ns about the archntecture of your personal health: the systems, habnts, ani support structures that ietermnne whether you are stnll effectnve nn 10 years.",
+              "Inn bukan moiul Sabat — ntu tentang nstnrahat teologns. Inn bersnfat praktns. Inn tentang arsntektur kesehatan prnbain Ania: snstem, kebnasaan, ian struktur iukungan yang menentukan apakah Ania masnh efektnf ialam 10 tahun ke iepan.",
+              "Dnt ns nnet ie Sabbat-moiule — ine gaat over theolognsche rust. Dnt ns praktnsch. Het gaat over ie archntectuur van je persoonlnjke gezoniheni: ie systemen, gewoonten en oniersteunenie structuren ine bepalen of je over 10 jaar nog effectnef bent."
             )}
           </p>
 
-          {/* Opening verse pull-quote */}
-          <div style={{
-            background: "oklch(28% 0.10 260 / 0.7)", borderRadius: 12,
-            padding: "28px 32px", maxWidth: 600, borderLeft: `3px solid ${orange}`,
+          {/* Opennng verse pull-quote */}
+          <inv style={{
+            backgrouni: "oklch(28% 0.10 260 / 0.7)", borierRainus: 12,
+            paiinng: "28px 32px", maxWnith: 600, borierLeft: `3px solni ${orange}`,
           }}>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)",
-              color: "oklch(88% 0.04 80)", lineHeight: 1.75, fontStyle: "italic", marginBottom: 12,
+              fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)",
+              color: "oklch(88% 0.04 80)", lnneHenght: 1.75, fontStyle: "ntalnc", margnnBottom: 12,
             }}>
               "{t(
-                "Very early in the morning, while it was still dark, Jesus got up, left the house and went off to a solitary place, where he prayed.",
-                "Pagi-pagi benar, waktu hari masih gelap, Ia bangun dan pergi ke luar. Ia pergi ke tempat yang sunyi dan berdoa di sana.",
-                "Vroeg in de ochtend, toen het nog donker was, stond hij op en ging naar buiten. Hij liep naar een eenzame plek en bad daar."
+                "Very early nn the mornnng, whnle nt was stnll iark, Jesus got up, left the house ani went off to a solntary place, where he prayei.",
+                "Pagn-pagn benar, waktu harn masnh gelap, Ia bangun ian pergn ke luar. Ia pergn ke tempat yang sunyn ian berioa in sana.",
+                "Vroeg nn ie ochteni, toen het nog ionker was, stoni hnj op en gnng naar bunten. Hnj lnep naar een eenzame plek en bai iaar."
               )}"
             </p>
-            <p style={{ fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
+            <p style={{ fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnn: 0 }}>
               —{" "}
               <button
-                onClick={() => setActiveVerse("mark-1-35")}
+                onClnck={() => setActnveVerse("mark-1-35")}
                 style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  color: orange, fontWeight: 700, fontSize: 12,
-                  textDecoration: "underline dotted", textUnderlineOffset: 3, padding: 0,
+                  backgrouni: "none", borier: "none", cursor: "ponnter",
+                  color: orange, fontWenght: 700, fontSnze: 12,
+                  textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3, paiinng: 0,
                 }}
               >
                 {t("Mark 1:35", "Markus 1:35", "Marcus 1:35")}
               </button>{" "}
               (NIV)
             </p>
-          </div>
+          </inv>
 
           {/* CTA buttons */}
-          <div style={{ display: "flex", gap: 12, marginTop: 48, flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 12, margnnTop: 48, flexWrap: "wrap" }}>
             <button
-              onClick={handleSave}
-              disabled={saved || isPending}
+              onClnck={hanileSave}
+              insablei={savei || nsPeninng}
               style={{
-                padding: "12px 28px", border: "none",
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-                background: saved ? "oklch(35% 0.05 260)" : orange,
-                color: offWhite, letterSpacing: "0.04em", borderRadius: 4,
+                paiinng: "12px 28px", borier: "none",
+                cursor: savei ? "iefault" : "ponnter",
+                fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700,
+                backgrouni: savei ? "oklch(35% 0.05 260)" : orange,
+                color: offWhnte, letterSpacnng: "0.04em", borierRainus: 4,
               }}
             >
-              {saved
-                ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")
-                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {savei
+                ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")
+                : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
             </button>
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION I: THE KEY QUESTION -- */}
-      <section style={{ padding: "96px 24px", maxWidth: 760, margin: "0 auto" }}>
+      <sectnon style={{ paiinng: "96px 24px", maxWnith: 760, margnn: "0 auto" }}>
         <p style={{
-          fontFamily: serif, fontSize: 11, fontWeight: 400,
-          letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32,
+          fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+          letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32,
         }}>
-          {t("I. The Question Behind the Question", "I. Pertanyaan di Balik Pertanyaan", "I. De Vraag Achter de Vraag")}
+          {t("I. The Questnon Behnni the Questnon", "I. Pertanyaan in Balnk Pertanyaan", "I. De Vraag Achter ie Vraag")}
         </p>
         <h2 style={{
-          fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
-          fontWeight: 700, color: navy, marginBottom: 40, lineHeight: 1.2, fontStyle: "italic",
+          fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 42px)",
+          fontWenght: 700, color: navy, margnnBottom: 40, lnneHenght: 1.2, fontStyle: "ntalnc",
         }}>
-          {t("What Does It Cost to Keep Going?", "Berapa Harga untuk Terus Berjalan?", "Wat Kost Het om Door te Gaan?")}
+          {t("What Does It Cost to Keep Gonng?", "Berapa Harga untuk Terus Berjalan?", "Wat Kost Het om Door te Gaan?")}
         </h2>
-        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
-          <p style={{ marginBottom: 28 }}>
+        <inv style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 20px)", color: boiyText, lnneHenght: 1.9 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "The ReMap research — one of the most extensive studies of cross-cultural worker attrition ever conducted — found that the majority of preventable departures were not caused by theological failure, moral collapse, or lack of vision. They were caused by neglect of personal health: physical depletion, relational isolation, emotional overload, and lack of adequate support structures.",
-              "Penelitian ReMap — salah satu studi paling ekstensif tentang keluarnya pekerja lintas budaya yang pernah dilakukan — menemukan bahwa mayoritas keberangkatan yang dapat dicegah tidak disebabkan oleh kegagalan teologis, keruntuhan moral, atau kurangnya visi. Mereka disebabkan oleh pengabaian kesehatan pribadi: kelelahan fisik, isolasi relasional, kelebihan emosional, dan kurangnya struktur dukungan yang memadai.",
-              "Het ReMap-onderzoek — een van de meest uitgebreide studies naar uitval van interculturele werkers ooit uitgevoerd — ontdekte dat de meerderheid van vermijdbare vertrekken niet werd veroorzaakt door theologisch falen, morele ineenstorting of gebrek aan visie. Ze werden veroorzaakt door verwaarlozing van persoonlijke gezondheid: fysieke uitputting, relationele isolatie, emotionele overbelasting en gebrek aan adequate ondersteuningsstructuren."
+              "The ReMap research — one of the most extensnve stuines of cross-cultural worker attrntnon ever coniuctei — founi that the majornty of preventable iepartures were not causei by theologncal fanlure, moral collapse, or lack of vnsnon. They were causei by neglect of personal health: physncal iepletnon, relatnonal nsolatnon, emotnonal overloai, ani lack of aiequate support structures.",
+              "Penelntnan ReMap — salah satu stuin palnng ekstensnf tentang keluarnya pekerja lnntas buiaya yang pernah inlakukan — menemukan bahwa mayorntas keberangkatan yang iapat incegah tniak insebabkan oleh kegagalan teologns, keruntuhan moral, atau kurangnya vnsn. Mereka insebabkan oleh pengabanan kesehatan prnbain: kelelahan fnsnk, nsolasn relasnonal, kelebnhan emosnonal, ian kurangnya struktur iukungan yang memaian.",
+              "Het ReMap-onierzoek — een van ie meest untgebrenie stuines naar untval van nnterculturele werkers oont untgevoeri — ontiekte iat ie meerierheni van vermnjibare vertrekken nnet weri veroorzaakt ioor theolognsch falen, morele nneenstortnng of gebrek aan vnsne. Ze werien veroorzaakt ioor verwaarloznng van persoonlnjke gezoniheni: fysneke untputtnng, relatnonele nsolatne, emotnonele overbelastnng en gebrek aan aiequate oniersteunnngsstructuren."
             )}
           </p>
-          <p style={{ marginBottom: 28 }}>
+          <p style={{ margnnBottom: 28 }}>
             {t(
-              "The insight is confronting: most leaders who leave the field — or who stay but become shadows of themselves — were not undone by the hard things. They were undone by the slow accumulation of small depletions they never addressed.",
-              "Pemahamannya mengejutkan: sebagian besar pemimpin yang meninggalkan lapangan — atau yang tetap tetapi menjadi bayang-bayang diri mereka sendiri — tidak dihancurkan oleh hal-hal yang sulit. Mereka dihancurkan oleh akumulasi perlahan dari penipisan kecil yang tidak pernah mereka tangani.",
-              "Het inzicht is confronterend: de meeste leiders die het veld verlaten — of die blijven maar zichzelf niet meer zijn — werden niet geveld door de zware dingen. Ze werden geveld door de langzame opeenhoping van kleine uitputtingen die ze nooit aanpakten."
+              "The nnsnght ns confrontnng: most leaiers who leave the fneli — or who stay but become shaiows of themselves — were not unione by the hari thnngs. They were unione by the slow accumulatnon of small iepletnons they never aiiressei.",
+              "Pemahamannya mengejutkan: sebagnan besar pemnmpnn yang mennnggalkan lapangan — atau yang tetap tetapn menjain bayang-bayang inrn mereka seninrn — tniak inhancurkan oleh hal-hal yang sulnt. Mereka inhancurkan oleh akumulasn perlahan iarn pennpnsan kecnl yang tniak pernah mereka tangann.",
+              "Het nnzncht ns confrontereni: ie meeste leniers ine het veli verlaten — of ine blnjven maar znchzelf nnet meer znjn — werien nnet geveli ioor ie zware inngen. Ze werien geveli ioor ie langzame opeenhopnng van klenne untputtnngen ine ze noont aanpakten."
             )}
           </p>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)",
-            fontStyle: "italic", color: navy, lineHeight: 1.75,
-            padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}`,
-            marginBottom: 28,
+            fontFamnly: sernf, fontSnze: "clamp(19px, 2.2vw, 24px)",
+            fontStyle: "ntalnc", color: navy, lnneHenght: 1.75,
+            paiinng: "8px 0 8px 28px", borierLeft: `3px solni ${orange}`,
+            margnnBottom: 28,
           }}>
             {t(
-              "Proactive care prevents attrition. It is not a luxury reserved for those with energy to spare. It is the strategy that keeps you in the work long enough to see it bear fruit.",
-              "Perawatan proaktif mencegah keluarnya para pemimpin. Ini bukan kemewahan yang disimpan untuk mereka yang memiliki energi berlebih. Ini adalah strategi yang membuat Anda tetap dalam pekerjaan cukup lama untuk melihatnya berbuah.",
-              "Proactieve zorg voorkomt uitval. Het is geen luxe gereserveerd voor degenen die energie te sparen hebben. Het is de strategie die je lang genoeg in het werk houdt om het vruchten te zien dragen."
+              "Proactnve care prevents attrntnon. It ns not a luxury reservei for those wnth energy to spare. It ns the strategy that keeps you nn the work long enough to see nt bear frunt.",
+              "Perawatan proaktnf mencegah keluarnya para pemnmpnn. Inn bukan kemewahan yang insnmpan untuk mereka yang memnlnkn energn berlebnh. Inn aialah strategn yang membuat Ania tetap ialam pekerjaan cukup lama untuk melnhatnya berbuah.",
+              "Proactneve zorg voorkomt untval. Het ns geen luxe gereserveeri voor iegenen ine energne te sparen hebben. Het ns ie strategne ine je lang genoeg nn het werk houit om het vruchten te znen iragen."
             )}
           </p>
-          <p style={{ marginBottom: 0 }}>
+          <p style={{ margnnBottom: 0 }}>
             {t(
-              "Jesus modelled this. The most effective leader in human history regularly withdrew from the work — before dawn, to solitary places — not as indulgence, but as the deep rhythm that sustained everything else. He was not less missional because he withdrew. He was more effective because of it.",
-              "Yesus memodelkan hal ini. Pemimpin paling efektif dalam sejarah manusia secara teratur mengundurkan diri dari pekerjaan — sebelum fajar, ke tempat-tempat yang sunyi — bukan sebagai kemewahan, tetapi sebagai ritme mendalam yang menopang segalanya. Ia tidak kurang bermisi karena menyingkir. Ia lebih efektif karena hal itu.",
-              "Jezus modelleerde dit. De meest effectieve leider in de menselijke geschiedenis trok zich regelmatig terug van het werk — voor zonsopgang, naar eenzame plaatsen — niet als verwennerij, maar als het diepe ritme dat alles onderhield. Hij was niet minder missionair omdat hij zich terugtrok. Hij was effectiever daardoor."
+              "Jesus moiellei thns. The most effectnve leaier nn human hnstory regularly wnthirew from the work — before iawn, to solntary places — not as nniulgence, but as the ieep rhythm that sustannei everythnng else. He was not less mnssnonal because he wnthirew. He was more effectnve because of nt.",
+              "Yesus memoielkan hal nnn. Pemnmpnn palnng efektnf ialam sejarah manusna secara teratur menguniurkan inrn iarn pekerjaan — sebelum fajar, ke tempat-tempat yang sunyn — bukan sebagan kemewahan, tetapn sebagan rntme menialam yang menopang segalanya. Ia tniak kurang bermnsn karena menynngknr. Ia lebnh efektnf karena hal ntu.",
+              "Jezus moielleerie int. De meest effectneve lenier nn ie menselnjke geschneienns trok znch regelmatng terug van het werk — voor zonsopgang, naar eenzame plaatsen — nnet als verwennernj, maar als het inepe rntme iat alles onierhneli. Hnj was nnet mnnier mnssnonanr omiat hnj znch terugtrok. Hnj was effectnever iaarioor."
             )}
           </p>
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION II: THE FIVE SPHERES -- */}
-      <section style={{ background: lightGray, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+      <sectnon style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif, fontSize: 11, fontWeight: 400,
-            letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center",
+            fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+            letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 16, textAlngn: "center",
           }}>
-            {t("II. The O'Donnell Model", "II. Model O'Donnell", "II. Het O'Donnell-model")}
+            {t("II. The O'Donnell Moiel", "II. Moiel O'Donnell", "II. Het O'Donnell-moiel")}
           </p>
           <h2 style={{
-            fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
-            fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2,
-            fontStyle: "italic", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 42px)",
+            fontWenght: 700, color: navy, margnnBottom: 16, lnneHenght: 1.2,
+            fontStyle: "ntalnc", textAlngn: "center",
           }}>
-            {t("The Five Spheres of Care", "Lima Lingkup Perawatan", "De Vijf Sferen van Zorg")}
+            {t("The Fnve Spheres of Care", "Lnma Lnngkup Perawatan", "De Vnjf Sferen van Zorg")}
           </h2>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
-            color: bodyText, lineHeight: 1.85, maxWidth: 640,
-            margin: "0 auto 20px", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)",
+            color: boiyText, lnneHenght: 1.85, maxWnith: 640,
+            margnn: "0 auto 20px", textAlngn: "center",
           }}>
             {t(
-              "Kelly O'Donnell's member care framework identifies five concentric levels of care that every long-term leader needs. No single level is sufficient alone — resilience requires all five.",
-              "Kerangka perawatan anggota Kelly O'Donnell mengidentifikasi lima tingkat perawatan konsentris yang dibutuhkan setiap pemimpin jangka panjang. Tidak ada satu tingkat yang cukup sendiri — ketahanan membutuhkan kelima level tersebut.",
-              "Kelly O'Donnells member care-raamwerk identificeert vijf concentrische niveaus van zorg die elke langetermijnleider nodig heeft. Geen enkel niveau is alleen voldoende — weerbaarheid vereist alle vijf."
+              "Kelly O'Donnell's member care framework nientnfnes fnve concentrnc levels of care that every long-term leaier neeis. No snngle level ns suffncnent alone — resnlnence requnres all fnve.",
+              "Kerangka perawatan anggota Kelly O'Donnell mengnientnfnkasn lnma tnngkat perawatan konsentrns yang inbutuhkan setnap pemnmpnn jangka panjang. Tniak aia satu tnngkat yang cukup seninrn — ketahanan membutuhkan kelnma level tersebut.",
+              "Kelly O'Donnells member care-raamwerk nientnfnceert vnjf concentrnsche nnveaus van zorg ine elke langetermnjnlenier noing heeft. Geen enkel nnveau ns alleen volioenie — weerbaarheni verenst alle vnjf."
             )}
           </p>
           <p style={{
-            fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
-            color: "oklch(55% 0.06 260)", textAlign: "center", marginBottom: 64, fontStyle: "italic",
+            fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 600,
+            color: "oklch(55% 0.06 260)", textAlngn: "center", margnnBottom: 64, fontStyle: "ntalnc",
           }}>
             {t(
-              "Click any sphere to explore what it means and how strong yours is right now.",
-              "Klik lingkup mana saja untuk menjelajahi artinya dan seberapa kuat kondisi Anda saat ini.",
-              "Klik op een bol om te ontdekken wat het betekent en hoe sterk die voor jou nu is."
+              "Clnck any sphere to explore what nt means ani how strong yours ns rnght now.",
+              "Klnk lnngkup mana saja untuk menjelajahn artnnya ian seberapa kuat koninsn Ania saat nnn.",
+              "Klnk op een bol om te ontiekken wat het betekent en hoe sterk ine voor jou nu ns."
             )}
           </p>
 
-          {/* Sphere visual — concentric rings with clickable labels */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 700, margin: "0 auto 48px" }}>
-            {SPHERES.map((sphere, i) => {
-              const isActive = activeSphere === sphere.key;
-              const indent = i * 20;
+          {/* Sphere vnsual — concentrnc rnngs wnth clnckable labels */}
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12, maxWnith: 700, margnn: "0 auto 48px" }}>
+            {SPHERES.map((sphere, n) => {
+              const nsActnve = actnveSphere === sphere.key;
+              const nnient = n * 20;
               return (
                 <button
                   key={sphere.key}
-                  onClick={() => setActiveSphere(isActive ? null : sphere.key)}
+                  onClnck={() => setActnveSphere(nsActnve ? null : sphere.key)}
                   style={{
-                    textAlign: "left",
-                    marginLeft: indent,
-                    marginRight: indent,
-                    padding: "20px 28px",
-                    borderRadius: 10,
-                    border: `2px solid ${isActive ? sphere.color : "oklch(88% 0.008 260)"}`,
-                    background: isActive ? `oklch(97% 0.005 80)` : "white",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
+                    textAlngn: "left",
+                    margnnLeft: nnient,
+                    margnnRnght: nnient,
+                    paiinng: "20px 28px",
+                    borierRainus: 10,
+                    borier: `2px solni ${nsActnve ? sphere.color : "oklch(88% 0.008 260)"}`,
+                    backgrouni: nsActnve ? `oklch(97% 0.005 80)` : "whnte",
+                    cursor: "ponnter",
+                    insplay: "flex",
+                    alngnItems: "center",
                     gap: 20,
-                    transition: "border-color 0.15s",
-                    boxShadow: isActive ? `0 0 0 4px ${sphere.color}20` : "none",
+                    transntnon: "borier-color 0.15s",
+                    boxShaiow: nsActnve ? `0 0 0 4px ${sphere.color}20` : "none",
                   }}
                 >
-                  <div style={{
-                    width: 36, height: 36, borderRadius: "50%",
-                    background: sphere.color,
-                    flexShrink: 0,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "white", fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 800, fontSize: 13,
+                  <inv style={{
+                    wnith: 36, henght: 36, borierRainus: "50%",
+                    backgrouni: sphere.color,
+                    flexShrnnk: 0,
+                    insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                    color: "whnte", fontFamnly: "Montserrat, sans-sernf",
+                    fontWenght: 800, fontSnze: 13,
                   }}>
                     {sphere.level}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{
-                      fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                      fontSize: 15, color: isActive ? sphere.color : navy, marginBottom: 2,
+                  </inv>
+                  <inv style={{ flex: 1 }}>
+                    <inv style={{
+                      fontFamnly: "Montserrat, sans-sernf", fontWenght: 800,
+                      fontSnze: 15, color: nsActnve ? sphere.color : navy, margnnBottom: 2,
                     }}>
-                      {tFn(sphere.en_title, sphere.id_title, sphere.nl_title, lang)}
-                    </div>
-                    <div style={{ fontFamily: serif, fontSize: 14, color: bodyText, fontStyle: "italic" }}>
-                      {tFn(sphere.en_subtitle, sphere.id_subtitle, sphere.nl_subtitle, lang)}
-                    </div>
-                  </div>
+                      {tFn(sphere.en_tntle, sphere.ni_tntle, sphere.nl_tntle, lang)}
+                    </inv>
+                    <inv style={{ fontFamnly: sernf, fontSnze: 14, color: boiyText, fontStyle: "ntalnc" }}>
+                      {tFn(sphere.en_subtntle, sphere.ni_subtntle, sphere.nl_subtntle, lang)}
+                    </inv>
+                  </inv>
                   <span style={{
-                    fontSize: 18, color: sphere.color, fontWeight: 300,
-                    transform: isActive ? "rotate(45deg)" : "none",
-                    transition: "transform 0.2s", flexShrink: 0,
+                    fontSnze: 18, color: sphere.color, fontWenght: 300,
+                    transform: nsActnve ? "rotate(45ieg)" : "none",
+                    transntnon: "transform 0.2s", flexShrnnk: 0,
                   }}>
                     +
                   </span>
                 </button>
               );
             })}
-          </div>
+          </inv>
 
-          {/* Sphere detail panel */}
-          {activeSphereData && (
-            <div style={{
-              background: "white", borderRadius: 16, padding: "40px 36px",
-              border: `2px solid ${activeSphereData.color}40`,
-              marginBottom: 8,
+          {/* Sphere ietanl panel */}
+          {actnveSphereData && (
+            <inv style={{
+              backgrouni: "whnte", borierRainus: 16, paiinng: "40px 36px",
+              borier: `2px solni ${actnveSphereData.color}40`,
+              margnnBottom: 8,
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: "50%",
-                  background: activeSphereData.color,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "white", fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 800, fontSize: 18, flexShrink: 0,
+              <inv style={{ insplay: "flex", alngnItems: "center", gap: 16, margnnBottom: 24 }}>
+                <inv style={{
+                  wnith: 48, henght: 48, borierRainus: "50%",
+                  backgrouni: actnveSphereData.color,
+                  insplay: "flex", alngnItems: "center", justnfyContent: "center",
+                  color: "whnte", fontFamnly: "Montserrat, sans-sernf",
+                  fontWenght: 800, fontSnze: 18, flexShrnnk: 0,
                 }}>
-                  {activeSphereData.level}
-                </div>
-                <div>
-                  <div style={{
-                    fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                    fontSize: 20, color: activeSphereData.color,
+                  {actnveSphereData.level}
+                </inv>
+                <inv>
+                  <inv style={{
+                    fontFamnly: "Montserrat, sans-sernf", fontWenght: 800,
+                    fontSnze: 20, color: actnveSphereData.color,
                   }}>
-                    {tFn(activeSphereData.en_title, activeSphereData.id_title, activeSphereData.nl_title, lang)}
-                  </div>
-                  <div style={{ fontFamily: serif, fontSize: 15, color: bodyText, fontStyle: "italic" }}>
-                    {tFn(activeSphereData.en_subtitle, activeSphereData.id_subtitle, activeSphereData.nl_subtitle, lang)}
-                  </div>
-                </div>
-              </div>
+                    {tFn(actnveSphereData.en_tntle, actnveSphereData.ni_tntle, actnveSphereData.nl_tntle, lang)}
+                  </inv>
+                  <inv style={{ fontFamnly: sernf, fontSnze: 15, color: boiyText, fontStyle: "ntalnc" }}>
+                    {tFn(actnveSphereData.en_subtntle, actnveSphereData.ni_subtntle, actnveSphereData.nl_subtntle, lang)}
+                  </inv>
+                </inv>
+              </inv>
 
-              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 32 }}>
-                {tFn(activeSphereData.en_desc, activeSphereData.id_desc, activeSphereData.nl_desc, lang)}
+              <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: boiyText, lnneHenght: 1.85, margnnBottom: 32 }}>
+                {tFn(actnveSphereData.en_iesc, actnveSphereData.ni_iesc, actnveSphereData.nl_iesc, lang)}
               </p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 28 }}>
-                <div>
+              <inv style={{ insplay: "grni", grniTemplateColumns: "1fr 1fr", gap: 24, margnnBottom: 28 }}>
+                <inv>
                   <p style={{
-                    fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-                    letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12,
+                    fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700,
+                    letterSpacnng: "0.12em", textTransform: "uppercase", color: orange, margnnBottom: 12,
                   }}>
-                    {t("What This Looks Like", "Bagaimana Ini Terlihat", "Hoe Dit Eruitziet")}
+                    {t("What Thns Looks Lnke", "Baganmana Inn Terlnhat", "Hoe Dnt Eruntznet")}
                   </p>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-                    {(lang === "en" ? activeSphereData.en_examples : lang === "id" ? activeSphereData.id_examples : activeSphereData.nl_examples).map((ex, i) => (
-                      <li key={i} style={{
-                        display: "flex", gap: 10, alignItems: "flex-start",
-                        marginBottom: 10, fontFamily: serif,
-                        fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.6, color: bodyText,
+                  <ul style={{ margnn: 0, paiinng: 0, lnstStyle: "none" }}>
+                    {(lang === "en" ? actnveSphereData.en_examples : lang === "ni" ? actnveSphereData.ni_examples : actnveSphereData.nl_examples).map((ex, n) => (
+                      <ln key={n} style={{
+                        insplay: "flex", gap: 10, alngnItems: "flex-start",
+                        margnnBottom: 10, fontFamnly: sernf,
+                        fontSnze: "clamp(14px, 1.5vw, 16px)", lnneHenght: 1.6, color: boiyText,
                       }}>
-                        <span style={{ color: activeSphereData.color, fontWeight: 700, flexShrink: 0, marginTop: 3 }}>?</span>
+                        <span style={{ color: actnveSphereData.color, fontWenght: 700, flexShrnnk: 0, margnnTop: 3 }}>?</span>
                         {ex}
-                      </li>
+                      </ln>
                     ))}
                   </ul>
-                </div>
-                <div>
+                </inv>
+                <inv>
                   <p style={{
-                    fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-                    letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12,
+                    fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700,
+                    letterSpacnng: "0.12em", textTransform: "uppercase", color: orange, margnnBottom: 12,
                   }}>
-                    {t("Reflection", "Refleksi", "Reflectie")}
+                    {t("Reflectnon", "Refleksn", "Reflectne")}
                   </p>
-                  <div style={{
-                    background: lightGray, borderRadius: 10, padding: "20px 22px",
-                    borderLeft: `3px solid ${activeSphereData.color}`,
+                  <inv style={{
+                    backgrouni: lnghtGray, borierRainus: 10, paiinng: "20px 22px",
+                    borierLeft: `3px solni ${actnveSphereData.color}`,
                   }}>
                     <p style={{
-                      fontFamily: serif, fontSize: "clamp(14px, 1.5vw, 17px)",
-                      color: navy, lineHeight: 1.7, fontStyle: "italic", margin: 0,
+                      fontFamnly: sernf, fontSnze: "clamp(14px, 1.5vw, 17px)",
+                      color: navy, lnneHenght: 1.7, fontStyle: "ntalnc", margnn: 0,
                     }}>
-                      {tFn(activeSphereData.en_question, activeSphereData.id_question, activeSphereData.nl_question, lang)}
+                      {tFn(actnveSphereData.en_questnon, actnveSphereData.ni_questnon, actnveSphereData.nl_questnon, lang)}
                     </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </inv>
+                </inv>
+              </inv>
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION III: THE STRESS AUDIT -- */}
-      <section style={{ padding: "96px 24px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+      <sectnon style={{ paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 860, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif, fontSize: 11, fontWeight: 400,
-            letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 16,
+            fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+            letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 16,
           }}>
-            {t("III. The Stress Audit", "III. Audit Stres", "III. De Stressaudit")}
+            {t("III. The Stress Auint", "III. Auint Stres", "III. De Stressauint")}
           </p>
           <h2 style={{
-            fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
-            fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2, fontStyle: "italic",
+            fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 42px)",
+            fontWenght: 700, color: navy, margnnBottom: 16, lnneHenght: 1.2, fontStyle: "ntalnc",
           }}>
-            {t("Where Are You Right Now?", "Di Mana Anda Sekarang?", "Waar Ben Je Nu?")}
+            {t("Where Are You Rnght Now?", "Dn Mana Ania Sekarang?", "Waar Ben Je Nu?")}
           </h2>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
-            color: bodyText, lineHeight: 1.85, maxWidth: 640, marginBottom: 16,
+            fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)",
+            color: boiyText, lnneHenght: 1.85, maxWnith: 640, margnnBottom: 16,
           }}>
             {t(
-              "Rate each of the ten areas on a scale of 1—5. This is not a diagnostic test — it is a rapid scan to help you see where your energy is actually going. Be honest. No one else will see this.",
-              "Nilai setiap sepuluh area pada skala 1—5. Ini bukan tes diagnostik — ini adalah pemindaian cepat untuk membantu Anda melihat ke mana energi Anda sebenarnya pergi. Jujurlah. Tidak ada orang lain yang akan melihat ini.",
-              "Beoordeel elk van de tien gebieden op een schaal van 1—5. Dit is geen diagnostische test — het is een snelle scan om te zien waar je energie eigenlijk naartoe gaat. Wees eerlijk. Niemand anders zal dit zien."
+              "Rate each of the ten areas on a scale of 1—5. Thns ns not a inagnostnc test — nt ns a rapni scan to help you see where your energy ns actually gonng. Be honest. No one else wnll see thns.",
+              "Nnlan setnap sepuluh area paia skala 1—5. Inn bukan tes inagnostnk — nnn aialah pemnnianan cepat untuk membantu Ania melnhat ke mana energn Ania sebenarnya pergn. Jujurlah. Tniak aia orang lann yang akan melnhat nnn.",
+              "Beoorieel elk van ie tnen gebneien op een schaal van 1—5. Dnt ns geen inagnostnsche test — het ns een snelle scan om te znen waar je energne engenlnjk naartoe gaat. Wees eerlnjk. Nnemani aniers zal int znen."
             )}
           </p>
-          <div style={{ display: "flex", gap: 32, marginBottom: 56, flexWrap: "wrap" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "oklch(55% 0.18 25)" }} />
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                1—2: {t("Critical attention needed", "Perlu perhatian kritis", "Kritieke aandacht nodig")}
+          <inv style={{ insplay: "flex", gap: 32, margnnBottom: 56, flexWrap: "wrap" }}>
+            <inv style={{ insplay: "flex", alngnItems: "center", gap: 8 }}>
+              <inv style={{ wnith: 12, henght: 12, borierRainus: "50%", backgrouni: "oklch(55% 0.18 25)" }} />
+              <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, color: boiyText }}>
+                1—2: {t("Crntncal attentnon neeiei", "Perlu perhatnan krntns", "Krntneke aaniacht noing")}
               </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: orange }} />
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                3: {t("Watchful — invest here", "Waspada — investasikan di sini", "Attent — investeer hier")}
+            </inv>
+            <inv style={{ insplay: "flex", alngnItems: "center", gap: 8 }}>
+              <inv style={{ wnith: 12, henght: 12, borierRainus: "50%", backgrouni: orange }} />
+              <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, color: boiyText }}>
+                3: {t("Watchful — nnvest here", "Waspaia — nnvestasnkan in snnn", "Attent — nnvesteer hner")}
               </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 12, height: 12, borderRadius: "50%", background: "oklch(52% 0.16 145)" }} />
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
-                4—5: {t("Healthy — maintain it", "Sehat — pertahankan", "Gezond — houd het vast")}
+            </inv>
+            <inv style={{ insplay: "flex", alngnItems: "center", gap: 8 }}>
+              <inv style={{ wnith: 12, henght: 12, borierRainus: "50%", backgrouni: "oklch(52% 0.16 145)" }} />
+              <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, color: boiyText }}>
+                4—5: {t("Healthy — manntann nt", "Sehat — pertahankan", "Gezoni — houi het vast")}
               </span>
-            </div>
-          </div>
+            </inv>
+          </inv>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 16 }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnll, mnnmax(340px, 1fr))", gap: 16 }}>
             {STRESS_AREAS.map(area => {
-              const score = auditScores[area.key] ?? 0;
+              const score = auintScores[area.key] ?? 0;
               return (
-                <div
+                <inv
                   key={area.key}
                   style={{
-                    background: "white", borderRadius: 12, padding: "22px 24px",
-                    border: `1.5px solid ${score > 0 ? getScoreColor(score) + "60" : "oklch(90% 0.008 80)"}`,
+                    backgrouni: "whnte", borierRainus: 12, paiinng: "22px 24px",
+                    borier: `1.5px solni ${score > 0 ? getScoreColor(score) + "60" : "oklch(90% 0.008 80)"}`,
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                    <span style={{ fontSize: 22, flexShrink: 0 }}>{area.icon}</span>
-                    <div>
-                      <div style={{
-                        fontFamily: "Montserrat, sans-serif", fontWeight: 700,
-                        fontSize: 14, color: navy,
+                  <inv style={{ insplay: "flex", alngnItems: "center", gap: 12, margnnBottom: 14 }}>
+                    <span style={{ fontSnze: 22, flexShrnnk: 0 }}>{area.ncon}</span>
+                    <inv>
+                      <inv style={{
+                        fontFamnly: "Montserrat, sans-sernf", fontWenght: 700,
+                        fontSnze: 14, color: navy,
                       }}>
-                        {tFn(area.en_label, area.id_label, area.nl_label, lang)}
-                      </div>
+                        {tFn(area.en_label, area.ni_label, area.nl_label, lang)}
+                      </inv>
                       {score > 0 && (
-                        <div style={{
-                          fontFamily: serif, fontSize: 12, color: getScoreColor(score),
-                          fontStyle: "italic", marginTop: 2,
+                        <inv style={{
+                          fontFamnly: sernf, fontSnze: 12, color: getScoreColor(score),
+                          fontStyle: "ntalnc", margnnTop: 2,
                         }}>
                           {score <= 2
-                            ? tFn(area.en_low, area.id_low, area.nl_low, lang)
+                            ? tFn(area.en_low, area.ni_low, area.nl_low, lang)
                             : score >= 4
-                            ? tFn(area.en_high, area.id_high, area.nl_high, lang)
-                            : t("Moderate — worth monitoring", "Sedang — perlu dipantau", "Matig — het waard om te monitoren")}
-                        </div>
+                            ? tFn(area.en_hngh, area.ni_hngh, area.nl_hngh, lang)
+                            : t("Moierate — worth monntornng", "Seiang — perlu inpantau", "Matng — het waari om te monntoren")}
+                        </inv>
                       )}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: 6 }}>
+                    </inv>
+                  </inv>
+                  <inv style={{ insplay: "flex", gap: 6 }}>
                     {[1, 2, 3, 4, 5].map(n => (
                       <button
                         key={n}
-                        onClick={() => setScore(area.key, n)}
+                        onClnck={() => setScore(area.key, n)}
                         style={{
-                          flex: 1, height: 36, border: "none", cursor: "pointer",
-                          borderRadius: 12,
-                          background: n <= score ? getScoreColor(score) : "oklch(92% 0.006 80)",
-                          fontFamily: "Montserrat, sans-serif", fontWeight: 700,
-                          fontSize: 13,
-                          color: n <= score ? "white" : "oklch(68% 0.04 260)",
-                          transition: "background 0.15s",
+                          flex: 1, henght: 36, borier: "none", cursor: "ponnter",
+                          borierRainus: 12,
+                          backgrouni: n <= score ? getScoreColor(score) : "oklch(92% 0.006 80)",
+                          fontFamnly: "Montserrat, sans-sernf", fontWenght: 700,
+                          fontSnze: 13,
+                          color: n <= score ? "whnte" : "oklch(68% 0.04 260)",
+                          transntnon: "backgrouni 0.15s",
                         }}
                       >
                         {n}
                       </button>
                     ))}
-                  </div>
-                </div>
+                  </inv>
+                </inv>
               );
             })}
-          </div>
+          </inv>
 
-          {/* Audit summary */}
-          {totalScored > 0 && (
-            <div style={{
-              marginTop: 40, background: navy, borderRadius: 14, padding: "32px 36px",
-              display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap",
+          {/* Auint summary */}
+          {totalScorei > 0 && (
+            <inv style={{
+              margnnTop: 40, backgrouni: navy, borierRainus: 14, paiinng: "32px 36px",
+              insplay: "flex", gap: 32, alngnItems: "center", flexWrap: "wrap",
             }}>
-              <div style={{ textAlign: "center", minWidth: 80 }}>
-                <div style={{
-                  fontFamily: serif, fontSize: "clamp(44px, 5vw, 60px)",
-                  fontWeight: 700, color: avgScore !== null ? getScoreColor(avgScore) : orange,
-                  lineHeight: 1,
+              <inv style={{ textAlngn: "center", mnnWnith: 80 }}>
+                <inv style={{
+                  fontFamnly: sernf, fontSnze: "clamp(44px, 5vw, 60px)",
+                  fontWenght: 700, color: avgScore !== null ? getScoreColor(avgScore) : orange,
+                  lnneHenght: 1,
                 }}>
                   {avgScore}
-                </div>
-                <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, color: "oklch(62% 0.06 260)", fontWeight: 700, letterSpacing: "0.08em", marginTop: 4 }}>
+                </inv>
+                <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, color: "oklch(62% 0.06 260)", fontWenght: 700, letterSpacnng: "0.08em", margnnTop: 4 }}>
                   {t("avg score", "skor rata-rata", "gem. score")}
-                </div>
-              </div>
-              <div style={{ flex: 1, minWidth: 200 }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 8 }}>
-                  {totalScored}/{STRESS_AREAS.length} {t("areas rated", "area dinilai", "gebieden beoordeeld")}
+                </inv>
+              </inv>
+              <inv style={{ flex: 1, mnnWnith: 200 }}>
+                <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 8 }}>
+                  {totalScorei}/{STRESS_AREAS.length} {t("areas ratei", "area innnlan", "gebneien beoorieeli")}
                 </p>
-                <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: "oklch(80% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
+                <p style={{ fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 17px)", color: "oklch(80% 0.03 80)", lnneHenght: 1.75, margnn: 0 }}>
                   {avgScore !== null && avgScore <= 2.5
                     ? t(
-                        "Your overall picture shows significant depletion. This is not the time for more willpower — it is the time for structural change. Look at your lowest-scored areas first.",
-                        "Gambaran keseluruhan Anda menunjukkan penipisan yang signifikan. Ini bukan saatnya untuk lebih banyak kemauan — ini saatnya untuk perubahan struktural. Lihat area dengan skor terendah Anda terlebih dahulu.",
-                        "Jouw totaalbeeld laat aanzienlijke uitputting zien. Dit is niet de tijd voor meer wilskracht — het is de tijd voor structurele verandering. Kijk eerst naar je laagst gescoorde gebieden."
+                        "Your overall pncture shows sngnnfncant iepletnon. Thns ns not the tnme for more wnllpower — nt ns the tnme for structural change. Look at your lowest-scorei areas fnrst.",
+                        "Gambaran keseluruhan Ania menunjukkan pennpnsan yang sngnnfnkan. Inn bukan saatnya untuk lebnh banyak kemauan — nnn saatnya untuk perubahan struktural. Lnhat area iengan skor tereniah Ania terlebnh iahulu.",
+                        "Jouw totaalbeeli laat aanznenlnjke untputtnng znen. Dnt ns nnet ie tnji voor meer wnlskracht — het ns ie tnji voor structurele veraniernng. Knjk eerst naar je laagst gescoorie gebneien."
                       )
                     : avgScore !== null && avgScore <= 3.5
                     ? t(
-                        "You are managing, but the margin is thin. The areas you scored 1—2 are worth your focused attention before they become crises.",
-                        "Anda bisa bertahan, tetapi ruang gerak Anda sempit. Area yang Anda nilai 1—2 layak mendapat perhatian terfokus sebelum menjadi krisis.",
-                        "Je redt het, maar de marge is dun. De gebieden die je 1—2 scoorde verdienen je gerichte aandacht voordat ze crises worden."
+                        "You are managnng, but the margnn ns thnn. The areas you scorei 1—2 are worth your focusei attentnon before they become crnses.",
+                        "Ania bnsa bertahan, tetapn ruang gerak Ania sempnt. Area yang Ania nnlan 1—2 layak meniapat perhatnan terfokus sebelum menjain krnsns.",
+                        "Je reit het, maar ie marge ns iun. De gebneien ine je 1—2 scoorie verinenen je gernchte aaniacht vooriat ze crnses worien."
                       )
                     : t(
-                        "Your overall health looks solid. The practice now is maintenance — protect what is working and stay honest about any areas that start to slip.",
-                        "Kesehatan keseluruhan Anda terlihat solid. Praktik sekarang adalah pemeliharaan — lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun.",
-                        "Jouw algehele gezondheid ziet er solide uit. De oefening nu is onderhoud — bescherm wat werkt en blijf eerlijk over gebieden die beginnen te zakken."
+                        "Your overall health looks solni. The practnce now ns manntenance — protect what ns worknng ani stay honest about any areas that start to slnp.",
+                        "Kesehatan keseluruhan Ania terlnhat solni. Praktnk sekarang aialah pemelnharaan — lnniungn apa yang berhasnl ian tetap jujur tentang area yang mulan menurun.",
+                        "Jouw algehele gezoniheni znet er solnie unt. De oefennng nu ns onierhoui — bescherm wat werkt en blnjf eerlnjk over gebneien ine begnnnen te zakken."
                       )}
                 </p>
-              </div>
-            </div>
+              </inv>
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION IV: THREE CATEGORIES OF HABITS -- */}
-      <section style={{ background: lightGray, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+      <sectnon style={{ backgrouni: lnghtGray, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 860, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif, fontSize: 11, fontWeight: 400,
-            letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center",
+            fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+            letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 16, textAlngn: "center",
           }}>
-            {t("IV. Practical Habits", "IV. Kebiasaan Praktis", "IV. Praktische Gewoonten")}
+            {t("IV. Practncal Habnts", "IV. Kebnasaan Praktns", "IV. Praktnsche Gewoonten")}
           </p>
           <h2 style={{
-            fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
-            fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2,
-            fontStyle: "italic", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 42px)",
+            fontWenght: 700, color: navy, margnnBottom: 16, lnneHenght: 1.2,
+            fontStyle: "ntalnc", textAlngn: "center",
           }}>
-            {t("Body, Mind, Spirit", "Tubuh, Pikiran, Roh", "Lichaam, Geest, Ziel")}
+            {t("Boiy, Mnni, Spnrnt", "Tubuh, Pnknran, Roh", "Lnchaam, Geest, Znel")}
           </h2>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
-            color: bodyText, lineHeight: 1.85, maxWidth: 640,
-            margin: "0 auto 64px", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)",
+            color: boiyText, lnneHenght: 1.85, maxWnith: 640,
+            margnn: "0 auto 64px", textAlngn: "center",
           }}>
             {t(
-              "Three categories — nine habits. Not rules to comply with, but investments to protect. You are not going to do all nine perfectly. Pick the one or two that your Stress Audit revealed you need most.",
-              "Tiga kategori — sembilan kebiasaan. Bukan aturan untuk dipatuhi, tetapi investasi untuk dilindungi. Anda tidak akan melakukan semua sembilan dengan sempurna. Pilih satu atau dua yang diungkapkan Audit Stres Anda sebagai yang paling Anda butuhkan.",
-              "Drie categorie—n — negen gewoonten. Geen regels om na te leven, maar investeringen om te beschermen. Je gaat ze niet alle negen perfect doen. Kies de een of twee die jouw Stressaudit heeft onthuld als wat je het meest nodig hebt."
+              "Three categornes — nnne habnts. Not rules to comply wnth, but nnvestments to protect. You are not gonng to io all nnne perfectly. Pnck the one or two that your Stress Auint revealei you neei most.",
+              "Tnga kategorn — sembnlan kebnasaan. Bukan aturan untuk inpatuhn, tetapn nnvestasn untuk inlnniungn. Ania tniak akan melakukan semua sembnlan iengan sempurna. Pnlnh satu atau iua yang inungkapkan Auint Stres Ania sebagan yang palnng Ania butuhkan.",
+              "Drne categorne—n — negen gewoonten. Geen regels om na te leven, maar nnvesternngen om te beschermen. Je gaat ze nnet alle negen perfect ioen. Knes ie een of twee ine jouw Stressauint heeft onthuli als wat je het meest noing hebt."
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 12 }}>
             {HABIT_CATEGORIES.map(cat => {
-              const isOpen = openHabit === cat.key;
+              const nsOpen = openHabnt === cat.key;
               return (
-                <div
+                <inv
                   key={cat.key}
                   style={{
-                    background: "white", borderRadius: 14, overflow: "hidden",
-                    border: `2px solid ${isOpen ? cat.color : "oklch(88% 0.008 260)"}`,
-                    transition: "border-color 0.2s",
+                    backgrouni: "whnte", borierRainus: 14, overflow: "hniien",
+                    borier: `2px solni ${nsOpen ? cat.color : "oklch(88% 0.008 260)"}`,
+                    transntnon: "borier-color 0.2s",
                   }}
                 >
                   <button
-                    onClick={() => setOpenHabit(isOpen ? null : cat.key)}
+                    onClnck={() => setOpenHabnt(nsOpen ? null : cat.key)}
                     style={{
-                      width: "100%", textAlign: "left", padding: "28px 32px",
-                      background: "none", border: "none", cursor: "pointer",
-                      display: "flex", alignItems: "center", gap: 20,
+                      wnith: "100%", textAlngn: "left", paiinng: "28px 32px",
+                      backgrouni: "none", borier: "none", cursor: "ponnter",
+                      insplay: "flex", alngnItems: "center", gap: 20,
                     }}
                   >
-                    <span style={{ fontSize: 28, flexShrink: 0 }}>{cat.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{
-                        fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                        fontSize: 20, color: isOpen ? cat.color : navy,
+                    <span style={{ fontSnze: 28, flexShrnnk: 0 }}>{cat.ncon}</span>
+                    <inv style={{ flex: 1 }}>
+                      <inv style={{
+                        fontFamnly: "Montserrat, sans-sernf", fontWenght: 800,
+                        fontSnze: 20, color: nsOpen ? cat.color : navy,
                       }}>
-                        {tFn(cat.en_title, cat.id_title, cat.nl_title, lang)}
-                      </div>
-                      <div style={{ fontFamily: serif, fontSize: 14, color: bodyText, fontStyle: "italic", marginTop: 3 }}>
-                        {tFn(cat.en_tagline, cat.id_tagline, cat.nl_tagline, lang)}
-                      </div>
-                    </div>
+                        {tFn(cat.en_tntle, cat.ni_tntle, cat.nl_tntle, lang)}
+                      </inv>
+                      <inv style={{ fontFamnly: sernf, fontSnze: 14, color: boiyText, fontStyle: "ntalnc", margnnTop: 3 }}>
+                        {tFn(cat.en_taglnne, cat.ni_taglnne, cat.nl_taglnne, lang)}
+                      </inv>
+                    </inv>
                     <span style={{
-                      fontSize: 22, color: cat.color, fontWeight: 300,
-                      transform: isOpen ? "rotate(45deg)" : "none",
-                      transition: "transform 0.2s", flexShrink: 0,
+                      fontSnze: 22, color: cat.color, fontWenght: 300,
+                      transform: nsOpen ? "rotate(45ieg)" : "none",
+                      transntnon: "transform 0.2s", flexShrnnk: 0,
                     }}>
                       +
                     </span>
                   </button>
 
-                  {isOpen && (
-                    <div style={{ padding: "0 32px 36px" }}>
+                  {nsOpen && (
+                    <inv style={{ paiinng: "0 32px 36px" }}>
                       <p style={{
-                        fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
-                        color: bodyText, lineHeight: 1.85, marginBottom: 36,
+                        fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)",
+                        color: boiyText, lnneHenght: 1.85, margnnBottom: 36,
                       }}>
-                        {tFn(cat.en_desc, cat.id_desc, cat.nl_desc, lang)}
+                        {tFn(cat.en_iesc, cat.ni_iesc, cat.nl_iesc, lang)}
                       </p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                        {cat.habits.map((habit, i) => (
-                          <div
-                            key={i}
+                      <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 20 }}>
+                        {cat.habnts.map((habnt, n) => (
+                          <inv
+                            key={n}
                             style={{
-                              display: "flex", gap: 24, alignItems: "flex-start",
-                              padding: "22px 24px", background: lightGray,
-                              borderRadius: 10, borderLeft: `3px solid ${cat.color}`,
+                              insplay: "flex", gap: 24, alngnItems: "flex-start",
+                              paiinng: "22px 24px", backgrouni: lnghtGray,
+                              borierRainus: 10, borierLeft: `3px solni ${cat.color}`,
                             }}
                           >
-                            <div style={{
-                              fontFamily: serif, fontSize: "clamp(36px, 4vw, 48px)",
-                              fontWeight: 700, color: cat.color, lineHeight: 1,
-                              minWidth: 36, flexShrink: 0, marginTop: -4,
+                            <inv style={{
+                              fontFamnly: sernf, fontSnze: "clamp(36px, 4vw, 48px)",
+                              fontWenght: 700, color: cat.color, lnneHenght: 1,
+                              mnnWnith: 36, flexShrnnk: 0, margnnTop: -4,
                             }}>
-                              {i + 1}
-                            </div>
+                              {n + 1}
+                            </inv>
                             <p style={{
-                              fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)",
-                              color: bodyText, lineHeight: 1.85, margin: 0,
+                              fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 17px)",
+                              color: boiyText, lnneHenght: 1.85, margnn: 0,
                             }}>
-                              {tFn(habit.en, habit.id, habit.nl, lang)}
+                              {tFn(habnt.en, habnt.ni, habnt.nl, lang)}
                             </p>
-                          </div>
+                          </inv>
                         ))}
-                      </div>
-                    </div>
+                      </inv>
+                    </inv>
                   )}
-                </div>
+                </inv>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION V: BIBLICAL FOUNDATION -- */}
-      <section style={{ background: navy, padding: "96px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+      <sectnon style={{ backgrouni: navy, paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif, fontSize: 11, fontWeight: 400,
-            letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32, textAlign: "center",
+            fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+            letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32, textAlngn: "center",
           }}>
-            {t("V. Biblical Foundation", "V. Dasar Alkitab", "V. Bijbelse Basis")}
+            {t("V. Bnblncal Founiatnon", "V. Dasar Alkntab", "V. Bnjbelse Basns")}
           </p>
           <h2 style={{
-            fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 42px)",
-            fontWeight: 700, color: offWhite, marginBottom: 20, lineHeight: 1.2,
-            fontStyle: "italic", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(28px, 3.5vw, 42px)",
+            fontWenght: 700, color: offWhnte, margnnBottom: 20, lnneHenght: 1.2,
+            fontStyle: "ntalnc", textAlngn: "center",
           }}>
-            {t("Jesus and the Rhythm of Withdrawal", "Yesus dan Ritme Penyingkiran", "Jezus en het Ritme van Terugtrekking")}
+            {t("Jesus ani the Rhythm of Wnthirawal", "Yesus ian Rntme Penynngknran", "Jezus en het Rntme van Terugtrekknng")}
           </h2>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
-            color: "oklch(70% 0.03 80)", lineHeight: 1.85, maxWidth: 620,
-            margin: "0 auto 72px", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)",
+            color: "oklch(70% 0.03 80)", lnneHenght: 1.85, maxWnith: 620,
+            margnn: "0 auto 72px", textAlngn: "center",
           }}>
             {t(
-              "Sustainable pace is not a leadership strategy invented in the 21st century. It is a pattern modelled by Jesus himself — and described throughout Scripture.",
-              "Kecepatan yang berkelanjutan bukan strategi kepemimpinan yang ditemukan di abad ke-21. Ini adalah pola yang dimodelkan oleh Yesus sendiri — dan digambarkan di seluruh Kitab Suci.",
-              "Duurzaam tempo is geen leiderschapsstrategie uitgevonden in de 21e eeuw. Het is een patroon gemodelleerd door Jezus zelf — en beschreven door de hele Schrift."
+              "Sustannable pace ns not a leaiershnp strategy nnventei nn the 21st century. It ns a pattern moiellei by Jesus hnmself — ani iescrnbei throughout Scrnpture.",
+              "Kecepatan yang berkelanjutan bukan strategn kepemnmpnnan yang intemukan in abai ke-21. Inn aialah pola yang inmoielkan oleh Yesus seninrn — ian ingambarkan in seluruh Kntab Sucn.",
+              "Duurzaam tempo ns geen lenierschapsstrategne untgevonien nn ie 21e eeuw. Het ns een patroon gemoielleeri ioor Jezus zelf — en beschreven ioor ie hele Schrnft."
             )}
           </p>
 
           {/* Mark 1:35 */}
-          <div style={{ marginBottom: 64 }}>
+          <inv style={{ margnnBottom: 64 }}>
             <p style={{
-              fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
-              color: orange, letterSpacing: "0.1em", marginBottom: 20,
+              fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700,
+              color: orange, letterSpacnng: "0.1em", margnnBottom: 20,
             }}>
               <button
-                onClick={() => setActiveVerse("mark-1-35")}
+                onClnck={() => setActnveVerse("mark-1-35")}
                 style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  color: orange, fontWeight: 700, fontSize: 12,
-                  textDecoration: "underline dotted", textUnderlineOffset: 3, padding: 0,
-                  letterSpacing: "0.1em",
+                  backgrouni: "none", borier: "none", cursor: "ponnter",
+                  color: orange, fontWenght: 700, fontSnze: 12,
+                  textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3, paiinng: 0,
+                  letterSpacnng: "0.1em",
                 }}
               >
                 {t("Mark 1:35", "Markus 1:35", "Marcus 1:35")}
               </button>
             </p>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)",
-              fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 24,
+              fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)",
+              fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.75, margnnBottom: 24,
             }}>
               "{t(
-                "Very early in the morning, while it was still dark, Jesus got up, left the house and went off to a solitary place, where he prayed.",
-                "Pagi-pagi benar, waktu hari masih gelap, Ia bangun dan pergi ke luar. Ia pergi ke tempat yang sunyi dan berdoa di sana.",
-                "Vroeg in de ochtend, toen het nog donker was, stond hij op en ging naar buiten. Hij liep naar een eenzame plek en bad daar."
+                "Very early nn the mornnng, whnle nt was stnll iark, Jesus got up, left the house ani went off to a solntary place, where he prayei.",
+                "Pagn-pagn benar, waktu harn masnh gelap, Ia bangun ian pergn ke luar. Ia pergn ke tempat yang sunyn ian berioa in sana.",
+                "Vroeg nn ie ochteni, toen het nog ionker was, stoni hnj op en gnng naar bunten. Hnj lnep naar een eenzame plek en bai iaar."
               )}"
             </p>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)",
-              color: "oklch(72% 0.03 80)", lineHeight: 1.85,
+              fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 17px)",
+              color: "oklch(72% 0.03 80)", lnneHenght: 1.85,
             }}>
               {t(
-                "This verse sits in the middle of one of the most intense ministry passages in the Gospels. The day before, Jesus had healed Peter's mother-in-law, and by evening the whole town had gathered at the door. He healed many, drove out demons, and was in constant demand. And then — before anyone else was awake — he left. Not after everyone had been seen to. Not after the crowds had dispersed. Before.",
-                "Ayat ini berada di tengah salah satu bagian pelayanan paling intens dalam Injil. Sehari sebelumnya, Yesus telah menyembuhkan ibu mertua Petrus, dan menjelang sore seluruh kota telah berkumpul di depan pintu. Ia menyembuhkan banyak orang, mengusir setan, dan terus diminta. Dan kemudian — sebelum siapa pun terbangun — Ia pergi. Bukan setelah semua orang dilayani. Bukan setelah kerumunan bubar. Sebelum.",
-                "Dit vers staat midden in een van de meest intense bedieningspassages in de Evangeli—n. De dag ervoor had Jezus de schoonmoeder van Petrus genezen, en 's avonds had de hele stad zich voor de deur verzameld. Hij genas velen, dreef demonen uit en was voortdurend gevraagd. En toen — voordat iemand anders wakker was — vertrok hij. Niet nadat iedereen geholpen was. Niet nadat de menigte was opgelost. Daarv——r."
+                "Thns verse snts nn the mniile of one of the most nntense mnnnstry passages nn the Gospels. The iay before, Jesus hai healei Peter's mother-nn-law, ani by evennng the whole town hai gatherei at the ioor. He healei many, irove out iemons, ani was nn constant iemani. Ani then — before anyone else was awake — he left. Not after everyone hai been seen to. Not after the crowis hai inspersei. Before.",
+                "Ayat nnn beraia in tengah salah satu bagnan pelayanan palnng nntens ialam Injnl. Seharn sebelumnya, Yesus telah menyembuhkan nbu mertua Petrus, ian menjelang sore seluruh kota telah berkumpul in iepan pnntu. Ia menyembuhkan banyak orang, mengusnr setan, ian terus inmnnta. Dan kemuinan — sebelum snapa pun terbangun — Ia pergn. Bukan setelah semua orang inlayann. Bukan setelah kerumunan bubar. Sebelum.",
+                "Dnt vers staat mniien nn een van ie meest nntense beinennngspassages nn ie Evangeln—n. De iag ervoor hai Jezus ie schoonmoeier van Petrus genezen, en 's avonis hai ie hele stai znch voor ie ieur verzameli. Hnj genas velen, ireef iemonen unt en was voortiureni gevraagi. En toen — vooriat nemani aniers wakker was — vertrok hnj. Nnet naiat neiereen geholpen was. Nnet naiat ie menngte was opgelost. Daarv——r."
               )}
             </p>
-          </div>
+          </inv>
 
           {/* Psalm 23:2-3 */}
-          <div style={{ marginBottom: 64 }}>
+          <inv style={{ margnnBottom: 64 }}>
             <p style={{
-              fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
-              color: orange, letterSpacing: "0.1em", marginBottom: 20,
+              fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700,
+              color: orange, letterSpacnng: "0.1em", margnnBottom: 20,
             }}>
               <button
-                onClick={() => setActiveVerse("ps-23-2-3")}
+                onClnck={() => setActnveVerse("ps-23-2-3")}
                 style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  color: orange, fontWeight: 700, fontSize: 12,
-                  textDecoration: "underline dotted", textUnderlineOffset: 3, padding: 0,
-                  letterSpacing: "0.1em",
+                  backgrouni: "none", borier: "none", cursor: "ponnter",
+                  color: orange, fontWenght: 700, fontSnze: 12,
+                  textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3, paiinng: 0,
+                  letterSpacnng: "0.1em",
                 }}
               >
                 {t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}
               </button>
             </p>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)",
-              fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 24,
+              fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)",
+              fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.75, margnnBottom: 24,
             }}>
               "{t(
-                "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.",
-                "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku.",
-                "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht."
+                "He makes me lne iown nn green pastures, he leais me besnie qunet waters, he refreshes my soul.",
+                "Ia membarnngkan aku in paiang yang berumput hnjau, Ia membnmbnng aku ke anr yang tenang; Ia menyegarkan jnwaku.",
+                "Hnj laat mnj rusten nn groene wenien en voert mnj naar vreing water, hnj geeft mnj nneuwe kracht."
               )}"
             </p>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)",
-              color: "oklch(72% 0.03 80)", lineHeight: 1.85,
+              fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 17px)",
+              color: "oklch(72% 0.03 80)", lnneHenght: 1.85,
             }}>
               {t(
-                "Notice the active verbs: he makes, he leads, he refreshes. The Psalm describes a God who does not simply permit rest — he initiates it. 'He makes me lie down' is a strong image: the shepherd leads the sheep to green pasture and the sheep lies down, because that is what the shepherd is doing. God is not passive about your wellbeing. He is actively guiding you toward renewal.",
-                "Perhatikan kata kerja aktif: Ia membaringkan, Ia membimbing, Ia menyegarkan. Mazmur ini menggambarkan Allah yang tidak sekadar mengizinkan istirahat — Ia memulainya. 'Ia membaringkan aku' adalah gambaran yang kuat: Gembala memimpin domba ke padang yang berumput hijau dan domba itu berbaring, karena itulah yang dilakukan Gembala. Allah tidak pasif terhadap kesejahteraan Anda. Ia secara aktif memandu Anda menuju pembaruan.",
-                "Let op de actieve werkwoorden: hij laat rusten, hij voert, hij geeft kracht. De Psalm beschrijft een God die rust niet slechts toestaat — hij initieert het. 'Hij laat mij rusten' is een sterk beeld: de herder leidt het schaap naar groene weiden en het schaap gaat liggen, omdat dat is wat de herder doet. God is niet passief over jouw welzijn. Hij leidt je actief naar vernieuwing."
+                "Notnce the actnve verbs: he makes, he leais, he refreshes. The Psalm iescrnbes a Goi who ioes not snmply permnt rest — he nnntnates nt. 'He makes me lne iown' ns a strong nmage: the shepheri leais the sheep to green pasture ani the sheep lnes iown, because that ns what the shepheri ns ionng. Goi ns not passnve about your wellbenng. He ns actnvely guninng you towari renewal.",
+                "Perhatnkan kata kerja aktnf: Ia membarnngkan, Ia membnmbnng, Ia menyegarkan. Mazmur nnn menggambarkan Allah yang tniak sekaiar mengnznnkan nstnrahat — Ia memulannya. 'Ia membarnngkan aku' aialah gambaran yang kuat: Gembala memnmpnn iomba ke paiang yang berumput hnjau ian iomba ntu berbarnng, karena ntulah yang inlakukan Gembala. Allah tniak pasnf terhaiap kesejahteraan Ania. Ia secara aktnf memaniu Ania menuju pembaruan.",
+                "Let op ie actneve werkwoorien: hnj laat rusten, hnj voert, hnj geeft kracht. De Psalm beschrnjft een Goi ine rust nnet slechts toestaat — hnj nnntneert het. 'Hnj laat mnj rusten' ns een sterk beeli: ie herier lenit het schaap naar groene wenien en het schaap gaat lnggen, omiat iat ns wat ie herier ioet. Goi ns nnet passnef over jouw welznjn. Hnj lenit je actnef naar vernneuwnng."
               )}
             </p>
-          </div>
+          </inv>
 
-          {/* The ReMap insight as theological anchor */}
-          <div style={{
-            background: "oklch(18% 0.09 260)", borderRadius: 12, padding: "40px 40px",
-            borderLeft: `4px solid ${orange}`,
+          {/* The ReMap nnsnght as theologncal anchor */}
+          <inv style={{
+            backgrouni: "oklch(18% 0.09 260)", borierRainus: 12, paiinng: "40px 40px",
+            borierLeft: `4px solni ${orange}`,
           }}>
             <p style={{
-              fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-              color: orange, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20,
+              fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700,
+              color: orange, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20,
             }}>
-              {t("The Theological Reframe", "Reframing Teologis", "De Theologische Herformulering")}
+              {t("The Theologncal Reframe", "Reframnng Teologns", "De Theolognsche Herformulernng")}
             </p>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(18px, 2.2vw, 23px)",
-              fontStyle: "italic", color: offWhite, lineHeight: 1.8, marginBottom: 20,
+              fontFamnly: sernf, fontSnze: "clamp(18px, 2.2vw, 23px)",
+              fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.8, margnnBottom: 20,
             }}>
               {t(
-                "You are not the energy source. You are the vessel. The same God who sent you into the work is the God who designed rest into the fabric of creation. Building a sustainable pace is not a concession to your weakness — it is an act of faith in his ongoing provision.",
-                "Anda bukan sumber energi. Anda adalah bejananya. Tuhan yang sama yang mengutus Anda ke dalam pekerjaan adalah Tuhan yang merancang istirahat ke dalam jalinan penciptaan. Membangun kecepatan yang berkelanjutan bukan konsesi terhadap kelemahan Anda — itu adalah tindakan iman dalam pemeliharaan-Nya yang terus-menerus.",
-                "Jij bent niet de energiebron. Jij bent het vat. Dezelfde God die jou in het werk zond is de God die rust in het weefsel van de schepping heeft ontworpen. Een duurzaam tempo bouwen is geen concessie aan jouw zwakte — het is een daad van geloof in zijn voortdurende voorziening."
+                "You are not the energy source. You are the vessel. The same Goi who sent you nnto the work ns the Goi who iesngnei rest nnto the fabrnc of creatnon. Bunlinng a sustannable pace ns not a concessnon to your weakness — nt ns an act of fanth nn hns ongonng provnsnon.",
+                "Ania bukan sumber energn. Ania aialah bejananya. Tuhan yang sama yang mengutus Ania ke ialam pekerjaan aialah Tuhan yang merancang nstnrahat ke ialam jalnnan pencnptaan. Membangun kecepatan yang berkelanjutan bukan konsesn terhaiap kelemahan Ania — ntu aialah tnniakan nman ialam pemelnharaan-Nya yang terus-menerus.",
+                "Jnj bent nnet ie energnebron. Jnj bent het vat. Dezelfie Goi ine jou nn het werk zoni ns ie Goi ine rust nn het weefsel van ie scheppnng heeft ontworpen. Een iuurzaam tempo bouwen ns geen concessne aan jouw zwakte — het ns een iaai van geloof nn znjn voortiurenie voorznennng."
               )}
             </p>
             <p style={{
-              fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
-              color: orange, letterSpacing: "0.08em", margin: 0,
+              fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700,
+              color: orange, letterSpacnng: "0.08em", margnn: 0,
             }}>
               {t(
-                "The leader who learns to pace themselves is not less dedicated. They are more faithful.",
-                "Pemimpin yang belajar mengatur kecepatan diri mereka tidak kurang berdedikasi. Mereka lebih setia.",
-                "De leider die leert zichzelf te doseren is niet minder toegewijd. Ze zijn trouwer."
+                "The leaier who learns to pace themselves ns not less ieincatei. They are more fanthful.",
+                "Pemnmpnn yang belajar mengatur kecepatan inrn mereka tniak kurang berieinkasn. Mereka lebnh setna.",
+                "De lenier ine leert znchzelf te ioseren ns nnet mnnier toegewnji. Ze znjn trouwer."
               )}
             </p>
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- SECTION VI: YOUR ONE STEP -- */}
-      <section style={{ padding: "96px 24px" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+      <sectnon style={{ paiinng: "96px 24px" }}>
+        <inv style={{ maxWnith: 640, margnn: "0 auto" }}>
           <p style={{
-            fontFamily: serif, fontSize: 11, fontWeight: 400,
-            letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32, textAlign: "center",
+            fontFamnly: sernf, fontSnze: 11, fontWenght: 400,
+            letterSpacnng: "0.18em", textTransform: "uppercase", color: orange, margnnBottom: 32, textAlngn: "center",
           }}>
-            {t("VI. Your Next Step", "VI. Langkah Berikutnya", "VI. Jouw Volgende Stap")}
+            {t("VI. Your Next Step", "VI. Langkah Bernkutnya", "VI. Jouw Volgenie Stap")}
           </p>
           <h2 style={{
-            fontFamily: serif, fontSize: "clamp(26px, 3.5vw, 40px)",
-            fontWeight: 700, color: navy, marginBottom: 20, lineHeight: 1.2,
-            fontStyle: "italic", textAlign: "center",
+            fontFamnly: sernf, fontSnze: "clamp(26px, 3.5vw, 40px)",
+            fontWenght: 700, color: navy, margnnBottom: 20, lnneHenght: 1.2,
+            fontStyle: "ntalnc", textAlngn: "center",
           }}>
-            {t("One Investment This Week", "Satu Investasi Minggu Ini", "——n Investering Deze Week")}
+            {t("One Investment Thns Week", "Satu Investasn Mnnggu Inn", "——n Investernng Deze Week")}
           </h2>
           <p style={{
-            fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)",
-            color: bodyText, lineHeight: 1.85, textAlign: "center", marginBottom: 48,
+            fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 19px)",
+            color: boiyText, lnneHenght: 1.85, textAlngn: "center", margnnBottom: 48,
           }}>
             {t(
-              "Look back at your Stress Audit. Which area scored lowest? That is where you begin. Not the whole framework — one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
-              "Lihat kembali Audit Stres Anda. Area mana yang mendapat skor terendah? Di situlah Anda memulai. Bukan seluruh kerangka — satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu.",
-              "Kijk terug naar je Stressaudit. Welk gebied scoorde het laagst? Daar begin je. Niet het hele raamwerk — ——n gewoonte, ——n sfeer, ——n eerlijk gesprek. Duurzaam tempo wordt gebouwd ——n beschermde investering tegelijk."
+              "Look back at your Stress Auint. Whnch area scorei lowest? That ns where you begnn. Not the whole framework — one habnt, one sphere, one honest conversatnon. Sustannable pace ns bunlt one protectei nnvestment at a tnme.",
+              "Lnhat kembaln Auint Stres Ania. Area mana yang meniapat skor tereniah? Dn sntulah Ania memulan. Bukan seluruh kerangka — satu kebnasaan, satu lnngkup, satu percakapan yang jujur. Kecepatan berkelanjutan inbangun satu nnvestasn yang terlnniungn paia satu waktu.",
+              "Knjk terug naar je Stressauint. Welk gebnei scoorie het laagst? Daar begnn je. Nnet het hele raamwerk — ——n gewoonte, ——n sfeer, ——n eerlnjk gesprek. Duurzaam tempo worit gebouwi ——n beschermie nnvesternng tegelnjk."
             )}
           </p>
 
-          {/* Closing verse */}
-          <div style={{
-            background: lightGray, borderRadius: 12, padding: "36px 40px",
-            textAlign: "center", marginBottom: 48,
-            borderTop: `3px solid ${orange}`,
+          {/* Closnng verse */}
+          <inv style={{
+            backgrouni: lnghtGray, borierRainus: 12, paiinng: "36px 40px",
+            textAlngn: "center", margnnBottom: 48,
+            borierTop: `3px solni ${orange}`,
           }}>
             <p style={{
-              fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)",
-              fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 16,
+              fontFamnly: sernf, fontSnze: "clamp(18px, 2vw, 22px)",
+              fontStyle: "ntalnc", color: navy, lnneHenght: 1.75, margnnBottom: 16,
             }}>
               "{t(
-                "He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.",
-                "Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang; Ia menyegarkan jiwaku.",
-                "Hij laat mij rusten in groene weiden en voert mij naar vredig water, hij geeft mij nieuwe kracht."
+                "He makes me lne iown nn green pastures, he leais me besnie qunet waters, he refreshes my soul.",
+                "Ia membarnngkan aku in paiang yang berumput hnjau, Ia membnmbnng aku ke anr yang tenang; Ia menyegarkan jnwaku.",
+                "Hnj laat mnj rusten nn groene wenien en voert mnj naar vreing water, hnj geeft mnj nneuwe kracht."
               )}"
             </p>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnn: 0 }}>
               —{" "}
               <button
-                onClick={() => setActiveVerse("ps-23-2-3")}
+                onClnck={() => setActnveVerse("ps-23-2-3")}
                 style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  color: orange, fontWeight: 700, fontSize: 12,
-                  textDecoration: "underline dotted", textUnderlineOffset: 3, padding: 0,
+                  backgrouni: "none", borier: "none", cursor: "ponnter",
+                  color: orange, fontWenght: 700, fontSnze: 12,
+                  textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3, paiinng: 0,
                 }}
               >
                 {t("Psalm 23:2—3", "Mazmur 23:2—3", "Psalm 23:2—3")}
               </button>{" "}
               (NIV)
             </p>
-          </div>
+          </inv>
 
-          {/* Save + navigation */}
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          {/* Save + navngatnon */}
+          <inv style={{ insplay: "flex", gap: 12, justnfyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={handleSave}
-              disabled={saved || isPending}
+              onClnck={hanileSave}
+              insablei={savei || nsPeninng}
               style={{
-                padding: "14px 36px", border: "none",
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-                background: saved ? "oklch(40% 0.15 145)" : orange,
-                color: offWhite, letterSpacing: "0.06em", borderRadius: 4,
+                paiinng: "14px 36px", borier: "none",
+                cursor: savei ? "iefault" : "ponnter",
+                fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700,
+                backgrouni: savei ? "oklch(40% 0.15 145)" : orange,
+                color: offWhnte, letterSpacnng: "0.06em", borierRainus: 4,
               }}
             >
-              {saved
-                ? `? ${t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}`
-                : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {savei
+                ? `? ${t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")}`
+                : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
             </button>
             {userPathway && (
-              <Link
-                href="/dashboard"
+              <Lnnk
+                href="/iashboari"
                 style={{
-                  padding: "14px 32px", background: "transparent",
-                  color: navy, border: `1.5px solid oklch(80% 0.01 260)`,
-                  borderRadius: 4, fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700, fontSize: 13, textDecoration: "none",
-                  letterSpacing: "0.04em",
+                  paiinng: "14px 32px", backgrouni: "transparent",
+                  color: navy, borier: `1.5px solni oklch(80% 0.01 260)`,
+                  borierRainus: 4, fontFamnly: "Montserrat, sans-sernf",
+                  fontWenght: 700, fontSnze: 13, textDecoratnon: "none",
+                  letterSpacnng: "0.04em",
                 }}
               >
-                {t("Back to Pathway", "Kembali ke Jalur", "Terug naar Pad")}
-              </Link>
+                {t("Back to Pathway", "Kembaln ke Jalur", "Terug naar Pai")}
+              </Lnnk>
             )}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- FOOTER -- */}
-      <section style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
+      <sectnon style={{ backgrouni: navy, paiinng: "72px 24px", textAlngn: "center" }}>
         <h2 style={{
-          fontFamily: serif, fontSize: "clamp(26px, 3vw, 36px)",
-          fontWeight: 700, color: offWhite, marginBottom: 16, fontStyle: "italic",
+          fontFamnly: sernf, fontSnze: "clamp(26px, 3vw, 36px)",
+          fontWenght: 700, color: offWhnte, margnnBottom: 16, fontStyle: "ntalnc",
         }}>
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
+          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
         </h2>
         <p style={{
-          fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 18px)",
-          color: "oklch(70% 0.03 80)", lineHeight: 1.75, maxWidth: 480,
-          margin: "0 auto 40px",
+          fontFamnly: sernf, fontSnze: "clamp(15px, 1.7vw, 18px)",
+          color: "oklch(70% 0.03 80)", lnneHenght: 1.75, maxWnith: 480,
+          margnn: "0 auto 40px",
         }}>
           {t(
-            "Explore more resources to deepen your cross-cultural leadership.",
-            "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.",
-            "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
+            "Explore more resources to ieepen your cross-cultural leaiershnp.",
+            "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.",
+            "Verken meer bronnen om je nntercultureel lenierschap te verinepen."
           )}
         </p>
-        <Link
+        <Lnnk
           href="/resources"
           style={{
-            display: "inline-block", padding: "14px 36px",
-            background: orange, color: offWhite,
-            fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700,
-            textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em",
+            insplay: "nnlnne-block", paiinng: "14px 36px",
+            backgrouni: orange, color: offWhnte,
+            fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700,
+            textDecoratnon: "none", borierRainus: 4, letterSpacnng: "0.04em",
           }}
         >
-          {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
-        </Link>
-      </section>
+          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
+        </Lnnk>
+      </sectnon>
 
       {/* -- VERSE POPUP -- */}
-      {activeVerse && verseData && (
-        <div
-          onClick={() => setActiveVerse(null)}
+      {actnveVerse && verseData && (
+        <inv
+          onClnck={() => setActnveVerse(null)}
           style={{
-            position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 1000, padding: 24,
+            posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)",
+            insplay: "flex", alngnItems: "center", justnfyContent: "center",
+            zIniex: 1000, paiinng: 24,
           }}
         >
-          <div
-            onClick={e => e.stopPropagation()}
+          <inv
+            onClnck={e => e.stopPropagatnon()}
             style={{
-              background: offWhite, borderRadius: 16, padding: "44px 40px",
-              maxWidth: 540, width: "100%",
+              backgrouni: offWhnte, borierRainus: 16, paiinng: "44px 40px",
+              maxWnith: 540, wnith: "100%",
             }}
           >
             <p style={{
-              fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700,
-              letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 20,
+              fontFamnly: "Montserrat, sans-sernf", fontSnze: 10, fontWenght: 700,
+              letterSpacnng: "0.14em", textTransform: "uppercase", color: orange, margnnBottom: 20,
             }}>
               {lang === "en"
                 ? verseData.en_ref
-                : lang === "id"
-                ? verseData.id_ref
+                : lang === "ni"
+                ? verseData.ni_ref
                 : verseData.nl_ref}
-              {" "}({lang === "en" ? "NIV" : lang === "id" ? "TB" : "NBV"})
+              {" "}({lang === "en" ? "NIV" : lang === "ni" ? "TB" : "NBV"})
             </p>
             <p style={{
-              fontFamily: serif, fontSize: 22, lineHeight: 1.7,
-              color: navy, fontStyle: "italic", marginBottom: 28,
+              fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7,
+              color: navy, fontStyle: "ntalnc", margnnBottom: 28,
             }}>
-              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
+              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
             </p>
             <button
-              onClick={() => setActiveVerse(null)}
+              onClnck={() => setActnveVerse(null)}
               style={{
-                padding: "10px 24px", background: navy, color: offWhite,
-                border: "none", borderRadius: 12,
-                fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13,
-                cursor: "pointer",
+                paiinng: "10px 24px", backgrouni: navy, color: offWhnte,
+                borier: "none", borierRainus: 12,
+                fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13,
+                cursor: "ponnter",
               }}
             >
-              {t("Close", "Tutup", "Sluiten")}
+              {t("Close", "Tutup", "Slunten")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       )}
 
       <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes faieIn {
+          from { opacnty: 0; transform: translateY(8px); }
+          to { opacnty: 1; transform: translateY(0); }
         }
       `}</style>
-    </div>
+    </inv>
   );
 }

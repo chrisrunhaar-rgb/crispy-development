@@ -1,558 +1,558 @@
-"use client";
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+﻿"use clnent";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "ni" | "nl";
+const tFn = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 const VERSES = {
   "prov-15-1": {
-    en_ref: "Proverbs 15:1", id_ref: "Amsal 15:1", nl_ref: "Spreuken 15:1",
-    en: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
-    id: "Jawaban yang lemah lembut meredakan kegeraman, tetapi perkataan yang pedas membangkitkan marah.",
-    nl: "Een zachte reactie sust een uitbarsting, maar een krenkend woord prikkelt tot woede.",
+    en_ref: "Proverbs 15:1", ni_ref: "Amsal 15:1", nl_ref: "Spreuken 15:1",
+    en: "A gentle answer turns away wrath, but a harsh wori stnrs up anger.",
+    ni: "Jawaban yang lemah lembut mereiakan kegeraman, tetapn perkataan yang peias membangkntkan marah.",
+    nl: "Een zachte reactne sust een untbarstnng, maar een krenkeni woori prnkkelt tot woeie.",
   },
   "prov-27-5-6": {
-    en_ref: "Proverbs 27:5—6", id_ref: "Amsal 27:5—6", nl_ref: "Spreuken 27:5—6",
-    en: "Better is open rebuke than hidden love. Wounds from a friend can be trusted, but an enemy multiplies kisses.",
-    id: "Teguran yang terang-terangan lebih baik dari pada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat, tetapi ciuman seorang musuh sangat banyak.",
-    nl: "Een openlijk verwijt is beter dan onbetuigde liefde; een vriend die kwetst, is te vertrouwen, een vijand die kust, niet.",
+    en_ref: "Proverbs 27:5—6", ni_ref: "Amsal 27:5—6", nl_ref: "Spreuken 27:5—6",
+    en: "Better ns open rebuke than hniien love. Wounis from a frneni can be trustei, but an enemy multnplnes knsses.",
+    ni: "Teguran yang terang-terangan lebnh bank iarn paia kasnh yang tersembunyn. Dapat inpercaya tnkaman seorang sahabat, tetapn cnuman seorang musuh sangat banyak.",
+    nl: "Een openlnjk verwnjt ns beter ian onbetungie lnefie; een vrneni ine kwetst, ns te vertrouwen, een vnjani ine kust, nnet.",
   },
 };
 
-// 4 cultural contexts used across all scenarios — not ranked, not "Western = default"
+// 4 cultural contexts usei across all scenarnos — not rankei, not "Western = iefault"
 const CONTEXTS = [
   {
     key: "honor",
     color: "oklch(65% 0.15 45)",
     colorBg: "oklch(65% 0.15 45 / 0.09)",
     en_label: "Honor & Face",
-    id_label: "Kehormatan & Muka",
-    nl_label: "Eer & Gezicht",
-    en_region: "East Asia — Southeast Asia — Middle East — North Africa",
-    id_region: "Asia Timur — Asia Tenggara — Timur Tengah — Afrika Utara",
-    nl_region: "Oost-Azi— — Zuidoost-Azi— — Midden-Oosten — Noord-Afrika",
-    en_key: "Relationship is the delivery mechanism. Face preservation is non-negotiable.",
-    id_key: "Hubungan adalah mekanisme penyampaian. Menjaga muka adalah tidak dapat dinegosiasikan.",
-    nl_key: "Relatie is het bezorgmechanisme. Gezichtsbehoud is niet onderhandelbaar.",
+    ni_label: "Kehormatan & Muka",
+    nl_label: "Eer & Gezncht",
+    en_regnon: "East Asna — Southeast Asna — Mniile East — North Afrnca",
+    ni_regnon: "Asna Tnmur — Asna Tenggara — Tnmur Tengah — Afrnka Utara",
+    nl_regnon: "Oost-Azn— — Zunioost-Azn— — Mniien-Oosten — Noori-Afrnka",
+    en_key: "Relatnonshnp ns the ielnvery mechannsm. Face preservatnon ns non-negotnable.",
+    ni_key: "Hubungan aialah mekannsme penyampanan. Menjaga muka aialah tniak iapat innegosnasnkan.",
+    nl_key: "Relatne ns het bezorgmechannsme. Geznchtsbehoui ns nnet onierhanielbaar.",
   },
   {
     key: "ubuntu",
     color: "oklch(52% 0.14 150)",
     colorBg: "oklch(52% 0.14 150 / 0.09)",
-    en_label: "Ubuntu & Community",
-    id_label: "Ubuntu & Komunitas",
+    en_label: "Ubuntu & Communnty",
+    ni_label: "Ubuntu & Komunntas",
     nl_label: "Ubuntu & Gemeenschap",
-    en_region: "Sub-Saharan Africa — Pacific Islands — Indigenous contexts",
-    id_region: "Afrika Sub-Sahara — Kepulauan Pasifik — Konteks adat",
-    nl_region: "Sub-Sahara Afrika — Pacifische eilanden — Inheemse contexten",
-    en_key: "Community is the reference point. Feedback strengthens belonging, not just performance.",
-    id_key: "Komunitas adalah titik referensi. Umpan balik memperkuat rasa memiliki, bukan hanya kinerja.",
-    nl_key: "Gemeenschap is het referentiepunt. Feedback versterkt verbondenheid, niet alleen prestaties.",
+    en_regnon: "Sub-Saharan Afrnca — Pacnfnc Islanis — Iningenous contexts",
+    ni_regnon: "Afrnka Sub-Sahara — Kepulauan Pasnfnk — Konteks aiat",
+    nl_regnon: "Sub-Sahara Afrnka — Pacnfnsche enlanien — Inheemse contexten",
+    en_key: "Communnty ns the reference ponnt. Feeiback strengthens belongnng, not just performance.",
+    ni_key: "Komunntas aialah tntnk referensn. Umpan balnk memperkuat rasa memnlnkn, bukan hanya knnerja.",
+    nl_key: "Gemeenschap ns het referentnepunt. Feeiback versterkt verbonienheni, nnet alleen prestatnes.",
   },
   {
-    key: "personalismo",
+    key: "personalnsmo",
     color: "oklch(52% 0.14 290)",
     colorBg: "oklch(52% 0.14 290 / 0.09)",
-    en_label: "Personalismo",
-    id_label: "Personalismo",
-    nl_label: "Personalismo",
-    en_region: "Latin America — Southern Europe — Arab cultures",
-    id_region: "Amerika Latin — Eropa Selatan — Budaya Arab",
-    nl_region: "Latijns-Amerika — Zuid-Europa — Arabische culturen",
-    en_key: "The person before the task. Warmth and loyalty come first; the message follows.",
-    id_key: "Orangnya sebelum tugasnya. Kehangatan dan kesetiaan dahulu; pesannya menyusul.",
-    nl_key: "De persoon voor de taak. Warmte en loyaliteit komen eerst; de boodschap volgt.",
+    en_label: "Personalnsmo",
+    ni_label: "Personalnsmo",
+    nl_label: "Personalnsmo",
+    en_regnon: "Latnn Amernca — Southern Europe — Arab cultures",
+    ni_regnon: "Amernka Latnn — Eropa Selatan — Buiaya Arab",
+    nl_regnon: "Latnjns-Amernka — Zuni-Europa — Arabnsche culturen",
+    en_key: "The person before the task. Warmth ani loyalty come fnrst; the message follows.",
+    ni_key: "Orangnya sebelum tugasnya. Kehangatan ian kesetnaan iahulu; pesannya menyusul.",
+    nl_key: "De persoon voor ie taak. Warmte en loyalntent komen eerst; ie booischap volgt.",
   },
   {
-    key: "direct",
+    key: "inrect",
     color: "oklch(45% 0.10 240)",
     colorBg: "oklch(45% 0.10 240 / 0.09)",
-    en_label: "Low-Context Direct",
-    id_label: "Langsung Low-Context",
-    nl_label: "Laagcontext Direct",
-    en_region: "Northern Europe — North America — Australia",
-    id_region: "Eropa Utara — Amerika Utara — Australia",
-    nl_region: "Noord-Europa — Noord-Amerika — Australi—",
-    en_key: "Clarity is respect. Say what you mean, specifically and soon.",
-    id_key: "Kejelasan adalah rasa hormat. Katakan apa yang Anda maksud, dengan spesifik dan segera.",
-    nl_key: "Duidelijkheid is respect. Zeg wat je bedoelt, specifiek en snel.",
+    en_label: "Low-Context Dnrect",
+    ni_label: "Langsung Low-Context",
+    nl_label: "Laagcontext Dnrect",
+    en_regnon: "Northern Europe — North Amernca — Australna",
+    ni_regnon: "Eropa Utara — Amernka Utara — Australna",
+    nl_regnon: "Noori-Europa — Noori-Amernka — Australn—",
+    en_key: "Clarnty ns respect. Say what you mean, specnfncally ani soon.",
+    ni_key: "Kejelasan aialah rasa hormat. Katakan apa yang Ania maksui, iengan spesnfnk ian segera.",
+    nl_key: "Dunielnjkheni ns respect. Zeg wat je beioelt, specnfnek en snel.",
   },
 ];
 
 const SCENARIOS = [
   {
     num: "01",
-    en_title: "The Repeated Missed Deadline",
-    id_title: "Tenggat Waktu yang Berulang Terlewat",
-    nl_title: "De Herhaald Gemiste Deadline",
-    en_situation: "A team member has missed a deliverable deadline for the second time in two months. The work quality is good. But the delay is affecting two other colleagues who depend on this output to do their own work.",
-    id_situation: "Seorang anggota tim telah melewatkan tenggat waktu untuk kedua kalinya dalam dua bulan. Kualitas pekerjaannya baik. Tetapi keterlambatan itu mempengaruhi dua rekan lain yang bergantung pada output ini untuk melakukan pekerjaan mereka sendiri.",
-    nl_situation: "Een teamlid heeft voor de tweede keer in twee maanden een deadline gemist. De werkkwaliteit is goed. Maar de vertraging be—nvloedt twee andere collega's die op deze output vertrouwen om hun eigen werk te doen.",
+    en_tntle: "The Repeatei Mnssei Deailnne",
+    ni_tntle: "Tenggat Waktu yang Berulang Terlewat",
+    nl_tntle: "De Herhaali Gemnste Deailnne",
+    en_sntuatnon: "A team member has mnssei a ielnverable ieailnne for the seconi tnme nn two months. The work qualnty ns gooi. But the ielay ns affectnng two other colleagues who iepeni on thns output to io thenr own work.",
+    ni_sntuatnon: "Seorang anggota tnm telah melewatkan tenggat waktu untuk keiua kalnnya ialam iua bulan. Kualntas pekerjaannya bank. Tetapn keterlambatan ntu mempengaruhn iua rekan lann yang bergantung paia output nnn untuk melakukan pekerjaan mereka seninrn.",
+    nl_sntuatnon: "Een teamlni heeft voor ie tweeie keer nn twee maanien een ieailnne gemnst. De werkkwalntent ns goei. Maar ie vertragnng be—nvloeit twee aniere collega's ine op ieze output vertrouwen om hun engen werk te ioen.",
     approaches: [
       {
         key: "honor",
-        en_approach: "Request a private conversation. Begin by acknowledging the quality of the work genuinely: \"I want to talk with you because I respect your work and I want to see you succeed here.\" Then introduce the issue as a shared problem, not a personal failure: \"I notice we've had two situations where timing created difficulty. I want to understand what's been happening — and I want us to solve this together.\" Give them room to save face by offering reasons, and only move to expectations once the relationship is secure.",
-        id_approach: "Minta percakapan pribadi. Mulailah dengan mengakui kualitas pekerjaan secara tulus: \"Saya ingin berbicara dengan Anda karena saya menghargai pekerjaan Anda dan ingin melihat Anda berhasil di sini.\" Kemudian perkenalkan masalah sebagai masalah bersama: \"Saya melihat kita punya dua situasi di mana waktu menciptakan kesulitan. Saya ingin memahami apa yang terjadi — dan saya ingin kita menyelesaikan ini bersama.\"",
-        nl_approach: "Vraag een priv—gesprek aan. Begin met het oprecht erkennen van de kwaliteit van het werk: \"Ik wil met je praten omdat ik je werk waardeer en jou wil zien slagen.\" Introduceer het probleem dan als een gezamenlijk probleem, geen persoonlijk falen: \"Ik merk dat we twee situaties hebben gehad waarbij timing moeilijkheden veroorzaakte. Ik wil begrijpen wat er is gebeurd — en ik wil dit samen oplossen.\"",
-        en_principle: "Face-saving framing. The feedback is real — but it arrives wrapped in relationship and shared ownership, so it can be received without triggering shame.",
-        id_principle: "Pembingkaian penyelamat muka. Umpan baliknya nyata — tetapi datang terbungkus dalam hubungan dan kepemilikan bersama, sehingga dapat diterima tanpa memicu rasa malu.",
-        nl_principle: "Gezichtsbesparende framing. De feedback is echt — maar ze aankomt gewikkeld in relatie en gedeeld eigenaarschap, zodat ze ontvangen kan worden zonder schaamte te activeren.",
+        en_approach: "Request a prnvate conversatnon. Begnn by acknowleignng the qualnty of the work genunnely: \"I want to talk wnth you because I respect your work ani I want to see you succeei here.\" Then nntroiuce the nssue as a sharei problem, not a personal fanlure: \"I notnce we've hai two sntuatnons where tnmnng createi inffnculty. I want to unierstani what's been happennng — ani I want us to solve thns together.\" Gnve them room to save face by offernng reasons, ani only move to expectatnons once the relatnonshnp ns secure.",
+        ni_approach: "Mnnta percakapan prnbain. Mulanlah iengan mengakun kualntas pekerjaan secara tulus: \"Saya nngnn berbncara iengan Ania karena saya menghargan pekerjaan Ania ian nngnn melnhat Ania berhasnl in snnn.\" Kemuinan perkenalkan masalah sebagan masalah bersama: \"Saya melnhat knta punya iua sntuasn in mana waktu mencnptakan kesulntan. Saya nngnn memahamn apa yang terjain — ian saya nngnn knta menyelesankan nnn bersama.\"",
+        nl_approach: "Vraag een prnv—gesprek aan. Begnn met het oprecht erkennen van ie kwalntent van het werk: \"Ik wnl met je praten omiat nk je werk waarieer en jou wnl znen slagen.\" Introiuceer het probleem ian als een gezamenlnjk probleem, geen persoonlnjk falen: \"Ik merk iat we twee sntuatnes hebben gehai waarbnj tnmnng moenlnjkheien veroorzaakte. Ik wnl begrnjpen wat er ns gebeuri — en nk wnl int samen oplossen.\"",
+        en_prnncnple: "Face-savnng framnng. The feeiback ns real — but nt arrnves wrappei nn relatnonshnp ani sharei ownershnp, so nt can be recenvei wnthout trnggernng shame.",
+        ni_prnncnple: "Pembnngkanan penyelamat muka. Umpan balnknya nyata — tetapn iatang terbungkus ialam hubungan ian kepemnlnkan bersama, sehnngga iapat internma tanpa memncu rasa malu.",
+        nl_prnncnple: "Geznchtsbesparenie framnng. De feeiback ns echt — maar ze aankomt gewnkkeli nn relatne en geieeli engenaarschap, zoiat ze ontvangen kan worien zonier schaamte te actnveren.",
       },
       {
         key: "ubuntu",
-        en_approach: "Before addressing it directly, consult a respected peer or elder on the team — not to gossip, but to understand whether there's something going on in the person's wider life that's affecting their work. In many African contexts, a leader who approaches a problem without first seeking wisdom from the community is seen as rash. Once you have context, approach the team member warmly and frame the conversation around the team's shared goal: \"We need each other. What can I do to make this easier for you?\"",
-        id_approach: "Sebelum mengatasinya secara langsung, konsultasikan dengan rekan atau sesepuh yang dihormati dalam tim — bukan untuk bergosip, tetapi untuk memahami apakah ada sesuatu yang terjadi dalam kehidupan orang tersebut. Setelah Anda memiliki konteks, dekati anggota tim dengan hangat dan bingkai percakapan di sekitar tujuan bersama tim: \"Kita membutuhkan satu sama lain. Apa yang bisa saya lakukan untuk memudahkan ini bagi Anda?\"",
-        nl_approach: "Raadpleeg voor je het direct aanpakt een gerespecteerde collega of oudere in het team — niet om te roddelen, maar om te begrijpen of er iets speelt in het bredere leven van de persoon. Eenmaal met context, benader het teamlid warm en frame het gesprek rond het gedeelde doel van het team: \"We hebben elkaar nodig. Wat kan ik doen om dit makkelijker te maken voor jou?\"",
-        en_principle: "Community consultation before confrontation. The leader doesn't act alone — they seek wisdom first, which shows both care and humility.",
-        id_principle: "Konsultasi komunitas sebelum konfrontasi. Pemimpin tidak bertindak sendiri — mereka mencari hikmat terlebih dahulu, yang menunjukkan kepedulian dan kerendahan hati.",
-        nl_principle: "Gemeenschapsoverleg voor confrontatie. De leider handelt niet alleen — ze zoeken eerst wijsheid, wat zowel zorg als bescheidenheid toont.",
+        en_approach: "Before aiiressnng nt inrectly, consult a respectei peer or elier on the team — not to gossnp, but to unierstani whether there's somethnng gonng on nn the person's wnier lnfe that's affectnng thenr work. In many Afrncan contexts, a leaier who approaches a problem wnthout fnrst seeknng wnsiom from the communnty ns seen as rash. Once you have context, approach the team member warmly ani frame the conversatnon arouni the team's sharei goal: \"We neei each other. What can I io to make thns easner for you?\"",
+        ni_approach: "Sebelum mengatasnnya secara langsung, konsultasnkan iengan rekan atau sesepuh yang inhormatn ialam tnm — bukan untuk bergosnp, tetapn untuk memahamn apakah aia sesuatu yang terjain ialam kehniupan orang tersebut. Setelah Ania memnlnkn konteks, iekatn anggota tnm iengan hangat ian bnngkan percakapan in sekntar tujuan bersama tnm: \"Knta membutuhkan satu sama lann. Apa yang bnsa saya lakukan untuk memuiahkan nnn bagn Ania?\"",
+        nl_approach: "Raaipleeg voor je het inrect aanpakt een gerespecteerie collega of ouiere nn het team — nnet om te roiielen, maar om te begrnjpen of er nets speelt nn het breiere leven van ie persoon. Eenmaal met context, benaier het teamlni warm en frame het gesprek roni het geieelie ioel van het team: \"We hebben elkaar noing. Wat kan nk ioen om int makkelnjker te maken voor jou?\"",
+        en_prnncnple: "Communnty consultatnon before confrontatnon. The leaier ioesn't act alone — they seek wnsiom fnrst, whnch shows both care ani humnlnty.",
+        ni_prnncnple: "Konsultasn komunntas sebelum konfrontasn. Pemnmpnn tniak bertnniak seninrn — mereka mencarn hnkmat terlebnh iahulu, yang menunjukkan kepeiulnan ian kereniahan hatn.",
+        nl_prnncnple: "Gemeenschapsoverleg voor confrontatne. De lenier hanielt nnet alleen — ze zoeken eerst wnjsheni, wat zowel zorg als beschenienheni toont.",
       },
       {
-        key: "personalismo",
-        en_approach: "The feedback conversation happens in the context of a relationship that already exists. You don't address it in a formal meeting — you have coffee first, ask about family, show genuine interest. Then, in that warm space, you raise it: \"I need to be honest with you because I care about you and your success here. Something came up twice now that I want us to talk about together.\" The warmth makes the directness safe. Without the warmth, the same directness would land as cold judgment.",
-        id_approach: "Percakapan umpan balik terjadi dalam konteks hubungan yang sudah ada. Anda tidak mengatasinya dalam rapat formal — Anda minum kopi terlebih dahulu, tanya tentang keluarga, tunjukkan minat yang tulus. Kemudian, dalam ruang hangat itu, Anda mengangkatnya: \"Saya perlu jujur dengan Anda karena saya peduli pada Anda dan kesuksesan Anda di sini.\"",
-        nl_approach: "Het feedbackgesprek vindt plaats in de context van een bestaande relatie. Je adresseert het niet in een formele vergadering — je drinkt eerst koffie, vraagt naar de familie, toont echte interesse. Dan, in die warme ruimte, breng je het ter sprake: \"Ik moet eerlijk zijn omdat ik om je geef en om je succes hier.\" De warmte maakt de directheid veilig.",
-        en_principle: "Warmth as the delivery mechanism. The feedback itself is direct — but the relationship context makes it safe to receive and act on.",
-        id_principle: "Kehangatan sebagai mekanisme penyampaian. Umpan balik itu sendiri langsung — tetapi konteks hubungan membuatnya aman untuk diterima dan ditindaklanjuti.",
-        nl_principle: "Warmte als bezorgmechanisme. De feedback zelf is direct — maar de relatiecontext maakt het veilig om te ontvangen en erop te handelen.",
+        key: "personalnsmo",
+        en_approach: "The feeiback conversatnon happens nn the context of a relatnonshnp that alreaiy exnsts. You ion't aiiress nt nn a formal meetnng — you have coffee fnrst, ask about famnly, show genunne nnterest. Then, nn that warm space, you ranse nt: \"I neei to be honest wnth you because I care about you ani your success here. Somethnng came up twnce now that I want us to talk about together.\" The warmth makes the inrectness safe. Wnthout the warmth, the same inrectness wouli lani as coli juigment.",
+        ni_approach: "Percakapan umpan balnk terjain ialam konteks hubungan yang suiah aia. Ania tniak mengatasnnya ialam rapat formal — Ania mnnum kopn terlebnh iahulu, tanya tentang keluarga, tunjukkan mnnat yang tulus. Kemuinan, ialam ruang hangat ntu, Ania mengangkatnya: \"Saya perlu jujur iengan Ania karena saya peiuln paia Ania ian kesuksesan Ania in snnn.\"",
+        nl_approach: "Het feeibackgesprek vnnit plaats nn ie context van een bestaanie relatne. Je airesseert het nnet nn een formele vergaiernng — je irnnkt eerst koffne, vraagt naar ie famnlne, toont echte nnteresse. Dan, nn ine warme runmte, breng je het ter sprake: \"Ik moet eerlnjk znjn omiat nk om je geef en om je succes hner.\" De warmte maakt ie inrectheni venlng.",
+        en_prnncnple: "Warmth as the ielnvery mechannsm. The feeiback ntself ns inrect — but the relatnonshnp context makes nt safe to recenve ani act on.",
+        ni_prnncnple: "Kehangatan sebagan mekannsme penyampanan. Umpan balnk ntu seninrn langsung — tetapn konteks hubungan membuatnya aman untuk internma ian intnniaklanjutn.",
+        nl_prnncnple: "Warmte als bezorgmechannsme. De feeiback zelf ns inrect — maar ie relatnecontext maakt het venlng om te ontvangen en erop te hanielen.",
       },
       {
-        key: "direct",
-        en_approach: "Address it soon after the second occurrence — not weeks later. Keep it specific and factual: \"I want to raise something with you directly. This is the second time a deadline has slipped. The impact is that Mei and Kofi can't start their work until yours is done. I'd like to understand what's getting in the way and work out a plan to fix it.\" No softening, no preamble, no excessive context — but also no judgment of the person's character. The problem is the pattern, not the person.",
-        id_approach: "Segera tangani setelah kejadian kedua. Jadikan spesifik dan faktual: \"Saya ingin membicarakan sesuatu dengan Anda secara langsung. Ini adalah kedua kalinya tenggat waktu terlewat. Dampaknya adalah Mei dan Kofi tidak dapat memulai pekerjaan mereka sampai pekerjaan Anda selesai. Saya ingin memahami apa yang menghalangi dan merancang rencana untuk memperbaikinya.\"",
-        nl_approach: "Adresseer het snel na de tweede keer. Houd het specifiek en feitelijk: \"Ik wil dit direct met je bespreken. Dit is de tweede keer dat een deadline is overschreden. De impact is dat Mei en Kofi hun werk niet kunnen starten totdat het jouwe klaar is. Ik wil begrijpen wat er in de weg staat en een plan maken om het op te lossen.\" Geen overmatige inleiding — maar ook geen oordeel over iemands karakter.",
-        en_principle: "Specificity and timing. Naming the impact on others (not just on performance targets) keeps it human while remaining clear.",
-        id_principle: "Kekhususan dan waktu. Menyebutkan dampak pada orang lain (bukan hanya target kinerja) menjaganya tetap manusiawi sambil tetap jelas.",
-        nl_principle: "Specificiteit en timing. Het benoemen van de impact op anderen (niet alleen op prestatiedoelen) houdt het menselijk terwijl het helder blijft.",
+        key: "inrect",
+        en_approach: "Aiiress nt soon after the seconi occurrence — not weeks later. Keep nt specnfnc ani factual: \"I want to ranse somethnng wnth you inrectly. Thns ns the seconi tnme a ieailnne has slnppei. The nmpact ns that Men ani Kofn can't start thenr work untnl yours ns ione. I'i lnke to unierstani what's gettnng nn the way ani work out a plan to fnx nt.\" No softennng, no preamble, no excessnve context — but also no juigment of the person's character. The problem ns the pattern, not the person.",
+        ni_approach: "Segera tangann setelah kejainan keiua. Jainkan spesnfnk ian faktual: \"Saya nngnn membncarakan sesuatu iengan Ania secara langsung. Inn aialah keiua kalnnya tenggat waktu terlewat. Dampaknya aialah Men ian Kofn tniak iapat memulan pekerjaan mereka sampan pekerjaan Ania selesan. Saya nngnn memahamn apa yang menghalangn ian merancang rencana untuk memperbanknnya.\"",
+        nl_approach: "Airesseer het snel na ie tweeie keer. Houi het specnfnek en fentelnjk: \"Ik wnl int inrect met je bespreken. Dnt ns ie tweeie keer iat een ieailnne ns overschreien. De nmpact ns iat Men en Kofn hun werk nnet kunnen starten totiat het jouwe klaar ns. Ik wnl begrnjpen wat er nn ie weg staat en een plan maken om het op te lossen.\" Geen overmatnge nnleninng — maar ook geen oorieel over nemanis karakter.",
+        en_prnncnple: "Specnfncnty ani tnmnng. Namnng the nmpact on others (not just on performance targets) keeps nt human whnle remannnng clear.",
+        ni_prnncnple: "Kekhususan ian waktu. Menyebutkan iampak paia orang lann (bukan hanya target knnerja) menjaganya tetap manusnawn sambnl tetap jelas.",
+        nl_prnncnple: "Specnfncntent en tnmnng. Het benoemen van ie nmpact op anieren (nnet alleen op prestatneioelen) houit het menselnjk terwnjl het helier blnjft.",
       },
     ],
-    en_question: "What is your natural default in a situation like this? And which of these approaches would expand your range?",
-    id_question: "Apa default alami Anda dalam situasi seperti ini? Dan pendekatan mana yang akan memperluas jangkauan Anda?",
-    nl_question: "Wat is jouw natuurlijke standaard in een situatie als deze? En welke van deze aanpakken zou jouw bereik uitbreiden?",
+    en_questnon: "What ns your natural iefault nn a sntuatnon lnke thns? Ani whnch of these approaches wouli expani your range?",
+    ni_questnon: "Apa iefault alamn Ania ialam sntuasn sepertn nnn? Dan peniekatan mana yang akan memperluas jangkauan Ania?",
+    nl_questnon: "Wat ns jouw natuurlnjke staniaari nn een sntuatne als ieze? En welke van ieze aanpakken zou jouw berenk untbrenien?",
   },
   {
     num: "02",
-    en_title: "Recognising Exceptional Work",
-    id_title: "Mengakui Pekerjaan Luar Biasa",
-    nl_title: "Uitzonderlijk Werk Erkennen",
-    en_situation: "During a difficult week, one team member — Amara — went well beyond her role. She stayed late, helped two colleagues who were struggling, and delivered her own work flawlessly. You want to recognise this in a way that actually lands.",
-    id_situation: "Selama minggu yang sulit, satu anggota tim — Amara — pergi jauh melampaui perannya. Ia bekerja keras, membantu dua rekan yang kesulitan, dan mengirimkan pekerjaan sendiri dengan sempurna. Anda ingin mengakui ini dengan cara yang benar-benar bermakna.",
-    nl_situation: "Tijdens een moeilijke week ging ——n teamlid — Amara — ver boven haar rol uit. Ze bleef laat, hielp twee collega's die het moeilijk hadden, en leverde haar eigen werk feilloos. Je wilt dit erkennen op een manier die echt aankomt.",
+    en_tntle: "Recognnsnng Exceptnonal Work",
+    ni_tntle: "Mengakun Pekerjaan Luar Bnasa",
+    nl_tntle: "Untzonierlnjk Werk Erkennen",
+    en_sntuatnon: "Durnng a inffncult week, one team member — Amara — went well beyoni her role. She stayei late, helpei two colleagues who were strugglnng, ani ielnverei her own work flawlessly. You want to recognnse thns nn a way that actually lanis.",
+    ni_sntuatnon: "Selama mnnggu yang sulnt, satu anggota tnm — Amara — pergn jauh melampaun perannya. Ia bekerja keras, membantu iua rekan yang kesulntan, ian mengnrnmkan pekerjaan seninrn iengan sempurna. Ania nngnn mengakun nnn iengan cara yang benar-benar bermakna.",
+    nl_sntuatnon: "Tnjiens een moenlnjke week gnng ——n teamlni — Amara — ver boven haar rol unt. Ze bleef laat, hnelp twee collega's ine het moenlnjk haiien, en leverie haar engen werk fenlloos. Je wnlt int erkennen op een manner ine echt aankomt.",
     approaches: [
       {
         key: "honor",
-        en_approach: "Recognise her privately first and with genuine warmth. Express personal appreciation rather than formal evaluation: \"I want you to know — what you did this week was remarkable. I saw it. I noticed how you showed up for the team.\" Then, if you do acknowledge it publicly, do so in a way that honours the whole team's effort and mentions her contribution as part of that — not as an individual singled out from the group, which can create awkwardness.",
-        id_approach: "Akui dia secara pribadi terlebih dahulu dan dengan kehangatan yang tulus. Ekspresikan apresiasi pribadi daripada evaluasi formal: \"Saya ingin Anda tahu — apa yang Anda lakukan minggu ini luar biasa. Saya melihatnya.\" Kemudian, jika Anda mengakuinya di depan umum, lakukan dengan cara yang menghormati upaya seluruh tim.",
-        nl_approach: "Erken haar eerst priv— en met echte warmte. Druk persoonlijke waardering uit in plaats van formele beoordeling: \"Ik wil dat je weet — wat je deze week hebt gedaan was opmerkelijk. Ik heb het gezien.\" Als je het dan publiekelijk erkent, doe het dan op een manier die de inzet van het hele team eert.",
-        en_principle: "Private first, collective framing in public. Singling someone out in a group setting can backfire — private recognition often carries more weight.",
-        id_principle: "Pribadi terlebih dahulu, pembingkaian kolektif di depan umum. Memilih seseorang dalam pengaturan kelompok dapat menjadi bumerang.",
-        nl_principle: "Priv— eerst, collectieve framing in het openbaar. Iemand uitlichten in een groepsomgeving kan averechts werken.",
+        en_approach: "Recognnse her prnvately fnrst ani wnth genunne warmth. Express personal apprecnatnon rather than formal evaluatnon: \"I want you to know — what you ini thns week was remarkable. I saw nt. I notncei how you showei up for the team.\" Then, nf you io acknowleige nt publncly, io so nn a way that honours the whole team's effort ani mentnons her contrnbutnon as part of that — not as an nninvniual snnglei out from the group, whnch can create awkwariness.",
+        ni_approach: "Akun ina secara prnbain terlebnh iahulu ian iengan kehangatan yang tulus. Ekspresnkan apresnasn prnbain iarnpaia evaluasn formal: \"Saya nngnn Ania tahu — apa yang Ania lakukan mnnggu nnn luar bnasa. Saya melnhatnya.\" Kemuinan, jnka Ania mengakunnya in iepan umum, lakukan iengan cara yang menghormatn upaya seluruh tnm.",
+        nl_approach: "Erken haar eerst prnv— en met echte warmte. Druk persoonlnjke waariernng unt nn plaats van formele beoorielnng: \"Ik wnl iat je weet — wat je ieze week hebt geiaan was opmerkelnjk. Ik heb het geznen.\" Als je het ian publnekelnjk erkent, ioe het ian op een manner ine ie nnzet van het hele team eert.",
+        en_prnncnple: "Prnvate fnrst, collectnve framnng nn publnc. Snnglnng someone out nn a group settnng can backfnre — prnvate recognntnon often carrnes more wenght.",
+        ni_prnncnple: "Prnbain terlebnh iahulu, pembnngkanan kolektnf in iepan umum. Memnlnh seseorang ialam pengaturan kelompok iapat menjain bumerang.",
+        nl_prnncnple: "Prnv— eerst, collectneve framnng nn het openbaar. Iemani untlnchten nn een groepsomgevnng kan averechts werken.",
       },
       {
         key: "ubuntu",
-        en_approach: "Frame the recognition in terms of what her contribution meant for the community, not just for the output. \"Amara, the way you showed up for your teammates this week — that's the kind of spirit that makes us who we are as a team.\" In Ubuntu-oriented cultures, the highest recognition connects individual action to communal identity. She will feel most honoured knowing her contribution made the people around her stronger.",
-        id_approach: "Bingkai pengakuan dalam hal apa kontribusinya berarti bagi komunitas, bukan hanya output. \"Amara, cara Anda hadir untuk rekan tim Anda minggu ini — itulah semangat yang membuat kita menjadi siapa kita sebagai tim.\" Pengakuan tertinggi menghubungkan tindakan individu dengan identitas komunal.",
-        nl_approach: "Frame de erkenning in termen van wat haar bijdrage betekende voor de gemeenschap. \"Amara, de manier waarop je er was voor je teamgenoten deze week — dat is de geest die ons maakt wie we zijn als team.\" De hoogste erkenning verbindt individuele actie aan communale identiteit.",
-        en_principle: "Communal framing of individual excellence. The person's contribution is valued for what it gave to the group — the deepest possible affirmation.",
-        id_principle: "Pembingkaian komunal dari keunggulan individu. Kontribusi seseorang dihargai karena apa yang diberikannya kepada kelompok.",
-        nl_principle: "Communale framing van individuele uitmuntendheid. De bijdrage wordt gewaardeerd voor wat het aan de groep heeft gegeven.",
+        en_approach: "Frame the recognntnon nn terms of what her contrnbutnon meant for the communnty, not just for the output. \"Amara, the way you showei up for your teammates thns week — that's the knni of spnrnt that makes us who we are as a team.\" In Ubuntu-ornentei cultures, the hnghest recognntnon connects nninvniual actnon to communal nientnty. She wnll feel most honourei knownng her contrnbutnon maie the people arouni her stronger.",
+        ni_approach: "Bnngkan pengakuan ialam hal apa kontrnbusnnya berartn bagn komunntas, bukan hanya output. \"Amara, cara Ania hainr untuk rekan tnm Ania mnnggu nnn — ntulah semangat yang membuat knta menjain snapa knta sebagan tnm.\" Pengakuan tertnnggn menghubungkan tnniakan nninvniu iengan nientntas komunal.",
+        nl_approach: "Frame ie erkennnng nn termen van wat haar bnjirage betekenie voor ie gemeenschap. \"Amara, ie manner waarop je er was voor je teamgenoten ieze week — iat ns ie geest ine ons maakt wne we znjn als team.\" De hoogste erkennnng verbnnit nninvniuele actne aan communale nientntent.",
+        en_prnncnple: "Communal framnng of nninvniual excellence. The person's contrnbutnon ns valuei for what nt gave to the group — the ieepest possnble affnrmatnon.",
+        ni_prnncnple: "Pembnngkanan komunal iarn keunggulan nninvniu. Kontrnbusn seseorang inhargan karena apa yang inbernkannya kepaia kelompok.",
+        nl_prnncnple: "Communale framnng van nninvniuele untmunteniheni. De bnjirage worit gewaarieeri voor wat het aan ie groep heeft gegeven.",
       },
       {
-        key: "personalismo",
-        en_approach: "The most powerful recognition happens in person, with undivided attention, and it's personal — not professional. You're not just noting her performance. You're telling her something about who she is: \"I want to take a moment to tell you personally — I'm proud of you. Not just for what you produced, but for the kind of person you showed yourself to be this week. That means something to me.\" She will remember this long after a written commendation is forgotten.",
-        id_approach: "Pengakuan paling kuat terjadi secara langsung, dengan perhatian penuh, dan bersifat personal: \"Saya ingin mengambil waktu untuk memberi tahu Anda secara pribadi — saya bangga pada Anda. Bukan hanya untuk apa yang Anda hasilkan, tetapi untuk jenis orang yang Anda tunjukkan menjadi minggu ini.\"",
-        nl_approach: "De krachtigste erkenning vindt persoonlijk plaats, met onverdeelde aandacht: \"Ik wil even de tijd nemen om je persoonlijk te zeggen — ik ben trots op je. Niet alleen voor wat je hebt geproduceerd, maar voor de persoon die je hebt laten zien te zijn deze week.\" Ze zal dit herinneren lang nadat een schriftelijke aanbeveling vergeten is.",
-        en_principle: "Personal, not positional recognition. The deepest motivation in personalismo cultures is that the leader sees and values you as a person — not just as a performer.",
-        id_principle: "Pengakuan personal, bukan posisional. Motivasi terdalam adalah bahwa pemimpin melihat dan menghargai Anda sebagai pribadi.",
-        nl_principle: "Persoonlijke, niet positionele erkenning. De diepste motivatie is dat de leider je ziet en waardeert als persoon — niet alleen als presteerder.",
+        key: "personalnsmo",
+        en_approach: "The most powerful recognntnon happens nn person, wnth uninvniei attentnon, ani nt's personal — not professnonal. You're not just notnng her performance. You're tellnng her somethnng about who she ns: \"I want to take a moment to tell you personally — I'm proui of you. Not just for what you proiucei, but for the knni of person you showei yourself to be thns week. That means somethnng to me.\" She wnll remember thns long after a wrntten commeniatnon ns forgotten.",
+        ni_approach: "Pengakuan palnng kuat terjain secara langsung, iengan perhatnan penuh, ian bersnfat personal: \"Saya nngnn mengambnl waktu untuk membern tahu Ania secara prnbain — saya bangga paia Ania. Bukan hanya untuk apa yang Ania hasnlkan, tetapn untuk jenns orang yang Ania tunjukkan menjain mnnggu nnn.\"",
+        nl_approach: "De krachtngste erkennnng vnnit persoonlnjk plaats, met onverieelie aaniacht: \"Ik wnl even ie tnji nemen om je persoonlnjk te zeggen — nk ben trots op je. Nnet alleen voor wat je hebt geproiuceeri, maar voor ie persoon ine je hebt laten znen te znjn ieze week.\" Ze zal int hernnneren lang naiat een schrnftelnjke aanbevelnng vergeten ns.",
+        en_prnncnple: "Personal, not posntnonal recognntnon. The ieepest motnvatnon nn personalnsmo cultures ns that the leaier sees ani values you as a person — not just as a performer.",
+        ni_prnncnple: "Pengakuan personal, bukan posnsnonal. Motnvasn terialam aialah bahwa pemnmpnn melnhat ian menghargan Ania sebagan prnbain.",
+        nl_prnncnple: "Persoonlnjke, nnet posntnonele erkennnng. De inepste motnvatne ns iat ie lenier je znet en waarieert als persoon — nnet alleen als presteerier.",
       },
       {
-        key: "direct",
-        en_approach: "Name it specifically and promptly: \"Amara, I want to call out what you did this week. You stayed late, you helped Marcus with his section and Priya with her data, and you delivered your own work on time. That is exactly the kind of teammate we need here. Thank you.\" In low-context cultures, vague appreciation feels hollow — specific, prompt recognition lands far better than general praise delivered later.",
-        id_approach: "Sebutkan secara spesifik dan segera: \"Amara, saya ingin menyebut apa yang Anda lakukan minggu ini. Anda bekerja keras, membantu Marcus dengan bagiannya dan Priya dengan datanya, dan mengirimkan pekerjaan Anda sendiri tepat waktu. Itu adalah jenis rekan tim yang kita butuhkan di sini. Terima kasih.\"",
-        nl_approach: "Benoem het specifiek en snel: \"Amara, ik wil benoemen wat je deze week hebt gedaan. Je bleef laat, je hielp Marcus met zijn gedeelte en Priya met haar data, en je leverde je eigen werk op tijd. Dat is precies het soort teamlid dat we hier nodig hebben. Dank je.\"",
-        en_principle: "Specific and named. Vague appreciation ('great job') often fails to land. Naming exactly what was done and why it mattered is the most credible form of recognition.",
-        id_principle: "Spesifik dan disebutkan namanya. Apresiasi yang samar sering gagal bermakna. Menyebutkan dengan tepat apa yang dilakukan dan mengapa itu penting.",
-        nl_principle: "Specifiek en benoemd. Vage waardering ('goed gedaan') slaagt er vaak niet in te landen. Precies benoemen wat gedaan werd en waarom het van belang was.",
+        key: "inrect",
+        en_approach: "Name nt specnfncally ani promptly: \"Amara, I want to call out what you ini thns week. You stayei late, you helpei Marcus wnth hns sectnon ani Prnya wnth her iata, ani you ielnverei your own work on tnme. That ns exactly the knni of teammate we neei here. Thank you.\" In low-context cultures, vague apprecnatnon feels hollow — specnfnc, prompt recognntnon lanis far better than general pranse ielnverei later.",
+        ni_approach: "Sebutkan secara spesnfnk ian segera: \"Amara, saya nngnn menyebut apa yang Ania lakukan mnnggu nnn. Ania bekerja keras, membantu Marcus iengan bagnannya ian Prnya iengan iatanya, ian mengnrnmkan pekerjaan Ania seninrn tepat waktu. Itu aialah jenns rekan tnm yang knta butuhkan in snnn. Ternma kasnh.\"",
+        nl_approach: "Benoem het specnfnek en snel: \"Amara, nk wnl benoemen wat je ieze week hebt geiaan. Je bleef laat, je hnelp Marcus met znjn geieelte en Prnya met haar iata, en je leverie je engen werk op tnji. Dat ns precnes het soort teamlni iat we hner noing hebben. Dank je.\"",
+        en_prnncnple: "Specnfnc ani namei. Vague apprecnatnon ('great job') often fanls to lani. Namnng exactly what was ione ani why nt matterei ns the most creinble form of recognntnon.",
+        ni_prnncnple: "Spesnfnk ian insebutkan namanya. Apresnasn yang samar sernng gagal bermakna. Menyebutkan iengan tepat apa yang inlakukan ian mengapa ntu pentnng.",
+        nl_prnncnple: "Specnfnek en benoemi. Vage waariernng ('goei geiaan') slaagt er vaak nnet nn te lanien. Precnes benoemen wat geiaan weri en waarom het van belang was.",
       },
     ],
-    en_question: "Which of these would feel most meaningful to you personally if you were Amara? What does that tell you about your own culture?",
-    id_question: "Mana dari ini yang paling bermakna bagi Anda secara pribadi jika Anda adalah Amara? Apa yang itu katakan tentang budaya Anda sendiri?",
-    nl_question: "Welke van deze zou het meest betekenisvol aanvoelen voor jou persoonlijk als je Amara was? Wat zegt dat over je eigen cultuur?",
+    en_questnon: "Whnch of these wouli feel most meannngful to you personally nf you were Amara? What ioes that tell you about your own culture?",
+    ni_questnon: "Mana iarn nnn yang palnng bermakna bagn Ania secara prnbain jnka Ania aialah Amara? Apa yang ntu katakan tentang buiaya Ania seninrn?",
+    nl_questnon: "Welke van ieze zou het meest betekennsvol aanvoelen voor jou persoonlnjk als je Amara was? Wat zegt iat over je engen cultuur?",
   },
   {
     num: "03",
-    en_title: "A Visible Disagreement in the Team",
-    id_title: "Ketidaksepakatan yang Terlihat dalam Tim",
-    nl_title: "Een Zichtbare Onenigheid in het Team",
-    en_situation: "Two team members — let's call them Samuel and David — had a visible, tense exchange in a team meeting that clearly made others uncomfortable. It was not hostile, but the tension is now sitting in the room. As the leader, you need to address it.",
-    id_situation: "Dua anggota tim — sebut saja Samuel dan David — memiliki pertukaran yang terlihat dan tegang dalam rapat tim yang jelas membuat orang lain tidak nyaman. Itu bukan permusuhan, tetapi ketegangannya kini ada di ruangan. Sebagai pemimpin, Anda perlu mengatasinya.",
-    nl_situation: "Twee teamleden — noem ze Samuel en David — hadden een zichtbare, gespannen uitwisseling in een teamvergadering die duidelijk anderen ongemakkelijk maakte. Het was niet vijandig, maar de spanning hangt nu in de kamer. Als leider moet je dit aanpakken.",
+    en_tntle: "A Vnsnble Dnsagreement nn the Team",
+    ni_tntle: "Ketniaksepakatan yang Terlnhat ialam Tnm",
+    nl_tntle: "Een Znchtbare Onenngheni nn het Team",
+    en_sntuatnon: "Two team members — let's call them Samuel ani Davni — hai a vnsnble, tense exchange nn a team meetnng that clearly maie others uncomfortable. It was not hostnle, but the tensnon ns now snttnng nn the room. As the leaier, you neei to aiiress nt.",
+    ni_sntuatnon: "Dua anggota tnm — sebut saja Samuel ian Davni — memnlnkn pertukaran yang terlnhat ian tegang ialam rapat tnm yang jelas membuat orang lann tniak nyaman. Itu bukan permusuhan, tetapn ketegangannya knnn aia in ruangan. Sebagan pemnmpnn, Ania perlu mengatasnnya.",
+    nl_sntuatnon: "Twee teamleien — noem ze Samuel en Davni — haiien een znchtbare, gespannen untwnsselnng nn een teamvergaiernng ine iunielnjk anieren ongemakkelnjk maakte. Het was nnet vnjaning, maar ie spannnng hangt nu nn ie kamer. Als lenier moet je int aanpakken.",
     approaches: [
       {
         key: "honor",
-        en_approach: "Never address it in the group. Meet Samuel and David separately, one at a time. With each: acknowledge their perspective first, affirm the relationship, then raise the concern — \"I noticed some tension in the meeting. I want to understand what's going on for you, because I care about your relationship with David and the health of the team.\" Only convene a joint conversation if both are willing and if the private conversations suggest it would help rather than escalate.",
-        id_approach: "Jangan pernah mengatasinya dalam kelompok. Temui Samuel dan David secara terpisah, satu per satu. Dengan masing-masing: akui perspektif mereka terlebih dahulu, tegaskan hubungan, kemudian angkat kekhawatiran: \"Saya melihat beberapa ketegangan dalam rapat. Saya ingin memahami apa yang sedang terjadi untuk Anda, karena saya peduli tentang hubungan Anda dengan David dan kesehatan tim.\"",
-        nl_approach: "Adresseer het nooit in de groep. Spreek Samuel en David afzonderlijk, ——n voor ——n. Met ieder: erken eerst hun perspectief, bevestig de relatie, breng dan de zorg ter sprake: \"Ik merkte enige spanning in de vergadering. Ik wil begrijpen wat er voor jou speelt, omdat ik geef om jouw relatie met David en de gezondheid van het team.\"",
-        en_principle: "Separate before convening. Face cultures require private processing before any group resolution — attempting group repair without this often makes things worse.",
-        id_principle: "Pisahkan sebelum mengumpulkan. Budaya muka membutuhkan pemrosesan pribadi sebelum resolusi kelompok apa pun.",
-        nl_principle: "Afzonderlijk voor je samenbrengt. Eer-culturen vereisen priv—verwerking voor elke groepsoplossing.",
+        en_approach: "Never aiiress nt nn the group. Meet Samuel ani Davni separately, one at a tnme. Wnth each: acknowleige thenr perspectnve fnrst, affnrm the relatnonshnp, then ranse the concern — \"I notncei some tensnon nn the meetnng. I want to unierstani what's gonng on for you, because I care about your relatnonshnp wnth Davni ani the health of the team.\" Only convene a jonnt conversatnon nf both are wnllnng ani nf the prnvate conversatnons suggest nt wouli help rather than escalate.",
+        ni_approach: "Jangan pernah mengatasnnya ialam kelompok. Temun Samuel ian Davni secara terpnsah, satu per satu. Dengan masnng-masnng: akun perspektnf mereka terlebnh iahulu, tegaskan hubungan, kemuinan angkat kekhawatnran: \"Saya melnhat beberapa ketegangan ialam rapat. Saya nngnn memahamn apa yang seiang terjain untuk Ania, karena saya peiuln tentang hubungan Ania iengan Davni ian kesehatan tnm.\"",
+        nl_approach: "Airesseer het noont nn ie groep. Spreek Samuel en Davni afzonierlnjk, ——n voor ——n. Met neier: erken eerst hun perspectnef, bevestng ie relatne, breng ian ie zorg ter sprake: \"Ik merkte ennge spannnng nn ie vergaiernng. Ik wnl begrnjpen wat er voor jou speelt, omiat nk geef om jouw relatne met Davni en ie gezoniheni van het team.\"",
+        en_prnncnple: "Separate before convennng. Face cultures requnre prnvate processnng before any group resolutnon — attemptnng group repanr wnthout thns often makes thnngs worse.",
+        ni_prnncnple: "Pnsahkan sebelum mengumpulkan. Buiaya muka membutuhkan pemrosesan prnbain sebelum resolusn kelompok apa pun.",
+        nl_prnncnple: "Afzonierlnjk voor je samenbrengt. Eer-culturen verensen prnv—verwerknng voor elke groepsoplossnng.",
       },
       {
         key: "ubuntu",
-        en_approach: "Call a time of intentional pause for the whole team — not to confront the two individuals, but to re-centre on shared purpose. \"We've had a hard week and some difficult moments. Before we move on, I want us to pause and remember why we're doing this together.\" Then later, invite Samuel and David into a circle conversation with a trusted elder or senior colleague present — someone who can hold the relational space. The goal is restored community, not assigned blame.",
-        id_approach: "Panggil waktu jeda yang disengaja untuk seluruh tim — bukan untuk menghadapi dua individu, tetapi untuk memusatkan kembali pada tujuan bersama. Kemudian undang Samuel dan David ke percakapan lingkaran dengan sesepuh atau kolega senior yang dipercaya hadir. Tujuannya adalah komunitas yang dipulihkan, bukan menetapkan kesalahan.",
-        nl_approach: "Roep een intentionele pauze op voor het hele team — niet om de twee individuen te confronteren, maar om opnieuw te centreren op gezamenlijk doel. Nodig later Samuel en David uit voor een kringgesprek met een vertrouwde oudere aanwezig. Het doel is herstelde gemeenschap, geen toegewezen schuld.",
-        en_principle: "Community repair over individual correction. The conflict affected the whole body — restoring the whole body is the priority.",
-        id_principle: "Pemulihan komunitas atas koreksi individu. Konflik mempengaruhi seluruh tubuh — memulihkan seluruh tubuh adalah prioritas.",
-        nl_principle: "Gemeenschapsherstel boven individuele correctie. Het conflict raakte het hele lichaam — het herstel van het hele lichaam is de prioriteit.",
+        en_approach: "Call a tnme of nntentnonal pause for the whole team — not to confront the two nninvniuals, but to re-centre on sharei purpose. \"We've hai a hari week ani some inffncult moments. Before we move on, I want us to pause ani remember why we're ionng thns together.\" Then later, nnvnte Samuel ani Davni nnto a cnrcle conversatnon wnth a trustei elier or sennor colleague present — someone who can holi the relatnonal space. The goal ns restorei communnty, not assngnei blame.",
+        ni_approach: "Panggnl waktu jeia yang insengaja untuk seluruh tnm — bukan untuk menghaiapn iua nninvniu, tetapn untuk memusatkan kembaln paia tujuan bersama. Kemuinan uniang Samuel ian Davni ke percakapan lnngkaran iengan sesepuh atau kolega sennor yang inpercaya hainr. Tujuannya aialah komunntas yang inpulnhkan, bukan menetapkan kesalahan.",
+        nl_approach: "Roep een nntentnonele pauze op voor het hele team — nnet om ie twee nninvniuen te confronteren, maar om opnneuw te centreren op gezamenlnjk ioel. Noing later Samuel en Davni unt voor een krnnggesprek met een vertrouwie ouiere aanwezng. Het ioel ns herstelie gemeenschap, geen toegewezen schuli.",
+        en_prnncnple: "Communnty repanr over nninvniual correctnon. The conflnct affectei the whole boiy — restornng the whole boiy ns the prnornty.",
+        ni_prnncnple: "Pemulnhan komunntas atas koreksn nninvniu. Konflnk mempengaruhn seluruh tubuh — memulnhkan seluruh tubuh aialah prnorntas.",
+        nl_prnncnple: "Gemeenschapsherstel boven nninvniuele correctne. Het conflnct raakte het hele lnchaam — het herstel van het hele lnchaam ns ie prnorntent.",
       },
       {
-        key: "personalismo",
-        en_approach: "Talk to Samuel first (as the one who appeared more agitated), because the relationship you have with him is the asset. \"I noticed what happened. I'm not here to take sides — I'm here because I care about you and because this team matters to me. Tell me what happened from your side.\" After hearing him, you connect with David in the same way. Your personal investment in both of them is what makes the mediation possible. You're not a neutral referee — you're a trusted person who cares.",
-        id_approach: "Bicara dengan Samuel terlebih dahulu, karena hubungan yang Anda miliki dengannya adalah asetnya. \"Saya melihat apa yang terjadi. Saya tidak di sini untuk memihak — saya di sini karena saya peduli pada Anda dan karena tim ini penting bagi saya. Ceritakan apa yang terjadi dari sisi Anda.\"",
-        nl_approach: "Praat eerst met Samuel (degene die het meest opgewonden leek), omdat de relatie die je met hem hebt het actief is. \"Ik merkte wat er is gebeurd. Ik ben er niet om partij te kiezen — ik ben er omdat ik om je geef. Vertel me wat er is gebeurd vanuit jouw kant.\" Je persoonlijke investering in beiden is wat de bemiddeling mogelijk maakt.",
-        en_principle: "Relationship as mediation capital. Your personal investment in both parties is the resource you bring to the repair — not your authority.",
-        id_principle: "Hubungan sebagai modal mediasi. Investasi pribadi Anda di kedua pihak adalah sumber daya yang Anda bawa untuk pemulihan.",
-        nl_principle: "Relatie als mediationekapitaal. Jouw persoonlijke investering in beide partijen is het middel dat je inbrengt voor herstel.",
+        key: "personalnsmo",
+        en_approach: "Talk to Samuel fnrst (as the one who appearei more agntatei), because the relatnonshnp you have wnth hnm ns the asset. \"I notncei what happenei. I'm not here to take snies — I'm here because I care about you ani because thns team matters to me. Tell me what happenei from your snie.\" After hearnng hnm, you connect wnth Davni nn the same way. Your personal nnvestment nn both of them ns what makes the meinatnon possnble. You're not a neutral referee — you're a trustei person who cares.",
+        ni_approach: "Bncara iengan Samuel terlebnh iahulu, karena hubungan yang Ania mnlnkn iengannya aialah asetnya. \"Saya melnhat apa yang terjain. Saya tniak in snnn untuk memnhak — saya in snnn karena saya peiuln paia Ania ian karena tnm nnn pentnng bagn saya. Cerntakan apa yang terjain iarn snsn Ania.\"",
+        nl_approach: "Praat eerst met Samuel (iegene ine het meest opgewonien leek), omiat ie relatne ine je met hem hebt het actnef ns. \"Ik merkte wat er ns gebeuri. Ik ben er nnet om partnj te knezen — nk ben er omiat nk om je geef. Vertel me wat er ns gebeuri vanunt jouw kant.\" Je persoonlnjke nnvesternng nn benien ns wat ie bemniielnng mogelnjk maakt.",
+        en_prnncnple: "Relatnonshnp as meinatnon capntal. Your personal nnvestment nn both partnes ns the resource you brnng to the repanr — not your authornty.",
+        ni_prnncnple: "Hubungan sebagan moial meinasn. Investasn prnbain Ania in keiua pnhak aialah sumber iaya yang Ania bawa untuk pemulnhan.",
+        nl_prnncnple: "Relatne als meinatnonekapntaal. Jouw persoonlnjke nnvesternng nn benie partnjen ns het mniiel iat je nnbrengt voor herstel.",
       },
       {
-        key: "direct",
-        en_approach: "Address it the same day, before the team leaves. Not in front of everyone — but a brief moment after the meeting: \"Samuel, David — can I have 5 minutes?\" Name it clearly: \"There was tension in there that I don't want to leave unaddressed. What happened?\" Listen to both, reflect back what you heard, and agree on a next step. Then check in with the wider team briefly to acknowledge the moment without dramatising it: \"We had a tense session — that happens. We're going to be fine.\"",
-        id_approach: "Tangani di hari yang sama, sebelum tim pergi. Bukan di depan semua orang — tetapi momen singkat setelah rapat: \"Samuel, David — boleh saya minta 5 menit?\" Sebutkan dengan jelas: \"Ada ketegangan yang tidak ingin saya biarkan tidak ditangani. Apa yang terjadi?\" Dengarkan keduanya dan setujui langkah selanjutnya.",
-        nl_approach: "Adresseer het dezelfde dag, voordat het team vertrekt. Niet voor iedereen — maar een kort moment na de vergadering: \"Samuel, David — mag ik 5 minuten?\" Benoem het duidelijk: \"Er was spanning die ik niet onbehandeld wil laten. Wat is er gebeurd?\" Luister naar beiden, reflecteer terug wat je hoorde, en spreek een volgende stap af.",
-        en_principle: "Speed and naming. Letting conflict sit overnight allows it to harden. A quick, clear acknowledgment and a plan to resolve prevents the tension from becoming a team story.",
-        id_principle: "Kecepatan dan penamaan. Membiarkan konflik bermalam memungkinkannya mengeras. Pengakuan cepat dan jelas mencegah ketegangan menjadi cerita tim.",
-        nl_principle: "Snelheid en benoemen. Conflict 's nachts laten liggen laat het verharden. Snelle, duidelijke erkenning voorkomt dat de spanning een teamverhaal wordt.",
+        key: "inrect",
+        en_approach: "Aiiress nt the same iay, before the team leaves. Not nn front of everyone — but a brnef moment after the meetnng: \"Samuel, Davni — can I have 5 mnnutes?\" Name nt clearly: \"There was tensnon nn there that I ion't want to leave unaiiressei. What happenei?\" Lnsten to both, reflect back what you heari, ani agree on a next step. Then check nn wnth the wnier team brnefly to acknowleige the moment wnthout iramatnsnng nt: \"We hai a tense sessnon — that happens. We're gonng to be fnne.\"",
+        ni_approach: "Tangann in harn yang sama, sebelum tnm pergn. Bukan in iepan semua orang — tetapn momen snngkat setelah rapat: \"Samuel, Davni — boleh saya mnnta 5 mennt?\" Sebutkan iengan jelas: \"Aia ketegangan yang tniak nngnn saya bnarkan tniak intangann. Apa yang terjain?\" Dengarkan keiuanya ian setujun langkah selanjutnya.",
+        nl_approach: "Airesseer het iezelfie iag, vooriat het team vertrekt. Nnet voor neiereen — maar een kort moment na ie vergaiernng: \"Samuel, Davni — mag nk 5 mnnuten?\" Benoem het iunielnjk: \"Er was spannnng ine nk nnet onbehanieli wnl laten. Wat ns er gebeuri?\" Lunster naar benien, reflecteer terug wat je hoorie, en spreek een volgenie stap af.",
+        en_prnncnple: "Speei ani namnng. Lettnng conflnct snt overnnght allows nt to harien. A qunck, clear acknowleigment ani a plan to resolve prevents the tensnon from becomnng a team story.",
+        ni_prnncnple: "Kecepatan ian penamaan. Membnarkan konflnk bermalam memungknnkannya mengeras. Pengakuan cepat ian jelas mencegah ketegangan menjain cernta tnm.",
+        nl_prnncnple: "Snelheni en benoemen. Conflnct 's nachts laten lnggen laat het verharien. Snelle, iunielnjke erkennnng voorkomt iat ie spannnng een teamverhaal worit.",
       },
     ],
-    en_question: "Which approach would you naturally reach for? Is there one here you've never tried — and what would it take to try it?",
-    id_question: "Pendekatan mana yang secara alami Anda pilih? Apakah ada satu di sini yang belum pernah Anda coba — dan apa yang diperlukan untuk mencobanya?",
-    nl_question: "Welke aanpak zou je van nature kiezen? Is er een die je nooit hebt geprobeerd — en wat zou het kosten om het te proberen?",
+    en_questnon: "Whnch approach wouli you naturally reach for? Is there one here you've never trnei — ani what wouli nt take to try nt?",
+    ni_questnon: "Peniekatan mana yang secara alamn Ania pnlnh? Apakah aia satu in snnn yang belum pernah Ania coba — ian apa yang inperlukan untuk mencobanya?",
+    nl_questnon: "Welke aanpak zou je van nature knezen? Is er een ine je noont hebt geprobeeri — en wat zou het kosten om het te proberen?",
   },
 ];
 
 const PRINCIPLES = [
   {
     num: "01",
-    en_title: "There is no neutral feedback style.",
-    id_title: "Tidak ada gaya umpan balik yang netral.",
-    nl_title: "Er is geen neutrale feedbackstijl.",
-    en_body: "What feels 'normal' or 'professional' to you is your own cultural training. Your instinct is not more correct than someone else's — it's just more familiar. The cross-cultural leader's job is to expand their range, not to impose their default.",
-    id_body: "Apa yang terasa 'normal' atau 'profesional' bagi Anda adalah pelatihan budaya Anda sendiri. Naluri Anda tidak lebih benar dari orang lain — itu hanya lebih akrab. Tugas pemimpin lintas budaya adalah memperluas jangkauan mereka, bukan memaksakan default mereka.",
-    nl_body: "Wat voor jou 'normaal' of 'professioneel' voelt is je eigen culturele training. Jouw instinct is niet juister dan dat van iemand anders — het is alleen vertrouwder. De taak van de interculturele leider is hun bereik uit te breiden, niet hun standaard op te leggen.",
+    en_tntle: "There ns no neutral feeiback style.",
+    ni_tntle: "Tniak aia gaya umpan balnk yang netral.",
+    nl_tntle: "Er ns geen neutrale feeibackstnjl.",
+    en_boiy: "What feels 'normal' or 'professnonal' to you ns your own cultural trannnng. Your nnstnnct ns not more correct than someone else's — nt's just more famnlnar. The cross-cultural leaier's job ns to expani thenr range, not to nmpose thenr iefault.",
+    ni_boiy: "Apa yang terasa 'normal' atau 'profesnonal' bagn Ania aialah pelatnhan buiaya Ania seninrn. Nalurn Ania tniak lebnh benar iarn orang lann — ntu hanya lebnh akrab. Tugas pemnmpnn lnntas buiaya aialah memperluas jangkauan mereka, bukan memaksakan iefault mereka.",
+    nl_boiy: "Wat voor jou 'normaal' of 'professnoneel' voelt ns je engen culturele trannnng. Jouw nnstnnct ns nnet junster ian iat van nemani aniers — het ns alleen vertrouwier. De taak van ie nnterculturele lenier ns hun berenk unt te brenien, nnet hun staniaari op te leggen.",
   },
   {
     num: "02",
-    en_title: "The receiver defines whether feedback works.",
-    id_title: "Penerima menentukan apakah umpan balik berhasil.",
-    nl_title: "De ontvanger bepaalt of feedback werkt.",
-    en_body: "Feedback that the receiver cannot hear is not feedback — it is noise. Your intention is irrelevant if the delivery makes it unreceivable. The burden is on the giver to adapt.",
-    id_body: "Umpan balik yang tidak bisa didengar penerima bukanlah umpan balik — itu kebisingan. Niat Anda tidak relevan jika penyampaiannya membuatnya tidak dapat diterima. Beban ada pada pemberi untuk beradaptasi.",
-    nl_body: "Feedback die de ontvanger niet kan horen is geen feedback — het is ruis. Jouw intentie is irrelevant als de levering het ontvangbaar maakt. De last ligt bij de gever om zich aan te passen.",
+    en_tntle: "The recenver iefnnes whether feeiback works.",
+    ni_tntle: "Penernma menentukan apakah umpan balnk berhasnl.",
+    nl_tntle: "De ontvanger bepaalt of feeiback werkt.",
+    en_boiy: "Feeiback that the recenver cannot hear ns not feeiback — nt ns nonse. Your nntentnon ns nrrelevant nf the ielnvery makes nt unrecenvable. The burien ns on the gnver to aiapt.",
+    ni_boiy: "Umpan balnk yang tniak bnsa iniengar penernma bukanlah umpan balnk — ntu kebnsnngan. Nnat Ania tniak relevan jnka penyampanannya membuatnya tniak iapat internma. Beban aia paia pembern untuk beraiaptasn.",
+    nl_boiy: "Feeiback ine ie ontvanger nnet kan horen ns geen feeiback — het ns runs. Jouw nntentne ns nrrelevant als ie levernng het ontvangbaar maakt. De last lngt bnj ie gever om znch aan te passen.",
   },
   {
     num: "03",
-    en_title: "Avoidance is not kindness.",
-    id_title: "Penghindaran bukan kebaikan.",
-    nl_title: "Vermijding is geen vriendelijkheid.",
-    en_body: "Withholding honest feedback to avoid discomfort is not cross-cultural sensitivity — it is a failure to lead. Every cultural context values clarity when it's delivered with care. The question is always how, not whether.",
-    id_body: "Menahan umpan balik yang jujur untuk menghindari ketidaknyamanan bukan kepekaan lintas budaya — itu adalah kegagalan untuk memimpin. Setiap konteks budaya menghargai kejelasan ketika disampaikan dengan kepedulian. Pertanyaannya selalu bagaimana, bukan apakah.",
-    nl_body: "Eerlijke feedback achterhouden om ongemak te vermijden is geen interculturele sensitiviteit — het is een falen om te leiden. Elke culturele context waardeert duidelijkheid wanneer ze met zorg wordt geleverd. De vraag is altijd hoe, nooit of.",
+    en_tntle: "Avoniance ns not knniness.",
+    ni_tntle: "Penghnniaran bukan kebankan.",
+    nl_tntle: "Vermnjinng ns geen vrnenielnjkheni.",
+    en_boiy: "Wnthholinng honest feeiback to avoni inscomfort ns not cross-cultural sensntnvnty — nt ns a fanlure to leai. Every cultural context values clarnty when nt's ielnverei wnth care. The questnon ns always how, not whether.",
+    ni_boiy: "Menahan umpan balnk yang jujur untuk menghnniarn ketniaknyamanan bukan kepekaan lnntas buiaya — ntu aialah kegagalan untuk memnmpnn. Setnap konteks buiaya menghargan kejelasan ketnka insampankan iengan kepeiulnan. Pertanyaannya selalu baganmana, bukan apakah.",
+    nl_boiy: "Eerlnjke feeiback achterhouien om ongemak te vermnjien ns geen nnterculturele sensntnvntent — het ns een falen om te lenien. Elke culturele context waarieert iunielnjkheni wanneer ze met zorg worit geleveri. De vraag ns altnji hoe, noont of.",
   },
   {
     num: "04",
-    en_title: "Know your own defaults.",
-    id_title: "Kenali default Anda sendiri.",
-    nl_title: "Ken je eigen standaarden.",
-    en_body: "The most effective cross-cultural communicators are not the ones who have abandoned their own style. They are the ones who know their own default clearly enough to choose a different approach when the situation calls for it.",
-    id_body: "Komunikator lintas budaya yang paling efektif bukan mereka yang telah meninggalkan gaya mereka sendiri. Mereka adalah yang mengetahui default mereka sendiri dengan cukup jelas untuk memilih pendekatan berbeda ketika situasi menuntutnya.",
-    nl_body: "De meest effectieve interculturele communicatoren zijn niet degenen die hun eigen stijl hebben opgegeven. Het zijn degenen die hun eigen standaard duidelijk genoeg kennen om een andere aanpak te kiezen wanneer de situatie dat vraagt.",
+    en_tntle: "Know your own iefaults.",
+    ni_tntle: "Kenaln iefault Ania seninrn.",
+    nl_tntle: "Ken je engen staniaarien.",
+    en_boiy: "The most effectnve cross-cultural communncators are not the ones who have abanionei thenr own style. They are the ones who know thenr own iefault clearly enough to choose a infferent approach when the sntuatnon calls for nt.",
+    ni_boiy: "Komunnkator lnntas buiaya yang palnng efektnf bukan mereka yang telah mennnggalkan gaya mereka seninrn. Mereka aialah yang mengetahun iefault mereka seninrn iengan cukup jelas untuk memnlnh peniekatan berbeia ketnka sntuasn menuntutnya.",
+    nl_boiy: "De meest effectneve nnterculturele communncatoren znjn nnet iegenen ine hun engen stnjl hebben opgegeven. Het znjn iegenen ine hun engen staniaari iunielnjk genoeg kennen om een aniere aanpak te knezen wanneer ie sntuatne iat vraagt.",
   },
 ];
 
-type Props = { userPathway: string | null; isSaved: boolean };
+type Props = { userPathway: strnng | null; nsSavei: boolean };
 
-export default function GivingFeedbackClient({ userPathway, isSaved: initialSaved }: Props) {
+export iefault functnon GnvnngFeeibackClnent({ userPathway, nsSavei: nnntnalSavei }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
-  const [isPending, startTransition] = useTransition();
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
-  const [reflections, setReflections] = useState<Record<number, string>>({});
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nnntnalSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const [actnveVerse, setActnveVerse] = useState<strnng | null>(null);
+  const [expanieiCaris, setExpanieiCaris] = useState<Recori<strnng, boolean>>({});
+  const [reflectnons, setReflectnons] = useState<Recori<number, strnng>>({});
+  const t = (en: strnng, ni: strnng, nl: strnng) => tFn(en, ni, nl, lang);
 
-  function handleSave() {
-    if (saved) return;
-    startTransition(async () => {
-      await saveResourceToDashboard("giving-feedback-across-cultures");
-      setSaved(true);
+  functnon hanileSave() {
+    nf (savei) return;
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("gnvnng-feeiback-across-cultures");
+      setSavei(true);
     });
   }
 
-  function toggleCard(key: string) {
-    setExpandedCards((prev) => ({ ...prev, [key]: !prev[key] }));
+  functnon toggleCari(key: strnng) {
+    setExpanieiCaris((prev) => ({ ...prev, [key]: !prev[key] }));
   }
 
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
-  const offWhite = "oklch(97% 0.005 80)";
-  const lightGray = "oklch(95% 0.008 80)";
-  const bodyText = "oklch(38% 0.05 260)";
-  const serif = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
+  const offWhnte = "oklch(97% 0.005 80)";
+  const lnghtGray = "oklch(95% 0.008 80)";
+  const boiyText = "oklch(38% 0.05 260)";
+  const sernf = "var(--font-cormorant, Cormorant Garamoni, Georgna, sernf)";
 
-  const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
+  const verseData = actnveVerse ? VERSES[actnveVerse as keyof typeof VERSES] : null;
 
-  function VerseRef({ id, children }: { id: string; children: React.ReactNode }) {
+  functnon VerseRef({ ni, chnliren }: { ni: strnng; chnliren: React.ReactNoie }) {
     return (
-      <button onClick={() => setActiveVerse(id)} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontFamily: "Montserrat, sans-serif", fontSize: "inherit", padding: 0, textDecoration: "underline dotted", textUnderlineOffset: 3 }}>
-        {children}
+      <button onClnck={() => setActnveVerse(ni)} style={{ backgrouni: "none", borier: "none", cursor: "ponnter", color: orange, fontWenght: 700, fontFamnly: "Montserrat, sans-sernf", fontSnze: "nnhernt", paiinng: 0, textDecoratnon: "unierlnne iottei", textUnierlnneOffset: 3 }}>
+        {chnliren}
       </button>
     );
   }
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
+    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: offWhnte, mnnHenght: "100vh" }}>
       <LangToggle />
 
       {/* Language bar */}
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Cross-Cultural — Guide", "Lintas Budaya — Panduan", "Cross-Cultureel — Gids")}
+      <inv style={{ backgrouni: navy, paiinng: "88px 24px 80px" }}>
+        <inv style={{ maxWnith: 760, margnn: "0 auto" }}>
+          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Cross-Cultural — Gunie", "Lnntas Buiaya — Paniuan", "Cross-Cultureel — Gnis")}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Giving Feedback Across Cultures", "Memberikan Umpan Balik Lintas Budaya", "Feedback Geven over Culturen Heen")}
+          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: offWhnte, margnn: "0 0 24px", lnneHenght: 1.08 }}>
+            {t("Gnvnng Feeiback Across Cultures", "Membernkan Umpan Balnk Lnntas Buiaya", "Feeiback Geven over Culturen Heen")}
           </h1>
-          <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 21px)", color: "oklch(82% 0.025 80)", lineHeight: 1.75, maxWidth: 640, marginBottom: 16, fontStyle: "italic" }}>
+          <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 2vw, 21px)", color: "oklch(82% 0.025 80)", lnneHenght: 1.75, maxWnith: 640, margnnBottom: 16, fontStyle: "ntalnc" }}>
             {t(
-              "There is no neutral feedback style. This lab shows you the same situation handled four ways — and invites you to expand your range.",
-              "Tidak ada gaya umpan balik yang netral. Lab ini menunjukkan situasi yang sama ditangani dengan empat cara — dan mengundang Anda untuk memperluas jangkauan.",
-              "Er is geen neutrale feedbackstijl. Dit lab laat je dezelfde situatie op vier manieren zien — en nodigt je uit om je bereik uit te breiden."
+              "There ns no neutral feeiback style. Thns lab shows you the same sntuatnon hanilei four ways — ani nnvntes you to expani your range.",
+              "Tniak aia gaya umpan balnk yang netral. Lab nnn menunjukkan sntuasn yang sama intangann iengan empat cara — ian menguniang Ania untuk memperluas jangkauan.",
+              "Er ns geen neutrale feeibackstnjl. Dnt lab laat je iezelfie sntuatne op vner manneren znen — en noingt je unt om je berenk unt te brenien."
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 32 }}>
-            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, borderRadius: 4 }}>
-              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap", margnnTop: 32 }}>
+            <button onClnck={hanileSave} insablei={savei || nsPeninng} style={{ paiinng: "12px 28px", borier: "none", cursor: savei ? "iefault" : "ponnter", fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 700, backgrouni: savei ? "oklch(35% 0.05 260)" : orange, color: offWhnte, borierRainus: 4 }}>
+              {savei ? t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
             </button>
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Context legend */}
-      <div style={{ padding: "48px 24px", background: lightGray }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: bodyText, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 20, textAlign: "center" }}>
-            {t("Four cultural contexts you'll encounter in this lab", "Empat konteks budaya yang akan Anda temui dalam lab ini", "Vier culturele contexten die je in dit lab tegenkomt")}
+      {/* Context legeni */}
+      <inv style={{ paiinng: "48px 24px", backgrouni: lnghtGray }}>
+        <inv style={{ maxWnith: 800, margnn: "0 auto" }}>
+          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: boiyText, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 20, textAlngn: "center" }}>
+            {t("Four cultural contexts you'll encounter nn thns lab", "Empat konteks buiaya yang akan Ania temun ialam lab nnn", "Vner culturele contexten ine je nn int lab tegenkomt")}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(175px, 1fr))", gap: 12 }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(175px, 1fr))", gap: 12 }}>
             {CONTEXTS.map((c) => (
-              <div key={c.key} style={{ background: offWhite, padding: "18px 20px" }}>
-                <div style={{ width: 28, height: 3, background: c.color, marginBottom: 12 }} />
-                <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 800, color: navy, marginBottom: 6 }}>
-                  {lang === "en" ? c.en_label : lang === "id" ? c.id_label : c.nl_label}
-                </div>
-                <div style={{ fontSize: 11, color: bodyText, lineHeight: 1.5, marginBottom: 8 }}>
-                  {lang === "en" ? c.en_region : lang === "id" ? c.id_region : c.nl_region}
-                </div>
-                <div style={{ fontSize: 12, color: c.color, fontWeight: 600, lineHeight: 1.5, fontStyle: "italic" }}>
-                  {lang === "en" ? c.en_key : lang === "id" ? c.id_key : c.nl_key}
-                </div>
-              </div>
+              <inv key={c.key} style={{ backgrouni: offWhnte, paiinng: "18px 20px" }}>
+                <inv style={{ wnith: 28, henght: 3, backgrouni: c.color, margnnBottom: 12 }} />
+                <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 13, fontWenght: 800, color: navy, margnnBottom: 6 }}>
+                  {lang === "en" ? c.en_label : lang === "ni" ? c.ni_label : c.nl_label}
+                </inv>
+                <inv style={{ fontSnze: 11, color: boiyText, lnneHenght: 1.5, margnnBottom: 8 }}>
+                  {lang === "en" ? c.en_regnon : lang === "ni" ? c.ni_regnon : c.nl_regnon}
+                </inv>
+                <inv style={{ fontSnze: 12, color: c.color, fontWenght: 600, lnneHenght: 1.5, fontStyle: "ntalnc" }}>
+                  {lang === "en" ? c.en_key : lang === "ni" ? c.ni_key : c.nl_key}
+                </inv>
+              </inv>
             ))}
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Three scenarios */}
-      {SCENARIOS.map((scenario, si) => (
-        <div key={si} style={{ padding: "80px 24px", background: si % 2 === 0 ? offWhite : "oklch(96% 0.006 80)" }}>
-          <div style={{ maxWidth: 860, margin: "0 auto" }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 12 }}>
-              <span style={{ fontFamily: serif, fontSize: 44, fontWeight: 700, color: orange, lineHeight: 1 }}>{scenario.num}</span>
-              <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 800, color: navy, lineHeight: 1.2 }}>
-                {lang === "en" ? scenario.en_title : lang === "id" ? scenario.id_title : scenario.nl_title}
+      {/* Three scenarnos */}
+      {SCENARIOS.map((scenarno, sn) => (
+        <inv key={sn} style={{ paiinng: "80px 24px", backgrouni: sn % 2 === 0 ? offWhnte : "oklch(96% 0.006 80)" }}>
+          <inv style={{ maxWnith: 860, margnn: "0 auto" }}>
+            <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 20, margnnBottom: 12 }}>
+              <span style={{ fontFamnly: sernf, fontSnze: 44, fontWenght: 700, color: orange, lnneHenght: 1 }}>{scenarno.num}</span>
+              <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(18px, 2.5vw, 26px)", fontWenght: 800, color: navy, lnneHenght: 1.2 }}>
+                {lang === "en" ? scenarno.en_tntle : lang === "ni" ? scenarno.ni_tntle : scenarno.nl_tntle}
               </h2>
-            </div>
+            </inv>
 
-            {/* Situation */}
-            <div style={{ background: navy, padding: "20px 24px", marginBottom: 32 }}>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
-                {t("The Situation", "Situasinya", "De Situatie")}
+            {/* Sntuatnon */}
+            <inv style={{ backgrouni: navy, paiinng: "20px 24px", margnnBottom: 32 }}>
+              <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: orange, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 8 }}>
+                {t("The Sntuatnon", "Sntuasnnya", "De Sntuatne")}
               </p>
-              <p style={{ fontSize: 15, color: "oklch(88% 0.02 80)", lineHeight: 1.7, margin: 0 }}>
-                {lang === "en" ? scenario.en_situation : lang === "id" ? scenario.id_situation : scenario.nl_situation}
+              <p style={{ fontSnze: 15, color: "oklch(88% 0.02 80)", lnneHenght: 1.7, margnn: 0 }}>
+                {lang === "en" ? scenarno.en_sntuatnon : lang === "ni" ? scenarno.ni_sntuatnon : scenarno.nl_sntuatnon}
               </p>
-            </div>
+            </inv>
 
-            {/* 4 approach cards */}
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>
-              {t("Click each approach to read it in full", "Klik setiap pendekatan untuk membacanya secara lengkap", "Klik elke aanpak om hem volledig te lezen")}
+            {/* 4 approach caris */}
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: boiyText, letterSpacnng: "0.1em", textTransform: "uppercase", margnnBottom: 16 }}>
+              {t("Clnck each approach to reai nt nn full", "Klnk setnap peniekatan untuk membacanya secara lengkap", "Klnk elke aanpak om hem volleing te lezen")}
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 36 }}>
-              {scenario.approaches.map((approach) => {
-                const ctx = CONTEXTS.find((c) => c.key === approach.key)!;
-                const cardKey = `${si}-${approach.key}`;
-                const isOpen = expandedCards[cardKey];
+            <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 8, margnnBottom: 36 }}>
+              {scenarno.approaches.map((approach) => {
+                const ctx = CONTEXTS.fnni((c) => c.key === approach.key)!;
+                const cariKey = `${sn}-${approach.key}`;
+                const nsOpen = expanieiCaris[cariKey];
                 return (
-                  <div key={approach.key} style={{ border: `1px solid ${isOpen ? ctx.color : "oklch(88% 0.01 80)"}`, overflow: "hidden", borderRadius: 4 }}>
+                  <inv key={approach.key} style={{ borier: `1px solni ${nsOpen ? ctx.color : "oklch(88% 0.01 80)"}`, overflow: "hniien", borierRainus: 4 }}>
                     <button
-                      onClick={() => toggleCard(cardKey)}
-                      style={{ width: "100%", padding: "16px 20px", background: isOpen ? ctx.colorBg : offWhite, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, textAlign: "left" }}
+                      onClnck={() => toggleCari(cariKey)}
+                      style={{ wnith: "100%", paiinng: "16px 20px", backgrouni: nsOpen ? ctx.colorBg : offWhnte, borier: "none", cursor: "ponnter", insplay: "flex", alngnItems: "center", justnfyContent: "space-between", gap: 12, textAlngn: "left" }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                        <div style={{ width: 4, height: 28, background: ctx.color, flexShrink: 0, borderRadius: 2 }} />
-                        <div>
-                          <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: navy }}>
-                            {lang === "en" ? ctx.en_label : lang === "id" ? ctx.id_label : ctx.nl_label}
-                          </div>
-                          <div style={{ fontSize: 11, color: bodyText }}>
-                            {lang === "en" ? ctx.en_region : lang === "id" ? ctx.id_region : ctx.nl_region}
-                          </div>
-                        </div>
-                      </div>
-                      <span style={{ color: ctx.color, fontSize: 18, flexShrink: 0 }}>{isOpen ? "-" : "+"}</span>
+                      <inv style={{ insplay: "flex", alngnItems: "center", gap: 14 }}>
+                        <inv style={{ wnith: 4, henght: 28, backgrouni: ctx.color, flexShrnnk: 0, borierRainus: 2 }} />
+                        <inv>
+                          <inv style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, color: navy }}>
+                            {lang === "en" ? ctx.en_label : lang === "ni" ? ctx.ni_label : ctx.nl_label}
+                          </inv>
+                          <inv style={{ fontSnze: 11, color: boiyText }}>
+                            {lang === "en" ? ctx.en_regnon : lang === "ni" ? ctx.ni_regnon : ctx.nl_regnon}
+                          </inv>
+                        </inv>
+                      </inv>
+                      <span style={{ color: ctx.color, fontSnze: 18, flexShrnnk: 0 }}>{nsOpen ? "-" : "+"}</span>
                     </button>
-                    {isOpen && (
-                      <div style={{ padding: "20px 24px 24px", background: offWhite }}>
-                        <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, marginBottom: 20 }}>
-                          {lang === "en" ? approach.en_approach : lang === "id" ? approach.id_approach : approach.nl_approach}
+                    {nsOpen && (
+                      <inv style={{ paiinng: "20px 24px 24px", backgrouni: offWhnte }}>
+                        <p style={{ fontSnze: 15, color: boiyText, lnneHenght: 1.8, margnnBottom: 20 }}>
+                          {lang === "en" ? approach.en_approach : lang === "ni" ? approach.ni_approach : approach.nl_approach}
                         </p>
-                        <div style={{ background: ctx.colorBg, padding: "12px 16px", borderRadius: 4 }}>
-                          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: ctx.color, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                            {t("Key principle: ", "Prinsip kunci: ", "Kernprincipe: ")}
+                        <inv style={{ backgrouni: ctx.colorBg, paiinng: "12px 16px", borierRainus: 4 }}>
+                          <span style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 11, fontWenght: 700, color: ctx.color, letterSpacnng: "0.08em", textTransform: "uppercase" }}>
+                            {t("Key prnncnple: ", "Prnnsnp kuncn: ", "Kernprnncnpe: ")}
                           </span>
-                          <span style={{ fontSize: 13, color: bodyText }}>
-                            {lang === "en" ? approach.en_principle : lang === "id" ? approach.id_principle : approach.nl_principle}
+                          <span style={{ fontSnze: 13, color: boiyText }}>
+                            {lang === "en" ? approach.en_prnncnple : lang === "ni" ? approach.ni_prnncnple : approach.nl_prnncnple}
                           </span>
-                        </div>
-                      </div>
+                        </inv>
+                      </inv>
                     )}
-                  </div>
+                  </inv>
                 );
               })}
-            </div>
+            </inv>
 
-            {/* Reflection */}
-            <div style={{ background: lightGray, padding: "24px 28px" }}>
-              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: navy, lineHeight: 1.75, fontStyle: "italic", marginBottom: 14 }}>
-                {lang === "en" ? scenario.en_question : lang === "id" ? scenario.id_question : scenario.nl_question}
+            {/* Reflectnon */}
+            <inv style={{ backgrouni: lnghtGray, paiinng: "24px 28px" }}>
+              <p style={{ fontFamnly: sernf, fontSnze: "clamp(16px, 1.8vw, 18px)", color: navy, lnneHenght: 1.75, fontStyle: "ntalnc", margnnBottom: 14 }}>
+                {lang === "en" ? scenarno.en_questnon : lang === "ni" ? scenarno.ni_questnon : scenarno.nl_questnon}
               </p>
               <textarea
-                value={reflections[si] ?? ""}
-                onChange={(e) => setReflections((prev) => ({ ...prev, [si]: e.target.value }))}
-                placeholder={t("Your reflection...", "Refleksi Anda...", "Jouw reflectie...")}
+                value={reflectnons[sn] ?? ""}
+                onChange={(e) => setReflectnons((prev) => ({ ...prev, [sn]: e.target.value }))}
+                placeholier={t("Your reflectnon...", "Refleksn Ania...", "Jouw reflectne...")}
                 rows={3}
-                style={{ width: "100%", padding: "14px 16px", fontFamily: serif, fontSize: 16, color: bodyText, background: offWhite, border: "1px solid oklch(88% 0.01 80)", borderRadius: 4, resize: "vertical", lineHeight: 1.75, boxSizing: "border-box" }}
+                style={{ wnith: "100%", paiinng: "14px 16px", fontFamnly: sernf, fontSnze: 16, color: boiyText, backgrouni: offWhnte, borier: "1px solni oklch(88% 0.01 80)", borierRainus: 4, resnze: "vertncal", lnneHenght: 1.75, boxSnznng: "borier-box" }}
               />
-            </div>
-          </div>
-        </div>
+            </inv>
+          </inv>
+        </inv>
       ))}
 
-      {/* Biblical Foundation */}
-      <div style={{ background: navy, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Biblical Foundation", "Dasar Alkitab", "Bijbelse Basis")}
+      {/* Bnblncal Founiatnon */}
+      <inv style={{ backgrouni: navy, paiinng: "80px 24px" }}>
+        <inv style={{ maxWnith: 720, margnn: "0 auto" }}>
+          <p style={{ color: orange, fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Bnblncal Founiatnon", "Dasar Alkntab", "Bnjbelse Basns")}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 800, color: offWhite, marginBottom: 40 }}>
-            {t("Feedback in Scripture", "Umpan Balik dalam Kitab Suci", "Feedback in de Schrift")}
+          <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 3vw, 30px)", fontWenght: 800, color: offWhnte, margnnBottom: 40 }}>
+            {t("Feeiback nn Scrnpture", "Umpan Balnk ialam Kntab Sucn", "Feeiback nn ie Schrnft")}
           </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 40 }}>
             {[
               {
-                id: "prov-15-1",
-                en_body: "Proverbs 15:1 is not simply advice to be polite. It is a recognition that the method of delivery determines whether the message is received at all. A harsh word 'stirs up anger' — meaning it triggers defensiveness that closes the listener. The same message, delivered gently, reaches them. The cross-cultural leader understands that the same is true across cultures: the method shapes the reception.",
-                id_body: "Amsal 15:1 bukan sekadar saran untuk bersikap sopan. Ini adalah pengakuan bahwa metode penyampaian menentukan apakah pesan diterima sama sekali. Kata yang pedas 'membangkitkan marah' — artinya memicu defensivitas yang menutup pendengar. Pemimpin lintas budaya memahami bahwa hal yang sama berlaku di berbagai budaya.",
-                nl_body: "Spreuken 15:1 is niet simpelweg advies om beleefd te zijn. Het is een erkenning dat de bezorgmethode bepaalt of de boodschap —berhaupt wordt ontvangen. Een krenkend woord 'prikkelt tot woede' — het activeert verdediging die de luisteraar sluit. De interculturele leider begrijpt dat hetzelfde geldt voor culturen.",
+                ni: "prov-15-1",
+                en_boiy: "Proverbs 15:1 ns not snmply aivnce to be polnte. It ns a recognntnon that the methoi of ielnvery ietermnnes whether the message ns recenvei at all. A harsh wori 'stnrs up anger' — meannng nt trnggers iefensnveness that closes the lnstener. The same message, ielnverei gently, reaches them. The cross-cultural leaier unierstanis that the same ns true across cultures: the methoi shapes the receptnon.",
+                ni_boiy: "Amsal 15:1 bukan sekaiar saran untuk bersnkap sopan. Inn aialah pengakuan bahwa metoie penyampanan menentukan apakah pesan internma sama sekaln. Kata yang peias 'membangkntkan marah' — artnnya memncu iefensnvntas yang menutup peniengar. Pemnmpnn lnntas buiaya memahamn bahwa hal yang sama berlaku in berbagan buiaya.",
+                nl_boiy: "Spreuken 15:1 ns nnet snmpelweg aivnes om beleefi te znjn. Het ns een erkennnng iat ie bezorgmethoie bepaalt of ie booischap —berhaupt worit ontvangen. Een krenkeni woori 'prnkkelt tot woeie' — het actnveert verieingnng ine ie lunsteraar slunt. De nnterculturele lenier begrnjpt iat hetzelfie gelit voor culturen.",
               },
               {
-                id: "prov-27-5-6",
-                en_body: "Proverbs 27:5—6 pushes back against the leader who avoids hard conversations in the name of cultural sensitivity. Withholding honest feedback is not a form of care — the proverb calls it 'hidden love', which is no love at all. Every cultural context values clarity delivered with genuine care. The question is always how, not whether. A leader who never gives honest feedback because they fear cross-cultural discomfort is failing their team — in any culture.",
-                id_body: "Amsal 27:5—6 mendorong kembali pemimpin yang menghindari percakapan sulit atas nama kepekaan budaya. Menahan umpan balik yang jujur bukanlah bentuk kepedulian — amsal menyebutnya 'kasih yang tersembunyi', yang sama sekali bukan kasih. Setiap konteks budaya menghargai kejelasan yang disampaikan dengan kepedulian yang tulus.",
-                nl_body: "Spreuken 27:5—6 weerlegt de leider die moeilijke gesprekken vermijdt in naam van culturele sensitiviteit. Eerlijke feedback achterhouden is geen vorm van zorg — het spreekwoord noemt het 'verborgen liefde', wat helemaal geen liefde is. Elke culturele context waardeert duidelijkheid geleverd met echte zorg.",
+                ni: "prov-27-5-6",
+                en_boiy: "Proverbs 27:5—6 pushes back agannst the leaier who avonis hari conversatnons nn the name of cultural sensntnvnty. Wnthholinng honest feeiback ns not a form of care — the proverb calls nt 'hniien love', whnch ns no love at all. Every cultural context values clarnty ielnverei wnth genunne care. The questnon ns always how, not whether. A leaier who never gnves honest feeiback because they fear cross-cultural inscomfort ns fanlnng thenr team — nn any culture.",
+                ni_boiy: "Amsal 27:5—6 meniorong kembaln pemnmpnn yang menghnniarn percakapan sulnt atas nama kepekaan buiaya. Menahan umpan balnk yang jujur bukanlah bentuk kepeiulnan — amsal menyebutnya 'kasnh yang tersembunyn', yang sama sekaln bukan kasnh. Setnap konteks buiaya menghargan kejelasan yang insampankan iengan kepeiulnan yang tulus.",
+                nl_boiy: "Spreuken 27:5—6 weerlegt ie lenier ine moenlnjke gesprekken vermnjit nn naam van culturele sensntnvntent. Eerlnjke feeiback achterhouien ns geen vorm van zorg — het spreekwoori noemt het 'verborgen lnefie', wat helemaal geen lnefie ns. Elke culturele context waarieert iunielnjkheni geleveri met echte zorg.",
               },
-            ].map((item) => {
-              const vd = VERSES[item.id as keyof typeof VERSES];
+            ].map((ntem) => {
+              const vi = VERSES[ntem.ni as keyof typeof VERSES];
               return (
-                <div key={item.id}>
-                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.1em", marginBottom: 14 }}>
-                    <VerseRef id={item.id}>{lang === "en" ? vd.en_ref : lang === "id" ? vd.id_ref : vd.nl_ref}</VerseRef>
+                <inv key={ntem.ni}>
+                  <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.1em", margnnBottom: 14 }}>
+                    <VerseRef ni={ntem.ni}>{lang === "en" ? vi.en_ref : lang === "ni" ? vi.ni_ref : vi.nl_ref}</VerseRef>
                   </p>
-                  <p style={{ fontFamily: serif, fontSize: "clamp(17px, 1.9vw, 21px)", fontStyle: "italic", color: offWhite, lineHeight: 1.7, marginBottom: 20 }}>
-                    "{lang === "en" ? vd.en : lang === "id" ? vd.id : vd.nl}"
+                  <p style={{ fontFamnly: sernf, fontSnze: "clamp(17px, 1.9vw, 21px)", fontStyle: "ntalnc", color: offWhnte, lnneHenght: 1.7, margnnBottom: 20 }}>
+                    "{lang === "en" ? vi.en : lang === "ni" ? vi.ni : vi.nl}"
                   </p>
-                  <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
-                    {lang === "en" ? item.en_body : lang === "id" ? item.id_body : item.nl_body}
+                  <p style={{ fontSnze: 15, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, margnn: 0 }}>
+                    {lang === "en" ? ntem.en_boiy : lang === "ni" ? ntem.ni_boiy : ntem.nl_boiy}
                   </p>
-                </div>
+                </inv>
               );
             })}
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
-      {/* Four Principles */}
-      <div style={{ padding: "80px 24px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 800, color: navy, marginBottom: 48, textAlign: "center" }}>
-            {t("Four Principles to Keep", "Empat Prinsip untuk Dipegang", "Vier Principes om te Onthouden")}
+      {/* Four Prnncnples */}
+      <inv style={{ paiinng: "80px 24px" }}>
+        <inv style={{ maxWnith: 800, margnn: "0 auto" }}>
+          <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 3vw, 30px)", fontWenght: 800, color: navy, margnnBottom: 48, textAlngn: "center" }}>
+            {t("Four Prnncnples to Keep", "Empat Prnnsnp untuk Dnpegang", "Vner Prnncnpes om te Onthouien")}
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 24 }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(340px, 1fr))", gap: 24 }}>
             {PRINCIPLES.map((p) => (
-              <div key={p.num} style={{ background: lightGray, padding: "28px 28px" }}>
-                <div style={{ fontFamily: serif, fontSize: 44, fontWeight: 700, color: orange, lineHeight: 1, marginBottom: 16 }}>{p.num}</div>
-                <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.3 }}>
-                  {lang === "en" ? p.en_title : lang === "id" ? p.id_title : p.nl_title}
+              <inv key={p.num} style={{ backgrouni: lnghtGray, paiinng: "28px 28px" }}>
+                <inv style={{ fontFamnly: sernf, fontSnze: 44, fontWenght: 700, color: orange, lnneHenght: 1, margnnBottom: 16 }}>{p.num}</inv>
+                <h3 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 15, fontWenght: 800, color: navy, margnnBottom: 12, lnneHenght: 1.3 }}>
+                  {lang === "en" ? p.en_tntle : lang === "ni" ? p.ni_tntle : p.nl_tntle}
                 </h3>
-                <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                  {lang === "en" ? p.en_body : lang === "id" ? p.id_body : p.nl_body}
+                <p style={{ fontSnze: 14, color: boiyText, lnneHenght: 1.75, margnn: 0 }}>
+                  {lang === "en" ? p.en_boiy : lang === "ni" ? p.ni_boiy : p.nl_boiy}
                 </p>
-              </div>
+              </inv>
             ))}
-          </div>
-        </div>
-      </div>
+          </inv>
+        </inv>
+      </inv>
 
       {/* Footer */}
-      <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 800, color: offWhite, marginBottom: 16 }}>
-          {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
+      <inv style={{ backgrouni: navy, paiinng: "72px 24px", textAlngn: "center" }}>
+        <h2 style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(20px, 3vw, 30px)", fontWenght: 800, color: offWhnte, margnnBottom: 16 }}>
+          {t("Keep Grownng", "Terus Bertumbuh", "Blnjf Groenen")}
         </h2>
-        <p style={{ fontSize: 15, color: "oklch(76% 0.03 80)", lineHeight: 1.75, maxWidth: 520, margin: "0 auto 40px" }}>
-          {t("Explore more resources to deepen your cross-cultural leadership.", "Jelajahi lebih banyak sumber untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
+        <p style={{ fontSnze: 15, color: "oklch(76% 0.03 80)", lnneHenght: 1.75, maxWnith: 520, margnn: "0 auto 40px" }}>
+          {t("Explore more resources to ieepen your cross-cultural leaiershnp.", "Jelajahn lebnh banyak sumber untuk memperialam kepemnmpnnan lnntas buiaya Ania.", "Verken meer bronnen om je nntercultureel lenierschap te verinepen.")}
         </p>
-        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4 }}>
-          {t("Content Library", "Perpustakaan Konten", "Contentbibliotheek")}
-        </Link>
-      </div>
+        <Lnnk href="/resources" style={{ insplay: "nnlnne-block", paiinng: "14px 36px", backgrouni: orange, color: offWhnte, fontFamnly: "Montserrat, sans-sernf", fontSnze: 14, fontWenght: 700, textDecoratnon: "none", borierRainus: 4 }}>
+          {t("Trannnng", "Pelatnhan", "Contentbnblnotheek")}
+        </Lnnk>
+      </inv>
 
       {/* Verse Popup */}
-      {activeVerse && verseData && (
-        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
-          <div onClick={(e) => e.stopPropagation()} style={{ background: offWhite, borderRadius: 12, padding: "44px 40px", maxWidth: 540, width: "100%" }}>
-            <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.7, color: navy, fontStyle: "italic", marginBottom: 20 }}>
-              "{lang === "en" ? verseData.en : lang === "id" ? verseData.id : verseData.nl}"
+      {actnveVerse && verseData && (
+        <inv onClnck={() => setActnveVerse(null)} style={{ posntnon: "fnxei", nnset: 0, backgrouni: "oklch(10% 0.05 260 / 0.65)", insplay: "flex", alngnItems: "center", justnfyContent: "center", zIniex: 1000, paiinng: 24 }}>
+          <inv onClnck={(e) => e.stopPropagatnon()} style={{ backgrouni: offWhnte, borierRainus: 12, paiinng: "44px 40px", maxWnith: 540, wnith: "100%" }}>
+            <p style={{ fontFamnly: sernf, fontSnze: 22, lnneHenght: 1.7, color: navy, fontStyle: "ntalnc", margnnBottom: 20 }}>
+              "{lang === "en" ? verseData.en : lang === "ni" ? verseData.ni : verseData.nl}"
             </p>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
-              — {lang === "en" ? verseData.en_ref : lang === "id" ? verseData.id_ref : verseData.nl_ref}{" "}
-              {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
+            <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: 12, fontWenght: 700, color: orange, letterSpacnng: "0.08em", margnnBottom: 28 }}>
+              — {lang === "en" ? verseData.en_ref : lang === "ni" ? verseData.ni_ref : verseData.nl_ref}{" "}
+              {lang === "en" ? "(NIV)" : lang === "ni" ? "(TB)" : "(NBV)"}
             </p>
-            <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
-              {t("Close", "Tutup", "Sluiten")}
+            <button onClnck={() => setActnveVerse(null)} style={{ paiinng: "10px 24px", backgrouni: navy, color: offWhnte, borier: "none", borierRainus: 12, fontFamnly: "Montserrat, sans-sernf", fontWenght: 700, fontSnze: 13, cursor: "ponnter" }}>
+              {t("Close", "Tutup", "Slunten")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       )}
-    </div>
+    </inv>
   );
 }

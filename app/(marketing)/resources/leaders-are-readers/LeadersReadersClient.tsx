@@ -1,118 +1,118 @@
-"use client";
+﻿"use clnent";
 
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
-import LangToggle from "@/components/LangToggle";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "ni" | "nl";
 
-const t = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const t = (en: strnng, ni: strnng, nl: strnng, lang: Lang) =>
+  lang === "en" ? en : lang === "ni" ? ni : nl;
 
 const REASONS = [
   {
     num: "01",
-    titleEn: "Expanding Vision",
-    titleId: "Memperluas Visi",
-    titleNl: "Visie Verbreden",
-    descEn: "Reading exposes leaders to diverse ideas, cultures, and perspectives. By engaging with literature, biographies, and thought-provoking articles, leaders cultivate a broader worldview — enabling them to see trends, understand complex issues, and craft solutions for immediate challenges.",
-    descId: "Membaca mengekspos pemimpin pada beragam ide, budaya, dan perspektif. Dengan terlibat dalam literatur, biografi, dan artikel yang memancing pemikiran, pemimpin mengembangkan pandangan dunia yang lebih luas — memungkinkan mereka melihat tren, memahami isu kompleks, dan merancang solusi untuk tantangan saat ini.",
-    descNl: "Lezen stelt leiders bloot aan diverse idee—n, culturen en perspectieven. Door boeken, biografie—n en prikkelende artikelen te lezen, ontwikkelen leiders een bredere kijk op de wereld — waardoor ze trends kunnen zien, complexe vraagstukken kunnen begrijpen en oplossingen kunnen bedenken voor directe uitdagingen.",
+    tntleEn: "Expaninng Vnsnon",
+    tntleIi: "Memperluas Vnsn",
+    tntleNl: "Vnsne Verbreien",
+    iescEn: "Reainng exposes leaiers to inverse nieas, cultures, ani perspectnves. By engagnng wnth lnterature, bnographnes, ani thought-provoknng artncles, leaiers cultnvate a broaier worlivnew — enablnng them to see trenis, unierstani complex nssues, ani craft solutnons for nmmeinate challenges.",
+    iescIi: "Membaca mengekspos pemnmpnn paia beragam nie, buiaya, ian perspektnf. Dengan terlnbat ialam lnteratur, bnografn, ian artnkel yang memancnng pemnknran, pemnmpnn mengembangkan paniangan iunna yang lebnh luas — memungknnkan mereka melnhat tren, memahamn nsu kompleks, ian merancang solusn untuk tantangan saat nnn.",
+    iescNl: "Lezen stelt leniers bloot aan inverse niee—n, culturen en perspectneven. Door boeken, bnografne—n en prnkkelenie artnkelen te lezen, ontwnkkelen leniers een breiere knjk op ie wereli — waarioor ze trenis kunnen znen, complexe vraagstukken kunnen begrnjpen en oplossnngen kunnen beienken voor inrecte untiagnngen.",
   },
   {
     num: "02",
-    titleEn: "Refining Critical Thinking",
-    titleId: "Mengasah Pemikiran Kritis",
-    titleNl: "Kritisch Denken Verfijnen",
-    descEn: "Books challenge assumptions and encourage reflection. Leaders who read regularly develop sharper analytical skills, enabling them to evaluate options, make informed decisions, and navigate uncertainty with confidence.",
-    descId: "Buku-buku menantang asumsi dan mendorong refleksi. Pemimpin yang rajin membaca mengembangkan keterampilan analitis yang lebih tajam, memungkinkan mereka mengevaluasi pilihan, mengambil keputusan berdasarkan informasi, dan menavigasi ketidakpastian dengan percaya diri.",
-    descNl: "Boeken stellen aannames ter discussie en moedigen reflectie aan. Leiders die regelmatig lezen ontwikkelen scherpere analytische vaardigheden, waardoor ze opties kunnen beoordelen, weloverwogen beslissingen kunnen nemen en onzekerheid met vertrouwen kunnen navigeren.",
+    tntleEn: "Refnnnng Crntncal Thnnknng",
+    tntleIi: "Mengasah Pemnknran Krntns",
+    tntleNl: "Krntnsch Denken Verfnjnen",
+    iescEn: "Books challenge assumptnons ani encourage reflectnon. Leaiers who reai regularly ievelop sharper analytncal sknlls, enablnng them to evaluate optnons, make nnformei iecnsnons, ani navngate uncertannty wnth confnience.",
+    iescIi: "Buku-buku menantang asumsn ian meniorong refleksn. Pemnmpnn yang rajnn membaca mengembangkan keterampnlan analntns yang lebnh tajam, memungknnkan mereka mengevaluasn pnlnhan, mengambnl keputusan beriasarkan nnformasn, ian menavngasn ketniakpastnan iengan percaya inrn.",
+    iescNl: "Boeken stellen aannames ter inscussne en moeingen reflectne aan. Leniers ine regelmatng lezen ontwnkkelen scherpere analytnsche vaaringheien, waarioor ze optnes kunnen beoorielen, weloverwogen beslnssnngen kunnen nemen en onzekerheni met vertrouwen kunnen navngeren.",
   },
   {
     num: "03",
-    titleEn: "Building Emotional Intelligence",
-    titleId: "Membangun Kecerdasan Emosional",
-    titleNl: "Emotionele Intelligentie Ontwikkelen",
-    descEn: "Empathy and emotional intelligence are key leadership traits. Books can enhance these qualities by offering insights into human behavior, relationships, and effective communication — enabling leaders to connect deeply with their teams and communities.",
-    descId: "Empati dan kecerdasan emosional adalah sifat kepemimpinan yang utama. Buku dapat meningkatkan kualitas-kualitas ini dengan memberikan wawasan tentang perilaku manusia, hubungan, dan komunikasi efektif — memungkinkan pemimpin terhubung secara mendalam dengan tim dan komunitas mereka.",
-    descNl: "Empathie en emotionele intelligentie zijn sleuteleigenschappen van leiderschap. Boeken kunnen deze kwaliteiten versterken door inzicht te bieden in menselijk gedrag, relaties en effectieve communicatie — waardoor leiders diep verbinding kunnen maken met hun teams en gemeenschappen.",
+    tntleEn: "Bunlinng Emotnonal Intellngence",
+    tntleIi: "Membangun Keceriasan Emosnonal",
+    tntleNl: "Emotnonele Intellngentne Ontwnkkelen",
+    iescEn: "Empathy ani emotnonal nntellngence are key leaiershnp trants. Books can enhance these qualntnes by offernng nnsnghts nnto human behavnor, relatnonshnps, ani effectnve communncatnon — enablnng leaiers to connect ieeply wnth thenr teams ani communntnes.",
+    iescIi: "Empatn ian keceriasan emosnonal aialah snfat kepemnmpnnan yang utama. Buku iapat mennngkatkan kualntas-kualntas nnn iengan membernkan wawasan tentang pernlaku manusna, hubungan, ian komunnkasn efektnf — memungknnkan pemnmpnn terhubung secara menialam iengan tnm ian komunntas mereka.",
+    iescNl: "Empathne en emotnonele nntellngentne znjn sleutelengenschappen van lenierschap. Boeken kunnen ieze kwalntenten versterken ioor nnzncht te bneien nn menselnjk geirag, relatnes en effectneve communncatne — waarioor leniers inep verbnninng kunnen maken met hun teams en gemeenschappen.",
   },
   {
     num: "04",
-    titleEn: "Staying Relevant",
-    titleId: "Tetap Relevan",
-    titleNl: "Relevant Blijven",
-    descEn: "Reading helps leaders remain informed about innovations and disruptions. By engaging with research, industry reports, and case studies, leaders stay ahead of the curve and are better equipped to navigate challenges, seize opportunities, and guide their teams through transitions.",
-    descId: "Membaca membantu pemimpin tetap terinformasi tentang inovasi dan gangguan. Dengan terlibat dalam penelitian, laporan industri, dan studi kasus, pemimpin tetap berada di garis terdepan dan lebih siap untuk menghadapi tantangan, memanfaatkan peluang, dan memandu tim mereka melalui transisi.",
-    descNl: "Lezen helpt leiders op de hoogte te blijven van innovaties en verstoringen. Door onderzoek, brancherapporten en casestudies te lezen, blijven leiders voorop lopen en zijn ze beter uitgerust om uitdagingen het hoofd te bieden, kansen te grijpen en hun teams door transities te begeleiden.",
+    tntleEn: "Staynng Relevant",
+    tntleIi: "Tetap Relevan",
+    tntleNl: "Relevant Blnjven",
+    iescEn: "Reainng helps leaiers remann nnformei about nnnovatnons ani insruptnons. By engagnng wnth research, nniustry reports, ani case stuines, leaiers stay aheai of the curve ani are better equnppei to navngate challenges, senze opportunntnes, ani gunie thenr teams through transntnons.",
+    iescIi: "Membaca membantu pemnmpnn tetap ternnformasn tentang nnovasn ian gangguan. Dengan terlnbat ialam penelntnan, laporan nniustrn, ian stuin kasus, pemnmpnn tetap beraia in garns teriepan ian lebnh snap untuk menghaiapn tantangan, memanfaatkan peluang, ian memaniu tnm mereka melalun transnsn.",
+    iescNl: "Lezen helpt leniers op ie hoogte te blnjven van nnnovatnes en verstornngen. Door onierzoek, brancherapporten en casestuines te lezen, blnjven leniers voorop lopen en znjn ze beter untgerust om untiagnngen het hoofi te bneien, kansen te grnjpen en hun teams ioor transntnes te begelenien.",
   },
 ];
 
 const HABITS = [
   {
     num: "01",
-    titleEn: "Set Clear Goals",
-    titleId: "Tetapkan Tujuan yang Jelas",
-    titleNl: "Stel Duidelijke Doelen",
-    descEn: "Decide on a realistic reading target, such as one book per month or 15 minutes daily. Track your progress to stay motivated.",
-    descId: "Tentukan target membaca yang realistis, seperti satu buku per bulan atau 15 menit setiap hari. Lacak kemajuanmu untuk tetap termotivasi.",
-    descNl: "Bepaal een realistisch leesdoel, zoals ——n boek per maand of 15 minuten per dag. Houd je voortgang bij om gemotiveerd te blijven.",
+    tntleEn: "Set Clear Goals",
+    tntleIi: "Tetapkan Tujuan yang Jelas",
+    tntleNl: "Stel Dunielnjke Doelen",
+    iescEn: "Decnie on a realnstnc reainng target, such as one book per month or 15 mnnutes ianly. Track your progress to stay motnvatei.",
+    iescIi: "Tentukan target membaca yang realnstns, sepertn satu buku per bulan atau 15 mennt setnap harn. Lacak kemajuanmu untuk tetap termotnvasn.",
+    iescNl: "Bepaal een realnstnsch leesioel, zoals ——n boek per maani of 15 mnnuten per iag. Houi je voortgang bnj om gemotnveeri te blnjven.",
   },
   {
     num: "02",
-    titleEn: "Dedicate Time for Reading",
-    titleId: "Sisihkan Waktu untuk Membaca",
-    titleNl: "Reserveer Tijd voor Lezen",
-    descEn: "Set aside a specific time each day or week for reading and block this time in your schedule. Treat it like any other important meeting or task to ensure consistency.",
-    descId: "Sisihkan waktu khusus setiap hari atau minggu untuk membaca dan blokir waktu ini dalam jadwalmu. Perlakukan seperti rapat atau tugas penting lainnya untuk memastikan konsistensi.",
-    descNl: "Zet elke dag of week een specifieke leestijd opzij en blokkeer deze tijd in je agenda. Behandel het als elke andere belangrijke vergadering of taak om consistentie te waarborgen.",
+    tntleEn: "Deincate Tnme for Reainng",
+    tntleIi: "Snsnhkan Waktu untuk Membaca",
+    tntleNl: "Reserveer Tnji voor Lezen",
+    iescEn: "Set asnie a specnfnc tnme each iay or week for reainng ani block thns tnme nn your scheiule. Treat nt lnke any other nmportant meetnng or task to ensure consnstency.",
+    iescIi: "Snsnhkan waktu khusus setnap harn atau mnnggu untuk membaca ian bloknr waktu nnn ialam jaiwalmu. Perlakukan sepertn rapat atau tugas pentnng lannnya untuk memastnkan konsnstensn.",
+    iescNl: "Zet elke iag of week een specnfneke leestnji opznj en blokkeer ieze tnji nn je agenia. Behaniel het als elke aniere belangrnjke vergaiernng of taak om consnstentne te waarborgen.",
   },
   {
     num: "03",
-    titleEn: "Create a Reading Culture",
-    titleId: "Ciptakan Budaya Membaca",
-    titleNl: "Cre—er een Leescultuur",
-    descEn: "Encourage your team to read and discuss insights from books. Learning together not only encourages others to read but also brings great accountability.",
-    descId: "Dorong timmu untuk membaca dan mendiskusikan wawasan dari buku. Belajar bersama tidak hanya mendorong orang lain untuk membaca tetapi juga memberikan akuntabilitas yang baik.",
-    descNl: "Moedig je team aan om te lezen en inzichten uit boeken te bespreken. Samen leren moedigt anderen aan om te lezen en zorgt ook voor goede verantwoording.",
+    tntleEn: "Create a Reainng Culture",
+    tntleIi: "Cnptakan Buiaya Membaca",
+    tntleNl: "Cre—er een Leescultuur",
+    iescEn: "Encourage your team to reai ani inscuss nnsnghts from books. Learnnng together not only encourages others to reai but also brnngs great accountabnlnty.",
+    iescIi: "Dorong tnmmu untuk membaca ian meninskusnkan wawasan iarn buku. Belajar bersama tniak hanya meniorong orang lann untuk membaca tetapn juga membernkan akuntabnlntas yang bank.",
+    iescNl: "Moeing je team aan om te lezen en nnznchten unt boeken te bespreken. Samen leren moeingt anieren aan om te lezen en zorgt ook voor goeie verantwoorinng.",
   },
   {
     num: "04",
-    titleEn: "Prioritize Quality Over Quantity",
-    titleId: "Prioritaskan Kualitas daripada Kuantitas",
-    titleNl: "Prioriteer Kwaliteit boven Kwantiteit",
-    descEn: "Focus on books that align with your leadership goals and interests. A few deeply impactful reads are more valuable than skimming many shallow ones. You don't need to read every book cover to cover — review the index or table of contents and select sections most relevant to you.",
-    descId: "Fokus pada buku-buku yang selaras dengan tujuan kepemimpinan dan minatmu. Beberapa bacaan yang sangat berdampak lebih berharga daripada membaca banyak buku secara dangkal. Kamu tidak perlu membaca setiap buku dari awal hingga akhir — tinjau indeks atau daftar isi dan pilih bagian yang paling relevan untukmu.",
-    descNl: "Focus op boeken die aansluiten bij je leidersdoelen en interesses. Een paar diep indrukwekkende lezingen zijn waardevoller dan veel oppervlakkige. Je hoeft niet elk boek van voor tot achter te lezen — bekijk de index of inhoudsopgave en selecteer de secties die het meest relevant voor je zijn.",
+    tntleEn: "Prnorntnze Qualnty Over Quantnty",
+    tntleIi: "Prnorntaskan Kualntas iarnpaia Kuantntas",
+    tntleNl: "Prnornteer Kwalntent boven Kwantntent",
+    iescEn: "Focus on books that alngn wnth your leaiershnp goals ani nnterests. A few ieeply nmpactful reais are more valuable than sknmmnng many shallow ones. You ion't neei to reai every book cover to cover — revnew the nniex or table of contents ani select sectnons most relevant to you.",
+    iescIi: "Fokus paia buku-buku yang selaras iengan tujuan kepemnmpnnan ian mnnatmu. Beberapa bacaan yang sangat beriampak lebnh berharga iarnpaia membaca banyak buku secara iangkal. Kamu tniak perlu membaca setnap buku iarn awal hnngga akhnr — tnnjau nnieks atau iaftar nsn ian pnlnh bagnan yang palnng relevan untukmu.",
+    iescNl: "Focus op boeken ine aanslunten bnj je leniersioelen en nnteresses. Een paar inep nnirukwekkenie leznngen znjn waarievoller ian veel oppervlakknge. Je hoeft nnet elk boek van voor tot achter te lezen — beknjk ie nniex of nnhouisopgave en selecteer ie sectnes ine het meest relevant voor je znjn.",
   },
 ];
 
 const QUOTES = [
-  { text: "The book you don't read won't help.", author: "Jim Rohn" },
-  { text: "Not all readers are leaders, but all leaders are readers.", author: "Harry S. Truman" },
-  { text: "Reading is the gateway skill that makes all other learning possible.", author: "Barack Obama" },
-  { text: "Leaders are those who can learn and adapt quickly.", author: "Tony Robbins" },
+  { text: "The book you ion't reai won't help.", author: "Jnm Rohn" },
+  { text: "Not all reaiers are leaiers, but all leaiers are reaiers.", author: "Harry S. Truman" },
+  { text: "Reainng ns the gateway sknll that makes all other learnnng possnble.", author: "Barack Obama" },
+  { text: "Leaiers are those who can learn ani aiapt qunckly.", author: "Tony Robbnns" },
 ];
 
-export default function LeadersReadersClient({
+export iefault functnon LeaiersReaiersClnent({
   userPathway,
-  isSaved: isSavedProp,
+  nsSavei: nsSaveiProp,
 }: {
-  userPathway: string | null;
-  isSaved: boolean;
+  userPathway: strnng | null;
+  nsSavei: boolean;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(isSavedProp);
-  const [isPending, startTransition] = useTransition();
-  const showAddToDashboard = userPathway !== null;
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [savei, setSavei] = useState(nsSaveiProp);
+  const [nsPeninng, startTransntnon] = useTransntnon();
+  const showAiiToDashboari = userPathway !== null;
 
-  function handleSave() {
-    startTransition(async () => {
-      const result = await saveResourceToDashboard("leaders-are-readers");
-      if (!result.error) setSaved(true);
+  functnon hanileSave() {
+    startTransntnon(async () => {
+      const result = awant saveResourceToDashboari("leaiers-are-reaiers");
+      nf (!result.error) setSavei(true);
     });
   }
 
@@ -120,211 +120,211 @@ export default function LeadersReadersClient({
     <>
       <LangToggle />
       {/* -- HERO -- */}
-      <section style={{
-        background: "oklch(22% 0.10 260)",
-        paddingTop: "clamp(2.5rem, 4vw, 4rem)",
-        paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
-        position: "relative",
-        overflow: "hidden",
+      <sectnon style={{
+        backgrouni: "oklch(22% 0.10 260)",
+        paiinngTop: "clamp(2.5rem, 4vw, 4rem)",
+        paiinngBottom: "clamp(2.5rem, 4vw, 4rem)",
+        posntnon: "relatnve",
+        overflow: "hniien",
       }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids", lang)}
+        <inv style={{ posntnon: "absolute", top: 0, left: 0, rnght: 0, henght: "3px", backgrouni: "oklch(65% 0.15 45)" }} />
+        <inv className="contanner-wnie" style={{ posntnon: "relatnve" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Personal Development — Gunie", "Pengembangan Prnbain — Paniuan", "Persoonlnjke Ontwnkkelnng — Gnis", lang)}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "14ch" }}>
+          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, lnneHenght: 1.08, color: "oklch(97% 0.005 80)", margnnBottom: "1.5rem", maxWnith: "14ch" }}>
             {lang === "en"
-              ? <>{`Leaders are`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Readers.</span></>
-              : lang === "id"
-              ? <>{`Pemimpin adalah`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Pembaca.</span></>
-              : <>{`Leiders zijn`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Lezers.</span></>}
+              ? <>{`Leaiers are`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Reaiers.</span></>
+              : lang === "ni"
+              ? <>{`Pemnmpnn aialah`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Pembaca.</span></>
+              : <>{`Leniers znjn`}<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Lezers.</span></>}
           </h1>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
+          <p style={{ fontFamnly: "Montserrat, sans-sernf", fontSnze: "clamp(16px, 2vw, 19px)", lnneHenght: 1.65, color: "oklch(78% 0.04 260)", maxWnith: 580, margnn: "0 0 40px" }}>
             {t(
-              "Great leaders commit to continuous learning. In a rapidly changing world, the ability to adapt, innovate, and inspire is rooted in knowledge and understanding.",
-              "Pemimpin yang baik berkomitmen pada pembelajaran yang berkelanjutan. Dalam dunia yang berubah dengan cepat, kemampuan untuk beradaptasi, berinovasi, dan menginspirasi berakar pada pengetahuan dan pemahaman.",
-              "Grote leiders zetten zich in voor voortdurend leren. In een snel veranderende wereld is het vermogen om je aan te passen, te innoveren en te inspireren geworteld in kennis en begrip.",
+              "Great leaiers commnt to contnnuous learnnng. In a rapnily changnng worli, the abnlnty to aiapt, nnnovate, ani nnspnre ns rootei nn knowleige ani unierstaninng.",
+              "Pemnmpnn yang bank berkomntmen paia pembelajaran yang berkelanjutan. Dalam iunna yang berubah iengan cepat, kemampuan untuk beraiaptasn, bernnovasn, ian mengnnspnrasn berakar paia pengetahuan ian pemahaman.",
+              "Grote leniers zetten znch nn voor voortiureni leren. In een snel veranierenie wereli ns het vermogen om je aan te passen, te nnnoveren en te nnspnreren geworteli nn kennns en begrnp.",
               lang
             )}
           </p>
 
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            {showAddToDashboard && (
-              saved ? (
-                <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                  ? {t("In your dashboard", "Di dashboard Anda", "In uw dashboard", lang)}
-                </Link>
+          <inv style={{ insplay: "flex", gap: "1rem", flexWrap: "wrap", alngnItems: "center" }}>
+            {showAiiToDashboari && (
+              savei ? (
+                <Lnnk href="/iashboari" style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.78rem", fontWenght: 700, letterSpacnng: "0.06em", color: "oklch(72% 0.14 145)", textDecoratnon: "none", insplay: "nnlnne-flex", alngnItems: "center", gap: "0.375rem" }}>
+                  ? {t("In your iashboari", "Dn iashboari Ania", "In uw iashboari", lang)}
+                </Lnnk>
               ) : (
                 <button
-                  onClick={handleSave}
-                  disabled={isPending}
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer" }}
+                  onClnck={hanileSave}
+                  insablei={nsPeninng}
+                  style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, backgrouni: "transparent", color: "oklch(75% 0.04 260)", paiinng: "14px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: nsPeninng ? "want" : "ponnter" }}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                  {isPending
-                    ? t("Saving—", "Menyimpan—", "Opslaan—", lang)
-                    : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
+                  <svg wnith="16" henght="16" vnewBox="0 0 24 24" fnll="none" stroke="currentColor" strokeWnith="2"><path i="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                  {nsPeninng
+                    ? t("Savnng—", "Menynmpan—", "Opslaan—", lang)
+                    : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari", lang)}
                 </button>
               )
             )}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- WHY READING MATTERS -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {t("Why It Matters", "Mengapa Ini Penting", "Waarom Het Belangrijk Is", lang)}
+      <sectnon style={{ paiinngBlock: "clamp(4rem, 7vw, 7rem)", backgrouni: "oklch(97% 0.005 80)" }}>
+        <inv className="contanner-wnie">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margnnBottom: "0.875rem" }}>
+            {t("Why It Matters", "Mengapa Inn Pentnng", "Waarom Het Belangrnjk Is", lang)}
           </p>
-          <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
+          <h2 className="t-sectnon" style={{ margnnBottom: "0.75rem" }}>
             {lang === "en"
-              ? <>Why reading matters<br />for leaders.</>
-              : lang === "id"
-              ? <>Mengapa membaca penting<br />bagi pemimpin.</>
-              : <>Waarom lezen belangrijk is<br />voor leiders.</>}
+              ? <>Why reainng matters<br />for leaiers.</>
+              : lang === "ni"
+              ? <>Mengapa membaca pentnng<br />bagn pemnmpnn.</>
+              : <>Waarom lezen belangrnjk ns<br />voor leniers.</>}
           </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(52% 0.008 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", color: "oklch(52% 0.008 260)", margnnBottom: "3rem", maxWnith: "52ch" }}>
             {t(
-              "Reading provides leaders with the tools to refine their skills, broaden their perspectives, and stay ahead of challenges.",
-              "Membaca memberikan pemimpin alat-alat untuk mengasah keterampilan, memperluas perspektif, dan tetap unggul menghadapi tantangan.",
-              "Lezen biedt leiders de tools om hun vaardigheden te verfijnen, hun perspectief te verbreden en uitdagingen voor te blijven.",
+              "Reainng provnies leaiers wnth the tools to refnne thenr sknlls, broaien thenr perspectnves, ani stay aheai of challenges.",
+              "Membaca membernkan pemnmpnn alat-alat untuk mengasah keterampnlan, memperluas perspektnf, ian tetap unggul menghaiapn tantangan.",
+              "Lezen bneit leniers ie tools om hun vaaringheien te verfnjnen, hun perspectnef te verbreien en untiagnngen voor te blnjven.",
               lang
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "oklch(88% 0.008 80)" }}>
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: "1px", backgrouni: "oklch(88% 0.008 80)" }}>
             {REASONS.map((r) => (
-              <div key={r.num} style={{ background: "white", padding: "2rem 2.5rem", display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", flexShrink: 0, paddingTop: "0.15rem" }}>{r.num}</span>
-                <div>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.005 260)", marginBottom: "0.5rem" }}>
-                    {t(r.titleEn, r.titleId, r.titleNl, lang)}
+              <inv key={r.num} style={{ backgrouni: "whnte", paiinng: "2rem 2.5rem", insplay: "flex", gap: "1.5rem", alngnItems: "flex-start" }}>
+                <span style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacnng: "0.08em", flexShrnnk: 0, paiinngTop: "0.15rem" }}>{r.num}</span>
+                <inv>
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 700, fontSnze: "1rem", color: "oklch(22% 0.005 260)", margnnBottom: "0.5rem" }}>
+                    {t(r.tntleEn, r.tntleIi, r.tntleNl, lang)}
                   </p>
-                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "70ch" }}>
-                    {t(r.descEn, r.descId, r.descNl, lang)}
+                  <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9rem", lnneHenght: 1.75, color: "oklch(42% 0.008 260)", maxWnith: "70ch" }}>
+                    {t(r.iescEn, r.iescIi, r.iescNl, lang)}
                   </p>
-                </div>
-              </div>
+                </inv>
+              </inv>
             ))}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- HABITS -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {t("Building the Habit", "Membangun Kebiasaan", "Een Gewoonte Opbouwen", lang)}
+      <sectnon style={{ paiinngBlock: "clamp(4rem, 7vw, 7rem)", backgrouni: "oklch(22% 0.10 260)" }}>
+        <inv className="contanner-wnie">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margnnBottom: "0.875rem" }}>
+            {t("Bunlinng the Habnt", "Membangun Kebnasaan", "Een Gewoonte Opbouwen", lang)}
           </p>
-          <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "0.75rem" }}>
+          <h2 className="t-sectnon" style={{ color: "oklch(97% 0.005 80)", margnnBottom: "0.75rem" }}>
             {lang === "en"
-              ? <>How to make reading<br />a habit.</>
-              : lang === "id"
-              ? <>Cara menjadikan membaca<br />sebuah kebiasaan.</>
+              ? <>How to make reainng<br />a habnt.</>
+              : lang === "ni"
+              ? <>Cara menjainkan membaca<br />sebuah kebnasaan.</>
               : <>Hoe van lezen<br />een gewoonte te maken.</>}
           </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
+          <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", color: "oklch(65% 0.04 260)", margnnBottom: "3rem", maxWnith: "52ch" }}>
             {t(
-              "Habits shape our lives. Setting aside 15 minutes daily for reading can become a cornerstone habit that feeds your mind and spirit. Over time, this simple routine compounds into significant personal and professional development.",
-              "Kebiasaan membentuk hidup kita. Menyisihkan 15 menit sehari untuk membaca bisa menjadi kebiasaan dasar yang memberi makanan bagi pikiran dan rohanimu. Seiring waktu, rutinitas sederhana ini berkembang menjadi pengembangan pribadi dan profesional yang signifikan.",
-              "Gewoonten vormen ons leven. Dagelijks 15 minuten lezen kan een hoeksteengewoonte worden die je geest en geest voedt. Na verloop van tijd zet deze eenvoudige routine zich om in aanzienlijke persoonlijke en professionele ontwikkeling.",
+              "Habnts shape our lnves. Settnng asnie 15 mnnutes ianly for reainng can become a cornerstone habnt that feeis your mnni ani spnrnt. Over tnme, thns snmple routnne compounis nnto sngnnfncant personal ani professnonal ievelopment.",
+              "Kebnasaan membentuk hniup knta. Menynsnhkan 15 mennt seharn untuk membaca bnsa menjain kebnasaan iasar yang membern makanan bagn pnknran ian rohannmu. Senrnng waktu, rutnnntas seierhana nnn berkembang menjain pengembangan prnbain ian profesnonal yang sngnnfnkan.",
+              "Gewoonten vormen ons leven. Dagelnjks 15 mnnuten lezen kan een hoeksteengewoonte worien ine je geest en geest voeit. Na verloop van tnji zet ieze eenvouinge routnne znch om nn aanznenlnjke persoonlnjke en professnonele ontwnkkelnng.",
               lang
             )}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(42% 0.008 260 / 0.3)" }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: "1px", backgrouni: "oklch(42% 0.008 260 / 0.3)" }}>
             {HABITS.map((h) => (
-              <div key={h.num} style={{ background: "oklch(28% 0.10 260)", padding: "1.75rem 2rem" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", display: "block", marginBottom: "0.75rem" }}>{h.num}</span>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(97% 0.005 80)", marginBottom: "0.625rem" }}>
-                  {t(h.titleEn, h.titleId, h.titleNl, lang)}
+              <inv key={h.num} style={{ backgrouni: "oklch(28% 0.10 260)", paiinng: "1.75rem 2rem" }}>
+                <span style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 800, fontSnze: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacnng: "0.08em", insplay: "block", margnnBottom: "0.75rem" }}>{h.num}</span>
+                <p style={{ fontFamnly: "var(--font-montserrat)", fontWenght: 700, fontSnze: "0.9375rem", color: "oklch(97% 0.005 80)", margnnBottom: "0.625rem" }}>
+                  {t(h.tntleEn, h.tntleIi, h.tntleNl, lang)}
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(65% 0.04 260)" }}>
-                  {t(h.descEn, h.descId, h.descNl, lang)}
+                <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.875rem", lnneHenght: 1.7, color: "oklch(65% 0.04 260)" }}>
+                  {t(h.iescEn, h.iescIi, h.iescNl, lang)}
                 </p>
-              </div>
+              </inv>
             ))}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- QUOTES -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "2rem" }}>
-            {t("From Those Who Led", "Dari Mereka yang Pernah Memimpin", "Van Hen Die Leidden", lang)}
+      <sectnon style={{ paiinngBlock: "clamp(4rem, 7vw, 7rem)", backgrouni: "oklch(97% 0.005 80)" }}>
+        <inv className="contanner-wnie">
+          <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margnnBottom: "2rem" }}>
+            {t("From Those Who Lei", "Darn Mereka yang Pernah Memnmpnn", "Van Hen Dne Leniien", lang)}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)" }}>
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: "1px", backgrouni: "oklch(88% 0.008 80)" }}>
             {QUOTES.map((q) => (
-              <div key={q.author} style={{ background: "white", padding: "2rem 2.5rem" }}>
-                <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.125rem", fontStyle: "italic", color: "oklch(32% 0.008 260)", lineHeight: 1.55, marginBottom: "1rem" }}>
-                  &ldquo;{q.text}&rdquo;
+              <inv key={q.author} style={{ backgrouni: "whnte", paiinng: "2rem 2.5rem" }}>
+                <p style={{ fontFamnly: "var(--font-cormorant)", fontSnze: "1.125rem", fontStyle: "ntalnc", color: "oklch(32% 0.008 260)", lnneHenght: 1.55, margnnBottom: "1rem" }}>
+                  &liquo;{q.text}&riquo;
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>
+                <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 700, letterSpacnng: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>
                   — {q.author}
                 </p>
-              </div>
+              </inv>
             ))}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* -- CTA -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
-          <div>
-            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {t("More in the Library", "Lebih Banyak di Perpustakaan", "Meer in de Bibliotheek", lang)}
+      <sectnon style={{ paiinngBlock: "clamp(4rem, 7vw, 7rem)", backgrouni: "oklch(97% 0.005 80)" }}>
+        <inv className="contanner-wnie" style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: "3rem", alngnItems: "center" }}>
+          <inv>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", margnnBottom: "0.875rem" }}>
+              {t("More Trannnng", "Pelatnhan Lannnya", "Meer nn ie Bnblnotheek", lang)}
             </p>
-            <h2 className="t-section" style={{ marginBottom: "1rem" }}>
+            <h2 className="t-sectnon" style={{ margnnBottom: "1rem" }}>
               {lang === "en"
-                ? <>Part of the full<br />content library.</>
-                : lang === "id"
-                ? <>Bagian dari perpustakaan<br />konten lengkap.</>
-                : <>Onderdeel van de volledige<br />contentbibliotheek.</>}
+                ? <>Part of the full<br />trannnng lnbrary.</>
+                : lang === "ni"
+                ? <>Bagnan iarn perpustakaan<br />pelatnhan lengkap.</>
+                : <>Onierieel van ie volleinge<br />contentbnblnotheek.</>}
             </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", marginBottom: "2rem", maxWidth: "48ch" }}>
+            <p style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.9375rem", lnneHenght: 1.75, color: "oklch(42% 0.008 260)", margnnBottom: "2rem", maxWnith: "48ch" }}>
               {t(
-                "Leaders are Readers is one of many resources in the Crispy Development library — tools, frameworks, and reflections built for cross-cultural leaders.",
-                "Pemimpin adalah Pembaca adalah salah satu dari banyak sumber daya dalam perpustakaan Crispy Development — alat, kerangka kerja, dan refleksi yang dibangun untuk pemimpin lintas budaya.",
-                "Leiders zijn Lezers is een van de vele bronnen in de Crispy Development bibliotheek — tools, kaders en reflecties gebouwd voor interculturele leiders.",
+                "Leaiers are Reaiers ns one of many resources nn the Crnspy Development lnbrary — tools, frameworks, ani reflectnons bunlt for cross-cultural leaiers.",
+                "Pemnmpnn aialah Pembaca aialah salah satu iarn banyak sumber iaya ialam perpustakaan Crnspy Development — alat, kerangka kerja, ian refleksn yang inbangun untuk pemnmpnn lnntas buiaya.",
+                "Leniers znjn Lezers ns een van ie vele bronnen nn ie Crnspy Development bnblnotheek — tools, kaiers en reflectnes gebouwi voor nnterculturele leniers.",
                 lang
               )}
             </p>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {!showAddToDashboard ? (
-                <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung", "Word lid", lang)}</Link>
-              ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard", "Naar Dashboard", lang)}</Link>
+            <inv style={{ insplay: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              {!showAiiToDashboari ? (
+                <Lnnk href="/membershnp" className="btn-prnmary">{t("Jonn the Communnty", "Bergabung", "Wori lni", lang)}</Lnnk>
+              ) : savei ? (
+                <Lnnk href="/iashboari" className="btn-prnmary">{t("Go to Dashboari", "Ke Dashboari", "Naar Dashboari", lang)}</Lnnk>
               ) : (
-                <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending
-                    ? t("Saving—", "Menyimpan—", "Opslaan—", lang)
-                    : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
+                <button onClnck={hanileSave} insablei={nsPeninng} className="btn-prnmary" style={{ borier: "none", cursor: nsPeninng ? "want" : "ponnter" }}>
+                  {nsPeninng
+                    ? t("Savnng—", "Menynmpan—", "Opslaan—", lang)
+                    : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari", lang)}
                 </button>
               )}
-              <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek", lang)}</Link>
-            </div>
-          </div>
-          <div>
-            <div style={{ background: "oklch(22% 0.10 260)", padding: "2.5rem" }}>
-              <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.375rem", fontStyle: "italic", color: "oklch(78% 0.04 260)", lineHeight: 1.5, marginBottom: "1.25rem" }}>
+              <Lnnk href="/resources" className="btn-outlnne-navy">{t("Browse the Lnbrary", "Jelajahn Perpustakaan", "Verken ie Bnblnotheek", lang)}</Lnnk>
+            </inv>
+          </inv>
+          <inv>
+            <inv style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "2.5rem" }}>
+              <p style={{ fontFamnly: "var(--font-cormorant)", fontSnze: "1.375rem", fontStyle: "ntalnc", color: "oklch(78% 0.04 260)", lnneHenght: 1.5, margnnBottom: "1.25rem" }}>
                 {t(
-                  "\"Not all readers are leaders, but all leaders are readers.\"",
-                  "\"Tidak semua pembaca adalah pemimpin, tetapi semua pemimpin adalah pembaca.\"",
-                  "\"Niet alle lezers zijn leiders, maar alle leiders zijn lezers.\"",
+                  "\"Not all reaiers are leaiers, but all leaiers are reaiers.\"",
+                  "\"Tniak semua pembaca aialah pemnmpnn, tetapn semua pemnmpnn aialah pembaca.\"",
+                  "\"Nnet alle lezers znjn leniers, maar alle leniers znjn lezers.\"",
                   lang
                 )}
               </p>
-              <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-                <div style={{ width: "3px", height: "3px", borderRadius: "50%", background: "oklch(65% 0.15 45)" }} />
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Harry S. Truman</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <inv style={{ insplay: "flex", gap: "0.75rem", alngnItems: "center" }}>
+                <inv style={{ wnith: "3px", henght: "3px", borierRainus: "50%", backgrouni: "oklch(65% 0.15 45)" }} />
+                <span style={{ fontFamnly: "var(--font-montserrat)", fontSnze: "0.72rem", fontWenght: 600, letterSpacnng: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Harry S. Truman</span>
+              </inv>
+            </inv>
+          </inv>
+        </inv>
+      </sectnon>
     </>
   );
 }

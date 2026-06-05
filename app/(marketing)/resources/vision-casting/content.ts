@@ -561,8 +561,8 @@ export const cta: {
     nl: "Voordat je de visie opnieuw uitspreekt, hoor wat je team al ziet. Voer individuele gesprekken met elk lid. Vraag wat hen beweegt. Maak aantekeningen. Zeg niets anders dan \"vertel meer.\" De visie die naar voren komt, zal groter zijn dan de visie waarmee je begon.",
   },
   buttonLabel: {
-    en: "← Content Library",
-    id: "← Perpustakaan Konten",
+    en: "← Training",
+    id: "← Pelatihan",
     nl: "← Contentbibliotheek",
   },
 };
@@ -615,8 +615,8 @@ export const ui: {
       nl: "Voer de Onderscheidingsaudit uit",
     },
     viewAllResources: {
-      en: "← Content Library",
-      id: "← Perpustakaan Konten",
+      en: "← Training",
+      id: "← Pelatihan",
       nl: "← Contentbibliotheek",
     },
   },

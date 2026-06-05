@@ -1,26 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import { createClient } from "@/lib/supabase/client";
 
 interface Props {
   isIndonesia: boolean;
 }
 
-// ── Checkout button — Stripe-ready stub ──────────────────────────────────────
+type BillingPeriod = "monthly" | "annual";
+
+// ── Checkout button ──────────────────────────────────────────────────────────
 function CheckoutButton({
   plan,
   isIndonesia,
   variant,
+  billingPeriod,
 }: {
   plan: "personal" | "team";
   isIndonesia: boolean;
   variant: "orange" | "navy";
+  billingPeriod: BillingPeriod;
 }) {
   const { lang } = useLanguage();
   const [status, setStatus] = useState<"idle" | "loading" | "unavailable">("idle");
   const [hovered, setHovered] = useState(false);
+  const [signedIn, setSignedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setSignedIn(!!data.user));
+  }, []);
 
   async function go() {
     setStatus("loading");
@@ -28,7 +39,11 @@ function CheckoutButton({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, currency: isIndonesia ? "idr" : "usd" }),
+        body: JSON.stringify({
+          plan,
+          currency: isIndonesia ? "idr" : "usd",
+          billingPeriod,
+        }),
       });
       const data = await res.json();
       if (data.checkoutUrl) {
@@ -46,24 +61,29 @@ function CheckoutButton({
       personal: "Get started →",
       team: "Set up your team →",
       loading: "Loading…",
-      unavailable: "Payment setup in progress — contact us to arrange access.",
-      contact: "get in touch",
+      unavailable: "Payment setup in progress.",
+      contact: "",
     },
     id: {
       personal: "Mulai sekarang →",
       team: "Bangun tim Anda →",
       loading: "Memuat…",
-      unavailable: "Pembayaran sedang disiapkan — hubungi kami untuk mengatur akses.",
-      contact: "hubungi kami",
+      unavailable: "Pembayaran sedang disiapkan.",
+      contact: "",
     },
   };
   const l = labels[lang === "id" ? "id" : "en"];
 
   const active = hovered && status !== "loading";
   const btnStyle: React.CSSProperties = {
-    background: variant === "orange"
-      ? active ? "oklch(60% 0.14 45)" : "oklch(65% 0.15 45)"
-      : active ? "oklch(18% 0.10 260)" : "oklch(22% 0.10 260)",
+    background:
+      variant === "orange"
+        ? active
+          ? "oklch(60% 0.14 45)"
+          : "oklch(65% 0.15 45)"
+        : active
+        ? "oklch(18% 0.10 260)"
+        : "oklch(22% 0.10 260)",
     color: "oklch(97% 0.005 80)",
   };
 
@@ -87,6 +107,7 @@ function CheckoutButton({
           opacity: status === "loading" ? 0.65 : 1,
           transition: "background-color 0.15s ease, opacity 0.2s ease",
           display: "inline-block",
+          width: "100%",
         }}
       >
         {status === "loading" ? l.loading : plan === "personal" ? l.personal : l.team}
@@ -103,18 +124,32 @@ function CheckoutButton({
             maxWidth: "32ch",
           }}
         >
-          {l.unavailable}{" "}
-          <a
-            href="mailto:hello@crispyleaders.com"
+          {l.unavailable}
+        </p>
+      )}
+
+      {signedIn === false && (
+        <p
+          style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.75rem",
+            lineHeight: 1.6,
+            color: variant === "orange" ? "oklch(68% 0.04 260)" : "oklch(48% 0.008 260)",
+            marginTop: "0.875rem",
+          }}
+        >
+          {lang === "id" ? "Sudah punya akun? " : "Already have an account? "}
+          <Link
+            href="/login?redirect=/pricing"
             style={{
-              color: "inherit",
-              textDecoration: "underline",
+              color: variant === "orange" ? "oklch(82% 0.06 260)" : "oklch(32% 0.10 260)",
               fontWeight: 700,
+              textDecoration: "underline",
             }}
           >
-            {l.contact}
-          </a>
-          .
+            {lang === "id" ? "Masuk terlebih dahulu" : "Sign in first"}
+          </Link>
+          {" "}{lang === "id" ? "untuk melanjutkan ke jalur tim." : "to extend to team pathway."}
         </p>
       )}
     </div>
@@ -221,159 +256,222 @@ function Feature({ text, light }: { text: string; light?: boolean }) {
   );
 }
 
+// ── Savings badge ────────────────────────────────────────────────────────────
+function SavingsBadge({ label }: { label: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        background: "oklch(65% 0.15 45)",
+        color: "oklch(97% 0.005 80)",
+        fontFamily: "var(--font-montserrat)",
+        fontWeight: 700,
+        fontSize: "0.65rem",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        padding: "0.25em 0.65em",
+        borderRadius: "999px",
+        marginLeft: "0.75rem",
+        verticalAlign: "middle",
+        lineHeight: 1.4,
+      }}
+    >
+      {label}
+    </span>
+  );
+}
+
 // ── Main component ───────────────────────────────────────────────────────────
 export default function PricingContent({ isIndonesia }: Props) {
   const { lang } = useLanguage();
   const id = lang === "id";
+  const [billing, setBilling] = useState<BillingPeriod>("monthly");
+  const annual = billing === "annual";
 
   // ── Copy ────────────────────────────────────────────────────────────────
   const copy = {
     eyebrow: id ? "Akses · Harga" : "Access · Pricing",
-    h1: id ? "Satu pembayaran.\nAkses seumur hidup." : "One payment.\nLifetime access.",
+    h1: id ? "Sumber daya. Coaching. Komunitas." : "Resources. Coaching. Community.",
     tagline: id
-      ? "Sumber daya, jalur, dan coaching AI untuk pemimpin lintas budaya. Tidak ada langganan. Tidak ada perpanjangan. Siapa pun bisa bergabung."
-      : "Resources, pathways, and AI coaching for cross-cultural leaders. No subscription. No renewal. Open to all.",
+      ? "Sumber daya, jalur, dan coaching AI untuk pemimpin lintas budaya. Siapa pun bisa bergabung."
+      : "Resources, pathways, and AI coaching for cross-cultural leaders. Open to all.",
 
-    personalLabel: id ? "Jalur Pribadi" : "Personal Pathway",
-    personalPrice: isIndonesia ? "RP 399.000" : "$49",
-    personalPeriod: id
-      ? "pembayaran sekali · akses seumur hidup"
-      : "one-time · lifetime access",
-    personalFeatures: id
+    toggleMonthly: id ? "Bulanan" : "Monthly",
+    toggleAnnual: id ? "Tahunan" : "Annual",
+
+    // PERSONAL ───────────────────────────────────────────────────────────
+    personalLabel: id ? "Personal" : "Personal",
+
+    personalMonthlyPrice: isIndonesia ? "RP 99.000" : "$7.99",
+    personalMonthlyPeriod: id ? "per bulan · perpanjangan otomatis" : "per month · auto-renews",
+    personalMonthlyNote: id ? "Tanpa WayPoint · perpanjangan otomatis" : "No WayPoint · auto-renews",
+    personalMonthlyFeatures: id
       ? [
-          "Seluruh perpustakaan konten (53+ sumber daya)",
+          "53 modul pelatihan dengan dasbor kemajuan",
           "Dasbor pribadi + pelacakan kemajuan",
-          "Semua penilaian tersimpan ke profil Anda",
-          "60 menit WayPoint AI coaching gratis",
+          "8 asesmen personal (DISC · Enneagram · 5 Bahasa Cinta · Roda Kehidupan · Gaya Berpikir · Karunia Rohani · Big Five · 16 Kepribadian)",
           "Konten baru saat diluncurkan",
         ]
       : [
-          "Full content library (53+ resources)",
+          "53 training modules with progress dashboard",
           "Personal dashboard + progress tracking",
-          "All assessments saved to your profile",
-          "60 min WayPoint AI coaching included",
+          "8 personal assessments (DISC · Enneagram · 5 Love Languages · Wheel of Life · Thinking Styles · Spiritual Gifts · Big Five · 16 Personalities)",
           "New content as it launches",
         ],
 
-    teamLabel: id ? "Jalur Tim · 8 Kursi" : "Team Pathway · 8 Seats",
-    teamPrice: isIndonesia ? "RP 1.499.000" : "$199",
-    teamPeriod: id
-      ? "pembayaran sekali · 8 kursi anggota · seumur hidup"
-      : "one-time · 8 member seats · lifetime",
-    teamValue: isIndonesia
-      ? "RP 187k per anggota · hemat 53% dari harga individual"
-      : "$24.88 per member · 49% off individual plans",
-    teamFeatures: id
+    personalAnnualPrice: isIndonesia ? "RP 749.000" : "$59",
+    personalAnnualPeriod: id ? "per tahun" : "per year",
+    personalAnnualBadge: id ? "Hemat 38%" : "Save 38%",
+    personalAnnualFeatures: id
       ? [
-          "Perjalanan tim yang unik — progres bersama, dipandu pemimpin",
-          "8 penilaian kepemimpinan pribadi — satu per anggota",
-          "Seluruh perpustakaan konten untuk semua 8 anggota",
-          "60 menit WayPoint AI coaching per anggota (8 jam total)",
-          "Dasbor tim + kontrol konten pemimpin",
-          "Alat kepemimpinan lintas budaya khusus pemimpin tim",
+          "60 menit WayPoint AI Coaching disertakan",
         ]
       : [
-          "Unique team journey — shared, leader-paced progression",
-          "8 personal leadership assessments — one per member",
-          "Full content library for all 8 members",
-          "60 min AI coaching per member (8 hours total)",
-          "Team dashboard + leader content controls",
-          "Cross-cultural leader tools and guides",
+          "60 min WayPoint AI Coaching included",
         ],
-    teamNote: id
-      ? `Pemimpin memerlukan Jalur Pribadi${isIndonesia ? " (RP 399.000)" : " ($49)"} — dibeli terpisah. Kursi melekat pada pembelian.`
-      : `Leader requires a Personal plan${isIndonesia ? " (RP 399.000)" : " ($49)"} — purchased separately. Seats remain with the purchase.`,
 
-    freeBanner: id
-      ? "Hanya menjelajah? Mulai dengan sumber daya gratis kami — tidak perlu pembelian."
-      : "Just exploring? Start with our free resources — no purchase required.",
-    freeCta: id ? "Lihat sumber daya gratis →" : "Browse free resources →",
+    // TEAM ───────────────────────────────────────────────────────────────
+    teamLabel: id ? "Tim · 8 Kursi" : "Team · 8 Seats",
 
-    coachingEyebrow: "WayPoint AI Coaching",
-    coachingH2: id ? "60 menit disertakan.\nLebih banyak saat Anda butuh." : "60 minutes included.\nMore when you need it.",
-    coachingSub: id
-      ? "WayPoint adalah coach AI berbasis suara yang dirancang khusus untuk pemimpin lintas budaya. Tersedia dalam sesi 10 menit, kapan saja."
-      : "WayPoint is a voice-based AI coach built for cross-cultural leaders. Available in 10-minute sessions, any time.",
-    coachingAddons: id ? "Butuh lebih banyak? Tambahkan jam ekstra:" : "Need more time? Add extra hours:",
-    coachingNote: id
-      ? "Jam coaching tersedia setelah pembelian. Tidak ada kadaluwarsa."
-      : "Coaching hours unlock after purchase. Hours never expire.",
+    teamMonthlyPrice: isIndonesia ? "RP 399.000" : "$39",
+    teamMonthlyPeriod: id ? "per bulan · perpanjangan otomatis" : "per month · auto-renews",
+    teamMonthlyValue: isIndonesia
+      ? "Hanya RP 49.875 per anggota"
+      : "Only $4.88/member",
+    teamMonthlyNote: id ? "Tanpa WayPoint · perpanjangan otomatis" : "No WayPoint · auto-renews",
+    teamMonthlyFeatures: id
+      ? [
+          "Perjalanan pengembangan tim yang unik",
+          "Jalur personal untuk semua 8 anggota",
+          "Dasbor tim + kontrol pemimpin",
+          "Alat kepemimpinan lintas budaya",
+        ]
+      : [
+          "Unique team development journey",
+          "Personal pathway for all 8 members",
+          "Team dashboard + leader controls",
+          "Cross-cultural tools",
+        ],
 
+    teamAnnualPrice: isIndonesia ? "RP 2.990.000" : "$299",
+    teamAnnualPeriod: id ? "per tahun" : "per year",
+    teamAnnualBadge: id ? "Hemat 36%" : "Save 36%",
+    teamAnnualValue: isIndonesia ? "Hanya RP 373.750 per anggota" : "Only $37.38/member",
+    teamAnnualFeatures: id
+      ? [
+          "4 jam total WayPoint AI Coaching (30 menit per anggota)",
+        ]
+      : [
+          "4 hours total WayPoint AI Coaching included (30 min/member)",
+        ],
+
+    // FAQ ────────────────────────────────────────────────────────────────
     faqLabel: id ? "Pertanyaan Umum" : "Common Questions",
     faqH2: id ? "Yang perlu Anda tahu." : "What you need to know.",
     faqs: id
       ? [
           {
             q: "Apakah ini berlangganan?",
-            a: "Tidak. Satu pembayaran, akses seumur hidup. Tidak ada perpanjangan, tidak ada biaya berulang.",
+            a: "Ya — paket Bulanan dan Tahunan sama-sama berlangganan. Paket Bulanan diperpanjang otomatis setiap bulan. Paket Tahunan diperpanjang setiap tahun. Anda dapat membatalkan kapan saja dari dasbor akun Anda.",
           },
           {
-            q: "Bisakah saya upgrade dari Personal ke Team?",
-            a: "Ya — hubungi kami dan kami akan mengatur selisih harganya.",
+            q: "Bagaimana cara membatalkan?",
+            a: "Masuk ke dasbor akun Anda dan batalkan kapan saja. Akses tetap aktif hingga akhir periode penagihan saat ini. Tidak ada biaya pembatalan.",
           },
           {
-            q: "Apa yang termasuk dalam coaching AI?",
-            a: "Setiap paket berbayar menyertakan 60 menit WayPoint AI coaching — coach AI berbasis suara yang dilatih untuk pemimpin lintas budaya. Jam tambahan tersedia sebagai add-on setelah pembelian.",
+            q: "Apa perbedaan Bulanan dan Tahunan?",
+            a: "Paket Bulanan memberikan akses ke seluruh perpustakaan konten tanpa coaching WayPoint. Paket Tahunan termasuk menit coaching WayPoint AI dan harga lebih hemat secara keseluruhan.",
+          },
+          {
+            q: "Apa yang termasuk dalam coaching AI WayPoint?",
+            a: "WayPoint adalah coach AI berbasis suara yang dirancang untuk pemimpin lintas budaya. Paket Tahunan Personal menyertakan 60 menit; Paket Tahunan Tim menyertakan 4 jam total (30 menit per anggota).",
+          },
+          {
+            q: "Bisakah saya upgrade dari Bulanan ke Tahunan?",
+            a: "Ya — hubungi kami di hello@crispyleaders.com dan kami akan mengatur penyesuaian harga.",
           },
           {
             q: "Apakah kursi tim bisa dialihkan?",
-            a: "Tidak. Kursi tim tidak dapat dialihkan ke anggota lain. Jika anggota tim pergi, pembelian tim baru diperlukan untuk menambah anggota pengganti.",
+            a: "Tidak. Kursi tim tidak dapat dialihkan ke anggota lain setelah ditetapkan.",
           },
         ]
       : [
           {
             q: "Is this a subscription?",
-            a: "No. One payment, lifetime access. No renewals, no recurring charges.",
+            a: "Yes — both Monthly and Annual plans are subscriptions. Monthly renews each month. Annual renews each year. You can cancel any time from your account dashboard.",
           },
           {
-            q: "Can I upgrade from Personal to Team?",
-            a: "Yes — contact us and we'll arrange the price difference.",
+            q: "How do I cancel?",
+            a: "Log in to your account dashboard and cancel any time. Access remains active until the end of your current billing period. No cancellation fees.",
           },
           {
-            q: "What's included in the AI coaching?",
-            a: "Every paid plan includes 60 minutes of WayPoint AI coaching — a voice-based AI coach trained for cross-cultural leaders. Additional hours are available as add-ons after purchase.",
+            q: "What's the difference between Monthly and Annual?",
+            a: "Monthly gives you full access to all 53 training modules without WayPoint coaching. Annual includes WayPoint AI coaching minutes and better overall value.",
+          },
+          {
+            q: "What's included in WayPoint AI coaching?",
+            a: "WayPoint is a voice-based AI coach built for cross-cultural leaders. The Personal Annual plan includes 60 minutes; the Team Annual plan includes 4 hours total (30 min per member).",
+          },
+          {
+            q: "Can I upgrade from Monthly to Annual?",
+            a: "Yes — contact us at hello@crispyleaders.com and we'll arrange the price difference.",
           },
           {
             q: "Are team seats transferable?",
-            a: "No. Team seats are non-transferable. If a team member leaves, a new team purchase is needed to add a replacement.",
+            a: "No. Team seats are non-transferable once assigned.",
           },
         ],
   };
 
-  const packages = [
-    {
-      label: id ? "1 jam" : "1 hour",
-      usd: "$10",
-      idr: "RP 150.000",
-      per: id ? "per jam" : "per hour",
-    },
-    {
-      label: id ? "5 jam" : "5 hours",
-      usd: "$39",
-      idr: "RP 599.000",
-      per: id ? "→ $7.80/jam" : "→ $7.80/hr",
-    },
-    {
-      label: id ? "10 jam" : "10 hours",
-      usd: "$69",
-      idr: "RP 1.099.000",
-      per: id ? "→ $6.90/jam" : "→ $6.90/hr",
-      bestValue: true,
-    },
-  ];
+  // Derived values for the active billing period
+  const personalPrice = annual ? copy.personalAnnualPrice : copy.personalMonthlyPrice;
+  const personalPeriod = annual ? copy.personalAnnualPeriod : copy.personalMonthlyPeriod;
+  const personalFeatures = annual
+    ? [...copy.personalMonthlyFeatures, ...copy.personalAnnualFeatures]
+    : copy.personalMonthlyFeatures;
+
+  const teamPrice = annual ? copy.teamAnnualPrice : copy.teamMonthlyPrice;
+  const teamPeriod = annual ? copy.teamAnnualPeriod : copy.teamMonthlyPeriod;
+  const teamFeatures = annual
+    ? [...copy.teamMonthlyFeatures, ...copy.teamAnnualFeatures]
+    : copy.teamMonthlyFeatures;
 
   return (
     <>
       {/* eslint-disable-next-line react/no-danger */}
       <style dangerouslySetInnerHTML={{ __html: `
-        .pricing-free-link:hover { text-decoration: underline; }
         .pricing-contact-link:hover { text-decoration: underline; }
         @keyframes pricingFadeDown {
           from { opacity: 0; transform: translateY(-5px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         .pricing-faq-answer { animation: pricingFadeDown 0.18s ease-out; }
+        .pricing-toggle-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: var(--font-montserrat);
+          font-weight: 700;
+          font-size: 0.8rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 0.5rem 1.25rem;
+          border-radius: 8px;
+          transition: background 0.15s ease, color 0.15s ease;
+        }
+        .pricing-toggle-btn.active {
+          background: oklch(22% 0.10 260);
+          color: oklch(97% 0.005 80);
+        }
+        .pricing-toggle-btn.inactive {
+          background: none;
+          color: oklch(48% 0.008 260);
+        }
+        .pricing-toggle-btn.inactive:hover {
+          color: oklch(22% 0.10 260);
+        }
       `}} />
+
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         style={{
@@ -426,19 +524,22 @@ export default function PricingContent({ isIndonesia }: Props) {
             </p>
           </div>
           <div
-            style={{ width: "48px", height: "2px", background: "oklch(65% 0.15 45)", marginBottom: "1.75rem" }}
+            style={{
+              width: "48px",
+              height: "2px",
+              background: "oklch(65% 0.15 45)",
+              marginBottom: "1.75rem",
+            }}
           />
           <h1
             style={{
               fontFamily: "var(--font-cormorant)",
               fontStyle: "italic",
               fontWeight: 600,
-              fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              lineHeight: 1.0,
+              fontSize: "clamp(2rem, 4vw, 3.5rem)",
+              lineHeight: 1.1,
               color: "oklch(97% 0.005 80)",
               margin: "0 0 1.75rem",
-              maxWidth: "14ch",
-              whiteSpace: "pre-line",
             }}
           >
             {copy.h1}
@@ -458,235 +559,109 @@ export default function PricingContent({ isIndonesia }: Props) {
         </div>
       </section>
 
-      {/* ── TWO-PANEL PRICING ─────────────────────────────────────────────── */}
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {/* ── Personal ── navy panel */}
-        <div
-          style={{
-            flex: "1 1 340px",
-            background: "oklch(27% 0.11 260)",
-            padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4rem)",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.68rem",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              margin: "0 0 2.5rem",
-            }}
-          >
-            {copy.personalLabel}
-          </p>
-
-          <div style={{ marginBottom: "0.375rem" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-cormorant)",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "clamp(4.5rem, 9vw, 8rem)",
-                lineHeight: 0.9,
-                color: "oklch(97% 0.005 80)",
-                display: "block",
-              }}
-            >
-              {copy.personalPrice}
-            </span>
-          </div>
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.68rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "oklch(52% 0.04 260)",
-              margin: "0.875rem 0 2.5rem",
-            }}
-          >
-            {copy.personalPeriod}
-          </p>
-
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "0 0 2.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-              flexGrow: 1,
-            }}
-          >
-            {copy.personalFeatures.map((f) => (
-              <Feature key={f} text={f} light />
-            ))}
-          </ul>
-
-          <CheckoutButton plan="personal" isIndonesia={isIndonesia} variant="orange" />
-        </div>
-
-        {/* ── Team ── cream panel */}
-        <div
-          style={{
-            flex: "1 1 340px",
-            background: "oklch(96% 0.006 80)",
-            padding: "clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4rem)",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.68rem",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "oklch(65% 0.15 45)",
-              margin: "0 0 1.25rem",
-            }}
-          >
-            {copy.teamLabel}
-          </p>
-
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.72rem",
-              lineHeight: 1.55,
-              color: "oklch(48% 0.008 260)",
-              fontStyle: "italic",
-              margin: "0 0 1.75rem",
-            }}
-          >
-            {copy.teamNote}
-          </p>
-
-          <div style={{ marginBottom: "0.375rem" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-cormorant)",
-                fontStyle: "italic",
-                fontWeight: 300,
-                fontSize: "clamp(4.5rem, 9vw, 8rem)",
-                lineHeight: 0.9,
-                color: "oklch(22% 0.10 260)",
-                display: "block",
-              }}
-            >
-              {copy.teamPrice}
-            </span>
-          </div>
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.68rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "oklch(55% 0.008 260)",
-              margin: "0.875rem 0 0.875rem",
-            }}
-          >
-            {copy.teamPeriod}
-          </p>
-
-          <p
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              color: "oklch(65% 0.15 45)",
-              margin: "0 0 2.5rem",
-            }}
-          >
-            {copy.teamValue}
-          </p>
-
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "0 0 2.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-              flexGrow: 1,
-            }}
-          >
-            {copy.teamFeatures.map((f) => (
-              <Feature key={f} text={f} />
-            ))}
-          </ul>
-
-          <CheckoutButton plan="team" isIndonesia={isIndonesia} variant="navy" />
-        </div>
-      </div>
-
-      {/* ── FREE RESOURCES STRIP ──────────────────────────────────────────── */}
-      <div
-        style={{
-          background: "oklch(94% 0.012 55)",
-          padding: "1.25rem clamp(1.75rem, 5vw, 4rem)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "0.75rem 2rem",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.875rem",
-            color: "oklch(35% 0.08 50)",
-            margin: 0,
-          }}
-        >
-          {copy.freeBanner}
-        </p>
-        <Link
-          href="/resources"
-          className="pricing-free-link"
-          style={{
-            fontFamily: "var(--font-montserrat)",
-            fontWeight: 700,
-            fontSize: "0.8rem",
-            letterSpacing: "0.04em",
-            color: "oklch(42% 0.12 45)",
-            textDecoration: "none",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {copy.freeCta}
-        </Link>
-      </div>
-
-      {/* ── AI COACHING SECTION ───────────────────────────────────────────── */}
+      {/* ── PRICING CARDS ─────────────────────────────────────────────────── */}
       <section
         style={{
-          background: "oklch(22% 0.10 260)",
-          paddingBlock: "clamp(4rem, 7vw, 6.5rem)",
+          background: "oklch(94% 0.008 80)",
+          paddingBlock: "clamp(3rem, 6vw, 5rem)",
         }}
       >
         <div className="container-wide">
+
+          {/* Toggle */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "clamp(2rem, 4vw, 3rem)",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                background: "oklch(88% 0.008 80)",
+                borderRadius: "12px",
+                padding: "4px",
+                gap: "2px",
+              }}
+            >
+              <button
+                className={`pricing-toggle-btn ${billing === "monthly" ? "active" : "inactive"}`}
+                onClick={() => setBilling("monthly")}
+              >
+                {copy.toggleMonthly}
+              </button>
+              <button
+                className={`pricing-toggle-btn ${billing === "annual" ? "active" : "inactive"}`}
+                onClick={() => setBilling("annual")}
+              >
+                {copy.toggleAnnual}
+                {billing === "monthly" && (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      background: "oklch(65% 0.15 45)",
+                      color: "oklch(97% 0.005 80)",
+                      fontSize: "0.58rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.06em",
+                      padding: "0.15em 0.5em",
+                      borderRadius: "999px",
+                      marginLeft: "0.5rem",
+                      verticalAlign: "middle",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {id ? "Hemat" : "Save"}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Indonesian pricing notice */}
+          {isIndonesia && (
+            <p
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.75rem",
+                lineHeight: 1.6,
+                color: "oklch(48% 0.008 260)",
+                textAlign: "center",
+                marginBottom: "1.5rem",
+                padding: "0.75rem 1.25rem",
+                background: "oklch(90% 0.008 80)",
+                borderRadius: "8px",
+              }}
+            >
+              {id
+                ? "Harga IDR hanya tersedia untuk pengguna Indonesia. Pembayaran melalui rekening bank Indonesia."
+                : "IDR pricing is available for Indonesian subscribers only. Payment via Indonesian bank account."}
+            </p>
+          )}
+
+          {/* Card grid */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "clamp(3rem, 6vw, 5rem)",
-              alignItems: "start",
+              gap: "clamp(1.25rem, 3vw, 2rem)",
+              alignItems: "stretch",
             }}
           >
-            {/* Left — coaching intro */}
-            <div>
+            {/* ── Personal card — navy ── */}
+            <div
+              style={{
+                background: "oklch(27% 0.11 260)",
+                borderRadius: "16px",
+                padding: "clamp(2rem, 4vw, 2.75rem)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 0,
+              }}
+            >
+              {/* Label */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
@@ -695,135 +670,180 @@ export default function PricingContent({ isIndonesia }: Props) {
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
                   color: "oklch(65% 0.15 45)",
-                  margin: "0 0 1.5rem",
+                  margin: "0 0 1.75rem",
                 }}
               >
-                {copy.coachingEyebrow}
+                {copy.personalLabel}
               </p>
-              <h2
+
+              {/* Price row */}
+              <div
                 style={{
-                  fontFamily: "var(--font-cormorant)",
-                  fontStyle: "italic",
-                  fontWeight: 600,
-                  fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
-                  lineHeight: 1.08,
-                  color: "oklch(97% 0.005 80)",
-                  margin: "0 0 1.5rem",
-                  maxWidth: "18ch",
-                  whiteSpace: "pre-line",
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "0.5rem",
+                  flexWrap: "wrap",
+                  marginBottom: "0.375rem",
                 }}
               >
-                {copy.coachingH2}
-              </h2>
+                <span
+                  style={{
+                    fontFamily: "var(--font-cormorant)",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
+                    lineHeight: 1,
+                    color: "oklch(97% 0.005 80)",
+                  }}
+                >
+                  {personalPrice}
+                </span>
+                {annual && <SavingsBadge label={copy.personalAnnualBadge} />}
+              </div>
+
+              {/* Period */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.75,
-                  color: "oklch(68% 0.035 260)",
-                  maxWidth: "44ch",
-                  margin: 0,
+                  fontSize: "0.68rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "oklch(52% 0.04 260)",
+                  margin: "0.625rem 0 1.75rem",
                 }}
               >
-                {copy.coachingSub}
+                {personalPeriod}
               </p>
+
+              {/* Features */}
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: "0 0 2rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.875rem",
+                  flexGrow: 1,
+                }}
+              >
+                {personalFeatures.map((f) => (
+                  <Feature key={f} text={f} light />
+                ))}
+              </ul>
+
+              <CheckoutButton
+                plan="personal"
+                isIndonesia={isIndonesia}
+                variant="orange"
+                billingPeriod={billing}
+              />
             </div>
 
-            {/* Right — add-on packages */}
-            <div>
+            {/* ── Team card — off-white ── */}
+            <div
+              style={{
+                background: "oklch(96% 0.006 80)",
+                borderRadius: "16px",
+                padding: "clamp(2rem, 4vw, 2.75rem)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 0,
+              }}
+            >
+              {/* Label */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
                   fontSize: "0.68rem",
                   fontWeight: 700,
-                  letterSpacing: "0.18em",
+                  letterSpacing: "0.22em",
                   textTransform: "uppercase",
-                  color: "oklch(48% 0.03 260)",
-                  margin: "0 0 1.5rem",
+                  color: "oklch(65% 0.15 45)",
+                  margin: "0 0 1.75rem",
                 }}
               >
-                {copy.coachingAddons}
+                {copy.teamLabel}
               </p>
 
-              {packages.map((pkg) => (
-                <div
-                  key={pkg.label}
+              {/* Price row */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "0.5rem",
+                  flexWrap: "wrap",
+                  marginBottom: "0.375rem",
+                }}
+              >
+                <span
                   style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingBlock: "1.125rem",
-                    paddingInline: "0",
-                    borderTop: "1px solid oklch(97% 0.005 80 / 0.08)",
+                    fontFamily: "var(--font-cormorant)",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
+                    lineHeight: 1,
+                    color: "oklch(22% 0.10 260)",
                   }}
                 >
-                  <div>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontWeight: 700,
-                        fontSize: "1rem",
-                        color: "oklch(88% 0.008 80)",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.625rem",
-                      }}
-                    >
-                      {pkg.label}
-                      {"bestValue" in pkg && pkg.bestValue && (
-                        <span
-                          style={{
-                            fontFamily: "var(--font-montserrat)",
-                            fontSize: "0.58rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.12em",
-                            textTransform: "uppercase",
-                            color: "oklch(65% 0.15 45)",
-                            padding: "0.15em 0.5em",
-                            border: "1px solid oklch(65% 0.15 45 / 0.5)",
-                          }}
-                        >
-                          {id ? "Terbaik" : "Best value"}
-                        </span>
-                      )}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-montserrat)",
-                        fontSize: "0.72rem",
-                        color: "oklch(48% 0.03 260)",
-                      }}
-                    >
-                      {pkg.per}
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-cormorant)",
-                      fontStyle: "italic",
-                      fontWeight: 500,
-                      fontSize: "2rem",
-                      color: "oklch(97% 0.005 80)",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {isIndonesia ? pkg.idr : pkg.usd}
-                  </span>
-                </div>
-              ))}
+                  {teamPrice}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.72rem",
+                    fontWeight: 500,
+                    color: "oklch(55% 0.008 260)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {isIndonesia
+                    ? annual ? "" : "(Rp 50.000/anggota)"
+                    : annual ? "" : "(less than $5 per member)"}
+                </span>
+                {annual && <SavingsBadge label={copy.teamAnnualBadge} />}
+              </div>
 
-              <div style={{ borderTop: "1px solid oklch(97% 0.005 80 / 0.08)" }} />
+              {/* Period */}
               <p
                 style={{
                   fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.75rem",
-                  color: "oklch(45% 0.025 260)",
-                  margin: "1.25rem 0 0",
-                  fontStyle: "italic",
+                  fontSize: "0.68rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "oklch(55% 0.008 260)",
+                  margin: "0.625rem 0 1.75rem",
                 }}
               >
-                {copy.coachingNote}
+                {teamPeriod}
               </p>
+
+              {/* Features */}
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: "0 0 1.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.875rem",
+                  flexGrow: 1,
+                }}
+              >
+                {teamFeatures.map((f) => (
+                  <Feature key={f} text={f} />
+                ))}
+              </ul>
+
+              {/* Team leader note */}
+              <CheckoutButton
+                plan="team"
+                isIndonesia={isIndonesia}
+                variant="navy"
+                billingPeriod={billing}
+              />
             </div>
           </div>
         </div>

@@ -1,632 +1,632 @@
-"use client";
+﻿"use clnent";
 
-import { useState, useTransition } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard, saveSmartGoal } from "../actions";
-import LangToggle from "@/components/LangToggle";
+nmport { useState, useTransntnon } from "react";
+nmport { useLanguage } from "@/lnb/LanguageContext";
+nmport Lnnk from "next/lnnk";
+nmport { saveResourceToDashboari, saveSmartGoal } from "../actnons";
+nmport LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-type Answer = "yes" | "partial" | "no";
+type Lang = "en" | "ni" | "nl";
+type Answer = "yes" | "partnal" | "no";
 
 const LETTERS = [
   {
     letter: "S",
-    wordEn: "Specific",
-    wordId: "Spesifik",
-    wordNl: "Specifiek",
+    woriEn: "Specnfnc",
+    woriIi: "Spesnfnk",
+    woriNl: "Specnfnek",
     color: "oklch(42% 0.14 260)",
     colorBg: "oklch(42% 0.14 260 / 0.08)",
-    descEn: "A specific goal answers the who, what, where, and why. Vague goals stay wishes; specific goals become plans.",
-    descId: "Tujuan yang spesifik menjawab siapa, apa, di mana, dan mengapa. Tujuan yang samar tetap menjadi keinginan; tujuan yang spesifik menjadi rencana.",
-    descNl: "Een specifiek doel beantwoordt de vragen wie, wat, waar en waarom. Vage doelen blijven wensen; specifieke doelen worden plannen.",
-    questionsEn: [
-      "What exactly do you want to achieve?",
-      "Who is involved or responsible?",
-      "Where will it take place (if applicable)?",
-      "Why is this goal important to you?",
+    iescEn: "A specnfnc goal answers the who, what, where, ani why. Vague goals stay wnshes; specnfnc goals become plans.",
+    iescIi: "Tujuan yang spesnfnk menjawab snapa, apa, in mana, ian mengapa. Tujuan yang samar tetap menjain kenngnnan; tujuan yang spesnfnk menjain rencana.",
+    iescNl: "Een specnfnek ioel beantwoorit ie vragen wne, wat, waar en waarom. Vage ioelen blnjven wensen; specnfneke ioelen worien plannen.",
+    questnonsEn: [
+      "What exactly io you want to achneve?",
+      "Who ns nnvolvei or responsnble?",
+      "Where wnll nt take place (nf applncable)?",
+      "Why ns thns goal nmportant to you?",
     ],
-    questionsId: [
-      "Apa tepatnya yang ingin Anda capai?",
-      "Siapa yang terlibat atau bertanggung jawab?",
-      "Di mana itu akan berlangsung (jika berlaku)?",
-      "Mengapa tujuan ini penting bagi Anda?",
+    questnonsIi: [
+      "Apa tepatnya yang nngnn Ania capan?",
+      "Snapa yang terlnbat atau bertanggung jawab?",
+      "Dn mana ntu akan berlangsung (jnka berlaku)?",
+      "Mengapa tujuan nnn pentnng bagn Ania?",
     ],
-    questionsNl: [
-      "Wat wil je precies bereiken?",
-      "Wie is erbij betrokken of verantwoordelijk?",
-      "Waar vindt het plaats (indien van toepassing)?",
-      "Waarom is dit doel belangrijk voor jou?",
+    questnonsNl: [
+      "Wat wnl je precnes berenken?",
+      "Wne ns erbnj betrokken of verantwoorielnjk?",
+      "Waar vnnit het plaats (nninen van toepassnng)?",
+      "Waarom ns int ioel belangrnjk voor jou?",
     ],
     worksheetQEn: [
-      { q: "Can you describe exactly what you want to achieve in one clear sentence?", hint: "A specific goal names the outcome, not the activity." },
-      { q: "Do you know who is responsible and who else is involved?", hint: "Clarity on ownership prevents goals from drifting." },
-      { q: "Do you know where or in what context this will happen?", hint: "Context grounds a goal in reality." },
-      { q: "Can you clearly explain why this goal matters to you right now?", hint: "A strong 'why' fuels action when motivation fades." },
+      { q: "Can you iescrnbe exactly what you want to achneve nn one clear sentence?", hnnt: "A specnfnc goal names the outcome, not the actnvnty." },
+      { q: "Do you know who ns responsnble ani who else ns nnvolvei?", hnnt: "Clarnty on ownershnp prevents goals from irnftnng." },
+      { q: "Do you know where or nn what context thns wnll happen?", hnnt: "Context grounis a goal nn realnty." },
+      { q: "Can you clearly explann why thns goal matters to you rnght now?", hnnt: "A strong 'why' fuels actnon when motnvatnon faies." },
     ],
-    worksheetQId: [
-      { q: "Bisakah Anda menggambarkan dengan tepat apa yang ingin dicapai dalam satu kalimat yang jelas?", hint: "Tujuan yang spesifik menyebutkan hasil, bukan aktivitas." },
-      { q: "Apakah Anda tahu siapa yang bertanggung jawab dan siapa lagi yang terlibat?", hint: "Kejelasan kepemilikan mencegah tujuan menjadi kabur." },
-      { q: "Apakah Anda tahu di mana atau dalam konteks apa ini akan terjadi?", hint: "Konteks membumikan tujuan dalam kenyataan." },
-      { q: "Dapatkah Anda menjelaskan dengan jelas mengapa tujuan ini penting bagi Anda sekarang?", hint: "\"Mengapa\" yang kuat memotivasi tindakan ketika semangat memudar." },
+    worksheetQIi: [
+      { q: "Bnsakah Ania menggambarkan iengan tepat apa yang nngnn incapan ialam satu kalnmat yang jelas?", hnnt: "Tujuan yang spesnfnk menyebutkan hasnl, bukan aktnvntas." },
+      { q: "Apakah Ania tahu snapa yang bertanggung jawab ian snapa lagn yang terlnbat?", hnnt: "Kejelasan kepemnlnkan mencegah tujuan menjain kabur." },
+      { q: "Apakah Ania tahu in mana atau ialam konteks apa nnn akan terjain?", hnnt: "Konteks membumnkan tujuan ialam kenyataan." },
+      { q: "Dapatkah Ania menjelaskan iengan jelas mengapa tujuan nnn pentnng bagn Ania sekarang?", hnnt: "\"Mengapa\" yang kuat memotnvasn tnniakan ketnka semangat memuiar." },
     ],
     worksheetQNl: [
-      { q: "Kun jij in ——n heldere zin beschrijven wat je precies wilt bereiken?", hint: "Een specifiek doel benoemt de uitkomst, niet de activiteit." },
-      { q: "Weet je wie verantwoordelijk is en wie er verder bij betrokken is?", hint: "Duidelijkheid over eigenaarschap voorkomt dat doelen afdrijven." },
-      { q: "Weet je waar of in welke context dit zal plaatsvinden?", hint: "Context verankert een doel in de werkelijkheid." },
-      { q: "Kun je duidelijk uitleggen waarom dit doel er nu voor jou toe doet?", hint: "Een sterk 'waarom' voedt actie wanneer de motivatie wegzakt." },
+      { q: "Kun jnj nn ——n heliere znn beschrnjven wat je precnes wnlt berenken?", hnnt: "Een specnfnek ioel benoemt ie untkomst, nnet ie actnvntent." },
+      { q: "Weet je wne verantwoorielnjk ns en wne er verier bnj betrokken ns?", hnnt: "Dunielnjkheni over engenaarschap voorkomt iat ioelen afirnjven." },
+      { q: "Weet je waar of nn welke context int zal plaatsvnnien?", hnnt: "Context verankert een ioel nn ie werkelnjkheni." },
+      { q: "Kun je iunielnjk untleggen waarom int ioel er nu voor jou toe ioet?", hnnt: "Een sterk 'waarom' voeit actne wanneer ie motnvatne wegzakt." },
     ],
-    actionEn: "CLARIFY",
-    actionId: "KLARIFIKASI",
-    actionNl: "VERDUIDELIJK",
-    actionDescEn: "Rewrite your goal as a single sentence that answers: what, who, where, and why.",
-    actionDescId: "Tulis ulang tujuan Anda sebagai satu kalimat yang menjawab: apa, siapa, di mana, dan mengapa.",
-    actionDescNl: "Herschrijf je doel als ——n zin die antwoord geeft op: wat, wie, waar en waarom.",
-    actionColor: "oklch(42% 0.14 260)",
+    actnonEn: "CLARIFY",
+    actnonIi: "KLARIFIKASI",
+    actnonNl: "VERDUIDELIJK",
+    actnonDescEn: "Rewrnte your goal as a snngle sentence that answers: what, who, where, ani why.",
+    actnonDescIi: "Tulns ulang tujuan Ania sebagan satu kalnmat yang menjawab: apa, snapa, in mana, ian mengapa.",
+    actnonDescNl: "Herschrnjf je ioel als ——n znn ine antwoori geeft op: wat, wne, waar en waarom.",
+    actnonColor: "oklch(42% 0.14 260)",
   },
   {
     letter: "M",
-    wordEn: "Motivating",
-    wordId: "Memotivasi",
-    wordNl: "Motiverend",
+    woriEn: "Motnvatnng",
+    woriIi: "Memotnvasn",
+    woriNl: "Motnvereni",
     color: "oklch(48% 0.18 25)",
     colorBg: "oklch(48% 0.18 25 / 0.08)",
-    descEn: "A motivating goal aligns with your values and creates energy. Goals without inner fire get abandoned when difficulty comes.",
-    descId: "Tujuan yang memotivasi selaras dengan nilai-nilai Anda dan menciptakan energi. Tujuan tanpa api batin akan ditinggalkan ketika kesulitan datang.",
-    descNl: "Een motiverend doel sluit aan bij je waarden en wekt energie. Doelen zonder innerlijk vuur worden opgegeven zodra het moeilijk wordt.",
-    questionsEn: [
-      "Does the goal align with your values and passions?",
-      "Does the goal excite and inspire you, creating energy?",
-      "Does the goal help you push through challenges and setbacks?",
+    iescEn: "A motnvatnng goal alngns wnth your values ani creates energy. Goals wnthout nnner fnre get abanionei when inffnculty comes.",
+    iescIi: "Tujuan yang memotnvasn selaras iengan nnlan-nnlan Ania ian mencnptakan energn. Tujuan tanpa apn batnn akan intnnggalkan ketnka kesulntan iatang.",
+    iescNl: "Een motnvereni ioel slunt aan bnj je waarien en wekt energne. Doelen zonier nnnerlnjk vuur worien opgegeven zoira het moenlnjk worit.",
+    questnonsEn: [
+      "Does the goal alngn wnth your values ani passnons?",
+      "Does the goal excnte ani nnspnre you, creatnng energy?",
+      "Does the goal help you push through challenges ani setbacks?",
     ],
-    questionsId: [
-      "Apakah tujuan tersebut selaras dengan nilai-nilai dan hasrat Anda?",
-      "Apakah tujuan tersebut membuat Anda bersemangat dan terinspirasi, menciptakan energi?",
-      "Apakah tujuan tersebut membantu Anda melewati tantangan dan kemunduran?",
+    questnonsIi: [
+      "Apakah tujuan tersebut selaras iengan nnlan-nnlan ian hasrat Ania?",
+      "Apakah tujuan tersebut membuat Ania bersemangat ian ternnspnrasn, mencnptakan energn?",
+      "Apakah tujuan tersebut membantu Ania melewatn tantangan ian kemuniuran?",
     ],
-    questionsNl: [
-      "Sluit het doel aan bij jouw waarden en passies?",
-      "Inspireert en enthousiasmeert het doel je, waardoor het energie geeft?",
-      "Helpt het doel je door uitdagingen en tegenslagen heen?",
+    questnonsNl: [
+      "Slunt het ioel aan bnj jouw waarien en passnes?",
+      "Inspnreert en enthousnasmeert het ioel je, waarioor het energne geeft?",
+      "Helpt het ioel je ioor untiagnngen en tegenslagen heen?",
     ],
     worksheetQEn: [
-      { q: "Does this goal connect to something you genuinely care about — a value, a calling, or a dream?", hint: "Intrinsic motivation outlasts external pressure every time." },
-      { q: "When you think about achieving this goal, does it create positive energy and excitement?", hint: "If the idea feels flat, the goal may be borrowed from someone else's vision." },
-      { q: "Can you imagine this goal carrying you through a hard stretch — when progress stalls or costs rise?", hint: "Motivating goals feel worth the sacrifice." },
+      { q: "Does thns goal connect to somethnng you genunnely care about — a value, a callnng, or a iream?", hnnt: "Intrnnsnc motnvatnon outlasts external pressure every tnme." },
+      { q: "When you thnnk about achnevnng thns goal, ioes nt create posntnve energy ani excntement?", hnnt: "If the niea feels flat, the goal may be borrowei from someone else's vnsnon." },
+      { q: "Can you nmagnne thns goal carrynng you through a hari stretch — when progress stalls or costs rnse?", hnnt: "Motnvatnng goals feel worth the sacrnfnce." },
     ],
-    worksheetQId: [
-      { q: "Apakah tujuan ini terhubung dengan sesuatu yang benar-benar Anda pedulikan — sebuah nilai, panggilan, atau impian?", hint: "Motivasi intrinsik selalu lebih tahan lama daripada tekanan eksternal." },
-      { q: "Ketika memikirkan pencapaian tujuan ini, apakah itu menciptakan energi positif dan kegembiraan?", hint: "Jika ideanya terasa datar, tujuan mungkin dipinjam dari visi orang lain." },
-      { q: "Bisakah Anda membayangkan tujuan ini membawa Anda melalui masa sulit — ketika kemajuan terhenti atau biaya meningkat?", hint: "Tujuan yang memotivasi terasa sepadan dengan pengorbanannya." },
+    worksheetQIi: [
+      { q: "Apakah tujuan nnn terhubung iengan sesuatu yang benar-benar Ania peiulnkan — sebuah nnlan, panggnlan, atau nmpnan?", hnnt: "Motnvasn nntrnnsnk selalu lebnh tahan lama iarnpaia tekanan eksternal." },
+      { q: "Ketnka memnknrkan pencapanan tujuan nnn, apakah ntu mencnptakan energn posntnf ian kegembnraan?", hnnt: "Jnka nieanya terasa iatar, tujuan mungknn inpnnjam iarn vnsn orang lann." },
+      { q: "Bnsakah Ania membayangkan tujuan nnn membawa Ania melalun masa sulnt — ketnka kemajuan terhentn atau bnaya mennngkat?", hnnt: "Tujuan yang memotnvasn terasa sepaian iengan pengorbanannya." },
     ],
     worksheetQNl: [
-      { q: "Heeft dit doel verbinding met iets wat je echt belangrijk vindt — een waarde, een roeping of een droom?", hint: "Intrinsieke motivatie houdt het altijd langer vol dan externe druk." },
-      { q: "Wanneer je aan het bereiken van dit doel denkt, geeft dat positieve energie en enthousiasme?", hint: "Als het idee vlak aanvoelt, is het doel misschien geleend van iemand anders' visie." },
-      { q: "Kun jij je voorstellen dat dit doel je door een moeilijke periode heen draagt — wanneer de voortgang stagneert of de kosten stijgen?", hint: "Motiverende doelen voelen het offer waard." },
+      { q: "Heeft int ioel verbnninng met nets wat je echt belangrnjk vnnit — een waarie, een roepnng of een iroom?", hnnt: "Intrnnsneke motnvatne houit het altnji langer vol ian externe iruk." },
+      { q: "Wanneer je aan het berenken van int ioel ienkt, geeft iat posntneve energne en enthousnasme?", hnnt: "Als het niee vlak aanvoelt, ns het ioel mnsschnen geleeni van nemani aniers' vnsne." },
+      { q: "Kun jnj je voorstellen iat int ioel je ioor een moenlnjke pernoie heen iraagt — wanneer ie voortgang stagneert of ie kosten stnjgen?", hnnt: "Motnverenie ioelen voelen het offer waari." },
     ],
-    actionEn: "REFRAME",
-    actionId: "UBAH PERSPEKTIF",
-    actionNl: "HERFORMULEER",
-    actionDescEn: "Connect the goal to a deeper value or purpose — find the 'why' that creates genuine energy.",
-    actionDescId: "Hubungkan tujuan dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi yang nyata.",
-    actionDescNl: "Verbind het doel met een diepere waarde of een hoger doel — vind het 'waarom' dat echte energie geeft.",
-    actionColor: "oklch(48% 0.18 25)",
+    actnonEn: "REFRAME",
+    actnonIi: "UBAH PERSPEKTIF",
+    actnonNl: "HERFORMULEER",
+    actnonDescEn: "Connect the goal to a ieeper value or purpose — fnni the 'why' that creates genunne energy.",
+    actnonDescIi: "Hubungkan tujuan iengan nnlan atau tujuan yang lebnh ialam — temukan 'mengapa' yang mencnptakan energn yang nyata.",
+    actnonDescNl: "Verbnni het ioel met een inepere waarie of een hoger ioel — vnni het 'waarom' iat echte energne geeft.",
+    actnonColor: "oklch(48% 0.18 25)",
   },
   {
     letter: "A",
-    wordEn: "Achievable",
-    wordId: "Dapat Dicapai",
-    wordNl: "Haalbaar",
+    woriEn: "Achnevable",
+    woriIi: "Dapat Dncapan",
+    woriNl: "Haalbaar",
     color: "oklch(46% 0.16 145)",
     colorBg: "oklch(46% 0.16 145 / 0.08)",
-    descEn: "An achievable goal stretches you without breaking you. It's ambitious enough to matter, realistic enough to execute.",
-    descId: "Tujuan yang dapat dicapai merentangkan Anda tanpa memecah Anda. Cukup ambisius untuk berarti, cukup realistis untuk dijalankan.",
-    descNl: "Een haalbaar doel daagt je uit zonder je te breken. Ambitieus genoeg om er toe te doen, realistisch genoeg om uit te voeren.",
-    questionsEn: [
-      "Is the goal realistic given your resources and constraints?",
-      "What steps or actions will you take to reach the goal?",
-      "Do you have the necessary skills and support?",
+    iescEn: "An achnevable goal stretches you wnthout breaknng you. It's ambntnous enough to matter, realnstnc enough to execute.",
+    iescIi: "Tujuan yang iapat incapan merentangkan Ania tanpa memecah Ania. Cukup ambnsnus untuk berartn, cukup realnstns untuk injalankan.",
+    iescNl: "Een haalbaar ioel iaagt je unt zonier je te breken. Ambntneus genoeg om er toe te ioen, realnstnsch genoeg om unt te voeren.",
+    questnonsEn: [
+      "Is the goal realnstnc gnven your resources ani constrannts?",
+      "What steps or actnons wnll you take to reach the goal?",
+      "Do you have the necessary sknlls ani support?",
     ],
-    questionsId: [
-      "Apakah tujuan tersebut realistis mengingat sumber daya dan kendala Anda?",
-      "Langkah atau tindakan apa yang akan Anda ambil untuk mencapai tujuan?",
-      "Apakah Anda memiliki keterampilan dan dukungan yang diperlukan?",
+    questnonsIi: [
+      "Apakah tujuan tersebut realnstns mengnngat sumber iaya ian keniala Ania?",
+      "Langkah atau tnniakan apa yang akan Ania ambnl untuk mencapan tujuan?",
+      "Apakah Ania memnlnkn keterampnlan ian iukungan yang inperlukan?",
     ],
-    questionsNl: [
-      "Is het doel realistisch gezien jouw middelen en beperkingen?",
-      "Welke stappen of acties ga je ondernemen om het doel te bereiken?",
-      "Beschik je over de benodigde vaardigheden en ondersteuning?",
+    questnonsNl: [
+      "Is het ioel realnstnsch geznen jouw mniielen en beperknngen?",
+      "Welke stappen of actnes ga je oniernemen om het ioel te berenken?",
+      "Beschnk je over ie benoingie vaaringheien en oniersteunnng?",
     ],
     worksheetQEn: [
-      { q: "Do you have (or can realistically obtain) the time, money, and resources this goal requires?", hint: "Stretch goals inspire. Impossible goals demoralise." },
-      { q: "Can you name at least three concrete actions you would take to move toward this goal?", hint: "If you can't describe the path, the goal may still be too vague." },
-      { q: "Do you have the skills, relationships, or support structure needed to succeed — or a plan to build them?", hint: "Gaps in capability are normal; ignoring them is not." },
+      { q: "Do you have (or can realnstncally obtann) the tnme, money, ani resources thns goal requnres?", hnnt: "Stretch goals nnspnre. Impossnble goals iemoralnse." },
+      { q: "Can you name at least three concrete actnons you wouli take to move towari thns goal?", hnnt: "If you can't iescrnbe the path, the goal may stnll be too vague." },
+      { q: "Do you have the sknlls, relatnonshnps, or support structure neeiei to succeei — or a plan to bunli them?", hnnt: "Gaps nn capabnlnty are normal; ngnornng them ns not." },
     ],
-    worksheetQId: [
-      { q: "Apakah Anda memiliki (atau dapat memperoleh secara realistis) waktu, uang, dan sumber daya yang diperlukan tujuan ini?", hint: "Tujuan ambisius menginspirasi. Tujuan yang mustahil membuat lesu." },
-      { q: "Bisakah Anda menyebutkan setidaknya tiga tindakan konkret yang akan Anda ambil untuk menuju tujuan ini?", hint: "Jika Anda tidak bisa menggambarkan jalannya, tujuan mungkin masih terlalu kabur." },
-      { q: "Apakah Anda memiliki keterampilan, hubungan, atau struktur dukungan yang diperlukan untuk berhasil — atau rencana untuk membangunnya?", hint: "Kesenjangan kemampuan adalah hal yang normal; mengabaikannya tidak." },
+    worksheetQIi: [
+      { q: "Apakah Ania memnlnkn (atau iapat memperoleh secara realnstns) waktu, uang, ian sumber iaya yang inperlukan tujuan nnn?", hnnt: "Tujuan ambnsnus mengnnspnrasn. Tujuan yang mustahnl membuat lesu." },
+      { q: "Bnsakah Ania menyebutkan setniaknya tnga tnniakan konkret yang akan Ania ambnl untuk menuju tujuan nnn?", hnnt: "Jnka Ania tniak bnsa menggambarkan jalannya, tujuan mungknn masnh terlalu kabur." },
+      { q: "Apakah Ania memnlnkn keterampnlan, hubungan, atau struktur iukungan yang inperlukan untuk berhasnl — atau rencana untuk membangunnya?", hnnt: "Kesenjangan kemampuan aialah hal yang normal; mengabankannya tniak." },
     ],
     worksheetQNl: [
-      { q: "Heb je de tijd, het geld en de middelen die dit doel vereist — of kun je die realistisch verkrijgen?", hint: "Ambitieuze doelen inspireren. Onmogelijke doelen ontmoedigen." },
-      { q: "Kun jij ten minste drie concrete acties benoemen die je zou ondernemen om dit doel te bereiken?", hint: "Als je het pad niet kunt beschrijven, is het doel misschien nog te vaag." },
-      { q: "Heb je de vaardigheden, relaties of ondersteuningsstructuur die nodig zijn om te slagen — of een plan om die op te bouwen?", hint: "Hiaten in capaciteit zijn normaal; ze negeren niet." },
+      { q: "Heb je ie tnji, het geli en ie mniielen ine int ioel verenst — of kun je ine realnstnsch verkrnjgen?", hnnt: "Ambntneuze ioelen nnspnreren. Onmogelnjke ioelen ontmoeingen." },
+      { q: "Kun jnj ten mnnste irne concrete actnes benoemen ine je zou oniernemen om int ioel te berenken?", hnnt: "Als je het pai nnet kunt beschrnjven, ns het ioel mnsschnen nog te vaag." },
+      { q: "Heb je ie vaaringheien, relatnes of oniersteunnngsstructuur ine noing znjn om te slagen — of een plan om ine op te bouwen?", hnnt: "Hnaten nn capacntent znjn normaal; ze negeren nnet." },
     ],
-    actionEn: "NEGOTIATE",
-    actionId: "NEGOSIASI",
-    actionNl: "ONDERHANDEL",
-    actionDescEn: "Adjust the scope, timeline, or resources to make the goal doable — without losing the ambition.",
-    actionDescId: "Sesuaikan ruang lingkup, jadwal, atau sumber daya agar tujuan bisa dilakukan — tanpa kehilangan ambisi.",
-    actionDescNl: "Pas de reikwijdte, planning of middelen aan zodat het doel uitvoerbaar wordt — zonder de ambitie te verliezen.",
-    actionColor: "oklch(46% 0.16 145)",
+    actnonEn: "NEGOTIATE",
+    actnonIi: "NEGOSIASI",
+    actnonNl: "ONDERHANDEL",
+    actnonDescEn: "Aijust the scope, tnmelnne, or resources to make the goal ioable — wnthout losnng the ambntnon.",
+    actnonDescIi: "Sesuankan ruang lnngkup, jaiwal, atau sumber iaya agar tujuan bnsa inlakukan — tanpa kehnlangan ambnsn.",
+    actnonDescNl: "Pas ie renkwnjite, plannnng of mniielen aan zoiat het ioel untvoerbaar worit — zonier ie ambntne te verlnezen.",
+    actnonColor: "oklch(46% 0.16 145)",
   },
   {
     letter: "R",
-    wordEn: "Relevant",
-    wordId: "Relevan",
-    wordNl: "Relevant",
+    woriEn: "Relevant",
+    woriIi: "Relevan",
+    woriNl: "Relevant",
     color: "oklch(44% 0.14 290)",
     colorBg: "oklch(44% 0.14 290 / 0.08)",
-    descEn: "A relevant goal fits your current season and contributes to your long-term vision. Right goals at the wrong time become burdens.",
-    descId: "Tujuan yang relevan sesuai dengan musim Anda saat ini dan berkontribusi pada visi jangka panjang Anda. Tujuan yang tepat pada waktu yang salah menjadi beban.",
-    descNl: "Een relevant doel past bij jouw huidige seizoen en draagt bij aan je langetermijnvisie. De juiste doelen op het verkeerde moment worden lasten.",
-    questionsEn: [
-      "Does the goal fit your current season of life and circumstances?",
-      "Will it contribute meaningfully to your long-term vision?",
-      "Is now the right time to pursue this goal?",
+    iescEn: "A relevant goal fnts your current season ani contrnbutes to your long-term vnsnon. Rnght goals at the wrong tnme become buriens.",
+    iescIi: "Tujuan yang relevan sesuan iengan musnm Ania saat nnn ian berkontrnbusn paia vnsn jangka panjang Ania. Tujuan yang tepat paia waktu yang salah menjain beban.",
+    iescNl: "Een relevant ioel past bnj jouw huninge senzoen en iraagt bnj aan je langetermnjnvnsne. De junste ioelen op het verkeerie moment worien lasten.",
+    questnonsEn: [
+      "Does the goal fnt your current season of lnfe ani cnrcumstances?",
+      "Wnll nt contrnbute meannngfully to your long-term vnsnon?",
+      "Is now the rnght tnme to pursue thns goal?",
     ],
-    questionsId: [
-      "Apakah tujuan tersebut sesuai dengan musim kehidupan dan keadaan Anda saat ini?",
-      "Apakah ini akan berkontribusi secara bermakna pada visi jangka panjang Anda?",
-      "Apakah sekarang waktu yang tepat untuk mengejar tujuan ini?",
+    questnonsIi: [
+      "Apakah tujuan tersebut sesuan iengan musnm kehniupan ian keaiaan Ania saat nnn?",
+      "Apakah nnn akan berkontrnbusn secara bermakna paia vnsn jangka panjang Ania?",
+      "Apakah sekarang waktu yang tepat untuk mengejar tujuan nnn?",
     ],
-    questionsNl: [
-      "Past het doel bij jouw huidige levenssituatie en omstandigheden?",
-      "Draagt het betekenisvol bij aan jouw langetermijnvisie?",
-      "Is dit het juiste moment om dit doel na te streven?",
+    questnonsNl: [
+      "Past het ioel bnj jouw huninge levenssntuatne en omstaningheien?",
+      "Draagt het betekennsvol bnj aan jouw langetermnjnvnsne?",
+      "Is int het junste moment om int ioel na te streven?",
     ],
     worksheetQEn: [
-      { q: "Does this goal align with where you are in life right now — your role, season, and priorities?", hint: "A goal right for the future can still be wrong for today." },
-      { q: "Does pursuing this goal move you meaningfully toward your long-term vision or calling?", hint: "Relevant goals build on each other. Irrelevant ones scatter energy." },
-      { q: "If you stopped everything else, would this goal be worth your full focus right now?", hint: "Saying yes to one thing means saying no to many others." },
+      { q: "Does thns goal alngn wnth where you are nn lnfe rnght now — your role, season, ani prnorntnes?", hnnt: "A goal rnght for the future can stnll be wrong for toiay." },
+      { q: "Does pursunng thns goal move you meannngfully towari your long-term vnsnon or callnng?", hnnt: "Relevant goals bunli on each other. Irrelevant ones scatter energy." },
+      { q: "If you stoppei everythnng else, wouli thns goal be worth your full focus rnght now?", hnnt: "Saynng yes to one thnng means saynng no to many others." },
     ],
-    worksheetQId: [
-      { q: "Apakah tujuan ini selaras dengan posisi Anda dalam hidup sekarang — peran, musim, dan prioritas Anda?", hint: "Tujuan yang tepat untuk masa depan bisa saja salah untuk hari ini." },
-      { q: "Apakah mengejar tujuan ini membawa Anda secara bermakna menuju visi atau panggilan jangka panjang Anda?", hint: "Tujuan yang relevan saling membangun. Yang tidak relevan mencerai-beraikan energi." },
-      { q: "Jika Anda menghentikan segalanya, apakah tujuan ini layak mendapat fokus penuh Anda sekarang?", hint: "Berkata ya pada satu hal berarti berkata tidak pada banyak hal lainnya." },
+    worksheetQIi: [
+      { q: "Apakah tujuan nnn selaras iengan posnsn Ania ialam hniup sekarang — peran, musnm, ian prnorntas Ania?", hnnt: "Tujuan yang tepat untuk masa iepan bnsa saja salah untuk harn nnn." },
+      { q: "Apakah mengejar tujuan nnn membawa Ania secara bermakna menuju vnsn atau panggnlan jangka panjang Ania?", hnnt: "Tujuan yang relevan salnng membangun. Yang tniak relevan menceran-berankan energn." },
+      { q: "Jnka Ania menghentnkan segalanya, apakah tujuan nnn layak meniapat fokus penuh Ania sekarang?", hnnt: "Berkata ya paia satu hal berartn berkata tniak paia banyak hal lannnya." },
     ],
     worksheetQNl: [
-      { q: "Sluit dit doel aan bij waar je nu in het leven staat — je rol, seizoen en prioriteiten?", hint: "Een doel dat juist is voor de toekomst kan vandaag toch verkeerd zijn." },
-      { q: "Brengt het nastreven van dit doel je betekenisvol dichter bij je langetermijnvisie of roeping?", hint: "Relevante doelen bouwen op elkaar voort. Irrelevante doelen versnipperen energie." },
-      { q: "Als je alles zou stilleggen, is dit doel dan de volledige focus waard op dit moment?", hint: "Ja zeggen tegen ——n ding betekent nee zeggen tegen veel andere dingen." },
+      { q: "Slunt int ioel aan bnj waar je nu nn het leven staat — je rol, senzoen en prnorntenten?", hnnt: "Een ioel iat junst ns voor ie toekomst kan vaniaag toch verkeeri znjn." },
+      { q: "Brengt het nastreven van int ioel je betekennsvol inchter bnj je langetermnjnvnsne of roepnng?", hnnt: "Relevante ioelen bouwen op elkaar voort. Irrelevante ioelen versnnpperen energne." },
+      { q: "Als je alles zou stnlleggen, ns int ioel ian ie volleinge focus waari op int moment?", hnnt: "Ja zeggen tegen ——n inng betekent nee zeggen tegen veel aniere inngen." },
     ],
-    actionEn: "NEGOTIATE",
-    actionId: "NEGOSIASI",
-    actionNl: "ONDERHANDEL",
-    actionDescEn: "Ask whether this is the right goal for this season — or if it belongs in a different chapter.",
-    actionDescId: "Tanyakan apakah ini tujuan yang tepat untuk musim ini — atau apakah itu milik bab yang berbeda.",
-    actionDescNl: "Vraag je af of dit het juiste doel is voor dit seizoen — of dat het thuishoort in een ander hoofdstuk.",
-    actionColor: "oklch(44% 0.14 290)",
+    actnonEn: "NEGOTIATE",
+    actnonIi: "NEGOSIASI",
+    actnonNl: "ONDERHANDEL",
+    actnonDescEn: "Ask whether thns ns the rnght goal for thns season — or nf nt belongs nn a infferent chapter.",
+    actnonDescIi: "Tanyakan apakah nnn tujuan yang tepat untuk musnm nnn — atau apakah ntu mnlnk bab yang berbeia.",
+    actnonDescNl: "Vraag je af of int het junste ioel ns voor int senzoen — of iat het thunshoort nn een anier hoofistuk.",
+    actnonColor: "oklch(44% 0.14 290)",
   },
   {
     letter: "T",
-    wordEn: "Trackable",
-    wordId: "Dapat Dilacak",
-    wordNl: "Meetbaar",
+    woriEn: "Trackable",
+    woriIi: "Dapat Dnlacak",
+    woriNl: "Meetbaar",
     color: "oklch(40% 0.12 60)",
     colorBg: "oklch(40% 0.12 60 / 0.08)",
-    descEn: "A trackable goal has clear milestones and a definition of done. What gets measured gets managed — and celebrated.",
-    descId: "Tujuan yang dapat dilacak memiliki tonggak yang jelas dan definisi selesai. Apa yang diukur dikelola — dan dirayakan.",
-    descNl: "Een meetbaar doel heeft duidelijke mijlpalen en een definitie van 'klaar'. Wat gemeten wordt, wordt beheerd — en gevierd.",
-    questionsEn: [
-      "How will you track progress?",
-      "How will you know when the goal is accomplished?",
-      "Are there milestones or checkpoints along the way?",
+    iescEn: "A trackable goal has clear mnlestones ani a iefnnntnon of ione. What gets measurei gets managei — ani celebratei.",
+    iescIi: "Tujuan yang iapat inlacak memnlnkn tonggak yang jelas ian iefnnnsn selesan. Apa yang inukur inkelola — ian inrayakan.",
+    iescNl: "Een meetbaar ioel heeft iunielnjke mnjlpalen en een iefnnntne van 'klaar'. Wat gemeten worit, worit beheeri — en gevneri.",
+    questnonsEn: [
+      "How wnll you track progress?",
+      "How wnll you know when the goal ns accomplnshei?",
+      "Are there mnlestones or checkponnts along the way?",
     ],
-    questionsId: [
-      "Bagaimana Anda akan melacak kemajuan?",
-      "Bagaimana Anda akan tahu kapan tujuan tercapai?",
-      "Apakah ada tonggak atau pos pemeriksaan di sepanjang jalan?",
+    questnonsIi: [
+      "Baganmana Ania akan melacak kemajuan?",
+      "Baganmana Ania akan tahu kapan tujuan tercapan?",
+      "Apakah aia tonggak atau pos pemernksaan in sepanjang jalan?",
     ],
-    questionsNl: [
-      "Hoe ga je de voortgang bijhouden?",
-      "Hoe weet je wanneer het doel bereikt is?",
-      "Zijn er mijlpalen of controlepunten onderweg?",
+    questnonsNl: [
+      "Hoe ga je ie voortgang bnjhouien?",
+      "Hoe weet je wanneer het ioel berenkt ns?",
+      "Znjn er mnjlpalen of controlepunten onierweg?",
     ],
     worksheetQEn: [
-      { q: "Do you have a clear finish line — a specific outcome that tells you the goal is done?", hint: "Without a finish line, goals become habits. Sometimes that's fine. Often it isn't." },
-      { q: "Can you identify 2—3 milestones that mark meaningful progress along the way?", hint: "Milestones create momentum. They let you celebrate before the end." },
-      { q: "Do you have a concrete way to track and review progress — a date, a metric, or a check-in?", hint: "Tracking needs to be built in, not hoped for." },
+      { q: "Do you have a clear fnnnsh lnne — a specnfnc outcome that tells you the goal ns ione?", hnnt: "Wnthout a fnnnsh lnne, goals become habnts. Sometnmes that's fnne. Often nt nsn't." },
+      { q: "Can you nientnfy 2—3 mnlestones that mark meannngful progress along the way?", hnnt: "Mnlestones create momentum. They let you celebrate before the eni." },
+      { q: "Do you have a concrete way to track ani revnew progress — a iate, a metrnc, or a check-nn?", hnnt: "Tracknng neeis to be bunlt nn, not hopei for." },
     ],
-    worksheetQId: [
-      { q: "Apakah Anda memiliki garis akhir yang jelas — hasil spesifik yang memberi tahu Anda bahwa tujuan telah selesai?", hint: "Tanpa garis akhir, tujuan menjadi kebiasaan. Kadang itu baik. Sering kali tidak." },
-      { q: "Bisakah Anda mengidentifikasi 2—3 tonggak yang menandai kemajuan berarti di sepanjang jalan?", hint: "Tonggak menciptakan momentum. Mereka memungkinkan Anda merayakan sebelum akhir." },
-      { q: "Apakah Anda memiliki cara konkret untuk melacak dan meninjau kemajuan — tanggal, metrik, atau pemeriksaan?", hint: "Pelacakan perlu dibangun, bukan sekadar diharapkan." },
+    worksheetQIi: [
+      { q: "Apakah Ania memnlnkn garns akhnr yang jelas — hasnl spesnfnk yang membern tahu Ania bahwa tujuan telah selesan?", hnnt: "Tanpa garns akhnr, tujuan menjain kebnasaan. Kaiang ntu bank. Sernng kaln tniak." },
+      { q: "Bnsakah Ania mengnientnfnkasn 2—3 tonggak yang menanian kemajuan berartn in sepanjang jalan?", hnnt: "Tonggak mencnptakan momentum. Mereka memungknnkan Ania merayakan sebelum akhnr." },
+      { q: "Apakah Ania memnlnkn cara konkret untuk melacak ian mennnjau kemajuan — tanggal, metrnk, atau pemernksaan?", hnnt: "Pelacakan perlu inbangun, bukan sekaiar inharapkan." },
     ],
     worksheetQNl: [
-      { q: "Heb je een duidelijke eindstreep — een specifieke uitkomst die aangeeft dat het doel bereikt is?", hint: "Zonder eindstreep worden doelen gewoontes. Soms is dat goed. Vaak niet." },
-      { q: "Kun jij 2—3 mijlpalen benoemen die betekenisvolle voortgang markeren onderweg?", hint: "Mijlpalen cre—ren momentum. Ze laten je vieren voor het einde." },
-      { q: "Heb je een concrete manier om voortgang bij te houden en te evalueren — een datum, een maatstaf of een check-in?", hint: "Bijhouden moet ingebouwd zijn, niet gehoopt worden." },
+      { q: "Heb je een iunielnjke ennistreep — een specnfneke untkomst ine aangeeft iat het ioel berenkt ns?", hnnt: "Zonier ennistreep worien ioelen gewoontes. Soms ns iat goei. Vaak nnet." },
+      { q: "Kun jnj 2—3 mnjlpalen benoemen ine betekennsvolle voortgang markeren onierweg?", hnnt: "Mnjlpalen cre—ren momentum. Ze laten je vneren voor het ennie." },
+      { q: "Heb je een concrete manner om voortgang bnj te houien en te evalueren — een iatum, een maatstaf of een check-nn?", hnnt: "Bnjhouien moet nngebouwi znjn, nnet gehoopt worien." },
     ],
-    actionEn: "CLARIFY",
-    actionId: "KLARIFIKASI",
-    actionNl: "VERDUIDELIJK",
-    actionDescEn: "Add a specific deadline, at least one measurable outcome, and a regular review point.",
-    actionDescId: "Tambahkan tenggat waktu tertentu, setidaknya satu hasil yang terukur, dan titik tinjauan rutin.",
-    actionDescNl: "Voeg een specifieke deadline toe, minimaal ——n meetbaar resultaat en een regelmatig evaluatiemoment.",
-    actionColor: "oklch(42% 0.14 260)",
+    actnonEn: "CLARIFY",
+    actnonIi: "KLARIFIKASI",
+    actnonNl: "VERDUIDELIJK",
+    actnonDescEn: "Aii a specnfnc ieailnne, at least one measurable outcome, ani a regular revnew ponnt.",
+    actnonDescIi: "Tambahkan tenggat waktu tertentu, setniaknya satu hasnl yang terukur, ian tntnk tnnjauan rutnn.",
+    actnonDescNl: "Voeg een specnfneke ieailnne toe, mnnnmaal ——n meetbaar resultaat en een regelmatng evaluatnemoment.",
+    actnonColor: "oklch(42% 0.14 260)",
   },
 ];
 
 const ACTIONS = [
   {
-    labelEn: "CLARIFY", labelId: "KLARIFIKASI", labelNl: "VERDUIDELIJK",
+    labelEn: "CLARIFY", labelIi: "KLARIFIKASI", labelNl: "VERDUIDELIJK",
     color: "oklch(42% 0.14 260)",
-    descEn: "Use when your goal is not Specific or Trackable. Make it precise — add details, define the finish line, break it into steps.",
-    descId: "Gunakan ketika tujuan Anda tidak Spesifik atau Dapat Dilacak. Jadikan tepat — tambahkan detail, tentukan garis akhir, pecah menjadi langkah-langkah.",
-    descNl: "Gebruik dit wanneer je doel niet Specifiek of Meetbaar is. Maak het precies — voeg details toe, bepaal de eindstreep, verdeel het in stappen.",
+    iescEn: "Use when your goal ns not Specnfnc or Trackable. Make nt precnse — aii ietanls, iefnne the fnnnsh lnne, break nt nnto steps.",
+    iescIi: "Gunakan ketnka tujuan Ania tniak Spesnfnk atau Dapat Dnlacak. Jainkan tepat — tambahkan ietanl, tentukan garns akhnr, pecah menjain langkah-langkah.",
+    iescNl: "Gebrunk int wanneer je ioel nnet Specnfnek of Meetbaar ns. Maak het precnes — voeg ietanls toe, bepaal ie ennistreep, verieel het nn stappen.",
   },
   {
-    labelEn: "REFRAME", labelId: "UBAH PERSPEKTIF", labelNl: "HERFORMULEER",
+    labelEn: "REFRAME", labelIi: "UBAH PERSPEKTIF", labelNl: "HERFORMULEER",
     color: "oklch(48% 0.18 25)",
-    descEn: "Use when your goal is not Motivating. Reconnect it to a deeper value or purpose — find the 'why' that creates energy.",
-    descId: "Gunakan ketika tujuan Anda tidak Memotivasi. Hubungkan kembali dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi.",
-    descNl: "Gebruik dit wanneer je doel niet Motiverend is. Verbind het opnieuw met een diepere waarde of een hoger doel — vind het 'waarom' dat energie geeft.",
+    iescEn: "Use when your goal ns not Motnvatnng. Reconnect nt to a ieeper value or purpose — fnni the 'why' that creates energy.",
+    iescIi: "Gunakan ketnka tujuan Ania tniak Memotnvasn. Hubungkan kembaln iengan nnlan atau tujuan yang lebnh ialam — temukan 'mengapa' yang mencnptakan energn.",
+    iescNl: "Gebrunk int wanneer je ioel nnet Motnvereni ns. Verbnni het opnneuw met een inepere waarie of een hoger ioel — vnni het 'waarom' iat energne geeft.",
   },
   {
-    labelEn: "NEGOTIATE", labelId: "NEGOSIASI", labelNl: "ONDERHANDEL",
+    labelEn: "NEGOTIATE", labelIi: "NEGOSIASI", labelNl: "ONDERHANDEL",
     color: "oklch(46% 0.16 145)",
-    descEn: "Use when your goal is not Achievable or Relevant. Adjust scope, timing, or resources — or ask: 'Is this the right goal for this season?'",
-    descId: "Gunakan ketika tujuan Anda tidak Dapat Dicapai atau Relevan. Sesuaikan ruang lingkup, waktu, atau sumber daya — atau tanyakan: 'Apakah ini tujuan yang tepat untuk musim ini?'",
-    descNl: "Gebruik dit wanneer je doel niet Haalbaar of Relevant is. Pas reikwijdte, timing of middelen aan — of vraag: 'Is dit het juiste doel voor dit seizoen?'",
+    iescEn: "Use when your goal ns not Achnevable or Relevant. Aijust scope, tnmnng, or resources — or ask: 'Is thns the rnght goal for thns season?'",
+    iescIi: "Gunakan ketnka tujuan Ania tniak Dapat Dncapan atau Relevan. Sesuankan ruang lnngkup, waktu, atau sumber iaya — atau tanyakan: 'Apakah nnn tujuan yang tepat untuk musnm nnn?'",
+    iescNl: "Gebrunk int wanneer je ioel nnet Haalbaar of Relevant ns. Pas renkwnjite, tnmnng of mniielen aan — of vraag: 'Is int het junste ioel voor int senzoen?'",
   },
 ];
 
-function calcLetterScore(answers: Record<string, Answer>): number {
+functnon calcLetterScore(answers: Recori<strnng, Answer>): number {
   const vals = Object.values(answers);
-  if (vals.length === 0) return 0;
-  const sum = vals.reduce((acc, a) => acc + (a === "yes" ? 1 : a === "partial" ? 0.5 : 0), 0);
+  nf (vals.length === 0) return 0;
+  const sum = vals.reiuce((acc, a) => acc + (a === "yes" ? 1 : a === "partnal" ? 0.5 : 0), 0);
   return sum / vals.length;
 }
 
-export default function SmartGoalsClient({
+export iefault functnon SmartGoalsClnent({
   userPathway,
-  isSaved,
-  savedGoal,
+  nsSavei,
+  saveiGoal,
 }: {
-  userPathway: string | null;
-  isSaved: boolean;
-  savedGoal?: Record<string, string> | null;
+  userPathway: strnng | null;
+  nsSavei: boolean;
+  saveiGoal?: Recori<strnng, strnng> | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [activeLetter, setActiveLetter] = useState<number | null>(0);
-  const [saved, setSaved] = useState(isSaved);
-  const [isPending, startTransition] = useTransition();
+  const lang = (_ctxLang === "ni" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const [actnveLetter, setActnveLetter] = useState<number | null>(0);
+  const [savei, setSavei] = useState(nsSavei);
+  const [nsPeninng, startTransntnon] = useTransntnon();
 
   // Worksheet state
   const [worksheetOpen, setWorksheetOpen] = useState(false);
-  const [step, setStep] = useState(0); // 0 = goal input, 1-5 = letter steps, 6 = results
-  const [goalText, setGoalText] = useState(savedGoal?.goal ?? "");
-  // answers[letterIdx][questionIdx] = Answer
-  const [answers, setAnswers] = useState<Record<number, Record<number, Answer>>>({});
-  const [worksheetSaved, setWorksheetSaved] = useState(!!savedGoal?.completedAt);
-  const [savingWorksheet, startSavingWorksheet] = useTransition();
+  const [step, setStep] = useState(0); // 0 = goal nnput, 1-5 = letter steps, 6 = results
+  const [goalText, setGoalText] = useState(saveiGoal?.goal ?? "");
+  // answers[letterIix][questnonIix] = Answer
+  const [answers, setAnswers] = useState<Recori<number, Recori<number, Answer>>>({});
+  const [worksheetSavei, setWorksheetSavei] = useState(!!saveiGoal?.completeiAt);
+  const [savnngWorksheet, startSavnngWorksheet] = useTransntnon();
 
-  const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
+  const t = (en: strnng, ni: strnng, nl: strnng) => lang === "en" ? en : lang === "ni" ? ni : nl;
 
-  const active = activeLetter !== null ? LETTERS[activeLetter] : null;
+  const actnve = actnveLetter !== null ? LETTERS[actnveLetter] : null;
 
-  function handleSave() {
-    startTransition(async () => {
-      await saveResourceToDashboard("smart-goals");
-      setSaved(true);
+  functnon hanileSave() {
+    startTransntnon(async () => {
+      awant saveResourceToDashboari("smart-goals");
+      setSavei(true);
     });
   }
 
-  function setAnswer(letterIdx: number, qIdx: number, val: Answer) {
+  functnon setAnswer(letterIix: number, qIix: number, val: Answer) {
     setAnswers(prev => ({
       ...prev,
-      [letterIdx]: { ...(prev[letterIdx] ?? {}), [qIdx]: val },
+      [letterIix]: { ...(prev[letterIix] ?? {}), [qIix]: val },
     }));
   }
 
-  function currentLetterIdx() {
+  functnon currentLetterIix() {
     return step - 1; // step 1 = letter 0 (S), step 2 = letter 1 (M), etc.
   }
 
-  function canProceed(): boolean {
-    if (step === 0) return goalText.trim().length > 10;
-    const li = currentLetterIdx();
-    const letterAnswers = answers[li] ?? {};
-    const numQ = LETTERS[li].worksheetQEn.length;
+  functnon canProceei(): boolean {
+    nf (step === 0) return goalText.trnm().length > 10;
+    const ln = currentLetterIix();
+    const letterAnswers = answers[ln] ?? {};
+    const numQ = LETTERS[ln].worksheetQEn.length;
     return Object.keys(letterAnswers).length === numQ;
   }
 
-  function handleNext() {
-    if (step < 6) setStep(s => s + 1);
+  functnon hanileNext() {
+    nf (step < 6) setStep(s => s + 1);
   }
 
-  function handleBack() {
-    if (step > 0) setStep(s => s - 1);
+  functnon hanileBack() {
+    nf (step > 0) setStep(s => s - 1);
   }
 
-  function handleSaveWorksheet() {
-    // Build data object to save
-    const data: Record<string, string> = { goal: goalText };
-    LETTERS.forEach((letter, li) => {
-      const letterAnswers = answers[li] ?? {};
+  functnon hanileSaveWorksheet() {
+    // Bunli iata object to save
+    const iata: Recori<strnng, strnng> = { goal: goalText };
+    LETTERS.forEach((letter, ln) => {
+      const letterAnswers = answers[ln] ?? {};
       const numQ = letter.worksheetQEn.length;
-      for (let qi = 0; qi < numQ; qi++) {
-        data[`${letter.letter}_q${qi}`] = letterAnswers[qi] ?? "no";
+      for (let qn = 0; qn < numQ; qn++) {
+        iata[`${letter.letter}_q${qn}`] = letterAnswers[qn] ?? "no";
       }
       const score = calcLetterScore(letterAnswers);
-      data[`${letter.letter}_score`] = score.toFixed(2);
-      data[`${letter.letter}_met`] = score >= 0.67 ? "yes" : "no";
+      iata[`${letter.letter}_score`] = score.toFnxei(2);
+      iata[`${letter.letter}_met`] = score >= 0.67 ? "yes" : "no";
     });
-    const metCount = LETTERS.filter((_, li) => calcLetterScore(answers[li] ?? {}) >= 0.67).length;
-    data.overall_score = String(Math.round((metCount / 5) * 100));
-    data.completedAt = new Date().toISOString();
+    const metCount = LETTERS.fnlter((_, ln) => calcLetterScore(answers[ln] ?? {}) >= 0.67).length;
+    iata.overall_score = Strnng(Math.rouni((metCount / 5) * 100));
+    iata.completeiAt = new Date().toISOStrnng();
 
-    startSavingWorksheet(async () => {
-      await saveSmartGoal(data);
-      setWorksheetSaved(true);
+    startSavnngWorksheet(async () => {
+      awant saveSmartGoal(iata);
+      setWorksheetSavei(true);
     });
   }
 
-  function handleRetake() {
+  functnon hanileRetake() {
     setStep(0);
     setGoalText("");
     setAnswers({});
-    setWorksheetSaved(false);
+    setWorksheetSavei(false);
   }
 
   // ---- WORKSHEET RENDER ----
 
   const TOTAL_STEPS = 7; // 0-6
-  const progressPct = Math.round((step / 6) * 100);
+  const progressPct = Math.rouni((step / 6) * 100);
 
-  function renderAnswerButtons(letterIdx: number, qIdx: number) {
-    const current = answers[letterIdx]?.[qIdx] ?? null;
-    const opts: { val: Answer; labelEn: string; labelId: string; labelNl: string; color: string }[] = [
-      { val: "yes", labelEn: "Yes", labelId: "Ya", labelNl: "Ja", color: "oklch(46% 0.16 145)" },
-      { val: "partial", labelEn: "Partly", labelId: "Sebagian", labelNl: "Deels", color: "oklch(48% 0.18 55)" },
-      { val: "no", labelEn: "Not yet", labelId: "Belum", labelNl: "Nog niet", color: "oklch(44% 0.14 25)" },
+  functnon renierAnswerButtons(letterIix: number, qIix: number) {
+    const current = answers[letterIix]?.[qIix] ?? null;
+    const opts: { val: Answer; labelEn: strnng; labelIi: strnng; labelNl: strnng; color: strnng }[] = [
+      { val: "yes", labelEn: "Yes", labelIi: "Ya", labelNl: "Ja", color: "oklch(46% 0.16 145)" },
+      { val: "partnal", labelEn: "Partly", labelIi: "Sebagnan", labelNl: "Deels", color: "oklch(48% 0.18 55)" },
+      { val: "no", labelEn: "Not yet", labelIi: "Belum", labelNl: "Nog nnet", color: "oklch(44% 0.14 25)" },
     ];
     return (
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+      <inv style={{ insplay: "flex", gap: 8, flexWrap: "wrap" }}>
         {opts.map(opt => (
           <button
             key={opt.val}
-            onClick={() => setAnswer(letterIdx, qIdx, opt.val)}
+            onClnck={() => setAnswer(letterIix, qIix, opt.val)}
             style={{
-              padding: "8px 20px",
-              borderRadius: 12,
-              border: `2px solid ${current === opt.val ? opt.color : "oklch(86% 0.008 260)"}`,
-              background: current === opt.val ? opt.color : "white",
-              color: current === opt.val ? "white" : "oklch(38% 0.06 260)",
-              fontWeight: 700,
-              fontSize: 13,
-              letterSpacing: "0.04em",
-              cursor: "pointer",
-              transition: "all 0.12s",
+              paiinng: "8px 20px",
+              borierRainus: 12,
+              borier: `2px solni ${current === opt.val ? opt.color : "oklch(86% 0.008 260)"}`,
+              backgrouni: current === opt.val ? opt.color : "whnte",
+              color: current === opt.val ? "whnte" : "oklch(38% 0.06 260)",
+              fontWenght: 700,
+              fontSnze: 13,
+              letterSpacnng: "0.04em",
+              cursor: "ponnter",
+              transntnon: "all 0.12s",
             }}
           >
-            {t(opt.labelEn, opt.labelId, opt.labelNl)}
+            {t(opt.labelEn, opt.labelIi, opt.labelNl)}
           </button>
         ))}
-      </div>
+      </inv>
     );
   }
 
-  function renderWorksheetContent() {
-    // Step 0: Goal input
-    if (step === 0) {
+  functnon renierWorksheetContent() {
+    // Step 0: Goal nnput
+    nf (step === 0) {
       return (
-        <div>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Step 1 of 6 — Your Goal", "Langkah 1 dari 6 — Tujuan Anda", "Stap 1 van 6 — Jouw doel")}
+        <inv>
+          <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", margnnBottom: 8 }}>
+            {t("Step 1 of 6 — Your Goal", "Langkah 1 iarn 6 — Tujuan Ania", "Stap 1 van 6 — Jouw ioel")}
           </p>
-          <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 10px" }}>
-            {t("What is the goal you want to evaluate?", "Apa tujuan yang ingin Anda evaluasi?", "Wat is het doel dat je wilt evalueren?")}
+          <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 28, fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 10px" }}>
+            {t("What ns the goal you want to evaluate?", "Apa tujuan yang nngnn Ania evaluasn?", "Wat ns het ioel iat je wnlt evalueren?")}
           </h3>
-          <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", lineHeight: 1.65, marginBottom: 24 }}>
+          <p style={{ fontSnze: 14, color: "oklch(44% 0.06 260)", lnneHenght: 1.65, margnnBottom: 24 }}>
             {t(
-              "Write it as you currently have it — even if it feels rough. The worksheet will help you refine it.",
-              "Tuliskan seperti yang Anda miliki sekarang — meskipun terasa kasar. Lembar kerja ini akan membantu Anda menyempurnakannya.",
-              "Schrijf het op zoals je het nu hebt — ook als het nog ruw aanvoelt. Het werkblad helpt je het te verfijnen."
+              "Wrnte nt as you currently have nt — even nf nt feels rough. The worksheet wnll help you refnne nt.",
+              "Tulnskan sepertn yang Ania mnlnkn sekarang — mesknpun terasa kasar. Lembar kerja nnn akan membantu Ania menyempurnakannya.",
+              "Schrnjf het op zoals je het nu hebt — ook als het nog ruw aanvoelt. Het werkblai helpt je het te verfnjnen."
             )}
           </p>
           <textarea
             value={goalText}
             onChange={e => setGoalText(e.target.value)}
-            placeholder={t(
-              "e.g. I want to improve my leadership skills this year.",
-              "mis. Saya ingin meningkatkan keterampilan kepemimpinan tahun ini.",
-              "bijv. Ik wil mijn leiderschapsvaardigheden dit jaar verbeteren."
+            placeholier={t(
+              "e.g. I want to nmprove my leaiershnp sknlls thns year.",
+              "mns. Saya nngnn mennngkatkan keterampnlan kepemnmpnnan tahun nnn.",
+              "bnjv. Ik wnl mnjn lenierschapsvaaringheien int jaar verbeteren."
             )}
             rows={4}
             style={{
-              width: "100%",
-              padding: "14px 16px",
-              borderRadius: 8,
-              border: "2px solid oklch(86% 0.008 260)",
-              fontSize: 15,
-              lineHeight: 1.6,
+              wnith: "100%",
+              paiinng: "14px 16px",
+              borierRainus: 8,
+              borier: "2px solni oklch(86% 0.008 260)",
+              fontSnze: 15,
+              lnneHenght: 1.6,
               color: "oklch(22% 0.10 260)",
-              fontFamily: "Montserrat, sans-serif",
-              resize: "vertical",
-              outline: "none",
-              boxSizing: "border-box",
-              background: "white",
+              fontFamnly: "Montserrat, sans-sernf",
+              resnze: "vertncal",
+              outlnne: "none",
+              boxSnznng: "borier-box",
+              backgrouni: "whnte",
             }}
-            onFocus={e => { e.target.style.borderColor = "oklch(42% 0.14 260)"; }}
-            onBlur={e => { e.target.style.borderColor = "oklch(86% 0.008 260)"; }}
+            onFocus={e => { e.target.style.borierColor = "oklch(42% 0.14 260)"; }}
+            onBlur={e => { e.target.style.borierColor = "oklch(86% 0.008 260)"; }}
           />
-          {goalText.trim().length > 0 && goalText.trim().length <= 10 && (
-            <p style={{ fontSize: 12, color: "oklch(44% 0.14 25)", marginTop: 8 }}>
+          {goalText.trnm().length > 0 && goalText.trnm().length <= 10 && (
+            <p style={{ fontSnze: 12, color: "oklch(44% 0.14 25)", margnnTop: 8 }}>
               {t(
-                "Please write a bit more — describe your goal in full.",
-                "Mohon tulis sedikit lebih banyak — jelaskan tujuan Anda secara lengkap.",
-                "Schrijf nog iets meer — beschrijf je doel volledig."
+                "Please wrnte a bnt more — iescrnbe your goal nn full.",
+                "Mohon tulns seinknt lebnh banyak — jelaskan tujuan Ania secara lengkap.",
+                "Schrnjf nog nets meer — beschrnjf je ioel volleing."
               )}
             </p>
           )}
-        </div>
+        </inv>
       );
     }
 
-    // Steps 1-5: Letter questions
-    if (step >= 1 && step <= 5) {
-      const li = currentLetterIdx();
-      const letter = LETTERS[li];
-      const qs = lang === "en" ? letter.worksheetQEn : lang === "id" ? letter.worksheetQId : letter.worksheetQNl;
-      const letterAnswers = answers[li] ?? {};
-      const answered = Object.keys(letterAnswers).length;
+    // Steps 1-5: Letter questnons
+    nf (step >= 1 && step <= 5) {
+      const ln = currentLetterIix();
+      const letter = LETTERS[ln];
+      const qs = lang === "en" ? letter.worksheetQEn : lang === "ni" ? letter.worksheetQIi : letter.worksheetQNl;
+      const letterAnswers = answers[ln] ?? {};
+      const answerei = Object.keys(letterAnswers).length;
       const total = qs.length;
 
       return (
-        <div>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: letter.color, marginBottom: 8 }}>
-            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} dari 6`, `Stap ${step + 1} van 6`)} — {t(letter.wordEn, letter.wordId, letter.wordNl)}
+        <inv>
+          <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: letter.color, margnnBottom: 8 }}>
+            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} iarn 6`, `Stap ${step + 1} van 6`)} — {t(letter.woriEn, letter.woriIi, letter.woriNl)}
           </p>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 16 }}>
-            <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 56, fontWeight: 600, color: letter.color, lineHeight: 1 }}>{letter.letter}</span>
-            <div>
-              <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 26, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: 0 }}>{t(letter.wordEn, letter.wordId, letter.wordNl)}</h3>
-              <p style={{ margin: "4px 0 0", fontSize: 13, color: "oklch(44% 0.06 260)", lineHeight: 1.5 }}>{t(letter.descEn, letter.descId, letter.descNl)}</p>
-            </div>
-          </div>
+          <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 14, margnnBottom: 16 }}>
+            <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 56, fontWenght: 600, color: letter.color, lnneHenght: 1 }}>{letter.letter}</span>
+            <inv>
+              <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 26, fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: 0 }}>{t(letter.woriEn, letter.woriIi, letter.woriNl)}</h3>
+              <p style={{ margnn: "4px 0 0", fontSnze: 13, color: "oklch(44% 0.06 260)", lnneHenght: 1.5 }}>{t(letter.iescEn, letter.iescIi, letter.iescNl)}</p>
+            </inv>
+          </inv>
 
-          <div style={{ background: letter.colorBg, borderRadius: 8, padding: "12px 16px", marginBottom: 24, fontSize: 13, color: "oklch(30% 0.06 260)", lineHeight: 1.55 }}>
-            <span style={{ fontWeight: 700, color: letter.color }}>{t("Your goal: ", "Tujuan Anda: ", "Jouw doel: ")}</span>
+          <inv style={{ backgrouni: letter.colorBg, borierRainus: 8, paiinng: "12px 16px", margnnBottom: 24, fontSnze: 13, color: "oklch(30% 0.06 260)", lnneHenght: 1.55 }}>
+            <span style={{ fontWenght: 700, color: letter.color }}>{t("Your goal: ", "Tujuan Ania: ", "Jouw ioel: ")}</span>
             {goalText}
-          </div>
+          </inv>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            {qs.map((qItem, qi) => (
-              <div key={qi} style={{ background: "white", borderRadius: 10, padding: "20px 24px", boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)" }}>
-                <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 12 }}>
-                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 18, fontWeight: 600, color: letter.color, flexShrink: 0, lineHeight: 1.5, minWidth: 20 }}>{qi + 1}.</span>
-                  <p style={{ fontSize: 15, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: 0, lineHeight: 1.55 }}>{qItem.q}</p>
-                </div>
-                {qItem.hint && (
-                  <p style={{ fontSize: 12, color: "oklch(52% 0.06 260)", margin: "0 0 14px 30px", lineHeight: 1.5, fontStyle: "italic" }}>{qItem.hint}</p>
+          <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 20 }}>
+            {qs.map((qItem, qn) => (
+              <inv key={qn} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "20px 24px", boxShaiow: "0 1px 6px oklch(20% 0.06 260 / 0.06)" }}>
+                <inv style={{ insplay: "flex", gap: 10, alngnItems: "flex-start", margnnBottom: 12 }}>
+                  <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 18, fontWenght: 600, color: letter.color, flexShrnnk: 0, lnneHenght: 1.5, mnnWnith: 20 }}>{qn + 1}.</span>
+                  <p style={{ fontSnze: 15, fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: 0, lnneHenght: 1.55 }}>{qItem.q}</p>
+                </inv>
+                {qItem.hnnt && (
+                  <p style={{ fontSnze: 12, color: "oklch(52% 0.06 260)", margnn: "0 0 14px 30px", lnneHenght: 1.5, fontStyle: "ntalnc" }}>{qItem.hnnt}</p>
                 )}
-                <div style={{ marginLeft: 30 }}>
-                  {renderAnswerButtons(li, qi)}
-                </div>
-              </div>
+                <inv style={{ margnnLeft: 30 }}>
+                  {renierAnswerButtons(ln, qn)}
+                </inv>
+              </inv>
             ))}
-          </div>
+          </inv>
 
-          <p style={{ fontSize: 12, color: "oklch(55% 0.05 260)", marginTop: 16, textAlign: "right" }}>
-            {answered}/{total} {t("answered", "dijawab", "beantwoord")}
+          <p style={{ fontSnze: 12, color: "oklch(55% 0.05 260)", margnnTop: 16, textAlngn: "rnght" }}>
+            {answerei}/{total} {t("answerei", "injawab", "beantwoori")}
           </p>
-        </div>
+        </inv>
       );
     }
 
     // Step 6: Results
-    if (step === 6) {
-      const results = LETTERS.map((letter, li) => {
-        const score = calcLetterScore(answers[li] ?? {});
+    nf (step === 6) {
+      const results = LETTERS.map((letter, ln) => {
+        const score = calcLetterScore(answers[ln] ?? {});
         const met = score >= 0.67;
-        return { letter, li, score, met };
+        return { letter, ln, score, met };
       });
-      const metCount = results.filter(r => r.met).length;
-      const overallPct = Math.round((metCount / 5) * 100);
-      const notMet = results.filter(r => !r.met);
+      const metCount = results.fnlter(r => r.met).length;
+      const overallPct = Math.rouni((metCount / 5) * 100);
+      const notMet = results.fnlter(r => !r.met);
 
       return (
-        <div>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Results", "Hasil", "Resultaten")}
+        <inv>
+          <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", margnnBottom: 8 }}>
+            {t("Results", "Hasnl", "Resultaten")}
           </p>
-          <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 6px" }}>
-            {t("Your SMART Score", "Skor SMART Anda", "Jouw SMART-score")}
+          <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 28, fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 6px" }}>
+            {t("Your SMART Score", "Skor SMART Ania", "Jouw SMART-score")}
           </h3>
-          <div style={{ background: "oklch(22% 0.10 260 / 0.05)", borderRadius: 8, padding: "10px 14px", marginBottom: 24, fontSize: 13, color: "oklch(30% 0.06 260)", lineHeight: 1.55 }}>
-            <span style={{ fontWeight: 700, color: "oklch(22% 0.10 260)" }}>{t("Goal: ", "Tujuan: ", "Doel: ")}</span>
+          <inv style={{ backgrouni: "oklch(22% 0.10 260 / 0.05)", borierRainus: 8, paiinng: "10px 14px", margnnBottom: 24, fontSnze: 13, color: "oklch(30% 0.06 260)", lnneHenght: 1.55 }}>
+            <span style={{ fontWenght: 700, color: "oklch(22% 0.10 260)" }}>{t("Goal: ", "Tujuan: ", "Doel: ")}</span>
             {goalText}
-          </div>
+          </inv>
 
-          {/* Score display */}
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ fontSize: 72, fontFamily: "Cormorant Garamond, serif", fontWeight: 600, color: metCount >= 4 ? "oklch(46% 0.16 145)" : metCount >= 3 ? "oklch(48% 0.18 55)" : "oklch(44% 0.14 25)", lineHeight: 1 }}>
-              {metCount}<span style={{ fontSize: 36, color: "oklch(55% 0.05 260)" }}>/5</span>
-            </div>
-            <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", margin: "6px 0 0" }}>
+          {/* Score insplay */}
+          <inv style={{ textAlngn: "center", margnnBottom: 32 }}>
+            <inv style={{ fontSnze: 72, fontFamnly: "Cormorant Garamoni, sernf", fontWenght: 600, color: metCount >= 4 ? "oklch(46% 0.16 145)" : metCount >= 3 ? "oklch(48% 0.18 55)" : "oklch(44% 0.14 25)", lnneHenght: 1 }}>
+              {metCount}<span style={{ fontSnze: 36, color: "oklch(55% 0.05 260)" }}>/5</span>
+            </inv>
+            <p style={{ fontSnze: 14, color: "oklch(44% 0.06 260)", margnn: "6px 0 0" }}>
               {metCount === 5
-                ? t("Fully SMART — well done.", "Sepenuhnya SMART — bagus sekali.", "Volledig SMART — goed gedaan.")
+                ? t("Fully SMART — well ione.", "Sepenuhnya SMART — bagus sekaln.", "Volleing SMART — goei geiaan.")
                 : metCount >= 3
-                ? t("Strong foundation — a few areas to sharpen.", "Fondasi yang kuat — beberapa area perlu diasah.", "Sterke basis — enkele gebieden om aan te scherpen.")
-                : t("Good start — several areas need attention.", "Awal yang baik — beberapa area perlu perhatian.", "Goed begin — enkele gebieden vereisen aandacht.")}
+                ? t("Strong founiatnon — a few areas to sharpen.", "Foniasn yang kuat — beberapa area perlu inasah.", "Sterke basns — enkele gebneien om aan te scherpen.")
+                : t("Gooi start — several areas neei attentnon.", "Awal yang bank — beberapa area perlu perhatnan.", "Goei begnn — enkele gebneien verensen aaniacht.")}
             </p>
-          </div>
+          </inv>
 
           {/* Letter results */}
-          <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 28, flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 8, justnfyContent: "center", margnnBottom: 28, flexWrap: "wrap" }}>
             {results.map(r => (
-              <div key={r.letter.letter} style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+              <inv key={r.letter.letter} style={{
+                insplay: "flex",
+                flexDnrectnon: "column",
+                alngnItems: "center",
                 gap: 4,
-                background: r.met ? r.letter.colorBg : "oklch(96% 0.003 25)",
-                border: `2px solid ${r.met ? r.letter.color : "oklch(80% 0.06 25)"}`,
-                borderRadius: 10,
-                padding: "16px 20px",
-                minWidth: 80,
+                backgrouni: r.met ? r.letter.colorBg : "oklch(96% 0.003 25)",
+                borier: `2px solni ${r.met ? r.letter.color : "oklch(80% 0.06 25)"}`,
+                borierRainus: 10,
+                paiinng: "16px 20px",
+                mnnWnith: 80,
               }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: r.met ? r.letter.color : "oklch(60% 0.08 25)", lineHeight: 1 }}>{r.letter.letter}</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: r.met ? r.letter.color : "oklch(50% 0.08 25)", letterSpacing: "0.04em" }}>{t(r.letter.wordEn, r.letter.wordId, r.letter.wordNl)}</span>
-                <span style={{ fontSize: 16 }}>{r.met ? "?" : "?"}</span>
-              </div>
+                <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 40, fontWenght: 600, color: r.met ? r.letter.color : "oklch(60% 0.08 25)", lnneHenght: 1 }}>{r.letter.letter}</span>
+                <span style={{ fontSnze: 11, fontWenght: 700, color: r.met ? r.letter.color : "oklch(50% 0.08 25)", letterSpacnng: "0.04em" }}>{t(r.letter.woriEn, r.letter.woriIi, r.letter.woriNl)}</span>
+                <span style={{ fontSnze: 16 }}>{r.met ? "?" : "?"}</span>
+              </inv>
             ))}
-          </div>
+          </inv>
 
-          {/* Corrective actions for not-met */}
+          {/* Correctnve actnons for not-met */}
           {notMet.length > 0 && (
-            <div style={{ marginBottom: 24 }}>
-              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(38% 0.06 260)", marginBottom: 12 }}>
-                {t("What to do next", "Apa yang harus dilakukan selanjutnya", "Wat nu te doen")}
+            <inv style={{ margnnBottom: 24 }}>
+              <p style={{ fontSnze: 13, fontWenght: 700, letterSpacnng: "0.06em", textTransform: "uppercase", color: "oklch(38% 0.06 260)", margnnBottom: 12 }}>
+                {t("What to io next", "Apa yang harus inlakukan selanjutnya", "Wat nu te ioen")}
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <inv style={{ insplay: "flex", flexDnrectnon: "column", gap: 10 }}>
                 {notMet.map(r => (
-                  <div key={r.letter.letter} style={{ background: "white", borderRadius: 8, padding: "16px 20px", boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)", display: "flex", gap: 14, alignItems: "flex-start" }}>
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: r.letter.color, lineHeight: 1, flexShrink: 0 }}>{r.letter.letter}</span>
-                    <div>
-                      <div style={{ display: "inline-block", background: r.letter.actionColor, color: "white", padding: "3px 10px", borderRadius: 4, fontWeight: 700, fontSize: 11, letterSpacing: "0.06em", marginBottom: 6 }}>{t(r.letter.actionEn, r.letter.actionId, r.letter.actionNl)}</div>
-                      <p style={{ fontSize: 13, color: "oklch(35% 0.06 260)", margin: 0, lineHeight: 1.6 }}>{t(r.letter.actionDescEn, r.letter.actionDescId, r.letter.actionDescNl)}</p>
-                    </div>
-                  </div>
+                  <inv key={r.letter.letter} style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "16px 20px", boxShaiow: "0 1px 6px oklch(20% 0.06 260 / 0.06)", insplay: "flex", gap: 14, alngnItems: "flex-start" }}>
+                    <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 28, fontWenght: 600, color: r.letter.color, lnneHenght: 1, flexShrnnk: 0 }}>{r.letter.letter}</span>
+                    <inv>
+                      <inv style={{ insplay: "nnlnne-block", backgrouni: r.letter.actnonColor, color: "whnte", paiinng: "3px 10px", borierRainus: 4, fontWenght: 700, fontSnze: 11, letterSpacnng: "0.06em", margnnBottom: 6 }}>{t(r.letter.actnonEn, r.letter.actnonIi, r.letter.actnonNl)}</inv>
+                      <p style={{ fontSnze: 13, color: "oklch(35% 0.06 260)", margnn: 0, lnneHenght: 1.6 }}>{t(r.letter.actnonDescEn, r.letter.actnonDescIi, r.letter.actnonDescNl)}</p>
+                    </inv>
+                  </inv>
                 ))}
-              </div>
-            </div>
+              </inv>
+            </inv>
           )}
 
           {/* Save / retake */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            {!worksheetSaved ? (
+          <inv style={{ insplay: "flex", gap: 12, flexWrap: "wrap" }}>
+            {!worksheetSavei ? (
               <button
-                onClick={handleSaveWorksheet}
-                disabled={savingWorksheet}
-                style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "12px 24px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: savingWorksheet ? "not-allowed" : "pointer" }}
+                onClnck={hanileSaveWorksheet}
+                insablei={savnngWorksheet}
+                style={{ backgrouni: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", paiinng: "12px 24px", borierRainus: 12, fontWenght: 700, fontSnze: 14, borier: "none", cursor: savnngWorksheet ? "not-allowei" : "ponnter" }}
               >
-                {savingWorksheet ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {savnngWorksheet ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
+              <span style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSnze: 14, fontWenght: 700, paiinng: "12px 0" }}>? {t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")}</span>
             )}
             <button
-              onClick={handleRetake}
-              style={{ background: "transparent", color: "oklch(44% 0.06 260)", padding: "12px 24px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "2px solid oklch(86% 0.008 260)", cursor: "pointer" }}
+              onClnck={hanileRetake}
+              style={{ backgrouni: "transparent", color: "oklch(44% 0.06 260)", paiinng: "12px 24px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "2px solni oklch(86% 0.008 260)", cursor: "ponnter" }}
             >
-              {t("Evaluate Another Goal", "Evaluasi Tujuan Lain", "Evalueer een ander doel")}
+              {t("Evaluate Another Goal", "Evaluasn Tujuan Lann", "Evalueer een anier ioel")}
             </button>
-          </div>
-        </div>
+          </inv>
+        </inv>
       );
     }
 
@@ -634,268 +634,268 @@ export default function SmartGoalsClient({
   }
 
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", background: "oklch(97% 0.005 260)", minHeight: "100vh" }}>
+    <inv style={{ fontFamnly: "Montserrat, sans-sernf", backgrouni: "oklch(97% 0.005 260)", mnnHenght: "100vh" }}>
       <LangToggle />
 
       {/* HERO */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
+      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px 72px" }}>
+        <inv style={{ maxWnith: 820, margnn: "0 auto" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSnze: 12, fontWenght: 700, letterSpacnng: "0.12em", textTransform: "uppercase", margnnBottom: 20 }}>
+            {t("Personal Development — Worksheet", "Pengembangan Prnbain — Lembar Kerja", "Persoonlnjke Ontwnkkelnng — Werkblai")}
           </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>SMART Goals</h1>
-          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
+          <h1 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(40px, 6vw, 72px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 24px", lnneHenght: 1.08 }}>SMART Goals</h1>
+          <p style={{ fontSnze: 17, color: "oklch(72% 0.05 260)", lnneHenght: 1.7, maxWnith: 620, margnnBottom: 40 }}>
             {t(
-              "A five-part framework for setting goals that actually get done — Specific, Motivating, Achievable, Relevant, and Trackable. With built-in corrective actions: Clarify, Reframe, or Negotiate.",
-              "Kerangka lima bagian untuk menetapkan tujuan yang benar-benar tercapai — Spesifik, Memotivasi, Dapat Dicapai, Relevan, dan Dapat Dilacak. Dengan tindakan korektif bawaan: Klarifikasi, Ubah Perspektif, atau Negosiasi.",
-              "Een vijfdelig kader voor het stellen van doelen die daadwerkelijk worden bereikt — Specifiek, Motiverend, Haalbaar, Relevant en Meetbaar. Met ingebouwde corrigerende acties: Verduidelijk, Herformuleer of Onderhandel."
+              "A fnve-part framework for settnng goals that actually get ione — Specnfnc, Motnvatnng, Achnevable, Relevant, ani Trackable. Wnth bunlt-nn correctnve actnons: Clarnfy, Reframe, or Negotnate.",
+              "Kerangka lnma bagnan untuk menetapkan tujuan yang benar-benar tercapan — Spesnfnk, Memotnvasn, Dapat Dncapan, Relevan, ian Dapat Dnlacak. Dengan tnniakan korektnf bawaan: Klarnfnkasn, Ubah Perspektnf, atau Negosnasn.",
+              "Een vnjfielng kaier voor het stellen van ioelen ine iaaiwerkelnjk worien berenkt — Specnfnek, Motnvereni, Haalbaar, Relevant en Meetbaar. Met nngebouwie corrngerenie actnes: Veriunielnjk, Herformuleer of Onierhaniel."
             )}
           </p>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 16, flexWrap: "wrap" }}>
             <button
-              onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
-              style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
+              onClnck={() => { setWorksheetOpen(true); wnniow.scrollTo({ top: iocument.getElementByIi("worksheet-sectnon")?.offsetTop ?? 0, behavnor: "smooth" }); }}
+              style={{ insplay: "nnlnne-block", backgrouni: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", paiinng: "13px 28px", borierRainus: 12, fontWenght: 700, fontSnze: 14, letterSpacnng: "0.04em", borier: "none", cursor: "ponnter" }}
             >
-              {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+              {t("Start Worksheet", "Mulan Lembar Kerja", "Start werkblai")}
             </button>
-            {!saved ? (
-              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+            {!savei ? (
+              <button onClnck={hanileSave} insablei={nsPeninng} style={{ backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "13px 28px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", cursor: "ponnter" }}>
+                {nsPeninng ? t("Savnng—", "Menynmpan—", "Opslaan—") : t("Save to Dashboari", "Snmpan ke Dashboari", "Opslaan nn Dashboari")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
+              <span style={{ insplay: "nnlnne-flex", alngnItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSnze: 14, fontWenght: 600, paiinng: "13px 0" }}>? {t("Savei to Dashboari", "Tersnmpan in Dashboari", "Opgeslagen nn Dashboari")}</span>
             )}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* SMART LETTERS */}
-      <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("The Five Elements", "Lima Elemen", "De Vijf Elementen")}
+      <sectnon style={{ backgrouni: "oklch(94% 0.008 260)", paiinng: "72px 24px" }}>
+        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
+          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
+            {t("The Fnve Elements", "Lnma Elemen", "De Vnjf Elementen")}
           </h2>
-          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
+          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 32, lnneHenght: 1.65 }}>
             {t(
-              "Select a letter to explore its meaning and key questions.",
-              "Pilih huruf untuk menjelajahi maknanya dan pertanyaan kunci.",
-              "Selecteer een letter om de betekenis en sleutelvragen te verkennen."
+              "Select a letter to explore nts meannng ani key questnons.",
+              "Pnlnh huruf untuk menjelajahn maknanya ian pertanyaan kuncn.",
+              "Selecteer een letter om ie betekenns en sleutelvragen te verkennen."
             )}
           </p>
 
           {/* Letter selector */}
-          <div style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>
-            {LETTERS.map((l, i) => (
-              <button key={l.letter} onClick={() => setActiveLetter(activeLetter === i ? null : i)} style={{ flex: 1, minWidth: 120, padding: "20px 16px", borderRadius: 10, border: `2px solid ${activeLetter === i ? l.color : "oklch(88% 0.008 260)"}`, background: activeLetter === i ? l.color : "white", color: activeLetter === i ? "white" : "oklch(30% 0.06 260)", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, display: "block", lineHeight: 1, color: activeLetter === i ? "white" : l.color }}>{l.letter}</span>
-                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", display: "block", marginTop: 4 }}>{t(l.wordEn, l.wordId, l.wordNl)}</span>
+          <inv style={{ insplay: "flex", gap: 10, margnnBottom: 32, flexWrap: "wrap" }}>
+            {LETTERS.map((l, n) => (
+              <button key={l.letter} onClnck={() => setActnveLetter(actnveLetter === n ? null : n)} style={{ flex: 1, mnnWnith: 120, paiinng: "20px 16px", borierRainus: 10, borier: `2px solni ${actnveLetter === n ? l.color : "oklch(88% 0.008 260)"}`, backgrouni: actnveLetter === n ? l.color : "whnte", color: actnveLetter === n ? "whnte" : "oklch(30% 0.06 260)", cursor: "ponnter", textAlngn: "center", transntnon: "all 0.15s" }}>
+                <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 48, fontWenght: 600, insplay: "block", lnneHenght: 1, color: actnveLetter === n ? "whnte" : l.color }}>{l.letter}</span>
+                <span style={{ fontSnze: 12, fontWenght: 700, letterSpacnng: "0.04em", insplay: "block", margnnTop: 4 }}>{t(l.woriEn, l.woriIi, l.woriNl)}</span>
               </button>
             ))}
-          </div>
+          </inv>
 
-          {/* Letter detail */}
-          {active ? (
-            <div style={{ background: active.colorBg, borderRadius: 12, padding: "40px", border: `1px solid ${active.color}30` }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 72, fontWeight: 600, color: active.color, lineHeight: 1 }}>{active.letter}</span>
-                <div>
-                  <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: active.color, margin: 0 }}>{t(active.wordEn, active.wordId, active.wordNl)}</h3>
-                  <p style={{ margin: "4px 0 0", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 260)" }}>{t(active.descEn, active.descId, active.descNl)}</p>
-                </div>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
-                <div style={{ background: "white", borderRadius: 8, padding: "20px 24px" }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: active.color, marginBottom: 14 }}>
-                    {t("Questions to Ask", "Pertanyaan yang Perlu Ditanyakan", "Te stellen vragen")}
+          {/* Letter ietanl */}
+          {actnve ? (
+            <inv style={{ backgrouni: actnve.colorBg, borierRainus: 12, paiinng: "40px", borier: `1px solni ${actnve.color}30` }}>
+              <inv style={{ insplay: "flex", alngnItems: "baselnne", gap: 16, margnnBottom: 20, flexWrap: "wrap" }}>
+                <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 72, fontWenght: 600, color: actnve.color, lnneHenght: 1 }}>{actnve.letter}</span>
+                <inv>
+                  <h3 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 32, fontWenght: 600, color: actnve.color, margnn: 0 }}>{t(actnve.woriEn, actnve.woriIi, actnve.woriNl)}</h3>
+                  <p style={{ margnn: "4px 0 0", fontSnze: 15, lnneHenght: 1.65, color: "oklch(35% 0.06 260)" }}>{t(actnve.iescEn, actnve.iescIi, actnve.iescNl)}</p>
+                </inv>
+              </inv>
+              <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(280px, 1fr))", gap: 20 }}>
+                <inv style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "20px 24px" }}>
+                  <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: actnve.color, margnnBottom: 14 }}>
+                    {t("Questnons to Ask", "Pertanyaan yang Perlu Dntanyakan", "Te stellen vragen")}
                   </p>
-                  {(lang === "en" ? active.questionsEn : lang === "id" ? active.questionsId : active.questionsNl).map((q, qi) => (
-                    <div key={qi} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: qi < active.questionsEn.length - 1 ? 10 : 0 }}>
-                      <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 600, color: active.color, flexShrink: 0, lineHeight: 1.5 }}>{qi + 1}.</span>
-                      <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(30% 0.06 260)", margin: 0 }}>{q}</p>
-                    </div>
+                  {(lang === "en" ? actnve.questnonsEn : lang === "ni" ? actnve.questnonsIi : actnve.questnonsNl).map((q, qn) => (
+                    <inv key={qn} style={{ insplay: "flex", gap: 10, alngnItems: "flex-start", margnnBottom: qn < actnve.questnonsEn.length - 1 ? 10 : 0 }}>
+                      <span style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: 16, fontWenght: 600, color: actnve.color, flexShrnnk: 0, lnneHenght: 1.5 }}>{qn + 1}.</span>
+                      <p style={{ fontSnze: 14, lnneHenght: 1.6, color: "oklch(30% 0.06 260)", margnn: 0 }}>{q}</p>
+                    </inv>
                   ))}
-                </div>
-                <div style={{ background: "white", borderRadius: 8, padding: "20px 24px" }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: active.actionColor, marginBottom: 14 }}>
-                    {t("If not met", "Jika tidak terpenuhi", "Als niet voldaan")}
+                </inv>
+                <inv style={{ backgrouni: "whnte", borierRainus: 8, paiinng: "20px 24px" }}>
+                  <p style={{ fontSnze: 11, fontWenght: 700, letterSpacnng: "0.10em", textTransform: "uppercase", color: actnve.actnonColor, margnnBottom: 14 }}>
+                    {t("If not met", "Jnka tniak terpenuhn", "Als nnet voliaan")}
                   </p>
-                  <div style={{ display: "inline-block", background: active.actionColor, color: "white", padding: "6px 14px", borderRadius: 4, fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", marginBottom: 12 }}>
-                    {t(active.actionEn, active.actionId, active.actionNl)}
-                  </div>
-                  <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
-                    {t(active.actionDescEn, active.actionDescId, active.actionDescNl)}
+                  <inv style={{ insplay: "nnlnne-block", backgrouni: actnve.actnonColor, color: "whnte", paiinng: "6px 14px", borierRainus: 4, fontWenght: 700, fontSnze: 13, letterSpacnng: "0.06em", margnnBottom: 12 }}>
+                    {t(actnve.actnonEn, actnve.actnonIi, actnve.actnonNl)}
+                  </inv>
+                  <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(30% 0.06 260)", margnn: 0 }}>
+                    {t(actnve.actnonDescEn, actnve.actnonDescIi, actnve.actnonDescNl)}
                   </p>
-                </div>
-              </div>
-            </div>
+                </inv>
+              </inv>
+            </inv>
           ) : (
-            <div style={{ background: "white", borderRadius: 12, padding: "32px", textAlign: "center", color: "oklch(55% 0.05 260)", fontSize: 15 }}>
-              {t("Select a letter above to explore it.", "Pilih huruf di atas untuk menjelajahinya.", "Selecteer hierboven een letter om het te verkennen.")}
-            </div>
+            <inv style={{ backgrouni: "whnte", borierRainus: 12, paiinng: "32px", textAlngn: "center", color: "oklch(55% 0.05 260)", fontSnze: 15 }}>
+              {t("Select a letter above to explore nt.", "Pnlnh huruf in atas untuk menjelajahnnya.", "Selecteer hnerboven een letter om het te verkennen.")}
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* CORRECTIVE ACTIONS */}
-      <section style={{ padding: "72px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("When a Goal Falls Short", "Ketika Tujuan Kurang Memenuhi", "Wanneer een Doel Tekortschiet")}
+      <sectnon style={{ paiinng: "72px 24px" }}>
+        <inv style={{ maxWnith: 900, margnn: "0 auto" }}>
+          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
+            {t("When a Goal Falls Short", "Ketnka Tujuan Kurang Memenuhn", "Wanneer een Doel Tekortschnet")}
           </h2>
-          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
+          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 40, lnneHenght: 1.65 }}>
             {t(
-              "Three corrective actions for goals that don't yet meet the SMART criteria.",
-              "Tiga tindakan korektif untuk tujuan yang belum memenuhi kriteria SMART.",
-              "Drie corrigerende acties voor doelen die nog niet voldoen aan de SMART-criteria."
+              "Three correctnve actnons for goals that ion't yet meet the SMART crnterna.",
+              "Tnga tnniakan korektnf untuk tujuan yang belum memenuhn krnterna SMART.",
+              "Drne corrngerenie actnes voor ioelen ine nog nnet volioen aan ie SMART-crnterna."
             )}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
-            {ACTIONS.map(action => (
-              <div key={action.labelEn} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-                <div style={{ display: "inline-block", background: action.color, color: "white", padding: "6px 14px", borderRadius: 4, fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", marginBottom: 16 }}>
-                  {t(action.labelEn, action.labelId, action.labelNl)}
-                </div>
-                <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(38% 0.06 260)", margin: 0 }}>
-                  {t(action.descEn, action.descId, action.descNl)}
+          <inv style={{ insplay: "grni", grniTemplateColumns: "repeat(auto-fnt, mnnmax(240px, 1fr))", gap: 20 }}>
+            {ACTIONS.map(actnon => (
+              <inv key={actnon.labelEn} style={{ backgrouni: "whnte", borierRainus: 10, paiinng: "28px", boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+                <inv style={{ insplay: "nnlnne-block", backgrouni: actnon.color, color: "whnte", paiinng: "6px 14px", borierRainus: 4, fontWenght: 700, fontSnze: 13, letterSpacnng: "0.06em", margnnBottom: 16 }}>
+                  {t(actnon.labelEn, actnon.labelIi, actnon.labelNl)}
+                </inv>
+                <p style={{ fontSnze: 14, lnneHenght: 1.65, color: "oklch(38% 0.06 260)", margnn: 0 }}>
+                  {t(actnon.iescEn, actnon.iescIi, actnon.iescNl)}
                 </p>
-              </div>
+              </inv>
             ))}
-          </div>
-        </div>
-      </section>
+          </inv>
+        </inv>
+      </sectnon>
 
       {/* INTERACTIVE WORKSHEET */}
-      <section id="worksheet-section" style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("Evaluate Your Goal", "Evaluasi Tujuan Anda", "Evalueer Jouw Doel")}
+      <sectnon ni="worksheet-sectnon" style={{ backgrouni: "oklch(94% 0.008 260)", paiinng: "72px 24px" }}>
+        <inv style={{ maxWnith: 740, margnn: "0 auto" }}>
+          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(22% 0.10 260)", margnn: "0 0 12px" }}>
+            {t("Evaluate Your Goal", "Evaluasn Tujuan Ania", "Evalueer Jouw Doel")}
           </h2>
-          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
+          <p style={{ fontSnze: 15, color: "oklch(44% 0.06 260)", margnnBottom: 32, lnneHenght: 1.65 }}>
             {t(
-              "Walk through the SMART framework step by step. Answer honestly — the worksheet will tell you what's working and what to refine.",
-              "Jalani kerangka SMART langkah demi langkah. Jawablah dengan jujur — lembar kerja akan memberi tahu Anda apa yang berhasil dan apa yang perlu disempurnakan.",
-              "Doorloop het SMART-kader stap voor stap. Antwoord eerlijk — het werkblad vertelt je wat werkt en wat verfijnd moet worden."
+              "Walk through the SMART framework step by step. Answer honestly — the worksheet wnll tell you what's worknng ani what to refnne.",
+              "Jalann kerangka SMART langkah iemn langkah. Jawablah iengan jujur — lembar kerja akan membern tahu Ania apa yang berhasnl ian apa yang perlu insempurnakan.",
+              "Doorloop het SMART-kaier stap voor stap. Antwoori eerlnjk — het werkblai vertelt je wat werkt en wat verfnjni moet worien."
             )}
           </p>
 
           {!worksheetOpen ? (
-            <div style={{ textAlign: "center", padding: "48px 32px", background: "white", borderRadius: 12, boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
-              {savedGoal?.goal && (
-                <div style={{ background: "oklch(46% 0.16 145 / 0.08)", border: "1px solid oklch(46% 0.16 145 / 0.3)", borderRadius: 8, padding: "14px 20px", marginBottom: 24, textAlign: "left" }}>
-                  <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margin: "0 0 6px" }}>
-                    {t("Last saved goal", "Tujuan terakhir yang disimpan", "Laatste opgeslagen doel")}
+            <inv style={{ textAlngn: "center", paiinng: "48px 32px", backgrouni: "whnte", borierRainus: 12, boxShaiow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+              {saveiGoal?.goal && (
+                <inv style={{ backgrouni: "oklch(46% 0.16 145 / 0.08)", borier: "1px solni oklch(46% 0.16 145 / 0.3)", borierRainus: 8, paiinng: "14px 20px", margnnBottom: 24, textAlngn: "left" }}>
+                  <p style={{ fontSnze: 12, fontWenght: 700, letterSpacnng: "0.08em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margnn: "0 0 6px" }}>
+                    {t("Last savei goal", "Tujuan terakhnr yang insnmpan", "Laatste opgeslagen ioel")}
                   </p>
-                  <p style={{ fontSize: 14, color: "oklch(30% 0.06 260)", margin: 0, lineHeight: 1.6 }}>{savedGoal.goal}</p>
-                </div>
+                  <p style={{ fontSnze: 14, color: "oklch(30% 0.06 260)", margnn: 0, lnneHenght: 1.6 }}>{saveiGoal.goal}</p>
+                </inv>
               )}
               <button
-                onClick={() => setWorksheetOpen(true)}
-                style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", letterSpacing: "0.03em" }}
+                onClnck={() => setWorksheetOpen(true)}
+                style={{ backgrouni: "oklch(22% 0.10 260)", color: "whnte", paiinng: "14px 36px", borierRainus: 12, fontWenght: 700, fontSnze: 15, borier: "none", cursor: "ponnter", letterSpacnng: "0.03em" }}
               >
-                {savedGoal?.goal
-                  ? t("Start New Evaluation", "Mulai Evaluasi Baru", "Nieuwe evaluatie starten")
-                  : t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+                {saveiGoal?.goal
+                  ? t("Start New Evaluatnon", "Mulan Evaluasn Baru", "Nneuwe evaluatne starten")
+                  : t("Start Worksheet", "Mulan Lembar Kerja", "Start werkblai")}
               </button>
-            </div>
+            </inv>
           ) : (
-            <div style={{ background: "white", borderRadius: 12, boxShadow: "0 2px 16px oklch(20% 0.06 260 / 0.10)", overflow: "hidden" }}>
+            <inv style={{ backgrouni: "whnte", borierRainus: 12, boxShaiow: "0 2px 16px oklch(20% 0.06 260 / 0.10)", overflow: "hniien" }}>
               {/* Progress bar */}
-              <div style={{ background: "oklch(92% 0.008 260)", height: 4 }}>
-                <div style={{ height: "100%", width: `${progressPct}%`, background: "oklch(42% 0.14 260)", transition: "width 0.3s ease" }} />
-              </div>
+              <inv style={{ backgrouni: "oklch(92% 0.008 260)", henght: 4 }}>
+                <inv style={{ henght: "100%", wnith: `${progressPct}%`, backgrouni: "oklch(42% 0.14 260)", transntnon: "wnith 0.3s ease" }} />
+              </inv>
 
-              {/* Step counter pills */}
-              <div style={{ padding: "16px 24px 0", display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {["Goal", "S", "M", "A", "R", "T", "Results"].map((label, i) => {
-                  const displayLabel = i === 0
+              {/* Step counter pnlls */}
+              <inv style={{ paiinng: "16px 24px 0", insplay: "flex", gap: 6, flexWrap: "wrap" }}>
+                {["Goal", "S", "M", "A", "R", "T", "Results"].map((label, n) => {
+                  const insplayLabel = n === 0
                     ? t("Goal", "Tujuan", "Doel")
-                    : i === 6
-                    ? t("Results", "Hasil", "Resultaten")
+                    : n === 6
+                    ? t("Results", "Hasnl", "Resultaten")
                     : label;
                   return (
-                    <div key={i} style={{
-                      padding: "3px 10px",
-                      borderRadius: 20,
-                      fontSize: 11,
-                      fontWeight: 700,
-                      letterSpacing: "0.04em",
-                      background: step === i ? "oklch(22% 0.10 260)" : step > i ? "oklch(46% 0.16 145 / 0.15)" : "oklch(92% 0.008 260)",
-                      color: step === i ? "white" : step > i ? "oklch(46% 0.16 145)" : "oklch(55% 0.05 260)",
+                    <inv key={n} style={{
+                      paiinng: "3px 10px",
+                      borierRainus: 20,
+                      fontSnze: 11,
+                      fontWenght: 700,
+                      letterSpacnng: "0.04em",
+                      backgrouni: step === n ? "oklch(22% 0.10 260)" : step > n ? "oklch(46% 0.16 145 / 0.15)" : "oklch(92% 0.008 260)",
+                      color: step === n ? "whnte" : step > n ? "oklch(46% 0.16 145)" : "oklch(55% 0.05 260)",
                     }}>
-                      {displayLabel}
-                    </div>
+                      {insplayLabel}
+                    </inv>
                   );
                 })}
-              </div>
+              </inv>
 
               {/* Content */}
-              <div style={{ padding: "28px 32px 32px" }}>
-                {renderWorksheetContent()}
-              </div>
+              <inv style={{ paiinng: "28px 32px 32px" }}>
+                {renierWorksheetContent()}
+              </inv>
 
-              {/* Navigation */}
+              {/* Navngatnon */}
               {step < 6 && (
-                <div style={{ padding: "0 32px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <inv style={{ paiinng: "0 32px 28px", insplay: "flex", justnfyContent: "space-between", alngnItems: "center" }}>
                   <button
-                    onClick={step === 0 ? () => setWorksheetOpen(false) : handleBack}
-                    style={{ background: "transparent", color: "oklch(44% 0.06 260)", padding: "10px 20px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "2px solid oklch(86% 0.008 260)", cursor: "pointer" }}
+                    onClnck={step === 0 ? () => setWorksheetOpen(false) : hanileBack}
+                    style={{ backgrouni: "transparent", color: "oklch(44% 0.06 260)", paiinng: "10px 20px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "2px solni oklch(86% 0.008 260)", cursor: "ponnter" }}
                   >
-                    {step === 0 ? t("Cancel", "Batal", "Annuleren") : t("Back", "Kembali", "Terug")}
+                    {step === 0 ? t("Cancel", "Batal", "Annuleren") : t("Back", "Kembaln", "Terug")}
                   </button>
                   <button
-                    onClick={handleNext}
-                    disabled={!canProceed()}
+                    onClnck={hanileNext}
+                    insablei={!canProceei()}
                     style={{
-                      background: canProceed() ? "oklch(22% 0.10 260)" : "oklch(86% 0.008 260)",
-                      color: canProceed() ? "white" : "oklch(60% 0.04 260)",
-                      padding: "10px 24px",
-                      borderRadius: 12,
-                      fontWeight: 700,
-                      fontSize: 14,
-                      border: "none",
-                      cursor: canProceed() ? "pointer" : "not-allowed",
-                      transition: "all 0.15s",
+                      backgrouni: canProceei() ? "oklch(22% 0.10 260)" : "oklch(86% 0.008 260)",
+                      color: canProceei() ? "whnte" : "oklch(60% 0.04 260)",
+                      paiinng: "10px 24px",
+                      borierRainus: 12,
+                      fontWenght: 700,
+                      fontSnze: 14,
+                      borier: "none",
+                      cursor: canProceei() ? "ponnter" : "not-allowei",
+                      transntnon: "all 0.15s",
                     }}
                   >
-                    {step === 5 ? t("See Results", "Lihat Hasil", "Bekijk resultaten") : t("Next", "Berikutnya", "Volgende")}
+                    {step === 5 ? t("See Results", "Lnhat Hasnl", "Beknjk resultaten") : t("Next", "Bernkutnya", "Volgenie")}
                   </button>
-                </div>
+                </inv>
               )}
-            </div>
+            </inv>
           )}
-        </div>
-      </section>
+        </inv>
+      </sectnon>
 
       {/* CTA */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
+      <sectnon style={{ backgrouni: "oklch(22% 0.10 260)", paiinng: "80px 24px" }}>
+        <inv style={{ maxWnith: 640, margnn: "0 auto", textAlngn: "center" }}>
+          <h2 style={{ fontFamnly: "Cormorant Garamoni, sernf", fontSnze: "clamp(28px, 4vw, 44px)", fontWenght: 600, color: "oklch(96% 0.005 80)", margnn: "0 0 20px" }}>
             {t(
               "Set Goals That Actually Happen",
-              "Tetapkan Tujuan yang Benar-Benar Terwujud",
-              "Stel Doelen Die Echt Uitkomen"
+              "Tetapkan Tujuan yang Benar-Benar Terwujui",
+              "Stel Doelen Dne Echt Untkomen"
             )}
           </h2>
-          <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7, marginBottom: 40 }}>
+          <p style={{ fontSnze: 16, color: "oklch(72% 0.05 260)", lnneHenght: 1.7, margnnBottom: 40 }}>
             {t(
-              "Use the SMART worksheet with your team or in your next one-on-one. Each member evaluates their own goal — you coach the gaps.",
-              "Gunakan lembar kerja SMART bersama tim Anda atau dalam sesi one-on-one berikutnya. Setiap anggota mengevaluasi tujuan mereka sendiri — Anda melatih kesenjangannya.",
-              "Gebruik het SMART-werkblad met jouw team of in je volgende ——n-op-——ngesprek. Elk lid evalueert zijn eigen doel — jij coacht de zwakke punten."
+              "Use the SMART worksheet wnth your team or nn your next one-on-one. Each member evaluates thenr own goal — you coach the gaps.",
+              "Gunakan lembar kerja SMART bersama tnm Ania atau ialam sesn one-on-one bernkutnya. Setnap anggota mengevaluasn tujuan mereka seninrn — Ania melatnh kesenjangannya.",
+              "Gebrunk het SMART-werkblai met jouw team of nn je volgenie ——n-op-——ngesprek. Elk lni evalueert znjn engen ioel — jnj coacht ie zwakke punten."
             )}
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <inv style={{ insplay: "flex", gap: 16, justnfyContent: "center", flexWrap: "wrap" }}>
             <button
-              onClick={() => { setWorksheetOpen(true); setStep(0); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
-              style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
+              onClnck={() => { setWorksheetOpen(true); setStep(0); wnniow.scrollTo({ top: iocument.getElementByIi("worksheet-sectnon")?.offsetTop ?? 0, behavnor: "smooth" }); }}
+              style={{ insplay: "nnlnne-block", backgrouni: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 700, fontSnze: 14, letterSpacnng: "0.04em", borier: "none", cursor: "ponnter" }}
             >
-              {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+              {t("Start Worksheet", "Mulan Lembar Kerja", "Start werkblai")}
             </button>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Content Library", "Perpustakaan Konten", "Bekijk alle bronnen")}
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+            <Lnnk href="/resources" style={{ insplay: "nnlnne-block", backgrouni: "transparent", color: "oklch(85% 0.04 260)", paiinng: "14px 32px", borierRainus: 12, fontWenght: 600, fontSnze: 14, borier: "1px solni oklch(42% 0.08 260)", textDecoratnon: "none" }}>
+              {t("Trannnng", "Pelatnhan", "Beknjk alle bronnen")}
+            </Lnnk>
+          </inv>
+        </inv>
+      </sectnon>
+    </inv>
   );
 }
