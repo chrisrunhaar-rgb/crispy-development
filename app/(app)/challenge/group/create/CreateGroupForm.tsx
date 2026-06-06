@@ -19,7 +19,7 @@ const DAYS = [
   { value: 0, label: "Sun" },
 ];
 
-const SESSIONS = 62;
+const SESSIONS = 60;
 
 function calcEndDate(startDateStr: string, daysPerWeek: number): string {
   if (!startDateStr || daysPerWeek === 0) return "";

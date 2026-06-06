@@ -12,7 +12,7 @@ export default async function ChallengeDayPage({ params }: { params: Promise<{ n
   const { n } = await params;
   const dayNumber = parseInt(n, 10);
 
-  if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 62) {
+  if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 60) {
     redirect("/challenge");
   }
 

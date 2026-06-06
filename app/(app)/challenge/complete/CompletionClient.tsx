@@ -82,7 +82,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
             Well done, {firstName}.
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", color: mid, lineHeight: 1.7, marginBottom: "2.5rem", maxWidth: "40ch", margin: "0 auto 2.5rem" }}>
-            62 days. Completed {completedDate}. You did the inner work. That&apos;s what changes everything.
+            60 days. Completed {completedDate}. You did the inner work. That&apos;s what changes everything.
           </p>
 
           {/* Actions */}
@@ -107,7 +107,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
           {filledEntries.length > 0 && (
             <div ref={journalRef} style={{ textAlign: "left" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid, marginBottom: "1rem" }}>
-                Your journal — {filledEntries.length} of 62 days
+                Your journal — {filledEntries.length} of 60 days
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {filledEntries.slice(0, 10).map(entry => (

@@ -50,7 +50,7 @@ async function getAiPrompt(
       return lines.join("\n");
     }).join("\n\n");
 
-    const prompt = `You are a coach for a 62-day leadership challenge. Read these journal entries and write ONE question to push the person's thinking forward.
+    const prompt = `You are a coach for a 60-day leadership challenge. Read these journal entries and write ONE question to push the person's thinking forward.
 
 Rules:
 - Plain, everyday English. No jargon, no academic language.

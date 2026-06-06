@@ -134,7 +134,7 @@ export default function DayClient({
   function handleAdvance() {
     startAdvance(async () => {
       await advanceToNextDay(dayNumber);
-      if (dayNumber === 62) {
+      if (dayNumber === 60) {
         window.location.href = "/challenge/complete";
       } else if (hasGroup) {
         window.location.href = "/challenge/team";
@@ -465,7 +465,7 @@ export default function DayClient({
             </Link>
           ) : <div />}
 
-          {isToday && dayNumber < 62 && (
+          {isToday && dayNumber < 60 && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
               {teamAnswerRequired && !peerAnswer.trim() && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
@@ -482,7 +482,7 @@ export default function DayClient({
             </div>
           )}
 
-          {isToday && dayNumber === 62 && (
+          {isToday && dayNumber === 60 && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
               {teamAnswerRequired && !peerAnswer.trim() && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
@@ -499,7 +499,7 @@ export default function DayClient({
             </div>
           )}
 
-          {isCompleted && dayNumber < 62 && (
+          {isCompleted && dayNumber < 60 && (
             <Link
               href={`/challenge/day/${dayNumber + 1}`}
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, padding: "0.625rem 1.25rem", borderRadius: "8px", textDecoration: "none" }}

@@ -49,7 +49,7 @@ export default function ApplyForm({ groupId, groupName, existingStatus }: {
         </div>
         <div style={{ marginBottom: "1.5rem" }}>
           <label style={labelStyle}>What do you hope to get from this challenge? <span style={{ fontWeight: 400 }}>(optional)</span></label>
-          <textarea name="answer_2" rows={3} placeholder="Your hopes or goals for the next 62 days..." style={textareaStyle} />
+          <textarea name="answer_2" rows={3} placeholder="Your hopes or goals for the next 60 days..." style={textareaStyle} />
         </div>
         {state.error && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(50% 0.22 15)", marginBottom: "1rem" }}>{state.error}</p>}
         <button type="submit" disabled={pending} style={{ width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.9375rem", cursor: pending ? "not-allowed" : "pointer", opacity: pending ? 0.7 : 1 }}>

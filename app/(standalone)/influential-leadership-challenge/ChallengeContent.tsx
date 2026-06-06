@@ -14,9 +14,9 @@ const CHAPTERS = [
   { title: "Leading from Who God Made Me to Be", topics: ["Biography and Leadership","Convergence","Uniquely Called and Qualified","Understanding Our Life Themes","Leadership Style and Individual Design","Team, Legacy, and Succession"] },
   { title: "Choosing Intentionality", topics: ["A Theology of Time","Powerful Choices","Distraction Management","Scheduling Proactively","Personal Development","Altitude, Standard Work, and Prayer"] },
   { title: "Thinking Like a Contrarian", topics: ["Thinking Like a Contrarian","Leverage","The Lens of Leadership","Thinking Gray, Simplicity, and Wisdom"] },
-  { title: "Living with the Freedom of Clarity", topics: ["Knowing Who God Made Me to Be","Knowing What God Has Called Me to Do","Being Comfortable in My Own Skin","The Clarity of Saying No","A Cause Worth Giving Your Life To","Unfinished Business, Accountability, and Freedom"] },
+  { title: "Living with the Freedom of Clarity", topics: ["Identity and Calling","Being Comfortable in My Own Skin","The Clarity of Saying No","A Cause Worth Giving Your Life To","Unfinished Business, Accountability, and Freedom"] },
   { title: "Powerful Transparency", topics: ["The Power of Transparency","The Barriers to Transparency","The Authentic Self","Presence and Transparency in Failure","Staying Transparent with Yourself"] },
-  { title: "Guarding Our Hearts", topics: ["The Wellspring of Life","People and Our Hearts","Success and Our Hearts","The Truly Authentic Life"] },
+  { title: "Guarding Our Hearts", topics: ["The Wellspring of Life","What Tests Our Hearts","The Truly Authentic Life"] },
 ];
 
 const STEPS = [
