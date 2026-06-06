@@ -190,10 +190,10 @@ export default function DayClient({
             color: orange,
             letterSpacing: "0.05em",
           }}>
-            {dayPad} / 62
+            DAY {dayNumber} of 60
           </span>
           <div style={{ width: "80px", height: "3px", background: "oklch(35% 0.08 260)", borderRadius: "2px" }}>
-            <div style={{ width: `${(dayNumber / 62) * 100}%`, height: "100%", background: orange, borderRadius: "2px" }} />
+            <div style={{ width: `${Math.min((dayNumber / 60) * 100, 100)}%`, height: "100%", background: orange, borderRadius: "2px" }} />
           </div>
         </div>
 
