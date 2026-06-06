@@ -101,6 +101,24 @@ export async function saveJournalEntry(dayNumber: number, answer1: string, answe
   return { success: true };
 }
 
+export async function saveTeamAnswer(dayNumber: number, peerAnswer: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("challenge_journal_entries")
+    .upsert({
+      user_id: user.id,
+      day_number: dayNumber,
+      peer_answer: peerAnswer,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "user_id,day_number" });
+
+  if (error) return { error: error.message };
+  return { success: true };
+}
+
 export async function advanceToNextDay(currentDay: number) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();

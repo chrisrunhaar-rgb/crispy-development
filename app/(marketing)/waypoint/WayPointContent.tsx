@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const translations = {
@@ -75,18 +76,51 @@ const translations = {
 export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { lang } = useLanguage();
   const t = lang === "id" ? translations.id : translations.en;
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("wp-visible");
+          } else {
+            entry.target.classList.remove("wp-visible");
+          }
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -60px 0px" }
+    );
+    cardRefs.current.forEach((el) => { if (el) observer.observe(el); });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
       <style>{`
-        .wp-tiles {
+        .wp-features {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          border: 1px solid oklch(88% 0.008 80);
+          gap: clamp(1.25rem, 2.5vw, 2rem);
         }
-        @media (max-width: 540px) {
-          .wp-tiles { grid-template-columns: 1fr; }
-          .wp-tile { border-right: none !important; }
+        @media (max-width: 600px) {
+          .wp-features { grid-template-columns: 1fr; }
+        }
+        .wp-feature-card {
+          background: oklch(100% 0 0);
+          border: 1px solid oklch(88% 0.008 80);
+          border-top: 3px solid oklch(65% 0.15 45);
+          padding: clamp(1.75rem, 3.5vw, 2.75rem);
+          transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s ease;
+        }
+        .wp-feature-card[data-dir="left"]  { opacity: 0; transform: translateX(-48px) scale(0.96); }
+        .wp-feature-card[data-dir="right"] { opacity: 0; transform: translateX(48px) scale(0.96); }
+        .wp-feature-card[data-dir="up-left"]  { opacity: 0; transform: translate(-32px, 40px) scale(0.95) rotate(-1deg); }
+        .wp-feature-card[data-dir="up-right"] { opacity: 0; transform: translate(32px, 40px) scale(0.95) rotate(1deg); }
+        .wp-feature-card.wp-visible {
+          opacity: 1 !important;
+          transform: translate(0, 0) scale(1) rotate(0deg) !important;
+          box-shadow: 0 8px 32px oklch(22% 0.10 260 / 0.07);
         }
         .wp-mark-grid {
           display: grid;
@@ -99,9 +133,6 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
           .wp-mark-grid { grid-template-columns: 1fr; }
           .wp-mark-logo { max-width: 180px !important; margin: 0 auto 2.5rem; }
           .wp-mark-text { border-left: none !important; padding-left: 0 !important; border-top: 2px solid oklch(65% 0.15 45 / 0.35); padding-top: 2.5rem !important; }
-        }
-        @media (prefers-reduced-motion: no-preference) {
-          .wp-tile { transition: background 0.2s ease; }
         }
       `}</style>
 
@@ -186,66 +217,41 @@ export default function WayPointContent({ isLoggedIn }: { isLoggedIn: boolean })
             </p>
           </div>
 
-          {/* 2×2 tile grid — checkerboard light/dark */}
-          <div className="wp-tiles" style={{ marginBottom: "clamp(3rem, 5vw, 4.5rem)" }}>
+          {/* Feature cards — 2-column, consistent light treatment */}
+          <div className="wp-features" style={{ marginBottom: "clamp(3rem, 5vw, 4.5rem)" }}>
 
-            {/* Tile 1 — light, top-left */}
-            <div className="wp-tile" style={{ padding: "clamp(2rem, 4vw, 3rem)", borderRight: "1px solid oklch(88% 0.008 80)", borderBottom: "1px solid oklch(88% 0.008 80)", background: "oklch(97% 0.005 80)" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.875rem" }}>
-                {t.tile1Label}
-              </p>
-              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", margin: "0 0 0.875rem", lineHeight: 1.35 }}>
-                {t.tile1H3}
-              </h3>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8, color: "oklch(42% 0.008 260)", margin: 0 }}>
-                {t.tile1Body}
-              </p>
-            </div>
-
-            {/* Tile 2 — dark navy, top-right */}
-            <div className="wp-tile" style={{ padding: "clamp(2rem, 4vw, 3rem)", borderBottom: "1px solid oklch(14% 0.06 260)", background: "oklch(22% 0.10 260)", position: "relative", overflow: "hidden" }}>
-              <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "24px 24px", pointerEvents: "none" }} />
-              <div style={{ position: "relative" }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.875rem" }}>
-                  {t.tile2Label}
-                </p>
-                <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", margin: "0 0 0.875rem", lineHeight: 1.35 }}>
-                  {t.tile2H3}
+            {[
+              { num: "01", label: t.tile1Label, h3: t.tile1H3, body: t.tile1Body, dir: "left",      delay: "0ms"   },
+              { num: "02", label: t.tile2Label, h3: t.tile2H3, body: t.tile2Body, dir: "right",     delay: "90ms"  },
+              { num: "03", label: t.tile3Label, h3: t.tile3H3, body: t.tile3Body, dir: "up-left",   delay: "180ms" },
+              { num: "04", label: t.tile4Label, h3: t.tile4H3, body: t.tile4Body, dir: "up-right",  delay: "270ms" },
+            ].map(({ num, label, h3, body, dir, delay }, i) => (
+              <div
+                key={num}
+                ref={(el) => { cardRefs.current[i] = el; }}
+                className="wp-feature-card"
+                data-dir={dir}
+                style={{ transitionDelay: delay }}
+              >
+                {/* Number + label row */}
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "1.25rem" }}>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.625rem", fontWeight: 700, letterSpacing: "0.12em", color: "oklch(65% 0.15 45 / 0.5)" }}>
+                    {num}
+                  </span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
+                    {label}
+                  </span>
+                </div>
+                {/* Headline in Cormorant italic */}
+                <h3 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(1.35rem, 2.2vw, 1.65rem)", lineHeight: 1.15, color: "oklch(22% 0.10 260)", margin: "0 0 1rem" }}>
+                  {h3}
                 </h3>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8, color: "oklch(76% 0.03 260)", margin: 0 }}>
-                  {t.tile2Body}
+                {/* Body */}
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8, color: "oklch(42% 0.008 260)", margin: 0 }}>
+                  {body}
                 </p>
               </div>
-            </div>
-
-            {/* Tile 3 — deeper dark, bottom-left */}
-            <div className="wp-tile" style={{ padding: "clamp(2rem, 4vw, 3rem)", borderRight: "1px solid oklch(14% 0.06 260)", background: "oklch(18% 0.08 260)", position: "relative", overflow: "hidden" }}>
-              <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "24px 24px", pointerEvents: "none" }} />
-              <div style={{ position: "relative" }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.875rem" }}>
-                  {t.tile3Label}
-                </p>
-                <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(97% 0.005 80)", margin: "0 0 0.875rem", lineHeight: 1.35 }}>
-                  {t.tile3H3}
-                </h3>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8, color: "oklch(76% 0.03 260)", margin: 0 }}>
-                  {t.tile3Body}
-                </p>
-              </div>
-            </div>
-
-            {/* Tile 4 — light, bottom-right */}
-            <div className="wp-tile" style={{ padding: "clamp(2rem, 4vw, 3rem)", background: "oklch(97% 0.005 80)" }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.875rem" }}>
-                {t.tile4Label}
-              </p>
-              <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.10 260)", margin: "0 0 0.875rem", lineHeight: 1.35 }}>
-                {t.tile4H3}
-              </h3>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.8, color: "oklch(42% 0.008 260)", margin: 0 }}>
-                {t.tile4Body}
-              </p>
-            </div>
+            ))}
 
           </div>
 

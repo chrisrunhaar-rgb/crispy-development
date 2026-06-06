@@ -11,6 +11,7 @@ import InviteButton from "@/components/InviteButton";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
+import ChallengeTile from "@/components/ChallengeTile";
 import TeamJourney, { BASE_JOURNEY_STEPS, buildJourneySteps, getTypeLabel, TYPE_BADGE } from "@/components/TeamJourney";
 import TeamCommsSection from "@/components/TeamCommsSection";
 import TeamRoster, { type RosterMember } from "@/components/TeamRoster";
@@ -217,17 +218,19 @@ export default async function DashboardPage({
       .eq("status", "active")
       .eq("reply_seen", false)
       .not("admin_reply", "is", null),
-    admin.from("challenge_enrollments").select("current_day, status").eq("user_id", viewingUserId).maybeSingle(),
+    admin.from("challenge_enrollments").select("current_day, status, path").eq("user_id", viewingUserId).maybeSingle(),
   ]);
   modules = allMods ?? [];
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
-  const challengeCurrentDay = (challengeRow as { current_day: number; status: string } | null)?.current_day ?? null;
+  const challengeCurrentDay = (challengeRow as { current_day: number; status: string; path: string } | null)?.current_day ?? null;
+  const challengePath = (challengeRow as { current_day: number; status: string; path: string } | null)?.path ?? null;
 
-  const { data: facilitatorGroup } = await admin
+  const { data: facilitatorGroups } = await admin
     .from("challenge_groups")
     .select("id, name")
     .eq("facilitator_id", viewingUserId)
-    .maybeSingle();
+    .limit(1);
+  const facilitatorGroup = facilitatorGroups?.[0] ?? null;
   userMessages = (msgs ?? []) as CoachMsg[];
   const pendingReplies = (unseenReplies ?? []) as { id: string; module_slug: string; comment: string; admin_reply: string }[];
 
@@ -648,7 +651,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -814,7 +817,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "" }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -843,6 +846,8 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   languagePreference?: "en" | "id";
   challengeCurrentDay?: number | null;
   isFacilitator?: boolean;
+  challengePath?: string | null;
+  dashboardFirstName?: string;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -929,48 +934,11 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             <p className="t-label" style={{ color: "oklch(52% 0.008 260)", fontSize: "0.62rem", marginBottom: "0.75rem" }}>
               {languagePreference === "id" ? "Tantangan Saya" : "My Challenge"}
             </p>
-            <Link
-              href={`/challenge/day/${challengeCurrentDay}`}
-              style={{
-                display: "flex", alignItems: "center", gap: "1rem",
-                background: "oklch(22% 0.10 260)", borderRadius: "12px",
-                padding: "1rem 1.25rem", textDecoration: "none",
-                border: "1px solid oklch(30% 0.10 260)",
-              }}
-            >
-              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-                <polygon points="20,4 28,18 12,18" fill="#f9f8f6" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" strokeLinejoin="round" />
-                <polygon points="12,20 28,20 32,32 8,32" fill="oklch(65% 0.15 45)" opacity="0.3" />
-                <line x1="8" y1="19" x2="32" y2="19" stroke="#f9f8f6" strokeWidth="1" strokeDasharray="2 2" opacity="0.4" />
-              </svg>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.25rem" }}>
-                  Influential Leadership Challenge
-                </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "oklch(97% 0.005 80)" }}>
-                  Day {challengeCurrentDay} of 62
-                </p>
-                <div style={{ marginTop: "0.5rem", height: "3px", background: "oklch(35% 0.08 260)", borderRadius: "2px", width: "120px" }}>
-                  <div style={{ width: `${(challengeCurrentDay / 62) * 100}%`, height: "100%", background: "oklch(65% 0.15 45)", borderRadius: "2px" }} />
-                </div>
-              </div>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(72% 0.04 260)" }}>→</span>
-            </Link>
-            {isFacilitator && (
-              <Link
-                href="/challenge/facilitator"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  background: "oklch(28% 0.10 260)", borderRadius: "8px",
-                  padding: "0.625rem 1rem", textDecoration: "none", marginTop: "0.5rem",
-                }}
-              >
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(80% 0.04 260)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                  Facilitator settings
-                </span>
-                <span style={{ color: "oklch(65% 0.15 45)", fontSize: "0.8rem" }}>→</span>
-              </Link>
-            )}
+            <ChallengeTile
+              currentDay={challengeCurrentDay}
+              userRole={isFacilitator ? "facilitator" : challengePath === "member" ? "member" : "solo"}
+              firstName={dashboardFirstName}
+            />
           </div>
         )}
 

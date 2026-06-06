@@ -202,7 +202,7 @@ export const RESOURCES: Resource[] = [
     format: "Article",
     languages: ["en", "id"],
     gated: true,
-    topics: ["personal-development", "cross-cultural"],
+    topics: ["self-care", "personal-development", "cross-cultural"],
   },
   // ── LEADERSHIP ─────────────────────────────────────────────────────────────
   {
@@ -696,7 +696,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "faith-calling", "self-care"],
+    topics: ["self-care", "personal-development", "faith-calling"],
   },
   {
     id: "healthy-transitions",
@@ -707,7 +707,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "cross-cultural", "self-care"],
+    topics: ["self-care", "personal-development", "cross-cultural"],
   },
   {
     id: "psychological-first-aid",
@@ -733,7 +733,7 @@ export const RESOURCES: Resource[] = [
     format: "Guide",
     languages: ["en"],
     gated: true,
-    topics: ["personal-development", "faith-calling", "self-care"],
+    topics: ["self-care", "personal-development", "faith-calling"],
   },
   // ── TEAM & FACILITATION (continued) ───────────────────────────────────────
   {

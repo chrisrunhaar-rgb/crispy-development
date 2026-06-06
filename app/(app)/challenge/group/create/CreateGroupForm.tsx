@@ -179,7 +179,7 @@ export default function CreateGroupForm() {
                   style={inputStyle}
                 />
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid, marginTop: "0.375rem" }}>
-                  Members will see this link on each daily session page.
+                  You can arrange with your team what day and time you want to meet.
                 </p>
               </div>
             )}

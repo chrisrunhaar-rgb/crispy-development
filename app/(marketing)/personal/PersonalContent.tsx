@@ -135,12 +135,51 @@ export default function PersonalContent({ ctaHref = "/pricing" }: { ctaHref?: st
     <h2 className="t-section" style={{ textAlign: "center", marginBottom: "2.5rem" }}>
       {lang === "id" ? "Perjalananmu, dalam satu tampilan." : "Your pathway, in one view."}
     </h2>
-    <div style={{ maxWidth: "860px", margin: "0 auto", borderRadius: "6px", overflow: "hidden", boxShadow: "0 8px 40px oklch(22% 0.05 260 / 0.18)" }}>
-      <img
-        src={lang === "id" ? "/dashboard-id.png" : "/dashboard-en.png"}
-        alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
-        style={{ width: "100%", display: "block" }}
-      />
+    <div style={{ maxWidth: "960px", margin: "0 auto", position: "relative", display: "flex", alignItems: "flex-end" }}>
+
+      {/* Laptop dashboard */}
+      <div style={{ flex: "1 1 0", borderRadius: "10px", overflow: "hidden", boxShadow: "0 12px 48px oklch(22% 0.10 260 / 0.2)" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/dashboard-personal.jpg"
+          alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
+          style={{ width: "100%", display: "block" }}
+        />
+      </div>
+
+      {/* Phone — overlaps laptop by pulling left */}
+      <div style={{
+        flexShrink: 0,
+        width: "clamp(110px, 16vw, 185px)",
+        background: "oklch(12% 0.06 260)",
+        borderRadius: "clamp(20px, 3.2vw, 34px)",
+        padding: "clamp(5px, 0.7vw, 8px)",
+        boxShadow: "0 24px 64px oklch(8% 0.10 260 / 0.55), inset 0 0 0 1px oklch(97% 0.005 80 / 0.12)",
+        position: "relative",
+        marginLeft: "clamp(-40px, -6vw, -60px)",
+        marginBottom: "clamp(12px, 2.5vw, 28px)",
+        zIndex: 2,
+      }}>
+        {/* Side button */}
+        <div style={{ position: "absolute", right: "-3px", top: "24%", width: "3px", height: "12%", background: "oklch(22% 0.06 260)", borderRadius: "0 2px 2px 0" }} />
+        {/* Volume buttons */}
+        <div style={{ position: "absolute", left: "-3px", top: "19%", width: "3px", height: "7%", background: "oklch(22% 0.06 260)", borderRadius: "2px 0 0 2px" }} />
+        <div style={{ position: "absolute", left: "-3px", top: "28%", width: "3px", height: "7%", background: "oklch(22% 0.06 260)", borderRadius: "2px 0 0 2px" }} />
+        {/* Dynamic island */}
+        <div style={{ width: "28%", height: "clamp(5px, 0.9vw, 9px)", background: "oklch(8% 0.04 260)", borderRadius: "999px", margin: "0 auto clamp(4px, 0.6vw, 6px)" }} />
+        {/* Screen */}
+        <div style={{ borderRadius: "clamp(14px, 2.4vw, 26px)", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/dashboard-mobile.jpg"
+            alt={lang === "id" ? "Tampilan mobile dasbor" : "Dashboard mobile view"}
+            style={{ width: "100%", display: "block" }}
+          />
+        </div>
+        {/* Home indicator */}
+        <div style={{ width: "28%", height: "3px", background: "oklch(45% 0.008 260)", borderRadius: "2px", margin: "clamp(4px, 0.6vw, 6px) auto 0" }} />
+      </div>
+
     </div>
   </div>
 </section>
@@ -152,12 +191,12 @@ export default function PersonalContent({ ctaHref = "/pricing" }: { ctaHref?: st
         <div className="container-wide">
           <div style={{ width: "3px", height: "40px", background: "oklch(65% 0.15 45)", marginBottom: "2rem" }} />
           <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "480px" }}>
-            {lang === "id" ? "Dapatkan akses penuh." : "Get full access."}
+            {lang === "id" ? "Mulai perjalananmu." : "Start your journey."}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "48ch", marginBottom: "2.5rem" }}>
             {lang === "id"
-              ? "Satu pembayaran. Akses seumur hidup ke seluruh perpustakaan, dasbor pribadi, dan 60 menit AI coaching."
-              : "One payment. Lifetime access to the full library, personal dashboard, and 60 min AI coaching."}
+              ? "Akses penuh ke seluruh perpustakaan, dasbor pribadi, dan 60 menit WayPoint AI Coaching. Langganan bulanan atau tahunan — batalkan kapan saja."
+              : "Full library access, personal dashboard, and 60 min WayPoint AI Coaching. Monthly or annual subscription — cancel any time."}
           </p>
           <Link href={ctaHref} className="btn-primary" style={{ display: "inline-flex" }}>
             {p.ctaPrimary2} →

@@ -52,17 +52,21 @@ export default function ChallengeContent() {
         @keyframes slideUp { from{opacity:0;transform:translateY(22px) scale(0.97)} to{opacity:1;transform:none} }
         .ch-page {
           position: fixed; inset: 0;
-          background-image: url('/iceberg-full.jpg');
-          background-size: 70%;
-          background-repeat: no-repeat;
-          background-position: center center;
           background-color: oklch(14% 0.09 260);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .ch-img-wrap {
+          position: relative;
+          width: min(100dvh, 100dvw);
+          height: min(100dvh, 100dvw);
+          flex-shrink: 0;
+        }
+        .ch-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .ch-content {
+          position: absolute; inset: 0;
           display: flex; flex-direction: column;
           align-items: center; justify-content: space-between;
-          padding: calc(env(safe-area-inset-top, 0px) + clamp(2rem,5vw,4.5rem)) clamp(1.5rem,4vw,4rem) calc(env(safe-area-inset-bottom, 0px) + clamp(2rem,4vw,3.5rem));
-        }
-        @media (max-width:640px) {
-          .ch-page { background-size: 130%; background-position: center 38%; }
+          padding: calc(env(safe-area-inset-top, 0px) + clamp(1.5rem,4vmin,4rem)) clamp(1.25rem,3vmin,3rem) calc(env(safe-area-inset-bottom, 0px) + clamp(1.5rem,3.5vmin,3rem));
         }
         .ch-tiles { display:flex; flex-direction:column; gap:clamp(0.5rem,1vw,0.75rem); align-items:flex-end; }
         .ch-tile {
@@ -97,27 +101,35 @@ export default function ChallengeContent() {
       `}</style>
 
       <div className="ch-page">
-        {/* Title */}
-        <div style={{ textAlign:"center", position:"relative", zIndex:1 }}>
-          <h1 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.75rem,5vw,4rem)", lineHeight:1.05, color:"oklch(22% 0.10 260)", margin:"0 0 0.625rem", textShadow:"0 1px 6px oklch(97% 0.005 80 / 0.5)" }}>
-            {isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge"}
-          </h1>
-          <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.85rem,1.6vw,1.05rem)", color:"oklch(65% 0.15 45)", margin:0, maxWidth:"48ch", lineHeight:1.65, fontWeight:600 }}>
-            {isId ? <>Pemimpin berpengaruh bukan dibentuk oleh keterampilan mereka,<br />melainkan oleh siapa mereka di dalam.</> : <>Influential leaders aren&apos;t shaped by their skills,<br />they are shaped by who they are inside.</>}
-          </p>
-        </div>
+        <div className="ch-img-wrap">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/il-challenge-bg.png" className="ch-img" alt="" />
+          <div className="ch-content">
+            {/* Icon + Title */}
+            <div style={{ textAlign:"center", position:"relative", zIndex:1 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/il-challenge-icon.png" alt="" width={52} height={52} style={{ borderRadius:"50%", objectFit:"cover", display:"block", margin:"0 auto 0.75rem" }} />
+              <h1 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.5rem,4.5vmin,3.5rem)", lineHeight:1.05, color:"oklch(22% 0.10 260)", margin:"0 0 0.5rem", textShadow:"0 1px 6px oklch(97% 0.005 80 / 0.5)" }}>
+                {isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge"}
+              </h1>
+              <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.75rem,1.4vmin,0.95rem)", color:"oklch(65% 0.15 45)", margin:0, maxWidth:"36ch", lineHeight:1.65, fontWeight:600 }}>
+                {isId ? <>Pemimpin berpengaruh bukan dibentuk oleh keterampilan mereka,<br />melainkan oleh siapa mereka di dalam.</> : <>Influential leaders aren&apos;t shaped by their skills,<br />they are shaped by who they are inside.</>}
+              </p>
+            </div>
 
-        {/* Bottom row: back left, tiles right */}
-        <div style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"flex-end", position:"relative", zIndex:1 }}>
-          {/* Back — plain text, bottom-left */}
-          <Link href="/" style={{ fontFamily:"var(--font-montserrat)", fontWeight:600, fontSize:"0.72rem", letterSpacing:"0.06em", color:"oklch(75% 0.025 260)", textDecoration:"none", textShadow:"0 1px 6px oklch(4% 0.08 260 / 0.8)" }}>
-            ← {isId ? "Kembali ke Crispy" : "Back to Crispy"}
-          </Link>
-          {/* Tiles — stacked, bottom-right */}
-          <div className="ch-tiles">
-            <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
-            <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
-            <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
+            {/* Bottom row: back left, tiles right */}
+            <div style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"flex-end", position:"relative", zIndex:1 }}>
+              {/* Back — plain text, bottom-left */}
+              <Link href="/" style={{ fontFamily:"var(--font-montserrat)", fontWeight:600, fontSize:"0.72rem", letterSpacing:"0.06em", color:"oklch(75% 0.025 260)", textDecoration:"none", textShadow:"0 1px 6px oklch(4% 0.08 260 / 0.8)" }}>
+                ← {isId ? "Kembali ke Crispy" : "Back to Crispy"}
+              </Link>
+              {/* Tiles — stacked, bottom-right */}
+              <div className="ch-tiles">
+                <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
+                <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
+                <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -136,17 +148,18 @@ export default function ChallengeContent() {
               </div>
               <div className="ch-modal-body">
                 <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.875rem", lineHeight:1.8, color:"oklch(72% 0.025 260)", margin:"0 0 1.625rem" }}>
-                  {isId ? "Perjalanan 60 hari yang dipandu berdasarkan Deep Influence karya T.J. Addington. Setiap hari: satu topik, pertanyaan refleksi pribadi, dan tantangan implementasi kelompok. Kepemimpinan terbaik tidak dimulai dari keterampilan — melainkan dari dalam." : "A free 60-day guided journey based on T.J. Addington's Deep Influence. Each day: a focused topic, personal reflection questions, and a group implementation challenge. The best leadership does not begin with skills — it begins on the inside."}
+                  {isId ? "Perjalanan 60 hari yang dipandu berdasarkan Deep Influence karya T.J. Addington. Setiap hari: satu topik, pertanyaan refleksi pribadi, dan tantangan implementasi kelompok. Kepemimpinan terbaik tidak dimulai dari keterampilan — melainkan dari dalam." : "This 60-day guided journey is based on T.J. Addington's Deep Influence. Each day: a focused topic, personal reflection questions, and a group implementation challenge. The best leadership does not begin with skills — it begins on the inside."}
                 </p>
-                <div style={{ display:"flex", flexDirection:"column", gap:"1.25rem", marginBottom:"1.625rem" }}>
+                <div style={{ display:"flex", flexDirection:"column", gap:"0.875rem", marginBottom:"1.625rem" }}>
                   {STEPS.map(s => {
                     const c = isId ? s.id : s.en;
                     return (
                       <div key={s.num}>
-                        <span style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"1.75rem", color:"oklch(65% 0.15 45)", display:"block", lineHeight:1, marginBottom:"0.3rem" }}>{s.num}</span>
-                        <div style={{ width:"22px", height:"2px", background:"oklch(65% 0.15 45)", marginBottom:"0.45rem" }} />
-                        <p style={{ fontFamily:"var(--font-montserrat)", fontWeight:700, fontSize:"0.9375rem", color:"oklch(97% 0.005 80)", margin:"0 0 0.25rem" }}>{c[0]}</p>
-                        <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.825rem", lineHeight:1.7, color:"oklch(66% 0.025 260)", margin:0 }}>{c[1]}</p>
+                        <div style={{ display:"flex", alignItems:"baseline", gap:"0.625rem", marginBottom:"0.2rem" }}>
+                          <span style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"1.25rem", color:"oklch(65% 0.15 45)", lineHeight:1, flexShrink:0 }}>{s.num}</span>
+                          <p style={{ fontFamily:"var(--font-montserrat)", fontWeight:700, fontSize:"0.9375rem", color:"oklch(97% 0.005 80)", margin:0 }}>{c[0]}</p>
+                        </div>
+                        <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.825rem", lineHeight:1.7, color:"oklch(66% 0.025 260)", margin:0, paddingLeft:"1.875rem" }}>{c[1]}</p>
                       </div>
                     );
                   })}
@@ -163,7 +176,7 @@ export default function ChallengeContent() {
             {modal === "topics" && (<>
               <div className="ch-modal-head">
                 <div>
-                  <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.58rem", fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase", color:"oklch(65% 0.15 45)", margin:"0 0 0.3rem" }}>62 {isId ? "Topik" : "Topics"}</p>
+                  <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.58rem", fontWeight:700, letterSpacing:"0.18em", textTransform:"uppercase", color:"oklch(65% 0.15 45)", margin:"0 0 0.3rem" }}>{isId ? "Topik" : "Topics"}</p>
                   <h2 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.3rem,2.5vw,1.65rem)", color:"oklch(97% 0.005 80)", margin:0, lineHeight:1.1 }}>{isId ? "Setiap hari satu topik." : "Each day one topic."}</h2>
                 </div>
                 <button className="ch-close" onClick={() => setModal(null)}>×</button>
@@ -173,7 +186,7 @@ export default function ChallengeContent() {
                   <div key={ch.title} style={{ marginBottom:"1.25rem" }}>
                     <p className="ch-chapter">{ch.title}</p>
                     <div style={{ display:"flex", flexDirection:"column", gap:"0.18rem" }}>
-                      {ch.topics.map(t => (
+                      {ch.topics.filter(t => t.toLowerCase() !== ch.title.toLowerCase()).map(t => (
                         <p key={t} style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.875rem", lineHeight:1.5, color:"oklch(76% 0.025 260)", margin:0, paddingLeft:"0.625rem", borderLeft:"1px solid oklch(97% 0.005 80 / 0.07)" }}>{t}</p>
                       ))}
                     </div>

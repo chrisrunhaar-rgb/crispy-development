@@ -279,7 +279,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 marginBottom: "1rem",
               }}
             >
-              Hasil Penilaian Tim
+              Hasil Asesmen Tim
             </p>
             <h1
               className="t-hero"
@@ -743,7 +743,7 @@ export default function KaruniaTeamClient({ user }: { user: User | null }) {
                 padding: "0.3rem 0.7rem",
               }}
             >
-              Penilaian Tim · Karunia Rohani
+              Asesmen Tim · Karunia Rohani
             </span>
             <span
               style={{

@@ -23,9 +23,9 @@ export default async function ChallengeDayPage({ params }: { params: Promise<{ n
   const admin = createAdminClient();
 
   const [{ data: enrollment }, { data: module }, { data: journalEntry }] = await Promise.all([
-    admin.from("challenge_enrollments").select("id, current_day, status, path").eq("user_id", user.id).maybeSingle(),
+    admin.from("challenge_enrollments").select("id, current_day, status, path, group_id").eq("user_id", user.id).maybeSingle(),
     admin.from("challenge_modules").select("*").eq("day_number", dayNumber).maybeSingle(),
-    admin.from("challenge_journal_entries").select("answer_1, answer_2, updated_at").eq("user_id", user.id).eq("day_number", dayNumber).maybeSingle(),
+    admin.from("challenge_journal_entries").select("answer_1, answer_2, peer_answer, updated_at").eq("user_id", user.id).eq("day_number", dayNumber).maybeSingle(),
   ]);
 
   if (!enrollment) {
@@ -45,8 +45,9 @@ export default async function ChallengeDayPage({ params }: { params: Promise<{ n
       dayNumber={dayNumber}
       currentDay={currentDay}
       isLocked={isLocked}
-      initialJournal={journalEntry ? { answer1: journalEntry.answer_1 ?? "", answer2: journalEntry.answer_2 ?? "" } : null}
+      initialJournal={journalEntry ? { answer1: journalEntry.answer_1 ?? "", answer2: journalEntry.answer_2 ?? "", peerAnswer: journalEntry.peer_answer ?? "" } : null}
       firstName={(user.user_metadata?.first_name as string | undefined) ?? ""}
+      hasGroup={!!enrollment.group_id}
     />
   );
 }

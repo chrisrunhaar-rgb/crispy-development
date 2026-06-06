@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const LogoRevealPlayer = dynamic(
@@ -15,6 +15,19 @@ export default function HomeContent() {
   const { t, lang } = useLanguage();
   const h = t.home;
   const [activeTile, setActiveTile] = useState<number | null>(null);
+  const reasonRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add("reason-visible");
+        else e.target.classList.remove("reason-visible");
+      }),
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    reasonRefs.current.forEach((el) => { if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, []);
 
   const freeModules = [
     { slug: "three-thinking-styles",  label: "Framework",  title: "Three Thinking Styles",       hook: "Discover why smart people reach opposite conclusions.",         bg: "oklch(22% 0.10 260)", text: "oklch(97% 0.005 80)", accent: "oklch(65% 0.15 45)" },
@@ -181,7 +194,7 @@ export default function HomeContent() {
             <div>
               <div style={{ borderRadius: "6px", overflow: "hidden", boxShadow: "0 32px 64px oklch(10% 0.08 260 / 0.5)" }}>
                 <img
-                  src={lang === "id" ? "/dashboard-id.png" : "/dashboard-en.png"}
+                  src="/dashboard-personal.jpg"
                   alt={lang === "id" ? "Contoh dasbor pribadi" : "Personal dashboard preview"}
                   style={{ width: "100%", display: "block" }}
                 />
@@ -191,71 +204,198 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ── ORANGE RULE ── */}
-      <div style={{ height: "3px", background: "oklch(65% 0.15 45)" }} />
+      {/* ── CHALLENGE FEATURE SECTION ── */}
+      <section style={{ background: "oklch(15% 0.085 262)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden" }}>
+        {/* Iceberg — atmospheric right-side element */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute", top: 0, right: 0, bottom: 0,
+            width: "clamp(260px, 42vw, 560px)",
+            pointerEvents: "none",
+            overflow: "hidden",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/iceberg-full.jpg"
+            alt=""
+            style={{
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center 40%",
+              display: "block", opacity: 0.18,
+            }}
+          />
+          {/* Fade left edge of iceberg into the section bg */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to right, oklch(15% 0.085 262) 0%, oklch(15% 0.085 262 / 0.6) 35%, transparent 70%)",
+          }} />
+        </div>
+
+        {/* Top accent rule */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "oklch(65% 0.15 45 / 0.5)" }} />
+
+        <div className="container-wide" style={{ position: "relative" }}>
+          <div style={{ maxWidth: "620px" }}>
+            {/* Eyebrow */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+              <span style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 800,
+                letterSpacing: "0.2em", textTransform: "uppercase",
+                color: "oklch(65% 0.15 45)",
+                border: "1px solid oklch(65% 0.15 45 / 0.4)",
+                padding: "0.28em 0.75em", borderRadius: "3px",
+              }}>
+                {lang === "id" ? "Gratis" : "Free"}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700,
+                letterSpacing: "0.16em", textTransform: "uppercase",
+                color: "oklch(55% 0.04 260)",
+              }}>
+                {lang === "id" ? "Tantangan · 60 hari" : "Challenge · 60 days"}
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h2 style={{
+              fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600,
+              fontSize: "clamp(2rem, 4vw, 3.25rem)", lineHeight: 1.05,
+              color: "oklch(97% 0.005 80)", margin: "0 0 1rem",
+            }}>
+              {lang === "id"
+                ? "Kepemimpinan dimulai\ndari dalam."
+                : "Leadership starts\non the inside."}
+            </h2>
+
+            {/* Body */}
+            <p style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75,
+              color: "oklch(65% 0.035 260)", margin: "0 0 2rem", maxWidth: "46ch",
+            }}>
+              {lang === "id"
+                ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari berdasarkan Deep Influence karya T.J. Addington. Untuk pemimpin dan tim yang ingin bertumbuh dari dalam ke luar."
+                : "The Influential Leadership Challenge — a 60-day guided journey based on T.J. Addington's Deep Influence. For leaders and teams who want to grow from the inside out."}
+            </p>
+
+            {/* CTA */}
+            <Link
+              href="/influential-leadership-challenge"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.8rem",
+                letterSpacing: "0.08em", textTransform: "uppercase",
+                color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)",
+                padding: "0.875rem 2rem", borderRadius: "4px", textDecoration: "none",
+                transition: "background 0.15s ease",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "oklch(60% 0.14 45)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "oklch(65% 0.15 45)"; }}
+            >
+              {lang === "id" ? "Ikuti Sekarang" : "Join Now"} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ── WHY JOIN ── */}
+      <style>{`
+        .reason-tile {
+          background: oklch(27% 0.11 260);
+          border-radius: 14px;
+          border: 1px solid oklch(34% 0.08 260);
+          border-top: 3px solid oklch(65% 0.15 45);
+          padding: clamp(1.5rem, 3vw, 2.25rem);
+          display: flex;
+          flex-direction: column;
+          gap: 0.875rem;
+          cursor: default;
+          opacity: 0;
+          transform: translateY(36px) scale(0.97);
+          transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
+          will-change: transform, opacity;
+        }
+        .reason-tile:hover {
+          transform: translateY(-5px) rotate(-0.3deg) scale(1.01) !important;
+          box-shadow: 0 16px 40px oklch(8% 0.10 260 / 0.4);
+        }
+        .reason-tile:nth-child(even):hover { transform: translateY(-5px) rotate(0.3deg) scale(1.01) !important; }
+        .reason-visible {
+          opacity: 1 !important;
+          transform: translateY(0) scale(1) !important;
+        }
+      `}</style>
       <section style={{ paddingBlock: "clamp(5rem, 8vw, 8rem)", background: "oklch(22% 0.10 260)" }}>
         <div className="container-wide">
 
-          <div style={{ marginBottom: "3.5rem" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "oklch(65% 0.15 45 / 0.15)", border: "1px solid oklch(65% 0.15 45 / 0.35)", padding: "0.375rem 0.875rem", marginBottom: "1.25rem" }}>
-              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)" }}>
-                {h.membershipLabel ?? "Membership"}
-              </span>
-            </div>
-            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: "1rem", maxWidth: "520px" }}>
+          <div style={{ marginBottom: "3rem" }}>
+            <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "1rem" }}>
+              {h.membershipLabel ?? "Membership"}
+            </p>
+            <h2 className="t-section" style={{ color: "oklch(97% 0.005 80)", marginBottom: 0, maxWidth: "520px" }}>
               {h.membershipHeading ?? <>Why leaders<br />join this platform.</>}
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "0", border: "1px solid oklch(34% 0.08 260)", marginBottom: "3rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "clamp(0.875rem, 1.5vw, 1.25rem)", marginBottom: "3rem" }}>
             {[
               {
                 num: "01",
                 title: h.reason1Title ?? "Content built for your context",
-                body: h.reason1Body ?? "30+ resources and 8 assessments designed specifically for cross-cultural leaders — not generic leadership advice repurposed for a global audience.",
+                body: h.reason1Body ?? "53+ resources and 8 assessments designed specifically for cross-cultural leaders — not generic leadership advice repurposed for a global audience.",
+                delay: "0ms",
               },
               {
                 num: "02",
                 title: h.reason2Title ?? "Finally, someone names your reality",
                 body: h.reason2Body ?? "Most leadership content ignores the cross-cultural dimension entirely. This platform is built around the pressures, tensions, and opportunities that come with leading across cultures.",
+                delay: "80ms",
               },
               {
                 num: "03",
                 title: h.reason3Title ?? "A community that understands",
                 body: h.reason3Body ?? "Others here have navigated the same tensions. The same expectations, the same re-entry fog, the same question of whether your context is real leadership. This is a room that already knows.",
+                delay: "160ms",
               },
               {
                 num: "04",
                 title: h.reason4Title ?? "A journey, not just content",
                 body: h.reason4Body ?? "A personal dashboard with progress tracking, saved assessments, and a structured pathway. Not just resources to consume — a development journey to follow.",
+                delay: "240ms",
               },
               {
                 num: "05",
-                title: h.reason5Title ?? "Not open to everyone",
-                body: h.reason5Body ?? "Membership is application-based and personally reviewed. That means the community stays focused, the quality stays high, and you know the people around you belong here.",
+                title: h.reason5Title ?? "Simple subscription",
+                body: h.reason5Body ?? "Monthly or annual. Full library access, personal dashboard, and WayPoint AI coaching included. Cancel any time.",
+                delay: "320ms",
               },
               {
                 num: "06",
                 title: h.reason6Title ?? "Built for leaders with a calling",
                 body: h.reason6Body ?? "Cross-cultural leadership often comes with something deeper than a career goal. This platform takes the spiritual dimension seriously — the calling, the doubt, and the resilience that grows from faith under pressure.",
+                delay: "400ms",
               },
-            ].map(({ num, title, body }) => (
-              <div key={num} style={{ background: "oklch(24% 0.10 260)", padding: "clamp(1.5rem, 4vw, 2rem)", display: "flex", flexDirection: "column", gap: "1rem", borderRight: "1px solid oklch(34% 0.08 260)", borderBottom: "1px solid oklch(34% 0.08 260)" }}>
-                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", color: "oklch(65% 0.15 45)" }}>{num}</span>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(97% 0.005 80)", margin: 0, lineHeight: 1.35 }}>{title}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8375rem", lineHeight: 1.75, color: "oklch(72% 0.03 260)", margin: 0 }}>{body}</p>
+            ].map(({ num, title, body, delay }, i) => (
+              <div
+                key={num}
+                ref={(el) => { reasonRefs.current[i] = el; }}
+                className="reason-tile"
+                style={{ transitionDelay: delay }}
+              >
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.14em", color: "oklch(65% 0.15 45 / 0.7)" }}>{num}</span>
+                <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(1.15rem, 1.8vw, 1.35rem)", lineHeight: 1.2, color: "oklch(97% 0.005 80)", margin: 0 }}>{title}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.825rem", lineHeight: 1.75, color: "oklch(70% 0.025 260)", margin: 0 }}>{body}</p>
               </div>
             ))}
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1rem" }}>
-            <Link href="/membership" className="btn-primary">
-              {h.membershipCta ?? "Apply for membership →"}
+            <Link href="/pricing" className="btn-primary">
+              {h.membershipCta ?? "Join today →"}
             </Link>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(52% 0.008 260)", lineHeight: 1.6 }}>
-              {h.membershipNote ?? "Free during the early phase. Every application is reviewed personally."}
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.775rem", color: "oklch(55% 0.025 260)", lineHeight: 1.6 }}>
+              {h.membershipNote ?? "Monthly or annual. Cancel any time."}
             </p>
           </div>
 

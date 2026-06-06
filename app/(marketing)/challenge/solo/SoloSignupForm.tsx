@@ -78,8 +78,10 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
 
   return (
     <div style={{ width: "100%", maxWidth: "400px" }}>
-      <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "2rem" }}>
-        Create your account
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/il-challenge-icon.png" alt="" width={88} height={88} style={{ borderRadius: "50%", objectFit: "cover", display: "block", margin: "0 auto 1.5rem" }} />
+      <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "2rem", textAlign: "center" }}>
+        Sign up for the challenge
       </h1>
 
       <form action={formAction}>
@@ -99,11 +101,11 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
         )}
 
         <button type="submit" disabled={pending} style={btnStyle(pending)}>
-          {pending ? "Creating account..." : "Start Day 1 →"}
+          {pending ? "Creating account..." : "Create account →"}
         </button>
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1rem" }}>
-          Have an account?{" "}
+          Have a Crispy account already?{" "}
           <Link href="/login?redirectTo=/challenge/solo" style={{ color: navy, fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
         </p>
       </form>

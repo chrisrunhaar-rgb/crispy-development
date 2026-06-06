@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { saveJournalEntry, advanceToNextDay } from "@/app/challenge/actions";
+import { saveJournalEntry, advanceToNextDay, saveTeamAnswer } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
@@ -12,6 +12,7 @@ const mid      = "oklch(52% 0.008 260)";
 type Module = {
   day_number: number;
   title: string;
+  chapter_title: string | null;
   core_idea: string | null;
   content: string | null;
   biblical_foundation: string | null;
@@ -21,6 +22,18 @@ type Module = {
   implementation_challenge: string | null;
 };
 
+function parseScripture(raw: string): { passage: string; ref: string | null } {
+  // Split on em dash surrounded by whitespace, followed by uppercase (scripture ref)
+  const parts = raw.split(/\s*—\s*(?=[A-Z1])/);
+  if (parts.length >= 2) {
+    return {
+      passage: parts.slice(0, -1).join("—").replace(/^[""]|[""]$/g, "").trim(),
+      ref: parts[parts.length - 1].trim(),
+    };
+  }
+  return { passage: raw.replace(/^[""]|[""]$/g, "").trim(), ref: null };
+}
+
 export default function DayClient({
   module,
   dayNumber,
@@ -28,25 +41,27 @@ export default function DayClient({
   isLocked,
   initialJournal,
   firstName,
+  hasGroup,
 }: {
   module: Module;
   dayNumber: number;
   currentDay: number;
   isLocked: boolean;
-  initialJournal: { answer1: string; answer2: string } | null;
+  initialJournal: { answer1: string; answer2: string; peerAnswer: string } | null;
   firstName: string;
+  hasGroup: boolean;
 }) {
   const [answer1, setAnswer1] = useState(initialJournal?.answer1 ?? "");
   const [answer2, setAnswer2] = useState(initialJournal?.answer2 ?? "");
+  const [peerAnswer, setPeerAnswer] = useState(initialJournal?.peerAnswer ?? "");
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [peerSaveStatus, setPeerSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [advancing, startAdvance] = useTransition();
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({ content: true });
 
   if (isLocked) {
     return (
       <div style={{ minHeight: "calc(100dvh - 80px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem" }}>
         <div style={{ textAlign: "center", maxWidth: "400px" }}>
-          <IcebergIcon size={48} style={{ margin: "0 auto 1.5rem" }} />
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.75rem" }}>
             Day {dayNumber} isn&apos;t ready yet
           </h2>
@@ -66,6 +81,41 @@ export default function DayClient({
 
   const isToday = dayNumber === currentDay;
   const isCompleted = dayNumber < currentDay;
+  const dayPad = dayNumber.toString().padStart(2, "0");
+
+  // Build content paragraphs with scripture interwoven at ~1/4, 1/2, 3/4 positions
+  const contentElements = (() => {
+    if (!module.content) return null;
+    const paras = module.content.split("\n\n");
+    const verses = module.biblical_foundation ? module.biblical_foundation.split("\n\n") : [];
+    const step = verses.length > 0 ? Math.floor(paras.length / (verses.length + 1)) : 0;
+    const insertAfter = new Map(verses.map((v, i) => [(i + 1) * step - 1, v]));
+    const els: React.ReactNode[] = [];
+    paras.forEach((para, i) => {
+      els.push(
+        <p key={`p${i}`} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(30% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
+          {para}
+        </p>
+      );
+      const verse = insertAfter.get(i);
+      if (verse) {
+        const { passage, ref } = parseScripture(verse);
+        els.push(
+          <div key={`v${i}`} style={{ paddingLeft: "1.25rem", borderLeft: "2px solid oklch(65% 0.15 45 / 0.35)", margin: "0.5rem 0" }}>
+            <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 400, fontSize: "clamp(1.3rem, 3vw, 1.6rem)", color: "oklch(28% 0.06 260)", lineHeight: 1.65, margin: 0 }}>
+              {passage}
+            </p>
+            {ref && (
+              <span style={{ display: "block", marginTop: "0.375rem", fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: orange }}>
+                {ref}
+              </span>
+            )}
+          </div>
+        );
+      }
+    });
+    return els;
+  })();
 
   async function handleSave() {
     setSaveStatus("saving");
@@ -74,109 +124,237 @@ export default function DayClient({
     setTimeout(() => setSaveStatus("idle"), 3000);
   }
 
+  async function handlePeerSave() {
+    setPeerSaveStatus("saving");
+    const result = await saveTeamAnswer(dayNumber, peerAnswer);
+    setPeerSaveStatus(result?.error ? "error" : "saved");
+    setTimeout(() => setPeerSaveStatus("idle"), 3000);
+  }
+
   function handleAdvance() {
     startAdvance(async () => {
       await advanceToNextDay(dayNumber);
-      if (dayNumber < 62) {
-        window.location.href = `/challenge/day/${dayNumber + 1}`;
-      } else {
+      if (dayNumber === 62) {
         window.location.href = "/challenge/complete";
+      } else if (hasGroup) {
+        window.location.href = "/challenge/team";
+      } else {
+        window.location.href = "/dashboard";
       }
     });
   }
 
+  const teamAnswerRequired = !!module.peer_question;
+  const canAdvance = !teamAnswerRequired || peerAnswer.trim().length > 0;
+
   return (
     <div style={{ minHeight: "calc(100dvh - 80px)", background: offWhite }}>
+
       {/* ── Top bar ── */}
-      <div style={{ background: navy, padding: "0.875rem clamp(1rem, 4vw, 2rem)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-          <Link href="/dashboard" style={{ color: "oklch(72% 0.04 260)", textDecoration: "none", fontSize: "0.75rem", fontFamily: "var(--font-montserrat)", display: "flex", alignItems: "center", gap: "0.25rem" }}>
-            ← Dashboard
-          </Link>
-          <IcebergIcon size={24} />
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, color: offWhite, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+      <div style={{ background: navy, position: "sticky", top: 0, zIndex: 10 }}>
+      <div style={{
+        maxWidth: "1020px",
+        margin: "0 auto",
+        padding: "1rem clamp(1rem, 4vw, 2rem)",
+        display: "grid",
+        gridTemplateColumns: "1fr auto 1fr",
+        alignItems: "center",
+        gap: "1rem",
+      }}>
+        <Link href="/dashboard" style={{
+          color: "oklch(65% 0.04 260)",
+          textDecoration: "none",
+          fontSize: "0.75rem",
+          fontFamily: "var(--font-montserrat)",
+          fontWeight: 600,
+          letterSpacing: "0.04em",
+        }}>
+          ← Dashboard
+        </Link>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+          <span style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 800,
+            fontSize: "clamp(0.7rem, 2vw, 0.95rem)",
+            color: offWhite,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+          }}>
             Influential Leadership
           </span>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
-          <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(65% 0.04 260)" }}>
-            {dayNumber} / 62
-          </div>
-          <div style={{ width: "80px", height: "4px", background: "oklch(35% 0.08 260)", borderRadius: "2px" }}>
+          <span style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 700,
+            fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
+            color: orange,
+            letterSpacing: "0.05em",
+          }}>
+            {dayPad} / 62
+          </span>
+          <div style={{ width: "80px", height: "3px", background: "oklch(35% 0.08 260)", borderRadius: "2px" }}>
             <div style={{ width: `${(dayNumber / 62) * 100}%`, height: "100%", background: orange, borderRadius: "2px" }} />
           </div>
         </div>
+
+        <div />
+      </div>
       </div>
 
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem)" }}>
+      {/* ── Hero image + overlays ── */}
+      <div style={{ maxWidth: "1020px", margin: "0 auto" }}>
+      <div style={{ position: "relative", width: "100%", height: "clamp(460px, 70vw, 600px)", overflow: "hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/iceberg-full.jpg"
+          alt=""
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+        />
 
-        {/* ── Day header ── */}
-        <div style={{ marginBottom: "2rem" }}>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.375rem" }}>
-            Day {dayNumber.toString().padStart(2, "0")} {isCompleted ? "· Completed" : isToday ? "· Today" : ""}
-          </p>
-          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1.5rem, 3.5vw, 2rem)", color: navy, lineHeight: 1.2, marginBottom: "0.5rem" }}>
+        {/* Top-left: Title / Day / Chapter — no background box */}
+        <div style={{
+          position: "absolute",
+          top: "1.5rem",
+          left: "clamp(1rem, 3vw, 2rem)",
+          maxWidth: "520px",
+        }}>
+          <h1 style={{
+            fontFamily: "var(--font-cormorant)",
+            fontWeight: 600,
+            fontSize: "clamp(2rem, 5vw, 3.5rem)",
+            lineHeight: 1.05,
+            color: navy,
+            margin: 0,
+            marginBottom: "0.5rem",
+            textShadow: "0 1px 8px oklch(97% 0.005 80 / 0.8)",
+          }}>
             {module.title}
           </h1>
+          <p style={{
+            fontFamily: "var(--font-montserrat)",
+            fontWeight: 700,
+            fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: orange,
+            margin: 0,
+            marginBottom: "0.25rem",
+            textShadow: "0 1px 4px oklch(97% 0.005 80 / 0.6)",
+          }}>
+            Day {dayPad}{isCompleted ? " \xb7 Completed" : ""}
+          </p>
+          {module.chapter_title && (
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontWeight: 600,
+              fontSize: "clamp(0.65rem, 1.1vw, 0.85rem)",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: orange,
+              opacity: 0.85,
+              margin: 0,
+              textShadow: "0 1px 4px oklch(97% 0.005 80 / 0.6)",
+            }}>
+              {module.chapter_title}
+            </p>
+          )}
         </div>
 
-        {/* ── Core Idea ── */}
+        {/* Bottom: quote box */}
         {module.core_idea && (
-          <blockquote style={{ borderLeft: `3px solid ${orange}`, paddingLeft: "1.25rem", margin: "0 0 2rem", padding: "0.875rem 1.25rem", background: "white", borderRadius: "0 8px 8px 0" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", fontStyle: "italic", color: navy, lineHeight: 1.6, margin: 0 }}>
-              {module.core_idea.replace(/^"|"$/g, "")}
+          <div style={{
+            position: "absolute",
+            bottom: "2rem",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "calc(100% - clamp(2rem, 10vw, 6rem))",
+            maxWidth: "560px",
+            background: "oklch(22% 0.10 260 / 0.72)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            border: "1px solid oklch(100% 0 0 / 0.12)",
+            borderRadius: "10px",
+            padding: "1.125rem 1.5rem",
+          }}>
+            <p style={{
+              fontFamily: "var(--font-cormorant)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+              color: offWhite,
+              lineHeight: 1.55,
+              margin: 0,
+              textAlign: "center",
+            }}>
+              {module.core_idea.replace(/^[""]|[""]$/g, "")}
             </p>
-          </blockquote>
+          </div>
+        )}
+      </div>
+      </div>
+
+      {/* ── Body ── */}
+      <div style={{ maxWidth: "1020px", margin: "0 auto", padding: "2.5rem clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 3rem)" }}>
+
+        {/* Content with scripture woven in */}
+        {contentElements && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "2.5rem" }}>
+            {contentElements}
+          </div>
         )}
 
-        {/* ── Content ── */}
-        {module.content && (
-          <Section
-            title="Content"
-            expanded={expanded.content}
-            onToggle={() => setExpanded(e => ({ ...e, content: !e.content }))}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-              {module.content.split("\n\n").map((para, i) => (
-                <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(30% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
-                  {para}
-                </p>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {/* ── Biblical Foundation ── */}
-        {module.biblical_foundation && (
-          <Section
-            title="Biblical Foundation"
-            expanded={expanded.biblical ?? false}
-            onToggle={() => setExpanded(e => ({ ...e, biblical: !e.biblical }))}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {module.biblical_foundation.split("\n\n").map((verse, i) => (
-                <p key={i} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(35% 0.008 260)", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>
-                  {verse}
-                </p>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {/* ── Implementation Challenge ── */}
+        {/* Today's Challenge */}
         {module.implementation_challenge && (
-          <div style={{ background: `${orange.replace(")", " / 0.08)")}`, border: `1px solid ${orange.replace(")", " / 0.25)")}`, borderRadius: "12px", padding: "1.25rem 1.5rem", marginBottom: "1.5rem" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
-              This Week&apos;s Challenge
-            </p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: navy, lineHeight: 1.65, margin: 0 }}>
+          <div style={{
+            position: "relative",
+            background: navy,
+            borderRadius: "14px",
+            padding: "1.75rem 2rem 1.75rem 2.5rem",
+            marginBottom: "2rem",
+            overflow: "hidden",
+          }}>
+            <div style={{
+              position: "absolute",
+              left: 0, top: 0, bottom: 0,
+              width: "5px",
+              background: orange,
+              borderRadius: "14px 0 0 14px",
+            }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "0.875rem" }}>
+              <div style={{
+                width: "20px", height: "20px", borderRadius: "50%",
+                background: orange,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0,
+              }}>
+                <span style={{ color: "white", fontSize: "10px", fontWeight: 800 }}>→</span>
+              </div>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontWeight: 800,
+                fontSize: "0.625rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: orange,
+                margin: 0,
+              }}>
+                Today&apos;s Challenge
+              </p>
+            </div>
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontWeight: 500,
+              fontSize: "1rem",
+              color: offWhite,
+              lineHeight: 1.7,
+              margin: 0,
+            }}>
               {module.implementation_challenge}
             </p>
           </div>
         )}
 
-        {/* ── Personal Journal ── */}
+        {/* Personal Journal */}
         <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid, marginBottom: "1rem" }}>
             Personal Journal — private, only you can see this
@@ -228,8 +406,56 @@ export default function DayClient({
           </div>
         </div>
 
-        {/* ── Navigation ── */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+        {/* Team Sharing */}
+        {module.peer_question && (
+          <div style={{
+            background: "oklch(22% 0.10 260 / 0.06)",
+            border: "1px solid oklch(22% 0.10 260 / 0.18)",
+            borderRadius: "14px",
+            padding: "1.5rem",
+            marginBottom: "1.5rem",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.375rem" }}>
+              <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+                <div style={{ width: "13px", height: "13px", borderRadius: "50%", background: navy }} />
+                <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: orange, marginLeft: "-4px" }} />
+              </div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: navy, margin: 0 }}>
+                Team Sharing
+              </p>
+            </div>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: mid, marginBottom: "1rem" }}>
+              Your answer is visible to everyone in your group.
+            </p>
+            <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: navy, lineHeight: 1.55, marginBottom: "0.875rem" }}>
+              {module.peer_question}
+            </p>
+            <textarea
+              value={peerAnswer}
+              onChange={e => { setPeerAnswer(e.target.value); setPeerSaveStatus("idle"); }}
+              placeholder="Share your response with your team..."
+              rows={3}
+              style={textareaStyle}
+            />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "0.75rem" }}>
+              <button
+                onClick={handlePeerSave}
+                disabled={peerSaveStatus === "saving"}
+                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.625rem 1.25rem", cursor: peerSaveStatus === "saving" ? "not-allowed" : "pointer", opacity: peerSaveStatus === "saving" ? 0.7 : 1 }}
+              >
+                {peerSaveStatus === "saving" ? "Saving..." : peerSaveStatus === "saved" ? "Shared ✓" : "Share with team"}
+              </button>
+              {peerSaveStatus === "error" && (
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(50% 0.22 15)" }}>
+                  Save failed — try again
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Navigation */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
           {dayNumber > 1 ? (
             <Link
               href={`/challenge/day/${dayNumber - 1}`}
@@ -240,23 +466,37 @@ export default function DayClient({
           ) : <div />}
 
           {isToday && dayNumber < 62 && (
-            <button
-              onClick={handleAdvance}
-              disabled={advancing}
-              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: advancing ? "not-allowed" : "pointer", opacity: advancing ? 0.7 : 1 }}
-            >
-              {advancing ? "Advancing..." : `Mark complete & go to Day ${dayNumber + 1} →`}
-            </button>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
+              {teamAnswerRequired && !peerAnswer.trim() && (
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
+                  Share with your team first to mark complete
+                </span>
+              )}
+              <button
+                onClick={handleAdvance}
+                disabled={advancing || !canAdvance}
+                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: (advancing || !canAdvance) ? "not-allowed" : "pointer", opacity: (advancing || !canAdvance) ? 0.45 : 1 }}
+              >
+                {advancing ? "Saving..." : "Mark complete →"}
+              </button>
+            </div>
           )}
 
           {isToday && dayNumber === 62 && (
-            <button
-              onClick={handleAdvance}
-              disabled={advancing}
-              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: advancing ? "not-allowed" : "pointer", opacity: advancing ? 0.7 : 1 }}
-            >
-              {advancing ? "Finishing..." : "Complete the challenge →"}
-            </button>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
+              {teamAnswerRequired && !peerAnswer.trim() && (
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
+                  Share with your team first to mark complete
+                </span>
+              )}
+              <button
+                onClick={handleAdvance}
+                disabled={advancing || !canAdvance}
+                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: (advancing || !canAdvance) ? "not-allowed" : "pointer", opacity: (advancing || !canAdvance) ? 0.45 : 1 }}
+              >
+                {advancing ? "Finishing..." : "Complete the challenge →"}
+              </button>
+            </div>
           )}
 
           {isCompleted && dayNumber < 62 && (
@@ -271,37 +511,6 @@ export default function DayClient({
 
       </div>
     </div>
-  );
-}
-
-function Section({ title, expanded, onToggle, children }: { title: string; expanded: boolean; onToggle: () => void; children: React.ReactNode }) {
-  return (
-    <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", marginBottom: "1rem", overflow: "hidden" }}>
-      <button
-        onClick={onToggle}
-        style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem 1.25rem", background: "none", border: "none", cursor: "pointer" }}
-      >
-        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid }}>
-          {title}
-        </span>
-        <span style={{ color: mid, fontSize: "0.75rem", transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▼</span>
-      </button>
-      {expanded && (
-        <div style={{ padding: "0.25rem 1.25rem 1.25rem" }}>
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function IcebergIcon({ size = 40, style = {} }: { size?: number; style?: React.CSSProperties }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
-      <polygon points="20,4 28,18 12,18" fill="#f9f8f6" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" strokeLinejoin="round" />
-      <polygon points="12,20 28,20 32,32 8,32" fill="oklch(65% 0.15 45)" opacity="0.25" />
-      <line x1="8" y1="19" x2="32" y2="19" stroke="oklch(22% 0.10 260)" strokeWidth="1" strokeDasharray="2 2" opacity="0.4" />
-    </svg>
   );
 }
 

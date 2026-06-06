@@ -32,7 +32,8 @@ export default async function ChallengeLandingPage() {
           </div>
 
           <div style={{ display: "flex", alignItems: "flex-start", gap: "1.25rem", marginBottom: "1.75rem" }}>
-            <IcebergIcon size={56} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/il-challenge-icon.png" alt="" width={64} height={64} className="hidden-mobile" style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0, alignSelf: "flex-start" }} />
             <div>
               <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: offWhite, lineHeight: 1.15, marginBottom: "0.75rem" }}>
                 The Influential Leadership Challenge
