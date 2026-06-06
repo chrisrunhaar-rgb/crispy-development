@@ -34,11 +34,13 @@ export default async function ChallengeTeamPage() {
   // Fetch members and group in parallel
   const [{ data: rawMembers }, { data: groupData }] = await Promise.all([
     admin.from("challenge_group_members").select("user_id, role").eq("group_id", groupId),
-    admin.from("challenge_groups").select("id, name, facilitator_id").eq("id", groupId).single(),
+    admin.from("challenge_groups").select("id, name, facilitator_id, has_meetings, meeting_frequency, meeting_day, meeting_time, meeting_link").eq("id", groupId).single(),
   ]);
 
   const memberIds = (rawMembers ?? []).map((m: { user_id: string }) => m.user_id);
-  const facilitatorId = (groupData as { id: string; name: string; facilitator_id: string } | null)?.facilitator_id;
+  type GroupData = { id: string; name: string; facilitator_id: string; has_meetings: boolean | null; meeting_frequency: string | null; meeting_day: number | null; meeting_time: string | null; meeting_link: string | null };
+  const group = groupData as GroupData | null;
+  const facilitatorId = group?.facilitator_id;
   const allUserIds = [...new Set([...memberIds, user.id, ...(facilitatorId ? [facilitatorId] : [])])];
 
   // Parallel: profiles, enrollments, peer answers, modules
@@ -107,7 +109,19 @@ export default async function ChallengeTeamPage() {
   const previousAnswers: PeerEntry[] = hasPreviousDay ? (answersByDay[String(previousDay)] ?? []) : [];
   const feedDays = daysWithAnswers.filter(d => d !== previousDay);
 
-  const groupName = (groupData as { name: string } | null)?.name ?? "Your Team";
+  const groupName = group?.name ?? "Your Team";
+
+  const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function formatMeetingTime(t: string): string {
+    const [h, m] = t.split(":").map(Number);
+    const period = h >= 12 ? "PM" : "AM";
+    const hour = h % 12 || 12;
+    return m === 0 ? `${hour} ${period}` : `${hour}:${String(m).padStart(2, "0")} ${period}`;
+  }
+  const hasMeetingSchedule = group?.has_meetings && (group?.meeting_day !== null || group?.meeting_time);
+  const meetingDayName = group?.meeting_day !== null && group?.meeting_day !== undefined ? DAY_NAMES[group.meeting_day] : null;
+  const meetingTimeFormatted = group?.meeting_time ? formatMeetingTime(group.meeting_time) : null;
+  const meetingLabel = group?.meeting_frequency === "biweekly" ? "Every other" : "Every";
 
   return (
     <div style={{ minHeight: "calc(100dvh - 80px)", background: "oklch(97% 0.005 80)" }}>
@@ -148,6 +162,33 @@ export default async function ChallengeTeamPage() {
             </Link>
           </div>
         </div>
+
+        {/* Meeting schedule card */}
+        {hasMeetingSchedule && (
+          <div style={{ background: "white", border: `1px solid oklch(65% 0.15 45 / 0.3)`, borderRadius: "12px", padding: "1.125rem 1.5rem", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "oklch(65% 0.15 45 / 0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <span style={{ fontSize: "1rem" }}>📅</span>
+            </div>
+            <div style={{ flex: 1, minWidth: "160px" }}>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.2rem" }}>
+                Online Meeting
+              </p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: navy, margin: 0 }}>
+                {meetingLabel}{meetingDayName ? ` ${meetingDayName}` : ""}{meetingTimeFormatted ? ` at ${meetingTimeFormatted}` : ""}
+              </p>
+            </div>
+            {group?.meeting_link && (
+              <a
+                href={group.meeting_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", background: orange, padding: "0.5rem 1.125rem", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
+              >
+                Join →
+              </a>
+            )}
+          </div>
+        )}
 
         {/* Member list */}
         <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>

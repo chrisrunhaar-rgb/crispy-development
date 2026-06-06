@@ -34,9 +34,12 @@ const initialState = { error: "" };
 
 export default function CreateGroupForm() {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [isPublic, setIsPublic]         = useState(false);
-  const [hasMeetings, setHasMeetings]   = useState(false);
-  const [startDate, setStartDate]       = useState("");
+  const [isPublic, setIsPublic]           = useState(false);
+  const [hasMeetings, setHasMeetings]     = useState(false);
+  const [meetingFrequency, setMeetingFrequency] = useState<"weekly" | "biweekly">("weekly");
+  const [meetingDay, setMeetingDay]       = useState<number | null>(null);
+  const [meetingTime, setMeetingTime]     = useState("");
+  const [startDate, setStartDate]         = useState("");
 
   const endDateDisplay = useMemo(
     () => calcEndDate(startDate, selectedDays.length),
@@ -48,6 +51,11 @@ export default function CreateGroupForm() {
       selectedDays.forEach(d => formData.append("schedule_days", String(d)));
       formData.set("is_public", String(isPublic));
       formData.set("has_meetings", String(hasMeetings));
+      if (hasMeetings) {
+        formData.set("meeting_frequency", meetingFrequency);
+        if (meetingDay !== null) formData.set("meeting_day", String(meetingDay));
+        formData.set("meeting_time", meetingTime);
+      }
       const result = await createGroup(formData);
       return result ?? initialState;
     },
@@ -170,17 +178,78 @@ export default function CreateGroupForm() {
             </div>
 
             {hasMeetings && (
-              <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid oklch(90% 0.006 80)" }}>
-                <label style={labelStyle}>Your Zoom / Teams meeting link <span style={{ fontWeight: 400, color: mid }}>(optional)</span></label>
-                <input
-                  name="meeting_link"
-                  type="url"
-                  placeholder="https://zoom.us/j/... or https://teams.microsoft.com/..."
-                  style={inputStyle}
-                />
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid, marginTop: "0.375rem" }}>
-                  You can arrange with your team what day and time you want to meet.
-                </p>
+              <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid oklch(90% 0.006 80)", display: "flex", flexDirection: "column", gap: "1rem" }}>
+
+                {/* Frequency */}
+                <div>
+                  <label style={labelStyle}>Frequency</label>
+                  <div style={{ display: "flex", gap: "0.625rem" }}>
+                    {(["weekly", "biweekly"] as const).map(opt => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => setMeetingFrequency(opt)}
+                        style={{
+                          fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem",
+                          padding: "0.5rem 1.125rem", borderRadius: "8px", border: "1px solid",
+                          cursor: "pointer",
+                          background: meetingFrequency === opt ? navy : "white",
+                          color: meetingFrequency === opt ? offWhite : mid,
+                          borderColor: meetingFrequency === opt ? navy : "oklch(82% 0.006 260)",
+                        }}
+                      >
+                        {opt === "weekly" ? "Weekly" : "Bi-weekly"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Meeting day */}
+                <div>
+                  <label style={labelStyle}>Meeting day</label>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                    {DAYS.map(d => (
+                      <button
+                        key={d.value}
+                        type="button"
+                        onClick={() => setMeetingDay(prev => prev === d.value ? null : d.value)}
+                        style={{
+                          fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
+                          padding: "0.5rem 0.875rem", borderRadius: "8px", border: "1px solid",
+                          cursor: "pointer",
+                          background: meetingDay === d.value ? orange : "white",
+                          color: meetingDay === d.value ? "white" : mid,
+                          borderColor: meetingDay === d.value ? orange : "oklch(82% 0.006 260)",
+                        }}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Meeting time */}
+                <div>
+                  <label style={labelStyle}>Meeting time</label>
+                  <input
+                    type="time"
+                    value={meetingTime}
+                    onChange={e => setMeetingTime(e.target.value)}
+                    style={{ ...inputStyle, maxWidth: "160px" }}
+                  />
+                </div>
+
+                {/* Meeting link */}
+                <div>
+                  <label style={labelStyle}>Meeting link <span style={{ fontWeight: 400, color: mid }}>(optional)</span></label>
+                  <input
+                    name="meeting_link"
+                    type="url"
+                    placeholder="https://zoom.us/j/... or https://teams.microsoft.com/..."
+                    style={inputStyle}
+                  />
+                </div>
+
               </div>
             )}
           </div>

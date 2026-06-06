@@ -17,6 +17,10 @@ export async function createGroup(formData: FormData) {
   const isPublic = formData.get("is_public") === "true";
   const hasMeetings = formData.get("has_meetings") === "true";
   const meetingLink = (formData.get("meeting_link") as string | null)?.trim() || null;
+  const meetingFrequency = hasMeetings ? ((formData.get("meeting_frequency") as string | null) || null) : null;
+  const meetingDayRaw = formData.get("meeting_day") as string | null;
+  const meetingDay = (hasMeetings && meetingDayRaw !== null && meetingDayRaw !== "") ? Number(meetingDayRaw) : null;
+  const meetingTime = hasMeetings ? ((formData.get("meeting_time") as string | null)?.trim() || null) : null;
   const startDate = (formData.get("start_date") as string | null) || null;
 
   // Calculate end date: ceil(62 / daysPerWeek) weeks from start
@@ -43,6 +47,9 @@ export async function createGroup(formData: FormData) {
       is_public: isPublic,
       has_meetings: hasMeetings,
       meeting_link: meetingLink,
+      meeting_frequency: meetingFrequency,
+      meeting_day: meetingDay,
+      meeting_time: meetingTime,
       start_date: startDate,
       end_date: endDate,
     })
