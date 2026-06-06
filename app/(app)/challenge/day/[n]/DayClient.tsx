@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { saveJournalEntry, advanceToNextDay, saveTeamAnswer } from "@/app/challenge/actions";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
@@ -51,6 +52,9 @@ export default function DayClient({
   firstName: string;
   hasGroup: boolean;
 }) {
+  const { t } = useLanguage();
+  const c = t.challenge;
+
   const [answer1, setAnswer1] = useState(initialJournal?.answer1 ?? "");
   const [answer2, setAnswer2] = useState(initialJournal?.answer2 ?? "");
   const [peerAnswer, setPeerAnswer] = useState(initialJournal?.peerAnswer ?? "");
@@ -63,16 +67,16 @@ export default function DayClient({
       <div style={{ minHeight: "calc(100dvh - 80px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem" }}>
         <div style={{ textAlign: "center", maxWidth: "400px" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.75rem" }}>
-            Day {dayNumber} isn&apos;t ready yet
+            {c.dayNotReady.replace("{n}", String(dayNumber))}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "1.5rem" }}>
-            Complete Day {currentDay} first to unlock the next session.
+            {c.dayNotReadyHint.replace("{n}", String(currentDay))}
           </p>
           <Link
             href={`/challenge/day/${currentDay}`}
             style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: navy, padding: "0.75rem 1.75rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}
           >
-            Go to Day {currentDay}
+            {c.goToDay.replace("{n}", String(currentDay))}
           </Link>
         </div>
       </div>
@@ -169,7 +173,7 @@ export default function DayClient({
           fontWeight: 600,
           letterSpacing: "0.04em",
         }}>
-          ← Dashboard
+          {c.backDashboard}
         </Link>
 
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
@@ -181,7 +185,7 @@ export default function DayClient({
             letterSpacing: "0.1em",
             textTransform: "uppercase",
           }}>
-            Influential Leadership
+            {c.influentialLeadership}
           </span>
           <span style={{
             fontFamily: "var(--font-montserrat)",
@@ -190,7 +194,7 @@ export default function DayClient({
             color: orange,
             letterSpacing: "0.05em",
           }}>
-            DAY {dayNumber} of 60
+            {c.dayOf60.replace("{n}", String(dayNumber))}
           </span>
           <div style={{ width: "80px", height: "3px", background: "oklch(35% 0.08 260)", borderRadius: "2px" }}>
             <div style={{ width: `${Math.min((dayNumber / 60) * 100, 100)}%`, height: "100%", background: orange, borderRadius: "2px" }} />
@@ -241,7 +245,7 @@ export default function DayClient({
             marginBottom: "0.25rem",
             textShadow: "0 1px 4px oklch(97% 0.005 80 / 0.6)",
           }}>
-            Day {dayPad}{isCompleted ? " \xb7 Completed" : ""}
+            {isCompleted ? c.dayCompleted.replace("{pad}", dayPad) : `Day ${dayPad}`}
           </p>
           {module.chapter_title && (
             <p style={{
@@ -338,7 +342,7 @@ export default function DayClient({
                 color: orange,
                 margin: 0,
               }}>
-                Today&apos;s Challenge
+                {c.todaysChallenge}
               </p>
             </div>
             <p style={{
@@ -357,7 +361,7 @@ export default function DayClient({
         {/* Personal Journal */}
         <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid, marginBottom: "1rem" }}>
-            Personal Journal — private, only you can see this
+            {c.journalLabel}
           </p>
 
           {module.personal_reflection_q1 && (
@@ -368,7 +372,7 @@ export default function DayClient({
               <textarea
                 value={answer1}
                 onChange={e => { setAnswer1(e.target.value); setSaveStatus("idle"); }}
-                placeholder="Write your reflection here..."
+                placeholder={c.journalPlaceholder}
                 rows={4}
                 style={textareaStyle}
               />
@@ -383,7 +387,7 @@ export default function DayClient({
               <textarea
                 value={answer2}
                 onChange={e => { setAnswer2(e.target.value); setSaveStatus("idle"); }}
-                placeholder="Write your reflection here..."
+                placeholder={c.journalPlaceholder}
                 rows={4}
                 style={textareaStyle}
               />
@@ -396,11 +400,11 @@ export default function DayClient({
               disabled={saveStatus === "saving"}
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.625rem 1.25rem", cursor: saveStatus === "saving" ? "not-allowed" : "pointer", opacity: saveStatus === "saving" ? 0.7 : 1 }}
             >
-              {saveStatus === "saving" ? "Saving..." : saveStatus === "saved" ? "Saved ✓" : "Save journal"}
+              {saveStatus === "saving" ? c.saving : saveStatus === "saved" ? c.saved : c.saveJournal}
             </button>
             {saveStatus === "error" && (
               <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(50% 0.22 15)" }}>
-                Save failed — try again
+                {c.saveFailed}
               </span>
             )}
           </div>
@@ -421,11 +425,11 @@ export default function DayClient({
                 <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: orange, marginLeft: "-4px" }} />
               </div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: navy, margin: 0 }}>
-                Team Sharing
+                {c.teamSharing}
               </p>
             </div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6875rem", color: mid, marginBottom: "1rem" }}>
-              Your answer is visible to everyone in your group.
+              {c.teamSharingHint}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9375rem", color: navy, lineHeight: 1.55, marginBottom: "0.875rem" }}>
               {module.peer_question}
@@ -433,7 +437,7 @@ export default function DayClient({
             <textarea
               value={peerAnswer}
               onChange={e => { setPeerAnswer(e.target.value); setPeerSaveStatus("idle"); }}
-              placeholder="Share your response with your team..."
+              placeholder={c.teamPlaceholder}
               rows={3}
               style={textareaStyle}
             />
@@ -443,11 +447,11 @@ export default function DayClient({
                 disabled={peerSaveStatus === "saving"}
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.625rem 1.25rem", cursor: peerSaveStatus === "saving" ? "not-allowed" : "pointer", opacity: peerSaveStatus === "saving" ? 0.7 : 1 }}
               >
-                {peerSaveStatus === "saving" ? "Saving..." : peerSaveStatus === "saved" ? "Shared ✓" : "Share with team"}
+                {peerSaveStatus === "saving" ? c.saving : peerSaveStatus === "saved" ? c.sharedWithTeam : c.shareWithTeam}
               </button>
               {peerSaveStatus === "error" && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(50% 0.22 15)" }}>
-                  Save failed — try again
+                  {c.saveFailed}
                 </span>
               )}
             </div>
@@ -461,7 +465,7 @@ export default function DayClient({
               href={`/challenge/day/${dayNumber - 1}`}
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8125rem", color: mid, border: "1px solid oklch(82% 0.006 260)", padding: "0.625rem 1.25rem", borderRadius: "8px", textDecoration: "none" }}
             >
-              ← Day {dayNumber - 1}
+              {c.prevDay.replace("{n}", String(dayNumber - 1))}
             </Link>
           ) : <div />}
 
@@ -469,7 +473,7 @@ export default function DayClient({
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
               {teamAnswerRequired && !peerAnswer.trim() && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
-                  Share with your team first to mark complete
+                  {c.shareFirstHint}
                 </span>
               )}
               <button
@@ -477,7 +481,7 @@ export default function DayClient({
                 disabled={advancing || !canAdvance}
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: (advancing || !canAdvance) ? "not-allowed" : "pointer", opacity: (advancing || !canAdvance) ? 0.45 : 1 }}
               >
-                {advancing ? "Saving..." : "Mark complete →"}
+                {advancing ? c.saving : c.markComplete}
               </button>
             </div>
           )}
@@ -486,7 +490,7 @@ export default function DayClient({
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
               {teamAnswerRequired && !peerAnswer.trim() && (
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: mid }}>
-                  Share with your team first to mark complete
+                  {c.shareFirstHint}
                 </span>
               )}
               <button
@@ -494,7 +498,7 @@ export default function DayClient({
                 disabled={advancing || !canAdvance}
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: orange, border: "none", borderRadius: "8px", padding: "0.75rem 1.75rem", cursor: (advancing || !canAdvance) ? "not-allowed" : "pointer", opacity: (advancing || !canAdvance) ? 0.45 : 1 }}
               >
-                {advancing ? "Finishing..." : "Complete the challenge →"}
+                {advancing ? c.finishing : c.completeChallenge}
               </button>
             </div>
           )}
@@ -504,7 +508,7 @@ export default function DayClient({
               href={`/challenge/day/${dayNumber + 1}`}
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, padding: "0.625rem 1.25rem", borderRadius: "8px", textDecoration: "none" }}
             >
-              Day {dayNumber + 1} →
+              {c.nextDay.replace("{n}", String(dayNumber + 1))}
             </Link>
           )}
         </div>
