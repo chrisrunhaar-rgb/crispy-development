@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import SoloSignupForm from "./SoloSignupForm";
 
 export const metadata = { title: "Join — Influential Leadership Challenge" };
@@ -9,7 +10,16 @@ export default async function ChallengeSoloPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   if (user?.user_metadata?.challenge_enrolled) {
-    redirect("/challenge/day/1");
+    const admin = createAdminClient();
+    const { data: enrollment } = await admin
+      .from("challenge_enrollments")
+      .select("current_day")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    if (enrollment) {
+      redirect(`/challenge/day/${enrollment.current_day}`);
+    }
+    // metadata flag set but no DB enrollment — fall through to signup form
   }
 
   return (

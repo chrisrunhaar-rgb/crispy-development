@@ -66,11 +66,19 @@ export default function ChallengeContent() {
         .ch-page {
           position: fixed; inset: 0;
           background-color: oklch(14% 0.09 260);
+          display: flex; align-items: center; justify-content: center;
         }
         .ch-img-wrap {
-          position: absolute; inset: 0;
+          position: relative;
+          width: min(100dvh, 100dvw);
+          height: min(100dvh, 100dvw);
+          flex-shrink: 0;
         }
         .ch-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        @media (orientation: portrait) {
+          .ch-page { display: block; }
+          .ch-img-wrap { position: absolute; inset: 0; width: 100%; height: 100%; }
+        }
         .ch-content {
           position: absolute; inset: 0;
           display: flex; flex-direction: column;
@@ -128,15 +136,19 @@ export default function ChallengeContent() {
 
             {/* Bottom row: back left, tiles right */}
             <div style={{ width:"100%", display:"flex", justifyContent:"space-between", alignItems:"flex-end", position:"relative", zIndex:1 }}>
-              {/* Back — plain text, bottom-left */}
-              <Link href="/" style={{ fontFamily:"var(--font-montserrat)", fontWeight:600, fontSize:"0.72rem", letterSpacing:"0.06em", color:"oklch(75% 0.025 260)", textDecoration:"none", textShadow:"0 1px 6px oklch(4% 0.08 260 / 0.8)" }}>
-                ← {isId ? "Kembali ke Crispy" : "Back to Crispy"}
-              </Link>
+              {/* Back + Share — stacked, bottom-left */}
+              <div style={{ display:"flex", flexDirection:"column", gap:"0.5rem", alignItems:"flex-start" }}>
+                <button type="button" onClick={handleShare} style={{ fontFamily:"var(--font-montserrat)", fontWeight:600, fontSize:"0.72rem", letterSpacing:"0.06em", color:"oklch(75% 0.025 260)", background:"none", border:"none", padding:0, cursor:"pointer", textShadow:"0 1px 6px oklch(4% 0.08 260 / 0.8)" }}>
+                  ↗ {isId ? "Bagikan" : "Share"}
+                </button>
+                <Link href="/" style={{ fontFamily:"var(--font-montserrat)", fontWeight:600, fontSize:"0.72rem", letterSpacing:"0.06em", color:"oklch(75% 0.025 260)", textDecoration:"none", textShadow:"0 1px 6px oklch(4% 0.08 260 / 0.8)" }}>
+                  ← {isId ? "Kembali ke Crispy" : "Back to Crispy"}
+                </Link>
+              </div>
               {/* Tiles — stacked, bottom-right */}
               <div className="ch-tiles">
                 <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
                 <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
-                <button type="button" className="ch-tile" onClick={handleShare}>{isId ? "Bagikan ↗" : "Share ↗"}</button>
                 <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
               </div>
             </div>
