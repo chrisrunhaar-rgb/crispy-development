@@ -53,13 +53,9 @@ export default function ChallengeContent() {
         .ch-page {
           position: fixed; inset: 0;
           background-color: oklch(14% 0.09 260);
-          display: flex; align-items: center; justify-content: center;
         }
         .ch-img-wrap {
-          position: relative;
-          width: min(100dvh, 100dvw);
-          height: min(100dvh, 100dvw);
-          flex-shrink: 0;
+          position: absolute; inset: 0;
         }
         .ch-img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .ch-content {
