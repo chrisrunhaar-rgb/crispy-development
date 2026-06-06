@@ -64,7 +64,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
           </Link>
         </div>
 
-        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)", textAlign: "center" }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", padding: "clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) 0", textAlign: "center" }}>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
             Challenge complete
@@ -77,7 +77,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
           </p>
 
           {/* Actions */}
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "3rem" }}>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.5rem" }}>
             {filledEntries.length > 0 && (
               <button
                 onClick={downloadJournal}
@@ -116,9 +116,9 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
       </div>
 
       {/* Print certificate */}
-      <div className="cert-only" style={{ padding: "60px", fontFamily: "var(--font-montserrat)", textAlign: "center", border: `8px solid ${navy}`, margin: "40px", minHeight: "90vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+      <div className="cert-only" style={{ padding: "64px", fontFamily: "var(--font-montserrat)", textAlign: "center", background: offWhite, border: `3px solid ${navy}`, boxShadow: `inset 0 0 0 12px ${offWhite}, inset 0 0 0 14px ${navy}`, margin: "0 1.5rem 2rem", minHeight: "90vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-full.png" alt="Crispy Development" style={{ height: "48px", objectFit: "contain", marginBottom: "0.5rem" }} />
+        <img src="/logo-icon.png" alt="Crispy Development" style={{ width: "96px", height: "96px", objectFit: "contain", marginBottom: "0.5rem" }} />
         <div style={{ width: "60px", height: "4px", background: orange }} />
         <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: mid }}>Certificate of Completion</p>
         <h1 style={{ fontSize: "2.5rem", fontWeight: 900, color: navy, lineHeight: 1.1 }}>Influential Leadership<br />Challenge</h1>
