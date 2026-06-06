@@ -35,6 +35,19 @@ export default function ChallengeContent() {
   const [status, setStatus] = useState<"idle"|"loading"|"done"|"error">("idle");
   const isId = lang === "id";
 
+  async function handleShare() {
+    const url = "https://crispyleaders.com/influential-leadership-challenge";
+    const text = isId
+      ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari gratis untuk pemimpin lintas budaya."
+      : "The Influential Leadership Challenge — a free 60-day journey for cross-cultural leaders.";
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try { await navigator.share({ title: isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge", text, url }); }
+      catch { /* cancelled */ }
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n" + url)}`, "_blank", "noopener,noreferrer");
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
@@ -123,6 +136,7 @@ export default function ChallengeContent() {
               <div className="ch-tiles">
                 <button type="button" className="ch-tile" onClick={() => setModal("challenge")}>{isId ? "Tantangannya" : "The Challenge"}</button>
                 <button type="button" className="ch-tile" onClick={() => setModal("topics")}>{isId ? "Topik" : "Topics"}</button>
+                <button type="button" className="ch-tile" onClick={handleShare}>{isId ? "Bagikan ↗" : "Share ↗"}</button>
                 <Link href="/challenge/solo" className="ch-tile ch-tile-cta" style={{ textDecoration: "none", display: "block" }}>{isId ? "Daftar Sekarang" : "Sign Up Now"}</Link>
               </div>
             </div>
