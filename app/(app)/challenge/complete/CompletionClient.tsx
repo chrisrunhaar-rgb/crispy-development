@@ -16,27 +16,30 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
   completedAt: string;
   journalEntries: JournalEntry[];
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const c = t.challenge;
 
   const fullName = [firstName, lastName].filter(Boolean).join(" ") || "Leader";
-  const completedDate = new Date(completedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  const completedDate = new Date(completedAt).toLocaleDateString(
+    lang === "id" ? "id-ID" : "en-GB",
+    { day: "numeric", month: "long", year: "numeric" }
+  );
   const filledEntries = journalEntries.filter(e => e.answer_1 || e.answer_2);
 
   function downloadJournal() {
     const lines: string[] = [
-      "INFLUENTIAL LEADERSHIP CHALLENGE",
-      "Personal Journal",
-      `${fullName} · Completed ${completedDate}`,
+      c.journalDownloadHeader,
+      c.journalDownloadSubheader,
+      `${fullName} · ${c.journalDownloadCompleted} ${completedDate}`,
       "",
       "═".repeat(60),
       "",
     ];
     filledEntries.forEach(entry => {
-      lines.push(`DAY ${String(entry.day_number).padStart(2, "0")}`);
+      lines.push(`${c.journalDayLabel} ${String(entry.day_number).padStart(2, "0")}`);
       lines.push("─".repeat(40));
-      if (entry.answer_1) { lines.push("Reflection 1:"); lines.push(entry.answer_1); lines.push(""); }
-      if (entry.answer_2) { lines.push("Reflection 2:"); lines.push(entry.answer_2); lines.push(""); }
+      if (entry.answer_1) { lines.push(c.journalDownloadReflection1); lines.push(entry.answer_1); lines.push(""); }
+      if (entry.answer_2) { lines.push(c.journalDownloadReflection2); lines.push(entry.answer_2); lines.push(""); }
       lines.push("");
     });
     const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
@@ -102,7 +105,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
                 {filledEntries.slice(0, 10).map(entry => (
                   <div key={entry.day_number} style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "10px", padding: "1rem 1.25rem" }}>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
-                      Day {entry.day_number}
+                      {c.journalDayLabel} {entry.day_number}
                     </p>
                     {entry.answer_1 && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(35% 0.008 260)", lineHeight: 1.65, marginBottom: entry.answer_2 ? "0.625rem" : 0 }}>{entry.answer_1}</p>}
                     {entry.answer_2 && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(40% 0.008 260)", lineHeight: 1.65 }}>{entry.answer_2}</p>}
@@ -110,7 +113,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
                 ))}
                 {filledEntries.length > 10 && (
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid, textAlign: "center" }}>
-                    + {filledEntries.length - 10} more entries in the downloaded journal
+                    {c.journalMoreEntries.replace("{n}", String(filledEntries.length - 10))}
                   </p>
                 )}
               </div>

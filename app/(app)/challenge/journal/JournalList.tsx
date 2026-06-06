@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy   = "oklch(22% 0.10 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -21,6 +22,8 @@ type Module = {
 };
 
 export default function JournalList({ entries, moduleMap }: { entries: Entry[]; moduleMap: Record<number, Module> }) {
+  const { t } = useLanguage();
+  const c = t.challenge;
   const validEntries = entries.filter(e => e.answer_1?.trim() || e.answer_2?.trim());
   const [openDays, setOpenDays] = useState<Set<number>>(new Set(validEntries.length > 0 ? [validEntries[0].day_number] : []));
 
@@ -69,7 +72,7 @@ export default function JournalList({ entries, moduleMap }: { entries: Entry[]; 
             >
               <div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.2rem" }}>
-                  Day {String(entry.day_number).padStart(2, "0")}
+                  {c.journalDayLabel} {String(entry.day_number).padStart(2, "0")}
                 </p>
                 {mod && (
                   <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: navy, margin: 0 }}>
@@ -83,7 +86,7 @@ export default function JournalList({ entries, moduleMap }: { entries: Entry[]; 
                   onClick={e => e.stopPropagation()}
                   style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600, color: mid, textDecoration: "none", whiteSpace: "nowrap" }}
                 >
-                  View session →
+                  {c.journalViewSession}
                 </Link>
                 <span style={{ color: mid, fontSize: "0.85rem", lineHeight: 1, transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", display: "block" }}>
                   ▾
