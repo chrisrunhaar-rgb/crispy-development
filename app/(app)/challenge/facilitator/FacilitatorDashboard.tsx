@@ -37,6 +37,8 @@ type Group = {
   inviteUrl: string;
   notify_time: string | null;
   notify_timezone: string;
+  start_date: string | null;
+  currentDay: number;
 };
 
 type Application = {
@@ -192,13 +194,26 @@ export default function FacilitatorDashboard({
             </div>
 
             {/* Actions row */}
-            <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
-              <Link
-                href={`/challenge/day/1`}
-                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, padding: "0.625rem 1.25rem", borderRadius: "8px", textDecoration: "none" }}
-              >
-                Continue challenge →
-              </Link>
+            <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
+              {(() => {
+                const startDate = group.start_date ? new Date(group.start_date + "T00:00:00") : null;
+                const today = new Date(); today.setHours(0, 0, 0, 0);
+                if (startDate && startDate > today) {
+                  return (
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: mid, margin: 0 }}>
+                      Starts {startDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                    </p>
+                  );
+                }
+                return (
+                  <Link
+                    href={`/challenge/day/${group.currentDay}`}
+                    style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem", color: offWhite, background: navy, padding: "0.625rem 1.25rem", borderRadius: "8px", textDecoration: "none" }}
+                  >
+                    {group.currentDay <= 1 ? "Start challenge →" : `Continue — Day ${group.currentDay} →`}
+                  </Link>
+                );
+              })()}
 
               {/* Open group toggle */}
               <button

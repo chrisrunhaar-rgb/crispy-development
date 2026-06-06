@@ -17,11 +17,19 @@ export default async function FacilitatorPage({
   const { created, code } = await searchParams;
   const admin = createAdminClient();
 
-  const { data: groups } = await admin
-    .from("challenge_groups")
-    .select("id, name, description, group_code, is_public, max_members, schedule_days, notify_time, notify_timezone, created_at")
-    .eq("facilitator_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: groups }, { data: enrollmentData }] = await Promise.all([
+    admin
+      .from("challenge_groups")
+      .select("id, name, description, group_code, is_public, max_members, schedule_days, notify_time, notify_timezone, start_date, created_at")
+      .eq("facilitator_id", user.id)
+      .order("created_at", { ascending: false }),
+    admin
+      .from("challenge_enrollments")
+      .select("current_day")
+      .eq("user_id", user.id)
+      .maybeSingle(),
+  ]);
+  const currentDay = (enrollmentData as { current_day: number | null } | null)?.current_day ?? 1;
 
   const groupIds = (groups ?? []).map(g => g.id);
 
@@ -54,6 +62,8 @@ export default async function FacilitatorPage({
         inviteUrl: `${siteUrl}/challenge/join/${g.group_code}`,
         notify_time: g.notify_time ?? null,
         notify_timezone: g.notify_timezone ?? "Asia/Kuala_Lumpur",
+        start_date: (g as { start_date?: string | null }).start_date ?? null,
+        currentDay,
       }))}
       pendingApplications={applications as AppRow[] ?? []}
       newlyCreatedId={created ?? null}
