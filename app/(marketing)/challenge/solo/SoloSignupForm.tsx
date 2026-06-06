@@ -1,17 +1,39 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { signUpChallenge, enrollExistingUser } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
 const offWhite = "oklch(97% 0.005 80)";
+const pillNavy = "oklch(30% 0.12 260)";
 
 const initialState = { error: "" };
 
+type Lang = "en" | "id";
+
+function setLangCookie(lang: Lang) {
+  document.cookie = `crispy-lang=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
+
+async function callSetLanguage(lang: Lang) {
+  try {
+    await fetch("/api/set-language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lang }),
+    });
+  } catch {
+    // fire and forget — silently ignore
+  }
+}
+
 export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: boolean; userEmail: string | null }) {
+  const [selectedLang, setSelectedLang] = useState<Lang>("en");
+
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
+      formData.set("language", selectedLang);
       const result = await signUpChallenge(formData);
       return result ?? initialState;
     },
@@ -84,7 +106,7 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
         Sign up for the challenge
       </h1>
 
-      <form action={formAction}>
+      <form action={formAction} onSubmit={() => { setLangCookie(selectedLang); callSetLanguage(selectedLang); }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.25rem" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
             <input name="firstName" type="text" required placeholder="First name" autoComplete="given-name" style={inputStyle} />
@@ -92,6 +114,23 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
           </div>
           <input name="email" type="email" required placeholder="Email address" autoComplete="email" style={inputStyle} />
           <input name="password" type="password" required minLength={8} placeholder="Password (8+ characters)" autoComplete="new-password" style={inputStyle} />
+        </div>
+
+        {/* Language selector */}
+        <div style={{ marginBottom: "1.25rem" }}>
+          <p style={langLabelStyle}>Language / Bahasa</p>
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            {(["en", "id"] as const).map(lang => (
+              <button
+                key={lang}
+                type="button"
+                onClick={() => setSelectedLang(lang)}
+                style={pillStyle(selectedLang === lang)}
+              >
+                {lang === "en" ? "English" : "Bahasa Indonesia"}
+              </button>
+            ))}
+          </div>
         </div>
 
         {state.error && (
@@ -111,6 +150,22 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
       </form>
     </div>
   );
+}
+
+const langLabelStyle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+  letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.008 260)",
+  marginBottom: "0.5rem",
+};
+
+function pillStyle(active: boolean): React.CSSProperties {
+  return {
+    fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700,
+    padding: "0.5rem 1.25rem", borderRadius: "999px", cursor: "pointer",
+    background: active ? pillNavy : "#fff",
+    color: active ? "#fff" : pillNavy,
+    border: active ? "none" : `2px solid ${pillNavy}`,
+  };
 }
 
 function btnStyle(disabled: boolean): React.CSSProperties {

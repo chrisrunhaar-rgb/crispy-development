@@ -8,6 +8,7 @@ const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
 const offWhite = "oklch(97% 0.005 80)";
 const mid      = "oklch(52% 0.008 260)";
+const pillNavy = "oklch(30% 0.12 260)";
 
 const DAYS = [
   { value: 1, label: "Mon" },
@@ -32,6 +33,24 @@ function calcEndDate(startDateStr: string, daysPerWeek: number): string {
 
 const initialState = { error: "" };
 
+type Lang = "en" | "id";
+
+async function callSetLanguage(lang: Lang) {
+  try {
+    await fetch("/api/set-language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lang }),
+    });
+  } catch {
+    // fire and forget — silently ignore
+  }
+}
+
+function setLangCookie(lang: Lang) {
+  document.cookie = `crispy-lang=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
+
 export default function CreateGroupForm() {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [isPublic, setIsPublic]           = useState(false);
@@ -40,6 +59,7 @@ export default function CreateGroupForm() {
   const [meetingDay, setMeetingDay]       = useState<number | null>(null);
   const [meetingTime, setMeetingTime]     = useState("");
   const [startDate, setStartDate]         = useState("");
+  const [selectedLang, setSelectedLang]   = useState<Lang>("en");
 
   const endDateDisplay = useMemo(
     () => calcEndDate(startDate, selectedDays.length),
@@ -56,7 +76,13 @@ export default function CreateGroupForm() {
         if (meetingDay !== null) formData.set("meeting_day", String(meetingDay));
         formData.set("meeting_time", meetingTime);
       }
+      formData.set("language", selectedLang);
       const result = await createGroup(formData);
+      if (!result?.error) {
+        // Group created successfully — set language preference (fire and forget)
+        setLangCookie(selectedLang);
+        callSetLanguage(selectedLang);
+      }
       return result ?? initialState;
     },
     initialState,
@@ -279,6 +305,23 @@ export default function CreateGroupForm() {
             </button>
           </div>
 
+          {/* Language selector */}
+          <div>
+            <label style={langLabelStyle}>Language / Bahasa</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {(["en", "id"] as const).map(lang => (
+                <button
+                  key={lang}
+                  type="button"
+                  onClick={() => setSelectedLang(lang)}
+                  style={pillStyle(selectedLang === lang)}
+                >
+                  {lang === "en" ? "English" : "Bahasa Indonesia"}
+                </button>
+              ))}
+            </div>
+          </div>
+
         </div>
 
         {state.error && (
@@ -304,6 +347,22 @@ const labelStyle: React.CSSProperties = {
   color: "oklch(42% 0.008 260)", display: "block", marginBottom: "0.375rem",
   letterSpacing: "0.04em", textTransform: "uppercase",
 };
+
+const langLabelStyle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700,
+  letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.008 260)",
+  marginBottom: "0.5rem", display: "block",
+};
+
+function pillStyle(active: boolean): React.CSSProperties {
+  return {
+    fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700,
+    padding: "0.5rem 1.25rem", borderRadius: "999px", cursor: "pointer",
+    background: active ? pillNavy : "#fff",
+    color: active ? "#fff" : pillNavy,
+    border: active ? "none" : `2px solid ${pillNavy}`,
+  };
+}
 
 const inputStyle: React.CSSProperties = {
   width: "100%", fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem",
