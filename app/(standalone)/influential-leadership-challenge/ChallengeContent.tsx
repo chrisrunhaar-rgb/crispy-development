@@ -38,8 +38,8 @@ export default function ChallengeContent() {
   async function handleShare() {
     const url = "https://crispyleaders.com/influential-leadership-challenge";
     const text = isId
-      ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari gratis untuk pemimpin lintas budaya."
-      : "The Influential Leadership Challenge — a free 60-day journey for cross-cultural leaders.";
+      ? "Ikuti Tantangan Kepemimpinan Berpengaruh! 60 hari, 15 menit sehari. Perjalanan Kepemimpinan Kristen gratis yang akan membawa Anda menuju Kepemimpinan yang Berpengaruh. Ikuti sendiri atau ajak seluruh tim Anda. Daftar sekarang!"
+      : "Join the Influential Leadership Challenge! 60-days, 15 minutes a day. A free Christian Leadership journey that will move you towards Influential Leadership. Go solo or take your whole team with you. Sign up today!";
     if (typeof navigator !== "undefined" && navigator.share) {
       try { await navigator.share({ title: isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge", text, url }); }
       catch { /* cancelled */ }
