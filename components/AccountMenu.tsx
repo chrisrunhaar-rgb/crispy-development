@@ -59,6 +59,17 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
             <PushNotificationToggle />
           </div>
 
+          {/* Account settings */}
+          <a
+            href="/account"
+            onClick={() => setOpen(false)}
+            style={{ display: "block", padding: "0.625rem 1rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", textDecoration: "none" }}
+            onMouseEnter={e => (e.currentTarget.style.background = "oklch(32% 0.11 260)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+          >
+            Account settings
+          </a>
+
           {/* Change password */}
           <a
             href="/account/password"
