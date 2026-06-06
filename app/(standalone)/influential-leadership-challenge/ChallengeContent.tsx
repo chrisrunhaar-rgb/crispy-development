@@ -122,14 +122,12 @@ export default function ChallengeContent() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/il-challenge-bg.png" className="ch-img" alt="" />
           <div className="ch-content">
-            {/* Icon + Title */}
+            {/* Title */}
             <div style={{ textAlign:"center", position:"relative", zIndex:1 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/il-challenge-icon.png" alt="" width={52} height={52} style={{ borderRadius:"50%", objectFit:"cover", display:"block", margin:"0 auto 0.75rem" }} />
               <h1 style={{ fontFamily:"var(--font-cormorant)", fontStyle:"italic", fontWeight:600, fontSize:"clamp(1.5rem,4.5vmin,3.5rem)", lineHeight:1.05, color:"oklch(22% 0.10 260)", margin:"0 0 0.5rem", textShadow:"0 1px 6px oklch(97% 0.005 80 / 0.5)" }}>
                 {isId ? "Tantangan Kepemimpinan Berpengaruh" : "The Influential Leadership Challenge"}
               </h1>
-              <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.75rem,1.4vmin,0.95rem)", color:"oklch(65% 0.15 45)", margin:0, maxWidth:"36ch", lineHeight:1.65, fontWeight:600 }}>
+              <p style={{ fontFamily:"var(--font-montserrat)", fontSize:"clamp(0.75rem,1.4vmin,0.95rem)", color:"oklch(65% 0.15 45)", margin:"0 auto", maxWidth:"36ch", lineHeight:1.65, fontWeight:600, textAlign:"center" }}>
                 {isId ? <>Pemimpin berpengaruh bukan dibentuk oleh keterampilan mereka,<br />melainkan oleh siapa mereka di dalam.</> : <>Influential leaders aren&apos;t shaped by their skills,<br />they are shaped by who they are inside.</>}
               </p>
             </div>
