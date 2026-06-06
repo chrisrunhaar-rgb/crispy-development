@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -16,7 +15,6 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
   completedAt: string;
   journalEntries: JournalEntry[];
 }) {
-  const journalRef = useRef<HTMLDivElement>(null);
   const fullName = [firstName, lastName].filter(Boolean).join(" ") || "Leader";
   const completedDate = new Date(completedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const filledEntries = journalEntries.filter(e => e.answer_1 || e.answer_2);
@@ -46,10 +44,6 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
     URL.revokeObjectURL(url);
   }
 
-  function printCertificate() {
-    window.print();
-  }
-
   return (
     <div style={{ background: offWhite, minHeight: "100dvh" }}>
       {/* Print-only certificate styles */}
@@ -72,9 +66,6 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
 
         <div style={{ maxWidth: "640px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)", textAlign: "center" }}>
 
-          {/* Trophy */}
-          <div style={{ fontSize: "4rem", marginBottom: "1.5rem" }}>🏔️</div>
-
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
             Challenge complete
           </p>
@@ -87,12 +78,6 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
 
           {/* Actions */}
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "3rem" }}>
-            <button
-              onClick={printCertificate}
-              style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.75rem 1.5rem", cursor: "pointer" }}
-            >
-              Download certificate
-            </button>
             {filledEntries.length > 0 && (
               <button
                 onClick={downloadJournal}
@@ -105,7 +90,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
 
           {/* Journal preview */}
           {filledEntries.length > 0 && (
-            <div ref={journalRef} style={{ textAlign: "left" }}>
+            <div style={{ textAlign: "left" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid, marginBottom: "1rem" }}>
                 Your journal — {filledEntries.length} of 60 days
               </p>
@@ -132,12 +117,15 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
 
       {/* Print certificate */}
       <div className="cert-only" style={{ padding: "60px", fontFamily: "var(--font-montserrat)", textAlign: "center", border: `8px solid ${navy}`, margin: "40px", minHeight: "90vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo-full.png" alt="Crispy Development" style={{ height: "48px", objectFit: "contain", marginBottom: "0.5rem" }} />
         <div style={{ width: "60px", height: "4px", background: orange }} />
         <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: mid }}>Certificate of Completion</p>
         <h1 style={{ fontSize: "2.5rem", fontWeight: 900, color: navy, lineHeight: 1.1 }}>Influential Leadership<br />Challenge</h1>
+        <p style={{ fontSize: "0.9rem", color: mid, maxWidth: "36ch", lineHeight: 1.6 }}>A 60-day journey in the hidden practices of leaders who carry deep and lasting influence</p>
         <p style={{ fontSize: "1rem", color: mid }}>This certifies that</p>
         <p style={{ fontSize: "2rem", fontWeight: 800, color: navy }}>{fullName}</p>
-        <p style={{ fontSize: "1rem", color: mid }}>successfully completed all 62 sessions of the<br />Influential Leadership Challenge</p>
+        <p style={{ fontSize: "1rem", color: mid }}>successfully completed all 60 sessions of the<br />Influential Leadership Challenge</p>
         <p style={{ fontSize: "0.9rem", color: mid }}>Based on <em>Deep Influence</em> by T.J. Addington</p>
         <p style={{ fontSize: "1rem", fontWeight: 700, color: navy }}>Completed {completedDate}</p>
         <div style={{ width: "60px", height: "4px", background: orange }} />
