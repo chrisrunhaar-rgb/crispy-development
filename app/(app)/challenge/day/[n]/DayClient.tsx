@@ -245,7 +245,7 @@ export default function DayClient({
             marginBottom: "0.25rem",
             textShadow: "0 1px 4px oklch(97% 0.005 80 / 0.6)",
           }}>
-            {isCompleted ? c.dayCompleted.replace("{pad}", dayPad) : `Day ${dayPad}`}
+            {isCompleted ? c.dayCompleted.replace("{pad}", dayPad) : c.dayCompleted.split(" · ")[0].replace("{pad}", dayPad)}
           </p>
           {module.chapter_title && (
             <p style={{
