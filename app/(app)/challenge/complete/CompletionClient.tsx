@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
@@ -15,6 +16,9 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
   completedAt: string;
   journalEntries: JournalEntry[];
 }) {
+  const { t } = useLanguage();
+  const c = t.challenge;
+
   const fullName = [firstName, lastName].filter(Boolean).join(" ") || "Leader";
   const completedDate = new Date(completedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const filledEntries = journalEntries.filter(e => e.answer_1 || e.answer_2);
@@ -60,20 +64,20 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
       <div className="no-print">
         <div style={{ background: navy, padding: "0.875rem clamp(1rem, 4vw, 2rem)" }}>
           <Link href="/dashboard" style={{ color: "oklch(72% 0.04 260)", textDecoration: "none", fontSize: "0.75rem", fontFamily: "var(--font-montserrat)" }}>
-            ← Dashboard
+            {c.backDashboard}
           </Link>
         </div>
 
         <div style={{ maxWidth: "640px", margin: "0 auto", padding: "clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) 0", textAlign: "center" }}>
 
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
-            Challenge complete
+            {c.challengeComplete}
           </p>
           <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1.75rem, 4vw, 2.5rem)", color: navy, lineHeight: 1.15, marginBottom: "0.75rem" }}>
-            Well done, {firstName}.
+            {c.wellDone.replace("{name}", firstName)}
           </h1>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "1rem", color: mid, lineHeight: 1.7, marginBottom: "2.5rem", maxWidth: "40ch", margin: "0 auto 2.5rem" }}>
-            60 days. Completed {completedDate}. You did the inner work. That&apos;s what changes everything.
+            {c.completionTagline.replace("{date}", completedDate)}
           </p>
 
           {/* Actions */}
@@ -83,7 +87,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
                 onClick={downloadJournal}
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, background: "none", border: `1px solid ${navy}`, borderRadius: "8px", padding: "0.75rem 1.5rem", cursor: "pointer" }}
               >
-                Download journal ({filledEntries.length} entries)
+                {c.downloadJournal.replace("{n}", String(filledEntries.length))}
               </button>
             )}
           </div>
@@ -92,7 +96,7 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
           {filledEntries.length > 0 && (
             <div style={{ textAlign: "left" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: mid, marginBottom: "1rem" }}>
-                Your journal — {filledEntries.length} of 60 days
+                {c.yourJournal.replace("{n}", String(filledEntries.length))}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {filledEntries.slice(0, 10).map(entry => (
@@ -120,16 +124,16 @@ export default function CompletionClient({ firstName, lastName, completedAt, jou
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo-icon.png" alt="Crispy Development" style={{ width: "96px", height: "96px", objectFit: "contain", marginBottom: "0.5rem" }} />
         <div style={{ width: "60px", height: "4px", background: orange }} />
-        <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: mid }}>Certificate of Completion</p>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: 900, color: navy, lineHeight: 1.1 }}>Influential Leadership<br />Challenge</h1>
-        <p style={{ fontSize: "0.9rem", color: mid, maxWidth: "36ch", lineHeight: 1.6 }}>A 60-day journey in the hidden practices of leaders who carry deep and lasting influence</p>
-        <p style={{ fontSize: "1rem", color: mid }}>This certifies that</p>
+        <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: mid }}>{c.certTitle}</p>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: 900, color: navy, lineHeight: 1.1 }}>{c.certChallengeName}</h1>
+        <p style={{ fontSize: "0.9rem", color: mid, maxWidth: "36ch", lineHeight: 1.6 }}>{c.certSubtitle}</p>
+        <p style={{ fontSize: "1rem", color: mid }}>{c.certCertifies}</p>
         <p style={{ fontSize: "2rem", fontWeight: 800, color: navy }}>{fullName}</p>
-        <p style={{ fontSize: "1rem", color: mid }}>successfully completed all 60 sessions of the<br />Influential Leadership Challenge</p>
-        <p style={{ fontSize: "0.9rem", color: mid }}>Based on <em>Deep Influence</em> by T.J. Addington</p>
-        <p style={{ fontSize: "1rem", fontWeight: 700, color: navy }}>Completed {completedDate}</p>
+        <p style={{ fontSize: "1rem", color: mid }}>{c.certCompleted}</p>
+        <p style={{ fontSize: "0.9rem", color: mid }}>{c.certBased}</p>
+        <p style={{ fontSize: "1rem", fontWeight: 700, color: navy }}>{c.certCompletedDate.replace("{date}", completedDate)}</p>
         <div style={{ width: "60px", height: "4px", background: orange }} />
-        <p style={{ fontSize: "0.75rem", color: "oklch(65% 0.008 260)", marginTop: "1rem" }}>crispyleaders.com · Crispy Development</p>
+        <p style={{ fontSize: "0.75rem", color: "oklch(65% 0.008 260)", marginTop: "1rem" }}>{c.certSite}</p>
       </div>
     </div>
   );

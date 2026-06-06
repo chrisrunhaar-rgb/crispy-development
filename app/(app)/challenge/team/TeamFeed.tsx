@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy   = "oklch(22% 0.10 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -24,6 +25,8 @@ export default function TeamFeed({
   members: MemberInfo[];
 }) {
   const [openDays, setOpenDays] = useState<Set<number>>(new Set(days.length > 0 ? [days[0]] : []));
+  const { t } = useLanguage();
+  const c = t.challenge;
 
   function toggle(day: number) {
     setOpenDays(prev => {
@@ -49,7 +52,7 @@ export default function TeamFeed({
             >
               <div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.2rem" }}>
-                  Day {String(day).padStart(2, "0")}
+                  {c.dayCompleted.split(" · ")[0].replace("{pad}", String(day).padStart(2, "0"))}
                 </p>
                 {mod && (
                   <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: navy, margin: 0 }}>
@@ -59,7 +62,7 @@ export default function TeamFeed({
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", color: mid }}>
-                  {answers.length} response{answers.length !== 1 ? "s" : ""}
+                  {(answers.length !== 1 ? c.responsesPlural : c.responses).replace("{n}", String(answers.length))}
                 </span>
                 <span style={{ color: mid, fontSize: "0.85rem", lineHeight: 1, transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease", display: "block" }}>
                   ▾
@@ -78,7 +81,7 @@ export default function TeamFeed({
                   {answers.map((a, i) => (
                     <div key={i} style={{ borderLeft: `3px solid ${a.user_id === currentUserId ? orange : "oklch(82% 0.06 260)"}`, paddingLeft: "0.875rem" }}>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: a.user_id === currentUserId ? orange : mid, marginBottom: "0.3rem" }}>
-                        {a.user_id === currentUserId ? "You" : a.name}
+                        {a.user_id === currentUserId ? c.youLabel : a.name}
                       </p>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(28% 0.008 260)", lineHeight: 1.7, margin: 0, whiteSpace: "pre-wrap" }}>
                         {a.answer}
@@ -88,10 +91,10 @@ export default function TeamFeed({
                   {noResponseMembers.map(m => (
                     <div key={m.user_id} style={{ borderLeft: "3px solid oklch(88% 0.006 80)", paddingLeft: "0.875rem" }}>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(72% 0.006 260)", marginBottom: "0.2rem" }}>
-                        {m.is_me ? "You" : m.name}
+                        {m.is_me ? c.youLabel : m.name}
                       </p>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(68% 0.006 260)", fontStyle: "italic", margin: 0 }}>
-                        No response yet
+                        {c.noResponseYet}
                       </p>
                     </div>
                   ))}
