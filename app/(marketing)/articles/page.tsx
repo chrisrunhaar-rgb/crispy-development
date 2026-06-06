@@ -17,6 +17,15 @@ type Article = {
 
 const articles: Article[] = [
   {
+    image: "/pathway-articles.jpg",
+    source: "Annual Review of Organizational Psychology",
+    title: "Cross-Cultural Leadership: What We Know, What We Need to Know, and Where We Need to Go",
+    summary: "A rigorous academic review of what the research actually says about cross-cultural leadership. Den Hartog and De Hoogh examine how societal culture shapes leadership processes and their effects — covering implicit leadership theories, followership across cultures, and the challenges of leading multicultural teams. One of the most comprehensive surveys of the field, drawing on decades of empirical research to identify what we know with confidence and where the gaps remain.",
+    author: "Deanne N. Den Hartog & Annebel H.B. De Hoogh",
+    date: "January 2024",
+    url: "https://www.annualreviews.org/content/journals/10.1146/annurev-orgpsych-110721-033711",
+  },
+  {
     image: "https://www.talaera.com/app/uploads/2026/05/high-vs-low-power-distance-featured.png",
     source: "Talaera",
     title: "High vs. Low Power Distance: Why Your Team Won't Speak Up",
