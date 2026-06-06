@@ -11,14 +11,38 @@ const mid      = "oklch(52% 0.008 260)";
 
 const initialState = { error: "", success: false };
 
-export default function ApplyForm({ groupId, groupName, existingStatus }: {
+type Lang = "en" | "id";
+
+async function callSetLanguage(lang: Lang) {
+  try {
+    await fetch("/api/set-language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lang }),
+    });
+  } catch {
+    // fire and forget — silently ignore
+  }
+}
+
+function setLangCookie(lang: Lang) {
+  document.cookie = `crispy-lang=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
+
+export default function ApplyForm({ groupId, groupName, existingStatus, groupLanguage }: {
   groupId: string;
   groupName: string;
   existingStatus: string | null;
+  groupLanguage: Lang;
 }) {
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
       const result = await applyToGroup(groupId, formData);
+      if (!result?.error) {
+        // Inherit group language on successful application (fire and forget)
+        setLangCookie(groupLanguage);
+        callSetLanguage(groupLanguage);
+      }
       return result?.error ? { error: result.error, success: false } : { error: "", success: true };
     },
     initialState,

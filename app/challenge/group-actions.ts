@@ -22,6 +22,8 @@ export async function createGroup(formData: FormData) {
   const meetingDay = (hasMeetings && meetingDayRaw !== null && meetingDayRaw !== "") ? Number(meetingDayRaw) : null;
   const meetingTime = hasMeetings ? ((formData.get("meeting_time") as string | null)?.trim() || null) : null;
   const startDate = (formData.get("start_date") as string | null) || null;
+  const langRaw = formData.get("language") as string | null;
+  const language: "en" | "id" = langRaw === "id" ? "id" : "en";
 
   // Calculate end date: ceil(62 / daysPerWeek) weeks from start
   let endDate: string | null = null;
@@ -52,6 +54,7 @@ export async function createGroup(formData: FormData) {
       meeting_time: meetingTime,
       start_date: startDate,
       end_date: endDate,
+      language,
     })
     .select("id, group_code")
     .single();

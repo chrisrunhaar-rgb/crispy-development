@@ -11,6 +11,8 @@ export async function signUpChallenge(formData: FormData) {
   const password = formData.get("password") as string;
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
+  const langRaw = formData.get("language") as string | null;
+  const language: "en" | "id" = langRaw === "id" ? "id" : "en";
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://crispyleaders.com";
 
@@ -25,7 +27,7 @@ export async function signUpChallenge(formData: FormData) {
         pathway: "personal",
         challenge_enrolled: true,
         onboarding_complete: true,
-        language_preference: "en",
+        language_preference: language,
       },
     },
   });

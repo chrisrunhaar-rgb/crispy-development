@@ -14,11 +14,13 @@ export default async function ApplyPage({ params }: { params: Promise<{ groupId:
   const admin = createAdminClient();
   const { data: group } = await admin
     .from("challenge_groups")
-    .select("id, name, description, is_public")
+    .select("id, name, description, is_public, language")
     .eq("id", groupId)
     .maybeSingle();
 
   if (!group || !group.is_public) redirect("/challenge/group/browse");
+
+  const groupLanguage: "en" | "id" = group.language === "id" ? "id" : "en";
 
   // Already applied?
   const { data: existing } = await admin
@@ -34,6 +36,7 @@ export default async function ApplyPage({ params }: { params: Promise<{ groupId:
         groupId={groupId}
         groupName={group.name}
         existingStatus={existing?.status ?? null}
+        groupLanguage={groupLanguage}
       />
     </div>
   );
