@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import CreateGroupForm from "./CreateGroupForm";
 
@@ -9,9 +10,13 @@ export default async function CreateGroupPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/challenge/group/create");
 
+  const cookieStore = await cookies();
+  const rawLang = cookieStore.get("crispy-lang")?.value;
+  const initialLang: "en" | "id" = rawLang === "id" ? "id" : "en";
+
   return (
     <div style={{ minHeight: "calc(100dvh - 80px)", background: "oklch(97% 0.005 80)", paddingBlock: "3rem", paddingInline: "1.5rem", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
-      <CreateGroupForm />
+      <CreateGroupForm initialLang={initialLang} />
     </div>
   );
 }

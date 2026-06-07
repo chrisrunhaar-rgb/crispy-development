@@ -10,7 +10,7 @@ const offWhite = "oklch(97% 0.005 80)";
 const mid      = "oklch(52% 0.008 260)";
 const pillNavy = "oklch(30% 0.12 260)";
 
-const DAYS = [
+const DAYS_EN = [
   { value: 1, label: "Mon" },
   { value: 2, label: "Tue" },
   { value: 3, label: "Wed" },
@@ -18,6 +18,16 @@ const DAYS = [
   { value: 5, label: "Fri" },
   { value: 6, label: "Sat" },
   { value: 0, label: "Sun" },
+];
+
+const DAYS_ID = [
+  { value: 1, label: "Sen" },
+  { value: 2, label: "Sel" },
+  { value: 3, label: "Rab" },
+  { value: 4, label: "Kam" },
+  { value: 5, label: "Jum" },
+  { value: 6, label: "Sab" },
+  { value: 0, label: "Min" },
 ];
 
 const SESSIONS = 60;
@@ -43,7 +53,7 @@ async function callSetLanguage(lang: Lang) {
       body: JSON.stringify({ lang }),
     });
   } catch {
-    // fire and forget — silently ignore
+    // fire and forget
   }
 }
 
@@ -51,7 +61,68 @@ function setLangCookie(lang: Lang) {
   document.cookie = `crispy-lang=${lang}; path=/; max-age=31536000; samesite=lax`;
 }
 
-export default function CreateGroupForm() {
+const copy = {
+  en: {
+    back: "← Back",
+    pathLabel: "Facilitator path",
+    heading: "Create your group",
+    subheading: "You'll get an invite link to share. Members read together on the same schedule.",
+    groupName: "Group name",
+    groupNamePlaceholder: "e.g. Leadership Team 2025",
+    description: "Description",
+    optional: "(optional)",
+    descriptionPlaceholder: "What's this group about? Who's it for?",
+    readingDays: "Reading days",
+    readingDaysHint: "Which days do members read? Members can read any day, but these are the scheduled nudge days.",
+    startDate: "Start date",
+    estimatedEnd: "Estimated end date",
+    pickReadingDays: "Pick reading days",
+    pickStartDate: "Pick a start date",
+    onlineMeetings: "Online meetings",
+    onlineMeetingsDesc: "Highly recommended. Each topic has a guided discussion script for the facilitator — making it easy to lead the group conversation online.",
+    frequency: "Frequency",
+    weekly: "Weekly",
+    biweekly: "Bi-weekly",
+    meetingDay: "Meeting day",
+    meetingTime: "Meeting time",
+    meetingLink: "Meeting link",
+    openGroup: "Open group",
+    openGroupDesc: "Anyone can discover and apply to join. You approve each member.",
+    creating: "Creating group...",
+    create: "Create group →",
+  },
+  id: {
+    back: "← Kembali",
+    pathLabel: "Jalur fasilitator",
+    heading: "Buat kelompok Anda",
+    subheading: "Anda akan mendapat tautan undangan untuk dibagikan. Anggota membaca bersama sesuai jadwal yang sama.",
+    groupName: "Nama kelompok",
+    groupNamePlaceholder: "mis. Tim Kepemimpinan 2025",
+    description: "Deskripsi",
+    optional: "(opsional)",
+    descriptionPlaceholder: "Tentang apa kelompok ini? Untuk siapa?",
+    readingDays: "Hari membaca",
+    readingDaysHint: "Hari apa anggota membaca? Anggota bisa membaca kapan saja, tapi hari ini adalah jadwal pengingat.",
+    startDate: "Tanggal mulai",
+    estimatedEnd: "Perkiraan tanggal selesai",
+    pickReadingDays: "Pilih hari membaca",
+    pickStartDate: "Pilih tanggal mulai",
+    onlineMeetings: "Pertemuan online",
+    onlineMeetingsDesc: "Sangat disarankan. Setiap topik memiliki panduan diskusi untuk fasilitator — memudahkan memimpin percakapan kelompok secara online.",
+    frequency: "Frekuensi",
+    weekly: "Mingguan",
+    biweekly: "Dua minggu sekali",
+    meetingDay: "Hari pertemuan",
+    meetingTime: "Waktu pertemuan",
+    meetingLink: "Tautan pertemuan",
+    openGroup: "Kelompok terbuka",
+    openGroupDesc: "Siapa saja bisa menemukan dan mendaftar untuk bergabung. Anda menyetujui setiap anggota.",
+    creating: "Membuat kelompok...",
+    create: "Buat kelompok →",
+  },
+};
+
+export default function CreateGroupForm({ initialLang = "en" }: { initialLang?: Lang }) {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [isPublic, setIsPublic]           = useState(false);
   const [hasMeetings, setHasMeetings]     = useState(false);
@@ -59,7 +130,10 @@ export default function CreateGroupForm() {
   const [meetingDay, setMeetingDay]       = useState<number | null>(null);
   const [meetingTime, setMeetingTime]     = useState("");
   const [startDate, setStartDate]         = useState("");
-  const [selectedLang, setSelectedLang]   = useState<Lang>("en");
+  const [selectedLang, setSelectedLang]   = useState<Lang>(initialLang);
+
+  const c = copy[selectedLang];
+  const DAYS = selectedLang === "id" ? DAYS_ID : DAYS_EN;
 
   const endDateDisplay = useMemo(
     () => calcEndDate(startDate, selectedDays.length),
@@ -79,7 +153,6 @@ export default function CreateGroupForm() {
       formData.set("language", selectedLang);
       const result = await createGroup(formData);
       if (!result?.error) {
-        // Group created successfully — set language preference (fire and forget)
         setLangCookie(selectedLang);
         callSetLanguage(selectedLang);
       }
@@ -99,17 +172,17 @@ export default function CreateGroupForm() {
   return (
     <div style={{ width: "100%", maxWidth: "520px" }}>
       <Link href="/challenge/solo" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem", marginBottom: "1.5rem" }}>
-        ← Back
+        {c.back}
       </Link>
 
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.5rem" }}>
-        Facilitator path
+        {c.pathLabel}
       </p>
       <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
-        Create your group
+        {c.heading}
       </h1>
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.6, marginBottom: "2rem" }}>
-        You&apos;ll get an invite link to share. Members read together on the same schedule.
+        {c.subheading}
       </p>
 
       <form action={formAction}>
@@ -117,21 +190,21 @@ export default function CreateGroupForm() {
 
           {/* Name */}
           <div>
-            <label style={labelStyle}>Group name</label>
-            <input name="name" type="text" required placeholder="e.g. Leadership Team 2025" style={inputStyle} />
+            <label style={labelStyle}>{c.groupName}</label>
+            <input name="name" type="text" required placeholder={c.groupNamePlaceholder} style={inputStyle} />
           </div>
 
           {/* Description */}
           <div>
-            <label style={labelStyle}>Description <span style={{ fontWeight: 400, color: mid }}>(optional)</span></label>
-            <textarea name="description" rows={3} placeholder="What's this group about? Who's it for?" style={{ ...inputStyle, resize: "vertical" }} />
+            <label style={labelStyle}>{c.description} <span style={{ fontWeight: 400, color: mid }}>{c.optional}</span></label>
+            <textarea name="description" rows={3} placeholder={c.descriptionPlaceholder} style={{ ...inputStyle, resize: "vertical" }} />
           </div>
 
           {/* Reading days */}
           <div>
-            <label style={labelStyle}>Reading days</label>
+            <label style={labelStyle}>{c.readingDays}</label>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: mid, marginBottom: "0.75rem" }}>
-              Which days do members read? Members can read any day, but these are the scheduled nudge days.
+              {c.readingDaysHint}
             </p>
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
               {DAYS.map(d => (
@@ -157,7 +230,7 @@ export default function CreateGroupForm() {
           {/* Start date + end date */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
             <div>
-              <label style={labelStyle}>Start date</label>
+              <label style={labelStyle}>{c.startDate}</label>
               <input
                 name="start_date"
                 type="date"
@@ -168,9 +241,9 @@ export default function CreateGroupForm() {
               />
             </div>
             <div>
-              <label style={labelStyle}>Estimated end date</label>
+              <label style={labelStyle}>{c.estimatedEnd}</label>
               <div style={{ ...inputStyle, color: endDateDisplay ? navy : "oklch(70% 0.006 260)", background: "oklch(94% 0.004 80)", display: "flex", alignItems: "center" }}>
-                {endDateDisplay || (selectedDays.length === 0 ? "Pick reading days" : "Pick a start date")}
+                {endDateDisplay || (selectedDays.length === 0 ? c.pickReadingDays : c.pickStartDate)}
               </div>
             </div>
           </div>
@@ -180,10 +253,10 @@ export default function CreateGroupForm() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
               <div style={{ flex: 1 }}>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>
-                  Online meetings
+                  {c.onlineMeetings}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid, lineHeight: 1.55 }}>
-                  Highly recommended. Each topic has a guided discussion script for the facilitator — making it easy to lead the group conversation online.
+                  {c.onlineMeetingsDesc}
                 </p>
               </div>
               <button
@@ -208,7 +281,7 @@ export default function CreateGroupForm() {
 
                 {/* Frequency */}
                 <div>
-                  <label style={labelStyle}>Frequency</label>
+                  <label style={labelStyle}>{c.frequency}</label>
                   <div style={{ display: "flex", gap: "0.625rem" }}>
                     {(["weekly", "biweekly"] as const).map(opt => (
                       <button
@@ -224,7 +297,7 @@ export default function CreateGroupForm() {
                           borderColor: meetingFrequency === opt ? navy : "oklch(82% 0.006 260)",
                         }}
                       >
-                        {opt === "weekly" ? "Weekly" : "Bi-weekly"}
+                        {opt === "weekly" ? c.weekly : c.biweekly}
                       </button>
                     ))}
                   </div>
@@ -232,7 +305,7 @@ export default function CreateGroupForm() {
 
                 {/* Meeting day */}
                 <div>
-                  <label style={labelStyle}>Meeting day</label>
+                  <label style={labelStyle}>{c.meetingDay}</label>
                   <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                     {DAYS.map(d => (
                       <button
@@ -256,7 +329,7 @@ export default function CreateGroupForm() {
 
                 {/* Meeting time */}
                 <div>
-                  <label style={labelStyle}>Meeting time</label>
+                  <label style={labelStyle}>{c.meetingTime}</label>
                   <input
                     type="time"
                     value={meetingTime}
@@ -267,7 +340,7 @@ export default function CreateGroupForm() {
 
                 {/* Meeting link */}
                 <div>
-                  <label style={labelStyle}>Meeting link <span style={{ fontWeight: 400, color: mid }}>(optional)</span></label>
+                  <label style={labelStyle}>{c.meetingLink} <span style={{ fontWeight: 400, color: mid }}>{c.optional}</span></label>
                   <input
                     name="meeting_link"
                     type="url"
@@ -283,9 +356,9 @@ export default function CreateGroupForm() {
           {/* Open group toggle */}
           <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1rem 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
             <div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>Open group</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>{c.openGroup}</p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid, lineHeight: 1.5 }}>
-                Anyone can discover and apply to join. You approve each member.
+                {c.openGroupDesc}
               </p>
             </div>
             <button
@@ -335,7 +408,7 @@ export default function CreateGroupForm() {
           disabled={pending || selectedDays.length === 0}
           style={{ width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: offWhite, background: navy, border: "none", borderRadius: "8px", padding: "0.9375rem", cursor: pending ? "not-allowed" : "pointer", opacity: pending || selectedDays.length === 0 ? 0.7 : 1, marginTop: "1.5rem" }}
         >
-          {pending ? "Creating group..." : "Create group →"}
+          {pending ? c.creating : c.create}
         </button>
       </form>
     </div>
