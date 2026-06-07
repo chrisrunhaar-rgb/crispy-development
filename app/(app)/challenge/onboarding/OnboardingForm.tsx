@@ -273,7 +273,7 @@ export default function OnboardingForm({ initialLang = "en", firstName, preselec
     setSkipPending(false);
   }
 
-  const showInstallBlock = !isInstalled && (promptReady || isIOS);
+  const showInstallBlock = !isInstalled;
 
   return (
     <div style={{ width: "100%", maxWidth: "480px" }}>
@@ -306,10 +306,18 @@ export default function OnboardingForm({ initialLang = "en", firstName, preselec
                         {c.installIosStep} <strong style={{ color: navy }}>→</strong> {c.installIosStep2}
                       </span>
                     </div>
-                  ) : (
+                  ) : promptReady ? (
                     <button type="button" onClick={handleInstall} disabled={installLoading} style={actionBtn}>
                       {installLoading ? "…" : c.installBtn}
                     </button>
+                  ) : (
+                    <div style={iosInstructions}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid }}>
+                        {lang === "id"
+                          ? "Buka menu browser (⋮) → Tambahkan ke layar utama"
+                          : "Open browser menu (⋮) → Add to home screen"}
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
