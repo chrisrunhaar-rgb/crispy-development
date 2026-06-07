@@ -60,6 +60,24 @@ export async function GET(req: Request) {
         )
       );
 
+      // Remove expired subscriptions (410 Gone = endpoint permanently invalid)
+      const staleEndpoints: string[] = [];
+      results.forEach((result, i) => {
+        if (result.status === "rejected") {
+          const err = result.reason as { statusCode?: number };
+          if (err?.statusCode === 410) {
+            staleEndpoints.push(subs[i].endpoint);
+          }
+        }
+      });
+      if (staleEndpoints.length > 0) {
+        await admin
+          .from("push_subscriptions")
+          .delete()
+          .eq("user_id", enrollment.user_id)
+          .in("endpoint", staleEndpoints);
+      }
+
       const didSend = results.some(r => r.status === "fulfilled");
       if (didSend) {
         sent++;
