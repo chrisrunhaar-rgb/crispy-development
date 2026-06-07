@@ -21,9 +21,16 @@ export default async function AppLayout({
     hasCoachAccess = membership?.coach_access === true || membership?.is_admin === true;
   }
 
+  // Sync cookie to metadata on every authenticated page load — prevents stale cookie
+  // overriding the user's explicit language preference (e.g. after group creation)
+  const metaLang = ((user?.user_metadata as Record<string, unknown>)?.language_preference as string) === "id" ? "id" : "en";
+
   return (
-    <ClientLayout hasCoachAccess={hasCoachAccess}>
-      {children}
-    </ClientLayout>
+    <>
+      <script dangerouslySetInnerHTML={{ __html: `document.cookie="crispy-lang=${metaLang};path=/;max-age=31536000;samesite=lax"` }} />
+      <ClientLayout hasCoachAccess={hasCoachAccess}>
+        {children}
+      </ClientLayout>
+    </>
   );
 }
