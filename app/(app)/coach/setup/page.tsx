@@ -22,6 +22,12 @@ export default async function CoachSetupPage() {
 
   const isFirstTime = !profile?.onboarding_complete;
   const showIntroFirst = isFirstTime && !profile?.terms_accepted_at;
+  const lang = (user.user_metadata?.language_preference === "id" ? "id" : "en") as "en" | "id";
+
+  const headerLabels = {
+    en: { setup: "Set up your profile", profile: "Your profile", back: "← Back to WayPoint" },
+    id: { setup: "Atur profilmu", profile: "Profilmu", back: "← Kembali ke WayPoint" },
+  };
 
   // When showing intro first, SetupFlow handles the full-page layout
   if (showIntroFirst) {
@@ -29,6 +35,7 @@ export default async function CoachSetupPage() {
       <SetupFlow
         userId={user.id}
         isFirstTime={isFirstTime}
+        lang={lang}
         existing={profile ?? null}
         showIntroFirst={showIntroFirst}
       />
@@ -45,12 +52,12 @@ export default async function CoachSetupPage() {
               WayPoint
             </p>
             <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.375rem", color: "white" }}>
-              {isFirstTime ? "Set up your profile" : "Your profile"}
+              {isFirstTime ? headerLabels[lang].setup : headerLabels[lang].profile}
             </h1>
           </div>
           {!isFirstTime && (
             <Link href="/coach" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 600, letterSpacing: "0.06em", color: "oklch(72% 0.008 260)", textDecoration: "none" }}>
-              ← Back to WayPoint
+              {headerLabels[lang].back}
             </Link>
           )}
         </div>
@@ -61,6 +68,7 @@ export default async function CoachSetupPage() {
           <SetupFlow
             userId={user.id}
             isFirstTime={isFirstTime}
+            lang={lang}
             existing={profile ?? null}
             showIntroFirst={false}
           />
