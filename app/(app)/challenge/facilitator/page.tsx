@@ -25,11 +25,16 @@ export default async function FacilitatorPage({
       .order("created_at", { ascending: false }),
     admin
       .from("challenge_enrollments")
-      .select("current_day")
+      .select("current_day, notification_time, notification_days, timezone")
       .eq("user_id", user.id)
       .maybeSingle(),
   ]);
-  const currentDay = (enrollmentData as { current_day: number | null } | null)?.current_day ?? 1;
+  type EnrollRow = { current_day: number | null; notification_time: string | null; notification_days: number[] | null; timezone: string | null };
+  const enroll = enrollmentData as EnrollRow | null;
+  const currentDay = enroll?.current_day ?? 1;
+  const personalTime = enroll?.notification_time?.slice(0, 5) ?? "08:00";
+  const personalDays = (enroll?.notification_days as number[] | null) ?? [1, 2, 3, 4, 5];
+  const lang = (user.user_metadata?.language_preference === "id" ? "id" : "en") as "en" | "id";
 
   const groupIds = (groups ?? []).map(g => g.id);
 
@@ -70,6 +75,9 @@ export default async function FacilitatorPage({
       newlyCreatedId={created ?? null}
       newGroupCode={code ?? null}
       firstName={firstName}
+      personalTime={personalTime}
+      personalDays={personalDays}
+      lang={lang}
     />
   );
 }

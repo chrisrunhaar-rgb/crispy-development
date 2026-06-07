@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { updateNotificationPrefs } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -58,9 +59,11 @@ export default function SettingsForm({
   initialTime: string;
   initialDays: number[];
 }) {
+  const router = useRouter();
   const [selectedDays, setSelectedDays] = useState<number[]>(initialDays);
   const [time, setTime] = useState(initialTime);
   const [isPending, startTransition] = useTransition();
+  const [saved, setSaved] = useState(false);
   const c = copy[lang];
   const DAYS = lang === "id" ? DAYS_ID : DAYS_EN;
 
@@ -75,7 +78,11 @@ export default function SettingsForm({
       fd.set("notification_time", time);
       fd.set("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
       selectedDays.forEach(d => fd.append("notification_days", String(d)));
-      await updateNotificationPrefs(fd);
+      const result = await updateNotificationPrefs(fd);
+      if (result && !("error" in result)) {
+        setSaved(true);
+        setTimeout(() => router.push(`/challenge/day/${result.currentDay}`), 1200);
+      }
     });
   }
 
@@ -136,16 +143,19 @@ export default function SettingsForm({
 
       <button
         type="button"
-        disabled={isPending || selectedDays.length === 0}
+        disabled={isPending || saved || selectedDays.length === 0}
         onClick={handleSave}
         style={{
           width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700,
-          fontSize: "1rem", color: offWhite, background: orange, border: "none",
-          borderRadius: "8px", padding: "0.9375rem", cursor: (isPending || selectedDays.length === 0) ? "not-allowed" : "pointer",
-          opacity: (isPending || selectedDays.length === 0) ? 0.7 : 1,
+          fontSize: "1rem", color: offWhite, border: "none",
+          borderRadius: "8px", padding: "0.9375rem",
+          cursor: (isPending || saved || selectedDays.length === 0) ? "not-allowed" : "pointer",
+          background: saved ? "oklch(42% 0.14 145)" : orange,
+          opacity: (isPending || selectedDays.length === 0) && !saved ? 0.7 : 1,
+          transition: "background 0.2s",
         }}
       >
-        {isPending ? c.saving : c.saveBtn}
+        {saved ? (lang === "id" ? "✓ Tersimpan!" : "✓ Saved!") : isPending ? c.saving : c.saveBtn}
       </button>
     </div>
   );

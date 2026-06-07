@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { reviewApplication, toggleGroupPublic, saveNotificationSettings, updateGroupDetails } from "@/app/challenge/group-actions";
+import { updateNotificationPrefs } from "@/app/challenge/actions";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -54,16 +55,31 @@ type Application = {
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+const PERSONAL_DAYS_EN = [
+  { value: 1, label: "Mon" }, { value: 2, label: "Tue" }, { value: 3, label: "Wed" },
+  { value: 4, label: "Thu" }, { value: 5, label: "Fri" }, { value: 6, label: "Sat" }, { value: 0, label: "Sun" },
+];
+const PERSONAL_DAYS_ID = [
+  { value: 1, label: "Sen" }, { value: 2, label: "Sel" }, { value: 3, label: "Rab" },
+  { value: 4, label: "Kam" }, { value: 5, label: "Jum" }, { value: 6, label: "Sab" }, { value: 0, label: "Min" },
+];
+
 export default function FacilitatorDashboard({
   groups,
   pendingApplications,
   firstName,
+  personalTime,
+  personalDays,
+  lang,
 }: {
   groups: Group[];
   pendingApplications: Application[];
   newlyCreatedId: string | null;
   newGroupCode: string | null;
   firstName: string;
+  personalTime: string;
+  personalDays: number[];
+  lang: "en" | "id";
 }) {
   const { t } = useLanguage();
   const c = t.challenge;
@@ -80,6 +96,10 @@ export default function FacilitatorDashboard({
   const [editLanguage, setEditLanguage] = useState<"en" | "id">((groups[0]?.language as "en" | "id") ?? "en");
   const [detailsSaving, setDetailsSaving] = useState(false);
   const [detailsError, setDetailsError] = useState<string | null>(null);
+  const [pDays, setPDays] = useState<number[]>(personalDays);
+  const [pTime, setPTime] = useState(personalTime);
+  const [pSaved, setPSaved] = useState(false);
+  const [pPending, startPTransition] = useTransition();
 
   const group = groups[0] ?? null;
 
@@ -124,6 +144,19 @@ export default function FacilitatorDashboard({
 
   function handleReview(appId: string, action: "approve" | "reject") {
     startTransition(async () => { await reviewApplication(appId, action); });
+  }
+
+  function handleSavePersonal() {
+    if (pPending || pSaved || pDays.length === 0) return;
+    startPTransition(async () => {
+      const fd = new FormData();
+      fd.set("notification_time", pTime);
+      fd.set("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
+      pDays.forEach(d => fd.append("notification_days", String(d)));
+      await updateNotificationPrefs(fd);
+      setPSaved(true);
+      setTimeout(() => setPSaved(false), 2500);
+    });
   }
 
   return (
@@ -345,6 +378,71 @@ export default function FacilitatorDashboard({
                 </button>
               </div>
             </div>
+
+            {/* Personal notification settings */}
+            {(() => {
+              const PDAYS = lang === "id" ? PERSONAL_DAYS_ID : PERSONAL_DAYS_EN;
+              const pLabel = lang === "id" ? "Notifikasi saya sendiri" : "My personal notifications";
+              const pHint = lang === "id"
+                ? "Pengingat harian untuk sesi tantangan kamu sendiri."
+                : "Your own daily reminder for the challenge sessions.";
+              const pDayLabel = lang === "id" ? "Hari kamu membaca" : "Days you read";
+              const pTimeLabel = lang === "id" ? "Pukul berapa?" : "What time?";
+              const pSaveLabel = lang === "id" ? "Simpan" : "Save";
+              const pSavingLabel = lang === "id" ? "Menyimpan…" : "Saving…";
+              const pSavedLabel = lang === "id" ? "✓ Tersimpan" : "✓ Saved";
+              return (
+                <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.25rem", marginBottom: "1.25rem" }}>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: navy, marginBottom: "0.25rem" }}>
+                    {pLabel}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: mid, lineHeight: 1.55, marginBottom: "1rem" }}>
+                    {pHint}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.06em", textTransform: "uppercase", color: mid, marginBottom: "0.5rem" }}>
+                    {pDayLabel}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap", marginBottom: "0.875rem" }}>
+                    {PDAYS.map(d => (
+                      <button
+                        key={d.value}
+                        type="button"
+                        onClick={() => setPDays(prev => prev.includes(d.value) ? prev.filter(x => x !== d.value) : [...prev, d.value])}
+                        style={{
+                          fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem",
+                          padding: "0.4375rem 0.75rem", borderRadius: "6px", border: "1px solid",
+                          cursor: "pointer",
+                          background: pDays.includes(d.value) ? navy : "white",
+                          color: pDays.includes(d.value) ? offWhite : mid,
+                          borderColor: pDays.includes(d.value) ? navy : "oklch(82% 0.006 260)",
+                          transition: "background 0.15s, color 0.15s",
+                        }}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.06em", textTransform: "uppercase", color: mid, marginBottom: "0.5rem" }}>
+                    {pTimeLabel}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.625rem", alignItems: "center", flexWrap: "wrap" }}>
+                    <input
+                      type="time"
+                      value={pTime}
+                      onChange={e => setPTime(e.target.value)}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: navy, background: "oklch(95% 0.004 80)", border: "1px solid oklch(85% 0.006 80)", borderRadius: "6px", padding: "0.5rem 0.75rem", outline: "none" }}
+                    />
+                    <button
+                      onClick={handleSavePersonal}
+                      disabled={pPending || pSaved || pDays.length === 0}
+                      style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem", color: offWhite, border: "none", borderRadius: "6px", padding: "0.5rem 1rem", cursor: (pPending || pSaved || pDays.length === 0) ? "not-allowed" : "pointer", background: pSaved ? "oklch(42% 0.14 145)" : navy, transition: "background 0.2s" }}
+                    >
+                      {pSaved ? pSavedLabel : pPending ? pSavingLabel : pSaveLabel}
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Pending applications */}
             {pendingApplications.length > 0 && (

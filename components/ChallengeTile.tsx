@@ -221,21 +221,22 @@ export default function ChallengeTile({
                 </Link>
               )}
 
-              <Link
-                href="/challenge/settings"
-                onClick={() => setOpen(false)}
-                style={{
-                  display: 'block', width: '100%', textAlign: 'center',
-                  background: 'transparent', color: mid,
-                  fontFamily: 'var(--font-montserrat)', fontWeight: 600, fontSize: '0.8rem',
-                  padding: '0.625rem 1rem', textDecoration: 'none',
-                  borderTop: userRole === 'facilitator' ? 'none' : '1px solid oklch(90% 0.006 260)',
-                  marginTop: userRole === 'facilitator' ? '0' : '0.25rem',
-                  paddingTop: userRole === 'facilitator' ? '0' : '0.875rem',
-                }}
-              >
-                {c.tileNotifSettings}
-              </Link>
+              {userRole !== 'facilitator' && (
+                <Link
+                  href="/challenge/settings"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    display: 'block', width: '100%', textAlign: 'center',
+                    background: 'transparent', color: mid,
+                    fontFamily: 'var(--font-montserrat)', fontWeight: 600, fontSize: '0.8rem',
+                    padding: '0.625rem 1rem', textDecoration: 'none',
+                    borderTop: '1px solid oklch(90% 0.006 260)',
+                    marginTop: '0.25rem', paddingTop: '0.875rem',
+                  }}
+                >
+                  {c.tileNotifSettings}
+                </Link>
+              )}
             </div>
           </div>
         </div>

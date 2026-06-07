@@ -142,13 +142,15 @@ export async function updateNotificationPrefs(formData: FormData) {
     .eq("user_id", user.id);
 
   revalidatePath("/challenge/settings");
+  revalidatePath("/challenge/facilitator");
+
   const { data: enrollment } = await admin
     .from("challenge_enrollments")
     .select("current_day")
     .eq("user_id", user.id)
     .maybeSingle();
 
-  redirect(`/challenge/day/${enrollment?.current_day ?? 1}`);
+  return { currentDay: enrollment?.current_day ?? 1 };
 }
 
 export async function saveJournalEntry(dayNumber: number, answer1: string, answer2: string) {
