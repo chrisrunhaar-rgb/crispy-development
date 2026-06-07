@@ -1,15 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-
-const LogoRevealPlayer = dynamic(
-  () => import("@/components/Animations/LogoRevealPlayer"),
-  { ssr: false }
-);
 
 export default function HomeContent() {
   const { t, lang } = useLanguage();
@@ -45,7 +39,6 @@ export default function HomeContent() {
 
   return (
     <>
-      <LogoRevealPlayer />
       {/* ── HERO ── */}
       <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(5rem, 9vw, 9rem)", paddingBottom: "clamp(5rem, 9vw, 9rem)", position: "relative", overflow: "hidden" }}>
         {/* Top orange rule */}
