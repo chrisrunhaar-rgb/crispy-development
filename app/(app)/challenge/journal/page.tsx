@@ -130,7 +130,9 @@ export default async function ChallengeJournalPage() {
   if (!user) redirect("/login?next=/challenge/journal");
 
   const cookieStore = await cookies();
-  const lang = cookieStore.get("crispy-lang")?.value ?? "en";
+  const cookieLang = cookieStore.get("crispy-lang")?.value;
+  const metaLang = (user.user_metadata as Record<string, unknown>)?.language_preference as string | undefined;
+  const lang = ((metaLang ?? cookieLang ?? "en") === "id" ? "id" : "en");
 
   const admin = createAdminClient();
 
