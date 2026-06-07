@@ -84,7 +84,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
 
   const admin = createAdminClient();
 
-  const notificationTime = formData.get("notification_time") as string | null ?? "08:00";
+  const notificationTime = (formData.get("notification_time") as string | null) || "08:00";
   const timezone = formData.get("timezone") as string | null ?? "UTC";
   const rawDays = formData.getAll("notification_days") as string[];
   const notificationDays = rawDays.map(Number).filter(n => !isNaN(n));
