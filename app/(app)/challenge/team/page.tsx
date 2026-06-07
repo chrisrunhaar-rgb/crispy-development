@@ -24,10 +24,22 @@ export default async function ChallengeTeamPage() {
     .limit(1);
 
   const enrollment = enrollments?.[0] ?? null;
-  if (!enrollment?.group_id) redirect("/dashboard");
 
-  const groupId = enrollment.group_id;
-  const myCurrentDay: number = enrollment.current_day ?? 1;
+  let groupId: string;
+  if (enrollment?.group_id) {
+    groupId = enrollment.group_id;
+  } else {
+    const { data: facilitatorGroup } = await admin
+      .from("challenge_groups")
+      .select("id")
+      .eq("facilitator_id", user.id)
+      .limit(1)
+      .maybeSingle();
+    if (!facilitatorGroup) redirect("/dashboard");
+    groupId = facilitatorGroup.id;
+  }
+
+  const myCurrentDay: number = enrollment?.current_day ?? 1;
   const previousDay = myCurrentDay - 1;
   const hasPreviousDay = myCurrentDay > 1;
 
