@@ -39,7 +39,7 @@ export async function signUpChallenge(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/challenge/onboarding");
+  redirect("/challenge/solo");
 }
 
 export async function enrollExistingUser() {
@@ -74,7 +74,7 @@ export async function enrollExistingUser() {
     revalidatePath("/", "layout");
   }
 
-  redirect("/challenge/onboarding");
+  redirect("/challenge/day/1");
 }
 
 export async function saveOnboardingPrefs(formData: FormData) {

@@ -27,9 +27,9 @@ export function AppBottomNav({ hasCoachAccess }: { hasCoachAccess: boolean }) {
   const pathname = usePathname();
 
   const items = [
-    { href: "/dashboard", label: "Home", icon: HomeIcon, badge: null, logoSrc: null },
-    { href: "/resources", label: "Library", icon: ResourcesIcon, badge: null, logoSrc: null },
-    ...(hasCoachAccess ? [{ href: "/coach", label: "AI Coach", icon: null, badge: null as string | null, logoSrc: "/images/waypoint/waypoint-logo-blue.png" }] : []),
+    { href: "/dashboard", label: "Home", icon: HomeIcon, badge: null as string | null, logoSrc: null as string | null },
+    { href: "/resources", label: "Library", icon: ResourcesIcon, badge: null as string | null, logoSrc: null as string | null },
+    { href: "/coach", label: "AI Coach", icon: null, badge: null as string | null, logoSrc: "/images/waypoint/waypoint-logo-blue.png" },
   ];
 
   return (
