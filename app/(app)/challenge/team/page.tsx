@@ -159,7 +159,7 @@ export default async function ChallengeTeamPage() {
           <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1.375rem, 3vw, 1.75rem)", color: navy, lineHeight: 1.2, marginBottom: "1.25rem" }}>
             {groupName}
           </h1>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
             <Link
               href="/dashboard"
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8rem", color: navy, background: "transparent", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}
@@ -172,6 +172,14 @@ export default async function ChallengeTeamPage() {
             >
               Today: Day {myCurrentDay} →
             </Link>
+            {user.id === facilitatorId && (
+              <Link
+                href="/challenge/facilitator"
+                style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8rem", color: "oklch(52% 0.008 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
+              >
+                ⚙ Team settings
+              </Link>
+            )}
           </div>
         </div>
 
