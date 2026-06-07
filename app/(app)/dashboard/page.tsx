@@ -179,10 +179,6 @@ export default async function DashboardPage({
     .maybeSingle();
   const hasCoachAccess = membershipRow?.coach_access === true || membershipRow?.is_admin === true;
 
-  // First-time onboarding — redirect new members before any heavy fetching
-  if (!user.user_metadata?.onboarding_complete && !viewingAsAdmin) {
-    redirect("/welcome");
-  }
 
   const isTeamLeader = (pathway === "team" || isLeaderByMeta) && teamApplicationStatus === "approved";
   const hasTeam = isTeamLeader || !!memberOfTeam;
