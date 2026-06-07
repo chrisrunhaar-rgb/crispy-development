@@ -45,8 +45,8 @@ export async function GET(req: Request) {
 
       const day = enrollment.current_day;
       const payload = JSON.stringify({
-        title: `Day ${day} is ready 📖`,
-        body: "Your daily leadership reading is waiting.",
+        title: `Your Day ${day} reading is ready 📖`,
+        body: "Don't break your streak — your insight is waiting.",
         data: { url: `/challenge/day/${day}` },
         tag: "challenge-nudge",
       });
@@ -55,7 +55,8 @@ export async function GET(req: Request) {
         subs.map((sub: { endpoint: string; p256dh: string; auth: string }) =>
           webpush.sendNotification(
             { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
-            payload
+            payload,
+            { urgency: "high", TTL: 60 }
           )
         )
       );
