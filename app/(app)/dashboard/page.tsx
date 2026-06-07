@@ -936,7 +936,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             </p>
             <ChallengeTile
               currentDay={challengeCurrentDay}
-              userRole={isFacilitator ? "facilitator" : challengePath === "member" ? "member" : "solo"}
+              userRole={challengePath === "facilitator" ? "facilitator" : challengePath === "member" ? "member" : "solo"}
               firstName={dashboardFirstName}
             />
           </div>

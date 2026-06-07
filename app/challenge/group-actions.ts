@@ -68,14 +68,19 @@ export async function createGroup(formData: FormData) {
     role: "facilitator",
   });
 
-  // Enroll facilitator if not yet enrolled
+  // Enroll facilitator — upsert so existing solo enrollment gets upgraded
   const { data: existing } = await admin
     .from("challenge_enrollments")
     .select("id")
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (!existing) {
+  if (existing) {
+    await admin
+      .from("challenge_enrollments")
+      .update({ path: "facilitator", group_id: group.id })
+      .eq("user_id", user.id);
+  } else {
     await admin.from("challenge_enrollments").insert({
       user_id: user.id,
       path: "facilitator",
