@@ -124,6 +124,33 @@ export async function saveOnboardingPrefs(formData: FormData) {
   redirect("/challenge/day/1");
 }
 
+export async function updateNotificationPrefs(formData: FormData) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const admin = createAdminClient();
+
+  const notificationTime = (formData.get("notification_time") as string | null) || "08:00";
+  const timezone = (formData.get("timezone") as string | null) ?? "UTC";
+  const rawDays = formData.getAll("notification_days") as string[];
+  const notificationDays = rawDays.map(Number).filter(n => !isNaN(n));
+
+  await admin
+    .from("challenge_enrollments")
+    .update({ notification_time: notificationTime, notification_days: notificationDays, timezone })
+    .eq("user_id", user.id);
+
+  revalidatePath("/challenge/settings");
+  const { data: enrollment } = await admin
+    .from("challenge_enrollments")
+    .select("current_day")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  redirect(`/challenge/day/${enrollment?.current_day ?? 1}`);
+}
+
 export async function saveJournalEntry(dayNumber: number, answer1: string, answer2: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
