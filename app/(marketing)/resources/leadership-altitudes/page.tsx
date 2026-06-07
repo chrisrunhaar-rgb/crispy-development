@@ -1,6 +1,7 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
+import { requireModuleAccess } from "@/lib/require-module-access";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
@@ -16,6 +17,7 @@ export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG);
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
 

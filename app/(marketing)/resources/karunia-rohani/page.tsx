@@ -2,7 +2,7 @@
 import Script from "next/script";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireSubscription } from "@/lib/require-subscription";
+import { requireModuleAccess } from "@/lib/require-module-access";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata, generateFAQSchema } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
@@ -45,8 +45,7 @@ export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
-  await requireSubscription(supabase, user.id);
+  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG);
 
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
