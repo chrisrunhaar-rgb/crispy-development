@@ -2,19 +2,20 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/lib/LanguageContext';
 
 const navy   = 'oklch(22% 0.10 260)';
 const orange = 'oklch(65% 0.15 45)';
 const mid    = 'oklch(52% 0.008 260)';
 
-function getEncouragement(day: number): string {
-  if (day <= 9)  return "Great start. One day at a time.";
-  if (day <= 18) return "Momentum is building. Keep the habit.";
-  if (day <= 27) return "Consistency shapes character. You're proving it.";
-  if (day <= 36) return "Going deeper. Stay the course.";
-  if (day <= 45) return "More than halfway. Your leadership is growing.";
-  if (day <= 55) return "Almost there. Don't stop now.";
-  return "The final stretch. Finish strong.";
+function getEncouragementKey(day: number): string {
+  if (day <= 9)  return 'tileEncourage1';
+  if (day <= 18) return 'tileEncourage2';
+  if (day <= 27) return 'tileEncourage3';
+  if (day <= 36) return 'tileEncourage4';
+  if (day <= 45) return 'tileEncourage5';
+  if (day <= 55) return 'tileEncourage6';
+  return 'tileEncourage7';
 }
 
 export default function ChallengeTile({
@@ -26,8 +27,18 @@ export default function ChallengeTile({
   userRole: 'solo' | 'facilitator' | 'member';
   firstName: string;
 }) {
+  const { t } = useLanguage();
+  const c = t.challenge;
   const [open, setOpen] = useState(false);
   const pct = Math.round((currentDay / 62) * 100);
+
+  const encouragement = (c as Record<string, string>)[getEncouragementKey(currentDay)] ?? '';
+  const keepGoing = c.tileKeepGoing.replace('{name}', firstName);
+  const groupMessage = c.tileGroupMessage.replace('{name}', firstName);
+
+  const mainCta = userRole === 'member'
+    ? c.tileOpenDay.replace('{n}', String(currentDay))
+    : c.tileContinueDay.replace('{n}', String(currentDay));
 
   return (
     <>
@@ -43,7 +54,7 @@ export default function ChallengeTile({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/il-challenge-icon.png"
-          alt="Influential Leadership Challenge"
+          alt={c.certChallengeName}
           width={64}
           height={64}
           style={{ borderRadius: '50%', flexShrink: 0, objectFit: 'cover' }}
@@ -53,10 +64,10 @@ export default function ChallengeTile({
             fontFamily: 'var(--font-montserrat)', fontSize: '0.6rem', fontWeight: 700,
             letterSpacing: '0.1em', textTransform: 'uppercase', color: orange, marginBottom: '0.25rem',
           }}>
-            Influential Leadership Challenge
+            {c.certChallengeName}
           </p>
           <p style={{ fontFamily: 'var(--font-montserrat)', fontWeight: 700, fontSize: '0.875rem', color: navy }}>
-            Day {currentDay} of 62
+            {c.journalDayLabel} {currentDay} {c.tileOf62}
           </p>
           <div style={{ marginTop: '0.375rem', height: '3px', background: 'oklch(88% 0.008 80)', borderRadius: '2px', width: '120px' }}>
             <div style={{ width: `${pct}%`, height: '100%', background: orange, borderRadius: '2px' }} />
@@ -122,7 +133,7 @@ export default function ChallengeTile({
               letterSpacing: '0.12em', textTransform: 'uppercase', color: orange,
               marginBottom: '0.5rem', textAlign: 'center',
             }}>
-              Influential Leadership Challenge
+              {c.certChallengeName}
             </p>
 
             {/* Day count */}
@@ -131,7 +142,7 @@ export default function ChallengeTile({
               fontSize: '1.5rem', color: navy, lineHeight: 1.1,
               textAlign: 'center', marginBottom: '0.75rem',
             }}>
-              Day {currentDay} <span style={{ fontSize: '1rem', fontWeight: 400, color: mid }}>of 62</span>
+              {c.journalDayLabel} {currentDay} <span style={{ fontSize: '1rem', fontWeight: 400, color: mid }}>{c.tileOf62}</span>
             </p>
 
             {/* Progress bar */}
@@ -145,9 +156,7 @@ export default function ChallengeTile({
               color: mid, lineHeight: 1.65, textAlign: 'center',
               marginBottom: '1.5rem', maxWidth: '280px',
             }}>
-              {userRole === 'member'
-                ? `Your group walks through this together, ${firstName}. A new session opens on your group schedule.`
-                : `${getEncouragement(currentDay)} Keep going, ${firstName}.`}
+              {userRole === 'member' ? groupMessage : `${encouragement} ${keepGoing}`}
             </p>
 
             {/* Action buttons */}
@@ -162,7 +171,7 @@ export default function ChallengeTile({
                   padding: '0.8125rem 1rem', borderRadius: '8px', textDecoration: 'none',
                 }}
               >
-                {userRole === 'member' ? `Open Day ${currentDay} →` : `Continue Day ${currentDay} →`}
+                {mainCta}
               </Link>
 
               <Link
@@ -176,7 +185,7 @@ export default function ChallengeTile({
                   border: '1px solid oklch(82% 0.006 260)',
                 }}
               >
-                My Journal
+                {c.journalMyJournal}
               </Link>
 
               {userRole !== 'solo' && (
@@ -191,7 +200,7 @@ export default function ChallengeTile({
                     border: '1px solid oklch(82% 0.006 260)',
                   }}
                 >
-                  Team →
+                  {c.tileTeam}
                 </Link>
               )}
 
@@ -208,7 +217,7 @@ export default function ChallengeTile({
                     marginTop: '0.25rem', paddingTop: '0.875rem',
                   }}
                 >
-                  Facilitator Settings →
+                  {c.tileFacilitatorSettings}
                 </Link>
               )}
             </div>

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
@@ -11,6 +12,10 @@ export default async function ChallengeLandingPage() {
   const { data: { user } } = await supabase.auth.getUser();
   const isLoggedIn = !!user;
   const alreadyEnrolled = user?.user_metadata?.challenge_enrolled === true;
+
+  if (alreadyEnrolled) {
+    redirect("/dashboard");
+  }
 
   const navy     = "oklch(22% 0.10 260)";
   const orange   = "oklch(65% 0.15 45)";

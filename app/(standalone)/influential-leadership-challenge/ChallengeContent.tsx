@@ -5,18 +5,18 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const CHAPTERS = [
-  { title: "Deep Inside Our Hearts", topics: ["Deep Inside Our Hearts","Being Before Doing","Depth Takes Time","Me or Him","Inside Out"] },
-  { title: "Character", topics: ["Humility","Authenticity","Listening","Serving","Leading Generously"] },
-  { title: "Suffering", topics: ["Suffering","Suffering and Freedom","Suffering in Ministry","Spiritual Warfare"] },
-  { title: "Transformation", topics: ["Transformation","Transformation of Our Hearts","Transformation of Our Thinking","Transformation of Our Priorities","Transformation of Our Relationships","Prioritizing Transformation"] },
-  { title: "Managing the Shadow Side", topics: ["Managing the Shadow Side","Strengths and Liabilities","The Righteous Struggle","Counsel, Time and Prayer","Common Vulnerabilities","Antidotes to the Shadow Side"] },
-  { title: "Emotional Intelligence", topics: ["Emotional Intelligence","Insecurity and Defensiveness","Control and Narcissism","Enmeshment and Anger","Growing EQ"] },
-  { title: "Leading from Who God Made Me to Be", topics: ["Biography and Leadership","Convergence","Uniquely Called and Qualified","Understanding Our Life Themes","Leadership Style and Individual Design","Team, Legacy, and Succession"] },
-  { title: "Choosing Intentionality", topics: ["A Theology of Time","Powerful Choices","Distraction Management","Scheduling Proactively","Personal Development","Altitude, Standard Work, and Prayer"] },
-  { title: "Thinking Like a Contrarian", topics: ["Thinking Like a Contrarian","Leverage","The Lens of Leadership","Thinking Gray, Simplicity, and Wisdom"] },
-  { title: "Living with the Freedom of Clarity", topics: ["Identity and Calling","Being Comfortable in My Own Skin","The Clarity of Saying No","A Cause Worth Giving Your Life To","Unfinished Business, Accountability, and Freedom"] },
-  { title: "Powerful Transparency", topics: ["The Power of Transparency","The Barriers to Transparency","The Authentic Self","Presence and Transparency in Failure","Staying Transparent with Yourself"] },
-  { title: "Guarding Our Hearts", topics: ["The Wellspring of Life","What Tests Our Hearts","The Truly Authentic Life"] },
+  { en: "Deep Inside Our Hearts", id: "Jauh di Dalam Hati Kita", topicsEn: ["Being Before Doing","Depth Takes Time","Me or Him","Inside Out"], topicsId: ["Ada Sebelum Berbuat","Kedalaman Membutuhkan Waktu","Aku atau Dia","Dari Dalam ke Luar"] },
+  { en: "Character", id: "Karakter", topicsEn: ["Humility","Authenticity","Listening","Serving","Leading Generously"], topicsId: ["Kerendahan Hati","Keaslian","Mendengarkan","Melayani","Memimpin dengan Murah Hati"] },
+  { en: "Suffering", id: "Penderitaan", topicsEn: ["Suffering and Freedom","Suffering in Ministry","Spiritual Warfare"], topicsId: ["Penderitaan dan Kebebasan","Penderitaan dalam Pelayanan","Peperangan Rohani"] },
+  { en: "Transformation", id: "Transformasi", topicsEn: ["Transformation of Our Hearts","Transformation of Our Thinking","Transformation of Our Priorities","Transformation of Our Relationships","Prioritizing Transformation"], topicsId: ["Transformasi Hati Kita","Transformasi Pemikiran Kita","Transformasi Prioritas Kita","Transformasi Hubungan Kita","Memprioritaskan Transformasi"] },
+  { en: "Managing the Shadow Side", id: "Mengelola Sisi Gelap", topicsEn: ["Strengths and Liabilities","The Righteous Struggle","Counsel, Time and Prayer","Common Vulnerabilities","Antidotes to the Shadow Side"], topicsId: ["Kekuatan dan Kelemahan","Pergumulan yang Benar","Nasihat, Waktu dan Doa","Kerentanan Umum","Penawar Sisi Gelap"] },
+  { en: "Emotional Intelligence", id: "Kecerdasan Emosional", topicsEn: ["Insecurity and Defensiveness","Control and Narcissism","Enmeshment and Anger","Growing EQ"], topicsId: ["Ketidakamanan dan Sikap Defensif","Kontrol dan Narsisisme","Keterjebakan dan Kemarahan","Mengembangkan Kecerdasan Emosional"] },
+  { en: "Leading from Who God Made Me to Be", id: "Memimpin dari Identitas yang Diberikan Tuhan", topicsEn: ["Biography and Leadership","Convergence","Uniquely Called and Qualified","Understanding Our Life Themes","Leadership Style and Individual Design","Team, Legacy, and Succession"], topicsId: ["Biografi dan Kepemimpinan","Konvergensi","Dipanggil dan Dipersiapkan secara Unik","Memahami Tema Hidup Kita","Gaya Kepemimpinan dan Desain Individu","Tim, Warisan, dan Suksesi"] },
+  { en: "Choosing Intentionality", id: "Memilih Kesengajaan", topicsEn: ["A Theology of Time","Powerful Choices","Distraction Management","Scheduling Proactively","Personal Development","Altitude, Standard Work, and Prayer"], topicsId: ["Teologi Waktu","Pilihan yang Kuat","Manajemen Gangguan","Penjadwalan Proaktif","Pengembangan Pribadi","Ketinggian, Pekerjaan Standar, dan Doa"] },
+  { en: "Thinking Like a Contrarian", id: "Berpikir seperti Kontrarian", topicsEn: ["Leverage","The Lens of Leadership","Thinking Gray, Simplicity, and Wisdom"], topicsId: ["Leverage","Lensa Kepemimpinan","Berpikir Abu-abu, Kesederhanaan, dan Kebijaksanaan"] },
+  { en: "Living with the Freedom of Clarity", id: "Hidup dengan Kebebasan dalam Kejelasan", topicsEn: ["Identity and Calling","Being Comfortable in My Own Skin","The Clarity of Saying No","A Cause Worth Giving Your Life To","Unfinished Business, Accountability, and Freedom"], topicsId: ["Identitas dan Panggilan","Nyaman dalam Diri Sendiri","Kejelasan Berkata Tidak","Tujuan yang Layak untuk Hidupmu","Urusan yang Belum Selesai, Akuntabilitas, dan Kebebasan"] },
+  { en: "Powerful Transparency", id: "Transparansi yang Kuat", topicsEn: ["The Power of Transparency","The Barriers to Transparency","The Authentic Self","Presence and Transparency in Failure","Staying Transparent with Yourself"], topicsId: ["Kekuatan Transparansi","Hambatan Transparansi","Diri yang Autentik","Kehadiran dan Transparansi dalam Kegagalan","Tetap Transparan dengan Diri Sendiri"] },
+  { en: "Guarding Our Hearts", id: "Menjaga Hati Kita", topicsEn: ["What Tests Our Hearts","The Truly Authentic Life"], topicsId: ["Apa yang Menguji Hati Kita","Kehidupan yang Benar-benar Autentik"] },
 ];
 
 const STEPS = [
@@ -202,16 +202,20 @@ export default function ChallengeContent() {
                 <button className="ch-close" onClick={() => setModal(null)}>×</button>
               </div>
               <div className="ch-modal-body">
-                {CHAPTERS.map(ch => (
-                  <div key={ch.title} style={{ marginBottom:"1.25rem" }}>
-                    <p className="ch-chapter">{ch.title}</p>
+                {CHAPTERS.map(ch => {
+                  const chTitle = isId ? ch.id : ch.en;
+                  const chTopics = isId ? ch.topicsId : ch.topicsEn;
+                  return (
+                  <div key={ch.en} style={{ marginBottom:"1.25rem" }}>
+                    <p className="ch-chapter">{chTitle}</p>
                     <div style={{ display:"flex", flexDirection:"column", gap:"0.18rem" }}>
-                      {ch.topics.filter(t => t.toLowerCase() !== ch.title.toLowerCase()).map(t => (
+                      {chTopics.map(t => (
                         <p key={t} style={{ fontFamily:"var(--font-montserrat)", fontSize:"0.875rem", lineHeight:1.5, color:"oklch(76% 0.025 260)", margin:0, paddingLeft:"0.625rem", borderLeft:"1px solid oklch(97% 0.005 80 / 0.07)" }}>{t}</p>
                       ))}
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </>)}
 

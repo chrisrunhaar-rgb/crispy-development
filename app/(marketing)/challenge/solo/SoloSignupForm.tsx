@@ -28,8 +28,58 @@ async function callSetLanguage(lang: Lang) {
   }
 }
 
-export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: boolean; userEmail: string | null }) {
-  const [selectedLang, setSelectedLang] = useState<Lang>("en");
+const copy = {
+  en: {
+    howJoin: "How do you want to join?",
+    signedIn: "Signed in as",
+    solo: "Solo",
+    soloDesc: "Work through the challenge at your own pace. Private journal, daily content.",
+    facilitator: "Facilitator",
+    facilitatorDesc: "Lead a small group. Set a schedule, share an invite link, track progress.",
+    joinGroup: "Join a group",
+    joinGroupDesc: "Browse open groups and apply to join one that fits your context.",
+    signUp: "Sign up for the challenge",
+    firstName: "First name",
+    lastName: "Last name",
+    email: "Email address",
+    password: "Password (8+ characters)",
+    creating: "Creating account...",
+    create: "Create account →",
+    haveAccount: "Have a Crispy account already?",
+    signIn: "Sign in",
+  },
+  id: {
+    howJoin: "Bagaimana Anda ingin bergabung?",
+    signedIn: "Masuk sebagai",
+    solo: "Sendiri",
+    soloDesc: "Jalani tantangan sesuai ritme Anda. Jurnal pribadi, konten harian.",
+    facilitator: "Fasilitator",
+    facilitatorDesc: "Pimpin kelompok kecil. Atur jadwal, bagikan tautan undangan, pantau kemajuan.",
+    joinGroup: "Bergabung dengan kelompok",
+    joinGroupDesc: "Jelajahi kelompok terbuka dan daftar untuk bergabung.",
+    signUp: "Daftar untuk tantangan ini",
+    firstName: "Nama depan",
+    lastName: "Nama belakang",
+    email: "Alamat email",
+    password: "Kata sandi (min. 8 karakter)",
+    creating: "Membuat akun...",
+    create: "Buat akun →",
+    haveAccount: "Sudah punya akun Crispy?",
+    signIn: "Masuk",
+  },
+};
+
+export default function SoloSignupForm({
+  isLoggedIn,
+  userEmail,
+  initialLang = "en",
+}: {
+  isLoggedIn: boolean;
+  userEmail: string | null;
+  initialLang?: Lang;
+}) {
+  const [selectedLang, setSelectedLang] = useState<Lang>(initialLang);
+  const c = copy[selectedLang];
 
   const [state, formAction, pending] = useActionState(
     async (_prev: typeof initialState, formData: FormData) => {
@@ -52,10 +102,10 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
     return (
       <div style={{ width: "100%", maxWidth: "480px" }}>
         <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.375rem" }}>
-          How do you want to join?
+          {c.howJoin}
         </h1>
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", color: "oklch(52% 0.008 260)", marginBottom: "2rem" }}>
-          Signed in as {userEmail}
+          {c.signedIn} {userEmail}
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
@@ -64,8 +114,8 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
             <button type="submit" disabled={enrollPending} style={pathCardStyle}>
               <div style={pathCardInner}>
                 <div>
-                  <p style={pathTitle}>Solo</p>
-                  <p style={pathDesc}>Work through the challenge at your own pace. Private journal, daily content.</p>
+                  <p style={pathTitle}>{c.solo}</p>
+                  <p style={pathDesc}>{c.soloDesc}</p>
                 </div>
                 <span style={pathArrow}>→</span>
               </div>
@@ -76,8 +126,8 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
           <Link href="/challenge/group/create" style={{ ...pathCardStyle, textDecoration: "none", display: "block" }}>
             <div style={pathCardInner}>
               <div>
-                <p style={pathTitle}>Facilitator</p>
-                <p style={pathDesc}>Lead a small group. Set a schedule, share an invite link, track progress.</p>
+                <p style={pathTitle}>{c.facilitator}</p>
+                <p style={pathDesc}>{c.facilitatorDesc}</p>
               </div>
               <span style={pathArrow}>→</span>
             </div>
@@ -87,8 +137,8 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
           <Link href="/challenge/group/browse" style={{ ...pathCardStyle, textDecoration: "none", display: "block" }}>
             <div style={pathCardInner}>
               <div>
-                <p style={pathTitle}>Join a group</p>
-                <p style={pathDesc}>Browse open groups and apply to join one that fits your context.</p>
+                <p style={pathTitle}>{c.joinGroup}</p>
+                <p style={pathDesc}>{c.joinGroupDesc}</p>
               </div>
               <span style={pathArrow}>→</span>
             </div>
@@ -103,17 +153,17 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/il-challenge-icon.png" alt="" width={88} height={88} style={{ borderRadius: "50%", objectFit: "cover", display: "block", margin: "0 auto 1.5rem" }} />
       <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "2rem", textAlign: "center" }}>
-        Sign up for the challenge
+        {c.signUp}
       </h1>
 
       <form action={formAction} onSubmit={() => { setLangCookie(selectedLang); callSetLanguage(selectedLang); }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "1.25rem" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-            <input name="firstName" type="text" required placeholder="First name" autoComplete="given-name" style={inputStyle} />
-            <input name="lastName" type="text" required placeholder="Last name" autoComplete="family-name" style={inputStyle} />
+            <input name="firstName" type="text" required placeholder={c.firstName} autoComplete="given-name" style={inputStyle} />
+            <input name="lastName" type="text" required placeholder={c.lastName} autoComplete="family-name" style={inputStyle} />
           </div>
-          <input name="email" type="email" required placeholder="Email address" autoComplete="email" style={inputStyle} />
-          <input name="password" type="password" required minLength={8} placeholder="Password (8+ characters)" autoComplete="new-password" style={inputStyle} />
+          <input name="email" type="email" required placeholder={c.email} autoComplete="email" style={inputStyle} />
+          <input name="password" type="password" required minLength={8} placeholder={c.password} autoComplete="new-password" style={inputStyle} />
         </div>
 
         {/* Language selector */}
@@ -140,12 +190,12 @@ export default function SoloSignupForm({ isLoggedIn, userEmail }: { isLoggedIn: 
         )}
 
         <button type="submit" disabled={pending} style={btnStyle(pending)}>
-          {pending ? "Creating account..." : "Create account →"}
+          {pending ? c.creating : c.create}
         </button>
 
         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "oklch(52% 0.008 260)", textAlign: "center", marginTop: "1rem" }}>
-          Have a Crispy account already?{" "}
-          <Link href="/login?redirectTo=/challenge/solo" style={{ color: navy, fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
+          {c.haveAccount}{" "}
+          <Link href="/login?redirectTo=/challenge/solo" style={{ color: navy, fontWeight: 600, textDecoration: "none" }}>{c.signIn}</Link>
         </p>
       </form>
     </div>

@@ -20,7 +20,7 @@ export async function signUpChallenge(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${siteUrl}/auth/callback?type=signup&next=/challenge/day/1`,
+      emailRedirectTo: `${siteUrl}/auth/callback?type=signup&next=/challenge/solo`,
       data: {
         first_name: firstName,
         last_name: lastName,
@@ -34,22 +34,12 @@ export async function signUpChallenge(formData: FormData) {
 
   if (error) return { error: error.message };
 
-  if (data.user) {
-    const admin = createAdminClient();
-    await admin.from("challenge_enrollments").upsert({
-      user_id: data.user.id,
-      path: "solo",
-      current_day: 1,
-      status: "active",
-    }, { onConflict: "user_id" });
-  }
-
   if (!data.session) {
     redirect("/signup/confirm");
   }
 
   revalidatePath("/", "layout");
-  redirect("/challenge/day/1");
+  redirect("/challenge/solo");
 }
 
 export async function enrollExistingUser() {
