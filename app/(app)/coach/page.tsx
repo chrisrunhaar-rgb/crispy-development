@@ -40,15 +40,11 @@ export default async function CoachPage({
   const admin = createAdminClient();
   const { data: membership } = await admin
     .from("memberships")
-    .select("is_admin, coach_access, coach_minutes_granted, currency")
+    .select("coach_minutes_granted, currency")
     .eq("user_id", user.id)
-    .single();
+    .maybeSingle();
 
-  const isAdmin = membership?.is_admin === true;
-  const hasCoachAccess = membership?.coach_access === true || isAdmin;
-  if (!hasCoachAccess) redirect("/dashboard");
-
-  const coachLimitSeconds = (membership?.coach_minutes_granted ?? 120) * 60;
+  const coachLimitSeconds = membership ? (membership.coach_minutes_granted ?? 120) * 60 : 0;
 
   const { data: trialData } = await supabase
     .from("wp_sessions")
@@ -60,7 +56,7 @@ export default async function CoachPage({
     (sum, s) => sum + ((s.duration_seconds as number | null) ?? 0),
     0
   );
-  const grantedMinutes = membership?.coach_minutes_granted ?? 120;
+  const grantedMinutes = membership ? (membership.coach_minutes_granted ?? 120) : 0;
   const trialUsedMinutes = Math.round(totalUsedSeconds / 60);
   const trialRemainingMinutes = Math.max(0, grantedMinutes - trialUsedMinutes);
   const trialExhausted = totalUsedSeconds >= coachLimitSeconds || trialExhaustedParam;

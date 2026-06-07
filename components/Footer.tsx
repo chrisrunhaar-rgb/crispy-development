@@ -65,6 +65,7 @@ export default function Footer() {
               <Link href="/team" className="footer-link">{t.footer.team}</Link>
               <Link href="/resources" className="footer-link">{t.footer.freeResources}</Link>
               <Link href="/waypoint" className="footer-link">WayPoint</Link>
+              <Link href="/coach" className="footer-link">AI Coach</Link>
               <Link href="/courses" className="footer-link">Courses</Link>
             </div>
           </div>

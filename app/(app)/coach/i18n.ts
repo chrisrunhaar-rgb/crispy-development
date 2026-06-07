@@ -46,7 +46,7 @@ const strings = {
     current: "Current",
 
     // SessionTypeSelector
-    trialExhaustedMsg: "You've used your 120-minute free trial. Contact us to continue coaching.",
+    trialExhaustedMsg: "You need credits to start a session. Purchase coaching time to get started.",
     deep: "Deep",
     quick: "Quick",
     deepDesc: "~40 min · complex topics",
@@ -152,7 +152,7 @@ const strings = {
     chooseCoach: "Pilih Coach Anda",
     current: "Aktif",
 
-    trialExhaustedMsg: "Anda telah menggunakan 120 menit uji coba gratis. Hubungi kami untuk melanjutkan coaching.",
+    trialExhaustedMsg: "Anda membutuhkan kredit untuk memulai sesi. Beli waktu coaching untuk memulai.",
     deep: "Mendalam",
     quick: "Singkat",
     deepDesc: "~40 mnt · topik kompleks",

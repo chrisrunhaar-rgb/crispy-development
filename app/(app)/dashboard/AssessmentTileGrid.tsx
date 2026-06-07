@@ -1381,6 +1381,7 @@ function CompactTile({
   onClick,
   extraButton,
   lang = "en",
+  isSubscriber = true,
 }: {
   title: string;
   visual: React.ReactNode;
@@ -1389,6 +1390,7 @@ function CompactTile({
   onClick?: () => void;
   extraButton?: React.ReactNode;
   lang?: "en" | "id";
+  isSubscriber?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -1449,18 +1451,20 @@ function CompactTile({
 
       {!done && href && (
         <Link
-          href={href}
+          href={isSubscriber ? href : "/personal"}
           style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "0.62rem",
             fontWeight: 700,
-            color: "oklch(42% 0.08 260)",
+            color: isSubscriber ? "oklch(42% 0.08 260)" : "oklch(55% 0.10 45)",
             textDecoration: "none",
             alignSelf: "flex-end",
           }}
           onClick={e => e.stopPropagation()}
         >
-          {lang === "id" ? "Ikuti tes →" : "Take test →"}
+          {isSubscriber
+            ? (lang === "id" ? "Ikuti tes →" : "Take test →")
+            : (lang === "id" ? "🔒 Buka akses →" : "🔒 Unlock →")}
         </Link>
       )}
       {extraButton && (
@@ -1480,12 +1484,14 @@ function WheelLifeTile({
   lang,
   wheelReflections,
   onOpenScores,
+  isSubscriber = true,
 }: {
   visual: React.ReactNode;
   done: boolean;
   lang: "en" | "id";
   wheelReflections: Record<string, { gratitude: string; action: string }> | null;
   onOpenScores?: () => void;
+  isSubscriber?: boolean;
 }) {
   const [flipped, setFlipped] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -1554,8 +1560,12 @@ function WheelLifeTile({
           </div>
 
           {!done && (
-            <Link href="/resources/wheel-of-life" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: "oklch(42% 0.08 260)", textDecoration: "none", alignSelf: "flex-end" }} onClick={e => e.stopPropagation()}>
-              {lang === "id" ? "Ikuti tes →" : "Take test →"}
+            <Link
+              href={isSubscriber ? "/resources/wheel-of-life" : "/personal"}
+              style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, color: isSubscriber ? "oklch(42% 0.08 260)" : "oklch(55% 0.10 45)", textDecoration: "none", alignSelf: "flex-end" }}
+              onClick={e => e.stopPropagation()}
+            >
+              {isSubscriber ? (lang === "id" ? "Ikuti tes →" : "Take test →") : (lang === "id" ? "🔒 Buka akses →" : "🔒 Unlock →")}
             </Link>
           )}
 
@@ -1672,6 +1682,7 @@ export default function AssessmentTileGrid({
   fivelaReceivingScores = null,
   fivelaGivingScores = null,
   languagePreference = "en",
+  isSubscriber = true,
 }: {
   discResult?: string | null;
   discScores?: { D: number; I: number; S: number; C: number } | null;
@@ -1692,6 +1703,7 @@ export default function AssessmentTileGrid({
   fivelaReceivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   languagePreference?: "en" | "id";
+  isSubscriber?: boolean;
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
   const [enneagramFlipped, setEnneagramFlipped] = useState(false);
@@ -1836,6 +1848,7 @@ export default function AssessmentTileGrid({
           done={!!(discResult && discScores)}
           href="/resources/disc"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={discResult && discScores ? () => setModal({ type: "disc", result: discResult, scores: discScores, lang }) : undefined}
         />
 
@@ -1844,6 +1857,7 @@ export default function AssessmentTileGrid({
           visual={wheelVisual}
           done={!!wheelOfLifeScores}
           lang={lang}
+          isSubscriber={isSubscriber}
           wheelReflections={wheelReflections}
           onOpenScores={wheelOfLifeScores ? () => setModal({ type: "wheel", scores: wheelOfLifeScores, reflections: wheelReflections, lang }) : undefined}
         />
@@ -1855,6 +1869,7 @@ export default function AssessmentTileGrid({
           done={!!(thinkingStyleResult && thinkingStyleScores)}
           href="/resources/three-thinking-styles"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={thinkingStyleResult && thinkingStyleScores ? () => setModal({ type: "thinking", result: thinkingStyleResult, scores: thinkingStyleScores, lang }) : undefined}
         />
 
@@ -1865,6 +1880,7 @@ export default function AssessmentTileGrid({
           done={!!(karuniaTopGifts && karuniaTopGifts.length > 0)}
           href="/resources/karunia-rohani"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={karuniaTopGifts && karuniaScores && karuniaTopGifts.length > 0
             ? () => setModal({ type: "karunia", topGifts: karuniaTopGifts, scores: karuniaScores!, lang })
             : undefined}
@@ -1877,6 +1893,7 @@ export default function AssessmentTileGrid({
           done={!!(enneagramType && enneagramScores)}
           href="/resources/enneagram"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={enneagramType && enneagramScores && ENNEAGRAM_TYPES[enneagramType] ? () => setModal({ type: "enneagram", typeData: ENNEAGRAM_TYPES[enneagramType], scores: enneagramScores, lang: lang as "en" | "id" }) : undefined}
         />
 
@@ -1888,6 +1905,7 @@ export default function AssessmentTileGrid({
           done={!!(personalities16Type && personalities16Scores)}
           href="/resources/16-personalities"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={personalities16Type && personalities16Scores ? () => setModal({ type: "16personalities", personalityType: personalities16Type, scores: personalities16Scores, lang }) : undefined}
         />
 
@@ -1900,6 +1918,7 @@ export default function AssessmentTileGrid({
           done={!!bigFiveScores}
           href="/resources/big-five"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={bigFiveScores ? () => setModal({ type: "bigfive", scores: bigFiveScores, lang }) : undefined}
         />
 
@@ -1910,6 +1929,7 @@ export default function AssessmentTileGrid({
           done={!!(fivelaReceivingResult && fivelaGivingResult)}
           href="/resources/5languages"
           lang={lang}
+          isSubscriber={isSubscriber}
           onClick={fivelaReceivingResult && fivelaGivingResult && fivelaReceivingScores && fivelaGivingScores
             ? () => setModal({ type: "fivela", receivingResult: fivelaReceivingResult, givingResult: fivelaGivingResult, receivingScores: fivelaReceivingScores, givingScores: fivelaGivingScores })
             : undefined}

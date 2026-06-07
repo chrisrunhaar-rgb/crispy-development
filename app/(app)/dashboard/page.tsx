@@ -11,6 +11,7 @@ import InviteButton from "@/components/InviteButton";
 import { RESOURCES } from "@/lib/resources-data";
 import ResourceCard from "@/components/ResourceCard";
 import AssessmentTileGrid from "./AssessmentTileGrid";
+import TeamPreviewDashboard from "./TeamPreviewDashboard";
 import ChallengeTile from "@/components/ChallengeTile";
 import TeamJourney, { BASE_JOURNEY_STEPS, buildJourneySteps, getTypeLabel, TYPE_BADGE } from "@/components/TeamJourney";
 import TeamCommsSection from "@/components/TeamCommsSection";
@@ -185,11 +186,10 @@ export default async function DashboardPage({
 
   const isTeamLeader = (pathway === "team" || isLeaderByMeta) && teamApplicationStatus === "approved";
   const hasTeam = isTeamLeader || !!memberOfTeam;
+  const isSubscriber = !!membershipRow || hasTeam;
 
-  // Determine active tab — personal is always the safe default
-  const currentTab =
-    tab === "team" && hasTeam ? "team"
-    : "personal";
+  // Determine active tab — team tab always resolves so non-members see TeamPreviewDashboard
+  const currentTab = tab === "team" ? "team" : "personal";
 
   // ── Modules + progress + messages — all independent, fired in parallel ──
   let modules: Module[] = [];
@@ -604,34 +604,32 @@ export default async function DashboardPage({
                   </Link>
                 );
               })}
-              {hasCoachAccess && (
-                <Link href="/coach" style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  fontFamily: "var(--font-montserrat)",
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  padding: "0.5rem 1.125rem",
-                  borderRadius: 100,
-                  border: "none",
-                  whiteSpace: "nowrap",
-                  transition: "background 0.15s ease, color 0.15s ease",
-                  background: "transparent",
-                  color: "oklch(68% 0.06 260)",
-                  cursor: "pointer",
-                  textDecoration: "none",
-                }}>
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-                    <rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M2 8.5C2 11.538 4.686 14 8 14s6-2.462 6-5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="8" y1="14" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                  AI Coach
-                </Link>
-              )}
+              <Link href="/coach" style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                padding: "0.5rem 1.125rem",
+                borderRadius: 100,
+                border: "none",
+                whiteSpace: "nowrap",
+                transition: "background 0.15s ease, color 0.15s ease",
+                background: "transparent",
+                color: "oklch(68% 0.06 260)",
+                cursor: "pointer",
+                textDecoration: "none",
+              }}>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                  <rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M2 8.5C2 11.538 4.686 14 8 14s6-2.462 6-5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="8" y1="14" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                AI Coach
+              </Link>
             </div>
           </div>
         </div>
@@ -651,7 +649,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -817,7 +815,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "" }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -848,6 +846,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   isFacilitator?: boolean;
   challengePath?: string | null;
   dashboardFirstName?: string;
+  isSubscriber?: boolean;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -965,6 +964,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             fivelaReceivingScores={fivelaReceivingScores}
             fivelaGivingScores={fivelaGivingScores}
             languagePreference={languagePreference}
+            isSubscriber={isSubscriber}
           />
         </div>
 
