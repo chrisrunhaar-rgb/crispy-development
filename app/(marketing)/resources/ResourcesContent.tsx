@@ -449,6 +449,52 @@ export default function ResourcesContent({
         </div>
       </section>
 
+      {/* ── CONTRIBUTE SECTION ── */}
+      <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 4rem)", background: "oklch(97% 0.005 80)", borderTop: "1px solid oklch(88% 0.008 80)" }}>
+        <div className="container-wide">
+          <div style={{ maxWidth: "600px" }}>
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.62rem",
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "oklch(65% 0.15 45)",
+              marginBottom: "1rem",
+            }}>
+              {lang === "id" ? "Ikut Berkontribusi" : "Get Involved"}
+            </p>
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "clamp(0.9rem, 2vw, 1rem)",
+              lineHeight: 1.75,
+              color: "oklch(35% 0.008 260)",
+              marginBottom: "1.25rem",
+              maxWidth: "52ch",
+            }}>
+              {lang === "id"
+                ? "Perpustakaan kami terus berkembang. Kami mengembangkan materi pelatihan baru seputar topik-topik yang relevan dalam kepemimpinan lintas budaya, dan kami ingin mendengar pendapat Anda. Ingin menyarankan topik modul baru atau ikut terlibat dalam pengembangannya?"
+                : "Our library is always growing. We develop new training materials around timely topics in cross-cultural leadership, and we'd love your input. Want to suggest a new module topic or get involved in developing one?"}
+            </p>
+            <Link
+              href="/contact"
+              style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                color: "oklch(65% 0.15 45)",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.3rem",
+              }}
+            >
+              {lang === "id" ? "Hubungi kami →" : "Get in touch →"}
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── MEMBERSHIP CTA ── */}
       {!userId && (
         <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(22% 0.10 260)", position: "relative" }}>
