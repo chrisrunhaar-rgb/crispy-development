@@ -163,6 +163,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
 
   // PWA install state
   const [isInstalled, setIsInstalled]       = useState(false);
+  const [promptReady, setPromptReady]       = useState(false);
   const [isIOS, setIsIOS]                   = useState(false);
   const [installLoading, setInstallLoading] = useState(false);
   const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
@@ -176,7 +177,14 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as Navigator & { standalone?: boolean }).standalone === true;
-    setIsInstalled(standalone);
+    if (standalone) {
+      setIsInstalled(true);
+    } else if ("getInstalledRelatedApps" in navigator) {
+      (navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> })
+        .getInstalledRelatedApps?.()
+        .then(apps => { if (apps.length > 0) setIsInstalled(true); })
+        .catch(() => {});
+    }
 
     const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as Window & { MSStream?: unknown }).MSStream;
     setIsIOS(ios);
@@ -184,6 +192,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     const handleInstallPrompt = (e: Event) => {
       e.preventDefault();
       installPromptRef.current = e as BeforeInstallPromptEvent;
+      setPromptReady(true);
     };
     window.addEventListener("beforeinstallprompt", handleInstallPrompt);
 
@@ -264,7 +273,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     setSkipPending(false);
   }
 
-  const showInstallBlock = !isInstalled;
+  const showInstallBlock = !isInstalled && (promptReady || isIOS);
 
   return (
     <div style={{ width: "100%", maxWidth: "480px" }}>
