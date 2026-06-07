@@ -79,7 +79,7 @@ export default async function ChallengeTeamPage() {
       .neq("peer_answer", "")
       .order("day_number", { ascending: false }),
     admin.from("challenge_modules")
-      .select("day_number, title, core_idea, peer_question")
+      .select("day_number, title, title_id, core_idea, core_idea_id, peer_question, peer_question_id")
       .order("day_number", { ascending: false }),
   ]);
 
@@ -124,9 +124,17 @@ export default async function ChallengeTeamPage() {
     answersByDay[key].push({ user_id: a.user_id, name: memberName(a.user_id), answer: a.peer_answer });
   }
 
+  type ModuleRow = { day_number: number; title: string; title_id?: string | null; core_idea: string | null; core_idea_id?: string | null; peer_question: string | null; peer_question_id?: string | null };
   type ModuleInfo = { day_number: number; title: string; core_idea: string | null; peer_question: string | null };
   const moduleMap: Record<string, ModuleInfo> = Object.fromEntries(
-    ((modulesRes.data ?? []) as ModuleInfo[]).map(m => [String(m.day_number), m])
+    ((modulesRes.data ?? []) as ModuleRow[]).map(m => {
+      if (lang === "id") {
+        if (m.title_id) m.title = m.title_id;
+        if (m.core_idea_id) m.core_idea = m.core_idea_id;
+        if (m.peer_question_id) m.peer_question = m.peer_question_id;
+      }
+      return [String(m.day_number), m];
+    })
   );
 
   const daysWithAnswers = Object.keys(answersByDay).map(Number).sort((a, b) => b - a);
