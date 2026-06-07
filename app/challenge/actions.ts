@@ -74,7 +74,7 @@ export async function enrollExistingUser() {
     revalidatePath("/", "layout");
   }
 
-  redirect("/challenge/day/1");
+  redirect("/challenge/onboarding");
 }
 
 export async function saveOnboardingPrefs(formData: FormData) {

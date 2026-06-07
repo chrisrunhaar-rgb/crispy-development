@@ -14,7 +14,7 @@ export default async function OnboardingPage() {
   const admin = createAdminClient();
   const { data: enrollment } = await admin
     .from("challenge_enrollments")
-    .select("current_day, notification_time")
+    .select("current_day, notification_time, path")
     .eq("user_id", user.id)
     .maybeSingle();
 
@@ -29,6 +29,8 @@ export default async function OnboardingPage() {
 
   const firstName = user.user_metadata?.first_name as string | undefined;
 
+  const preselectedPath = enrollment?.path as "solo" | "facilitator" | "join" | undefined;
+
   return (
     <div style={{
       minHeight: "calc(100dvh - 80px)",
@@ -39,7 +41,7 @@ export default async function OnboardingPage() {
       alignItems: "flex-start",
       justifyContent: "center",
     }}>
-      <OnboardingForm initialLang={initialLang} firstName={firstName} />
+      <OnboardingForm initialLang={initialLang} firstName={firstName} preselectedPath={preselectedPath} />
     </div>
   );
 }

@@ -151,7 +151,7 @@ const copy = {
   },
 };
 
-export default function OnboardingForm({ initialLang = "en", firstName }: { initialLang?: Lang; firstName?: string }) {
+export default function OnboardingForm({ initialLang = "en", firstName, preselectedPath }: { initialLang?: Lang; firstName?: string; preselectedPath?: "solo" | "facilitator" | "join" }) {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [time, setTime]                 = useState("08:00");
   const [lang]                          = useState<Lang>(initialLang);
@@ -268,7 +268,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     fd.append("notification_days", "3");
     fd.append("notification_days", "4");
     fd.append("notification_days", "5");
-    fd.set("path", "solo");
+    fd.set("path", preselectedPath ?? "solo");
     await saveOnboardingPrefs(fd);
     setSkipPending(false);
   }
@@ -415,16 +415,16 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
           {/* Continue */}
           <button
             type="button"
-            disabled={selectedDays.length === 0}
-            onClick={() => setStep("path")}
+            disabled={selectedDays.length === 0 || (preselectedPath !== undefined && pathPending !== null)}
+            onClick={() => preselectedPath ? handlePathSelect(preselectedPath) : setStep("path")}
             style={{
               width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700,
               fontSize: "1rem", color: offWhite, background: navy, border: "none",
-              borderRadius: "8px", padding: "0.9375rem", cursor: selectedDays.length === 0 ? "not-allowed" : "pointer",
-              opacity: selectedDays.length === 0 ? 0.7 : 1, marginBottom: "1rem",
+              borderRadius: "8px", padding: "0.9375rem", cursor: (selectedDays.length === 0 || (preselectedPath !== undefined && pathPending !== null)) ? "not-allowed" : "pointer",
+              opacity: (selectedDays.length === 0 || (preselectedPath !== undefined && pathPending !== null)) ? 0.7 : 1, marginBottom: "1rem",
             }}
           >
-            {c.continueBtn}
+            {preselectedPath && pathPending !== null ? "…" : c.continueBtn}
           </button>
 
           {/* Skip */}
@@ -445,8 +445,8 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
         </>
       )}
 
-      {/* ── Step 2: Path selection ───────────────────────────────── */}
-      {step === "path" && (
+      {/* ── Step 2: Path selection (only shown when path not preselected) ── */}
+      {step === "path" && !preselectedPath && (
         <>
           <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
             {c.pathHeading}
@@ -527,11 +527,13 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
         </>
       )}
 
-      {/* Progress dots */}
-      <div style={{ display: "flex", gap: "0.375rem", marginTop: "2.5rem" }}>
-        <span style={{ width: "20px", height: "4px", borderRadius: "2px", background: step === "setup" ? orange : "oklch(85% 0.006 80)", transition: "background 0.2s" }} />
-        <span style={{ width: step === "path" ? "20px" : "8px", height: "4px", borderRadius: "2px", background: step === "path" ? orange : "oklch(85% 0.006 80)", transition: "width 0.2s, background 0.2s" }} />
-      </div>
+      {/* Progress dots — only show when there are 2 steps */}
+      {!preselectedPath && (
+        <div style={{ display: "flex", gap: "0.375rem", marginTop: "2.5rem" }}>
+          <span style={{ width: "20px", height: "4px", borderRadius: "2px", background: step === "setup" ? orange : "oklch(85% 0.006 80)", transition: "background 0.2s" }} />
+          <span style={{ width: step === "path" ? "20px" : "8px", height: "4px", borderRadius: "2px", background: step === "path" ? orange : "oklch(85% 0.006 80)", transition: "width 0.2s, background 0.2s" }} />
+        </div>
+      )}
     </div>
   );
 }
