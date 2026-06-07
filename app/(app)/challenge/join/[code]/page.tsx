@@ -15,7 +15,7 @@ export default async function JoinGroupPage({ params }: { params: Promise<{ code
   const admin = createAdminClient();
   const { data: group } = await admin
     .from("challenge_groups")
-    .select("id, name, description, facilitator_id, max_members, schedule_days")
+    .select("id, name, description, facilitator_id, max_members, schedule_days, language")
     .eq("group_code", code.toUpperCase())
     .maybeSingle();
 
@@ -46,6 +46,8 @@ export default async function JoinGroupPage({ params }: { params: Promise<{ code
 
   if (alreadyMember) redirect("/challenge/day/1");
 
+  const lang = ((group as { language?: string | null }).language === "id" ? "id" : "en") as "en" | "id";
+
   return (
     <JoinGroupClient
       code={code.toUpperCase()}
@@ -55,6 +57,7 @@ export default async function JoinGroupPage({ params }: { params: Promise<{ code
       memberCount={count ?? 0}
       maxMembers={group.max_members}
       isFull={isFull}
+      lang={lang}
     />
   );
 }

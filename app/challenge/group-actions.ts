@@ -96,7 +96,7 @@ export async function createGroup(formData: FormData) {
 }
 
 // ── Join via invite link ──────────────────────────────────────────────────────
-export async function joinGroupByCode(code: string) {
+export async function joinGroupByCode(code: string, notifTime?: string, notifDays?: number[], timezone?: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect(`/login?next=/challenge/join/${code}`);
@@ -142,6 +142,12 @@ export async function joinGroupByCode(code: string) {
     .eq("user_id", user.id)
     .maybeSingle();
 
+  const notifFields = notifTime ? {
+    notification_time: notifTime,
+    notification_days: notifDays ?? [],
+    timezone: timezone ?? "UTC",
+  } : {};
+
   if (!existing) {
     await admin.from("challenge_enrollments").insert({
       user_id: user.id,
@@ -149,9 +155,16 @@ export async function joinGroupByCode(code: string) {
       group_id: group.id,
       current_day: 1,
       status: "active",
+      ...notifFields,
     });
     await supabase.auth.updateUser({ data: { challenge_enrolled: true } });
     redirect("/challenge/day/1");
+  }
+
+  if (notifTime) {
+    await admin.from("challenge_enrollments")
+      .update(notifFields)
+      .eq("user_id", user.id);
   }
 
   revalidatePath("/dashboard");
