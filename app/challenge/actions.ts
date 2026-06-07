@@ -85,6 +85,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
   const admin = createAdminClient();
 
   const notificationTime = formData.get("notification_time") as string | null ?? "08:00";
+  const timezone = formData.get("timezone") as string | null ?? "UTC";
   const rawDays = formData.getAll("notification_days") as string[];
   const notificationDays = rawDays.map(Number).filter(n => !isNaN(n));
 
@@ -97,7 +98,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
   if (existing) {
     await admin
       .from("challenge_enrollments")
-      .update({ notification_time: notificationTime, notification_days: notificationDays })
+      .update({ notification_time: notificationTime, notification_days: notificationDays, timezone })
       .eq("user_id", user.id);
   } else {
     await supabase.auth.updateUser({
@@ -111,6 +112,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
       status: "active",
       notification_time: notificationTime,
       notification_days: notificationDays,
+      timezone,
     });
   }
 

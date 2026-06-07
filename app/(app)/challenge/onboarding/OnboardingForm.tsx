@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { saveOnboardingPrefs } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -61,6 +61,11 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [time, setTime]                 = useState("08:00");
   const [lang]                          = useState<Lang>(initialLang);
+  const [timezone, setTimezone]         = useState("UTC");
+
+  useEffect(() => {
+    setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
+  }, []);
 
   const c    = copy[lang];
   const DAYS = lang === "id" ? DAYS_ID : DAYS_EN;
@@ -69,6 +74,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     async (_prev: typeof initialState, formData: FormData) => {
       selectedDays.forEach(d => formData.append("notification_days", String(d)));
       formData.set("notification_time", time);
+      formData.set("timezone", timezone);
       formData.set("language", lang);
       return (await saveOnboardingPrefs(formData)) ?? initialState;
     },
@@ -163,6 +169,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
             onClick={async () => {
               const fd = new FormData();
               fd.set("notification_time", "08:00");
+              fd.set("timezone", timezone);
               fd.set("language", lang);
               fd.append("notification_days", "1");
               fd.append("notification_days", "2");
