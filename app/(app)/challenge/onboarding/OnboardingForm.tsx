@@ -197,7 +197,11 @@ export default function OnboardingForm({ initialLang = "en", firstName, preselec
     window.addEventListener("beforeinstallprompt", handleInstallPrompt);
 
     if ("Notification" in window) {
-      setNotifStatus(Notification.permission as "default" | "granted" | "denied");
+      const perm = Notification.permission as "default" | "granted" | "denied";
+      setNotifStatus(perm);
+      if (perm === "granted" && "serviceWorker" in navigator) {
+        subscribePush().catch(() => {});
+      }
     }
 
     return () => window.removeEventListener("beforeinstallprompt", handleInstallPrompt);

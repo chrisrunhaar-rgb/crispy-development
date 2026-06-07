@@ -313,7 +313,7 @@ function MinutesPanel({
       </div>
 
       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: MUTED, textAlign: "center" }}>
-        {s.minutesUsed(trialUsedMinutes, grantedMinutes)}
+        {grantedMinutes === 0 ? s.noCredit : s.minutesUsed(trialUsedMinutes, grantedMinutes)}
       </p>
 
       {/* Add-on packages */}
@@ -777,14 +777,16 @@ export default function CoachCarousel({
               </svg>
               <div>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: "0.15rem" }}>
-                  {s.freeTrial}
+                  {grantedMinutes === 0 ? "" : s.freeTrial}
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: trialExhausted ? "oklch(55% 0.15 30)" : WHITE }}>
-                  {trialExhausted ? s.trialComplete : s.minRemaining(trialRemainingMinutes)}
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 700, color: (trialExhausted || grantedMinutes === 0) ? "oklch(55% 0.15 30)" : WHITE }}>
+                  {grantedMinutes === 0 ? s.noCredit : trialExhausted ? s.trialComplete : s.minRemaining(trialRemainingMinutes)}
                 </p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
-                  {s.minutesUsed(trialUsedMinutes, grantedMinutes)}
-                </p>
+                {grantedMinutes > 0 && (
+                  <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: MUTED }}>
+                    {s.minutesUsed(trialUsedMinutes, grantedMinutes)}
+                  </p>
+                )}
               </div>
               <div style={{ marginLeft: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.375rem" }}>
                 <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
