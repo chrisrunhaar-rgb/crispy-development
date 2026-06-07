@@ -152,10 +152,6 @@ export default function CreateGroupForm({ initialLang = "en" }: { initialLang?: 
       }
       formData.set("language", selectedLang);
       const result = await createGroup(formData);
-      if (!result?.error) {
-        setLangCookie(selectedLang);
-        callSetLanguage(selectedLang);
-      }
       return result ?? initialState;
     },
     initialState,

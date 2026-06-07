@@ -1,7 +1,9 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { translations } from "@/lib/i18n";
 import TeamFeed from "./TeamFeed";
 
 export const metadata = { title: "Team — Influential Leadership Challenge" };
@@ -10,10 +12,21 @@ const navy   = "oklch(22% 0.10 260)";
 const orange = "oklch(65% 0.15 45)";
 const mid    = "oklch(52% 0.008 260)";
 
+const DAY_NAMES_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_NAMES_ID = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
 export default async function ChallengeTeamPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/challenge/team");
+
+  // Language: metadata takes precedence over cookie for consistency across devices
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("crispy-lang")?.value;
+  const metaLang = (user.user_metadata as Record<string, unknown>)?.language_preference as string | undefined;
+  const lang = ((metaLang ?? cookieLang ?? "en") === "id" ? "id" : "en") as "en" | "id";
+  const c = translations[lang].challenge;
+  const DAY_NAMES = lang === "id" ? DAY_NAMES_ID : DAY_NAMES_EN;
 
   const admin = createAdminClient();
 
@@ -123,7 +136,6 @@ export default async function ChallengeTeamPage() {
 
   const groupName = group?.name ?? "Your Team";
 
-  const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   function formatMeetingTime(t: string): string {
     const [h, m] = t.split(":").map(Number);
     const period = h >= 12 ? "PM" : "AM";
@@ -133,14 +145,14 @@ export default async function ChallengeTeamPage() {
   const hasMeetingSchedule = group?.has_meetings && (group?.meeting_day !== null || group?.meeting_time);
   const meetingDayName = group?.meeting_day !== null && group?.meeting_day !== undefined ? DAY_NAMES[group.meeting_day] : null;
   const meetingTimeFormatted = group?.meeting_time ? formatMeetingTime(group.meeting_time) : null;
-  const meetingLabel = group?.meeting_frequency === "biweekly" ? "Every other" : "Every";
+  const meetingLabel = group?.meeting_frequency === "biweekly" ? c.everyOther : c.everyWeek;
 
   return (
     <div style={{ minHeight: "calc(100dvh - 80px)", background: "oklch(97% 0.005 80)" }}>
       {/* Top bar */}
       <div style={{ background: navy, padding: "0.875rem clamp(1rem, 4vw, 2rem)", display: "flex", alignItems: "center", gap: "0.875rem" }}>
         <Link href="/dashboard" style={{ color: "oklch(72% 0.04 260)", textDecoration: "none", fontSize: "0.75rem", fontFamily: "var(--font-montserrat)", flexShrink: 0 }}>
-          ← Dashboard
+          {c.backDashboard}
         </Link>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/il-challenge-icon.png" alt="" width={28} height={28} style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
@@ -154,7 +166,7 @@ export default async function ChallengeTeamPage() {
         {/* Header */}
         <div style={{ marginBottom: "2rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.375rem" }}>
-            Influential Leadership Challenge
+            {c.teamPageSubtitle}
           </p>
           <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 900, fontSize: "clamp(1.375rem, 3vw, 1.75rem)", color: navy, lineHeight: 1.2, marginBottom: "1.25rem" }}>
             {groupName}
@@ -164,20 +176,20 @@ export default async function ChallengeTeamPage() {
               href="/dashboard"
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8rem", color: navy, background: "transparent", border: "1px solid oklch(82% 0.006 260)", padding: "0.6rem 1rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}
             >
-              ← Back
+              {c.backBtn}
             </Link>
             <Link
               href={`/challenge/day/${myCurrentDay}`}
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", background: orange, padding: "0.6rem 1.25rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}
             >
-              Today: Day {myCurrentDay} →
+              {c.todayDay.replace("{n}", String(myCurrentDay))}
             </Link>
             {user.id === facilitatorId && (
               <Link
                 href="/challenge/facilitator"
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.8rem", color: "oklch(52% 0.008 260)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
               >
-                ⚙ Team settings
+                {c.teamSettings}
               </Link>
             )}
           </div>
@@ -191,10 +203,10 @@ export default async function ChallengeTeamPage() {
             </div>
             <div style={{ flex: 1, minWidth: "160px" }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.2rem" }}>
-                Online Meeting
+                {c.onlineMeeting}
               </p>
               <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: navy, margin: 0 }}>
-                {meetingLabel}{meetingDayName ? ` ${meetingDayName}` : ""}{meetingTimeFormatted ? ` at ${meetingTimeFormatted}` : ""}
+                {meetingLabel}{meetingDayName ? ` ${meetingDayName}` : ""}{meetingTimeFormatted ? ` ${c.meetingAt} ${meetingTimeFormatted}` : ""}
               </p>
             </div>
             {group?.meeting_link && (
@@ -204,7 +216,7 @@ export default async function ChallengeTeamPage() {
                 rel="noopener noreferrer"
                 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem", color: "white", background: orange, padding: "0.5rem 1.125rem", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
               >
-                Join →
+                {c.joinBtn}
               </a>
             )}
           </div>
@@ -213,7 +225,7 @@ export default async function ChallengeTeamPage() {
         {/* Member list */}
         <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.25rem 1.5rem", marginBottom: "2rem" }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.875rem" }}>
-            Team Members
+            {c.teamMembers}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
             {members.map(m => (
@@ -226,17 +238,17 @@ export default async function ChallengeTeamPage() {
                   </div>
                   <div>
                     <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: m.is_me ? 700 : 500, fontSize: "0.875rem", color: navy }}>
-                      {m.name}{m.is_me ? " (you)" : ""}
+                      {m.name}{m.is_me ? ` ${c.youSuffix}` : ""}
                     </span>
                     {m.role === "facilitator" && (
                       <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 600, color: orange, marginLeft: "0.5rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                        Facilitator
+                        {c.facilitatorLabel}
                       </span>
                     )}
                   </div>
                 </div>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: mid, flexShrink: 0 }}>
-                  Day {m.current_day}
+                  {c.dayN.replace("{n}", String(m.current_day))}
                 </span>
               </div>
             ))}
@@ -247,7 +259,7 @@ export default async function ChallengeTeamPage() {
         {hasPreviousDay && (
           <div style={{ marginBottom: "2rem" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: orange, marginBottom: "0.875rem" }}>
-              Yesterday — Day {previousDay}
+              {c.yesterdayDay.replace("{n}", String(previousDay))}
             </p>
 
             {/* Module context card */}
@@ -270,7 +282,7 @@ export default async function ChallengeTeamPage() {
                 </>
               ) : (
                 <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "white", margin: 0 }}>
-                  Day {previousDay}
+                  {c.dayN.replace("{n}", String(previousDay))}
                 </p>
               )}
             </div>
@@ -280,7 +292,7 @@ export default async function ChallengeTeamPage() {
               {previousAnswers.map((a, i) => (
                 <div key={i} style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "10px", padding: "1rem 1.25rem" }}>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: a.user_id === user.id ? orange : mid, marginBottom: "0.4rem" }}>
-                    {a.user_id === user.id ? "You" : a.name}
+                    {a.user_id === user.id ? c.youLabel : a.name}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(28% 0.008 260)", lineHeight: 1.7, margin: 0, whiteSpace: "pre-wrap" }}>
                     {a.answer}
@@ -292,16 +304,16 @@ export default async function ChallengeTeamPage() {
                 .map(m => (
                   <div key={m.user_id} style={{ background: "oklch(97% 0.005 80)", border: "1px dashed oklch(88% 0.006 80)", borderRadius: "10px", padding: "1rem 1.25rem" }}>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(72% 0.006 260)", marginBottom: "0.25rem" }}>
-                      {m.is_me ? "You" : m.name}
+                      {m.is_me ? c.youLabel : m.name}
                     </p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(68% 0.006 260)", fontStyle: "italic", margin: 0 }}>
-                      No response yet
+                      {c.noResponseYet}
                     </p>
                   </div>
                 ))}
               {previousAnswers.length === 0 && members.length === 0 && (
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid }}>
-                  No responses yet for Day {previousDay}.
+                  {c.noResponseYet}
                 </p>
               )}
             </div>
@@ -312,16 +324,16 @@ export default async function ChallengeTeamPage() {
         {!hasPreviousDay && (
           <div style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: "12px", padding: "1.75rem 1.5rem", marginBottom: "2rem", textAlign: "center" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: navy, marginBottom: "0.5rem" }}>
-              The journey starts here.
+              {c.journeyStartsHeading}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "1.25rem" }}>
-              Complete Day 1 and share your response — it will appear here for the whole team.
+              {c.journeyStartsBody}
             </p>
             <Link
               href="/challenge/day/1"
               style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.875rem", color: "white", background: orange, padding: "0.75rem 1.75rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}
             >
-              Open Day 1 →
+              {c.openDay1}
             </Link>
           </div>
         )}
@@ -330,7 +342,7 @@ export default async function ChallengeTeamPage() {
         {feedDays.length > 0 && (
           <div>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: mid, marginBottom: "0.875rem" }}>
-              Previous Days
+              {c.previousDays}
             </p>
             <TeamFeed
               days={feedDays}

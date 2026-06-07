@@ -37,9 +37,11 @@ export default async function ChallengeDayPage({ params }: { params: Promise<{ n
     redirect("/challenge");
   }
 
-  // Read language preference from cookie (set by LanguageContext / /api/set-language)
+  // Language: user metadata takes precedence over cookie for cross-device consistency
   const cookieStore = await cookies();
-  const langCookie = (cookieStore.get("crispy-lang")?.value ?? "en") as "en" | "id";
+  const cookieLang = cookieStore.get("crispy-lang")?.value;
+  const metaLang = (user.user_metadata as Record<string, unknown>)?.language_preference as string | undefined;
+  const langCookie = ((metaLang ?? cookieLang ?? "en") === "id" ? "id" : "en") as "en" | "id";
 
   // Overlay Indonesian content fields when lang=id
   if (langCookie === "id") {

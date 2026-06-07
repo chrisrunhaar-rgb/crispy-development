@@ -43,9 +43,7 @@ export default function ApplyForm({ groupId, groupName, existingStatus, groupLan
     async (_prev: typeof initialState, formData: FormData) => {
       const result = await applyToGroup(groupId, formData);
       if (!result?.error) {
-        // Inherit group language on successful application (fire and forget)
-        setLangCookie(groupLanguage);
-        callSetLanguage(groupLanguage);
+        // Group language does not override the user's own language preference
       }
       return result?.error ? { error: result.error, success: false } : { error: "", success: true };
     },
