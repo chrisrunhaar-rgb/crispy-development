@@ -255,3 +255,28 @@ export async function saveNotificationSettings(groupId: string, notifyTime: stri
   revalidatePath("/challenge/facilitator");
   return { success: true };
 }
+
+// ── Update group name + description ──────────────────────────────────────────
+export async function updateGroupDetails(groupId: string, name: string, description: string | null, language?: "en" | "id") {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const trimmedName = name.trim();
+  if (!trimmedName) return { error: "Group name is required" };
+
+  const admin = createAdminClient();
+  const update: Record<string, unknown> = { name: trimmedName, description: description?.trim() || null };
+  if (language) update.language = language;
+
+  const { error } = await admin
+    .from("challenge_groups")
+    .update(update)
+    .eq("id", groupId)
+    .eq("facilitator_id", user.id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/challenge/facilitator");
+  revalidatePath("/challenge/team");
+  return { success: true };
+}

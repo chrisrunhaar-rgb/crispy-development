@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { reviewApplication, toggleGroupPublic, saveNotificationSettings } from "@/app/challenge/group-actions";
+import { reviewApplication, toggleGroupPublic, saveNotificationSettings, updateGroupDetails } from "@/app/challenge/group-actions";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -40,6 +40,7 @@ type Group = {
   notify_timezone: string;
   start_date: string | null;
   currentDay: number;
+  language?: string | null;
 };
 
 type Application = {
@@ -73,6 +74,12 @@ export default function FacilitatorDashboard({
   const [notifyTz, setNotifyTz] = useState(groups[0]?.notify_timezone ?? "Asia/Kuala_Lumpur");
   const [notifySaved, setNotifySaved] = useState(false);
   const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [editingDetails, setEditingDetails] = useState(false);
+  const [editName, setEditName] = useState(groups[0]?.name ?? "");
+  const [editDescription, setEditDescription] = useState(groups[0]?.description ?? "");
+  const [editLanguage, setEditLanguage] = useState<"en" | "id">((groups[0]?.language as "en" | "id") ?? "en");
+  const [detailsSaving, setDetailsSaving] = useState(false);
+  const [detailsError, setDetailsError] = useState<string | null>(null);
 
   const group = groups[0] ?? null;
 
@@ -149,13 +156,77 @@ export default function FacilitatorDashboard({
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: "0.375rem" }}>
                 {c.yourGroup}
               </p>
-              <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, marginBottom: "0.25rem" }}>
-                {group.name}
-              </h1>
-              {group.description && (
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.6 }}>
-                  {group.description}
-                </p>
+              {editingDetails ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                  <input
+                    value={editName}
+                    onChange={e => setEditName(e.target.value)}
+                    placeholder="Group name"
+                    style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.1rem", color: navy, border: "1.5px solid oklch(72% 0.08 260)", borderRadius: "8px", padding: "0.5rem 0.75rem", outline: "none" }}
+                  />
+                  <textarea
+                    value={editDescription}
+                    onChange={e => setEditDescription(e.target.value)}
+                    placeholder="Short description (optional)"
+                    rows={2}
+                    style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: navy, border: "1.5px solid oklch(82% 0.006 260)", borderRadius: "8px", padding: "0.5rem 0.75rem", outline: "none", resize: "vertical" }}
+                  />
+                  <div>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: mid, marginBottom: "0.4rem" }}>Challenge language</p>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      {(["en", "id"] as const).map(lang => (
+                        <button
+                          key={lang}
+                          onClick={() => setEditLanguage(lang)}
+                          style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem", padding: "0.4rem 0.875rem", border: editLanguage === lang ? "none" : `1.5px solid oklch(82% 0.006 260)`, borderRadius: "6px", background: editLanguage === lang ? navy : "white", color: editLanguage === lang ? "white" : navy, cursor: "pointer" }}
+                        >
+                          {lang === "en" ? "English" : "Bahasa Indonesia"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {detailsError && <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "oklch(52% 0.2 25)", margin: 0 }}>{detailsError}</p>}
+                  <div style={{ display: "flex", gap: "0.625rem" }}>
+                    <button
+                      onClick={async () => {
+                        setDetailsSaving(true);
+                        setDetailsError(null);
+                        const res = await updateGroupDetails(group.id, editName, editDescription || null, editLanguage);
+                        setDetailsSaving(false);
+                        if (res?.error) { setDetailsError(res.error); } else { setEditingDetails(false); }
+                      }}
+                      disabled={detailsSaving}
+                      style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem", color: "white", background: detailsSaving ? "oklch(62% 0.06 260)" : navy, border: "none", borderRadius: "7px", padding: "0.5rem 1rem", cursor: detailsSaving ? "not-allowed" : "pointer" }}
+                    >
+                      {detailsSaving ? "Saving…" : "Save"}
+                    </button>
+                    <button
+                      onClick={() => { setEditingDetails(false); setEditName(group.name); setEditDescription(group.description ?? ""); setEditLanguage((group.language as "en" | "id") ?? "en"); setDetailsError(null); }}
+                      style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem", color: mid, background: "transparent", border: `1px solid oklch(82% 0.006 260)`, borderRadius: "7px", padding: "0.5rem 1rem", cursor: "pointer" }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.25rem" }}>
+                    <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.5rem", color: navy, margin: 0, flex: 1 }}>
+                      {group.name}
+                    </h1>
+                    <button
+                      onClick={() => setEditingDetails(true)}
+                      style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 600, color: mid, background: "transparent", border: "none", cursor: "pointer", padding: "0.25rem 0", flexShrink: 0, marginTop: "0.25rem" }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  {group.description && (
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.6 }}>
+                      {group.description}
+                    </p>
+                  )}
+                </>
               )}
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: mid, marginTop: "0.5rem" }}>
                 {(group.memberCount !== 1 ? c.membersReadsPlural : c.membersReads)

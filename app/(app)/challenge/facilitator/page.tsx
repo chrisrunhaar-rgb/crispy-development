@@ -20,7 +20,7 @@ export default async function FacilitatorPage({
   const [{ data: groups }, { data: enrollmentData }] = await Promise.all([
     admin
       .from("challenge_groups")
-      .select("id, name, description, group_code, is_public, max_members, schedule_days, notify_time, notify_timezone, start_date, created_at")
+      .select("id, name, description, group_code, is_public, max_members, schedule_days, notify_time, notify_timezone, start_date, language, created_at")
       .eq("facilitator_id", user.id)
       .order("created_at", { ascending: false }),
     admin
@@ -63,6 +63,7 @@ export default async function FacilitatorPage({
         notify_time: g.notify_time ?? null,
         notify_timezone: g.notify_timezone ?? "Asia/Kuala_Lumpur",
         start_date: (g as { start_date?: string | null }).start_date ?? null,
+        language: (g as { language?: string | null }).language ?? "en",
         currentDay,
       }))}
       pendingApplications={applications as AppRow[] ?? []}
