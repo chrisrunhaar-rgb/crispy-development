@@ -88,6 +88,8 @@ export async function saveOnboardingPrefs(formData: FormData) {
   const timezone = formData.get("timezone") as string | null ?? "UTC";
   const rawDays = formData.getAll("notification_days") as string[];
   const notificationDays = rawDays.map(Number).filter(n => !isNaN(n));
+  const pathRaw = (formData.get("path") as string | null) ?? "solo";
+  const enrollmentPath = pathRaw === "facilitator" ? "facilitator" : pathRaw === "join" ? "group" : "solo";
 
   const { data: existing } = await admin
     .from("challenge_enrollments")
@@ -98,7 +100,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
   if (existing) {
     await admin
       .from("challenge_enrollments")
-      .update({ notification_time: notificationTime, notification_days: notificationDays, timezone })
+      .update({ notification_time: notificationTime, notification_days: notificationDays, timezone, path: enrollmentPath })
       .eq("user_id", user.id);
   } else {
     await supabase.auth.updateUser({
@@ -107,7 +109,7 @@ export async function saveOnboardingPrefs(formData: FormData) {
 
     await admin.from("challenge_enrollments").insert({
       user_id: user.id,
-      path: "solo",
+      path: enrollmentPath,
       current_day: 1,
       status: "active",
       notification_time: notificationTime,
@@ -117,6 +119,8 @@ export async function saveOnboardingPrefs(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
+  if (pathRaw === "facilitator") redirect("/challenge/group/create");
+  if (pathRaw === "join") redirect("/challenge/group/browse");
   redirect("/challenge/day/1");
 }
 

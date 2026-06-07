@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { saveOnboardingPrefs } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
@@ -64,6 +64,30 @@ async function subscribePush() {
   });
 }
 
+const phoneIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={mid} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="2" width="14" height="20" rx="2"/>
+    <circle cx="12" cy="17" r="1" fill={mid} stroke="none"/>
+  </svg>
+);
+
+const bellIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={mid} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+  </svg>
+);
+
+const bellOffIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="oklch(65% 0.12 30)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    <path d="M18.63 13A17.89 17.89 0 0 1 18 8"/>
+    <path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/>
+    <path d="M18 8a6 6 0 0 0-9.33-4.99"/>
+    <line x1="1" y1="1" x2="23" y2="23"/>
+  </svg>
+);
+
 const copy = {
   en: {
     heading: "Set up your challenge",
@@ -83,9 +107,17 @@ const copy = {
     readingDaysHint: "These are the days you'll get a gentle nudge. Pick whatever fits your schedule.",
     notificationTime: "What time works best for you?",
     notificationTimeHint: "We'll send your daily reading reminder at this time.",
-    startBtn: "Start the challenge →",
-    starting: "Starting...",
+    continueBtn: "Continue →",
     skip: "Skip for now",
+    pathHeading: "How do you want to do this?",
+    pathSubheading: "You can change this later.",
+    soloTitle: "Solo",
+    soloDesc: "Work through the challenge at your own pace. Private journal, daily content.",
+    facilitatorTitle: "Become a facilitator",
+    facilitatorDesc: "Lead a small group. Set a schedule, share an invite link, track progress.",
+    joinTitle: "Join a group",
+    joinDesc: "Browse open groups and apply to join one that fits your context.",
+    back: "← Back",
   },
   id: {
     heading: "Siapkan tantangan Anda",
@@ -105,19 +137,29 @@ const copy = {
     readingDaysHint: "Hari-hari ini adalah saat Anda akan mendapat pengingat. Pilih yang sesuai jadwal.",
     notificationTime: "Pukul berapa yang paling nyaman?",
     notificationTimeHint: "Kami akan mengirim pengingat harian Anda pada waktu ini.",
-    startBtn: "Mulai tantangan →",
-    starting: "Memulai...",
+    continueBtn: "Lanjutkan →",
     skip: "Lewati untuk sekarang",
+    pathHeading: "Bagaimana Anda ingin menjalaninya?",
+    pathSubheading: "Anda bisa mengubah ini nanti.",
+    soloTitle: "Sendiri",
+    soloDesc: "Jalani tantangan sesuai ritme Anda. Jurnal pribadi, konten harian.",
+    facilitatorTitle: "Jadi fasilitator",
+    facilitatorDesc: "Pimpin kelompok kecil. Atur jadwal, bagikan tautan undangan, pantau kemajuan.",
+    joinTitle: "Bergabung dengan kelompok",
+    joinDesc: "Jelajahi kelompok terbuka dan daftar untuk bergabung.",
+    back: "← Kembali",
   },
 };
-
-const initialState = { error: "" };
 
 export default function OnboardingForm({ initialLang = "en", firstName }: { initialLang?: Lang; firstName?: string }) {
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [time, setTime]                 = useState("08:00");
   const [lang]                          = useState<Lang>(initialLang);
   const [timezone, setTimezone]         = useState("UTC");
+  const [step, setStep]                 = useState<"setup" | "path">("setup");
+  const [pathPending, setPathPending]   = useState<string | null>(null);
+  const [pathError, setPathError]       = useState("");
+  const [skipPending, setSkipPending]   = useState(false);
 
   // PWA install state
   const [isInstalled, setIsInstalled]       = useState(false);
@@ -131,24 +173,20 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
   useEffect(() => {
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
 
-    // Detect if already installed as PWA
     const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as Navigator & { standalone?: boolean }).standalone === true;
     setIsInstalled(standalone);
 
-    // Detect iOS
     const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as Window & { MSStream?: unknown }).MSStream;
     setIsIOS(ios);
 
-    // Capture install prompt (Android/Chrome)
     const handleInstallPrompt = (e: Event) => {
       e.preventDefault();
       installPromptRef.current = e as BeforeInstallPromptEvent;
     };
     window.addEventListener("beforeinstallprompt", handleInstallPrompt);
 
-    // Check current notification permission
     if ("Notification" in window) {
       setNotifStatus(Notification.permission as "default" | "granted" | "denied");
     }
@@ -158,17 +196,6 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
 
   const c    = copy[lang];
   const DAYS = lang === "id" ? DAYS_ID : DAYS_EN;
-
-  const [state, formAction, pending] = useActionState(
-    async (_prev: typeof initialState, formData: FormData) => {
-      selectedDays.forEach(d => formData.append("notification_days", String(d)));
-      formData.set("notification_time", time);
-      formData.set("timezone", timezone);
-      formData.set("language", lang);
-      return (await saveOnboardingPrefs(formData)) ?? initialState;
-    },
-    initialState,
-  );
 
   function toggleDay(v: number) {
     setSelectedDays(p => p.includes(v) ? p.filter(d => d !== v) : [...p, v]);
@@ -203,10 +230,40 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     }
   }
 
-  // Show install block if: not installed AND (iOS OR install prompt available)
-  // We render it always on iOS (can't detect prompt availability until interaction)
-  // On non-iOS, only render if there's a prompt ref (updated reactively isn't possible,
-  // so we show it initially and hide after install)
+  async function handlePathSelect(path: "solo" | "facilitator" | "join") {
+    if (pathPending) return;
+    setPathPending(path);
+    setPathError("");
+    const fd = new FormData();
+    selectedDays.forEach(d => fd.append("notification_days", String(d)));
+    fd.set("notification_time", time);
+    fd.set("timezone", timezone);
+    fd.set("language", lang);
+    fd.set("path", path);
+    const result = await saveOnboardingPrefs(fd);
+    if (result?.error) {
+      setPathError(result.error);
+      setPathPending(null);
+    }
+  }
+
+  async function handleSkip() {
+    if (skipPending) return;
+    setSkipPending(true);
+    const fd = new FormData();
+    fd.set("notification_time", "08:00");
+    fd.set("timezone", timezone);
+    fd.set("language", lang);
+    fd.append("notification_days", "1");
+    fd.append("notification_days", "2");
+    fd.append("notification_days", "3");
+    fd.append("notification_days", "4");
+    fd.append("notification_days", "5");
+    fd.set("path", "solo");
+    await saveOnboardingPrefs(fd);
+    setSkipPending(false);
+  }
+
   const showInstallBlock = !isInstalled;
 
   return (
@@ -216,198 +273,255 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
       <img src="/il-challenge-icon.png" alt="" width={72} height={72}
         style={{ borderRadius: "50%", objectFit: "cover", display: "block", marginBottom: "1.5rem" }} />
 
-      <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
-        {firstName ? `${firstName}, ` : ""}{c.heading}
-      </h1>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "2rem" }}>
-        {c.subheading}
-      </p>
-
-      {/* ── Install block ─────────────────────────────────────────── */}
-      {showInstallBlock && (
-        <div style={setupCard}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-            <span style={stepIcon}>📲</span>
-            <div style={{ flex: 1 }}>
-              <p style={stepHeading}>{c.installHeading}</p>
-              <p style={stepHint}>{c.installHint}</p>
-
-              {isIOS ? (
-                <div style={iosInstructions}>
-                  <span style={{ fontSize: "1rem" }}>⬆️</span>
-                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid }}>
-                    {c.installIosStep} <strong style={{ color: navy }}>→</strong> {c.installIosStep2}
-                  </span>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleInstall}
-                  disabled={installLoading}
-                  style={actionBtn}
-                >
-                  {installLoading ? "…" : c.installBtn}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {isInstalled && (
-        <div style={doneRow}>
-          <span style={checkCircle}>✓</span>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
-            {c.installed}
-          </span>
-        </div>
-      )}
-
-      {/* ── Notifications block ───────────────────────────────────── */}
-      {notifStatus === "default" && (
-        <div style={{ ...setupCard, marginTop: "0.75rem" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-            <span style={stepIcon}>🔔</span>
-            <div style={{ flex: 1 }}>
-              <p style={stepHeading}>{c.notifHeading}</p>
-              <p style={stepHint}>{c.notifHint}</p>
-              <button
-                type="button"
-                onClick={handleNotifAllow}
-                disabled={notifStatus === "loading"}
-                style={actionBtn}
-              >
-                {c.notifBtn}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {notifStatus === "loading" && (
-        <div style={{ ...setupCard, marginTop: "0.75rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <span style={stepIcon}>🔔</span>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid }}>…</span>
-          </div>
-        </div>
-      )}
-
-      {notifStatus === "granted" && (
-        <div style={{ ...doneRow, marginTop: "0.75rem" }}>
-          <span style={checkCircle}>✓</span>
-          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
-            {c.notifGranted}
-          </span>
-        </div>
-      )}
-
-      {notifStatus === "denied" && (
-        <div style={{ ...setupCard, marginTop: "0.75rem", background: "oklch(97% 0.005 30)", borderColor: "oklch(85% 0.05 30)" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-            <span style={stepIcon}>🔕</span>
-            <p style={{ ...stepHint, margin: 0 }}>{c.notifDenied}</p>
-          </div>
-        </div>
-      )}
-
-      <div style={{ height: "1.75rem" }} />
-
-      <form action={formAction}>
-
-        {/* Reading days */}
-        <div style={{ marginBottom: "2rem" }}>
-          <p style={sectionLabel}>{c.readingDays}</p>
-          <p style={hint}>{c.readingDaysHint}</p>
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-            {DAYS.map(d => (
-              <button
-                key={d.value}
-                type="button"
-                onClick={() => toggleDay(d.value)}
-                style={{
-                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem",
-                  padding: "0.5625rem 1rem", borderRadius: "8px", border: "1px solid",
-                  cursor: "pointer",
-                  background: selectedDays.includes(d.value) ? navy : "white",
-                  color: selectedDays.includes(d.value) ? offWhite : mid,
-                  borderColor: selectedDays.includes(d.value) ? navy : "oklch(82% 0.006 260)",
-                  transition: "background 0.15s, color 0.15s",
-                }}
-              >
-                {d.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Notification time */}
-        <div style={{ marginBottom: "2.5rem" }}>
-          <p style={sectionLabel}>{c.notificationTime}</p>
-          <p style={hint}>{c.notificationTimeHint}</p>
-          <input
-            type="time"
-            value={time}
-            onChange={e => setTime(e.target.value)}
-            style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "1.125rem", fontWeight: 700,
-              color: navy, background: "white", border: "1px solid oklch(82% 0.006 260)",
-              borderRadius: "8px", padding: "0.75rem 1rem", outline: "none",
-            }}
-          />
-        </div>
-
-        {state.error && (
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(50% 0.22 15)", marginBottom: "1rem" }}>
-            {state.error}
+      {/* ── Step 1: Schedule setup ───────────────────────────────── */}
+      {step === "setup" && (
+        <>
+          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
+            {firstName ? `${firstName}, ` : ""}{c.heading}
+          </h1>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "2rem" }}>
+            {c.subheading}
           </p>
-        )}
 
-        <button
-          type="submit"
-          disabled={pending || selectedDays.length === 0}
-          style={{
-            width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700,
-            fontSize: "1rem", color: offWhite, background: navy, border: "none",
-            borderRadius: "8px", padding: "0.9375rem", cursor: pending ? "not-allowed" : "pointer",
-            opacity: pending || selectedDays.length === 0 ? 0.7 : 1, marginBottom: "1rem",
-          }}
-        >
-          {pending ? c.starting : c.startBtn}
-        </button>
+          {/* Install block */}
+          {showInstallBlock && (
+            <div style={setupCard}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.625rem" }}>
+                <span style={stepIcon}>{phoneIcon}</span>
+                <div style={{ flex: 1 }}>
+                  <p style={stepHeading}>{c.installHeading}</p>
+                  <p style={stepHint}>{c.installHint}</p>
+                  {isIOS ? (
+                    <div style={iosInstructions}>
+                      <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid }}>
+                        {c.installIosStep} <strong style={{ color: navy }}>→</strong> {c.installIosStep2}
+                      </span>
+                    </div>
+                  ) : (
+                    <button type="button" onClick={handleInstall} disabled={installLoading} style={actionBtn}>
+                      {installLoading ? "…" : c.installBtn}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
 
-        {/* Skip link */}
-        <div style={{ textAlign: "center" }}>
+          {isInstalled && (
+            <div style={doneRow}>
+              <span style={checkCircle}>✓</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
+                {c.installed}
+              </span>
+            </div>
+          )}
+
+          {/* Notifications block */}
+          {notifStatus === "default" && (
+            <div style={{ ...setupCard, marginTop: "0.75rem" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.625rem" }}>
+                <span style={stepIcon}>{bellIcon}</span>
+                <div style={{ flex: 1 }}>
+                  <p style={stepHeading}>{c.notifHeading}</p>
+                  <p style={stepHint}>{c.notifHint}</p>
+                  <button type="button" onClick={handleNotifAllow} style={actionBtn}>
+                    {c.notifBtn}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {notifStatus === "loading" && (
+            <div style={{ ...setupCard, marginTop: "0.75rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+                <span style={stepIcon}>{bellIcon}</span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid }}>…</span>
+              </div>
+            </div>
+          )}
+
+          {notifStatus === "granted" && (
+            <div style={{ ...doneRow, marginTop: "0.75rem" }}>
+              <span style={checkCircle}>✓</span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
+                {c.notifGranted}
+              </span>
+            </div>
+          )}
+
+          {notifStatus === "denied" && (
+            <div style={{ ...setupCard, marginTop: "0.75rem", background: "oklch(97% 0.005 30)", borderColor: "oklch(85% 0.05 30)" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.625rem" }}>
+                <span style={stepIcon}>{bellOffIcon}</span>
+                <p style={{ ...stepHint, margin: 0 }}>{c.notifDenied}</p>
+              </div>
+            </div>
+          )}
+
+          <div style={{ height: "1.75rem" }} />
+
+          {/* Reading days */}
+          <div style={{ marginBottom: "2rem" }}>
+            <p style={sectionLabel}>{c.readingDays}</p>
+            <p style={hint}>{c.readingDaysHint}</p>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              {DAYS.map(d => (
+                <button
+                  key={d.value}
+                  type="button"
+                  onClick={() => toggleDay(d.value)}
+                  style={{
+                    fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem",
+                    padding: "0.5625rem 1rem", borderRadius: "8px", border: "1px solid",
+                    cursor: "pointer",
+                    background: selectedDays.includes(d.value) ? navy : "white",
+                    color: selectedDays.includes(d.value) ? offWhite : mid,
+                    borderColor: selectedDays.includes(d.value) ? navy : "oklch(82% 0.006 260)",
+                    transition: "background 0.15s, color 0.15s",
+                  }}
+                >
+                  {d.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Notification time */}
+          <div style={{ marginBottom: "2.5rem" }}>
+            <p style={sectionLabel}>{c.notificationTime}</p>
+            <p style={hint}>{c.notificationTimeHint}</p>
+            <input
+              type="time"
+              value={time}
+              onChange={e => setTime(e.target.value)}
+              style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "1.125rem", fontWeight: 700,
+                color: navy, background: "white", border: "1px solid oklch(82% 0.006 260)",
+                borderRadius: "8px", padding: "0.75rem 1rem", outline: "none",
+              }}
+            />
+          </div>
+
+          {/* Continue */}
           <button
             type="button"
-            onClick={async () => {
-              const fd = new FormData();
-              fd.set("notification_time", "08:00");
-              fd.set("timezone", timezone);
-              fd.set("language", lang);
-              fd.append("notification_days", "1");
-              fd.append("notification_days", "2");
-              fd.append("notification_days", "3");
-              fd.append("notification_days", "4");
-              fd.append("notification_days", "5");
-              await saveOnboardingPrefs(fd);
-            }}
+            disabled={selectedDays.length === 0}
+            onClick={() => setStep("path")}
             style={{
-              fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem",
-              color: mid, background: "none", border: "none", cursor: "pointer",
-              textDecoration: "underline", padding: 0,
+              width: "100%", fontFamily: "var(--font-montserrat)", fontWeight: 700,
+              fontSize: "1rem", color: offWhite, background: navy, border: "none",
+              borderRadius: "8px", padding: "0.9375rem", cursor: selectedDays.length === 0 ? "not-allowed" : "pointer",
+              opacity: selectedDays.length === 0 ? 0.7 : 1, marginBottom: "1rem",
             }}
           >
-            {c.skip}
+            {c.continueBtn}
           </button>
-        </div>
 
-      </form>
+          {/* Skip */}
+          <div style={{ textAlign: "center" }}>
+            <button
+              type="button"
+              disabled={skipPending}
+              onClick={handleSkip}
+              style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem",
+                color: mid, background: "none", border: "none", cursor: "pointer",
+                textDecoration: "underline", padding: 0,
+              }}
+            >
+              {skipPending ? "…" : c.skip}
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* ── Step 2: Path selection ───────────────────────────────── */}
+      {step === "path" && (
+        <>
+          <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
+            {c.pathHeading}
+          </h1>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "2rem" }}>
+            {c.pathSubheading}
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.5rem" }}>
+            {/* Solo */}
+            <button
+              type="button"
+              disabled={pathPending !== null}
+              onClick={() => handlePathSelect("solo")}
+              style={makePathCard(pathPending === "solo")}
+            >
+              <div style={pathCardInner}>
+                <div>
+                  <p style={pathTitle}>{c.soloTitle}</p>
+                  <p style={pathDesc}>{c.soloDesc}</p>
+                </div>
+                <span style={pathArrow}>{pathPending === "solo" ? "…" : "→"}</span>
+              </div>
+            </button>
+
+            {/* Facilitator */}
+            <button
+              type="button"
+              disabled={pathPending !== null}
+              onClick={() => handlePathSelect("facilitator")}
+              style={makePathCard(pathPending === "facilitator")}
+            >
+              <div style={pathCardInner}>
+                <div>
+                  <p style={pathTitle}>{c.facilitatorTitle}</p>
+                  <p style={pathDesc}>{c.facilitatorDesc}</p>
+                </div>
+                <span style={pathArrow}>{pathPending === "facilitator" ? "…" : "→"}</span>
+              </div>
+            </button>
+
+            {/* Join group */}
+            <button
+              type="button"
+              disabled={pathPending !== null}
+              onClick={() => handlePathSelect("join")}
+              style={makePathCard(pathPending === "join")}
+            >
+              <div style={pathCardInner}>
+                <div>
+                  <p style={pathTitle}>{c.joinTitle}</p>
+                  <p style={pathDesc}>{c.joinDesc}</p>
+                </div>
+                <span style={pathArrow}>{pathPending === "join" ? "…" : "→"}</span>
+              </div>
+            </button>
+          </div>
+
+          {pathError && (
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(50% 0.22 15)", marginBottom: "1rem" }}>
+              {pathError}
+            </p>
+          )}
+
+          <div style={{ textAlign: "center" }}>
+            <button
+              type="button"
+              onClick={() => setStep("setup")}
+              style={{
+                fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem",
+                color: mid, background: "none", border: "none", cursor: "pointer",
+                textDecoration: "underline", padding: 0,
+              }}
+            >
+              {c.back}
+            </button>
+          </div>
+        </>
+      )}
 
       {/* Progress dots */}
       <div style={{ display: "flex", gap: "0.375rem", marginTop: "2.5rem" }}>
-        <span style={{ width: "20px", height: "4px", borderRadius: "2px", background: orange }} />
-        <span style={{ width: "8px",  height: "4px", borderRadius: "2px", background: "oklch(85% 0.006 80)" }} />
+        <span style={{ width: "20px", height: "4px", borderRadius: "2px", background: step === "setup" ? orange : "oklch(85% 0.006 80)", transition: "background 0.2s" }} />
+        <span style={{ width: step === "path" ? "20px" : "8px", height: "4px", borderRadius: "2px", background: step === "path" ? orange : "oklch(85% 0.006 80)", transition: "width 0.2s, background 0.2s" }} />
       </div>
     </div>
   );
@@ -427,7 +541,7 @@ const setupCard: React.CSSProperties = {
   background: "oklch(97% 0.006 260)",
   border: "1px solid oklch(88% 0.01 260)",
   borderRadius: "10px",
-  padding: "1rem",
+  padding: "0.75rem",
 };
 
 const doneRow: React.CSSProperties = {
@@ -452,19 +566,20 @@ const checkCircle: React.CSSProperties = {
 };
 
 const stepIcon: React.CSSProperties = {
-  fontSize: "1.25rem",
+  display: "flex",
+  alignItems: "center",
   flexShrink: 0,
   marginTop: "1px",
 };
 
 const stepHeading: React.CSSProperties = {
   fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9rem",
-  color: navy, margin: "0 0 0.25rem",
+  color: navy, margin: "0 0 0.2rem",
 };
 
 const stepHint: React.CSSProperties = {
   fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: mid,
-  lineHeight: 1.55, margin: "0 0 0.75rem",
+  lineHeight: 1.55, margin: "0 0 0.625rem",
 };
 
 const actionBtn: React.CSSProperties = {
@@ -481,4 +596,33 @@ const iosInstructions: React.CSSProperties = {
   border: "1px solid oklch(88% 0.01 260)",
   borderRadius: "6px",
   padding: "0.5rem 0.75rem",
+};
+
+function makePathCard(active: boolean): React.CSSProperties {
+  return {
+    width: "100%", background: "white",
+    border: `1px solid ${active ? navy : "oklch(85% 0.006 80)"}`,
+    borderRadius: "12px", padding: "1.125rem 1.25rem",
+    cursor: active ? "not-allowed" : "pointer",
+    textAlign: "left", opacity: active ? 0.8 : 1,
+  };
+}
+
+const pathCardInner: React.CSSProperties = {
+  display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem",
+};
+
+const pathTitle: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.9375rem",
+  color: navy, margin: "0 0 0.25rem",
+};
+
+const pathDesc: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "0.8rem",
+  color: mid, lineHeight: 1.5, maxWidth: "34ch", margin: 0,
+};
+
+const pathArrow: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "1.1rem",
+  color: orange, flexShrink: 0, fontWeight: 700,
 };
