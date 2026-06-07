@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import ClientLayout from "./ClientLayout";
+import { AuthLanguageSync } from "./AuthLanguageSync";
 
 export default async function AppLayout({
   children,
@@ -27,7 +28,7 @@ export default async function AppLayout({
 
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: `document.cookie="crispy-lang=${metaLang};path=/;max-age=31536000;samesite=lax"` }} />
+      <AuthLanguageSync lang={metaLang} />
       <ClientLayout hasCoachAccess={hasCoachAccess}>
         {children}
       </ClientLayout>
