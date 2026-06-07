@@ -23,7 +23,7 @@ export default function Footer() {
         @media (max-width: 600px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; margin-bottom: 1.5rem; }
           .footer-brand { grid-column: 1 / -1; margin-bottom: 0.25rem; }
-          .footer-pathways, .footer-account { display: none; }
+          .footer-account { display: none; }
           .footer-legal-contact { display: none; }
         }
       `}</style>

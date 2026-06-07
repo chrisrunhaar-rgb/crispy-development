@@ -604,7 +604,7 @@ export default async function DashboardPage({
                   </Link>
                 );
               })}
-              <Link href="/coach" style={{
+              {isSubscriber && <Link href="/coach" style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
@@ -629,7 +629,7 @@ export default async function DashboardPage({
                   <line x1="8" y1="14" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
                 AI Coach
-              </Link>
+              </Link>}
             </div>
           </div>
         </div>
@@ -650,7 +650,7 @@ export default async function DashboardPage({
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
             <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} />
-            {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
+            {isSubscriber && courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
 

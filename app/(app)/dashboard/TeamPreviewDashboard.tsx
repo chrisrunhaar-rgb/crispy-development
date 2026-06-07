@@ -30,7 +30,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
             {lang === "id" ? "Upgrade untuk membawa seluruh tim ke dalam perjalanan ini." : "Upgrade to bring your whole team into the journey."}
           </p>
         </div>
-        <Link href="/team-pathway" style={{
+        <Link href="/membership" style={{
           fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem",
           letterSpacing: "0.06em", color: "white", background: "oklch(30% 0.12 260)",
           padding: "0.625rem 1.25rem", textDecoration: "none", whiteSpace: "nowrap",
@@ -87,7 +87,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(52% 0.008 260)", margin: 0, fontWeight: 600 }}>
             {lang === "id" ? "8 kursi anggota tersedia" : "8 member seats available"}
           </p>
-          <Link href="/team-pathway" style={{
+          <Link href="/membership" style={{
             fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.7rem",
             letterSpacing: "0.06em", color: "oklch(30% 0.12 260)",
             border: "1.5px solid oklch(75% 0.04 260)", padding: "0.45rem 1rem",
@@ -163,7 +163,7 @@ export default function TeamPreviewDashboard({ language }: { language: string })
           background: "oklch(98% 0.003 80)", borderTop: "1px solid oklch(90% 0.006 80)",
           padding: "1rem 1.25rem", textAlign: "center",
         }}>
-          <Link href="/team-pathway" style={{
+          <Link href="/membership" style={{
             fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.72rem",
             letterSpacing: "0.06em", color: "oklch(30% 0.12 260)", textDecoration: "none",
           }}>
