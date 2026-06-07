@@ -1,12 +1,13 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState, useEffect, useRef } from "react";
 import { saveOnboardingPrefs } from "@/app/challenge/actions";
 
 const navy     = "oklch(22% 0.10 260)";
 const orange   = "oklch(65% 0.15 45)";
 const offWhite = "oklch(97% 0.005 80)";
 const mid      = "oklch(52% 0.008 260)";
+const green    = "oklch(55% 0.18 150)";
 
 const DAYS_EN = [
   { value: 1, label: "Mon" },
@@ -30,10 +31,54 @@ const DAYS_ID = [
 
 type Lang = "en" | "id";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+function urlBase64ToUint8Array(base64String: string): ArrayBuffer {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = atob(base64);
+  const arr = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; i++) arr[i] = rawData.charCodeAt(i);
+  return arr.buffer;
+}
+
+async function subscribePush() {
+  const reg = await navigator.serviceWorker.ready;
+  const sub = await reg.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(
+      process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+    ),
+  });
+  const subJson = sub.toJSON();
+  await fetch("/api/push/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      endpoint: sub.endpoint,
+      keys: { p256dh: subJson.keys?.p256dh, auth: subJson.keys?.auth },
+    }),
+  });
+}
+
 const copy = {
   en: {
     heading: "Set up your challenge",
     subheading: "These settings help you build a consistent rhythm. You can change them anytime.",
+    installHeading: "Install the Crispy app",
+    installHint: "Add to your home screen for the best experience and offline access.",
+    installBtn: "Install app",
+    installIosStep: "Tap Share",
+    installIosStep2: "then Add to Home Screen",
+    installed: "App installed",
+    notifHeading: "Allow daily reminders",
+    notifHint: "We'll nudge you at your chosen time so you never miss a day.",
+    notifBtn: "Allow notifications",
+    notifGranted: "Notifications enabled",
+    notifDenied: "Enable notifications in your browser settings.",
     readingDays: "Which days will you read?",
     readingDaysHint: "These are the days you'll get a gentle nudge. Pick whatever fits your schedule.",
     notificationTime: "What time works best for you?",
@@ -45,6 +90,17 @@ const copy = {
   id: {
     heading: "Siapkan tantangan Anda",
     subheading: "Pengaturan ini membantu Anda membangun ritme yang konsisten. Anda bisa mengubahnya kapan saja.",
+    installHeading: "Pasang aplikasi Crispy",
+    installHint: "Tambahkan ke layar utama untuk pengalaman terbaik dan akses offline.",
+    installBtn: "Pasang aplikasi",
+    installIosStep: "Ketuk Bagikan",
+    installIosStep2: "lalu Tambahkan ke Layar Utama",
+    installed: "Aplikasi terpasang",
+    notifHeading: "Izinkan pengingat harian",
+    notifHint: "Kami akan mengingatkan Anda di waktu yang dipilih agar tidak melewatkan satu hari pun.",
+    notifBtn: "Izinkan notifikasi",
+    notifGranted: "Notifikasi aktif",
+    notifDenied: "Aktifkan notifikasi di pengaturan browser Anda.",
     readingDays: "Hari apa Anda akan membaca?",
     readingDaysHint: "Hari-hari ini adalah saat Anda akan mendapat pengingat. Pilih yang sesuai jadwal.",
     notificationTime: "Pukul berapa yang paling nyaman?",
@@ -63,8 +119,41 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
   const [lang]                          = useState<Lang>(initialLang);
   const [timezone, setTimezone]         = useState("UTC");
 
+  // PWA install state
+  const [isInstalled, setIsInstalled]       = useState(false);
+  const [isIOS, setIsIOS]                   = useState(false);
+  const [installLoading, setInstallLoading] = useState(false);
+  const installPromptRef = useRef<BeforeInstallPromptEvent | null>(null);
+
+  // Notification state
+  const [notifStatus, setNotifStatus] = useState<"default" | "granted" | "denied" | "loading">("default");
+
   useEffect(() => {
     setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
+
+    // Detect if already installed as PWA
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (navigator as Navigator & { standalone?: boolean }).standalone === true;
+    setIsInstalled(standalone);
+
+    // Detect iOS
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as Window & { MSStream?: unknown }).MSStream;
+    setIsIOS(ios);
+
+    // Capture install prompt (Android/Chrome)
+    const handleInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      installPromptRef.current = e as BeforeInstallPromptEvent;
+    };
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+
+    // Check current notification permission
+    if ("Notification" in window) {
+      setNotifStatus(Notification.permission as "default" | "granted" | "denied");
+    }
+
+    return () => window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
   }, []);
 
   const c    = copy[lang];
@@ -85,6 +174,41 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
     setSelectedDays(p => p.includes(v) ? p.filter(d => d !== v) : [...p, v]);
   }
 
+  async function handleInstall() {
+    if (!installPromptRef.current) return;
+    setInstallLoading(true);
+    try {
+      await installPromptRef.current.prompt();
+      const { outcome } = await installPromptRef.current.userChoice;
+      if (outcome === "accepted") {
+        setIsInstalled(true);
+        installPromptRef.current = null;
+      }
+    } finally {
+      setInstallLoading(false);
+    }
+  }
+
+  async function handleNotifAllow() {
+    if (!("Notification" in window)) return;
+    setNotifStatus("loading");
+    try {
+      const perm = await Notification.requestPermission();
+      setNotifStatus(perm as "default" | "granted" | "denied");
+      if (perm === "granted" && "serviceWorker" in navigator) {
+        await subscribePush();
+      }
+    } catch {
+      setNotifStatus("default");
+    }
+  }
+
+  // Show install block if: not installed AND (iOS OR install prompt available)
+  // We render it always on iOS (can't detect prompt availability until interaction)
+  // On non-iOS, only render if there's a prompt ref (updated reactively isn't possible,
+  // so we show it initially and hide after install)
+  const showInstallBlock = !isInstalled;
+
   return (
     <div style={{ width: "100%", maxWidth: "480px" }}>
       {/* Challenge icon */}
@@ -95,9 +219,99 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
       <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.75rem", color: navy, lineHeight: 1.15, marginBottom: "0.5rem" }}>
         {firstName ? `${firstName}, ` : ""}{c.heading}
       </h1>
-      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "2.5rem" }}>
+      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid, lineHeight: 1.65, marginBottom: "2rem" }}>
         {c.subheading}
       </p>
+
+      {/* ── Install block ─────────────────────────────────────────── */}
+      {showInstallBlock && (
+        <div style={setupCard}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+            <span style={stepIcon}>📲</span>
+            <div style={{ flex: 1 }}>
+              <p style={stepHeading}>{c.installHeading}</p>
+              <p style={stepHint}>{c.installHint}</p>
+
+              {isIOS ? (
+                <div style={iosInstructions}>
+                  <span style={{ fontSize: "1rem" }}>⬆️</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid }}>
+                    {c.installIosStep} <strong style={{ color: navy }}>→</strong> {c.installIosStep2}
+                  </span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleInstall}
+                  disabled={installLoading}
+                  style={actionBtn}
+                >
+                  {installLoading ? "…" : c.installBtn}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isInstalled && (
+        <div style={doneRow}>
+          <span style={checkCircle}>✓</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
+            {c.installed}
+          </span>
+        </div>
+      )}
+
+      {/* ── Notifications block ───────────────────────────────────── */}
+      {notifStatus === "default" && (
+        <div style={{ ...setupCard, marginTop: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+            <span style={stepIcon}>🔔</span>
+            <div style={{ flex: 1 }}>
+              <p style={stepHeading}>{c.notifHeading}</p>
+              <p style={stepHint}>{c.notifHint}</p>
+              <button
+                type="button"
+                onClick={handleNotifAllow}
+                disabled={notifStatus === "loading"}
+                style={actionBtn}
+              >
+                {c.notifBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {notifStatus === "loading" && (
+        <div style={{ ...setupCard, marginTop: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <span style={stepIcon}>🔔</span>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: mid }}>…</span>
+          </div>
+        </div>
+      )}
+
+      {notifStatus === "granted" && (
+        <div style={{ ...doneRow, marginTop: "0.75rem" }}>
+          <span style={checkCircle}>✓</span>
+          <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", fontWeight: 600, color: green }}>
+            {c.notifGranted}
+          </span>
+        </div>
+      )}
+
+      {notifStatus === "denied" && (
+        <div style={{ ...setupCard, marginTop: "0.75rem", background: "oklch(97% 0.005 30)", borderColor: "oklch(85% 0.05 30)" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+            <span style={stepIcon}>🔕</span>
+            <p style={{ ...stepHint, margin: 0 }}>{c.notifDenied}</p>
+          </div>
+        </div>
+      )}
+
+      <div style={{ height: "1.75rem" }} />
 
       <form action={formAction}>
 
@@ -162,7 +376,7 @@ export default function OnboardingForm({ initialLang = "en", firstName }: { init
           {pending ? c.starting : c.startBtn}
         </button>
 
-        {/* Skip link — submits with no days to skip onboarding */}
+        {/* Skip link */}
         <div style={{ textAlign: "center" }}>
           <button
             type="button"
@@ -207,4 +421,64 @@ const sectionLabel: React.CSSProperties = {
 const hint: React.CSSProperties = {
   fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: mid,
   lineHeight: 1.6, marginBottom: "0.875rem",
+};
+
+const setupCard: React.CSSProperties = {
+  background: "oklch(97% 0.006 260)",
+  border: "1px solid oklch(88% 0.01 260)",
+  borderRadius: "10px",
+  padding: "1rem",
+};
+
+const doneRow: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
+  padding: "0.5rem 0",
+};
+
+const checkCircle: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "20px",
+  height: "20px",
+  borderRadius: "50%",
+  background: green,
+  color: "white",
+  fontSize: "0.7rem",
+  fontWeight: 700,
+  flexShrink: 0,
+};
+
+const stepIcon: React.CSSProperties = {
+  fontSize: "1.25rem",
+  flexShrink: 0,
+  marginTop: "1px",
+};
+
+const stepHeading: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9rem",
+  color: navy, margin: "0 0 0.25rem",
+};
+
+const stepHint: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: mid,
+  lineHeight: 1.55, margin: "0 0 0.75rem",
+};
+
+const actionBtn: React.CSSProperties = {
+  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8125rem",
+  background: navy, color: offWhite, border: "none", borderRadius: "6px",
+  padding: "0.5rem 1rem", cursor: "pointer",
+};
+
+const iosInstructions: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
+  background: "white",
+  border: "1px solid oklch(88% 0.01 260)",
+  borderRadius: "6px",
+  padding: "0.5rem 0.75rem",
 };
