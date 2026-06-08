@@ -3,6 +3,7 @@ import {AltitudesAnim} from '../components/Animations/AltitudesAnim';
 import {LogoReveal} from '../components/Animations/LogoReveal';
 import {ILChallengePromo} from '../components/Animations/ILChallengePromo';
 import {CrossCulturalStatement} from '../components/Animations/CrossCulturalStatement';
+import {Day6HumilityPromo} from '../components/Animations/Day6HumilityPromo';
 
 export const RemotionRoot = () => {
   return (
@@ -35,6 +36,14 @@ export const RemotionRoot = () => {
         id="CrossCulturalStatement"
         component={CrossCulturalStatement}
         durationInFrames={180}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="Day6HumilityPromo"
+        component={Day6HumilityPromo}
+        durationInFrames={695}
         fps={30}
         width={1280}
         height={720}
