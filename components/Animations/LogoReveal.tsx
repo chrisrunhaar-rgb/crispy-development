@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Img } from "remotion";
+import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Img, staticFile } from "remotion";
 
 const NAVY = "#1B3A6B";
 const NAVY_DARK = "#0D1E3A";
@@ -156,7 +156,7 @@ export const LogoReveal: React.FC = () => {
           marginBottom: 28,
         }}>
           <Img
-            src="/logo-icon-dark-badge.png"
+            src={staticFile("logo-icon-dark-badge.png")}
             style={{
               width: 120,
               height: 120,
