@@ -15,7 +15,8 @@
 
 # next.js
 /.next/
-/out/
+/out/*.mp4
+/out/*.webm
 
 # production
 /build

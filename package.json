@@ -6,11 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "render:altitudes": "remotion render AltitudesAnim out/altitudes.mp4",
+    "render:logo": "remotion render LogoReveal out/logo-reveal.mp4",
+    "remotion:studio": "remotion studio"
   },
   "dependencies": {
     "@google/genai": "^2.2.0",
+    "@remotion/bundler": "^4.0.474",
+    "@remotion/cli": "^4.0.474",
     "@remotion/player": "^4.0.448",
+    "@remotion/renderer": "^4.0.474",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "@vercel/analytics": "^2.0.1",
