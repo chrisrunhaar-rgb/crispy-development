@@ -91,14 +91,6 @@ export default function SessionTypeSelector({ trialExhausted, trialRemainingMinu
               }}>
                 {type === "deep" ? s.deepType : s.quickType}
               </span>
-              <span style={{
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.62rem",
-                color: "oklch(50% 0.008 260)",
-                lineHeight: 1.3,
-              }}>
-                {type === "deep" ? s.deepTime : s.quickTime}
-              </span>
             </button>
           );
         })}
