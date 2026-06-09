@@ -29,11 +29,11 @@ const COACH_ROOM_IMAGES: Record<string, string> = {
 };
 
 const PHASE_MIN_SECONDS_DEEP: Partial<Record<Phase, number>> = {
-  LAND: 30,
-  SEEK: 60,
-  EXPLORE: 120,
-  COMMIT: 60,
-  CARRY: 30,
+  LAND: 180,
+  SEEK: 300,
+  EXPLORE: 600,
+  COMMIT: 300,
+  CARRY: 180,
 };
 
 const PHASE_MIN_SECONDS_QUICK: Partial<Record<Phase, number>> = {
@@ -250,6 +250,17 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
         if (call.name === "advance_phase") {
           const newPhase = args.phase as Phase;
           const currentPhase = phaseRef.current;
+          const currentIndex = PHASE_ORDER.indexOf(currentPhase);
+          const requestedIndex = PHASE_ORDER.indexOf(newPhase);
+
+          if (requestedIndex !== currentIndex + 1) {
+            const nextPhase = PHASE_ORDER[currentIndex + 1];
+            return {
+              id: call.id ?? "", name: call.name ?? "",
+              response: { result: "invalid", message: `Cannot skip phases. Next phase is ${nextPhase}. Complete ${currentPhase} first.` },
+            };
+          }
+
           const phaseMinSeconds = sessionType === "quick" ? PHASE_MIN_SECONDS_QUICK : PHASE_MIN_SECONDS_DEEP;
           const minSeconds = phaseMinSeconds[currentPhase] ?? 0;
           const secondsInPhase = (Date.now() - phaseStartTimeRef.current) / 1000;
@@ -258,7 +269,7 @@ export default function GeminiSessionClient({ sessionId, coachName, coachVoice, 
             const remaining = Math.ceil(minSeconds - secondsInPhase);
             return {
               id: call.id ?? "", name: call.name ?? "",
-              response: { result: "too_early", message: `Stay in ${currentPhase} for at least ${remaining} more seconds. Ask another question.` },
+              response: { result: "too_early", message: `Not yet — ${remaining} more seconds in ${currentPhase}. Do not go quiet. Ask a follow-up question, invite them to go deeper on something they said, or explore what's beneath the surface. Keep the conversation alive.` },
             };
           }
 
