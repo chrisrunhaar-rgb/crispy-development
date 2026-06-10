@@ -10,9 +10,10 @@ interface Props {
   lastName?: string;
   email: string;
   currentLanguage?: "en" | "id";
+  pathway?: string;
 }
 
-export default function AccountMenu({ firstName, lastName, email, currentLanguage = "en" }: Props) {
+export default function AccountMenu({ firstName, lastName, email, currentLanguage = "en", pathway }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -45,6 +46,11 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
           <div style={{ padding: "0.875rem 1rem", borderBottom: "1px solid oklch(38% 0.06 260)" }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(97% 0.005 80)", margin: 0 }}>{displayName}</p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "oklch(50% 0.008 260)", margin: "0.2rem 0 0" }}>{email}</p>
+            {pathway && pathway !== "free" && (
+              <span style={{ display: "inline-block", marginTop: "0.4rem", fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.2rem 0.5rem", background: pathway === "team" ? "oklch(45% 0.15 155 / 0.25)" : "oklch(50% 0.18 270 / 0.25)", color: pathway === "team" ? "oklch(65% 0.15 155)" : "oklch(68% 0.18 270)", border: `1px solid ${pathway === "team" ? "oklch(45% 0.15 155 / 0.4)" : "oklch(50% 0.18 270 / 0.4)"}` }}>
+                {pathway === "team" ? "Team" : "Personal"}
+              </span>
+            )}
           </div>
 
           {/* Language selector */}
@@ -58,6 +64,17 @@ export default function AccountMenu({ firstName, lastName, email, currentLanguag
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", margin: 0 }}>Notifications</p>
             <PushNotificationToggle />
           </div>
+
+          {/* Subscription */}
+          <a
+            href="/account/subscription"
+            onClick={() => setOpen(false)}
+            style={{ display: "block", padding: "0.625rem 1rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(72% 0.04 260)", textDecoration: "none" }}
+            onMouseEnter={e => (e.currentTarget.style.background = "oklch(32% 0.11 260)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+          >
+            Subscription
+          </a>
 
           {/* Account settings */}
           <a

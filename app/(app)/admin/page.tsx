@@ -67,17 +67,24 @@ export default async function AdminPage({
   let progressCounts = new Map<string, number>();
   type CoachEntry = { coach_access: boolean; coach_minutes_granted: number };
   let coachData = new Map<string, CoachEntry>();
+  let teamSeatsMap = new Map<string, { filled: number; max: number }>();
 
   if (activeTab === "members") {
-    const [progressResult, membershipResult] = await Promise.all([
+    const [progressResult, membershipResult, teamsResult] = await Promise.all([
       admin.from("user_progress").select("user_id").eq("status", "completed"),
       admin.from("memberships").select("user_id, coach_access, coach_minutes_granted"),
+      admin.from("teams").select("leader_user_id, max_seats, team_members(count)"),
     ]);
     (progressResult.data ?? []).forEach((r: { user_id: string }) => {
       progressCounts.set(r.user_id, (progressCounts.get(r.user_id) ?? 0) + 1);
     });
     (membershipResult.data ?? []).forEach((m: { user_id: string; coach_access: boolean; coach_minutes_granted: number }) => {
       coachData.set(m.user_id, { coach_access: m.coach_access, coach_minutes_granted: m.coach_minutes_granted });
+    });
+    (teamsResult.data ?? []).forEach((t: { leader_user_id: string; max_seats: number | null; team_members: { count: number }[] }) => {
+      const filled = t.team_members?.[0]?.count ?? 0;
+      const max = t.max_seats ?? 8;
+      teamSeatsMap.set(t.leader_user_id, { filled, max });
     });
   }
 
@@ -335,6 +342,7 @@ export default async function AdminPage({
             progressCounts={progressCounts}
             membersList={membersList}
             coachData={coachData}
+            teamSeatsMap={teamSeatsMap}
           />
         )}
 

@@ -535,6 +535,7 @@ export default async function DashboardPage({
                 lastName={user.user_metadata?.last_name}
                 email={user.email ?? ""}
                 currentLanguage={languagePreference}
+                pathway={pathway}
               />
             </div>
           </div>
