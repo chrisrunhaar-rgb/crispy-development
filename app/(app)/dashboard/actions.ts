@@ -329,7 +329,7 @@ export async function acceptMemberInvite(token: string, userId: string): Promise
   await admin
     .from("memberships")
     .upsert(
-      { user_id: userId, coach_access: coachAccess, coach_minutes_granted: coachMinutes },
+      { user_id: userId, coach_access: coachAccess, coach_minutes_granted: coachMinutes, subscription_active: true },
       { onConflict: "user_id" }
     );
 

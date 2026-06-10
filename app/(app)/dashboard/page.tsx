@@ -75,7 +75,7 @@ export default async function DashboardPage({
 
   // Extract metadata from session user OR target user (if admin)
   const firstName = metadata.first_name ?? (viewingAsAdmin ? viewedUserName : user.email?.split("@")[0]) ?? "there";
-  const pathway = (metadata.pathway as string) ?? "personal";
+  const pathway = (metadata.pathway as string) ?? "free";
   const savedResources = (metadata.saved_resources ?? []) as string[];
   const resourceNotes = (metadata.resource_notes ?? {}) as Record<string, string>;
   const resourceRatings = (metadata.resource_ratings ?? {}) as Record<string, number>;
@@ -174,7 +174,7 @@ export default async function DashboardPage({
   // ── Coach access check ──
   const { data: membershipRow } = await admin
     .from("memberships")
-    .select("coach_access, is_admin")
+    .select("coach_access, is_admin, subscription_active")
     .eq("user_id", viewingUserId)
     .maybeSingle();
   const hasCoachAccess = membershipRow?.coach_access === true || membershipRow?.is_admin === true;
@@ -182,7 +182,7 @@ export default async function DashboardPage({
 
   const isTeamLeader = (pathway === "team" || isLeaderByMeta) && teamApplicationStatus === "approved";
   const hasTeam = isTeamLeader || !!memberOfTeam;
-  const isSubscriber = !!membershipRow || hasTeam;
+  const isSubscriber = membershipRow?.subscription_active === true || hasTeam;
 
   // Determine active tab — team tab always resolves so non-members see TeamPreviewDashboard
   const currentTab = tab === "team" ? "team" : "personal";
