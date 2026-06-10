@@ -1,5 +1,5 @@
 "use client";
-import { useState, useTransition, type CSSProperties } from "react";
+import { Fragment, useState, useTransition, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -549,6 +549,191 @@ function ScenarioCard({
   );
 }
 
+/* -------------------------------- Visual diagrams -------------------------------- */
+
+/**
+ * Two Roads to Trust — sits in the navy Concept Cards section, above the cards.
+ * Cognitive trust: a straight, stepped path with square milestones (tasks delivered).
+ * Affective trust: a winding path with round markers (shared moments).
+ * Both converge on the same destination. The SVG is decorative (aria-hidden);
+ * the visible caption carries the meaning.
+ */
+function TrustPathsDiagram({ lang }: { lang: "en" | "id" }) {
+  const t = (en: string, id: string) => (lang === "id" ? id : en);
+  const PATH_STROKE = "oklch(72% 0.05 260)";
+  const LABEL_MUTED = "oklch(72% 0.04 260)";
+  return (
+    <figure style={{ margin: "0 0 56px", padding: 0 }}>
+      <svg aria-hidden="true" viewBox="0 0 640 300" style={{ width: "100%", height: "auto", display: "block" }}>
+        {/* Cognitive path — straight, stepped, task by task */}
+        <path d="M30 96 H150 V120 H280 V144 H400 V150 H506" fill="none" stroke={PATH_STROKE} strokeWidth="2" />
+        <rect x="85" y="91" width="10" height="10" fill={ORANGE} />
+        <rect x="210" y="115" width="10" height="10" fill={ORANGE} />
+        <rect x="335" y="139" width="10" height="10" fill={ORANGE} />
+        <rect x="448" y="145" width="10" height="10" fill={ORANGE} />
+        <text x="30" y="50" fontFamily={FONT_BODY} fontSize="14" fontWeight="700" letterSpacing="1.5" fill={OFF_WHITE}>
+          {t("COGNITIVE TRUST", "KEPERCAYAAN KOGNITIF")}
+        </text>
+        <text x="30" y="72" fontFamily={FONT_HEADLINE} fontSize="16" fontStyle="italic" fill={LABEL_MUTED}>
+          {t("built task by task", "dibangun tugas demi tugas")}
+        </text>
+
+        {/* Affective path — winding, moment by moment */}
+        <path
+          d="M30 210 C90 246 140 178 200 206 C250 229 310 238 370 206 C420 180 470 176 510 170"
+          fill="none"
+          stroke={PATH_STROKE}
+          strokeWidth="2"
+        />
+        <circle cx="115" cy="211" r="5.5" fill={ORANGE} />
+        <circle cx="264" cy="225" r="5.5" fill={ORANGE} />
+        <circle cx="407" cy="190" r="5.5" fill={ORANGE} />
+        <text x="30" y="262" fontFamily={FONT_BODY} fontSize="14" fontWeight="700" letterSpacing="1.5" fill={OFF_WHITE}>
+          {t("AFFECTIVE TRUST", "KEPERCAYAAN AFEKTIF")}
+        </text>
+        <text x="30" y="284" fontFamily={FONT_HEADLINE} fontSize="16" fontStyle="italic" fill={LABEL_MUTED}>
+          {t("grown moment by moment", "tumbuh momen demi momen")}
+        </text>
+
+        {/* Shared destination */}
+        <circle cx="560" cy="150" r="52" fill="oklch(26% 0.09 260)" stroke={ORANGE} strokeWidth="1.5" />
+        <text
+          x="560"
+          y="155"
+          textAnchor="middle"
+          fontFamily={FONT_BODY}
+          fontSize={lang === "id" ? "11" : "13"}
+          fontWeight="700"
+          letterSpacing={lang === "id" ? "0.5" : "1.5"}
+          fill={OFF_WHITE}
+        >
+          {t("TRUST", "KEPERCAYAAN")}
+        </text>
+      </svg>
+      <figcaption
+        style={{
+          fontFamily: FONT_BODY,
+          fontSize: 13,
+          fontStyle: "italic",
+          color: LABEL_MUTED,
+          lineHeight: 1.7,
+          maxWidth: 560,
+          margin: "20px auto 0",
+          textAlign: "center",
+        }}
+      >
+        {t(
+          "Two different roads to the same destination. One moves in straight, measured steps. One winds through shared time. Neither is wrong — but each culture expects trust to arrive by its own road.",
+          "Dua jalan berbeda menuju tujuan yang sama. Satu bergerak dalam langkah-langkah lurus dan terukur. Satu berkelok melalui waktu bersama. Tidak ada yang salah — tapi setiap budaya mengharapkan kepercayaan tiba melalui jalannya sendiri."
+        )}
+      </figcaption>
+    </figure>
+  );
+}
+
+/**
+ * Trust Asymmetry — sits in the Teaching section, after the paragraph that names it.
+ * A confident solid arrow goes out; the dashed return arrow stops short.
+ * "I trust them" does not mean "they trust me."
+ */
+function TrustAsymmetryDiagram({ lang }: { lang: "en" | "id" }) {
+  const t = (en: string, id: string) => (lang === "id" ? id : en);
+  const FAINT = "oklch(55% 0.05 260)";
+  return (
+    <figure style={{ margin: "40px 0 44px", padding: 0 }}>
+      <svg aria-hidden="true" viewBox="0 0 640 220" style={{ width: "100%", height: "auto", display: "block", maxWidth: 560, margin: "0 auto" }}>
+        <defs>
+          <marker id="bt-arrow-solid" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill={NAVY} />
+          </marker>
+          <marker id="bt-arrow-faint" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill={FAINT} />
+          </marker>
+        </defs>
+
+        {/* Me */}
+        <circle cx="90" cy="110" r="46" fill="oklch(92% 0.01 80)" stroke={NAVY} strokeWidth="2" />
+        <text x="90" y="115" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="700" letterSpacing="1" fill={NAVY}>
+          {t("ME", "AKU")}
+        </text>
+
+        {/* Them */}
+        <circle cx="550" cy="110" r="46" fill="oklch(92% 0.01 80)" stroke={NAVY} strokeWidth="2" />
+        <text x="550" y="115" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="700" letterSpacing="1" fill={NAVY}>
+          {t("THEM", "MEREKA")}
+        </text>
+
+        {/* Outgoing trust — solid, confident */}
+        <line x1="146" y1="84" x2="494" y2="84" stroke={NAVY} strokeWidth="2.5" markerEnd="url(#bt-arrow-solid)" />
+        <text x="320" y="62" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={NAVY}>
+          {t("I trust them", "Aku mempercayai mereka")}
+        </text>
+
+        {/* The return path — dashed, stops short */}
+        <line
+          x1="500"
+          y1="136"
+          x2="252"
+          y2="136"
+          stroke={FAINT}
+          strokeWidth="2.5"
+          strokeDasharray="3 9"
+          strokeLinecap="round"
+          markerEnd="url(#bt-arrow-faint)"
+        />
+        <text x="320" y="174" textAnchor="middle" fontFamily={FONT_HEADLINE} fontSize="18" fontStyle="italic" fill={BODY_TEXT}>
+          {t("…do they trust me?", "…apakah mereka mempercayaiku?")}
+        </text>
+
+        {/* The asymmetry */}
+        <text x="320" y="120" textAnchor="middle" fontFamily={FONT_HEADLINE} fontSize="26" fontWeight="600" fill={ORANGE}>
+          ≠
+        </text>
+      </svg>
+      <figcaption
+        style={{
+          fontFamily: FONT_BODY,
+          fontSize: 13,
+          fontStyle: "italic",
+          color: "oklch(48% 0.04 260)",
+          lineHeight: 1.7,
+          maxWidth: 520,
+          margin: "16px auto 0",
+          textAlign: "center",
+        }}
+      >
+        {t(
+          "Trust extended is not trust returned. The return path does not build itself — it has to be grown, in the other person's trust language.",
+          "Kepercayaan yang diberikan bukan kepercayaan yang dikembalikan. Jalur kembalinya tidak terbangun dengan sendirinya — ia harus ditumbuhkan, dalam bahasa kepercayaan orang lain."
+        )}
+      </figcaption>
+    </figure>
+  );
+}
+
+/**
+ * Compass motif — quiet decorative echo of the Crispy compass mark.
+ * Opens the Faith Anchor section. Purely decorative.
+ */
+function CompassMotif() {
+  return (
+    <svg aria-hidden="true" width="64" height="64" viewBox="0 0 56 56" style={{ display: "block", marginBottom: 28 }}>
+      <circle cx="28" cy="28" r="25" fill="none" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
+      {/* cardinal ticks */}
+      <line x1="28" y1="6" x2="28" y2="12" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
+      <line x1="28" y1="44" x2="28" y2="50" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
+      <line x1="6" y1="28" x2="12" y2="28" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
+      <line x1="44" y1="28" x2="50" y2="28" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
+      {/* needle, tilted off-north — still searching, still pointing */}
+      <g transform="rotate(45 28 28)">
+        <polygon points="28,10 33,28 23,28" fill={ORANGE} />
+        <polygon points="28,46 33,28 23,28" fill="oklch(38% 0.10 260)" />
+      </g>
+      <circle cx="28" cy="28" r="2.5" fill={OFF_WHITE} />
+    </svg>
+  );
+}
+
 /* -------------------------------- Main component -------------------------------- */
 
 type Props = {
@@ -706,7 +891,10 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
             {t("Trust Is Not Universal", "Kepercayaan Bukan Sesuatu yang Universal")}
           </h2>
           {TEACHING_PARAS[lang].map((para, i) => (
-            <p key={i} style={prose}>{para}</p>
+            <Fragment key={i}>
+              <p style={prose}>{para}</p>
+              {i === 5 && <TrustAsymmetryDiagram lang={lang} />}
+            </Fragment>
           ))}
         </div>
       </div>
@@ -718,6 +906,7 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.2, margin: "0 0 40px" }}>
             {t("Cognitive Trust vs. Affective Trust", "Kepercayaan Kognitif vs. Kepercayaan Afektif")}
           </h2>
+          <TrustPathsDiagram lang={lang} />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
             {CONCEPT_CARDS.map((card, i) => (
               <ConceptCard
@@ -958,6 +1147,7 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
       {/* 10 — Faith Anchor */}
       <div style={{ background: NAVY, padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <CompassMotif />
           <p style={{ ...eyebrow, marginBottom: 12 }}>{t("Faith Anchor", "Jangkar Iman")}</p>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(28px, 3.5vw, 44px)", fontStyle: "italic", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.15, margin: "0 0 36px" }}>
             {t("He Invested First", "Dia Berinvestasi Lebih Dahulu")}
