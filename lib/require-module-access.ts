@@ -12,11 +12,16 @@ import { createAdminClient } from "@/lib/supabase/admin";
  * Subscription = memberships.subscription_active = true
  * Coach access (WayPoint) does NOT grant module access — separate concern.
  */
+const ADMIN_EMAIL = "chris.runhaar@world-outreach.com";
+
 export async function requireModuleAccess(
   supabase: SupabaseClient,
   userId: string | null,
-  slug: string
+  slug: string,
+  userEmail?: string | null
 ) {
+  if (userEmail === ADMIN_EMAIL) return;
+
   const admin = createAdminClient();
   const { data: ms } = await admin
     .from("module_status")

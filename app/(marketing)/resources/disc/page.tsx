@@ -45,7 +45,7 @@ export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG);
+  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG, user?.email ?? null);
 
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
