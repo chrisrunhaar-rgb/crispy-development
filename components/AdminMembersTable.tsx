@@ -12,17 +12,16 @@ interface Member {
   created_at: string;
   last_sign_in_at?: string | null;
   status: 'active' | 'inactive' | 'pending';
-  pathway?: 'personal' | 'team' | 'peer';
+  pathway?: 'free' | 'personal' | 'team' | 'peer';
   completedModules?: number;
   team?: boolean;
-  peer?: boolean;
   tests?: number;
   timezone?: string | null;
   coach_access?: boolean;
   coach_minutes_granted?: number;
 }
 
-type SortColumn = 'name' | 'pathway' | 'team' | 'peer' | 'modules' | 'tests' | 'timezone' | 'lastLogin' | 'joined';
+type SortColumn = 'name' | 'pathway' | 'team' | 'modules' | 'tests' | 'timezone' | 'lastLogin' | 'joined';
 type SortDirection = 'asc' | 'desc';
 
 interface AdminMembersTableProps {
@@ -44,8 +43,10 @@ function getPathwayColor(pathway?: string) {
     case 'peer':
       return 'ds-badge-red';
     case 'personal':
-    default:
       return 'ds-badge-indigo';
+    case 'free':
+    default:
+      return 'ds-badge-gray';
   }
 }
 
@@ -273,10 +274,6 @@ export default function AdminMembersTable({
           aVal = a.team ? 1 : 0;
           bVal = b.team ? 1 : 0;
           break;
-        case 'peer':
-          aVal = a.peer ? 1 : 0;
-          bVal = b.peer ? 1 : 0;
-          break;
         case 'modules':
           aVal = a.completedModules || 0;
           bVal = b.completedModules || 0;
@@ -461,7 +458,7 @@ export default function AdminMembersTable({
               {/* Pathway filter */}
               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <label style={{ fontSize: '0.75rem', fontWeight: 600, color: '#6B7280' }}>Pathway:</label>
-                {['personal', 'team', 'peer'].map(p => (
+                {['free', 'personal', 'team'].map(p => (
                   <label key={p} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.875rem', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
@@ -554,9 +551,6 @@ export default function AdminMembersTable({
                 <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('team')}>
                   Team <SortIcon column="team" />
                 </th>
-                <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('peer')}>
-                  Peer <SortIcon column="peer" />
-                </th>
                 <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('modules')}>
                   Modules <SortIcon column="modules" />
                 </th>
@@ -639,11 +633,6 @@ export default function AdminMembersTable({
                     <td data-label="Team" style={{ textAlign: 'center' }}>
                       <span style={{ fontWeight: '500', color: member.team ? '#10B981' : '#9CA3AF' }}>
                         {member.team ? '✓' : '—'}
-                      </span>
-                    </td>
-                    <td data-label="Peer" style={{ textAlign: 'center' }}>
-                      <span style={{ fontWeight: '500', color: member.peer ? '#10B981' : '#9CA3AF' }}>
-                        {member.peer ? '✓' : '—'}
                       </span>
                     </td>
                     <td data-label="Modules" style={{ textAlign: 'center' }}>

@@ -24,6 +24,10 @@ const ASSESSMENT_KEYS = [
   "thinking_style_completed_at",
   "wheel_of_life_saved_at",
   "karunia_completed_at",
+  "fivela_completed_at",
+  "enneagram_completed_at",
+  "big_five_completed_at",
+  "personalities16_completed_at",
 ];
 
 

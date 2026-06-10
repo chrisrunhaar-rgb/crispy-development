@@ -882,6 +882,10 @@ a:focus-visible {
   color: #FFFFFF;
 }
 
+.ds-badge-gray {
+  background: #9CA3AF;
+}
+
 .ds-badge-indigo {
   background: #818CF8;
 }

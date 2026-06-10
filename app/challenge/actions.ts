@@ -24,7 +24,7 @@ export async function signUpChallenge(formData: FormData) {
       data: {
         first_name: firstName,
         last_name: lastName,
-        pathway: "personal",
+        pathway: "free",
         challenge_enrolled: true,
         onboarding_complete: true,
         language_preference: language,

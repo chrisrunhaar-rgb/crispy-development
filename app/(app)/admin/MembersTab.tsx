@@ -13,6 +13,10 @@ const ASSESSMENT_KEYS = [
   'thinking_style_completed_at',
   'wheel_of_life_saved_at',
   'karunia_completed_at',
+  'fivela_completed_at',
+  'enneagram_completed_at',
+  'big_five_completed_at',
+  'personalities16_completed_at',
 ];
 
 interface UserData {
@@ -31,7 +35,7 @@ interface Member {
   created_at: string;
   last_sign_in_at?: string | null;
   status: 'active' | 'inactive' | 'pending';
-  pathway?: 'personal' | 'team' | 'peer';
+  pathway?: 'free' | 'personal' | 'team' | 'peer';
   completedModules?: number;
   team?: boolean;
   peer?: boolean;
@@ -61,7 +65,6 @@ export default function MembersTab({
       const lastName = u.user_metadata?.last_name as string ?? '';
       const pathway = u.user_metadata?.pathway as string ?? 'personal';
       const hasTeam = pathway === 'team' || !!u.user_metadata?.team_id;
-      const hasPeer = pathway === 'peer' || !!u.user_metadata?.peer_group_id;
       const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
 
       const cd = coachData.get(u.id);
@@ -73,10 +76,9 @@ export default function MembersTab({
         created_at: u.created_at,
         last_sign_in_at: u.last_sign_in_at,
         status: 'active' as const,
-        pathway: pathway as 'personal' | 'team' | 'peer',
+        pathway: pathway as 'free' | 'personal' | 'team' | 'peer',
         completedModules: progressCounts.get(u.id) ?? 0,
         team: hasTeam,
-        peer: hasPeer,
         tests: testsDone,
         timezone: u.user_metadata?.timezone as string | null ?? null,
         coach_access: cd?.coach_access ?? false,
