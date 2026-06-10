@@ -66,7 +66,7 @@ const TEACHING_PARAS = {
     "This is not primarily a skills problem. It is an awareness problem.",
     "The shift this module invites is simple to describe and genuinely hard to do. It is a move from passive trust assessment to active trust investment.",
     "Most leaders, when they think about trust in a team, are quietly asking: “Do I trust this person?” That is passive assessment. It puts you in the position of the evaluator, watching to see if the other person earns your confidence.",
-    "Chris's conviction — shaped by real experience of this kind of silent breakdown — is something different: “We assume that when we trust someone, the person also trusts us. That is not the case. Trust needs to grow, and only grows when we intentionally care about the other person, genuinely try to listen and understand their situation, values, and viewpoints.”",
+    "But there is a different conviction, one shaped by real experience of this kind of silent breakdown: we assume that when we trust someone, the person also trusts us. That is not the case. Trust needs to grow, and only grows when we intentionally care about the other person, genuinely try to listen and understand their situation, values, and viewpoints.",
     "The question that changes things is not “do I trust them?” The question is: “Have I done everything I can so that this person can grow in trusting me?”",
     "That shift — from assessor to investor — is where cross-cultural trust actually begins.",
   ],
@@ -81,15 +81,10 @@ const TEACHING_PARAS = {
     "Ini bukan terutama masalah keterampilan. Ini masalah kesadaran.",
     "Pergeseran yang diundang modul ini sederhana untuk dijelaskan dan sungguh sulit untuk dilakukan. Ini adalah langkah dari penilaian kepercayaan yang pasif ke investasi kepercayaan yang aktif.",
     "Kebanyakan pemimpin, ketika memikirkan kepercayaan dalam tim, diam-diam bertanya: “Apakah aku mempercayai orang ini?” Itu adalah penilaian pasif. Itu menempatkan kamu dalam posisi sebagai penilai, menunggu untuk melihat apakah orang lain mendapatkan kepercayaanmu.",
-    "Keyakinan Chris — yang dibentuk oleh pengalaman nyata dari jenis kerusakan diam seperti ini — adalah sesuatu yang berbeda: “Kita mengasumsikan bahwa ketika kita mempercayai seseorang, orang itu juga mempercayai kita. Itu tidak benar. Kepercayaan perlu tumbuh, dan hanya tumbuh ketika kita dengan sengaja peduli pada orang lain, benar-benar mencoba mendengarkan dan memahami situasi, nilai, dan sudut pandang mereka.”",
+    "Tapi ada keyakinan yang berbeda, yang dibentuk oleh pengalaman nyata dari jenis kerusakan diam seperti ini: kita mengasumsikan bahwa ketika kita mempercayai seseorang, orang itu juga mempercayai kita. Itu tidak benar. Kepercayaan perlu tumbuh, dan hanya tumbuh ketika kita dengan sengaja peduli pada orang lain, benar-benar mencoba mendengarkan dan memahami situasi, nilai, dan sudut pandang mereka.",
     "Pertanyaan yang mengubah segalanya bukan “apakah aku mempercayai mereka?” Pertanyaannya adalah: “Apakah aku sudah melakukan semua yang bisa aku lakukan agar orang ini bisa bertumbuh dalam mempercayai aku?”",
     "Pergeseran itu — dari penilai ke investor — adalah tempat kepercayaan lintas budaya sebenarnya dimulai.",
   ],
-};
-
-const PULL_QUOTE = {
-  en: "“Trust needs to grow, and only grows when we intentionally care about the other person, genuinely try to listen and understand their situation, values, and viewpoints.”",
-  id: "“Kepercayaan perlu tumbuh, dan hanya tumbuh ketika kita dengan sengaja peduli pada orang lain, benar-benar mencoba mendengarkan dan memahami situasi, nilai, dan sudut pandang mereka.”",
 };
 
 type ConceptCardData = {
@@ -188,6 +183,39 @@ const SELF_ASSESSMENT_ITEMS = [
     id: "Aku baru-baru ini mengambil langkah konkret untuk berinvestasi dalam hubungan di mana kepercayaan terasa tipis — tanpa menunggu orang lain mengambil langkah pertama.",
   },
 ];
+
+const ASSESSMENT_RESULTS = {
+  high: {
+    en: {
+      title: "You are leading as an investor",
+      body: "Your answers suggest that active trust investment is already part of how you lead. The risk at this level is subtle: the habits that built trust in one relationship can quietly become a formula. Look at the statement where you scored lowest. That is where your next growth is. Keep asking the question behind this module: have I done everything I can so this person can grow in trusting me?",
+    },
+    id: {
+      title: "Kamu memimpin sebagai investor",
+      body: "Jawabanmu menunjukkan bahwa investasi kepercayaan yang aktif sudah menjadi bagian dari caramu memimpin. Risikonya di level ini halus: kebiasaan yang membangun kepercayaan dalam satu hubungan bisa diam-diam menjadi rumus. Lihat pernyataan dengan nilai terendahmu. Di situlah pertumbuhanmu berikutnya. Terus tanyakan pertanyaan di balik modul ini: apakah aku sudah melakukan semua yang aku bisa agar orang ini bisa bertumbuh dalam mempercayai aku?",
+    },
+  },
+  mid: {
+    en: {
+      title: "You are somewhere in between",
+      body: "Your answers suggest a mix of active investment and passive assessment. That is where most leaders honestly are. The most useful next step is specific, not general: find your lowest score above, and treat that statement as your assignment for the coming weeks. The practical actions below give you a place to start.",
+    },
+    id: {
+      title: "Kamu berada di antara keduanya",
+      body: "Jawabanmu menunjukkan campuran antara investasi aktif dan penilaian pasif. Di situlah kebanyakan pemimpin sebenarnya berada. Langkah berikutnya yang paling berguna bersifat spesifik, bukan umum: temukan nilai terendahmu di atas, dan jadikan pernyataan itu sebagai tugasmu untuk minggu-minggu mendatang. Tindakan praktis di bawah memberimu tempat untuk memulai.",
+    },
+  },
+  low: {
+    en: {
+      title: "You are mostly assessing, not yet investing",
+      body: "Your answers suggest that trust in your team is currently something you evaluate more than something you build. That is not a verdict. It is the most common starting point, and naming it honestly is already the first move. Choose one relationship where trust feels thin and begin there. The practical actions below are designed for exactly this.",
+    },
+    id: {
+      title: "Kamu lebih banyak menilai, belum berinvestasi",
+      body: "Jawabanmu menunjukkan bahwa kepercayaan dalam timmu saat ini lebih merupakan sesuatu yang kamu evaluasi daripada sesuatu yang kamu bangun. Itu bukan vonis. Itu adalah titik awal yang paling umum, dan menamainya dengan jujur sudah merupakan langkah pertama. Pilih satu hubungan di mana kepercayaan terasa tipis dan mulailah dari sana. Tindakan praktis di bawah dirancang persis untuk ini.",
+    },
+  },
+};
 
 const REFLECTION_NOTE = {
   en: "There is no threshold to hit here. If several of your answers are lower than you would like, that is not a verdict — it is a starting point. The goal of this module is not a perfect score. It is one honest next step.",
@@ -677,18 +705,7 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 600, color: NAVY, lineHeight: 1.15, margin: "0 0 36px" }}>
             {t("Trust Is Not Universal", "Kepercayaan Bukan Sesuatu yang Universal")}
           </h2>
-          {TEACHING_PARAS[lang].slice(0, 4).map((para, i) => (
-            <p key={i} style={prose}>{para}</p>
-          ))}
-          <blockquote style={{ borderLeft: "3px solid " + ORANGE, paddingLeft: 24, margin: "40px 0" }}>
-            <p style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(18px, 2.2vw, 24px)", fontStyle: "italic", fontWeight: 600, color: NAVY, lineHeight: 1.6, margin: 0 }}>
-              {PULL_QUOTE[lang]}
-            </p>
-            <p style={{ fontFamily: FONT_BODY, fontSize: 13, fontWeight: 600, color: ORANGE, letterSpacing: "0.06em", marginTop: 12, marginBottom: 0 }}>
-              — Chris Runhaar
-            </p>
-          </blockquote>
-          {TEACHING_PARAS[lang].slice(4).map((para, i) => (
+          {TEACHING_PARAS[lang].map((para, i) => (
             <p key={i} style={prose}>{para}</p>
           ))}
         </div>
@@ -798,6 +815,28 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
             ))}
           </div>
 
+          <div aria-live="polite">
+            {Object.keys(ratings).length === SELF_ASSESSMENT_ITEMS.length &&
+              (() => {
+                const total = Object.values(ratings).reduce((a, b) => a + b, 0);
+                const band = total >= 20 ? "high" : total >= 13 ? "mid" : "low";
+                const result = ASSESSMENT_RESULTS[band][lang];
+                return (
+                  <div style={{ background: NAVY, borderRadius: 12, padding: "28px 32px", marginTop: 32 }}>
+                    <p style={{ fontFamily: FONT_BODY, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(75% 0.13 45)", margin: "0 0 10px" }}>
+                      {t("Your result", "Hasilmu")} · {total}/25
+                    </p>
+                    <h3 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 600, color: OFF_WHITE, margin: "0 0 12px", lineHeight: 1.25 }}>
+                      {result.title}
+                    </h3>
+                    <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: "oklch(88% 0.008 80)", lineHeight: 1.75, margin: 0 }}>
+                      {result.body}
+                    </p>
+                  </div>
+                );
+              })()}
+          </div>
+
           <div style={{ background: "oklch(93% 0.008 80)", borderRadius: 10, padding: "20px 24px", margin: "32px 0 0", borderLeft: "3px solid " + ORANGE }}>
             <p style={{ fontFamily: FONT_BODY, fontSize: 14, fontStyle: "italic", color: BODY_TEXT, lineHeight: 1.75, margin: 0 }}>
               {REFLECTION_NOTE[lang]}
@@ -901,7 +940,6 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
                         fontSize: 15,
                         color: checked ? "oklch(48% 0.04 260)" : BODY_TEXT,
                         lineHeight: 1.75,
-                        textDecoration: checked ? "line-through" : "none",
                         cursor: "pointer",
                         flex: 1,
                         margin: 0,
