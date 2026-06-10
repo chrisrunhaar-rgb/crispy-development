@@ -19,6 +19,7 @@ interface Member {
   timezone?: string | null;
   coach_access?: boolean;
   coach_minutes_granted?: number;
+  subscription_active?: boolean;
 }
 
 type SortColumn = 'name' | 'pathway' | 'team' | 'modules' | 'tests' | 'timezone' | 'lastLogin' | 'joined';
@@ -31,6 +32,7 @@ interface AdminMembersTableProps {
   onDeleteMultiple?: (memberIds: string[]) => Promise<void>;
   onExport?: (members: Member[]) => void;
   onCoachAccessChange?: (memberId: string, access: boolean, minutes: number) => Promise<void>;
+  onSubscriptionChange?: (memberId: string, subscriptionActive: boolean, pathway: string) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
   testCount?: number;
@@ -207,6 +209,98 @@ function WaypointCell({
   );
 }
 
+const PATHWAY_OPTIONS = [
+  { value: 'free', label: 'Free', subscriptionActive: false },
+  { value: 'personal', label: 'Personal', subscriptionActive: true },
+  { value: 'team', label: 'Team', subscriptionActive: true },
+] as const;
+
+function SubscriptionCell({
+  memberId,
+  initialPathway,
+  onSave,
+}: {
+  memberId: string;
+  initialPathway: string;
+  onSave?: (memberId: string, subscriptionActive: boolean, pathway: string) => Promise<void>;
+}) {
+  const [pathway, setPathway] = useState(initialPathway || 'free');
+  const [saved, setSaved] = useState(false);
+  const [, startTransition] = useTransition();
+
+  const isDirty = pathway !== (initialPathway || 'free');
+
+  function handleSave() {
+    if (!onSave) return;
+    const option = PATHWAY_OPTIONS.find(o => o.value === pathway) ?? PATHWAY_OPTIONS[0];
+    startTransition(async () => {
+      await onSave(memberId, option.subscriptionActive, pathway);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    });
+  }
+
+  const navy = 'oklch(30% 0.12 260)';
+
+  const pathwayColors: Record<string, { active: string; border: string }> = {
+    free: { active: 'oklch(55% 0.008 260)', border: 'oklch(58% 0.008 260)' },
+    personal: { active: 'oklch(48% 0.18 270)', border: 'oklch(50% 0.18 270)' },
+    team: { active: 'oklch(42% 0.15 155)', border: 'oklch(45% 0.15 155)' },
+  };
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexWrap: 'nowrap' }}>
+      <div style={{ display: 'flex', gap: '2px', flexShrink: 0 }}>
+        {PATHWAY_OPTIONS.map(opt => {
+          const isActive = pathway === opt.value;
+          const colors = pathwayColors[opt.value];
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setPathway(opt.value)}
+              style={{
+                fontFamily: 'var(--font-montserrat)',
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                padding: '0.2rem 0.45rem',
+                border: `1px solid ${isActive ? colors.border : 'oklch(82% 0.008 80)'}`,
+                background: isActive ? colors.active : 'transparent',
+                color: isActive ? 'white' : 'oklch(55% 0.008 260)',
+                cursor: 'pointer',
+                lineHeight: 1,
+              }}
+            >
+              {opt.label}
+            </button>
+          );
+        })}
+      </div>
+      {onSave && (
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={!isDirty && !saved}
+          style={{
+            fontFamily: 'var(--font-montserrat)',
+            fontSize: '0.6rem',
+            fontWeight: 700,
+            padding: '0.2rem 0.5rem',
+            border: 'none',
+            background: saved ? 'oklch(52% 0.14 150)' : isDirty ? navy : 'oklch(88% 0.008 80)',
+            color: isDirty || saved ? 'white' : 'oklch(62% 0.008 260)',
+            cursor: isDirty ? 'pointer' : 'default',
+            flexShrink: 0,
+            lineHeight: 1,
+          }}
+        >
+          {saved ? '✓' : 'Save'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function AdminMembersTable({
   members,
   onEdit,
@@ -214,6 +308,7 @@ export default function AdminMembersTable({
   onDeleteMultiple,
   onExport,
   onCoachAccessChange,
+  onSubscriptionChange,
   showSearch = true,
   showFilters = true,
   testCount = 4,
@@ -545,8 +640,8 @@ export default function AdminMembersTable({
                 <th style={{ width: '22%', cursor: 'pointer' }} onClick={() => handleSort('name')}>
                   Name <SortIcon column="name" />
                 </th>
-                <th style={{ width: '18%', cursor: 'pointer' }} onClick={() => handleSort('pathway')}>
-                  Pathway <SortIcon column="pathway" />
+                <th style={{ width: '22%' }}>
+                  Access
                 </th>
                 <th style={{ width: '9%', cursor: 'pointer' }} onClick={() => handleSort('team')}>
                   Team <SortIcon column="team" />
@@ -625,10 +720,12 @@ export default function AdminMembersTable({
                         </div>
                       </div>
                     </td>
-                    <td data-label="Pathway">
-                      <span style={{ fontSize: '0.875rem', color: '#374151' }}>
-                        {member.pathway ? member.pathway.charAt(0).toUpperCase() + member.pathway.slice(1) : '—'}
-                      </span>
+                    <td data-label="Access" style={{ verticalAlign: 'middle' }}>
+                      <SubscriptionCell
+                        memberId={member.id}
+                        initialPathway={member.pathway ?? 'free'}
+                        onSave={onSubscriptionChange}
+                      />
                     </td>
                     <td data-label="Team" style={{ textAlign: 'center' }}>
                       <span style={{ fontWeight: '500', color: member.teamSeats ? '#10B981' : '#9CA3AF' }}>

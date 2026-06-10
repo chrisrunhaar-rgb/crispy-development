@@ -6,7 +6,7 @@ import AdminBroadcastForm from './AdminBroadcastForm';
 import { ToastContainer } from '@/components/Toast';
 import { useToast } from '@/hooks/useToast';
 import { exportMembersAsCSV } from '@/lib/admin-export';
-import { adminBulkDeleteMembers, updateMemberCoachAccess } from './actions';
+import { adminBulkDeleteMembers, updateMemberCoachAccess, updateMemberSubscription } from './actions';
 
 const ASSESSMENT_KEYS = [
   'disc_completed_at',
@@ -49,7 +49,7 @@ interface MembersTabProps {
   users: UserData[];
   progressCounts: Map<string, number>;
   membersList: Array<{ id: string; name: string; email: string }>;
-  coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number }>;
+  coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number; subscription_active: boolean }>;
   teamSeatsMap: Map<string, { filled: number; max: number }>;
 }
 
@@ -86,6 +86,7 @@ export default function MembersTab({
         timezone: u.user_metadata?.timezone as string | null ?? null,
         coach_access: cd?.coach_access ?? false,
         coach_minutes_granted: cd?.coach_minutes_granted ?? 120,
+        subscription_active: cd?.subscription_active ?? false,
       };
     });
   });
@@ -120,6 +121,17 @@ export default function MembersTab({
     }
   };
 
+  const handleSubscriptionChange = async (memberId: string, subscriptionActive: boolean, pathway: string) => {
+    const result = await updateMemberSubscription(memberId, subscriptionActive, pathway);
+    if (result.error) {
+      error(result.error);
+    } else {
+      setTableMembers(prev =>
+        prev.map(m => m.id === memberId ? { ...m, subscription_active: subscriptionActive, pathway: pathway as 'free' | 'personal' | 'team' | 'peer' } : m)
+      );
+    }
+  };
+
   const sectionHeading: React.CSSProperties = {
     fontFamily: 'var(--font-montserrat)',
     fontWeight: 700,
@@ -143,6 +155,7 @@ export default function MembersTab({
           onDeleteMultiple={handleDeleteMultiple}
           onExport={handleExport}
           onCoachAccessChange={handleCoachAccessChange}
+          onSubscriptionChange={handleSubscriptionChange}
           showSearch={true}
           showFilters={true}
           testCount={ASSESSMENT_KEYS.length}

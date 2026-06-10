@@ -327,6 +327,44 @@ export async function rejectMembershipApplication(formData: FormData) {
   revalidatePath("/admin");
 }
 
+export async function updateMemberSubscription(
+  userId: string,
+  subscriptionActive: boolean,
+  pathway: string
+): Promise<{ error?: string }> {
+  await assertAdmin();
+  const adminClient = createAdminClient();
+
+  const { error: membershipError } = await adminClient
+    .from("memberships")
+    .upsert(
+      { user_id: userId, subscription_active: subscriptionActive },
+      { onConflict: "user_id" }
+    );
+  if (membershipError) return { error: membershipError.message };
+
+  await adminClient.auth.admin.updateUserById(userId, {
+    user_metadata: { pathway },
+  });
+
+  if (pathway === "team") {
+    const { data: existingTeam } = await adminClient
+      .from("teams")
+      .select("id")
+      .eq("leader_user_id", userId)
+      .maybeSingle();
+    if (!existingTeam) {
+      const { data: u } = await adminClient.auth.admin.getUserById(userId);
+      const firstName = u?.user?.user_metadata?.first_name as string | undefined;
+      const name = firstName ? `${firstName}'s Team` : "My Team";
+      await adminClient.from("teams").insert({ leader_user_id: userId, name, language: "en" });
+    }
+  }
+
+  revalidatePath("/admin");
+  return {};
+}
+
 export async function updateMemberCoachAccess(
   userId: string,
   coachAccess: boolean,
