@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-const ADMIN_USER_ID = "e04e4310-075a-4df5-9113-4fe7f993afe6";
+const ADMIN_USER_ID = "c8526fd3-ab76-4514-ad0c-2310e37c5053";
 
 async function assertAdmin() {
   const supabase = await createClient();
