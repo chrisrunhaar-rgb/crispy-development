@@ -365,7 +365,7 @@ function ConceptCard({
       </p>
 
       {expanded && (
-        <div>
+        <div id={`concept-card-panel-${index}`}>
           {data.sections.map((section, si) => {
             const isBreaks = si === 3;
             if (isBreaks) {
@@ -394,11 +394,33 @@ function ConceptCard({
         </div>
       )}
 
-      <p style={{ fontFamily: FONT_BODY, fontSize: 12, color: ORANGE, margin: "12px 0 0", fontWeight: 600 }}>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle(index);
+        }}
+        aria-expanded={expanded}
+        aria-controls={`concept-card-panel-${index}`}
+        style={{
+          fontFamily: FONT_BODY,
+          fontSize: 12,
+          color: ORANGE,
+          margin: "12px 0 0",
+          fontWeight: 600,
+          background: "none",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: 44,
+          textAlign: "left",
+        }}
+      >
         {expanded
           ? lang === "id" ? "Tampilkan lebih sedikit ↑" : "Show less ↑"
           : lang === "id" ? "Tampilkan lebih banyak ↓" : "Show more ↓"}
-      </p>
+      </button>
     </div>
   );
 }
@@ -463,6 +485,8 @@ function ScenarioCard({
 
         <button
           onClick={() => onToggle(index)}
+          aria-expanded={revealed}
+          aria-controls={`scenario-insight-panel-${index}`}
           style={{
             fontFamily: FONT_BODY,
             fontSize: 14,
@@ -474,6 +498,7 @@ function ScenarioCard({
             borderRadius: 12,
             cursor: "pointer",
             marginTop: 16,
+            minHeight: 44,
           }}
         >
           {revealed
@@ -483,7 +508,7 @@ function ScenarioCard({
       </div>
 
       {revealed && (
-        <div style={{ background: LIGHT_GRAY, padding: "1.25rem 1.75rem", borderTop: "1px solid oklch(82% 0.008 80)" }}>
+        <div id={`scenario-insight-panel-${index}`} style={{ background: LIGHT_GRAY, padding: "1.25rem 1.75rem", borderTop: "1px solid oklch(82% 0.008 80)" }}>
           <p style={{ fontFamily: FONT_BODY, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: "0 0 8px" }}>
             {lang === "id" ? "Wawasan" : "Insight"}
           </p>
@@ -598,10 +623,10 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
               fontSize: 14,
               fontFamily: FONT_BODY,
               border: "1px solid oklch(42% 0.08 260)",
-              cursor: saved ? "default" : "pointer",
+              cursor: saved || isPending ? "default" : "pointer",
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
             {isPending
@@ -734,7 +759,11 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
                 <p style={{ fontFamily: FONT_BODY, fontSize: 15, color: BODY_TEXT, lineHeight: 1.75, margin: "0 0 16px" }}>
                   {item[lang]}
                 </p>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <div
+                  role="group"
+                  aria-label={t(`Rate statement ${i + 1} from 1 to 5`, `Beri nilai pernyataan ${i + 1} dari 1 sampai 5`)}
+                  style={{ display: "flex", gap: 8, flexWrap: "wrap" }}
+                >
                   {[1, 2, 3, 4, 5].map((n) => {
                     const selected = ratings[i] === n;
                     return (
@@ -831,14 +860,14 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
                     <button
                       onClick={() => toggleChecklistItem(key)}
                       aria-pressed={checked}
+                      aria-label={item}
                       style={{
-                        width: 22,
-                        height: 22,
-                        borderRadius: 4,
-                        border: checked ? "none" : "2px solid " + NAVY_BORDER,
-                        background: checked ? ORANGE : "transparent",
+                        width: 44,
+                        height: 44,
+                        border: "none",
+                        background: "transparent",
                         flexShrink: 0,
-                        marginTop: 1,
+                        margin: "-10px -11px -11px -11px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
@@ -846,18 +875,31 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
                         padding: 0,
                       }}
                     >
-                      {checked && (
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      )}
+                      <span
+                        style={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: 4,
+                          border: checked ? "none" : "2px solid " + NAVY_BORDER,
+                          background: checked ? ORANGE : "transparent",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {checked && (
+                          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        )}
+                      </span>
                     </button>
                     <p
                       onClick={() => toggleChecklistItem(key)}
                       style={{
                         fontFamily: FONT_BODY,
                         fontSize: 15,
-                        color: checked ? "oklch(55% 0.04 260)" : BODY_TEXT,
+                        color: checked ? "oklch(48% 0.04 260)" : BODY_TEXT,
                         lineHeight: 1.75,
                         textDecoration: checked ? "line-through" : "none",
                         cursor: "pointer",
