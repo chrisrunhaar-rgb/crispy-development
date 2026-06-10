@@ -14,7 +14,7 @@ interface Member {
   status: 'active' | 'inactive' | 'pending';
   pathway?: 'free' | 'personal' | 'team' | 'peer';
   completedModules?: number;
-  team?: boolean;
+  teamSeats?: string | null;
   tests?: number;
   timezone?: string | null;
   coach_access?: boolean;
@@ -271,8 +271,8 @@ export default function AdminMembersTable({
           bVal = b.pathway || 'personal';
           break;
         case 'team':
-          aVal = a.team ? 1 : 0;
-          bVal = b.team ? 1 : 0;
+          aVal = a.teamSeats ?? '';
+          bVal = b.teamSeats ?? '';
           break;
         case 'modules':
           aVal = a.completedModules || 0;
@@ -631,8 +631,8 @@ export default function AdminMembersTable({
                       </span>
                     </td>
                     <td data-label="Team" style={{ textAlign: 'center' }}>
-                      <span style={{ fontWeight: '500', color: member.team ? '#10B981' : '#9CA3AF' }}>
-                        {member.team ? '✓' : '—'}
+                      <span style={{ fontWeight: '500', color: member.teamSeats ? '#10B981' : '#9CA3AF' }}>
+                        {member.teamSeats ?? '—'}
                       </span>
                     </td>
                     <td data-label="Modules" style={{ textAlign: 'center' }}>

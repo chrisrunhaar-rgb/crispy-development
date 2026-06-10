@@ -50,6 +50,7 @@ interface MembersTabProps {
   progressCounts: Map<string, number>;
   membersList: Array<{ id: string; name: string; email: string }>;
   coachData: Map<string, { coach_access: boolean; coach_minutes_granted: number }>;
+  teamSeatsMap: Map<string, { filled: number; max: number }>;
 }
 
 export default function MembersTab({
@@ -57,6 +58,7 @@ export default function MembersTab({
   progressCounts,
   membersList,
   coachData,
+  teamSeatsMap,
 }: MembersTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
   const [tableMembers, setTableMembers] = useState<Member[]>(() => {
@@ -64,10 +66,11 @@ export default function MembersTab({
       const firstName = u.user_metadata?.first_name as string ?? '';
       const lastName = u.user_metadata?.last_name as string ?? '';
       const pathway = u.user_metadata?.pathway as string ?? 'personal';
-      const hasTeam = pathway === 'team' || !!u.user_metadata?.team_id;
       const testsDone = ASSESSMENT_KEYS.filter(k => !!u.user_metadata?.[k]).length;
 
       const cd = coachData.get(u.id);
+      const seats = teamSeatsMap.get(u.id);
+      const teamSeats = seats ? `${seats.filled}/${seats.max}` : null;
       return {
         id: u.id,
         email: u.email ?? '',
@@ -78,7 +81,7 @@ export default function MembersTab({
         status: 'active' as const,
         pathway: pathway as 'free' | 'personal' | 'team' | 'peer',
         completedModules: progressCounts.get(u.id) ?? 0,
-        team: hasTeam,
+        teamSeats,
         tests: testsDone,
         timezone: u.user_metadata?.timezone as string | null ?? null,
         coach_access: cd?.coach_access ?? false,
