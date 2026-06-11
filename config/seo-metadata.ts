@@ -222,7 +222,7 @@ export const resourceMetadata: Record<string, { title: string; description: stri
   },
   "understanding-high-context": {
     title: "Understanding High-Context Communication — Crispy Development",
-    description: "Master high-context cultures. Learn to read between the lines and communicate indirectly with skill.",
+    description: "Learn to read the signals that matter in high-context cultures — indirect refusal, silence, face-saving, and consensus. Practical module for global leaders.",
   },
 
   // Training
