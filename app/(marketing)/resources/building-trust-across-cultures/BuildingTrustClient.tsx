@@ -711,29 +711,6 @@ function TrustAsymmetryDiagram({ lang }: { lang: "en" | "id" }) {
   );
 }
 
-/**
- * Compass motif — quiet decorative echo of the Crispy compass mark.
- * Opens the Faith Anchor section. Purely decorative.
- */
-function CompassMotif() {
-  return (
-    <svg aria-hidden="true" width="64" height="64" viewBox="0 0 56 56" style={{ display: "block", marginBottom: 28 }}>
-      <circle cx="28" cy="28" r="25" fill="none" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
-      {/* cardinal ticks */}
-      <line x1="28" y1="6" x2="28" y2="12" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
-      <line x1="28" y1="44" x2="28" y2="50" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
-      <line x1="6" y1="28" x2="12" y2="28" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
-      <line x1="44" y1="28" x2="50" y2="28" stroke="oklch(45% 0.10 260)" strokeWidth="1.5" />
-      {/* needle, tilted off-north — still searching, still pointing */}
-      <g transform="rotate(45 28 28)">
-        <polygon points="28,10 33,28 23,28" fill={ORANGE} />
-        <polygon points="28,46 33,28 23,28" fill="oklch(38% 0.10 260)" />
-      </g>
-      <circle cx="28" cy="28" r="2.5" fill={OFF_WHITE} />
-    </svg>
-  );
-}
-
 /* -------------------------------- Main component -------------------------------- */
 
 type Props = {
@@ -1147,7 +1124,6 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
       {/* 10 — Faith Anchor */}
       <div style={{ background: NAVY, padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <CompassMotif />
           <p style={{ ...eyebrow, marginBottom: 12 }}>{t("Faith Anchor", "Jangkar Iman")}</p>
           <h2 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(28px, 3.5vw, 44px)", fontStyle: "italic", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.15, margin: "0 0 36px" }}>
             {t("He Invested First", "Dia Berinvestasi Lebih Dahulu")}

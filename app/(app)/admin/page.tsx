@@ -197,6 +197,7 @@ export default async function AdminPage({
   const contentReadCounts = new Map<string, number>();
   const moduleStatuses: Record<string, string> = {};
   const moduleCats: Record<string, string> = {};
+  const moduleUpdated: Record<string, string> = {};
   if (activeTab === "content") {
     allUsers.forEach(u => {
       const saved = u.user_metadata?.saved_resources;
@@ -213,10 +214,11 @@ export default async function AdminPage({
       }
     });
     const adminClient = createAdminClient();
-    const { data: statusRows } = await adminClient.from("module_status").select("slug, status, library_category");
+    const { data: statusRows } = await adminClient.from("module_status").select("slug, status, library_category, updated_at");
     for (const row of statusRows ?? []) {
       if (row.status) moduleStatuses[row.slug] = row.status;
       if (row.library_category) moduleCats[row.slug] = row.library_category;
+      if (row.updated_at) moduleUpdated[row.slug] = row.updated_at;
     }
   }
 
@@ -601,7 +603,7 @@ export default async function AdminPage({
               title: r.title,
               category: r.format,
               created_at: "2026-04-21",
-              updated_at: "2026-04-21",
+              updated_at: moduleUpdated[r.slug ?? r.id] ?? "2026-04-21",
               languages: r.languages.map(l => l.toUpperCase()),
               reads: contentReadCounts.get(r.slug ?? r.id) ?? 0,
               saves: contentSaveCounts.get(r.slug ?? r.id) ?? 0,
