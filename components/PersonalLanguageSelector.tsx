@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { setPersonalLanguage } from "@/app/(app)/dashboard/actions";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const LANGS = [
   { code: "en", label: "EN", full: "English" },
@@ -13,13 +15,23 @@ type Lang = "en" | "id";
 export default function PersonalLanguageSelector({ currentLanguage, compact = false }: { currentLanguage: Lang; compact?: boolean }) {
   const [optimisticLang, setOptimisticLang] = useState<Lang>(currentLanguage);
   const [isPending, startTransition] = useTransition();
+  const { setLang } = useLanguage();
+  const router = useRouter();
 
   function handleChange(lang: Lang) {
     if (lang === optimisticLang || isPending) return;
     setOptimisticLang(lang);
+    // Update LanguageContext immediately so client-rendered pages (homepage,
+    // marketing) switch without a reload — this also writes the crispy-lang
+    // cookie and localStorage.
+    setLang(lang);
     const formData = new FormData();
     formData.set("language", lang);
-    startTransition(() => setPersonalLanguage(formData));
+    startTransition(async () => {
+      await setPersonalLanguage(formData);
+      // Re-render server components that read user_metadata.language_preference
+      router.refresh();
+    });
   }
 
   return (

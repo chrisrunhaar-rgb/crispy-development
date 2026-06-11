@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -17,6 +18,10 @@ export async function setPersonalLanguage(formData: FormData) {
   await admin.auth.admin.updateUserById(user.id, {
     user_metadata: { language_preference: language },
   });
+  // Keep the marketing-side language cookie in sync — LanguageContext reads
+  // crispy-lang, while server pages read user_metadata. Both must agree.
+  const cookieStore = await cookies();
+  cookieStore.set("crispy-lang", language, { path: "/", maxAge: 31536000, sameSite: "lax" });
   revalidatePath("/dashboard");
 }
 
