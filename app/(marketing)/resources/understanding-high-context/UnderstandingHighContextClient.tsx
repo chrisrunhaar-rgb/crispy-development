@@ -293,31 +293,31 @@ const KEY_TAKEAWAYS = [
   {
     en: {
       title: "The message is rarely just in the words.",
-      body: "In high-context cultures, meaning lives in the relationship, the setting, what is NOT said, and the pause before the answer. Most of the world communicates this way. When you only listen for words, you miss more than half the conversation.",
+      body: "In high-context cultures, the message lives in the relationship, the setting, and what is NOT said — not only in the words. Most of the world communicates this way.",
     },
     id: {
       title: "Pesan jarang hanya ada dalam kata-kata.",
-      body: "Dalam budaya berkonteks tinggi, makna ada dalam hubungan, setting, apa yang TIDAK dikatakan, dan jeda sebelum jawaban. Sebagian besar dunia berkomunikasi dengan cara ini. Ketika kamu hanya mendengarkan kata-kata, kamu melewatkan lebih dari separuh percakapan.",
+      body: "Dalam budaya berkonteks tinggi, pesan ada dalam hubungan, setting, dan apa yang TIDAK dikatakan — bukan hanya dalam kata-kata. Sebagian besar dunia berkomunikasi dengan cara ini.",
     },
   },
   {
     en: {
       title: "Five dynamics, one pattern — different names, same need.",
-      body: "Indirect refusal, communicative silence, face-saving, relational preamble, and consensus before announcement all point to the same underlying logic: relationship is the container that carries meaning. Learn to read the container, not just the content.",
+      body: "Indirect refusal, communicative silence, face-saving, relationship as prerequisite, and consensus before announcement. Different names, same patterns.",
     },
     id: {
       title: "Lima dinamika, satu pola — nama berbeda, kebutuhan sama.",
-      body: "Penolakan tidak langsung, keheningan komunikatif, menjaga muka, basa-basi relasional, dan konsensus sebelum pengumuman semuanya menunjuk pada logika mendasar yang sama: hubungan adalah wadah yang membawa makna. Belajarlah membaca wadahnya, bukan hanya isinya.",
+      body: "Penolakan tidak langsung, keheningan komunikatif, menjaga muka, hubungan sebagai prasyarat, dan konsensus sebelum pengumuman. Nama yang berbeda, pola yang sama.",
     },
   },
   {
     en: {
       title: "The gap between your default and theirs is the work.",
-      body: "Every cross-cultural misread starts with two people operating from different communication systems without knowing it. The goal is not to abandon your default. It is to develop enough awareness to bridge the gap — one deliberate adjustment at a time.",
+      body: "The gap between your communication instinct and your team's is not a problem to be eliminated. It is the place where the most important learning happens.",
     },
     id: {
       title: "Kesenjangan antara defaultmu dan default mereka adalah pekerjaannya.",
-      body: "Setiap kesalahan baca lintas budaya dimulai dengan dua orang yang beroperasi dari sistem komunikasi yang berbeda tanpa mengetahuinya. Tujuannya bukan untuk meninggalkan defaultmu. Melainkan untuk mengembangkan kesadaran yang cukup untuk menjembatani kesenjangan — satu penyesuaian yang disengaja pada satu waktu.",
+      body: "Kesenjangan antara naluri komunikasimu dan naluri timmu bukan masalah yang harus dihilangkan. Itulah tempat di mana pembelajaran terpenting terjadi.",
     },
   },
 ];
