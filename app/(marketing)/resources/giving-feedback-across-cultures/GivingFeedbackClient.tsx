@@ -54,8 +54,8 @@ const INBOX_EMAIL = {
     id: "Analisis dalam laporan minggu lalu dangkal. Kesimpulan-kesimpulannya tidak didukung oleh data. Ini bukan standar yang kita butuhkan.",
   },
   footer: {
-    en: "Sent to three team leads -- word for word the same.",
-    id: "Dikirim ke tiga pemimpin tim -- kata per kata sama.",
+    en: "Sent to three team leads, word for word the same.",
+    id: "Dikirim ke tiga pemimpin tim, kata per kata sama.",
   },
 };
 
@@ -80,8 +80,8 @@ const INBOX_CARDS: { chip: string; name: string; visible: { en: string; id: stri
       id: "Laptop ditutup sampai pukul lima. Tanpa balasan.",
     },
     reveal: {
-      en: "The written record felt permanent -- public humiliation. Within a month she applied for a transfer. She never mentioned the email.",
-      id: "Catatan tertulis itu terasa permanen -- penghinaan publik. Dalam sebulan ia mengajukan mutasi. Ia tidak pernah menyebut email itu.",
+      en: "The written record felt permanent: public humiliation. Within a month she applied for a transfer. She never mentioned the email.",
+      id: "Catatan tertulis itu terasa permanen: penghinaan publik. Dalam sebulan ia mengajukan mutasi. Ia tidak pernah menyebut email itu.",
     },
   },
   {
@@ -177,8 +177,8 @@ const CULTURE_DIALS: {
 
 // ─── Section 3 Intensity pairs data ───────────────────────────────────────────
 const INTENSITY_HEADERS = {
-  up: { en: "TURNED UP -- UPGRADERS", id: "DINAIKKAN -- PENGUAT" },
-  down: { en: "TURNED DOWN -- DOWNGRADERS", id: "DITURUNKAN -- PELEMBUT" },
+  up: { en: "TURNED UP: UPGRADERS", id: "DINAIKKAN: PENGUAT" },
+  down: { en: "TURNED DOWN: DOWNGRADERS", id: "DITURUNKAN: PELEMBUT" },
 };
 
 const INTENSITY_PAIRS: { up: { en: string; id: string }; down: { en: string; id: string } }[] = [
@@ -221,13 +221,13 @@ const REFRAME_ROUNDS = [
       id: "Tulis ulang ini untuk kolega Jepang menggunakan pelembut dan bingkai yang menjaga muka.",
     },
     reframe: {
-      en: `"Thank you for the time you put into this draft. I wonder if this section might benefit from a little more development in the analysis -- perhaps we could look at it together before the final version goes out? I want to make sure it reflects the quality I know you're capable of."`,
-      id: `"Terima kasih atas waktu yang kamu curahkan untuk draf ini. Saya bertanya-tanya apakah bagian ini mungkin mendapat manfaat dari sedikit lebih banyak pengembangan dalam analisis -- mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu kamu mampu capai."`,
+      en: `"Thank you for the time you put into this draft. I wonder if this section might benefit from a little more development in the analysis. Perhaps we could look at it together before the final version goes out? I want to make sure it reflects the quality I know you're capable of."`,
+      id: `"Terima kasih atas waktu yang kamu curahkan untuk draf ini. Saya bertanya-tanya apakah bagian ini mungkin mendapat manfaat dari sedikit lebih banyak pengembangan dalam analisis. Mungkin kita bisa melihatnya bersama sebelum versi final keluar? Saya ingin memastikannya mencerminkan kualitas yang saya tahu kamu mampu capai."`,
     },
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
-      en: `The upgraders are gone -- "completely," "entirely," the verdict. A question replaces the closed door, and the opening thanks makes the critique receivable. The truth is unchanged.`,
-      id: `Penguat-penguatnya hilang -- "sepenuhnya," "sama sekali," vonisnya. Pertanyaan menggantikan pintu yang tertutup, dan terima kasih pembuka membuat kritik dapat diterima. Kebenarannya tidak berubah.`,
+      en: `The upgraders are gone: "completely," "entirely," the verdict. A question replaces the closed door, and the opening thanks makes the critique receivable. The truth is unchanged.`,
+      id: `Penguat-penguatnya hilang: "sepenuhnya," "sama sekali," vonisnya. Pertanyaan menggantikan pintu yang tertutup, dan terima kasih pembuka membuat kritik dapat diterima. Kebenarannya tidak berubah.`,
     },
   },
   {
@@ -249,8 +249,8 @@ const REFRAME_ROUNDS = [
     },
     explanationLabel: { en: "What changed and why:", id: "Apa yang berubah dan mengapa:" },
     explanation: {
-      en: "The original protected dignity but lost the issue -- nothing was named. The reframe keeps the relational opening, names the specific thing, and closes with a concrete ask.",
-      id: "Versi asli menjaga martabat tetapi kehilangan masalahnya -- tidak ada yang disebutkan. Reframe mempertahankan pembukaan relasional, menyebutkan hal spesifik, dan menutup dengan permintaan konkret.",
+      en: "The original protected dignity but lost the issue: nothing was named. The reframe keeps the relational opening, names the specific thing, and closes with a concrete ask.",
+      id: "Versi asli menjaga martabat tetapi kehilangan masalahnya: tidak ada yang disebutkan. Reframe mempertahankan pembukaan relasional, menyebutkan hal spesifik, dan menutup dengan permintaan konkret.",
     },
   },
 ];
@@ -301,39 +301,39 @@ const CASE_WHAT_NEXT = { en: "What happens next:", id: "Apa yang terjadi selanju
 
 const CASE_SETUP: Record<Lang, string[]> = {
   en: [
-    "You lead an NGO team in East Africa. James, your field reporting lead, frames outcomes data more optimistically than the numbers support -- nothing false, but it would not survive a direct donor question. He believes he is protecting the project.",
+    "You lead an NGO team in East Africa. James, your field reporting lead, frames outcomes data more optimistically than the numbers support. Nothing false, but it would not survive a direct donor question. He believes he is protecting the project.",
   ],
   id: [
-    "Kamu memimpin tim LSM di Afrika Timur. James, penanggung jawab pelaporan lapanganmu, membingkai data hasil lebih optimis daripada yang didukung angka -- tidak ada yang palsu, tetapi tidak akan bertahan jika donor bertanya langsung. Ia percaya sedang melindungi proyek.",
+    "Kamu memimpin tim LSM di Afrika Timur. James, penanggung jawab pelaporan lapanganmu, membingkai data hasil lebih optimis daripada yang didukung angka. Tidak ada yang palsu, tetapi tidak akan bertahan jika donor bertanya langsung. Ia percaya sedang melindungi proyek.",
   ],
 };
 
 const CASE_CP1: { heading: { en: string; id: string }; options: [CaseChoice, CaseChoice] } = {
   heading: {
-    en: "Choice Point 1 -- How do you open?",
-    id: "Titik Pilihan 1 -- Bagaimana kamu membuka?",
+    en: "Choice Point 1: How do you open?",
+    id: "Titik Pilihan 1: Bagaimana kamu membuka?",
   },
   options: [
     {
-      label: { en: "Option A -- Begin with the issue", id: "Pilihan A -- Mulai dengan masalah" },
+      label: { en: "Option A: Begin with the issue", id: "Pilihan A: Mulai dengan masalah" },
       action: {
         en: ["You meet privately and name it straight away: the last three reports do not match the numbers."],
         id: ["Kamu bertemu secara pribadi dan langsung menyebutkannya: tiga laporan terakhir tidak cocok dengan angkanya."],
       },
       outcome: {
-        en: ["James nods, agrees, thanks you. Two weeks later the pattern has only half-changed -- he heard a preference, not a correction."],
-        id: ["James mengangguk, setuju, berterima kasih. Dua minggu kemudian polanya baru setengah berubah -- ia mendengar preferensi, bukan koreksi."],
+        en: ["James nods, agrees, thanks you. Two weeks later the pattern has only half-changed: he heard a preference, not a correction."],
+        id: ["James mengangguk, setuju, berterima kasih. Dua minggu kemudian polanya baru setengah berubah: ia mendengar preferensi, bukan koreksi."],
       },
     },
     {
-      label: { en: "Option B -- Begin with the relationship", id: "Pilihan B -- Mulai dengan hubungan" },
+      label: { en: "Option B: Begin with the relationship", id: "Pilihan B: Mulai dengan hubungan" },
       action: {
         en: [`You open with what you genuinely value in his work: "There's something I want to work through with you first, before it goes anywhere else."`],
         id: [`Kamu membuka dengan apa yang sungguh kamu hargai dari kerjanya: "Ada sesuatu yang ingin saya selesaikan denganmu terlebih dahulu, sebelum pergi ke mana pun."`],
       },
       outcome: {
-        en: ["James relaxes. You are not angry, and this is private -- the hard content can now enter through an open door."],
-        id: ["James menjadi santai. Kamu tidak marah, dan ini bersifat pribadi -- konten yang sulit kini bisa masuk melalui pintu yang terbuka."],
+        en: ["James relaxes. You are not angry, and this is private. The hard content can now enter through an open door."],
+        id: ["James menjadi santai. Kamu tidak marah, dan ini bersifat pribadi. Konten yang sulit kini bisa masuk melalui pintu yang terbuka."],
       },
     },
   ],
@@ -342,8 +342,8 @@ const CASE_CP1: { heading: { en: string; id: string }; options: [CaseChoice, Cas
 const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: { en: string; id: string }; options: [CaseChoice, CaseChoice] }> = {
   A: {
     heading: {
-      en: "Choice Point 2 -- Naming the stakes",
-      id: "Titik Pilihan 2 -- Menyebutkan taruhannya",
+      en: "Choice Point 2: Naming the stakes",
+      id: "Titik Pilihan 2: Menyebutkan taruhannya",
     },
     intro: {
       en: "James heard you, but not at the depth you intended.",
@@ -351,21 +351,21 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
     },
     options: [
       {
-        label: { en: "Option A1 -- Cite the professional standard", id: "Pilihan A1 -- Rujuk standar profesional" },
+        label: { en: "Option A1: Cite the professional standard", id: "Pilihan A1: Rujuk standar profesional" },
         action: {
           en: ["You walk through the data policy and donor agreements. Contractual, not stylistic."],
           id: ["Kamu menjelaskan kebijakan data dan perjanjian donor. Kontraktual, bukan soal gaya."],
         },
         outcome: {
-          en: ["He complies. The reports improve; the relationship cools. The behavior changed -- the understanding did not."],
-          id: ["Ia patuh. Laporan membaik; hubungan mendingin. Perilakunya berubah -- pemahamannya tidak."],
+          en: ["He complies. The reports improve; the relationship cools. The behavior changed, but the understanding did not."],
+          id: ["Ia patuh. Laporan membaik; hubungan mendingin. Perilakunya berubah, tetapi pemahamannya tidak."],
         },
       },
       {
-        label: { en: "Option A2 -- Ask what he was protecting", id: "Pilihan A2 -- Tanyakan apa yang ia lindungi" },
+        label: { en: "Option A2: Ask what he was protecting", id: "Pilihan A2: Tanyakan apa yang ia lindungi" },
         action: {
-          en: [`"James, help me understand -- when you framed the data this way, what were you trying to achieve?"`],
-          id: [`"James, bantu saya memahami -- ketika kamu membingkai data seperti ini, apa yang ingin kamu capai?"`],
+          en: [`"James, help me understand: when you framed the data this way, what were you trying to achieve?"`],
+          id: [`"James, bantu saya memahami: ketika kamu membingkai data seperti ini, apa yang ingin kamu capai?"`],
         },
         outcome: {
           en: ["He exhales. In his world, keeping donors confident is the job. Now you can change the mental model, not just the behavior."],
@@ -376,8 +376,8 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
   },
   B: {
     heading: {
-      en: "Choice Point 2 -- Naming the stakes",
-      id: "Titik Pilihan 2 -- Menyebutkan taruhannya",
+      en: "Choice Point 2: Naming the stakes",
+      id: "Titik Pilihan 2: Menyebutkan taruhannya",
     },
     intro: {
       en: "The relational opening worked. Now you name the pattern.",
@@ -385,7 +385,7 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
     },
     options: [
       {
-        label: { en: "Option B1 -- Name it, then ask", id: "Pilihan B1 -- Sebutkan, lalu tanyakan" },
+        label: { en: "Option B1: Name it, then ask", id: "Pilihan B1: Sebutkan, lalu tanyakan" },
         action: {
           en: [`You describe the selective framing, then: "I want to understand your thinking before I say more."`],
           id: [`Kamu menggambarkan pembingkaian selektif itu, lalu: "Saya ingin memahami pemikiranmu sebelum berbicara lebih jauh."`],
@@ -396,7 +396,7 @@ const CASE_CP2: Record<"A" | "B", { heading: { en: string; id: string }; intro: 
         },
       },
       {
-        label: { en: "Option B2 -- Give the parable first", id: "Pilihan B2 -- Berikan perumpamaan dahulu" },
+        label: { en: "Option B2: Give the parable first", id: "Pilihan B2: Berikan perumpamaan dahulu" },
         action: {
           en: [`"Let me tell you what a donor would think, seeing this report next to the raw numbers."`],
           id: [`"Biarkan saya menceritakan apa yang akan dipikirkan donor, melihat laporan ini berdampingan dengan angka mentahnya."`],
@@ -417,8 +417,8 @@ const CASE_CP3: {
   prompts: { en: string[]; id: string[] };
 } = {
   heading: {
-    en: "Choice Point 3 -- What does restoration look like?",
-    id: "Titik Pilihan 3 -- Seperti apa pemulihan itu?",
+    en: "Choice Point 3: What does restoration look like?",
+    id: "Titik Pilihan 3: Seperti apa pemulihan itu?",
   },
   intro: {
     en: "Whatever path you took, James knows the practice must change. What does he walk away with?",
@@ -431,12 +431,12 @@ const CASE_CP3: {
   prompts: {
     en: [
       `Matthew 18 calls the goal "you have won them back." What does winning James back look like?`,
-      "Correction without restored honor can damage more than the problem. How do you restore James's standing -- in his eyes and the team's?",
+      "Correction without restored honor can damage more than the problem. How do you restore James's standing, in his eyes and the team's?",
       "Did your path correct his behavior, or his understanding? Which one lasts?",
     ],
     id: [
       `Matius 18 menyebut tujuannya "kamu telah mendapatkannya kembali." Seperti apa mendapatkan James kembali?`,
-      "Koreksi tanpa kehormatan yang dipulihkan bisa merusak lebih dari masalahnya. Bagaimana kamu memulihkan kedudukan James -- di matanya dan di mata tim?",
+      "Koreksi tanpa kehormatan yang dipulihkan bisa merusak lebih dari masalahnya. Bagaimana kamu memulihkan kedudukan James, di matanya dan di mata tim?",
       "Apakah jalurmu mengoreksi perilakunya, atau pemahamannya? Mana yang bertahan?",
     ],
   },
@@ -448,7 +448,7 @@ const STEP_CARDS: Record<Lang, { num: string; title: string; body: string }[]> =
     {
       num: "01",
       title: "Know your default register",
-      body: "Direct or indirect -- neither is better, but be conscious enough of yours to adjust it.",
+      body: "Direct or indirect: neither is better, but be conscious enough of yours to adjust it.",
     },
     {
       num: "02",
@@ -458,19 +458,19 @@ const STEP_CARDS: Record<Lang, { num: string; title: string; body: string }[]> =
     {
       num: "03",
       title: "Translate the truth, never dilute it",
-      body: "The content does not change -- the form does. Upgraders or downgraders, preamble or plain, verdict or shared problem.",
+      body: "The content does not change. The form does. Upgraders or downgraders, preamble or plain, verdict or shared problem.",
     },
     {
       num: "04",
       title: "Plan the follow-up",
-      body: "Agreement in the room may not mean agreement. Return gently within days -- sometimes the follow-up carries the weight.",
+      body: "Agreement in the room may not mean agreement. Return gently within days. Sometimes the follow-up carries the weight.",
     },
   ],
   id: [
     {
       num: "01",
       title: "Kenali register defaultmu",
-      body: "Langsung atau tidak langsung -- tidak ada yang lebih baik, tetapi sadarilah milikmu cukup dalam untuk menyesuaikannya.",
+      body: "Langsung atau tidak langsung: tidak ada yang lebih baik, tetapi sadarilah milikmu cukup dalam untuk menyesuaikannya.",
     },
     {
       num: "02",
@@ -480,12 +480,12 @@ const STEP_CARDS: Record<Lang, { num: string; title: string; body: string }[]> =
     {
       num: "03",
       title: "Terjemahkan kebenaran, jangan encerkan",
-      body: "Kontennya tidak berubah -- bentuknya yang berubah. Penguat atau pelembut, basa-basi atau langsung, vonis atau masalah bersama.",
+      body: "Kontennya tidak berubah. Bentuknya yang berubah. Penguat atau pelembut, basa-basi atau langsung, vonis atau masalah bersama.",
     },
     {
       num: "04",
       title: "Rencanakan tindak lanjut",
-      body: "Persetujuan di ruangan belum tentu berarti setuju. Kembalilah dengan lembut dalam beberapa hari -- terkadang tindak lanjutlah yang membawa bobot.",
+      body: "Persetujuan di ruangan belum tentu berarti setuju. Kembalilah dengan lembut dalam beberapa hari. Terkadang tindak lanjutlah yang membawa bobot.",
     },
   ],
 };
@@ -499,7 +499,7 @@ const CHECKLIST_COLS: Record<Lang, { col: string; title: string; items: string[]
       items: [
         "I can state the core truth in one plain sentence",
         "I know this person's likely position on the Evaluating scale",
-        "I have chosen a private setting -- and considered an intermediary",
+        "I have chosen a private setting, and considered an intermediary",
         "I know what restoration looks like, not just correction",
       ],
     },
@@ -530,7 +530,7 @@ const CHECKLIST_COLS: Record<Lang, { col: string; title: string; items: string[]
       items: [
         "Saya bisa menyatakan kebenaran intinya dalam satu kalimat yang jelas",
         "Saya tahu kemungkinan posisi orang ini pada skala Evaluasi",
-        "Saya telah memilih tempat pribadi -- dan mempertimbangkan perantara",
+        "Saya telah memilih tempat pribadi, dan mempertimbangkan perantara",
         "Saya tahu seperti apa pemulihan, bukan hanya koreksi",
       ],
     },
@@ -559,50 +559,50 @@ const CHECKLIST_COLS: Record<Lang, { col: string; title: string; items: string[]
 // ─── Key Takeaways (Section 8) ────────────────────────────────────────────────
 const KEY_TAKEAWAYS: Record<Lang, { title: string; body: string }[]> = {
   en: [
-    { title: "Feedback is never culturally neutral -- the same words land differently in different logic systems.", body: "" },
+    { title: "Feedback is never culturally neutral. The same words land differently in different logic systems.", body: "" },
     { title: "Communicating and Evaluating are two separate dials that move independently.", body: "" },
-    { title: "Upgraders intensify, downgraders soften -- intensity is the most adjustable part of your feedback.", body: "" },
+    { title: "Upgraders intensify, downgraders soften. Intensity is the most adjustable part of your feedback.", body: "" },
     { title: "In honor-shame cultures, correction without restored dignity often damages more than no correction at all.", body: "" },
-    { title: "Nathan told the story first -- the indirect path is what makes the direct truth land.", body: "" },
+    { title: "Nathan told the story first. The indirect path is what makes the direct truth land.", body: "" },
   ],
   id: [
-    { title: "Umpan balik tidak pernah netral secara budaya -- kata-kata yang sama mendarat berbeda dalam sistem logika yang berbeda.", body: "" },
+    { title: "Umpan balik tidak pernah netral secara budaya. Kata-kata yang sama mendarat berbeda dalam sistem logika yang berbeda.", body: "" },
     { title: "Komunikasi dan Evaluasi adalah dua skala terpisah yang bergerak secara independen.", body: "" },
-    { title: "Penguat mengintensifkan, pelembut memperlunak -- intensitas adalah bagian umpan balikmu yang paling bisa disesuaikan.", body: "" },
+    { title: "Penguat mengintensifkan, pelembut memperlunak. Intensitas adalah bagian umpan balikmu yang paling bisa disesuaikan.", body: "" },
     { title: "Dalam budaya kehormatan-malu, koreksi tanpa martabat yang dipulihkan sering merusak lebih dari tanpa koreksi sama sekali.", body: "" },
-    { title: "Natan menceritakan kisahnya terlebih dahulu -- jalan tidak langsung itulah yang membuat kebenaran langsung mendarat.", body: "" },
+    { title: "Natan menceritakan kisahnya terlebih dahulu. Jalan tidak langsung itulah yang membuat kebenaran langsung mendarat.", body: "" },
   ],
 };
 const S2_PARAS: Record<Lang, string[]> = {
   en: [
     "There is a common assumption among leaders working across cultures: if you know whether someone is from a high-context or low-context culture, you know how to give them feedback. More context, more indirectness. Less context, more directness. Simple.",
-    "The assumption is wrong -- and getting it wrong produces some of the most predictable intercultural friction in global teams.",
-    "The distinction between high-context and low-context communication comes from anthropologist Edward T. Hall, who noted in the 1950s and 1970s that cultures differ fundamentally in how much meaning is carried by explicit words versus the surrounding context -- the relationship, the setting, shared history, non-verbal signals. In high-context cultures (prevalent across much of Asia, Africa, and the Middle East), meaning is layered and relational. Silence carries weight. What is left unsaid is often more significant than what is spoken. In low-context cultures (Germany, Scandinavia, the Netherlands, the United States), meaning is encoded explicitly in the words. Say what you mean. Mean what you say. Ambiguity is a problem to be solved.",
+    "The assumption is wrong, and getting it wrong produces some of the most predictable intercultural friction in global teams.",
+    "The distinction between high-context and low-context communication comes from anthropologist Edward T. Hall, who noted in the 1950s and 1970s that cultures differ fundamentally in how much meaning is carried by explicit words versus the surrounding context: the relationship, the setting, shared history, non-verbal signals. In high-context cultures (prevalent across much of Asia, Africa, and the Middle East), meaning is layered and relational. Silence carries weight. What is left unsaid is often more significant than what is spoken. In low-context cultures (Germany, Scandinavia, the Netherlands, the United States), meaning is encoded explicitly in the words. Say what you mean. Mean what you say. Ambiguity is a problem to be solved.",
     "This is genuinely useful as a starting map. But Erin Meyer, who teaches organizational behavior at INSEAD, identified something that Hall’s single-axis model could not show: the way you communicate and the way you give feedback are two separate things, and they move independently of each other.",
-    "Meyer calls these the Communicating scale and the Evaluating scale -- and the gap between them is where confusion lives.",
-    "The Communicating scale measures how much meaning is carried implicitly versus explicitly. The Evaluating scale measures how directly negative feedback is delivered -- whether criticism is stated plainly or softened, hedged, and wrapped in layers of relational context.",
+    "Meyer calls these the Communicating scale and the Evaluating scale. The gap between them is where confusion lives.",
+    "The Communicating scale measures how much meaning is carried implicitly versus explicitly. The Evaluating scale measures how directly negative feedback is delivered: whether criticism is stated plainly or softened, hedged, and wrapped in layers of relational context.",
     "Here is what makes this important: these two dials do not move together.",
-    "The French are textbook high-context communicators -- layered, allusive, where subtext and intellectual nuance carry much of the meaning. Yet when a French professional thinks your work is inadequate, they will often tell you so in terms that leave no ambiguity. France sits on the direct end of the Evaluating scale, even as it sits at the indirect end of the Communicating scale.",
-    "Americans, by contrast, are strongly low-context communicators. American business culture prizes explicitness -- say it plainly, be clear, avoid ambiguity. Yet American professional feedback culture is famously soft. The \u201cfeedback sandwich\u201d -- positive, critical, positive -- is an American invention. American managers routinely wrap difficult assessments in so much encouragement that the critique itself gets lost. The United States is a low-context communicator that delivers highly indirect negative feedback.",
+    "The French are textbook high-context communicators, layered and allusive, where subtext and intellectual nuance carry much of the meaning. Yet when a French professional thinks your work is inadequate, they will often tell you so in terms that leave no ambiguity. France sits on the direct end of the Evaluating scale, even as it sits at the indirect end of the Communicating scale.",
+    "Americans, by contrast, are strongly low-context communicators. American business culture prizes explicitness: say it plainly, be clear, avoid ambiguity. Yet American professional feedback culture is famously soft. The \u201cfeedback sandwich\u201d (positive, critical, positive) is an American invention. American managers routinely wrap difficult assessments in so much encouragement that the critique itself gets lost. The United States is a low-context communicator that delivers highly indirect negative feedback.",
     "A Dutch engineer working with a French colleague may assume: \u201cwe both communicate plainly, so we share the same feedback culture.\u201d They do not. The Dutch engineer will deliver feedback bluntly and expect it to be received professionally. The French colleague will deliver feedback with rhetorical sophistication that the Dutch engineer mistakes for politeness and the French colleague intends as precision.",
-    "An American manager working with a Japanese colleague may assume: \u201cwe are both indirect, so we are on the same page.\u201d They are not -- the American is indirect about criticism in order to preserve the relationship; the Japanese professional is indirect as a structural feature of how truth is communicated at all, and the signals the American is missing are not softening devices but primary communication.",
-    "This is why the two-dial model matters. The question is not just \u201cis this a high-context culture?\u201d The question is \u201cwhat is the Evaluating scale here -- and is that different from my assumption?\u201d",
-    "Look at your own culture on both spectra. Then look at the cultures you work with most. The gap between those positions -- not just on one scale but on both -- is where your feedback is getting lost.",
+    "An American manager working with a Japanese colleague may assume: \u201cwe are both indirect, so we are on the same page.\u201d They are not. The American is indirect about criticism in order to preserve the relationship; the Japanese professional is indirect as a structural feature of how truth is communicated at all, and the signals the American is missing are not softening devices but primary communication.",
+    "This is why the two-dial model matters. The question is not just \u201cis this a high-context culture?\u201d The question is \u201cwhat is the Evaluating scale here, and is that different from my assumption?\u201d",
+    "Look at your own culture on both spectra. Then look at the cultures you work with most. The gap between those positions, not just on one scale but on both, is where your feedback is getting lost.",
   ],
   id: [
     "Ada asumsi umum di kalangan pemimpin yang bekerja lintas budaya: jika kamu tahu apakah seseorang berasal dari budaya berkonteks tinggi atau rendah, kamu tahu cara memberi mereka umpan balik. Lebih banyak konteks, lebih banyak ketidaklangsungan. Lebih sedikit konteks, lebih langsung. Sederhana.",
-    "Asumsi itu salah -- dan salah dalam hal ini menghasilkan beberapa gesekan antarbudaya yang paling dapat diprediksi dalam tim global.",
-    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya -- hubungan, setting, sejarah bersama, sinyal non-verbal. Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang kamu maksud. Maksudkan apa yang kamu katakan. Ambiguitas adalah masalah yang harus dipecahkan.",
+    "Asumsi itu salah, dan salah dalam hal ini menghasilkan beberapa gesekan antarbudaya yang paling dapat diprediksi dalam tim global.",
+    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya: hubungan, setting, sejarah bersama, sinyal non-verbal. Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang kamu maksud. Maksudkan apa yang kamu katakan. Ambiguitas adalah masalah yang harus dipecahkan.",
     "Ini sungguh berguna sebagai peta awal. Tetapi Erin Meyer, yang mengajar perilaku organisasi di INSEAD, mengidentifikasi sesuatu yang tidak bisa ditunjukkan oleh model satu sumbu Hall: cara kamu berkomunikasi dan cara kamu memberi umpan balik adalah dua hal yang terpisah, dan keduanya bergerak secara independen satu sama lain.",
-    "Meyer menyebut ini skala Komunikasi dan skala Evaluasi -- dan kesenjangan di antara keduanya adalah tempat kebingungan berada.",
-    "Skala Komunikasi mengukur seberapa banyak makna dibawa secara implisit versus eksplisit. Skala Evaluasi mengukur seberapa langsung umpan balik negatif disampaikan -- apakah kritik dinyatakan terang-terangan atau dilembutkan, dilindungi, dan dibungkus dalam lapisan konteks relasional.",
+    "Meyer menyebut ini skala Komunikasi dan skala Evaluasi. Kesenjangan di antara keduanya adalah tempat kebingungan berada.",
+    "Skala Komunikasi mengukur seberapa banyak makna dibawa secara implisit versus eksplisit. Skala Evaluasi mengukur seberapa langsung umpan balik negatif disampaikan: apakah kritik dinyatakan terang-terangan atau dilembutkan, dilindungi, dan dibungkus dalam lapisan konteks relasional.",
     "Inilah yang membuat ini penting: kedua skala ini tidak bergerak bersama.",
-    "Orang Prancis adalah komunikator berkonteks tinggi yang tekstual -- berlapis, allusif, di mana subteks dan nuansa intelektual membawa banyak makna. Namun ketika seorang profesional Prancis menganggap pekerjaan kamu tidak memadai, mereka sering akan memberitahukannya dalam istilah yang tidak meninggalkan ambiguitas. Prancis berada di ujung langsung pada skala Evaluasi, meskipun berada di ujung tidak langsung pada skala Komunikasi.",
-    "Sebaliknya, orang Amerika adalah komunikator berkonteks rendah yang kuat. Budaya bisnis Amerika menghargai keeksplisitan -- katakan dengan jelas, bersikaplah jelas, hindari ambiguitas. Namun budaya umpan balik profesional Amerika terkenal lembut. \u201cFeedback sandwich\u201d -- positif, kritis, positif -- adalah penemuan Amerika. Manajer Amerika secara rutin membungkus penilaian yang sulit dalam begitu banyak dorongan sehingga kritik itu sendiri hilang. Amerika Serikat adalah komunikator berkonteks rendah yang menyampaikan umpan balik negatif yang sangat tidak langsung.",
+    "Orang Prancis adalah komunikator berkonteks tinggi yang tekstual, berlapis dan allusif, di mana subteks dan nuansa intelektual membawa banyak makna. Namun ketika seorang profesional Prancis menganggap pekerjaan kamu tidak memadai, mereka sering akan memberitahukannya dalam istilah yang tidak meninggalkan ambiguitas. Prancis berada di ujung langsung pada skala Evaluasi, meskipun berada di ujung tidak langsung pada skala Komunikasi.",
+    "Sebaliknya, orang Amerika adalah komunikator berkonteks rendah yang kuat. Budaya bisnis Amerika menghargai keeksplisitan: katakan dengan jelas, bersikaplah jelas, hindari ambiguitas. Namun budaya umpan balik profesional Amerika terkenal lembut. \u201cFeedback sandwich\u201d (positif, kritis, positif) adalah penemuan Amerika. Manajer Amerika secara rutin membungkus penilaian yang sulit dalam begitu banyak dorongan sehingga kritik itu sendiri hilang. Amerika Serikat adalah komunikator berkonteks rendah yang menyampaikan umpan balik negatif yang sangat tidak langsung.",
     "Seorang insinyur Belanda yang bekerja dengan kolega Prancis mungkin berasumsi: \u201ckita berdua berkomunikasi dengan jelas, jadi kita memiliki budaya umpan balik yang sama.\u201d Mereka tidak. Insinyur Belanda akan menyampaikan umpan balik secara blak-blakan dan mengharapkannya diterima secara profesional. Kolega Prancis akan menyampaikan umpan balik dengan kecanggihan retoris yang disalahartikan oleh insinyur Belanda sebagai kesopanan dan yang dimaksud oleh kolega Prancis sebagai presisi.",
-    "Seorang manajer Amerika yang bekerja dengan kolega Jepang mungkin berasumsi: \u201ckita berdua tidak langsung, jadi kita pada halaman yang sama.\u201d Mereka tidak -- orang Amerika tidak langsung tentang kritik untuk menjaga hubungan; profesional Jepang tidak langsung sebagai fitur struktural dari bagaimana kebenaran dikomunikasikan sama sekali, dan sinyal yang dilewatkan oleh orang Amerika bukan perangkat pelembut tetapi komunikasi primer.",
-    "Inilah mengapa model dua skala penting. Pertanyaannya bukan hanya \u201capakah ini budaya berkonteks tinggi?\u201d Pertanyaannya adalah \u201capa skala Evaluasi di sini -- dan apakah itu berbeda dari asumsi saya?\u201d",
-    "Lihatlah budayamu sendiri pada kedua spektrum. Kemudian lihatlah budaya yang paling banyak kamu kerjakan. Kesenjangan antara posisi-posisi tersebut -- bukan hanya pada satu skala tetapi pada keduanya -- adalah tempat umpan balikmu hilang.",
+    "Seorang manajer Amerika yang bekerja dengan kolega Jepang mungkin berasumsi: \u201ckita berdua tidak langsung, jadi kita pada halaman yang sama.\u201d Mereka tidak. Orang Amerika tidak langsung tentang kritik untuk menjaga hubungan; profesional Jepang tidak langsung sebagai fitur struktural dari bagaimana kebenaran dikomunikasikan sama sekali, dan sinyal yang dilewatkan oleh orang Amerika bukan perangkat pelembut tetapi komunikasi primer.",
+    "Inilah mengapa model dua skala penting. Pertanyaannya bukan hanya \u201capakah ini budaya berkonteks tinggi?\u201d Pertanyaannya adalah \u201capa skala Evaluasi di sini, dan apakah itu berbeda dari asumsi saya?\u201d",
+    "Lihatlah budayamu sendiri pada kedua spektrum. Kemudian lihatlah budaya yang paling banyak kamu kerjakan. Kesenjangan antara posisi-posisi tersebut, bukan hanya pada satu skala tetapi pada keduanya, adalah tempat umpan balikmu hilang.",
   ],
 };
 const UDRG_TABLE = {
@@ -627,7 +627,7 @@ const UDRG_TABLE = {
       culture: { en: "Israel", id: "Israel" },
       pos: { en: "Very direct", id: "Sangat langsung" },
       lang: { en: "Upgraders, confrontational warmth", id: "Penguat, kehangatan konfrontatif" },
-      example: { en: "“I'll be straight with you -- this doesn't work. Let's fix it together.”", id: "“Saya akan berbicara jujur denganmu -- ini tidak berhasil. Mari kita perbaiki bersama.”" },
+      example: { en: "“I'll be straight with you: this doesn't work. Let's fix it together.”", id: "“Saya akan berbicara jujur denganmu: ini tidak berhasil. Mari kita perbaiki bersama.”" },
     },
     {
       culture: { en: "Australia", id: "Australia" },
@@ -651,7 +651,7 @@ const UDRG_TABLE = {
       culture: { en: "Brazil", id: "Brasil" },
       pos: { en: "Moderately indirect", id: "Cukup tidak langsung" },
       lang: { en: "Relationship-first framing", id: "Bingkai relasi terlebih dahulu" },
-      example: { en: "“I really appreciate the effort on this -- I think we might want to look at the analysis together before we send it.”", id: "“Saya benar-benar menghargai upaya dalam hal ini -- saya pikir kita mungkin ingin melihat analisisnya bersama sebelum mengirimkannya.”" },
+      example: { en: "“I really appreciate the effort on this. I think we might want to look at the analysis together before we send it.”", id: "“Saya benar-benar menghargai upaya dalam hal ini. Saya pikir kita mungkin ingin melihat analisisnya bersama sebelum mengirimkannya.”" },
     },
     {
       culture: { en: "Kenya", id: "Kenya" },
@@ -706,7 +706,7 @@ const S5_PARAS: Record<Lang, string[]> = {
     "Before we get to practice, there is a question that sits underneath all of this that is worth naming directly.",
     "You may have been reading this module and thinking: this is all very thoughtful, but at what point does cultural sensitivity become an excuse for not saying the hard thing? If I keep softening and hedging and wrapping in relational preamble, at what point have I stopped delivering the feedback at all?",
     "It is a fair question. And the biblical tradition does not let you off the hook with a simple answer.",
-    `Proverbs 27:5-6 is blunt: "Better is open rebuke than hidden love. Faithful are the wounds of a friend." The Hebrew wisdom tradition does not treat indirect deflection as kindness. It treats the withholding of correction as a failure of love -- and, strikingly, it equates that failure with the deceptive flattery of an enemy. If you care about someone, you tell them the truth. That is not optional.`,
+    `Proverbs 27:5-6 is blunt: "Better is open rebuke than hidden love. Faithful are the wounds of a friend." The Hebrew wisdom tradition does not treat indirect deflection as kindness. It treats the withholding of correction as a failure of love and, strikingly, equates that failure with the deceptive flattery of an enemy. If you care about someone, you tell them the truth. That is not optional.`,
 
     "And yet, sitting right inside the same tradition, there is a man named Nathan who chose not to begin with the direct statement.",
     `David had committed adultery with Bathsheba and had arranged the death of Uriah her husband. Nathan knew. God sent him to confront the king. And Nathan did not walk into the throne room and say, "You are guilty of adultery and murder."`,
@@ -714,15 +714,15 @@ const S5_PARAS: Record<Lang, string[]> = {
     `A rich man had many flocks, but when a traveler came, he took a poor man's one beloved lamb rather than from his own flock, and killed it for the feast. David, hearing the story, was outraged. "That man deserves to die!" he said.`,
     `"You are the man," Nathan said.`,
     "Five words. But the parable came first.",
-    "The parable was not evasion. It was not weakness. It was preparation -- the structure that made the direct truth receivable. Nathan needed David to arrive at the verdict himself before it could be applied to David. The indirect path was what made the direct declaration land.",
-    "This is not a template to be mechanically applied -- it is a model of what it looks like when truth-telling is shaped by the question: how does this person need to receive this in order for the truth to actually reach them?",
-    "The Nathan Principle is not a technique for avoiding directness. Nathan was direct -- devastatingly direct, when the moment came. The principle is about the preparation that makes direct truth receivable. The indirect path is not the opposite of the direct declaration. It is what makes the direct declaration land.",
+    "The parable was not evasion. It was not weakness. It was preparation: the structure that made the direct truth receivable. Nathan needed David to arrive at the verdict himself before it could be applied to David. The indirect path was what made the direct declaration land.",
+    "This is not a template to be mechanically applied. It is a model of what it looks like when truth-telling is shaped by the question: how does this person need to receive this in order for the truth to actually reach them?",
+    "The Nathan Principle is not a technique for avoiding directness. Nathan was direct, devastatingly direct, when the moment came. The principle is about the preparation that makes direct truth receivable. The indirect path is not the opposite of the direct declaration. It is what makes the direct declaration land.",
   ],
   id: [
     "Sebelum kita masuk ke praktik, ada pertanyaan yang berada di bawah semua ini yang layak disebutkan secara langsung.",
     "Kamu mungkin telah membaca modul ini dan berpikir: ini semua sangat bijaksana, tetapi pada titik mana kepekaan budaya menjadi alasan untuk tidak mengatakan hal yang sulit? Jika saya terus melembutkan dan melindungi dan membungkus dalam basa-basi relasional, pada titik mana saya berhenti menyampaikan umpan balik sama sekali?",
     "Itu adalah pertanyaan yang adil. Dan tradisi biblika tidak membiarkan kamu lolos dengan jawaban sederhana.",
-    `Amsal 27:5-6 terus terang: "Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih -- dan, luar biasa, ini menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika kamu peduli pada seseorang, kamu memberitahu mereka kebenaran. Itu bukan opsional.`,
+    `Amsal 27:5-6 terus terang: "Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat." Tradisi hikmat Ibrani tidak memperlakukan pengalihan tidak langsung sebagai kebaikan. Ini memperlakukan penahanan koreksi sebagai kegagalan kasih dan, luar biasa, menyamakan kegagalan itu dengan sanjungan menipu dari seorang musuh. Jika kamu peduli pada seseorang, kamu memberitahu mereka kebenaran. Itu bukan opsional.`,
 
     "Namun, tepat di dalam tradisi yang sama, ada seorang pria bernama Natan yang memilih untuk tidak memulai dengan pernyataan langsung.",
     `Daud telah berzinah dengan Batsyeba dan telah mengatur kematian Uria suaminya. Natan tahu. Tuhan mengutusnya untuk menghadapi raja. Dan Natan tidak berjalan masuk ke ruang takhta dan berkata, "Kamu bersalah atas perzinahan dan pembunuhan."`,
@@ -730,43 +730,43 @@ const S5_PARAS: Record<Lang, string[]> = {
     `Seorang pria kaya memiliki banyak kawanan, tetapi ketika seorang musafir datang, ia mengambil satu-satunya domba betina kesayangan orang miskin alih-alih dari kawanannya sendiri, dan menyembelihnya untuk perjamuan. Daud, mendengar kisah itu, marah besar. "Orang itu layak mati!" katanya.`,
     `"Engkau sendiri orang itu," kata Natan.`,
     "Lima kata. Tetapi perumpamaan datang terlebih dahulu.",
-    "Perumpamaan itu bukan penghindaran. Itu bukan kelemahan. Itu adalah persiapan -- struktur yang membuat kebenaran langsung dapat diterima. Natan membutuhkan Daud untuk sampai pada vonis itu sendiri sebelum dapat diterapkan pada Daud. Jalan tidak langsung itulah yang membuat deklarasi langsung mendarat.",
-    "Ini bukan template yang harus diterapkan secara mekanis -- ini adalah model tentang seperti apa jadinya ketika penyampaian kebenaran dibentuk oleh pertanyaan: bagaimana orang ini perlu menerima ini agar kebenaran benar-benar sampai kepada mereka?",
-    "Prinsip Natan bukan teknik untuk menghindari ketegasan. Natan tegas -- sangat tegas, ketika saatnya tiba. Prinsipnya adalah tentang persiapan yang membuat kebenaran langsung dapat diterima. Jalan tidak langsung bukan lawan dari deklarasi langsung. Itulah yang membuat deklarasi langsung mendarat.",
+    "Perumpamaan itu bukan penghindaran. Itu bukan kelemahan. Itu adalah persiapan: struktur yang membuat kebenaran langsung dapat diterima. Natan membutuhkan Daud untuk sampai pada vonis itu sendiri sebelum dapat diterapkan pada Daud. Jalan tidak langsung itulah yang membuat deklarasi langsung mendarat.",
+    "Ini bukan template yang harus diterapkan secara mekanis. Ini adalah model tentang seperti apa jadinya ketika penyampaian kebenaran dibentuk oleh pertanyaan: bagaimana orang ini perlu menerima ini agar kebenaran benar-benar sampai kepada mereka?",
+    "Prinsip Natan bukan teknik untuk menghindari ketegasan. Natan tegas, sangat tegas, ketika saatnya tiba. Prinsipnya adalah tentang persiapan yang membuat kebenaran langsung dapat diterima. Jalan tidak langsung bukan lawan dari deklarasi langsung. Itulah yang membuat deklarasi langsung mendarat.",
   ],
 };
 const FAITH_PARAS: Record<Lang, string[]> = {
   en: [
-    `The Greek word that sits behind "speaking the truth in love" in Ephesians 4:15 is *aletheuon* -- a word that carries the force of living or embodying truth, not merely stating accurate propositions. Paul was not writing a communication tip. He was describing the corporate life of a diverse church under pressure, and he was arguing that truth-speaking and love are not in tension -- they are the same act, pursued faithfully.`,
+    `The Greek word that sits behind "speaking the truth in love" in Ephesians 4:15 is *aletheuon*, a word that carries the force of living or embodying truth, not merely stating accurate propositions. Paul was not writing a communication tip. He was describing the corporate life of a diverse church under pressure, and he was arguing that truth-speaking and love are not in tension. They are the same act, pursued faithfully.`,
     "This matters for cross-cultural feedback because the two distortions that corrupt feedback across cultural difference map precisely onto the two failures Paul is guarding against.",
     "The first distortion is truth without love: delivering accurate correction in a form that damages rather than restores, stripping a person of dignity in order to achieve behavioral compliance. This is what the German manager in Section 1 did without knowing it. The content was right; the carrying was destructive.",
     `The second distortion is love without truth: withholding correction to maintain surface harmony, letting a problem grow because naming it feels dangerous to the relationship. This is what Proverbs 27 is most direct about: "Better is open rebuke than hidden love. Faithful are the wounds of a friend; profuse are the kisses of an enemy." Withholding correction to preserve a relationship is not kindness, in the Hebrew wisdom tradition. It is what an enemy does.`,
 
-    `*Aletheuon en agape* -- living the truth in love -- refuses both distortions. The question the phrase puts to every cross-cultural leader is not "did I say the true thing?" but "did I carry the true thing in a way that this person could actually receive it?"`,
-    "Proverbs 27:5-6 holds an uncomfortable tension for leaders working in honor-shame cultures. Open rebuke -- clear, named, direct -- is presented as a mark of genuine friendship. And yet the cultural logic of communities shaped by shame-sensitivity and face-preservation makes open rebuke structurally damaging unless it comes through a pathway that also offers restored dignity. The question is not which of these is more biblical. Both are in the text. The question is how to honor both simultaneously -- which is precisely what Nathan's method was designed to do.",
-    `Jesus' graduated model in Matthew 18:15-17 -- private first, then with witnesses, then community -- is striking in how structurally compatible it is with high-context feedback principles. Begin with the least confrontational, most relational approach. Escalate only when necessary. And keep the goal clear: "you have won them back." Restoration is the target. Correction is the path to it, not the destination itself.`,
+    `*Aletheuon en agape* (living the truth in love) refuses both distortions. The question the phrase puts to every cross-cultural leader is not "did I say the true thing?" but "did I carry the true thing in a way that this person could actually receive it?"`,
+    "Proverbs 27:5-6 holds an uncomfortable tension for leaders working in honor-shame cultures. Open rebuke (clear, named, direct) is presented as a mark of genuine friendship. And yet the cultural logic of communities shaped by shame-sensitivity and face-preservation makes open rebuke structurally damaging unless it comes through a pathway that also offers restored dignity. The question is not which of these is more biblical. Both are in the text. The question is how to honor both simultaneously, which is precisely what Nathan's method was designed to do.",
+    `Jesus' graduated model in Matthew 18:15-17 (private first, then with witnesses, then community) is striking in how structurally compatible it is with high-context feedback principles. Begin with the least confrontational, most relational approach. Escalate only when necessary. And keep the goal clear: "you have won them back." Restoration is the target. Correction is the path to it, not the destination itself.`,
 
-    `Nathan understood this at a level that deserves careful attention. He did not begin with "You are the man." He began with a story that built David's moral comprehension from the inside -- drew him into the verdict before applying it to him. The parable was not evasion. It was preparation. The direct declaration, "You are the man," hit harder because of what preceded it. And notably: Nathan was not punishing David. He was restoring him. The correction was devastating, but the goal was not devastation.`,
+    `Nathan understood this at a level that deserves careful attention. He did not begin with "You are the man." He began with a story that built David's moral comprehension from the inside, drawing him into the verdict before applying it to him. The parable was not evasion. It was preparation. The direct declaration, "You are the man," hit harder because of what preceded it. And notably: Nathan was not punishing David. He was restoring him. The correction was devastating, but the goal was not devastation.`,
 
-    "There is a theological thread running through honor-shame scholarship that has direct implications for how correction is understood in global Christian contexts. In shame-oriented cultures -- which include large portions of Asia, Africa, the Middle East, and Latin America -- the gospel addresses shame through honor restoration. The adopted child receives a new name, a new status, a new standing before the community. Correction in these contexts, when it functions like the gospel, does not merely name a failure and demand changed behavior. It names the failure clearly, then offers a pathway back to dignity -- not because the person earned it, but because restoration is what the gospel does.",
+    "There is a theological thread running through honor-shame scholarship that has direct implications for how correction is understood in global Christian contexts. In shame-oriented cultures (which include large portions of Asia, Africa, the Middle East, and Latin America) the gospel addresses shame through honor restoration. The adopted child receives a new name, a new status, a new standing before the community. Correction in these contexts, when it functions like the gospel, does not merely name a failure and demand changed behavior. It names the failure clearly, then offers a pathway back to dignity: not because the person earned it, but because restoration is what the gospel does.",
     "Correction without restoration in these contexts is not just culturally incomplete. It is theologically incomplete. It strips out the half of the gospel that such cultures are most equipped to understand.",
-    "The practical implication: when you correct someone in a high-shame-sensitivity cultural context, the restoration is not optional -- it is the point. The pathway back to honor before God and community is not an afterthought to the accountability. It is what makes the correction an act of love rather than an act of judgment.",
+    "The practical implication: when you correct someone in a high-shame-sensitivity cultural context, the restoration is not optional. It is the point. The pathway back to honor before God and community is not an afterthought to the accountability. It is what makes the correction an act of love rather than an act of judgment.",
   ],
   id: [
-    `Kata Yunani yang ada di balik "berkata benar dalam kasih" dalam Efesus 4:15 adalah *aletheuon* -- sebuah kata yang membawa kekuatan hidup atau mewujudkan kebenaran, bukan sekadar menyatakan proposisi yang akurat. Paulus tidak sedang menulis tips komunikasi. Ia menggambarkan kehidupan bersama sebuah jemaat yang beragam di bawah tekanan, dan ia berargumen bahwa berbicara kebenaran dan kasih tidak berada dalam ketegangan -- keduanya adalah tindakan yang sama, dikejar dengan setia.`,
+    `Kata Yunani yang ada di balik "berkata benar dalam kasih" dalam Efesus 4:15 adalah *aletheuon*, sebuah kata yang membawa kekuatan hidup atau mewujudkan kebenaran, bukan sekadar menyatakan proposisi yang akurat. Paulus tidak sedang menulis tips komunikasi. Ia menggambarkan kehidupan bersama sebuah jemaat yang beragam di bawah tekanan, dan ia berargumen bahwa berbicara kebenaran dan kasih tidak berada dalam ketegangan. Keduanya adalah tindakan yang sama, dikejar dengan setia.`,
     "Ini penting untuk umpan balik lintas budaya karena dua distorsi yang merusak umpan balik lintas perbedaan budaya tepat memetakan dua kegagalan yang dijaga Paulus.",
     "Distorsi pertama adalah kebenaran tanpa kasih: menyampaikan koreksi yang akurat dalam bentuk yang merusak daripada memulihkan, menghilangkan martabat seseorang untuk mencapai kepatuhan perilaku. Inilah yang dilakukan manajer Jerman di Bagian 1 tanpa menyadarinya. Kontennya benar; penyampaiannya merusak.",
     `Distorsi kedua adalah kasih tanpa kebenaran: menahan koreksi untuk mempertahankan harmoni permukaan, membiarkan masalah tumbuh karena menyebutkannya terasa berbahaya bagi hubungan. Inilah yang paling langsung disebutkan Amsal 27: "Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi. Dapat dipercaya tikaman seorang sahabat; tetapi ciuman seorang musuh sangat banyak." Menahan koreksi untuk menjaga hubungan bukan kebaikan, dalam tradisi hikmat Ibrani. Itu adalah apa yang dilakukan musuh.`,
 
-    `*Aletheuon en agape* -- hidup dalam kebenaran dengan kasih -- menolak kedua distorsi tersebut. Pertanyaan yang diajukan frasa ini kepada setiap pemimpin lintas budaya bukan "apakah saya mengatakan hal yang benar?" tetapi "apakah saya membawa hal yang benar dengan cara yang benar-benar bisa diterima orang ini?"`,
-    "Amsal 27:5-6 memegang ketegangan yang tidak nyaman bagi pemimpin yang bekerja dalam budaya kehormatan-malu. Teguran yang terang-terangan -- jelas, disebut, langsung -- disajikan sebagai tanda persahabatan yang tulus. Namun logika budaya komunitas yang dibentuk oleh kepekaan malu dan pelestarian muka membuat teguran terbuka secara struktural merusak kecuali datang melalui jalur yang juga menawarkan martabat yang dipulihkan. Pertanyaannya bukan mana dari ini yang lebih biblika. Keduanya ada dalam teks. Pertanyaannya adalah bagaimana menghormati keduanya secara bersamaan -- yang persis itulah yang dirancang metode Natan.",
-    `Model bertahap Yesus dalam Matius 18:15-17 -- pribadi terlebih dahulu, kemudian dengan saksi, kemudian komunitas -- mencolok dalam seberapa kompatibel secara strukturalnya dengan prinsip-prinsip umpan balik berkonteks tinggi. Mulai dengan pendekatan yang paling tidak konfrontatif, paling relasional. Eskalasi hanya jika diperlukan. Dan jaga tujuan tetap jelas: "kamu telah mendapatkan mereka kembali." Pemulihan adalah targetnya. Koreksi adalah jalannya, bukan tujuan itu sendiri.`,
+    `*Aletheuon en agape* (hidup dalam kebenaran dengan kasih) menolak kedua distorsi tersebut. Pertanyaan yang diajukan frasa ini kepada setiap pemimpin lintas budaya bukan "apakah saya mengatakan hal yang benar?" tetapi "apakah saya membawa hal yang benar dengan cara yang benar-benar bisa diterima orang ini?"`,
+    "Amsal 27:5-6 memegang ketegangan yang tidak nyaman bagi pemimpin yang bekerja dalam budaya kehormatan-malu. Teguran yang terang-terangan (jelas, disebut, langsung) disajikan sebagai tanda persahabatan yang tulus. Namun logika budaya komunitas yang dibentuk oleh kepekaan malu dan pelestarian muka membuat teguran terbuka secara struktural merusak kecuali datang melalui jalur yang juga menawarkan martabat yang dipulihkan. Pertanyaannya bukan mana dari ini yang lebih biblika. Keduanya ada dalam teks. Pertanyaannya adalah bagaimana menghormati keduanya secara bersamaan, yang persis itulah yang dirancang metode Natan.",
+    `Model bertahap Yesus dalam Matius 18:15-17 (pribadi terlebih dahulu, kemudian dengan saksi, kemudian komunitas) mencolok dalam seberapa kompatibel secara strukturalnya dengan prinsip-prinsip umpan balik berkonteks tinggi. Mulai dengan pendekatan yang paling tidak konfrontatif, paling relasional. Eskalasi hanya jika diperlukan. Dan jaga tujuan tetap jelas: "kamu telah mendapatkan mereka kembali." Pemulihan adalah targetnya. Koreksi adalah jalannya, bukan tujuan itu sendiri.`,
 
-    `Natan memahami ini pada tingkat yang layak mendapat perhatian cermat. Ia tidak memulai dengan "Engkau sendiri orang itu." Ia memulai dengan sebuah kisah yang membangun pemahaman moral Daud dari dalam -- menariknya ke dalam vonis sebelum menerapkannya padanya. Perumpamaan itu bukan penghindaran. Itu adalah persiapan. Deklarasi langsung, "Engkau sendiri orang itu," memukul lebih keras karena apa yang mendahuluinya. Dan perlu dicatat: Natan tidak menghukum Daud. Ia memulihkannya. Koreksi itu menghancurkan, tetapi tujuannya bukan kehancuran.`,
+    `Natan memahami ini pada tingkat yang layak mendapat perhatian cermat. Ia tidak memulai dengan "Engkau sendiri orang itu." Ia memulai dengan sebuah kisah yang membangun pemahaman moral Daud dari dalam, menariknya ke dalam vonis sebelum menerapkannya padanya. Perumpamaan itu bukan penghindaran. Itu adalah persiapan. Deklarasi langsung, "Engkau sendiri orang itu," memukul lebih keras karena apa yang mendahuluinya. Dan perlu dicatat: Natan tidak menghukum Daud. Ia memulihkannya. Koreksi itu menghancurkan, tetapi tujuannya bukan kehancuran.`,
 
-    "Ada benang teologis yang mengalir melalui beasiswa kehormatan-malu yang memiliki implikasi langsung tentang bagaimana koreksi dipahami dalam konteks Kristen global. Dalam budaya berorientasi malu -- yang mencakup sebagian besar Asia, Afrika, Timur Tengah, dan Amerika Latin -- injil mengatasi rasa malu melalui pemulihan kehormatan. Anak yang diadopsi menerima nama baru, status baru, kedudukan baru di hadapan komunitas. Koreksi dalam konteks ini, ketika berfungsi seperti injil, tidak hanya menyebutkan kegagalan dan menuntut perilaku yang berubah. Ini menyebutkan kegagalan dengan jelas, kemudian menawarkan jalur kembali ke martabat -- bukan karena orang itu mendapatkannya, tetapi karena pemulihan adalah apa yang dilakukan injil.",
+    "Ada benang teologis yang mengalir melalui beasiswa kehormatan-malu yang memiliki implikasi langsung tentang bagaimana koreksi dipahami dalam konteks Kristen global. Dalam budaya berorientasi malu (yang mencakup sebagian besar Asia, Afrika, Timur Tengah, dan Amerika Latin) injil mengatasi rasa malu melalui pemulihan kehormatan. Anak yang diadopsi menerima nama baru, status baru, kedudukan baru di hadapan komunitas. Koreksi dalam konteks ini, ketika berfungsi seperti injil, tidak hanya menyebutkan kegagalan dan menuntut perilaku yang berubah. Ini menyebutkan kegagalan dengan jelas, kemudian menawarkan jalur kembali ke martabat: bukan karena orang itu mendapatkannya, tetapi karena pemulihan adalah apa yang dilakukan injil.",
     "Koreksi tanpa pemulihan dalam konteks ini tidak hanya tidak lengkap secara budaya. Ini tidak lengkap secara teologis. Ini menanggalkan setengah dari injil yang paling siap dipahami oleh budaya-budaya tersebut.",
-    "Implikasi praktisnya: ketika kamu mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional -- itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Allah dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
+    "Implikasi praktisnya: ketika kamu mengoreksi seseorang dalam konteks budaya dengan kepekaan malu yang tinggi, pemulihan bukan opsional. Itu adalah intinya. Jalur kembali kepada kehormatan di hadapan Allah dan komunitas bukan renungan terhadap akuntabilitas. Itu adalah apa yang membuat koreksi menjadi tindakan kasih daripada tindakan penghakiman.",
   ],
 };
 // ─── Section 9 From the Field ─────────────────────────────────────────────────
@@ -774,82 +774,82 @@ const FIELD_STORIES: Record<Lang, { title: string; subtitle: string; paras: stri
   en: [
     {
       title: '"He was fine. He resigned the next morning."',
-      subtitle: "Composite -- Southeast Asian organizational context",
+      subtitle: "Composite: Southeast Asian organizational context",
       paras: [
-        "I had been managing the regional operations team for about eight months when the pattern started showing up in performance reviews. One of my strongest local managers -- I will call him Arif -- was consistently producing outcomes that were below what I knew he was capable of. The numbers were fine on paper. The downstream work was not.",
+        "I had been managing the regional operations team for about eight months when the pattern started showing up in performance reviews. One of my strongest local managers (I will call him Arif) was consistently producing outcomes that were below what I knew he was capable of. The numbers were fine on paper. The downstream work was not.",
         "I decided to address it directly. Arif and I had a good working relationship, I thought. We met weekly. He always had something useful to add in team discussions. I pulled him into a meeting room one afternoon and walked him through what I was observing: specific deliverables that had come in below standard, timelines missed, a pattern that was starting to affect the team's output. I was specific. I was clear. I told him what needed to change and by when.",
         `He was attentive throughout. Took notes. Said, "Yes, I understand. I will work on this." Thanked me for being direct. I left the meeting feeling that it had gone about as well as a difficult conversation could.`,
 
         "Two weeks later, Arif's line manager came to me with an administrative question about notice periods. Arif had submitted his resignation the same afternoon as our meeting.",
-        "I did not understand it. I had done everything right -- I had been specific, private, professional. I had not been unkind. But what I had not understood was what the meeting communicated to Arif beyond its explicit content. The fact that I had kept notes, that I had referenced a pattern across multiple weeks, that I named specific deliverables by date -- this told him that his performance was being tracked and documented at a level that, in his cultural logic, meant his position was in question. The meeting was not feedback. It was a warning he could not respond to without losing face. He processed it as a door closing, not a path opening.",
-        `What I would do differently: I would not have come with notes. I would have opened with a genuine question -- "I want to understand what has been challenging about this last quarter" -- and let him tell me what was in the way before I named what I was observing. I would have built the corrective frame around a shared problem rather than a documented pattern. And I would have made clear, in words, that the conversation was between us -- that I was bringing this to him first because I believed in his ability to solve it.`,
+        "I did not understand it. I had done everything right: I had been specific, private, professional. I had not been unkind. But what I had not understood was what the meeting communicated to Arif beyond its explicit content. The fact that I had kept notes, referenced a pattern across multiple weeks, and named specific deliverables by date: all of this told him that his performance was being tracked and documented at a level that, in his cultural logic, meant his position was in question. The meeting was not feedback. It was a warning he could not respond to without losing face. He processed it as a door closing, not a path opening.",
+        `What I would do differently: I would not have come with notes. I would have opened with a genuine question ("I want to understand what has been challenging about this last quarter") and let him tell me what was in the way before I named what I was observing. I would have built the corrective frame around a shared problem rather than a documented pattern. And I would have made clear, in words, that the conversation was between us: that I was bringing this to him first because I believed in his ability to solve it.`,
       ],
     },
     {
       title: "The Translator in the Room",
-      subtitle: "Composite -- East African NGO context",
+      subtitle: "Composite: East African NGO context",
       paras: [
-        "We had a funding review coming up, and I knew -- because multiple people had told me indirectly -- that there were concerns about how Daniel, one of our senior program officers, was presenting outcomes data to donors. Nothing false. But consistently shaped to look better than the underlying reality.",
+        "We had a funding review coming up, and I knew (because multiple people had told me indirectly) that there were concerns about how Daniel, one of our senior program officers, was presenting outcomes data to donors. Nothing false. But consistently shaped to look better than the underlying reality.",
         "I had tried to raise it once before in a team meeting. Nothing came of it. Daniel had smiled and agreed with the process feedback I gave; the reports had not changed.",
-        "A colleague suggested I speak to David first. David had been with the organization for twelve years, was respected by everyone on the team, and had a long-standing personal relationship with Daniel. I was hesitant -- it felt like I was outsourcing a difficult conversation. But I agreed.",
-        "David came back to me two days later. He had spoken with Daniel. The conversation had apparently been straightforward -- David had described the situation as a risk to the organization and asked Daniel to make changes. Daniel had listened to David in a way he had not listened to me. The following reporting cycle was substantially better.",
-        "I spent some time thinking about what the difference was. It was not that David had said something I could not have said. It was that David's voice carried relational weight that mine did not -- weight built over twelve years of being present through difficult things, being trusted, being seen as someone whose concern came from genuine care for the organization and the people in it. My voice was accurate. David's voice was credible in a way mine was not yet.",
+        "A colleague suggested I speak to David first. David had been with the organization for twelve years, was respected by everyone on the team, and had a long-standing personal relationship with Daniel. I was hesitant. It felt like I was outsourcing a difficult conversation. But I agreed.",
+        "David came back to me two days later. He had spoken with Daniel. The conversation had apparently been straightforward. David had described the situation as a risk to the organization and asked Daniel to make changes. Daniel had listened to David in a way he had not listened to me. The following reporting cycle was substantially better.",
+        "I spent some time thinking about what the difference was. It was not that David had said something I could not have said. It was that David's voice carried relational weight that mine did not, weight built over twelve years of being present through difficult things, being trusted, being seen as someone whose concern came from genuine care for the organization and the people in it. My voice was accurate. David's voice was credible in a way mine was not yet.",
         "There is a version of this story where I resist using an intermediary because it feels like it compromises my authority as a manager. That version ends with a funding review conversation that is much harder than it needed to be.",
       ],
     },
     {
       title: "Getting the Reframe Wrong (and Then Right)",
-      subtitle: "Composite -- Northern European and East Asian team context",
+      subtitle: "Composite: Northern European and East Asian team context",
       paras: [
         "I am Dutch. I have been working in multicultural teams in Southeast Asia for nearly a decade, and I still get this wrong regularly enough that I am not sure the learning ever becomes automatic.",
-        `The moment I want to describe happened during a virtual project review. A Korean colleague had submitted a deliverable that was genuinely not ready -- the core analysis was missing a dimension that we had explicitly agreed would be included. I knew this. The team lead knew this. In the call, I said something like: "I think there might be a few areas here that could be developed a bit further before we finalize -- especially the comparative piece."`,
+        `The moment I want to describe happened during a virtual project review. A Korean colleague had submitted a deliverable that was genuinely not ready. The core analysis was missing a dimension that we had explicitly agreed would be included. I knew this. The team lead knew this. In the call, I said something like: "I think there might be a few areas here that could be developed a bit further before we finalize, especially the comparative piece."`,
         `I thought I was being kind. In Dutch terms, I was being almost embarrassingly gentle.`,
         `My Korean colleague heard, I would learn later, "this is not ready and I have said so in front of the team." The "comparative piece" was a specific enough reference that it pointed at a clear gap. The "before we finalize" implied a deadline problem. And the "might" and "a bit further" did not soften it enough to prevent the group-facing element from landing as a public correction.`,
-        `After the call, a mutual colleague told me what had happened. I went back to my Korean colleague privately, opened by saying that I was aware the way I had raised the feedback in the group setting had probably not been how it should have gone, and asked if we could work through the deliverable together. I said -- and this felt important to say explicitly -- that the gap in the analysis was not a reflection on their competence; I had probably not been clear enough in the initial brief about what "comparative" meant.`,
+        `After the call, a mutual colleague told me what had happened. I went back to my Korean colleague privately, opened by saying that I was aware the way I had raised the feedback in the group setting had probably not been how it should have gone, and asked if we could work through the deliverable together. I said (and this felt important to say explicitly) that the gap in the analysis was not a reflection on their competence; I had probably not been clear enough in the initial brief about what "comparative" meant.`,
         "This was partially true and mostly strategic, but it was not dishonest. It was a face-restoring move that offered my colleague a way to correct the work without the correction sitting on top of a public loss of standing.",
         "The deliverable came back two days later. It was excellent.",
-        `What I had learned: in indirect feedback cultures, "gentle" by my standards is not the same as gentle by theirs. And the group setting changes everything -- what felt to me like a low-key comment in a meeting was, from the other side, a correction made in front of peers. The register of the delivery and the setting of the delivery both have to be right, or neither is.`,
+        `What I had learned: in indirect feedback cultures, "gentle" by my standards is not the same as gentle by theirs. And the group setting changes everything. What felt to me like a low-key comment in a meeting was, from the other side, a correction made in front of peers. The register of the delivery and the setting of the delivery both have to be right, or neither is.`,
       ],
     },
   ],
   id: [
     {
       title: '"Dia baik-baik saja. Ia mengundurkan diri keesokan paginya."',
-      subtitle: "Komposit -- Konteks organisasi Asia Tenggara",
+      subtitle: "Komposit: Konteks organisasi Asia Tenggara",
       paras: [
-        "Saya telah mengelola tim operasi regional selama sekitar delapan bulan ketika pola itu mulai muncul dalam tinjauan kinerja. Salah satu manajer lokal saya yang paling kuat -- saya akan menyebutnya Arif -- secara konsisten menghasilkan hasil yang di bawah yang saya tahu mampu ia capai. Angkanya baik di atas kertas. Pekerjaan hilir tidak.",
+        "Saya telah mengelola tim operasi regional selama sekitar delapan bulan ketika pola itu mulai muncul dalam tinjauan kinerja. Salah satu manajer lokal saya yang paling kuat (saya akan menyebutnya Arif) secara konsisten menghasilkan hasil yang di bawah yang saya tahu mampu ia capai. Angkanya baik di atas kertas. Pekerjaan hilir tidak.",
         "Saya memutuskan untuk mengatasinya secara langsung. Arif dan saya memiliki hubungan kerja yang baik, pikir saya. Kami bertemu setiap minggu. Ia selalu punya sesuatu yang berguna untuk ditambahkan dalam diskusi tim. Saya menariknya ke ruang rapat suatu sore dan menjelaskan apa yang saya amati: hasil-hasil spesifik yang masuk di bawah standar, tenggat waktu yang terlewat, pola yang mulai mempengaruhi output tim. Saya spesifik. Saya jelas. Saya memberitahunya apa yang perlu berubah dan kapan.",
         `Ia penuh perhatian sepanjang waktu. Mencatat. Berkata, "Ya, saya mengerti. Saya akan mengerjakan ini." Berterima kasih karena saya bersikap langsung. Saya meninggalkan pertemuan dengan perasaan bahwa itu berjalan sebaik yang bisa dilakukan percakapan yang sulit.`,
         "Dua minggu kemudian, manajer lini Arif datang kepada saya dengan pertanyaan administratif tentang periode pemberitahuan. Arif telah mengajukan pengunduran dirinya pada sore yang sama dengan pertemuan kami.",
-        "Saya tidak mengerti. Saya telah melakukan segalanya dengan benar -- saya telah spesifik, pribadi, profesional. Saya tidak tidak baik. Tetapi apa yang tidak saya pahami adalah apa yang dikomunikasikan pertemuan itu kepada Arif di luar konten eksplisitnya. Fakta bahwa saya telah membuat catatan, bahwa saya telah merujuk pola selama beberapa minggu, bahwa saya menyebutkan hasil-hasil spesifik berdasarkan tanggal -- ini memberitahunya bahwa kinerjanya sedang dilacak dan didokumentasikan pada tingkat yang, dalam logika budayanya, berarti posisinya dipertanyakan. Pertemuan itu bukan umpan balik. Itu adalah peringatan yang tidak bisa ia tanggapi tanpa kehilangan muka. Ia memprosesnya sebagai pintu yang menutup, bukan jalan yang terbuka.",
-        `Apa yang akan saya lakukan secara berbeda: Saya tidak akan datang dengan catatan. Saya akan membuka dengan pertanyaan yang tulus -- "Saya ingin memahami apa yang telah menantang selama kuartal terakhir ini" -- dan membiarkan ia memberitahu saya apa yang ada di jalan sebelum saya menyebutkan apa yang saya amati. Saya akan membangun kerangka korektif di sekitar masalah bersama daripada pola yang terdokumentasi. Dan saya akan memperjelas, dalam kata-kata, bahwa percakapan tersebut antara kami -- bahwa saya membawa ini kepadanya terlebih dahulu karena saya percaya pada kemampuannya untuk menyelesaikannya.`,
+        "Saya tidak mengerti. Saya telah melakukan segalanya dengan benar: saya telah spesifik, pribadi, profesional. Saya tidak tidak baik. Tetapi apa yang tidak saya pahami adalah apa yang dikomunikasikan pertemuan itu kepada Arif di luar konten eksplisitnya. Fakta bahwa saya telah membuat catatan, merujuk pola selama beberapa minggu, dan menyebutkan hasil-hasil spesifik berdasarkan tanggal: semua ini memberitahunya bahwa kinerjanya sedang dilacak dan didokumentasikan pada tingkat yang, dalam logika budayanya, berarti posisinya dipertanyakan. Pertemuan itu bukan umpan balik. Itu adalah peringatan yang tidak bisa ia tanggapi tanpa kehilangan muka. Ia memprosesnya sebagai pintu yang menutup, bukan jalan yang terbuka.",
+        `Apa yang akan saya lakukan secara berbeda: Saya tidak akan datang dengan catatan. Saya akan membuka dengan pertanyaan yang tulus ("Saya ingin memahami apa yang telah menantang selama kuartal terakhir ini") dan membiarkan ia memberitahu saya apa yang ada di jalan sebelum saya menyebutkan apa yang saya amati. Saya akan membangun kerangka korektif di sekitar masalah bersama daripada pola yang terdokumentasi. Dan saya akan memperjelas, dalam kata-kata, bahwa percakapan tersebut antara kami: bahwa saya membawa ini kepadanya terlebih dahulu karena saya percaya pada kemampuannya untuk menyelesaikannya.`,
       ],
     },
     {
       title: "Penerjemah di Ruangan",
-      subtitle: "Komposit -- Konteks LSM Afrika Timur",
+      subtitle: "Komposit: Konteks LSM Afrika Timur",
       paras: [
-        "Kami akan menghadapi tinjauan pendanaan, dan saya tahu -- karena beberapa orang telah memberitahu saya secara tidak langsung -- bahwa ada kekhawatiran tentang bagaimana Daniel, salah satu petugas program senior kami, mempresentasikan data hasil kepada donor. Tidak ada yang salah. Tetapi secara konsisten dibentuk untuk terlihat lebih baik dari kenyataan dasarnya.",
+        "Kami akan menghadapi tinjauan pendanaan, dan saya tahu (karena beberapa orang telah memberitahu saya secara tidak langsung) bahwa ada kekhawatiran tentang bagaimana Daniel, salah satu petugas program senior kami, mempresentasikan data hasil kepada donor. Tidak ada yang salah. Tetapi secara konsisten dibentuk untuk terlihat lebih baik dari kenyataan dasarnya.",
         "Saya telah mencoba mengangkatnya sekali sebelumnya dalam rapat tim. Tidak ada yang terjadi. Daniel telah tersenyum dan setuju dengan umpan balik proses yang saya berikan; laporan-laporan tidak berubah.",
-        "Seorang kolega menyarankan saya untuk berbicara dengan David terlebih dahulu. David telah bersama organisasi selama dua belas tahun, dihormati oleh semua orang di tim, dan memiliki hubungan pribadi yang sudah lama dengan Daniel. Saya ragu -- rasanya seperti saya mengalihdayakan percakapan yang sulit. Tetapi saya setuju.",
-        "David kembali kepada saya dua hari kemudian. Ia telah berbicara dengan Daniel. Percakapan itu tampaknya lugas -- David telah menggambarkan situasinya sebagai risiko bagi organisasi dan meminta Daniel untuk melakukan perubahan. Daniel telah mendengarkan David dengan cara yang tidak ia lakukan kepada saya. Siklus pelaporan berikutnya jauh lebih baik.",
-        "Saya menghabiskan waktu untuk memikirkan apa perbedaannya. Bukan bahwa David telah mengatakan sesuatu yang tidak bisa saya katakan. Adalah bahwa suara David membawa bobot relasional yang tidak dimiliki suara saya -- bobot yang dibangun selama dua belas tahun hadir melalui hal-hal yang sulit, dipercaya, dilihat sebagai seseorang yang kepeduliannya berasal dari kepedulian tulus terhadap organisasi dan orang-orang di dalamnya. Suara saya akurat. Suara David dapat dipercaya dengan cara yang belum dimiliki suara saya.",
+        "Seorang kolega menyarankan saya untuk berbicara dengan David terlebih dahulu. David telah bersama organisasi selama dua belas tahun, dihormati oleh semua orang di tim, dan memiliki hubungan pribadi yang sudah lama dengan Daniel. Saya ragu. Rasanya seperti saya mengalihdayakan percakapan yang sulit. Tetapi saya setuju.",
+        "David kembali kepada saya dua hari kemudian. Ia telah berbicara dengan Daniel. Percakapan itu tampaknya lugas. David telah menggambarkan situasinya sebagai risiko bagi organisasi dan meminta Daniel untuk melakukan perubahan. Daniel telah mendengarkan David dengan cara yang tidak ia lakukan kepada saya. Siklus pelaporan berikutnya jauh lebih baik.",
+        "Saya menghabiskan waktu untuk memikirkan apa perbedaannya. Bukan bahwa David telah mengatakan sesuatu yang tidak bisa saya katakan. Adalah bahwa suara David membawa bobot relasional yang tidak dimiliki suara saya, bobot yang dibangun selama dua belas tahun hadir melalui hal-hal yang sulit, dipercaya, dilihat sebagai seseorang yang kepeduliannya berasal dari kepedulian tulus terhadap organisasi dan orang-orang di dalamnya. Suara saya akurat. Suara David dapat dipercaya dengan cara yang belum dimiliki suara saya.",
         "Ada versi cerita ini di mana saya menolak menggunakan perantara karena rasanya seperti mengkompromikan otoritas saya sebagai manajer. Versi itu berakhir dengan percakapan tinjauan pendanaan yang jauh lebih sulit dari yang seharusnya.",
       ],
     },
     {
       title: "Salah Melakukan Reframe (dan Kemudian Benar)",
-      subtitle: "Komposit -- Konteks tim Eropa Utara dan Asia Timur",
+      subtitle: "Komposit: Konteks tim Eropa Utara dan Asia Timur",
       paras: [
         "Saya orang Belanda. Saya telah bekerja dalam tim multikultural di Asia Tenggara selama hampir satu dekade, dan saya masih sering melakukan kesalahan ini sehingga saya tidak yakin pembelajaran itu pernah menjadi otomatis.",
-        `Momen yang ingin saya ceritakan terjadi selama tinjauan proyek virtual. Seorang kolega Korea telah menyerahkan hasil yang sungguh-sungguh belum siap -- analisis inti kehilangan dimensi yang secara eksplisit kami setujui akan disertakan. Saya tahu ini. Pemimpin tim tahu ini. Dalam panggilan itu, saya mengatakan sesuatu seperti: "Saya pikir mungkin ada beberapa area di sini yang bisa dikembangkan sedikit lebih lanjut sebelum kita finalisasi -- terutama bagian komparatif."`,
+        `Momen yang ingin saya ceritakan terjadi selama tinjauan proyek virtual. Seorang kolega Korea telah menyerahkan hasil yang sungguh-sungguh belum siap. Analisis inti kehilangan dimensi yang secara eksplisit kami setujui akan disertakan. Saya tahu ini. Pemimpin tim tahu ini. Dalam panggilan itu, saya mengatakan sesuatu seperti: "Saya pikir mungkin ada beberapa area di sini yang bisa dikembangkan sedikit lebih lanjut sebelum kita finalisasi, terutama bagian komparatif."`,
         "Saya pikir saya bersikap baik. Dalam istilah Belanda, saya hampir memalukan betapa lembutnya saya.",
         `Kolega Korea saya mendengar, seperti yang saya pelajari kemudian, "ini belum siap dan saya telah mengatakan demikian di depan tim." "Bagian komparatif" adalah referensi yang cukup spesifik sehingga menunjuk pada celah yang jelas. "Sebelum kita finalisasi" mengimplikasikan masalah tenggat waktu. Dan "mungkin" dan "sedikit lebih lanjut" tidak cukup melembutkannya untuk mencegah elemen yang menghadap kelompok mendarat sebagai koreksi publik.`,
 
-        `Setelah panggilan, seorang kolega bersama memberitahu saya apa yang terjadi. Saya kembali kepada kolega Korea saya secara pribadi, membuka dengan mengatakan bahwa saya menyadari cara saya mengangkat umpan balik dalam setting kelompok mungkin tidak seperti yang seharusnya, dan bertanya apakah kita bisa mengerjakan hasilnya bersama. Saya berkata -- dan ini terasa penting untuk dikatakan secara eksplisit -- bahwa celah dalam analisis bukan cerminan kompetensi mereka; saya mungkin tidak cukup jelas dalam arahan awal tentang apa arti "komparatif."`,
+        `Setelah panggilan, seorang kolega bersama memberitahu saya apa yang terjadi. Saya kembali kepada kolega Korea saya secara pribadi, membuka dengan mengatakan bahwa saya menyadari cara saya mengangkat umpan balik dalam setting kelompok mungkin tidak seperti yang seharusnya, dan bertanya apakah kita bisa mengerjakan hasilnya bersama. Saya berkata (dan ini terasa penting untuk dikatakan secara eksplisit) bahwa celah dalam analisis bukan cerminan kompetensi mereka; saya mungkin tidak cukup jelas dalam arahan awal tentang apa arti "komparatif."`,
         "Ini sebagian benar dan sebagian besar strategis, tetapi tidak tidak jujur. Itu adalah gerakan pemulihan muka yang memberikan kolega saya cara untuk mengoreksi pekerjaan tanpa koreksi berada di atas kehilangan kedudukan publik.",
         "Hasilnya kembali dua hari kemudian. Itu luar biasa.",
-        `Apa yang telah saya pelajari: dalam budaya umpan balik tidak langsung, "lembut" menurut standar saya tidak sama dengan lembut menurut standar mereka. Dan setting kelompok mengubah segalanya -- apa yang bagi saya terasa seperti komentar yang tidak mencolok dalam rapat, dari sisi lain, adalah koreksi yang dibuat di depan rekan-rekan. Register penyampaian dan setting penyampaian keduanya harus benar, atau tidak satupun yang benar.`,
+        `Apa yang telah saya pelajari: dalam budaya umpan balik tidak langsung, "lembut" menurut standar saya tidak sama dengan lembut menurut standar mereka. Dan setting kelompok mengubah segalanya. Apa yang bagi saya terasa seperti komentar yang tidak mencolok dalam rapat, dari sisi lain, adalah koreksi yang dibuat di depan rekan-rekan. Register penyampaian dan setting penyampaian keduanya harus benar, atau tidak satupun yang benar.`,
 
       ],
     },
@@ -1490,8 +1490,8 @@ function GivingFeedbackSpectrum({ lang }: { lang: Lang }) {
         </defs>
 
         {/* Band 1 zone labels */}
-        <text x={X0 + 8} y={34} textAnchor="start" {...labelStyle}>{t("UPGRADER -- DIRECT", "PENGUAT -- LANGSUNG")}</text>
-        <text x={X1 - 8} y={34} textAnchor="end" {...labelStyle}>{t("DOWNGRADER -- INDIRECT", "PELEMBUT -- TIDAK LANGSUNG")}</text>
+        <text x={X0 + 8} y={34} textAnchor="start" {...labelStyle}>{t("UPGRADER: DIRECT", "PENGUAT: LANGSUNG")}</text>
+        <text x={X1 - 8} y={34} textAnchor="end" {...labelStyle}>{t("DOWNGRADER: INDIRECT", "PELEMBUT: TIDAK LANGSUNG")}</text>
         {/* Band 1 axis label */}
         <text x={400} y={138} textAnchor="middle" {...axisStyle}>{t("EVALUATING SCALE (Meyer)", "SKALA EVALUASI (Meyer)")}</text>
         {/* Band 1 gradient bar */}
@@ -1522,7 +1522,7 @@ function GivingFeedbackSpectrum({ lang }: { lang: Lang }) {
         <text x="462" y="238" textAnchor="middle"
           fontFamily={FONT_BODY} fontSize="11" fontWeight="700"
           letterSpacing="0.08em" fill={ORANGE} opacity="0.9">
-          {t("FRANCE -- not where you expect", "PRANCIS -- bukan di posisi yang kamu duga")}
+          {t("FRANCE: not where you expect", "PRANCIS: bukan di posisi yang kamu duga")}
         </text>
 
         {/* Band 2 zone labels */}
@@ -1562,8 +1562,8 @@ function GivingFeedbackSpectrum({ lang }: { lang: Lang }) {
       </svg>
       <figcaption style={{ fontFamily: FONT_BODY, fontSize: 13, fontStyle: "italic", color: "oklch(48% 0.04 260)", lineHeight: 1.7, maxWidth: 640, margin: "20px auto 0", textAlign: "center" }}>
         {lang === "id"
-          ? "Dua skala budaya yang independen. Kotak menandai skala Mengevaluasi (seberapa langsung umpan balik disampaikan); lingkaran menandai skala Komunikasi (seberapa banyak makna yang berjalan di luar kata-kata). Posisi Prancis -- sangat kiri pada Evaluasi, sangat kanan pada Komunikasi -- menunjukkan mengapa dua skala ini tidak bisa diasumsikan bergerak bersama. Posisi adalah kecenderungan, bukan aturan tetap."
-          : "Two independent cultural scales. Squares track the Evaluating scale (how directly feedback is delivered); circles track the Communicating scale (how much meaning travels outside the words). France's position -- far-left on Evaluating, far-right on Communicating -- shows why the two scales cannot be assumed to move together. Positions are tendencies, not fixed rules."}
+          ? "Dua skala budaya yang independen. Kotak menandai skala Mengevaluasi (seberapa langsung umpan balik disampaikan); lingkaran menandai skala Komunikasi (seberapa banyak makna yang berjalan di luar kata-kata). Posisi Prancis (sangat kiri pada Evaluasi, sangat kanan pada Komunikasi) menunjukkan mengapa dua skala ini tidak bisa diasumsikan bergerak bersama. Posisi adalah kecenderungan, bukan aturan tetap."
+          : "Two independent cultural scales. Squares track the Evaluating scale (how directly feedback is delivered); circles track the Communicating scale (how much meaning travels outside the words). France's position (far-left on Evaluating, far-right on Communicating) shows why the two scales cannot be assumed to move together. Positions are tendencies, not fixed rules."}
       </figcaption>
     </figure>
   );
@@ -1617,7 +1617,7 @@ function ReframeTool({ lang }: { lang: Lang }) {
 
   return (
     <div style={containerStyle}>
-      <p style={{ ...eyebrow, marginBottom: 8 }}>{t("THE REFRAME -- 3 Rounds", "THE REFRAME -- 3 Babak")}</p>
+      <p style={{ ...eyebrow, marginBottom: 8 }}>{t("THE REFRAME: 3 Rounds", "THE REFRAME: 3 Babak")}</p>
       <h3 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 600, color: OFF_WHITE, lineHeight: 1.2, margin: "0 0 16px" }}>
         {t("The Reframe Tool", "Alat Reframe")}
       </h3>
@@ -2097,14 +2097,14 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22, mixBlendMode: "luminosity" }}
         />
         <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ ...eyebrow, color: ORANGE }}>{t("Cross-Cultural -- Module", "Lintas Budaya -- Modul")}</p>
+          <p style={{ ...eyebrow, color: ORANGE }}>{t("Cross-Cultural Module", "Lintas Budaya: Modul")}</p>
           <h1 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(34px, 5vw, 62px)", fontWeight: 700, color: OFF_WHITE, lineHeight: 1.1, marginBottom: 20, marginTop: 0 }}>
             {t("Giving Feedback Across Cultures", "Memberi Umpan Balik Lintas Budaya")}
           </h1>
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(17px, 2.2vw, 22px)", color: "oklch(82% 0.03 260)", lineHeight: 1.6, maxWidth: 580, marginBottom: 32 }}>
             {t(
-              "The same truth -- four different registers. Learning to translate feedback across cultural difference without losing what it needs to say.",
-              "Kebenaran yang sama -- empat register yang berbeda. Belajar menerjemahkan umpan balik lintas perbedaan budaya tanpa kehilangan apa yang perlu disampaikan.",
+              "The same truth, four different registers. Learning to translate feedback across cultural difference without losing what it needs to say.",
+              "Kebenaran yang sama, empat register yang berbeda. Belajar menerjemahkan umpan balik lintas perbedaan budaya tanpa kehilangan apa yang perlu disampaikan.",
             )}
           </p>
           <button
@@ -2130,12 +2130,12 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S1: Three Inboxes (NAVY) ── */}
       <section style={{ background: NAVY, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
-          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 01 -- The Same Words", "Bagian 01 -- Kata-kata yang Sama")}</p>
+          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 01: The Same Words", "Bagian 01: Kata-kata yang Sama")}</p>
           <h2 style={h2Dark}>{t("Three Inboxes", "Tiga Kotak Masuk")}</h2>
           <p style={proseDark}>
             {t(
-              "One manager, one email, three inboxes. To Markus the words felt clear and fair -- tap each card to see how the same message landed.",
-              "Satu manajer, satu email, tiga kotak masuk. Bagi Markus kata-katanya terasa jelas dan adil -- ketuk setiap kartu untuk melihat bagaimana pesan yang sama mendarat.",
+              "One manager, one email, three inboxes. To Markus the words felt clear and fair. Tap each card to see how the same message landed.",
+              "Satu manajer, satu email, tiga kotak masuk. Bagi Markus kata-katanya terasa jelas dan adil. Ketuk setiap kartu untuk melihat bagaimana pesan yang sama mendarat.",
             )}
           </p>
           <InboxCards lang={lang} />
@@ -2147,8 +2147,8 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           </p>
           <p style={{ ...proseDark, marginBottom: 0 }}>
             {t(
-              "None responded wrongly. Each read the email through the logic their culture gave them. This module teaches you to see that logic -- and write for it.",
-              "Tak ada yang salah merespons. Masing-masing membaca email itu melalui logika budaya mereka. Modul ini mengajarkanmu melihat logika itu -- dan menulis untuknya.",
+              "None responded wrongly. Each read the email through the logic their culture gave them. This module teaches you to see that logic and write for it.",
+              "Tak ada yang salah merespons. Masing-masing membaca email itu melalui logika budaya mereka. Modul ini mengajarkanmu melihat logika itu dan menulis untuknya.",
             )}
           </p>
         </div>
@@ -2165,12 +2165,12 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
             />
             <div style={imageOverlay} aria-hidden="true" />
           </div>
-          <p style={eyebrow}>{t("Section 02 -- The Model", "Bagian 02 -- Model")}</p>
+          <p style={eyebrow}>{t("Section 02: The Model", "Bagian 02: Model")}</p>
           <h2 style={h2Light}>{t("Two Dials, Not One", "Dua Skala, Bukan Satu")}</h2>
           <p style={prose}>
             {t(
-              "Most leaders assume one dial. Erin Meyer's research shows two, moving independently -- how a culture communicates, and how it criticizes. The gap is where feedback gets lost.",
-              "Kebanyakan pemimpin mengasumsikan satu skala. Riset Erin Meyer menunjukkan dua, yang bergerak secara independen -- cara sebuah budaya berkomunikasi, dan cara budaya itu mengkritik. Kesenjangan itulah tempat umpan balik hilang.",
+              "Most leaders assume one dial. Erin Meyer's research shows two, moving independently: how a culture communicates, and how it criticizes. The gap is where feedback gets lost.",
+              "Kebanyakan pemimpin mengasumsikan satu skala. Riset Erin Meyer menunjukkan dua, yang bergerak secara independen: cara sebuah budaya berkomunikasi, dan cara budaya itu mengkritik. Kesenjangan itulah tempat umpan balik hilang.",
             )}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginBottom: 36 }}>
@@ -2184,8 +2184,8 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
             <DefinitionChip
               term={t("EVALUATING", "EVALUASI")}
               definition={t(
-                "How directly negative feedback is spoken -- plain, or softened and wrapped.",
-                "Seberapa langsung umpan balik negatif diucapkan -- terang-terangan, atau dilembutkan dan dibungkus.",
+                "How directly negative feedback is spoken: plain, or softened and wrapped.",
+                "Seberapa langsung umpan balik negatif diucapkan: terang-terangan, atau dilembutkan dan dibungkus.",
               )}
             />
           </div>
@@ -2220,12 +2220,12 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S3: Say It Stronger, Say It Softer (NAVY) ── */}
       <section style={{ background: NAVY, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
-          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 03 -- The Language", "Bagian 03 -- Bahasa")}</p>
+          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 03: The Language", "Bagian 03: Bahasa")}</p>
           <h2 style={h2Dark}>{t("Say It Stronger, Say It Softer", "Lebih Tegas, Lebih Lembut")}</h2>
           <p style={proseDark}>
             {t(
-              "Every language carries small words that turn feedback up or down. Direct cultures reach for upgraders; indirect cultures reach for downgraders. Neither is more honest -- but send the wrong intensity into the wrong culture, and the message either wounds or evaporates.",
-              "Setiap bahasa membawa kata-kata kecil yang menaikkan atau menurunkan volume umpan balik. Budaya langsung memakai penguat; budaya tidak langsung memakai pelembut. Tidak ada yang lebih jujur -- tetapi kirimkan intensitas yang salah ke budaya yang salah, dan pesan itu akan melukai atau menguap.",
+              "Every language carries small words that turn feedback up or down. Direct cultures reach for upgraders; indirect cultures reach for downgraders. Neither is more honest. Send the wrong intensity into the wrong culture, and the message either wounds or evaporates.",
+              "Setiap bahasa membawa kata-kata kecil yang menaikkan atau menurunkan volume umpan balik. Budaya langsung memakai penguat; budaya tidak langsung memakai pelembut. Tidak ada yang lebih jujur. Kirimkan intensitas yang salah ke budaya yang salah, dan pesan itu akan melukai atau menguap.",
             )}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginBottom: 36 }}>
@@ -2289,7 +2289,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S4: When Silence Is the Feedback (OFF_WHITE) ── */}
       <section style={{ background: OFF_WHITE, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
-          <p style={eyebrow}>{t("Section 04 -- The Unsaid", "Bagian 04 -- Yang Tak Terucap")}</p>
+          <p style={eyebrow}>{t("Section 04: The Unsaid", "Bagian 04: Yang Tak Terucap")}</p>
           <h2 style={h2Light}>{t("When Silence Is the Feedback", "Ketika Keheningan Adalah Umpan Balik")}</h2>
           <div style={imageWrap}>
             <img
@@ -2318,38 +2318,38 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S5: The Nathan Principle (NAVY) ── */}
       <section style={{ background: NAVY, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
-          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 05 -- The Principle", "Bagian 05 -- Prinsip")}</p>
+          <p style={{ ...eyebrow, color: ORANGE }}>{t("Section 05: The Principle", "Bagian 05: Prinsip")}</p>
           <h2 style={h2Dark}>{t("The Nathan Principle", "Prinsip Natan")}</h2>
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(22px, 2.6vw, 26px)", color: OFF_WHITE, lineHeight: 1.5, margin: "32px 0 28px", paddingLeft: 20, borderLeft: `3px solid ${ORANGE}` }}>
             {t(
-              "\"Better is open rebuke than hidden love.\" -- Proverbs 27:5",
-              "\"Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi.\" -- Amsal 27:5",
+              "\"Better is open rebuke than hidden love.\" (Proverbs 27:5)",
+              "\"Teguran yang terang-terangan lebih baik daripada kasih yang tersembunyi.\" (Amsal 27:5)",
             )}
           </p>
           <p style={proseDark}>
             {t(
-              "Nathan, sent to confront King David over adultery and murder, did not open with the charge. He told a story -- a rich man who took a poor man's one beloved lamb -- and let David pronounce the verdict himself.",
-              "Natan, yang diutus untuk menghadapi Raja Daud atas perzinahan dan pembunuhan, tidak membuka dengan tuduhan. Ia menceritakan sebuah kisah -- seorang kaya yang mengambil satu-satunya domba kesayangan orang miskin -- dan membiarkan Daud menjatuhkan vonis itu sendiri.",
+              "Nathan, sent to confront King David over adultery and murder, did not open with the charge. He told a story (a rich man who took a poor man's one beloved lamb) and let David pronounce the verdict himself.",
+              "Natan, yang diutus untuk menghadapi Raja Daud atas perzinahan dan pembunuhan, tidak membuka dengan tuduhan. Ia menceritakan sebuah kisah (seorang kaya yang mengambil satu-satunya domba kesayangan orang miskin) dan membiarkan Daud menjatuhkan vonis itu sendiri.",
             )}
           </p>
           <p style={{ fontFamily: FONT_HEADLINE, fontWeight: 700, fontSize: "clamp(32px, 4vw, 40px)", color: OFF_WHITE, lineHeight: 1.3, margin: "36px 0 28px" }}>
             {t(
-              "\"You are the man.\" -- 2 Samuel 12:7",
-              "\"Engkau sendiri orang itu.\" -- 2 Samuel 12:7",
+              "\"You are the man.\" (2 Samuel 12:7)",
+              "\"Engkau sendiri orang itu.\" (2 Samuel 12:7)",
             )}
           </p>
           <BigStat
             dark
             number="5"
             caption={t(
-              "words. Devastatingly direct -- receivable because the parable came first.",
-              "kata. Sangat tegas -- dapat diterima karena perumpamaan datang lebih dulu.",
+              "words. Devastatingly direct, receivable because the parable came first.",
+              "kata. Sangat tegas, dapat diterima karena perumpamaan datang lebih dulu.",
             )}
           />
           <p style={proseDark}>
             {t(
-              "The indirect path was not evasion -- it was preparation. That is the Nathan Principle. Now test it.",
-              "Jalan tidak langsung itu bukan penghindaran -- itu persiapan. Itulah Prinsip Natan. Sekarang ujilah.",
+              "The indirect path was not evasion. It was preparation. That is the Nathan Principle. Now test it.",
+              "Jalan tidak langsung itu bukan penghindaran. Itu persiapan. Itulah Prinsip Natan. Sekarang ujilah.",
             )}
           </p>
           <div style={imageWrap}>
@@ -2361,7 +2361,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
             <div style={imageOverlay} aria-hidden="true" />
           </div>
           <h3 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(22px, 2.6vw, 32px)", fontWeight: 700, color: OFF_WHITE, marginBottom: 20, marginTop: 0 }}>
-            {t("Case Study -- The Optimistic Reports", "Studi Kasus -- Laporan yang Optimis")}
+            {t("Case Study: The Optimistic Reports", "Studi Kasus: Laporan yang Optimis")}
           </h3>
           <NathanCaseStudy lang={lang} />
           <DigDeeper
@@ -2388,7 +2388,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       {/* ── S6: The Reframe in Practice (OFF_WHITE) ── */}
       <section style={{ background: OFF_WHITE, padding: "72px 0" }}>
         <div className="container-wide" style={{ maxWidth: 860 }}>
-          <p style={eyebrow}>{t("Section 06 -- The Practice", "Bagian 06 -- Praktik")}</p>
+          <p style={eyebrow}>{t("Section 06: The Practice", "Bagian 06: Praktik")}</p>
           <h2 style={h2Light}>{t("The Reframe in Practice", "Reframe dalam Praktik")}</h2>
           <p style={prose}>
             {t(
@@ -2407,20 +2407,20 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           <h2 style={h2Dark}>{t("Faith Anchor", "Jangkar Iman")}</h2>
           <p style={proseDark}>
             {t(
-              "Paul's phrase in Ephesians 4:15 -- aletheuon en agape, truthing in love -- refuses both distortions: truth without love, which wounds, and love without truth, which lets problems grow.",
-              "Frasa Paulus dalam Efesus 4:15 -- aletheuon en agape, hidup dalam kebenaran dengan kasih -- menolak kedua distorsi: kebenaran tanpa kasih, yang melukai, dan kasih tanpa kebenaran, yang membiarkan masalah tumbuh.",
+              "Paul's phrase in Ephesians 4:15, aletheuon en agape (truthing in love), refuses both distortions: truth without love, which wounds, and love without truth, which lets problems grow.",
+              "Frasa Paulus dalam Efesus 4:15, aletheuon en agape (hidup dalam kebenaran dengan kasih), menolak kedua distorsi: kebenaran tanpa kasih, yang melukai, dan kasih tanpa kebenaran, yang membiarkan masalah tumbuh.",
             )}
           </p>
           <p style={{ fontFamily: FONT_HEADLINE, fontStyle: "italic", fontSize: "clamp(22px, 2.6vw, 26px)", color: OFF_WHITE, lineHeight: 1.5, margin: "32px 0 28px", paddingLeft: 20, borderLeft: `3px solid ${ORANGE}` }}>
             {t(
-              "\"Faithful are the wounds of a friend.\" -- Proverbs 27:6",
-              "\"Dapat dipercaya tikaman seorang sahabat.\" -- Amsal 27:6",
+              "\"Faithful are the wounds of a friend.\" (Proverbs 27:6)",
+              "\"Dapat dipercaya tikaman seorang sahabat.\" (Amsal 27:6)",
             )}
           </p>
           <p style={{ ...proseDark, marginBottom: 0 }}>
             {t(
-              "Matthew 18 keeps the goal in view -- private first, and always \"you have won them back.\" Restoration is the target; correction is the path.",
-              "Matius 18 menjaga tujuannya tetap terlihat -- pribadi dahulu, dan selalu \"kamu telah mendapatkannya kembali.\" Pemulihan adalah target; koreksi adalah jalannya.",
+              "Matthew 18 keeps the goal in view: private first, and always \"you have won them back.\" Restoration is the target; correction is the path.",
+              "Matius 18 menjaga tujuannya tetap terlihat: pribadi dahulu, dan selalu \"kamu telah mendapatkannya kembali.\" Pemulihan adalah target; koreksi adalah jalannya.",
             )}
           </p>
           <DigDeeper
