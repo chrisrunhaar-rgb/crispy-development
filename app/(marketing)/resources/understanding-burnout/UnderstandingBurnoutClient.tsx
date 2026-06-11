@@ -6,618 +6,1574 @@ import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const t = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "id";
+const t = (en: string, id: string, lang: Lang) => lang === "en" ? en : id;
 
-// -- BRAND TOKENS -------------------------------------------------------------
-const navy     = "oklch(22% 0.10 260)";
-const orange   = "oklch(65% 0.15 45)";
-const offWhite = "oklch(97% 0.005 80)";
-const bodyText = "oklch(38% 0.05 260)";
+// -- BRAND TOKENS ---------------------------------------------------------------
+const navy      = "oklch(22% 0.10 260)";
+const orange    = "oklch(65% 0.15 45)";
+const offWhite  = "oklch(96% 0.005 80)";
+const lightGray = "oklch(88% 0.008 80)";
+const charcoal  = "oklch(18% 0.000 0)";
+const bodyText  = "oklch(38% 0.05 260)";
 
-// -- VERSE DATA ----------------------------------------------------------------
-const VERSES = {
-  "2cor-4-8-9": {
-    ref: "2 Corinthians 4:8—9",
-    ref_id: "2 Korintus 4:8—9",
-    ref_nl: "2 Korinti—rs 4:8—9",
-    en: "We are hard pressed on every side, but not crushed; perplexed, but not in despair; persecuted, but not abandoned; struck down, but not destroyed.",
-    id: "Dalam segala hal kami ditindas, namun tidak terjepit; kami habis akal, namun tidak putus asa; kami dianiaya, namun tidak ditinggalkan sendirian, kami dihempaskan, namun tidak binasa.",
-    nl: "Van alle kanten worden we belaagd, maar raken we niet in het nauw; we worden door twijfel gekweld, maar wanhopen niet; we worden vervolgd, maar niet verlaten; we worden geveld, maar gaan niet ten onder.",
-  },
-  "1kings-19-5": {
-    ref: "1 Kings 19:5",
-    ref_id: "1 Raja-raja 19:5",
-    ref_nl: "1 Koningen 19:5",
-    en: "Then he lay down under the bush and fell asleep. All at once an angel touched him and said, 'Get up and eat.'",
-    id: "Kemudian ia berbaring dan tertidur di bawah pohon aras itu. Tetapi tiba-tiba seorang malaikat menyentuh dia serta berkata kepadanya: 'Bangunlah, makanlah!'",
-    nl: "Hij viel in slaap onder de bremstruik, maar plotseling raakte een engel hem aan en zei: 'Sta op en eet.'",
-  },
-  "luke-10-1": {
-    ref: "Luke 10:1",
-    ref_id: "Lukas 10:1",
-    ref_nl: "Lucas 10:1",
-    en: "After this the Lord appointed seventy-two others and sent them two by two ahead of him to every town and place where he was about to go.",
-    id: "Kemudian dari pada itu Tuhan menunjuk tujuh puluh dua murid yang lain, lalu mengutus mereka berdua-dua mendahului-Nya ke setiap kota dan tempat yang hendak dikunjungi-Nya.",
-    nl: "Daarna wees de Heer nog twee—nzeventig anderen aan en zond hen twee aan twee voor zich uit naar alle steden en plaatsen waar hij zelf zou komen.",
-  },
-  "phil-4-13": {
-    ref: "Philippians 4:13",
-    ref_id: "Filipi 4:13",
-    ref_nl: "Filippenzen 4:13",
-    en: "I can do all this through him who gives me strength.",
-    id: "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.",
-    nl: "Ik kan alles aan door hem die mij kracht geeft.",
-  },
-};
+// -- SVG DIAGRAM ----------------------------------------------------------------
+function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
+  return (
+    <figure style={{ margin: "2rem 0 0" }}>
+      <svg
+        viewBox="0 0 800 320"
+        aria-hidden="true"
+        style={{ width: "100%", height: "auto", display: "block" }}
+      >
+        <defs>
+          <linearGradient id="ub-spectrum-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="hsl(210,60%,35%)" />
+            <stop offset="33%" stopColor="hsl(210,40%,55%)" />
+            <stop offset="66%" stopColor="hsl(35,60%,55%)" />
+            <stop offset="100%" stopColor="hsl(0,65%,40%)" />
+          </linearGradient>
+          <marker id="ub-arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="oklch(22% 0.10 260)" />
+          </marker>
+        </defs>
+        <rect x="40" y="60" width="720" height="60" rx="8" fill="url(#ub-spectrum-gradient)" />
+        <text x="80" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Working from identity" : "Bekerja dari identitas"}
+        </text>
+        <text x="280" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Drifting" : "Menyimpang"}
+        </text>
+        <text x="520" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "At risk" : "Berisiko"}
+        </text>
+        <text x="720" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Burning" : "Terbakar"}
+        </text>
+        <line x1="160" y1="52" x2="400" y2="52" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <line x1="160" y1="48" x2="160" y2="60" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <line x1="400" y1="48" x2="400" y2="60" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <text x="280" y="42" fontSize="11" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Underchallenged" : "Underchallenged"}
+        </text>
+        <line x1="200" y1="30" x2="560" y2="30" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
+        <line x1="200" y1="26" x2="200" y2="38" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
+        <line x1="560" y1="26" x2="560" y2="38" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
+        <text x="380" y="22" fontSize="11" fill="oklch(65% 0.15 45)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Frenetic" : "Frenetic"}
+        </text>
+        <line x1="440" y1="52" x2="760" y2="52" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
+        <line x1="440" y1="48" x2="440" y2="60" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
+        <line x1="760" y1="48" x2="760" y2="60" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
+        <text x="600" y="42" fontSize="11" fill="hsl(0,65%,40%)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Worn-out" : "Worn-out"}
+        </text>
+        <text x="40" y="185" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Maslach dimensions:" : "Dimensi Maslach:"}
+        </text>
+        <rect x="320" y="195" width="10" height="10" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <text x="335" y="205" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Exhaustion" : "Kelelahan"}
+        </text>
+        <circle cx="505" cy="225" r="5" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <text x="515" y="230" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Cynicism" : "Sinisme"}
+        </text>
+        <rect x="620" y="220" width="10" height="10" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
+        <text x="635" y="230" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
+          {lang === "en" ? "Reduced efficacy" : "Efikasi berkurang"}
+        </text>
+      </svg>
+      <figcaption style={{ fontSize: "0.8rem", color: bodyText, marginTop: "0.5rem", fontFamily: "Montserrat,sans-serif" }}>
+        {lang === "en"
+          ? "The four-band risk spectrum with Montero-Marin subtype clustering. Frenetic burnout spans drifting into at-risk; underchallenged centres on drifting; worn-out spans at-risk into burning."
+          : "Spektrum risiko empat band dengan pengelompokan subtipe Montero-Marin. Kelelahan frenetic mencakup drifting hingga berisiko; underchallenged berpusat pada drifting; worn-out mencakup berisiko hingga terbakar."}
+      </figcaption>
+    </figure>
+  );
+}
 
-// -- BURNOUT TYPES -------------------------------------------------------------
-type BurnoutType = "overload" | "underchallenge" | "neglect";
+// -- MAIN COMPONENT -------------------------------------------------------------
+export default function UnderstandingBurnoutClient({
+  isSaved,
+}: {
+  isSaved: boolean;
+}) {
+  const { lang: rawLang } = useLanguage();
+  const lang = (rawLang === "id" ? "id" : "en") as Lang;
 
-const BURNOUT_TYPES: {
-  key: BurnoutType;
-  icon: string;
-  color: string;
-  en_title: string; id_title: string; nl_title: string;
-  en_subtitle: string; id_subtitle: string; nl_subtitle: string;
-  en_desc: string; id_desc: string; nl_desc: string;
-  en_signs: string[]; id_signs: string[]; nl_signs: string[];
-  en_culture: string; id_culture: string; nl_culture: string;
-  en_first: string; id_first: string; nl_first: string;
-}[] = [
-  {
-    key: "overload",
-    icon: "??",
-    color: "oklch(55% 0.18 25)",
-    en_title: "Overload Burnout",
-    id_title: "Kelelahan Akibat Beban Berlebih",
-    nl_title: "Overbelasting",
-    en_subtitle: "Running on empty at full speed",
-    id_subtitle: "Berlari dengan tangki kosong",
-    nl_subtitle: "Leeggereden op volle snelheid",
-    en_desc: "You're working at an unsustainable pace — keeping all the balls in the air while your health, rest, and relationships quietly fall away. The work never stops. You tell yourself you'll slow down after this season. But this season never ends.",
-    id_desc: "Anda bekerja dengan kecepatan yang tidak berkelanjutan — menjaga semua hal tetap berjalan sementara kesehatan, istirahat, dan hubungan Anda perlahan-lahan terkikis. Pekerjaan tidak pernah berhenti. Anda berkata akan melambat setelah musim ini selesai. Tapi musim itu tidak pernah berakhir.",
-    nl_desc: "Je werkt in een tempo dat je niet kunt volhouden — je houdt alles in de lucht terwijl je gezondheid, rust en relaties stilletjes wegvallen. Het werk stopt nooit. Je zegt dat je langzamer zult gaan na dit seizoen. Maar dat seizoen eindigt nooit.",
-    en_signs: ["Missing deadlines but adding more projects", "Sleep is the first thing you sacrifice", "You feel guilty resting", "Physical symptoms: headaches, illness, exhaustion"],
-    id_signs: ["Melewatkan tenggat waktu tapi terus menambah proyek baru", "Tidur adalah hal pertama yang Anda korbankan", "Anda merasa bersalah saat beristirahat", "Gejala fisik: sakit kepala, penyakit, kelelahan"],
-    nl_signs: ["Deadlines missen maar toch nieuwe projecten aannemen", "Slaap is het eerste dat je opoffert", "Je voelt je schuldig als je rust", "Lichamelijke klachten: hoofdpijn, ziekte, uitputting"],
-    en_culture: "In high-achievement cultures, overload is often worn as a badge of honour. The leader who never stops is admired, not helped. In collectivist cultures, saying no feels like abandoning the community — so the pace becomes truly unsustainable.",
-    id_culture: "Dalam budaya yang mengutamakan pencapaian tinggi, beban berlebih sering dianggap sebagai kehormatan. Pemimpin yang tidak pernah berhenti dikagumi, bukan dibantu. Dalam budaya kolektif, mengatakan tidak terasa seperti meninggalkan komunitas — sehingga kecepatan kerja menjadi benar-benar tidak berkelanjutan.",
-    nl_culture: "In prestatiegerichte culturen wordt overbelasting vaak gedragen als een eersbewijs. De leider die nooit stopt wordt bewonderd, niet geholpen. In collectivistische culturen voelt nee zeggen als het verlaten van de gemeenschap — waardoor het tempo werkelijk onhoudbaar wordt.",
-    en_first: "Block one non-negotiable rest hour this week — and protect it like an appointment with God. Because it is.",
-    id_first: "Tetapkan satu jam istirahat yang tidak bisa diganggu gugat minggu ini — dan jaga seperti janji temu dengan Tuhan. Karena memang begitulah adanya.",
-    nl_first: "Reserveer deze week ——n ononderhandelbaar rustuur — en bescherm het als een afspraak met God. Want dat is het.",
-  },
-  {
-    key: "underchallenge",
-    icon: "???",
-    color: "oklch(52% 0.12 225)",
-    en_title: "Underchallenge Burnout",
-    id_title: "Kelelahan Akibat Kurang Tantangan",
-    nl_title: "Onderstimulering",
-    en_subtitle: "Not too much — too little meaning",
-    id_subtitle: "Bukan terlalu banyak — terlalu sedikit makna",
-    nl_subtitle: "Niet te veel — te weinig betekenis",
-    en_desc: "Your work has become monotonous, passionless, or energy-draining. You no longer feel like what you do matters. The routine continues, but the spark is gone. This kind of burnout is harder to name — there's no obvious crisis, just a slow fading.",
-    id_desc: "Pekerjaan Anda telah menjadi monoton, tanpa semangat, atau menguras energi. Anda tidak lagi merasa bahwa apa yang Anda lakukan berarti. Rutinitas terus berlanjut, tapi percikan api sudah padam. Jenis kelelahan ini lebih sulit untuk dikenali — tidak ada krisis yang jelas, hanya kepudaran yang lambat.",
-    nl_desc: "Je werk is eentonig, passieloos of energieslurpend geworden. Je hebt het gevoel dat wat je doet er niet meer toe doet. De routine gaat door, maar de vonk is verdwenen. Dit soort burnout is moeilijker te benoemen — er is geen duidelijke crisis, alleen een langzame vervaging.",
-    en_signs: ["Going through the motions without engagement", "Feeling invisible or replaceable", "Dreading Monday mornings", "Disconnected from the original 'why' of your work"],
-    id_signs: ["Menjalani rutinitas tanpa keterlibatan", "Merasa tidak terlihat atau mudah tergantikan", "Merasa takut hari Senin", "Terputus dari alasan awal mengapa Anda memilih pekerjaan ini"],
-    nl_signs: ["Dingen doen zonder betrokkenheid", "Je onzichtbaar of vervangbaar voelen", "Opzien tegen maandagochtenden", "Losgeraakt van de oorspronkelijke 'waarom' van je werk"],
-    en_culture: "In cultures where role and identity are tightly fused, feeling underchallenged carries shame — you're not allowed to be bored when the mission is urgent. But monotony is a real burnout pathway, not a character flaw.",
-    id_culture: "Dalam budaya di mana peran dan identitas sangat terkait erat, merasa kurang tertantang membawa rasa malu — Anda tidak boleh merasa bosan ketika misi begitu mendesak. Tetapi kejenuhan adalah jalan nyata menuju kelelahan, bukan kelemahan karakter.",
-    nl_culture: "In culturen waar rol en identiteit nauw verweven zijn, brengt onderuitdaging schaamte met zich mee — je mag niet verveeld zijn als de missie urgent is. Maar monotonie is een re—el burnout-pad, geen karakterfout.",
-    en_first: "Name the last time you felt genuinely alive in your work. What was different? That answer is a clue toward what needs to change.",
-    id_first: "Ingat kapan terakhir kali Anda benar-benar merasa hidup dalam pekerjaan Anda. Apa yang berbeda? Jawaban itu adalah petunjuk tentang apa yang perlu diubah.",
-    nl_first: "Denk aan de laatste keer dat je je echt levend voelde in je werk. Wat was er anders? Dat antwoord is een aanwijzing naar wat er moet veranderen.",
-  },
-  {
-    key: "neglect",
-    icon: "??",
-    color: "oklch(40% 0.08 260)",
-    en_title: "Neglect Burnout",
-    id_title: "Kelelahan Akibat Diabaikan",
-    nl_title: "Verwaarlozing",
-    en_subtitle: "Working unseen, unheard, unrecognised",
-    id_subtitle: "Bekerja tanpa dilihat, didengar, atau diakui",
-    nl_subtitle: "Werken zonder gezien, gehoord of erkend te worden",
-    en_desc: "There's no feedback, no direction, no one checking in. You pour yourself out for the work, but no one notices — or if they do, it's to point out what's missing. Over time, the silence becomes a weight. You begin to question whether what you do matters at all.",
-    id_desc: "Tidak ada umpan balik, tidak ada arahan, tidak ada yang peduli. Anda mencurahkan diri untuk pekerjaan, tetapi tidak ada yang memperhatikan — atau jika mereka memperhatikan, itu hanya untuk menunjukkan apa yang kurang. Seiring waktu, keheningan menjadi beban. Anda mulai mempertanyakan apakah apa yang Anda lakukan benar-benar berarti.",
-    nl_desc: "Er is geen feedback, geen richting, niemand die incheckt. Je geeft alles voor het werk, maar niemand merkt het op — of als ze dat doen, is het om te wijzen op wat ontbreekt. Na verloop van tijd wordt de stilte een last. Je begint te twijfelen of wat je doet er —berhaupt toe doet.",
-    en_signs: ["Receiving feedback only when something goes wrong", "Feeling like your contributions go unnoticed", "Drifting without clear direction or accountability", "Withdrawing from the team or community"],
-    id_signs: ["Hanya menerima umpan balik ketika ada yang salah", "Merasa kontribusi Anda tidak diperhatikan", "Terombang-ambing tanpa arah atau akuntabilitas yang jelas", "Menarik diri dari tim atau komunitas"],
-    nl_signs: ["Alleen feedback ontvangen als er iets misgaat", "Het gevoel dat je bijdragen onopgemerkt blijven", "Ronddwalen zonder duidelijke richting of verantwoording", "Je terugtrekken uit het team of de gemeenschap"],
-    en_culture: "In high-context cultures, direct appreciation is rarely spoken — it's assumed to be felt. But cross-cultural workers often don't have the cultural radar to pick up on unspoken affirmation, and the silence reads as indifference.",
-    id_culture: "Dalam budaya konteks tinggi, penghargaan langsung jarang diucapkan — diasumsikan sudah bisa dirasakan. Namun para pekerja lintas budaya sering tidak memiliki kepekaan budaya untuk menangkap penegasan yang tidak terucap, dan keheningan itu terasa seperti ketidakpedulian.",
-    nl_culture: "In hoge-context culturen wordt directe waardering zelden uitgesproken — men neemt aan dat het gevoeld wordt. Maar interculturele werkers hebben vaak niet de culturele antenne om onuitgesproken bevestiging op te pikken, en de stilte leest als onverschilligheid.",
-    en_first: "Ask one person you trust this week: 'How do you think I'm doing?' The answer — and the act of asking — will break the silence.",
-    id_first: "Minggu ini, tanyakan kepada satu orang yang Anda percaya: 'Menurut kamu, bagaimana saya melakukannya?' Jawaban itu — dan tindakan bertanya itu sendiri — akan memecah keheningan.",
-    nl_first: "Vraag deze week aan ——n persoon die je vertrouwt: 'Hoe denk je dat het met me gaat?' Het antwoord — en de daad van vragen zelf — zal de stilte doorbreken.",
-  },
-];
-
-// -- THREE Ps DATA -------------------------------------------------------------
-const THREE_PS = [
-  {
-    key: "people",
-    icon: "??",
-    en_title: "People",
-    id_title: "Orang",
-    nl_title: "Mensen",
-    en_tagline: "You were not sent alone",
-    id_tagline: "Anda tidak diutus sendirian",
-    nl_tagline: "Je bent niet alleen gestuurd",
-    en_desc: "Isolation is not a spiritual discipline — it's a warning sign. Research consistently shows that community of support is the single most protective factor against burnout. Jesus sent his disciples in pairs for good reason.",
-    id_desc: "Isolasi bukanlah disiplin rohani — itu adalah tanda peringatan. Penelitian secara konsisten menunjukkan bahwa komunitas dukungan adalah faktor perlindungan tunggal yang paling efektif melawan kelelahan. Yesus mengutus murid-murid-Nya berdua-dua bukan tanpa alasan.",
-    nl_desc: "Isolatie is geen geestelijke discipline — het is een waarschuwingsteken. Onderzoek toont consequent aan dat een gemeenschap van steun de meest beschermende factor is tegen burnout. Jezus stuurde zijn discipelen twee aan twee, niet voor niets.",
-    en_q: "Who is one person who knows the real weight of your work right now — not just the highlights?",
-    id_q: "Siapa satu orang yang mengetahui beban nyata pekerjaan Anda saat ini — bukan hanya sorotan positifnya?",
-    nl_q: "Wie is ——n persoon die het echte gewicht van je werk nu kent — niet alleen de hoogtepunten?",
-    en_action: "Identify your 'sent-in-pairs' person and schedule one honest conversation this week.",
-    id_action: "Identifikasi 'pasangan yang diutus bersama' Anda dan jadwalkan satu percakapan jujur minggu ini.",
-    nl_action: "Identificeer je 'samen-uitgezonden' persoon en plan deze week ——n eerlijk gesprek.",
-  },
-  {
-    key: "practices",
-    icon: "??",
-    en_title: "Practices",
-    id_title: "Kebiasaan",
-    nl_title: "Gewoonten",
-    en_tagline: "Your body, mind, and spirit are one system",
-    id_tagline: "Tubuh, pikiran, dan roh Anda adalah satu sistem",
-    nl_tagline: "Je lichaam, geest en ziel zijn ——n systeem",
-    en_desc: "Sustainable leaders are not superhuman. They are practised. Holistic habits — physical health, continuous learning, prayer and spiritual depth — aren't optional extras. They are the infrastructure of endurance.",
-    id_desc: "Pemimpin yang berkelanjutan bukanlah manusia super. Mereka adalah orang yang terlatih. Kebiasaan holistik — kesehatan fisik, pembelajaran berkelanjutan, doa dan kedalaman rohani — bukan pelengkap opsional. Mereka adalah infrastruktur ketahanan.",
-    nl_desc: "Duurzame leiders zijn niet bovenmenselijk. Ze zijn geoefend. Holistische gewoonten — lichamelijke gezondheid, continu leren, gebed en geestelijke diepgang — zijn geen optionele extra's. Ze zijn de infrastructuur van uithoudingsvermogen.",
-    en_q: "Which of the three — body, mind, or spirit — is the most depleted for you right now?",
-    id_q: "Di antara ketiganya — tubuh, pikiran, atau roh — mana yang paling terkuras bagi Anda saat ini?",
-    nl_q: "Welke van de drie — lichaam, geest of ziel — is voor jou nu het meest uitgeput?",
-    en_action: "Choose one small, specific practice for the most depleted area and protect it for 7 days.",
-    id_action: "Pilih satu kebiasaan kecil yang spesifik untuk area yang paling terkuras dan jaga selama 7 hari.",
-    nl_action: "Kies ——n kleine, specifieke gewoonte voor het meest uitgeputte gebied en bescherm het 7 dagen lang.",
-  },
-  {
-    key: "purpose",
-    icon: "??",
-    en_title: "Purpose",
-    id_title: "Tujuan",
-    nl_title: "Roeping",
-    en_tagline: "Meaning is not a luxury — it's fuel",
-    id_tagline: "Makna bukan kemewahan — itu adalah bahan bakar",
-    nl_tagline: "Betekenis is geen luxe — het is brandstof",
-    en_desc: "When goals that once felt vital begin to seem pointless, burnout is close. Purpose isn't just motivational fuel — it's a theological anchor. You don't serve a cause. You serve a Person. That changes everything about sustainability.",
-    id_desc: "Ketika tujuan yang dulu terasa vital mulai tampak sia-sia, kelelahan sudah dekat. Tujuan bukan hanya bahan bakar motivasi — itu adalah jangkar teologis. Anda tidak melayani sebuah tujuan. Anda melayani seorang Pribadi. Itu mengubah segalanya tentang keberlanjutan.",
-    nl_desc: "Wanneer doelen die ooit vitaal aanvoelden zinloos beginnen te lijken, is burnout nabij. Roeping is niet alleen motivatiebrandstof — het is een theologisch anker. Je dient geen zaak. Je dient een Persoon. Dat verandert alles aan duurzaamheid.",
-    en_q: "Finish this sentence honestly: 'The reason I'm still in this work, even on hard days, is...'",
-    id_q: "Lengkapi kalimat ini dengan jujur: 'Alasan saya masih dalam pekerjaan ini, bahkan di hari-hari sulit, adalah...'",
-    nl_q: "Maak deze zin eerlijk af: 'De reden waarom ik nog steeds dit werk doe, ook op moeilijke dagen, is...'",
-    en_action: "Write down your answer. Keep it somewhere you'll see it when the work gets hard.",
-    id_action: "Tuliskan jawabanmu. Simpan di tempat yang bisa kamu lihat saat pekerjaan terasa berat.",
-    nl_action: "Schrijf je antwoord op. Bewaar het ergens waar je het kunt zien als het werk zwaar wordt.",
-  },
-];
-
-// -- PROPS ---------------------------------------------------------------------
-type Props = { userPathway: string | null; isSaved: boolean };
-
-export default function UnderstandingBurnoutClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<BurnoutType | null>(null);
-  const [openP, setOpenP] = useState<string | null>(null);
-  const [saved, setSaved] = useState(initialSaved);
+  const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
+
+  // Section 2 Dig Deeper
+  const [digOpen2, setDigOpen2] = useState(false);
+
+  // Section 4 Dig Deeper
+  const [digOpen4, setDigOpen4] = useState(false);
+
+  // Section 4 pathway accordions
+  const [pathOpen, setPathOpen] = useState<string | null>(null);
+
+  // Section 5 checklist
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const toggleCheck = (key: string) =>
+    setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  // Section 6 emotion card pick
+  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+
+  // Assessment state
+  const [answers, setAnswers] = useState<(number | null)[]>(Array(20).fill(null));
+  const [currentQ, setCurrentQ] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  function handleAnswer(value: number) {
+    const next = [...answers];
+    next[currentQ] = value;
+    setAnswers(next);
+    if (currentQ < 19) {
+      setTimeout(() => setCurrentQ((q) => q + 1), 400);
+    } else {
+      setTimeout(() => setShowResult(true), 400);
+    }
+  }
 
   function handleSave() {
     startTransition(async () => {
-      const result = await saveResourceToDashboard("understanding-burnout");
-      if (!result.error) setSaved(true);
+      await saveResourceToDashboard("understanding-burnout");
+      setSaved(true);
     });
   }
 
-  const selectedBurnout = BURNOUT_TYPES.find(b => b.key === selectedType);
+  // Score calculations
+  const totalScore = answers.reduce<number>((s, a) => s + (a ?? 0), 0);
+  const freneticScore = answers.slice(0, 7).reduce<number>((s, a) => s + (a ?? 0), 0);
+  const underchallengedScore = answers.slice(7, 13).reduce<number>((s, a) => s + (a ?? 0), 0);
+  const wornOutScore = answers.slice(13, 20).reduce<number>((s, a) => s + (a ?? 0), 0);
 
+  const dominantSubtype = (() => {
+    const frPct = (freneticScore as number) / 28;
+    const ucPct = (underchallengedScore as number) / 24;
+    const woPct = (wornOutScore as number) / 28;
+    if (frPct >= ucPct && frPct >= woPct) return "frenetic";
+    if (ucPct >= frPct && ucPct >= woPct) return "underchallenged";
+    return "worn-out";
+  })();
+
+  const band = (() => {
+    const s = totalScore as number;
+    if (s <= 29) return "identity";
+    if (s <= 49) return "drifting";
+    if (s <= 69) return "at-risk";
+    return "burning";
+  })();
+
+  const answerLabels = {
+    en: ["Never", "Rarely", "Sometimes", "Often", "Almost always"],
+    id: ["Tidak pernah", "Jarang", "Kadang-kadang", "Sering", "Hampir selalu"],
+  };
+
+  const questions = [
+    // Frenetic 1-7
+    { en: "I find it difficult to stop working even when I know I should rest.", id: "Saya merasa sulit untuk berhenti bekerja bahkan ketika saya tahu saya harus istirahat." },
+    { en: "I feel guilty when I am not being productive.", id: "Saya merasa bersalah ketika saya tidak produktif." },
+    { en: "I measure my worth or sense of calling by how much I am accomplishing.", id: "Saya mengukur nilai atau rasa panggilan saya dari seberapa banyak yang saya capai." },
+    { en: "I take on more than I can manage because I am afraid something important will be missed.", id: "Saya mengambil lebih banyak dari yang bisa saya tangani karena saya takut sesuatu yang penting akan terlewatkan." },
+    { en: "I find it hard to say no to requests, even when I am already at capacity.", id: "Saya merasa sulit untuk mengatakan tidak pada permintaan, bahkan ketika saya sudah penuh." },
+    { en: "I push through fatigue because the work feels too important to pause.", id: "Saya memaksakan diri melalui kelelahan karena pekerjaan terasa terlalu penting untuk dijeda." },
+    { en: "The pace I am currently working at is not sustainable, but I keep going anyway.", id: "Kecepatan kerja saya saat ini tidak berkelanjutan, tetapi saya terus saja." },
+    // Underchallenged 8-13
+    { en: "The work I am doing right now does not use my best gifts or capacities.", id: "Pekerjaan yang saya lakukan saat ini tidak menggunakan karunia atau kapasitas terbaik saya." },
+    { en: "I find it hard to care about the tasks in front of me even though I know they matter.", id: "Saya merasa sulit untuk peduli dengan tugas di hadapan saya meskipun saya tahu tugas itu penting." },
+    { en: "I feel a growing distance between what I am doing and what I believe I was called to do.", id: "Saya merasakan jarak yang semakin besar antara apa yang saya lakukan dan apa yang saya yakini sebagai panggilan saya." },
+    { en: "The routine of my work has become flat or meaningless.", id: "Rutinitas pekerjaan saya telah menjadi datar atau tidak bermakna." },
+    { en: "I feel underused -- like my best is not needed here.", id: "Saya merasa kurang dimanfaatkan -- seolah yang terbaik dari saya tidak dibutuhkan di sini." },
+    { en: "I am going through the motions without genuine engagement.", id: "Saya menjalani rutinitas tanpa keterlibatan yang tulus." },
+    // Worn-out 14-20
+    { en: "I feel little energy or motivation even after rest.", id: "Saya merasa sedikit energi atau motivasi bahkan setelah beristirahat." },
+    { en: "I have started to feel that my efforts make no real difference.", id: "Saya mulai merasa bahwa upaya saya tidak membuat perbedaan nyata." },
+    { en: "I have withdrawn from people or relationships I used to invest in.", id: "Saya telah menarik diri dari orang-orang atau hubungan yang dulu saya jaga." },
+    { en: "I feel unacknowledged or invisible in my work.", id: "Saya merasa tidak diakui atau tidak terlihat dalam pekerjaan saya." },
+    { en: "I have lost the sense of purpose that once made this work feel meaningful.", id: "Saya telah kehilangan rasa tujuan yang pernah membuat pekerjaan ini terasa bermakna." },
+    { en: "I feel that things are out of my control and there is nothing I can do to change them.", id: "Saya merasa bahwa segala sesuatunya di luar kendali saya dan tidak ada yang bisa saya lakukan untuk mengubahnya." },
+    { en: "I am simply enduring rather than living into my calling.", id: "Saya hanya bertahan daripada hidup dalam panggilan saya." },
+  ];
+
+  // -- SHARED STYLES --
+  const sectionPadding = { padding: "5rem 1.5rem" };
+  const containerStyle = { maxWidth: "860px", margin: "0 auto" };
+  const eyebrowStyle = {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "0.75rem",
+    fontWeight: 700,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase" as const,
+    color: orange,
+    marginBottom: "0.75rem",
+  };
+  const h2Style = (light?: boolean) => ({
+    fontFamily: "'Cormorant Garamond', Georgia, serif",
+    fontSize: "clamp(28px, 4vw, 48px)",
+    fontWeight: 600,
+    lineHeight: 1.15,
+    color: light ? offWhite : navy,
+    marginBottom: "1.5rem",
+    marginTop: 0,
+  });
+  const bodyStyle = (light?: boolean) => ({
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: "1rem",
+    lineHeight: 1.8,
+    color: light ? "oklch(85% 0.01 80)" : bodyText,
+    marginBottom: "1.25rem",
+  });
+
+  // ============================================================
+  // HERO SECTION
+  // ============================================================
   return (
-    <div style={{ fontFamily: "Montserrat, sans-serif", color: bodyText, background: offWhite }}>
-      <LangToggle />
-
-      {/* LANGUAGE TOGGLE */}
-      <div style={{ position: "sticky", top: 0, zIndex: 50, background: navy, padding: "10px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: "oklch(75% 0.04 260)", textTransform: "uppercase" }}>
-          {t("Resilience & Mental Health", "Ketahanan & Kesehatan Mental", "Weerbaarheid & Mentale Gezondheid", lang)}
-        </span>
-      </div>
-
+    <main>
       {/* HERO */}
-      <section style={{ background: navy, padding: "80px 24px 64px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 60% 0%, oklch(32% 0.12 260 / 0.5) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
-            {t("Personal Development — Guide", "Pengembangan Pribadi — Panduan", "Persoonlijke Ontwikkeling — Gids", lang)}
-          </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, lineHeight: 1.08, margin: "0 0 24px" }}>
-            {t("Understanding Burnout", "Memahami Kelelahan", "Burnout Begrijpen", lang)}
+      <section
+        style={{
+          position: "relative",
+          background: navy,
+          overflow: "hidden",
+          padding: "7rem 1.5rem 6rem",
+        }}
+      >
+        <img
+          src="/images/resources/understanding-burnout/hero-nest.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.22,
+            mixBlendMode: "luminosity",
+          }}
+        />
+        <div style={{ ...containerStyle, position: "relative", zIndex: 1 }}>
+          <p style={eyebrowStyle}>{t("Personal Growth", "Pengembangan Diri", lang)}</p>
+          <h1
+            style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: "clamp(40px, 6vw, 72px)",
+              fontWeight: 600,
+              lineHeight: 1.1,
+              color: offWhite,
+              marginBottom: "1.5rem",
+              marginTop: 0,
+            }}
+          >
+            {t("Understanding Burnout", "Memahami Kelelahan", lang)}
           </h1>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(82% 0.03 80)", lineHeight: 1.65, maxWidth: 580, margin: "0 0 32px" }}>
+          <p
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "1.1rem",
+              lineHeight: 1.8,
+              color: "oklch(85% 0.01 80)",
+              maxWidth: "640px",
+              marginBottom: "2.5rem",
+            }}
+          >
             {t(
-              "Not all burnout looks the same. Before you can recover, you need to know which kind of empty you are.",
-              "Tidak semua kelelahan terlihat sama. Sebelum Anda dapat pulih, Anda perlu tahu jenis kekosongan yang mana yang sedang Anda alami.",
-              "Niet alle burnout ziet er hetzelfde uit. Voordat je kunt herstellen, moet je weten wat voor soort leeg je bent.",
+              "Burnout rarely announces itself. It builds slowly, often in workers who look effective from the outside -- driven by a gradual shift from serving out of calling to serving out of fear, ambition, or need for results. This module helps you see the pattern, name which type you are dealing with, and find the path back to working from identity rather than from pressure.",
+              "Kelelahan jarang mengumumkan dirinya sendiri. Ia berkembang perlahan, sering pada pekerja yang tampak efektif dari luar -- didorong oleh pergeseran bertahap dari melayani berdasarkan panggilan ke melayani karena rasa takut, ambisi, atau kebutuhan akan hasil. Modul ini membantu Anda melihat polanya, menamai jenis kelelahan yang Anda hadapi, dan menemukan jalan kembali untuk bekerja dari identitas, bukan dari tekanan.",
               lang
             )}
           </p>
-          {/* Opening verse */}
-          <div style={{ background: "oklch(30% 0.10 260 / 0.6)", borderRadius: 12, padding: "24px 28px", maxWidth: 560, margin: "0 auto" }}>
-            <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 18, color: "oklch(88% 0.04 80)", lineHeight: 1.7, fontStyle: "italic", marginBottom: 10 }}>
-              "{lang === "en" ? VERSES["2cor-4-8-9"].en : lang === "id" ? VERSES["2cor-4-8-9"].id : VERSES["2cor-4-8-9"].nl}"
-            </p>
-            <p style={{ fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.10em" }}>
-              — {lang === "en" ? VERSES["2cor-4-8-9"].ref : lang === "id" ? VERSES["2cor-4-8-9"].ref_id : VERSES["2cor-4-8-9"].ref_nl}
-            </p>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+            <LangToggle />
+            {!saved ? (
+              <button
+                onClick={handleSave}
+                disabled={isPending}
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  background: orange,
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "6px",
+                  padding: "0.6rem 1.25rem",
+                  cursor: isPending ? "wait" : "pointer",
+                  opacity: isPending ? 0.7 : 1,
+                }}
+              >
+                {t("Save to Dashboard", "Simpan ke Dashboard", lang)}
+              </button>
+            ) : (
+              <span
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.85rem",
+                  color: "oklch(80% 0.01 80)",
+                }}
+              >
+                {t("Saved", "Tersimpan", lang)} ✓
+              </span>
+            )}
           </div>
         </div>
       </section>
 
-      {/* DIAGNOSTIC — WHICH KIND? */}
-      <section style={{ background: "oklch(96% 0.004 80)", padding: "72px 24px" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12, textAlign: "center" }}>
-            {t("Step 1 — Identify", "Langkah 1 — Identifikasi", "Stap 1 — Identificeer", lang)}
+      {/* ============================================================
+          SECTION 1 -- The Call That Broke Me
+          ============================================================ */}
+      <section style={{ background: offWhite, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>
+            {t("THE COST NOBODY NAMES", "HARGA YANG TIDAK PERNAH DIUCAPKAN", lang)}
           </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 12 }}>
-            {t("Which kind of burnout is this?", "Jenis kelelahan apa ini?", "Welk soort burnout is dit?", lang)}
+          <h2 style={h2Style()}>
+            {t("The Call That Broke Me", "Panggilan yang Menghancurkan Saya", lang)}
           </h2>
-          <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 560, margin: "0 auto 48px" }}>
-            {t("Select the one that resonates most with where you are right now. Honest self-diagnosis is the first act of recovery.", "Pilih yang paling sesuai dengan kondisi Anda saat ini. Diagnosis diri yang jujur adalah langkah pertama pemulihan.", "Selecteer degene die het meest aansluit bij waar je nu bent. Eerlijke zelfdiagnose is de eerste stap naar herstel.", lang)}
+          <p style={bodyStyle()}>
+            {t(
+              "Five years into cross-cultural ministry, in a city far from home, a worker was producing visible fruit. The team was growing. The program was running. By any external measure, the work was succeeding. What no one saw -- including the worker -- was the cost building underneath. The early-morning hours that had once felt like communion began to feel like catching up. The people they served began to feel like demand. By the time the collapse came, no one, including the worker, had seen it building.",
+              "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pekerja menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun -- termasuk pekerja itu sendiri -- adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pekerja itu sendiri, yang melihatnya datang.",
+              lang
+            )}
+          </p>
+          <p style={bodyStyle()}>
+            {t(
+              "A 2024 study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% reported high or very high burnout levels. In the Philippines the figure was 70.71%. This is not exceptional -- this is the ordinary experience of people doing meaningful work in high-demand, high-accountability contexts. And in cultures where admitting exhaustion means losing face, risking your role, or alarming your supporters back home, the pressure to appear fine compounds the problem significantly. The word for this in Indonesian is malu -- the pressure to protect dignity and standing by not naming the struggle. Many cross-cultural workers carry this pressure without naming it. This module names it first, because nothing that follows makes sense until it does.",
+              "Sebuah studi tahun 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi. Di Filipina angkanya 70,71%. Ini bukan pengecualian -- ini adalah pengalaman biasa orang-orang yang melakukan pekerjaan bermakna dalam konteks tuntutan tinggi dan akuntabilitas tinggi. Dan dalam budaya di mana mengakui kelelahan berarti kehilangan muka, mempertaruhkan peran Anda, atau mengkhawatirkan pendukung Anda di kampung halaman, tekanan untuk tampak baik-baik saja memperburuk masalah secara signifikan. Kata untuk ini dalam bahasa Indonesia adalah malu -- tekanan untuk melindungi martabat dan kedudukan dengan tidak menamai perjuangan. Banyak pekerja lintas budaya membawa tekanan ini tanpa menamakannya. Modul ini menamakannya terlebih dahulu, karena tidak ada yang berikut ini masuk akal sampai hal itu dilakukan.",
+              lang
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 2 -- What Burnout Actually Is
+          ============================================================ */}
+      <section style={{ background: lightGray, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("THE SCIENCE", "ILMUNYA", lang)}</p>
+          <h2 style={h2Style()}>
+            {t("What Burnout Actually Is", "Apa Sebenarnya Kelelahan Itu", lang)}
+          </h2>
+          <p style={bodyStyle()}>
+            {t(
+              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization classifies it as an occupational phenomenon -- a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy (loss of confidence in one's own competence and impact). These three dimensions can operate independently -- a leader can be exhausted but still engaged, or disengaged without being physically depleted.",
+              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia mengklasifikasikannya sebagai fenomena pekerjaan -- sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen -- seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
+              lang
+            )}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginBottom: 40 }}>
-            {BURNOUT_TYPES.map(bt => {
-              const isSelected = selectedType === bt.key;
-              return (
-                <button
-                  key={bt.key}
-                  onClick={() => setSelectedType(isSelected ? null : bt.key)}
-                  style={{
-                    textAlign: "left", padding: "28px 24px", borderRadius: 14,
-                    border: `2px solid ${isSelected ? bt.color : "oklch(88% 0.008 260)"}`,
-                    background: isSelected ? `${bt.color}15` : "white",
-                    cursor: "pointer", transition: "all 0.2s",
-                  }}
-                >
-                  <div style={{ fontSize: 32, marginBottom: 12 }}>{bt.icon}</div>
-                  <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 15, color: isSelected ? bt.color : navy, marginBottom: 6 }}>
-                    {t(bt.en_title, bt.id_title, bt.nl_title, lang)}
-                  </div>
-                  <div style={{ fontSize: 13, color: isSelected ? bt.color : bodyText, fontStyle: "italic" }}>
-                    {t(bt.en_subtitle, bt.id_subtitle, bt.nl_subtitle, lang)}
-                  </div>
-                </button>
-              );
-            })}
+          {/* Concept Cards -- 3 subtypes */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "1.25rem",
+              margin: "2rem 0",
+            }}
+          >
+            {/* Card 1 -- Frenetic */}
+            <div
+              style={{
+                background: navy,
+                borderRadius: "10px",
+                padding: "1.75rem 1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: orange,
+                  margin: 0,
+                }}
+              >
+                {t("Frenetic -- Overload", "Frenetic -- Kelebihan Beban", lang)}
+              </p>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.8rem",
+                  color: "oklch(75% 0.01 80)",
+                  margin: 0,
+                  fontStyle: "italic",
+                }}
+              >
+                {t("High drive, still pushing", "Dorongan tinggi, terus memaksakan diri", lang)}
+              </p>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
+                {t(
+                  "High ambition, high commitment, keeps pushing through depletion. Coping style is active but unsustainable. This is often the worker who cannot stop because stopping feels like faithlessness. Visible, productive, well-regarded -- and running on a collapsing foundation.",
+                  "Ambisi tinggi, komitmen tinggi, terus mendorong meskipun sudah terkuras. Gaya mengatasinya aktif tetapi tidak berkelanjutan. Ini sering kali adalah pekerja yang tidak bisa berhenti karena berhenti terasa seperti tidak setia. Terlihat, produktif, dihormati -- dan berjalan di atas fondasi yang runtuh.",
+                  lang
+                )}
+              </p>
+            </div>
+
+            {/* Card 2 -- Underchallenged */}
+            <div
+              style={{
+                background: navy,
+                borderRadius: "10px",
+                padding: "1.75rem 1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: orange,
+                  margin: 0,
+                }}
+              >
+                {t("Underchallenged -- Disengagement", "Underchallenged -- Ketidakterlibatan", lang)}
+              </p>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.8rem",
+                  color: "oklch(75% 0.01 80)",
+                  margin: 0,
+                  fontStyle: "italic",
+                }}
+              >
+                {t("Disconnected from purpose", "Terputus dari tujuan", lang)}
+              </p>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
+                {t(
+                  "Not overwhelmed but disengaged. Skills are underused. The work feels repetitive, small, disconnected from calling. Common among experienced workers placed in roles below their capacity, or those whose pioneering work has become bureaucratic maintenance. The exhaustion here is not from too much -- it is from too little meaning.",
+                  "Tidak kewalahan tetapi tidak terlibat. Keterampilan tidak dimanfaatkan. Pekerjaan terasa berulang, kecil, terputus dari panggilan. Umum di antara pekerja berpengalaman yang ditempatkan dalam peran di bawah kapasitas mereka, atau mereka yang pekerjaan perintisnya telah menjadi pemeliharaan birokrasi. Kelelahan di sini bukan karena terlalu banyak -- melainkan karena terlalu sedikit makna.",
+                  lang
+                )}
+              </p>
+            </div>
+
+            {/* Card 3 -- Worn-Out */}
+            <div
+              style={{
+                background: navy,
+                borderRadius: "10px",
+                padding: "1.75rem 1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: orange,
+                  margin: 0,
+                }}
+              >
+                {t("Worn-Out -- Neglect", "Worn-Out -- Pengabaian", lang)}
+              </p>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.8rem",
+                  color: "oklch(75% 0.01 80)",
+                  margin: 0,
+                  fontStyle: "italic",
+                }}
+              >
+                {t("Apathy, passivity, stopped trying", "Apatis, pasif, berhenti berusaha", lang)}
+              </p>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
+                {t(
+                  "Advanced disengagement, apathy, passivity. This worker has often passed through frenetic burnout without recovery and arrived at a place where effort no longer feels worth it. Acknowledgment feels absent. Control feels absent. They have stopped trying to change what is not changing. This is the hardest pattern to reverse and the most likely to precede attrition or breakdown.",
+                  "Ketidakterlibatan lanjut, apatis, pasif. Pekerja ini sering telah melewati kelelahan frenetic tanpa pemulihan dan tiba di tempat di mana usaha tidak lagi terasa sepadan. Pengakuan terasa tidak ada. Kontrol terasa tidak ada. Mereka telah berhenti mencoba mengubah apa yang tidak berubah. Ini adalah pola yang paling sulit untuk dibalik dan yang paling mungkin mendahului gesekan atau kerusakan.",
+                  lang
+                )}
+              </p>
+            </div>
           </div>
 
-          {/* Expanded burnout detail */}
-          {selectedBurnout && (
-            <div style={{ background: "white", borderRadius: 16, padding: "40px 36px", border: `2px solid ${selectedBurnout.color}30`, animation: "fadeIn 0.3s ease" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                <span style={{ fontSize: 40 }}>{selectedBurnout.icon}</span>
-                <div>
-                  <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 22, color: selectedBurnout.color }}>
-                    {t(selectedBurnout.en_title, selectedBurnout.id_title, selectedBurnout.nl_title, lang)}
-                  </div>
-                  <div style={{ fontSize: 14, color: bodyText, fontStyle: "italic" }}>
-                    {t(selectedBurnout.en_subtitle, selectedBurnout.id_subtitle, selectedBurnout.nl_subtitle, lang)}
-                  </div>
+          {/* SVG Diagram */}
+          <RiskSpectrumDiagram lang={lang} />
+
+          {/* Dig Deeper -- Section 2 */}
+          <div style={{ marginTop: "2.5rem" }}>
+            <button
+              onClick={() => setDigOpen2((v) => !v)}
+              aria-expanded={digOpen2}
+              aria-controls="dig-deeper-s2"
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                color: navy,
+                background: "transparent",
+                border: `1.5px solid ${navy}`,
+                borderRadius: "6px",
+                padding: "0.6rem 1.25rem",
+                cursor: "pointer",
+              }}
+            >
+              {t("Dig Deeper ->", "Pelajari Lebih Lanjut ->", lang)}
+            </button>
+            <div
+              id="dig-deeper-s2"
+              role="region"
+              aria-label={t("Additional depth", "Kedalaman tambahan", lang)}
+              style={{
+                display: "grid",
+                gridTemplateRows: digOpen2 ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.3s ease",
+              }}
+            >
+              <div style={{ overflow: "hidden" }}>
+                <div
+                  style={{
+                    marginTop: "1.25rem",
+                    padding: "1.5rem",
+                    background: "oklch(92% 0.005 80)",
+                    borderRadius: "8px",
+                    borderLeft: `4px solid ${orange}`,
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: 700,
+                      color: navy,
+                      marginBottom: "0.75rem",
+                      marginTop: 0,
+                    }}
+                  >
+                    {t("The Job Demands-Resources Model", "Model Tuntutan Pekerjaan-Sumber Daya", lang)}
+                  </p>
+                  <p style={{ ...bodyStyle(), marginBottom: "1rem" }}>
+                    {t(
+                      "The Job Demands-Resources (JD-R) model offers a structural explanation for burnout. Burnout occurs when job demands -- workload, emotional demands, role ambiguity, interpersonal conflict -- consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem -- it is a structural diagnosis that calls for a structural response.",
+                      "Model Tuntutan Pekerjaan-Sumber Daya (JD-R) menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan -- beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal -- secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter -- ini adalah diagnosis struktural yang membutuhkan respons struktural.",
+                      lang
+                    )}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: 700,
+                      color: navy,
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    {t("The Neuroscience of Chronic Stress", "Neurosains Stres Kronis", lang)}
+                  </p>
+                  <p style={{ ...bodyStyle(), marginBottom: 0 }}>
+                    {t(
+                      "Prolonged exposure to elevated cortisol -- the hormone released under chronic stress -- progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected -- and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
+                      "Paparan berkepanjangan terhadap kortisol yang meningkat -- hormon yang dilepaskan di bawah stres kronis -- secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung -- dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
+                      lang
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 3 -- 20-Question Assessment
+          ============================================================ */}
+      <section style={{ background: offWhite, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("THE ASSESSMENT", "PENILAIAN DIRI", lang)}</p>
+          <h2 style={h2Style()}>
+            {t("Where Are You on the Risk Spectrum?", "Di Mana Anda di Spektrum Risiko?", lang)}
+          </h2>
+          <p style={bodyStyle()}>
+            {t(
+              "This is not a clinical diagnostic. It is a mirror -- a way to see patterns that are often invisible from the inside. Burnout, unlike most challenges, is characterised by the person experiencing it being one of the last to notice. The assessment places you on a four-band spectrum and identifies which of the three Montero-Marin patterns is most prominent for you right now.",
+              "Ini bukan diagnosis klinis. Ini adalah cermin -- cara untuk melihat pola yang sering tidak terlihat dari dalam. Kelelahan, tidak seperti sebagian besar tantangan, ditandai oleh orang yang mengalaminya sebagai salah satu yang terakhir menyadari. Penilaian ini menempatkan Anda pada spektrum empat band dan mengidentifikasi mana dari tiga pola Montero-Marin yang paling menonjol bagi Anda saat ini.",
+              lang
+            )}
+          </p>
+
+          {!showResult ? (
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: "12px",
+                padding: "2rem",
+                boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+              }}
+            >
+              {/* Progress bar */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.75rem",
+                    color: bodyText,
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  <span>{t(`Question ${currentQ + 1} of 20`, `Pertanyaan ${currentQ + 1} dari 20`, lang)}</span>
+                  <span>{Math.round((currentQ / 20) * 100)}%</span>
+                </div>
+                <div
+                  style={{
+                    height: "6px",
+                    background: lightGray,
+                    borderRadius: "3px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${(currentQ / 20) * 100}%`,
+                      background: orange,
+                      borderRadius: "3px",
+                      transition: "width 0.3s ease",
+                    }}
+                  />
                 </div>
               </div>
 
-              <p style={{ fontSize: 16, lineHeight: 1.75, color: bodyText, marginBottom: 32 }}>
-                {t(selectedBurnout.en_desc, selectedBurnout.id_desc, selectedBurnout.nl_desc, lang)}
+              {/* Cluster label */}
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "oklch(60% 0.05 260)",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {currentQ < 7
+                  ? t("Pattern: Frenetic", "Pola: Frenetic", lang)
+                  : currentQ < 13
+                  ? t("Pattern: Underchallenged", "Pola: Underchallenged", lang)
+                  : t("Pattern: Worn-Out", "Pola: Worn-Out", lang)}
               </p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
-                <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
-                    {t("Warning Signs", "Tanda Peringatan", "Waarschuwingssignalen", lang)}
-                  </p>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-                    {(lang === "en" ? selectedBurnout.en_signs : lang === "id" ? selectedBurnout.id_signs : selectedBurnout.nl_signs).map((sign, i) => (
-                      <li key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 10, fontSize: 14, lineHeight: 1.5, color: bodyText }}>
-                        <span style={{ color: selectedBurnout.color, fontWeight: 700, flexShrink: 0, marginTop: 2 }}>?</span>
-                        {sign}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* Question */}
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  color: navy,
+                  lineHeight: 1.5,
+                  marginBottom: "1.75rem",
+                  minHeight: "3em",
+                }}
+              >
+                {lang === "en" ? questions[currentQ].en : questions[currentQ].id}
+              </p>
 
-                <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
-                    {t("Cross-Cultural Note", "Catatan Lintas Budaya", "Interculturele Noot", lang)}
-                  </p>
-                  <p style={{ fontSize: 14, lineHeight: 1.65, color: bodyText, fontStyle: "italic" }}>
-                    {t(selectedBurnout.en_culture, selectedBurnout.id_culture, selectedBurnout.nl_culture, lang)}
-                  </p>
-                </div>
+              {/* Answer options */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                {answerLabels[lang].map((label, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleAnswer(i)}
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.9rem",
+                      fontWeight: answers[currentQ] === i ? 700 : 400,
+                      textAlign: "left",
+                      padding: "0.75rem 1rem",
+                      background: answers[currentQ] === i ? navy : "oklch(95% 0.005 80)",
+                      color: answers[currentQ] === i ? offWhite : navy,
+                      border: `1.5px solid ${answers[currentQ] === i ? navy : "oklch(80% 0.008 80)"}`,
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
 
-              <div style={{ background: `${selectedBurnout.color}12`, borderRadius: 10, padding: "20px 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-                <span style={{ fontSize: 20, flexShrink: 0 }}>??</span>
-                <div>
-                  <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: selectedBurnout.color, marginBottom: 6 }}>
-                    {t("Your First Step", "Langkah Pertama Anda", "Jouw eerste stap", lang)}
-                  </p>
-                  <p style={{ fontSize: 15, lineHeight: 1.65, color: bodyText, fontStyle: "italic", margin: 0 }}>
-                    {t(selectedBurnout.en_first, selectedBurnout.id_first, selectedBurnout.nl_first, lang)}
-                  </p>
-                </div>
+              {/* Back button */}
+              {currentQ > 0 && (
+                <button
+                  onClick={() => setCurrentQ((q) => q - 1)}
+                  style={{
+                    marginTop: "1.25rem",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.8rem",
+                    color: bodyText,
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {t("<- Back", "<- Kembali", lang)}
+                </button>
+              )}
+            </div>
+          ) : (
+            /* RESULT CARD */
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: "12px",
+                padding: "2.5rem",
+                boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: orange,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {t("Your result", "Hasil Anda", lang)}
+              </p>
+              <h3
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: "clamp(28px, 4vw, 44px)",
+                  fontWeight: 600,
+                  color: navy,
+                  marginBottom: "0.5rem",
+                  marginTop: 0,
+                }}
+              >
+                {band === "identity" && t("Working from Identity", "Bekerja dari Identitas", lang)}
+                {band === "drifting" && t("Drifting", "Menyimpang", lang)}
+                {band === "at-risk" && t("At Risk", "Berisiko", lang)}
+                {band === "burning" && t("Burning", "Terbakar", lang)}
+              </h3>
+              <p
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.85rem",
+                  color: bodyText,
+                  marginBottom: "1.25rem",
+                }}
+              >
+                {t(`Score: ${totalScore} / 80`, `Skor: ${totalScore} / 80`, lang)}
+              </p>
+              <p style={bodyStyle()}>
+                {band === "identity" &&
+                  t(
+                    "Your current pattern shows a sustainable base. You are not immune to drift -- but the indicators right now point toward work rooted in identity rather than performance. The challenge at this stage is staying aware: burnout most often takes hold when leaders stop asking the question.",
+                    "Pola Anda saat ini menunjukkan fondasi yang berkelanjutan. Anda tidak kebal terhadap penyimpangan -- tetapi indikator saat ini menunjukkan pekerjaan yang berakar pada identitas daripada kinerja. Tantangan pada tahap ini adalah tetap waspada: kelelahan paling sering terjadi ketika pemimpin berhenti mengajukan pertanyaan ini.",
+                    lang
+                  )}
+                {band === "drifting" &&
+                  t(
+                    "Early-stage drift is detectable. You are not in crisis, but patterns are present that -- unaddressed -- tend toward depletion. This is the most common result, and the most actionable one. You have enough margin left to change direction before it becomes harder.",
+                    "Penyimpangan tahap awal dapat dideteksi. Anda tidak dalam krisis, tetapi ada pola yang -- jika tidak ditangani -- cenderung menuju penipisan. Ini adalah hasil yang paling umum, dan yang paling dapat ditindaklanjuti. Anda masih memiliki cukup ruang untuk mengubah arah sebelum menjadi lebih sulit.",
+                    lang
+                  )}
+                {band === "at-risk" &&
+                  t(
+                    "Significant imbalance is present. A recognisable subtype pattern is identifiable in your scores. Intervention is warranted now -- not after the next season, not when things slow down. The practical pathways in Section 5 are directly relevant to where you are.",
+                    "Ketidakseimbangan yang signifikan ada. Pola subtipe yang dapat dikenali dapat diidentifikasi dalam skor Anda. Intervensi diperlukan sekarang -- bukan setelah musim berikutnya, bukan ketika segala sesuatunya melambat. Jalur praktis di Bagian 5 langsung relevan dengan posisi Anda.",
+                    lang
+                  )}
+                {band === "burning" &&
+                  t(
+                    "Acute burnout indicators are present. Please read this carefully: this module can offer a framework and a first step, but it cannot replace the support of a trusted person, a supervisor, a counsellor, or a doctor. Naming what is happening is the most important thing you can do right now. You are not alone, and this is not the end.",
+                    "Indikator kelelahan akut ada. Mohon baca ini dengan seksama: modul ini dapat memberikan kerangka kerja dan langkah pertama, tetapi tidak dapat menggantikan dukungan dari orang yang dipercaya, atasan, konselor, atau dokter. Menamai apa yang terjadi adalah hal terpenting yang dapat Anda lakukan sekarang. Anda tidak sendirian, dan ini bukan akhirnya.",
+                    lang
+                  )}
+              </p>
+              <div
+                style={{
+                  background: "oklch(95% 0.005 80)",
+                  borderRadius: "8px",
+                  padding: "1.25rem",
+                  borderLeft: `4px solid ${orange}`,
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: navy,
+                    marginBottom: "0.5rem",
+                    marginTop: 0,
+                  }}
+                >
+                  {t("Dominant pattern", "Pola dominan", lang)}:{" "}
+                  {dominantSubtype === "frenetic" && t("Frenetic", "Frenetic", lang)}
+                  {dominantSubtype === "underchallenged" && t("Underchallenged", "Underchallenged", lang)}
+                  {dominantSubtype === "worn-out" && t("Worn-Out", "Worn-Out", lang)}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.85rem",
+                    color: bodyText,
+                    margin: 0,
+                  }}
+                >
+                  {t("One honest next step:", "Satu langkah jujur berikutnya:", lang)}{" "}
+                  {band === "identity" &&
+                    t(
+                      "Use the burning-emotions card in the Faith Anchor section as a regular personal check-in.",
+                      "Gunakan kartu emosi-terbakar di bagian Jangkar Iman sebagai pemeriksaan pribadi yang teratur.",
+                      lang
+                    )}
+                  {band === "drifting" &&
+                    t(
+                      "Read Section 4 -- The Drift Nobody Planned -- carefully. Then identify which burning emotion from Section 6 has been driving the drift.",
+                      "Baca Bagian 4 -- Penyimpangan yang Tidak Direncanakan Siapapun -- dengan seksama. Kemudian identifikasi emosi terbakar mana dari Bagian 6 yang telah mendorong penyimpangan.",
+                      lang
+                    )}
+                  {band === "at-risk" &&
+                    t(
+                      "Go directly to Section 5 and find the pathway that matches your dominant subtype. Then share your result with one person you trust.",
+                      "Langsung ke Bagian 5 dan temukan jalur yang sesuai dengan subtipe dominan Anda. Kemudian bagikan hasil Anda dengan satu orang yang Anda percaya.",
+                      lang
+                    )}
+                  {band === "burning" &&
+                    t(
+                      "Section 5 -- The Worn-Out pathway -- is written for where you are. Please also reach out to someone today.",
+                      "Bagian 5 -- jalur Worn-Out -- ditulis untuk posisi Anda. Mohon juga hubungi seseorang hari ini.",
+                      lang
+                    )}
+                </p>
               </div>
+              <button
+                onClick={() => {
+                  setAnswers(Array(20).fill(null));
+                  setCurrentQ(0);
+                  setShowResult(false);
+                }}
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: navy,
+                  background: "transparent",
+                  border: `1.5px solid ${navy}`,
+                  borderRadius: "6px",
+                  padding: "0.6rem 1.25rem",
+                  cursor: "pointer",
+                }}
+              >
+                {t("Retake assessment", "Ulangi penilaian", lang)}
+              </button>
             </div>
           )}
         </div>
       </section>
 
-      {/* THE THREE Ps */}
-      <section style={{ background: offWhite, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12, textAlign: "center" }}>
-            {t("Step 2 — Rebuild", "Langkah 2 — Bangun Kembali", "Stap 2 — Herbouwen", lang)}
-          </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: navy, textAlign: "center", marginBottom: 12 }}>
-            {t("The Three Ps of Resilience", "Tiga P Ketahanan", "De Drie P's van Weerbaarheid", lang)}
+      {/* ============================================================
+          SECTION 4 -- The Drift Nobody Planned
+          ============================================================ */}
+      <section style={{ background: navy, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("THE ROOT", "AKAR MASALAH", lang)}</p>
+          <h2 style={h2Style(true)}>
+            {t("The Drift Nobody Planned", "Penyimpangan yang Tidak Direncanakan Siapapun", lang)}
           </h2>
-          <p style={{ textAlign: "center", fontSize: 15, color: bodyText, lineHeight: 1.65, maxWidth: 560, margin: "0 auto 48px" }}>
-            {t("Resilience isn't just mental toughness. It's built through three interconnected pillars — People, Practices, and Purpose. Which one needs the most attention right now?",
-              "Ketahanan bukan hanya ketangguhan mental. Ini dibangun melalui tiga pilar yang saling terhubung — Orang, Kebiasaan, dan Tujuan. Mana yang paling membutuhkan perhatian saat ini?",
-              "Weerbaarheid is niet alleen mentale kracht. Het wordt opgebouwd door drie onderling verbonden pijlers — Mensen, Gewoonten en Roeping. Welke heeft nu de meeste aandacht nodig?", lang)}
+          <p style={bodyStyle(true)}>
+            {t(
+              "Most burnouts among ministry and cross-cultural workers are not caused primarily by working too hard. They happen when, gradually and often invisibly, the worker drifts from serving out of God's calling and wisdom to serving out of their own ambition, expectations, fears, or need for results. The distinction is not between effort and rest. It is between identity and performance. And it rarely announces itself.",
+              "Sebagian besar kelelahan di antara pekerja pelayanan dan lintas budaya tidak disebabkan terutama oleh terlalu banyak bekerja. Itu terjadi ketika, secara bertahap dan sering tidak terlihat, pekerja menyimpang dari melayani berdasarkan panggilan dan hikmat Allah ke melayani berdasarkan ambisi, harapan, ketakutan, atau kebutuhan akan hasil sendiri. Perbedaannya bukan antara usaha dan istirahat. Melainkan antara identitas dan kinerja. Dan itu jarang mengumumkan dirinya sendiri.",
+              lang
+            )}
+          </p>
+          <p style={bodyStyle(true)}>
+            {t(
+              "Selfish ambition does not announce itself as selfish ambition. In ministry and cross-cultural work, it wears ministry clothes. It sounds like vision, like faithfulness, like sacrifice, like responsibility. The worker who cannot delegate because the standard will drop -- that may not be diligence; it may be control. The worker who cannot rest because the need is too great -- that may not be calling; it may be fear of what happens to their sense of worth when the output stops. The worker who cannot receive help without feeling ashamed -- that is not strength; that is isolation wearing the face of faith.",
+              "Ambisi egois tidak mengumumkan dirinya sebagai ambisi egois. Dalam pelayanan dan pekerjaan lintas budaya, ia mengenakan pakaian pelayanan. Terdengar seperti visi, seperti kesetiaan, seperti pengorbanan, seperti tanggung jawab. Pekerja yang tidak bisa mendelegasikan karena standar akan menurun -- itu mungkin bukan ketekunan; mungkin kontrol. Pekerja yang tidak bisa beristirahat karena kebutuhan terlalu besar -- itu mungkin bukan panggilan; mungkin ketakutan akan apa yang terjadi pada rasa nilai diri mereka ketika output berhenti. Pekerja yang tidak bisa menerima bantuan tanpa merasa malu -- itu bukan kekuatan; itu isolasi yang mengenakan wajah iman.",
+              lang
+            )}
+          </p>
+          <p style={bodyStyle(true)}>
+            {t(
+              "In 1 Kings 19, Elijah collapses under a broom tree after his greatest public victory. An angel arrives. Not with a word of correction or a theological challenge. With food and water -- twice. 'The journey is too great for you.' God's first response to burnout is physical. Rest before duty. Body before soul. No rebuke. When Elijah finally speaks, God listens. When Elijah finally walks again, God meets him not in the fire or the earthquake or the wind -- but in the still small voice. Recovery from burnout is not spectacular. It is slow, quiet, and arrives in the spaces where noise has finally stopped.",
+              "Dalam 1 Raja-raja 19, Elia runtuh di bawah pohon aras setelah kemenangan publik terbesarnya. Seorang malaikat datang. Bukan dengan kata-kata koreksi atau tantangan teologis. Dengan makanan dan air -- dua kali. 'Perjalanan ini terlalu berat bagimu.' Respons pertama Allah terhadap kelelahan bersifat fisik. Istirahat sebelum kewajiban. Tubuh sebelum jiwa. Tidak ada teguran. Ketika Elia akhirnya berbicara, Allah mendengarkan. Ketika Elia akhirnya berjalan lagi, Allah menemuinya bukan dalam api atau gempa bumi atau angin -- tetapi dalam suara yang sunyi dan lembut. Pemulihan dari kelelahan bukanlah hal yang spektakuler. Ini lambat, tenang, dan tiba di ruang di mana kebisingan akhirnya berhenti.",
+              lang
+            )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {THREE_PS.map(p => {
-              const isOpen = openP === p.key;
-              return (
-                <div key={p.key} style={{ background: "white", borderRadius: 14, overflow: "hidden", border: `1.5px solid ${isOpen ? orange : "oklch(88% 0.008 260)"}`, transition: "border-color 0.2s" }}>
-                  <button
-                    onClick={() => setOpenP(isOpen ? null : p.key)}
-                    style={{ width: "100%", textAlign: "left", padding: "24px 28px", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 16 }}
+          {/* Dig Deeper -- Section 4 */}
+          <div style={{ marginTop: "2rem" }}>
+            <button
+              onClick={() => setDigOpen4((v) => !v)}
+              aria-expanded={digOpen4}
+              aria-controls="dig-deeper-s4"
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                color: offWhite,
+                background: "transparent",
+                border: `1.5px solid oklch(60% 0.05 260)`,
+                borderRadius: "6px",
+                padding: "0.6rem 1.25rem",
+                cursor: "pointer",
+              }}
+            >
+              {t("Dig Deeper ->", "Pelajari Lebih Lanjut ->", lang)}
+            </button>
+            <div
+              id="dig-deeper-s4"
+              role="region"
+              aria-label={t("Additional depth", "Kedalaman tambahan", lang)}
+              style={{
+                display: "grid",
+                gridTemplateRows: digOpen4 ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.3s ease",
+              }}
+            >
+              <div style={{ overflow: "hidden" }}>
+                <div
+                  style={{
+                    marginTop: "1.25rem",
+                    padding: "1.5rem",
+                    background: "oklch(28% 0.08 260)",
+                    borderRadius: "8px",
+                    borderLeft: `4px solid ${orange}`,
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: 700,
+                      color: offWhite,
+                      marginBottom: "0.75rem",
+                      marginTop: 0,
+                    }}
                   >
-                    <span style={{ fontSize: 28, flexShrink: 0 }}>{p.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 18, color: isOpen ? orange : navy }}>
-                        {t(p.en_title, p.id_title, p.nl_title, lang)}
-                      </div>
-                      <div style={{ fontSize: 13, color: bodyText, fontStyle: "italic", marginTop: 2 }}>
-                        {t(p.en_tagline, p.id_tagline, p.nl_tagline, lang)}
-                      </div>
-                    </div>
-                    <span style={{ fontSize: 20, color: orange, fontWeight: 300, transform: isOpen ? "rotate(45deg)" : "none", transition: "transform 0.2s", flexShrink: 0 }}>+</span>
-                  </button>
-
-                  {isOpen && (
-                    <div style={{ padding: "0 28px 32px" }}>
-                      <p style={{ fontSize: 15, lineHeight: 1.75, color: bodyText, marginBottom: 28 }}>
-                        {t(p.en_desc, p.id_desc, p.nl_desc, lang)}
-                      </p>
-
-                      {/* Reflection prompt */}
-                      <div style={{ background: "oklch(97% 0.005 80)", borderRadius: 10, padding: "20px 24px", marginBottom: 20 }}>
-                        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>
-                          {t("Reflection", "Refleksi", "Reflectie", lang)}
-                        </p>
-                        <p style={{ fontSize: 15, lineHeight: 1.65, color: navy, fontStyle: "italic", margin: 0 }}>
-                          {t(p.en_q, p.id_q, p.nl_q, lang)}
-                        </p>
-                      </div>
-
-                      {/* Action */}
-                      <div style={{ display: "flex", gap: 14, alignItems: "flex-start", background: `${orange}12`, borderRadius: 10, padding: "16px 20px" }}>
-                        <span style={{ fontSize: 18, flexShrink: 0 }}>?</span>
-                        <p style={{ fontSize: 14, lineHeight: 1.6, color: bodyText, margin: 0 }}>
-                          <strong style={{ color: orange }}>{t("This week:", "Minggu ini:", "Deze week:", lang)}</strong>{" "}
-                          {t(p.en_action, p.id_action, p.nl_action, lang)}
-                        </p>
-                      </div>
-
-                      {/* Luke 10 reference for People */}
-                      {p.key === "people" && (
-                        <p style={{ marginTop: 16, fontSize: 13, color: "oklch(55% 0.04 260)" }}>
-                          {t("Biblical foundation: ", "Dasar Alkitab: ", "Bijbelse grondslag: ", lang)}
-                          <button onClick={() => setActiveVerse("luke-10-1")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, textDecoration: "underline dotted", padding: 0 }}>
-                            {lang === "id" ? "Lukas 10:1" : lang === "nl" ? "Lucas 10:1" : "Luke 10:1"}
-                          </button>
-                        </p>
-                      )}
-                    </div>
-                  )}
+                    {t("Recognising the drift in real time", "Mengenali penyimpangan secara real-time", lang)}
+                  </p>
+                  <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: "oklch(82% 0.01 80)", margin: 0 }}>
+                    {t(
+                      "Four signs that the drift has begun: (1) You feel guilty when you are not working, even during designated rest. (2) You have stopped being honest with the people closest to you about how you are actually doing. (3) The work has stopped being something you do from a place of fullness and started feeling like something you owe. (4) Your physical health, sleep quality, or key relationships have quietly deteriorated -- and you have not named it to anyone.",
+                      "Empat tanda bahwa penyimpangan telah dimulai: (1) Anda merasa bersalah ketika tidak bekerja, bahkan selama waktu istirahat yang ditetapkan. (2) Anda telah berhenti jujur dengan orang-orang terdekat Anda tentang bagaimana keadaan Anda sebenarnya. (3) Pekerjaan telah berhenti menjadi sesuatu yang Anda lakukan dari tempat yang penuh dan mulai terasa seperti sesuatu yang Anda utang. (4) Kesehatan fisik, kualitas tidur, atau hubungan kunci Anda telah menurun diam-diam -- dan Anda belum memberitahukannya kepada siapa pun.",
+                      lang
+                    )}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ELIJAH NARRATIVE — BIBLICAL FOUNDATION */}
-      <section style={{ background: navy, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center" }}>
-            {t("Biblical Foundation", "Dasar Alkitab", "Bijbelse Grondslag", lang)}
-          </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(24px, 3.5vw, 40px)", fontWeight: 800, color: offWhite, textAlign: "center", marginBottom: 40 }}>
-            {t("The Leader Under the Juniper Tree", "Pemimpin di Bawah Pohon Aras", "De Leider Onder de Bremstruik", lang)}
+      {/* ============================================================
+          SECTION 5 -- The Three Paths Out
+          ============================================================ */}
+      <section style={{ background: offWhite, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("THE RESPONSE", "RESPONSNYA", lang)}</p>
+          <h2 style={h2Style()}>
+            {t("The Three Paths Out", "Tiga Jalan Keluar", lang)}
           </h2>
+          <p style={bodyStyle()}>
+            {t(
+              "The right response to burnout depends on which pattern you are in. A frenetic worker needs something different from an underchallenged worker, and both need something different from a worn-out worker. What follows are three targeted pathways -- one for each subtype. Find the one that matches your assessment result.",
+              "Respons yang tepat terhadap kelelahan tergantung pada pola mana yang Anda alami. Pekerja frenetic membutuhkan sesuatu yang berbeda dari pekerja underchallenged, dan keduanya membutuhkan sesuatu yang berbeda dari pekerja worn-out. Berikut adalah tiga jalur yang ditargetkan -- satu untuk setiap subtipe. Temukan yang sesuai dengan hasil penilaian Anda.",
+              lang
+            )}
+          </p>
 
-          {/* Narrative */}
+          {/* Pathway accordion cards */}
           {[
             {
-              label: t("The Victory", "Kemenangan", "De Overwinning", lang),
-              en: "Elijah had just won the greatest victory of his prophetic ministry — fire from heaven on Mt. Carmel, 450 false prophets defeated, rain returning to a drought-parched land. By every measure, he was at the peak of his effectiveness.",
-              id: "Elia baru saja meraih kemenangan terbesar dalam pelayanan kenabiannya — api dari surga di Gunung Karmel, 450 nabi palsu dikalahkan, hujan kembali ke tanah yang dilanda kekeringan. Dengan segala ukuran, ia berada di puncak efektivitasnya.",
-              nl: "Elia had zojuist de grootste overwinning van zijn profetische bediening behaald — vuur uit de hemel op de Karmel, 450 valse profeten verslagen, regen die terugkeerde naar een door droogte geteisterd land. Naar alle maatstaven stond hij op het hoogtepunt van zijn effectiviteit.",
-              icon: "?",
+              key: "frenetic",
+              title: t("If you are frenetic: permission to stop", "Jika Anda frenetic: izin untuk berhenti", lang),
+              body: t(
+                "The primary intervention is identity-based permission to stop -- not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
+                "Intervensi utama adalah izin berbasis identitas untuk berhenti -- bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
+                lang
+              ),
             },
             {
-              label: t("The Collapse", "Keruntuhan", "De Ineenstorting", lang),
-              en: "Then one threat from Jezebel was enough. Elijah ran — alone, exhausted, afraid. He sat under a juniper tree in the wilderness and asked God to take his life. 'I have had enough, LORD.' This was not weakness of faith. It was a burnt-out leader at the end of himself.",
-              id: "Kemudian satu ancaman dari Izebel sudah cukup. Elia lari — sendirian, kelelahan, ketakutan. Ia duduk di bawah pohon aras di padang gurun dan meminta Tuhan untuk mengakhiri hidupnya. 'Cukup sekian, ya TUHAN.' Ini bukan kelemahan iman. Ini adalah seorang pemimpin yang kelelahan dan sudah mencapai batas dirinya.",
-              nl: "Toen was ——n dreiging van Izebel genoeg. Elia vluchtte — alleen, uitgeput, bang. Hij zat onder een bremstruik in de woestijn en vroeg God om zijn leven te nemen. 'Het is genoeg, HEER.' Dit was geen geloofszwakte. Het was een opgebrande leider op zijn uiterste grens.",
-              icon: "??",
+              key: "underchallenged",
+              title: t("If you are underchallenged: renewed purpose", "Jika Anda underchallenged: tujuan yang diperbarui", lang),
+              body: t(
+                "The intervention here is renewed purpose and craft challenge -- not more rest. Have an honest conversation with leadership about role fit, skill match, and how your best contribution is actually being used. Build peer relationships with people doing substantive work in your field. Ask the specific question beneath the general one: not just 'am I called to this kind of work?' but 'what is the particular thing I am made to do -- and is there room for it here?' The Jethro model from Exodus 18 is relevant: Jethro did not tell Moses to pray more or manage his stress better. He looked at the structure and said it was not good -- and then he changed the structure.",
+                "Intervensi di sini adalah tujuan yang diperbarui dan tantangan kerajinan -- bukan lebih banyak istirahat. Lakukan percakapan jujur dengan kepemimpinan tentang kesesuaian peran, kecocokan keterampilan, dan bagaimana kontribusi terbaik Anda sebenarnya digunakan. Bangun hubungan rekan dengan orang-orang yang melakukan pekerjaan substantif di bidang Anda. Ajukan pertanyaan spesifik di balik pertanyaan umum: bukan hanya 'apakah saya dipanggil untuk jenis pekerjaan ini?' tetapi 'apa hal khusus yang saya diciptakan untuk lakukan -- dan apakah ada ruang untuk itu di sini?' Model Yitro dari Keluaran 18 relevan: Yitro tidak memberitahu Musa untuk lebih berdoa atau mengelola stresnya dengan lebih baik. Ia melihat strukturnya dan berkata itu tidak baik -- dan kemudian ia mengubah strukturnya.",
+                lang
+              ),
             },
             {
-              label: t("God's Response", "Respons Tuhan", "Gods Antwoord", lang),
-              en: "God's first response to Elijah's burnout was not a sermon. It was a meal and rest. An angel touched him twice: 'Get up and eat — the journey is too great for you.' God met the physical before the spiritual. He restored before he redirected.",
-              id: "Respons pertama Tuhan terhadap kelelahan Elia bukan sebuah khotbah. Melainkan makanan dan istirahat. Seorang malaikat menyentuhnya dua kali: 'Bangunlah dan makanlah — perjalanan itu terlalu jauh bagimu.' Tuhan memenuhi kebutuhan fisik sebelum kebutuhan rohani. Dia memulihkan sebelum mengarahkan kembali.",
-              nl: "Gods eerste reactie op Elia's burnout was geen preek. Het was een maaltijd en rust. Een engel raakte hem tweemaal aan: 'Sta op en eet — de weg is te groot voor jou.' God ontmoette het fysieke voor het geestelijke. Hij herstelde voordat hij opnieuw richtte.",
-              icon: "??",
+              key: "worn-out",
+              title: t("If you are worn-out: honest assessment", "Jika Anda worn-out: penilaian yang jujur", lang),
+              body: t(
+                "This pattern is the most serious and requires honest assessment of whether recovery is possible within the current system without structural change -- or whether a period of leave, clinical support, or a role change is needed. Worn-out burnout does not respond well to individual practices alone: the structural and relational drivers need to change. This module can offer a framework and a starting point. It cannot replace a trusted counsellor, a wise supervisor, a doctor, or a member care worker. If you scored in this range, the most important next step is not to read more content -- it is to tell one person the truth about where you actually are today.",
+                "Pola ini adalah yang paling serius dan memerlukan penilaian jujur apakah pemulihan mungkin dalam sistem saat ini tanpa perubahan struktural -- atau apakah diperlukan periode cuti, dukungan klinis, atau perubahan peran. Kelelahan worn-out tidak merespons dengan baik terhadap praktik individu saja: pendorong struktural dan relasional perlu berubah. Modul ini dapat menawarkan kerangka kerja dan titik awal. Ini tidak dapat menggantikan konselor yang dipercaya, pengawas yang bijak, dokter, atau pekerja perawatan anggota. Jika Anda mendapat skor dalam rentang ini, langkah terpenting selanjutnya bukanlah membaca lebih banyak konten -- melainkan menceritakan kebenaran kepada satu orang tentang posisi Anda sebenarnya hari ini.",
+                lang
+              ),
             },
-            {
-              label: t("The Whisper", "Bisikan", "Het Gefluister", lang),
-              en: "After fire, wind, and earthquake — God came in a gentle whisper. Not in the dramatic. In the quiet. 'What are you doing here, Elijah?' The same question God asks every burnt-out leader. Not to shame. To invite back to purpose.",
-              id: "Setelah api, angin, dan gempa bumi — Tuhan datang dalam bisikan yang lembut. Bukan dalam hal yang dramatis. Dalam ketenangan. 'Apa yang kaulakukan di sini, Elia?' Pertanyaan yang sama yang Tuhan tanyakan kepada setiap pemimpin yang kelelahan. Bukan untuk mempermalukan. Tetapi untuk mengundang kembali ke tujuan.",
-              nl: "Na vuur, wind en aardbeving — God kwam in een zacht gefluister. Niet in het dramatische. In de stilte. 'Wat doe je hier, Elia?' Dezelfde vraag die God aan elke opgebrande leider stelt. Niet om te beschamen. Maar om terug te nodigen naar roeping.",
-              icon: "???",
-            },
-          ].map((section, i) => (
-            <div key={i} style={{ display: "flex", gap: 20, marginBottom: 36, alignItems: "flex-start" }}>
-              <div style={{ flexShrink: 0, width: 44, height: 44, borderRadius: "50%", background: "oklch(32% 0.10 260)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-                {section.icon}
-              </div>
-              <div>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 8 }}>{section.label}</p>
-                <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(82% 0.03 80)", margin: 0 }}>
-                  {lang === "en" ? section.en : lang === "id" ? section.id : section.nl}
-                </p>
+          ].map(({ key, title, body }) => (
+            <div
+              key={key}
+              style={{
+                marginBottom: "1rem",
+                border: `1.5px solid oklch(80% 0.008 80)`,
+                borderRadius: "8px",
+                overflow: "hidden",
+              }}
+            >
+              <button
+                onClick={() => setPathOpen(pathOpen === key ? null : key)}
+                aria-expanded={pathOpen === key}
+                style={{
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "1.25rem 1.5rem",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  fontWeight: 600,
+                  color: navy,
+                  background: pathOpen === key ? "oklch(94% 0.007 80)" : "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {title}
+                <span style={{ fontSize: "1.1rem", color: orange }}>{pathOpen === key ? "−" : "+"}</span>
+              </button>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateRows: pathOpen === key ? "1fr" : "0fr",
+                  transition: "grid-template-rows 0.3s ease",
+                }}
+              >
+                <div style={{ overflow: "hidden" }}>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.9rem",
+                      lineHeight: 1.8,
+                      color: bodyText,
+                      padding: "0 1.5rem 1.5rem",
+                      margin: 0,
+                    }}
+                  >
+                    {body}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
 
-          {/* Verse callout */}
-          <div style={{ marginTop: 48, background: "oklch(28% 0.10 260)", borderRadius: 12, padding: "28px 32px", textAlign: "center" }}>
-            <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 20, color: "oklch(88% 0.04 80)", lineHeight: 1.7, fontStyle: "italic", marginBottom: 12 }}>
-              "{lang === "en" ? VERSES["1kings-19-5"].en : lang === "id" ? VERSES["1kings-19-5"].id : VERSES["1kings-19-5"].nl}"
-            </p>
-            <button onClick={() => setActiveVerse("1kings-19-5")} style={{ background: "none", border: "none", cursor: "pointer", color: orange, fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textDecoration: "underline dotted" }}>
-              {lang === "id" ? VERSES["1kings-19-5"].ref_id : lang === "nl" ? VERSES["1kings-19-5"].ref_nl : VERSES["1kings-19-5"].ref}
-            </button>
+          {/* Reflect-and-Mark Checklist */}
+          <div style={{ marginTop: "3rem" }}>
+            <h3
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(22px, 3vw, 32px)",
+                fontWeight: 600,
+                color: navy,
+                marginBottom: "1.5rem",
+                marginTop: 0,
+              }}
+            >
+              {t("This Week -- Reflect and Mark", "Minggu Ini -- Renungkan dan Tandai", lang)}
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "1.5rem",
+              }}
+            >
+              {[
+                {
+                  col: t("Before the Week Begins", "Sebelum Minggu Dimulai", lang),
+                  items: lang === "en"
+                    ? [
+                        "Name one boundary I will protect this week",
+                        "Identify who has permission to check on me honestly",
+                        "Choose one recovery practice I will protect (sleep, movement, silence)",
+                        "Review whether my workload this week is sustainable",
+                        "Pray or reflect: am I working from rest, or toward it?",
+                      ]
+                    : [
+                        "Namai satu batasan yang akan saya lindungi minggu ini",
+                        "Identifikasi siapa yang memiliki izin untuk memeriksa saya secara jujur",
+                        "Pilih satu praktik pemulihan yang akan saya lindungi (tidur, gerak, keheningan)",
+                        "Tinjau apakah beban kerja saya minggu ini berkelanjutan",
+                        "Berdoa atau renungkan: apakah saya bekerja dari istirahat, atau menuju istirahat?",
+                      ],
+                },
+                {
+                  col: t("In the Day's Work", "Dalam Pekerjaan Harian", lang),
+                  items: lang === "en"
+                    ? [
+                        "Notice when guilt, not purpose, is driving the pace",
+                        "Take one complete break away from screens",
+                        "Ask one honest question before taking on a new task",
+                        "Protect the quality of sleep tonight",
+                        "Check in with one person about how they are actually doing",
+                      ]
+                    : [
+                        "Perhatikan ketika rasa bersalah, bukan tujuan, yang mendorong kecepatan",
+                        "Ambil satu istirahat lengkap jauh dari layar",
+                        "Ajukan satu pertanyaan jujur sebelum mengambil tugas baru",
+                        "Lindungi kualitas tidur malam ini",
+                        "Hubungi satu orang tentang bagaimana keadaan mereka sebenarnya",
+                      ],
+                },
+                {
+                  col: t("When Pressure Peaks", "Ketika Tekanan Memuncak", lang),
+                  items: lang === "en"
+                    ? [
+                        "Name what is driving the pressure (fear / comparison / control / recognition)",
+                        "Ask: is this mine to carry, or have I taken it from someone else?",
+                        "Choose one thing to let go of today -- not postpone, let go",
+                        "Remember: Jesus worked from rest. The yoke is easy, the burden is light.",
+                        "Tell someone the truth about where I am today",
+                      ]
+                    : [
+                        "Namai apa yang mendorong tekanan (ketakutan / perbandingan / kontrol / pengakuan)",
+                        "Tanya: apakah ini milik saya untuk ditanggung, atau saya ambil dari orang lain?",
+                        "Pilih satu hal untuk dilepaskan hari ini -- bukan ditunda, dilepaskan",
+                        "Ingat: Yesus bekerja dari istirahat. Kuk itu enak, bebannya ringan.",
+                        "Ceritakan kebenaran kepada seseorang tentang di mana saya hari ini",
+                      ],
+                },
+              ].map(({ col, items }) => (
+                <div key={col}>
+                  <p
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: orange,
+                      marginBottom: "0.75rem",
+                      marginTop: 0,
+                    }}
+                  >
+                    {col}
+                  </p>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    {items.map((item, i) => {
+                      const ck = `${col}-${i}`;
+                      return (
+                        <li
+                          key={ck}
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: "0.6rem",
+                            marginBottom: "0.6rem",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => toggleCheck(ck)}
+                        >
+                          <span
+                            style={{
+                              flexShrink: 0,
+                              width: "18px",
+                              height: "18px",
+                              marginTop: "2px",
+                              border: `2px solid ${checked[ck] ? orange : "oklch(65% 0.03 260)"}`,
+                              borderRadius: "3px",
+                              background: checked[ck] ? orange : "transparent",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "#fff",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                              transition: "all 0.15s ease",
+                            }}
+                          >
+                            {checked[ck] ? "✓" : ""}
+                          </span>
+                          <span
+                            style={{
+                              fontFamily: "Montserrat, sans-serif",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.6,
+                              color: checked[ck] ? "oklch(55% 0.03 260)" : bodyText,
+                              textDecoration: checked[ck] ? "line-through" : "none",
+                              transition: "all 0.15s ease",
+                            }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Theological reflection */}
-          <div style={{ marginTop: 32, padding: "24px 0" }}>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: "oklch(78% 0.03 80)", fontStyle: "italic", textAlign: "center" }}>
+      {/* ============================================================
+          SECTION 6 -- Faith Anchor: Two Wisdoms
+          ============================================================ */}
+      <section style={{ background: navy, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("FAITH ANCHOR", "JANGKAR IMAN", lang)}</p>
+          <h2 style={h2Style(true)}>{t("Two Wisdoms", "Dua Hikmat", lang)}</h2>
+
+          {/* Scripture block -- James 3 */}
+          <blockquote
+            style={{
+              borderLeft: `4px solid ${orange}`,
+              paddingLeft: "1.5rem",
+              margin: "0 0 2rem 0",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(17px, 2.2vw, 21px)",
+                fontStyle: "italic",
+                lineHeight: 1.7,
+                color: "oklch(88% 0.008 80)",
+                marginBottom: "0.5rem",
+              }}
+            >
               {t(
-                "Notice what God did not do: He did not rebuke Elijah for his despair. He did not tell him to push through. He fed him, let him sleep, and asked a question. The God who knows your capacity does not demand performance from empty vessels.",
-                "Perhatikan apa yang tidak dilakukan Tuhan: Dia tidak menegur Elia karena keputusasaannya. Dia tidak menyuruhnya untuk terus berjuang. Dia memberinya makan, membiarkannya tidur, dan mengajukan sebuah pertanyaan. Tuhan yang mengetahui kapasitas Anda tidak menuntut performa dari bejana yang kosong.",
-                "Merk op wat God niet deed: Hij berispte Elia niet om zijn wanhoop. Hij zei hem niet door te zetten. Hij voedde hem, liet hem slapen en stelde een vraag. De God die jouw capaciteit kent, eist geen prestaties van lege vaten.",
+                "If you are wise and understand God's ways, prove it by living an honorable life, doing good works with the humility that comes from wisdom. But if you are bitterly jealous and there is selfish ambition in your heart, don't cover up the truth with boasting and lying. For jealousy and selfishness are not God's kind of wisdom. Such things are earthly, unspiritual, and demonic. For wherever there is jealousy and selfish ambition, there you will find disorder and evil of every kind. But the wisdom from above is first of all pure. It is also peace loving, gentle at all times, and willing to yield to others. It is full of mercy and the power to do good.",
+                "Jika kamu bijaksana dan mengerti jalan Allah, buktikanlah dengan hidup yang terhormat dan dengan perbuatan baik yang dilakukan dengan kerendahan hati yang datang dari kebijaksanaan. Tetapi jika kamu sangat cemburu dan ada ambisi egois dalam hatimu, janganlah menutupi kebenaran dengan membual dan berbohong. Sebab kecemburuan dan keegoisan bukanlah hikmat Allah. Hal-hal seperti itu bersifat duniawi, tidak rohani, dan bersifat iblis. Sebab di mana pun ada kecemburuan dan ambisi egois, di sana kamu akan menemukan ketidakteraturan dan segala kejahatan. Tetapi hikmat yang dari atas pertama-tama murni. Ia juga mencintai perdamaian, selalu lembut, dan mau mengalah kepada orang lain. Ia penuh belas kasihan dan kuasa untuk berbuat baik.",
                 lang
               )}
             </p>
-          </div>
-        </div>
-      </section>
+            <cite
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.8rem",
+                color: "oklch(70% 0.03 260)",
+                fontStyle: "normal",
+              }}
+            >
+              {t("James 3:13-17 (NLT)", "Yakobus 3:13-17 (BIS)", lang)}
+            </cite>
+          </blockquote>
 
-      {/* SELF-ASSESSMENT — FUEL CHECK */}
-      <section style={{ background: "oklch(96% 0.004 80)", padding: "72px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: orange, marginBottom: 12 }}>
-            {t("Step 3 — Honest Check", "Langkah 3 — Pemeriksaan Jujur", "Stap 3 — Eerlijke Check", lang)}
-          </p>
-          <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(22px, 3.5vw, 36px)", fontWeight: 800, color: navy, marginBottom: 16 }}>
-            {t("Where are you on the fuel gauge?", "Di mana posisi Anda pada pengukur bahan bakar?", "Waar sta je op de brandstofmeter?", lang)}
-          </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.65, color: bodyText, maxWidth: 540, margin: "0 auto 48px" }}>
-            {t("Answer honestly. This is for you alone.", "Jawab dengan jujur. Ini hanya untuk Anda.", "Antwoord eerlijk. Dit is alleen voor jou.", lang)}
-          </p>
-
-          <div style={{ display: "grid", gap: 16, maxWidth: 560, margin: "0 auto" }}>
-            {[
-              { label: t("Overloaded — running on fumes", "Kelebihan beban — berjalan dengan sisa energi", "Overbelast — rijdend op de damp", lang), level: 1 },
-              { label: t("Depleted but still functional", "Terkuras tapi masih bisa berfungsi", "Uitgeput maar nog functioneel", lang), level: 2 },
-              { label: t("Managing, but the margin is thin", "Bisa bertahan, tapi ruang gerak sangat sempit", "Het gaat, maar de marge is dun", lang), level: 3 },
-              { label: t("Mostly okay — occasional dips", "Sebagian besar baik — kadang menurun", "Grotendeels goed — af en toe een dip", lang), level: 4 },
-              { label: t("Full tank — genuinely sustainable", "Tangki penuh — benar-benar berkelanjutan", "Volle tank — echt duurzaam", lang), level: 5 },
-            ].map(({ label, level }) => (
-              <div key={level} style={{ display: "flex", alignItems: "center", gap: 16, background: "white", borderRadius: 10, padding: "16px 20px" }}>
-                <div style={{ display: "flex", gap: 4 }}>
-                  {[1,2,3,4,5].map(i => (
-                    <div key={i} style={{ width: 12, height: 12, borderRadius: "50%", background: i <= level ? (level <= 2 ? "oklch(55% 0.18 25)" : level === 3 ? orange : "oklch(52% 0.16 145)") : "oklch(88% 0.008 80)" }} />
-                  ))}
-                </div>
-                <p style={{ fontSize: 14, color: bodyText, margin: 0, lineHeight: 1.4, textAlign: "left" }}>{label}</p>
-              </div>
-            ))}
-          </div>
-
-          <p style={{ marginTop: 32, fontSize: 14, color: "oklch(55% 0.05 260)", fontStyle: "italic", maxWidth: 500, margin: "32px auto 0" }}>
+          <p style={bodyStyle(true)}>
             {t(
-              "If you're below 3, what you're reading today matters. But more important than reading about burnout is taking one action this week. Don't just learn. Move.",
-              "Jika Anda di bawah 3, apa yang Anda baca hari ini penting. Tetapi lebih penting dari membaca tentang kelelahan adalah mengambil satu tindakan minggu ini. Jangan hanya belajar. Bergeraklah.",
-              "Als je onder de 3 zit, is wat je vandaag leest belangrijk. Maar belangrijker dan lezen over burnout is ——n actie ondernemen deze week. Leer niet alleen. Beweeg.",
+              "James is not describing two categories of people. He is describing two modes of operating that any person can inhabit -- sometimes in the same week. Earthly wisdom drives from zelos: burning emotional energy, comparison, the need to produce and be seen. It feels urgent and motivated. It produces disorder. Wisdom from above is pure, peace-loving, willing to yield. It is not passive or unproductive -- it produces fruit. But its source is different. The diagnostic question is not how hard you are working. It is from where.",
+              "Yakobus tidak menggambarkan dua kategori orang. Ia menggambarkan dua mode beroperasi yang dapat dihuni siapa saja -- kadang-kadang dalam minggu yang sama. Hikmat duniawi bergerak dari zelos: energi emosional yang membara, perbandingan, kebutuhan untuk menghasilkan dan dilihat. Rasanya mendesak dan termotivasi. Ini menghasilkan ketidaktertiban. Hikmat dari atas murni, mencintai perdamaian, mau mengalah. Ini tidak pasif atau tidak produktif -- ini menghasilkan buah. Tetapi sumbernya berbeda. Pertanyaan diagnostik bukan seberapa keras Anda bekerja. Melainkan dari mana.",
               lang
             )}
           </p>
-        </div>
-      </section>
 
-      {/* SAVE & PATHWAY CTA */}
-      <section style={{ background: navy, padding: "64px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: "clamp(18px, 2.5vw, 24px)", color: "oklch(82% 0.03 80)", lineHeight: 1.7, fontStyle: "italic", marginBottom: 32 }}>
-            {t(
-              "\"He who began a good work in you will carry it on to completion.\" You are not the fuel source. You are the vessel.",
-              "\"Dia yang memulai pekerjaan yang baik di antara kamu, akan meneruskannya hingga selesai.\" Anda bukan sumber bahan bakarnya. Anda adalah bejananya.",
-              "\"Hij die dit goede werk in je begonnen is, zal het ook voltooien.\" Jij bent niet de brandstofbron. Jij bent het vat.",
-              lang
-            )}
-          </p>
-          <p style={{ fontSize: 12, color: orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 48 }}>
-            — {lang === "id" ? VERSES["phil-4-13"].ref_id : lang === "nl" ? VERSES["phil-4-13"].ref_nl : "Philippians 1:6"}
-          </p>
+          {/* Burning-emotions card-pick */}
+          <div style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}>
+            <p
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+                color: "oklch(82% 0.01 80)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              {t(
+                "James names the emotions that drive earthly wisdom -- the ones that quietly shape decisions, responses, and pace of life. Which one whispers loudest in you right now?",
+                "Yakobus menamai emosi yang mendorong hikmat duniawi -- yang diam-diam membentuk keputusan, respons, dan kecepatan hidup. Mana yang paling keras berbisik dalam diri Anda saat ini?",
+                lang
+              )}
+            </p>
 
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            {!saved ? (
-              <button
-                onClick={handleSave}
-                disabled={isPending}
-                style={{ padding: "14px 32px", background: orange, color: "white", border: "none", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, cursor: isPending ? "wait" : "pointer", letterSpacing: "0.06em" }}
-              >
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—", lang) : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard", lang)}
-              </button>
-            ) : (
-              <span style={{ padding: "14px 32px", background: "oklch(40% 0.15 145)", color: "white", borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: "0.06em" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard", lang)}
-              </span>
-            )}
-            {userPathway && (
-              <Link href={`/dashboard`} style={{ padding: "14px 32px", background: "transparent", color: offWhite, border: `1.5px solid oklch(50% 0.06 260)`, borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", letterSpacing: "0.06em" }}>
-                {t("Back to Pathway", "Kembali ke Jalur", "Terug naar Pad", lang)}
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* VERSE POPUP */}
-      {activeVerse && VERSES[activeVerse as keyof typeof VERSES] && (() => {
-        const v = VERSES[activeVerse as keyof typeof VERSES];
-        return (
-          <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
-            <div onClick={e => e.stopPropagation()} style={{ background: offWhite, borderRadius: 16, padding: "40px 36px", maxWidth: 520, width: "100%" }}>
-              <p style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 22, lineHeight: 1.6, color: navy, fontStyle: "italic", marginBottom: 16 }}>
-                "{lang === "en" ? v.en : lang === "id" ? v.id : v.nl}"
-              </p>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 24 }}>
-                — {lang === "en" ? v.ref : lang === "id" ? v.ref_id : v.ref_nl} ({lang === "en" ? "NIV" : lang === "id" ? "TB" : "NBV"})
-              </p>
-              <button onClick={() => setActiveVerse(null)} style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, cursor: "pointer" }}>
-                {t("Close", "Tutup", "Sluiten", lang)}
-              </button>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "0.75rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              {[
+                {
+                  key: "fear",
+                  icon: "◇",
+                  label: t("Fear", "Ketakutan", lang),
+                  reflection: {
+                    en: "What are you afraid will happen if you slow down or let go? Name it specifically -- not 'things will fall apart' but what specifically you fear losing.",
+                    id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik -- bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
+                  },
+                },
+                {
+                  key: "comparison",
+                  icon: "⟷",
+                  label: t("Comparison", "Perbandingan", lang),
+                  reflection: {
+                    en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you -- and what would it free you from if you stopped?",
+                    id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda -- dan dari apa Anda akan bebas jika berhenti?",
+                  },
+                },
+                {
+                  key: "frustration",
+                  icon: "△",
+                  label: t("Frustration", "Frustrasi", lang),
+                  reflection: {
+                    en: "What expectation -- of yourself, your work, or God -- is not being met? Is the expectation yours, or was it given to you by someone else?",
+                    id: "Harapan apa -- terhadap diri sendiri, pekerjaan Anda, atau Allah -- yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
+                  },
+                },
+                {
+                  key: "pride",
+                  icon: "◉",
+                  label: t("Pride", "Kebanggaan", lang),
+                  reflection: {
+                    en: "Where have you made yourself indispensable? What would actually happen -- in the work, in the team, in God's purposes -- if you stepped back or asked for help?",
+                    id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi -- dalam pekerjaan, dalam tim, dalam tujuan Allah -- jika Anda mundur atau meminta bantuan?",
+                  },
+                },
+                {
+                  key: "recognition",
+                  icon: "☆",
+                  label: t("Desire for recognition", "Keinginan akan pengakuan", lang),
+                  reflection: {
+                    en: "Who do you most want to notice the work you are doing? What would it mean if they never did -- and what does that tell you about where your worth is rooted?",
+                    id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya -- dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
+                  },
+                },
+                {
+                  key: "control",
+                  icon: "⊞",
+                  label: t("Control", "Kontrol", lang),
+                  reflection: {
+                    en: "What are you currently managing that you were never meant to carry alone? What would it look like to trust God and the people around you with a piece of it this week?",
+                    id: "Apa yang Anda kelola saat ini yang tidak pernah dimaksudkan untuk Anda tanggung sendiri? Seperti apa tampaknya untuk mempercayai Allah dan orang-orang di sekitar Anda dengan sebagian dari itu minggu ini?",
+                  },
+                },
+              ].map(({ key, icon, label, reflection }) => {
+                const isSelected = selectedEmotion === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setSelectedEmotion(isSelected ? null : key)}
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      textAlign: "center",
+                      padding: "1.25rem 1rem",
+                      background: isSelected ? orange : "oklch(28% 0.08 260)",
+                      color: isSelected ? "#fff" : "oklch(82% 0.01 80)",
+                      border: `1.5px solid ${isSelected ? orange : "oklch(38% 0.08 260)"}`,
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "0.4rem",
+                    }}
+                  >
+                    <span style={{ fontSize: "1.4rem" }}>{icon}</span>
+                    {label}
+                  </button>
+                );
+              })}
             </div>
-          </div>
-        );
-      })()}
 
-      <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
-    </div>
+            {/* Reflection reveal */}
+            {selectedEmotion && (
+              <div
+                style={{
+                  background: "oklch(28% 0.08 260)",
+                  borderRadius: "8px",
+                  padding: "1.5rem",
+                  borderLeft: `4px solid ${orange}`,
+                  animation: "fadeIn 0.3s ease",
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: orange,
+                    marginBottom: "0.75rem",
+                    marginTop: 0,
+                  }}
+                >
+                  {t("Reflect", "Renungkan", lang)}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "0.9rem",
+                    lineHeight: 1.8,
+                    color: "oklch(85% 0.01 80)",
+                    margin: 0,
+                  }}
+                >
+                  {(() => {
+                    const emotions: Record<string, { en: string; id: string }> = {
+                      fear: {
+                        en: "What are you afraid will happen if you slow down or let go? Name it specifically -- not 'things will fall apart' but what specifically you fear losing.",
+                        id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik -- bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
+                      },
+                      comparison: {
+                        en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you -- and what would it free you from if you stopped?",
+                        id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda -- dan dari apa Anda akan bebas jika berhenti?",
+                      },
+                      frustration: {
+                        en: "What expectation -- of yourself, your work, or God -- is not being met? Is the expectation yours, or was it given to you by someone else?",
+                        id: "Harapan apa -- terhadap diri sendiri, pekerjaan Anda, atau Allah -- yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
+                      },
+                      pride: {
+                        en: "Where have you made yourself indispensable? What would actually happen -- in the work, in the team, in God's purposes -- if you stepped back or asked for help?",
+                        id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi -- dalam pekerjaan, dalam tim, dalam tujuan Allah -- jika Anda mundur atau meminta bantuan?",
+                      },
+                      recognition: {
+                        en: "Who do you most want to notice the work you are doing? What would it mean if they never did -- and what does that tell you about where your worth is rooted?",
+                        id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya -- dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
+                      },
+                      control: {
+                        en: "What are you currently managing that you were never meant to carry alone? What would it look like to trust God and the people around you with a piece of it this week?",
+                        id: "Apa yang Anda kelola saat ini yang tidak pernah dimaksudkan untuk Anda tanggung sendiri? Seperti apa tampaknya untuk mempercayai Allah dan orang-orang di sekitar Anda dengan sebagian dari itu minggu ini?",
+                      },
+                    };
+                    const e = emotions[selectedEmotion];
+                    return lang === "en" ? e.en : e.id;
+                  })()}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Birds paragraph */}
+          <p style={bodyStyle(true)}>
+            {t(
+              "God made birds to fly. Flying is their identity -- it costs energy, but it does not burn them out, because they are operating from what they were made for. A fish swimming costs energy. Neither bird nor fish burns out from doing what they are made to do. We burn out when our identity shifts from 'what I am made for' to 'what I must produce.' Working from identity costs energy. Working from fear, ambition, or need for recognition consumes it.",
+              "Allah menciptakan burung untuk terbang. Terbang adalah identitas mereka -- ini membutuhkan energi, tetapi tidak membuat mereka kelelahan, karena mereka beroperasi dari apa yang mereka diciptakan untuk lakukan. Ikan berenang membutuhkan energi. Baik burung maupun ikan tidak kelelahan dari melakukan apa yang mereka diciptakan untuk lakukan. Kita kelelahan ketika identitas kita bergeser dari 'apa yang saya diciptakan untuk lakukan' ke 'apa yang harus saya hasilkan.' Bekerja dari identitas membutuhkan energi. Bekerja dari ketakutan, ambisi, atau kebutuhan akan pengakuan menghabiskannya.",
+              lang
+            )}
+          </p>
+
+          {/* Commissioning -- 1 Corinthians */}
+          <blockquote
+            style={{
+              borderLeft: `4px solid oklch(45% 0.08 260)`,
+              paddingLeft: "1.5rem",
+              margin: "0",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: "clamp(16px, 2vw, 19px)",
+                fontStyle: "italic",
+                lineHeight: 1.7,
+                color: "oklch(80% 0.008 80)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              {t(
+                "God chose things the world considers foolish in order to shame those who think they are wise. And he chose things that are powerless to shame those who are powerful. God chose things despised by the world, things counted as nothing at all, and used them to bring to nothing what the world considers important. As a result, no one can ever boast in the presence of God.",
+                "Allah memilih hal-hal yang dianggap bodoh oleh dunia untuk mempermalukan orang-orang yang merasa bijaksana. Dan Dia memilih hal-hal yang tidak berdaya untuk mempermalukan orang-orang yang berkuasa. Allah memilih hal-hal yang tidak dihormati di dunia, hal-hal yang dianggap tidak berarti sama sekali, dan menggunakannya untuk meniadakan apa yang dianggap penting oleh dunia. Sebagai hasilnya, tidak ada seorang pun yang dapat membanggakan diri di hadirat Allah.",
+                lang
+              )}
+            </p>
+            <cite
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "0.8rem",
+                color: "oklch(65% 0.03 260)",
+                fontStyle: "normal",
+              }}
+            >
+              {t("1 Corinthians 1:27-29 (NLT)", "1 Korintus 1:27-29 (BIS)", lang)}
+            </cite>
+          </blockquote>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 7 -- Key Takeaways
+          ============================================================ */}
+      <section style={{ background: lightGray, ...sectionPadding }}>
+        <div style={containerStyle}>
+          <p style={eyebrowStyle}>{t("KEY TAKEAWAYS", "POIN-POIN UTAMA", lang)}</p>
+          <h2 style={h2Style()}>{t("What to Carry Forward", "Yang Perlu Dibawa Ke Depan", lang)}</h2>
+          <ol
+            style={{
+              paddingLeft: "1.25rem",
+              margin: 0,
+            }}
+          >
+            {(lang === "en"
+              ? [
+                  "Burnout is not primarily a time-management failure. It is a diagnosis of a system under pressure, often driven by a gradual drift from working out of calling to working out of ambition, fear, or need for results.",
+                  "Montero-Marin's three subtypes -- frenetic, underchallenged, and worn-out -- respond to different drivers and need different interventions. Recognising your own pattern is the first step toward a response that actually fits.",
+                  "God's response to Elijah's collapse was physical before it was spiritual. Food, water, rest -- then the still small voice. The body is not separate from the spiritual life. It is the place where the spiritual life is lived.",
+                  "Selfish ambition often wears ministry clothes. It sounds like vision, faithfulness, responsibility, even sacrifice. The diagnostic question is not how much you are working -- it is from where.",
+                  "Working from identity costs energy but does not burn you out. The drift begins when we start to serve the results rather than the calling from which those results flow.",
+                ]
+              : [
+                  "Kelelahan bukan terutama kegagalan manajemen waktu. Ini adalah diagnosis sistem di bawah tekanan, sering didorong oleh penyimpangan bertahap dari bekerja berdasarkan panggilan ke bekerja berdasarkan ambisi, ketakutan, atau kebutuhan akan hasil.",
+                  "Tiga subtipe Montero-Marin -- frenetic, underchallenged, dan worn-out -- merespons pendorong yang berbeda dan membutuhkan intervensi yang berbeda. Mengenali pola Anda sendiri adalah langkah pertama menuju respons yang benar-benar sesuai.",
+                  "Respons Allah terhadap keruntuhan Elia bersifat fisik sebelum rohani. Makanan, air, istirahat -- kemudian suara yang sunyi dan lembut. Tubuh tidak terpisah dari kehidupan rohani. Itu adalah tempat di mana kehidupan rohani dijalani.",
+                  "Ambisi egois sering mengenakan pakaian pelayanan. Terdengar seperti visi, kesetiaan, tanggung jawab, bahkan pengorbanan. Pertanyaan diagnostik bukan seberapa banyak Anda bekerja -- melainkan dari mana.",
+                  "Bekerja dari identitas membutuhkan energi tetapi tidak membuat Anda kelelahan. Penyimpangan dimulai ketika kita mulai melayani hasil daripada panggilan dari mana hasil itu mengalir.",
+                ]
+            ).map((item, i) => (
+              <li
+                key={i}
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.95rem",
+                  lineHeight: 1.8,
+                  color: bodyText,
+                  marginBottom: "1rem",
+                  paddingLeft: "0.25rem",
+                }}
+              >
+                {item}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Fade-in keyframe for emotion reflection */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </main>
   );
 }
