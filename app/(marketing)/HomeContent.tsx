@@ -50,14 +50,16 @@ export default function HomeContent() {
         {/* Concentric arcs */}
         <div aria-hidden="true" style={{ position: "absolute", bottom: "-180px", right: "-180px", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.06)", pointerEvents: "none" }}>
           <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(97% 0.005 80 / 0.06)" }}>
-            <div style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.18)" }} />
+            <div className="animate-arc-pulse" style={{ position: "absolute", top: "70px", left: "70px", right: "70px", bottom: "70px", borderRadius: "50%", border: "1px solid oklch(65% 0.15 45 / 0.18)" }} />
           </div>
         </div>
 
         <div className="container-wide" style={{ position: "relative" }}>
-          {/* Compass mark */}
-          <div aria-hidden="true" style={{ position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)", width: "min(42vw, 420px)", height: "min(42vw, 420px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.45 }}>
-            <Image src="/logo-icon.png" alt="" fill style={{ objectFit: "contain" }} priority />
+          {/* Compass mark — outer div centers (translateY), inner div carries the rotation animations */}
+          <div aria-hidden="true" style={{ position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)", width: "min(42vw, 420px)", height: "min(42vw, 420px)", pointerEvents: "none", mixBlendMode: "screen", opacity: 0.55 }}>
+            <div className="animate-compass" style={{ position: "absolute", inset: 0 }}>
+              <Image src="/logo-icon.png" alt="" fill style={{ objectFit: "contain" }} priority />
+            </div>
           </div>
 
           <div style={{ maxWidth: "640px", position: "relative" }}>

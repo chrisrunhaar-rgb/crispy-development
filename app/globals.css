@@ -440,6 +440,49 @@ body {
   .animate-fade-up { animation: none; }
 }
 
+/* ── HERO COMPASS ── */
+/* Entrance: needle finds north — swing from -20deg, one overshoot, settle. Plays once. */
+@keyframes compass-settle {
+  0%   { transform: rotate(-20deg); animation-timing-function: cubic-bezier(0.34, 0.04, 0.26, 1); }
+  58%  { transform: rotate(2.5deg); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  78%  { transform: rotate(-0.9deg); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  92%  { transform: rotate(0.25deg); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Living drift: perpetual micro-rotation. Starts and ends at 0deg so the
+   handoff from compass-settle is invisible. */
+@keyframes compass-drift {
+  0%   { transform: rotate(0deg); }
+  30%  { transform: rotate(2.2deg); }
+  70%  { transform: rotate(-2.2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-compass {
+  transform-origin: center;
+  will-change: transform;
+  /* drift is listed last so it takes over the moment its delay (= settle end) elapses */
+  animation:
+    compass-settle 2.4s 0.15s both,
+    compass-drift 25s ease-in-out 2.55s infinite;
+}
+
+/* Arc shimmer: barely-there breath on the innermost orange arc */
+@keyframes arc-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+.animate-arc-pulse {
+  animation: arc-pulse 16s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-compass,
+  .animate-arc-pulse { animation: none; }
+}
+
 /* ── LEGAL PAGE LISTS ── */
 .container-text ul {
   padding-left: 1.25rem;
