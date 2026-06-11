@@ -427,122 +427,214 @@ function CompassMotif() {
 
 function ContextCalibrationGauge({ lang }: { lang: "en" | "id" }) {
   const t = (en: string, id: string) => (lang === "id" ? id : en);
+
+  // Axis band geometry
+  const BAND_Y = 152;   // top of gradient band
+  const BAND_H = 18;    // band height
+  const AXIS_Y = BAND_Y + BAND_H / 2; // 161 — visual centre of band
+  const X0 = 60;        // band left edge
+  const X1 = 740;       // band right edge
+
+  // Tick/marker y (midpoint of band)
+  const TICK_Y = AXIS_Y;
+
+  // Label rows
+  const ROW_A = 124;    // primary above row
+  const ROW_B = 98;     // secondary above row (used for Netherlands, UK, Indonesia)
+  const ROW_C = 208;    // primary below row  (Brazil, Mexico, China)
+
+  // Leader line colour
+  const LEADER = "oklch(65% 0.06 260)";
+  const LABEL_FILL = NAVY;
+
+  // Culture x-positions (spread deliberately across the band)
+  // Low-context squares: Germany 90, Netherlands 145, USA 205, UK 265, Australia 325
+  // High-context circles: Brazil 435, Kenya 490, Mexico 548, India 600, China 654, Indonesia 702, Japan 740
+
   return (
     <figure style={{ margin: "0 0 56px", padding: 0 }}>
       <svg
         aria-hidden="true"
-        viewBox="0 0 800 260"
+        viewBox="0 0 800 320"
         style={{ width: "100%", height: "auto", display: "block" }}
       >
         <defs>
+          {/* Gradient band: off-white left → mid-navy right */}
+          <linearGradient id="hc-spectrum-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stopColor="#F8F7F4" />
+            <stop offset="30%"  stopColor="#b8c8df" />
+            <stop offset="65%"  stopColor="#4a6a9e" />
+            <stop offset="100%" stopColor="#1B3A6B" />
+          </linearGradient>
+          {/* Arrowhead for axis */}
           <marker id="hc-arrowhead" viewBox="0 0 10 10" refX="9" refY="5"
-            markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M0 0 L10 5 L0 10 z" fill="oklch(55% 0.05 260)" />
+            markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="#1B3A6B" />
           </marker>
         </defs>
 
-        {/* Axis */}
-        <line x1="40" y1="140" x2="760" y2="140"
-          stroke="oklch(72% 0.05 260)" strokeWidth="1.5"
-          markerEnd="url(#hc-arrowhead)" />
+        {/* ── Zone background fills ──────────────────────────────────── */}
+        <rect x={X0} y="20" width="260" height="266" rx="6"
+          fill="oklch(92% 0.008 80)" fillOpacity="0.55" />
+        <rect x="360" y="20" width="380" height="266" rx="6"
+          fill="oklch(28% 0.10 260)" fillOpacity="0.10" />
 
-        {/* Axis end labels */}
-        <text x="40" y="200" fontFamily={FONT_BODY} fontSize="13" fontWeight="700"
-          letterSpacing="0.8" fill={BODY_TEXT}>
+        {/* ── Zone labels ───────────────────────────────────────────── */}
+        <text x={X0 + 8} y="40" fontFamily={FONT_BODY} fontSize="11" fontWeight="700"
+          letterSpacing="1.5" textTransform="uppercase" fill="oklch(55% 0.06 260)">
           {t("LOW-CONTEXT", "KONTEKS RENDAH")}
         </text>
-        <text x="760" y="200" textAnchor="end" fontFamily={FONT_BODY} fontSize="13"
-          fontWeight="700" letterSpacing="0.8" fill={BODY_TEXT}>
+        <text x={X1 - 8} y="40" textAnchor="end" fontFamily={FONT_BODY} fontSize="11"
+          fontWeight="700" letterSpacing="1.5" fill="oklch(30% 0.10 260)">
           {t("HIGH-CONTEXT", "KONTEKS TINGGI")}
         </text>
 
-        {/* Germany (square, above) */}
-        <rect x="83" y="135" width="10" height="10" fill={NAVY} />
-        <text x="88" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
+        {/* ── Gradient band ─────────────────────────────────────────── */}
+        <rect x={X0} y={BAND_Y} width={X1 - X0} height={BAND_H} rx="9"
+          fill="url(#hc-spectrum-grad)" />
+        {/* Right arrowhead continuation */}
+        <line x1={X1} y1={AXIS_Y} x2={X1 + 14} y2={AXIS_Y}
+          stroke="#1B3A6B" strokeWidth="1.5" markerEnd="url(#hc-arrowhead)" />
+
+        {/* ════════ LOW-CONTEXT CULTURES (squares) ════════════════════ */}
+
+        {/* Germany — Row A (above) */}
+        <line x1="90" y1={TICK_Y} x2="90" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <rect x="85" y={TICK_Y - 5} width="10" height="10" fill={NAVY} />
+        <text x="90" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
           {t("Germany", "Jerman")}
         </text>
 
-        {/* Netherlands (square, below) */}
-        <rect x="107" y="135" width="10" height="10" fill={NAVY} />
-        <text x="112" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
+        {/* Netherlands — Row B (above, staggered higher) */}
+        <line x1="145" y1={TICK_Y} x2="145" y2={ROW_B + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <rect x="140" y={TICK_Y - 5} width="10" height="10" fill={NAVY} />
+        <text x="145" y={ROW_B} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
           {t("Netherlands", "Belanda")}
         </text>
 
-        {/* USA (square, above) */}
-        <rect x="139" y="135" width="10" height="10" fill={NAVY} />
-        <text x="144" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
+        {/* USA — Row A */}
+        <line x1="205" y1={TICK_Y} x2="205" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <rect x="200" y={TICK_Y - 5} width="10" height="10" fill={NAVY} />
+        <text x="205" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
           {t("USA", "AS")}
         </text>
 
-        {/* UK (square, below) */}
-        <rect x="185" y="135" width="10" height="10" fill={NAVY} />
-        <text x="190" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
+        {/* UK — Row B */}
+        <line x1="265" y1={TICK_Y} x2="265" y2={ROW_B + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <rect x="260" y={TICK_Y - 5} width="10" height="10" fill={NAVY} />
+        <text x="265" y={ROW_B} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
           {t("UK", "Inggris")}
         </text>
 
-        {/* Australia (square, above) */}
-        <rect x="215" y="135" width="10" height="10" fill={NAVY} />
-        <text x="220" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
+        {/* Australia — Row A */}
+        <line x1="325" y1={TICK_Y} x2="325" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <rect x="320" y={TICK_Y - 5} width="10" height="10" fill={NAVY} />
+        <text x="325" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
           {t("Australia", "Australia")}
         </text>
 
-        {/* Brazil (circle, below) */}
-        <circle cx="420" cy="140" r="6" fill={NAVY} />
-        <text x="420" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("Brazil", "Brasil")}
-        </text>
-
-        {/* Kenya (circle, above) */}
-        <circle cx="480" cy="140" r="6" fill={NAVY} />
-        <text x="480" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("Kenya", "Kenya")}
-        </text>
-
-        {/* Mexico (circle, below) */}
-        <circle cx="510" cy="140" r="6" fill={NAVY} />
-        <text x="510" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("Mexico", "Meksiko")}
-        </text>
-
-        {/* India (circle, above) */}
-        <circle cx="560" cy="140" r="6" fill={NAVY} />
-        <text x="560" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("India", "India")}
-        </text>
-
-        {/* China (circle, below) */}
-        <circle cx="620" cy="140" r="6" fill={NAVY} />
-        <text x="620" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("China", "Tiongkok")}
-        </text>
-
-        {/* Indonesia (circle, above) */}
-        <circle cx="660" cy="140" r="6" fill={NAVY} />
-        <text x="660" y="120" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("Indonesia", "Indonesia")}
-        </text>
-
-        {/* Japan (circle, below) */}
-        <circle cx="720" cy="140" r="6" fill={NAVY} />
-        <text x="720" y="172" textAnchor="middle" fontFamily={FONT_BODY} fontSize="14" fontWeight="600" fill={BODY_TEXT}>
-          {t("Japan", "Jepang")}
-        </text>
-
-        {/* "You?" marker */}
-        <circle cx="400" cy="140" r="9" fill="none" stroke={ORANGE} strokeWidth="2" />
-        <text x="400" y="118" textAnchor="middle" fontFamily={FONT_BODY}
-          fontSize="14" fontWeight="700" fill={BODY_TEXT}>
+        {/* ════════ YOU? marker — between zones ══════════════════════ */}
+        {/* Dashed drop-line */}
+        <line x1="390" y1="64" x2="390" y2={TICK_Y - 2}
+          stroke={ORANGE} strokeWidth="1.5" strokeDasharray="3 4" strokeLinecap="round" />
+        {/* Marker ring */}
+        <circle cx="390" cy={TICK_Y} r="10" fill="none" stroke={ORANGE} strokeWidth="2" />
+        {/* Label */}
+        <text x="390" y="60" textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="700" fill={ORANGE}>
           {t("You?", "Kamu?")}
         </text>
 
-        {/* Legend */}
-        <rect x="60" y="230" width="10" height="10" fill={NAVY} />
-        <text x="76" y="240" fontFamily={FONT_BODY} fontSize="12" fill={BODY_TEXT}>
-          {t("Square = task/cognitive encoding", "Kotak = pengkodean tugas/kognitif")}
+        {/* ════════ HIGH-CONTEXT CULTURES (circles) ═══════════════════ */}
+
+        {/* Brazil — Row C (below) */}
+        <circle cx="435" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="435" y1={TICK_Y + 6} x2="435" y2={ROW_C - 14}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="435" y={ROW_C} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("Brazil", "Brasil")}
         </text>
-        <circle cx="268" cy="235" r="5" fill={NAVY} />
-        <text x="278" y="240" fontFamily={FONT_BODY} fontSize="12" fill={BODY_TEXT}>
-          {t("Circle = relational/affective encoding", "Lingkaran = pengkodean relasional/afektif")}
+
+        {/* Kenya — Row A (above) */}
+        <circle cx="490" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="490" y1={TICK_Y - 6} x2="490" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="490" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("Kenya", "Kenya")}
+        </text>
+
+        {/* Mexico — Row C (below) */}
+        <circle cx="548" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="548" y1={TICK_Y + 6} x2="548" y2={ROW_C - 14}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="548" y={ROW_C} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("Mexico", "Meksiko")}
+        </text>
+
+        {/* India — Row A (above) */}
+        <circle cx="600" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="600" y1={TICK_Y - 6} x2="600" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="600" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("India", "India")}
+        </text>
+
+        {/* China — Row C (below) */}
+        <circle cx="650" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="650" y1={TICK_Y + 6} x2="650" y2={ROW_C - 14}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="650" y={ROW_C} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("China", "Tiongkok")}
+        </text>
+
+        {/* Indonesia — Row B (above, staggered higher) */}
+        <circle cx="698" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="698" y1={TICK_Y - 6} x2="698" y2={ROW_B + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="698" y={ROW_B} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("Indonesia", "Indonesia")}
+        </text>
+
+        {/* Japan — Row A (above) */}
+        <circle cx="740" cy={TICK_Y} r="6" fill={NAVY} />
+        <line x1="740" y1={TICK_Y - 6} x2="740" y2={ROW_A + 3}
+          stroke={LEADER} strokeWidth="0.8" />
+        <text x="740" y={ROW_A} textAnchor="middle" fontFamily={FONT_BODY}
+          fontSize="14" fontWeight="600" fill={LABEL_FILL}>
+          {t("Japan", "Jepang")}
+        </text>
+
+        {/* ── Legend row ────────────────────────────────────────────── */}
+        {/* Centred legend strip */}
+        <rect x="150" y="272" width="500" height="32" rx="8"
+          fill="oklch(92% 0.008 80)" fillOpacity="0.7" />
+
+        {/* Square legend item */}
+        <rect x="180" y="282" width="10" height="10" fill={NAVY} />
+        <text x="198" y="291" fontFamily={FONT_BODY} fontSize="12" fontWeight="500" fill={NAVY}>
+          {t("Square = task / cognitive", "Kotak = tugas / kognitif")}
+        </text>
+
+        {/* Circle legend item */}
+        <circle cx="404" cy="287" r="5.5" fill={NAVY} />
+        <text x="417" y="291" fontFamily={FONT_BODY} fontSize="12" fontWeight="500" fill={NAVY}>
+          {t("Circle = relational / affective", "Lingkaran = relasional / afektif")}
         </text>
       </svg>
       <figcaption style={{
@@ -556,8 +648,8 @@ function ContextCalibrationGauge({ lang }: { lang: "en" | "id" }) {
         textAlign: "center",
       }}>
         {t(
-          "Communication styles on a spectrum — from low-context (explicit, direct, written) to high-context (implicit, indirect, relational). Position is relative; every culture contains internal variation.",
-          "Gaya komunikasi dalam spektrum — dari konteks rendah (eksplisit, langsung, tertulis) hingga konteks tinggi (implisit, tidak langsung, relasional). Posisi bersifat relatif; setiap budaya mengandung variasi internal."
+          "Communication styles on a spectrum from low-context (explicit, direct, written) to high-context (implicit, indirect, relational). Position is relative; every culture contains internal variation.",
+          "Gaya komunikasi dalam spektrum dari konteks rendah (eksplisit, langsung, tertulis) hingga konteks tinggi (implisit, tidak langsung, relasional). Posisi bersifat relatif; setiap budaya mengandung variasi internal."
         )}
       </figcaption>
     </figure>
