@@ -17,77 +17,95 @@ const lightGray = "oklch(88% 0.008 80)";
 const charcoal  = "oklch(18% 0.000 0)";
 const bodyText  = "oklch(38% 0.05 260)";
 
-// -- SVG DIAGRAM ----------------------------------------------------------------
+// -- RISK SPECTRUM DIAGRAM -----------------------------------------------------
 function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
+  const en = lang === "en";
+
+  const bands = [
+    { label: en ? "Working from\nidentity" : "Dari\nidentitas", bg: "hsl(215,55%,28%)" },
+    { label: en ? "Drifting" : "Menyimpang",                    bg: "hsl(210,40%,44%)" },
+    { label: en ? "At risk" : "Berisiko",                       bg: "hsl(35,70%,48%)" },
+    { label: en ? "Burning" : "Terbakar",                       bg: "hsl(0,60%,38%)" },
+  ];
+
   return (
     <figure style={{ margin: "2rem 0 0" }}>
-      <svg
-        viewBox="0 0 800 320"
-        aria-hidden="true"
-        style={{ width: "100%", height: "auto", display: "block" }}
-      >
-        <defs>
-          <linearGradient id="ub-spectrum-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="hsl(210,60%,35%)" />
-            <stop offset="33%" stopColor="hsl(210,40%,55%)" />
-            <stop offset="66%" stopColor="hsl(35,60%,55%)" />
-            <stop offset="100%" stopColor="hsl(0,65%,40%)" />
-          </linearGradient>
-          <marker id="ub-arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-            <polygon points="0 0, 8 3, 0 6" fill="oklch(22% 0.10 260)" />
-          </marker>
-        </defs>
-        <rect x="40" y="60" width="720" height="60" rx="8" fill="url(#ub-spectrum-gradient)" />
-        <text x="80" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Working from identity" : "Bekerja dari identitas"}
-        </text>
-        <text x="280" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Drifting" : "Menyimpang"}
-        </text>
-        <text x="520" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "At risk" : "Berisiko"}
-        </text>
-        <text x="720" y="145" fontSize="12" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Burning" : "Terbakar"}
-        </text>
-        <line x1="160" y1="52" x2="400" y2="52" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <line x1="160" y1="48" x2="160" y2="60" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <line x1="400" y1="48" x2="400" y2="60" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <text x="280" y="42" fontSize="11" fill="oklch(22% 0.10 260)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Underchallenged" : "Underchallenged"}
-        </text>
-        <line x1="200" y1="30" x2="560" y2="30" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
-        <line x1="200" y1="26" x2="200" y2="38" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
-        <line x1="560" y1="26" x2="560" y2="38" stroke="oklch(65% 0.15 45)" strokeWidth="1.5" />
-        <text x="380" y="22" fontSize="11" fill="oklch(65% 0.15 45)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Frenetic" : "Frenetic"}
-        </text>
-        <line x1="440" y1="52" x2="760" y2="52" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
-        <line x1="440" y1="48" x2="440" y2="60" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
-        <line x1="760" y1="48" x2="760" y2="60" stroke="hsl(0,65%,40%)" strokeWidth="1.5" />
-        <text x="600" y="42" fontSize="11" fill="hsl(0,65%,40%)" textAnchor="middle" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Worn-out" : "Worn-out"}
-        </text>
-        <text x="40" y="185" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Maslach dimensions:" : "Dimensi Maslach:"}
-        </text>
-        <rect x="320" y="195" width="10" height="10" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <text x="335" y="205" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Exhaustion" : "Kelelahan"}
-        </text>
-        <circle cx="505" cy="225" r="5" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <text x="515" y="230" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Cynicism" : "Sinisme"}
-        </text>
-        <rect x="620" y="220" width="10" height="10" fill="none" stroke="oklch(22% 0.10 260)" strokeWidth="1.5" />
-        <text x="635" y="230" fontSize="10" fill="oklch(38% 0.05 260)" fontFamily="Montserrat,sans-serif">
-          {lang === "en" ? "Reduced efficacy" : "Efikasi berkurang"}
-        </text>
-      </svg>
-      <figcaption style={{ fontSize: "0.8rem", color: bodyText, marginTop: "0.5rem", fontFamily: "Montserrat,sans-serif" }}>
-        {lang === "en"
-          ? "The four-band risk spectrum with Montero-Marin subtype clustering. Frenetic burnout spans drifting into at-risk; underchallenged centres on drifting; worn-out spans at-risk into burning."
-          : "Spektrum risiko empat band dengan pengelompokan subtipe Montero-Marin. Kelelahan frenetic mencakup drifting hingga berisiko; underchallenged berpusat pada drifting; worn-out mencakup berisiko hingga terbakar."}
+      {/* 4-band spectrum bar */}
+      <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", height: 64 }}>
+        {bands.map((b, i) => (
+          <div
+            key={i}
+            style={{
+              flex: 1,
+              background: b.bg,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.2)" : undefined,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontSize: "clamp(9px, 1.3vw, 12px)",
+                fontWeight: 700,
+                color: "white",
+                textAlign: "center",
+                lineHeight: 1.25,
+                padding: "0 4px",
+                whiteSpace: "pre-line",
+              }}
+            >
+              {b.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Subtype spans — show where each subtype sits on the spectrum */}
+      <div style={{ position: "relative", height: 100, marginTop: 10 }}>
+        {/* Frenetic: drifting and at-risk (25%–75%) */}
+        <div
+          style={{
+            position: "absolute", top: 0, left: "25%", right: "25%", height: 28,
+            background: "hsl(35,70%,48%)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(10px, 1.4vw, 12px)", fontWeight: 700, color: "white" }}>
+            {en ? "Frenetic" : "Frenetic"}
+          </span>
+        </div>
+        {/* Underchallenged: drifting only (25%–50%) */}
+        <div
+          style={{
+            position: "absolute", top: 36, left: "25%", width: "25%", height: 28,
+            background: "hsl(210,42%,40%)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(9px, 1.2vw, 12px)", fontWeight: 700, color: "white", textAlign: "center", padding: "0 4px", lineHeight: 1.2 }}>
+            {en ? "Underchallenged" : "Underchallenged"}
+          </span>
+        </div>
+        {/* Worn-out: at-risk and burning (50%–100%) */}
+        <div
+          style={{
+            position: "absolute", top: 72, left: "50%", right: 0, height: 28,
+            background: "hsl(0,60%,38%)", borderRadius: 4,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(10px, 1.4vw, 12px)", fontWeight: 700, color: "white" }}>
+            {en ? "Worn-out" : "Worn-out"}
+          </span>
+        </div>
+      </div>
+
+      <figcaption style={{ fontSize: "0.8rem", color: bodyText, marginTop: "0.5rem", fontFamily: "Montserrat, sans-serif" }}>
+        {en
+          ? "Burnout risk spectrum based on Montero-Marín et al. Each subtype maps to a different risk zone."
+          : "Spektrum risiko kelelahan berdasarkan model Montero-Marín dkk. Setiap subtipe memetakan ke zona risiko berbeda."}
       </figcaption>
     </figure>
   );
@@ -187,7 +205,7 @@ export default function UnderstandingBurnoutClient({
     { en: "I find it hard to care about the tasks in front of me even though I know they matter.", id: "Saya merasa sulit untuk peduli dengan tugas di hadapan saya meskipun saya tahu tugas itu penting." },
     { en: "I feel a growing distance between what I am doing and what I believe I was called to do.", id: "Saya merasakan jarak yang semakin besar antara apa yang saya lakukan dan apa yang saya yakini sebagai panggilan saya." },
     { en: "The routine of my work has become flat or meaningless.", id: "Rutinitas pekerjaan saya telah menjadi datar atau tidak bermakna." },
-    { en: "I feel underused -- like my best is not needed here.", id: "Saya merasa kurang dimanfaatkan -- seolah yang terbaik dari saya tidak dibutuhkan di sini." },
+    { en: "I feel underused, as though my best is not needed here.", id: "Saya merasa kurang dimanfaatkan, seolah yang terbaik dari saya tidak dibutuhkan di sini." },
     { en: "I am going through the motions without genuine engagement.", id: "Saya menjalani rutinitas tanpa keterlibatan yang tulus." },
     // Worn-out 14-20
     { en: "I feel little energy or motivation even after rest.", id: "Saya merasa sedikit energi atau motivasi bahkan setelah beristirahat." },
@@ -232,7 +250,9 @@ export default function UnderstandingBurnoutClient({
   // HERO SECTION
   // ============================================================
   return (
-    <main>
+    <>
+      <LangToggle />
+
       {/* HERO */}
       <section
         style={{
@@ -273,53 +293,38 @@ export default function UnderstandingBurnoutClient({
           </h1>
           <p
             style={{
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: "1.1rem",
-              lineHeight: 1.8,
-              color: "oklch(85% 0.01 80)",
-              maxWidth: "640px",
-              marginBottom: "2.5rem",
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontStyle: "italic",
+              fontSize: "clamp(17px, 2.2vw, 22px)",
+              color: "oklch(82% 0.03 260)",
+              lineHeight: 1.6,
+              maxWidth: 580,
+              marginBottom: 32,
             }}
           >
             {t(
-              "Burnout rarely announces itself. It builds slowly, often in workers who look effective from the outside -- driven by a gradual shift from serving out of calling to serving out of fear, ambition, or need for results. This module helps you see the pattern, name which type you are dealing with, and find the path back to working from identity rather than from pressure.",
-              "Kelelahan jarang mengumumkan dirinya sendiri. Ia berkembang perlahan, sering pada pekerja yang tampak efektif dari luar -- didorong oleh pergeseran bertahap dari melayani berdasarkan panggilan ke melayani karena rasa takut, ambisi, atau kebutuhan akan hasil. Modul ini membantu Anda melihat polanya, menamai jenis kelelahan yang Anda hadapi, dan menemukan jalan kembali untuk bekerja dari identitas, bukan dari tekanan.",
+              "Burnout builds slowly and rarely announces itself. This module helps you name the type you are carrying, understand how it works, and find the path back to working from identity rather than from pressure.",
+              "Kelelahan berkembang perlahan dan jarang mengumumkan dirinya sendiri. Modul ini membantu Anda menamai jenis kelelahan yang Anda bawa, memahami cara kerjanya, dan menemukan jalan kembali untuk bekerja dari identitas, bukan dari tekanan.",
               lang
             )}
           </p>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-            <LangToggle />
-            {!saved ? (
-              <button
-                onClick={handleSave}
-                disabled={isPending}
-                style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  background: orange,
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "6px",
-                  padding: "0.6rem 1.25rem",
-                  cursor: isPending ? "wait" : "pointer",
-                  opacity: isPending ? 0.7 : 1,
-                }}
-              >
-                {t("Save to Dashboard", "Simpan ke Dashboard", lang)}
-              </button>
-            ) : (
-              <span
-                style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "0.85rem",
-                  color: "oklch(80% 0.01 80)",
-                }}
-              >
-                {t("Saved", "Tersimpan", lang)} ✓
-              </span>
-            )}
-          </div>
+          <button
+            onClick={handleSave}
+            disabled={saved || isPending}
+            aria-label={t(saved ? "Saved to dashboard" : "Save to dashboard", saved ? "Tersimpan di dasbor" : "Simpan ke dasbor")}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              minHeight: 44, padding: "10px 20px",
+              background: "transparent", border: `1.5px solid ${saved ? orange : "oklch(55% 0.04 260)"}`,
+              borderRadius: 8, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 600,
+              color: saved ? orange : "oklch(70% 0.04 260)", cursor: saved ? "default" : "pointer",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill={saved ? orange : "none"} stroke={saved ? orange : "currentColor"} strokeWidth="1.5" aria-hidden="true">
+              <path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z"/>
+            </svg>
+            {t(saved ? "Saved" : "Save to Dashboard", saved ? "Tersimpan" : "Simpan ke Dasbor", lang)}
+          </button>
         </div>
       </section>
 
@@ -336,17 +341,31 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "Five years into cross-cultural ministry, in a city far from home, a worker was producing visible fruit. The team was growing. The program was running. By any external measure, the work was succeeding. What no one saw -- including the worker -- was the cost building underneath. The early-morning hours that had once felt like communion began to feel like catching up. The people they served began to feel like demand. By the time the collapse came, no one, including the worker, had seen it building.",
-              "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pekerja menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun -- termasuk pekerja itu sendiri -- adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pekerja itu sendiri, yang melihatnya datang.",
+              "Five years into cross-cultural ministry, in a city far from home, a worker was producing visible fruit. The team was growing. The program was running. By any external measure, the work was succeeding. What no one saw (including the worker) was the cost building underneath. The early-morning hours that had once felt like communion began to feel like catching up. The people they served began to feel like demand. By the time the collapse came, no one, including the worker, had seen it building.",
+              "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pekerja menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun (termasuk pekerja itu sendiri) adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pekerja itu sendiri, yang melihatnya datang.",
               lang
             )}
           </p>
           <p style={bodyStyle()}>
             {t(
-              "A 2024 study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% reported high or very high burnout levels. In the Philippines the figure was 70.71%. This is not exceptional -- this is the ordinary experience of people doing meaningful work in high-demand, high-accountability contexts. And in cultures where admitting exhaustion means losing face, risking your role, or alarming your supporters back home, the pressure to appear fine compounds the problem significantly. The word for this in Indonesian is malu -- the pressure to protect dignity and standing by not naming the struggle. Many cross-cultural workers carry this pressure without naming it. This module names it first, because nothing that follows makes sense until it does.",
-              "Sebuah studi tahun 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi. Di Filipina angkanya 70,71%. Ini bukan pengecualian -- ini adalah pengalaman biasa orang-orang yang melakukan pekerjaan bermakna dalam konteks tuntutan tinggi dan akuntabilitas tinggi. Dan dalam budaya di mana mengakui kelelahan berarti kehilangan muka, mempertaruhkan peran Anda, atau mengkhawatirkan pendukung Anda di kampung halaman, tekanan untuk tampak baik-baik saja memperburuk masalah secara signifikan. Kata untuk ini dalam bahasa Indonesia adalah malu -- tekanan untuk melindungi martabat dan kedudukan dengan tidak menamai perjuangan. Banyak pekerja lintas budaya membawa tekanan ini tanpa menamakannya. Modul ini menamakannya terlebih dahulu, karena tidak ada yang berikut ini masuk akal sampai hal itu dilakukan.",
+              "A 2024 study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% reported high or very high burnout levels. In the Philippines the figure was 70.71%. This is not exceptional. This is the ordinary experience of people doing meaningful work in high-demand, high-accountability contexts. And in cultures where admitting exhaustion means losing face, risking your role, or alarming your supporters back home, the pressure to appear fine compounds the problem significantly. The word for this in Indonesian is malu: the pressure to protect dignity and standing by not naming the struggle. Many cross-cultural workers carry this pressure without naming it. This module names it first, because nothing that follows makes sense until it does.",
+              "Sebuah studi tahun 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi. Di Filipina angkanya 70,71%. Ini bukan pengecualian. Ini adalah pengalaman biasa orang-orang yang melakukan pekerjaan bermakna dalam konteks tuntutan tinggi dan akuntabilitas tinggi. Dan dalam budaya di mana mengakui kelelahan berarti kehilangan muka, mempertaruhkan peran Anda, atau mengkhawatirkan pendukung Anda di kampung halaman, tekanan untuk tampak baik-baik saja memperburuk masalah secara signifikan. Kata untuk ini dalam bahasa Indonesia adalah malu: tekanan untuk melindungi martabat dan kedudukan dengan tidak menamai perjuangan. Banyak pekerja lintas budaya membawa tekanan ini tanpa menamakannya. Modul ini menamakannya terlebih dahulu, karena tidak ada yang berikut ini masuk akal sampai hal itu dilakukan.",
               lang
             )}
+          </p>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.78rem", color: bodyText, lineHeight: 1.5, marginTop: "-0.75rem", marginBottom: "1.25rem" }}>
+            <a
+              href="https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2024.1326227/full"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: navy, textDecoration: "underline", textUnderlineOffset: "2px" }}
+            >
+              {t(
+                "Source: Abdul Aziz & Ong, \"Prevalence and associated factors of burnout among working adults in Southeast Asia,\" Frontiers in Public Health, 2024",
+                "Sumber: Abdul Aziz & Ong, \"Prevalensi dan faktor terkait kelelahan pada pekerja dewasa di Asia Tenggara,\" Frontiers in Public Health, 2024",
+                lang
+              )}
+            </a>
           </p>
         </div>
       </section>
@@ -362,8 +381,8 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization classifies it as an occupational phenomenon -- a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy (loss of confidence in one's own competence and impact). These three dimensions can operate independently -- a leader can be exhausted but still engaged, or disengaged without being physically depleted.",
-              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia mengklasifikasikannya sebagai fenomena pekerjaan -- sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen -- seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
+              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization classifies it as an occupational phenomenon: a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy (loss of confidence in one's own competence and impact). These three dimensions can operate independently. A leader can be exhausted but still engaged, or disengaged without being physically depleted.",
+              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia mengklasifikasikannya sebagai fenomena pekerjaan: sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen. Seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
               lang
             )}
           </p>
@@ -397,7 +416,7 @@ export default function UnderstandingBurnoutClient({
                   margin: 0,
                 }}
               >
-                {t("Frenetic -- Overload", "Frenetic -- Kelebihan Beban", lang)}
+                {t("Frenetic: Overload", "Frenetic: Kelebihan Beban", lang)}
               </p>
               <p
                 style={{
@@ -412,8 +431,8 @@ export default function UnderstandingBurnoutClient({
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
                 {t(
-                  "High ambition, high commitment, keeps pushing through depletion. Coping style is active but unsustainable. This is often the worker who cannot stop because stopping feels like faithlessness. Visible, productive, well-regarded -- and running on a collapsing foundation.",
-                  "Ambisi tinggi, komitmen tinggi, terus mendorong meskipun sudah terkuras. Gaya mengatasinya aktif tetapi tidak berkelanjutan. Ini sering kali adalah pekerja yang tidak bisa berhenti karena berhenti terasa seperti tidak setia. Terlihat, produktif, dihormati -- dan berjalan di atas fondasi yang runtuh.",
+                  "High ambition, high commitment, keeps pushing through depletion. Coping style is active but unsustainable. This is often the worker who cannot stop because stopping feels like faithlessness. Visible, productive, well-regarded, and running on a collapsing foundation.",
+                  "Ambisi tinggi, komitmen tinggi, terus mendorong meskipun sudah terkuras. Gaya mengatasinya aktif tetapi tidak berkelanjutan. Ini sering kali adalah pekerja yang tidak bisa berhenti karena berhenti terasa seperti tidak setia. Terlihat, produktif, dihormati, dan berjalan di atas fondasi yang runtuh.",
                   lang
                 )}
               </p>
@@ -439,7 +458,7 @@ export default function UnderstandingBurnoutClient({
                   margin: 0,
                 }}
               >
-                {t("Underchallenged -- Disengagement", "Underchallenged -- Ketidakterlibatan", lang)}
+                {t("Underchallenged: Disengagement", "Underchallenged: Ketidakterlibatan", lang)}
               </p>
               <p
                 style={{
@@ -454,8 +473,8 @@ export default function UnderstandingBurnoutClient({
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
                 {t(
-                  "Not overwhelmed but disengaged. Skills are underused. The work feels repetitive, small, disconnected from calling. Common among experienced workers placed in roles below their capacity, or those whose pioneering work has become bureaucratic maintenance. The exhaustion here is not from too much -- it is from too little meaning.",
-                  "Tidak kewalahan tetapi tidak terlibat. Keterampilan tidak dimanfaatkan. Pekerjaan terasa berulang, kecil, terputus dari panggilan. Umum di antara pekerja berpengalaman yang ditempatkan dalam peran di bawah kapasitas mereka, atau mereka yang pekerjaan perintisnya telah menjadi pemeliharaan birokrasi. Kelelahan di sini bukan karena terlalu banyak -- melainkan karena terlalu sedikit makna.",
+                  "Not overwhelmed but disengaged. Skills are underused. The work feels repetitive, small, disconnected from calling. Common among experienced workers placed in roles below their capacity, or those whose pioneering work has become bureaucratic maintenance. The exhaustion here is not from too much. It is from too little meaning.",
+                  "Tidak kewalahan tetapi tidak terlibat. Keterampilan tidak dimanfaatkan. Pekerjaan terasa berulang, kecil, terputus dari panggilan. Umum di antara pekerja berpengalaman yang ditempatkan dalam peran di bawah kapasitas mereka, atau mereka yang pekerjaan perintisnya telah menjadi pemeliharaan birokrasi. Kelelahan di sini bukan karena terlalu banyak, melainkan karena terlalu sedikit makna.",
                   lang
                 )}
               </p>
@@ -481,7 +500,7 @@ export default function UnderstandingBurnoutClient({
                   margin: 0,
                 }}
               >
-                {t("Worn-Out -- Neglect", "Worn-Out -- Pengabaian", lang)}
+                {t("Worn-Out: Neglect", "Worn-Out: Pengabaian", lang)}
               </p>
               <p
                 style={{
@@ -561,8 +580,8 @@ export default function UnderstandingBurnoutClient({
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: "1rem" }}>
                     {t(
-                      "The Job Demands-Resources (JD-R) model offers a structural explanation for burnout. Burnout occurs when job demands -- workload, emotional demands, role ambiguity, interpersonal conflict -- consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem -- it is a structural diagnosis that calls for a structural response.",
-                      "Model Tuntutan Pekerjaan-Sumber Daya (JD-R) menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan -- beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal -- secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter -- ini adalah diagnosis struktural yang membutuhkan respons struktural.",
+                      "The Job Demands-Resources (JD-R) model offers a structural explanation for burnout. Burnout occurs when job demands (workload, emotional demands, role ambiguity, interpersonal conflict) consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem. It is a structural diagnosis that calls for a structural response.",
+                      "Model Tuntutan Pekerjaan-Sumber Daya (JD-R) menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan (beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal) secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter. Ini adalah diagnosis struktural yang membutuhkan respons struktural.",
                       lang
                     )}
                   </p>
@@ -579,8 +598,8 @@ export default function UnderstandingBurnoutClient({
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: 0 }}>
                     {t(
-                      "Prolonged exposure to elevated cortisol -- the hormone released under chronic stress -- progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected -- and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
-                      "Paparan berkepanjangan terhadap kortisol yang meningkat -- hormon yang dilepaskan di bawah stres kronis -- secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung -- dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
+                      "Prolonged exposure to elevated cortisol (the hormone released under chronic stress) progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected, and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
+                      "Paparan berkepanjangan terhadap kortisol yang meningkat (hormon yang dilepaskan di bawah stres kronis) secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung, dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
                       lang
                     )}
                   </p>
@@ -602,8 +621,8 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "This is not a clinical diagnostic. It is a mirror -- a way to see patterns that are often invisible from the inside. Burnout, unlike most challenges, is characterised by the person experiencing it being one of the last to notice. The assessment places you on a four-band spectrum and identifies which of the three Montero-Marin patterns is most prominent for you right now.",
-              "Ini bukan diagnosis klinis. Ini adalah cermin -- cara untuk melihat pola yang sering tidak terlihat dari dalam. Kelelahan, tidak seperti sebagian besar tantangan, ditandai oleh orang yang mengalaminya sebagai salah satu yang terakhir menyadari. Penilaian ini menempatkan Anda pada spektrum empat band dan mengidentifikasi mana dari tiga pola Montero-Marin yang paling menonjol bagi Anda saat ini.",
+              "This is not a clinical diagnostic. It is a mirror: a way to see patterns that are often invisible from the inside. Burnout, unlike most challenges, is characterised by the person experiencing it being one of the last to notice. The assessment places you on a four-band spectrum and identifies which of the three Montero-Marin patterns is most prominent for you right now.",
+              "Ini bukan diagnosis klinis. Ini adalah cermin: cara untuk melihat pola yang sering tidak terlihat dari dalam. Kelelahan, tidak seperti sebagian besar tantangan, ditandai oleh orang yang mengalaminya sebagai salah satu yang terakhir menyadari. Penilaian ini menempatkan Anda pada spektrum empat band dan mengidentifikasi mana dari tiga pola Montero-Marin yang paling menonjol bagi Anda saat ini.",
               lang
             )}
           </p>
@@ -781,20 +800,20 @@ export default function UnderstandingBurnoutClient({
               <p style={bodyStyle()}>
                 {band === "identity" &&
                   t(
-                    "Your current pattern shows a sustainable base. You are not immune to drift -- but the indicators right now point toward work rooted in identity rather than performance. The challenge at this stage is staying aware: burnout most often takes hold when leaders stop asking the question.",
-                    "Pola Anda saat ini menunjukkan fondasi yang berkelanjutan. Anda tidak kebal terhadap penyimpangan -- tetapi indikator saat ini menunjukkan pekerjaan yang berakar pada identitas daripada kinerja. Tantangan pada tahap ini adalah tetap waspada: kelelahan paling sering terjadi ketika pemimpin berhenti mengajukan pertanyaan ini.",
+                    "Your current pattern shows a sustainable base. You are not immune to drift, but the indicators right now point toward work rooted in identity rather than performance. The challenge at this stage is staying aware: burnout most often takes hold when leaders stop asking the question.",
+                    "Pola Anda saat ini menunjukkan fondasi yang berkelanjutan. Anda tidak kebal terhadap penyimpangan, tetapi indikator saat ini menunjukkan pekerjaan yang berakar pada identitas daripada kinerja. Tantangan pada tahap ini adalah tetap waspada: kelelahan paling sering terjadi ketika pemimpin berhenti mengajukan pertanyaan ini.",
                     lang
                   )}
                 {band === "drifting" &&
                   t(
-                    "Early-stage drift is detectable. You are not in crisis, but patterns are present that -- unaddressed -- tend toward depletion. This is the most common result, and the most actionable one. You have enough margin left to change direction before it becomes harder.",
-                    "Penyimpangan tahap awal dapat dideteksi. Anda tidak dalam krisis, tetapi ada pola yang -- jika tidak ditangani -- cenderung menuju penipisan. Ini adalah hasil yang paling umum, dan yang paling dapat ditindaklanjuti. Anda masih memiliki cukup ruang untuk mengubah arah sebelum menjadi lebih sulit.",
+                    "Early-stage drift is detectable. You are not in crisis, but patterns are present that (if unaddressed) tend toward depletion. This is the most common result, and the most actionable one. You have enough margin left to change direction before it becomes harder.",
+                    "Penyimpangan tahap awal dapat dideteksi. Anda tidak dalam krisis, tetapi ada pola yang (jika tidak ditangani) cenderung menuju penipisan. Ini adalah hasil yang paling umum, dan yang paling dapat ditindaklanjuti. Anda masih memiliki cukup ruang untuk mengubah arah sebelum menjadi lebih sulit.",
                     lang
                   )}
                 {band === "at-risk" &&
                   t(
-                    "Significant imbalance is present. A recognisable subtype pattern is identifiable in your scores. Intervention is warranted now -- not after the next season, not when things slow down. The practical pathways in Section 5 are directly relevant to where you are.",
-                    "Ketidakseimbangan yang signifikan ada. Pola subtipe yang dapat dikenali dapat diidentifikasi dalam skor Anda. Intervensi diperlukan sekarang -- bukan setelah musim berikutnya, bukan ketika segala sesuatunya melambat. Jalur praktis di Bagian 5 langsung relevan dengan posisi Anda.",
+                    "Significant imbalance is present. A recognisable subtype pattern is identifiable in your scores. Intervention is warranted now. Not after the next season, not when things slow down. The practical pathways in Section 5 are directly relevant to where you are.",
+                    "Ketidakseimbangan yang signifikan ada. Pola subtipe yang dapat dikenali dapat diidentifikasi dalam skor Anda. Intervensi diperlukan sekarang. Bukan setelah musim berikutnya, bukan ketika segala sesuatunya melambat. Jalur praktis di Bagian 5 langsung relevan dengan posisi Anda.",
                     lang
                   )}
                 {band === "burning" &&
@@ -847,8 +866,8 @@ export default function UnderstandingBurnoutClient({
                     )}
                   {band === "drifting" &&
                     t(
-                      "Read Section 4 -- The Drift Nobody Planned -- carefully. Then identify which burning emotion from Section 6 has been driving the drift.",
-                      "Baca Bagian 4 -- Penyimpangan yang Tidak Direncanakan Siapapun -- dengan seksama. Kemudian identifikasi emosi terbakar mana dari Bagian 6 yang telah mendorong penyimpangan.",
+                      "Read Section 4 (The Drift Nobody Planned) carefully. Then identify which burning emotion from Section 6 has been driving the drift.",
+                      "Baca Bagian 4 (Penyimpangan yang Tidak Direncanakan Siapapun) dengan seksama. Kemudian identifikasi emosi terbakar mana dari Bagian 6 yang telah mendorong penyimpangan.",
                       lang
                     )}
                   {band === "at-risk" &&
@@ -859,8 +878,8 @@ export default function UnderstandingBurnoutClient({
                     )}
                   {band === "burning" &&
                     t(
-                      "Section 5 -- The Worn-Out pathway -- is written for where you are. Please also reach out to someone today.",
-                      "Bagian 5 -- jalur Worn-Out -- ditulis untuk posisi Anda. Mohon juga hubungi seseorang hari ini.",
+                      "Section 5 (the Worn-Out pathway) is written for where you are. Please also reach out to someone today.",
+                      "Bagian 5 (jalur Worn-Out) ditulis untuk posisi Anda. Mohon juga hubungi seseorang hari ini.",
                       lang
                     )}
                 </p>
@@ -908,15 +927,15 @@ export default function UnderstandingBurnoutClient({
           </p>
           <p style={bodyStyle(true)}>
             {t(
-              "Selfish ambition does not announce itself as selfish ambition. In ministry and cross-cultural work, it wears ministry clothes. It sounds like vision, like faithfulness, like sacrifice, like responsibility. The worker who cannot delegate because the standard will drop -- that may not be diligence; it may be control. The worker who cannot rest because the need is too great -- that may not be calling; it may be fear of what happens to their sense of worth when the output stops. The worker who cannot receive help without feeling ashamed -- that is not strength; that is isolation wearing the face of faith.",
-              "Ambisi egois tidak mengumumkan dirinya sebagai ambisi egois. Dalam pelayanan dan pekerjaan lintas budaya, ia mengenakan pakaian pelayanan. Terdengar seperti visi, seperti kesetiaan, seperti pengorbanan, seperti tanggung jawab. Pekerja yang tidak bisa mendelegasikan karena standar akan menurun -- itu mungkin bukan ketekunan; mungkin kontrol. Pekerja yang tidak bisa beristirahat karena kebutuhan terlalu besar -- itu mungkin bukan panggilan; mungkin ketakutan akan apa yang terjadi pada rasa nilai diri mereka ketika output berhenti. Pekerja yang tidak bisa menerima bantuan tanpa merasa malu -- itu bukan kekuatan; itu isolasi yang mengenakan wajah iman.",
+              "Selfish ambition does not announce itself as selfish ambition. In ministry and cross-cultural work, it wears ministry clothes. It sounds like vision, like faithfulness, like sacrifice, like responsibility. The worker who cannot delegate because the standard will drop: that may not be diligence; it may be control. The worker who cannot rest because the need is too great: that may not be calling; it may be fear of what happens to their sense of worth when the output stops. The worker who cannot receive help without feeling ashamed: that is not strength; that is isolation wearing the face of faith.",
+              "Ambisi egois tidak mengumumkan dirinya sebagai ambisi egois. Dalam pelayanan dan pekerjaan lintas budaya, ia mengenakan pakaian pelayanan. Terdengar seperti visi, seperti kesetiaan, seperti pengorbanan, seperti tanggung jawab. Pekerja yang tidak bisa mendelegasikan karena standar akan menurun: itu mungkin bukan ketekunan; mungkin kontrol. Pekerja yang tidak bisa beristirahat karena kebutuhan terlalu besar: itu mungkin bukan panggilan; mungkin ketakutan akan apa yang terjadi pada rasa nilai diri mereka ketika output berhenti. Pekerja yang tidak bisa menerima bantuan tanpa merasa malu: itu bukan kekuatan; itu isolasi yang mengenakan wajah iman.",
               lang
             )}
           </p>
           <p style={bodyStyle(true)}>
             {t(
-              "In 1 Kings 19, Elijah collapses under a broom tree after his greatest public victory. An angel arrives. Not with a word of correction or a theological challenge. With food and water -- twice. 'The journey is too great for you.' God's first response to burnout is physical. Rest before duty. Body before soul. No rebuke. When Elijah finally speaks, God listens. When Elijah finally walks again, God meets him not in the fire or the earthquake or the wind -- but in the still small voice. Recovery from burnout is not spectacular. It is slow, quiet, and arrives in the spaces where noise has finally stopped.",
-              "Dalam 1 Raja-raja 19, Elia runtuh di bawah pohon aras setelah kemenangan publik terbesarnya. Seorang malaikat datang. Bukan dengan kata-kata koreksi atau tantangan teologis. Dengan makanan dan air -- dua kali. 'Perjalanan ini terlalu berat bagimu.' Respons pertama Allah terhadap kelelahan bersifat fisik. Istirahat sebelum kewajiban. Tubuh sebelum jiwa. Tidak ada teguran. Ketika Elia akhirnya berbicara, Allah mendengarkan. Ketika Elia akhirnya berjalan lagi, Allah menemuinya bukan dalam api atau gempa bumi atau angin -- tetapi dalam suara yang sunyi dan lembut. Pemulihan dari kelelahan bukanlah hal yang spektakuler. Ini lambat, tenang, dan tiba di ruang di mana kebisingan akhirnya berhenti.",
+              "In 1 Kings 19, Elijah collapses under a broom tree after his greatest public victory. An angel arrives. Not with a word of correction or a theological challenge. With food and water, twice. 'The journey is too great for you.' God's first response to burnout is physical. Rest before duty. Body before soul. No rebuke. When Elijah finally speaks, God listens. When Elijah finally walks again, God meets him not in the fire or the earthquake or the wind, but in the still small voice. Recovery from burnout is not spectacular. It is slow, quiet, and arrives in the spaces where noise has finally stopped.",
+              "Dalam 1 Raja-raja 19, Elia runtuh di bawah pohon aras setelah kemenangan publik terbesarnya. Seorang malaikat datang. Bukan dengan kata-kata koreksi atau tantangan teologis. Dengan makanan dan air, dua kali. 'Perjalanan ini terlalu berat bagimu.' Respons pertama Allah terhadap kelelahan bersifat fisik. Istirahat sebelum kewajiban. Tubuh sebelum jiwa. Tidak ada teguran. Ketika Elia akhirnya berbicara, Allah mendengarkan. Ketika Elia akhirnya berjalan lagi, Allah menemuinya bukan dalam api atau gempa bumi atau angin, tetapi dalam suara yang sunyi dan lembut. Pemulihan dari kelelahan bukanlah hal yang spektakuler. Ini lambat, tenang, dan tiba di ruang di mana kebisingan akhirnya berhenti.",
               lang
             )}
           </p>
@@ -975,8 +994,8 @@ export default function UnderstandingBurnoutClient({
                   </p>
                   <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.8, color: "oklch(82% 0.01 80)", margin: 0 }}>
                     {t(
-                      "Four signs that the drift has begun: (1) You feel guilty when you are not working, even during designated rest. (2) You have stopped being honest with the people closest to you about how you are actually doing. (3) The work has stopped being something you do from a place of fullness and started feeling like something you owe. (4) Your physical health, sleep quality, or key relationships have quietly deteriorated -- and you have not named it to anyone.",
-                      "Empat tanda bahwa penyimpangan telah dimulai: (1) Anda merasa bersalah ketika tidak bekerja, bahkan selama waktu istirahat yang ditetapkan. (2) Anda telah berhenti jujur dengan orang-orang terdekat Anda tentang bagaimana keadaan Anda sebenarnya. (3) Pekerjaan telah berhenti menjadi sesuatu yang Anda lakukan dari tempat yang penuh dan mulai terasa seperti sesuatu yang Anda utang. (4) Kesehatan fisik, kualitas tidur, atau hubungan kunci Anda telah menurun diam-diam -- dan Anda belum memberitahukannya kepada siapa pun.",
+                      "Four signs that the drift has begun: (1) You feel guilty when you are not working, even during designated rest. (2) You have stopped being honest with the people closest to you about how you are actually doing. (3) The work has stopped being something you do from a place of fullness and started feeling like something you owe. (4) Your physical health, sleep quality, or key relationships have quietly deteriorated, and you have not named it to anyone.",
+                      "Empat tanda bahwa penyimpangan telah dimulai: (1) Anda merasa bersalah ketika tidak bekerja, bahkan selama waktu istirahat yang ditetapkan. (2) Anda telah berhenti jujur dengan orang-orang terdekat Anda tentang bagaimana keadaan Anda sebenarnya. (3) Pekerjaan telah berhenti menjadi sesuatu yang Anda lakukan dari tempat yang penuh dan mulai terasa seperti sesuatu yang Anda utang. (4) Kesehatan fisik, kualitas tidur, atau hubungan kunci Anda telah menurun diam-diam, dan Anda belum memberitahukannya kepada siapa pun.",
                       lang
                     )}
                   </p>
@@ -998,8 +1017,8 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "The right response to burnout depends on which pattern you are in. A frenetic worker needs something different from an underchallenged worker, and both need something different from a worn-out worker. What follows are three targeted pathways -- one for each subtype. Find the one that matches your assessment result.",
-              "Respons yang tepat terhadap kelelahan tergantung pada pola mana yang Anda alami. Pekerja frenetic membutuhkan sesuatu yang berbeda dari pekerja underchallenged, dan keduanya membutuhkan sesuatu yang berbeda dari pekerja worn-out. Berikut adalah tiga jalur yang ditargetkan -- satu untuk setiap subtipe. Temukan yang sesuai dengan hasil penilaian Anda.",
+              "The right response to burnout depends on which pattern you are in. A frenetic worker needs something different from an underchallenged worker, and both need something different from a worn-out worker. What follows are three targeted pathways, one for each subtype. Find the one that matches your assessment result.",
+              "Respons yang tepat terhadap kelelahan tergantung pada pola mana yang Anda alami. Pekerja frenetic membutuhkan sesuatu yang berbeda dari pekerja underchallenged, dan keduanya membutuhkan sesuatu yang berbeda dari pekerja worn-out. Berikut adalah tiga jalur yang ditargetkan, satu untuk setiap subtipe. Temukan yang sesuai dengan hasil penilaian Anda.",
               lang
             )}
           </p>
@@ -1010,8 +1029,8 @@ export default function UnderstandingBurnoutClient({
               key: "frenetic",
               title: t("If you are frenetic: permission to stop", "Jika Anda frenetic: izin untuk berhenti", lang),
               body: t(
-                "The primary intervention is identity-based permission to stop -- not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
-                "Intervensi utama adalah izin berbasis identitas untuk berhenti -- bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
+                "The primary intervention is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
+                "Intervensi utama adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
                 lang
               ),
             },
@@ -1019,8 +1038,8 @@ export default function UnderstandingBurnoutClient({
               key: "underchallenged",
               title: t("If you are underchallenged: renewed purpose", "Jika Anda underchallenged: tujuan yang diperbarui", lang),
               body: t(
-                "The intervention here is renewed purpose and craft challenge -- not more rest. Have an honest conversation with leadership about role fit, skill match, and how your best contribution is actually being used. Build peer relationships with people doing substantive work in your field. Ask the specific question beneath the general one: not just 'am I called to this kind of work?' but 'what is the particular thing I am made to do -- and is there room for it here?' The Jethro model from Exodus 18 is relevant: Jethro did not tell Moses to pray more or manage his stress better. He looked at the structure and said it was not good -- and then he changed the structure.",
-                "Intervensi di sini adalah tujuan yang diperbarui dan tantangan kerajinan -- bukan lebih banyak istirahat. Lakukan percakapan jujur dengan kepemimpinan tentang kesesuaian peran, kecocokan keterampilan, dan bagaimana kontribusi terbaik Anda sebenarnya digunakan. Bangun hubungan rekan dengan orang-orang yang melakukan pekerjaan substantif di bidang Anda. Ajukan pertanyaan spesifik di balik pertanyaan umum: bukan hanya 'apakah saya dipanggil untuk jenis pekerjaan ini?' tetapi 'apa hal khusus yang saya diciptakan untuk lakukan -- dan apakah ada ruang untuk itu di sini?' Model Yitro dari Keluaran 18 relevan: Yitro tidak memberitahu Musa untuk lebih berdoa atau mengelola stresnya dengan lebih baik. Ia melihat strukturnya dan berkata itu tidak baik -- dan kemudian ia mengubah strukturnya.",
+                "The intervention here is renewed purpose and craft challenge, not more rest. Have an honest conversation with leadership about role fit, skill match, and how your best contribution is actually being used. Build peer relationships with people doing substantive work in your field. Ask the specific question beneath the general one: not just 'am I called to this kind of work?' but 'what is the particular thing I am made to do, and is there room for it here?' The Jethro model from Exodus 18 is relevant: Jethro did not tell Moses to pray more or manage his stress better. He looked at the structure and said it was not good, and then he changed the structure.",
+                "Intervensi di sini adalah tujuan yang diperbarui dan tantangan kerajinan, bukan lebih banyak istirahat. Lakukan percakapan jujur dengan kepemimpinan tentang kesesuaian peran, kecocokan keterampilan, dan bagaimana kontribusi terbaik Anda sebenarnya digunakan. Bangun hubungan rekan dengan orang-orang yang melakukan pekerjaan substantif di bidang Anda. Ajukan pertanyaan spesifik di balik pertanyaan umum: bukan hanya 'apakah saya dipanggil untuk jenis pekerjaan ini?' tetapi 'apa hal khusus yang saya diciptakan untuk lakukan, dan apakah ada ruang untuk itu di sini?' Model Yitro dari Keluaran 18 relevan: Yitro tidak memberitahu Musa untuk lebih berdoa atau mengelola stresnya dengan lebih baik. Ia melihat strukturnya dan berkata itu tidak baik, dan kemudian ia mengubah strukturnya.",
                 lang
               ),
             },
@@ -1028,8 +1047,8 @@ export default function UnderstandingBurnoutClient({
               key: "worn-out",
               title: t("If you are worn-out: honest assessment", "Jika Anda worn-out: penilaian yang jujur", lang),
               body: t(
-                "This pattern is the most serious and requires honest assessment of whether recovery is possible within the current system without structural change -- or whether a period of leave, clinical support, or a role change is needed. Worn-out burnout does not respond well to individual practices alone: the structural and relational drivers need to change. This module can offer a framework and a starting point. It cannot replace a trusted counsellor, a wise supervisor, a doctor, or a member care worker. If you scored in this range, the most important next step is not to read more content -- it is to tell one person the truth about where you actually are today.",
-                "Pola ini adalah yang paling serius dan memerlukan penilaian jujur apakah pemulihan mungkin dalam sistem saat ini tanpa perubahan struktural -- atau apakah diperlukan periode cuti, dukungan klinis, atau perubahan peran. Kelelahan worn-out tidak merespons dengan baik terhadap praktik individu saja: pendorong struktural dan relasional perlu berubah. Modul ini dapat menawarkan kerangka kerja dan titik awal. Ini tidak dapat menggantikan konselor yang dipercaya, pengawas yang bijak, dokter, atau pekerja perawatan anggota. Jika Anda mendapat skor dalam rentang ini, langkah terpenting selanjutnya bukanlah membaca lebih banyak konten -- melainkan menceritakan kebenaran kepada satu orang tentang posisi Anda sebenarnya hari ini.",
+                "This pattern is the most serious and requires honest assessment of whether recovery is possible within the current system without structural change, or whether a period of leave, clinical support, or a role change is needed. Worn-out burnout does not respond well to individual practices alone: the structural and relational drivers need to change. This module can offer a framework and a starting point. It cannot replace a trusted counsellor, a wise supervisor, a doctor, or a member care worker. If you scored in this range, the most important next step is not to read more content. It is to tell one person the truth about where you actually are today.",
+                "Pola ini adalah yang paling serius dan memerlukan penilaian jujur apakah pemulihan mungkin dalam sistem saat ini tanpa perubahan struktural, atau apakah diperlukan periode cuti, dukungan klinis, atau perubahan peran. Kelelahan worn-out tidak merespons dengan baik terhadap praktik individu saja: pendorong struktural dan relasional perlu berubah. Modul ini dapat menawarkan kerangka kerja dan titik awal. Ini tidak dapat menggantikan konselor yang dipercaya, pengawas yang bijak, dokter, atau pekerja perawatan anggota. Jika Anda mendapat skor dalam rentang ini, langkah terpenting selanjutnya bukanlah membaca lebih banyak konten. Melainkan menceritakan kebenaran kepada satu orang tentang posisi Anda sebenarnya hari ini.",
                 lang
               ),
             },
@@ -1102,7 +1121,7 @@ export default function UnderstandingBurnoutClient({
                 marginTop: 0,
               }}
             >
-              {t("This Week -- Reflect and Mark", "Minggu Ini -- Renungkan dan Tandai", lang)}
+              {t("This Week: Reflect and Mark", "Minggu Ini: Renungkan dan Tandai", lang)}
             </h3>
             <div
               style={{
@@ -1154,14 +1173,14 @@ export default function UnderstandingBurnoutClient({
                     ? [
                         "Name what is driving the pressure (fear / comparison / control / recognition)",
                         "Ask: is this mine to carry, or have I taken it from someone else?",
-                        "Choose one thing to let go of today -- not postpone, let go",
+                        "Choose one thing to let go of today. Not postpone. Let go.",
                         "Remember: Jesus worked from rest. The yoke is easy, the burden is light.",
                         "Tell someone the truth about where I am today",
                       ]
                     : [
                         "Namai apa yang mendorong tekanan (ketakutan / perbandingan / kontrol / pengakuan)",
                         "Tanya: apakah ini milik saya untuk ditanggung, atau saya ambil dari orang lain?",
-                        "Pilih satu hal untuk dilepaskan hari ini -- bukan ditunda, dilepaskan",
+                        "Pilih satu hal untuk dilepaskan hari ini. Bukan ditunda. Dilepaskan.",
                         "Ingat: Yesus bekerja dari istirahat. Kuk itu enak, bebannya ringan.",
                         "Ceritakan kebenaran kepada seseorang tentang di mana saya hari ini",
                       ],
@@ -1286,8 +1305,8 @@ export default function UnderstandingBurnoutClient({
 
           <p style={bodyStyle(true)}>
             {t(
-              "James is not describing two categories of people. He is describing two modes of operating that any person can inhabit -- sometimes in the same week. Earthly wisdom drives from zelos: burning emotional energy, comparison, the need to produce and be seen. It feels urgent and motivated. It produces disorder. Wisdom from above is pure, peace-loving, willing to yield. It is not passive or unproductive -- it produces fruit. But its source is different. The diagnostic question is not how hard you are working. It is from where.",
-              "Yakobus tidak menggambarkan dua kategori orang. Ia menggambarkan dua mode beroperasi yang dapat dihuni siapa saja -- kadang-kadang dalam minggu yang sama. Hikmat duniawi bergerak dari zelos: energi emosional yang membara, perbandingan, kebutuhan untuk menghasilkan dan dilihat. Rasanya mendesak dan termotivasi. Ini menghasilkan ketidaktertiban. Hikmat dari atas murni, mencintai perdamaian, mau mengalah. Ini tidak pasif atau tidak produktif -- ini menghasilkan buah. Tetapi sumbernya berbeda. Pertanyaan diagnostik bukan seberapa keras Anda bekerja. Melainkan dari mana.",
+              "James is not describing two categories of people. He is describing two modes of operating that any person can inhabit, sometimes in the same week. Earthly wisdom drives from zelos: burning emotional energy, comparison, the need to produce and be seen. It feels urgent and motivated. It produces disorder. Wisdom from above is pure, peace-loving, willing to yield. It is not passive or unproductive; it produces fruit. But its source is different. The diagnostic question is not how hard you are working. It is from where.",
+              "Yakobus tidak menggambarkan dua kategori orang. Ia menggambarkan dua mode beroperasi yang dapat dihuni siapa saja, kadang-kadang dalam minggu yang sama. Hikmat duniawi bergerak dari zelos: energi emosional yang membara, perbandingan, kebutuhan untuk menghasilkan dan dilihat. Rasanya mendesak dan termotivasi. Ini menghasilkan ketidaktertiban. Hikmat dari atas murni, mencintai perdamaian, mau mengalah. Ini tidak pasif atau tidak produktif; ini menghasilkan buah. Tetapi sumbernya berbeda. Pertanyaan diagnostik bukan seberapa keras Anda bekerja. Melainkan dari mana.",
               lang
             )}
           </p>
@@ -1304,8 +1323,8 @@ export default function UnderstandingBurnoutClient({
               }}
             >
               {t(
-                "James names the emotions that drive earthly wisdom -- the ones that quietly shape decisions, responses, and pace of life. Which one whispers loudest in you right now?",
-                "Yakobus menamai emosi yang mendorong hikmat duniawi -- yang diam-diam membentuk keputusan, respons, dan kecepatan hidup. Mana yang paling keras berbisik dalam diri Anda saat ini?",
+                "James names the emotions that drive earthly wisdom: the ones that quietly shape decisions, responses, and pace of life. Which one whispers loudest in you right now?",
+                "Yakobus menamai emosi yang mendorong hikmat duniawi: yang diam-diam membentuk keputusan, respons, dan kecepatan hidup. Mana yang paling keras berbisik dalam diri Anda saat ini?",
                 lang
               )}
             </p>
@@ -1324,8 +1343,8 @@ export default function UnderstandingBurnoutClient({
                   icon: "◇",
                   label: t("Fear", "Ketakutan", lang),
                   reflection: {
-                    en: "What are you afraid will happen if you slow down or let go? Name it specifically -- not 'things will fall apart' but what specifically you fear losing.",
-                    id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik -- bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
+                    en: "What are you afraid will happen if you slow down or let go? Name it specifically: not 'things will fall apart' but what specifically you fear losing.",
+                    id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik: bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
                   },
                 },
                 {
@@ -1333,8 +1352,8 @@ export default function UnderstandingBurnoutClient({
                   icon: "⟷",
                   label: t("Comparison", "Perbandingan", lang),
                   reflection: {
-                    en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you -- and what would it free you from if you stopped?",
-                    id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda -- dan dari apa Anda akan bebas jika berhenti?",
+                    en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you, and what would it free you from if you stopped?",
+                    id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda, dan dari apa Anda akan bebas jika berhenti?",
                   },
                 },
                 {
@@ -1342,8 +1361,8 @@ export default function UnderstandingBurnoutClient({
                   icon: "△",
                   label: t("Frustration", "Frustrasi", lang),
                   reflection: {
-                    en: "What expectation -- of yourself, your work, or God -- is not being met? Is the expectation yours, or was it given to you by someone else?",
-                    id: "Harapan apa -- terhadap diri sendiri, pekerjaan Anda, atau Allah -- yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
+                    en: "What expectation (of yourself, your work, or God) is not being met? Is the expectation yours, or was it given to you by someone else?",
+                    id: "Harapan apa (terhadap diri sendiri, pekerjaan Anda, atau Allah) yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
                   },
                 },
                 {
@@ -1351,8 +1370,8 @@ export default function UnderstandingBurnoutClient({
                   icon: "◉",
                   label: t("Pride", "Kebanggaan", lang),
                   reflection: {
-                    en: "Where have you made yourself indispensable? What would actually happen -- in the work, in the team, in God's purposes -- if you stepped back or asked for help?",
-                    id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi -- dalam pekerjaan, dalam tim, dalam tujuan Allah -- jika Anda mundur atau meminta bantuan?",
+                    en: "Where have you made yourself indispensable? What would actually happen (in the work, in the team, in God's purposes) if you stepped back or asked for help?",
+                    id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi (dalam pekerjaan, dalam tim, dalam tujuan Allah) jika Anda mundur atau meminta bantuan?",
                   },
                 },
                 {
@@ -1360,8 +1379,8 @@ export default function UnderstandingBurnoutClient({
                   icon: "☆",
                   label: t("Desire for recognition", "Keinginan akan pengakuan", lang),
                   reflection: {
-                    en: "Who do you most want to notice the work you are doing? What would it mean if they never did -- and what does that tell you about where your worth is rooted?",
-                    id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya -- dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
+                    en: "Who do you most want to notice the work you are doing? What would it mean if they never did, and what does that tell you about where your worth is rooted?",
+                    id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya, dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
                   },
                 },
                 {
@@ -1441,24 +1460,24 @@ export default function UnderstandingBurnoutClient({
                   {(() => {
                     const emotions: Record<string, { en: string; id: string }> = {
                       fear: {
-                        en: "What are you afraid will happen if you slow down or let go? Name it specifically -- not 'things will fall apart' but what specifically you fear losing.",
-                        id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik -- bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
+                        en: "What are you afraid will happen if you slow down or let go? Name it specifically: not 'things will fall apart' but what specifically you fear losing.",
+                        id: "Apa yang Anda takutkan akan terjadi jika Anda memperlambat atau melepaskan? Namai secara spesifik: bukan 'semuanya akan hancur' tetapi apa yang secara spesifik Anda takutkan untuk kehilangan.",
                       },
                       comparison: {
-                        en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you -- and what would it free you from if you stopped?",
-                        id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda -- dan dari apa Anda akan bebas jika berhenti?",
+                        en: "Whose output, reach, or recognition have you been measuring yourself against? What does that comparison cost you, and what would it free you from if you stopped?",
+                        id: "Output, jangkauan, atau pengakuan siapa yang telah Anda jadikan tolok ukur diri Anda? Apa biaya perbandingan itu bagi Anda, dan dari apa Anda akan bebas jika berhenti?",
                       },
                       frustration: {
-                        en: "What expectation -- of yourself, your work, or God -- is not being met? Is the expectation yours, or was it given to you by someone else?",
-                        id: "Harapan apa -- terhadap diri sendiri, pekerjaan Anda, atau Allah -- yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
+                        en: "What expectation (of yourself, your work, or God) is not being met? Is the expectation yours, or was it given to you by someone else?",
+                        id: "Harapan apa (terhadap diri sendiri, pekerjaan Anda, atau Allah) yang tidak terpenuhi? Apakah harapan itu milik Anda, atau diberikan kepada Anda oleh orang lain?",
                       },
                       pride: {
-                        en: "Where have you made yourself indispensable? What would actually happen -- in the work, in the team, in God's purposes -- if you stepped back or asked for help?",
-                        id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi -- dalam pekerjaan, dalam tim, dalam tujuan Allah -- jika Anda mundur atau meminta bantuan?",
+                        en: "Where have you made yourself indispensable? What would actually happen (in the work, in the team, in God's purposes) if you stepped back or asked for help?",
+                        id: "Di mana Anda telah membuat diri Anda tak tergantikan? Apa yang sebenarnya akan terjadi (dalam pekerjaan, dalam tim, dalam tujuan Allah) jika Anda mundur atau meminta bantuan?",
                       },
                       recognition: {
-                        en: "Who do you most want to notice the work you are doing? What would it mean if they never did -- and what does that tell you about where your worth is rooted?",
-                        id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya -- dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
+                        en: "Who do you most want to notice the work you are doing? What would it mean if they never did, and what does that tell you about where your worth is rooted?",
+                        id: "Siapa yang paling ingin Anda perhatikan untuk pekerjaan yang Anda lakukan? Apa artinya jika mereka tidak pernah melakukannya, dan apa yang itu katakan tentang di mana akar nilai diri Anda?",
                       },
                       control: {
                         en: "What are you currently managing that you were never meant to carry alone? What would it look like to trust God and the people around you with a piece of it this week?",
@@ -1476,8 +1495,8 @@ export default function UnderstandingBurnoutClient({
           {/* Birds paragraph */}
           <p style={bodyStyle(true)}>
             {t(
-              "God made birds to fly. Flying is their identity -- it costs energy, but it does not burn them out, because they are operating from what they were made for. A fish swimming costs energy. Neither bird nor fish burns out from doing what they are made to do. We burn out when our identity shifts from 'what I am made for' to 'what I must produce.' Working from identity costs energy. Working from fear, ambition, or need for recognition consumes it.",
-              "Allah menciptakan burung untuk terbang. Terbang adalah identitas mereka -- ini membutuhkan energi, tetapi tidak membuat mereka kelelahan, karena mereka beroperasi dari apa yang mereka diciptakan untuk lakukan. Ikan berenang membutuhkan energi. Baik burung maupun ikan tidak kelelahan dari melakukan apa yang mereka diciptakan untuk lakukan. Kita kelelahan ketika identitas kita bergeser dari 'apa yang saya diciptakan untuk lakukan' ke 'apa yang harus saya hasilkan.' Bekerja dari identitas membutuhkan energi. Bekerja dari ketakutan, ambisi, atau kebutuhan akan pengakuan menghabiskannya.",
+              "God made birds to fly. Flying is their identity: it costs energy, but it does not burn them out, because they are operating from what they were made for. A fish swimming costs energy. Neither bird nor fish burns out from doing what they are made to do. We burn out when our identity shifts from 'what I am made for' to 'what I must produce.' Working from identity costs energy. Working from fear, ambition, or need for recognition consumes it.",
+              "Allah menciptakan burung untuk terbang. Terbang adalah identitas mereka: ini membutuhkan energi, tetapi tidak membuat mereka kelelahan, karena mereka beroperasi dari apa yang mereka diciptakan untuk lakukan. Ikan berenang membutuhkan energi. Baik burung maupun ikan tidak kelelahan dari melakukan apa yang mereka diciptakan untuk lakukan. Kita kelelahan ketika identitas kita bergeser dari 'apa yang saya diciptakan untuk lakukan' ke 'apa yang harus saya hasilkan.' Bekerja dari identitas membutuhkan energi. Bekerja dari ketakutan, ambisi, atau kebutuhan akan pengakuan menghabiskannya.",
               lang
             )}
           </p>
@@ -1536,16 +1555,16 @@ export default function UnderstandingBurnoutClient({
             {(lang === "en"
               ? [
                   "Burnout is not primarily a time-management failure. It is a diagnosis of a system under pressure, often driven by a gradual drift from working out of calling to working out of ambition, fear, or need for results.",
-                  "Montero-Marin's three subtypes -- frenetic, underchallenged, and worn-out -- respond to different drivers and need different interventions. Recognising your own pattern is the first step toward a response that actually fits.",
-                  "God's response to Elijah's collapse was physical before it was spiritual. Food, water, rest -- then the still small voice. The body is not separate from the spiritual life. It is the place where the spiritual life is lived.",
-                  "Selfish ambition often wears ministry clothes. It sounds like vision, faithfulness, responsibility, even sacrifice. The diagnostic question is not how much you are working -- it is from where.",
+                  "Montero-Marin's three subtypes (frenetic, underchallenged, and worn-out) respond to different drivers and need different interventions. Recognising your own pattern is the first step toward a response that actually fits.",
+                  "God's response to Elijah's collapse was physical before it was spiritual. Food, water, rest, then the still small voice. The body is not separate from the spiritual life. It is the place where the spiritual life is lived.",
+                  "Selfish ambition often wears ministry clothes. It sounds like vision, faithfulness, responsibility, even sacrifice. The diagnostic question is not how much you are working. It is from where.",
                   "Working from identity costs energy but does not burn you out. The drift begins when we start to serve the results rather than the calling from which those results flow.",
                 ]
               : [
                   "Kelelahan bukan terutama kegagalan manajemen waktu. Ini adalah diagnosis sistem di bawah tekanan, sering didorong oleh penyimpangan bertahap dari bekerja berdasarkan panggilan ke bekerja berdasarkan ambisi, ketakutan, atau kebutuhan akan hasil.",
-                  "Tiga subtipe Montero-Marin -- frenetic, underchallenged, dan worn-out -- merespons pendorong yang berbeda dan membutuhkan intervensi yang berbeda. Mengenali pola Anda sendiri adalah langkah pertama menuju respons yang benar-benar sesuai.",
-                  "Respons Allah terhadap keruntuhan Elia bersifat fisik sebelum rohani. Makanan, air, istirahat -- kemudian suara yang sunyi dan lembut. Tubuh tidak terpisah dari kehidupan rohani. Itu adalah tempat di mana kehidupan rohani dijalani.",
-                  "Ambisi egois sering mengenakan pakaian pelayanan. Terdengar seperti visi, kesetiaan, tanggung jawab, bahkan pengorbanan. Pertanyaan diagnostik bukan seberapa banyak Anda bekerja -- melainkan dari mana.",
+                  "Tiga subtipe Montero-Marin (frenetic, underchallenged, dan worn-out) merespons pendorong yang berbeda dan membutuhkan intervensi yang berbeda. Mengenali pola Anda sendiri adalah langkah pertama menuju respons yang benar-benar sesuai.",
+                  "Respons Allah terhadap keruntuhan Elia bersifat fisik sebelum rohani. Makanan, air, istirahat, kemudian suara yang sunyi dan lembut. Tubuh tidak terpisah dari kehidupan rohani. Itu adalah tempat di mana kehidupan rohani dijalani.",
+                  "Ambisi egois sering mengenakan pakaian pelayanan. Terdengar seperti visi, kesetiaan, tanggung jawab, bahkan pengorbanan. Pertanyaan diagnostik bukan seberapa banyak Anda bekerja, melainkan dari mana.",
                   "Bekerja dari identitas membutuhkan energi tetapi tidak membuat Anda kelelahan. Penyimpangan dimulai ketika kita mulai melayani hasil daripada panggilan dari mana hasil itu mengalir.",
                 ]
             ).map((item, i) => (
@@ -1574,6 +1593,6 @@ export default function UnderstandingBurnoutClient({
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </main>
+    </>
   );
 }
