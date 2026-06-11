@@ -500,14 +500,18 @@ export default async function DashboardPage({
 
       {/* ── DASHBOARD HEADER ── */}
       <div id="tour-header" style={{ background: "oklch(30% 0.12 260)", paddingTop: "1.75rem", borderBottom: "1px solid oklch(22% 0.10 260)", position: "relative" }}>
-        {/* Hero watermark logo — left side */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo-icon-dark-badge.png"
-          alt=""
-          aria-hidden="true"
-          style={{ position: "absolute", left: "-1rem", top: "50%", transform: "translateY(-50%)", width: "200px", height: "200px", objectFit: "contain", opacity: 0.06, pointerEvents: "none", userSelect: "none" }}
-        />
+        {/* Hero watermark logo — left side. Positioning lives on the wrapper so the
+            compass rotation animation never clobbers the translateY centering. */}
+        <div aria-hidden="true" style={{ position: "absolute", left: "-1rem", top: "50%", transform: "translateY(-50%)", width: "200px", height: "200px", pointerEvents: "none", userSelect: "none" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="animate-compass"
+            src="/logo-icon-dark-badge.png"
+            alt=""
+            aria-hidden="true"
+            style={{ display: "block", width: "100%", height: "100%", objectFit: "contain", opacity: 0.06 }}
+          />
+        </div>
         <div className="container-wide">
 
           {/* Top row: title + utilities */}
@@ -516,6 +520,7 @@ export default async function DashboardPage({
               {/* CD logo mark */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                className="animate-compass"
                 src="/logo-icon-dark-badge.png"
                 alt="Crispy Development"
                 style={{ width: "64px", height: "64px", objectFit: "contain", flexShrink: 0 }}
