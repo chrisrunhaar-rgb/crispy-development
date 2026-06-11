@@ -2042,7 +2042,6 @@ function FeedbackChecklist({ lang }: { lang: Lang }) {
                         fontSize: "clamp(13px, 1.4vw, 14px)",
                         color: isChecked ? "oklch(55% 0.04 260)" : "oklch(75% 0.04 260)",
                         lineHeight: 1.6,
-                        textDecoration: isChecked ? "line-through" : "none",
                         transition: "color 0.2s",
                       }}>
                         {item}
@@ -2066,6 +2065,7 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
 
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
+  const [fieldExpanded, setFieldExpanded] = useState<boolean[]>([false, false, false]);
 
   function handleSave() {
     startTransition(async () => {
@@ -2482,9 +2482,30 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
                 <h3 style={{ fontFamily: FONT_HEADLINE, fontSize: "clamp(20px, 2.2vw, 26px)", fontWeight: 700, color: NAVY, marginBottom: 16, marginTop: 0 }}>
                   {story.title}
                 </h3>
-                {story.paras.map((p, j) => (
-                  <p key={j} style={{ ...prose, marginBottom: j < story.paras.length - 1 ? 16 : 0 }}>{p}</p>
+                <p style={{ ...prose, marginBottom: 0 }}>{story.paras[0]}</p>
+                {fieldExpanded[i] && story.paras.slice(1).map((p, j) => (
+                  <p key={j} style={{ ...prose, marginTop: 16, marginBottom: 0 }}>{p}</p>
                 ))}
+                <button
+                  onClick={() => setFieldExpanded(prev => prev.map((v, idx) => idx === i ? !v : v))}
+                  style={{
+                    marginTop: 20,
+                    background: "transparent",
+                    border: `1.5px solid ${ORANGE}`,
+                    borderRadius: 8,
+                    color: ORANGE,
+                    fontFamily: FONT_BODY,
+                    fontSize: "clamp(13px, 1.4vw, 14px)",
+                    fontWeight: 600,
+                    padding: "8px 18px",
+                    cursor: "pointer",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {fieldExpanded[i]
+                    ? t("Show less", "Tampilkan lebih sedikit")
+                    : t("Read the whole story", "Baca cerita lengkap")}
+                </button>
               </article>
             ))}
           </div>
