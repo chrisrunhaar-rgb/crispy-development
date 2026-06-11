@@ -295,21 +295,6 @@ export const RESOURCES: Resource[] = [
     gated: false,
     topics: ["leadership"],
   },
-  {
-    id: "influential-leadership-framework",
-    slug: "influential-leadership-framework",
-    title: "The Influential Leadership Framework",
-    titleId: "Kerangka Kepemimpinan Berpengaruh",
-    titleNl: "Het Invloedrijk Leiderschapsraamwerk",
-    description: "A systematic approach to leading with influence across cultural boundaries.",
-    descriptionId: "Pendekatan sistematis untuk memimpin dengan pengaruh di lintas batas budaya.",
-    descriptionNl: "Een systematische aanpak om met invloed te leiden over culturele grenzen heen.",
-    time: "18 min",
-    format: "Guide",
-    languages: ["en", "id"],
-    gated: true,
-    topics: ["leadership"],
-  },
   // ── TEAM & FACILITATION ────────────────────────────────────────────────────
   {
     id: "team-health",
