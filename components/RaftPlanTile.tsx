@@ -1,6 +1,20 @@
 "use client";
 import { useState } from "react";
 
+function formatSavedAt(iso: string, lang: "en" | "id"): string {
+  try {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "";
+    const day = d.getDate();
+    const months_en = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const months_id = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    const month = lang === "id" ? months_id[d.getMonth()] : months_en[d.getMonth()];
+    return `${day} ${month} ${d.getFullYear()}`;
+  } catch {
+    return "";
+  }
+}
+
 type RaftPlan = { R: string; A: string; F: string; T: string; lang: string; saved_at: string };
 
 const LABELS = {
@@ -224,7 +238,9 @@ export default function RaftPlanTile({ plan, lang = "en" }: { plan: RaftPlan; la
                 color: "oklch(62% 0.008 260)",
                 margin: 0,
               }}>
-                {lang === "id" ? "Disimpan dari modul Transisi yang Sehat" : "Saved from Healthy Transitions module"}
+                {lang === "id"
+                  ? `Disimpan ${formatSavedAt(plan.saved_at, "id")} dari modul Transisi yang Sehat`
+                  : `Saved ${formatSavedAt(plan.saved_at, "en")} from Healthy Transitions module`}
               </p>
               <button
                 onClick={() => setOpen(false)}
