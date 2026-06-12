@@ -219,6 +219,9 @@ export default function ComfortZoneClient({
   const [locatorAnswers, setLocatorAnswers] = useState<Record<number, boolean>>({});
   const [locatorCurrent, setLocatorCurrent] = useState<number>(0);
 
+  // Zone accordion state
+  const [openZone, setOpenZone] = useState<string | null>(null);
+
   // Reflection question accordion state
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
 
@@ -351,19 +354,47 @@ export default function ComfortZoneClient({
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {ZONES.map((zone) => (
-                <a key={zone.key} href={`#zone-${zone.key}`} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1rem 1.25rem", background: zone.colorBg, border: `1px solid ${zone.colorBorder}`, textDecoration: "none", transition: "transform 0.2s ease", borderRadius: 4 }}
-                  onMouseEnter={e => (e.currentTarget.style.transform = "translateX(4px)")}
-                  onMouseLeave={e => (e.currentTarget.style.transform = "none")}
-                >
-                  <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: zone.color, letterSpacing: "0.1em", textTransform: "uppercase" as const, flexShrink: 0 }}>{zone.num}</span>
-                  <div>
-                    <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", fontWeight: 700, color: zone.color }}>{t(zone.titleEn, zone.titleId, lang)}</div>
-                    <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", color: BODY_TEXT, marginTop: "0.1rem" }}>{t(zone.tagEn, zone.tagId, lang)}</div>
+              {ZONES.map((zone) => {
+                const isOpen = openZone === zone.key;
+                return (
+                  <div key={zone.key} style={{ border: `1px solid ${isOpen ? zone.color : zone.colorBorder}`, borderRadius: 6, overflow: "hidden", transition: "border-color 0.2s ease" }}>
+                    <button
+                      onClick={() => setOpenZone(isOpen ? null : zone.key)}
+                      aria-expanded={isOpen}
+                      style={{ display: "flex", alignItems: "center", gap: "1rem", width: "100%", padding: "1rem 1.25rem", background: zone.colorBg, border: "none", cursor: "pointer", textAlign: "left" as const }}
+                    >
+                      <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: zone.color, letterSpacing: "0.1em", textTransform: "uppercase" as const, flexShrink: 0 }}>{zone.num}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", fontWeight: 700, color: zone.color }}>{t(zone.titleEn, zone.titleId, lang)}</div>
+                        <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", color: BODY_TEXT, marginTop: "0.1rem" }}>{t(zone.tagEn, zone.tagId, lang)}</div>
+                      </div>
+                      <span style={{ flexShrink: 0, width: 8, height: 8, borderRight: `2px solid ${zone.color}`, borderBottom: `2px solid ${zone.color}`, transform: isOpen ? "rotate(45deg)" : "rotate(-45deg)", transition: "transform 0.25s ease", marginTop: isOpen ? "4px" : "0px" }} />
+                    </button>
+                    <div style={{ display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows 0.3s ease" }}>
+                      <div style={{ overflow: "hidden" }}>
+                        <div style={{ padding: "1.25rem 1.5rem 1.5rem", background: "#ffffff", borderTop: `1px solid ${zone.colorBorder}` }}>
+                          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: "0 0 1.25rem" }}>
+                            {t(zone.descEn, zone.descId, lang)}
+                          </p>
+                          <div style={{ background: zone.colorBg, padding: "1.25rem 1.5rem", border: `1px solid ${zone.colorBorder}`, borderRadius: 4 }}>
+                            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: zone.color, marginBottom: "0.875rem", marginTop: 0 }}>
+                              {t("Characteristics", "Karakteristik", lang)}
+                            </p>
+                            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                              {(lang === "en" ? zone.listEn : zone.listId).map(item => (
+                                <li key={item} style={{ display: "flex", gap: "0.625rem", fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: BODY_TEXT, lineHeight: 1.7 }}>
+                                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: zone.color, flexShrink: 0, marginTop: "0.5rem" }} />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <span style={{ marginLeft: "auto", width: 8, height: 8, borderRight: `2px solid ${zone.color}`, borderBottom: `2px solid ${zone.color}`, transform: "rotate(-45deg)", flexShrink: 0 }} />
-                </a>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -421,38 +452,6 @@ export default function ComfortZoneClient({
         </div>
       </section>
 
-      {/* ── FOUR ZONES ── */}
-      {ZONES.map((zone, i) => (
-        <section key={zone.key} id={`zone-${zone.key}`} style={{ background: i % 2 === 0 ? OFF_WHITE : LIGHT_GRAY, ...sectionPadding }}>
-          <div style={containerStyle}>
-            <p style={eyebrowStyle}>{`${zone.num} / 04 — ${t("Zone", "Zona", lang)}`}</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 600, fontSize: "clamp(24px, 3.5vw, 40px)", color: NAVY, marginBottom: "0.375rem", lineHeight: 1.15, marginTop: 0 }}>
-              {t(zone.titleEn, zone.titleId, lang)}
-            </h2>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(17px, 2vw, 21px)", fontStyle: "italic", color: zone.color, marginBottom: "1.5rem" }}>
-              {t(zone.tagEn, zone.tagId, lang)}
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "2rem", alignItems: "start" }}>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "1rem", lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>
-                {t(zone.descEn, zone.descId, lang)}
-              </p>
-              <div style={{ background: zone.colorBg, padding: "1.5rem 1.75rem", border: `1px solid ${zone.colorBorder}`, borderRadius: 4 }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: zone.color, marginBottom: "1rem", marginTop: 0 }}>
-                  {t("Characteristics", "Karakteristik", lang)}
-                </p>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                  {(lang === "en" ? zone.listEn : zone.listId).map(item => (
-                    <li key={item} style={{ display: "flex", gap: "0.75rem", fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", color: BODY_TEXT, lineHeight: 1.7 }}>
-                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: zone.color, flexShrink: 0, marginTop: "0.45rem" }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-      ))}
 
       {/* ── CONCENTRIC CIRCLE DIAGRAM ── PURE WHITE ── */}
       <section style={{ background: "#ffffff", paddingBlock: "clamp(4rem, 7vw, 7rem)" }}>
