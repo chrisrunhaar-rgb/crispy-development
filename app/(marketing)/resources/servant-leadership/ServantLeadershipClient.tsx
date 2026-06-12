@@ -1,6 +1,5 @@
 "use client";
 import { useState, useTransition, useCallback } from "react";
-import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -14,7 +13,8 @@ const LIGHT_GRAY = "oklch(88% 0.008 80)";
 const BODY_TEXT  = "oklch(38% 0.05 260)";
 const MUTED      = "oklch(55% 0.008 260)";
 
-const FONT_HEAD = "'Cormorant Garamond', serif";
+const serif     = "Cormorant Garamond, Georgia, serif";
+const FONT_HEAD = serif;
 const FONT_BODY = "'Montserrat', sans-serif";
 
 // ─── Pentagon math ─────────────────────────────────────────────────────────────
@@ -367,7 +367,7 @@ const L: Record<Lang, {
   en: {
     moduleLabel: "Servant Leadership",
     title: "The Servant Leader's Tension Map",
-    subtitle: "Two frameworks. Five tensions. One honest look at how you lead.",
+    subtitle: "Most leaders know they should serve. Fewer have asked what that actually costs, where it comes from, or how it changes when the culture around them doesn't reward it.",
 
     introTitle: "What Is Servant Leadership — Really?",
     introBody: "Most leadership training tells you what to do. This module asks who you are. Servant leadership is not a technique to apply — it is a posture formed over time. Two distinct traditions shape this idea: Robert Greenleaf's social research (1970) and the Christological model of Philippians 2. Each produces humble leaders. But their source, mechanism, and cross-cultural expressions differ in ways that matter enormously for anyone leading across cultures or in communities where positional authority is the norm.",
@@ -425,7 +425,7 @@ const L: Record<Lang, {
   id: {
     moduleLabel: "Kepemimpinan Hamba",
     title: "Peta Ketegangan Pemimpin Hamba",
-    subtitle: "Dua kerangka. Lima ketegangan. Satu pandangan jujur tentang cara kamu memimpin.",
+    subtitle: "Sebagian besar pemimpin tahu bahwa mereka harus melayani. Lebih sedikit yang pernah bertanya apa sebenarnya biayanya, dari mana asalnya, atau bagaimana cara kerjanya ketika budaya di sekitar mereka tidak menghargainya.",
 
     introTitle: "Apa Itu Kepemimpinan Hamba — Sebenarnya?",
     introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970) dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
@@ -815,38 +815,32 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
   }
 
   return (
-    <main style={{ background: OFF_WHITE, minHeight: "100vh" }}>
+    <div style={{ fontFamily: FONT_BODY, background: OFF_WHITE, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* ── Hero ── */}
-      <section style={{ position: "relative", height: "clamp(220px, 32vw, 380px)", overflow: "hidden", background: NAVY }}>
-        <Image
+      <section style={{ background: NAVY, padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <img
           src="/images/resources/servant-leadership/hero.jpg"
           alt=""
-          fill
-          style={{ objectFit: "cover", mixBlendMode: "luminosity", opacity: 0.22 }}
-          priority
-          sizes="100vw"
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover", opacity: 0.22, mixBlendMode: "luminosity",
+            pointerEvents: "none",
+          }}
+          onError={(e) => { e.currentTarget.style.display = "none"; }}
         />
-        <div style={{
-          position: "relative", zIndex: 1, height: "100%",
-          display: "flex", flexDirection: "column", justifyContent: "flex-end",
-          padding: "clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3rem)",
-          maxWidth: 860, margin: "0 auto", width: "100%",
-        }}>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
-            <div>
-              <p style={{ fontFamily: FONT_BODY, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
-                {t.moduleLabel}
-              </p>
-              <h1 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.6rem, 4vw, 2.6rem)", color: "white", margin: "0 0 0.5rem", lineHeight: 1.15 }}>
-                {t.title}
-              </h1>
-              <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.8rem, 1.4vw, 0.95rem)", color: "oklch(82% 0.01 260)", margin: 0, lineHeight: 1.5 }}>
-                {t.subtitle}
-              </p>
-            </div>
-            <LangToggle />
-          </div>
+        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
+          <p style={{ color: ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 20, fontFamily: FONT_BODY }}>
+            {t.moduleLabel}
+          </p>
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(38px, 6vw, 72px)", fontWeight: 700, color: OFF_WHITE, lineHeight: 1.1, fontStyle: "italic", marginBottom: 32 }}>
+            {t.title}
+          </h1>
+          <div style={{ width: 48, height: 2, background: ORANGE, marginBottom: 36 }} />
+          <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.4vw, 24px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, fontStyle: "italic", maxWidth: 640, marginBottom: 0 }}>
+            {t.subtitle}
+          </p>
         </div>
       </section>
 
@@ -1040,6 +1034,6 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
         </section>
 
       </div>
-    </main>
+    </div>
   );
 }
