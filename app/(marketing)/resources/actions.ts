@@ -412,6 +412,28 @@ export async function saveWheelReflections(
   return { error: error?.message ?? null };
 }
 
+// Save RAFT / RPPP plan answers
+export async function saveRaftPlan(
+  answers: { R: string; A: string; F: string; T: string },
+  lang: string
+): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase.auth.updateUser({
+    data: {
+      raft_plan: { ...answers, lang, saved_at: new Date().toISOString() },
+    },
+  });
+
+  if (!error) {
+    revalidatePath("/dashboard");
+    revalidatePath("/resources/healthy-transitions");
+  }
+  return { error: error?.message ?? null };
+}
+
 // Save Wheel of Life scores to user profile
 export async function saveWheelScores(scores: Record<string, number>): Promise<{ error: string | null }> {
   const supabase = await createClient();

@@ -24,6 +24,7 @@ import DashboardTour from "./DashboardTour";
 import GaEventTracker from "@/components/GaEventTracker";
 import { TEAM_UI, type TeamLang } from "@/lib/team-i18n";
 import AdminReplyNotification from "@/components/AdminReplyNotification";
+import RaftPlanTile from "@/components/RaftPlanTile";
 
 export const metadata = {
   title: "Dashboard — Crispy Development",
@@ -114,6 +115,7 @@ export default async function DashboardPage({
   const fivelaGivingScores = (metadata.fivela_giving_scores ?? null) as { A: number; B: number; C: number; D: number; E: number } | null;
   const userTimezone = metadata.timezone as string | undefined;
   const languagePreference = ((metadata.language_preference ?? "en") as "en" | "id");
+  const raftPlan = (metadata.raft_plan ?? null) as { R: string; A: string; F: string; T: string; lang: string; saved_at: string } | null;
 
   const admin = createAdminClient();
 
@@ -652,7 +654,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores}personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -818,7 +820,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -837,7 +839,6 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   enneagramType?: number | null;
   enneagramScores?: Record<string, number> | null;
   bigFiveScores?: Record<string, number> | null;
-
   personalities16Type?: string | null;
   personalities16Scores?: Record<string, number> | null;
   fivelaReceivingResult?: string | null;
@@ -850,6 +851,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   challengePath?: string | null;
   dashboardFirstName?: string;
   isSubscriber?: boolean;
+  raftPlan?: { R: string; A: string; F: string; T: string; lang: string; saved_at: string } | null;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -885,6 +887,9 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             <Link href="/resources" className="btn-primary" style={{ alignSelf: "flex-start", fontSize: "0.78rem", padding: "0.6rem 1.25rem" }}>
               {languagePreference === "id" ? "Ke Perpustakaan →" : "Go to Library →"}
             </Link>
+            {raftPlan && (
+              <RaftPlanTile plan={raftPlan} lang={languagePreference} />
+            )}
           </div>
         ) : (
           <div>
@@ -907,6 +912,9 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
                 />
               );
             })}
+            {raftPlan && (
+              <RaftPlanTile plan={raftPlan} lang={languagePreference} />
+            )}
           </div>
         )}
       </div>
