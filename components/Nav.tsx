@@ -149,7 +149,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
               {resourcesOpen && (
                 <div style={{ position: "absolute", top: "calc(100% + 10px)", left: 0, background: "oklch(99% 0.002 80)", border: "1px solid oklch(88% 0.008 80)", boxShadow: "0 8px 24px oklch(30% 0.12 260 / 0.12)", minWidth: "180px", zIndex: 100 }}>
                   {[
-                    { label: "Training", href: "/resources" },
+                    { label: "Library", href: "/resources" },
                     { label: "Courses", href: "/courses" },
                     { label: "Worth Reading", href: "/articles" },
                   ].map(item => (
@@ -245,7 +245,7 @@ export default function Nav({ initialFirstName = null }: { initialFirstName?: st
             <div style={{ height: "1px", background: "oklch(88% 0.008 80)", margin: "0.5rem 0" }} />
             <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", margin: "0 0 0.25rem" }}>Training</p>
             <Link href="/resources" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
-              Training
+              Library
             </Link>
             <Link href="/courses" onClick={() => setOpen(false)} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.9rem", letterSpacing: "0.04em", color: "oklch(30% 0.12 260)", textDecoration: "none", padding: "0.5rem 0 0.5rem 0.75rem" }}>
               Courses
