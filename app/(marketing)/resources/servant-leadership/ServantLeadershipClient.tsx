@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import { askServantLeadershipAI } from "./sl-actions";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const NAVY       = "oklch(22% 0.10 260)";
@@ -60,6 +61,95 @@ type TensionDef = {
   mid: Reading;
   high: Reading;
 };
+
+// ─── Spears 7 Dimensions ─────────────────────────────────────────────────────
+const SPEARS_DIMS: { title: Record<Lang, string>; body: Record<Lang, string> }[] = [
+  {
+    title: { en: "Emotional Healing", id: "Pemulihan Emosional" },
+    body: {
+      en: "Creates safe space for personal struggles — noticing the whole person, not just the role.",
+      id: "Menciptakan ruang aman untuk pergumulan pribadi — memperhatikan orang seutuhnya, bukan sekadar perannya.",
+    },
+  },
+  {
+    title: { en: "Creating Community Value", id: "Menciptakan Nilai Komunitas" },
+    body: {
+      en: "Prioritises the wider good beyond the immediate team — leadership with a conscience for the world around it.",
+      id: "Memprioritaskan kebaikan yang lebih luas melampaui tim langsung — kepemimpinan yang peduli pada dunia di sekitarnya.",
+    },
+  },
+  {
+    title: { en: "Empowering", id: "Memberdayakan" },
+    body: {
+      en: "Gives followers genuine freedom and authority to own their work — not delegating tasks but transferring trust.",
+      id: "Memberi pengikut kebebasan dan otoritas nyata untuk memiliki pekerjaan mereka — bukan mendelegasikan tugas tetapi memindahkan kepercayaan.",
+    },
+  },
+  {
+    title: { en: "Growing Others", id: "Mengembangkan Orang Lain" },
+    body: {
+      en: "Actively invests in followers' long-term development — the measure is who they become, not what they produce.",
+      id: "Secara aktif berinvestasi dalam pengembangan jangka panjang pengikut — ukurannya adalah siapa yang mereka jadi, bukan apa yang mereka hasilkan.",
+    },
+  },
+  {
+    title: { en: "Putting Others First", id: "Mendahulukan Orang Lain" },
+    body: {
+      en: "Places followers' interests above personal gain, comfort, or recognition — service is the orientation, not the strategy.",
+      id: "Menempatkan kepentingan pengikut di atas keuntungan, kenyamanan, atau pengakuan pribadi — pelayanan adalah orientasi, bukan strategi.",
+    },
+  },
+  {
+    title: { en: "Behaving Ethically", id: "Berperilaku Etis" },
+    body: {
+      en: "Open, honest, does the right thing especially when it costs something — the only dimension proven universal across cultures.",
+      id: "Terbuka, jujur, melakukan hal yang benar terutama ketika ada biayanya — satu-satunya dimensi yang terbukti universal lintas budaya.",
+    },
+  },
+  {
+    title: { en: "Building Relationships", id: "Membangun Relasi" },
+    body: {
+      en: "Knows followers' needs and concerns — service is relational, not transactional. People are not resources; they are the reason.",
+      id: "Mengenal kebutuhan dan keprihatinan pengikut — pelayanan bersifat relasional, bukan transaksional. Orang bukan sumber daya; mereka adalah alasannya.",
+    },
+  },
+];
+
+// ─── Kenosis 4 Implications ───────────────────────────────────────────────────
+const KENOSIS_ITEMS: { title: Record<Lang, string>; body: Record<Lang, string>; color: string }[] = [
+  {
+    title: { en: "Status Relinquishment", id: "Pelepasan Status" },
+    body: {
+      en: "Serve alongside, not over. The leader lays down markers of rank that separate them from those they serve — not as a strategy, but as a reflection of what they now hold most valuable.",
+      id: "Melayani bersama, bukan di atas. Pemimpin meletakkan tanda-tanda pangkat yang memisahkan mereka dari yang dilayani — bukan sebagai strategi, melainkan sebagai cerminan dari apa yang kini paling mereka hargai.",
+    },
+    color: "oklch(52% 0.16 260)",
+  },
+  {
+    title: { en: "Receptive Learning", id: "Pembelajaran Reseptif" },
+    body: {
+      en: "Listen before prescribing. The leader enters a posture of receiving before directing. The prescription follows real understanding — not the other way around.",
+      id: "Dengarkan sebelum meresepkan. Pemimpin masuk dalam postur menerima sebelum mengarahkan. Arahan mengikuti pemahaman yang nyata — bukan sebaliknya.",
+    },
+    color: "oklch(50% 0.14 155)",
+  },
+  {
+    title: { en: "Power Distribution", id: "Distribusi Kuasa" },
+    body: {
+      en: "Withhold decisions until others can own them. Power is not hoarded but progressively transferred — the goal is competence and ownership in others, not dependence on the leader.",
+      id: "Tunda keputusan sampai orang lain bisa memilikinya. Kuasa tidak ditimbun, melainkan secara bertahap dipindahkan — tujuannya adalah kompetensi dan kepemilikan pada orang lain, bukan ketergantungan pada pemimpin.",
+    },
+    color: "oklch(56% 0.13 45)",
+  },
+  {
+    title: { en: "Identity Transformation", id: "Transformasi Identitas" },
+    body: {
+      en: "Create space for others to move from dependent to self-directed. The leader's goal is that they are no longer needed in the same way — their growth, not continued reliance, is the measure of success.",
+      id: "Ciptakan ruang bagi orang lain untuk bergerak dari bergantung menjadi mandiri. Tujuan pemimpin adalah agar mereka tidak lagi dibutuhkan dengan cara yang sama — pertumbuhan mereka, bukan ketergantungan yang berkelanjutan, adalah ukuran keberhasilan.",
+    },
+    color: "oklch(48% 0.13 300)",
+  },
+];
 
 // ─── Tension data ──────────────────────────────────────────────────────────────
 const TENSIONS: TensionDef[] = [
@@ -258,36 +348,72 @@ const TENSIONS: TensionDef[] = [
 // ─── Copy ──────────────────────────────────────────────────────────────────────
 const L: Record<Lang, {
   moduleLabel: string; title: string; subtitle: string;
+  introTitle: string; introBody: string;
+  greenleafTitle: string; greenleafBody: string; spearsTitle: string;
+  philTitle: string; philBody: string;
+  crossTitle: string; crossBody: string;
   twoTitle: string; twoBody: string;
   twoLeft: string; twoLeftSub: string; twoRight: string; twoRightSub: string;
+  mapExplainTitle: string; mapExplainBody: string;
   mapTitle: string; mapIntro: string; allPlaced: string;
   profileTitle: string; sittingWith: string;
   faithTitle: string; faithBody: string;
   takeawaysTitle: string; takeaways: string[];
+  challengeTitle: string; challengeSubtitle: string; challengePlaceholder: string;
+  challengeSubmit: string; challengeLoading: string; challengeError: string; challengeDisclaimer: string;
   bgTitle: string; bgBody: string; readMore: string; readLess: string;
   saveDashboard: string; savedDashboard: string;
 }> = {
   en: {
     moduleLabel: "Servant Leadership",
     title: "The Servant Leader's Tension Map",
-    subtitle: "Five tensions that reveal the shape of your leadership",
+    subtitle: "Two frameworks. Five tensions. One honest look at how you lead.",
+
+    introTitle: "What Is Servant Leadership — Really?",
+    introBody: "Most leadership training tells you what to do. This module asks who you are. Servant leadership is not a technique to apply — it is a posture formed over time. Two distinct traditions shape this idea: Robert Greenleaf's social research (1970) and the Christological model of Philippians 2. Each produces humble leaders. But their source, mechanism, and cross-cultural expressions differ in ways that matter enormously for anyone leading across cultures or in communities where positional authority is the norm.",
+
+    greenleafTitle: "The Greenleaf Framework",
+    greenleafBody: "In 1970, Robert Greenleaf — a retired AT&T executive — published an essay that changed how the world thinks about leadership. Inspired by Hermann Hesse's novel Journey to the East, he described a leader whose primary motivation is to serve. The movement begins not with strategy but with disposition: the servant-first leader asks, above all else, how to help others flourish. His defining question — the 'best test' of servant leadership — became the standard for the entire field: Do those served grow as persons, becoming healthier, wiser, freer, more autonomous, and more likely to become servants themselves? Researchers Liden et al. later validated seven measurable dimensions of servant leadership:",
+    spearsTitle: "Seven Dimensions of Servant Leadership",
+
+    philTitle: "Philippians 2 — Kenosis and the Downward Movement",
+    philBody: "The Apostle Paul's description of Christ in Philippians 2:5-11 offers a different frame. Christ, who existed in the form of God, did not hold onto that status — but emptied himself (Greek: ekenōsen), taking the form of a servant. This is the theological root of servant leadership: not absence of power, but chosen self-limitation in service of others. New Testament scholar Daniel Wallace identifies four practical implications of kenosis for leaders today:",
+
+    crossTitle: "Servant Leadership Across Cultures",
+    crossBody: "Research spanning 59 societies reveals one consistent finding: moral integrity is universally endorsed as a leadership quality. But egalitarianism and empowering behaviours — often assumed to be the core of servant leadership — are among the weakest cross-cultural dimensions. In high power-distance contexts like Indonesia (power-distance score: 78/100) and much of Southeast Asia, leading from below creates confusion unless it is expressed through moral authority and relational investment rather than positional equalization. Pekerti and Sendjaya found that Indonesian leaders emphasise responsible morality and transforming influence rather than structural power-sharing. The servant leader retains authority — kenosis empties status, not the capacity to lead.",
+
     twoTitle: "Two Sources of Servant Power",
-    twoBody: "Robert Greenleaf's servant leadership model locates power in an upward movement: authority earned through service, confirmed by follower trust. Philippians 2 locates it differently — power flows downward from God, through voluntary self-emptying. Both produce humble leaders. But the source shapes everything, especially when serving gets costly.",
+    twoBody: "Robert Greenleaf's model locates power in an upward movement: authority earned through service, confirmed by follower trust. Philippians 2 locates it differently — power flows downward from God, through voluntary self-emptying. Both produce humble leaders. But the source shapes everything, especially when serving gets costly or when the culture around you does not reward humility.",
     twoLeft: "Phil 2 — Downward", twoLeftSub: "Power from God through kenosis",
     twoRight: "Greenleaf — Upward", twoRightSub: "Power from followers through trust",
+
+    mapExplainTitle: "Five Tensions Every Servant Leader Navigates",
+    mapExplainBody: "Servant leadership is not a position to arrive at — it is a set of ongoing tensions to hold. The five tensions below are not problems to solve. They are the space in which genuine servant leadership is formed. Leaders who pretend these tensions don't exist tend to oscillate between extremes without knowing it. Leaders who name them honestly can grow through them. Place yourself on each spectrum — not where you aspire to be, but where you honestly are right now.",
+
     mapTitle: "Your Tension Map",
     mapIntro: "Click anywhere on each spectrum to place yourself. No right answers — only honest ones.",
     allPlaced: "All five tensions mapped.",
     profileTitle: "Your Profile",
     sittingWith: "Sit with this:",
+
     faithTitle: "Faith Anchor",
     faithBody: "Mark 10:42-45 draws a sharp contrast: rulers lord it over people; the greatest among you will be servant (diakonos) and slave (doulos) of all. John 13 reframes foot-washing through an honour-shame lens — Jesus does the work of a Gentile slave, then says the master is not greater than the servant. Philippians 2:5-11 describes a direction of movement: downward, through status relinquishment, toward receptive learning and power redistribution. This is kenosis — not self-erasure, but a chosen giving up of what one was entitled to hold.",
+
     takeawaysTitle: "Key Takeaways",
     takeaways: [
       "Servant leadership is not a technique — it is an identity formed by the Spirit, not sustained by willpower alone.",
       "Humility and authority are not opposites. Kenosis empties status, not the capacity to act with power on behalf of others.",
       "The cost is real. Mark 10 uses doulos — a word that means self-expenditure, not just service. Honest servant leadership names this.",
     ],
+
+    challengeTitle: "Ask the Advisor",
+    challengeSubtitle: "Describe a leadership challenge you're currently facing. The advisor draws only from the frameworks in this module and your tension map profile.",
+    challengePlaceholder: "Describe your leadership challenge here — what you're facing, where you feel stuck, or what decision you're weighing...",
+    challengeSubmit: "Get Advice",
+    challengeLoading: "Thinking...",
+    challengeError: "Unable to respond right now. Please try again.",
+    challengeDisclaimer: "Responses are grounded in the Greenleaf and Philippians 2 frameworks covered in this module.",
+
     bgTitle: "Background: Research Foundations",
     bgBody: "David Crowther's critique (2024) distinguishes moral integrity — consistent across cultures — from egalitarianism, which research consistently identifies as the weakest cross-cultural dimension of servant leadership. Greenleaf's (1970) original framework places the test in followers: do those served grow as persons? Biblical scholarship on Philippians 2 identifies four kenosis implications: status relinquishment, receptive learning, power distribution, and identity transformation. Ezekiel 34 provides the negative image — the failed shepherd — against which servant leadership is measured. The deepest challenge for cross-cultural servant leaders is not learning humility but learning whose definition of humility applies.",
     readMore: "Read the research background",
@@ -295,27 +421,57 @@ const L: Record<Lang, {
     saveDashboard: "Save to Dashboard",
     savedDashboard: "Saved to Dashboard",
   },
+
   id: {
     moduleLabel: "Kepemimpinan Hamba",
     title: "Peta Ketegangan Pemimpin Hamba",
-    subtitle: "Lima ketegangan yang mengungkap bentuk kepemimpinanmu",
+    subtitle: "Dua kerangka. Lima ketegangan. Satu pandangan jujur tentang cara kamu memimpin.",
+
+    introTitle: "Apa Itu Kepemimpinan Hamba — Sebenarnya?",
+    introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970) dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
+
+    greenleafTitle: "Kerangka Greenleaf",
+    greenleafBody: "Pada tahun 1970, Robert Greenleaf — seorang eksekutif AT&T yang pensiun — menerbitkan sebuah esai yang mengubah cara dunia berpikir tentang kepemimpinan. Terinspirasi dari novel Hermann Hesse, ia menggambarkan pemimpin yang motivasi utamanya adalah melayani. Pertanyaan penentunya — 'uji terbaik' kepemimpinan hamba — menjadi standar seluruh bidang ini: Apakah mereka yang dilayani tumbuh sebagai pribadi, menjadi lebih sehat, lebih bijaksana, lebih bebas, lebih mandiri, dan lebih mungkin menjadi pelayan sendiri? Para peneliti kemudian memvalidasi tujuh dimensi kepemimpinan hamba yang terukur:",
+    spearsTitle: "Tujuh Dimensi Kepemimpinan Hamba",
+
+    philTitle: "Filipi 2 — Kenosis dan Gerakan ke Bawah",
+    philBody: "Deskripsi Paulus tentang Kristus dalam Filipi 2:5-11 menawarkan kerangka yang berbeda. Kristus, yang ada dalam rupa Allah, tidak mempertahankan status itu — tetapi mengosongkan diri-Nya (bahasa Yunani: ekenōsen), mengambil rupa seorang hamba. Inilah akar teologis kepemimpinan hamba: bukan ketiadaan kuasa, melainkan pembatasan diri yang dipilih demi melayani orang lain. Pakar Perjanjian Baru Daniel Wallace mengidentifikasi empat implikasi praktis kenosis bagi para pemimpin masa kini:",
+
+    crossTitle: "Kepemimpinan Hamba Lintas Budaya",
+    crossBody: "Penelitian yang mencakup 59 masyarakat mengungkapkan satu temuan konsisten: integritas moral secara universal diakui sebagai kualitas kepemimpinan. Namun egalitarianisme dan perilaku memberdayakan — yang sering dianggap sebagai inti kepemimpinan hamba — adalah dimensi lintas budaya yang paling lemah. Dalam konteks jarak kuasa tinggi seperti Indonesia (skor jarak kuasa: 78/100) dan sebagian besar Asia Tenggara, memimpin dari bawah menciptakan kebingungan kecuali diungkapkan melalui otoritas moral dan investasi relasional, bukan penyetaraan posisional. Pemimpin hamba mempertahankan otoritas — kenosis mengosongkan status, bukan kapasitas untuk memimpin.",
+
     twoTitle: "Dua Sumber Kuasa Hamba",
-    twoBody: "Model kepemimpinan hamba Robert Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Allah, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menjadi mahal.",
+    twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Allah, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menjadi mahal atau ketika budaya di sekitarmu tidak menghargai kerendahan hati.",
     twoLeft: "Fil 2 — Ke Bawah", twoLeftSub: "Kuasa dari Allah melalui kenosis",
     twoRight: "Greenleaf — Ke Atas", twoRightSub: "Kuasa dari pengikut melalui kepercayaan",
+
+    mapExplainTitle: "Lima Ketegangan yang Dihadapi Setiap Pemimpin Hamba",
+    mapExplainBody: "Kepemimpinan hamba bukan posisi untuk dicapai — melainkan sekumpulan ketegangan yang terus-menerus harus dipegang. Lima ketegangan di bawah ini bukan masalah yang harus dipecahkan. Itulah ruang di mana kepemimpinan hamba sejati dibentuk. Pemimpin yang berpura-pura ketegangan ini tidak ada cenderung berayun antara ekstrem tanpa menyadarinya. Pemimpin yang menamakannya dengan jujur dapat bertumbuh melaluinya. Tempatkan dirimu pada setiap spektrum — bukan di mana kamu ingin berada, tetapi di mana kamu sejujurnya berada sekarang.",
+
     mapTitle: "Peta Keteganganmu",
     mapIntro: "Klik di mana saja pada setiap spektrum untuk menempatkan dirimu. Tidak ada jawaban yang benar — hanya yang jujur.",
     allPlaced: "Kelima ketegangan telah dipetakan.",
     profileTitle: "Profilmu",
     sittingWith: "Renungkan ini:",
+
     faithTitle: "Jangkar Iman",
     faithBody: "Markus 10:42-45 menarik kontras yang tajam: para penguasa memerintah orang; yang terbesar di antara kamu akan menjadi pelayan (diakonos) dan hamba (doulos) dari semua. Yohanes 13 membingkai ulang pembasuhan kaki melalui lensa kehormatan-malu — Yesus melakukan pekerjaan hamba kafir, lalu berkata tuan tidak lebih besar dari hambanya. Filipi 2:5-11 menggambarkan arah gerakan: ke bawah, melalui pelepasan status, menuju pembelajaran yang reseptif dan redistribusi kuasa. Inilah kenosis — bukan penghapusan diri, tetapi pelepasan yang dipilih dari apa yang berhak dipegang.",
+
     takeawaysTitle: "Poin Utama",
     takeaways: [
       "Kepemimpinan hamba bukan teknik — melainkan identitas yang dibentuk oleh Roh, bukan hanya dipertahankan oleh kemauan.",
       "Kerendahan hati dan otoritas bukan lawan. Kenosis mengosongkan status, bukan kapasitas untuk bertindak dengan kuasa demi orang lain.",
       "Biayanya nyata. Markus 10 menggunakan doulos — kata yang berarti pengorbanan diri, bukan sekadar pelayanan. Kepemimpinan hamba yang jujur menyebutkan ini.",
     ],
+
+    challengeTitle: "Tanya Penasihat",
+    challengeSubtitle: "Ceritakan tantangan kepemimpinan yang sedang kamu hadapi. Penasihat hanya mengacu pada kerangka dalam modul ini dan profil peta keteganganmu.",
+    challengePlaceholder: "Ceritakan tantangan kepemimpinanmu di sini — apa yang kamu hadapi, di mana kamu merasa terhenti, atau keputusan apa yang sedang kamu pertimbangkan...",
+    challengeSubmit: "Dapatkan Saran",
+    challengeLoading: "Sedang berpikir...",
+    challengeError: "Tidak dapat merespons saat ini. Silakan coba lagi.",
+    challengeDisclaimer: "Respons mengacu pada kerangka Greenleaf dan Filipi 2 yang dibahas dalam modul ini.",
+
     bgTitle: "Latar Belakang: Fondasi Penelitian",
     bgBody: "Kritik David Crowther (2024) membedakan integritas moral — konsisten lintas budaya — dari egalitarianisme, yang penelitian secara konsisten mengidentifikasi sebagai dimensi lintas budaya yang paling lemah dalam kepemimpinan hamba. Kerangka asli Greenleaf (1970) menempatkan ujian pada pengikut: apakah mereka yang dilayani tumbuh sebagai pribadi? Beasiswa Alkitab tentang Filipi 2 mengidentifikasi empat implikasi kenosis: pelepasan status, pembelajaran reseptif, distribusi kuasa, dan transformasi identitas. Yehezkiel 34 memberikan gambaran negatif — gembala yang gagal — di mana kepemimpinan hamba diukur.",
     readMore: "Baca latar belakang penelitian",
@@ -326,33 +482,175 @@ const L: Record<Lang, {
 };
 
 // ─── Sub-components ────────────────────────────────────────────────────────────
+function SpearsGrid({ lang }: { lang: Lang }) {
+  const t = L[lang];
+  const colors = [
+    "oklch(52% 0.16 260)",
+    "oklch(50% 0.14 155)",
+    "oklch(56% 0.13 45)",
+    "oklch(48% 0.13 300)",
+    "oklch(52% 0.13 20)",
+    "oklch(55% 0.12 200)",
+    "oklch(50% 0.15 130)",
+  ];
+  return (
+    <div style={{ marginTop: "1.25rem" }}>
+      <p style={{ fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: NAVY, margin: "0 0 0.875rem" }}>
+        {t.spearsTitle}
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.75rem" }}>
+        {SPEARS_DIMS.map((dim, i) => (
+          <div key={i} style={{ padding: "0.875rem 1rem", borderLeft: `3px solid ${colors[i]}`, background: OFF_WHITE }}>
+            <p style={{ fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.74rem", color: colors[i], margin: "0 0 0.35rem" }}>
+              {dim.title[lang]}
+            </p>
+            <p style={{ fontFamily: FONT_BODY, fontSize: "0.79rem", lineHeight: 1.6, color: BODY_TEXT, margin: 0 }}>
+              {dim.body[lang]}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function KenosisCards({ lang }: { lang: Lang }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "0.875rem", marginTop: "1.25rem" }}>
+      {KENOSIS_ITEMS.map((item, i) => (
+        <div key={i} style={{
+          padding: "1.125rem 1.25rem",
+          background: "white",
+          border: `1px solid ${LIGHT_GRAY}`,
+          borderTop: `3px solid ${item.color}`,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "0.625rem" }}>
+            <span style={{
+              width: 22, height: 22, borderRadius: "50%",
+              background: item.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+            }}>
+              <span style={{ fontFamily: FONT_BODY, fontWeight: 800, fontSize: "0.62rem", color: "white", lineHeight: 1 }}>
+                {i + 1}
+              </span>
+            </span>
+            <p style={{ fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.78rem", color: item.color, margin: 0 }}>
+              {item.title[lang]}
+            </p>
+          </div>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "0.81rem", lineHeight: 1.65, color: BODY_TEXT, margin: 0 }}>
+            {item.body[lang]}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function AIChallengeSection({ placements, lang }: { placements: (number | null)[]; lang: Lang }) {
+  const t = L[lang];
+  const [challenge, setChallenge] = useState("");
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    if (!challenge.trim() || loading) return;
+    setLoading(true);
+    setError(null);
+    setResponse("");
+    const result = await askServantLeadershipAI(challenge, placements, lang);
+    setLoading(false);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setResponse(result.text);
+    }
+  }
+
+  return (
+    <section style={{ background: "white", border: `1px solid ${LIGHT_GRAY}`, padding: "2rem 1.75rem", marginBottom: "2.5rem" }}>
+      <p style={{ fontFamily: FONT_BODY, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
+        {t.moduleLabel}
+      </p>
+      <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.25rem, 2.4vw, 1.6rem)", color: NAVY, margin: "0 0 0.625rem" }}>
+        {t.challengeTitle}
+      </h2>
+      <p style={{ fontFamily: FONT_BODY, fontSize: "0.88rem", color: MUTED, margin: "0 0 1.5rem", lineHeight: 1.65 }}>
+        {t.challengeSubtitle}
+      </p>
+      <textarea
+        value={challenge}
+        onChange={e => setChallenge(e.target.value)}
+        placeholder={t.challengePlaceholder}
+        rows={5}
+        style={{
+          width: "100%", padding: "0.875rem", resize: "vertical",
+          fontFamily: FONT_BODY, fontSize: "0.9rem", lineHeight: 1.65, color: BODY_TEXT,
+          border: `1.5px solid ${LIGHT_GRAY}`, background: OFF_WHITE,
+          outline: "none", boxSizing: "border-box",
+        }}
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem", gap: "1rem", flexWrap: "wrap" }}>
+        <p style={{ fontFamily: FONT_BODY, fontSize: "0.7rem", color: MUTED, margin: 0, fontStyle: "italic" }}>
+          {t.challengeDisclaimer}
+        </p>
+        <button
+          onClick={handleSubmit}
+          disabled={loading || !challenge.trim()}
+          style={{
+            padding: "0.625rem 1.75rem", background: NAVY,
+            fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.82rem",
+            color: "white", border: "none",
+            cursor: loading || !challenge.trim() ? "not-allowed" : "pointer",
+            opacity: loading || !challenge.trim() ? 0.55 : 1,
+            transition: "opacity 0.15s",
+          }}
+        >
+          {loading ? t.challengeLoading : t.challengeSubmit}
+        </button>
+      </div>
+      {error && (
+        <p style={{ fontFamily: FONT_BODY, fontSize: "0.85rem", color: "oklch(50% 0.18 25)", margin: "1rem 0 0" }}>
+          {t.challengeError}
+        </p>
+      )}
+      {response && (
+        <div style={{
+          marginTop: "1.75rem", padding: "1.375rem 1.5rem",
+          background: "oklch(22% 0.10 260 / 0.035)",
+          borderLeft: `3px solid ${ORANGE}`,
+        }}>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "0.92rem", lineHeight: 1.85, color: BODY_TEXT, margin: 0, whiteSpace: "pre-wrap" }}>
+            {response}
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function TwoStreamsSVG({ lang }: { lang: Lang }) {
   const t = L[lang];
   return (
     <svg viewBox="0 0 300 200" style={{ width: "100%", maxWidth: 380, display: "block", margin: "1.5rem auto 0" }} aria-hidden="true">
-      {/* GOD */}
       <rect x="100" y="6" width="100" height="30" rx="3" fill={NAVY} />
       <text x="150" y="26" textAnchor="middle" fill="white" fontFamily={FONT_BODY} fontWeight="700" fontSize="11">GOD</text>
 
-      {/* Down arrow + label */}
       <line x1="150" y1="36" x2="150" y2="76" stroke={NAVY} strokeWidth="2" />
       <polygon points="145,72 150,82 155,72" fill={NAVY} />
-      <text x="158" y="52" textAnchor="start" fill={NAVY} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "kenosis" : "kenosis"}</text>
+      <text x="158" y="52" textAnchor="start" fill={NAVY} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">kenosis</text>
       <text x="158" y="64" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoLeft}</text>
 
-      {/* SERVANT LEADER box */}
       <rect x="50" y="82" width="200" height="32" rx="3" fill={LIGHT_GRAY} stroke={NAVY} strokeWidth="1.5" />
       <text x="150" y="103" textAnchor="middle" fill={NAVY} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
         {lang === "en" ? "SERVANT LEADER" : "PEMIMPIN HAMBA"}
       </text>
 
-      {/* Up arrow + label */}
       <line x1="150" y1="114" x2="150" y2="154" stroke={ORANGE} strokeWidth="2" />
       <polygon points="145,118 150,114 155,118" fill={ORANGE} />
       <text x="158" y="132" textAnchor="start" fill={ORANGE} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "trust" : "kepercayaan"}</text>
       <text x="158" y="144" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoRight}</text>
 
-      {/* FOLLOWERS box */}
       <rect x="70" y="160" width="160" height="30" rx="3" fill="oklch(65% 0.15 45 / 0.12)" stroke={ORANGE} strokeWidth="1.5" />
       <text x="150" y="180" textAnchor="middle" fill={ORANGE} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
         {lang === "en" ? "FOLLOWERS" : "PENGIKUT"}
@@ -367,7 +665,6 @@ function PentagonRadar({ placements }: { placements: (number | null)[] }) {
 
   return (
     <svg viewBox="0 0 280 280" style={{ width: "100%", maxWidth: 280, display: "block" }} aria-hidden="true">
-      {/* Grid rings */}
       {GRID_RINGS.map(r => {
         const pts = ANGLES_RAD.map(a => ({
           x: CX + (r / 100) * R_MAX * Math.cos(a),
@@ -379,18 +676,13 @@ function PentagonRadar({ placements }: { placements: (number | null)[] }) {
         );
       })}
 
-      {/* Axis spokes */}
       {OUTER_PTS.map((p, i) => (
         <line key={i} x1={CX} y1={CY} x2={p.x.toFixed(1)} y2={p.y.toFixed(1)} stroke={LIGHT_GRAY} strokeWidth="1" />
       ))}
 
-      {/* Outer boundary */}
       <path d={OUTER_PATH} fill="none" stroke={LIGHT_GRAY} strokeWidth="1.5" />
+      <path d={radarPath} fill="oklch(50% 0.14 155 / 0.2)" stroke={NAVY} strokeWidth="2" strokeLinejoin="round" />
 
-      {/* Radar fill */}
-      <path d={radarPath} fill={`${NAVY}25`} stroke={NAVY} strokeWidth="2" strokeLinejoin="round" />
-
-      {/* Vertex dots */}
       {ANGLES_RAD.map((a, i) => {
         const v = placements[i];
         const pt = ptAt(a, v ?? 50);
@@ -403,7 +695,6 @@ function PentagonRadar({ placements }: { placements: (number | null)[] }) {
         );
       })}
 
-      {/* Tension labels */}
       {LABEL_META.map((meta, i) => (
         <text key={i}
           x={meta.x.toFixed(1)} y={meta.y.toFixed(1)}
@@ -562,6 +853,48 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
       {/* ── Content wrapper ── */}
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "2.5rem clamp(1.25rem, 5vw, 2.5rem) 4rem" }}>
 
+        {/* ── Introduction ── */}
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
+            {t.introTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.9, color: BODY_TEXT, margin: 0, maxWidth: 680 }}>
+            {t.introBody}
+          </p>
+        </section>
+
+        {/* ── Greenleaf Framework ── */}
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
+            {t.greenleafTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.9, color: BODY_TEXT, margin: 0, maxWidth: 680 }}>
+            {t.greenleafBody}
+          </p>
+          <SpearsGrid lang={lang} />
+        </section>
+
+        {/* ── Kenosis / Phil 2 ── */}
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
+            {t.philTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.9, color: BODY_TEXT, margin: 0, maxWidth: 680 }}>
+            {t.philBody}
+          </p>
+          <KenosisCards lang={lang} />
+        </section>
+
+        {/* ── Cross-Cultural ── */}
+        <section style={{ background: "white", border: `1px solid ${LIGHT_GRAY}`, borderLeft: `4px solid ${NAVY}`, padding: "1.75rem", marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.2rem, 2.2vw, 1.5rem)", color: NAVY, margin: "0 0 0.875rem", lineHeight: 1.25 }}>
+            {t.crossTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.97rem)", lineHeight: 1.9, color: BODY_TEXT, margin: 0 }}>
+            {t.crossBody}
+          </p>
+        </section>
+
         {/* ── Two Sources ── */}
         <section style={{ marginBottom: "3rem" }}>
           <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
@@ -571,6 +904,16 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
             {t.twoBody}
           </p>
           <TwoStreamsSVG lang={lang} />
+        </section>
+
+        {/* ── Map Explanation ── */}
+        <section style={{ marginBottom: "1.5rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
+            {t.mapExplainTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.9, color: BODY_TEXT, margin: 0, maxWidth: 680 }}>
+            {t.mapExplainBody}
+          </p>
         </section>
 
         {/* ── Tension Map ── */}
@@ -645,6 +988,9 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
             ))}
           </ul>
         </section>
+
+        {/* ── AI Challenge Advisor ── */}
+        <AIChallengeSection placements={placements} lang={lang} />
 
         {/* ── Save button ── */}
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "2.5rem" }}>
