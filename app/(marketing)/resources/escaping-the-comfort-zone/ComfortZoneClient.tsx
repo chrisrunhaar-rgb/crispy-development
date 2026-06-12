@@ -333,6 +333,41 @@ export default function ComfortZoneClient({
         </div>
       </section>
 
+      {/* ── CONCENTRIC CIRCLE DIAGRAM ── PURE WHITE ── */}
+      <section style={{ background: "#ffffff", paddingBlock: "clamp(4rem, 7vw, 7rem)" }}>
+        <div style={containerStyle}>
+          <p style={{ ...eyebrowStyle, paddingInline: "1.5rem" }}>{t("KEY INSIGHT", "WAWASAN UTAMA", lang)}</p>
+          <h2 style={{ ...h2Style(), paddingInline: "1.5rem" }}>
+            {t("Growth doesn't replace fear -- it expands around it.", "Pertumbuhan tidak menggantikan ketakutan -- ia berkembang di sekitarnya.", lang)}
+          </h2>
+          <p style={{ ...bodyStyle(), paddingInline: "1.5rem" }}>
+            {t(
+              "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones -- even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.",
+              "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan -- bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
+              lang
+            )}
+          </p>
+          <figure style={{ margin: "0 1.5rem" }}>
+            <div style={{ width: "100%", maxWidth: "540px", margin: "0 auto", background: "#ffffff", padding: "2rem", boxShadow: "0 4px 40px oklch(22% 0.10 260 / 0.08)" }}>
+              <Image
+                src={lang === "id" ? "/resources/comfort-zone-diagram-id.png" : "/resources/comfort-zone-diagram-en.png"}
+                alt={t("Four concentric circles showing comfort, fear, learning and growth zones", "Empat lingkaran konsentris yang menunjukkan zona nyaman, ketakutan, pembelajaran, dan pertumbuhan", lang)}
+                width={540}
+                height={540}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </div>
+            <figcaption style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.8rem", color: BODY_TEXT, textAlign: "center", marginTop: "1rem" }}>
+              {t(
+                "Notice how the comfort and fear zones are smallest. Your comfort zone expands as you spend time in the learning and growth zones.",
+                "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Zona nyamanmu berkembang seiring waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
+                lang
+              )}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* ── INTRO / FOUR ZONES NAV ── */}
       <section style={{ background: OFF_WHITE, ...sectionPadding }}>
         <div style={containerStyle}>
@@ -452,41 +487,6 @@ export default function ComfortZoneClient({
         </div>
       </section>
 
-
-      {/* ── CONCENTRIC CIRCLE DIAGRAM ── PURE WHITE ── */}
-      <section style={{ background: "#ffffff", paddingBlock: "clamp(4rem, 7vw, 7rem)" }}>
-        <div style={containerStyle}>
-          <p style={{ ...eyebrowStyle, paddingInline: "1.5rem" }}>{t("KEY INSIGHT", "WAWASAN UTAMA", lang)}</p>
-          <h2 style={{ ...h2Style(), paddingInline: "1.5rem" }}>
-            {t("Growth doesn't replace fear -- it expands around it.", "Pertumbuhan tidak menggantikan ketakutan -- ia berkembang di sekitarnya.", lang)}
-          </h2>
-          <p style={{ ...bodyStyle(), paddingInline: "1.5rem" }}>
-            {t(
-              "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones -- even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.",
-              "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan -- bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
-              lang
-            )}
-          </p>
-          <figure style={{ margin: "0 1.5rem" }}>
-            <div style={{ width: "100%", maxWidth: "540px", margin: "0 auto", background: "#ffffff", padding: "2rem", boxShadow: "0 4px 40px oklch(22% 0.10 260 / 0.08)" }}>
-              <Image
-                src={lang === "id" ? "/resources/comfort-zone-diagram-id.png" : "/resources/comfort-zone-diagram-en.png"}
-                alt={t("Four concentric circles showing comfort, fear, learning and growth zones", "Empat lingkaran konsentris yang menunjukkan zona nyaman, ketakutan, pembelajaran, dan pertumbuhan", lang)}
-                width={540}
-                height={540}
-                style={{ width: "100%", height: "auto" }}
-              />
-            </div>
-            <figcaption style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.8rem", color: BODY_TEXT, textAlign: "center", marginTop: "1rem" }}>
-              {t(
-                "Notice how the comfort and fear zones are smallest. Your comfort zone expands as you spend time in the learning and growth zones.",
-                "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Zona nyamanmu berkembang seiring waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
-                lang
-              )}
-            </figcaption>
-          </figure>
-        </div>
-      </section>
 
       {/* ── ZONE LOCATOR ── */}
       <section style={{ background: OFF_WHITE, ...sectionPadding }}>
