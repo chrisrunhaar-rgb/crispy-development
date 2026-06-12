@@ -233,6 +233,7 @@ export default function FixedGrowthMindsetClient({
   const [quizOpen, setQuizOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [currentQ, setCurrentQ] = useState(0);
   const [growthScore, setGrowthScore] = useState<number | null>(savedScore ?? null);
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
   const [isSavingScore, startSaveScore] = useTransition();
@@ -263,6 +264,7 @@ export default function FixedGrowthMindsetClient({
   function handleRetake() {
     setAnswers({});
     setQuizSubmitted(false);
+    setCurrentQ(0);
     setGrowthScore(savedScore ?? null);
     setScoreSaved(savedScore != null);
   }
@@ -599,75 +601,92 @@ export default function FixedGrowthMindsetClient({
 
           {quizOpen && (
             <div style={{ marginTop: 36 }}>
-              {!quizSubmitted && (
-                <p style={{ fontSize: 13, color: BODY_TEXT, marginBottom: 28 }}>
-                  {answeredCount} {t("of", "dari")} {QUESTIONS.length} {t("answered", "dijawab")}
-                </p>
-              )}
-
-              {DIMS_ORDER.map(dim => {
-                const dimQuestions = QUESTIONS.map((q, i) => ({ ...q, idx: i })).filter(q => q.dim === dim);
-                const dimLabel = DIM_LABELS[dim][lang];
+              {!quizSubmitted && (() => {
+                const q = QUESTIONS[currentQ];
+                const statement = lang === "id" ? q.id : q.en;
+                const ans = answers[currentQ];
+                const dimLabel = DIM_LABELS[q.dim][lang];
+                const isLast = currentQ === QUESTIONS.length - 1;
+                const progressPct = Math.round(((currentQ + 1) / QUESTIONS.length) * 100);
                 return (
-                  <div key={dim} style={{ marginBottom: 36 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                      <div style={{ height: 1, flex: 1, background: LIGHT_GRAY }} />
-                      <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: BODY_TEXT, whiteSpace: "nowrap" }}>{dimLabel}</span>
-                      <div style={{ height: 1, flex: 1, background: LIGHT_GRAY }} />
+                  <div>
+                    {/* Progress bar */}
+                    <div style={{ marginBottom: 24 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: BODY_TEXT, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                          {t(`Question ${currentQ + 1} of ${QUESTIONS.length}`, `Pertanyaan ${currentQ + 1} dari ${QUESTIONS.length}`)}
+                        </span>
+                        <span style={{ fontSize: 11, fontWeight: 600, color: ORANGE, letterSpacing: "0.06em", textTransform: "uppercase" }}>{dimLabel}</span>
+                      </div>
+                      <div style={{ height: 4, background: LIGHT_GRAY, borderRadius: 4, overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${progressPct}%`, background: NAVY, borderRadius: 4, transition: "width 0.3s ease" }} />
+                      </div>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      {dimQuestions.map(q => {
-                        const ans = answers[q.idx];
-                        const statement = lang === "id" ? q.id : q.en;
-                        return (
-                          <div key={q.idx} style={{ background: "white", borderRadius: 10, padding: "20px 24px", border: `1px solid ${LIGHT_GRAY}` }}>
-                            <p style={{ fontSize: 15, lineHeight: 1.6, color: NAVY, margin: "0 0 16px", fontWeight: 500 }}>{statement}</p>
-                            <div role="group" aria-label={t(q.en, q.id)} style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                              {scaleLabels.map((label, vi) => {
-                                const val = vi + 1;
-                                return (
-                                  <button
-                                    key={val}
-                                    onClick={() => !quizSubmitted && setAnswers(prev => ({ ...prev, [q.idx]: val }))}
-                                    disabled={quizSubmitted}
-                                    aria-pressed={ans === val}
-                                    style={{
-                                      flex: 1, minWidth: 70, padding: "8px 6px", borderRadius: 12, fontSize: 11, fontWeight: 700, cursor: quizSubmitted ? "default" : "pointer",
-                                      border: `2px solid ${ans === val ? NAVY : LIGHT_GRAY}`,
-                                      background: ans === val ? NAVY : "white",
-                                      color: ans === val ? "white" : BODY_TEXT,
-                                      letterSpacing: "0.02em", textAlign: "center", lineHeight: 1.3, minHeight: 44,
-                                    }}
-                                  >
-                                    {label}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
+
+                    {/* Question card */}
+                    <div style={{ background: "white", borderRadius: 12, padding: "28px 24px", border: `1px solid ${LIGHT_GRAY}`, marginBottom: 20 }}>
+                      <p style={{ fontSize: 16, lineHeight: 1.65, color: NAVY, margin: "0 0 20px", fontWeight: 500 }}>{statement}</p>
+                      <div role="group" aria-label={t(q.en, q.id)} style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                        {scaleLabels.map((label, vi) => {
+                          const val = vi + 1;
+                          return (
+                            <button
+                              key={val}
+                              onClick={() => setAnswers(prev => ({ ...prev, [currentQ]: val }))}
+                              aria-pressed={ans === val}
+                              style={{
+                                flex: 1, minWidth: 70, padding: "10px 6px", borderRadius: 12, fontSize: 11, fontWeight: 700, cursor: "pointer",
+                                border: `2px solid ${ans === val ? NAVY : LIGHT_GRAY}`,
+                                background: ans === val ? NAVY : "white",
+                                color: ans === val ? "white" : BODY_TEXT,
+                                letterSpacing: "0.02em", textAlign: "center", lineHeight: 1.3, minHeight: 44,
+                                transition: "background 0.15s, border-color 0.15s",
+                              }}
+                            >
+                              {label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Navigation */}
+                    <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                      {currentQ > 0 && (
+                        <button
+                          onClick={() => setCurrentQ(q => q - 1)}
+                          style={{ background: "transparent", color: BODY_TEXT, padding: "12px 24px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: `1px solid ${LIGHT_GRAY}`, cursor: "pointer", minHeight: 44 }}
+                        >
+                          {t("Previous", "Sebelumnya")}
+                        </button>
+                      )}
+                      {!isLast ? (
+                        <button
+                          onClick={() => setCurrentQ(q => q + 1)}
+                          style={{ background: NAVY, color: "white", padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", letterSpacing: "0.04em", minHeight: 44 }}
+                        >
+                          {t("Next", "Selanjutnya")}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleSubmit}
+                          disabled={!allAnswered}
+                          style={{ background: allAnswered ? NAVY : LIGHT_GRAY, color: allAnswered ? "white" : BODY_TEXT, padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: allAnswered ? "pointer" : "not-allowed", letterSpacing: "0.04em", minHeight: 44 }}
+                        >
+                          {t("See My Results", "Lihat Hasil Saya")}
+                        </button>
+                      )}
+                      {!allAnswered && isLast && (
+                        <span style={{ fontSize: 13, color: BODY_TEXT }}>
+                          {QUESTIONS.length - answeredCount} {t("questions remaining", "pertanyaan tersisa")}
+                        </span>
+                      )}
                     </div>
                   </div>
                 );
-              })}
+              })()}
 
-              {!quizSubmitted ? (
-                <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", marginTop: 8 }}>
-                  <button
-                    onClick={handleSubmit}
-                    disabled={!allAnswered}
-                    style={{ background: allAnswered ? NAVY : LIGHT_GRAY, color: allAnswered ? "white" : BODY_TEXT, padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: allAnswered ? "pointer" : "not-allowed", letterSpacing: "0.04em", minHeight: 44 }}
-                  >
-                    {t("See My Results", "Lihat Hasil Saya")}
-                  </button>
-                  {!allAnswered && (
-                    <span style={{ fontSize: 13, color: BODY_TEXT }}>
-                      {QUESTIONS.length - answeredCount} {t("questions remaining", "pertanyaan tersisa")}
-                    </span>
-                  )}
-                </div>
-              ) : (
+              {quizSubmitted && (
                 <div style={{ background: LIGHT_GRAY, borderRadius: 12, padding: "36px 40px", marginTop: 16 }}>
                   {/* Score display */}
                   <div style={{ display: "flex", gap: 28, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 24 }}>
