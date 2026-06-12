@@ -217,6 +217,7 @@ export default function ComfortZoneClient({
 
   // Zone locator state
   const [locatorAnswers, setLocatorAnswers] = useState<Record<number, boolean>>({});
+  const [locatorCurrent, setLocatorCurrent] = useState<number>(0);
 
   // Reflection question accordion state
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
@@ -230,17 +231,19 @@ export default function ComfortZoneClient({
 
   function handleLocator(index: number, value: boolean) {
     setLocatorAnswers(prev => ({ ...prev, [index]: value }));
+    setLocatorCurrent(prev => Math.min(prev + 1, LOCATOR_STATEMENTS.length));
   }
 
   // Compute zone locator result
-  const answered = Object.keys(locatorAnswers).length;
+  const locatorDone = locatorCurrent >= LOCATOR_STATEMENTS.length;
   const locatorResult = (() => {
-    if (answered < 12) return null;
+    if (!locatorDone) return null;
     const comfort = [0,1,2,3,4,5].filter(i => locatorAnswers[i]).length;
     const fear = [6,7,8,9,10,11].filter(i => locatorAnswers[i]).length;
     const learning = [12,13,14,15,16,17].filter(i => locatorAnswers[i]).length;
     const growth = [18,19,20,21,22,23].filter(i => locatorAnswers[i]).length;
     const max = Math.max(comfort, fear, learning, growth);
+    if (max === 0) return null;
     if (max === comfort) return "comfort";
     if (max === fear) return "fear";
     if (max === learning) return "learning";
@@ -499,45 +502,47 @@ export default function ComfortZoneClient({
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
-            {LOCATOR_STATEMENTS.map((stmt, i) => (
-              <div key={i} style={{ background: locatorAnswers[i] === true ? "oklch(42% 0.14 260 / 0.08)" : locatorAnswers[i] === false ? "oklch(88% 0.008 80 / 0.5)" : "#ffffff", border: `1px solid ${locatorAnswers[i] === true ? "oklch(42% 0.14 260 / 0.25)" : "oklch(88% 0.008 80)"}`, borderRadius: 6, padding: "1rem 1.25rem", transition: "all 0.2s ease" }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", lineHeight: 1.7, color: BODY_TEXT, margin: "0 0 0.75rem" }}>
-                  {t(stmt.en, stmt.id, lang)}
+          {!locatorDone ? (
+            <div>
+              {/* Progress bar */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+                <div style={{ flex: 1, height: 4, background: LIGHT_GRAY, borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${(locatorCurrent / LOCATOR_STATEMENTS.length) * 100}%`, background: NAVY, borderRadius: 2, transition: "width 0.3s ease" }} />
+                </div>
+                <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.8rem", fontWeight: 600, color: BODY_TEXT, whiteSpace: "nowrap" as const }}>
+                  {locatorCurrent + 1} / {LOCATOR_STATEMENTS.length}
+                </span>
+              </div>
+
+              {/* Current statement */}
+              <div style={{ background: "#ffffff", border: `1px solid oklch(88% 0.008 80)`, borderRadius: 8, padding: "1.5rem 1.75rem" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "1rem", lineHeight: 1.75, color: BODY_TEXT, margin: "0 0 1.25rem" }}>
+                  {t(LOCATOR_STATEMENTS[locatorCurrent].en, LOCATOR_STATEMENTS[locatorCurrent].id, lang)}
                 </p>
-                <div style={{ display: "flex", gap: "0.625rem", flexWrap: "wrap" as const }}>
+                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" as const }}>
                   <button
-                    onClick={() => handleLocator(i, true)}
-                    aria-pressed={locatorAnswers[i] === true}
-                    style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.8rem", fontWeight: 700, padding: "0.375rem 0.875rem", minHeight: 36, borderRadius: 4, border: `1.5px solid ${locatorAnswers[i] === true ? NAVY : "oklch(70% 0.04 260)"}`, background: locatorAnswers[i] === true ? NAVY : "transparent", color: locatorAnswers[i] === true ? OFF_WHITE : BODY_TEXT, cursor: "pointer", transition: "all 0.15s ease" }}
+                    onClick={() => handleLocator(locatorCurrent, true)}
+                    style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", fontWeight: 700, padding: "0.625rem 1.5rem", minHeight: 44, borderRadius: 4, border: `1.5px solid ${NAVY}`, background: NAVY, color: OFF_WHITE, cursor: "pointer" }}
                   >
                     {t("This is me", "Ini saya", lang)}
                   </button>
                   <button
-                    onClick={() => handleLocator(i, false)}
-                    aria-pressed={locatorAnswers[i] === false}
-                    style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.8rem", fontWeight: 700, padding: "0.375rem 0.875rem", minHeight: 36, borderRadius: 4, border: `1.5px solid ${locatorAnswers[i] === false ? "oklch(55% 0.04 260)" : "oklch(70% 0.04 260)"}`, background: "transparent", color: BODY_TEXT, cursor: "pointer", transition: "all 0.15s ease" }}
+                    onClick={() => handleLocator(locatorCurrent, false)}
+                    style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", fontWeight: 700, padding: "0.625rem 1.5rem", minHeight: 44, borderRadius: 4, border: `1.5px solid oklch(70% 0.04 260)`, background: "transparent", color: BODY_TEXT, cursor: "pointer" }}
                   >
                     {t("Not right now", "Tidak saat ini", lang)}
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Locator result */}
-          {locatorResult && (
-            <div role="region" aria-live="polite" style={{ background: NAVY, borderRadius: 8, padding: "2rem", marginTop: "1rem" }}>
+            </div>
+          ) : (
+            /* Locator result */
+            <div role="region" aria-live="polite" style={{ background: NAVY, borderRadius: 8, padding: "2rem" }}>
               <p style={eyebrowStyle}>{t("YOUR RESULT", "HASILMU", lang)}</p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "1rem", lineHeight: 1.8, color: OFF_WHITE, margin: 0 }}>
-                {t(zoneResultText[locatorResult].en, zoneResultText[locatorResult].id, lang)}
+                {locatorResult ? t(zoneResultText[locatorResult].en, zoneResultText[locatorResult].id, lang) : t("You have a spread across multiple zones -- which is common. Read each zone description and notice where you feel the most recognition.", "Jawabanmu tersebar di beberapa zona, yang merupakan hal yang umum. Baca setiap deskripsi zona dan perhatikan di mana kamu paling merasa dikenali.", lang)}
               </p>
             </div>
-          )}
-          {answered > 0 && answered < 12 && (
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: BODY_TEXT, marginTop: "1rem" }}>
-              {t(`${answered} of 24 answered. Mark at least 12 to see your result.`, `${answered} dari 24 dijawab. Tandai setidaknya 12 untuk melihat hasilmu.`, lang)}
-            </p>
           )}
         </div>
       </section>
