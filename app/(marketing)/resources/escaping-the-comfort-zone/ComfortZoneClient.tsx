@@ -564,15 +564,17 @@ export default function ComfortZoneClient({
                     onClick={() => setOpenQuestion(isOpen ? null : q.num)}
                     aria-expanded={isOpen}
                     aria-controls={`q-panel-${q.num}`}
-                    style={{ width: "100%", display: "flex", gap: "1.5rem", alignItems: "flex-start", padding: "1.5rem 2rem", background: "transparent", border: "none", cursor: "pointer", textAlign: "left" as const }}
+                    style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.5rem", alignItems: "flex-start", padding: "1.5rem 2rem", background: "transparent", border: "none", cursor: "pointer", textAlign: "left" as const }}
                   >
-                    <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: ORANGE, letterSpacing: "0.08em", flexShrink: 0, paddingTop: "0.15rem", minWidth: "2.25rem" }}>
-                      {q.num}{q.optional ? ` (${t("optional", "opsional", lang)})` : ""}
-                    </span>
-                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", margin: 0, flex: 1 }}>
+                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: ORANGE, letterSpacing: "0.08em" }}>
+                        {q.num}{q.optional ? ` (${t("optional", "opsional", lang)})` : ""}
+                      </span>
+                      <span style={{ width: 8, height: 8, borderRight: `2px solid ${ORANGE}`, borderBottom: `2px solid ${ORANGE}`, transform: isOpen ? "rotate(-135deg)" : "rotate(45deg)", transition: "transform 0.2s ease", flexShrink: 0 }} />
+                    </div>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(78% 0.04 260)", margin: 0 }}>
                       {t(q.en, q.id, lang)}
                     </p>
-                    <span style={{ width: 8, height: 8, borderRight: `2px solid ${ORANGE}`, borderBottom: `2px solid ${ORANGE}`, transform: isOpen ? "rotate(-135deg)" : "rotate(45deg)", transition: "transform 0.2s ease", flexShrink: 0, marginTop: "0.5rem" }} />
                   </button>
                   <div
                     id={`q-panel-${q.num}`}
@@ -584,7 +586,7 @@ export default function ComfortZoneClient({
                     }}
                   >
                     <div style={{ overflow: "hidden" }}>
-                      <div style={{ padding: "0 2rem 1.5rem 5.25rem" }}>
+                      <div style={{ padding: "0 2rem 1.5rem 2rem" }}>
                         <textarea
                           placeholder={t("Type here...", "Tulis di sini...", lang)}
                           style={{ width: "100%", minHeight: "80px", padding: "0.75rem", border: "1px solid rgba(248,247,244,0.2)", borderRadius: "6px", background: "rgba(248,247,244,0.08)", color: "#F8F7F4", fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", resize: "vertical", marginTop: "0.75rem", boxSizing: "border-box" as const }}
