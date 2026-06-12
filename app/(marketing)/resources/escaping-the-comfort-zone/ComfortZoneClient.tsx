@@ -275,7 +275,7 @@ export default function ComfortZoneClient({
       {/* ── HERO ── */}
       <section style={{ position: "relative", background: NAVY, overflow: "hidden", padding: "7rem 1.5rem 6rem" }}>
         <img
-          src="/images/resources/understanding-burnout/hero-nest.jpg"
+          src="/images/resources/escaping-the-comfort-zone/hero-threshold.jpg"
           alt=""
           aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22, mixBlendMode: "luminosity" }}
