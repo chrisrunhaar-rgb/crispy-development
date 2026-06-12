@@ -66,8 +66,7 @@ export async function askServantLeadershipAI(
         body: JSON.stringify({
           system_instruction: { parts: [{ text: buildSystemPrompt(placements, lang) }] },
           contents: [{ role: "user", parts: [{ text: challenge.trim() }] }],
-          generationConfig: { maxOutputTokens: 1024, temperature: 0.65 },
-          thinkingConfig: { thinkingBudget: 0 },
+          generationConfig: { maxOutputTokens: 1024, temperature: 0.65, thinkingConfig: { thinkingBudget: 0 } },
         }),
       }
     );
