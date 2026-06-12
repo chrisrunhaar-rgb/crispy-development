@@ -741,19 +741,6 @@ export default function FixedGrowthMindsetClient({
                         )}
                   </p>
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {!scoreSaved ? (
-                      <button
-                        onClick={handleSaveScore}
-                        disabled={isSavingScore}
-                        style={{ background: NAVY, color: "white", padding: "12px 28px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em", minHeight: 44 }}
-                      >
-                        {isSavingScore ? t("Saving...", "Menyimpan...") : t("Save to Dashboard", "Simpan ke Dashboard")}
-                      </button>
-                    ) : (
-                      <span style={{ display: "flex", alignItems: "center", gap: 6, color: "oklch(40% 0.16 145)", fontWeight: 700, fontSize: 13 }}>
-                        ✓ {t("Saved to Dashboard", "Tersimpan di Dashboard")}
-                      </span>
-                    )}
                     <button
                       onClick={handleRetake}
                       style={{ background: "transparent", color: BODY_TEXT, padding: "12px 28px", borderRadius: 12, fontWeight: 600, fontSize: 13, border: `1px solid oklch(75% 0.008 80)`, cursor: "pointer", minHeight: 44 }}
