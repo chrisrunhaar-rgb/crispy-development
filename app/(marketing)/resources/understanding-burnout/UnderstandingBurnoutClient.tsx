@@ -1316,8 +1316,8 @@ export default function UnderstandingBurnoutClient({
               }}
             >
               {t(
-                "James names the emotions that drive earthly wisdom: the ones that quietly shape decisions, responses, and pace of life. Which one whispers loudest in you right now?",
-                "Yakobus menamai emosi yang mendorong hikmat duniawi: yang diam-diam membentuk keputusan, respons, dan kecepatan hidup. Mana yang paling keras berbisik dalam diri Anda saat ini?",
+                "James names two roots: bitter envy and selfish ambition. From those roots grow recognisable patterns. Which of these feels most present in you right now?",
+                "Yakobus menyebut dua akar: iri hati yang pahit dan ambisi yang mementingkan diri. Dari akar-akar itu tumbuh pola yang dapat dikenali. Mana yang paling terasa dalam diri Anda saat ini?",
                 lang
               )}
             </p>
@@ -1325,8 +1325,8 @@ export default function UnderstandingBurnoutClient({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "0.75rem",
+                gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                gap: "0.5rem",
                 marginBottom: "1.5rem",
               }}
             >
@@ -1385,7 +1385,7 @@ export default function UnderstandingBurnoutClient({
                     id: "Apa yang Anda kelola saat ini yang tidak pernah dimaksudkan untuk Anda tanggung sendiri? Seperti apa tampaknya untuk mempercayai Allah dan orang-orang di sekitar Anda dengan sebagian dari itu minggu ini?",
                   },
                 },
-              ].map(({ key, icon, label, reflection }) => {
+              ].map(({ key, label, reflection }) => {
                 const isSelected = selectedEmotion === key;
                 return (
                   <button
@@ -1393,23 +1393,18 @@ export default function UnderstandingBurnoutClient({
                     onClick={() => setSelectedEmotion(isSelected ? null : key)}
                     style={{
                       fontFamily: "Montserrat, sans-serif",
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
+                      fontSize: "0.85rem",
+                      fontWeight: 500,
                       textAlign: "center",
-                      padding: "1.25rem 1rem",
+                      padding: "0.65rem 0.75rem",
                       background: isSelected ? orange : "oklch(28% 0.08 260)",
                       color: isSelected ? "#fff" : "oklch(82% 0.01 80)",
                       border: `1.5px solid ${isSelected ? orange : "oklch(38% 0.08 260)"}`,
-                      borderRadius: "8px",
+                      borderRadius: "6px",
                       cursor: "pointer",
                       transition: "all 0.2s ease",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "0.4rem",
                     }}
                   >
-                    <span style={{ fontSize: "1.4rem" }}>{icon}</span>
                     {label}
                   </button>
                 );
