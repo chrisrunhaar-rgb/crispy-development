@@ -53,7 +53,7 @@ export async function askServantLeadershipAI(
   placements: (number | null)[],
   lang: "en" | "id"
 ): Promise<{ text: string; error: string | null }> {
-  const apiKey = process.env.GOOGLE_AI_STUDIO_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_AI_STUDIO_API_KEY;
   if (!apiKey) return { text: "", error: "Service unavailable" };
   if (!challenge.trim()) return { text: "", error: "Please describe your challenge" };
 
