@@ -86,7 +86,9 @@ export default function RaftPlanTile({ plan, lang = "en" }: { plan: RaftPlan; la
             margin: "0.2rem 0 0",
             lineHeight: 1.3,
           }}>
-            {lang === "id" ? "Ketuk untuk melihat jawaban Anda" : "Tap to view your answers"}
+            {lang === "id"
+              ? `Disimpan ${formatSavedAt(plan.saved_at, "id")}`
+              : `Saved ${formatSavedAt(plan.saved_at, "en")}`}
           </p>
         </div>
         <span style={{
@@ -238,9 +240,7 @@ export default function RaftPlanTile({ plan, lang = "en" }: { plan: RaftPlan; la
                 color: "oklch(62% 0.008 260)",
                 margin: 0,
               }}>
-                {lang === "id"
-                  ? `Disimpan ${formatSavedAt(plan.saved_at, "id")} dari modul Transisi yang Sehat`
-                  : `Saved ${formatSavedAt(plan.saved_at, "en")} from Healthy Transitions module`}
+                {lang === "id" ? "Disimpan dari modul Transisi yang Sehat" : "Saved from Healthy Transitions module"}
               </p>
               <button
                 onClick={() => setOpen(false)}
