@@ -68,7 +68,7 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
         <div
           style={{
             position: "absolute", top: 0, left: "25%", right: "25%", height: 28,
-            background: "hsl(35,70%,48%)", borderRadius: 4,
+            background: "hsl(42,75%,52%)", borderRadius: 4,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
@@ -80,7 +80,7 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
         <div
           style={{
             position: "absolute", top: 36, left: "25%", width: "25%", height: 28,
-            background: "hsl(210,42%,40%)", borderRadius: 4,
+            background: "hsl(185,45%,38%)", borderRadius: 4,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
@@ -92,7 +92,7 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
         <div
           style={{
             position: "absolute", top: 72, left: "50%", right: 0, height: 28,
-            background: "hsl(0,60%,38%)", borderRadius: 4,
+            background: "hsl(345,55%,32%)", borderRadius: 4,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
@@ -341,15 +341,8 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "Five years into cross-cultural ministry, in a city far from home, a worker was producing visible fruit. The team was growing. The program was running. By any external measure, the work was succeeding. What no one saw (including the worker) was the cost building underneath. The early-morning hours that had once felt like communion began to feel like catching up. The people they served began to feel like demand. By the time the collapse came, no one, including the worker, had seen it building.",
-              "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pekerja menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun (termasuk pekerja itu sendiri) adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pekerja itu sendiri, yang melihatnya datang.",
-              lang
-            )}
-          </p>
-          <p style={bodyStyle()}>
-            {t(
-              "A 2024 study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found that 62.91% reported high or very high burnout levels. In the Philippines the figure was 70.71%. This is not exceptional. This is the ordinary experience of people doing meaningful work in high-demand, high-accountability contexts. And in cultures where admitting exhaustion means losing face, risking your role, or alarming your supporters back home, the pressure to appear fine compounds the problem significantly. The word for this in Indonesian is malu: the pressure to protect dignity and standing by not naming the struggle. Many cross-cultural workers carry this pressure without naming it. This module names it first, because nothing that follows makes sense until it does.",
-              "Sebuah studi tahun 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan bahwa 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi. Di Filipina angkanya 70,71%. Ini bukan pengecualian. Ini adalah pengalaman biasa orang-orang yang melakukan pekerjaan bermakna dalam konteks tuntutan tinggi dan akuntabilitas tinggi. Dan dalam budaya di mana mengakui kelelahan berarti kehilangan muka, mempertaruhkan peran Anda, atau mengkhawatirkan pendukung Anda di kampung halaman, tekanan untuk tampak baik-baik saja memperburuk masalah secara signifikan. Kata untuk ini dalam bahasa Indonesia adalah malu: tekanan untuk melindungi martabat dan kedudukan dengan tidak menamai perjuangan. Banyak pekerja lintas budaya membawa tekanan ini tanpa menamakannya. Modul ini menamakannya terlebih dahulu, karena tidak ada yang berikut ini masuk akal sampai hal itu dilakukan.",
+              "Five years into cross-cultural ministry, in a city far from home, a leader was producing visible fruit. The team was growing. The program was running. By any external measure, the work was succeeding. What no one saw (including the leader) was the cost building underneath. The early-morning hours that had once felt like communion began to feel like catching up. The people they served began to feel like demand. By the time the collapse came, no one, including the leader, had seen it building.",
+              "Lima tahun dalam pelayanan lintas budaya, di sebuah kota jauh dari rumah, seorang pemimpin menghasilkan buah yang nyata. Tim bertumbuh. Program berjalan. Berdasarkan ukuran eksternal mana pun, pekerjaan itu berhasil. Yang tidak terlihat siapa pun (termasuk pemimpin itu sendiri) adalah biaya yang menumpuk di balik permukaan. Jam-jam dini hari yang dulunya terasa seperti persekutuan mulai terasa seperti mengejar ketertinggalan. Orang-orang yang dilayani mulai terasa seperti beban. Ketika keruntuhan itu tiba, tidak ada seorang pun, termasuk pemimpin itu sendiri, yang melihatnya datang.",
               lang
             )}
           </p>
@@ -431,8 +424,8 @@ export default function UnderstandingBurnoutClient({
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
                 {t(
-                  "High ambition, high commitment, keeps pushing through depletion. Coping style is active but unsustainable. This is often the worker who cannot stop because stopping feels like faithlessness. Visible, productive, well-regarded, and running on a collapsing foundation.",
-                  "Ambisi tinggi, komitmen tinggi, terus mendorong meskipun sudah terkuras. Gaya mengatasinya aktif tetapi tidak berkelanjutan. Ini sering kali adalah pekerja yang tidak bisa berhenti karena berhenti terasa seperti tidak setia. Terlihat, produktif, dihormati, dan berjalan di atas fondasi yang runtuh.",
+                  "High ambition, high commitment, keeps pushing through depletion. Coping style is active but unsustainable. This is often the leader who cannot stop because stopping feels like faithlessness. Visible, productive, well-regarded, and running on a collapsing foundation.",
+                  "Ambisi tinggi, komitmen tinggi, terus mendorong meskipun sudah terkuras. Gaya mengatasinya aktif tetapi tidak berkelanjutan. Ini sering kali adalah pemimpin yang tidak bisa berhenti karena berhenti terasa seperti tidak setia. Terlihat, produktif, dihormati, dan berjalan di atas fondasi yang runtuh.",
                   lang
                 )}
               </p>
@@ -473,8 +466,8 @@ export default function UnderstandingBurnoutClient({
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
                 {t(
-                  "Not overwhelmed but disengaged. Skills are underused. The work feels repetitive, small, disconnected from calling. Common among experienced workers placed in roles below their capacity, or those whose pioneering work has become bureaucratic maintenance. The exhaustion here is not from too much. It is from too little meaning.",
-                  "Tidak kewalahan tetapi tidak terlibat. Keterampilan tidak dimanfaatkan. Pekerjaan terasa berulang, kecil, terputus dari panggilan. Umum di antara pekerja berpengalaman yang ditempatkan dalam peran di bawah kapasitas mereka, atau mereka yang pekerjaan perintisnya telah menjadi pemeliharaan birokrasi. Kelelahan di sini bukan karena terlalu banyak, melainkan karena terlalu sedikit makna.",
+                  "Not overwhelmed but disengaged. Skills are underused. The work feels repetitive, small, disconnected from calling. Common among experienced leaders placed in roles below their capacity, or those whose pioneering work has become bureaucratic maintenance. The exhaustion here is not from too much. It is from too little meaning.",
+                  "Tidak kewalahan tetapi tidak terlibat. Keterampilan tidak dimanfaatkan. Pekerjaan terasa berulang, kecil, terputus dari panggilan. Umum di antara pemimpin berpengalaman yang ditempatkan dalam peran di bawah kapasitas mereka, atau mereka yang pekerjaan perintisnya telah menjadi pemeliharaan birokrasi. Kelelahan di sini bukan karena terlalu banyak, melainkan karena terlalu sedikit makna.",
                   lang
                 )}
               </p>
@@ -515,8 +508,8 @@ export default function UnderstandingBurnoutClient({
               </p>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", lineHeight: 1.7, color: "oklch(85% 0.01 80)", margin: 0 }}>
                 {t(
-                  "Advanced disengagement, apathy, passivity. This worker has often passed through frenetic burnout without recovery and arrived at a place where effort no longer feels worth it. Acknowledgment feels absent. Control feels absent. They have stopped trying to change what is not changing. This is the hardest pattern to reverse and the most likely to precede attrition or breakdown.",
-                  "Ketidakterlibatan lanjut, apatis, pasif. Pekerja ini sering telah melewati kelelahan frenetic tanpa pemulihan dan tiba di tempat di mana usaha tidak lagi terasa sepadan. Pengakuan terasa tidak ada. Kontrol terasa tidak ada. Mereka telah berhenti mencoba mengubah apa yang tidak berubah. Ini adalah pola yang paling sulit untuk dibalik dan yang paling mungkin mendahului gesekan atau kerusakan.",
+                  "Advanced disengagement, apathy, passivity. This leader has often passed through frenetic burnout without recovery and arrived at a place where effort no longer feels worth it. Acknowledgment feels absent. Control feels absent. They have stopped trying to change what is not changing. This is the hardest pattern to reverse and the most likely to precede attrition or breakdown.",
+                  "Ketidakterlibatan lanjut, apatis, pasif. Pemimpin ini sering telah melewati kelelahan frenetic tanpa pemulihan dan tiba di tempat di mana usaha tidak lagi terasa sepadan. Pengakuan terasa tidak ada. Kontrol terasa tidak ada. Mereka telah berhenti mencoba mengubah apa yang tidak berubah. Ini adalah pola yang paling sulit untuk dibalik dan yang paling mungkin mendahului gesekan atau kerusakan.",
                   lang
                 )}
               </p>
@@ -920,15 +913,15 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle(true)}>
             {t(
-              "Most burnouts among ministry and cross-cultural workers are not caused primarily by working too hard. They happen when, gradually and often invisibly, the worker drifts from serving out of God's calling and wisdom to serving out of their own ambition, expectations, fears, or need for results. The distinction is not between effort and rest. It is between identity and performance. And it rarely announces itself.",
-              "Sebagian besar kelelahan di antara pekerja pelayanan dan lintas budaya tidak disebabkan terutama oleh terlalu banyak bekerja. Itu terjadi ketika, secara bertahap dan sering tidak terlihat, pekerja menyimpang dari melayani berdasarkan panggilan dan hikmat Allah ke melayani berdasarkan ambisi, harapan, ketakutan, atau kebutuhan akan hasil sendiri. Perbedaannya bukan antara usaha dan istirahat. Melainkan antara identitas dan kinerja. Dan itu jarang mengumumkan dirinya sendiri.",
+              "Most burnouts among ministry and cross-cultural leaders are not caused primarily by working too hard. They happen when, gradually and often invisibly, the leader drifts from serving out of God's calling and wisdom to serving out of their own ambition, expectations, fears, or need for results. The distinction is not between effort and rest. It is between identity and performance. And it rarely announces itself.",
+              "Sebagian besar kelelahan di antara pemimpin pelayanan dan lintas budaya tidak disebabkan terutama oleh terlalu banyak bekerja. Itu terjadi ketika, secara bertahap dan sering tidak terlihat, pemimpin menyimpang dari melayani berdasarkan panggilan dan hikmat Allah ke melayani berdasarkan ambisi, harapan, ketakutan, atau kebutuhan akan hasil sendiri. Perbedaannya bukan antara usaha dan istirahat. Melainkan antara identitas dan kinerja. Dan itu jarang mengumumkan dirinya sendiri.",
               lang
             )}
           </p>
           <p style={bodyStyle(true)}>
             {t(
-              "Selfish ambition does not announce itself as selfish ambition. In ministry and cross-cultural work, it wears ministry clothes. It sounds like vision, like faithfulness, like sacrifice, like responsibility. The worker who cannot delegate because the standard will drop: that may not be diligence; it may be control. The worker who cannot rest because the need is too great: that may not be calling; it may be fear of what happens to their sense of worth when the output stops. The worker who cannot receive help without feeling ashamed: that is not strength; that is isolation wearing the face of faith.",
-              "Ambisi egois tidak mengumumkan dirinya sebagai ambisi egois. Dalam pelayanan dan pekerjaan lintas budaya, ia mengenakan pakaian pelayanan. Terdengar seperti visi, seperti kesetiaan, seperti pengorbanan, seperti tanggung jawab. Pekerja yang tidak bisa mendelegasikan karena standar akan menurun: itu mungkin bukan ketekunan; mungkin kontrol. Pekerja yang tidak bisa beristirahat karena kebutuhan terlalu besar: itu mungkin bukan panggilan; mungkin ketakutan akan apa yang terjadi pada rasa nilai diri mereka ketika output berhenti. Pekerja yang tidak bisa menerima bantuan tanpa merasa malu: itu bukan kekuatan; itu isolasi yang mengenakan wajah iman.",
+              "Selfish ambition does not announce itself as selfish ambition. In ministry and cross-cultural work, it wears ministry clothes. It sounds like vision, like faithfulness, like sacrifice, like responsibility. The leader who cannot delegate because the standard will drop: that may not be diligence; it may be control. The leader who cannot rest because the need is too great: that may not be calling; it may be fear of what happens to their sense of worth when the output stops. The leader who cannot receive help without feeling ashamed: that is not strength; that is isolation wearing the face of faith.",
+              "Ambisi egois tidak mengumumkan dirinya sebagai ambisi egois. Dalam pelayanan dan pekerjaan lintas budaya, ia mengenakan pakaian pelayanan. Terdengar seperti visi, seperti kesetiaan, seperti pengorbanan, seperti tanggung jawab. Pemimpin yang tidak bisa mendelegasikan karena standar akan menurun: itu mungkin bukan ketekunan; mungkin kontrol. Pemimpin yang tidak bisa beristirahat karena kebutuhan terlalu besar: itu mungkin bukan panggilan; mungkin ketakutan akan apa yang terjadi pada rasa nilai diri mereka ketika output berhenti. Pemimpin yang tidak bisa menerima bantuan tanpa merasa malu: itu bukan kekuatan; itu isolasi yang mengenakan wajah iman.",
               lang
             )}
           </p>
@@ -1242,7 +1235,7 @@ export default function UnderstandingBurnoutClient({
                               fontSize: "0.85rem",
                               lineHeight: 1.6,
                               color: checked[ck] ? "oklch(55% 0.03 260)" : bodyText,
-                              textDecoration: checked[ck] ? "line-through" : "none",
+                              textDecoration: "none",
                               transition: "all 0.15s ease",
                             }}
                           >
