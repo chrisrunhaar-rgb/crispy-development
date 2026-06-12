@@ -234,21 +234,31 @@ export default function OvercomingProcrastinationClient({
       const reg = await navigator.serviceWorker.ready;
       let sub = await reg.pushManager.getSubscription();
       if (!sub) {
-        sub = await reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-        });
+        const rawKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
+        const padding = "=".repeat((4 - (rawKey.length % 4)) % 4);
+        const base64 = (rawKey + padding).replace(/-/g, "+").replace(/_/g, "/");
+        const keyBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+        sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes });
       }
 
+      const subJson = sub.toJSON() as { endpoint: string; keys?: { p256dh: string; auth: string } };
       const remindAt = new Date(`${commitDate}T${commitTime}`).toISOString();
       const res = await fetch("/api/push/commitment-reminder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ task: commitAction.trim(), remindAt, subscription: sub.toJSON() }),
+        body: JSON.stringify({
+          task: commitAction.trim(),
+          remindAt,
+          subscription: {
+            endpoint: sub.endpoint,
+            keys: { p256dh: subJson.keys?.p256dh ?? "", auth: subJson.keys?.auth ?? "" },
+          },
+        }),
       });
-      if (!res.ok) throw new Error("API error");
+      if (!res.ok) throw new Error(`API ${res.status}`);
       setReminderStatus("set");
-    } catch {
+    } catch (err) {
+      console.error("[commitment-reminder]", err);
       setReminderStatus("error");
     }
   }
