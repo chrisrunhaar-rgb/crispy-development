@@ -61,7 +61,7 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <ServantLeadershipClient {...props} isSaved={isSaved} />
+      <ServantLeadershipClient isSaved={isSaved} userId={user?.id ?? null} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="servant-leadership" />

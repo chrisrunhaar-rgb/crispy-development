@@ -1,288 +1,522 @@
 "use client";
-
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
-import Link from "next/link";
-import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import { saveResourceToDashboard } from "../actions";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+// ─── Brand tokens ─────────────────────────────────────────────────────────────
+const NAVY       = "oklch(22% 0.10 260)";
+const ORANGE     = "oklch(65% 0.15 45)";
+const OFF_WHITE  = "oklch(96% 0.005 80)";
+const LIGHT_GRAY = "oklch(88% 0.008 80)";
+const BODY_TEXT  = "oklch(38% 0.05 260)";
+const MUTED      = "oklch(55% 0.008 260)";
 
-const SCENARIOS = [
+const FONT_HEAD = "'Cormorant Garamond', serif";
+const FONT_BODY = "'Montserrat', sans-serif";
+
+// ─── Pentagon math ─────────────────────────────────────────────────────────────
+const ANGLES_DEG = [-90, -18, 54, 126, 198];
+const ANGLES_RAD = ANGLES_DEG.map(d => d * Math.PI / 180);
+const CX = 140, CY = 140, R_MAX = 100;
+
+function ptAt(angleRad: number, value: number) {
+  const r = (value / 100) * R_MAX;
+  return { x: CX + r * Math.cos(angleRad), y: CY + r * Math.sin(angleRad) };
+}
+
+const OUTER_PTS = ANGLES_RAD.map(a => ({
+  x: CX + R_MAX * Math.cos(a),
+  y: CY + R_MAX * Math.sin(a),
+}));
+
+function polyPath(pts: { x: number; y: number }[]) {
+  return pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ") + " Z";
+}
+
+const OUTER_PATH = polyPath(OUTER_PTS);
+const GRID_RINGS = [25, 50, 75, 100];
+
+const LABEL_META = [
+  { anchor: "middle", x: CX + 120 * Math.cos(ANGLES_RAD[0]),     y: CY + 120 * Math.sin(ANGLES_RAD[0]) - 4 },
+  { anchor: "start",  x: CX + 115 * Math.cos(ANGLES_RAD[1]) + 4, y: CY + 115 * Math.sin(ANGLES_RAD[1])     },
+  { anchor: "start",  x: CX + 115 * Math.cos(ANGLES_RAD[2]) + 4, y: CY + 115 * Math.sin(ANGLES_RAD[2])     },
+  { anchor: "end",    x: CX + 115 * Math.cos(ANGLES_RAD[3]) - 4, y: CY + 115 * Math.sin(ANGLES_RAD[3])     },
+  { anchor: "end",    x: CX + 115 * Math.cos(ANGLES_RAD[4]) - 4, y: CY + 115 * Math.sin(ANGLES_RAD[4])     },
+] as const;
+
+// ─── Types ─────────────────────────────────────────────────────────────────────
+type Lang = "en" | "id";
+type Reading = { body: Record<Lang, string>; q: Record<Lang, string> };
+type TensionDef = {
+  id: number;
+  title: Record<Lang, string>;
+  left: Record<Lang, string>;
+  right: Record<Lang, string>;
+  short: Record<Lang, string>;
+  color: string;
+  low: Reading;
+  mid: Reading;
+  high: Reading;
+};
+
+// ─── Tension data ──────────────────────────────────────────────────────────────
+const TENSIONS: TensionDef[] = [
   {
-    num: 1,
-    en_theme: "Listening",
-    id_theme: "Mendengarkan",
-    nl_theme: "Luisteren",
-    en_setup: "You're leading a debrief after a project that went poorly. A junior Indonesian team member has been quiet the whole meeting. Thirty minutes in, she starts to speak — then hesitates as a senior Dutch colleague begins talking at the same time.",
-    id_setup: "Anda memimpin debrief setelah proyek yang berjalan buruk. Anggota tim junior Indonesia telah diam sepanjang rapat. Tiga puluh menit kemudian, dia mulai berbicara — kemudian ragu-ragu saat rekan kerja Belanda yang senior mulai berbicara bersamaan.",
-    nl_setup: "Je leidt een debrief na een project dat slecht is verlopen. Een junior Indonesisch teamlid heeft de hele vergadering gezwegen. Dertig minuten later begint ze te spreken — dan aarzelt ze als een senior Nederlandse collega tegelijkertijd begint te praten.",
-    options: [
-      {
-        key: "a",
-        en_text: "Gently interrupt your Dutch colleague: \"Sorry — I think Rini was about to say something.\"",
-        id_text: "Dengan lembut menyela rekan Belanda Anda: \"Maaf — saya rasa Rini mau mengatakan sesuatu.\"",
-        nl_text: "Je Nederlandse collega vriendelijk onderbreken: \"Sorry — ik denk dat Rini iets wilde zeggen.\"",
-        en_reveal: "Active listening in action. You created space for a voice that the room's default power dynamics were erasing. In cross-cultural teams, this is not just courtesy — it is leadership.",
-        id_reveal: "Mendengarkan aktif dalam tindakan. Anda menciptakan ruang untuk suara yang sedang dihapus oleh dinamika kekuasaan default ruangan. Dalam tim lintas budaya, ini bukan hanya kesopanan — ini kepemimpinan.",
-        nl_reveal: "Actief luisteren in actie. Je cre—erde ruimte voor een stem die de standaard machtsdynamiek van de kamer aan het uitwissen was. In interculturele teams is dit niet alleen hoffelijkheid — het is leiderschap.",
-        en_char: "Listening",
-        id_char: "Mendengarkan",
-        nl_char: "Luisteren",
+    id: 0,
+    title: { en: "Identity vs. Technique", id: "Identitas vs. Teknik" },
+    left:  { en: "I practice servant behaviors", id: "Saya mempraktikkan perilaku pelayan" },
+    right: { en: "Serving flows from who I am",  id: "Melayani mengalir dari siapa saya" },
+    short: { en: "Identity", id: "Identitas" },
+    color: "oklch(52% 0.16 260)",
+    low: {
+      body: {
+        en: "Your serving is shaped by skill — useful, but fragile under pressure. Behavioral discipline is a start, not an arrival.",
+        id: "Pelayananmu dibentuk oleh keterampilan — berguna, tapi rapuh di bawah tekanan. Disiplin perilaku adalah awal, bukan tujuan.",
       },
-      {
-        key: "b",
-        en_text: "Let your senior colleague finish, then ask Rini directly at the end of the meeting.",
-        id_text: "Biarkan rekan senior selesai, kemudian tanya Rini langsung di akhir rapat.",
-        nl_text: "Je senior collega laten uitspreken, dan Rini direct vragen aan het eind van de vergadering.",
-        en_reveal: "Reasonable — but the moment passed. In high-power-distance cultures, asking someone individually at the end after they were already overridden often results in a more guarded answer, not an honest one.",
-        id_reveal: "Masuk akal — tetapi momennya sudah berlalu. Dalam budaya berjarak kekuasaan tinggi, meminta seseorang secara individual di akhir setelah mereka sudah dilewati sering menghasilkan jawaban yang lebih terjaga, bukan yang jujur.",
-        nl_reveal: "Redelijk — maar het moment is voorbij. In hoge machtafstandsculturen resulteert het individueel vragen aan iemand aan het einde nadat ze al overstemd zijn vaak in een meer terughoudend antwoord, niet een eerlijk.",
-        en_char: "Delayed inclusion",
-        id_char: "Inklusi tertunda",
-        nl_char: "Uitgestelde inclusie",
+      q: {
+        en: "What drives your serving when no one is watching?",
+        id: "Apa yang mendorong pelayananmu ketika tidak ada yang melihat?",
       },
-      {
-        key: "c",
-        en_text: "The meeting is already running long. Move to close and ask for written input from everyone afterwards.",
-        id_text: "Rapat sudah berjalan terlalu lama. Bergerak untuk menutup dan minta masukan tertulis dari semua orang setelahnya.",
-        nl_text: "De vergadering loopt al te lang. Afsluiten en daarna schriftelijke input vragen van iedereen.",
-        en_reveal: "Efficiency over inclusion. Written input after the fact rarely surfaces what face-to-face honesty would — especially from team members who were already hesitant to speak.",
-        id_reveal: "Efisiensi di atas inklusi. Masukan tertulis setelah kejadian jarang mengungkapkan apa yang kejujuran tatap muka akan ungkapkan — terutama dari anggota tim yang sudah ragu untuk berbicara.",
-        nl_reveal: "Effici—ntie boven inclusie. Schriftelijke input achteraf brengt zelden op wat face-to-face eerlijkheid zou doen — zeker niet van teamleden die al aarzelden te spreken.",
-        en_char: "Task over person",
-        id_char: "Tugas di atas orang",
-        nl_char: "Taak boven persoon",
+    },
+    mid: {
+      body: {
+        en: "You're navigating both — sometimes it feels like discipline, sometimes it flows. That tension is growth, not failure.",
+        id: "Kamu menavigasi keduanya — kadang terasa seperti disiplin, kadang mengalir. Ketegangan itu adalah pertumbuhan, bukan kegagalan.",
       },
-    ],
+      q: {
+        en: "What would change if serving became less about what you do and more about who you are?",
+        id: "Apa yang akan berubah jika melayani lebih tentang siapa kamu daripada apa yang kamu lakukan?",
+      },
+    },
+    high: {
+      body: {
+        en: "Serving has become part of how you see yourself. Guard against identity collapse when your service is refused or goes unrecognised.",
+        id: "Melayani telah menjadi bagian dari cara kamu melihat dirimu. Jaga diri dari keruntuhan identitas ketika pelayananmu ditolak.",
+      },
+      q: {
+        en: "Where does your self-worth go when your service is rejected?",
+        id: "Ke mana harga dirimu pergi ketika pelayananmu ditolak?",
+      },
+    },
   },
   {
-    num: 2,
-    en_theme: "Empathy",
-    id_theme: "Empati",
-    nl_theme: "Empathie",
-    en_setup: "A team member delivers a key report 48 hours late — the third time this month. You are frustrated. Before you address it, you discover that his father is seriously ill in his home province.",
-    id_setup: "Anggota tim menyerahkan laporan penting 48 jam terlambat — ketiga kalinya bulan ini. Anda frustrasi. Sebelum Anda mengatasinya, Anda menemukan bahwa ayahnya sakit parah di provinsi asalnya.",
-    nl_setup: "Een teamlid levert een belangrijk rapport 48 uur te laat in — de derde keer deze maand. Je bent gefrustreerd. Voordat je het aanpakt, ontdek je dat zijn vader ernstig ziek is in zijn thuisprovincie.",
-    options: [
-      {
-        key: "a",
-        en_text: "Address the pattern directly: \"I understand you're going through difficulty, but the team needs reliability. This can't continue.\"",
-        id_text: "Tangani polanya secara langsung: \"Saya mengerti Anda sedang menghadapi kesulitan, tetapi tim membutuhkan keandalan. Ini tidak bisa dilanjutkan.\"",
-        nl_text: "Het patroon direct aanpakken: \"Ik begrijp dat je het moeilijk hebt, maar het team heeft betrouwbaarheid nodig. Dit kan niet doorgaan.\"",
-        en_reveal: "Accountability without empathy. The statement is fair in isolation — but given the context, it treats a human crisis as a performance issue. The relationship will likely survive, but trust will erode.",
-        id_reveal: "Akuntabilitas tanpa empati. Pernyataan itu adil secara terpisah — tetapi mengingat konteksnya, itu memperlakukan krisis manusiawi sebagai masalah kinerja. Hubungan mungkin akan bertahan, tetapi kepercayaan akan terkikis.",
-        nl_reveal: "Verantwoording zonder empathie. De uitspraak is op zichzelf eerlijk — maar gezien de context behandelt het een menselijke crisis als een prestatie-issue. De relatie overleeft waarschijnlijk, maar vertrouwen erodeert.",
-        en_char: "Accountability without context",
-        id_char: "Akuntabilitas tanpa konteks",
-        nl_char: "Verantwoording zonder context",
+    id: 1,
+    title: { en: "Universal vs. Contextual", id: "Universal vs. Kontekstual" },
+    left:  { en: "Humble leadership works the same everywhere",         id: "Kepemimpinan rendah hati sama di mana-mana" },
+    right: { en: "I read the culture before I decide how to serve",     id: "Saya membaca budaya sebelum memutuskan cara melayani" },
+    short: { en: "Universal", id: "Universal" },
+    color: "oklch(50% 0.14 155)",
+    low: {
+      body: {
+        en: "You may be applying a model that works at home but creates distance elsewhere. Humility looks different across cultures — especially how it's expressed.",
+        id: "Mungkin kamu menerapkan model yang berhasil di tempat asalmu tapi menciptakan jarak di tempat lain. Kerendahan hati terlihat berbeda di berbagai budaya.",
       },
-      {
-        key: "b",
-        en_text: "Set the pattern conversation aside entirely. Focus only on supporting him through this season.",
-        id_text: "Sisihkan sepenuhnya percakapan tentang pola. Fokus hanya pada mendukungnya melalui masa ini.",
-        nl_text: "Het gesprek over het patroon volledig opzij zetten. Alleen focussen op hem ondersteunen in deze periode.",
-        en_reveal: "Compassion without clarity. The person feels seen — but nothing changes for the team, and the next deadline carries the same ambiguity. Full empathy also includes being honest about what the situation requires.",
-        id_reveal: "Kasih sayang tanpa kejelasan. Orang itu merasa diperhatikan — tetapi tidak ada yang berubah untuk tim, dan tenggat waktu berikutnya membawa ambiguitas yang sama. Empati penuh juga mencakup kejujuran tentang apa yang dibutuhkan situasi.",
-        nl_reveal: "Medeleven zonder duidelijkheid. De persoon voelt zich gezien — maar er verandert niets voor het team, en de volgende deadline draagt dezelfde ambigu—teit. Volledige empathie omvat ook eerlijk zijn over wat de situatie vereist.",
-        en_char: "Compassion without clarity",
-        id_char: "Kasih sayang tanpa kejelasan",
-        nl_char: "Medeleven zonder duidelijkheid",
+      q: {
+        en: "Where have you assumed that your way of serving is the humble way?",
+        id: "Di mana kamu berasumsi bahwa cara melayanimu adalah cara yang rendah hati?",
       },
-      {
-        key: "c",
-        en_text: "Ask how he's doing first and listen fully. Then have an honest conversation: how can you both protect him and serve the team?",
-        id_text: "Tanyakan dulu bagaimana keadaannya dan dengarkan sepenuhnya. Kemudian adakan percakapan jujur: bagaimana Anda bisa melindunginya sekaligus melayani tim?",
-        nl_text: "Eerst vragen hoe het met hem gaat en volledig luisteren. Dan een eerlijk gesprek voeren: hoe kunnen jullie hem beschermen —n het team dienen?",
-        en_reveal: "Empathy with stewardship. You are fully present for the person AND honest about the real situation. This is what servant leaders do — they hold complexity without resolving it by ignoring one side.",
-        id_reveal: "Empati dengan penatalayanan. Anda sepenuhnya hadir untuk orang tersebut DAN jujur tentang situasi nyata. Inilah yang dilakukan pemimpin hamba — mereka memegang kompleksitas tanpa menyelesaikannya dengan mengabaikan satu sisi.",
-        nl_reveal: "Empathie met rentmeesterschap. Je bent volledig aanwezig voor de persoon EN eerlijk over de werkelijke situatie. Dit is wat dienend leiders doen — ze houden complexiteit vast zonder het op te lossen door ——n kant te negeren.",
-        en_char: "Empathy + Stewardship",
-        id_char: "Empati + Penatalayanan",
-        nl_char: "Empathie + Rentmeesterschap",
+    },
+    mid: {
+      body: {
+        en: "You're learning to hold the principle while releasing the form. That adaptability is exactly what cross-cultural servant leadership requires.",
+        id: "Kamu belajar memegang prinsip sambil melepaskan bentuknya. Adaptabilitas itu persis yang dibutuhkan kepemimpinan hamba lintas budaya.",
       },
-    ],
+      q: {
+        en: "What's one expression of service you've had to unlearn in a new cultural context?",
+        id: "Apa satu ekspresi pelayanan yang harus kamu lepaskan dalam konteks budaya baru?",
+      },
+    },
+    high: {
+      body: {
+        en: "You're highly contextually aware. Watch that adaptability doesn't slide into endless accommodation — some things don't flex.",
+        id: "Kamu sangat sadar konteks. Perhatikan agar adaptabilitas tidak bergeser menjadi akomodasi tanpa batas — beberapa hal tidak bisa dilenturkan.",
+      },
+      q: {
+        en: "What are the non-negotiables you hold regardless of culture?",
+        id: "Apa yang tidak dapat dinegosiasikan yang kamu pegang terlepas dari budaya?",
+      },
+    },
   },
   {
-    num: 3,
-    en_theme: "Stewardship",
-    id_theme: "Penatalayanan",
-    nl_theme: "Rentmeesterschap",
-    en_setup: "Your team completes a difficult six-month project with strong results. The regional director sends you a congratulatory email and copies the CEO. You led the project. The real work was done by four people on your team.",
-    id_setup: "Tim Anda menyelesaikan proyek enam bulan yang sulit dengan hasil yang kuat. Direktur regional mengirimkan email selamat kepada Anda dan menyalin CEO. Anda memimpin proyek. Pekerjaan nyata dilakukan oleh empat orang di tim Anda.",
-    nl_setup: "Je team voltooit een moeilijk project van zes maanden met sterke resultaten. De regionale directeur stuurt je een felicitatiemail en cc't de CEO. Jij leidde het project. Het echte werk is gedaan door vier mensen in je team.",
-    options: [
-      {
-        key: "a",
-        en_text: "Reply thanking the director, then forward it to your team with a personal note of appreciation.",
-        id_text: "Balas dengan berterima kasih kepada direktur, kemudian teruskan ke tim Anda dengan catatan apresiasi pribadi.",
-        nl_text: "Antwoorden met dankbetuiging aan de directeur, dan doorsturen naar je team met een persoonlijke waarderingsnoot.",
-        en_reveal: "Appreciation — but private. Your team sees the recognition internally. The director and CEO do not. In hierarchical contexts, who knows matters as much as whether you say it.",
-        id_reveal: "Apresiasi — tetapi privat. Tim Anda melihat pengakuan secara internal. Direktur dan CEO tidak. Dalam konteks hierarkis, siapa yang tahu sama pentingnya dengan apakah Anda mengatakannya.",
-        nl_reveal: "Waardering — maar priv—. Je team ziet de erkenning intern. De directeur en CEO niet. In hi—rarchische contexten maakt het uit wie het weet, niet alleen of je het zegt.",
-        en_char: "Recognition (private)",
-        id_char: "Pengakuan (privat)",
-        nl_char: "Erkenning (priv—)",
+    id: 2,
+    title: { en: "Deference vs. Authority", id: "Ketundukan vs. Otoritas" },
+    left:  { en: "Serving means I set my authority aside",  id: "Melayani berarti mengesampingkan otoritas saya" },
+    right: { en: "I hold authority and use it to serve",    id: "Saya memegang otoritas dan menggunakannya untuk melayani" },
+    short: { en: "Authority", id: "Otoritas" },
+    color: "oklch(56% 0.13 45)",
+    low: {
+      body: {
+        en: "Stepping back is sometimes wisdom — but check that it isn't avoidance. Kenosis means emptying status, not authority. Jesus washed feet and then commanded Lazarus from the grave.",
+        id: "Melangkah mundur kadang adalah kebijaksanaan — tapi pastikan itu bukan penghindaran. Kenosis berarti mengosongkan status, bukan otoritas.",
       },
-      {
-        key: "b",
-        en_text: "Reply with gratitude and mention it was a strong team effort — without naming individuals.",
-        id_text: "Balas dengan rasa syukur dan sebutkan bahwa itu adalah upaya tim yang kuat — tanpa menyebutkan nama individu.",
-        nl_text: "Antwoorden met dankbaarheid en vermelden dat het een sterke teaminspanning was — zonder individuen te noemen.",
-        en_reveal: "Modest — but generic. 'Team effort' is honest but invisible. No one grows professionally from being mentioned as part of a collective. Good stewardship is specific.",
-        id_reveal: "Rendah hati — tetapi umum. 'Upaya tim' itu jujur tetapi tidak terlihat. Tidak ada yang tumbuh secara profesional dari disebutkan sebagai bagian dari kolektif. Penatalayanan yang baik itu spesifik.",
-        nl_reveal: "Bescheiden — maar generiek. 'Teaminspanning' is eerlijk maar onzichtbaar. Niemand groeit professioneel van vermeld worden als onderdeel van een collectief. Goed rentmeesterschap is specifiek.",
-        en_char: "Modest but vague",
-        id_char: "Rendah hati tapi samar",
-        nl_char: "Bescheiden maar vaag",
+      q: {
+        en: "Is there a place where stepping back has left people without the direction they needed?",
+        id: "Apakah ada tempat di mana melangkah mundur justru membuat orang tanpa arahan yang mereka butuhkan?",
       },
-      {
-        key: "c",
-        en_text: "Reply with specific names and contributions: 'This result belongs to Andi, Sarah, Pak Budi, and Wim — here is what each one did.'",
-        id_text: "Balas dengan nama spesifik dan kontribusi: 'Hasil ini milik Andi, Sarah, Pak Budi, dan Wim — inilah apa yang masing-masing lakukan.'",
-        nl_text: "Antwoorden met specifieke namen en bijdragen: 'Dit resultaat is van Andi, Sarah, Pak Budi en Wim — dit is wat elk van hen deed.'",
-        en_reveal: "Stewardship. You used your position of visibility to give others what they cannot give themselves: recognition in front of leadership. Servant leaders understand that power is most useful when given away.",
-        id_reveal: "Penatalayanan. Anda menggunakan posisi visibilitas Anda untuk memberi orang lain apa yang tidak bisa mereka berikan sendiri: pengakuan di depan kepemimpinan. Pemimpin hamba memahami bahwa kekuasaan paling berguna ketika diberikan.",
-        nl_reveal: "Rentmeesterschap. Je hebt je positie van zichtbaarheid gebruikt om anderen te geven wat ze zichzelf niet kunnen geven: erkenning voor leiderschap. Dienend leiders begrijpen dat macht het meest nuttig is als je het weggeeft.",
-        en_char: "Stewardship",
-        id_char: "Penatalayanan",
-        nl_char: "Rentmeesterschap",
+    },
+    mid: {
+      body: {
+        en: "You hold the tension well — neither dominating nor disappearing. That's the hard, necessary middle ground most servant leaders struggle to find.",
+        id: "Kamu memegang ketegangan dengan baik — tidak mendominasi maupun menghilang. Itu adalah titik tengah yang sulit dan perlu.",
       },
-    ],
+      q: {
+        en: "When does your authority feel like a burden rather than a resource to give?",
+        id: "Kapan otoritasmu terasa seperti beban daripada sumber daya untuk diberikan?",
+      },
+    },
+    high: {
+      body: {
+        en: "You lead with confidence. The question isn't whether you hold authority — it's whether those you serve experience it as gift or weight.",
+        id: "Kamu memimpin dengan keyakinan. Pertanyaannya bukan apakah kamu memegang otoritas — tapi apakah yang kamu layani merasakannya sebagai anugerah atau beban.",
+      },
+      q: {
+        en: "How do the people you lead describe your leadership when you're not in the room?",
+        id: "Bagaimana orang yang kamu pimpin menggambarkan kepemimpinanmu ketika kamu tidak ada?",
+      },
+    },
   },
   {
-    num: 4,
-    en_theme: "Commitment to Growth",
-    id_theme: "Komitmen terhadap Pertumbuhan",
-    nl_theme: "Toewijding aan groei",
-    en_setup: "Your strongest team member — a Javanese leader with exceptional relational intelligence — tells you she's been offered a leadership role at another organisation. She's clearly excited. Losing her would significantly set back your team.",
-    id_setup: "Anggota tim Anda yang terkuat — seorang pemimpin Jawa dengan kecerdasan relasional yang luar biasa — memberi tahu Anda bahwa dia telah ditawari peran kepemimpinan di organisasi lain. Dia jelas-jelas bersemangat. Kehilangannya akan sangat menghambat tim Anda.",
-    nl_setup: "Je sterkste teamlid — een Javaanse leider met uitzonderlijke relationele intelligentie — vertelt je dat ze een leiderschapsrol aangeboden heeft gekregen bij een andere organisatie. Ze is duidelijk enthousiast. Haar verliezen zou je team aanzienlijk vertragen.",
-    options: [
-      {
-        key: "a",
-        en_text: "Tell her the timing is really difficult and ask if there's anything you could offer to make staying appealing.",
-        id_text: "Katakan padanya bahwa waktunya sangat sulit dan tanya apakah ada yang bisa Anda tawarkan untuk membuat tinggal menjadi menarik.",
-        nl_text: "Haar vertellen dat de timing echt moeilijk is en vragen of er iets is wat je kunt aanbieden om blijven aantrekkelijk te maken.",
-        en_reveal: "Retention over development. Your honest response reveals that her growth is secondary to your need. Even if she stays, the dynamic has shifted: she now knows your support is conditional on her usefulness to you.",
-        id_reveal: "Retensi di atas pengembangan. Respons jujur Anda mengungkapkan bahwa pertumbuhannya adalah sekunder dari kebutuhan Anda. Bahkan jika dia tinggal, dinamikanya telah berubah: dia sekarang tahu dukungan Anda bersyarat pada kegunaannya bagi Anda.",
-        nl_reveal: "Retentie boven ontwikkeling. Je eerlijke reactie onthult dat haar groei ondergeschikt is aan jouw behoefte. Zelfs als ze blijft, is de dynamiek veranderd: ze weet nu dat jouw steun voorwaardelijk is aan haar nut voor jou.",
-        en_char: "Retention over growth",
-        id_char: "Retensi di atas pertumbuhan",
-        nl_char: "Retentie boven groei",
+    id: 3,
+    title: { en: "Grace vs. Accountability", id: "Anugerah vs. Akuntabilitas" },
+    left:  { en: "Grace means I hold back from confronting", id: "Anugerah berarti menahan diri dari konfrontasi" },
+    right: { en: "I confront because I care",               id: "Saya mengonfrontasi karena saya peduli" },
+    short: { en: "Grace", id: "Anugerah" },
+    color: "oklch(48% 0.13 300)",
+    low: {
+      body: {
+        en: "Your instinct to protect the relationship may silence the truth the other person needs. Jesus confronted Peter (Mark 8:33) and cleared the Temple (John 2) — both were acts of care.",
+        id: "Nalurimu untuk melindungi hubungan mungkin membungkam kebenaran yang dibutuhkan orang lain. Yesus mengonfrontasi Petrus dan membersihkan Bait Allah — keduanya adalah tindakan kepedulian.",
       },
-      {
-        key: "b",
-        en_text: "Share your honest reaction — that it's hard news — then ask what drew her to this opportunity and what she needs to thrive.",
-        id_text: "Bagikan reaksi jujur Anda — bahwa ini berita yang berat — lalu tanya apa yang menariknya ke kesempatan ini dan apa yang dia butuhkan untuk berkembang.",
-        nl_text: "Je eerlijke reactie delen — dat het moeilijk nieuws is — dan vragen wat haar naar deze kans trok en wat ze nodig heeft om te gedijen.",
-        en_reveal: "Honesty with interest in her development. You're not hiding your feelings — but you're making her growth the centre of the conversation, not your loss. This is the middle path of servant leadership.",
-        id_reveal: "Kejujuran dengan minat pada pengembangannya. Anda tidak menyembunyikan perasaan Anda — tetapi Anda membuat pertumbuhannya sebagai pusat percakapan, bukan kehilangan Anda. Ini adalah jalan tengah kepemimpinan hamba.",
-        nl_reveal: "Eerlijkheid met interesse in haar ontwikkeling. Je verbergt je gevoelens niet — maar je maakt haar groei het middelpunt van het gesprek, niet jouw verlies. Dit is het middenpad van dienend leiderschap.",
-        en_char: "Growth + Honesty",
-        id_char: "Pertumbuhan + Kejujuran",
-        nl_char: "Groei + Eerlijkheid",
+      q: {
+        en: "Is there a relationship where truth is waiting — held back by what you're calling grace?",
+        id: "Apakah ada hubungan di mana kebenaran sedang menunggu — ditahan oleh apa yang kamu sebut anugerah?",
       },
-      {
-        key: "c",
-        en_text: "Share your genuine support and offer to write her the strongest recommendation letter you can.",
-        id_text: "Bagikan dukungan tulus Anda dan tawarkan untuk menulis surat rekomendasi terkuat yang bisa Anda tulis.",
-        nl_text: "Je oprechte steun delen en aanbieden haar de sterkste aanbevelingsbrief te schrijven die je kunt schrijven.",
-        en_reveal: "Commitment to growth. You put her future ahead of your present need. This is the most costly form of servant leadership — and often the most remembered. She will carry that throughout her career.",
-        id_reveal: "Komitmen terhadap pertumbuhan. Anda mengutamakan masa depannya di atas kebutuhan Anda saat ini. Ini adalah bentuk kepemimpinan hamba yang paling mahal — dan sering kali yang paling diingat. Dia akan membawa itu sepanjang karirnya.",
-        nl_reveal: "Toewijding aan groei. Je stelt haar toekomst boven jouw huidige behoefte. Dit is de meest kostbare vorm van dienend leiderschap — en vaak de meest herinnerde. Ze zal dit door haar carri—re met zich meedragen.",
-        en_char: "Commitment to Growth",
-        id_char: "Komitmen terhadap Pertumbuhan",
-        nl_char: "Toewijding aan groei",
+    },
+    mid: {
+      body: {
+        en: "You're learning that care and challenge aren't opposites. Holding both is harder than choosing either — and more faithful to what servant leadership actually demands.",
+        id: "Kamu belajar bahwa kepedulian dan tantangan bukan lawan. Memegang keduanya lebih sulit dari memilih salah satu — dan lebih setia.",
       },
-    ],
+      q: {
+        en: "What does it feel like in your body when you know you need to say something hard?",
+        id: "Apa yang kamu rasakan ketika kamu tahu kamu perlu mengatakan sesuatu yang berat?",
+      },
+    },
+    high: {
+      body: {
+        en: "You confront readily — a real strength when the motive is love. Check the difference between accountability that serves the relationship and accountability that serves being right.",
+        id: "Kamu mudah mengonfrontasi — kekuatan nyata ketika motivasinya kasih. Periksa perbedaan antara akuntabilitas yang melayani hubungan dan yang melayani keinginan untuk benar.",
+      },
+      q: {
+        en: "When you confront, who are you primarily thinking about — them, or the principle?",
+        id: "Ketika kamu mengonfrontasi, siapa yang terutama kamu pikirkan — mereka, atau prinsipnya?",
+      },
+    },
   },
   {
-    num: 5,
-    en_theme: "Building Community",
-    id_theme: "Membangun Komunitas",
-    nl_theme: "Gemeenschapsopbouw",
-    en_setup: "Your cross-cultural team functions well professionally but stays in cultural subgroups outside of work — Javanese members with Javanese, Bataknese with Bataknese. You notice that this is limiting the trust that would make the team exceptional.",
-    id_setup: "Tim lintas budaya Anda berfungsi dengan baik secara profesional tetapi tetap dalam subkelompok budaya di luar pekerjaan — anggota Jawa dengan Jawa, Batak dengan Batak. Anda memperhatikan bahwa ini membatasi kepercayaan yang akan membuat tim menjadi luar biasa.",
-    nl_setup: "Je interculturele team functioneert professioneel goed maar blijft in culturele subgroepen buiten het werk — Javaanse leden met Javanen, Batakkers met Batakkers. Je merkt dat dit het vertrouwen beperkt dat het team uitzonderlijk zou maken.",
-    options: [
-      {
-        key: "a",
-        en_text: "Organise a structured team-building event with activities designed to mix the cultural subgroups.",
-        id_text: "Organisasi acara team-building terstruktur dengan aktivitas yang dirancang untuk mencampur subkelompok budaya.",
-        nl_text: "Een gestructureerd teambuildingevenement organiseren met activiteiten ontworpen om de culturele subgroepen te mengen.",
-        en_reveal: "Building community through structure. This can work — especially for teams that need a formal context to cross informal boundaries. The risk is that structured events don't always create authentic connection.",
-        id_reveal: "Membangun komunitas melalui struktur. Ini bisa berhasil — terutama untuk tim yang membutuhkan konteks formal untuk melintasi batas informal. Risikonya adalah acara terstruktur tidak selalu menciptakan koneksi yang autentik.",
-        nl_reveal: "Gemeenschapsopbouw via structuur. Dit kan werken — zeker voor teams die een formele context nodig hebben om informele grenzen te overschrijden. Het risico is dat gestructureerde evenementen niet altijd authentieke verbinding cre—ren.",
-        en_char: "Building Community (structured)",
-        id_char: "Membangun Komunitas (terstruktur)",
-        nl_char: "Gemeenschapsopbouw (gestructureerd)",
+    id: 4,
+    title: { en: "Fulfilling vs. Costly", id: "Memenuhi vs. Berbiaya" },
+    left:  { en: "Serving is sustainable and life-giving",   id: "Melayani itu berkelanjutan dan memberi kehidupan" },
+    right: { en: "Serving genuinely costs me something",     id: "Melayani benar-benar menelan biaya dari diri saya" },
+    short: { en: "Cost", id: "Biaya" },
+    color: "oklch(52% 0.13 20)",
+    low: {
+      body: {
+        en: "Sustainable serving is real and good — but watch for a theology that never bleeds. Mark 10 uses both diakonos and doulos — the second implies self-expenditure, not just helpfulness.",
+        id: "Pelayanan yang berkelanjutan adalah nyata dan baik — tapi waspadai teologi yang tidak pernah berdarah. Markus 10 menyiratkan pengorbanan diri, bukan sekadar keramahan.",
       },
-      {
-        key: "b",
-        en_text: "Trust that people will connect naturally over time. Forcing community rarely works.",
-        id_text: "Percayai bahwa orang-orang akan terhubung secara alami seiring waktu. Memaksakan komunitas jarang berhasil.",
-        nl_text: "Vertrouwen dat mensen op natuurlijke wijze zullen verbinden in de loop van de tijd. Gemeenschap forceren werkt zelden.",
-        en_reveal: "Passive waiting. Cross-cultural connection rarely happens without a leader who actively models it. Teams take their relational cues from how the leader moves across cultural lines — not from being left to figure it out.",
-        id_reveal: "Menunggu secara pasif. Koneksi lintas budaya jarang terjadi tanpa pemimpin yang secara aktif mencontohkannya. Tim mengambil isyarat relasional dari bagaimana pemimpin bergerak melintasi garis budaya — bukan dari dibiarkan untuk mencari tahu sendiri.",
-        nl_reveal: "Passief wachten. Interculturele verbinding gebeurt zelden zonder een leider die het actief modelleert. Teams nemen hun relationele signalen van hoe de leider zich over culturele lijnen beweegt — niet van aan hun lot overgelaten worden.",
-        en_char: "Passive",
-        id_char: "Pasif",
-        nl_char: "Passief",
+      q: {
+        en: "What is serving costing you right now that you haven't named out loud?",
+        id: "Apa yang pelayanan biayai dari kamu sekarang yang belum pernah kamu ungkapkan?",
       },
-      {
-        key: "c",
-        en_text: "Start by modelling it yourself — eat lunch with different people, build cross-cultural friendships, and let the team watch you move between groups naturally.",
-        id_text: "Mulailah dengan mencontohkannya sendiri — makan siang dengan orang-orang yang berbeda, bangun persahabatan lintas budaya, dan biarkan tim melihat Anda bergerak di antara kelompok secara alami.",
-        nl_text: "Beginnen met het zelf te modelleren — lunchen met verschillende mensen, interculturele vriendschappen opbouwen en het team laten zien hoe je op natuurlijke wijze tussen groepen beweegt.",
-        en_reveal: "Building community by modelling. The most durable cross-cultural trust is built when the leader demonstrates that cultural boundaries are crossable — not by organising events, but by living it. Teams rarely go where their leader has not gone first.",
-        id_reveal: "Membangun komunitas dengan mencontohkan. Kepercayaan lintas budaya yang paling tahan lama dibangun ketika pemimpin menunjukkan bahwa batas budaya bisa dilintasi — bukan dengan mengorganisasi acara, tetapi dengan menghidupinya. Tim jarang pergi ke mana pemimpin mereka belum pergi lebih dulu.",
-        nl_reveal: "Gemeenschapsopbouw door modelleren. Het meest duurzame interculturele vertrouwen wordt gebouwd wanneer de leider laat zien dat culturele grenzen overschreden kunnen worden — niet door evenementen te organiseren, maar door het te leven. Teams gaan zelden waar hun leider niet als eerste is geweest.",
-        en_char: "Building Community (modelling)",
-        id_char: "Membangun Komunitas (mencontohkan)",
-        nl_char: "Gemeenschapsopbouw (modelleren)",
+    },
+    mid: {
+      body: {
+        en: "You hold the joy and the weight together. That honesty is exactly where most faithful servant leaders live — and it's more sustainable than pretending only one is real.",
+        id: "Kamu memegang sukacita dan beban bersama. Kejujuran itu tepat di mana kebanyakan pemimpin hamba yang setia hidup.",
       },
-    ],
+      q: {
+        en: "How do you know when the cost has become too high — and who do you tell?",
+        id: "Bagaimana kamu tahu ketika biayanya sudah terlalu tinggi — dan kepada siapa kamu bercerita?",
+      },
+    },
+    high: {
+      body: {
+        en: "You feel the cost clearly, and naming it is honest. Make sure it doesn't harden into a martyrdom narrative — costly serving still requires rest and replenishment.",
+        id: "Kamu merasakan biayanya dengan jelas, dan menyebutkannya itu jujur. Pastikan itu tidak mengeras menjadi narasi kemartiran — pelayanan berbiaya tetap membutuhkan istirahat.",
+      },
+      q: {
+        en: "What rhythms of replenishment are you actually practicing, not just planning?",
+        id: "Ritme pemulihan apa yang benar-benar kamu praktikkan, bukan hanya rencanakan?",
+      },
+    },
   },
 ];
 
-const VERSES = {
-  "mark-10-45": {
-    en_ref: "Mark 10:45",
-    id_ref: "Markus 10:45",
-    nl_ref: "Markus 10:45",
-    en: "For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many.",
-    id: "Karena Anak Manusia juga datang bukan untuk dilayani, melainkan untuk melayani dan untuk memberikan nyawa-Nya menjadi tebusan bagi banyak orang.",
-    nl: "Want ook de Mensenzoon is niet gekomen om gediend te worden, maar om te dienen en zijn leven te geven als losgeld voor velen.",
+// ─── Copy ──────────────────────────────────────────────────────────────────────
+const L: Record<Lang, {
+  moduleLabel: string; title: string; subtitle: string;
+  twoTitle: string; twoBody: string;
+  twoLeft: string; twoLeftSub: string; twoRight: string; twoRightSub: string;
+  mapTitle: string; mapIntro: string; allPlaced: string;
+  profileTitle: string; sittingWith: string;
+  faithTitle: string; faithBody: string;
+  takeawaysTitle: string; takeaways: string[];
+  bgTitle: string; bgBody: string; readMore: string; readLess: string;
+  saveDashboard: string; savedDashboard: string;
+}> = {
+  en: {
+    moduleLabel: "Servant Leadership",
+    title: "The Servant Leader's Tension Map",
+    subtitle: "Five tensions that reveal the shape of your leadership",
+    twoTitle: "Two Sources of Servant Power",
+    twoBody: "Robert Greenleaf's servant leadership model locates power in an upward movement: authority earned through service, confirmed by follower trust. Philippians 2 locates it differently — power flows downward from God, through voluntary self-emptying. Both produce humble leaders. But the source shapes everything, especially when serving gets costly.",
+    twoLeft: "Phil 2 — Downward", twoLeftSub: "Power from God through kenosis",
+    twoRight: "Greenleaf — Upward", twoRightSub: "Power from followers through trust",
+    mapTitle: "Your Tension Map",
+    mapIntro: "Click anywhere on each spectrum to place yourself. No right answers — only honest ones.",
+    allPlaced: "All five tensions mapped.",
+    profileTitle: "Your Profile",
+    sittingWith: "Sit with this:",
+    faithTitle: "Faith Anchor",
+    faithBody: "Mark 10:42-45 draws a sharp contrast: rulers lord it over people; the greatest among you will be servant (diakonos) and slave (doulos) of all. John 13 reframes foot-washing through an honour-shame lens — Jesus does the work of a Gentile slave, then says the master is not greater than the servant. Philippians 2:5-11 describes a direction of movement: downward, through status relinquishment, toward receptive learning and power redistribution. This is kenosis — not self-erasure, but a chosen giving up of what one was entitled to hold.",
+    takeawaysTitle: "Key Takeaways",
+    takeaways: [
+      "Servant leadership is not a technique — it is an identity formed by the Spirit, not sustained by willpower alone.",
+      "Humility and authority are not opposites. Kenosis empties status, not the capacity to act with power on behalf of others.",
+      "The cost is real. Mark 10 uses doulos — a word that means self-expenditure, not just service. Honest servant leadership names this.",
+    ],
+    bgTitle: "Background: Research Foundations",
+    bgBody: "David Crowther's critique (2024) distinguishes moral integrity — consistent across cultures — from egalitarianism, which research consistently identifies as the weakest cross-cultural dimension of servant leadership. Greenleaf's (1970) original framework places the test in followers: do those served grow as persons? Biblical scholarship on Philippians 2 identifies four kenosis implications: status relinquishment, receptive learning, power distribution, and identity transformation. Ezekiel 34 provides the negative image — the failed shepherd — against which servant leadership is measured. The deepest challenge for cross-cultural servant leaders is not learning humility but learning whose definition of humility applies.",
+    readMore: "Read the research background",
+    readLess: "Read less",
+    saveDashboard: "Save to Dashboard",
+    savedDashboard: "Saved to Dashboard",
   },
-  "phil-2-3": {
-    en_ref: "Philippians 2:3—4",
-    id_ref: "Filipi 2:3—4",
-    nl_ref: "Filippenzen 2:3—4",
-    en: "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others.",
-    id: "Dengan tidak mencari kepentingan sendiri atau puji-pujian yang sia-sia. Sebaliknya hendaklah dengan rendah hati yang seorang menganggap yang lain lebih utama dari pada dirinya sendiri; dan janganlah tiap-tiap orang hanya memperhatikan kepentingannya sendiri, tetapi kepentingan orang lain juga.",
-    nl: "Doe niets uit zelfzucht of eigenwaan, maar acht in ootmoed de een de ander uitnemender dan uzelf; en ieder lette niet op het zijne, maar ieder ook op dat van de ander.",
+  id: {
+    moduleLabel: "Kepemimpinan Hamba",
+    title: "Peta Ketegangan Pemimpin Hamba",
+    subtitle: "Lima ketegangan yang mengungkap bentuk kepemimpinanmu",
+    twoTitle: "Dua Sumber Kuasa Hamba",
+    twoBody: "Model kepemimpinan hamba Robert Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Allah, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menjadi mahal.",
+    twoLeft: "Fil 2 — Ke Bawah", twoLeftSub: "Kuasa dari Allah melalui kenosis",
+    twoRight: "Greenleaf — Ke Atas", twoRightSub: "Kuasa dari pengikut melalui kepercayaan",
+    mapTitle: "Peta Keteganganmu",
+    mapIntro: "Klik di mana saja pada setiap spektrum untuk menempatkan dirimu. Tidak ada jawaban yang benar — hanya yang jujur.",
+    allPlaced: "Kelima ketegangan telah dipetakan.",
+    profileTitle: "Profilmu",
+    sittingWith: "Renungkan ini:",
+    faithTitle: "Jangkar Iman",
+    faithBody: "Markus 10:42-45 menarik kontras yang tajam: para penguasa memerintah orang; yang terbesar di antara kamu akan menjadi pelayan (diakonos) dan hamba (doulos) dari semua. Yohanes 13 membingkai ulang pembasuhan kaki melalui lensa kehormatan-malu — Yesus melakukan pekerjaan hamba kafir, lalu berkata tuan tidak lebih besar dari hambanya. Filipi 2:5-11 menggambarkan arah gerakan: ke bawah, melalui pelepasan status, menuju pembelajaran yang reseptif dan redistribusi kuasa. Inilah kenosis — bukan penghapusan diri, tetapi pelepasan yang dipilih dari apa yang berhak dipegang.",
+    takeawaysTitle: "Poin Utama",
+    takeaways: [
+      "Kepemimpinan hamba bukan teknik — melainkan identitas yang dibentuk oleh Roh, bukan hanya dipertahankan oleh kemauan.",
+      "Kerendahan hati dan otoritas bukan lawan. Kenosis mengosongkan status, bukan kapasitas untuk bertindak dengan kuasa demi orang lain.",
+      "Biayanya nyata. Markus 10 menggunakan doulos — kata yang berarti pengorbanan diri, bukan sekadar pelayanan. Kepemimpinan hamba yang jujur menyebutkan ini.",
+    ],
+    bgTitle: "Latar Belakang: Fondasi Penelitian",
+    bgBody: "Kritik David Crowther (2024) membedakan integritas moral — konsisten lintas budaya — dari egalitarianisme, yang penelitian secara konsisten mengidentifikasi sebagai dimensi lintas budaya yang paling lemah dalam kepemimpinan hamba. Kerangka asli Greenleaf (1970) menempatkan ujian pada pengikut: apakah mereka yang dilayani tumbuh sebagai pribadi? Beasiswa Alkitab tentang Filipi 2 mengidentifikasi empat implikasi kenosis: pelepasan status, pembelajaran reseptif, distribusi kuasa, dan transformasi identitas. Yehezkiel 34 memberikan gambaran negatif — gembala yang gagal — di mana kepemimpinan hamba diukur.",
+    readMore: "Baca latar belakang penelitian",
+    readLess: "Baca lebih sedikit",
+    saveDashboard: "Simpan ke Dasbor",
+    savedDashboard: "Tersimpan di Dasbor",
   },
 };
 
-type Props = { userPathway: string | null; isSaved: boolean };
+// ─── Sub-components ────────────────────────────────────────────────────────────
+function TwoStreamsSVG({ lang }: { lang: Lang }) {
+  const t = L[lang];
+  return (
+    <svg viewBox="0 0 300 200" style={{ width: "100%", maxWidth: 380, display: "block", margin: "1.5rem auto 0" }} aria-hidden="true">
+      {/* GOD */}
+      <rect x="100" y="6" width="100" height="30" rx="3" fill={NAVY} />
+      <text x="150" y="26" textAnchor="middle" fill="white" fontFamily={FONT_BODY} fontWeight="700" fontSize="11">GOD</text>
 
-export default function ServantLeadershipClient({ userPathway, isSaved: initialSaved }: Props) {
-  const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
-  const [saved, setSaved] = useState(initialSaved);
+      {/* Down arrow + label */}
+      <line x1="150" y1="36" x2="150" y2="76" stroke={NAVY} strokeWidth="2" />
+      <polygon points="145,72 150,82 155,72" fill={NAVY} />
+      <text x="158" y="52" textAnchor="start" fill={NAVY} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "kenosis" : "kenosis"}</text>
+      <text x="158" y="64" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoLeft}</text>
+
+      {/* SERVANT LEADER box */}
+      <rect x="50" y="82" width="200" height="32" rx="3" fill={LIGHT_GRAY} stroke={NAVY} strokeWidth="1.5" />
+      <text x="150" y="103" textAnchor="middle" fill={NAVY} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
+        {lang === "en" ? "SERVANT LEADER" : "PEMIMPIN HAMBA"}
+      </text>
+
+      {/* Up arrow + label */}
+      <line x1="150" y1="114" x2="150" y2="154" stroke={ORANGE} strokeWidth="2" />
+      <polygon points="145,118 150,114 155,118" fill={ORANGE} />
+      <text x="158" y="132" textAnchor="start" fill={ORANGE} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "trust" : "kepercayaan"}</text>
+      <text x="158" y="144" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoRight}</text>
+
+      {/* FOLLOWERS box */}
+      <rect x="70" y="160" width="160" height="30" rx="3" fill="oklch(65% 0.15 45 / 0.12)" stroke={ORANGE} strokeWidth="1.5" />
+      <text x="150" y="180" textAnchor="middle" fill={ORANGE} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
+        {lang === "en" ? "FOLLOWERS" : "PENGIKUT"}
+      </text>
+    </svg>
+  );
+}
+
+function PentagonRadar({ placements }: { placements: (number | null)[] }) {
+  const radarPts = ANGLES_RAD.map((a, i) => ptAt(a, placements[i] ?? 50));
+  const radarPath = polyPath(radarPts);
+
+  return (
+    <svg viewBox="0 0 280 280" style={{ width: "100%", maxWidth: 280, display: "block" }} aria-hidden="true">
+      {/* Grid rings */}
+      {GRID_RINGS.map(r => {
+        const pts = ANGLES_RAD.map(a => ({
+          x: CX + (r / 100) * R_MAX * Math.cos(a),
+          y: CY + (r / 100) * R_MAX * Math.sin(a),
+        }));
+        return (
+          <polygon key={r} points={pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ")}
+            fill="none" stroke={LIGHT_GRAY} strokeWidth="1" />
+        );
+      })}
+
+      {/* Axis spokes */}
+      {OUTER_PTS.map((p, i) => (
+        <line key={i} x1={CX} y1={CY} x2={p.x.toFixed(1)} y2={p.y.toFixed(1)} stroke={LIGHT_GRAY} strokeWidth="1" />
+      ))}
+
+      {/* Outer boundary */}
+      <path d={OUTER_PATH} fill="none" stroke={LIGHT_GRAY} strokeWidth="1.5" />
+
+      {/* Radar fill */}
+      <path d={radarPath} fill={`${NAVY}25`} stroke={NAVY} strokeWidth="2" strokeLinejoin="round" />
+
+      {/* Vertex dots */}
+      {ANGLES_RAD.map((a, i) => {
+        const v = placements[i];
+        const pt = ptAt(a, v ?? 50);
+        return (
+          <circle key={i} cx={pt.x.toFixed(1)} cy={pt.y.toFixed(1)} r="5"
+            fill={v !== null ? TENSIONS[i].color : LIGHT_GRAY}
+            stroke="white" strokeWidth="1.5"
+            opacity={v !== null ? 1 : 0.5}
+          />
+        );
+      })}
+
+      {/* Tension labels */}
+      {LABEL_META.map((meta, i) => (
+        <text key={i}
+          x={meta.x.toFixed(1)} y={meta.y.toFixed(1)}
+          textAnchor={meta.anchor}
+          dy="0.3em"
+          fill={placements[i] !== null ? TENSIONS[i].color : MUTED}
+          fontFamily={FONT_BODY} fontWeight="700" fontSize="9"
+        >
+          {TENSIONS[i].short["en"]}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+function TensionSlider({ tension, lang, value, onPlace }: {
+  tension: TensionDef; lang: Lang; value: number | null; onPlace: (v: number) => void;
+}) {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    onPlace(Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)));
+  }, [onPlace]);
+
+  const handleTouch = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.changedTouches[0];
+    onPlace(Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100)));
+  }, [onPlace]);
+
+  return (
+    <div style={{ marginBottom: "1.875rem" }}>
+      <p style={{ fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.78rem", color: tension.color, margin: "0 0 0.5rem" }}>
+        {tension.title[lang]}
+      </p>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem", gap: "0.5rem" }}>
+        <span style={{ fontFamily: FONT_BODY, fontSize: "0.66rem", color: MUTED, maxWidth: "43%", lineHeight: 1.3 }}>
+          {tension.left[lang]}
+        </span>
+        <span style={{ fontFamily: FONT_BODY, fontSize: "0.66rem", color: MUTED, maxWidth: "43%", textAlign: "right", lineHeight: 1.3 }}>
+          {tension.right[lang]}
+        </span>
+      </div>
+      <div
+        role="slider" aria-valuenow={value !== null ? Math.round(value) : 50}
+        aria-valuemin={0} aria-valuemax={100} aria-label={tension.title[lang]}
+        onClick={handleClick} onTouchEnd={handleTouch}
+        style={{ position: "relative", height: 10, background: LIGHT_GRAY, cursor: "pointer", userSelect: "none" }}
+      >
+        {value !== null && (
+          <div style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${value}%`, background: tension.color, opacity: 0.3, pointerEvents: "none" }} />
+        )}
+        {value !== null ? (
+          <div style={{
+            position: "absolute", top: "50%", left: `${value}%`,
+            transform: "translate(-50%, -50%)",
+            width: 20, height: 20, borderRadius: "50%",
+            background: tension.color, border: "2.5px solid white",
+            boxShadow: "0 1px 5px oklch(0% 0 0 / 0.25)", pointerEvents: "none",
+          }} />
+        ) : (
+          <div style={{
+            position: "absolute", top: "50%", left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 14, height: 14, borderRadius: "50%",
+            border: `2px dashed ${MUTED}`, opacity: 0.4, pointerEvents: "none",
+          }} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ProfileReading({ tension, lang, value }: { tension: TensionDef; lang: Lang; value: number }) {
+  const reading = value < 34 ? tension.low : value < 67 ? tension.mid : tension.high;
+  return (
+    <div style={{ borderLeft: `3px solid ${tension.color}`, paddingLeft: "1rem", marginBottom: "1.625rem" }}>
+      <p style={{ fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.78rem", color: tension.color, margin: "0 0 0.5rem" }}>
+        {tension.title[lang]}
+      </p>
+      <p style={{ fontFamily: FONT_BODY, fontSize: "0.88rem", lineHeight: 1.75, color: BODY_TEXT, margin: "0 0 0.625rem" }}>
+        {reading.body[lang]}
+      </p>
+      <p style={{
+        fontFamily: FONT_BODY, fontSize: "0.82rem", lineHeight: 1.6, color: NAVY,
+        fontStyle: "italic", margin: 0,
+        paddingLeft: "0.75rem", borderLeft: `1px solid ${LIGHT_GRAY}`,
+      }}>
+        &ldquo;{reading.q[lang]}&rdquo;
+      </p>
+    </div>
+  );
+}
+
+// ─── Main export ───────────────────────────────────────────────────────────────
+type Props = { isSaved?: boolean; userId?: string | null; [key: string]: unknown };
+
+export default function ServantLeadershipClient({ isSaved = false }: Props) {
+  const { lang: ctxLang } = useLanguage();
+  const lang: Lang = ctxLang === "id" ? "id" : "en";
+  const t = L[lang];
+
+  const [placements, setPlacements] = useState<(number | null)[]>([null, null, null, null, null]);
+  const [bgOpen, setBgOpen] = useState(false);
+  const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
-  const [choices, setChoices] = useState<Record<number, string>>({});
-  const [activeVerse, setActiveVerse] = useState<string | null>(null);
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
-  const showSave = userPathway !== null;
-  const allChosen = Object.keys(choices).length === 5;
-  const translation = lang === "id" ? "TB" : lang === "nl" ? "NBV" : "NIV";
+
+  const allPlaced = placements.every(p => p !== null);
+
+  function handlePlace(idx: number, value: number) {
+    setPlacements(prev => { const n = [...prev]; n[idx] = value; return n; });
+  }
 
   function handleSave() {
-    if (saved) return;
     startTransition(async () => {
       await saveResourceToDashboard("servant-leadership");
       setSaved(true);
@@ -290,238 +524,176 @@ export default function ServantLeadershipClient({ userPathway, isSaved: initialS
   }
 
   return (
-    <>
-      <LangToggle />
-      {/* -- HERO -- */}
-      <section style={{ background: "oklch(22% 0.10 260)", paddingTop: "clamp(2.5rem, 4vw, 4rem)", paddingBottom: "clamp(2.5rem, 4vw, 4rem)", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "oklch(65% 0.15 45)" }} />
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, oklch(97% 0.005 80 / 0.04) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
-        <div className="container-wide" style={{ position: "relative" }}>
-          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Leadership — Guide", "Kepemimpinan — Panduan", "Leiderschap — Gids")}
-          </p>
-          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "clamp(40px, 6vw, 72px)", color: "oklch(97% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
-            {lang === "en" ? <>The Servant<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></> : lang === "id" ? <>Ujian<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Hamba.</span></> : <>De Dienende<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Test.</span></>}
-          </h1>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "oklch(72% 0.04 260)", maxWidth: "52ch", marginBottom: "2rem", lineHeight: 1.65 }}>
-            {t(
-              "Five real leadership moments. No wrong answers — just honest ones. Each choice reveals something about how you actually lead.",
-              "Lima momen kepemimpinan nyata. Tidak ada jawaban yang salah — hanya yang jujur. Setiap pilihan mengungkapkan sesuatu tentang cara Anda sebenarnya memimpin.",
-              "Vijf echte leiderschapsmomenten. Geen verkeerde antwoorden — alleen eerlijke. Elke keuze onthult iets over hoe je werkelijk leidt.",
-            )}
-          </p>
+    <main style={{ background: OFF_WHITE, minHeight: "100vh" }}>
 
-          {showSave && (
-            saved ? (
-              <Link href="/dashboard" style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.375rem" }}>
-                ? {t("In your dashboard", "Di dashboard Anda", "In uw dashboard")}
-              </Link>
-            ) : (
-              <button onClick={handleSave} disabled={isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: isPending ? "wait" : "pointer" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
-              </button>
-            )
-          )}
-        </div>
-      </section>
-
-      {/* -- SCENARIOS -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide">
-          <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-            {SCENARIOS.map(scenario => {
-              const chosen = choices[scenario.num] ?? null;
-              const chosenOption = chosen ? scenario.options.find(o => o.key === chosen) ?? null : null;
-              const theme = lang === "en" ? scenario.en_theme : lang === "id" ? scenario.id_theme : scenario.nl_theme;
-              const setup = lang === "en" ? scenario.en_setup : lang === "id" ? scenario.id_setup : scenario.nl_setup;
-
-              return (
-                <div key={scenario.num} style={{ background: chosen ? "oklch(96% 0.012 65)" : "oklch(99% 0.003 80)", padding: "2rem clamp(1.5rem, 4vw, 2.5rem)" }}>
-                  <div style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start", marginBottom: "1.5rem" }}>
-                    <span style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "2.5rem", fontWeight: 700, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, minWidth: "2.5rem" }}>{scenario.num}</span>
-                    <div>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>{theme}</p>
-                      <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", margin: 0 }}>{setup}</p>
-                    </div>
-                  </div>
-
-                  <div style={{ paddingLeft: "3.75rem", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: chosenOption ? "1.5rem" : 0 }}>
-                    {scenario.options.map(opt => {
-                      const isChosen = chosen === opt.key;
-                      const text = lang === "en" ? opt.en_text : lang === "id" ? opt.id_text : opt.nl_text;
-                      return (
-                        <button
-                          key={opt.key}
-                          onClick={() => setChoices(c => ({ ...c, [scenario.num]: opt.key }))}
-                          style={{
-                            textAlign: "left",
-                            fontFamily: "var(--font-montserrat)",
-                            fontSize: "0.875rem",
-                            lineHeight: 1.65,
-                            padding: "1rem 1.25rem",
-                            background: isChosen ? "oklch(22% 0.10 260)" : "oklch(97% 0.005 80)",
-                            color: isChosen ? "oklch(90% 0.02 80)" : "oklch(42% 0.05 260)",
-                            border: `1px solid ${isChosen ? "oklch(22% 0.10 260)" : "oklch(85% 0.008 80)"}`,
-                            cursor: "pointer",
-                            transition: "all 0.12s ease",
-                            display: "flex",
-                            gap: "0.875rem",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          <span style={{ fontWeight: 800, fontSize: "0.72rem", letterSpacing: "0.1em", flexShrink: 0, paddingTop: "0.1rem", color: isChosen ? "oklch(65% 0.15 45)" : "oklch(60% 0.04 260)" }}>
-                            {opt.key.toUpperCase()}
-                          </span>
-                          {text}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {chosenOption && (
-                    <div style={{ paddingLeft: "3.75rem" }}>
-                      <div style={{ background: "oklch(22% 0.10 260)", padding: "1.25rem 1.5rem" }}>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.375rem" }}>
-                          {lang === "en" ? chosenOption.en_char : lang === "id" ? chosenOption.id_char : chosenOption.nl_char}
-                        </p>
-                        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(75% 0.03 80)", margin: 0 }}>
-                          {lang === "en" ? chosenOption.en_reveal : lang === "id" ? chosenOption.id_reveal : chosenOption.nl_reveal}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+      {/* ── Hero ── */}
+      <section style={{ position: "relative", height: "clamp(220px, 32vw, 380px)", overflow: "hidden", background: NAVY }}>
+        <Image
+          src="/images/resources/servant-leadership/hero.jpg"
+          alt=""
+          fill
+          style={{ objectFit: "cover", mixBlendMode: "luminosity", opacity: 0.22 }}
+          priority
+          sizes="100vw"
+        />
+        <div style={{
+          position: "relative", zIndex: 1, height: "100%",
+          display: "flex", flexDirection: "column", justifyContent: "flex-end",
+          padding: "clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3rem)",
+          maxWidth: 860, margin: "0 auto", width: "100%",
+        }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+            <div>
+              <p style={{ fontFamily: FONT_BODY, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
+                {t.moduleLabel}
+              </p>
+              <h1 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.6rem, 4vw, 2.6rem)", color: "white", margin: "0 0 0.5rem", lineHeight: 1.15 }}>
+                {t.title}
+              </h1>
+              <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.8rem, 1.4vw, 0.95rem)", color: "oklch(82% 0.01 260)", margin: 0, lineHeight: 1.5 }}>
+                {t.subtitle}
+              </p>
+            </div>
+            <LangToggle />
           </div>
         </div>
       </section>
 
-      {/* -- PATTERN -- */}
-      {allChosen && (
-        <section style={{ paddingBlock: "clamp(3rem, 5vw, 4rem)", background: "oklch(95% 0.008 80)" }}>
-          <div className="container-wide" style={{ maxWidth: "640px" }}>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-              {t("Your Pattern", "Pola Anda", "Jouw patroon")}
-            </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
-              {t("You have now seen five dimensions of servant leadership.", "Anda sekarang telah melihat lima dimensi kepemimpinan hamba.", "Je hebt nu vijf dimensies van dienend leiderschap gezien.")}
-            </h2>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.05 260)", marginBottom: "1rem" }}>
-              {t(
-                "Servant leadership is not a personality type — it is a set of practised choices. The scenarios you just completed reveal where you move naturally toward serving others, and where self-protection, efficiency, or comfort pull you in a different direction.",
-                "Kepemimpinan hamba bukan tipe kepribadian — itu adalah serangkaian pilihan yang dipraktikkan. Skenario yang baru saja Anda selesaikan mengungkapkan di mana Anda secara alami bergerak menuju melayani orang lain, dan di mana perlindungan diri, efisiensi, atau kenyamanan menarik Anda ke arah yang berbeda.",
-                "Dienend leiderschap is geen persoonlijkheidstype — het is een reeks beoefende keuzes. De scenario's die je zojuist hebt voltooid onthullen waar je van nature naar het dienen van anderen beweegt, en waar zelfbescherming, effici—ntie of comfort je een andere kant op trekken.",
-              )}
-            </p>
-            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.15rem", fontStyle: "italic", color: "oklch(30% 0.10 260)", lineHeight: 1.65 }}>
-              {t(
-                "\"The real test of servant leadership is not what you do on your best day. It's what you do when it costs you.\"",
-                "\"Ujian nyata kepemimpinan hamba bukan apa yang Anda lakukan di hari terbaik Anda. Ini adalah apa yang Anda lakukan ketika ada harganya.\"",
-                "\"De echte test van dienend leiderschap is niet wat je doet op je beste dag. Het is wat je doet als het je iets kost.\"",
-              )}
-            </p>
-          </div>
-        </section>
-      )}
+      {/* ── Content wrapper ── */}
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "2.5rem clamp(1.25rem, 5vw, 2.5rem) 4rem" }}>
 
-      {/* -- BIBLICAL FOUNDATION -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(22% 0.10 260)" }}>
-        <div className="container-wide">
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.75rem" }}>
-            {t("Biblical Foundation", "Landasan Alkitab", "Bijbelse basis")}
-          </p>
-          <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "oklch(97% 0.005 80)", marginBottom: "1.25rem", maxWidth: "36ch" }}>
-            {t("The leader who came to serve", "Pemimpin yang datang untuk melayani", "De leider die kwam om te dienen")}
+        {/* ── Two Sources ── */}
+        <section style={{ marginBottom: "3rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", color: NAVY, margin: "0 0 1rem", lineHeight: 1.25 }}>
+            {t.twoTitle}
           </h2>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "1rem" }}>
-            {t(
-              "Robert Greenleaf coined 'servant leadership' in 1970. But the model predates him by two thousand years. Mark 10:45 is the most concentrated statement on leadership in the New Testament — and it comes in the middle of an argument among the disciples about who is the greatest.",
-              "Robert Greenleaf menciptakan 'servant leadership' pada tahun 1970. Tetapi modelnya mendahuluinya dua ribu tahun. Markus 10:45 adalah pernyataan paling ringkas tentang kepemimpinan dalam Perjanjian Baru — dan itu datang di tengah pertengkaran di antara para murid tentang siapa yang terbesar.",
-              "Robert Greenleaf bedacht 'dienend leiderschap' in 1970. Maar het model gaat hem tweeduizend jaar vooraf. Markus 10:45 is de meest geconcentreerde uitspraak over leiderschap in het Nieuwe Testament — en het komt midden in een ruzie onder de discipelen over wie de grootste is.",
-            )}
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.85, color: BODY_TEXT, margin: 0, maxWidth: 640 }}>
+            {t.twoBody}
           </p>
-          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(72% 0.04 260)", maxWidth: "62ch", marginBottom: "2.5rem" }}>
-            {t(
-              "Jesus doesn't give them a framework or a list of principles. He points to himself — not as a model to imitate from a safe distance, but as the living demonstration of what leadership that gives itself away actually looks like. Philippians 2 captures the same movement: 'consider others more significant than yourselves.' In a cross-cultural team, this is not softness. It is the most disruptive leadership posture available.",
-              "Yesus tidak memberi mereka kerangka atau daftar prinsip. Dia menunjuk pada diri-Nya sendiri — bukan sebagai model yang ditiru dari jarak aman, tetapi sebagai demonstrasi hidup tentang seperti apa kepemimpinan yang memberikan dirinya sendiri. Filipi 2 menangkap gerakan yang sama: 'anggap yang lain lebih utama dari pada dirimu sendiri.' Dalam tim lintas budaya, ini bukan kelemahan. Ini adalah postur kepemimpinan yang paling mengganggu yang tersedia.",
-              "Jezus geeft hen geen raamwerk of een lijst van principes. Hij wijst naar zichzelf — niet als een model om van veilige afstand na te bootsen, maar als de levende demonstratie van hoe leiderschap dat zichzelf weggeeft er werkelijk uitziet. Filippenzen 2 beschrijft dezelfde beweging: 'acht de ander uitnemender dan uzelf.' In een intercultureel team is dit geen zwakheid. Het is de meest disruptieve leiderschapshouding die beschikbaar is.",
-            )}
+          <TwoStreamsSVG lang={lang} />
+        </section>
+
+        {/* ── Tension Map ── */}
+        <section style={{ background: "white", border: `1px solid ${LIGHT_GRAY}`, padding: "2rem 1.75rem", marginBottom: "2.5rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.25rem, 2.4vw, 1.6rem)", color: NAVY, margin: "0 0 0.375rem" }}>
+            {t.mapTitle}
+          </h2>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "0.85rem", color: MUTED, margin: "0 0 2rem", lineHeight: 1.5 }}>
+            {t.mapIntro}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1px", background: "oklch(35% 0.08 260)" }}>
-            {(["mark-10-45", "phil-2-3"] as const).map(key => {
-              const v = VERSES[key];
-              const ref = lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref;
-              const text = lang === "en" ? v.en : lang === "id" ? v.id : v.nl;
-              return (
-                <div key={key} style={{ background: "oklch(28% 0.11 260)", padding: "2rem" }}>
-                  <button onClick={() => setActiveVerse(key)} style={{ background: "none", border: "none", cursor: "pointer", color: "oklch(65% 0.15 45)", fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "underline dotted", padding: 0, marginBottom: "0.875rem", display: "block" }}>
-                    {ref} ({translation})
-                  </button>
-                  <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.05rem", fontStyle: "italic", color: "oklch(85% 0.03 80)", lineHeight: 1.65, margin: 0 }}>
-                    "{text}"
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* -- CTA -- */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>
-        <div className="container-wide" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "center" }}>
-          <div>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-              {t("More Training", "Pelatihan Lainnya", "Meer in de Bibliotheek")}
-            </p>
-            <h2 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", color: "oklch(22% 0.10 260)", marginBottom: "1rem" }}>
-              {t("Part of the full training library.", "Bagian dari perpustakaan pelatihan lengkap.", "Onderdeel van de volledige contentbibliotheek.")}
-            </h2>
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {!userPathway ? (
-                <Link href="/membership" className="btn-primary">{t("Join the Community", "Bergabung", "Word lid")}</Link>
-              ) : saved ? (
-                <Link href="/dashboard" className="btn-primary">{t("Go to Dashboard", "Ke Dashboard", "Naar Dashboard")}</Link>
-              ) : (
-                <button onClick={handleSave} disabled={isPending} className="btn-primary" style={{ border: "none", cursor: isPending ? "wait" : "pointer" }}>
-                  {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
-                </button>
+          <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", alignItems: "flex-start" }}>
+            <div style={{ flex: "1 1 320px", minWidth: 260 }}>
+              {TENSIONS.map((tension, i) => (
+                <TensionSlider
+                  key={tension.id}
+                  tension={tension}
+                  lang={lang}
+                  value={placements[i]}
+                  onPlace={v => handlePlace(i, v)}
+                />
+              ))}
+            </div>
+            <div style={{ flex: "0 0 auto", width: 240, alignSelf: "center" }}>
+              <PentagonRadar placements={placements} />
+              {allPlaced && (
+                <p style={{ fontFamily: FONT_BODY, fontSize: "0.7rem", color: "oklch(45% 0.12 155)", textAlign: "center", margin: "0.625rem 0 0", fontWeight: 600 }}>
+                  ✓ {t.allPlaced}
+                </p>
               )}
-              <Link href="/resources" className="btn-outline-navy">{t("Browse the Library", "Jelajahi Perpustakaan", "Verken de Bibliotheek")}</Link>
             </div>
           </div>
-          <div style={{ background: "oklch(22% 0.10 260)", padding: "2.5rem" }}>
-            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(80% 0.04 260)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
-              {t(
-                "\"Servant leadership is not about being nice. It is about being willing to put your power and position in service of another person's flourishing.\"",
-                "\"Kepemimpinan hamba bukan tentang bersikap baik. Ini tentang kesediaan untuk menempatkan kekuasaan dan posisi Anda dalam pelayanan kemakmuran orang lain.\"",
-                "\"Dienend leiderschap gaat niet over aardig zijn. Het gaat over bereid zijn je macht en positie in dienst te stellen van andermans bloei.\"",
-              )}
-            </p>
-            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", textTransform: "uppercase" }}>Crispy Development</span>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* -- VERSE POPUP -- */}
-      {activeVerse && (
-        <div onClick={() => setActiveVerse(null)} style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1.5rem" }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: "oklch(97% 0.005 80)", borderRadius: "12px", padding: "2.5rem clamp(1.5rem, 4vw, 2.5rem)", maxWidth: "520px", width: "100%" }}>
-            <p style={{ fontFamily: "var(--font-cormorant, Cormorant Garamond, Georgia, serif)", fontSize: "1.25rem", fontStyle: "italic", color: "oklch(22% 0.10 260)", lineHeight: 1.65, marginBottom: "1rem" }}>
-              "{lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id : VERSES[activeVerse as keyof typeof VERSES].nl}"
-            </p>
-            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", marginBottom: "1.5rem" }}>
-              — {lang === "en" ? VERSES[activeVerse as keyof typeof VERSES].en_ref : lang === "id" ? VERSES[activeVerse as keyof typeof VERSES].id_ref : VERSES[activeVerse as keyof typeof VERSES].nl_ref} ({translation})
-            </p>
-            <button onClick={() => setActiveVerse(null)} style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: 700, background: "oklch(22% 0.10 260)", color: "oklch(97% 0.005 80)", border: "none", padding: "0.625rem 1.5rem", cursor: "pointer", borderRadius: "4px" }}>
-              {t("Close", "Tutup", "Sluiten")}
-            </button>
-          </div>
+        {/* ── Profile (shown when all placed) ── */}
+        {allPlaced && (
+          <section style={{ background: "white", border: `1px solid ${LIGHT_GRAY}`, padding: "2rem 1.75rem", marginBottom: "2.5rem" }}>
+            <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.25rem, 2.4vw, 1.6rem)", color: NAVY, margin: "0 0 1.75rem" }}>
+              {t.profileTitle}
+            </h2>
+            {TENSIONS.map((tension, i) => (
+              <ProfileReading key={tension.id} tension={tension} lang={lang} value={placements[i] as number} />
+            ))}
+          </section>
+        )}
+
+        {/* ── Faith Anchor ── */}
+        <section style={{ borderLeft: `4px solid ${ORANGE}`, paddingLeft: "1.5rem", marginBottom: "2.5rem" }}>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.625rem" }}>
+            {t.faithTitle}
+          </p>
+          <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.98rem)", lineHeight: 1.85, color: BODY_TEXT, margin: 0 }}>
+            {t.faithBody}
+          </p>
+        </section>
+
+        {/* ── Key Takeaways ── */}
+        <section style={{ marginBottom: "2.5rem" }}>
+          <h2 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "clamp(1.25rem, 2.4vw, 1.6rem)", color: NAVY, margin: "0 0 1.25rem" }}>
+            {t.takeawaysTitle}
+          </h2>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+            {t.takeaways.map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                <span style={{ flexShrink: 0, width: 22, height: 22, borderRadius: "50%", background: NAVY, display: "flex", alignItems: "center", justifyContent: "center", marginTop: "0.1rem" }}>
+                  <span style={{ fontFamily: FONT_BODY, fontWeight: 800, fontSize: "0.62rem", color: "white" }}>{i + 1}</span>
+                </span>
+                <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.88rem, 1.5vw, 0.97rem)", lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
+                  {item}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* ── Save button ── */}
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "2.5rem" }}>
+          <button
+            onClick={handleSave}
+            disabled={saved || isPending}
+            aria-label={saved ? t.savedDashboard : t.saveDashboard}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              minHeight: 44, padding: "10px 20px",
+              background: "transparent",
+              border: `1.5px solid ${saved ? ORANGE : "oklch(55% 0.04 260)"}`,
+              fontFamily: FONT_BODY, fontSize: 14, fontWeight: 600,
+              color: saved ? ORANGE : "oklch(70% 0.04 260)",
+              cursor: saved ? "default" : "pointer",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill={saved ? ORANGE : "none"} stroke={saved ? ORANGE : "currentColor"} strokeWidth="1.5" aria-hidden="true">
+              <path d="M3 2h10a1 1 0 011 1v11l-6-3-6 3V3a1 1 0 011-1z" />
+            </svg>
+            {saved ? t.savedDashboard : t.saveDashboard}
+          </button>
         </div>
-      )}
-    </>
+
+        {/* ── Background (collapsible SEO) ── */}
+        <section style={{ borderTop: `1px solid ${LIGHT_GRAY}`, paddingTop: "1.5rem" }}>
+          <button
+            onClick={() => setBgOpen(o => !o)}
+            aria-expanded={bgOpen}
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "none", border: "none", cursor: "pointer", padding: 0, fontFamily: FONT_BODY, fontWeight: 700, fontSize: "0.8rem", color: MUTED }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ transform: bgOpen ? "rotate(90deg)" : "none", transition: "transform 0.2s" }}>
+              <path d="M4 2l6 5-6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {bgOpen ? t.readLess : t.readMore}
+          </button>
+          {bgOpen && (
+            <div style={{ marginTop: "1.25rem" }}>
+              <h3 style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: "1.15rem", color: NAVY, margin: "0 0 0.875rem" }}>
+                {t.bgTitle}
+              </h3>
+              <p style={{ fontFamily: FONT_BODY, fontSize: "clamp(0.85rem, 1.4vw, 0.93rem)", lineHeight: 1.85, color: BODY_TEXT, margin: 0 }}>
+                {t.bgBody}
+              </p>
+            </div>
+          )}
+        </section>
+
+      </div>
+    </main>
   );
 }
