@@ -632,27 +632,32 @@ function AIChallengeSection({ placements, lang }: { placements: (number | null)[
 function TwoStreamsSVG({ lang }: { lang: Lang }) {
   const t = L[lang];
   return (
-    <svg viewBox="0 0 300 200" style={{ width: "100%", maxWidth: 380, display: "block", margin: "1.5rem auto 0" }} aria-hidden="true">
-      <rect x="100" y="6" width="100" height="30" rx="3" fill={NAVY} />
-      <text x="150" y="26" textAnchor="middle" fill="white" fontFamily={FONT_BODY} fontWeight="700" fontSize="11">GOD</text>
+    <svg viewBox="0 0 300 244" style={{ width: "100%", maxWidth: 380, display: "block", margin: "1.5rem auto 0" }} aria-hidden="true">
+      {/* GOD */}
+      <rect x="90" y="8" width="120" height="32" rx="3" fill={NAVY} />
+      <text x="150" y="29" textAnchor="middle" fill="white" fontFamily={FONT_BODY} fontWeight="700" fontSize="12">GOD</text>
 
-      <line x1="150" y1="36" x2="150" y2="76" stroke={NAVY} strokeWidth="2" />
-      <polygon points="145,72 150,82 155,72" fill={NAVY} />
-      <text x="158" y="52" textAnchor="start" fill={NAVY} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">kenosis</text>
-      <text x="158" y="64" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoLeft}</text>
+      {/* Kenosis arrow — solid, pointing down */}
+      <line x1="150" y1="40" x2="150" y2="88" stroke={NAVY} strokeWidth="2" />
+      <polygon points="145,88 155,88 150,100" fill={NAVY} />
+      <text x="160" y="62" textAnchor="start" fill={NAVY} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">kenosis</text>
+      <text x="160" y="74" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoLeft}</text>
 
-      <rect x="50" y="82" width="200" height="32" rx="3" fill={LIGHT_GRAY} stroke={NAVY} strokeWidth="1.5" />
-      <text x="150" y="103" textAnchor="middle" fill={NAVY} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
+      {/* SERVANT LEADER */}
+      <rect x="40" y="100" width="220" height="32" rx="3" fill={LIGHT_GRAY} stroke={NAVY} strokeWidth="1.5" />
+      <text x="150" y="121" textAnchor="middle" fill={NAVY} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
         {lang === "en" ? "SERVANT LEADER" : "PEMIMPIN HAMBA"}
       </text>
 
-      <line x1="150" y1="114" x2="150" y2="154" stroke={ORANGE} strokeWidth="2" />
-      <polygon points="145,118 150,114 155,118" fill={ORANGE} />
-      <text x="158" y="132" textAnchor="start" fill={ORANGE} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "trust" : "kepercayaan"}</text>
-      <text x="158" y="144" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoRight}</text>
+      {/* Trust arrow — dashed, pointing up */}
+      <line x1="150" y1="192" x2="150" y2="144" stroke={MUTED} strokeWidth="2" strokeDasharray="5,3" />
+      <polygon points="145,144 155,144 150,132" fill={MUTED} />
+      <text x="160" y="162" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="9" fontStyle="italic">{lang === "en" ? "trust" : "kepercayaan"}</text>
+      <text x="160" y="174" textAnchor="start" fill={MUTED} fontFamily={FONT_BODY} fontSize="8">{t.twoRight}</text>
 
-      <rect x="70" y="160" width="160" height="30" rx="3" fill="oklch(65% 0.15 45 / 0.12)" stroke={ORANGE} strokeWidth="1.5" />
-      <text x="150" y="180" textAnchor="middle" fill={ORANGE} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
+      {/* FOLLOWERS */}
+      <rect x="60" y="194" width="180" height="32" rx="3" fill="none" stroke={LIGHT_GRAY} strokeWidth="1.5" />
+      <text x="150" y="215" textAnchor="middle" fill={MUTED} fontFamily={FONT_BODY} fontWeight="700" fontSize="11">
         {lang === "en" ? "FOLLOWERS" : "PENGIKUT"}
       </text>
     </svg>
