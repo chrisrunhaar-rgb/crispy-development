@@ -224,6 +224,34 @@ export default function OvercomingProcrastinationClient({
   const [commitPlace, setCommitPlace] = useState("");
   const [reminderStatus, setReminderStatus] = useState<"idle" | "loading" | "set" | "error">("idle");
 
+  function handleAddToCalendar() {
+    const start = new Date(`${commitDate}T${commitTime}`);
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const fmt = (d: Date) =>
+      `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Crispy Development//Overcoming Procrastination//EN",
+      "BEGIN:VEVENT",
+      `DTSTART:${fmt(start)}`,
+      `DTEND:${fmt(end)}`,
+      `SUMMARY:${commitAction.trim()}`,
+      "DESCRIPTION:Commitment from Crispy Leaders — Overcoming Procrastination",
+      `LOCATION:${commitPlace.trim()}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "commitment.ics";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   async function handleSetReminder() {
     if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
     setReminderStatus("loading");
@@ -820,8 +848,31 @@ export default function OvercomingProcrastinationClient({
                 </p>
               </div>
 
-              {userId && reminderStatus !== "set" && (
-                <div style={{ marginTop: "1.25rem" }}>
+              <div style={{ marginTop: "1.25rem", display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+                {/* Add to Calendar — universal, no auth needed */}
+                <button
+                  onClick={handleAddToCalendar}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                    background: ORANGE,
+                    border: "none",
+                    color: "oklch(15% 0.05 45)",
+                    padding: "0 1.25rem", minHeight: 40,
+                    fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
+                    letterSpacing: "0.06em", textTransform: "uppercase",
+                    cursor: "pointer",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <rect x="1" y="2" width="12" height="11" rx="1" stroke="currentColor" strokeWidth="1.4" />
+                    <path d="M1 5.5h12" stroke="currentColor" strokeWidth="1.4" />
+                    <path d="M4 1v2M10 1v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  </svg>
+                  {t("Add to Calendar", "Tambah ke Kalender", lang)}
+                </button>
+
+                {/* Push reminder — requires auth + notification permission */}
+                {userId && reminderStatus !== "set" && (
                   <button
                     onClick={handleSetReminder}
                     disabled={reminderStatus === "loading"}
@@ -845,20 +896,21 @@ export default function OvercomingProcrastinationClient({
                       ? t("Setting reminder...", "Mengatur pengingat...", lang)
                       : t("Remind me at this time", "Ingatkan saya pada waktu ini", lang)}
                   </button>
-                  {reminderStatus === "error" && (
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(65% 0.18 25)", margin: "0.5rem 0 0" }}>
-                      {t("Could not set reminder. Make sure notifications are allowed.", "Tidak bisa mengatur pengingat. Pastikan notifikasi diizinkan.", lang)}
-                    </p>
-                  )}
-                </div>
-              )}
+                )}
 
-              {reminderStatus === "set" && (
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(68% 0.14 145)", marginTop: "1rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {t("Reminder set. You'll be notified at the time you chose.", "Pengingat telah diatur. Kamu akan diberitahu pada waktu yang dipilih.", lang)}
+                {reminderStatus === "set" && (
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(68% 0.14 145)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {t("Reminder set.", "Pengingat diatur.", lang)}
+                  </span>
+                )}
+              </div>
+
+              {reminderStatus === "error" && (
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(65% 0.18 25)", margin: "0.75rem 0 0" }}>
+                  {t("Could not set reminder. Make sure notifications are allowed.", "Tidak bisa mengatur pengingat. Pastikan notifikasi diizinkan.", lang)}
                 </p>
               )}
             </>
