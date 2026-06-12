@@ -37,15 +37,6 @@ const SCALE: { en: string; id: string }[] = [
   { en: "Often", id: "Sering" },
 ];
 
-const DAYS_LIST: { en: string; id: string }[] = [
-  { en: "Monday", id: "Senin" },
-  { en: "Tuesday", id: "Selasa" },
-  { en: "Wednesday", id: "Rabu" },
-  { en: "Thursday", id: "Kamis" },
-  { en: "Friday", id: "Jumat" },
-  { en: "Saturday", id: "Sabtu" },
-  { en: "Sunday", id: "Minggu" },
-];
 
 type Strategy = { title: { en: string; id: string }; body: { en: string; id: string } };
 type DisguiseData = {
@@ -228,9 +219,39 @@ export default function OvercomingProcrastinationClient({
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
   const [commitAction, setCommitAction] = useState("");
-  const [commitDayIdx, setCommitDayIdx] = useState(-1);
+  const [commitDate, setCommitDate] = useState("");
   const [commitTime, setCommitTime] = useState("");
   const [commitPlace, setCommitPlace] = useState("");
+  const [reminderStatus, setReminderStatus] = useState<"idle" | "loading" | "set" | "error">("idle");
+
+  async function handleSetReminder() {
+    if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
+    setReminderStatus("loading");
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") { setReminderStatus("error"); return; }
+
+      const reg = await navigator.serviceWorker.ready;
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub) {
+        sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        });
+      }
+
+      const remindAt = new Date(`${commitDate}T${commitTime}`).toISOString();
+      const res = await fetch("/api/push/commitment-reminder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ task: commitAction.trim(), remindAt, subscription: sub.toJSON() }),
+      });
+      if (!res.ok) throw new Error("API error");
+      setReminderStatus("set");
+    } catch {
+      setReminderStatus("error");
+    }
+  }
 
   function handleSave() {
     startTransition(async () => {
@@ -261,12 +282,17 @@ export default function OvercomingProcrastinationClient({
   const dominant = getDominant();
   const disguise = DISGUISES[dominant];
 
-  const commitFilled = commitAction.trim() && commitDayIdx >= 0 && commitTime.trim() && commitPlace.trim();
-  const dayDisplay = commitDayIdx >= 0 ? DAYS_LIST[commitDayIdx][lang] : "";
+  const commitFilled = commitAction.trim() && commitDate && commitTime && commitPlace.trim();
+  const dateDisplay = commitDate
+    ? new Intl.DateTimeFormat(lang === "id" ? "id-ID" : "en-GB", { weekday: "long", day: "numeric", month: "long" }).format(new Date(`${commitDate}T00:00:00`))
+    : "";
+  const timeDisplay = commitTime
+    ? new Intl.DateTimeFormat(lang === "id" ? "id-ID" : "en-GB", { hour: "2-digit", minute: "2-digit" }).format(new Date(`2000-01-01T${commitTime}`))
+    : "";
   const commitmentSentence = commitFilled
     ? t(
-        `I will ${commitAction.trim()} on ${dayDisplay} at ${commitTime.trim()} at ${commitPlace.trim()}.`,
-        `Saya akan ${commitAction.trim()} pada ${dayDisplay} pukul ${commitTime.trim()} di ${commitPlace.trim()}.`,
+        `I will ${commitAction.trim()} on ${dateDisplay} at ${timeDisplay} at ${commitPlace.trim()}.`,
+        `Saya akan ${commitAction.trim()} pada ${dateDisplay} pukul ${timeDisplay} di ${commitPlace.trim()}.`,
         lang
       )
     : null;
@@ -305,6 +331,8 @@ export default function OvercomingProcrastinationClient({
   return (
     <div style={{ fontFamily: "var(--font-montserrat)", background: "oklch(97% 0.003 260)", minHeight: "100vh" }}>
 
+      <LangToggle />
+
       {/* HERO */}
       <section style={{
         position: "relative",
@@ -315,8 +343,7 @@ export default function OvercomingProcrastinationClient({
       }}>
         <div style={{ position: "absolute", inset: 0, background: "oklch(22% 0.10 260 / 0.82)" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 860, margin: "0 auto", padding: "80px 24px 68px" }}>
-          <LangToggle />
-          <p style={{ ...eyebrow, color: ORANGE, marginTop: "1.5rem" }}>
+          <p style={{ ...eyebrow, color: ORANGE }}>
             {t("Personal Growth — Self-Assessment", "Pertumbuhan Pribadi — Penilaian Diri", lang)}
           </p>
           <h1 style={{
@@ -725,35 +752,31 @@ export default function OvercomingProcrastinationClient({
               <input
                 type="text"
                 value={commitAction}
-                onChange={e => setCommitAction(e.target.value)}
+                onChange={e => { setCommitAction(e.target.value); setReminderStatus("idle"); }}
                 placeholder={t("e.g. write the introduction", "mis. tulis pendahuluan", lang)}
                 style={inputStyle}
               />
             </div>
             <div>
               <label style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.06 260)", display: "block", marginBottom: "0.4rem" }}>
-                {t("Day", "Hari", lang)}
+                {t("Date", "Tanggal", lang)}
               </label>
-              <select
-                value={commitDayIdx}
-                onChange={e => setCommitDayIdx(Number(e.target.value))}
-                style={{ ...inputStyle, appearance: "none" }}
-              >
-                <option value={-1} disabled>{t("Select a day", "Pilih hari", lang)}</option>
-                {DAYS_LIST.map((d, i) => (
-                  <option key={i} value={i}>{d[lang]}</option>
-                ))}
-              </select>
+              <input
+                type="date"
+                value={commitDate}
+                min={new Date().toISOString().split("T")[0]}
+                onChange={e => { setCommitDate(e.target.value); setReminderStatus("idle"); }}
+                style={inputStyle}
+              />
             </div>
             <div>
               <label style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.06 260)", display: "block", marginBottom: "0.4rem" }}>
                 {t("Time", "Waktu", lang)}
               </label>
               <input
-                type="text"
+                type="time"
                 value={commitTime}
-                onChange={e => setCommitTime(e.target.value)}
-                placeholder={t("e.g. 9:00am", "mis. 09.00", lang)}
+                onChange={e => { setCommitTime(e.target.value); setReminderStatus("idle"); }}
                 style={inputStyle}
               />
             </div>
@@ -764,7 +787,7 @@ export default function OvercomingProcrastinationClient({
               <input
                 type="text"
                 value={commitPlace}
-                onChange={e => setCommitPlace(e.target.value)}
+                onChange={e => { setCommitPlace(e.target.value); setReminderStatus("idle"); }}
                 placeholder={t("e.g. my desk", "mis. meja kerja saya", lang)}
                 style={inputStyle}
               />
@@ -772,19 +795,63 @@ export default function OvercomingProcrastinationClient({
           </div>
 
           {commitmentSentence ? (
-            <div style={{
-              marginTop: "2rem",
-              background: "oklch(28% 0.10 260)",
-              borderLeft: `4px solid ${ORANGE}`,
-              padding: "1.5rem 1.75rem",
-            }}>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
-                {t("Your commitment", "Komitmenmu", lang)}
-              </p>
-              <p style={{ fontFamily: "var(--font-cormorant-garamond, 'Cormorant Garamond', serif)", fontSize: "1.25rem", fontStyle: "italic", color: OFF_WHITE, margin: 0, lineHeight: 1.55 }}>
-                &ldquo;{commitmentSentence}&rdquo;
-              </p>
-            </div>
+            <>
+              <div style={{
+                marginTop: "2rem",
+                background: "oklch(28% 0.10 260)",
+                borderLeft: `4px solid ${ORANGE}`,
+                padding: "1.5rem 1.75rem",
+              }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, margin: "0 0 0.5rem" }}>
+                  {t("Your commitment", "Komitmenmu", lang)}
+                </p>
+                <p style={{ fontFamily: "var(--font-cormorant-garamond, 'Cormorant Garamond', serif)", fontSize: "1.25rem", fontStyle: "italic", color: OFF_WHITE, margin: 0, lineHeight: 1.55 }}>
+                  &ldquo;{commitmentSentence}&rdquo;
+                </p>
+              </div>
+
+              {userId && reminderStatus !== "set" && (
+                <div style={{ marginTop: "1.25rem" }}>
+                  <button
+                    onClick={handleSetReminder}
+                    disabled={reminderStatus === "loading"}
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                      background: "transparent",
+                      border: `1.5px solid ${ORANGE}`,
+                      color: ORANGE,
+                      padding: "0 1.25rem", minHeight: 40,
+                      fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem",
+                      letterSpacing: "0.06em", textTransform: "uppercase",
+                      cursor: reminderStatus === "loading" ? "wait" : "pointer",
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                      <circle cx="7" cy="7.5" r="5.5" stroke="currentColor" strokeWidth="1.4" />
+                      <path d="M7 5v3l2 1.2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M4.5 1.5L7 0l2.5 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {reminderStatus === "loading"
+                      ? t("Setting reminder...", "Mengatur pengingat...", lang)
+                      : t("Remind me at this time", "Ingatkan saya pada waktu ini", lang)}
+                  </button>
+                  {reminderStatus === "error" && (
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "oklch(65% 0.18 25)", margin: "0.5rem 0 0" }}>
+                      {t("Could not set reminder. Make sure notifications are allowed.", "Tidak bisa mengatur pengingat. Pastikan notifikasi diizinkan.", lang)}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {reminderStatus === "set" && (
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(68% 0.14 145)", marginTop: "1rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {t("Reminder set. You'll be notified at the time you chose.", "Pengingat telah diatur. Kamu akan diberitahu pada waktu yang dipilih.", lang)}
+                </p>
+              )}
+            </>
           ) : (
             <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", border: `1px dashed oklch(38% 0.08 260)` }}>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "oklch(55% 0.06 260)", margin: 0, fontStyle: "italic" }}>
