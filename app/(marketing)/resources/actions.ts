@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { GoogleGenAI } from "@google/genai";
 
 async function saveToTeamIfMember(
   supabase: Awaited<ReturnType<typeof createClient>>,
@@ -479,20 +480,23 @@ export async function saveSmartGoalToTable(data: {
 export async function getSmartGoalAiSuggestion(
   goalText: string,
   letter: string,
-  word: string
+  word: string,
+  weakQuestions: string[]
 ): Promise<{ suggestion: string | null; error: string | null }> {
   try {
-    const { GoogleGenAI } = await import("@google/genai");
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+    const weakContext = weakQuestions.length > 0
+      ? `\n\nThe user answered "partly" or "not yet" on these questions:\n${weakQuestions.map(q => `- ${q}`).join("\n")}`
+      : "";
     const prompt = `You are a SMART goals coach. A leader is refining their goal to make it more ${word}.
 
-Their current goal: "${goalText}"
+Their current goal: "${goalText}"${weakContext}
 
-The ${letter} in SMART stands for ${word}. Rewrite this goal so it is stronger on the ${word} dimension. Keep the same intent. Keep it to one sentence.
+Based on the goal and the user's evaluation, list 2–3 concrete elements they should ADD to make this goal more ${word}. Do not rewrite the goal. Give short, actionable bullet points — each starting with "Add" or "Include" or "Specify".
 
-Return ONLY the improved goal text — no explanation, no labels, no quotes.`;
+Return only the bullet points. No intro, no explanation, no labels.`;
 
-    const result = await ai.models.generateContent({ model: "gemini-2.0-flash", contents: prompt });
+    const result = await ai.models.generateContent({ model: "gemini-2.5-flash", contents: prompt });
     const text = result.text?.trim() ?? "";
     if (!text) return { suggestion: null, error: "No suggestion returned." };
     return { suggestion: text, error: null };

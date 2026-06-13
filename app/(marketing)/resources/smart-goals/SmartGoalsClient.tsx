@@ -390,13 +390,15 @@ export default function SmartGoalsClient({
 
   async function handleAiSuggest(li: number) {
     const letter = LETTERS[li];
+    const qs = lang === "en" ? letter.worksheetQEn : lang === "id" ? letter.worksheetQId : letter.worksheetQNl;
+    const letterAnswers = answers[li] ?? {};
+    const weakQuestions = qs
+      .filter((_, qi) => letterAnswers[qi] === "partial" || letterAnswers[qi] === "no")
+      .map(qItem => qItem.q);
     setAiLoading(prev => ({ ...prev, [li]: true }));
-    const { suggestion } = await getSmartGoalAiSuggestion(goalText, letter.letter, letter.wordEn);
+    const { suggestion } = await getSmartGoalAiSuggestion(goalText, letter.letter, letter.wordEn, weakQuestions);
     setAiLoading(prev => ({ ...prev, [li]: false }));
-    if (suggestion) {
-      setAiSuggestions(prev => ({ ...prev, [li]: suggestion }));
-      setRewriteTexts(prev => ({ ...prev, [li]: suggestion }));
-    }
+    if (suggestion) setAiSuggestions(prev => ({ ...prev, [li]: suggestion }));
   }
 
   // ---- WORKSHEET RENDER ----
@@ -635,20 +637,18 @@ export default function SmartGoalsClient({
               </span>
             </div>
             {aiSuggestions[li] && (
-              <div style={{ background: "oklch(65% 0.15 45 / 0.08)", border: "1px solid oklch(65% 0.15 45 / 0.3)", borderRadius: 8, padding: "14px 16px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(48% 0.12 45)", margin: "0 0 6px" }}>
-                  {t("AI Suggestion", "Saran AI", "AI Suggestie")}
+              <div style={{ background: "oklch(65% 0.15 45 / 0.07)", border: "1px solid oklch(65% 0.15 45 / 0.25)", borderRadius: 8, padding: "14px 16px" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(48% 0.12 45)", margin: "0 0 10px" }}>
+                  {t("What to add to your goal", "Yang perlu ditambahkan ke tujuan Anda", "Wat toe te voegen aan je doel")}
                 </p>
-                <p style={{ fontSize: 14, color: "oklch(22% 0.10 260)", margin: "0 0 12px", lineHeight: 1.6 }}>{aiSuggestions[li]}</p>
-                <button
-                  onClick={() => {
-                    setGoalText(aiSuggestions[li]);
-                    setRewriteTexts(prev => ({ ...prev, [li]: aiSuggestions[li] }));
-                  }}
-                  style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "7px 16px", borderRadius: 8, fontWeight: 700, fontSize: 12, border: "none", cursor: "pointer" }}
-                >
-                  {t("Apply this suggestion →", "Terapkan saran ini →", "Pas deze suggestie toe →")}
-                </button>
+                <div style={{ fontSize: 14, color: "oklch(22% 0.10 260)", lineHeight: 1.7 }}>
+                  {aiSuggestions[li].split("\n").filter(Boolean).map((line, i) => (
+                    <p key={i} style={{ margin: "0 0 6px" }}>{line}</p>
+                  ))}
+                </div>
+                <p style={{ fontSize: 12, color: "oklch(52% 0.06 260)", margin: "10px 0 0", fontStyle: "italic" }}>
+                  {t("Use these to refine your goal in the box below.", "Gunakan ini untuk menyempurnakan tujuan Anda di kotak di bawah.", "Gebruik dit om je doel te verfijnen in het vak hieronder.")}
+                </p>
               </div>
             )}
           </div>
