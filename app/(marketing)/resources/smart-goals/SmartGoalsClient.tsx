@@ -3,7 +3,7 @@
 import { useState, useTransition, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion, getSmartGoalCoachingResponse } from "../actions";
+import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion, getSmartGoalCoachingResponse, getSmartGoalAiScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
@@ -317,6 +317,7 @@ export default function SmartGoalsClient({
   const [aiLoading, setAiLoading] = useState<Record<number, boolean>>({});
   const [coachingResult, setCoachingResult] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", string>>>({});
   const [coachingLoading, setCoachingLoading] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", boolean>>>({});
+  const [aiScore, setAiScore] = useState<{ score: number; reason: string } | null>(null);
   const worksheetCardRef = useRef<HTMLDivElement>(null);
 
   const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
@@ -376,13 +377,15 @@ export default function SmartGoalsClient({
       data[`${letter.letter}_score`] = score.toFixed(2);
       data[`${letter.letter}_met`] = score >= 0.67 ? "yes" : "no";
     });
-    const metCount = LETTERS.filter((_, li) => calcLetterScore(answers[li] ?? {}) >= 0.67).length;
-    data.overall_score = String(Math.round((metCount / 5) * 100));
     data.completedAt = new Date().toISOString();
 
     startSavingWorksheet(async () => {
+      const { score, reason } = await getSmartGoalAiScore(goalText);
+      const scoreToSave = score ?? 3;
+      if (score && reason) setAiScore({ score, reason });
+      data.overall_score = String(scoreToSave);
       await saveSmartGoal(data);
-      await saveSmartGoalToTable({ goal: goalText, answers: data, overallScore: Math.round((metCount / 5) * 100) });
+      await saveSmartGoalToTable({ goal: goalText, answers: data, overallScore: scoreToSave });
       setWorksheetSaved(true);
     });
   }
@@ -392,6 +395,7 @@ export default function SmartGoalsClient({
     setGoalText("");
     setAnswers({});
     setWorksheetSaved(false);
+    setAiScore(null);
     setRewriteTexts({});
     setAiSuggestions({});
     setAiLoading({});
@@ -792,6 +796,28 @@ export default function SmartGoalsClient({
             rows={3}
             style={{ width: "100%", boxSizing: "border-box", padding: "12px 14px", borderRadius: 10, border: "1.5px solid oklch(85% 0.008 260)", fontSize: 14, color: "oklch(22% 0.10 260)", lineHeight: 1.65, fontFamily: "inherit", resize: "vertical", marginBottom: 24, background: "white" }}
           />
+
+          {/* AI score card — shown after save */}
+          {worksheetSaved && aiScore && (() => {
+            const R = 22;
+            const C = 2 * Math.PI * R;
+            const filled = (aiScore.score / 5) * C;
+            return (
+              <div style={{ background: "white", border: "1px solid oklch(88% 0.015 45)", borderRadius: 12, padding: "16px 20px", marginBottom: 20, display: "flex", alignItems: "center", gap: 16 }}>
+                <svg viewBox="0 0 60 60" width="60" height="60" style={{ flexShrink: 0 }}>
+                  <circle cx="30" cy="30" r={R} fill="none" stroke="oklch(92% 0.006 80)" strokeWidth="6" />
+                  <circle cx="30" cy="30" r={R} fill="none" stroke="oklch(65% 0.15 45)" strokeWidth="6" strokeLinecap="round" strokeDasharray={`${filled} ${C}`} transform="rotate(-90 30 30)" />
+                  <text x="30" y="35" textAnchor="middle" fontSize="13" fontWeight="800" fill="oklch(22% 0.10 260)" fontFamily="Montserrat, sans-serif">{aiScore.score}/5</text>
+                </svg>
+                <div>
+                  <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", margin: "0 0 4px" }}>
+                    {t("AI Score", "Skor AI", "AI Score")}
+                  </p>
+                  <p style={{ fontSize: 14, color: "oklch(28% 0.08 260)", margin: 0, lineHeight: 1.55 }}>{aiScore.reason}</p>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Save / retake */}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>

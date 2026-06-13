@@ -490,11 +490,11 @@ function SmartGoalsModal({ data, onClose }: { data: Extract<ModalData, { type: "
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(55% 0.008 260)" }}>{date}</span>
                 <span style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700,
-                  background: g.overall_score >= 80 ? "oklch(88% 0.12 145)" : g.overall_score >= 50 ? "oklch(92% 0.10 60)" : "oklch(92% 0.04 260)",
-                  color: g.overall_score >= 80 ? "oklch(32% 0.12 145)" : g.overall_score >= 50 ? "oklch(40% 0.10 60)" : "oklch(45% 0.04 260)",
+                  background: (g.overall_score > 5 ? g.overall_score >= 80 : g.overall_score >= 4) ? "oklch(88% 0.12 145)" : (g.overall_score > 5 ? g.overall_score >= 50 : g.overall_score >= 3) ? "oklch(92% 0.10 60)" : "oklch(92% 0.04 260)",
+                  color: (g.overall_score > 5 ? g.overall_score >= 80 : g.overall_score >= 4) ? "oklch(32% 0.12 145)" : (g.overall_score > 5 ? g.overall_score >= 50 : g.overall_score >= 3) ? "oklch(40% 0.10 60)" : "oklch(45% 0.04 260)",
                   padding: "0.15rem 0.5rem", borderRadius: 6,
                 }}>
-                  {g.overall_score}% {label("SMART", "SMART")}
+                  {g.overall_score > 5 ? `${g.overall_score}%` : `${g.overall_score}/5`} {label("SMART", "SMART")}
                 </span>
               </div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, lineHeight: 1.55, margin: 0 }}>
@@ -2004,42 +2004,31 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={lang === "id" ? "Pembuat Tujuan SMART" : "SMART Goal Creator"}
           visual={smartGoals && smartGoals.length > 0 ? (
-            <div style={{ width: 180, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: "1rem" }}>
-              {(() => {
-                const segs = 20;
-                const step = (2 * Math.PI) / segs;
-                const wedge = (i: number, r1: number, r2: number) => {
-                  const a1 = i * step - Math.PI / 2;
-                  const a2 = a1 + step;
-                  const x1 = (50 + r2 * Math.cos(a1)).toFixed(2), y1 = (50 + r2 * Math.sin(a1)).toFixed(2);
-                  const x2 = (50 + r2 * Math.cos(a2)).toFixed(2), y2 = (50 + r2 * Math.sin(a2)).toFixed(2);
-                  const ix1 = (50 + r1 * Math.cos(a1)).toFixed(2), iy1 = (50 + r1 * Math.sin(a1)).toFixed(2);
-                  const ix2 = (50 + r1 * Math.cos(a2)).toFixed(2), iy2 = (50 + r1 * Math.sin(a2)).toFixed(2);
-                  return r1 === 0
-                    ? `M50,50 L${x1},${y1} A${r2},${r2} 0 0,1 ${x2},${y2} Z`
-                    : `M${ix1},${iy1} A${r1},${r1} 0 0,1 ${ix2},${iy2} L${x2},${y2} A${r2},${r2} 0 0,0 ${x1},${y1} Z`;
-                };
-                const arr = Array.from({ length: segs }, (_, i) => i);
-                return (
-                  <svg viewBox="0 0 100 100" width="84" height="84" style={{ flexShrink: 0 }}>
-                    <circle cx="50" cy="50" r="49" fill="#1a1a1a"/>
-                    {arr.map(i => <path key={`s${i}`} d={wedge(i, 27, 43)} fill={i % 2 === 0 ? "#f0e4c0" : "#1c1c1c"}/>)}
-                    {arr.map(i => <path key={`d${i}`} d={wedge(i, 39, 43)} fill={i % 2 === 0 ? "#cc2200" : "#1a7a3e"}/>)}
-                    {arr.map(i => <path key={`n${i}`} d={wedge(i, 15, 27)} fill={i % 2 === 0 ? "#f0e4c0" : "#1c1c1c"}/>)}
-                    {arr.map(i => <path key={`t${i}`} d={wedge(i, 23, 27)} fill={i % 2 === 0 ? "#cc2200" : "#1a7a3e"}/>)}
-                    <circle cx="50" cy="50" r="15" fill="#1a1a1a"/>
-                    <circle cx="50" cy="50" r="11" fill="#1a7a3e"/>
-                    <circle cx="50" cy="50" r="5.5" fill="#cc2200"/>
+            (() => {
+              const latest = smartGoals[0];
+              const score = latest.overall_score;
+              const isLegacy = score > 5;
+              const fraction = isLegacy ? score / 100 : score / 5;
+              const displayScore = isLegacy ? `${score}%` : `${score}/5`;
+              const R = 30;
+              const C = 2 * Math.PI * R;
+              const filled = fraction * C;
+              return (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                  <svg viewBox="0 0 76 76" width="76" height="76">
+                    <circle cx="38" cy="38" r={R} fill="none" stroke="oklch(92% 0.008 80)" strokeWidth="7" />
+                    <circle cx="38" cy="38" r={R} fill="none" stroke={orange} strokeWidth="7" strokeLinecap="round" strokeDasharray={`${filled} ${C}`} transform="rotate(-90 38 38)" />
+                    <text x="38" y="43" textAnchor="middle" fontSize="13" fontWeight="800" fill={navy} fontFamily="var(--font-montserrat)">{displayScore}</text>
                   </svg>
-                );
-              })()}
-              <div>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.6rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(48% 0.008 260)", margin: "4px 0 0" }}>
-                  {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
-                </p>
-              </div>
-            </div>
+                  <div style={{ textAlign: "center" }}>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.4rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
+                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(48% 0.008 260)", margin: "3px 0 0" }}>
+                      {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
+                    </p>
+                  </div>
+                </div>
+              );
+            })()
           ) : <EmptyTileVisual />}
           done={!!(smartGoals && smartGoals.length > 0)}
           href={smartGoals && smartGoals.length > 0 ? undefined : "/resources/smart-goals"}

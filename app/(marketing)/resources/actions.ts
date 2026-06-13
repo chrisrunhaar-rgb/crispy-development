@@ -507,6 +507,32 @@ Return only the bullet points. No intro, no explanation, no labels.`;
   }
 }
 
+export async function getSmartGoalAiScore(
+  goalText: string
+): Promise<{ score: number | null; reason: string | null; error: string | null }> {
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+    const prompt = `You are a cross-cultural leadership coach. Score this SMART goal from 1 to 5 based on how well it meets the SMART criteria (Specific, Measurable/Trackable, Achievable, Relevant, Time-bound). Consider that the writer may be a field worker, missionary, or cross-cultural ministry leader — not a corporate employee. Avoid penalising faith-based or ministry language.
+
+Return ONLY a valid JSON object on a single line with no other text:
+{"score": N, "reason": "one short sentence explaining the score"}
+
+Where N is an integer from 1 (very weak SMART goal) to 5 (excellent SMART goal).
+
+Goal: "${goalText}"`;
+    const result = await ai.models.generateContent({ model: "gemini-2.5-flash", contents: prompt });
+    const text = result.text?.trim() ?? "";
+    if (!text) return { score: null, reason: null, error: "No response returned." };
+    const jsonMatch = text.match(/\{[^}]+\}/);
+    if (!jsonMatch) return { score: null, reason: null, error: "Could not parse score." };
+    const parsed = JSON.parse(jsonMatch[0]);
+    const score = Math.min(5, Math.max(1, Math.round(Number(parsed.score))));
+    return { score, reason: String(parsed.reason ?? ""), error: null };
+  } catch {
+    return { score: null, reason: null, error: "Could not score goal." };
+  }
+}
+
 export async function getSmartGoalCoachingResponse(
   goalText: string,
   action: "clarify" | "reframe" | "negotiate"
