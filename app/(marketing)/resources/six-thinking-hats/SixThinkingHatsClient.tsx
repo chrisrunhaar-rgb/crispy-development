@@ -317,6 +317,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
       {/* HERO */}
       <section style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/six-thinking-hats/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 80% 30%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
@@ -369,12 +370,35 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {tr("Select a hat to explore its focus, cross-cultural context, faith connection, and key questions.", "Pilih topi untuk menjelajahi fokus, konteks lintas budaya, koneksi iman, dan pertanyaan utamanya.", "Selecteer een hoed om de focus, cross-culturele context, geloofsverbinding en sleutelvragen te verkennen.")}
           </p>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
-            {HATS.map((hat, i) => (
-              <button key={hat.num} onClick={() => setActiveHat(activeHat === i ? null : i)} style={{ padding: "10px 20px", borderRadius: 12, cursor: "pointer", background: activeHat === i ? hat.color : "white", color: activeHat === i ? "white" : "oklch(30% 0.08 260)", border: `1px solid ${activeHat === i ? hat.color : "oklch(88% 0.02 260)"}`, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600, transition: "all 0.2s ease" }}>
-                {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)} — {tr(hat.focusEn, hat.focusId, hat.focusNl)}
-              </button>
-            ))}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10, marginBottom: 32 }}>
+            {HATS.map((hat, i) => {
+              const isActive = activeHat === i;
+              return (
+                <button
+                  key={hat.num}
+                  onClick={() => setActiveHat(activeHat === i ? null : i)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 12,
+                    padding: "14px 16px", borderRadius: 12, cursor: "pointer",
+                    background: isActive ? hat.bg : "white",
+                    border: `2px solid ${isActive ? hat.color : "oklch(88% 0.02 260)"}`,
+                    boxShadow: isActive ? `0 0 0 2px ${hat.color}38` : "0 1px 4px oklch(20% 0.06 260 / 0.06)",
+                    textAlign: "left", fontFamily: "Montserrat, sans-serif",
+                    transition: "all 0.18s ease",
+                  }}
+                >
+                  <img src={hat.hatImage} alt="" style={{ width: 44, height: 44, objectFit: "contain", flexShrink: 0, mixBlendMode: "multiply" }} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: isActive ? hat.color : "oklch(25% 0.08 260)", marginBottom: 3 }}>
+                      {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)}
+                    </div>
+                    <div style={{ fontSize: 11, color: isActive ? hat.accent : "oklch(52% 0.05 260)", fontWeight: 500, letterSpacing: "0.02em", lineHeight: 1.4 }}>
+                      {tr(hat.focusEn, hat.focusId, hat.focusNl)}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
           {activeHat !== null && (() => {
@@ -398,7 +422,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                   <img
                     src={hat.hatImage}
                     alt=""
-                    style={{ width: 88, height: 88, objectFit: "contain", flexShrink: 0, opacity: 0.88, mixBlendMode: "multiply" }}
+                    style={{ width: 160, height: 160, objectFit: "contain", flexShrink: 0, opacity: 0.88, mixBlendMode: "multiply" }}
                   />
                 </div>
 
