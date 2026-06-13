@@ -736,7 +736,7 @@ export default function SmartGoalsClient({
               onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
               style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
             >
-              {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
             </button>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
@@ -898,8 +898,8 @@ export default function SmartGoalsClient({
       {/* INTERACTIVE WORKSHEET */}
       <section id="worksheet-section" style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("Evaluate Your Goal", "Evaluasi Tujuan Anda", "Evalueer Jouw Doel")}
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(65% 0.15 45)", margin: "0 0 12px" }}>
+            {t("SMART Goal Creator", "Pembuat Tujuan SMART", "SMART Doel Creator")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
             {t(
@@ -921,11 +921,11 @@ export default function SmartGoalsClient({
               )}
               <button
                 onClick={() => setWorksheetOpen(true)}
-                style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", letterSpacing: "0.03em" }}
+                style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", letterSpacing: "0.03em" }}
               >
                 {savedGoal?.goal
-                  ? t("Start New Evaluation", "Mulai Evaluasi Baru", "Nieuwe evaluatie starten")
-                  : t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+                  ? t("Create a New Goal", "Buat Tujuan Baru", "Nieuw doel maken")
+                  : t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
               </button>
             </div>
           ) : (
@@ -1019,7 +1019,7 @@ export default function SmartGoalsClient({
               onClick={() => { setWorksheetOpen(true); setStep(0); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
               style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
             >
-              {t("Start Worksheet", "Mulai Lembar Kerja", "Start werkblad")}
+              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
             </button>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
               {t("Training", "Pelatihan", "Bekijk alle bronnen")}
