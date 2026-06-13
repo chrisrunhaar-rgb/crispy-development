@@ -506,3 +506,23 @@ Return only the bullet points. No intro, no explanation, no labels.`;
     return { suggestion: null, error: "Could not generate suggestion." };
   }
 }
+
+export async function getSmartGoalCoachingResponse(
+  goalText: string,
+  action: "clarify" | "reframe" | "negotiate"
+): Promise<{ response: string | null; error: string | null }> {
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+    const prompts = {
+      clarify: `You are a cross-cultural leadership coach. A leader has written this goal:\n\n"${goalText}"\n\nAsk ONE short question that surfaces something genuinely unclear or missing in this goal — something not answered by what they have written. Focus on real-world clarity. Warm and direct. One sentence only. No preamble, no label, no dash at the start.`,
+      reframe: `You are a cross-cultural leadership coach. A leader has written this goal:\n\n"${goalText}"\n\nAsk ONE reflective question that invites this leader to connect their goal to a deeper value, calling, or conviction — something that would fuel their commitment when things get hard. Audience: cross-cultural workers, ministry leaders, field workers. Warm, spiritually aware, direct. One sentence only. No preamble.`,
+      negotiate: `You are a cross-cultural leadership coach. A leader has written this goal:\n\n"${goalText}"\n\nGive ONE concrete suggestion to adjust the scope, timeline, or approach so this goal is more achievable without losing its meaning. Consider they may work in a cross-cultural, low-resource, or complex environment. Use "Consider..." or "What if you..." framing. 1–2 sentences. No preamble.`,
+    };
+    const result = await ai.models.generateContent({ model: "gemini-2.5-flash", contents: prompts[action] });
+    const text = result.text?.trim() ?? "";
+    if (!text) return { response: null, error: "No response returned." };
+    return { response: text, error: null };
+  } catch {
+    return { response: null, error: "Could not generate response." };
+  }
+}

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion } from "../actions";
+import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion, getSmartGoalCoachingResponse } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
@@ -315,6 +315,9 @@ export default function SmartGoalsClient({
   const [rewriteTexts, setRewriteTexts] = useState<Record<number, string>>({});
   const [aiSuggestions, setAiSuggestions] = useState<Record<number, string>>({});
   const [aiLoading, setAiLoading] = useState<Record<number, boolean>>({});
+  const [coachingResult, setCoachingResult] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", string>>>({});
+  const [coachingLoading, setCoachingLoading] = useState<Partial<Record<"clarify" | "reframe" | "negotiate", boolean>>>({});
+  const worksheetCardRef = useRef<HTMLDivElement>(null);
 
   const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
 
@@ -347,11 +350,17 @@ export default function SmartGoalsClient({
   }
 
   function handleNext() {
-    if (step < 6) setStep(s => s + 1);
+    if (step < 6) {
+      setStep(s => s + 1);
+      setTimeout(() => worksheetCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    }
   }
 
   function handleBack() {
-    if (step > 0) setStep(s => s - 1);
+    if (step > 0) {
+      setStep(s => s - 1);
+      setTimeout(() => worksheetCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    }
   }
 
   function handleSaveWorksheet() {
@@ -386,6 +395,8 @@ export default function SmartGoalsClient({
     setRewriteTexts({});
     setAiSuggestions({});
     setAiLoading({});
+    setCoachingResult({});
+    setCoachingLoading({});
   }
 
   async function handleAiSuggest(li: number) {
@@ -399,6 +410,13 @@ export default function SmartGoalsClient({
     const { suggestion } = await getSmartGoalAiSuggestion(goalText, letter.letter, letter.wordEn, weakQuestions);
     setAiLoading(prev => ({ ...prev, [li]: false }));
     if (suggestion) setAiSuggestions(prev => ({ ...prev, [li]: suggestion }));
+  }
+
+  async function handleCoachingAction(action: "clarify" | "reframe" | "negotiate") {
+    setCoachingLoading(prev => ({ ...prev, [action]: true }));
+    const { response } = await getSmartGoalCoachingResponse(goalText, action);
+    setCoachingLoading(prev => ({ ...prev, [action]: false }));
+    if (response) setCoachingResult(prev => ({ ...prev, [action]: response }));
   }
 
   // ---- WORKSHEET RENDER ----
@@ -658,84 +676,122 @@ export default function SmartGoalsClient({
       );
     }
 
-    // Step 6: Results
+    // Step 6: Coaching finish
     if (step === 6) {
-      const results = LETTERS.map((letter, li) => {
-        const score = calcLetterScore(answers[li] ?? {});
-        const met = score >= 0.67;
-        return { letter, li, score, met };
-      });
-      const metCount = results.filter(r => r.met).length;
-      const overallPct = Math.round((metCount / 5) * 100);
-      const notMet = results.filter(r => !r.met);
+      const coachingActions: Array<{
+        key: "clarify" | "reframe" | "negotiate";
+        labelEn: string; labelId: string; labelNl: string;
+        descEn: string; descId: string; descNl: string;
+        color: string; colorBg: string; colorBorder: string;
+      }> = [
+        {
+          key: "clarify",
+          labelEn: "Clarify", labelId: "Klarifikasi", labelNl: "Verduidelijken",
+          descEn: "Ask AI to surface what's still unclear or missing in your goal.",
+          descId: "Minta AI mengungkap apa yang masih belum jelas dalam tujuan Anda.",
+          descNl: "Vraag AI wat nog onduidelijk of ontbreekt in je doel.",
+          color: "oklch(42% 0.14 260)",
+          colorBg: "oklch(42% 0.14 260 / 0.06)",
+          colorBorder: "oklch(42% 0.14 260 / 0.25)",
+        },
+        {
+          key: "reframe",
+          labelEn: "Reframe", labelId: "Bingkai Ulang", labelNl: "Herformuleren",
+          descEn: "Ask AI for a question that connects this goal to what matters most to you.",
+          descId: "Minta AI pertanyaan yang menghubungkan tujuan ini dengan apa yang terpenting.",
+          descNl: "Vraag AI een vraag die dit doel verbindt met wat voor jou het meest belangrijk is.",
+          color: "oklch(65% 0.15 45)",
+          colorBg: "oklch(65% 0.15 45 / 0.07)",
+          colorBorder: "oklch(65% 0.15 45 / 0.30)",
+        },
+        {
+          key: "negotiate",
+          labelEn: "Negotiate", labelId: "Negosiasi", labelNl: "Onderhandelen",
+          descEn: "Ask AI to suggest how to adjust the scope without losing the ambition.",
+          descId: "Minta AI menyarankan cara menyesuaikan lingkup tanpa kehilangan ambisi.",
+          descNl: "Vraag AI hoe je de omvang aanpast zonder de ambitie te verliezen.",
+          color: "oklch(46% 0.16 145)",
+          colorBg: "oklch(46% 0.16 145 / 0.07)",
+          colorBorder: "oklch(46% 0.16 145 / 0.28)",
+        },
+      ];
 
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Results", "Hasil", "Resultaten")}
+            {t("Your Goal", "Tujuan Anda", "Jouw Doel")}
           </p>
-          <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 6px" }}>
-            {t("Your SMART Score", "Skor SMART Anda", "Jouw SMART-score")}
+          <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 16px" }}>
+            {t("You've worked through every element.", "Anda telah mengerjakan setiap elemen.", "Je hebt elk element doorgewerkt.")}
           </h3>
-          <div style={{ background: "oklch(22% 0.10 260 / 0.05)", borderRadius: 8, padding: "10px 14px", marginBottom: 24, fontSize: 13, color: "oklch(30% 0.06 260)", lineHeight: 1.55 }}>
-            <span style={{ fontWeight: 700, color: "oklch(22% 0.10 260)" }}>{t("Goal: ", "Tujuan: ", "Doel: ")}</span>
+
+          {/* Goal display */}
+          <div style={{ background: "oklch(22% 0.10 260 / 0.05)", borderRadius: 8, padding: "12px 16px", marginBottom: 28, fontSize: 14, color: "oklch(28% 0.08 260)", lineHeight: 1.65 }}>
+            <span style={{ fontWeight: 700, color: "oklch(22% 0.10 260)", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", display: "block", marginBottom: 4 }}>
+              {t("Goal", "Tujuan", "Doel")}
+            </span>
             {goalText}
           </div>
 
-          {/* Score display */}
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ fontSize: 72, fontFamily: "Cormorant Garamond, serif", fontWeight: 600, color: metCount >= 4 ? "oklch(46% 0.16 145)" : metCount >= 3 ? "oklch(48% 0.18 55)" : "oklch(44% 0.14 25)", lineHeight: 1 }}>
-              {metCount}<span style={{ fontSize: 36, color: "oklch(55% 0.05 260)" }}>/5</span>
-            </div>
-            <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", margin: "6px 0 0" }}>
-              {metCount === 5
-                ? t("Fully SMART — well done.", "Sepenuhnya SMART — bagus sekali.", "Volledig SMART — goed gedaan.")
-                : metCount >= 3
-                ? t("Strong foundation — a few areas to sharpen.", "Fondasi yang kuat — beberapa area perlu diasah.", "Sterke basis — enkele gebieden om aan te scherpen.")
-                : t("Good start — several areas need attention.", "Awal yang baik — beberapa area perlu perhatian.", "Goed begin — enkele gebieden vereisen aandacht.")}
-            </p>
-          </div>
-
-          {/* Letter results */}
-          <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 28, flexWrap: "wrap" }}>
-            {results.map(r => (
-              <div key={r.letter.letter} style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 4,
-                background: r.met ? r.letter.colorBg : "oklch(96% 0.003 25)",
-                border: `2px solid ${r.met ? r.letter.color : "oklch(80% 0.06 25)"}`,
-                borderRadius: 10,
-                padding: "16px 20px",
-                minWidth: 80,
-              }}>
-                <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: r.met ? r.letter.color : "oklch(60% 0.08 25)", lineHeight: 1 }}>{r.letter.letter}</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: r.met ? r.letter.color : "oklch(50% 0.08 25)", letterSpacing: "0.04em" }}>{t(r.letter.wordEn, r.letter.wordId, r.letter.wordNl)}</span>
-                <span style={{ fontSize: 16 }}>{r.met ? "?" : "?"}</span>
+          {/* Three coaching actions */}
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.06 260)", marginBottom: 12 }}>
+            {t("One more question?", "Satu pertanyaan lagi?", "Nog een vraag?")}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+            {coachingActions.map(action => (
+              <div
+                key={action.key}
+                style={{
+                  background: coachingResult[action.key] ? action.colorBg : "oklch(98% 0.003 260)",
+                  borderRadius: 10,
+                  padding: "16px 20px",
+                  border: `1px solid ${coachingResult[action.key] ? action.colorBorder : "oklch(90% 0.005 260)"}`,
+                  transition: "background 0.2s, border-color 0.2s",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                  <button
+                    onClick={() => handleCoachingAction(action.key)}
+                    disabled={!!coachingLoading[action.key]}
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 6,
+                      background: coachingLoading[action.key] ? "oklch(88% 0.008 260)" : action.color,
+                      color: coachingLoading[action.key] ? "oklch(55% 0.05 260)" : "white",
+                      padding: "7px 16px", borderRadius: 8, fontWeight: 700, fontSize: 13,
+                      border: "none", cursor: coachingLoading[action.key] ? "not-allowed" : "pointer",
+                      letterSpacing: "0.04em", flexShrink: 0,
+                    }}
+                  >
+                    <span style={{ fontSize: 13 }}>✦</span>
+                    {coachingLoading[action.key]
+                      ? t("Thinking—", "Memproses—", "Bezig—")
+                      : t(action.labelEn, action.labelId, action.labelNl)}
+                  </button>
+                  <span style={{ fontSize: 13, color: "oklch(48% 0.06 260)", lineHeight: 1.5 }}>
+                    {t(action.descEn, action.descId, action.descNl)}
+                  </span>
+                </div>
+                {coachingResult[action.key] && (
+                  <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${action.colorBorder}` }}>
+                    <p style={{ fontSize: 14, color: "oklch(22% 0.10 260)", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>
+                      &ldquo;{coachingResult[action.key]}&rdquo;
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          {/* Corrective actions for not-met */}
-          {notMet.length > 0 && (
-            <div style={{ marginBottom: 24 }}>
-              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "oklch(38% 0.06 260)", marginBottom: 12 }}>
-                {t("What to do next", "Apa yang harus dilakukan selanjutnya", "Wat nu te doen")}
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {notMet.map(r => (
-                  <div key={r.letter.letter} style={{ background: "white", borderRadius: 8, padding: "16px 20px", boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)", display: "flex", gap: 14, alignItems: "flex-start" }}>
-                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: r.letter.color, lineHeight: 1, flexShrink: 0 }}>{r.letter.letter}</span>
-                    <div>
-                      <div style={{ display: "inline-block", background: r.letter.actionColor, color: "white", padding: "3px 10px", borderRadius: 4, fontWeight: 700, fontSize: 11, letterSpacing: "0.06em", marginBottom: 6 }}>{t(r.letter.actionEn, r.letter.actionId, r.letter.actionNl)}</div>
-                      <p style={{ fontSize: 13, color: "oklch(35% 0.06 260)", margin: 0, lineHeight: 1.6 }}>{t(r.letter.actionDescEn, r.letter.actionDescId, r.letter.actionDescNl)}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Final goal edit */}
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.06 260)", marginBottom: 10 }}>
+            {t("Refine your goal (optional)", "Sempurnakan tujuan Anda (opsional)", "Verfijn je doel (optioneel)")}
+          </p>
+          <textarea
+            value={goalText}
+            onChange={e => setGoalText(e.target.value)}
+            rows={3}
+            style={{ width: "100%", boxSizing: "border-box", padding: "12px 14px", borderRadius: 10, border: "1.5px solid oklch(85% 0.008 260)", fontSize: 14, color: "oklch(22% 0.10 260)", lineHeight: 1.65, fontFamily: "inherit", resize: "vertical", marginBottom: 24, background: "white" }}
+          />
 
           {/* Save / retake */}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -748,7 +804,10 @@ export default function SmartGoalsClient({
                 {savingWorksheet ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="oklch(46% 0.16 145)"/><path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+              </span>
             )}
             <button
               onClick={handleRetake}
@@ -987,7 +1046,7 @@ export default function SmartGoalsClient({
               </button>
             </div>
           ) : (
-            <div style={{ background: "white", borderRadius: 12, boxShadow: "0 2px 16px oklch(20% 0.06 260 / 0.10)", overflow: "hidden" }}>
+            <div ref={worksheetCardRef} style={{ background: "white", borderRadius: 12, boxShadow: "0 2px 16px oklch(20% 0.06 260 / 0.10)", overflow: "hidden" }}>
               {/* Progress bar */}
               <div style={{ background: "oklch(92% 0.008 260)", height: 4 }}>
                 <div style={{ height: "100%", width: `${progressPct}%`, background: "oklch(42% 0.14 260)", transition: "width 0.3s ease" }} />
