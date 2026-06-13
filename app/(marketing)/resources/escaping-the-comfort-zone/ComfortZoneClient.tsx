@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import { encourageComfortZone } from "./cz-actions";
 import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id";
@@ -224,6 +225,18 @@ export default function ComfortZoneClient({
 
   // Reflection question accordion state
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
+
+  // Reflection question answers (controlled)
+  const [questionAnswers, setQuestionAnswers] = useState<Record<string, string>>({});
+
+  // AI encouragement state
+  const [encourageState, setEncourageState] = useState<{ loading: boolean; text: string; error: string | null }>({ loading: false, text: "", error: null });
+
+  async function handleEncourage() {
+    setEncourageState({ loading: true, text: "", error: null });
+    const result = await encourageComfortZone(locatorResult, questionAnswers, lang);
+    setEncourageState({ loading: false, text: result.text, error: result.error });
+  }
 
   function handleSave() {
     startTransition(async () => {
@@ -589,6 +602,8 @@ export default function ComfortZoneClient({
                       <div style={{ padding: "0 2rem 1.5rem 2rem" }}>
                         <textarea
                           placeholder={t("Type here...", "Tulis di sini...", lang)}
+                          value={questionAnswers[q.num] ?? ""}
+                          onChange={(e) => setQuestionAnswers(prev => ({ ...prev, [q.num]: e.target.value }))}
                           style={{ width: "100%", minHeight: "80px", padding: "0.75rem", border: "1px solid rgba(248,247,244,0.2)", borderRadius: "6px", background: "rgba(248,247,244,0.08)", color: "#F8F7F4", fontFamily: "Montserrat, sans-serif", fontSize: "0.9rem", resize: "vertical", marginTop: "0.75rem", boxSizing: "border-box" as const }}
                         />
                       </div>
@@ -598,11 +613,81 @@ export default function ComfortZoneClient({
               );
             })}
           </div>
+
+          {/* ── ENCOURAGE ME ── */}
+          <div style={{ marginTop: "2.5rem", paddingTop: "2rem", borderTop: "1px solid oklch(35% 0.08 260)" }}>
+            <p style={eyebrowStyle}>{t("AI ENCOURAGEMENT", "DORONGAN AI", lang)}</p>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "1.5rem", maxWidth: "52ch", lineHeight: 1.7 }}>
+              {t(
+                "Based on your zone locator result and the answers you've written above, get a personal word of encouragement to help you take your next step.",
+                "Berdasarkan hasil pelacak zona dan jawaban yang telah kamu tulis di atas, dapatkan kata-kata dorongan pribadi untuk membantumu mengambil langkah berikutnya.",
+                lang
+              )}
+            </p>
+
+            {!encourageState.text && !encourageState.loading && (
+              <button
+                onClick={handleEncourage}
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  padding: "0.875rem 2rem",
+                  minHeight: 48,
+                  background: ORANGE,
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: 6,
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+                {t("Encourage me", "Dorong saya", lang)}
+              </button>
+            )}
+
+            {encourageState.loading && (
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "oklch(65% 0.04 260)", fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={ORANGE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ animation: "spin 1s linear infinite" }}>
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                {t("Thinking...", "Sedang berpikir...", lang)}
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
+            )}
+
+            {encourageState.text && (
+              <div style={{ background: "oklch(28% 0.10 260)", border: `1px solid ${ORANGE}`, borderRadius: 8, padding: "1.75rem 2rem" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.9375rem", lineHeight: 1.85, color: "oklch(88% 0.01 80)", margin: "0 0 1.25rem", whiteSpace: "pre-wrap" as const }}>
+                  {encourageState.text}
+                </p>
+                <button
+                  onClick={handleEncourage}
+                  style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.08em", color: ORANGE, background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" as const }}
+                >
+                  {t("Try again →", "Coba lagi →", lang)}
+                </button>
+              </div>
+            )}
+
+            {encourageState.error && !encourageState.text && (
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(65% 0.04 260)", marginTop: "0.5rem" }}>
+                {t("Something went wrong. Please try again.", "Ada yang salah. Silakan coba lagi.", lang)}
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
       {/* ── FAITH ANCHOR ── */}
-      <section style={{ background: NAVY, borderTop: "1px solid oklch(35% 0.08 260)", ...sectionPadding }}>
+      <section style={{ background: "oklch(15% 0.07 260)", ...sectionPadding }}>
         <div style={containerStyle}>
           <p style={eyebrowStyle}>{t("FAITH ANCHOR", "JANGKAR IMAN", lang)}</p>
           <h2 style={h2Style(true)}>
