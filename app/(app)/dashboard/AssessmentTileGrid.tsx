@@ -2004,15 +2004,7 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={lang === "id" ? "Pembuat Tujuan SMART" : "SMART Goal Creator"}
           visual={smartGoals && smartGoals.length > 0 ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-              <img src="/images/smart-goal-creator.jpg" alt="" style={{ width: 88, height: 58, objectFit: "contain" }} />
-              <div style={{ textAlign: "center" }}>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.4rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
-                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(48% 0.008 260)", margin: "3px 0 0" }}>
-                  {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
-                </p>
-              </div>
-            </div>
+            <img src="/images/smart-goal-creator.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           ) : <EmptyTileVisual />}
           done={!!(smartGoals && smartGoals.length > 0)}
           href={smartGoals && smartGoals.length > 0 ? undefined : "/resources/smart-goals"}
