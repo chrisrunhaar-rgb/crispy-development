@@ -633,7 +633,7 @@ export default function SmartGoalsClient({
                   : t(`AI: improve the ${letter.wordEn} element`, `AI: perkuat elemen ${letter.wordId}`, `AI: versterk het ${letter.wordNl} element`)}
               </button>
               <span style={{ fontSize: 12, color: "oklch(55% 0.05 260)" }}>
-                {t("Ask AI to suggest a stronger version of your goal.", "Minta AI untuk menyarankan versi tujuan yang lebih kuat.", "Vraag AI om een sterkere versie van je doel voor te stellen.")}
+                {t(`Ask AI what to add to make this goal more ${letter.wordEn}.`, `Minta AI apa yang perlu ditambahkan agar tujuan ini lebih ${letter.wordId}.`, `Vraag AI wat toe te voegen om dit doel meer ${letter.wordNl} te maken.`)}
               </span>
             </div>
             {aiSuggestions[li] && (

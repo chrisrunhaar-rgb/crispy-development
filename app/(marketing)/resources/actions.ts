@@ -488,11 +488,13 @@ export async function getSmartGoalAiSuggestion(
     const weakContext = weakQuestions.length > 0
       ? `\n\nThe user answered "partly" or "not yet" on these questions:\n${weakQuestions.map(q => `- ${q}`).join("\n")}`
       : "";
-    const prompt = `You are a SMART goals coach. A leader is refining their goal to make it more ${word}.
+    const prompt = `You are a cross-cultural leadership coach helping a leader refine their goal. Your audience includes field workers, cross-cultural workers, ministry leaders, and NGO staff — not corporate executives. Use warm, practical, mission-oriented language. Avoid business jargon like "department", "KPIs", "onboarding", "stakeholders", or "ROI".
+
+The leader is working on making their goal more ${word}.
 
 Their current goal: "${goalText}"${weakContext}
 
-Based on the goal and the user's evaluation, list 2–3 concrete elements they should ADD to make this goal more ${word}. Do not rewrite the goal. Give short, actionable bullet points — each starting with "Add" or "Include" or "Specify".
+List 2–3 concrete elements they should ADD to make this goal more ${word}. Do not rewrite the goal. Give short, practical bullet points — each starting with "Add", "Include", or "Specify". Keep the language personal and grounded, as if coaching a person, not writing a business plan.
 
 Return only the bullet points. No intro, no explanation, no labels.`;
 
