@@ -18,28 +18,41 @@ const WHITE = '#FFFFFF';
 
 const clamp = {extrapolateLeft: 'clamp' as const, extrapolateRight: 'clamp' as const};
 
-// Timing constants (frames at 30fps, total 600 = 20s)
+// Total: 720 frames = 24 seconds at 30fps
+//
+// 0–60    Navy open + large logo
+// 40–100  Jungle fades in
+// 55–90   Opening logo fades out
+// 100–510 Jungle plays
+// 120–180 Module name fades in
+// 155–220 Accent line wipes in
+// 185–255 Hook line fades in
+// 390–460 Text fades out
+// 450–520 Jungle fades to navy
+// 520–720 End card (200 frames = 6.7s)
+
 const T = {
-  // Phase 1: Navy open with logo icon
-  LOGO_OPEN_IN:  [0, 20],
-  LOGO_OPEN_OUT: [50, 80],
-  // Phase 2: Jungle fades in
-  JUNGLE_IN:     [35, 85],
-  JUNGLE_OUT:    [445, 510],
-  // Phase 3: Text fly-by
-  TEXT_START:    175,
-  HOOK_START:    210,
-  ACCENT_START:  185,
-  TEXT_OUT:      [415, 455],
-  // Watermark during footage
-  MARK_IN:       [90, 115],
-  MARK_OUT:      [445, 475],
-  // Phase 4: End card
-  END_CARD_IN:   [510, 545],
-  END_LOGO:      [535, 560],
-  END_LINE1:     [550, 572],
-  END_LINE2:     [562, 582],
-  END_LINE3:     [574, 595],
+  LOGO_OPEN_IN:   [0, 25] as [number, number],
+  LOGO_OPEN_HOLD: [25, 55] as [number, number],
+  LOGO_OPEN_OUT:  [55, 90] as [number, number],
+
+  JUNGLE_IN:      [40, 100] as [number, number],
+  JUNGLE_OUT:     [450, 520] as [number, number],
+
+  TEXT_IN:        [120, 180] as [number, number],
+  ACCENT_IN:      [155, 210] as [number, number],
+  HOOK_IN:        [185, 245] as [number, number],
+  TEXT_OUT:       [390, 450] as [number, number],
+
+  MARK_IN:        [100, 130] as [number, number],
+  MARK_OUT:       [440, 470] as [number, number],
+
+  END_BG:         [520, 570] as [number, number],
+  END_LOGO:       [545, 585] as [number, number],
+  END_LINE1:      [570, 605] as [number, number],
+  END_DIV:        [590, 620] as [number, number],
+  END_LINE2:      [605, 635] as [number, number],
+  END_LINE3:      [625, 655] as [number, number],
 };
 
 export interface ModuleRevealReelProps {
@@ -56,65 +69,47 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
   musicFile,
 }) => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
 
-  // ── Phase 1: Navy intro — logo fades in then out as jungle takes over ──────
-  const logoOpenOpacity = Math.min(
-    interpolate(frame, T.LOGO_OPEN_IN, [0, 1], clamp),
-    interpolate(frame, T.LOGO_OPEN_OUT, [1, 0], clamp),
-  );
+  // ── Opening logo on navy ──────────────────────────────────────────────────
+  const logoOpenOpacity = (() => {
+    const inVal  = interpolate(frame, T.LOGO_OPEN_IN, [0, 1], clamp);
+    const outVal = interpolate(frame, T.LOGO_OPEN_OUT, [1, 0], clamp);
+    if (frame < T.LOGO_OPEN_HOLD[0]) return inVal;
+    if (frame < T.LOGO_OPEN_OUT[0]) return 1;
+    return outVal;
+  })();
 
-  // ── Phase 2: Jungle footage ───────────────────────────────────────────────
+  // ── Jungle footage ────────────────────────────────────────────────────────
   const jungleOpacity = Math.min(
     interpolate(frame, T.JUNGLE_IN, [0, 1], clamp),
     interpolate(frame, T.JUNGLE_OUT, [1, 0], clamp),
   );
 
-  // ── Phase 3: Text fly-by — text feels embedded in the jungle ─────────────
-  // The text "exists" deep in the scene and the camera flies toward it,
-  // then it settles at reading position (scale-down + blur clears + tilt resolves)
-  const textFlyIn = spring({
-    frame: Math.max(0, frame - T.TEXT_START),
-    fps,
-    config: {mass: 1.5, damping: 24, stiffness: 65},
-  });
-
-  const textScale    = interpolate(textFlyIn, [0, 1], [3.8, 1.0], clamp);
-  const textBlur     = interpolate(textFlyIn, [0, 0.35], [14, 0], clamp);
-  const textTiltX    = interpolate(textFlyIn, [0, 1], [18, 0], clamp);  // slight 3D tilt as depth resolves
-  const textDriftX   = interpolate(textFlyIn, [0, 1], [-60, 0], clamp); // slight lateral drift = fly-by feel
-  const textSpacing  = interpolate(textFlyIn, [0, 1], [0, 7], clamp);   // letter spacing expands as it settles
-
-  const textOpacity = Math.min(
-    interpolate(frame, [T.TEXT_START, T.TEXT_START + 18], [0, 1], clamp),
+  // ── Text — simple fade, no animation gimmicks ────────────────────────────
+  const textFadeBase = Math.min(
+    interpolate(frame, T.TEXT_IN, [0, 1], clamp),
     interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
   );
-
-  const accentScaleX = interpolate(
-    frame, [T.ACCENT_START + 12, T.ACCENT_START + 38], [0, 1], clamp,
-  );
-  const accentOpacity = Math.min(
-    interpolate(frame, [T.ACCENT_START + 12, T.ACCENT_START + 28], [0, 1], clamp),
+  const accentScaleX = Math.min(
+    interpolate(frame, T.ACCENT_IN, [0, 1], clamp),
     interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
   );
-
-  // Hook line enters slightly after module name, rises in from below
   const hookOpacity = Math.min(
-    interpolate(frame, [T.HOOK_START, T.HOOK_START + 22], [0, 1], clamp),
+    interpolate(frame, T.HOOK_IN, [0, 1], clamp),
     interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
   );
-  const hookY = interpolate(frame, [T.HOOK_START, T.HOOK_START + 28], [36, 0], clamp);
 
-  // ── Watermark during footage ───────────────────────────────────────────────
+  // ── Watermark logo during footage ─────────────────────────────────────────
   const markOpacity = Math.min(
-    interpolate(frame, T.MARK_IN, [0, 0.72], clamp),
-    interpolate(frame, T.MARK_OUT, [0.72, 0], clamp),
+    interpolate(frame, T.MARK_IN, [0, 0.80], clamp),
+    interpolate(frame, T.MARK_OUT, [0.80, 0], clamp),
   );
 
-  // ── Phase 4: End card ─────────────────────────────────────────────────────
-  const endCardOpacity  = interpolate(frame, T.END_CARD_IN, [0, 1], clamp);
+  // ── End card ──────────────────────────────────────────────────────────────
+  const endBgOpacity    = interpolate(frame, T.END_BG, [0, 1], clamp);
   const endLogoOpacity  = interpolate(frame, T.END_LOGO, [0, 1], clamp);
   const endLine1Opacity = interpolate(frame, T.END_LINE1, [0, 1], clamp);
+  const endDivOpacity   = interpolate(frame, T.END_DIV, [0, 1], clamp);
   const endLine2Opacity = interpolate(frame, T.END_LINE2, [0, 1], clamp);
   const endLine3Opacity = interpolate(frame, T.END_LINE3, [0, 1], clamp);
 
@@ -122,7 +117,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
     <AbsoluteFill style={{backgroundColor: NAVY}}>
       {musicFile && <Audio src={staticFile(musicFile)} />}
 
-      {/* ── Phase 1: Logo icon centered on navy ── */}
+      {/* ── Opening: large logo centred on navy ── */}
       <AbsoluteFill style={{zIndex: 10, opacity: logoOpenOpacity, pointerEvents: 'none'}}>
         <div style={{
           position: 'absolute', inset: 0,
@@ -130,178 +125,190 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         }}>
           <Img
             src={staticFile('logo-icon.png')}
-            style={{width: 120, height: 120, objectFit: 'contain'}}
+            style={{width: 260, height: 260, objectFit: 'contain'}}
           />
         </div>
       </AbsoluteFill>
 
-      {/* ── Phase 2-3: Jungle footage ── */}
+      {/* ── Jungle footage ── */}
       <AbsoluteFill style={{zIndex: 1, opacity: jungleOpacity}}>
         <OffthreadVideo
           src={staticFile(videoFile)}
           style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center'}}
-          playbackRate={0.55}
+          playbackRate={0.35}
           loop
         />
-        {/* Vignette — grounds the text visually in the scene */}
+        {/* Vignette */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.0) 25%, rgba(0,0,0,0.50) 100%)',
+          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.55) 100%)',
         }} />
-        {/* Subtle navy mid-band — helps text read against bright jungle */}
+        {/* Centre scrim — helps text read */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(180deg, rgba(27,58,107,0) 25%, rgba(27,58,107,0.30) 50%, rgba(27,58,107,0) 75%)',
+          background: 'linear-gradient(180deg, rgba(27,58,107,0) 20%, rgba(27,58,107,0.35) 50%, rgba(27,58,107,0) 80%)',
         }} />
       </AbsoluteFill>
 
-      {/* ── Phase 3: Text embedded in scene (fly-by depth effect) ── */}
+      {/* ── Text layer (simple fade, no fly-by) ── */}
       <AbsoluteFill style={{zIndex: 20, pointerEvents: 'none'}}>
 
-        {/* Module name — scales down from scene depth as camera "arrives" */}
+        {/* Module name */}
         <div style={{
           position: 'absolute',
-          top: '41%',
+          top: '40%',
           left: 0, right: 0,
           textAlign: 'center',
-          opacity: textOpacity,
-          filter: `blur(${textBlur}px)`,
-          transform: `perspective(900px) rotateX(${textTiltX}deg) scale(${textScale}) translateX(${textDriftX}px)`,
-          transformOrigin: 'center center',
+          opacity: textFadeBase,
         }}>
           <div style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: 52,
+            fontSize: 58,
             fontWeight: 800,
             color: WHITE,
-            letterSpacing: textSpacing,
+            letterSpacing: 8,
             textTransform: 'uppercase',
             lineHeight: 1,
-            // Deep shadow sells the "exists in the jungle" illusion
-            textShadow: '0 0 60px rgba(27,58,107,0.9), 0 0 20px rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.6)',
+            textShadow: '0 0 40px rgba(27,58,107,0.85), 0 4px 16px rgba(0,0,0,0.65)',
           }}>
             {moduleName}
           </div>
         </div>
 
-        {/* Orange accent line — wipes in after module name resolves */}
+        {/* Orange accent line */}
         <div style={{
           position: 'absolute',
-          top: 'calc(41% + 74px)',
+          top: 'calc(40% + 76px)',
           left: '50%',
           transform: `translateX(-50%) scaleX(${accentScaleX})`,
           transformOrigin: 'center',
-          width: 200,
+          width: 220,
           height: 3,
           backgroundColor: ORANGE,
           borderRadius: 2,
-          opacity: accentOpacity,
+          opacity: accentScaleX,
         }} />
 
-        {/* Hook line — rises up from below */}
+        {/* Hook line */}
         <div style={{
           position: 'absolute',
-          top: 'calc(41% + 100px)',
-          left: 56, right: 56,
+          top: 'calc(40% + 106px)',
+          left: 64, right: 64,
           textAlign: 'center',
           opacity: hookOpacity,
-          transform: `translateY(${hookY}px)`,
         }}>
           <div style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 36,
+            fontSize: 38,
             fontWeight: 500,
             fontStyle: 'italic',
             color: OFF_WHITE,
-            lineHeight: 1.35,
-            textShadow: '0 2px 20px rgba(0,0,0,0.75)',
+            lineHeight: 1.4,
+            textShadow: '0 2px 18px rgba(0,0,0,0.75)',
           }}>
             {hookLine}
           </div>
         </div>
 
-        {/* Small logo watermark — top right during footage */}
+        {/* Watermark — top right during footage */}
         <Img
           src={staticFile('logo-icon-dark-badge.png')}
           style={{
             position: 'absolute',
-            top: 52, right: 52,
-            height: 56, width: 'auto',
+            top: 56, right: 56,
+            height: 80, width: 'auto',
             opacity: markOpacity,
           }}
         />
       </AbsoluteFill>
 
-      {/* ── Phase 4: End card ── */}
+      {/* ── End card ── */}
       <AbsoluteFill style={{
         zIndex: 30,
         backgroundColor: NAVY,
-        opacity: endCardOpacity,
+        opacity: endBgOpacity,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 0,
       }}>
-        {/* Orange top accent bar */}
+        {/* Orange top bar */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0,
-          height: 5, backgroundColor: ORANGE,
+          height: 6, backgroundColor: ORANGE,
           opacity: endLogoOpacity,
         }} />
 
+        {/* Logo name */}
         <Img
           src={staticFile('logo-name-transp.png')}
           style={{
-            height: 68, width: 'auto',
+            height: 120, width: 'auto',
             opacity: endLogoOpacity,
-            marginBottom: 36,
+            marginBottom: 52,
           }}
         />
 
+        {/* "Now available" label */}
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 28,
-          fontWeight: 700,
-          color: WHITE,
-          letterSpacing: 0.5,
-          opacity: endLine1Opacity,
+          fontSize: 18,
+          fontWeight: 600,
+          color: OFF_WHITE,
+          letterSpacing: 4,
+          textTransform: 'uppercase',
+          opacity: endLine1Opacity * 0.70,
+          marginBottom: 14,
           textAlign: 'center',
         }}>
           Now available
-          <span style={{color: ORANGE}}> · </span>
+        </div>
+
+        {/* URL — the big, unmissable line */}
+        <div style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: 72,
+          fontWeight: 700,
+          color: ORANGE,
+          letterSpacing: 1,
+          opacity: endLine1Opacity,
+          textAlign: 'center',
+          lineHeight: 1,
+          marginBottom: 40,
+        }}>
           crispyleaders.com
         </div>
 
+        {/* Divider */}
         <div style={{
-          width: 180, height: 2, backgroundColor: ORANGE,
-          margin: '22px auto',
-          opacity: endLine2Opacity,
+          width: 200, height: 2,
+          backgroundColor: OFF_WHITE,
+          opacity: endDivOpacity * 0.35,
+          marginBottom: 36,
         }} />
 
+        {/* Tagline lines */}
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 13,
-          fontWeight: 500,
+          fontSize: 18,
+          fontWeight: 400,
           color: OFF_WHITE,
-          opacity: endLine2Opacity * 0.72,
+          opacity: endLine2Opacity * 0.70,
           textAlign: 'center',
-          letterSpacing: 2.5,
-          textTransform: 'uppercase',
-          marginBottom: 10,
+          letterSpacing: 1.5,
+          marginBottom: 12,
         }}>
-          A Christian leadership development platform
+          A Christian leadership development platform.
         </div>
 
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 13,
+          fontSize: 18,
           fontWeight: 600,
           color: ORANGE,
           opacity: endLine3Opacity,
           textAlign: 'center',
-          letterSpacing: 2.5,
-          textTransform: 'uppercase',
+          letterSpacing: 1.5,
         }}>
           For those who cross cultures.
         </div>
