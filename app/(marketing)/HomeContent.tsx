@@ -200,7 +200,7 @@ export default function HomeContent() {
       </section>
 
       {/* ── CHALLENGE FEATURE SECTION ── */}
-      <section style={{ background: "oklch(24% 0.085 262)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "oklch(95% 0.012 260)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden" }}>
         {/* Iceberg — atmospheric right-side element */}
         <div
           aria-hidden="true"
@@ -218,18 +218,18 @@ export default function HomeContent() {
             style={{
               width: "100%", height: "100%",
               objectFit: "cover", objectPosition: "center 40%",
-              display: "block", opacity: 0.38,
+              display: "block", opacity: 0.28,
             }}
           />
           {/* Fade left edge of iceberg into the section bg */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(to right, oklch(24% 0.085 262) 0%, oklch(24% 0.085 262 / 0.6) 35%, transparent 70%)",
+            background: "linear-gradient(to right, oklch(95% 0.012 260) 0%, oklch(95% 0.012 260 / 0.6) 35%, transparent 70%)",
           }} />
         </div>
 
         {/* Top accent rule */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "oklch(65% 0.15 45 / 0.5)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "oklch(65% 0.15 45 / 0.6)" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>
           <div style={{ maxWidth: "620px" }}>
@@ -239,7 +239,7 @@ export default function HomeContent() {
                 fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 800,
                 letterSpacing: "0.2em", textTransform: "uppercase",
                 color: "oklch(65% 0.15 45)",
-                border: "1px solid oklch(65% 0.15 45 / 0.4)",
+                border: "1px solid oklch(65% 0.15 45 / 0.6)",
                 padding: "0.28em 0.75em", borderRadius: "3px",
               }}>
                 {lang === "id" ? "Gratis" : "Free"}
@@ -247,7 +247,7 @@ export default function HomeContent() {
               <span style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700,
                 letterSpacing: "0.16em", textTransform: "uppercase",
-                color: "oklch(55% 0.04 260)",
+                color: "oklch(42% 0.07 260)",
               }}>
                 {lang === "id" ? "Tantangan · 60 hari" : "Challenge · 60 days"}
               </span>
@@ -257,7 +257,7 @@ export default function HomeContent() {
             <h2 style={{
               fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600,
               fontSize: "clamp(2rem, 4vw, 3.25rem)", lineHeight: 1.05,
-              color: "oklch(97% 0.005 80)", margin: "0 0 1rem",
+              color: "oklch(22% 0.10 260)", margin: "0 0 1rem",
             }}>
               {lang === "id"
                 ? "Kepemimpinan dimulai\ndari dalam."
@@ -267,7 +267,7 @@ export default function HomeContent() {
             {/* Body */}
             <p style={{
               fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75,
-              color: "oklch(65% 0.035 260)", margin: "0 0 2rem", maxWidth: "46ch",
+              color: "oklch(38% 0.05 260)", margin: "0 0 2rem", maxWidth: "46ch",
             }}>
               {lang === "id"
                 ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari berdasarkan Deep Influence karya T.J. Addington. Untuk pemimpin dan tim yang ingin bertumbuh dari dalam ke luar."

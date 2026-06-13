@@ -251,15 +251,11 @@ export default function OvercomingProcrastinationClient({
       const rawKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
       const padding = "=".repeat((4 - (rawKey.length % 4)) % 4);
       const base64 = (rawKey + padding).replace(/-/g, "+").replace(/_/g, "/");
-      const keyBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+      const rawData = atob(base64);
+      const keyBytes = new Uint8Array(rawData.length);
+      for (let i = 0; i < rawData.length; i++) keyBytes[i] = rawData.charCodeAt(i);
 
-      let sub = await reg.pushManager.getSubscription();
-      try {
-        if (sub) await sub.unsubscribe();
-        sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes });
-      } catch {
-        if (!sub) throw new Error("Subscription failed");
-      }
+      const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes.buffer });
 
       const subJson = sub.toJSON() as { endpoint: string; keys?: { p256dh: string; auth: string } };
       const remindAt = new Date(`${commitDate}T${commitTime}`).toISOString();
