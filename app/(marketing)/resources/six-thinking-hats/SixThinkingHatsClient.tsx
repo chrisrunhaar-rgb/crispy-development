@@ -520,68 +520,54 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
         </div>
       </section>
 
-      {/* TEAM PRINCIPLES */}
-      <section style={{ background: "oklch(95% 0.008 80)", padding: "64px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
-            {tr("Using the Hats Well", "Menggunakan Topi dengan Baik", "De Hoeden Goed Gebruiken")}
-          </h2>
-          <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 36, lineHeight: 1.65 }}>
-            {tr("Five principles that make the difference between a framework that helps and one that becomes another meeting ritual.", "Lima prinsip yang membedakan kerangka yang benar-benar membantu dari sekadar ritual rapat.", "Vijf principes die het verschil maken tussen een kader dat helpt en een dat een ritueel wordt.")}
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
-            {[
-              {
-                en: { title: "Build a shared vocabulary", body: "When your team learns the hats together, 'I'm putting on my Black Hat' becomes a signal everyone reads immediately. The language does the work — it separates the concern from the person raising it, which makes honest thinking possible." },
-                id: { title: "Bangun kosakata bersama", body: "Ketika tim Anda mempelajari topi bersama, 'Saya memakai Topi Hitam' menjadi sinyal yang langsung dipahami semua orang. Bahasa inilah yang bekerja — ia memisahkan kekhawatiran dari orang yang mengungkapkannya." },
-                nl: { title: "Bouw een gedeelde woordenschat", body: "Wanneer je team de hoeden samen leert, wordt 'ik zet mijn Zwarte Hoed op' een signaal dat iedereen direct begrijpt. De taal doet het werk — het scheidt de zorg van de persoon die het uitbrengt." },
-              },
-              {
-                en: { title: "Hats are permission, not restriction", body: "Each hat gives you permission to think fully in one mode — to go further than you normally would. The Black Hat is not just 'raise a concern'; it's an invitation to be genuinely thorough about risk. Use that permission." },
-                id: { title: "Topi adalah izin, bukan pembatasan", body: "Setiap topi memberi Anda izin untuk berpikir sepenuhnya dalam satu mode — untuk pergi lebih jauh dari yang biasanya. Topi Hitam bukan sekadar 'angkat kekhawatiran'; itu undangan untuk benar-benar menyeluruh tentang risiko." },
-                nl: { title: "Hoeden zijn toestemming, geen beperking", body: "Elke hoed geeft je toestemming om volledig in één modus te denken — verder te gaan dan je normaal zou doen. De Zwarte Hoed is niet slechts 'een zorg uiten'; het is een uitnodiging om grondig te zijn over risico." },
-              },
-              {
-                en: { title: "Switching hats is part of the process", body: "You are not committed to one hat for the whole session. If a new piece of information surfaces during Yellow Hat thinking, it's fine to name it and move. The facilitator guides the flow — but flexibility is a feature, not a failure." },
-                id: { title: "Berganti topi adalah bagian dari prosesnya", body: "Anda tidak terikat pada satu topi untuk seluruh sesi. Jika informasi baru muncul saat berpikir dengan Topi Kuning, tidak apa-apa untuk menyebutnya dan beralih. Fasilitator memandu alur — tetapi fleksibilitas adalah fitur, bukan kegagalan." },
-                nl: { title: "Van hoed wisselen hoort erbij", body: "Je bent niet verplicht om de hele sessie één hoed te dragen. Als nieuwe informatie opduikt tijdens Gele Hoed-denken, is het prima om het te benoemen en te switchen. De facilitator stuurt de flow — maar flexibiliteit is een kenmerk, geen fout." },
-              },
-              {
-                en: { title: "Don't live in one hat", body: "Good decisions use all six. A team that only ever wears the Black Hat becomes paralysed. One that only wears the Yellow Hat becomes reckless. The framework is most powerful when you move through all the modes — especially the ones that feel uncomfortable." },
-                id: { title: "Jangan hanya tinggal di satu topi", body: "Keputusan yang baik menggunakan keenam topi. Tim yang selalu memakai Topi Hitam menjadi lumpuh. Yang hanya memakai Topi Kuning menjadi ceroboh. Kerangka ini paling kuat ketika Anda bergerak melalui semua mode — terutama yang terasa tidak nyaman." },
-                nl: { title: "Leef niet in één hoed", body: "Goede beslissingen gebruiken alle zes. Een team dat altijd de Zwarte Hoed draagt, raakt verlamd. Eén dat alleen de Gele Hoed draagt, wordt roekeloos. Het kader is het krachtigst wanneer je door alle modi beweegt." },
-              },
-              {
-                en: { title: "Everyone has a default hat", body: "Most people have one or two hats they reach for instinctively — their natural thinking style. The detail-focused person defaults to White. The cautious one defaults to Black. The visionary to Yellow or Green. Naming this in your team builds self-awareness and mutual understanding. It also helps the facilitator know whose voice to draw out." },
-                id: { title: "Setiap orang memiliki topi default", body: "Kebanyakan orang memiliki satu atau dua topi yang mereka raih secara naluriah — gaya berpikir alami mereka. Orang yang fokus pada detail default ke Putih. Yang hati-hati ke Hitam. Yang visioner ke Kuning atau Hijau. Menamai ini dalam tim Anda membangun kesadaran diri dan saling pengertian." },
-                nl: { title: "Iedereen heeft een standaardhoed", body: "De meeste mensen grijpen instinctief naar één of twee hoeden — hun natuurlijke denkstijl. De detailgerichte persoon gaat standaard naar Wit. De voorzichtige naar Zwart. De visionair naar Geel of Groen. Dit benoemen in je team bouwt zelfbewustzijn en wederzijds begrip." },
-              },
-            ].map((item) => {
-              const d = lang === "id" ? item.id : lang === "nl" ? item.nl : item.en;
-              return (
-                <div key={item.en.title} style={{ background: "white", borderRadius: 10, padding: "22px 24px", boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)", borderTop: "3px solid oklch(65% 0.15 45)" }}>
-                  <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 10px" }}>{d.title}</h3>
-                  <p style={{ fontSize: 13, lineHeight: 1.7, color: "oklch(40% 0.05 260)", margin: 0 }}>{d.body}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 16px" }}>
-            {tr("Try It in Your Next Meeting", "Coba di Rapat Berikutnya", "Probeer het in je Volgende Vergadering")}
+            {tr("Try the Six Hats in Your Next Team Meeting", "Coba Enam Topi di Rapat Tim Berikutnya", "Probeer de Zes Hoeden in Je Volgende Teamvergadering")}
           </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.65, color: "oklch(68% 0.04 260)", maxWidth: 480, margin: "0 auto" }}>
+          <p style={{ fontSize: 16, lineHeight: 1.65, color: "oklch(68% 0.04 260)", maxWidth: 500, margin: "0 auto 48px" }}>
             {tr(
-              "Pick one hat. Give your team five minutes with it. The shift in how you think together will be immediate.",
-              "Pilih satu topi. Beri tim Anda lima menit bersamanya. Perubahan cara berpikir bersama akan terasa langsung.",
-              "Kies één hoed. Geef je team er vijf minuten mee. De verschuiving in hoe je samen denkt, is onmiddellijk."
+              "You don't need a full workshop. Start with one hat, five minutes, and a real question your team is sitting with.",
+              "Anda tidak perlu workshop lengkap. Mulai dengan satu topi, lima menit, dan satu pertanyaan nyata yang dihadapi tim.",
+              "Je hebt geen volledige workshop nodig. Begin met één hoed, vijf minuten en een echte vraag die je team bezighoudt."
             )}
           </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14, textAlign: "left", maxWidth: 520, margin: "0 auto" }}>
+            {[
+              {
+                en: { n: "01", title: "Name the hat out loud", body: "\"I'm putting on my Black Hat.\" That phrase does real work — it separates the concern from the person raising it, which makes honest thinking safe." },
+                id: { n: "01", title: "Sebutkan topi dengan lantang", body: "\"Saya memakai Topi Hitam.\" Kalimat itu bekerja nyata — ia memisahkan kekhawatiran dari orang yang menyampaikannya, sehingga berpikir jujur menjadi aman." },
+                nl: { n: "01", title: "Noem de hoed hardop", body: "\"Ik zet mijn Zwarte Hoed op.\" Die zin doet echt werk — het scheidt de zorg van de persoon die het uitbrengt, wat eerlijk denken veilig maakt." },
+              },
+              {
+                en: { n: "02", title: "Switch hats when you need to", body: "You're not locked in. If new information surfaces mid-discussion, name it and move. Flexibility is part of the design." },
+                id: { n: "02", title: "Ganti topi saat dibutuhkan", body: "Anda tidak terkunci. Jika informasi baru muncul di tengah diskusi, sebutkan dan lanjutkan. Fleksibilitas adalah bagian dari desainnya." },
+                nl: { n: "02", title: "Wissel van hoed wanneer nodig", body: "Je zit niet vast. Als er nieuwe informatie opduikt, benoem het en ga verder. Flexibiliteit is onderdeel van het ontwerp." },
+              },
+              {
+                en: { n: "03", title: "Use all six — not just your favourites", body: "Teams default to one or two hats and skip the rest. The framework only works when you move through modes that feel uncomfortable too. The Green Hat is exactly as important as the Black." },
+                id: { n: "03", title: "Gunakan semua enam — bukan hanya favorit", body: "Tim cenderung hanya menggunakan satu atau dua topi. Kerangka ini hanya bekerja ketika Anda melewati mode yang terasa tidak nyaman juga. Topi Hijau sama pentingnya dengan Topi Hitam." },
+                nl: { n: "03", title: "Gebruik alle zes — niet alleen je favorieten", body: "Teams gaan standaard naar één of twee hoeden en slaan de rest over. Het kader werkt alleen als je ook door ongemakkelijke modi beweegt. De Groene Hoed is even belangrijk als de Zwarte." },
+              },
+              {
+                en: { n: "04", title: "Notice your team's default hat", body: "Most people gravitate to one hat naturally — the cautious thinker goes to Black, the visionary to Green or Yellow. Once your team names this, meetings become more self-aware. The facilitator knows whose voice to draw out." },
+                id: { n: "04", title: "Perhatikan topi default tim Anda", body: "Kebanyakan orang secara alami condong ke satu topi — pemikir hati-hati ke Hitam, visioner ke Hijau atau Kuning. Begitu tim Anda menamai ini, rapat menjadi lebih sadar diri. Fasilitator tahu suara siapa yang perlu dimunculkan." },
+                nl: { n: "04", title: "Merk de standaardhoed van je team op", body: "De meeste mensen graviteren van nature naar één hoed. Zodra je team dit benoemt, worden vergaderingen zelfbewuster. De facilitator weet wiens stem naar voren gehaald moet worden." },
+              },
+            ].map((tip) => {
+              const d = lang === "id" ? tip.id : lang === "nl" ? tip.nl : tip.en;
+              return (
+                <div key={tip.en.n} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "oklch(28% 0.09 260)", borderRadius: 10, padding: "18px 20px" }}>
+                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{d.n}</span>
+                  <div>
+                    <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(92% 0.005 80)", margin: "0 0 5px" }}>{d.title}</p>
+                    <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(65% 0.04 260)", margin: 0 }}>{d.body}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </div>
