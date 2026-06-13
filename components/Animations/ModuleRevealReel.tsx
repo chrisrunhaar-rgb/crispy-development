@@ -115,7 +115,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
 
   return (
     <AbsoluteFill style={{backgroundColor: NAVY}}>
-      {musicFile && <Audio src={staticFile(musicFile)} />}
+      {musicFile && <Audio src={staticFile(musicFile)} startFrom={2100} />}
 
       {/* ── Opening: large logo centred on navy ── */}
       <AbsoluteFill style={{zIndex: 10, opacity: logoOpenOpacity, pointerEvents: 'none'}}>
