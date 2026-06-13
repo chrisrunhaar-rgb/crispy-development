@@ -475,3 +475,28 @@ export async function saveSmartGoalToTable(data: {
   }
   return { error: error?.message ?? null, id: row?.id };
 }
+
+export async function getSmartGoalAiSuggestion(
+  goalText: string,
+  letter: string,
+  word: string
+): Promise<{ suggestion: string | null; error: string | null }> {
+  try {
+    const { GoogleGenAI } = await import("@google/genai");
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+    const prompt = `You are a SMART goals coach. A leader is refining their goal to make it more ${word}.
+
+Their current goal: "${goalText}"
+
+The ${letter} in SMART stands for ${word}. Rewrite this goal so it is stronger on the ${word} dimension. Keep the same intent. Keep it to one sentence.
+
+Return ONLY the improved goal text — no explanation, no labels, no quotes.`;
+
+    const result = await ai.models.generateContent({ model: "gemini-2.0-flash", contents: prompt });
+    const text = result.text?.trim() ?? "";
+    if (!text) return { suggestion: null, error: "No suggestion returned." };
+    return { suggestion: text, error: null };
+  } catch {
+    return { suggestion: null, error: "Could not generate suggestion." };
+  }
+}
