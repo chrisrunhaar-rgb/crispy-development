@@ -2004,18 +2004,41 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={lang === "id" ? "Pembuat Tujuan SMART" : "SMART Goal Creator"}
           visual={smartGoals && smartGoals.length > 0 ? (
-            <div style={{ width: 180, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-              <div style={{ position: "relative", width: 56, height: 56 }}>
-                <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
-                  <circle cx="28" cy="28" r="26" stroke={orange} strokeWidth="2.5" />
-                  <circle cx="28" cy="28" r="18" stroke={orange} strokeWidth="2" strokeOpacity="0.5" />
-                  <circle cx="28" cy="28" r="9" fill={orange} />
-                </svg>
+            <div style={{ width: 180, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: "1rem" }}>
+              {(() => {
+                const segs = 20;
+                const step = (2 * Math.PI) / segs;
+                const wedge = (i: number, r1: number, r2: number) => {
+                  const a1 = i * step - Math.PI / 2;
+                  const a2 = a1 + step;
+                  const x1 = (50 + r2 * Math.cos(a1)).toFixed(2), y1 = (50 + r2 * Math.sin(a1)).toFixed(2);
+                  const x2 = (50 + r2 * Math.cos(a2)).toFixed(2), y2 = (50 + r2 * Math.sin(a2)).toFixed(2);
+                  const ix1 = (50 + r1 * Math.cos(a1)).toFixed(2), iy1 = (50 + r1 * Math.sin(a1)).toFixed(2);
+                  const ix2 = (50 + r1 * Math.cos(a2)).toFixed(2), iy2 = (50 + r1 * Math.sin(a2)).toFixed(2);
+                  return r1 === 0
+                    ? `M50,50 L${x1},${y1} A${r2},${r2} 0 0,1 ${x2},${y2} Z`
+                    : `M${ix1},${iy1} A${r1},${r1} 0 0,1 ${ix2},${iy2} L${x2},${y2} A${r2},${r2} 0 0,0 ${x1},${y1} Z`;
+                };
+                const arr = Array.from({ length: segs }, (_, i) => i);
+                return (
+                  <svg viewBox="0 0 100 100" width="84" height="84" style={{ flexShrink: 0 }}>
+                    <circle cx="50" cy="50" r="49" fill="#1a1a1a"/>
+                    {arr.map(i => <path key={`s${i}`} d={wedge(i, 27, 43)} fill={i % 2 === 0 ? "#f0e4c0" : "#1c1c1c"}/>)}
+                    {arr.map(i => <path key={`d${i}`} d={wedge(i, 39, 43)} fill={i % 2 === 0 ? "#cc2200" : "#1a7a3e"}/>)}
+                    {arr.map(i => <path key={`n${i}`} d={wedge(i, 15, 27)} fill={i % 2 === 0 ? "#f0e4c0" : "#1c1c1c"}/>)}
+                    {arr.map(i => <path key={`t${i}`} d={wedge(i, 23, 27)} fill={i % 2 === 0 ? "#cc2200" : "#1a7a3e"}/>)}
+                    <circle cx="50" cy="50" r="15" fill="#1a1a1a"/>
+                    <circle cx="50" cy="50" r="11" fill="#1a7a3e"/>
+                    <circle cx="50" cy="50" r="5.5" fill="#cc2200"/>
+                  </svg>
+                );
+              })()}
+              <div>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.6rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", color: "oklch(48% 0.008 260)", margin: "4px 0 0" }}>
+                  {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
+                </p>
               </div>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
-              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(48% 0.008 260)", margin: 0 }}>
-                {lang === "id" ? (smartGoals.length === 1 ? "tujuan" : "tujuan") : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
-              </p>
             </div>
           ) : <EmptyTileVisual />}
           done={!!(smartGoals && smartGoals.length > 0)}
