@@ -4,6 +4,7 @@ import {LogoReveal} from '../components/Animations/LogoReveal';
 import {ILChallengePromo} from '../components/Animations/ILChallengePromo';
 import {CrossCulturalStatement} from '../components/Animations/CrossCulturalStatement';
 import {Day6HumilityPromo} from '../components/Animations/Day6HumilityPromo';
+import {ILChallengePromo60} from '../components/Animations/ILChallengePromo60';
 
 export const RemotionRoot = () => {
   return (
@@ -44,6 +45,14 @@ export const RemotionRoot = () => {
         id="Day6HumilityPromo"
         component={Day6HumilityPromo}
         durationInFrames={695}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="ILChallengePromo60"
+        component={ILChallengePromo60}
+        durationInFrames={1800}
         fps={30}
         width={1280}
         height={720}

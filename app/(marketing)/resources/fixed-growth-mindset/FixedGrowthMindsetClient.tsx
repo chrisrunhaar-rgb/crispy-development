@@ -237,6 +237,7 @@ export default function FixedGrowthMindsetClient({
   const [growthScore, setGrowthScore] = useState<number | null>(savedScore ?? null);
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
   const [isSavingScore, startSaveScore] = useTransition();
+  const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
   const t = (en: string, id: string) => lang === "id" ? id : en;
 
@@ -762,13 +763,19 @@ export default function FixedGrowthMindsetClient({
           <h2 style={{ ...sectionH2Style }}>
             {t("How to Shift Your Mindset", "Cara Mengubah Mindset Anda")}
           </h2>
-          <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.65 }}>
+          <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 16, lineHeight: 1.75 }}>
             {t(
               "Mindset change is not a one-time decision — it is a practice. Use this three-step process for any dimension where you want to grow.",
               "Perubahan mindset bukan keputusan sekali jalan — ini adalah latihan. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
             )}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+          <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.75 }}>
+            {t(
+              "Most mindset patterns formed in childhood or early career — they were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to go deeper.",
+              "Sebagian besar pola mindset terbentuk di masa kecil atau awal karir — mereka adalah respons adaptif terhadap situasi nyata. Mencoba memaksanya pergi jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk mendalaminya."
+            )}
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {[
               {
                 step: "01", color: "oklch(42% 0.14 260)",
@@ -776,6 +783,10 @@ export default function FixedGrowthMindsetClient({
                 desc: t(
                   "For a specific dimension, write down your current belief honestly. What do you actually think — not what you know you should think?",
                   "Untuk dimensi tertentu, tuliskan keyakinan Anda saat ini dengan jujur. Apa yang sebenarnya Anda pikirkan — bukan apa yang Anda tahu seharusnya Anda pikirkan?"
+                ),
+                detail: t(
+                  "Start by writing it down specifically, not vaguely. 'I avoid this' is not precise enough. 'When I'm asked to contribute in a meeting where I don't know the cultural norms, I assume anything I say will come across wrong and I go quiet' — that is specific. The more precisely you can name a belief, the less power it holds. Vague patterns are hard to interrupt. Named ones are not.",
+                  "Mulailah dengan menuliskannya secara spesifik, bukan samar-samar. 'Saya menghindari ini' tidak cukup tepat. 'Ketika diminta berkontribusi dalam rapat di mana saya tidak tahu norma budayanya, saya berasumsi apa pun yang saya katakan akan terdengar salah dan saya diam' — itu spesifik. Semakin tepat Anda dapat menamai keyakinan itu, semakin kecil kekuatannya. Pola yang samar sulit untuk dihentikan. Yang sudah diberi nama tidak demikian."
                 ),
               },
               {
@@ -785,6 +796,10 @@ export default function FixedGrowthMindsetClient({
                   "Is this a fixed or growth belief? Do not judge — just notice. Awareness is always the first step toward change.",
                   "Apakah ini keyakinan tetap atau pertumbuhan? Jangan menghakimi — cukup perhatikan. Kesadaran selalu menjadi langkah pertama menuju perubahan."
                 ),
+                detail: t(
+                  "Fixed beliefs tend to contain these words: always, never, 'not the kind of person who,' too late, not enough. Growth beliefs tend to sound like: not yet, what would I need to learn, I'm still figuring this out. The key is noticing without judging. Judgment shuts the process down. Curiosity keeps it open. Ask: where did this belief come from? Was it ever true? Is it still serving me?",
+                  "Keyakinan tetap cenderung mengandung kata-kata ini: selalu, tidak pernah, 'bukan tipe orang yang,' terlambat, tidak cukup. Keyakinan pertumbuhan cenderung terdengar seperti: belum, apa yang perlu saya pelajari, saya masih mencari tahu ini. Kuncinya adalah memperhatikan tanpa menghakimi. Penilaian menghentikan prosesnya. Rasa ingin tahu membuatnya tetap terbuka. Tanyakan: dari mana keyakinan ini berasal? Apakah pernah benar? Apakah masih bermanfaat?"
+                ),
               },
               {
                 step: "03", color: "oklch(46% 0.16 145)",
@@ -793,18 +808,41 @@ export default function FixedGrowthMindsetClient({
                   "Ask: 'What would a growth-oriented version of this belief look like?' Write it down and commit to returning to it when the fixed pattern shows up.",
                   "Tanyakan: 'Seperti apa versi keyakinan ini yang berorientasi pertumbuhan?' Tuliskan dan berkomitmenlah untuk kembali ke sana ketika pola tetap muncul."
                 ),
+                detail: t(
+                  "A reframe is not positive thinking. It is a more accurate, more complete statement of reality. 'I failed at this' becomes 'I haven't succeeded here yet, and I now know what doesn't work.' 'I don't belong here' becomes 'I'm in an unfamiliar context, and belonging takes time and repeated presence.' Write the reframe on paper. Say it aloud. Then commit to returning to it — especially when the original belief fires next time.",
+                  "Pembingkaian ulang bukan pemikiran positif. Ini adalah pernyataan yang lebih akurat dan lebih lengkap tentang realitas. 'Saya gagal dalam hal ini' menjadi 'Saya belum berhasil di sini, dan sekarang saya tahu apa yang tidak berhasil.' 'Saya tidak cocok di sini' menjadi 'Saya berada dalam konteks yang tidak familiar, dan rasa memiliki membutuhkan waktu dan kehadiran berulang.' Tuliskan pembingkaian ulang di atas kertas. Ucapkan dengan keras. Kemudian berkomitmenlah untuk kembali ke sana — terutama ketika keyakinan aslinya muncul lagi."
+                ),
               },
-            ].map(item => (
-              <div key={item.step} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)", border: `1px solid ${LIGHT_GRAY}` }}>
-                <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
-                  <div>
-                    <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>{item.title}</h3>
-                    <p style={{ fontSize: 13, lineHeight: 1.65, color: BODY_TEXT, margin: 0 }}>{item.desc}</p>
-                  </div>
+            ].map(item => {
+              const isExpanded = expandedStep === item.step;
+              return (
+                <div
+                  key={item.step}
+                  style={{ background: "white", borderRadius: 10, border: `1px solid ${isExpanded ? item.color : LIGHT_GRAY}`, overflow: "hidden", transition: "border-color 0.2s ease" }}
+                >
+                  <button
+                    onClick={() => setExpandedStep(isExpanded ? null : item.step)}
+                    style={{
+                      width: "100%", background: "none", border: "none", cursor: "pointer",
+                      padding: "28px", display: "flex", gap: 14, alignItems: "flex-start", textAlign: "left",
+                    }}
+                  >
+                    <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.step}</span>
+                    <div style={{ flex: 1 }}>
+                      <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: NAVY, margin: "0 0 8px" }}>{item.title}</h3>
+                      <p style={{ fontSize: 13, lineHeight: 1.65, color: BODY_TEXT, margin: 0 }}>{item.desc}</p>
+                    </div>
+                    <span style={{ flexShrink: 0, fontSize: 18, color: item.color, lineHeight: 1, paddingTop: 6, display: "inline-block", transform: isExpanded ? "rotate(180deg)" : "none", transition: "transform 0.2s ease" }}>▾</span>
+                  </button>
+                  {isExpanded && (
+                    <div style={{ padding: "0 28px 28px", paddingLeft: "82px" }}>
+                      <div style={{ height: 1, background: LIGHT_GRAY, marginBottom: 20 }} />
+                      <p style={{ fontSize: 14, lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>{item.detail}</p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

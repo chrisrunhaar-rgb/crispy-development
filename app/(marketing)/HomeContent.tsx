@@ -200,7 +200,7 @@ export default function HomeContent() {
       </section>
 
       {/* ── CHALLENGE FEATURE SECTION ── */}
-      <section style={{ background: "oklch(15% 0.085 262)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: "oklch(24% 0.085 262)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden" }}>
         {/* Iceberg — atmospheric right-side element */}
         <div
           aria-hidden="true"
@@ -218,13 +218,13 @@ export default function HomeContent() {
             style={{
               width: "100%", height: "100%",
               objectFit: "cover", objectPosition: "center 40%",
-              display: "block", opacity: 0.18,
+              display: "block", opacity: 0.38,
             }}
           />
           {/* Fade left edge of iceberg into the section bg */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(to right, oklch(15% 0.085 262) 0%, oklch(15% 0.085 262 / 0.6) 35%, transparent 70%)",
+            background: "linear-gradient(to right, oklch(24% 0.085 262) 0%, oklch(24% 0.085 262 / 0.6) 35%, transparent 70%)",
           }} />
         </div>
 

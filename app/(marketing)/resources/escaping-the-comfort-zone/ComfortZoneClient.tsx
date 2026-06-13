@@ -252,6 +252,8 @@ export default function ComfortZoneClient({
 
   // Compute zone locator result
   const locatorDone = locatorCurrent >= LOCATOR_STATEMENTS.length;
+  const answeredReflections = Object.values(questionAnswers).filter(v => v.trim().length > 0).length;
+  const canEncourage = locatorDone && answeredReflections >= 1;
   const locatorResult = (() => {
     if (!locatorDone) return null;
     const comfort = [0,1,2,3,4,5].filter(i => locatorAnswers[i]).length;
@@ -625,7 +627,20 @@ export default function ComfortZoneClient({
               )}
             </p>
 
-            {!encourageState.text && !encourageState.loading && (
+            {!canEncourage && !encourageState.text && (
+              <div style={{ background: "oklch(28% 0.10 260)", borderRadius: 6, padding: "1rem 1.5rem" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "0.875rem", color: "oklch(60% 0.04 260)", margin: 0, lineHeight: 1.7 }}>
+                  {!locatorDone && answeredReflections === 0
+                    ? t("Complete the zone locator above and answer at least one reflection question to unlock your encouragement.", "Selesaikan pelacak zona di atas dan jawab setidaknya satu pertanyaan refleksi untuk membuka doronganmu.", lang)
+                    : !locatorDone
+                      ? t("Complete the zone locator above to unlock your encouragement.", "Selesaikan pelacak zona di atas untuk membuka doronganmu.", lang)
+                      : t("Answer at least one reflection question above to unlock your encouragement.", "Jawab setidaknya satu pertanyaan refleksi di atas untuk membuka doronganmu.", lang)
+                  }
+                </p>
+              </div>
+            )}
+
+            {canEncourage && !encourageState.text && !encourageState.loading && (
               <button
                 onClick={handleEncourage}
                 style={{

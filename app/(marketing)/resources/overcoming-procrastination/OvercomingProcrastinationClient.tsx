@@ -215,7 +215,7 @@ export default function OvercomingProcrastinationClient({
 
   const [answers, setAnswers] = useState<number[]>(Array(9).fill(0));
   const [showResult, setShowResult] = useState(false);
-  const [digDeepOpen, setDigDeepOpen] = useState(false);
+  const [currentQ, setCurrentQ] = useState(0);
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
   const [commitAction, setCommitAction] = useState("");
@@ -230,26 +230,14 @@ export default function OvercomingProcrastinationClient({
     const pad = (n: number) => String(n).padStart(2, "0");
     const fmt = (d: Date) =>
       `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
-    const ics = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//Crispy Development//Overcoming Procrastination//EN",
-      "BEGIN:VEVENT",
-      `DTSTART:${fmt(start)}`,
-      `DTEND:${fmt(end)}`,
-      `SUMMARY:${commitAction.trim()}`,
-      "DESCRIPTION:Commitment from Crispy Leaders — Overcoming Procrastination",
-      `LOCATION:${commitPlace.trim()}`,
-      "END:VEVENT",
-      "END:VCALENDAR",
-    ].join("\r\n");
-    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "commitment.ics";
-    a.click();
-    URL.revokeObjectURL(url);
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: commitAction.trim(),
+      dates: `${fmt(start)}/${fmt(end)}`,
+      details: "Commitment from Crispy Leaders — Overcoming Procrastination",
+      location: commitPlace.trim(),
+    });
+    window.open(`https://calendar.google.com/calendar/render?${params}`, "_blank");
   }
 
   async function handleSetReminder() {
@@ -260,13 +248,17 @@ export default function OvercomingProcrastinationClient({
       if (permission !== "granted") { setReminderStatus("error"); return; }
 
       const reg = await navigator.serviceWorker.ready;
+      const rawKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
+      const padding = "=".repeat((4 - (rawKey.length % 4)) % 4);
+      const base64 = (rawKey + padding).replace(/-/g, "+").replace(/_/g, "/");
+      const keyBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+
       let sub = await reg.pushManager.getSubscription();
-      if (!sub) {
-        const rawKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
-        const padding = "=".repeat((4 - (rawKey.length % 4)) % 4);
-        const base64 = (rawKey + padding).replace(/-/g, "+").replace(/_/g, "/");
-        const keyBytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+      try {
+        if (sub) await sub.unsubscribe();
         sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes });
+      } catch {
+        if (!sub) throw new Error("Subscription failed");
       }
 
       const subJson = sub.toJSON() as { endpoint: string; keys?: { p256dh: string; auth: string } };
@@ -303,6 +295,9 @@ export default function OvercomingProcrastinationClient({
     next[qi] = val;
     setAnswers(next);
     setShowResult(false);
+    if (qi < QUESTIONS.length - 1) {
+      setTimeout(() => setCurrentQ(qi + 1), 180);
+    }
   }
 
   const allAnswered = answers.every(a => a > 0);
@@ -473,97 +468,119 @@ export default function OvercomingProcrastinationClient({
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={eyebrow}>{t("The Disguise Detector", "Pendeteksi Topeng", lang)}</p>
           <h2 style={sectionH2}>{t("Identify your pattern", "Kenali polamu", lang)}</h2>
-          <p style={{ fontSize: "0.9rem", color: MUTED, lineHeight: 1.65, margin: "0.5rem 0 2.5rem", maxWidth: 560 }}>
+          <p style={{ fontSize: "0.9rem", color: MUTED, lineHeight: 1.65, margin: "0.5rem 0 1.5rem", maxWidth: 560 }}>
             {t(
-              "Rate each statement 1–3: 1 = rarely true of me, 2 = sometimes true, 3 = often true. Answer honestly — this is for your own insight, not evaluation.",
-              "Nilai setiap pernyataan 1–3: 1 = jarang benar tentang saya, 2 = kadang benar, 3 = sering benar. Jawab dengan jujur — ini untuk wawasanmu sendiri, bukan penilaian.",
+              "One statement at a time. Rate each honestly — selecting an answer moves you forward automatically.",
+              "Satu pernyataan sekaligus. Nilai setiap pernyataan dengan jujur — memilih jawaban akan melanjutkan ke pernyataan berikutnya secara otomatis.",
               lang
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-            {QUESTIONS.map((q, qi) => (
-              <div key={qi}>
-                {/* Thin divider between groups */}
-                {(qi === 3 || qi === 6) && (
-                  <div style={{ height: 1, background: LIGHT_GRAY, margin: "0.5rem 0 1.25rem" }} />
-                )}
-                <div style={{
-                  background: "white",
-                  padding: "1.125rem 1.25rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.875rem",
-                }}>
-                  <p style={{
-                    fontFamily: "var(--font-montserrat)",
-                    fontSize: "0.875rem",
-                    lineHeight: 1.6,
-                    color: answers[qi] > 0 ? NAVY : BODY_TEXT,
-                    margin: 0,
-                    fontWeight: answers[qi] > 0 ? 600 : 400,
-                  }}>
-                    <span style={{ color: MUTED, fontWeight: 700, marginRight: "0.5rem", fontSize: "0.75rem" }}>{qi + 1}.</span>
-                    {q[lang]}
-                  </p>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
-                    {[1, 2, 3].map(val => (
-                      <button
-                        key={val}
-                        onClick={() => setAnswer(qi, val)}
-                        style={{
-                          flex: 1,
-                          minHeight: 52,
-                          border: `2px solid ${answers[qi] === val ? NAVY : LIGHT_GRAY}`,
-                          background: answers[qi] === val ? NAVY : "oklch(98% 0.002 260)",
-                          color: answers[qi] === val ? OFF_WHITE : MUTED,
-                          cursor: "pointer",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "0.2rem",
-                          transition: "all 0.12s ease",
-                        }}
-                      >
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.0625rem", lineHeight: 1 }}>{val}</span>
-                        <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", lineHeight: 1 }}>
-                          {SCALE[val - 1][lang]}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* Progress */}
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "0.625rem" }}>
+            <div style={{ flex: 1, height: 4, background: LIGHT_GRAY }}>
+              <div style={{
+                height: "100%",
+                background: ORANGE,
+                width: `${(answers.filter(a => a > 0).length / 9) * 100}%`,
+                transition: "width 0.3s ease",
+              }} />
+            </div>
+            <span style={{
+              fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.8rem",
+              color: NAVY, whiteSpace: "nowrap", minWidth: "2.5rem", textAlign: "right",
+            }}>
+              {answers.filter(a => a > 0).length} / 9
+            </span>
           </div>
 
-          {/* Submit */}
-          <div style={{ marginTop: "2rem" }}>
-            {!allAnswered && (
-              <p style={{ fontSize: "0.78rem", color: MUTED, marginBottom: "0.75rem", fontStyle: "italic" }}>
-                {t(`${answers.filter(a => a > 0).length} of 9 answered — complete all to reveal your pattern.`, `${answers.filter(a => a > 0).length} dari 9 terjawab — selesaikan semua untuk mengungkap polamu.`, lang)}
-              </p>
+          {/* Current question card */}
+          <div style={{ background: "white", padding: "1.75rem 1.75rem 1.5rem", marginBottom: "1rem" }}>
+            <p style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.9rem",
+              fontWeight: 600,
+              color: NAVY,
+              lineHeight: 1.65,
+              margin: "0 0 1.5rem",
+            }}>
+              <span style={{ color: MUTED, fontWeight: 700, marginRight: "0.625rem", fontSize: "0.75rem" }}>
+                {currentQ + 1}.
+              </span>
+              {QUESTIONS[currentQ][lang]}
+            </p>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              {[1, 2, 3].map(val => (
+                <button
+                  key={val}
+                  onClick={() => setAnswer(currentQ, val)}
+                  style={{
+                    flex: 1,
+                    minHeight: 68,
+                    border: `2px solid ${answers[currentQ] === val ? NAVY : LIGHT_GRAY}`,
+                    background: answers[currentQ] === val ? NAVY : "oklch(98% 0.002 260)",
+                    color: answers[currentQ] === val ? OFF_WHITE : MUTED,
+                    cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.25rem",
+                    transition: "all 0.12s ease",
+                  }}
+                >
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", lineHeight: 1 }}>{val}</span>
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", lineHeight: 1 }}>
+                    {SCALE[val - 1][lang]}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <p style={{ fontSize: "0.72rem", color: MUTED, margin: "0 0 1.25rem", textAlign: "center" }}>
+            {t("1 = Rarely · 2 = Sometimes · 3 = Often", "1 = Jarang · 2 = Kadang · 3 = Sering", lang)}
+          </p>
+
+          {/* Navigation */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            {currentQ > 0 ? (
+              <button
+                onClick={() => setCurrentQ(q => Math.max(0, q - 1))}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                  background: "none", border: `1.5px solid ${LIGHT_GRAY}`,
+                  color: MUTED, cursor: "pointer",
+                  padding: "0 1.25rem", minHeight: 40,
+                  fontFamily: "var(--font-montserrat)", fontWeight: 600, fontSize: "0.78rem",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M11 7H3M6 4L3 7l3 3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {t("Back", "Kembali", lang)}
+              </button>
+            ) : <div />}
+
+            {allAnswered && (
+              <button
+                onClick={() => setShowResult(true)}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                  background: NAVY, color: OFF_WHITE,
+                  padding: "0 2rem", minHeight: 48,
+                  border: "none", cursor: "pointer",
+                  fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.82rem",
+                  letterSpacing: "0.05em", textTransform: "uppercase",
+                }}
+              >
+                {t("Reveal My Pattern", "Ungkap Polaku", lang)}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
             )}
-            <button
-              onClick={() => allAnswered && setShowResult(true)}
-              disabled={!allAnswered}
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "0.5rem",
-                background: allAnswered ? NAVY : "oklch(80% 0.005 260)",
-                color: allAnswered ? OFF_WHITE : MUTED,
-                padding: "0 2rem", minHeight: 48,
-                border: "none",
-                cursor: allAnswered ? "pointer" : "not-allowed",
-                fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.82rem",
-                letterSpacing: "0.05em", textTransform: "uppercase",
-              }}
-            >
-              {t("Reveal My Pattern", "Ungkap Polaku", lang)}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
           </div>
         </div>
       </section>
@@ -646,36 +663,13 @@ export default function OvercomingProcrastinationClient({
       {/* CROSS-CULTURAL DIG DEEPER */}
       <section style={{ background: "oklch(95% 0.004 260)", padding: "64px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <button
-            onClick={() => setDigDeepOpen(v => !v)}
-            aria-expanded={digDeepOpen}
-            aria-controls="cross-cultural-panel"
-            style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              width: "100%", background: "none", border: "none", cursor: "pointer",
-              padding: 0, gap: "1rem",
-            }}
-          >
-            <div style={{ textAlign: "left" }}>
-              <p style={{ ...eyebrow, margin: 0 }}>{t("Dig Deeper", "Gali Lebih Dalam", lang)}</p>
-              <h2 style={{ ...sectionH2, margin: "0.375rem 0 0", fontSize: "clamp(20px, 2.5vw, 30px)" }}>
-                {t("The cross-cultural dimension", "Dimensi lintas budaya", lang)}
-              </h2>
-            </div>
-            <div style={{
-              width: 36, height: 36, border: `1.5px solid ${LIGHT_GRAY}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0, transition: "transform 0.2s ease",
-              transform: digDeepOpen ? "rotate(45deg)" : "none",
-            }}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M7 2v10M2 7h10" stroke={NAVY} strokeWidth="1.75" strokeLinecap="round" />
-              </svg>
-            </div>
-          </button>
+          <p style={{ ...eyebrow, margin: 0 }}>{t("Dig Deeper", "Gali Lebih Dalam", lang)}</p>
+          <h2 style={{ ...sectionH2, margin: "0.375rem 0 2rem", fontSize: "clamp(20px, 2.5vw, 30px)" }}>
+            {t("The cross-cultural dimension", "Dimensi lintas budaya", lang)}
+          </h2>
 
-          <div id="cross-cultural-panel" style={{ overflow: "hidden", maxHeight: digDeepOpen ? 1200 : 0, transition: "max-height 0.35s ease" }}>
-            <div style={{ paddingTop: "2rem" }}>
+          <div>
+            <div>
               <p style={{ fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: "0 0 1.1rem" }}>
                 {t(
                   "In many Southeast Asian contexts, what looks like procrastination may be something different: structural silence. In Indonesia, two cultural forces shape how delay presents in organisations.",
