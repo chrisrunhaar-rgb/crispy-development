@@ -854,32 +854,41 @@ export default function SmartGoalsClient({
       <LangToggle />
 
       {/* HERO */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "56px 24px 52px", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
-        <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>
-          {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
-        </p>
-        <img
-          src="/resources/smart-goals-machine.jpg"
-          alt="SMART Goal Creator — Specific, Motivating, Achievable, Relevant, Trackable"
-          style={{ width: "100%", maxWidth: 820, borderRadius: 20, boxShadow: "0 12px 48px oklch(0% 0 0 / 0.45)" }}
-        />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-          <button
-            onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
-            style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "16px 40px", borderRadius: 14, fontWeight: 800, fontSize: 16, letterSpacing: "0.06em", textTransform: "uppercase", border: "none", cursor: "pointer", boxShadow: "0 4px 20px oklch(65% 0.15 45 / 0.45)" }}
-          >
-            {t("START Creating My Goal →", "MULAI Membuat Tujuan →", "BEGIN Mijn Doel →")}
-          </button>
-          {!saved ? (
-            <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(72% 0.04 260)", padding: "10px 20px", borderRadius: 10, fontWeight: 600, fontSize: 13, border: "1px solid oklch(38% 0.08 260)", cursor: "pointer" }}>
-              {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+      <section style={{
+        position: "relative",
+        backgroundImage: "url('/resources/smart-goals-hero.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center 40%",
+        backgroundColor: "oklch(22% 0.10 260)",
+      }}>
+        <div style={{ position: "absolute", inset: 0, background: "oklch(22% 0.10 260 / 0.82)" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 820, margin: "0 auto", padding: "80px 24px 72px" }}>
+          <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
+            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
+          </p>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>SMART Goals</h1>
+          <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
+            {t(
+              "A five-part framework for setting goals that actually get done — Specific, Motivating, Achievable, Relevant, and Trackable. With built-in corrective actions: Clarify, Reframe, or Negotiate.",
+              "Kerangka lima bagian untuk menetapkan tujuan yang benar-benar tercapai — Spesifik, Memotivasi, Dapat Dicapai, Relevan, dan Dapat Dilacak. Dengan tindakan korektif bawaan: Klarifikasi, Ubah Perspektif, atau Negosiasi.",
+              "Een vijfdelig kader voor het stellen van doelen die daadwerkelijk worden bereikt — Specifiek, Motiverend, Haalbaar, Relevant en Meetbaar. Met ingebouwde corrigerende acties: Verduidelijk, Herformuleer of Onderhandel."
+            )}
+          </p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <button
+              onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
+              style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
+            >
+              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
             </button>
-          ) : (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.16 145)", fontSize: 13, fontWeight: 600 }}>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="oklch(46% 0.16 145)"/><path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
-            </span>
-          )}
+            {!saved ? (
+              <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
+                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              </button>
+            ) : (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
+            )}
+          </div>
         </div>
       </section>
 
@@ -1044,7 +1053,12 @@ export default function SmartGoalsClient({
           </p>
 
           {!worksheetOpen ? (
-            <div style={{ textAlign: "center", padding: "48px 32px", background: "white", borderRadius: 12, boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+            <div style={{ textAlign: "center", padding: "32px 32px 40px", background: "white", borderRadius: 12, boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+              <img
+                src="/resources/smart-goals-machine.jpg"
+                alt="SMART Goal Creator"
+                style={{ width: "100%", maxWidth: 560, borderRadius: 12, marginBottom: 28, boxShadow: "0 4px 20px oklch(22% 0.10 260 / 0.10)" }}
+              />
               {savedGoal?.goal && (
                 <div style={{ background: "oklch(46% 0.16 145 / 0.08)", border: "1px solid oklch(46% 0.16 145 / 0.3)", borderRadius: 8, padding: "14px 20px", marginBottom: 24, textAlign: "left" }}>
                   <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margin: "0 0 6px" }}>
