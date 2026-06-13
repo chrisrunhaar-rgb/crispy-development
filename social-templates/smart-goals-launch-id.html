@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>SMART Goals Launch — Social Image</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    background: #1B3A6B;
+  }
+
+  /* ─────────────────────────────────────────────
+     CARD — full 1080×1080 canvas
+  ───────────────────────────────────────────── */
+  .card {
+    position: relative;
+    width: 1080px;
+    height: 1080px;
+    background: #1B3A6B;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─────────────────────────────────────────────
+     PHOTO ZONE — top 65%
+     The machine image is navy/dark toned so it
+     blends naturally. mix-blend-mode: screen
+     kills any light fringing from the JPG edge.
+  ───────────────────────────────────────────── */
+  .photo-zone {
+    position: relative;
+    width: 1080px;
+    height: 702px;
+    flex-shrink: 0;
+    overflow: hidden;
+    /* navy base so blending has a floor */
+    background: #1B3A6B;
+  }
+
+  .photo-zone img.hero {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    /* screen blend: white/light JPG surround disappears into navy */
+    mix-blend-mode: screen;
+  }
+
+  /* Hard gradient wipe: photo → navy — starts at 55%, solid navy by 92% */
+  .photo-zone::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(27, 58, 107, 0)    0%,
+      rgba(27, 58, 107, 0)    44%,
+      rgba(27, 58, 107, 0.55) 68%,
+      rgba(27, 58, 107, 1)    92%,
+      rgba(27, 58, 107, 1)    100%
+    );
+    pointer-events: none;
+  }
+
+  /* ─────────────────────────────────────────────
+     CONTENT ZONE — bottom 35%
+  ───────────────────────────────────────────── */
+  .content-zone {
+    flex: 1;
+    background: #1B3A6B;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 72px 56px 72px;
+  }
+
+  /* ─────────────────────────────────────────────
+     WATERMARK COMPASS
+     Full-card watermark, bottom-right anchor
+     Oversized so compass bleeds — a presence,
+     not a label. screen blend on dark navy.
+  ───────────────────────────────────────────── */
+  .watermark {
+    position: absolute;
+    bottom: -200px;
+    right: -200px;
+    width: 900px;
+    height: 900px;
+    object-fit: contain;
+    opacity: 0.11;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─────────────────────────────────────────────
+     TEXT CONTENT — sits above watermark
+  ───────────────────────────────────────────── */
+  .text-group {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Orange divider bar */
+  .divider {
+    width: 64px;
+    height: 4px;
+    background: #E07540;
+    border-radius: 2px;
+    margin-bottom: 26px;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.24em;
+    color: #E07540;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* Main headline — large Cormorant Garamond */
+  .headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 100px;
+    line-height: 0.98;
+    color: #F8F7F4;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+  }
+
+  /* Sub-label — muted, small */
+  .sublabel {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: 0.05em;
+    color: rgba(248, 247, 244, 0.48);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- ── PHOTO ZONE ── -->
+  <div class="photo-zone">
+    <img class="hero"
+         src="../public/resources/smart-goals-machine.jpg"
+         alt="">
+  </div>
+
+  <!-- ── CONTENT ZONE ── -->
+  <div class="content-zone">
+
+    <!-- Watermark compass — behind text, screen-blended on navy -->
+    <img class="watermark"
+         src="../public/logo-icon.png"
+         alt="">
+
+    <!-- Text block -->
+    <div class="text-group">
+      <div class="divider"></div>
+      <div class="eyebrow">SMART Goals</div>
+      <div class="headline">Tujuan yang<br>benar-benar berhasil.</div>
+      <div class="sublabel">crispyleaders.com</div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
