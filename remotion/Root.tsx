@@ -5,6 +5,7 @@ import {ILChallengePromo} from '../components/Animations/ILChallengePromo';
 import {CrossCulturalStatement} from '../components/Animations/CrossCulturalStatement';
 import {Day6HumilityPromo} from '../components/Animations/Day6HumilityPromo';
 import {ILChallengePromo60} from '../components/Animations/ILChallengePromo60';
+import {ModuleRevealReel} from '../components/Animations/ModuleRevealReel';
 
 export const RemotionRoot = () => {
   return (
@@ -56,6 +57,19 @@ export const RemotionRoot = () => {
         fps={30}
         width={1280}
         height={720}
+      />
+      <Composition
+        id="ModuleRevealReel"
+        component={ModuleRevealReel}
+        durationInFrames={600}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          moduleName: 'LEADERSHIP ALTITUDES',
+          hookLine: 'Leadership needs altitude.',
+          videoFile: 'clips/jungle_aerial_module.mp4',
+        }}
       />
     </>
   );
