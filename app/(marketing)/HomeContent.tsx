@@ -218,7 +218,7 @@ export default function HomeContent() {
             style={{
               width: "100%", height: "100%",
               objectFit: "cover", objectPosition: "center 40%",
-              display: "block", opacity: 0.28,
+              display: "block", opacity: 0.55,
             }}
           />
           {/* Fade left edge of iceberg into the section bg */}
