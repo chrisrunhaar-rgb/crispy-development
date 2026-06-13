@@ -892,6 +892,21 @@ export default function SmartGoalsClient({
         </div>
       </section>
 
+      {/* MACHINE IMAGE + CTA */}
+      <section style={{ background: "oklch(97% 0.005 260)", padding: "56px 24px 48px", display: "flex", flexDirection: "column", alignItems: "center", gap: 32 }}>
+        <img
+          src="/resources/smart-goals-machine.jpg"
+          alt="SMART Goal Creator — Specific, Motivating, Achievable, Relevant, Trackable"
+          style={{ width: "100%", maxWidth: 760, borderRadius: 16, boxShadow: "0 8px 40px oklch(22% 0.10 260 / 0.15)" }}
+        />
+        <button
+          onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
+          style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "16px 40px", borderRadius: 14, fontWeight: 800, fontSize: 16, letterSpacing: "0.06em", textTransform: "uppercase", border: "none", cursor: "pointer", boxShadow: "0 4px 20px oklch(65% 0.15 45 / 0.35)" }}
+        >
+          {t("START Creating My Goal →", "MULAI Membuat Tujuan →", "BEGIN Mijn Doel →")}
+        </button>
+      </section>
+
       {/* INTRODUCTION */}
       <section style={{ background: "white", padding: "64px 24px 56px", borderBottom: "1px solid oklch(91% 0.008 260)" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
