@@ -41,12 +41,11 @@ const T = {
   JUNGLE_OUT:     [490, 560] as [number, number],
 
   TEXT_IN:        [120, 180] as [number, number],
+  TITLE_OUT:      [470, 515] as [number, number],  // logo + module name fade with jungle
+
   ACCENT_IN:      [155, 210] as [number, number],
   HOOK_IN:        [185, 245] as [number, number],
-  TEXT_OUT:       [300, 345] as [number, number],
-
-  MARK_IN:        [100, 130] as [number, number],
-  MARK_OUT:       [340, 375] as [number, number],
+  HOOK_OUT:       [300, 345] as [number, number],  // only hook fades out
 
   SUBLINE_IN:     [345, 400] as [number, number],
   SUBLINE_OUT:    [460, 500] as [number, number],
@@ -100,30 +99,26 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
     interpolate(frame, T.JUNGLE_OUT, [1, 0], clamp),
   );
 
-  // ── Module name + hook: fade in together, fade out together ───────────────
-  const textFadeBase = Math.min(
+  // ── Logo + module name: stay up, fade out late with jungle ───────────────
+  const titleOpacity = Math.min(
     interpolate(frame, T.TEXT_IN, [0, 1], clamp),
-    interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
+    interpolate(frame, T.TITLE_OUT, [1, 0], clamp),
   );
+
+  // ── Accent + hook: fade out early to make room for subline ───────────────
   const accentScaleX = Math.min(
     interpolate(frame, T.ACCENT_IN, [0, 1], clamp),
-    interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
+    interpolate(frame, T.HOOK_OUT, [1, 0], clamp),
   );
   const hookOpacity = Math.min(
     interpolate(frame, T.HOOK_IN, [0, 1], clamp),
-    interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
+    interpolate(frame, T.HOOK_OUT, [1, 0], clamp),
   );
 
-  // ── Sub line: appears alone after hook fades ──────────────────────────────
+  // ── Sub line: replaces hook, logo + title still visible ──────────────────
   const subLineOpacity = Math.min(
     interpolate(frame, T.SUBLINE_IN, [0, 1], clamp),
     interpolate(frame, T.SUBLINE_OUT, [1, 0], clamp),
-  );
-
-  // ── Watermark ─────────────────────────────────────────────────────────────
-  const markOpacity = Math.min(
-    interpolate(frame, T.MARK_IN, [0, 0.80], clamp),
-    interpolate(frame, T.MARK_OUT, [0.80, 0], clamp),
   );
 
   // ── End card ──────────────────────────────────────────────────────────────
@@ -183,7 +178,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
           top: '38%',
           left: 0, right: 0,
           textAlign: 'center',
-          opacity: textFadeBase,
+          opacity: titleOpacity,
         }}>
           <div style={{
             fontFamily: "'Montserrat', sans-serif",
@@ -234,41 +229,41 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
           </div>
         </div>
 
-        {/* Sub line — appears alone after hook fades */}
+        {/* Sub line — replaces hook in same spot, logo + title still visible */}
         {subLine && (
           <div style={{
             position: 'absolute',
-            top: '45%',
-            left: 80, right: 80,
+            top: 'calc(38% + 106px)',
+            left: 64, right: 64,
             textAlign: 'center',
             opacity: subLineOpacity,
           }}>
             <div style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 34,
+              fontSize: 38,
               fontWeight: 400,
               fontStyle: 'italic',
               color: OFF_WHITE,
-              lineHeight: 1.5,
-              textShadow: '0 2px 18px rgba(0,0,0,0.80)',
+              lineHeight: 1.4,
+              textShadow: '0 2px 18px rgba(0,0,0,0.75)',
             }}>
               {subLine}
             </div>
           </div>
         )}
 
-        {/* Logo icon — centred above module name, fades with text block */}
+        {/* Logo icon — centred above module name, stays visible with title */}
         <div style={{
           position: 'absolute',
-          top: '28%',
+          top: '26%',
           left: 0, right: 0,
           display: 'flex',
           justifyContent: 'center',
-          opacity: textFadeBase,
+          opacity: titleOpacity,
         }}>
           <Img
             src={staticFile('logo-icon-dark-badge.png')}
-            style={{height: 160, width: 'auto'}}
+            style={{height: 220, width: 'auto'}}
           />
         </div>
       </AbsoluteFill>
@@ -283,11 +278,11 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         pointerEvents: 'none',
       }}>
         <Img
-          src={staticFile('logo-name-transp.png')}
+          src={staticFile('logo-icon.png')}
           style={{
-            height: 140, width: 'auto',
+            height: 220, width: 'auto',
             opacity: endLogoOpacity,
-            marginBottom: 52,
+            marginBottom: 48,
           }}
         />
 
