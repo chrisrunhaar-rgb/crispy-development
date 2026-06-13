@@ -523,14 +523,16 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 16px" }}>
             {tr("Try It in Your Next Meeting", "Coba di Rapat Berikutnya", "Probeer het in je Volgende Vergadering")}
           </h2>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {tr("Training", "Pelatihan", "Contentbibliotheek")}
-            </Link>
-          </div>
+          <p style={{ fontSize: 16, lineHeight: 1.65, color: "oklch(68% 0.04 260)", maxWidth: 480, margin: "0 auto" }}>
+            {tr(
+              "Pick one hat. Give your team five minutes with it. The shift in how you think together will be immediate.",
+              "Pilih satu topi. Beri tim Anda lima menit bersamanya. Perubahan cara berpikir bersama akan terasa langsung.",
+              "Kies één hoed. Geef je team er vijf minuten mee. De verschuiving in hoe je samen denkt, is onmiddellijk."
+            )}
+          </p>
         </div>
       </section>
     </div>
