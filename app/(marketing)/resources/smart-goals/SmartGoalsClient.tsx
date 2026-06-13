@@ -1053,12 +1053,13 @@ export default function SmartGoalsClient({
           </p>
 
           {!worksheetOpen ? (
-            <div style={{ textAlign: "center", padding: "32px 32px 40px", background: "white", borderRadius: 12, boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
+            <div style={{ background: "white", borderRadius: 16, boxShadow: "0 2px 16px oklch(20% 0.06 260 / 0.09)", overflow: "hidden" }}>
               <img
                 src="/resources/smart-goals-machine.jpg"
                 alt="SMART Goal Creator"
-                style={{ width: "100%", maxWidth: 560, borderRadius: 12, marginBottom: 28, boxShadow: "0 4px 20px oklch(22% 0.10 260 / 0.10)" }}
+                style={{ width: "100%", display: "block" }}
               />
+              <div style={{ padding: "28px 32px 36px", textAlign: "center" }}>
               {savedGoal?.goal && (
                 <div style={{ background: "oklch(46% 0.16 145 / 0.08)", border: "1px solid oklch(46% 0.16 145 / 0.3)", borderRadius: 8, padding: "14px 20px", marginBottom: 24, textAlign: "left" }}>
                   <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margin: "0 0 6px" }}>
@@ -1075,6 +1076,7 @@ export default function SmartGoalsClient({
                   ? t("Create a New Goal", "Buat Tujuan Baru", "Nieuw doel maken")
                   : t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
               </button>
+              </div>
             </div>
           ) : (
             <div ref={worksheetCardRef} style={{ background: "white", borderRadius: 12, boxShadow: "0 2px 16px oklch(20% 0.06 260 / 0.10)", overflow: "hidden" }}>
