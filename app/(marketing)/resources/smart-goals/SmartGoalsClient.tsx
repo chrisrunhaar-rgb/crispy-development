@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
-import { saveResourceToDashboard, saveSmartGoal } from "../actions";
+import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
 type Lang = "en" | "id" | "nl";
@@ -312,6 +312,7 @@ export default function SmartGoalsClient({
   const [answers, setAnswers] = useState<Record<number, Record<number, Answer>>>({});
   const [worksheetSaved, setWorksheetSaved] = useState(!!savedGoal?.completedAt);
   const [savingWorksheet, startSavingWorksheet] = useTransition();
+  const [rewriteTexts, setRewriteTexts] = useState<Record<number, string>>({});
 
   const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
 
@@ -370,6 +371,7 @@ export default function SmartGoalsClient({
 
     startSavingWorksheet(async () => {
       await saveSmartGoal(data);
+      await saveSmartGoalToTable({ goal: goalText, answers: data, overallScore: Math.round((metCount / 5) * 100) });
       setWorksheetSaved(true);
     });
   }
@@ -379,6 +381,7 @@ export default function SmartGoalsClient({
     setGoalText("");
     setAnswers({});
     setWorksheetSaved(false);
+    setRewriteTexts({});
   }
 
   // ---- WORKSHEET RENDER ----
@@ -415,6 +418,75 @@ export default function SmartGoalsClient({
             {t(opt.labelEn, opt.labelId, opt.labelNl)}
           </button>
         ))}
+      </div>
+    );
+  }
+
+  function hasAnyWeakAnswer(li: number): boolean {
+    return Object.values(answers[li] ?? {}).some(a => a === "partial" || a === "no");
+  }
+
+  function renderRewriteSection(li: number) {
+    if (!hasAnyWeakAnswer(li)) return null;
+    const letter = LETTERS[li];
+    const draftText = rewriteTexts[li] ?? goalText;
+
+    return (
+      <div style={{ marginTop: 28, borderTop: "1px solid oklch(88% 0.008 260)", paddingTop: 24 }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: letter.color, marginBottom: 8 }}>
+          {t("Refine Your Goal", "Sempurnakan Tujuan Anda", "Verfijn uw doel")}
+        </p>
+        <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", lineHeight: 1.65, marginBottom: 16 }}>
+          {t(
+            `Your goal could be stronger on ${letter.wordEn}. Rewrite it below to address what's missing — the improved version carries into the next step.`,
+            `Tujuan Anda bisa lebih kuat pada ${letter.wordId}. Tulis ulang di bawah untuk mengatasi kekurangannya — versi yang diperbaiki akan dibawa ke langkah berikutnya.`,
+            `Uw doel kan sterker op ${letter.wordNl}. Herschrijf het hieronder om de zwakke punten aan te pakken — de verbeterde versie gaat mee naar de volgende stap.`
+          )}
+        </p>
+        <textarea
+          value={draftText}
+          onChange={e => setRewriteTexts(prev => ({ ...prev, [li]: e.target.value }))}
+          rows={3}
+          style={{
+            width: "100%",
+            padding: "12px 14px",
+            borderRadius: 8,
+            border: `2px solid ${letter.color}`,
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: "oklch(22% 0.10 260)",
+            fontFamily: "Montserrat, sans-serif",
+            resize: "vertical",
+            outline: "none",
+            boxSizing: "border-box",
+            background: "white",
+          }}
+        />
+        <div style={{ marginTop: 10, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+          <button
+            onClick={() => {
+              if (rewriteTexts[li]?.trim()) {
+                setGoalText(rewriteTexts[li]);
+              }
+            }}
+            disabled={!rewriteTexts[li]?.trim() || rewriteTexts[li] === goalText}
+            style={{
+              background: rewriteTexts[li]?.trim() && rewriteTexts[li] !== goalText ? letter.color : "oklch(88% 0.008 260)",
+              color: rewriteTexts[li]?.trim() && rewriteTexts[li] !== goalText ? "white" : "oklch(55% 0.05 260)",
+              padding: "8px 18px",
+              borderRadius: 10,
+              fontWeight: 700,
+              fontSize: 13,
+              border: "none",
+              cursor: rewriteTexts[li]?.trim() && rewriteTexts[li] !== goalText ? "pointer" : "not-allowed",
+            }}
+          >
+            {t("Use this version →", "Gunakan versi ini →", "Gebruik deze versie →")}
+          </button>
+          <span style={{ fontSize: 12, color: "oklch(55% 0.05 260)" }}>
+            {t("Optional — continue without rewriting if your goal already addresses this.", "Opsional — lanjutkan tanpa menulis ulang jika tujuan Anda sudah membahas ini.", "Optioneel — ga door zonder herschrijven als uw doel dit al behandelt.")}
+          </span>
+        </div>
       </div>
     );
   }
@@ -523,6 +595,7 @@ export default function SmartGoalsClient({
           <p style={{ fontSize: 12, color: "oklch(55% 0.05 260)", marginTop: 16, textAlign: "right" }}>
             {answered}/{total} {t("answered", "dijawab", "beantwoord")}
           </p>
+          {renderRewriteSection(li)}
         </div>
       );
     }
@@ -638,8 +711,15 @@ export default function SmartGoalsClient({
       <LangToggle />
 
       {/* HERO */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+      <section style={{
+        position: "relative",
+        backgroundImage: "url('/resources/smart-goals-hero.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center 40%",
+        backgroundColor: "oklch(22% 0.10 260)",
+      }}>
+        <div style={{ position: "absolute", inset: 0, background: "oklch(22% 0.10 260 / 0.82)" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 820, margin: "0 auto", padding: "80px 24px 72px" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
           </p>
@@ -666,6 +746,57 @@ export default function SmartGoalsClient({
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* INTRODUCTION */}
+      <section style={{ background: "white", padding: "64px 24px 56px", borderBottom: "1px solid oklch(91% 0.008 260)" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 20px" }}>
+            {t("Why SMART goals work — and why this version is different", "Mengapa tujuan SMART berhasil — dan mengapa versi ini berbeda", "Waarom SMART-doelen werken — en waarom deze versie anders is")}
+          </h2>
+
+          <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
+            {t(
+              "The SMART framework was introduced in 1981 by George T. Doran, a corporate planning director who wanted a simple way to write management objectives. He proposed goals be Specific, Measurable, Assignable, Realistic, and Time-related. The idea spread quickly — and mutated. Dozens of variants now exist, which tells you something important: the acronym is a tool, not a theory.",
+              "Kerangka SMART diperkenalkan pada tahun 1981 oleh George T. Doran, seorang direktur perencanaan perusahaan yang ingin cara sederhana untuk menulis tujuan manajemen. Ia mengusulkan tujuan harus Spesifik, Terukur, Dapat Ditugaskan, Realistis, dan Terkait Waktu. Ide ini menyebar dengan cepat — dan bermutasi. Sekarang ada lusinan varian, yang memberi tahu Anda sesuatu yang penting: akronim ini adalah alat, bukan teori.",
+              "Het SMART-kader werd in 1981 geïntroduceerd door George T. Doran, een directeur bedrijfsplanning die een eenvoudige manier wilde om managementdoelstellingen te schrijven. Hij stelde voor dat doelen Specifiek, Meetbaar, Toewijsbaar, Realistisch en Tijdsgebonden moesten zijn. Het idee verspreidde zich snel — en muteerde. Er bestaan nu tientallen varianten, wat je iets belangrijks vertelt: het acroniem is een hulpmiddel, geen theorie."
+            )}
+          </p>
+
+          <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
+            {t(
+              "The real science behind SMART comes from Edwin Locke and Gary Latham, whose forty years of research across more than 1,000 studies showed this: specific, well-defined goals consistently produce better results than vague ones. Not because of the acronym — because clarity, commitment, and feedback work. That foundation is what this tool is built on.",
+              "Ilmu pengetahuan nyata di balik SMART berasal dari Edwin Locke dan Gary Latham, yang empat puluh tahun penelitiannya di lebih dari 1.000 studi menunjukkan ini: tujuan yang spesifik dan terdefinisi dengan baik secara konsisten menghasilkan hasil yang lebih baik daripada tujuan yang samar. Bukan karena akronimnya — karena kejelasan, komitmen, dan umpan balik bekerja. Itulah fondasi yang menjadi dasar alat ini.",
+              "De echte wetenschap achter SMART komt van Edwin Locke en Gary Latham, wier veertig jaar onderzoek over meer dan 1.000 studies dit aantoonde: specifieke, goed omschreven doelen produceren consistent betere resultaten dan vage doelen. Niet vanwege het acroniem — omdat duidelijkheid, betrokkenheid en feedback werken. Dat fundament is waar dit hulpmiddel op gebouwd is."
+            )}
+          </p>
+
+          <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
+            {t(
+              "This module follows Ken Blanchard's variant — Specific, Motivating, Achievable, Relevant, Trackable — because two changes matter deeply for cross-cultural leaders. 'Motivating' replaces 'Measurable': before asking how to count progress, we ask why this goal matters at all. 'Trackable' replaces 'Time-bound': in complex, relational, and ministry work, noticing movement is more honest than hitting a fixed deadline. These aren't softer standards — they're more honest ones.",
+              "Modul ini mengikuti varian Ken Blanchard — Spesifik, Memotivasi, Dapat Dicapai, Relevan, Dapat Dilacak — karena dua perubahan sangat penting bagi pemimpin lintas budaya. 'Memotivasi' menggantikan 'Terukur': sebelum bertanya bagaimana menghitung kemajuan, kami bertanya mengapa tujuan ini sama sekali penting. 'Dapat Dilacak' menggantikan 'Terikat Waktu': dalam pekerjaan yang kompleks, relasional, dan pelayanan, memperhatikan pergerakan lebih jujur daripada memenuhi tenggat waktu yang tetap.",
+              "Deze module volgt de variant van Ken Blanchard — Specifiek, Motiverend, Haalbaar, Relevant, Traceerbaar — omdat twee veranderingen diep van belang zijn voor cross-culturele leiders. 'Motiverend' vervangt 'Meetbaar': voordat we vragen hoe we voortgang kunnen tellen, vragen we waarom dit doel überhaupt belangrijk is. 'Traceerbaar' vervangt 'Tijdsgebonden': in complex, relationeel en ministerie-werk is het eerlijker beweging op te merken dan een vaste deadline te halen."
+            )}
+          </p>
+
+          <div style={{ background: "oklch(96% 0.008 260)", borderLeft: "3px solid oklch(42% 0.14 260)", borderRadius: "0 8px 8px 0", padding: "20px 24px", marginBottom: 20 }}>
+            <p style={{ fontSize: 14, color: "oklch(32% 0.06 260)", lineHeight: 1.7, margin: 0, fontStyle: "italic" }}>
+              {t(
+                "\"Come now, you who say, 'Today or tomorrow we will go into such and such a town and spend a year there...' — yet you do not know what tomorrow will bring. Instead you ought to say, 'If the Lord wills, we will live and do this or that.'\" — James 4:13–15",
+                "\"Jadi sekarang, hai kamu yang berkata: 'Hari ini atau besok kami akan pergi ke kota ini dan menghabiskan satu tahun di sana...' — padahal kamu tidak tahu apa yang akan terjadi besok. Sebaliknya kamu harus berkata: 'Jika Tuhan menghendaki, kami akan hidup dan melakukan ini atau itu.'\" — Yakobus 4:13–15",
+                "\"Welaan, gij die zegt: Vandaag of morgen zullen wij naar die stad gaan en daar een jaar doorbrengen... — terwijl gij niet weet wat uw leven morgen zal zijn. Veeleer behoort gij te zeggen: Als de Here wil, zullen wij leven en dit of dat doen.\" — Jakobus 4:13–15"
+              )}
+            </p>
+          </div>
+
+          <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, margin: 0 }}>
+            {t(
+              "James isn't telling us not to plan. He's telling us not to plan arrogantly — as if the future belongs to us. The model for this is Nehemiah: he prayed before every major move, planned every material detail (travel permits, timber supply, timeline), and rebuilt the wall in 52 days. Goals are instruments of stewardship. Hold them with diligence — and with open hands.",
+              "Yakobus tidak mengatakan kepada kita untuk tidak merencanakan. Dia mengatakan kepada kita untuk tidak merencanakan dengan sombong — seolah-olah masa depan milik kita. Model untuk ini adalah Nehemia: ia berdoa sebelum setiap langkah besar, merencanakan setiap detail material (izin perjalanan, pasokan kayu, jadwal waktu), dan membangun kembali tembok dalam 52 hari. Tujuan adalah instrumen pengelolaan. Pegang dengan ketekunan — dan dengan tangan terbuka.",
+              "Jakobus zegt ons niet om niet te plannen. Hij zegt ons om niet arrogant te plannen — alsof de toekomst van ons is. Het model hiervoor is Nehemia: hij bad voor elke grote stap, plande elk materieel detail (reisvergunningen, houtvoorraad, tijdlijn), en herbouwde de muur in 52 dagen. Doelen zijn instrumenten van rentmeesterschap. Houd ze vast met ijver — en met open handen."
+            )}
+          </p>
         </div>
       </section>
 

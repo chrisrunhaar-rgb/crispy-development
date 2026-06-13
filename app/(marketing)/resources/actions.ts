@@ -453,3 +453,25 @@ export async function saveWheelScores(scores: Record<string, number>): Promise<{
   }
   return { error: error?.message ?? null };
 }
+
+export async function saveSmartGoalToTable(data: {
+  goal: string;
+  answers: Record<string, string>;
+  overallScore: number;
+}): Promise<{ error: string | null; id?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { data: row, error } = await supabase
+    .from("smart_goals")
+    .insert({ user_id: user.id, goal: data.goal, answers: data.answers, overall_score: data.overallScore })
+    .select("id")
+    .single();
+
+  if (!error) {
+    revalidatePath("/dashboard");
+    revalidatePath("/resources/smart-goals");
+  }
+  return { error: error?.message ?? null, id: row?.id };
+}

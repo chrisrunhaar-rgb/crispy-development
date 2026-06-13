@@ -410,6 +410,8 @@ type EnneagramTypeData = {
   crossCultural: T3;
 };
 
+type SmartGoal = { id: string; goal: string; overall_score: number; created_at: string };
+
 type ModalData =
   | { type: "disc"; result: string; scores: { D: number; I: number; S: number; C: number }; lang: "en" | "id" }
   | { type: "wheel"; scores: Record<string, number>; reflections: Record<string, { gratitude: string; action: string }> | null; lang: "en" | "id" }
@@ -417,10 +419,10 @@ type ModalData =
   | { type: "thinking"; result: string; scores: { C: number; H: number; I: number }; lang: "en" | "id" }
   | { type: "karunia"; topGifts: string[]; scores: Record<string, number>; lang: "en" | "id" }
   | { type: "enneagram"; typeData: EnneagramTypeData; scores: Record<string, number>; lang: "en" | "id" }
-
   | { type: "bigfive"; scores: Record<string, number>; lang: "en" | "id" }
   | { type: "16personalities"; personalityType: string; scores: Record<string, number>; lang: "en" | "id" }
-  | { type: "fivela"; receivingResult: string; givingResult: string; receivingScores: { A: number; B: number; C: number; D: number; E: number }; givingScores: { A: number; B: number; C: number; D: number; E: number } };
+  | { type: "fivela"; receivingResult: string; givingResult: string; receivingScores: { A: number; B: number; C: number; D: number; E: number }; givingScores: { A: number; B: number; C: number; D: number; E: number } }
+  | { type: "smartgoals"; goals: SmartGoal[]; lang: "en" | "id" };
 
 function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => void }) {
   return (
@@ -453,7 +455,69 @@ function AssessmentModal({ data, onClose }: { data: ModalData; onClose: () => vo
         {data.type === "bigfive" && <BigFiveModal data={data} onClose={onClose} />}
         {data.type === "16personalities" && <PersonalitiesModal data={data} onClose={onClose} />}
         {data.type === "fivela" && <FivelaModal data={data} onClose={onClose} />}
+        {data.type === "smartgoals" && <SmartGoalsModal data={data} onClose={onClose} />}
       </div>
+    </div>
+  );
+}
+
+function SmartGoalsModal({ data, onClose }: { data: Extract<ModalData, { type: "smartgoals" }>; onClose: () => void }) {
+  const { goals, lang } = data;
+  const label = (en: string, id: string) => lang === "id" ? id : en;
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem" }}>
+        <div>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.25rem" }}>
+            {label("Goal-Setting Tool", "Alat Penetapan Tujuan")}
+          </p>
+          <h3 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.125rem", color: navy, margin: 0 }}>
+            {label("SMART Goal Creator", "Pembuat Tujuan SMART")}
+          </h3>
+          <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(48% 0.008 260)", marginTop: "0.375rem" }}>
+            {goals.length} {label(goals.length === 1 ? "goal saved" : "goals saved", goals.length === 1 ? "tujuan tersimpan" : "tujuan tersimpan")}
+          </p>
+        </div>
+        <button onClick={onClose} style={{ background: "transparent", border: "none", cursor: "pointer", padding: "0.25rem", color: "oklch(60% 0.008 260)", fontSize: "1.25rem", lineHeight: 1 }}>×</button>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.25rem" }}>
+        {goals.map((g) => {
+          const date = new Date(g.created_at).toLocaleDateString(lang === "id" ? "id-ID" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+          return (
+            <div key={g.id} style={{ background: "white", border: "1px solid oklch(88% 0.006 80)", borderRadius: 10, padding: "0.875rem 1rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.375rem" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "oklch(55% 0.008 260)" }}>{date}</span>
+                <span style={{
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700,
+                  background: g.overall_score >= 80 ? "oklch(88% 0.12 145)" : g.overall_score >= 50 ? "oklch(92% 0.10 60)" : "oklch(92% 0.04 260)",
+                  color: g.overall_score >= 80 ? "oklch(32% 0.12 145)" : g.overall_score >= 50 ? "oklch(40% 0.10 60)" : "oklch(45% 0.04 260)",
+                  padding: "0.15rem 0.5rem", borderRadius: 6,
+                }}>
+                  {g.overall_score}% {label("SMART", "SMART")}
+                </span>
+              </div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: navy, lineHeight: 1.55, margin: 0 }}>
+                {g.goal}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      <Link
+        href="/resources/smart-goals"
+        onClick={onClose}
+        style={{
+          display: "block", textAlign: "center",
+          fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.78rem",
+          background: orange, color: "oklch(15% 0.05 45)",
+          padding: "0.7rem 1.5rem", borderRadius: 10,
+          textDecoration: "none",
+        }}
+      >
+        {label("+ Create a new SMART goal", "+ Buat tujuan SMART baru")}
+      </Link>
     </div>
   );
 }
@@ -1683,6 +1747,7 @@ export default function AssessmentTileGrid({
   fivelaGivingScores = null,
   languagePreference = "en",
   isSubscriber = true,
+  smartGoals = null,
 }: {
   discResult?: string | null;
   discScores?: { D: number; I: number; S: number; C: number } | null;
@@ -1695,7 +1760,6 @@ export default function AssessmentTileGrid({
   enneagramType?: number | null;
   enneagramScores?: Record<string, number> | null;
   bigFiveScores?: Record<string, number> | null;
-
   personalities16Type?: string | null;
   personalities16Scores?: Record<string, number> | null;
   fivelaReceivingResult?: string | null;
@@ -1704,6 +1768,7 @@ export default function AssessmentTileGrid({
   fivelaGivingScores?: { A: number; B: number; C: number; D: number; E: number } | null;
   languagePreference?: "en" | "id";
   isSubscriber?: boolean;
+  smartGoals?: SmartGoal[] | null;
 }) {
   const [modal, setModal] = useState<ModalData | null>(null);
   const [enneagramFlipped, setEnneagramFlipped] = useState(false);
@@ -1933,6 +1998,31 @@ export default function AssessmentTileGrid({
           onClick={fivelaReceivingResult && fivelaGivingResult && fivelaReceivingScores && fivelaGivingScores
             ? () => setModal({ type: "fivela", receivingResult: fivelaReceivingResult, givingResult: fivelaGivingResult, receivingScores: fivelaReceivingScores, givingScores: fivelaGivingScores })
             : undefined}
+        />
+
+        {/* 10. SMART Goal Creator */}
+        <CompactTile
+          title={lang === "id" ? "Pembuat Tujuan SMART" : "SMART Goal Creator"}
+          visual={smartGoals && smartGoals.length > 0 ? (
+            <div style={{ width: 180, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              <div style={{ position: "relative", width: 56, height: 56 }}>
+                <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+                  <circle cx="28" cy="28" r="26" stroke={orange} strokeWidth="2.5" />
+                  <circle cx="28" cy="28" r="18" stroke={orange} strokeWidth="2" strokeOpacity="0.5" />
+                  <circle cx="28" cy="28" r="9" fill={orange} />
+                </svg>
+              </div>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.25rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
+              <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.58rem", color: "oklch(48% 0.008 260)", margin: 0 }}>
+                {lang === "id" ? (smartGoals.length === 1 ? "tujuan" : "tujuan") : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
+              </p>
+            </div>
+          ) : <EmptyTileVisual />}
+          done={!!(smartGoals && smartGoals.length > 0)}
+          href={smartGoals && smartGoals.length > 0 ? undefined : "/resources/smart-goals"}
+          lang={lang}
+          isSubscriber={isSubscriber}
+          onClick={smartGoals && smartGoals.length > 0 ? () => setModal({ type: "smartgoals", goals: smartGoals, lang }) : undefined}
         />
 
       </div>

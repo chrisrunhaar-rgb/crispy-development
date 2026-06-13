@@ -194,7 +194,7 @@ export default async function DashboardPage({
   let completedIds = new Set<string>();
   let userMessages: CoachMsg[] = [];
 
-  const [{ data: allMods }, { data: progress }, { data: msgs }, { data: unseenReplies }, { data: challengeRow }] = await Promise.all([
+  const [{ data: allMods }, { data: progress }, { data: msgs }, { data: unseenReplies }, { data: challengeRow }, { data: smartGoalsRows }] = await Promise.all([
     supabase
       .from("modules")
       .select("id, slug, title, description, type, pathway, is_free, order_index")
@@ -217,6 +217,7 @@ export default async function DashboardPage({
       .eq("reply_seen", false)
       .not("admin_reply", "is", null),
     admin.from("challenge_enrollments").select("current_day, status, path").eq("user_id", viewingUserId).maybeSingle(),
+    supabase.from("smart_goals").select("id, goal, overall_score, created_at").eq("user_id", viewingUserId).order("created_at", { ascending: false }),
   ]);
   modules = allMods ?? [];
   completedIds = new Set((progress ?? []).map((p: { module_id: string }) => p.module_id));
@@ -654,7 +655,7 @@ export default async function DashboardPage({
           <>
             {pathway === "team" && teamApplicationStatus === "pending" && <TeamApplicationPending firstName={firstName} lang={languagePreference} />}
             {pathway === "team" && !teamApplicationStatus && <TeamApplicationPrompt lang={languagePreference} />}
-            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} />
+            <PersonalDashboard modules={modules} completedIds={completedIds} savedResources={savedResources} resourceNotes={resourceNotes} resourceRatings={resourceRatings} resourceRead={resourceRead} completedAssessments={completedAssessments} thinkingStyleResult={thinkingStyleResult} thinkingStyleScores={thinkingStyleScores} discResult={discResult} discScores={discScores} wheelOfLifeScores={wheelOfLifeScores} wheelReflections={wheelReflections} karuniaTopGifts={karuniaTopGifts} karuniaScores={karuniaScores} enneagramType={enneagramType} enneagramScores={enneagramScores} bigFiveScores={bigFiveScores} personalities16Type={personalities16Type} personalities16Scores={personalities16Scores} fivelaReceivingResult={fivelaReceivingResult} fivelaGivingResult={fivelaGivingResult} fivelaReceivingScores={fivelaReceivingScores} fivelaGivingScores={fivelaGivingScores} languagePreference={languagePreference} challengeCurrentDay={challengeCurrentDay} isFacilitator={!!facilitatorGroup} challengePath={challengePath} dashboardFirstName={firstName} isSubscriber={isSubscriber} raftPlan={raftPlan} smartGoals={smartGoalsRows ?? null} />
             {courseProgress.length > 0 && <MyCourses courses={courseProgress} lang={languagePreference} />}
           </>
         )}
@@ -820,7 +821,7 @@ function DiscPieCard({ result, scores }: { result: string; scores: { D: number; 
   );
 }
 
-function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null }: {
+function PersonalDashboard({ modules, completedIds, savedResources = [], resourceNotes = {}, resourceRatings = {}, resourceRead = [], completedAssessments = new Set(), thinkingStyleResult = null, thinkingStyleScores = null, discResult = null, discScores = null, wheelOfLifeScores = null, wheelReflections = null, karuniaTopGifts = null, karuniaScores = null, enneagramType = null, enneagramScores = null, bigFiveScores = null, personalities16Type = null, personalities16Scores = null, fivelaReceivingResult = null, fivelaGivingResult = null, fivelaReceivingScores = null, fivelaGivingScores = null, languagePreference = "en", challengeCurrentDay = null, isFacilitator = false, challengePath = null, dashboardFirstName = "", isSubscriber = true, raftPlan = null, smartGoals = null }: {
   modules: Module[];
   completedIds: Set<string>;
   savedResources?: string[];
@@ -852,6 +853,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
   dashboardFirstName?: string;
   isSubscriber?: boolean;
   raftPlan?: { R: string; A: string; F: string; T: string; lang: string; saved_at: string } | null;
+  smartGoals?: { id: string; goal: string; overall_score: number; created_at: string }[] | null;
 }) {
   const savedItems = savedResources.filter(s => RESOURCE_META[s]);
   const total = savedItems.length;
@@ -976,6 +978,7 @@ function PersonalDashboard({ modules, completedIds, savedResources = [], resourc
             fivelaGivingScores={fivelaGivingScores}
             languagePreference={languagePreference}
             isSubscriber={isSubscriber}
+            smartGoals={smartGoals}
           />
         </div>
 
