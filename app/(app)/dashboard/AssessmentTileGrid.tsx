@@ -2004,31 +2004,21 @@ export default function AssessmentTileGrid({
         <CompactTile
           title={lang === "id" ? "Pembuat Tujuan SMART" : "SMART Goal Creator"}
           visual={smartGoals && smartGoals.length > 0 ? (
-            (() => {
-              const latest = smartGoals[0];
-              const score = latest.overall_score;
-              const isLegacy = score > 5;
-              const fraction = isLegacy ? score / 100 : score / 5;
-              const displayScore = isLegacy ? `${score}%` : `${score}/5`;
-              const R = 30;
-              const C = 2 * Math.PI * R;
-              const filled = fraction * C;
-              return (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                  <svg viewBox="0 0 76 76" width="76" height="76">
-                    <circle cx="38" cy="38" r={R} fill="none" stroke="oklch(92% 0.008 80)" strokeWidth="7" />
-                    <circle cx="38" cy="38" r={R} fill="none" stroke={orange} strokeWidth="7" strokeLinecap="round" strokeDasharray={`${filled} ${C}`} transform="rotate(-90 38 38)" />
-                    <text x="38" y="43" textAnchor="middle" fontSize="13" fontWeight="800" fill={navy} fontFamily="var(--font-montserrat)">{displayScore}</text>
-                  </svg>
-                  <div style={{ textAlign: "center" }}>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.4rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
-                    <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(48% 0.008 260)", margin: "3px 0 0" }}>
-                      {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
-                    </p>
-                  </div>
-                </div>
-              );
-            })()
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <svg viewBox="0 0 72 72" width="68" height="68" fill="none">
+                <circle cx="36" cy="36" r="27" stroke="oklch(87% 0.02 260)" strokeWidth="2.5"/>
+                <circle cx="36" cy="36" r="17" stroke={navy} strokeWidth="2.5" opacity="0.28"/>
+                <circle cx="36" cy="36" r="8" fill={orange}/>
+                <line x1="7" y1="65" x2="24" y2="48" stroke={orange} strokeWidth="2.5" strokeLinecap="round"/>
+                <polygon points="30,42 27,52 20,45" fill={orange}/>
+              </svg>
+              <div style={{ textAlign: "center" }}>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "1.4rem", color: navy, margin: 0, lineHeight: 1 }}>{smartGoals.length}</p>
+                <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", color: "oklch(48% 0.008 260)", margin: "3px 0 0" }}>
+                  {lang === "id" ? "tujuan tersimpan" : (smartGoals.length === 1 ? "goal saved" : "goals saved")}
+                </p>
+              </div>
+            </div>
           ) : <EmptyTileVisual />}
           done={!!(smartGoals && smartGoals.length > 0)}
           href={smartGoals && smartGoals.length > 0 ? undefined : "/resources/smart-goals"}
