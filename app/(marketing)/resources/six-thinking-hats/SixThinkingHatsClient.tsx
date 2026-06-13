@@ -370,7 +370,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {tr("Select a hat to explore its focus, cross-cultural context, faith connection, and key questions.", "Pilih topi untuk menjelajahi fokus, konteks lintas budaya, koneksi iman, dan pertanyaan utamanya.", "Selecteer een hoed om de focus, cross-culturele context, geloofsverbinding en sleutelvragen te verkennen.")}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10, marginBottom: 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 32 }}>
             {HATS.map((hat, i) => {
               const isActive = activeHat === i;
               return (
