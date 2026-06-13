@@ -449,8 +449,52 @@ export default function ResourcesContent({
         </div>
       </section>
 
+      {/* ── CHALLENGE BANNER ── */}
+      <section style={{ background: "oklch(95% 0.012 260)", paddingBlock: "clamp(3.5rem, 6vw, 5.5rem)", position: "relative", overflow: "hidden", borderTop: "3px solid oklch(65% 0.15 45)", borderBottom: "3px solid oklch(65% 0.15 45)" }}>
+        {/* Iceberg */}
+        <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "clamp(260px, 42vw, 560px)", pointerEvents: "none", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/iceberg-full.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", display: "block", opacity: 0.55 }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, oklch(95% 0.012 260) 0%, oklch(95% 0.012 260 / 0.6) 35%, transparent 70%)" }} />
+        </div>
+
+        <div className="container-wide" style={{ position: "relative" }}>
+          <div style={{ maxWidth: "620px" }}>
+            {/* Eyebrow */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", border: "1px solid oklch(65% 0.15 45 / 0.6)", padding: "0.28em 0.75em", borderRadius: "3px" }}>
+                {lang === "id" ? "Gratis" : "Free"}
+              </span>
+              <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(42% 0.07 260)" }}>
+                {lang === "id" ? "Tantangan · 60 hari" : "Challenge · 60 days"}
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h2 style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontWeight: 600, fontSize: "clamp(2rem, 4vw, 3.25rem)", lineHeight: 1.05, color: "oklch(22% 0.10 260)", margin: "0 0 1rem" }}>
+              {lang === "id" ? "Kepemimpinan dimulai\ndari dalam." : "Leadership starts\non the inside."}
+            </h2>
+
+            {/* Body */}
+            <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(38% 0.05 260)", margin: "0 0 2rem", maxWidth: "46ch" }}>
+              {lang === "id"
+                ? "Tantangan Kepemimpinan Berpengaruh — perjalanan 60 hari berdasarkan Deep Influence karya T.J. Addington. Untuk pemimpin dan tim yang ingin bertumbuh dari dalam ke luar."
+                : "The Influential Leadership Challenge — a 60-day guided journey based on T.J. Addington's Deep Influence. For leaders and teams who want to grow from the inside out."}
+            </p>
+
+            {/* CTA */}
+            <Link
+              href="/influential-leadership-challenge"
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(22% 0.10 260)", background: "oklch(65% 0.15 45)", padding: "0.875rem 2rem", borderRadius: "4px", textDecoration: "none" }}
+            >
+              {lang === "id" ? "Ikuti Sekarang" : "Join Now"} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── CONTRIBUTE SECTION ── */}
-      <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 4rem)", background: "oklch(97% 0.005 80)", borderTop: "1px solid oklch(88% 0.008 80)" }}>
+      <section style={{ paddingBlock: "clamp(2.5rem, 5vw, 4rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
           <div style={{ maxWidth: "600px" }}>
             <p style={{
