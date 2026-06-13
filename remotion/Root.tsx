@@ -61,13 +61,14 @@ export const RemotionRoot = () => {
       <Composition
         id="ModuleRevealReel"
         component={ModuleRevealReel}
-        durationInFrames={720}
+        durationInFrames={800}
         fps={30}
         width={1080}
         height={1920}
         defaultProps={{
           moduleName: 'LEADERSHIP ALTITUDES',
           hookLine: 'Leadership needs altitude.',
+          subLine: 'Without it we get stuck in the details.',
           videoFile: 'clips/jungle_aerial_module.mp4',
         }}
       />

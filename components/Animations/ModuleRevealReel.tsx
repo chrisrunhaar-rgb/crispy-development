@@ -16,19 +16,21 @@ const WHITE = '#FFFFFF';
 
 const clamp = {extrapolateLeft: 'clamp' as const, extrapolateRight: 'clamp' as const};
 
-// Total: 720 frames = 24 seconds at 30fps
+// Total: 800 frames = 26.7 seconds at 30fps
 //
 // 0–60    Navy open + large logo
 // 40–100  Jungle fades in
 // 55–90   Opening logo fades out
-// 100–400 Jungle plays (playbackRate 0.55)
-// 120–180 Module name fades in
+// 120–180 Module name + hook fade in
 // 155–210 Accent line wipes in
-// 185–245 Hook line fades in
-// 330–390 Middle text + watermark fades out
-// 380–470 End card text fades in over jungle (before navy arrives)
-// 460–520 Navy background fades in (covers jungle)
-// 520–720 End card holds (200 frames = 6.7s)
+// 300–345 Module name + hook + accent fade out
+// 345–400 Sub line fades in alone (contemplative pause)
+// 460–500 Sub line fades out
+// 480–560 Jungle fades out
+// 480–535 End card text fades in over jungle
+// 550–610 Navy bg fades in
+// 610–800 End card holds (190 frames = 6.3s)
+// 760–800 Fade to black
 
 const T = {
   LOGO_OPEN_IN:   [0, 25] as [number, number],
@@ -36,30 +38,34 @@ const T = {
   LOGO_OPEN_OUT:  [55, 90] as [number, number],
 
   JUNGLE_IN:      [40, 100] as [number, number],
-  JUNGLE_OUT:     [400, 475] as [number, number],
+  JUNGLE_OUT:     [490, 560] as [number, number],
 
   TEXT_IN:        [120, 180] as [number, number],
   ACCENT_IN:      [155, 210] as [number, number],
   HOOK_IN:        [185, 245] as [number, number],
-  TEXT_OUT:       [330, 390] as [number, number],
+  TEXT_OUT:       [300, 345] as [number, number],
 
   MARK_IN:        [100, 130] as [number, number],
-  MARK_OUT:       [340, 380] as [number, number],
+  MARK_OUT:       [340, 375] as [number, number],
 
-  // End card text appears over fading jungle, before navy bg
-  END_LOGO:       [375, 430] as [number, number],
-  END_LINE1:      [395, 450] as [number, number],
-  END_DIV:        [415, 465] as [number, number],
-  END_LINE2:      [430, 480] as [number, number],
-  END_LINE3:      [450, 495] as [number, number],
+  SUBLINE_IN:     [345, 400] as [number, number],
+  SUBLINE_OUT:    [460, 500] as [number, number],
 
-  // Navy background arrives after text is already visible
-  END_BG:         [460, 520] as [number, number],
+  END_LOGO:       [475, 530] as [number, number],
+  END_LINE1:      [495, 550] as [number, number],
+  END_DIV:        [515, 560] as [number, number],
+  END_LINE2:      [530, 575] as [number, number],
+  END_LINE3:      [548, 590] as [number, number],
+
+  END_BG:         [550, 610] as [number, number],
+
+  FADE_BLACK:     [760, 800] as [number, number],
 };
 
 export interface ModuleRevealReelProps {
   moduleName?: string;
   hookLine?: string;
+  subLine?: string;
   videoFile?: string;
   musicFile?: string;
 }
@@ -67,15 +73,16 @@ export interface ModuleRevealReelProps {
 export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
   moduleName = 'LEADERSHIP ALTITUDES',
   hookLine = 'Leadership needs altitude.',
+  subLine,
   videoFile = 'clips/jungle_aerial_module.mp4',
   musicFile,
 }) => {
   const frame = useCurrentFrame();
 
-  // ── Music volume: long fade in, slow fade out ─────────────────────────────
+  // ── Music volume: smooth fade in + slow fade out ──────────────────────────
   const musicVolume = Math.min(
     interpolate(frame, [0, 90], [0, 1], clamp),
-    interpolate(frame, [660, 720], [1, 0], clamp),
+    interpolate(frame, [740, 800], [1, 0], clamp),
   );
 
   // ── Opening logo on navy ──────────────────────────────────────────────────
@@ -93,7 +100,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
     interpolate(frame, T.JUNGLE_OUT, [1, 0], clamp),
   );
 
-  // ── Middle text — simple fade ─────────────────────────────────────────────
+  // ── Module name + hook: fade in together, fade out together ───────────────
   const textFadeBase = Math.min(
     interpolate(frame, T.TEXT_IN, [0, 1], clamp),
     interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
@@ -105,6 +112,12 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
   const hookOpacity = Math.min(
     interpolate(frame, T.HOOK_IN, [0, 1], clamp),
     interpolate(frame, T.TEXT_OUT, [1, 0], clamp),
+  );
+
+  // ── Sub line: appears alone after hook fades ──────────────────────────────
+  const subLineOpacity = Math.min(
+    interpolate(frame, T.SUBLINE_IN, [0, 1], clamp),
+    interpolate(frame, T.SUBLINE_OUT, [1, 0], clamp),
   );
 
   // ── Watermark ─────────────────────────────────────────────────────────────
@@ -120,6 +133,9 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
   const endDivOpacity   = interpolate(frame, T.END_DIV, [0, 1], clamp);
   const endLine2Opacity = interpolate(frame, T.END_LINE2, [0, 1], clamp);
   const endLine3Opacity = interpolate(frame, T.END_LINE3, [0, 1], clamp);
+
+  // ── Fade to black ─────────────────────────────────────────────────────────
+  const fadeToBlack = interpolate(frame, T.FADE_BLACK, [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{backgroundColor: NAVY}}>
@@ -148,25 +164,23 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
           playbackRate={0.55}
           loop
         />
-        {/* Vignette */}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.0) 20%, rgba(0,0,0,0.55) 100%)',
         }} />
-        {/* Centre scrim */}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(180deg, rgba(27,58,107,0) 20%, rgba(27,58,107,0.35) 50%, rgba(27,58,107,0) 80%)',
         }} />
       </AbsoluteFill>
 
-      {/* ── Middle text layer ── */}
+      {/* ── Middle text: module name + hook ── */}
       <AbsoluteFill style={{zIndex: 20, pointerEvents: 'none'}}>
 
         {/* Module name */}
         <div style={{
           position: 'absolute',
-          top: '40%',
+          top: '38%',
           left: 0, right: 0,
           textAlign: 'center',
           opacity: textFadeBase,
@@ -188,7 +202,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         {/* Orange accent line */}
         <div style={{
           position: 'absolute',
-          top: 'calc(40% + 76px)',
+          top: 'calc(38% + 76px)',
           left: '50%',
           transform: `translateX(-50%) scaleX(${accentScaleX})`,
           transformOrigin: 'center',
@@ -202,7 +216,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         {/* Hook line */}
         <div style={{
           position: 'absolute',
-          top: 'calc(40% + 106px)',
+          top: 'calc(38% + 106px)',
           left: 64, right: 64,
           textAlign: 'center',
           opacity: hookOpacity,
@@ -220,19 +234,46 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
           </div>
         </div>
 
-        {/* Watermark — top right during footage */}
-        <Img
-          src={staticFile('logo-icon-dark-badge.png')}
-          style={{
+        {/* Sub line — appears alone after hook fades */}
+        {subLine && (
+          <div style={{
             position: 'absolute',
-            top: 56, right: 56,
-            height: 80, width: 'auto',
-            opacity: markOpacity,
-          }}
-        />
+            top: '45%',
+            left: 80, right: 80,
+            textAlign: 'center',
+            opacity: subLineOpacity,
+          }}>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 34,
+              fontWeight: 400,
+              fontStyle: 'italic',
+              color: OFF_WHITE,
+              lineHeight: 1.5,
+              textShadow: '0 2px 18px rgba(0,0,0,0.80)',
+            }}>
+              {subLine}
+            </div>
+          </div>
+        )}
+
+        {/* Logo icon — centred above module name, fades with text block */}
+        <div style={{
+          position: 'absolute',
+          top: '28%',
+          left: 0, right: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          opacity: textFadeBase,
+        }}>
+          <Img
+            src={staticFile('logo-icon-dark-badge.png')}
+            style={{height: 160, width: 'auto'}}
+          />
+        </div>
       </AbsoluteFill>
 
-      {/* ── End card content — fades in over jungle, before navy arrives ── */}
+      {/* ── End card content — fades in over jungle before navy arrives ── */}
       <AbsoluteFill style={{
         zIndex: 32,
         display: 'flex',
@@ -241,49 +282,45 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         justifyContent: 'center',
         pointerEvents: 'none',
       }}>
-        {/* Logo name */}
         <Img
           src={staticFile('logo-name-transp.png')}
           style={{
-            height: 120, width: 'auto',
+            height: 140, width: 'auto',
             opacity: endLogoOpacity,
             marginBottom: 52,
           }}
         />
 
-        {/* "Now available" label */}
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 18,
+          fontSize: 24,
           fontWeight: 600,
           color: OFF_WHITE,
           letterSpacing: 4,
           textTransform: 'uppercase',
           opacity: endLine1Opacity * 0.85,
-          marginBottom: 14,
+          marginBottom: 16,
           textAlign: 'center',
           textShadow: '0 2px 12px rgba(0,0,0,0.8)',
         }}>
           Now available
         </div>
 
-        {/* URL */}
         <div style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 72,
+          fontSize: 86,
           fontWeight: 700,
           color: ORANGE,
           letterSpacing: 1,
           opacity: endLine1Opacity,
           textAlign: 'center',
           lineHeight: 1,
-          marginBottom: 40,
+          marginBottom: 44,
           textShadow: '0 2px 20px rgba(0,0,0,0.7)',
         }}>
           crispyleaders.com
         </div>
 
-        {/* Divider */}
         <div style={{
           width: 200, height: 2,
           backgroundColor: OFF_WHITE,
@@ -291,16 +328,15 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
           marginBottom: 36,
         }} />
 
-        {/* Tagline lines */}
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 18,
+          fontSize: 22,
           fontWeight: 400,
           color: OFF_WHITE,
           opacity: endLine2Opacity * 0.80,
           textAlign: 'center',
           letterSpacing: 1.5,
-          marginBottom: 12,
+          marginBottom: 14,
           textShadow: '0 2px 8px rgba(0,0,0,0.6)',
         }}>
           A Christian leadership development platform.
@@ -308,7 +344,7 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
 
         <div style={{
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: 18,
+          fontSize: 22,
           fontWeight: 600,
           color: ORANGE,
           opacity: endLine3Opacity,
@@ -326,12 +362,20 @@ export const ModuleRevealReel: React.FC<ModuleRevealReelProps> = ({
         backgroundColor: NAVY,
         opacity: endBgOpacity,
       }}>
-        {/* Orange top bar */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0,
           height: 6, backgroundColor: ORANGE,
         }} />
       </AbsoluteFill>
+
+      {/* ── Fade to black ── */}
+      {fadeToBlack > 0 && (
+        <AbsoluteFill style={{
+          zIndex: 50,
+          backgroundColor: '#000000',
+          opacity: fadeToBlack,
+        }} />
+      )}
     </AbsoluteFill>
   );
 };
