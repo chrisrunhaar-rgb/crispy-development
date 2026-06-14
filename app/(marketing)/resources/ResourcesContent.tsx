@@ -25,11 +25,26 @@ const MODULE_TYPE_COLORS: Record<string, string> = {
   "Deep Dive":       "oklch(40% 0.15 10)",
 };
 
+const MODULE_TYPE_LABELS_ID: Record<string, string> = {
+  "Assessment":      "Asesmen",
+  "Self Evaluation": "Evaluasi Diri",
+  "Thinking Tool":   "Alat Berpikir",
+  "Guide":           "Panduan",
+  "Deep Dive":       "Kajian Mendalam",
+};
+
 const FORMAT_COLORS: Record<string, string> = {
   Article: "oklch(42% 0.14 260)",
   Assessment: "oklch(44% 0.14 300)",
   Worksheet: "oklch(46% 0.16 145)",
   Guide: "oklch(65% 0.15 45)",
+};
+
+const FORMAT_LABELS_ID: Record<string, string> = {
+  "Assessment": "Asesmen",
+  "Guide":      "Panduan",
+  "Worksheet":  "Lembar Kerja",
+  "Article":    "Artikel",
 };
 
 const SECTION_ORDER = [
@@ -111,6 +126,7 @@ function ResourceTile({
       : (lang === "id" ? "SEGERA" : "COMING SOON");
 
   const cleanTime = resource.time.replace(/\s*\+\s*quiz/gi, "");
+  const displayTime = lang === "id" ? cleanTime.replace(/\bmin\b/, "mnt") : cleanTime;
 
   const inner = (
     <div
@@ -200,7 +216,7 @@ function ResourceTile({
             fontWeight: 600,
             flexShrink: 0,
           }}>
-            {cleanTime}
+            {displayTime}
           </span>
           {!(types.length > 0 && MODULE_TYPE_COLORS[resource.format]) && (
             <span style={{
@@ -215,7 +231,7 @@ function ResourceTile({
               background: "oklch(93% 0.005 80)",
               flexShrink: 0,
             }}>
-              {resource.format}
+              {lang === "id" ? (FORMAT_LABELS_ID[resource.format] ?? resource.format) : resource.format}
             </span>
           )}
           {types.map(type => {
@@ -234,7 +250,7 @@ function ResourceTile({
                 borderRadius: 999,
                 flexShrink: 0,
               }}>
-                {type}
+                {lang === "id" ? (MODULE_TYPE_LABELS_ID[type] ?? type) : type}
               </span>
             );
           })}
