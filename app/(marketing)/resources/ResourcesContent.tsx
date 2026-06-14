@@ -17,34 +17,28 @@ interface Props {
   moduleFormats?: Record<string, string[]>;
 }
 
-const MODULE_TYPE_COLORS: Record<string, string> = {
+const TYPE_COLORS: Record<string, string> = {
   "Assessment":      "oklch(52% 0.15 280)",
   "Self Evaluation": "oklch(42% 0.14 170)",
   "Thinking Tool":   "oklch(40% 0.14 230)",
   "Guide":           "oklch(48% 0.15 45)",
   "Deep Dive":       "oklch(40% 0.15 10)",
+  "Worksheet":       "oklch(46% 0.16 145)",
+  "Article":         "oklch(42% 0.14 260)",
+  "Interactive":     "oklch(45% 0.14 200)",
+  "Video":           "oklch(45% 0.15 30)",
 };
 
-const MODULE_TYPE_LABELS_ID: Record<string, string> = {
+const TYPE_LABELS_ID: Record<string, string> = {
   "Assessment":      "Asesmen",
   "Self Evaluation": "Evaluasi Diri",
   "Thinking Tool":   "Alat Berpikir",
   "Guide":           "Panduan",
   "Deep Dive":       "Kajian Mendalam",
-};
-
-const FORMAT_COLORS: Record<string, string> = {
-  Article: "oklch(42% 0.14 260)",
-  Assessment: "oklch(44% 0.14 300)",
-  Worksheet: "oklch(46% 0.16 145)",
-  Guide: "oklch(65% 0.15 45)",
-};
-
-const FORMAT_LABELS_ID: Record<string, string> = {
-  "Assessment": "Asesmen",
-  "Guide":      "Panduan",
-  "Worksheet":  "Lembar Kerja",
-  "Article":    "Artikel",
+  "Worksheet":       "Lembar Kerja",
+  "Article":         "Artikel",
+  "Interactive":     "Interaktif",
+  "Video":           "Video",
 };
 
 const SECTION_ORDER = [
@@ -110,6 +104,7 @@ function ResourceTile({
   const isClickable =
     !!resource.slug && (access === "live_free" || access === "live_paid");
   const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
+  const displayTypes = types.length > 0 ? types : [resource.format];
 
   const barColor =
     access === "live_free"
@@ -218,25 +213,8 @@ function ResourceTile({
           }}>
             {displayTime}
           </span>
-          {!(types.length > 0 && MODULE_TYPE_COLORS[resource.format]) && (
-            <span style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.55rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
-              padding: "1px 6px",
-              borderRadius: 999,
-              background: "oklch(93% 0.005 80)",
-              flexShrink: 0,
-            }}>
-              {lang === "id" ? (FORMAT_LABELS_ID[resource.format] ?? resource.format) : resource.format}
-            </span>
-          )}
-          {types.map(type => {
-            const color = MODULE_TYPE_COLORS[type];
-            if (!color) return null;
+          {displayTypes.map(type => {
+            const color = TYPE_COLORS[type] ?? "oklch(42% 0.08 260)";
             return (
               <span key={type} style={{
                 fontFamily: "var(--font-montserrat)",
@@ -250,7 +228,7 @@ function ResourceTile({
                 borderRadius: 999,
                 flexShrink: 0,
               }}>
-                {lang === "id" ? (MODULE_TYPE_LABELS_ID[type] ?? type) : type}
+                {lang === "id" ? (TYPE_LABELS_ID[type] ?? type) : type}
               </span>
             );
           })}
