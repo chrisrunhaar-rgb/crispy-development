@@ -17,12 +17,12 @@ interface Props {
   moduleFormats?: Record<string, string[]>;
 }
 
-const MODULE_TYPE_COLORS: Record<string, { color: string; bg: string }> = {
-  "Assessment":      { color: "oklch(52% 0.15 280)", bg: "oklch(95% 0.02 280)" },
-  "Self Evaluation": { color: "oklch(42% 0.14 170)", bg: "oklch(95% 0.02 170)" },
-  "Thinking Tool":   { color: "oklch(40% 0.14 230)", bg: "oklch(95% 0.02 230)" },
-  "Guide":           { color: "oklch(48% 0.15 45)",  bg: "oklch(95% 0.02 45)"  },
-  "Deep Dive":       { color: "oklch(40% 0.15 10)",  bg: "oklch(95% 0.02 10)"  },
+const MODULE_TYPE_COLORS: Record<string, string> = {
+  "Assessment":      "oklch(52% 0.15 280)",
+  "Self Evaluation": "oklch(42% 0.14 170)",
+  "Thinking Tool":   "oklch(40% 0.14 230)",
+  "Guide":           "oklch(48% 0.15 45)",
+  "Deep Dive":       "oklch(40% 0.15 10)",
 };
 
 const FORMAT_COLORS: Record<string, string> = {
@@ -195,6 +195,15 @@ function ResourceTile({
         }}>
           <span style={{
             fontFamily: "var(--font-montserrat)",
+            fontSize: "0.65rem",
+            color: "oklch(55% 0.008 260)",
+            fontWeight: 600,
+            flexShrink: 0,
+          }}>
+            {cleanTime}
+          </span>
+          <span style={{
+            fontFamily: "var(--font-montserrat)",
             fontSize: "0.55rem",
             fontWeight: 700,
             letterSpacing: "0.08em",
@@ -207,28 +216,19 @@ function ResourceTile({
           }}>
             {resource.format}
           </span>
-          <span style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.65rem",
-            color: "oklch(55% 0.008 260)",
-            fontWeight: 600,
-            flexShrink: 0,
-          }}>
-            {cleanTime}
-          </span>
           {types.map(type => {
-            const cfg = MODULE_TYPE_COLORS[type];
-            if (!cfg) return null;
+            const color = MODULE_TYPE_COLORS[type];
+            if (!color) return null;
             return (
               <span key={type} style={{
                 fontFamily: "var(--font-montserrat)",
-                fontSize: "0.5rem",
+                fontSize: "0.55rem",
                 fontWeight: 700,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: cfg.color,
-                background: cfg.bg,
-                padding: "1px 5px",
+                color,
+                background: "oklch(93% 0.005 80)",
+                padding: "1px 6px",
                 borderRadius: 999,
                 flexShrink: 0,
               }}>
