@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { setPersonalLanguage } from "@/app/(app)/dashboard/actions";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -13,20 +13,15 @@ const LANGS = [
 type Lang = "en" | "id";
 
 export default function PersonalLanguageSelector({ currentLanguage, compact = false }: { currentLanguage: Lang; compact?: boolean }) {
-  const [optimisticLang, setOptimisticLang] = useState<Lang>(currentLanguage);
   const [isPending, startTransition] = useTransition();
-  const { setLang } = useLanguage();
+  const { lang, setLang } = useLanguage();
   const router = useRouter();
 
-  function handleChange(lang: Lang) {
-    if (lang === optimisticLang || isPending) return;
-    setOptimisticLang(lang);
-    // Update LanguageContext immediately so client-rendered pages (homepage,
-    // marketing) switch without a reload — this also writes the crispy-lang
-    // cookie and localStorage.
-    setLang(lang);
+  function handleChange(newLang: Lang) {
+    if (newLang === lang || isPending) return;
+    setLang(newLang);
     const formData = new FormData();
-    formData.set("language", lang);
+    formData.set("language", newLang);
     startTransition(async () => {
       await setPersonalLanguage(formData);
       // Re-render server components that read user_metadata.language_preference
@@ -51,7 +46,7 @@ export default function PersonalLanguageSelector({ currentLanguage, compact = fa
       )}
       <div style={{ display: "inline-flex", background: "oklch(18% 0.09 260)", borderRadius: 999, padding: "4px", gap: "2px", boxShadow: "inset 0 1px 3px oklch(10% 0.05 260 / 0.4)", opacity: isPending ? 0.7 : 1, transition: "opacity 0.15s" }}>
         {LANGS.map(({ code, label, full }) => {
-          const isActive = optimisticLang === code;
+          const isActive = lang === code;
           return (
             <button
               key={code}
