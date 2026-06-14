@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useTransition } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard } from "../actions";
+import LangToggle from "@/components/LangToggle";
 
 function L<T>(lang: string, en: T, id: T): T {
   return lang === "id" ? id : en;
@@ -1121,6 +1122,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
 
   return (
     <div style={{ fontFamily: "'Montserrat', sans-serif", background: OFF_WHITE, minHeight: "100vh" }}>
+      <LangToggle />
       <style>{`
         .concept-card-grid { grid-template-columns: repeat(2, 1fr); }
         @media (max-width: 640px) { .concept-card-grid { grid-template-columns: 1fr; } }

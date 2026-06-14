@@ -249,10 +249,10 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
   return (
     <div style={{ fontFamily: montserrat, background: offWhite, minHeight: "100vh" }}>
+      <LangToggle />
 
       {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center" }}>
-        <LangToggle />
 
         <p style={{
           color: orange,
