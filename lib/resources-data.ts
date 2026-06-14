@@ -798,9 +798,9 @@ export const RESOURCES: Resource[] = [
   {
     id: "karunia-rohani",
     slug: "karunia-rohani",
-    title: "Karunia Rohani (Spiritual Gifts)",
+    title: "Spiritual Gifts",
     titleId: "Karunia Rohani",
-    titleNl: "Karunia Rohani (Geestelijke Gaven)",
+    titleNl: "Spiritual Gifts",
     description: "Identify your spiritual gifts and discover how your unique God-given abilities contribute to community, ministry, and Kingdom work.",
     descriptionId: "Temukan karunia rohani Anda dan bagaimana kemampuan unik yang Tuhan berikan berkontribusi pada komunitas, pelayanan, dan pekerjaan Kerajaan Allah.",
     descriptionNl: "Identificeer je geestelijke gaven en ontdek hoe je unieke door God gegeven vermogens bijdragen aan gemeenschap, bediening en Koninkrijkswerk.",
