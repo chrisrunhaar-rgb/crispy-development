@@ -159,7 +159,7 @@ export const translations = {
     resources: {
       label: "Resources",
       h1: "Training modules for\ncross-cultural leaders.",
-      tagline: "53 self-paced training modules covering the leadership, cultural, and personal challenges that field workers face every day.",
+      tagline: "Self-paced training modules covering the leadership, cultural, and personal challenges that cross cultural leaders face every day.",
       freeLabel: "Free Resources",
       memberLabel: "Member Resources",
       membersOnly: "Members only",

@@ -400,16 +400,6 @@ export default function ResourcesContent({
                     }}>
                       {lang === "id" ? section.labelId : section.label}
                     </span>
-                    <span style={{
-                      fontFamily: "var(--font-montserrat)",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: "oklch(62% 0.008 260)",
-                    }}>
-                      {sectionResources.length} {lang === "id" ? "sumber daya" : sectionResources.length === 1 ? "resource" : "resources"}
-                    </span>
                   </div>
                   <span style={{
                     fontFamily: "var(--font-montserrat)",
@@ -551,8 +541,8 @@ export default function ResourcesContent({
               </h2>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.7, color: "oklch(72% 0.04 260)", marginBottom: "2rem", maxWidth: "44ch" }}>
                 {lang === "id"
-                  ? "53 modul pelatihan mandiri untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
-                  : "53 self-paced training modules for Christian cross-cultural leaders. Apply to join."}
+                  ? "Modul pelatihan mandiri untuk pemimpin Kristen lintas budaya. Daftar untuk bergabung."
+                  : "Self-paced training modules for Christian cross-cultural leaders. Apply to join."}
               </p>
               <Link href="/membership" className="btn-primary" style={{ display: "inline-flex" }}>
                 {lang === "id" ? "Daftar keanggotaan →" : "Apply for membership →"}
