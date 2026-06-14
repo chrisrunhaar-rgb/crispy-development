@@ -20,13 +20,15 @@ export default async function ResourcesPage() {
   const admin = createAdminClient();
   const { data: statusRows } = await admin
     .from("module_status")
-    .select("slug, status, library_category");
+    .select("slug, status, library_category, module_formats");
 
   const moduleStatuses: Record<string, string> = {};
   const moduleCategories: Record<string, string> = {};
+  const moduleFormats: Record<string, string[]> = {};
   for (const row of statusRows ?? []) {
     moduleStatuses[row.slug] = row.status;
     if (row.library_category) moduleCategories[row.slug] = row.library_category;
+    if (Array.isArray(row.module_formats) && row.module_formats.length > 0) moduleFormats[row.slug] = row.module_formats;
   }
 
   return (
@@ -37,6 +39,7 @@ export default async function ResourcesPage() {
       savedResources={savedResources}
       moduleStatuses={moduleStatuses}
       moduleCategories={moduleCategories}
+      moduleFormats={moduleFormats}
     />
   );
 }

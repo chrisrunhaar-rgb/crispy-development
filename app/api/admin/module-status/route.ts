@@ -18,13 +18,13 @@ export async function PATCH(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { slug, status, library_category } = body as { slug?: string; status?: string; library_category?: string };
+  const { slug, status, library_category, module_formats } = body as { slug?: string; status?: string; library_category?: string; module_formats?: string[] };
 
   if (!slug || typeof slug !== "string") {
     return NextResponse.json({ error: "slug required" }, { status: 400 });
   }
-  if (status === undefined && library_category === undefined) {
-    return NextResponse.json({ error: "at least one of status or library_category required" }, { status: 400 });
+  if (status === undefined && library_category === undefined && module_formats === undefined) {
+    return NextResponse.json({ error: "at least one of status, library_category, or module_formats required" }, { status: 400 });
   }
   if (status !== undefined && !VALID_STATUSES.includes(status as ModuleStatus)) {
     return NextResponse.json({ error: "status must be development | live_free | live_paid" }, { status: 400 });
@@ -33,9 +33,10 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "invalid library_category value" }, { status: 400 });
   }
 
-  const upsertPayload: Record<string, string | null> = { slug, updated_at: new Date().toISOString() };
+  const upsertPayload: Record<string, string | null | string[]> = { slug, updated_at: new Date().toISOString() };
   if (status !== undefined) upsertPayload.status = status;
   if (library_category !== undefined) upsertPayload.library_category = library_category === "" ? null : library_category;
+  if (module_formats !== undefined) upsertPayload.module_formats = module_formats;
 
   const admin = createAdminClient();
   const { error } = await admin
@@ -46,7 +47,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ slug, status, library_category });
+  return NextResponse.json({ slug, status, library_category, module_formats });
 }
 
 export async function GET() {
@@ -58,7 +59,7 @@ export async function GET() {
   }
 
   const admin = createAdminClient();
-  const { data, error } = await admin.from("module_status").select("slug, status, library_category, updated_at").order("slug");
+  const { data, error } = await admin.from("module_status").select("slug, status, library_category, module_formats, updated_at").order("slug");
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

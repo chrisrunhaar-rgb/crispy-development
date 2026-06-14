@@ -197,6 +197,7 @@ export default async function AdminPage({
   const contentReadCounts = new Map<string, number>();
   const moduleStatuses: Record<string, string> = {};
   const moduleCats: Record<string, string> = {};
+  const moduleFormats: Record<string, string[]> = {};
   const moduleUpdated: Record<string, string> = {};
   if (activeTab === "content") {
     allUsers.forEach(u => {
@@ -214,10 +215,11 @@ export default async function AdminPage({
       }
     });
     const adminClient = createAdminClient();
-    const { data: statusRows } = await adminClient.from("module_status").select("slug, status, library_category, updated_at");
+    const { data: statusRows } = await adminClient.from("module_status").select("slug, status, library_category, module_formats, updated_at");
     for (const row of statusRows ?? []) {
       if (row.status) moduleStatuses[row.slug] = row.status;
       if (row.library_category) moduleCats[row.slug] = row.library_category;
+      if (Array.isArray(row.module_formats) && row.module_formats.length > 0) moduleFormats[row.slug] = row.module_formats;
       if (row.updated_at) moduleUpdated[row.slug] = row.updated_at;
     }
   }
@@ -610,6 +612,7 @@ export default async function AdminPage({
             }))}
             moduleStatuses={moduleStatuses}
             moduleCats={moduleCats}
+            moduleFormats={moduleFormats}
           />
         )}
 

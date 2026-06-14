@@ -16,7 +16,17 @@ interface ContentModule {
   saves?: number;
   status?: string;
   library_category?: string;
+  module_formats?: string[];
 }
+
+const MODULE_TYPE_CONFIG: Record<string, { color: string; bg: string; border: string }> = {
+  "Assessment":      { color: "oklch(60% 0.15 280)", bg: "oklch(96% 0.02 280)", border: "oklch(75% 0.10 280)" },
+  "Self Evaluation": { color: "oklch(48% 0.14 170)", bg: "oklch(96% 0.02 170)", border: "oklch(72% 0.10 170)" },
+  "Thinking Tool":   { color: "oklch(45% 0.14 230)", bg: "oklch(96% 0.02 230)", border: "oklch(70% 0.10 230)" },
+  "Guide":           { color: "oklch(52% 0.15 45)",  bg: "oklch(96% 0.02 45)",  border: "oklch(75% 0.10 45)"  },
+  "Deep Dive":       { color: "oklch(45% 0.15 10)",  bg: "oklch(96% 0.02 10)",  border: "oklch(70% 0.10 10)"  },
+};
+const MODULE_TYPES = ["Assessment", "Self Evaluation", "Thinking Tool", "Guide", "Deep Dive"] as const;
 
 type SortColumn = 'title' | 'category' | 'created' | 'updated' | 'languages' | 'reads' | 'saves';
 type SortDirection = 'asc' | 'desc';
@@ -27,6 +37,7 @@ interface AdminContentTableProps {
   onExport?: (modules: ContentModule[]) => void;
   onStatusChange?: (slug: string, status: string) => Promise<void>;
   onCategoryChange?: (slug: string, category: string) => Promise<void>;
+  onFormatChange?: (slug: string, formats: string[]) => Promise<void>;
   showSearch?: boolean;
   showFilters?: boolean;
 }
@@ -52,6 +63,7 @@ export default function AdminContentTable({
   onExport,
   onStatusChange,
   onCategoryChange,
+  onFormatChange,
   showSearch = true,
   showFilters = true,
 }: AdminContentTableProps) {
@@ -415,22 +427,25 @@ export default function AdminContentTable({
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('languages')}>
                   Languages <SortIcon column="languages" />
                 </th>
-                <th style={{ width: '18%' }}>
+                <th style={{ width: '16%' }}>
                   Status
                 </th>
-                <th style={{ width: '13%' }}>
+                <th style={{ width: '11%' }}>
                   Lib Cat
                 </th>
-                <th style={{ width: '8%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
+                <th style={{ width: '18%' }}>
+                  Types
+                </th>
+                <th style={{ width: '6%', cursor: 'pointer' }} onClick={() => handleSort('reads')}>
                   Reads <SortIcon column="reads" />
                 </th>
-                <th style={{ width: '8%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
+                <th style={{ width: '6%', cursor: 'pointer' }} onClick={() => handleSort('saves')}>
                   Saves <SortIcon column="saves" />
                 </th>
-                <th style={{ width: '12%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
+                <th style={{ width: '10%', cursor: 'pointer' }} onClick={() => handleSort('updated')}>
                   Updated <SortIcon column="updated" />
                 </th>
-                <th style={{ width: '5%', textAlign: 'center' }}>
+                <th style={{ width: '4%', textAlign: 'center' }}>
                   View
                 </th>
               </tr>
@@ -540,6 +555,50 @@ export default function AdminContentTable({
                       <option value="faith-calling">Faith &amp; Calling</option>
                       <option value="self-care">Self-Care</option>
                     </select>
+                  </td>
+                  <td data-label="Types" style={{ verticalAlign: 'top', paddingTop: '8px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                      {MODULE_TYPES.map(type => {
+                        const cfg = MODULE_TYPE_CONFIG[type];
+                        const active = (module.module_formats ?? []).includes(type);
+                        return (
+                          <label
+                            key={type}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              cursor: onFormatChange ? 'pointer' : 'default',
+                              userSelect: 'none',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={active}
+                              onChange={() => {
+                                if (!onFormatChange) return;
+                                const current = module.module_formats ?? [];
+                                const next = active
+                                  ? current.filter(f => f !== type)
+                                  : [...current, type];
+                                onFormatChange(module.slug, next);
+                              }}
+                              style={{ width: '12px', height: '12px', accentColor: cfg.color, cursor: 'pointer', flexShrink: 0 }}
+                              aria-label={`${type} for ${module.title}`}
+                            />
+                            <span style={{
+                              fontFamily: 'var(--font-montserrat)',
+                              fontSize: '0.6rem',
+                              fontWeight: active ? 700 : 400,
+                              color: active ? cfg.color : '#9CA3AF',
+                              letterSpacing: '0.03em',
+                            }}>
+                              {type}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
                   </td>
                   <td data-label="Reads" style={{ textAlign: 'center' }}>
                     <span style={{ fontWeight: '500', color: (module.reads ?? 0) > 0 ? '#1F2937' : '#9CA3AF' }}>

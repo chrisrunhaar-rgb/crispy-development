@@ -14,7 +14,16 @@ interface Props {
   savedResources?: string[];
   moduleStatuses?: Record<string, string>;
   moduleCategories?: Record<string, string>;
+  moduleFormats?: Record<string, string[]>;
 }
+
+const MODULE_TYPE_COLORS: Record<string, { color: string; bg: string }> = {
+  "Assessment":      { color: "oklch(52% 0.15 280)", bg: "oklch(95% 0.02 280)" },
+  "Self Evaluation": { color: "oklch(42% 0.14 170)", bg: "oklch(95% 0.02 170)" },
+  "Thinking Tool":   { color: "oklch(40% 0.14 230)", bg: "oklch(95% 0.02 230)" },
+  "Guide":           { color: "oklch(48% 0.15 45)",  bg: "oklch(95% 0.02 45)"  },
+  "Deep Dive":       { color: "oklch(40% 0.15 10)",  bg: "oklch(95% 0.02 10)"  },
+};
 
 const FORMAT_COLORS: Record<string, string> = {
   Article: "oklch(42% 0.14 260)",
@@ -62,6 +71,7 @@ function ResourceTile({
   resource,
   userId,
   moduleStatuses,
+  moduleFormats,
   localSaved,
   pendingSlug,
   onAddToDashboard,
@@ -72,6 +82,7 @@ function ResourceTile({
   resource: Resource;
   userId: string | null;
   moduleStatuses: Record<string, string>;
+  moduleFormats: Record<string, string[]>;
   localSaved: Set<string>;
   pendingSlug: string | null;
   onAddToDashboard: (slug: string, e: React.MouseEvent) => void;
@@ -83,6 +94,7 @@ function ResourceTile({
   const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
   const isClickable =
     !!resource.slug && (access === "live_free" || access === "live_paid");
+  const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
 
   const barColor =
     access === "live_free"
@@ -179,6 +191,7 @@ function ResourceTile({
           alignItems: "center",
           gap: "0.5rem",
           marginTop: "0.3rem",
+          flexWrap: "wrap",
         }}>
           <span style={{
             fontFamily: "var(--font-montserrat)",
@@ -199,9 +212,30 @@ function ResourceTile({
             fontSize: "0.65rem",
             color: "oklch(55% 0.008 260)",
             fontWeight: 600,
+            flexShrink: 0,
           }}>
             {cleanTime}
           </span>
+          {types.map(type => {
+            const cfg = MODULE_TYPE_COLORS[type];
+            if (!cfg) return null;
+            return (
+              <span key={type} style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.5rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: cfg.color,
+                background: cfg.bg,
+                padding: "1px 5px",
+                borderRadius: 999,
+                flexShrink: 0,
+              }}>
+                {type}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -228,6 +262,7 @@ export default function ResourcesContent({
   savedResources = [],
   moduleStatuses = {},
   moduleCategories = {},
+  moduleFormats = {},
 }: Props) {
   const { t, lang } = useLanguage();
   const r = t.resources;
@@ -399,6 +434,7 @@ export default function ResourcesContent({
                           resource={resource}
                           userId={userId}
                           moduleStatuses={moduleStatuses}
+                          moduleFormats={moduleFormats}
                           localSaved={localSaved}
                           pendingSlug={pendingSlug}
                           onAddToDashboard={handleAddToDashboard}

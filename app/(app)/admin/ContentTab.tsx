@@ -17,20 +17,23 @@ interface ContentModule {
   saves?: number;
   status?: string;
   library_category?: string;
+  module_formats?: string[];
 }
 
 interface ContentTabProps {
   modules: ContentModule[];
   moduleStatuses?: Record<string, string>;
   moduleCats?: Record<string, string>;
+  moduleFormats?: Record<string, string[]>;
 }
 
-export default function ContentTab({ modules, moduleStatuses = {}, moduleCats = {} }: ContentTabProps) {
+export default function ContentTab({ modules, moduleStatuses = {}, moduleCats = {}, moduleFormats = {} }: ContentTabProps) {
   const { toasts, dismissToast, success, error } = useToast();
   const [statuses, setStatuses] = useState<Record<string, string>>(moduleStatuses);
   const [cats, setCats] = useState<Record<string, string>>(moduleCats);
+  const [formats, setFormats] = useState<Record<string, string[]>>(moduleFormats);
 
-  const contentModules = modules.map(m => ({ ...m, status: statuses[m.slug] ?? 'development', library_category: cats[m.slug] ?? undefined }));
+  const contentModules = modules.map(m => ({ ...m, status: statuses[m.slug] ?? 'development', library_category: cats[m.slug] ?? undefined, module_formats: formats[m.slug] ?? [] }));
 
   const handleArchiveMultiple = async (slugs: string[]) => {
     try {
@@ -90,6 +93,23 @@ export default function ContentTab({ modules, moduleStatuses = {}, moduleCats = 
     }
   };
 
+  const handleFormatChange = async (slug: string, module_formats: string[]) => {
+    const prev = formats[slug];
+    setFormats(s => ({ ...s, [slug]: module_formats }));
+    try {
+      const res = await fetch('/api/admin/module-status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug, module_formats }),
+      });
+      if (!res.ok) throw new Error('Failed');
+      success(`${slug}: types updated`);
+    } catch {
+      setFormats(s => ({ ...s, [slug]: prev ?? [] }));
+      error(`Failed to update ${slug}`);
+    }
+  };
+
   const sectionHeading: React.CSSProperties = {
     fontFamily: 'var(--font-montserrat)',
     fontWeight: 700,
@@ -111,6 +131,7 @@ export default function ContentTab({ modules, moduleStatuses = {}, moduleCats = 
           onExport={handleExport}
           onStatusChange={handleStatusChange}
           onCategoryChange={handleCategoryChange}
+          onFormatChange={handleFormatChange}
           showSearch={true}
           showFilters={true}
         />
