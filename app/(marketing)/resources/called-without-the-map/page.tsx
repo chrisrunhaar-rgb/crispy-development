@@ -1,0 +1,78 @@
+import { Metadata } from "next";
+import Script from "next/script";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { requireModuleAccess } from "@/lib/require-module-access";
+import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
+import Breadcrumb from "@/components/Breadcrumb";
+import RelatedResources from "@/components/RelatedResources";
+import ModuleComments from "@/components/ModuleComments";
+import CalledWithoutMapClient from "./CalledWithoutMapClient";
+
+export const dynamic = "force-dynamic";
+
+const RESOURCE_SLUG = "called-without-the-map";
+
+export const metadata = generateResourceMetadata(RESOURCE_SLUG);
+
+export default async function ResourcePage(props: any) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG, user?.email ?? null);
+
+  const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
+  const isSaved = savedResources.includes(RESOURCE_SLUG);
+
+  const breadcrumbSchema = generateResourceBreadcrumbSchema(RESOURCE_SLUG);
+
+  return (
+    <>
+      <Script
+        id={`breadcrumb-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <Script
+        id={`article-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateResourceArticleSchema(RESOURCE_SLUG)),
+        }}
+      />
+      <Script
+        id="sl-called-without-map-ga-tracking"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `window.gtag?.('event', 'resource_viewed', { resource: '${RESOURCE_SLUG}', category: 'faith-calling' });`,
+        }}
+      />
+
+      <div className="bg-gray-50 border-b border-gray-200 py-3 sticky top-0 z-10">
+        <div className="container-wide">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Resources", href: "/resources" },
+              { label: "Called Without the Map" },
+            ]}
+          />
+        </div>
+      </div>
+
+      <CalledWithoutMapClient {...props} isSaved={isSaved} />
+      <div className="border-t border-gray-100 py-10">
+        <div className="container-wide">
+          <ModuleComments slug="called-without-the-map" />
+        </div>
+      </div>
+
+      <div className="bg-gray-50 border-t border-gray-200 py-12">
+        <div className="container-wide">
+          <RelatedResources slug="called-without-the-map" />
+        </div>
+      </div>
+    </>
+  );
+}
