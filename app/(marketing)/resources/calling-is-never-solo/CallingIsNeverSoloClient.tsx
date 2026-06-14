@@ -86,8 +86,9 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
       <LangToggle />
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+      <div style={{ background: navy, padding: "88px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/calling-is-never-solo/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center", position: "relative" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Faith & Calling — Guide", "Iman & Panggilan — Panduan")}
           </p>
