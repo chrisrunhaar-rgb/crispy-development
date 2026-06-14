@@ -5,6 +5,114 @@ import Link from 'next/link';
 import { BulkActionsBar } from './BulkActionsBar';
 import { exportSingleRow } from '@/lib/admin-export';
 
+function TypesDropdown({
+  moduleTitle,
+  active,
+  onChange,
+}: {
+  moduleTitle: string;
+  active: string[];
+  onChange?: (next: string[]) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  const toggle = (type: string) => {
+    if (!onChange) return;
+    const next = active.includes(type) ? active.filter(t => t !== type) : [...active, type];
+    onChange(next);
+  };
+
+  return (
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          fontFamily: 'var(--font-montserrat)',
+          fontSize: '0.7rem',
+          fontWeight: 500,
+          padding: '3px 8px 3px 6px',
+          border: '1px solid #E5E7EB',
+          borderRadius: '4px',
+          background: 'white',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+          whiteSpace: 'nowrap',
+          minWidth: '90px',
+        }}
+        aria-label={`Types for ${moduleTitle}`}
+      >
+        {active.length === 0 ? (
+          <span style={{ color: '#9CA3AF' }}>— none —</span>
+        ) : (
+          <span style={{ color: '#374151' }}>{active.length === 1 ? active[0] : `${active.length} types`}</span>
+        )}
+        <span style={{ marginLeft: 'auto', color: '#6B7280', fontSize: '0.6rem' }}>▾</span>
+      </button>
+      {open && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% + 2px)',
+          left: 0,
+          zIndex: 100,
+          background: 'white',
+          border: '1px solid #E5E7EB',
+          borderRadius: '6px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          padding: '4px 0',
+          minWidth: '160px',
+        }}>
+          {MODULE_TYPES.map(type => {
+            const cfg = MODULE_TYPE_CONFIG[type];
+            const checked = active.includes(type);
+            return (
+              <label
+                key={type}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '5px 12px',
+                  cursor: 'pointer',
+                  background: checked ? cfg.bg : 'transparent',
+                  transition: 'background 0.1s',
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggle(type)}
+                  style={{ accentColor: cfg.color, width: '13px', height: '13px', flexShrink: 0 }}
+                  aria-label={type}
+                />
+                <span style={{
+                  fontFamily: 'var(--font-montserrat)',
+                  fontSize: '0.72rem',
+                  fontWeight: checked ? 700 : 400,
+                  color: checked ? cfg.color : '#374151',
+                }}>
+                  {type}
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface ContentModule {
   slug: string;
   title: string;
@@ -418,11 +526,8 @@ export default function AdminContentTable({
                     style={{ width: '18px', height: '18px', cursor: 'pointer' }}
                   />
                 </th>
-                <th style={{ width: '27%', cursor: 'pointer' }} onClick={() => handleSort('title')}>
+                <th style={{ width: '30%', cursor: 'pointer' }} onClick={() => handleSort('title')}>
                   Title <SortIcon column="title" />
-                </th>
-                <th style={{ width: '18%', cursor: 'pointer' }} onClick={() => handleSort('category')}>
-                  Category <SortIcon column="category" />
                 </th>
                 <th style={{ width: '14%', cursor: 'pointer' }} onClick={() => handleSort('languages')}>
                   Languages <SortIcon column="languages" />
@@ -473,9 +578,6 @@ export default function AdminContentTable({
                   </td>
                   <td data-label="Title">
                     <span style={{ fontWeight: '500', color: '#1F2937' }}>{module.title}</span>
-                  </td>
-                  <td data-label="Category">
-                    <span style={{ fontSize: '0.875rem', color: '#6B7280' }}>{module.category}</span>
                   </td>
                   <td data-label="Languages">
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -556,49 +658,12 @@ export default function AdminContentTable({
                       <option value="self-care">Self-Care</option>
                     </select>
                   </td>
-                  <td data-label="Types" style={{ verticalAlign: 'top', paddingTop: '8px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                      {MODULE_TYPES.map(type => {
-                        const cfg = MODULE_TYPE_CONFIG[type];
-                        const active = (module.module_formats ?? []).includes(type);
-                        return (
-                          <label
-                            key={type}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '5px',
-                              cursor: onFormatChange ? 'pointer' : 'default',
-                              userSelect: 'none',
-                            }}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={active}
-                              onChange={() => {
-                                if (!onFormatChange) return;
-                                const current = module.module_formats ?? [];
-                                const next = active
-                                  ? current.filter(f => f !== type)
-                                  : [...current, type];
-                                onFormatChange(module.slug, next);
-                              }}
-                              style={{ width: '12px', height: '12px', accentColor: cfg.color, cursor: 'pointer', flexShrink: 0 }}
-                              aria-label={`${type} for ${module.title}`}
-                            />
-                            <span style={{
-                              fontFamily: 'var(--font-montserrat)',
-                              fontSize: '0.6rem',
-                              fontWeight: active ? 700 : 400,
-                              color: active ? cfg.color : '#9CA3AF',
-                              letterSpacing: '0.03em',
-                            }}>
-                              {type}
-                            </span>
-                          </label>
-                        );
-                      })}
-                    </div>
+                  <td data-label="Types" style={{ verticalAlign: 'middle' }}>
+                    <TypesDropdown
+                      moduleTitle={module.title}
+                      active={module.module_formats ?? []}
+                      onChange={onFormatChange ? (next) => onFormatChange(module.slug, next) : undefined}
+                    />
                   </td>
                   <td data-label="Reads" style={{ textAlign: 'center' }}>
                     <span style={{ fontWeight: '500', color: (module.reads ?? 0) > 0 ? '#1F2937' : '#9CA3AF' }}>

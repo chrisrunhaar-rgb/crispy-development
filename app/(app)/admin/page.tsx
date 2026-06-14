@@ -337,7 +337,7 @@ export default async function AdminPage({
         </div>
       </div>
 
-      <div className="container-wide" style={{ paddingBlock: "3rem", display: "flex", flexDirection: "column", gap: "3rem" }}>
+      <div style={{ paddingBlock: "3rem", paddingInline: "2rem", display: "flex", flexDirection: "column", gap: "3rem", width: "100%" }}>
 
         {/* â"€â"€ MEMBERS TAB â"€â"€ */}
         {activeTab === "members" && (
