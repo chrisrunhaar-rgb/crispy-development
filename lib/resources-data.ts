@@ -522,6 +522,19 @@ export const RESOURCES: Resource[] = [
     gated: true,
     topics: ["faith-calling", "personal-development"],
   },
+  {
+    id: "four-stages-competence",
+    slug: "four-stages-competence",
+    title: "Four Stages of Competence",
+    titleId: "Empat Tahap Kompetensi",
+    description: "From not knowing what you don't know, to mastery so deep you no longer need to think. The Conscious Competence Model maps how we actually learn — and where you are in your growth journey right now.",
+    descriptionId: "Dari tidak tahu apa yang tidak Anda ketahui, hingga penguasaan yang begitu dalam sehingga Anda tidak perlu lagi berpikir. Model ini memetakan bagaimana kita sebenarnya belajar.",
+    time: "15 min",
+    format: "Guide",
+    languages: ["en", "id"],
+    gated: true,
+    topics: ["personal-development"],
+  },
   // ── THINKING TOOLS ─────────────────────────────────────────────────────────
   {
     id: "decision-making",
