@@ -94,7 +94,7 @@ function ResourceTile({
   const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
   const isClickable =
     !!resource.slug && (access === "live_free" || access === "live_paid");
-  const types: string[] = (resource.slug ? (moduleFormats[resource.slug] ?? []) : []).filter(t => t !== resource.format);
+  const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
 
   const barColor =
     access === "live_free"
@@ -202,20 +202,22 @@ function ResourceTile({
           }}>
             {cleanTime}
           </span>
-          <span style={{
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.55rem",
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
-            padding: "1px 6px",
-            borderRadius: 999,
-            background: "oklch(93% 0.005 80)",
-            flexShrink: 0,
-          }}>
-            {resource.format}
-          </span>
+          {!(types.length > 0 && MODULE_TYPE_COLORS[resource.format]) && (
+            <span style={{
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.55rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
+              padding: "1px 6px",
+              borderRadius: 999,
+              background: "oklch(93% 0.005 80)",
+              flexShrink: 0,
+            }}>
+              {resource.format}
+            </span>
+          )}
           {types.map(type => {
             const color = MODULE_TYPE_COLORS[type];
             if (!color) return null;
