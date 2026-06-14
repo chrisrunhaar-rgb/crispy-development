@@ -96,7 +96,7 @@ function ResourceTile({
       ? (lang === "id" ? "GRATIS" : "FREE")
       : access === "live_paid"
       ? (lang === "id" ? "ANGGOTA" : "MEMBER")
-      : "";
+      : (lang === "id" ? "SEGERA" : "COMING SOON");
 
   const cleanTime = resource.time.replace(/\s*\+\s*quiz/gi, "");
 
@@ -126,20 +126,18 @@ function ResourceTile({
         alignItems: "center",
         justifyContent: "center",
       }}>
-        {barLabel && (
           <span style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "0.45rem",
             fontWeight: 800,
             letterSpacing: "0.14em",
-            color: "oklch(99% 0.002 80)",
+            color: access === "development" ? "oklch(52% 0.008 260)" : "oklch(99% 0.002 80)",
             writingMode: "vertical-lr",
             textTransform: "uppercase",
             userSelect: "none",
           }}>
             {barLabel}
           </span>
-        )}
       </div>
 
       {/* Content */}
@@ -169,9 +167,10 @@ function ResourceTile({
           color: "oklch(52% 0.008 260)",
           margin: 0,
           lineHeight: 1.4,
+          display: "-webkit-box",
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: "vertical",
           overflow: "hidden",
-          whiteSpace: "nowrap",
-          textOverflow: "ellipsis",
         }}>
           {localDescription(resource)}
         </p>
