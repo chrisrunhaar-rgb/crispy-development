@@ -94,7 +94,7 @@ function ResourceTile({
   const access = getModuleAccess(resource.slug, resource.gated, moduleStatuses);
   const isClickable =
     !!resource.slug && (access === "live_free" || access === "live_paid");
-  const types: string[] = resource.slug ? (moduleFormats[resource.slug] ?? []) : [];
+  const types: string[] = (resource.slug ? (moduleFormats[resource.slug] ?? []) : []).filter(t => t !== resource.format);
 
   const barColor =
     access === "live_free"
