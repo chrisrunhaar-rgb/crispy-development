@@ -776,7 +776,7 @@ export const RESOURCES: Resource[] = [
     descriptionNl: "Gebaseerd op Jungiaanse typologie — identificeer je persoonlijkheidstype op vier dimensies en ontdek hoe je voorkeuren je leiderschap en besluitvorming bepalen.",
     time: "25 min",
     format: "Assessment",
-    languages: ["en"],
+    languages: ["en", "id"],
     gated: false,
     topics: ["personal-development", "leadership"],
   },
