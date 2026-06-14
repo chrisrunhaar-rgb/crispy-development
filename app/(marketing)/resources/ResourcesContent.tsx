@@ -84,148 +84,126 @@ function ResourceTile({
   const isClickable =
     !!resource.slug && (access === "live_free" || access === "live_paid");
 
-  const borderColor =
+  const barColor =
     access === "live_free"
       ? "oklch(55% 0.15 150)"
       : access === "live_paid"
       ? "oklch(65% 0.15 45)"
-      : "oklch(82% 0.005 260)";
+      : "oklch(85% 0.005 260)";
 
-  const badgeLabel =
+  const barLabel =
     access === "live_free"
-      ? lang === "id" ? "GRATIS" : "FREE"
+      ? (lang === "id" ? "GRATIS" : "FREE")
       : access === "live_paid"
-      ? lang === "id" ? "KHUSUS ANGGOTA" : "MEMBERS ONLY"
-      : lang === "id" ? "SEGERA HADIR" : "COMING SOON";
+      ? (lang === "id" ? "ANGGOTA" : "MEMBER")
+      : "";
 
-  const badgeStyle: React.CSSProperties =
-    access === "live_free"
-      ? { color: "oklch(38% 0.14 150)", background: "oklch(93% 0.05 150)" }
-      : access === "live_paid"
-      ? { color: "oklch(45% 0.14 45)", background: "oklch(95% 0.04 60)" }
-      : { color: "oklch(52% 0.008 260)", background: "oklch(94% 0.004 260)" };
-
-  const tileStyle: React.CSSProperties = {
-    border: "1px solid oklch(88% 0.008 80)",
-    borderLeft: `3px solid ${borderColor}`,
-    padding: "1rem 1.125rem",
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "220px",
-    background:
-      access === "development"
-        ? "oklch(96% 0.003 260)"
-        : "oklch(99.5% 0.002 80)",
-    opacity: access === "development" ? 0.7 : 1,
-    transition: "box-shadow 0.12s, transform 0.12s",
-    cursor: isClickable ? "pointer" : "default",
-    textDecoration: "none",
-    boxShadow:
-      hovered && isClickable
-        ? "0 2px 8px oklch(0% 0 0 / 0.08)"
-        : "none",
-    transform:
-      hovered && isClickable ? "translateY(-1px)" : "none",
-  };
+  const cleanTime = resource.time.replace(/\s*\+\s*quiz/gi, "");
 
   const inner = (
     <div
-      style={tileStyle}
+      style={{
+        display: "flex",
+        border: "1px solid oklch(88% 0.008 80)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        background: access === "development" ? "oklch(96% 0.003 260)" : "oklch(99.5% 0.002 80)",
+        opacity: access === "development" ? 0.65 : 1,
+        cursor: isClickable ? "pointer" : "default",
+        transition: "box-shadow 0.12s, transform 0.12s",
+        boxShadow: hovered && isClickable ? "0 2px 8px oklch(0% 0 0 / 0.08)" : "none",
+        transform: hovered && isClickable ? "translateY(-1px)" : "none",
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Status badge */}
-      <div>
-        <span
-          style={{
+      {/* Left bar */}
+      <div style={{
+        width: "36px",
+        flexShrink: 0,
+        background: barColor,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        {barLabel && (
+          <span style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.45rem",
+            fontWeight: 800,
+            letterSpacing: "0.14em",
+            color: "oklch(99% 0.002 80)",
+            writingMode: "vertical-lr",
+            textTransform: "uppercase",
+            userSelect: "none",
+          }}>
+            {barLabel}
+          </span>
+        )}
+      </div>
+
+      {/* Content */}
+      <div style={{
+        flex: 1,
+        padding: "0.75rem 1rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.2rem",
+        minWidth: 0,
+      }}>
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontWeight: 700,
+          fontSize: "0.875rem",
+          color: "oklch(22% 0.005 260)",
+          margin: 0,
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}>
+          {localTitle(resource)}
+        </p>
+        <p style={{
+          fontFamily: "var(--font-montserrat)",
+          fontSize: "0.75rem",
+          color: "oklch(52% 0.008 260)",
+          margin: 0,
+          lineHeight: 1.4,
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+        }}>
+          {localDescription(resource)}
+        </p>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginTop: "0.3rem",
+        }}>
+          <span style={{
             fontFamily: "var(--font-montserrat)",
             fontSize: "0.55rem",
             fontWeight: 700,
             letterSpacing: "0.08em",
             textTransform: "uppercase",
-            padding: "2px 8px",
+            color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
+            padding: "1px 6px",
             borderRadius: 999,
-            ...badgeStyle,
-          }}
-        >
-          {badgeLabel}
-        </span>
-      </div>
-
-      {/* Title */}
-      <p
-        style={{
-          fontFamily: "var(--font-montserrat)",
-          fontWeight: 700,
-          fontSize: "0.9375rem",
-          color: "oklch(22% 0.005 260)",
-          marginTop: "0.5rem",
-          marginBottom: 0,
-          lineHeight: 1.25,
-        }}
-      >
-        {localTitle(resource)}
-      </p>
-
-      {/* Description — 2-line clamp */}
-      <p
-        style={{
-          fontFamily: "var(--font-montserrat)",
-          fontSize: "0.8125rem",
-          color: "oklch(52% 0.008 260)",
-          lineHeight: 1.6,
-          marginTop: "0.375rem",
-          marginBottom: 0,
-          display: "-webkit-box",
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
-        }}
-      >
-        {localDescription(resource)}
-      </p>
-
-      {/* Bottom row */}
-      <div
-        style={{
-          marginTop: "auto",
-          paddingTop: "0.75rem",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-        }}
-      >
-        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
-          {/* Format badge */}
-          <span
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: FORMAT_COLORS[resource.format] ?? "oklch(42% 0.08 260)",
-              padding: "2px 8px",
-              borderRadius: 999,
-              background: "oklch(93% 0.005 80)",
-            }}
-          >
+            background: "oklch(93% 0.005 80)",
+            flexShrink: 0,
+          }}>
             {resource.format}
           </span>
-
-          {/* Time */}
-          <span
-            style={{
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.65rem",
-              color: "oklch(55% 0.008 260)",
-              fontWeight: 600,
-            }}
-          >
-            {resource.time}
+          <span style={{
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.65rem",
+            color: "oklch(55% 0.008 260)",
+            fontWeight: 600,
+          }}>
+            {cleanTime}
           </span>
         </div>
-
       </div>
     </div>
   );
