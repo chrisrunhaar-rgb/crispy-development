@@ -143,17 +143,6 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
 
       {/* Language bar */}
 
-      {/* Slow reading notice */}
-      <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 13, color: "oklch(42% 0.08 50)", fontStyle: "italic", margin: 0 }}>
-          {t(
-            "This module is designed to be read slowly. Set aside 15 minutes and give it your full attention.",
-            "Modul ini dirancang untuk dibaca dengan perlahan. Sisihkan 15 menit dan berikan perhatian penuh Anda.",
-            "Deze module is ontworpen om langzaam te lezen. Neem 15 minuten de tijd en geef het je volledige aandacht."
-          )}
-        </p>
-      </div>
-
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>

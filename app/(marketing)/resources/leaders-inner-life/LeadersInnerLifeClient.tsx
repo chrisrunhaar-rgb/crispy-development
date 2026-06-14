@@ -182,16 +182,6 @@ export default function LeadersInnerLifeClient({ isSaved: initialSaved }: Props)
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
       <LangToggle />
 
-      {/* Slow reading notice */}
-      <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 13, color: "oklch(42% 0.08 50)", fontStyle: "italic", margin: 0 }}>
-          {t(
-            "This module is designed to be read slowly. Set aside 15 minutes and give it your full attention.",
-            "Modul ini dirancang untuk dibaca dengan perlahan. Sisihkan 15 menit dan berikan perhatian penuh Anda."
-          )}
-        </p>
-      </div>
-
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
