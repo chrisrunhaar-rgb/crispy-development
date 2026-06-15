@@ -103,7 +103,7 @@ const ZONES = [
     titleId: "Zona Pertumbuhan",
     tagEn: "Living with purpose and clear vision",
     tagId: "Hidup dengan tujuan dan visi yang jelas",
-    descEn: "The growth zone is not the absence of difficulty. It is the place where the difficulty has stopped defining you. Leaders who reach this zone often describe it as a shift in what feels normal: things that used to require courage now feel like ordinary competence. The comfort zone has expanded. What was once foreign has become familiar. In a cross-cultural setting this is not a permanent destination. New contexts, new seasons, new roles will bring you back through the other zones. But once you have done the work in a zone, you know the terrain. You know you have crossed it before. That knowledge changes how you approach the next threshold.",
+    descEn: "The growth zone is not the absence of difficulty. It is the place where the difficulty has stopped defining you. Leaders who reach this zone often describe it as a shift in what feels normal: things that used to require courage now feel like ordinary competence.⁵ The comfort zone has expanded. What was once foreign has become familiar. In a cross-cultural setting this is not a permanent destination. New contexts, new seasons, new roles will bring you back through the other zones. But once you have done the work in a zone, you know the terrain. You know you have crossed it before. That knowledge changes how you approach the next threshold.",
     descId: "Zona pertumbuhan bukan ketiadaan kesulitan. Ini adalah tempat di mana kesulitan telah berhenti mendefinisikanmu. Para pemimpin yang mencapai zona ini sering menggambarkannya sebagai pergeseran dalam apa yang terasa normal: hal-hal yang dulu membutuhkan keberanian kini terasa seperti kompetensi biasa. Zona nyaman telah berkembang. Yang dulu asing kini terasa familiar. Dalam konteks lintas budaya, ini bukan tujuan permanen. Konteks baru, musim baru, peran baru akan membawamu kembali melalui zona lain. Tetapi setelah kamu melakukan pekerjaan di suatu zona, kamu tahu medannya. Kamu tahu kamu pernah melewatinya sebelumnya. Pengetahuan itu mengubah cara kamu mendekati ambang berikutnya.",
     listEn: ["Operating with flexibility across cultural contexts", "Taking on challenges that were previously avoided", "Coaching others through zones you have already passed through"],
     listId: ["Beroperasi dengan fleksibilitas di berbagai konteks budaya", "Mengambil tantangan yang sebelumnya dihindari", "Melatih orang lain melewati zona yang sudah kamu lewati"],
@@ -193,7 +193,7 @@ const TAKEAWAYS = [
     id: "Zona Ketakutan bukan musuh pertumbuhan, melainkan pintunya. Sinyal ketidaknyamanan berarti kamu berada di ambang, bukan bahwa kamu telah pergi terlalu jauh.",
   },
   {
-    en: "For cross-cultural leaders, comfort zone disruption is layered: behavioral, relational, and identity-level simultaneously. 'Who am I here?' is the deeper question.",
+    en: "For cross-cultural leaders, comfort zone disruption is layered: behavioral, relational, and identity-level simultaneously.⁴ 'Who am I here?' is the deeper question.",
     id: "Bagi pemimpin lintas budaya, gangguan zona nyaman berlapis: perilaku, relasional, dan identitas secara bersamaan. 'Siapa saya di sini?' adalah pertanyaan yang lebih dalam.",
   },
   {
@@ -362,7 +362,7 @@ export default function ComfortZoneClient({
               </h2>
               <p style={bodyStyle()}>
                 {t(
-                  "Most of us have a working theory about where we are stuck. This exercise asks you to test that theory. It maps the four zones between safety and growth, helps you locate where you actually are right now, and gives you questions to work through: alone, with a coach, or in a peer group. The discomfort you feel around a particular next step is not a warning to stop. It is usually a marker that you are close to where the growth is.",
+                  "Most of us have a working theory about where we are stuck. This exercise asks you to test that theory. It maps the four zones between safety and growth,¹ helps you locate where you actually are right now, and gives you questions to work through: alone, with a coach, or in a peer group. The discomfort you feel around a particular next step is not a warning to stop. It is usually a marker that you are close to where the growth is.",
                   "Sebagian besar dari kita memiliki teori kerja tentang di mana kita terjebak. Latihan ini mengajak kamu untuk menguji teori itu. Ini memetakan empat zona antara keamanan dan pertumbuhan, membantu kamu menemukan di mana kamu sebenarnya berada sekarang, dan memberikan pertanyaan untuk dikerjakan: sendiri, dengan pelatih, atau dalam kelompok teman sebaya. Ketidaknyamanan yang kamu rasakan tentang langkah berikutnya tertentu bukan peringatan untuk berhenti. Biasanya itu adalah penanda bahwa kamu dekat dengan tempat pertumbuhannya.",
                   lang
                 )}
@@ -450,7 +450,7 @@ export default function ComfortZoneClient({
           </p>
           <p style={bodyStyle()}>
             {t(
-              "The cross-cultural comfort zone often forms precisely because crossing into the fear zone carries real cost here. Getting something wrong in a high-context culture is not a small social misstep. It can damage trust that took years to build. Stepping into an unfamiliar leadership situation when you are already navigating language and cultural complexity is genuinely harder than doing the same thing in a familiar setting. The caution is rational.",
+              "The cross-cultural comfort zone often forms precisely because crossing into the fear zone carries real cost here. Getting something wrong in a high-context culture is not a small social misstep. It can damage trust that took years to build. Stepping into an unfamiliar leadership situation when you are already navigating language and cultural complexity is genuinely harder than doing the same thing in a familiar setting. The caution is rational.²",
               "Zona nyaman lintas budaya sering terbentuk justru karena memasuki zona ketakutan membawa biaya nyata di sini. Melakukan kesalahan dalam budaya konteks tinggi bukan sekadar kesalahan sosial kecil. Ini dapat merusak kepercayaan yang membutuhkan bertahun-tahun untuk dibangun. Memasuki situasi kepemimpinan yang tidak familiar ketika kamu sudah menavigasi kompleksitas bahasa dan budaya jauh lebih sulit daripada melakukan hal yang sama dalam lingkungan yang familiar. Kehati-hatian itu masuk akal.",
               lang
             )}
@@ -488,7 +488,7 @@ export default function ComfortZoneClient({
           </h2>
           <p style={{ ...bodyStyle(), paddingInline: "1.5rem" }}>
             {t(
-              "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones. Even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.",
+              "Notice how the comfort and fear zones are the smallest. Staying inside keeps your future small. But the growth zone still encompasses the fear and comfort zones. Even as you grow, you will still experience fears. It's just that your comfort zone expands as you spend more time in the learning and growth zones.³",
               "Perhatikan bagaimana zona nyaman dan ketakutan adalah yang terkecil. Tetap di dalamnya membuat masa depanmu menjadi kecil. Namun zona pertumbuhan masih mencakup zona ketakutan dan kenyamanan. Bahkan saat kamu bertumbuh, kamu masih akan mengalami ketakutan. Hanya saja zona nyamanmu berkembang seiring semakin banyak waktu yang kamu habiskan di zona pembelajaran dan pertumbuhan.",
               lang
             )}
@@ -777,6 +777,31 @@ export default function ComfortZoneClient({
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* ── SOURCES ── */}
+      <section style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: ORANGE, marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Tom Senninger — Vom Erfahrungsraum zum Lernraum (2000, via Vygotsky's Zone of Proximal Development). The 4-zone model (Comfort / Fear / Learning / Growth) is a widely used conceptual tool, not a peer-reviewed framework; practitioner origin uncertain, popularised c.2019. 'Comfort zone' as a phrase: Judith M. Bardwick, Danger in the Comfort Zone (AMACOM, 1991).",
+            "Acculturative stress and identity disruption in cross-cultural transition: J.W. Berry, 'Immigration, acculturation, and adaptation' (Applied Psychology, 1997); T. Jurcik et al., 'Making sense of mainstream culture' (PLoS ONE, 2013). Cross-cultural leaders face layered disruption — behavioral, relational, and identity-level — as documented in acculturation research.",
+            "Structural framing of optimal arousal for learning: the inverted-U pattern (Yerkes & Dodson, Journal of Comparative Neurology, 1908, as qualified by later researchers) and Window of Tolerance (D.J. Siegel, The Developing Mind, Guilford Press, 1999). Both describe the zone between under- and over-arousal where learning is most available.",
+            "Social identity threat and cross-cultural leadership: H. Tajfel & J.C. Turner, 'An integrative theory of intergroup conflict' (1979); R.J. Berry & T. Jurcik (2013, as above). Identity-level disruption — 'Who am I here?' — reflects social identity and acculturative stress research rather than the zone model alone.",
+            "Self-efficacy and competence transfer: A. Bandura, Self-Efficacy: The Exercise of Control (Freeman, 1997). The shift from effortful performance to automatic competence is documented in skill acquisition and self-efficacy literature.",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 

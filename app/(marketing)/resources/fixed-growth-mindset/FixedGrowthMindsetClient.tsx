@@ -379,7 +379,7 @@ export default function FixedGrowthMindsetClient({
             {t(
               "Drawing on Carol Dweck's widely studied framework, this assessment reveals where your mindset is fixed and where it's growing — across five key dimensions.",
               "Berdasarkan kerangka kerja Carol Dweck yang banyak dipelajari, penilaian ini mengungkapkan di mana mindset Anda tetap dan di mana ia berkembang — dalam lima dimensi utama."
-            )}
+            )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
             {!saved ? (
@@ -440,12 +440,16 @@ export default function FixedGrowthMindsetClient({
                 {t(
                   "According to researcher Carol Dweck, there are two types of mindsets. A fixed mindset believes that qualities like intelligence or talent are innate — you have what you were given. A growth mindset holds that you can improve any quality through effort and persistence.",
                   "Menurut peneliti Carol Dweck, ada dua jenis mindset. Mindset tetap percaya bahwa kualitas seperti kecerdasan atau bakat bersifat bawaan — Anda memiliki apa yang diberikan kepada Anda. Mindset pertumbuhan berpendapat bahwa Anda dapat meningkatkan kualitas apa pun melalui usaha dan ketekunan."
-                )}
+                )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>¹</sup>
               </p>
               <p style={{ fontSize: 15, lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
                 {t(
-                  "Research suggests growth mindset is associated with greater persistence and more adaptive responses to failure, though effects vary significantly across individuals and cultural contexts. The shift often starts with recognizing which mindset is operating in a given area of your life.",
-                  "Penelitian menunjukkan bahwa mindset pertumbuhan dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya. Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu."
+                  "Research suggests growth mindset is associated with greater persistence and more adaptive responses to failure, though effects vary significantly across individuals and cultural contexts — large-scale replication studies show more modest effects than early research suggested; the principle remains directionally sound.",
+                  "Penelitian menunjukkan bahwa mindset pertumbuhan dikaitkan dengan ketekunan yang lebih besar dan respons yang lebih adaptif terhadap kegagalan, meskipun efeknya sangat bervariasi di antara individu dan konteks budaya — studi replikasi skala besar menunjukkan efek yang lebih modest daripada yang disarankan penelitian awal; prinsipnya tetap benar secara arah."
+                )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>²</sup>{" "}
+                {t(
+                  "The shift often starts with recognizing which mindset is operating in a given area of your life.",
+                  "Pergeseran ini sering dimulai dengan mengenali mindset mana yang beroperasi di area kehidupan Anda tertentu."
                 )}
               </p>
             </div>
@@ -525,7 +529,7 @@ export default function FixedGrowthMindsetClient({
               {t(
                 "Dweck's research was conducted in schools and Western workplaces. The framework is solid. But cross-cultural leaders live and work in conditions that stress-test mindset in ways the original research did not anticipate.",
                 "Penelitian Dweck dilakukan di sekolah-sekolah dan tempat kerja Barat. Kerangka kerjanya kuat. Tetapi para pemimpin lintas budaya hidup dan bekerja dalam kondisi yang menguji pola pikir dengan cara yang tidak diantisipasi oleh penelitian aslinya."
-              )}
+              )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>³</sup>
             </p>
             <p style={{ marginBottom: 16 }}>
               {t(
@@ -765,15 +769,15 @@ export default function FixedGrowthMindsetClient({
           </h2>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 16, lineHeight: 1.75 }}>
             {t(
-              "Mindset change is not a one-time decision — it is a practice. Use this three-step process for any dimension where you want to grow.",
-              "Perubahan mindset bukan keputusan sekali jalan — ini adalah latihan. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
-            )}
+              "Mindset change is not a one-time decision — it is a practice. Research also shows that combining a growth mindset with seeing stress as enhancing (rather than debilitating) produces significantly stronger outcomes than either approach alone. Use this three-step process for any dimension where you want to grow.",
+              "Perubahan mindset bukan keputusan sekali jalan — ini adalah latihan. Penelitian juga menunjukkan bahwa menggabungkan mindset pertumbuhan dengan melihat stres sebagai sesuatu yang meningkatkan (daripada melemahkan) menghasilkan hasil yang jauh lebih kuat daripada salah satu pendekatan saja. Gunakan proses tiga langkah ini untuk dimensi mana pun yang ingin Anda kembangkan."
+            )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁴</sup>
           </p>
           <p style={{ fontSize: 15, color: BODY_TEXT, marginBottom: 40, lineHeight: 1.75 }}>
             {t(
               "Most mindset patterns formed in childhood or early career — they were adaptive responses to real situations. Trying to force them away rarely works. What does work is sustained, specific noticing: catching the moment a fixed belief fires, labeling it without judgment, and choosing a different response. Tap each step to go deeper.",
               "Sebagian besar pola mindset terbentuk di masa kecil atau awal karir — mereka adalah respons adaptif terhadap situasi nyata. Mencoba memaksanya pergi jarang berhasil. Yang berhasil adalah perhatian yang berkelanjutan dan spesifik: menangkap momen ketika keyakinan tetap muncul, memberinya label tanpa menghakimi, dan memilih respons yang berbeda. Ketuk setiap langkah untuk mendalaminya."
-            )}
+            )}<sup style={{ fontSize: "0.65em", verticalAlign: "super", marginLeft: 1 }}>⁵</sup>
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {[
@@ -972,8 +976,8 @@ export default function FixedGrowthMindsetClient({
               },
               {
                 num: 4,
-                en: "Dweck's research identifies effort as the mechanism of growth. But in high-load ministry or field contexts, effort is rarely the shortage — protection is. What would it look like to protect your growth capacity the way you protect your team's wellbeing?",
-                id: "Penelitian Dweck mengidentifikasi usaha sebagai mekanisme pertumbuhan. Tetapi dalam konteks pelayanan atau lapangan yang berat, usaha jarang menjadi kekurangan — perlindungan adalah. Seperti apa melindungi kapasitas pertumbuhan Anda seperti Anda melindungi kesejahteraan tim Anda?",
+                en: "Dweck's research identifies effort as the mechanism of growth.¹ But in high-load ministry or field contexts, effort is rarely the shortage — protection is. What would it look like to protect your growth capacity the way you protect your team's wellbeing?",
+                id: "Penelitian Dweck mengidentifikasi usaha sebagai mekanisme pertumbuhan.¹ Tetapi dalam konteks pelayanan atau lapangan yang berat, usaha jarang menjadi kekurangan — perlindungan adalah. Seperti apa melindungi kapasitas pertumbuhan Anda seperti Anda melindungi kesejahteraan tim Anda?",
               },
               {
                 num: 5,
@@ -989,6 +993,31 @@ export default function FixedGrowthMindsetClient({
           </div>
         </div>
       </section>
+
+      {/* SOURCES */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Carol S. Dweck — Mindset: The New Psychology of Success (Random House, 2006)",
+            "Jeni L. Burnette, Ernest H. O'Boyle, Eric M. VanEpps, Jeffrey M. Pollack & Eli J. Finkel — \"Mind-Sets Matter: A Meta-Analytic Review of Implicit Theories and Self-Regulation\" (Psychological Bulletin, 139(3), 655–701, 2013); Victoria F. Sisk, Alexander P. Burgoyne, Jingze Sun, Jennifer L. Butler & Brooke N. Macnamara — \"To What Extent and Under Which Circumstances Are Growth Mind-Sets Important to Academic Achievement? Two Meta-Analyses\" (Psychological Science, 29(4), 549–571, 2018)",
+            "Carol S. Dweck & David S. Yeager — \"Mindsets: A View From Two Eras\" (Perspectives on Psychological Science, 14(3), 481–496, 2019)",
+            "David S. Yeager et al. — \"A synergistic mindsets intervention protects adolescents from stress\" (Nature, 607, 512–520, 2022) — N=2,717+; growth mindset combined with stress-as-enhancing significantly outperformed either alone",
+            "Lisa S. Blackwell, Kali H. Trzesniewski & Carol S. Dweck — \"Implicit theories of intelligence predict achievement across an adolescent transition: A longitudinal study and an intervention\" (Child Development, 78(1), 246–263, 2007)",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* CTA */}
       <section style={{ background: NAVY, padding: "80px 24px" }}>

@@ -261,32 +261,32 @@ const SILENCE_CARDS: { term: string; region: { en: string; id: string }; back: {
     term: "MALU",
     region: { en: "Indonesia", id: "Indonesia" },
     back: {
-      en: "More than embarrassment: the knowledge that your standing has dropped in others' eyes. One manager, criticized publicly, smiled through the meeting and resigned the next morning.",
-      id: "Lebih dari rasa malu biasa: kesadaran bahwa kedudukanmu telah turun di mata orang lain. Seorang manajer, dikritik di depan umum, tersenyum sepanjang rapat dan mengundurkan diri keesokan paginya.",
+      en: "More than embarrassment: the knowledge that your standing has dropped in others' eyes.³ One manager, criticized publicly, smiled through the meeting and resigned the next morning.",
+      id: "Lebih dari rasa malu biasa: kesadaran bahwa kedudukanmu telah turun di mata orang lain.³ Seorang manajer, dikritik di depan umum, tersenyum sepanjang rapat dan mengundurkan diri keesokan paginya.",
     },
   },
   {
     term: "CHAE-MYUN & NUNCHI",
     region: { en: "Korea", id: "Korea" },
     back: {
-      en: "Chae-myun is social face; losing it publicly can take years to repair. Nunchi reads the room. Shorter emails and quieter meetings are the feedback.",
-      id: "Chae-myun adalah muka sosial; kehilangannya di depan umum bisa butuh bertahun-tahun untuk dipulihkan. Nunchi membaca suasana. Email yang memendek dan rapat yang menyepi adalah umpan baliknya.",
+      en: "Chae-myun is social face; losing it publicly can take years to repair.⁴ Nunchi reads the room. Shorter emails and quieter meetings are the feedback.",
+      id: "Chae-myun adalah muka sosial; kehilangannya di depan umum bisa butuh bertahun-tahun untuk dipulihkan.⁴ Nunchi membaca suasana. Email yang memendek dan rapat yang menyepi adalah umpan baliknya.",
     },
   },
   {
     term: "UBUNTU",
     region: { en: "Southern Africa", id: "Afrika bagian selatan" },
     back: {
-      en: `"I am because we are." Correction is community business. Isolating one person's failure, with no path back into the group, feels structurally wrong.`,
-      id: `"Saya ada karena kita ada." Koreksi adalah urusan komunitas. Mengisolasi kegagalan satu orang, tanpa jalan kembali ke dalam kelompok, terasa salah secara struktural.`,
+      en: `"I am because we are."⁵ Correction is community business. Isolating one person's failure, with no path back into the group, feels structurally wrong.`,
+      id: `"Saya ada karena kita ada."⁵ Koreksi adalah urusan komunitas. Mengisolasi kegagalan satu orang, tanpa jalan kembali ke dalam kelompok, terasa salah secara struktural.`,
     },
   },
   {
     term: "PERSONALISMO",
     region: { en: "Latin America", id: "Amerika Latin" },
     back: {
-      en: "Relationship is the channel. Feedback down a cold professional line reads as a message about the relationship itself. That is why Rafael phoned first.",
-      id: "Hubungan adalah salurannya. Umpan balik lewat jalur profesional yang dingin terbaca sebagai pesan tentang hubungan itu sendiri. Itulah mengapa Rafael menelepon dulu.",
+      en: "Relationship is the channel.⁶ Feedback down a cold professional line reads as a message about the relationship itself. That is why Rafael phoned first.",
+      id: "Hubungan adalah salurannya.⁶ Umpan balik lewat jalur profesional yang dingin terbaca sebagai pesan tentang hubungan itu sendiri. Itulah mengapa Rafael menelepon dulu.",
     },
   },
 ];
@@ -577,8 +577,8 @@ const S2_PARAS: Record<Lang, string[]> = {
   en: [
     "There is a common assumption among leaders working across cultures: if you know whether someone is from a high-context or low-context culture, you know how to give them feedback. More context, more indirectness. Less context, more directness. Simple.",
     "The assumption is wrong, and getting it wrong produces some of the most predictable intercultural friction in global teams.",
-    "The distinction between high-context and low-context communication comes from anthropologist Edward T. Hall, who noted in the 1950s and 1970s that cultures differ fundamentally in how much meaning is carried by explicit words versus the surrounding context: the relationship, the setting, shared history, non-verbal signals. In high-context cultures (prevalent across much of Asia, Africa, and the Middle East), meaning is layered and relational. Silence carries weight. What is left unsaid is often more significant than what is spoken. In low-context cultures (Germany, Scandinavia, the Netherlands, the United States), meaning is encoded explicitly in the words. Say what you mean. Mean what you say. Ambiguity is a problem to be solved.",
-    "This is genuinely useful as a starting map. But Erin Meyer, who teaches organizational behavior at INSEAD, identified something that Hall’s single-axis model could not show: the way you communicate and the way you give feedback are two separate things, and they move independently of each other.",
+    "The distinction between high-context and low-context communication comes from anthropologist Edward T. Hall, who noted in the 1950s and 1970s that cultures differ fundamentally in how much meaning is carried by explicit words versus the surrounding context: the relationship, the setting, shared history, non-verbal signals.² In high-context cultures (prevalent across much of Asia, Africa, and the Middle East), meaning is layered and relational. Silence carries weight. What is left unsaid is often more significant than what is spoken. In low-context cultures (Germany, Scandinavia, the Netherlands, the United States), meaning is encoded explicitly in the words. Say what you mean. Mean what you say. Ambiguity is a problem to be solved. (Note: high/low-context is a widely used descriptive framework — scholars have questioned its cross-cultural measurement validity, but the underlying phenomena it describes are well documented.)",
+    "This is genuinely useful as a starting map. But Erin Meyer, who teaches organizational behavior at INSEAD, identified something that Hall’s single-axis model could not show: the way you communicate and the way you give feedback are two separate things, and they move independently of each other.¹",
     "Meyer calls these the Communicating scale and the Evaluating scale. The gap between them is where confusion lives.",
     "The Communicating scale measures how much meaning is carried implicitly versus explicitly. The Evaluating scale measures how directly negative feedback is delivered: whether criticism is stated plainly or softened, hedged, and wrapped in layers of relational context.",
     "Here is what makes this important: these two dials do not move together.",
@@ -592,8 +592,8 @@ const S2_PARAS: Record<Lang, string[]> = {
   id: [
     "Ada asumsi umum di kalangan pemimpin yang bekerja lintas budaya: jika kamu tahu apakah seseorang berasal dari budaya berkonteks tinggi atau rendah, kamu tahu cara memberi mereka umpan balik. Lebih banyak konteks, lebih banyak ketidaklangsungan. Lebih sedikit konteks, lebih langsung. Sederhana.",
     "Asumsi itu salah, dan salah dalam hal ini menghasilkan beberapa gesekan antarbudaya yang paling dapat diprediksi dalam tim global.",
-    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya: hubungan, setting, sejarah bersama, sinyal non-verbal. Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang kamu maksud. Maksudkan apa yang kamu katakan. Ambiguitas adalah masalah yang harus dipecahkan.",
-    "Ini sungguh berguna sebagai peta awal. Tetapi Erin Meyer, yang mengajar perilaku organisasi di INSEAD, mengidentifikasi sesuatu yang tidak bisa ditunjukkan oleh model satu sumbu Hall: cara kamu berkomunikasi dan cara kamu memberi umpan balik adalah dua hal yang terpisah, dan keduanya bergerak secara independen satu sama lain.",
+    "Perbedaan antara komunikasi berkonteks tinggi dan rendah berasal dari antropolog Edward T. Hall, yang mencatat pada 1950-an dan 1970-an bahwa budaya berbeda secara fundamental dalam seberapa banyak makna dibawa oleh kata-kata eksplisit versus konteks sekitarnya: hubungan, setting, sejarah bersama, sinyal non-verbal.² Dalam budaya berkonteks tinggi (umum di sebagian besar Asia, Afrika, dan Timur Tengah), makna berlapis dan relasional. Keheningan memiliki bobot. Apa yang tidak dikatakan sering kali lebih signifikan dari apa yang diucapkan. Dalam budaya berkonteks rendah (Jerman, Skandinavia, Belanda, Amerika Serikat), makna dikodekan secara eksplisit dalam kata-kata. Katakan apa yang kamu maksud. Maksudkan apa yang kamu katakan. Ambiguitas adalah masalah yang harus dipecahkan. (Catatan: konteks tinggi/rendah adalah kerangka deskriptif yang banyak digunakan — para akademisi mempertanyakan validitas pengukurannya lintas budaya, tetapi fenomena yang digambarkannya terdokumentasi dengan baik.)",
+    "Ini sungguh berguna sebagai peta awal. Tetapi Erin Meyer, yang mengajar perilaku organisasi di INSEAD, mengidentifikasi sesuatu yang tidak bisa ditunjukkan oleh model satu sumbu Hall: cara kamu berkomunikasi dan cara kamu memberi umpan balik adalah dua hal yang terpisah, dan keduanya bergerak secara independen satu sama lain.¹",
     "Meyer menyebut ini skala Komunikasi dan skala Evaluasi. Kesenjangan di antara keduanya adalah tempat kebingungan berada.",
     "Skala Komunikasi mengukur seberapa banyak makna dibawa secara implisit versus eksplisit. Skala Evaluasi mengukur seberapa langsung umpan balik negatif disampaikan: apakah kritik dinyatakan terang-terangan atau dilembutkan, dilindungi, dan dibungkus dalam lapisan konteks relasional.",
     "Inilah yang membuat ini penting: kedua skala ini tidak bergerak bersama.",
@@ -2511,6 +2511,52 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Sources */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{
+          fontFamily: FONT_BODY,
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: ORANGE,
+          marginBottom: 14,
+        }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014). Foundation for the two-dial Communicating/Evaluating framework used throughout this module.",
+            "Edward T. Hall — The Silent Language (Anchor Books, 1959); Beyond Culture (Anchor Books / Doubleday, 1976). Hall coined the high-context / low-context distinction. Note: the descriptive framework's cross-cultural measurement validity has been questioned by subsequent scholars (Cardon, 2008; Kittler, 2011); the phenomena Hall identified remain well documented.",
+            "Clifford Geertz — The Religion of Java (University of Chicago Press, 1960); Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010). Sources on malu, face, and shame dynamics in Indonesian and collectivist cultures.",
+            "Chung Hyun Pai Balcom — \"Nunchi: The Art of Reading the Room\" (contextual scholarship on Korean interpersonal communication); general literature on chae-myun (face) in Korean professional contexts.",
+            "John S. Mbiti — African Religions and Philosophy (Heinemann, 2nd ed., 1990). Foundational source for ubuntu philosophy and communal identity in sub-Saharan African societies.",
+            "Glen Caudill Dealy — The Latin Americans: Spirit and Ethos (Westview Press, 1992); Glen H. Elder Jr. and cross-cultural relational literature on personalismo as a trust-before-task operating norm in Latin American professional contexts.",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{
+                fontSize: 11,
+                color: ORANGE,
+                fontWeight: 700,
+                flexShrink: 0,
+                marginTop: 1,
+              }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{
+                fontSize: 12,
+                color: "oklch(52% 0.04 260)",
+                lineHeight: 1.7,
+                margin: 0,
+                fontFamily: FONT_BODY,
+              }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

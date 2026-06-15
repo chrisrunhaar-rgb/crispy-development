@@ -882,7 +882,7 @@ export default function DiscClient({
               {
                 title: tr("What DISC does", "Apa yang DISC lakukan", "Wat DISC doet"),
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>,
-                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The model has been used in leadership development since 1928. You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Anda mendapatkan gambaran cepat tentang default Anda.", "DISC brengt in kaart hoe jij geneigd bent te gedragen — niet wie jij bent. Het groepeert gedrag in vier patronen: Dominantie, Invloed, Standvastigheid en Consci—ntieusheid."),
+                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The framework traces to William Moulton Marston's 1928 research¹ and was later adapted into the workplace assessments widely used today.² You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Kerangka ini berakar dari penelitian William Moulton Marston tahun 1928¹ dan kemudian diadaptasi menjadi alat penilaian tempat kerja yang banyak digunakan hari ini.² Anda mendapatkan gambaran cepat tentang default Anda.", "DISC brengt in kaart hoe jij geneigd bent te gedragen — niet wie jij bent. Het groepeert gedrag in vier patronen: Dominantie, Invloed, Standvastigheid en Consci—ntieusheid. Het kader gaat terug op het onderzoek van William Moulton Marston uit 1928¹ en werd later omgezet in de werkplekbeoordelingen die vandaag breed worden gebruikt.²"),
               },
               {
                 title: tr("Why it helps your team", "Mengapa ini membantu tim Anda", "Waarom het je team helpt"),
@@ -945,9 +945,9 @@ export default function DiscClient({
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
               {tr(
-                "DISC was built in the United States in 1928 and reflects mainstream American behavioural norms. Reliability is solid; cultural validity is not. A \"high D\" in Sumba is not the same person as a \"high D\" in Sydney. Use DISC to start the conversation — then let your team's actual cultures fill in the rest.",
-                "DISC dikembangkan di Amerika Serikat pada tahun 1928 dan mencerminkan norma perilaku Amerika arus utama. Gunakan DISC untuk memulai percakapan — lalu biarkan budaya nyata tim Anda mengisi sisanya.",
-                "DISC is ontwikkeld in de Verenigde Staten in 1928 en weerspiegelt mainstream Amerikaanse gedragsnormen. Gebruik DISC om het gesprek te starten — laat de werkelijke culturen van je team de rest invullen."
+                "DISC was built in the United States in 1928 and reflects mainstream American behavioural norms.¹ Reliability is solid; cross-cultural validity varies — DISC has not been validated across cultures with the same rigour as the Big Five personality framework.³ A \"high D\" in Sumba is not the same person as a \"high D\" in Sydney. Use DISC to start the conversation — then let your team's actual cultures fill in the rest.",
+                "DISC dikembangkan di Amerika Serikat pada tahun 1928 dan mencerminkan norma perilaku Amerika arus utama.¹ Reliabilitas cukup kuat; validitas lintas budaya bervariasi — DISC belum divalidasi lintas budaya dengan ketelitian yang sama seperti kerangka Big Five.³ Gunakan DISC untuk memulai percakapan — lalu biarkan budaya nyata tim Anda mengisi sisanya.",
+                "DISC is ontwikkeld in de Verenigde Staten in 1928 en weerspiegelt mainstream Amerikaanse gedragsnormen.¹ Betrouwbaarheid is solide; cross-culturele validiteit varieert — DISC is niet met dezelfde nauwkeurigheid als het Big Five-persoonlijkheidsraamwerk cross-cultureel gevalideerd.³ Gebruik DISC om het gesprek te starten — laat de werkelijke culturen van je team de rest invullen."
               )}
             </p>
           </div>
@@ -1709,7 +1709,7 @@ export default function DiscClient({
             {[
               {
                 q: "What is the DISC personality assessment?",
-                a: "DISC is a behavioural assessment tool that categorises leadership and communication styles into four types: Dominance (D), Influence (I), Steadiness (S), and Conscientiousness (C). Developed in 1928, DISC helps leaders understand how they naturally approach tasks, relationships, and decision-making — and how their default style lands with others.",
+                a: "DISC is a behavioural assessment tool that categorises leadership and communication styles into four types: Dominance (D), Influence (I), Steadiness (S), and Conscientiousness (C). The model traces to William Moulton Marston's 1928 theory of emotions and behaviour.¹ Modern workplace assessments were developed by Walter V. Clarke and later John Geier.² DISC helps leaders understand how they naturally approach tasks, relationships, and decision-making — and how their default style lands with others.",
               },
               {
                 q: "How long does the DISC assessment take?",
@@ -1721,7 +1721,7 @@ export default function DiscClient({
               },
               {
                 q: "Is DISC accurate for cross-cultural leadership?",
-                a: "DISC is a useful starting point, but it was developed in the United States in 1928 and reflects mainstream American behavioural norms. Cross-cultural validity varies significantly — a high-D leader in one cultural context may behave very differently from a high-D leader in another. Use DISC to start team conversations, then let your team's actual cultural backgrounds fill in the nuance.",
+                a: "DISC is a useful starting point, but it was developed in the United States in 1928 and reflects mainstream American behavioural norms.¹ Cross-cultural validity varies significantly — DISC has not been validated across cultures with the rigour of the Big Five personality framework,³ and a high-D leader in one cultural context may behave very differently from a high-D leader in another. Use DISC to start team conversations, then let your team's actual cultural backgrounds fill in the nuance.",
               },
               {
                 q: "Can I use DISC with my team?",
@@ -1729,7 +1729,7 @@ export default function DiscClient({
               },
               {
                 q: "What is the difference between DISC and Myers-Briggs (MBTI)?",
-                a: "DISC focuses on observable behaviour — how you act in specific workplace situations. Myers-Briggs (MBTI) focuses on personality preferences — how you think and perceive the world. DISC is more directly actionable for communication and leadership dynamics; MBTI goes deeper into how people process information. Both offer value, and neither is a complete picture of a person.",
+                a: "DISC focuses on observable behaviour — how you act in specific workplace situations. Myers-Briggs (MBTI) focuses on personality preferences — how you think and perceive the world. DISC is more directly actionable for communication and leadership dynamics; MBTI goes deeper into how people process information. Both offer value, and neither is a complete picture of a person. Of the major personality frameworks, the Big Five (OCEAN) has the strongest empirical support for cross-cultural applications.³",
               },
             ].map((faq, i) => (
               <div
@@ -1777,6 +1777,29 @@ export default function DiscClient({
           </div>
         </div>
       </section>
+
+      {/* -- SOURCES -- */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "William Moulton Marston — Emotions of Normal People (Kegan Paul, 1928). The theoretical foundation for DISC — Marston proposed four primary emotional types: Dominance, Inducement, Submission, Compliance.",
+            "John Geier — Personal Profile System (Performax Systems International, 1977); Walter V. Clarke — Activity Vector Analysis (Clarke, 1956). Clarke first adapted Marston's theory for workplace assessment; Geier developed the instrument that became today's widely used DISC tools.",
+            "Arthur E. Poropat — 'A meta-analysis of the five-factor model of personality and academic performance' (Psychological Bulletin, 2009); Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory (PAR, 1985). The Big Five framework has the strongest cross-cultural empirical support among personality models; DISC is a practitioner tool with substantial application history but more limited peer-reviewed validation.",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
