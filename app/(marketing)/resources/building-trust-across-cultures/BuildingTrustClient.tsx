@@ -1223,8 +1223,8 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
           {[
-            "Daniel J. McAllister — "Affect- and Cognition-Based Trust as Foundations for Interpersonal Cooperation in Organizations" (Academy of Management Journal, Vol. 38, No. 1, 1995) — foundational empirical study establishing the cognitive/affective trust distinction used throughout this module",
-            "Denise M. Rousseau, Sim B. Sitkin, Ronald S. Burt & Colin Camerer — "Not So Different After All: A Cross-Discipline View of Trust" (Academy of Management Review, Vol. 23, No. 3, 1998) — cross-disciplinary definition of trust; trust asymmetry as a structural property of trust relationships",
+            `Daniel J. McAllister — "Affect- and Cognition-Based Trust as Foundations for Interpersonal Cooperation in Organizations" (Academy of Management Journal, Vol. 38, No. 1, 1995) — foundational empirical study establishing the cognitive/affective trust distinction used throughout this module`,
+            `Denise M. Rousseau, Sim B. Sitkin, Ronald S. Burt & Colin Camerer — "Not So Different After All: A Cross-Discipline View of Trust" (Academy of Management Review, Vol. 23, No. 3, 1998) — cross-disciplinary definition of trust; trust asymmetry as a structural property of trust relationships`,
             "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — country-level mapping of task-based vs. relationship-based trust defaults across cultures",
           ].map((src, i) => (
             <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
