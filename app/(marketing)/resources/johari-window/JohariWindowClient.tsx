@@ -64,7 +64,7 @@ const PANES = [
     en_title: "Hidden", en_sub: "The Facade",
     id_title: "Tersembunyi", id_sub: "Fasad",
     nl_title: "Verborgen", nl_sub: "De Façade",
-    en_body: "What you know about yourself but have chosen not to share. Some of this is appropriate — not everything needs to be disclosed. But when the Hidden pane grows too large, the gap between your private self and your presented self creates exhaustion. You spend energy managing the gap.",
+    en_body: "What you know about yourself but have chosen not to share. Some of this is appropriate — not everything needs to be disclosed. But when the Hidden pane grows too large, the gap between your private self and your presented self creates exhaustion.² You spend energy managing the gap.",
     id_body: "Apa yang Anda ketahui tentang diri sendiri tetapi memilih untuk tidak dibagikan. Sebagian dari ini wajar — tidak semuanya perlu diungkapkan. Tetapi ketika pane Tersembunyi tumbuh terlalu besar, celah antara diri pribadi dan diri yang ditampilkan menciptakan kelelahan. Anda menghabiskan energi mengelola celah tersebut.",
     nl_body: "Wat je over jezelf weet maar hebt gekozen niet te delen. Sommige hiervan is gepast — niet alles hoeft onthuld te worden. Maar wanneer het Verborgen deel te groot wordt, creëert de kloof tussen je private zelf en je gepresenteerde zelf uitputting. Je besteedt energie aan het beheren van de kloof.",
     en_cross: "In high-context cultures (Indonesia, Japan, Korea), a larger Hidden pane is not dysfunction — it is social wisdom. What you share with your team leader is different from what you share with a peer. Cross-cultural leaders must read this without pathologising it.",
@@ -487,11 +487,11 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
             {bgOpen ? "Close ↑" : "Read the research →"}
           </button>
           {bgOpen && [
-            "Joseph Luft and Harry Ingham were psychologists at UCLA when they first presented their model at a group dynamics conference in 1955. The name — Johari — is simply a combination of their first names, Joe and Harry. The framework they produced is, by the standards of its longevity and application, remarkably simple: two axes, four quadrants, one central insight. What you know about yourself and what others know about you do not always match. That gap is where much of the invisible friction in leadership lives.",
+            "Joseph Luft and Harry Ingham were psychologists at UCLA when they first presented their model at a group dynamics conference in 1955.¹ The name — Johari — is simply a combination of their first names, Joe and Harry. The framework they produced is, by the standards of its longevity and application, remarkably simple: two axes, four quadrants, one central insight. What you know about yourself and what others know about you do not always match. That gap is where much of the invisible friction in leadership lives.",
             "The Open quadrant contains what is known to both you and the people around you. This is the foundation of functional working relationships — shared context, clear communication, predictable behaviour. The larger the Open quadrant, the less energy a team spends trying to interpret each other. The Hidden quadrant contains what you know about yourself that others do not: your uncertainties, your private concerns, the parts of your inner world you have not chosen to share. The Blind Spot is what others observe about you that you do not see in yourself: patterns in your communication, emotional reactions, the way your presence changes a room. The Unknown quadrant is what neither you nor the people around you currently know — the deeper material that has not yet surfaced.",
             "For leaders, the most practically significant quadrant is the Blind Spot. This is not because blind spots are shameful — every leader has them, by definition. It is because your team is already navigating around your blind spots whether you know about them or not. They are adjusting their communication, withholding information, working around patterns that have never been named. The leader's blind spot is, in practice, a tax on the team. The work of shrinking it is not a personal improvement project. It is a service to the people you lead.",
-            "The mechanism for shrinking the Blind Spot is feedback, and this is where the cross-cultural complexity enters. The Johari Window assumes that feedback can move between people, that self-disclosure is possible, that the Open quadrant can grow. All of this is true — but how it works varies significantly across cultures, and a model developed in mid-twentieth century California was not designed with that variation in mind.",
-            "In high-context cultures across East Asia, Southeast Asia, the Middle East, and parts of Africa, the social cost of direct feedback — especially upward, and especially in any setting with witnesses — is high. Telling your leader that they have a communication problem is not just uncomfortable. It risks the relationship, and in some cultural frameworks it violates a fundamental norm about how status and deference operate. This means that in a multicultural team, the leader's Blind Spot may be both larger and more consistently reinforced than in a cultural context where honest upward feedback is more normal.",
+            "The mechanism for shrinking the Blind Spot is feedback,³ and this is where the cross-cultural complexity enters. The Johari Window assumes that feedback can move between people, that self-disclosure is possible, that the Open quadrant can grow. All of this is true — but how it works varies significantly across cultures, and a model developed in mid-twentieth century California was not designed with that variation in mind.",
+            "In high-context cultures across East Asia, Southeast Asia, the Middle East, and parts of Africa, the social cost of direct feedback — especially upward, and especially in any setting with witnesses — is high.⁴ Telling your leader that they have a communication problem is not just uncomfortable. It risks the relationship, and in some cultural frameworks it violates a fundamental norm about how status and deference operate. This means that in a multicultural team, the leader's Blind Spot may be both larger and more consistently reinforced than in a cultural context where honest upward feedback is more normal.",
             "This does not make the Johari Window less useful cross-culturally. It makes it more useful — because it provides a shared vocabulary for what is actually happening. A leader who can name the Johari Window framework with their team is creating permission to talk about feedback and self-disclosure as normal team practices, not as confrontational acts. Naming the framework normalises the existence of the gap before asking anyone to fill it.",
             "What counts as appropriate content for the Hidden quadrant also varies across cultures. In many Western professional contexts, there is a working assumption that leaders share a fair amount of themselves: their reasoning, their uncertainty, sometimes their personal struggles. Vulnerability, in that context, is read as authenticity and can build trust. In other contexts — particularly where professional and personal domains are kept more explicitly separate — the same level of personal disclosure can signal instability rather than authenticity.",
             "The Unknown quadrant raises a different set of questions — and this is where the Christian tradition has something genuinely distinctive to contribute. If the Unknown contains what is known to neither you nor the people around you, then from a Christian perspective it is not unknown to God. Psalm 139:23-24 is one of the most direct scriptural addresses into this space: 'Search me, God, and know my heart; test me and know my anxious thoughts. See if there is any offensive way in me, and lead me in the way everlasting.' This is not a request for general spiritual health. It is a specific invitation for God to reveal what the psalmist cannot see in themselves — the Unknown quadrant understood as the domain of divine knowledge and ongoing formation.",
@@ -504,6 +504,30 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
           ))}
         </div>
       </section>
+
+      {/* ── SOURCES ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Joseph Luft & Harry Ingham — \"Of Human Interaction\" (National Press Books, 1969) — the published formalization of the Johari Window, building on their 1955 UCLA conference presentation",
+            "Sidney M. Jourard — \"The Transparent Self\" (Van Nostrand Reinhold, 2nd ed., 1971) — foundational research on self-disclosure, authenticity, and the psychological cost of concealment",
+            "Amy C. Edmondson — \"Psychological Safety and Learning Behavior in Work Teams\" (Administrative Science Quarterly, 44(2), 1999) — landmark study on team safety as the structural precondition for honest feedback",
+            "Geert Hofstede — \"Cultures and Organizations: Software of the Mind\" (McGraw-Hill, 3rd ed., 2010) — power distance research documenting cross-cultural variation in upward feedback norms and deference patterns",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ── CTA ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>

@@ -359,18 +359,18 @@ const KEY_TAKEAWAYS = [
 const RESEARCH_CALLOUTS = [
   {
     source: "Google Project Aristotle, 2016",
-    en: "After studying 180 teams over two years, Google's People Operations team found that psychological safety was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree. Teams that could challenge each other openly were consistently the highest performers.",
-    id: "Setelah mempelajari 180 tim selama dua tahun, tim People Operations Google menemukan bahwa keamanan psikologis adalah prediktor tunggal terkuat dari efektivitas tim, mengalahkan bakat individu, pengalaman, dan komposisi tim. Keamanan psikologis adalah keyakinan bersama bahwa aman untuk mengambil risiko interpersonal, untuk berbicara, dan untuk tidak setuju. Tim yang bisa saling menantang secara terbuka secara konsisten adalah yang berkinerja tertinggi.",
+    en: "After studying 180 teams over two years, Google's People Operations team found that psychological safety¹ was the single strongest predictor of team effectiveness, outranking individual talent, experience, and team composition. Psychological safety is the shared belief that it is safe to take interpersonal risks, to speak up, and to disagree.² Teams that could challenge each other openly were consistently the highest performers.",
+    id: "Setelah mempelajari 180 tim selama dua tahun, tim People Operations Google menemukan bahwa keamanan psikologis¹ adalah prediktor tunggal terkuat dari efektivitas tim, mengalahkan bakat individu, pengalaman, dan komposisi tim. Keamanan psikologis adalah keyakinan bersama bahwa aman untuk mengambil risiko interpersonal, untuk berbicara, dan untuk tidak setuju.² Tim yang bisa saling menantang secara terbuka secara konsisten adalah yang berkinerja tertinggi.",
   },
   {
-    source: "Hofstede Insights — Power Distance Index",
-    en: "Geert Hofstede's research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
-    id: "Penelitian Geert Hofstede di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menormalkan penolakan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
+    source: "Hofstede — Power Distance Index",
+    en: "Geert Hofstede's³ research across 90 countries found wide variation in how cultures relate to authority and disagreement. High power-distance countries such as Indonesia (78), Malaysia (100), and the Philippines (94) place a premium on hierarchy and deference. Low power-distance countries such as the Netherlands (38) and Germany (35) normalise pushback and open challenge. In high-PDI settings, silence is not disengagement. It is the culturally appropriate signal of respect.",
+    id: "Penelitian Geert Hofstede³ di 90 negara menemukan variasi besar dalam cara budaya berhubungan dengan otoritas dan ketidaksetujuan. Negara dengan jarak kekuasaan tinggi seperti Indonesia (78), Malaysia (100), dan Filipina (94) mengutamakan hierarki dan kepatuhan. Negara dengan jarak kekuasaan rendah seperti Belanda (38) dan Jerman (35) menormalkan penolakan dan tantangan terbuka. Dalam konteks PDI tinggi, diam bukan berarti tidak terlibat. Itu adalah sinyal rasa hormat yang tepat secara budaya.",
   },
   {
     source: "Patrick Lencioni — The Five Dysfunctions of a Team, 2002",
-    en: "Lencioni identified fear of conflict as the second of five dysfunctions that consistently undermine team performance. Teams which avoid genuine debate do not eliminate tension. They redirect it into politics, passive resistance, and quiet resentment. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
-    id: "Lencioni mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang secara konsisten merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan. Mereka mengalihkannya ke dalam politik, resistensi pasif, dan kebencian yang diam. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
+    en: "Lencioni's⁴ widely read practitioner framework identifies fear of conflict as the second of five dysfunctions that commonly undermine team performance. Teams which avoid genuine debate do not eliminate tension — they redirect it into politics, passive resistance, and quiet resentment. Note: this model is a practitioner account, not a peer-reviewed finding. For empirically grounded team research, Hackman's⁵ six conditions (explaining 50–74% of variance in team effectiveness) provide the stronger evidence base. The absence of productive conflict is not peace. It is the postponement of a harder conversation.",
+    id: "Kerangka praktisi Lencioni⁴ yang banyak dibaca mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang umum merusak kinerja tim. Tim yang menghindari debat yang tulus tidak menghilangkan ketegangan — mereka mengalihkannya ke dalam politik, resistensi pasif, dan kebencian yang diam. Catatan: model ini adalah akun praktisi, bukan temuan peer-reviewed. Untuk penelitian tim yang berdasar secara empiris, enam kondisi Hackman⁵ (menjelaskan 50–74% varians dalam efektivitas tim) memberikan dasar bukti yang lebih kuat. Tidak adanya konflik yang produktif bukan berarti damai. Itu adalah penundaan dari percakapan yang lebih berat.",
   },
 ];
 
@@ -1309,8 +1309,8 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
                 title: "The Five Dysfunctions of a Team",
                 year: "2002",
                 note: t(
-                  "Identifies fear of conflict as the second of five dysfunctions that undermine team performance. The most accessible treatment of why productive conflict is missing in most organisations.",
-                  "Mengidentifikasi ketakutan terhadap konflik sebagai disfungsi kedua dari lima yang merusak kinerja tim.",
+                  "A widely read practitioner framework identifying fear of conflict as central to team dysfunction. Not peer-reviewed, but the most accessible entry point to why productive conflict is missing in most organisations. For empirical grounding, pair with Hackman's team effectiveness research.",
+                  "Kerangka praktisi yang banyak dibaca yang mengidentifikasi ketakutan terhadap konflik sebagai inti dari disfungsi tim. Tidak peer-reviewed, tetapi titik masuk paling mudah diakses mengapa konflik produktif hilang di sebagian besar organisasi. Untuk dasar empiris, padukan dengan penelitian efektivitas tim Hackman.",
                 ),
               },
               {
@@ -1400,7 +1400,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
             "Healthy conflict is the productive surfacing of real differences so a team can work through them and reach genuine alignment. It is not performance, not aggression, and not the absence of care for relationships. It is a form of respect — the belief that the people around the table are capable of handling honest conversation, and that the work is important enough to do well.",
             "The challenge in multicultural and cross-cultural teams is that conflict avoidance is often not a personal weakness. It is a culturally encoded survival strategy. In many high-context cultures across Asia, the Middle East, and Africa, direct disagreement — especially upward or in a group setting — carries real social risk. To disagree publicly is to create discomfort for others, to potentially embarrass someone of higher status, and to invite the same back toward yourself. The rational response, in those cultural frameworks, is to signal concern indirectly: through silence, through delayed implementation, through vague agreement that never fully materialises. This is not dishonesty. It is social intelligence operating within a different set of rules.",
             "The problem is that a leader from a low-context culture — where directness is expected, and silence means agreement — will consistently misread these signals. They will conduct a meeting, read the room as aligned, and leave with a decision that three people in the room actually disagreed with. Those three will implement half-heartedly, or raise the concern quietly with peers, or simply wait for the decision to fail on its own. None of this is visible to the leader until the damage is already done.",
-            "Sherwood Lingenfelter, writing in Teamwork Cross-Culturally, identifies the most intractable form of this dysfunction as what he calls 'wicked problems' — conflicts that cannot be solved by better processes or communication training alone. These are situations where the root issue is not the presenting disagreement but the identity beneath it: two people operating from fundamentally different assumptions about authority, belonging, fairness, and what resolution actually means. No meeting structure or feedback framework resolves that. What resolves it, Lingenfelter argues, is a shared identity that is more foundational than cultural identity: the in-Christ identity that Paul describes in Galatians 3:28, where the distinctions remain real but no longer determine the hierarchy of loyalty.",
+            "Sherwood Lingenfelter,⁶ writing in Teamwork Cross-Culturally, identifies the most intractable form of this dysfunction as what he calls 'wicked problems' — conflicts that cannot be solved by better processes or communication training alone. These are situations where the root issue is not the presenting disagreement but the identity beneath it: two people operating from fundamentally different assumptions about authority, belonging, fairness, and what resolution actually means. No meeting structure or feedback framework resolves that. What resolves it, Lingenfelter argues, is a shared identity that is more foundational than cultural identity: the in-Christ identity that Paul describes in Galatians 3:28, where the distinctions remain real but no longer determine the hierarchy of loyalty.",
             "The earliest church understood this from experience, not theory. Acts 6:1-7 records the first documented cross-cultural conflict in the Christian community: a complaint from Hellenistic Jewish widows that they were being overlooked in the daily food distribution, while Hebrew Jewish widows were being served. This was not a minor logistical complaint. It was a charge of ethnic discrimination inside the community that had just declared itself unified in Christ. The apostles' response is instructive. They did not dismiss the complaint. They did not handle it privately and announce a decision. They called the whole community together, presented the problem transparently, and asked the community to select their own representatives to lead the solution. The seven names chosen are all Greek names — the affected group was entrusted with the resolution.",
             "From that passage, five principles emerge that remain directly applicable to cross-cultural teams today. Discovery: the complaint is heard and taken seriously before any response is formed. Mediation: leadership facilitates rather than decides unilaterally. Participation: the affected parties are given genuine voice and agency in the solution. Agreement: the resolution is formal, shared, and clear. Reaffirmation: the community confirms its unity and continues its work. These are not abstract ideals. They are a sequence tested in a real conflict with real cultural stakes.",
             "Matthew 18:15-17 provides a complementary framework: direct private conversation first, then a witness, then broader escalation if needed. The principle is theologically grounded and practically sound. The cross-cultural application requires care. 'Direct' is not universal. In many high-context cultures, directness through a trusted intermediary — someone who can carry the concern to the other party without putting either person in a public face-loss situation — is not a workaround. It is itself a direct method. The goal of the Matthew 18 process is restoration and clarity. The path there adapts to the cultural logic of the people involved.",
@@ -1414,7 +1414,41 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         </div>
       </div>
 
-      {/* ── 14. CTA FOOTER ───────────────────────────────────────────────────── */}
+      {/* ── 14. SOURCES ──────────────────────────────────────────────────────── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{
+          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
+          fontSize: 10,
+          fontWeight: 700,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: amber,
+          marginBottom: 14,
+        }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Amy C. Edmondson — Psychological Safety and Learning Behavior in Work Teams (Administrative Science Quarterly, 1999)",
+            "Google People Operations — Project Aristotle: Understanding Team Effectiveness (2016) — re.work/guides/understanding-team-effectiveness",
+            "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions, and Organizations Across Nations (Sage, 2nd ed., 2001); country scores via Hofstede Insights (hofstede-insights.com)",
+            "Patrick Lencioni — The Five Dysfunctions of a Team (Jossey-Bass, 2002). Practitioner framework — no peer-reviewed empirical validation.",
+            "J. Richard Hackman — Leading Teams: Setting the Stage for Great Performances (Harvard Business Review Press, 2002). Six conditions explaining 50–74% of variance in team effectiveness.",
+            "Sherwood G. Lingenfelter — Teamwork Cross-Culturally: Christ-Centered Solutions for Multicultural Teams (Baker Academic, 2024)",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: amber, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 15. CTA FOOTER ───────────────────────────────────────────────────── */}
       <div style={{
         background: navy,
         padding: "clamp(56px, 8vw, 80px) 24px",

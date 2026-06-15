@@ -101,8 +101,8 @@ const RAFT_STEPS = [
     id_title: "Persiapkan Masa Depan",
     en_tagline: "Prepare mentally and practically for what comes next.",
     id_tagline: "Persiapkan diri secara mental dan praktis untuk apa yang akan datang.",
-    en_body: `Most people skip this step. They are so focused on closing out the current season that they arrive in the new one completely unprepared, and then wonder why they feel lost. The chaos stage of transition is real and predictable. Planning for it before it arrives changes everything.`,
-    id_body: `Kebanyakan orang melewati langkah ini. Mereka begitu fokus pada penutupan musim saat ini sehingga mereka tiba di musim baru dengan sama sekali tidak siap, dan kemudian bertanya-tanya mengapa mereka merasa tersesat. Tahap kekacauan transisi adalah nyata dan dapat diprediksi. Merencanakannya sebelum datang mengubah segalanya.`,
+    en_body: `Most people skip this step. They are so focused on closing out the current season that they arrive in the new one completely unprepared, and then wonder why they feel lost. A disorientation phase early in transition is widely reported across transition literature.³ Planning for it before it arrives changes everything.`,
+    id_body: `Kebanyakan orang melewati langkah ini. Mereka begitu fokus pada penutupan musim saat ini sehingga mereka tiba di musim baru dengan sama sekali tidak siap, dan kemudian bertanya-tanya mengapa mereka merasa tersesat. Fase disorientasi di awal transisi banyak dilaporkan di seluruh literatur transisi.³ Merencanakannya sebelum datang mengubah segalanya.`,
     en_how: [
       "Research your new context before you arrive: culture, pace of life, communication styles, what is normal.",
       "Identify your first safe anchor: one relationship, one community, one rhythm you can build around immediately.",
@@ -130,8 +130,8 @@ const TRANSITION_PHASES = [
   {
     en_phase: "Chaos",
     id_phase: "Kekacauan",
-    en_description: "The first weeks to months in the new context. Disorientation, cognitive overload, emotional flatness. Everything requires effort. Simple tasks feel hard. This is normal, and temporary.",
-    id_description: "Minggu hingga bulan pertama dalam konteks baru. Disorientasi, kelebihan beban kognitif, kelesuan emosional. Segalanya membutuhkan usaha. Tugas sederhana terasa sulit. Ini normal, dan sementara.",
+    en_description: "The first weeks to months in the new context. Disorientation, cognitive overload, emotional flatness. Everything requires effort. Simple tasks feel hard. For most people, this phase eases with time — though how long varies significantly by person and cultural distance.⁴",
+    id_description: "Minggu hingga bulan pertama dalam konteks baru. Disorientasi, kelebihan beban kognitif, kelesuan emosional. Segalanya membutuhkan usaha. Tugas sederhana terasa sulit. Bagi kebanyakan orang, fase ini berkurang seiring waktu — meskipun berapa lama bervariasi secara signifikan berdasarkan orang dan jarak budaya.⁴",
   },
   {
     en_phase: "Adjustment",
@@ -262,7 +262,7 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
           <div style={{ width: 48, height: 1, background: orange, margin: "0 auto 32px" }} />
           <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2.3vw, 22px)", color: "oklch(82% 0.025 80)", lineHeight: 1.8, marginBottom: 48, fontStyle: "italic", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
             {t(
-              "Most people don't leave well. They disappear into the busyness of packing, the relief of finishing, the anxiety of what's next. The relationships they leave behind carry the unfinished weight for years. The RAFT model exists because transitions done poorly leave lasting damage. Transitions done well set you, and everyone you leave behind, free.",
+              "Most people don't leave well. They disappear into the busyness of packing, the relief of finishing, the anxiety of what's next. The relationships they leave behind carry the unfinished weight for years. The RAFT model exists because transitions done poorly leave lasting damage.¹ Transitions done well set you, and everyone you leave behind, free.",
               "Kebanyakan orang tidak pergi dengan baik. Mereka menghilang ke dalam kesibukan mengemas, lega karena selesai, kecemasan tentang apa selanjutnya. Hubungan yang mereka tinggalkan menanggung beban yang belum selesai selama bertahun-tahun. Model RPPP ada karena transisi yang dilakukan dengan buruk meninggalkan kerusakan yang bertahan lama. Transisi yang dilakukan dengan baik membebaskan Anda, dan semua orang yang Anda tinggalkan."
             )}
           </p>
@@ -306,8 +306,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             </p>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "Research on attrition and cross-cultural departure consistently finds the same pattern: the way people leave predicts how they arrive in the next place. Leaders who leave without reconciling unresolved conflict bring that conflict into new teams. Those who never grieve a leaving arrive emotionally numb in the next community. Those who don't prepare for the chaos of re-entry are blindsided by how disorienting it is.",
-                "Penelitian tentang atrisi dan kepergian lintas budaya secara konsisten menemukan pola yang sama: cara orang pergi memprediksi bagaimana mereka tiba di tempat berikutnya. Pemimpin yang pergi tanpa menyelesaikan konflik yang belum terselesaikan membawa konflik itu ke tim baru. Mereka yang tidak pernah berduka atas kepergian tiba secara emosional mati rasa di komunitas berikutnya. Mereka yang tidak mempersiapkan diri menghadapi kekacauan kepulangan terkejut betapa mengganggu itu."
+                "Research on attrition and cross-cultural departure consistently finds the same pattern: the way people leave predicts how they arrive in the next place.² Leaders who leave without reconciling unresolved conflict bring that conflict into new teams. Those who never grieve a leaving arrive emotionally numb in the next community. Those who don't prepare for the chaos of re-entry are blindsided by how disorienting it is.",
+                "Penelitian tentang atrisi dan kepergian lintas budaya secara konsisten menemukan pola yang sama: cara orang pergi memprediksi bagaimana mereka tiba di tempat berikutnya.² Pemimpin yang pergi tanpa menyelesaikan konflik yang belum terselesaikan membawa konflik itu ke tim baru. Mereka yang tidak pernah berduka atas kepergian tiba secara emosional mati rasa di komunitas berikutnya. Mereka yang tidak mempersiapkan diri menghadapi kekacauan kepulangan terkejut betapa mengganggu itu."
               )}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}`, marginBottom: 28 }}>
@@ -318,8 +318,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             </p>
             <p style={{ marginBottom: 0 }}>
               {t(
-                "David Pollock, who spent decades working with cross-cultural families, developed the RAFT model as a practical framework for doing the emotional and relational work of leaving well. The four letters each name a domain of work that most leaders neglect. None of them require extraordinary courage. They require intention.",
-                "David Pollock, yang menghabiskan beberapa dekade bekerja dengan keluarga lintas budaya, mengembangkan model RPPP sebagai kerangka praktis untuk melakukan pekerjaan emosional dan relasional dalam pergi dengan baik. Keempat huruf masing-masing menamai domain pekerjaan yang diabaikan oleh kebanyakan pemimpin. Tidak ada yang memerlukan keberanian luar biasa. Mereka memerlukan niat."
+                "David Pollock, who spent decades working with cross-cultural families, developed the RAFT model as a widely trusted practitioner framework for doing the emotional and relational work of leaving well.¹ The four letters each name a domain of work that most leaders neglect. None of them require extraordinary courage. They require intention.",
+                "David Pollock, yang menghabiskan beberapa dekade bekerja dengan keluarga lintas budaya, mengembangkan model RPPP sebagai kerangka praktisi yang dipercaya luas untuk melakukan pekerjaan emosional dan relasional dalam pergi dengan baik.¹ Keempat huruf masing-masing menamai domain pekerjaan yang diabaikan oleh kebanyakan pemimpin. Tidak ada yang memerlukan keberanian luar biasa. Mereka memerlukan niat."
               )}
             </p>
           </div>
@@ -471,8 +471,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginBottom: 56 }}>
             {t(
-              "Knowing the curve doesn't make it easy. But it makes it less frightening, because you can name what is happening rather than being swallowed by it.",
-              "Mengetahui kurva tidak membuatnya mudah. Tetapi itu membuatnya kurang menakutkan, karena Anda bisa menamai apa yang terjadi daripada ditelan olehnya."
+              "Knowing the curve doesn't make it easy. But it makes it less frightening, because you can name what is happening rather than being swallowed by it. These four phases are a directional normalising map drawn from transition literature³ — a way of naming common experiences, not a guaranteed sequence. Individual and cultural contexts vary considerably.",
+              "Mengetahui kurva tidak membuatnya mudah. Tetapi itu membuatnya kurang menakutkan, karena Anda bisa menamai apa yang terjadi daripada ditelan olehnya. Keempat fase ini adalah peta normalisasi arah yang diambil dari literatur transisi³ — cara untuk menamai pengalaman umum, bukan urutan yang dijamin. Konteks individu dan budaya sangat bervariasi."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -534,8 +534,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             </p>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "Reverse culture shock, returning to your home culture after an extended cross-cultural assignment, is harder precisely because it is unexpected. You expect home to feel like home. Instead, it feels foreign. Your humour doesn't land. Your references confuse people. The pace feels wrong. The conversations feel shallow. And there is almost no social permission to name this, because you are home.",
-                "Gegar budaya terbalik, kembali ke budaya asal Anda setelah penugasan lintas budaya yang panjang, lebih berat tepat karena tidak terduga. Anda mengharapkan rumah terasa seperti rumah. Sebaliknya, itu terasa asing. Humor Anda tidak mendarat. Referensi Anda membingungkan orang. Temponya terasa salah. Percakapannya terasa dangkal. Dan hampir tidak ada izin sosial untuk menamakannya, karena Anda sudah di rumah."
+                "Reverse culture shock, returning to your home culture after an extended cross-cultural assignment, is harder precisely because it is unexpected.⁵ You expect home to feel like home. Instead, it feels foreign. Your humour doesn't land. Your references confuse people. The pace feels wrong. The conversations feel shallow. And there is almost no social permission to name this, because you are home.",
+                "Gegar budaya terbalik, kembali ke budaya asal Anda setelah penugasan lintas budaya yang panjang, lebih berat tepat karena tidak terduga.⁵ Anda mengharapkan rumah terasa seperti rumah. Sebaliknya, itu terasa asing. Humor Anda tidak mendarat. Referensi Anda membingungkan orang. Temponya terasa salah. Percakapannya terasa dangkal. Dan hampir tidak ada izin sosial untuk menamakannya, karena Anda sudah di rumah."
               )}
             </p>
             <div style={{ background: "oklch(18% 0.09 260)", padding: "32px 36px", borderRadius: 12, marginBottom: 28 }}>
@@ -557,8 +557,8 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
             </p>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "Two specific re-entry dynamics to anticipate. Comparison: the instinct to compare your home context unfavourably with the field, or vice versa. Neither comparison produces belonging. And Invisibility: people around you often cannot see or honour the transformation you've been through. You have lived through things that don't translate in ordinary conversation. Name this to yourself. Find people who can receive it.",
-                "Dua dinamika kepulangan spesifik yang perlu diantisipasi. Perbandingan: naluri untuk membandingkan konteks rumah Anda secara tidak menguntungkan dengan lapangan, atau sebaliknya. Tidak ada perbandingan yang menghasilkan rasa memiliki. Dan Ketidaktampakan: orang-orang di sekitar Anda sering tidak dapat melihat atau menghormati transformasi yang telah Anda jalani. Anda telah menjalani hal-hal yang tidak dapat diterjemahkan dalam percakapan biasa. Namai ini untuk diri sendiri. Temukan orang-orang yang bisa menerimanya."
+                "Two specific re-entry dynamics to anticipate. Comparison: the instinct to compare your home context unfavourably with the field, or vice versa. Neither comparison produces belonging. And Invisibility: people around you often cannot see or honour the transformation you've been through. You have lived through things that don't translate in ordinary conversation. Name this to yourself. Find people who can receive it. Research on perceived social support suggests that one attuned relationship matters more than a large network with formulaic responses.⁶",
+                "Dua dinamika kepulangan spesifik yang perlu diantisipasi. Perbandingan: naluri untuk membandingkan konteks rumah Anda secara tidak menguntungkan dengan lapangan, atau sebaliknya. Tidak ada perbandingan yang menghasilkan rasa memiliki. Dan Ketidaktampakan: orang-orang di sekitar Anda sering tidak dapat melihat atau menghormati transformasi yang telah Anda jalani. Anda telah menjalani hal-hal yang tidak dapat diterjemahkan dalam percakapan biasa. Namai ini untuk diri sendiri. Temukan orang-orang yang bisa menerimanya. Penelitian tentang dukungan sosial yang dirasakan menunjukkan bahwa satu hubungan yang penuh perhatian lebih penting daripada jaringan besar dengan respons yang bersifat formula.⁶"
               )}
             </p>
             <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, padding: "8px 0 8px 28px", borderLeft: `3px solid ${orange}` }}>
@@ -787,6 +787,32 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Sources */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 14 }}>
+          {t("Sources", "Sumber")}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "David Pollock & Ruth Van Reken — Third Culture Kids: Preparing for the Life Between Worlds (Nicholas Brealey, 3rd ed., 2017). The source work for the RAFT model — a widely trusted practitioner framework developed through decades of field work; no peer-reviewed empirical validation exists.",
+            "Melissa Selby — The Journey Back: Understanding Re-entry and Attrition in Cross-Cultural Workers (William Carey Library, 2018). Field research on attrition patterns and the predictive relationship between departure quality and re-entry adjustment.",
+            "William Bridges with Susan Bridges — Transitions: Making Sense of Life's Changes (Da Capo Press, 4th ed., 2019). The transition phases on this page are a directional normalising map drawn from this and similar practitioner literature — a way of naming common experiences, not an empirically validated sequence.",
+            "Adrian Furnham & Stephen Bochner — Culture Shock: Psychological Reactions to Unfamiliar Environments (Routledge, 1986); P. Adler — 'The Transitional Experience: An Alternative View of Culture Shock,' Journal of Humanistic Psychology (1975). The research base for disorientation timelines in cross-cultural adjustment; duration varies significantly by individual and cultural distance.",
+            "Clyde Austin (ed.) — Cross-Cultural Re-Entry: A Book of Readings (Abilene Christian University Press, 1986). Foundational collection on reverse culture shock; the experience of return as harder than initial arrival is consistently documented across this literature.",
+            "PMC12840645 (Chan et al., 2026, Hong Kong/China context): perceived support appraisal quality outweighs network size. Confirms Zavala-Barajas (2022) missionary-context finding: one attuned relationship sustains more than a large network with formulaic responses.",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: orange, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
