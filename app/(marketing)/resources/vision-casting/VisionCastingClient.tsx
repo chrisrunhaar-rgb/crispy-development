@@ -90,9 +90,9 @@ const FLIP_CARDS: FlipCard[] = [
       nl: "Hoe Teamleiders Visie Uitdragen",
     },
     back: {
-      en: "Vision must be repeated seven to ten times before it settles. Use story, not slides. Invite people in — don't announce to them. In cross-cultural teams, vision must be framed collectively ('what we will do together'), not as a hero-leader announcement. The vision that emerges from the team together is almost always larger than the one you started with.",
-      id: "Visi harus diulangi tujuh hingga sepuluh kali sebelum menetap. Gunakan cerita, bukan slide. Undang orang masuk — jangan umumkan kepada mereka. Dalam tim lintas budaya, visi harus dibingkai secara kolektif.",
-      nl: "Visie moet zeven tot tien keer worden herhaald voordat het landt. Gebruik verhalen, geen slides. Nodig mensen uit — kondig niet aan. In interculturele teams moet visie collectief worden geframed: 'wat we samen zullen doen'.",
+      en: "Vision must be repeated seven to ten times² before it settles. Use story, not slides. Invite people in — don't announce to them. In cross-cultural teams, vision must be framed collectively ('what we will do together'), not as a hero-leader announcement. The vision that emerges from the team together is almost always larger than the one you started with.",
+      id: "Visi harus diulangi tujuh hingga sepuluh kali² sebelum menetap. Gunakan cerita, bukan slide. Undang orang masuk — jangan umumkan kepada mereka. Dalam tim lintas budaya, visi harus dibingkai secara kolektif.",
+      nl: "Visie moet zeven tot tien keer² worden herhaald voordat het landt. Gebruik verhalen, geen slides. Nodig mensen uit — kondig niet aan. In interculturele teams moet visie collectief worden geframed: 'wat we samen zullen doen'.",
     },
   },
 ];
@@ -1216,7 +1216,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
               marginBottom: 24,
               lineHeight: 1.3,
             }}>
-              Andy Stanley — Visioneering
+              Andy Stanley¹ — Visioneering¹
             </p>
             <div style={{
               position: "relative",
@@ -1332,6 +1332,25 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             })}
           </div>
 
+          {/* ── Sources ── */}
+          <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+            <p style={{ fontFamily: montserrat, fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
+              Sources
+            </p>
+            {[
+              "¹ Andy Stanley — Visioneering (Multnomah, 1999; rev. 2014) — Primary source for the vision-as-concern framework, the four-channel model, and the five discernment tests adapted throughout this module.",
+              "² John P. Kotter — Leading Change (Harvard Business Review Press, 1996) — Kotter's research found leaders under-communicate vision by a factor of ten; the seven-to-ten repetitions standard is grounded in his organizational change studies.",
+              "³ Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed. 2010) — Foundational cross-cultural research establishing the individualism–collectivism dimension and its implications for how authority and collective vision are communicated.",
+              "⁴ Bill Hybels — Courageous Leadership (Zondervan, 2002; updated 2009) — Practitioner account of vision casting in complex organizations; especially strong on the discipline of vision repetition and distinguishing vision from strategy.",
+              "⁵ Will Mancini & Warren Bird — God Dreams (B&H Publishing, 2016) — Identifies twelve recurring patterns in how God-given vision takes shape across different ministry contexts; useful framework for teams moving from intuition to articulation.",
+            ].map((src, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+                <span style={{ fontFamily: montserrat, fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵"][i]}</span>
+                <span style={{ fontFamily: montserrat, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
+              </div>
+            ))}
+          </div>
+
           {/* CTA */}
           <div style={{
             textAlign: "center",
@@ -1429,13 +1448,13 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
           </button>
           {bgOpen && [
             "Vision is the most over-talked and under-examined subject in leadership literature. The shelves are full of frameworks for vision-casting, vision-crafting, vision-sharing, vision-alignment. What most of them assume, without saying so, is that the leader's job is to produce a sufficiently compelling statement and deliver it clearly. After that, people will follow. This assumption holds in some contexts. In many others, particularly cross-cultural ones, it consistently fails — not because the leader lacks vision, but because the communication model they are using was designed for a different audience.",
-            "Vision communicates within a set of cultural assumptions about authority, hope, time, and collective identity. In high-individualism cultures — particularly in North America and parts of Northern Europe — vision is typically framed around personal opportunity and individual contribution. The implicit message is: this is where we are going, and here is what it means for you. In collectivist cultures, which represent the majority of the world's population and the majority of the contexts where cross-cultural workers and global church leaders operate, that frame lands differently. Vision must be communicated in terms of the community: what it means for us, what we are building together, what it asks of us collectively.",
+            "Vision communicates within a set of cultural assumptions about authority, hope, time, and collective identity. In high-individualism cultures — particularly in North America and parts of Northern Europe — vision is typically framed around personal opportunity and individual contribution. The implicit message is: this is where we are going, and here is what it means for you. In collectivist cultures³, which represent the majority of the world's population and the majority of the contexts where cross-cultural workers and global church leaders operate, that frame lands differently. Vision must be communicated in terms of the community: what it means for us, what we are building together, what it asks of us collectively.",
             "This is not about changing the vision. It is about understanding that the same destination, described through different frames, produces different responses. The leader's task is not to have a better vision. It is to understand who is in the room well enough to communicate it in a way that actually lands.",
             "Nehemiah is the most detailed study of vision communication in the Hebrew Bible, and the sequence he follows is worth examining carefully. He does not begin with a vision statement. He begins with a report: the wall of Jerusalem is broken down, the gates have been burned, the people are in great trouble and disgrace (1:3). He receives this information and his response is not strategic. He mourns. He fasts. He prays — for days, by his own account, before he takes any action (1:4-11). The burden precedes the blueprint by months.",
             "His arrival in Jerusalem follows the same pattern. He does not announce the vision on day one. He goes out at night, alone, and walks the rubble (2:11-16). Private observation before public declaration. When he does speak, his four-part statement in 2:17-18 covers present reality, future direction, motivating why, and evidence of God's hand on the work. The response is immediate: 'Let us start rebuilding.'",
             "What Nehemiah does not do is equally instructive. He does not oversell. He does not minimise the difficulty. He does not appeal to individual benefit. He speaks to collective shame, collective identity, and collective restoration. The vision is not about what this could be for any of them individually — it is about what they owe to something that matters more than any of them individually. That frame works in a collectivist context. It works because it matches the motivational structure of the audience.",
             "Habakkuk 2:2 describes the capacity to delegate vision in a single phrase: write the vision plainly, 'so that whoever reads it may run.' Vision clear enough to be delegated. Clear enough that people can act on it without waiting to be told. That is the functional test of whether vision has actually been communicated: not whether people can repeat it back, but whether they can act on it independently in a way that aligns with the whole.",
-            "Andy Stanley's observation in Visioneering — that vision begins as a concern — is borne out by Nehemiah's account and by most of the other biblical examples of vision that actually moved people. The burden precedes the blueprint. This matters for leaders today not as a historical observation but as a diagnostic: if the vision you are carrying does not have any weight to it — if it is the product of planning rather than something you cannot stop thinking about — it may be a plan dressed up as a vision. People follow weight more than they follow words, and they can usually tell the difference.",
+            "Andy Stanley's¹ observation in Visioneering¹ — that vision begins as a concern — is borne out by Nehemiah's account and by most of the other biblical examples of vision that actually moved people. The burden precedes the blueprint. This matters for leaders today not as a historical observation but as a diagnostic: if the vision you are carrying does not have any weight to it — if it is the product of planning rather than something you cannot stop thinking about — it may be a plan dressed up as a vision. People follow weight more than they follow words, and they can usually tell the difference.",
             "For cross-cultural leaders and field workers, the cross-cultural application of vision communication demands a longer time horizon and a more relational methodology than most Western leadership training suggests. In high-context cultures, trust precedes message reception. A vision announced before the relational foundation is built lands as noise at best and as presumption at worst. The leader who has been present, who has listened more than they have spoken, who has demonstrated that they understand and care about the community they are leading — that leader can cast vision and be heard.",
             "Habakkuk 2:3 adds the element that leaders in a hurry resist most: 'For the vision awaits an appointed time; it speaks of the end and will not prove false. Though it linger, wait for it; it will certainly come and will not delay.' The leader's job is to communicate it faithfully, hold it consistently, and trust that the timing belongs to God. That is not passivity. It is the theological discipline of leading in partnership with a God who is not surprised by how slowly things move.",
           ].map((para, i) => (

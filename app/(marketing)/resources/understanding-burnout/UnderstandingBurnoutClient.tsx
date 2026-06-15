@@ -104,8 +104,8 @@ function RiskSpectrumDiagram({ lang }: { lang: Lang }) {
 
       <figcaption style={{ fontSize: "0.8rem", color: bodyText, marginTop: "0.5rem", fontFamily: "Montserrat, sans-serif" }}>
         {en
-          ? "Burnout risk spectrum based on Montero-Marín et al. Each subtype maps to a different risk zone."
-          : "Spektrum risiko kelelahan berdasarkan model Montero-Marín dkk. Setiap subtipe memetakan ke zona risiko berbeda."}
+          ? "Burnout risk spectrum based on Montero-Marín et al.³ Each subtype maps to a different risk zone."
+          : "Spektrum risiko kelelahan berdasarkan model Montero-Marín dkk.³ Setiap subtipe memetakan ke zona risiko berbeda."}
       </figcaption>
     </figure>
   );
@@ -354,8 +354,8 @@ export default function UnderstandingBurnoutClient({
               style={{ color: navy, textDecoration: "underline", textUnderlineOffset: "2px" }}
             >
               {t(
-                "Source: Abdul Aziz & Ong, \"Prevalence and associated factors of burnout among working adults in Southeast Asia,\" Frontiers in Public Health, 2024",
-                "Sumber: Abdul Aziz & Ong, \"Prevalensi dan faktor terkait kelelahan pada pekerja dewasa di Asia Tenggara,\" Frontiers in Public Health, 2024",
+                "⁶ Abdul Aziz & Ong, \"Prevalence and associated factors of burnout among working adults in Southeast Asia,\" Frontiers in Public Health, 2024",
+                "⁶ Abdul Aziz & Ong, \"Prevalensi dan faktor terkait kelelahan pada pekerja dewasa di Asia Tenggara,\" Frontiers in Public Health, 2024",
                 lang
               )}
             </a>
@@ -374,8 +374,8 @@ export default function UnderstandingBurnoutClient({
           </h2>
           <p style={bodyStyle()}>
             {t(
-              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization classifies it as an occupational phenomenon: a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy (loss of confidence in one's own competence and impact). These three dimensions can operate independently. A leader can be exhausted but still engaged, or disengaged without being physically depleted.",
-              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia mengklasifikasikannya sebagai fenomena pekerjaan: sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen. Seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
+              "Burnout is not a personality weakness, a faith failure, or simply working too hard. The World Health Organization¹ classifies it as an occupational phenomenon: a syndrome resulting from chronic workplace stress that has not been successfully managed. Three dimensions define it: exhaustion (energy depletion), cynicism (growing distance and negativism toward the work and people in it), and reduced efficacy² (loss of confidence in one's own competence and impact). These three dimensions can operate independently. A leader can be exhausted but still engaged, or disengaged without being physically depleted.",
+              "Kelelahan bukan kelemahan kepribadian, kegagalan iman, atau sekadar terlalu banyak bekerja. Organisasi Kesehatan Dunia¹ mengklasifikasikannya sebagai fenomena pekerjaan: sebuah sindrom yang diakibatkan oleh stres kerja kronis yang tidak berhasil dikelola. Tiga dimensi mendefinisikannya: kelelahan (penipisan energi), sinisme (jarak dan negativisme yang berkembang terhadap pekerjaan dan orang-orang di dalamnya), dan berkurangnya efikasi² (hilangnya kepercayaan pada kompetensi dan dampak diri sendiri). Ketiga dimensi ini dapat beroperasi secara independen. Seorang pemimpin bisa kelelahan tetapi tetap terlibat, atau tidak terlibat tanpa fisik yang terkuras.",
               lang
             )}
           </p>
@@ -573,8 +573,8 @@ export default function UnderstandingBurnoutClient({
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: "1rem" }}>
                     {t(
-                      "The Job Demands-Resources (JD-R) model offers a structural explanation for burnout. Burnout occurs when job demands (workload, emotional demands, role ambiguity, interpersonal conflict) consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem. It is a structural diagnosis that calls for a structural response.",
-                      "Model Tuntutan Pekerjaan-Sumber Daya (JD-R) menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan (beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal) secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter. Ini adalah diagnosis struktural yang membutuhkan respons struktural.",
+                      "The Job Demands-Resources (JD-R) model⁴ offers a structural explanation for burnout. Burnout occurs when job demands (workload, emotional demands, role ambiguity, interpersonal conflict) consistently outpace the resources available to meet them: autonomy, feedback, supervisory support, skill match, relationship quality. The model explains why two workers in identical roles can have completely different experiences: the ratio of demands to resources differs. Burnout is therefore not simply a willpower or character problem. It is a structural diagnosis that calls for a structural response.",
+                      "Model Tuntutan Pekerjaan-Sumber Daya (JD-R)⁴ menawarkan penjelasan struktural untuk kelelahan. Kelelahan terjadi ketika tuntutan pekerjaan (beban kerja, tuntutan emosional, ambiguitas peran, konflik interpersonal) secara konsisten melebihi sumber daya yang tersedia untuk memenuhinya: otonomi, umpan balik, dukungan pengawasan, kecocokan keterampilan, kualitas hubungan. Model ini menjelaskan mengapa dua pekerja dalam peran yang identik dapat memiliki pengalaman yang sepenuhnya berbeda: rasio tuntutan terhadap sumber daya berbeda. Kelelahan oleh karena itu bukan sekadar masalah kemauan atau karakter. Ini adalah diagnosis struktural yang membutuhkan respons struktural.",
                       lang
                     )}
                   </p>
@@ -591,8 +591,8 @@ export default function UnderstandingBurnoutClient({
                   </p>
                   <p style={{ ...bodyStyle(), marginBottom: 0 }}>
                     {t(
-                      "Prolonged exposure to elevated cortisol (the hormone released under chronic stress) progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected, and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
-                      "Paparan berkepanjangan terhadap kortisol yang meningkat (hormon yang dilepaskan di bawah stres kronis) secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung, dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
+                      "Prolonged exposure to elevated cortisol⁵ (the hormone released under chronic stress) progressively impairs the prefrontal cortex, the region responsible for complex thinking, empathy, and long-range planning. At the same time, the amygdala (the threat-detection centre) becomes hypersensitive. The result is a person who is increasingly reactive, less able to think clearly, less able to feel connected, and often unaware that this is happening because the very capacity for self-assessment has been compromised. This is why self-report about burnout is notoriously unreliable: the instrument measuring the problem is itself affected by the problem.",
+                      "Paparan berkepanjangan terhadap kortisol⁵ yang meningkat (hormon yang dilepaskan di bawah stres kronis) secara progresif merusak korteks prefrontal, wilayah yang bertanggung jawab untuk pemikiran kompleks, empati, dan perencanaan jangka panjang. Pada saat yang sama, amigdala (pusat deteksi ancaman) menjadi hipersensitif. Hasilnya adalah seseorang yang semakin reaktif, kurang mampu berpikir jernih, kurang mampu merasa terhubung, dan sering tidak menyadari bahwa ini terjadi karena kapasitas penilaian diri itu sendiri telah terganggu. Inilah mengapa laporan diri tentang kelelahan terkenal tidak dapat diandalkan: instrumen yang mengukur masalah itu sendiri dipengaruhi oleh masalah.",
                       lang
                     )}
                   </p>
@@ -1022,8 +1022,8 @@ export default function UnderstandingBurnoutClient({
               key: "frenetic",
               title: t("If you are frenetic: permission to stop", "Jika Anda frenetic: izin untuk berhenti", lang),
               body: t(
-                "The primary intervention is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
-                "Intervensi utama adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
+                "The primary intervention is identity-based permission to stop: not efficiency advice or better time management. Build non-negotiable recovery anchors into the week as structural commitments, not suggestions. Identify one person who has explicit permission to name the warning signs when they appear. Return to the question of whether the work is held as servant or master of your calling. Walter Brueggemann's⁷ observation applies directly here: in a culture that treats availability as virtue and busyness as faithfulness, choosing to stop is a theological statement. The fourth commandment was not a productivity recommendation. It was a declaration of freedom.",
+                "Intervensi utama adalah izin berbasis identitas untuk berhenti: bukan saran efisiensi atau manajemen waktu yang lebih baik. Bangun jangkar pemulihan yang tidak bisa dinegosiasikan ke dalam minggu sebagai komitmen struktural, bukan saran. Identifikasi satu orang yang memiliki izin eksplisit untuk menamai tanda-tanda peringatan ketika mereka muncul. Kembalilah ke pertanyaan apakah pekerjaan dipegang sebagai pelayan atau tuan dari panggilan Anda. Pengamatan Walter Brueggemann⁷ berlaku langsung di sini: dalam budaya yang memperlakukan ketersediaan sebagai kebajikan dan kesibukan sebagai kesetiaan, memilih untuk berhenti adalah pernyataan teologis. Perintah keempat bukanlah rekomendasi produktivitas. Itu adalah deklarasi kebebasan.",
                 lang
               ),
             },
@@ -1543,14 +1543,14 @@ export default function UnderstandingBurnoutClient({
             {(lang === "en"
               ? [
                   "Burnout is not primarily a time-management failure. It is a diagnosis of a system under pressure, often driven by a gradual drift from working out of calling to working out of ambition, fear, or need for results.",
-                  "Montero-Marin's three subtypes (frenetic, underchallenged, and worn-out) respond to different drivers and need different interventions. Recognising your own pattern is the first step toward a response that actually fits.",
+                  "Montero-Marín's³ three subtypes (frenetic, underchallenged, and worn-out) respond to different drivers and need different interventions. Recognising your own pattern is the first step toward a response that actually fits.",
                   "God's response to Elijah's collapse was physical before it was spiritual. Food, water, rest, then the still small voice. The body is not separate from the spiritual life. It is the place where the spiritual life is lived.",
                   "Selfish ambition often wears ministry clothes. It sounds like vision, faithfulness, responsibility, even sacrifice. The diagnostic question is not how much you are working. It is from where.",
                   "Working from identity costs energy but does not burn you out. The drift begins when we start to serve the results rather than the calling from which those results flow.",
                 ]
               : [
                   "Kelelahan bukan terutama kegagalan manajemen waktu. Ini adalah diagnosis sistem di bawah tekanan, sering didorong oleh penyimpangan bertahap dari bekerja berdasarkan panggilan ke bekerja berdasarkan ambisi, ketakutan, atau kebutuhan akan hasil.",
-                  "Tiga subtipe Montero-Marin (frenetic, underchallenged, dan worn-out) merespons pendorong yang berbeda dan membutuhkan intervensi yang berbeda. Mengenali pola Anda sendiri adalah langkah pertama menuju respons yang benar-benar sesuai.",
+                  "Tiga subtipe Montero-Marín³ (frenetic, underchallenged, dan worn-out) merespons pendorong yang berbeda dan membutuhkan intervensi yang berbeda. Mengenali pola Anda sendiri adalah langkah pertama menuju respons yang benar-benar sesuai.",
                   "Respons Allah terhadap keruntuhan Elia bersifat fisik sebelum rohani. Makanan, air, istirahat, kemudian suara yang sunyi dan lembut. Tubuh tidak terpisah dari kehidupan rohani. Itu adalah tempat di mana kehidupan rohani dijalani.",
                   "Ambisi egois sering mengenakan pakaian pelayanan. Terdengar seperti visi, kesetiaan, tanggung jawab, bahkan pengorbanan. Pertanyaan diagnostik bukan seberapa banyak Anda bekerja, melainkan dari mana.",
                   "Bekerja dari identitas membutuhkan energi tetapi tidak membuat Anda kelelahan. Penyimpangan dimulai ketika kita mulai melayani hasil daripada panggilan dari mana hasil itu mengalir.",
@@ -1573,6 +1573,27 @@ export default function UnderstandingBurnoutClient({
           </ol>
         </div>
       </section>
+
+      {/* ── Sources ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
+          Sources
+        </p>
+        {[
+          "¹ World Health Organization — Burn-out an \"occupational phenomenon\": International Classification of Diseases (ICD-11, 2019) — Establishes burnout as a syndrome of chronic workplace stress, the foundational classification used throughout this module.",
+          "² Christina Maslach & Michael P. Leiter — The Truth About Burnout (Jossey-Bass, 1997) — Defines the three-dimension model (exhaustion, cynicism, reduced efficacy) that underpins the MBI and most burnout research since.",
+          "³ Jesús Montero-Marín, Javier García-Campayo et al. — \"A newer and broader definition of burnout: Validation of the Burnout Clinical Subtype Questionnaire (BCSQ-36)\" (BMC Public Health, 2011) — Introduces the frenetic, underchallenged, and worn-out subtypes used in the assessment and spectrum diagram.",
+          "⁴ Arnold Bakker & Evangelia Demerouti — \"The Job Demands-Resources model: State of the art\" (Journal of Managerial Psychology, 2007) — The structural model explaining how demand-resource imbalance produces burnout regardless of individual resilience.",
+          "⁵ Bruce S. McEwen — \"Stressed or stressed out: What is the difference?\" (Journal of Psychiatry & Neuroscience, 2005) — Documents how chronic cortisol elevation impairs prefrontal cortex function and sensitises the amygdala, underpinning the neuroscience section.",
+          "⁶ Abdul Aziz & Ong — \"Prevalence and associated factors of burnout among working adults in Southeast Asia\" (Frontiers in Public Health, 2024) — Regional prevalence data providing context for cross-cultural ministry leaders in Southeast Asia.",
+          "⁷ Walter Brueggemann — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — Theological framing of Sabbath rest as a counter-cultural act of freedom, cited in the frenetic pathway.",
+        ].map((src, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText, lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
+          </div>
+        ))}
+      </div>
 
       {/* Fade-in keyframe for emotion reflection */}
       <style>{`
