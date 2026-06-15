@@ -788,7 +788,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orangeOklch, marginBottom: 14 }}>
           Sources
         </p>
-        <ol style={{ margin: 0, padding: "0 0 0 18px", display: "flex", flexDirection: "column", gap: 5 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
           {[
             "P. Christopher Earley & Soon Ang — Cultural Intelligence: Individual Interactions Across Cultures (Stanford Business Books, 2003)",
             "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022)",
@@ -796,11 +796,16 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
             "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008)",
             "David J. Bosch — Transforming Mission: Paradigm Shifts in Theology of Mission (Orbis Books, 2011)",
           ].map((src, i) => (
-            <li key={i} style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>
-              {src}
-            </li>
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: orangeOklch, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
 
       {/* --- CTA FOOTER ------------------------------------------------------- */}
