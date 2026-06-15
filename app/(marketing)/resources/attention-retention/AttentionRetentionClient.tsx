@@ -163,7 +163,7 @@ const LEARNING_METHODS = [
   {
     num: "06",
     titleEn: "Experiential Learning", titleId: "Pembelajaran Pengalaman", titleNl: "Ervaringsleren",
-    descEn: "Structured activities that create direct experience — then reflection. Kolb's learning cycle in action.",
+    descEn: "Structured activities that create direct experience — then reflection. Kolb's learning cycle³ in action.",
     descId: "Kegiatan terstruktur yang menciptakan pengalaman langsung — kemudian refleksi. Siklus belajar Kolb dalam tindakan.",
     descNl: "Gestructureerde activiteiten die directe ervaring cre—ren — dan reflectie. Kolbs leercyclus in actie.",
   },
@@ -276,7 +276,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         </h2>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {tr(
-            "The average adult attention span in a learning environment is 10—20 minutes before focus begins to fade. This is not a weakness — it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
+            "The average adult attention span in a learning environment is 10—20 minutes¹ before focus begins to fade. This is not a weakness — it is how the human brain is designed. Effective trainers and communicators work with this reality, not against it.",
             "Rentang perhatian rata-rata orang dewasa dalam lingkungan belajar adalah 10—20 menit sebelum fokus mulai memudar. Ini bukan kelemahan — itulah cara otak manusia dirancang. Pelatih dan komunikator yang efektif bekerja dengan realitas ini, bukan melawannya.",
             "De gemiddelde aandachtsspanne van volwassenen in een leeromgeving is 10—20 minuten voordat de focus begint te vervagen. Dit is geen zwakte — het is hoe het menselijk brein is ontworpen. Effectieve trainers en communicators werken m—t deze realiteit, niet ertegen."
           )}
@@ -384,7 +384,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
             </h2>
             <p style={{ fontSize: 16, color: "oklch(72% 0.05 260)", lineHeight: 1.7 }}>
               {tr(
-                "Malcolm Knowles identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles — and design around them.",
+                "Malcolm Knowles² identified five core principles that distinguish how adults learn from how children learn. Every trainer working with adult leaders should know these principles — and design around them.",
                 "Malcolm Knowles mengidentifikasi lima prinsip inti yang membedakan bagaimana orang dewasa belajar dari bagaimana anak-anak belajar. Setiap pelatih yang bekerja dengan pemimpin dewasa harus mengetahui prinsip-prinsip ini — dan merancang berdasarkannya.",
                 "Malcolm Knowles identificeerde vijf kernprincipes die onderscheiden hoe volwassenen leren van hoe kinderen leren. Elke trainer die met volwassen leiders werkt, moet deze principes kennen — en er omheen ontwerpen."
               )}
@@ -516,6 +516,29 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           </p>
         </div>
       </section>
+
+      {/* -- SOURCES ------------------------------------------------------------ */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "John Medina — Brain Rules: 12 Principles for Surviving and Thriving at Work, Home, and School (Pear Press, 2nd ed., 2014) — research basis for the 10–20 minute adult attention window in learning environments",
+            "Malcolm Knowles — The Adult Learner: A Neglected Species (Gulf Publishing, 3rd ed., 1984); The Modern Practice of Adult Education: From Pedagogy to Andragogy (Cambridge Books, 1980) — originator of the five principles of andragogy",
+            "David A. Kolb — Experiential Learning: Experience as the Source of Learning and Development (Prentice Hall, 1984) — the four-stage experiential learning cycle (concrete experience, reflective observation, abstract conceptualisation, active experimentation)",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* -- CTA ----------------------------------------------------------------- */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

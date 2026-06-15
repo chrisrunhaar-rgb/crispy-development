@@ -1222,9 +1222,9 @@ export default function Personalities16Client({
             </button>
             {bgOpen && (lang === "id" ? SEO_PARAS_ID : [
               "Few tools in the world of leadership development have achieved the name recognition of the Myers-Briggs Type Indicator. Millions of people take some version of the assessment each year, and the four-letter type codes have become part of everyday conversation in workplaces, churches, and online communities globally. But for leaders working across cultural boundaries, a deeper question matters: what does a personality framework developed in mid-20th century America actually measure when it travels to Nairobi, Jakarta, or Beirut?",
-              "The origins of MBTI trace back to Carl Jung's theory of psychological types, articulated in his 1921 work Psychological Types, and later translated into a practical assessment by Isabel Briggs Myers and her mother Katharine Cook Briggs. Their goal was generous and practical — to help ordinary people understand themselves and work better with others. The assessment organizes personality across four dichotomies: where you focus your attention (Introversion or Extraversion), how you take in information (Sensing or Intuition), how you make decisions (Thinking or Feeling), and how you organize your life (Judging or Perceiving). The result is one of 16 possible type combinations, each carrying a profile description.",
-              "The popularity of MBTI has not insulated it from scientific scrutiny. Researchers reviewing decades of personality data have raised two primary concerns: test-retest reliability (a notable portion of respondents receive a different type when retested weeks later) and the validity of forcing continuous human traits into binary either/or categories. Personality scientists working in the field increasingly favor dimensional models, such as the Big Five, that treat traits as spectrums rather than switches. This does not invalidate the MBTI conversation, but it does mean the tool should be held lightly, as a useful map rather than a precise measurement.",
-              "The cross-cultural limitations of MBTI are where the stakes rise for international leaders. The framework was built on data drawn largely from Western, educated populations, and its type descriptions carry embedded cultural assumptions. Consider the Introversion/Extraversion dimension. In cultures where silence signals respect, where speaking without invitation in a group setting is inappropriate, or where collective harmony takes priority over individual expression, a person may consistently present as introverted on an MBTI assessment not because of temperament but because of deeply held cultural values. David Livermore's research on Cultural Intelligence (CQ) consistently shows that behaviour and personality are filtered through cultural programming — separating the two requires intentional interpretive work.",
+              "The origins of MBTI trace back to Carl Jung's theory of psychological types,¹ articulated in his 1921 work Psychological Types, and later translated into a practical assessment by Isabel Briggs Myers and her mother Katharine Cook Briggs.² Their goal was generous and practical — to help ordinary people understand themselves and work better with others. The assessment organizes personality across four dichotomies: where you focus your attention (Introversion or Extraversion), how you take in information (Sensing or Intuition), how you make decisions (Thinking or Feeling), and how you organize your life (Judging or Perceiving). The result is one of 16 possible type combinations, each carrying a profile description.",
+              "The popularity of MBTI has not insulated it from scientific scrutiny. Researchers reviewing decades of personality data have raised two primary concerns: test-retest reliability (a notable portion of respondents receive a different type when retested weeks later) and the validity of forcing continuous human traits into binary either/or categories. Personality scientists working in the field increasingly favor dimensional models, such as the Big Five,³ that treat traits as spectrums rather than switches. This does not invalidate the MBTI conversation, but it does mean the tool should be held lightly, as a useful map rather than a precise measurement.",
+              "The cross-cultural limitations of MBTI are where the stakes rise for international leaders. The framework was built on data drawn largely from Western, educated populations, and its type descriptions carry embedded cultural assumptions. Consider the Introversion/Extraversion dimension. In cultures where silence signals respect, where speaking without invitation in a group setting is inappropriate, or where collective harmony takes priority over individual expression, a person may consistently present as introverted on an MBTI assessment not because of temperament but because of deeply held cultural values. David Livermore's research on Cultural Intelligence (CQ)⁴ consistently shows that behaviour and personality are filtered through cultural programming — separating the two requires intentional interpretive work.",
               "The Thinking/Feeling dimension presents a similar challenge in cross-cultural settings. In many relational, high-context cultures, public decision-making emphasizes harmony and face-saving, which MBTI instruments may read as a preference for Feeling over Thinking. But a leader from such a culture may privately reason in highly analytical ways while publicly expressing relational attentiveness — not because Feeling dominates but because their cultural context demands relational sensitivity as the socially acceptable register. Reducing this complexity to a single letter misses the nuance that cross-cultural competence requires.",
               "None of this means MBTI should be abandoned in multicultural contexts. Used carefully, it can still generate productive reflection and conversation. The key is to position it as an invitation to self-disclosure rather than an authoritative verdict. When a team from five different countries explores personality together using MBTI, the most valuable output is not a set of four-letter codes but the conversations those codes provoke: here is how I tend to approach conflict — does that match what you observe? Those conversations, guided well, surface differences that improve collaboration regardless of whether the underlying type categories are culturally precise.",
               "For cross-cultural workers, one practical implication is to resist applying MBTI results from one cultural context to predict behaviour in another. A person assessed as an Extravert in their home context may present very differently when navigating a new culture where their natural expressive style reads as inappropriate or aggressive. Adaptation is a skill, not a personality shift, and assessment tools should not be used to mark someone as inconsistent simply because their behaviour shifts across cultural environments.",
@@ -1237,6 +1237,30 @@ export default function Personalities16Client({
             ))}
           </div>
         </div>
+
+      {/* ── SOURCES ─────────────────────────────────────────────────────── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Carl G. Jung — Psychological Types (Princeton University Press, 1971 [orig. 1921])",
+            "Isabel Briggs Myers & Peter B. Myers — Gifts Differing: Understanding Personality Type (Davies-Black Publishing, 1980)",
+            "Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory-Revised (PAR, 1992) — foundational instrument for the Big Five model",
+            "David Livermore — Leading with Cultural Intelligence: The Real Secret to Success (AMACOM, 2nd ed., 2022)",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       </div>
     );

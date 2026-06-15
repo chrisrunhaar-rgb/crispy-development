@@ -560,8 +560,8 @@ const UI = {
     startBtn: "Start Assessment →",
     whatIsTitle: "What is the Big Five?",
     whatIsP1: "The Big Five — also known as the OCEAN model — emerged not from one theorist's idea but from decades of cross-cultural research. When researchers analysed which words humans use to describe each other across many languages, the same five clusters kept appearing. The Big Five is the structure of personality that the data itself produced.",
-    whatIsP2: "Unlike DISC or Myers-Briggs, the Big Five does not put you in a box. You receive a unique score on each of the five traits along a continuum. Your profile is the unique shape that emerges from your five scores combined — the OCEAN pentagon that is genuinely yours.",
-    whatIsP3: "It is the framework most widely used in cross-cultural leadership research, with the five traits replicating across more than fifty countries. A Javanese team member's high Conscientiousness means roughly the same thing as a Dutch team member's high Conscientiousness. This shared baseline is rare in personality psychology and unusually useful for international teams.",
+    whatIsP2: "Unlike DISC or Myers-Briggs³ (which assigns fixed types that research shows shift in 39–76% of retakers within five weeks), the Big Five does not put you in a box. You receive a unique score on each of the five traits along a continuum. Your profile is the unique shape that emerges from your five scores combined — the OCEAN pentagon that is genuinely yours.",
+    whatIsP3: "It is the framework most widely used in cross-cultural leadership research, with the five traits replicating across more than fifty countries.² A Javanese team member's high Conscientiousness means roughly the same thing as a Dutch team member's high Conscientiousness. This shared baseline is rare in personality psychology and unusually useful for international teams.",
     crossCulturalCaveatTitle: "Cross-Cultural Caveat",
     crossCulturalCaveat: "Big Five is the most cross-culturally validated personality framework in the world — validated in more than fifty countries. Two caveats remain. First, most validation samples are still drawn from WEIRD populations (Western, Educated, Industrialised, Rich, Democratic). Second, trait labels carry cultural weight — 'Agreeableness' reads differently in honour cultures versus consensus cultures. Read your scores as a starting point for self-awareness, not as a verdict.",
     biblicalAnchorLabel: "Biblical Reflection",
@@ -600,8 +600,8 @@ const UI = {
     startBtn: "Mulai Tes →",
     whatIsTitle: "Apa itu Big Five?",
     whatIsP1: "Big Five — juga dikenal sebagai model OCEAN — muncul bukan dari ide satu teoris, tetapi dari dekade penelitian lintas budaya. Ketika para peneliti menganalisis kata-kata yang digunakan manusia untuk mendeskripsikan satu sama lain di berbagai bahasa, lima kelompok yang sama selalu muncul. Big Five adalah struktur kepribadian yang dihasilkan oleh data itu sendiri.",
-    whatIsP2: "Tidak seperti DISC atau Myers-Briggs, Big Five tidak menempatkan Anda dalam kotak. Anda menerima skor unik pada masing-masing dari lima sifat sepanjang kontinum. Profil Anda adalah bentuk unik yang muncul dari kombinasi lima skor Anda — pentagon OCEAN yang benar-benar milik Anda.",
-    whatIsP3: "Ini adalah kerangka yang paling banyak digunakan dalam penelitian kepemimpinan lintas budaya, dengan lima sifat yang mereplikasi di lebih dari lima puluh negara. Artinya, Kesadaran tinggi anggota tim dari Jawa berarti hal yang kurang lebih sama dengan Kesadaran tinggi anggota tim dari Belanda.",
+    whatIsP2: "Tidak seperti DISC atau Myers-Briggs³ (yang menetapkan tipe tetap yang menurut penelitian berubah pada 39–76% peserta tes ulang dalam lima minggu), Big Five tidak menempatkan Anda dalam kotak. Anda menerima skor unik pada masing-masing dari lima sifat sepanjang kontinum. Profil Anda adalah bentuk unik yang muncul dari kombinasi lima skor Anda — pentagon OCEAN yang benar-benar milik Anda.",
+    whatIsP3: "Ini adalah kerangka yang paling banyak digunakan dalam penelitian kepemimpinan lintas budaya, dengan lima sifat yang mereplikasi di lebih dari lima puluh negara.² Artinya, Kesadaran tinggi anggota tim dari Jawa berarti hal yang kurang lebih sama dengan Kesadaran tinggi anggota tim dari Belanda.",
     crossCulturalCaveatTitle: "Catatan Lintas Budaya",
     crossCulturalCaveat: "Big Five adalah kerangka kepribadian yang paling tervalidasi secara lintas budaya di dunia — telah divalidasi di lebih dari lima puluh negara. Dua catatan tetap perlu diperhatikan. Pertama, sebagian besar sampel validasi masih berasal dari populasi WEIRD (Western, Educated, Industrialised, Rich, Democratic). Kedua, label sifat membawa bobot budaya — 'Keramahan' dibaca berbeda dalam budaya kehormatan versus budaya konsensus. Baca skor Anda sebagai titik awal kesadaran diri, bukan sebagai keputusan final.",
     biblicalAnchorLabel: "Refleksi Alkitab",
@@ -640,8 +640,8 @@ const UI = {
     startBtn: "Start de test →",
     whatIsTitle: "Wat is de Big Five?",
     whatIsP1: "De Big Five — ook bekend als het OCEAN-model — is niet voortgekomen uit het idee van één theoreticus, maar uit decennia cross-cultureel onderzoek. Toen onderzoekers analyseerden welke woorden mensen in verschillende talen gebruiken om elkaar te beschrijven, kwamen steeds dezelfde vijf clusters naar voren. De Big Five is de persoonlijkheidsstructuur die de data zelf heeft voortgebracht.",
-    whatIsP2: "In tegenstelling tot DISC of Myers-Briggs stopt de Big Five je niet in een hokje. Je krijgt een unieke score op elk van de vijf eigenschappen langs een continuüm. Je profiel is de unieke vorm die ontstaat uit de combinatie van je vijf scores — de OCEAN-pentagon die echt van jou is.",
-    whatIsP3: "Het is het meest gebruikte model in intercultureel leiderschapsonderzoek, waarbij de vijf eigenschappen repliceren in meer dan vijftig landen. De hoge Zorgvuldigheid van een Javaans teamlid betekent ongeveer hetzelfde als de hoge Zorgvuldigheid van een Nederlands teamlid.",
+    whatIsP2: "In tegenstelling tot DISC of Myers-Briggs³ (dat vaste typen toekent die volgens onderzoek bij 39–76% van de hertesters binnen vijf weken veranderen) stopt de Big Five je niet in een hokje. Je krijgt een unieke score op elk van de vijf eigenschappen langs een continuüm. Je profiel is de unieke vorm die ontstaat uit de combinatie van je vijf scores — de OCEAN-pentagon die echt van jou is.",
+    whatIsP3: "Het is het meest gebruikte model in intercultureel leiderschapsonderzoek, waarbij de vijf eigenschappen repliceren in meer dan vijftig landen.² De hoge Zorgvuldigheid van een Javaans teamlid betekent ongeveer hetzelfde als de hoge Zorgvuldigheid van een Nederlands teamlid.",
     crossCulturalCaveatTitle: "Interculturele Kanttekening",
     crossCulturalCaveat: "Big Five is het meest cross-cultureel gevalideerde persoonlijkheidsmodel ter wereld — gevalideerd in meer dan vijftig landen. Twee voorbehouden blijven gelden. Ten eerste zijn de meeste validatiesteekproeven nog steeds afkomstig uit WEIRD-populaties (Western, Educated, Industrialised, Rich, Democratic). Ten tweede dragen traitlabels cultureel gewicht — 'Vriendelijkheid' wordt anders gelezen in eer-culturen versus consensusculturen. Lees je scores als een startpunt voor zelfbewustzijn, niet als een oordeel.",
     biblicalAnchorLabel: "Bijbelse Reflectie",
@@ -1004,8 +1004,8 @@ export default function BigFiveClient({
               {bgOpen ? "Close ↑" : lang === "id" ? "Baca penelitiannya →" : "Read the research →"}
             </button>
             {bgOpen && [
-              "Among the many personality frameworks available to leaders today, the Big Five — sometimes called OCEAN — stands apart on one significant measure: it is the personality model that has most consistently held up across cultures, languages, and research populations. For leaders working in diverse or international contexts, this matters enormously. A tool that was built and normed on North American college students tells you something quite different from a tool that has been validated in Lagos, Jakarta, São Paulo, and Seoul. The Big Five does not claim cultural neutrality, but it offers a shared dimensional vocabulary that crosses cultural boundaries more reliably than most of its competitors.",
-              "The five dimensions of the Big Five are Openness to Experience, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — forming the acronym OCEAN. The model emerged from decades of factor-analytic research, the landmark contributions coming from Robert McCrae and Paul Costa, whose work through the 1980s and 1990s established the five-factor model as the dominant framework in academic personality psychology. Unlike the Myers-Briggs Type Indicator, which assigns people to discrete types, the Big Five treats each dimension as a continuous spectrum. A person is not an Extravert or an Introvert but scores somewhere along the full range of the Extraversion dimension, with most people clustering near the middle rather than at the extremes.",
+              "Among the many personality frameworks available to leaders today, the Big Five — sometimes called OCEAN — stands apart on one significant measure: it is the personality model that has most consistently held up across cultures, languages, and research populations.² For leaders working in diverse or international contexts, this matters enormously. A tool that was built and normed on North American college students tells you something quite different from a tool that has been validated in Lagos, Jakarta, São Paulo, and Seoul. The Big Five does not claim cultural neutrality, but it offers a shared dimensional vocabulary that crosses cultural boundaries more reliably than most of its competitors.",
+              "The five dimensions of the Big Five are Openness to Experience, Conscientiousness, Extraversion, Agreeableness, and Neuroticism — forming the acronym OCEAN. The model emerged from decades of factor-analytic research, the landmark contributions coming from Robert McCrae and Paul Costa,¹ whose work through the 1980s and 1990s established the five-factor model as the dominant framework in academic personality psychology. Unlike the Myers-Briggs Type Indicator,³ which assigns people to discrete types, the Big Five treats each dimension as a continuous spectrum. A person is not an Extravert or an Introvert but scores somewhere along the full range of the Extraversion dimension, with most people clustering near the middle rather than at the extremes.",
               "Openness to Experience captures intellectual curiosity, aesthetic sensitivity, and comfort with novelty and abstraction. In cross-cultural leadership contexts, Openness matters because it shapes how a leader responds to cultural difference itself. A leader with low Openness working in an unfamiliar cultural environment may unconsciously interpret difference as deficit, while a high Openness leader may romanticize novelty and fail to appreciate what is genuinely valuable in established tradition. Both tendencies carry risk, and self-awareness about where you sit on this dimension is the first step toward managing it well.",
               "Conscientiousness, the dimension covering self-discipline, goal orientation, organization, and reliability, tends to be among the strongest predictors of professional performance across cultures. However, what Conscientiousness looks like in practice varies. In cultures with strong collective accountability structures, conscientious behaviour may be expressed through relational reliability and community obligation rather than individual task completion. A leader who imports a narrowly individualist interpretation of Conscientiousness into a collectivist context may misjudge who is actually reliable.",
               "Extraversion covers social energy, assertiveness, and comfort with being the center of attention. Cross-cultural personality research found that Extraversion shows variation in both average levels and in how it is expressed socially. In many East and Southeast Asian contexts, the assertive, high-volume social engagement associated with high Extraversion in North American norms may be read as disrespectful or immature. Cross-cultural workers with high Extraversion often benefit from explicitly learning to modulate their natural social style rather than assuming that what feels natural to them reads positively in a new cultural environment.",
@@ -1017,6 +1017,29 @@ export default function BigFiveClient({
               <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
                 {para}
               </p>
+            ))}
+          </div>
+        </div>
+
+        {/* ── SOURCES ──────────────────────────────────────────────────────── */}
+        <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+            Sources
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            {[
+              "Robert R. McCrae & Paul T. Costa Jr. — Validation of the Five-Factor Model of Personality Across Instruments and Observers (Journal of Personality and Social Psychology, 1987); and NEO-PI-R Professional Manual (Psychological Assessment Resources, 1992)",
+              "David P. Schmitt et al. — The Geographic Distribution of Big Five Personality Traits: Patterns and Profiles of Human Self-Description Across 56 Nations (Journal of Cross-Cultural Psychology, 2007)",
+              "David C. Funder & Daniel J. Ozer — Evaluating Effect Size in Psychological Research: Sense and Nonsense (Advances in Methods and Practices in Psychological Science, 2019); cf. Randall W. Pittenger — Measuring the MBTI … And Coming Up Short (Journal of Career Planning and Employment, 1993) — type instability 39–76% within five weeks",
+            ].map((src, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                  {["¹","²","³"][i]}
+                </span>
+                <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                  {src}
+                </p>
+              </div>
             ))}
           </div>
         </div>

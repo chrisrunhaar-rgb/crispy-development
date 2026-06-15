@@ -543,6 +543,133 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
         </div>
       </div>
 
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
+      </div>
+
+      {/* Section 6 */}
+      <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+          {t("VI. The Generations", "VI. Generasi")}
+        </p>
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("A Calling That Cannot Be Held", "Panggilan yang Tidak Bisa Digenggam Sendiri")}
+        </h2>
+        <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+          <p style={{ marginBottom: 24 }}>
+            {t(
+              "The patterns are too consistent to ignore. Moses hands the staff to Joshua. Elijah throws his cloak over Elisha before he has said a word. Paul writes to Timothy with the tenderness of a father who knows his time is short. In each case, the calling does not terminate with the one who first received it. It moves. It passes. It multiplies through relationship and trust and deliberate release.",
+              "Polanya terlalu konsisten untuk diabaikan. Musa menyerahkan tongkatnya kepada Yosua. Elia melemparkan jubahnya kepada Elisa bahkan sebelum mengucapkan sepatah kata. Paulus menulis kepada Timotius dengan kelembutan seorang ayah yang tahu waktunya tinggal sedikit. Dalam setiap kasus, panggilan itu tidak berakhir pada orang yang pertama menerimanya. Ia bergerak. Ia diteruskan. Ia berlipat ganda melalui hubungan, kepercayaan, dan pelepasan yang disengaja."
+            )}
+          </p>
+          <p style={{ marginBottom: 24 }}>
+            {t(
+              "This is not merely about succession planning. It is about the nature of calling itself. A calling that is only ever received and never passed on has been, at some point, quietly converted into a possession. The leader who cannot name who is coming behind them, who has no one they are actively preparing to carry more of what they carry, is a leader whose calling has begun to close in on itself. The body metaphor from 1 Corinthians 12 applies across time as much as across teams: the eye cannot say to the generation that follows it, I have no need of you.",
+              "Ini bukan sekadar tentang perencanaan suksesi. Ini tentang sifat panggilan itu sendiri. Sebuah panggilan yang hanya diterima dan tidak pernah diteruskan, pada suatu titik, secara diam-diam telah berubah menjadi kepemilikan pribadi. Pemimpin yang tidak bisa menyebut siapa yang sedang datang di belakangnya, yang tidak secara aktif mempersiapkan siapa pun untuk menanggung lebih banyak dari apa yang ia tanggung, adalah pemimpin yang panggilannya telah mulai menutup dirinya sendiri. Metafora tubuh dalam 1 Korintus 12 berlaku lintas generasi sama seperti lintas tim: mata tidak bisa berkata kepada generasi yang mengikutinya, aku tidak membutuhkanmu."
+            )}
+          </p>
+          <p style={{ marginBottom: 0 }}>
+            {t(
+              "To receive well is to receive with open hands. And open hands, by definition, can let things pass through. This does not mean abandoning what you carry before you are finished carrying it. But it does mean holding it in a way that someone else can one day reach for it. The most dangerous version of this failure is not the leader who refuses to hand anything over. It is the leader who genuinely wants to invest in the next generation but has never examined whether what they are modelling is transferable, or whether their influence requires their physical presence to survive.",
+              "Menerima dengan baik berarti menerima dengan tangan terbuka. Dan tangan yang terbuka, pada dasarnya, membiarkan sesuatu mengalir melewatinya. Ini bukan berarti melepaskan apa yang kamu emban sebelum waktunya selesai. Tetapi ini berarti memegangnya sedemikian rupa sehingga suatu hari nanti orang lain bisa meraihnya. Kegagalan yang paling berbahaya bukan pemimpin yang menolak menyerahkan apa pun. Melainkan pemimpin yang sungguh-sungguh ingin berinvestasi dalam generasi berikutnya, tetapi tidak pernah memeriksa apakah apa yang ia modelkan bisa ditransfer, atau apakah pengaruhnya membutuhkan kehadirannya secara fisik untuk bertahan."
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
+      </div>
+
+      {/* Section 7 */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+            {t("VII. The Cross-Cultural Dimension", "VII. Dimensi Lintas Budaya")}
+          </p>
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("The Exception That Became the Default", "Pengecualian yang Menjadi Standar")}
+          </h2>
+          <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "Western Christianity developed its theology of calling in a particular cultural context: individualist, low-context, shaped by Enlightenment assumptions about the autonomous self. In that framework, the question of calling naturally became a personal question. What has God called me to do? What is my purpose? Where do I fit? These are not bad questions. But they are not the only way the question can be formed, and for much of the global church, they are not even the primary way.",
+                "Kekristenan Barat mengembangkan teologi panggilannya dalam konteks budaya tertentu: individualistis, low-context, dibentuk oleh asumsi-asumsi Pencerahan tentang diri yang otonom. Dalam kerangka itu, pertanyaan tentang panggilan secara alami menjadi pertanyaan pribadi. Apa yang Tuhan panggil aku untuk lakukan? Apa tujuanku? Di mana aku cocok? Ini bukan pertanyaan yang buruk. Tetapi bukan satu-satunya cara pertanyaan itu bisa dirumuskan, dan bagi sebagian besar gereja global, itu bahkan bukan cara utama."
+              )}
+            </p>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "The majority world — sub-Saharan Africa, East and Southeast Asia, the Middle East, Latin America — operates largely within collectivist and honor-based frameworks where identity is relational by default. In these contexts, calling is not primarily a private discovery. It is a communal recognition. The community sees something in you, speaks it, and sends you. The calling does not exist until it has been named out loud by people who know you and who will bear responsibility for you. This is not a lesser theology. It may, in fact, be the closer reading of the biblical text.",
+                "Dunia mayoritas — Afrika Sub-Sahara, Asia Timur dan Tenggara, Timur Tengah, Amerika Latin — sebagian besar beroperasi dalam kerangka kolektivistis dan berbasis kehormatan di mana identitas pada dasarnya bersifat relasional. Dalam konteks ini, panggilan bukan terutama sebuah penemuan pribadi. Panggilan adalah pengakuan komunal. Komunitas melihat sesuatu dalam dirimu, menyuarakannya, dan mengutusmu. Panggilan itu tidak ada sampai diucapkan dengan lantang oleh orang-orang yang mengenalmu dan yang akan menanggung tanggung jawab atasmu. Ini bukan teologi yang lebih rendah. Bahkan, mungkin ini adalah pembacaan yang lebih dekat dengan teks Alkitab."
+              )}
+            </p>
+            <p style={{ marginBottom: 0 }}>
+              {t(
+                "When cross-cultural workers arrive in collectivist contexts carrying an individualist model of calling, the friction is real but often invisible. They have experienced their calling as something between themselves and God, confirmed perhaps by a pastor or a sending organisation, but ultimately personal. The people they work with may find this difficult to comprehend, not because they lack faith, but because in their understanding, a person who cannot be placed within a web of relationships and accountabilities has not yet fully arrived. The gift these cultures carry for the global church is the reminder that calling was never meant to be a solo project, and they have been living that truth all along.",
+                "Ketika para pekerja lintas budaya tiba di konteks kolektivistis dengan membawa model panggilan yang individualistis, gesekan itu nyata tetapi sering tidak terlihat. Mereka mengalami panggilan mereka sebagai sesuatu antara diri mereka dan Tuhan, mungkin dikonfirmasi oleh seorang pendeta atau organisasi pengirim, tetapi pada akhirnya bersifat pribadi. Orang-orang yang mereka layani mungkin merasa ini sulit dipahami, bukan karena mereka kurang iman, tetapi karena dalam pemahaman mereka, seseorang yang tidak bisa ditempatkan dalam jaringan hubungan dan akuntabilitas belum sepenuhnya hadir. Karunia yang dibawa budaya-budaya ini bagi gereja global adalah pengingat bahwa panggilan tidak pernah dimaksudkan sebagai proyek solo, dan mereka telah hidup dalam kebenaran itu sepanjang waktu."
+              )}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
+      </div>
+
+      {/* Section 8 */}
+      <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+          {t("VIII. Questions to Sit With", "VIII. Pertanyaan untuk Direnungkan")}
+        </p>
+        <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 48, lineHeight: 1.2, fontStyle: "italic" }}>
+          {t("Stay Here a While", "Tinggal Sejenak di Sini")}
+        </h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {([
+            {
+              en_title: "Who sent you?",
+              id_title: "Siapa yang mengutusmu?",
+              en_body: "Not who inspired you, or who encouraged you to explore the possibility. Who actually sent you? Who said, we see this in you, we are behind you, we will answer for you? And do those people still know where you are? Not your organisation's records, not your newsletter list — the people. If you have drifted so far from the community that sent you that they could not describe what you do on a Tuesday, something worth examining has happened in the distance between you and them.",
+              id_body: "Bukan siapa yang menginspirasimu, atau siapa yang mendorongmu untuk menjelajahi kemungkinan ini. Siapa yang benar-benar mengutusmu? Siapa yang berkata, kami melihat ini dalam dirimu, kami mendukungmu, kami akan bertanggung jawab atasmu? Dan apakah orang-orang itu masih tahu di mana kamu berada? Bukan catatan organisasimu, bukan daftar newsletter-mu — orangnya. Jika kamu telah melayang begitu jauh dari komunitas yang mengutusmu sehingga mereka tidak bisa menggambarkan apa yang kamu lakukan pada hari Selasa, ada sesuatu yang layak diperiksa dalam jarak antara kamu dan mereka.",
+            },
+            {
+              en_title: "What part of the body are you?",
+              id_title: "Bagian tubuh apakah kamu?",
+              en_body: "Paul's question in 1 Corinthians 12 is not rhetorical. It is diagnostic. Every part of the body has a specific function, a specific placement, a specific set of things it cannot and should not try to do. The eye does excellent eye work. It does not attempt to walk. There is something clarifying about sitting with the question: what does my particular part of the body do well, and where have I been quietly trying to do the work of a part I am not? This is not a question about personality types or strength profiles. It is a question about the shape of your obedience.",
+              id_body: "Pertanyaan Paulus dalam 1 Korintus 12 bukan retorika. Itu adalah diagnosis. Setiap bagian tubuh memiliki fungsi spesifik, penempatan spesifik, serangkaian hal spesifik yang tidak bisa dan tidak seharusnya ia coba lakukan. Mata melakukan pekerjaan mata dengan sangat baik. Ia tidak mencoba berjalan. Ada sesuatu yang menjernihkan ketika kita duduk dengan pertanyaan ini: apa yang bagian tubuhku ini lakukan dengan baik, dan di mana aku diam-diam mencoba melakukan pekerjaan bagian yang bukan aku? Ini bukan pertanyaan tentang tipe kepribadian atau profil kekuatan. Ini pertanyaan tentang bentuk ketaatanmu.",
+            },
+            {
+              en_title: "Who are you passing this to?",
+              id_title: "Kepada siapa kamu meneruskan ini?",
+              en_body: "This question is not about legacy in the sense of monuments or memories. It is simpler and more uncomfortable than that. Is there someone, right now, who is learning something from being close to you that they could not learn from a book or a course or a mentor they have never met? If the answer is no, it is worth asking why. It may be capacity. It may be context. But it may also be that somewhere along the way, the calling quietly stopped being something you carry for others and started being something you carry for yourself.",
+              id_body: "Pertanyaan ini bukan tentang warisan dalam arti monumen atau kenangan. Ini lebih sederhana dan lebih tidak nyaman dari itu. Apakah ada seseorang, saat ini, yang sedang belajar sesuatu karena dekat denganmu, sesuatu yang tidak bisa mereka pelajari dari buku atau kursus atau mentor yang belum pernah mereka temui? Jika jawabannya tidak, ada baiknya bertanya mengapa. Mungkin karena kapasitas. Mungkin karena konteks. Tetapi mungkin juga karena di suatu titik perjalanan ini, panggilan itu diam-diam berhenti menjadi sesuatu yang kamu emban untuk orang lain dan mulai menjadi sesuatu yang kamu emban untuk dirimu sendiri.",
+            },
+            {
+              en_title: "What would it mean to hold this more loosely?",
+              id_title: "Apa artinya memegang ini dengan lebih longgar?",
+              en_body: "Not to abandon it. Not to be careless with it. But to hold it in a way where, if God asked you tomorrow to set it down or hand it to someone else or pick it up in a different shape, you would be able to. Calling held too tightly looks like devotion from the inside. From the outside, and sometimes in the quiet moments when you are honest with yourself, it looks more like control. The question is not whether you are committed. It is whether the thing you are committed to has room to breathe, to grow, to be given away.",
+              id_body: "Bukan untuk meninggalkannya. Bukan untuk tidak peduli dengannya. Tetapi memegangnya sedemikian rupa sehingga, jika Tuhan memintamu besok untuk meletakkannya, menyerahkannya kepada orang lain, atau mengangkatnya dalam bentuk yang berbeda, kamu bisa melakukannya. Panggilan yang dipegang terlalu erat terlihat seperti pengabdian dari dalam. Dari luar, dan kadang-kadang di momen-momen sunyi ketika kamu jujur dengan dirimu sendiri, itu terlihat lebih seperti kontrol. Pertanyaannya bukan apakah kamu berkomitmen. Melainkan apakah hal yang kamu perjuangkan itu punya ruang untuk bernafas, untuk tumbuh, untuk diberikan.",
+            },
+          ] as const).map((q, i) => (
+            <div key={i} style={{ borderTop: `1px solid oklch(90% 0.008 80)`, paddingTop: 40, paddingBottom: 40 }}>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 700, color: navy, marginBottom: 20, fontStyle: "italic", lineHeight: 1.3 }}>
+                {lang === "en" ? q.en_title : q.id_title}
+              </h3>
+              <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
+                {lang === "en" ? q.en_body : q.id_body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Faith Anchor */}
       <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>

@@ -57,11 +57,11 @@ const LEARNING_OUTCOMES = {
 const TEACHING_PARAS = {
   en: [
     "Here is a question worth sitting with: when you think about whether you trust someone, what is the evidence you are looking at?",
-    "For many leaders — especially those shaped by Western European or North American working cultures — the answer involves things like: Did they do what they said they would? Did they deliver on time? Are they competent? Do they follow through? This is sometimes called cognitive trust. It is task-based, built through reliable performance, and felt most naturally in low-context cultures where professional behaviour and personal relationship are kept separate.",
-    "For many others — leaders and team members shaped by Indonesian, Brazilian, Nigerian, Chinese, or Indian working cultures, among others — the trust question looks very different. Before performance can mean anything, relationship has to come first. Have we spent real time together? Does this person know my family situation, my pressures, my story? Do they genuinely care about me as a person, not just what I produce? This is affective trust. It is relationship-based, built through emotional closeness and shared personal experience, and it takes time that task-focused cultures often do not naturally invest.",
+    "For many leaders — especially those shaped by Western European or North American working cultures — the answer involves things like: Did they do what they said they would? Did they deliver on time? Are they competent? Do they follow through? This is sometimes called cognitive trust¹. It is task-based, built through reliable performance, and felt most naturally in low-context cultures where professional behaviour and personal relationship are kept separate.",
+    "For many others — leaders and team members shaped by Indonesian, Brazilian, Nigerian, Chinese, or Indian working cultures, among others — the trust question looks very different. Before performance can mean anything, relationship has to come first. Have we spent real time together? Does this person know my family situation, my pressures, my story? Do they genuinely care about me as a person, not just what I produce? This is affective trust¹. It is relationship-based, built through emotional closeness and shared personal experience, and it takes time that task-focused cultures often do not naturally invest.",
     "Neither model is wrong. Both are deeply human. Both appear in Scripture.",
     "But when these two models collide in a team — without anyone naming what is happening — the result is predictable. The Dutch leader thinks the Indonesian team member is too slow to get to work because he keeps wanting to talk and share meals. The Indonesian team member thinks the Dutch leader cannot be trusted because he never takes the time to actually know you before he starts asking things of you. Both are working hard. Both have genuine goodwill. And neither one can name what is breaking down.",
-    "This is what researchers call the trust asymmetry. It is not a flaw in either cultural model. It is a structural collision between two equally legitimate ways of building human relationships — one designed for efficiency, one designed for safety — that most people have never had to consciously examine, because they have only ever worked with people who share their defaults.",
+    "This is what researchers call the trust asymmetry². It is not a flaw in either cultural model. It is a structural collision between two equally legitimate ways of building human relationships — one designed for efficiency, one designed for safety — that most people have never had to consciously examine, because they have only ever worked with people who share their defaults.",
     "The asymmetry becomes dangerous when it goes unnamed. Because when trust starts to erode across cultures, the breakdown is often self-sealing. Each person interprets the other's behaviour through their own cultural lens. The task-focused leader sees withdrawal and labels it passivity or disengagement. The relationship-focused team member sees pressure and labels it coldness or disrespect. Neither sees the trust failure clearly enough to name it. So there is no foundation from which to begin a real conversation. The distance grows, and no one knows exactly why.",
     "This is not primarily a skills problem. It is an awareness problem.",
     "The shift this module invites is simple to describe and genuinely hard to do. It is a move from passive trust assessment to active trust investment.",
@@ -72,11 +72,11 @@ const TEACHING_PARAS = {
   ],
   id: [
     "Ini adalah pertanyaan yang layak untuk direnungkan: ketika kamu memikirkan apakah kamu mempercayai seseorang, bukti apa yang sedang kamu lihat?",
-    "Bagi banyak pemimpin — terutama mereka yang dibentuk oleh budaya kerja Eropa Barat atau Amerika Utara — jawabannya melibatkan hal-hal seperti: Apakah mereka melakukan apa yang mereka katakan? Apakah mereka tepat waktu? Apakah mereka kompeten? Apakah mereka menindaklanjuti? Ini kadang disebut kepercayaan kognitif. Ini berbasis tugas, dibangun melalui kinerja yang dapat diandalkan, dan paling terasa alami dalam budaya konteks rendah di mana perilaku profesional dan hubungan personal dipisahkan.",
-    "Bagi banyak orang lain — pemimpin dan anggota tim yang dibentuk oleh budaya kerja Indonesia, Brasil, Nigeria, China, atau India, antara lain — pertanyaan kepercayaan terlihat sangat berbeda. Sebelum kinerja bisa berarti apa pun, hubungan harus datang lebih dulu. Apakah kita sudah menghabiskan waktu yang benar-benar bersama? Apakah orang ini mengetahui situasi keluargaku, tekananku, ceritaku? Apakah mereka benar-benar peduli padaku sebagai manusia, bukan hanya apa yang aku hasilkan? Ini adalah kepercayaan afektif. Ini berbasis hubungan, dibangun melalui kedekatan emosional dan pengalaman personal bersama, dan membutuhkan waktu yang sering tidak diinvestasikan secara alami oleh budaya yang berfokus pada tugas.",
+    "Bagi banyak pemimpin — terutama mereka yang dibentuk oleh budaya kerja Eropa Barat atau Amerika Utara — jawabannya melibatkan hal-hal seperti: Apakah mereka melakukan apa yang mereka katakan? Apakah mereka tepat waktu? Apakah mereka kompeten? Apakah mereka menindaklanjuti? Ini kadang disebut kepercayaan kognitif¹. Ini berbasis tugas, dibangun melalui kinerja yang dapat diandalkan, dan paling terasa alami dalam budaya konteks rendah di mana perilaku profesional dan hubungan personal dipisahkan.",
+    "Bagi banyak orang lain — pemimpin dan anggota tim yang dibentuk oleh budaya kerja Indonesia, Brasil, Nigeria, China, atau India, antara lain — pertanyaan kepercayaan terlihat sangat berbeda. Sebelum kinerja bisa berarti apa pun, hubungan harus datang lebih dulu. Apakah kita sudah menghabiskan waktu yang benar-benar bersama? Apakah orang ini mengetahui situasi keluargaku, tekananku, ceritaku? Apakah mereka benar-benar peduli padaku sebagai manusia, bukan hanya apa yang aku hasilkan? Ini adalah kepercayaan afektif¹. Ini berbasis hubungan, dibangun melalui kedekatan emosional dan pengalaman personal bersama, dan membutuhkan waktu yang sering tidak diinvestasikan secara alami oleh budaya yang berfokus pada tugas.",
     "Tidak ada model yang salah. Keduanya sangat manusiawi. Keduanya muncul dalam Kitab Suci.",
     "Tapi ketika dua model ini bertabrakan dalam satu tim — tanpa ada yang menamai apa yang sedang terjadi — hasilnya dapat diprediksi. Pemimpin dari Belanda berpikir anggota tim dari Indonesia terlalu lambat bekerja karena dia terus ingin berbicara dan makan bersama. Anggota tim dari Indonesia berpikir pemimpin dari Belanda tidak bisa dipercaya karena dia tidak pernah meluangkan waktu untuk benar-benar mengenalmu sebelum mulai meminta sesuatu darimu. Keduanya bekerja keras. Keduanya memiliki niat baik yang tulus. Dan tidak ada satu pun yang bisa menamai apa yang sedang rusak.",
-    "Ini yang disebut peneliti sebagai asimetri kepercayaan. Ini bukan cacat dalam salah satu model budaya. Ini adalah tabrakan struktural antara dua cara membangun hubungan manusia yang sama-sama sah — satu dirancang untuk efisiensi, satu dirancang untuk keamanan — yang kebanyakan orang tidak pernah harus periksa secara sadar, karena mereka hanya pernah bekerja dengan orang-orang yang berbagi default yang sama.",
+    "Ini yang disebut peneliti sebagai asimetri kepercayaan². Ini bukan cacat dalam salah satu model budaya. Ini adalah tabrakan struktural antara dua cara membangun hubungan manusia yang sama-sama sah — satu dirancang untuk efisiensi, satu dirancang untuk keamanan — yang kebanyakan orang tidak pernah harus periksa secara sadar, karena mereka hanya pernah bekerja dengan orang-orang yang berbagi default yang sama.",
     "Asimetri menjadi berbahaya ketika tidak dinamai. Karena ketika kepercayaan mulai terkikis lintas budaya, kerusakan itu sering kali menyegel dirinya sendiri. Setiap orang menafsirkan perilaku orang lain melalui lensa budayanya sendiri. Pemimpin yang berfokus pada tugas melihat penarikan diri dan memberinya label pasif atau tidak terlibat. Anggota tim yang berfokus pada hubungan melihat tekanan dan memberinya label dingin atau tidak menghormati. Tidak ada yang melihat kegagalan kepercayaan itu dengan cukup jelas untuk menamakannya. Jadi tidak ada fondasi dari mana memulai percakapan yang nyata. Jarak semakin besar, dan tidak ada yang tahu persis mengapa.",
     "Ini bukan terutama masalah keterampilan. Ini masalah kesadaran.",
     "Pergeseran yang diundang modul ini sederhana untuk dijelaskan dan sungguh sulit untuk dilakukan. Ini adalah langkah dari penilaian kepercayaan yang pasif ke investasi kepercayaan yang aktif.",
@@ -100,7 +100,7 @@ const CONCEPT_CARDS: { en: ConceptCardData; id: ConceptCardData }[] = [
       subtitle: "Task-based. Earned through reliable performance.",
       sections: [
         { label: "What it is", body: "Trust built through demonstrated competence, reliable delivery, and consistent professional behaviour. It is primarily task-based — you earn it by doing what you said you would do, on time, to a good standard." },
-        { label: "Where it is the default", body: "USA, Germany, Netherlands, Scandinavia, Australia, United Kingdom, and most other low-context, individualist cultures. These contexts tend to separate professional relationship from personal relationship — competence speaks first." },
+        { label: "Where it is the default", body: "USA, Germany, Netherlands, Scandinavia, Australia, United Kingdom, and most other low-context, individualist cultures. These contexts tend to separate professional relationship from personal relationship — competence speaks first.³" },
         { label: "How it is built", body: "Show up prepared. Deliver what you promised. Follow through consistently. Be honest about limitations. Meet deadlines. Competence and reliability are the currency." },
         { label: "What breaks it", body: "Missed commitments, inconsistent delivery, making promises that go unfulfilled, lack of transparency about failures or delays. Lateness without explanation reads as disrespect for the professional relationship." },
       ],
@@ -110,7 +110,7 @@ const CONCEPT_CARDS: { en: ConceptCardData; id: ConceptCardData }[] = [
       subtitle: "Berbasis tugas. Diperoleh melalui kinerja yang dapat diandalkan.",
       sections: [
         { label: "Apa itu", body: "Kepercayaan yang dibangun melalui kompetensi yang terbukti, penyampaian yang dapat diandalkan, dan perilaku profesional yang konsisten. Ini terutama berbasis tugas — kamu mendapatkannya dengan melakukan apa yang kamu katakan akan kamu lakukan, tepat waktu, dengan standar yang baik." },
-        { label: "Di mana ini menjadi default", body: "Amerika Serikat, Jerman, Belanda, Skandinavia, Australia, Inggris Raya, dan kebanyakan budaya konteks rendah dan individualis lainnya. Konteks-konteks ini cenderung memisahkan hubungan profesional dari hubungan personal — kompetensi berbicara lebih dulu." },
+        { label: "Di mana ini menjadi default", body: "Amerika Serikat, Jerman, Belanda, Skandinavia, Australia, Inggris Raya, dan kebanyakan budaya konteks rendah dan individualis lainnya. Konteks-konteks ini cenderung memisahkan hubungan profesional dari hubungan personal — kompetensi berbicara lebih dulu.³" },
         { label: "Bagaimana membangunnya", body: "Hadir dengan siap. Sampaikan apa yang kamu janjikan. Tindaklanjuti secara konsisten. Jujur tentang keterbatasan. Tepati tenggat waktu. Kompetensi dan keandalan adalah mata uangnya." },
         { label: "Apa yang menghancurkannya", body: "Komitmen yang tidak ditepati, penyampaian yang tidak konsisten, membuat janji yang tidak ditepati, kurangnya transparansi tentang kegagalan atau keterlambatan. Keterlambatan tanpa penjelasan dibaca sebagai kurang menghormati hubungan profesional." },
       ],
@@ -122,7 +122,7 @@ const CONCEPT_CARDS: { en: ConceptCardData; id: ConceptCardData }[] = [
       subtitle: "Relationship-based. Earned through personal investment.",
       sections: [
         { label: "What it is", body: "Trust built through emotional connection, genuine personal interest, and shared human experience. It is primarily relationship-based — you earn it by investing in the person before you invest in the project." },
-        { label: "Where it is the default", body: "Indonesia, Brazil, Nigeria, China, India, Saudi Arabia, Mexico, and most high-context, collectivist cultures. In these contexts, personal relationship and professional relationship are not separated — knowing someone as a person is the prerequisite for trusting them professionally." },
+        { label: "Where it is the default", body: "Indonesia, Brazil, Nigeria, China, India, Saudi Arabia, Mexico, and most high-context, collectivist cultures. In these contexts, personal relationship and professional relationship are not separated — knowing someone as a person is the prerequisite for trusting them professionally.³" },
         { label: "How it is built", body: "Spend time together beyond the task. Ask about family, personal situation, and concerns. Share meals. Be genuinely curious about who this person is outside the meeting room. Acknowledge life before business." },
         { label: "What breaks it", body: "Moving straight to task without investing in relationship first. Treating people primarily as their function or output. Declining social invitations. Rushing through the personal to get to the professional. Feeling “too busy” to engage on a human level." },
       ],
@@ -132,7 +132,7 @@ const CONCEPT_CARDS: { en: ConceptCardData; id: ConceptCardData }[] = [
       subtitle: "Berbasis hubungan. Diperoleh melalui investasi personal.",
       sections: [
         { label: "Apa itu", body: "Kepercayaan yang dibangun melalui koneksi emosional, minat personal yang tulus, dan pengalaman manusiawi bersama. Ini terutama berbasis hubungan — kamu mendapatkannya dengan berinvestasi pada orangnya sebelum berinvestasi pada proyeknya." },
-        { label: "Di mana ini menjadi default", body: "Indonesia, Brasil, Nigeria, China, India, Arab Saudi, Meksiko, dan kebanyakan budaya konteks tinggi dan kolektivis. Dalam konteks-konteks ini, hubungan personal dan profesional tidak dipisahkan — mengenal seseorang sebagai manusia adalah prasyarat untuk mempercayai mereka secara profesional." },
+        { label: "Di mana ini menjadi default", body: "Indonesia, Brasil, Nigeria, China, India, Arab Saudi, Meksiko, dan kebanyakan budaya konteks tinggi dan kolektivis. Dalam konteks-konteks ini, hubungan personal dan profesional tidak dipisahkan — mengenal seseorang sebagai manusia adalah prasyarat untuk mempercayai mereka secara profesional.³" },
         { label: "Bagaimana membangunnya", body: "Habiskan waktu bersama di luar tugas. Tanyakan tentang keluarga, situasi personal, dan kekhawatiran. Makan bersama. Jadilah penasaran yang tulus tentang siapa orang ini di luar ruang rapat. Akui kehidupan sebelum bisnis." },
         { label: "Apa yang menghancurkannya", body: "Langsung ke tugas tanpa berinvestasi dalam hubungan terlebih dahulu. Memperlakukan orang terutama sebagai fungsi atau output mereka. Menolak undangan sosial. Bergegas melewati hal personal untuk sampai ke hal profesional. Merasa “terlalu sibuk” untuk terlibat pada tingkat manusiawi." },
       ],
@@ -1213,6 +1213,29 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* --- SOURCES ---------------------------------------------------------- */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: FONT_BODY, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Daniel J. McAllister — "Affect- and Cognition-Based Trust as Foundations for Interpersonal Cooperation in Organizations" (Academy of Management Journal, Vol. 38, No. 1, 1995) — foundational empirical study establishing the cognitive/affective trust distinction used throughout this module",
+            "Denise M. Rousseau, Sim B. Sitkin, Ronald S. Burt & Colin Camerer — "Not So Different After All: A Cross-Discipline View of Trust" (Academy of Management Review, Vol. 23, No. 3, 1998) — cross-disciplinary definition of trust; trust asymmetry as a structural property of trust relationships",
+            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — country-level mapping of task-based vs. relationship-based trust defaults across cultures",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontFamily: FONT_BODY, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </>

@@ -632,8 +632,8 @@ export default function FiveLanguagesClient({
             </h2>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", color: "oklch(42% 0.008 260)", lineHeight: 1.7, maxWidth: 680, marginBottom: "2.5rem" }}>
               {lang === "id"
-                ? "Ini adalah tes 5 Languages pertama yang dirancang untuk mengukur kedua sisi kepedulian. Versi asli Chapman hanya menangkap cara kamu menerima. Di sini, kamu menyelesaikan dua tes — satu untuk menerima, satu untuk memberi. Keduanya tidak sama. Untuk tim lintas budaya, mengetahui kesenjangan antara keduanya bukan pilihan: di situlah wawasan kepemimpinan yang nyata berada."
-                : "This is the first 5 Languages test designed to measure both sides of care. Chapman’s original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives."
+                ? "Ini adalah tes 5 Languages pertama yang dirancang untuk mengukur kedua sisi kepedulian. Versi asli Chapman¹ hanya menangkap cara kamu menerima. Di sini, kamu menyelesaikan dua tes — satu untuk menerima, satu untuk memberi. Keduanya tidak sama. Untuk tim lintas budaya, mengetahui kesenjangan antara keduanya bukan pilihan: di situlah wawasan kepemimpinan yang nyata berada."
+                : "This is the first 5 Languages test designed to measure both sides of care. Chapman’s¹ original only captures how you receive. Here, you complete two tests — one for receiving, one for giving. They are not the same. For cross-cultural teams, knowing the gap between the two is not optional: it is where the real leadership insight lives."
               }
             </p>
 
@@ -1366,10 +1366,10 @@ export default function FiveLanguagesClient({
             {bgOpen ? "Close ↑" : "Read the research →"}
           </button>
           {bgOpen && [
-            "Love languages in the workplace began as a practical adaptation of Gary Chapman's landmark work on relational care. When Chapman partnered with organizational consultant Paul White to produce The 5 Languages of Appreciation in the Workplace, they were addressing a problem every leader quietly recognizes: people can work alongside each other for years, receive recognition regularly, and still feel unseen. The issue is rarely a lack of effort. It is usually a mismatch of languages.",
+            "Love languages in the workplace began as a practical adaptation of Gary Chapman's¹ landmark work on relational care. When Chapman partnered with organizational consultant Paul White to produce The 5 Languages of Appreciation in the Workplace,² they were addressing a problem every leader quietly recognizes: people can work alongside each other for years, receive recognition regularly, and still feel unseen. The issue is rarely a lack of effort. It is usually a mismatch of languages.",
             "For cross-cultural leaders, field workers, and expat team members, this mismatch runs deeper than most leadership frameworks acknowledge. The five appreciation languages — Words of Affirmation, Quality Time, Acts of Service, Tangible Gifts, and Physical Touch — are not culturally neutral in their expression. The same language can land completely differently depending on the cultural background of the person receiving it, the setting in which it is offered, and the relational history between the people involved.",
             "Take Words of Affirmation, the most commonly expressed appreciation language in the Chapman and White research. In many North American and Northern European work cultures, verbal praise given in front of a group is understood as an honor. The person being praised is lifted up, and the team shares in the recognition. In many East Asian, Southeast Asian, and Middle Eastern team cultures, the same public moment singles out an individual in a way that creates social discomfort. The person receiving the praise may feel exposed, pressured to deflect, or quietly embarrassed — the opposite of what the leader intended. This is not a problem with the Words of Affirmation language itself. It is a problem of form and setting. A leader who learns to offer specific, private, and well-timed verbal affirmation can work fully within this language and have it land as intended.",
-            "Erin Meyer's research on cultural feedback patterns, documented in The Culture Map, reinforces this. She identifies sharp differences between cultures in how direct praise and critique are offered and received — and how much those norms are embedded in professional identity. Cross-cultural leaders who have absorbed Meyer's framework alongside Chapman and White's will recognize the overlap immediately: the appreciation language is the content, and the cultural communication style governs the delivery.",
+            "Erin Meyer's³ research on cultural feedback patterns, documented in The Culture Map,³ reinforces this. She identifies sharp differences between cultures in how direct praise and critique are offered and received — and how much those norms are embedded in professional identity. Cross-cultural leaders who have absorbed Meyer's framework alongside Chapman and White's will recognize the overlap immediately: the appreciation language is the content, and the cultural communication style governs the delivery.",
             "Quality Time as an appreciation language looks equally different across contexts. For a field worker on a dispersed team, Quality Time might mean a video call where the team leader is fully present and unhurried — not skimming their email, not cutting the conversation short because the agenda is running over. In a community-oriented culture where work relationships extend naturally into shared meals, rest, and family life, Quality Time might mean being included in the ordinary rhythms of a colleague's life, not just scheduled one-on-one check-ins. A leader attuned to this will not mistake busyness for appreciation.",
             "Acts of Service — doing something that helps a colleague — is perhaps the most universally practical of the five languages, but even here culture shapes meaning. In high-context team environments where role boundaries are fluid and mutual support is assumed, helping a colleague with a task that sits outside your job description is normal relational behavior. In lower-context, highly individualistic work cultures, the same act can read as overstepping or as an implicit criticism of the colleague's capacity. Knowing which environment you are operating in changes how you offer and receive this language.",
             "Tangible Gifts, in the workplace context, is not primarily about material value. It is about the signal that someone was thought of. A book brought back from a trip, a regional food item shared at a team gathering, a carefully chosen resource passed along because it fits someone's current challenge — these are meaningful precisely because they say \"I noticed you and I was thinking of you when you weren't around.\" In many gift-giving cultures across Asia, Africa, and the Middle East, the practice of bringing something when you return from travel is deeply embedded in relational protocol. Leaders from low-gift-giving cultures sometimes underestimate how meaningful this language is, or assume that gift-giving is only appropriate at certain formal occasions.",
@@ -1381,6 +1381,29 @@ export default function FiveLanguagesClient({
             <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
               {para}
             </p>
+          ))}
+        </div>
+      </div>
+
+      {/* ─── SOURCES ──────────────────────────────────────────────────────────── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Gary Chapman — The 5 Love Languages: The Secret to Love That Lasts (Northfield Publishing, 1992)",
+            "Gary Chapman & Paul White — The 5 Languages of Appreciation in the Workplace (Northfield Publishing, 2012)",
+            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014)",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
           ))}
         </div>
       </div>
