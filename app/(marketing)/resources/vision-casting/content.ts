@@ -23,9 +23,9 @@ export const pageHero = {
     nl: "Vision Casting",
   },
   scripture: {
-    en: '"Where there is no vision, the people perish."',
-    id: '"Di mana tidak ada visi, rakyat akan binasa."',
-    nl: '"Waar geen visie is, vergaat het volk."',
+    en: '"Where there is no revelation, people cast off restraint."',
+    id: '"Bila tidak ada wahyu ilahi, bangsa itu menjadi liar."',
+    nl: '"Waar geen profetisch visioen is, worden mensen tuchteloos."',
   },
   scriptureRef: {
     en: "Proverbs 29:18",
