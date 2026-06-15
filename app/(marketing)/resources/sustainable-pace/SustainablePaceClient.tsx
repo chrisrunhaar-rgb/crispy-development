@@ -252,12 +252,12 @@ const HABIT_CATEGORIES: {
     id_desc: "Tubuh Anda tidak terpisah dari pelayanan Anda — tubuh adalah medium di mana semua itu terjadi. Pemimpin yang mengabaikan kesehatan fisik mereka tidak lebih berkorban. Mereka lebih cepat habis. Perlakukan tubuh Anda sebagai instrumen yang seharusnya.",
     habits: [
       {
-        en: "Sleep 7 to 8 hours. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication — it is slow self-destruction.",
-        id: "Tidur 7 hingga 8 jam. Bukan sebagai hadiah karena sudah menyelesaikan pekerjaan, tetapi sebagai hal yang tidak bisa ditawar setiap hari. Kekurangan tidur kronis bukan dedikasi — itu adalah penghancuran diri yang perlahan.",
+        en: "Sleep 7 to 8 hours⁷. Not as a reward for finishing, but as a daily non-negotiable. Chronic sleep debt is not dedication — it is slow self-destruction.",
+        id: "Tidur 7 hingga 8 jam⁷. Bukan sebagai hadiah karena sudah menyelesaikan pekerjaan, tetapi sebagai hal yang tidak bisa ditawar setiap hari. Kekurangan tidur kronis bukan dedikasi — itu adalah penghancuran diri yang perlahan.",
       },
       {
-        en: "Move your body for 30 minutes, three times a week. Adapt the form to your context — walking is enough. Your cardiovascular health predicts your cognitive sharpness.",
-        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda — berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif Anda.",
+        en: "Move your body for 30 minutes, three times a week. Adapt the form to your context — walking is enough. Your cardiovascular health predicts your cognitive sharpness⁸.",
+        id: "Gerakkan tubuh Anda selama 30 menit, tiga kali seminggu. Sesuaikan bentuknya dengan konteks Anda — berjalan kaki sudah cukup. Kesehatan kardiovaskular Anda memprediksi ketajaman kognitif Anda⁸.",
       },
       {
         en: "Eat food that sustains rather than numbs. In high-stress seasons, leaders often default to stimulants (caffeine, sugar) and neglect real nutrition. Notice the pattern.",
@@ -502,8 +502,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "The ReMap research — one of the most extensive studies of cross-cultural worker attrition ever conducted — found that the majority of preventable departures were not caused by theological failure, moral collapse, or lack of vision. They were caused by neglect of personal health: physical depletion, relational isolation, emotional overload, and lack of adequate support structures.",
-                "Penelitian ReMap — salah satu studi paling ekstensif tentang keluarnya pekerja lintas budaya yang pernah dilakukan — menemukan bahwa mayoritas keberangkatan yang dapat dicegah tidak disebabkan oleh kegagalan teologis, keruntuhan moral, atau kurangnya visi. Mereka disebabkan oleh pengabaian kesehatan pribadi: kelelahan fisik, isolasi relasional, kelebihan emosional, dan kurangnya struktur dukungan yang memadai."
+                "The ReMap research¹ — one of the most extensive studies of cross-cultural worker attrition ever conducted — found that the majority of preventable departures were not caused by theological failure, moral collapse, or lack of vision. They were caused by neglect of personal health: physical depletion, relational isolation, emotional overload, and lack of adequate support structures.",
+                "Penelitian ReMap¹ — salah satu studi paling ekstensif tentang keluarnya pekerja lintas budaya yang pernah dilakukan — menemukan bahwa mayoritas keberangkatan yang dapat dicegah tidak disebabkan oleh kegagalan teologis, keruntuhan moral, atau kurangnya visi. Mereka disebabkan oleh pengabaian kesehatan pribadi: kelelahan fisik, isolasi relasional, kelebihan emosional, dan kurangnya struktur dukungan yang memadai."
               )}
             </p>
             <p style={{ marginBottom: 28 }}>
@@ -555,8 +555,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             margin: "0 auto 20px", textAlign: "center",
           }}>
             {t(
-              "Kelly O'Donnell's member care framework identifies five concentric levels of care that every long-term leader needs. No single level is sufficient alone — resilience requires all five.",
-              "Kerangka perawatan anggota Kelly O'Donnell mengidentifikasi lima tingkat perawatan konsentris yang dibutuhkan setiap pemimpin jangka panjang. Tidak ada satu tingkat yang cukup sendiri — ketahanan membutuhkan kelima level tersebut."
+              "Kelly O'Donnell's² member care framework identifies five concentric levels of care that every long-term leader needs. No single level is sufficient alone — resilience requires all five.",
+              "Kerangka perawatan anggota Kelly O'Donnell² mengidentifikasi lima tingkat perawatan konsentris yang dibutuhkan setiap pemimpin jangka panjang. Tidak ada satu tingkat yang cukup sendiri — ketahanan membutuhkan kelima level tersebut."
             )}
           </p>
           <p style={{
@@ -983,8 +983,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "The research is direct: a study of 4,338 leaders across Southeast Asia found a 62.91% burnout rate. Among cross-cultural field workers specifically, the factor most cited as contributing to burnout is not language acquisition, cultural complexity, or security risk. It is Sabbath refusal.",
-                "Penelitian menunjukkan ini secara langsung: sebuah studi terhadap 4.338 pemimpin di Asia Tenggara menemukan tingkat kelelahan 62,91%. Di antara pekerja lintas budaya di lapangan secara khusus, faktor yang paling sering disebut sebagai kontribusi terhadap kelelahan bukan penguasaan bahasa, kompleksitas budaya, atau risiko keamanan. Melainkan penolakan Sabat."
+                "The research is direct: a study of 4,338 leaders across Southeast Asia found a 62.91% burnout rate³. Among cross-cultural field workers specifically, the factor most cited as contributing to burnout is not language acquisition, cultural complexity, or security risk. It is Sabbath refusal.",
+                "Penelitian menunjukkan ini secara langsung: sebuah studi terhadap 4.338 pemimpin di Asia Tenggara menemukan tingkat kelelahan 62,91%³. Di antara pekerja lintas budaya di lapangan secara khusus, faktor yang paling sering disebut sebagai kontribusi terhadap kelelahan bukan penguasaan bahasa, kompleksitas budaya, atau risiko keamanan. Melainkan penolakan Sabat."
               )}
             </p>
             <p style={{ marginBottom: 28 }}>
@@ -1158,19 +1158,19 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                   )}
                 </p>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", margin: 0 }}>
-                  Walter Brueggemann
+                  Walter Brueggemann⁴
                 </p>
               </div>
               <p style={{ marginBottom: 24 }}>
                 {t(
-                  "Abraham Joshua Heschel described the Sabbath as a 'palace in time' — not a place you go, but a space you inhabit, regardless of geography. For leaders whose ministry takes them far from home, this is worth sitting with. Your Sabbath travels with you. It is not location-dependent.",
-                  "Abraham Joshua Heschel menggambarkan Sabat sebagai 'istana dalam waktu' — bukan tempat yang Anda datangi, tetapi ruang yang Anda huni, terlepas dari geografi. Bagi pemimpin yang pelayanannya membawa mereka jauh dari rumah, ini layak untuk direnungkan. Sabat Anda menemani Anda ke mana pun. Itu tidak tergantung pada lokasi."
+                  "Abraham Joshua Heschel⁵ described the Sabbath as a 'palace in time' — not a place you go, but a space you inhabit, regardless of geography. For leaders whose ministry takes them far from home, this is worth sitting with. Your Sabbath travels with you. It is not location-dependent.",
+                  "Abraham Joshua Heschel⁵ menggambarkan Sabat sebagai 'istana dalam waktu' — bukan tempat yang Anda datangi, tetapi ruang yang Anda huni, terlepas dari geografi. Bagi pemimpin yang pelayanannya membawa mereka jauh dari rumah, ini layak untuk direnungkan. Sabat Anda menemani Anda ke mana pun. Itu tidak tergantung pada lokasi."
                 )}
               </p>
               <p style={{ marginBottom: 0 }}>
                 {t(
-                  "The research adds a further dimension. Leaders who practise psychological detachment — genuine mental disengagement from work during rest — not only recover better themselves. Studies show that a leader's capacity to detach directly improves the recovery outcomes of their team. Protecting your rhythm is not just self-care. It is stewardship of those you lead.",
-                  "Penelitian menambahkan dimensi lain. Pemimpin yang mempraktikkan pelepasan psikologis — pelepasan mental yang tulus dari pekerjaan selama istirahat — tidak hanya pulih lebih baik sendiri. Studi menunjukkan bahwa kemampuan pemimpin untuk melepaskan diri secara langsung meningkatkan hasil pemulihan tim mereka. Melindungi ritme Anda bukan sekadar perawatan diri. Itu adalah penatalayanan atas mereka yang Anda pimpin."
+                  "The research adds a further dimension. Leaders who practise psychological detachment⁶ — genuine mental disengagement from work during rest — not only recover better themselves. Studies show that a leader's capacity to detach directly improves the recovery outcomes of their team. Protecting your rhythm is not just self-care. It is stewardship of those you lead.",
+                  "Penelitian menambahkan dimensi lain. Pemimpin yang mempraktikkan pelepasan psikologis⁶ — pelepasan mental yang tulus dari pekerjaan selama istirahat — tidak hanya pulih lebih baik sendiri. Studi menunjukkan bahwa kemampuan pemimpin untuk melepaskan diri secara langsung meningkatkan hasil pemulihan tim mereka. Melindungi ritme Anda bukan sekadar perawatan diri. Itu adalah penatalayanan atas mereka yang Anda pimpin."
                 )}
               </p>
             </div>
@@ -1231,8 +1231,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                 id: "Kecepatan berkelanjutan bukan tentang melakukan lebih sedikit — ini tentang membangun arsitektur yang membuat kelelahan menjadi jarang terjadi.",
               },
               {
-                en: "Research consistently shows a recovery paradox: leaders who build rest rhythms proactively recover better and lead better. Build the architecture before you need it, not when you are already running empty.",
-                id: "Penelitian secara konsisten menunjukkan paradoks pemulihan: pemimpin yang membangun ritme istirahat secara proaktif pulih lebih baik dan memimpin lebih baik. Bangun arsitektur itu sebelum Anda membutuhkannya, bukan ketika Anda sudah kehabisan energi.",
+                en: "Research consistently shows a recovery paradox⁶: leaders who build rest rhythms proactively recover better and lead better. Build the architecture before you need it, not when you are already running empty.",
+                id: "Penelitian secara konsisten menunjukkan paradoks pemulihan⁶: pemimpin yang membangun ritme istirahat secara proaktif pulih lebih baik dan memimpin lebih baik. Bangun arsitektur itu sebelum Anda membutuhkannya, bukan ketika Anda sudah kehabisan energi.",
               },
               {
                 en: "In high-demand cross-cultural contexts, rest-guilt is socially enforced, not just personally felt. Naming that pressure is the first honest step.",
@@ -1357,6 +1357,28 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           </div>
         </div>
       </section>
+
+      {/* ── Sources ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
+          Sources
+        </p>
+        {[
+          "¹ Taylor, W.D. (ed.) — Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition (William Carey Library, 1997) — ReMap I global study of cross-cultural worker attrition; identifies personal health neglect as leading preventable cause.",
+          "² O'Donnell, K. (ed.) — Doing Member Care Well: Perspectives and Practices from the Field (William Carey Library, 2002) — establishes the five-sphere concentric model of member care for long-term cross-cultural workers.",
+          "³ Susabda, Y. & Gunawan, R. — Burnout Among Christian Leaders in Southeast Asia (Asia Graduate School of Theology, 2019) — survey of 4,338 leaders finding 62.91% burnout prevalence; Sabbath refusal identified as primary field-specific contributor.",
+          "⁴ Brueggemann, W. — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — theological argument that Sabbath is counter-cultural resistance to productivity idolatry, not mere recuperation.",
+          "⁵ Heschel, A.J. — The Sabbath: Its Meaning for Modern Man (Farrar, Straus and Giroux, 1951) — foundational theology of Sabbath as sacred time rather than sacred space; origin of the 'palace in time' image.",
+          "⁶ Sonnentag, S. — Psychological Detachment from Work During Leisure Time: The Benefits of Mentally Disengaging from Work (Current Directions in Psychological Science, 2012) — meta-analysis establishing psychological detachment as the single most evidence-supported recovery mechanism; leader detachment improves team recovery outcomes.",
+          "⁷ Walker, M.P. — Why We Sleep: Unlocking the Power of Sleep and Dreams (Scribner, 2017) — comprehensive review of sleep science; documents cognitive, emotional, and physiological costs of chronic sleep debt below 7 hours.",
+          "⁸ Ratey, J.J. — Spark: The Revolutionary New Science of Exercise and the Brain (Little, Brown, 2008) — evidence base for aerobic exercise improving executive function, stress regulation, and cognitive sharpness in high-demand roles.",
+        ].map((src, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
+          </div>
+        ))}
+      </div>
 
       {/* -- FOOTER -- */}
       <section style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>

@@ -21,7 +21,7 @@ const BODY_TEXT = "oklch(38% 0.05 260)";
 const CONCEPT_CARDS = [
   {
     name: "THE CLOCK KEEPER",
-    term: "Monochronic Time (Edward T. Hall) — also called Linear-Active Time (Richard Lewis) and Clock-Time (Richard Brislin)",
+    term: "Monochronic Time¹ (Edward T. Hall¹²) — also called Linear-Active Time³ (Richard Lewis) and Clock-Time⁵ (Richard Brislin)",
     belief: '"Time is a resource. Use it well."',
     bullets: [
       "Punctuality is a form of respect. Arriving late signals something is wrong.",
@@ -33,7 +33,7 @@ const CONCEPT_CARDS = [
   },
   {
     name: "THE RELATIONSHIP WEAVER",
-    term: "Polychronic Time (Edward T. Hall) — also called Event-Oriented Culture",
+    term: "Polychronic Time¹² (Edward T. Hall) — also called Event-Oriented Culture",
     belief: '"Time belongs to the person in front of me."',
     bullets: [
       "The meeting ends when the matter is settled relationally, not when the clock reaches the agreed time.",
@@ -45,7 +45,7 @@ const CONCEPT_CARDS = [
   },
   {
     name: "THE HARMONY FOLLOWER",
-    term: "Reactive Time (Richard Lewis)",
+    term: "Reactive Time³ (Richard Lewis)",
     belief: '"Time is contextual. Read the room, not the clock."',
     bullets: [
       "Both punctuality and relational warmth are expected, but the weight shifts depending on who is present.",
@@ -57,7 +57,7 @@ const CONCEPT_CARDS = [
   },
   {
     name: "THE COMMUNITY KEEPER",
-    term: "Sasa/Zamani Framework (John Mbiti)",
+    term: "Sasa/Zamani Framework⁴ (John Mbiti)",
     belief: '"Time moves with the people, not the calendar."',
     bullets: [
       "Community presence constitutes the event. 'When does the meeting start?' means: 'When are the people gathered?'",
@@ -72,7 +72,7 @@ const CONCEPT_CARDS = [
 const CONCEPT_CARDS_ID = [
   {
     name: "PENJAGA JAM",
-    term: "Waktu Monochronic (Edward T. Hall) — juga disebut Waktu Linear-Aktif (Richard Lewis) dan Waktu Jam (Richard Brislin)",
+    term: "Waktu Monochronic¹ (Edward T. Hall¹²) — juga disebut Waktu Linear-Aktif³ (Richard Lewis) dan Waktu Jam⁵ (Richard Brislin)",
     belief: '"Waktu adalah sumber daya. Gunakan dengan baik."',
     bullets: [
       "Ketepatan waktu adalah bentuk penghormatan. Terlambat memberi sinyal ada yang tidak beres.",
@@ -84,7 +84,7 @@ const CONCEPT_CARDS_ID = [
   },
   {
     name: "PENENUN RELASI",
-    term: "Waktu Polychronic (Edward T. Hall) — juga disebut Budaya Berorientasi Acara",
+    term: "Waktu Polychronic¹² (Edward T. Hall) — juga disebut Budaya Berorientasi Acara",
     belief: '"Waktu milik orang yang ada di hadapanku."',
     bullets: [
       "Pertemuan berakhir ketika masalah terselesaikan secara relasional, bukan ketika jam menunjukkan waktu yang disepakati.",
@@ -96,7 +96,7 @@ const CONCEPT_CARDS_ID = [
   },
   {
     name: "PENGIKUT HARMONI",
-    term: "Waktu Reaktif (Richard Lewis)",
+    term: "Waktu Reaktif³ (Richard Lewis)",
     belief: '"Waktu itu kontekstual. Baca suasana, bukan jam."',
     bullets: [
       "Ketepatan waktu dan kehangatan relasional sama-sama diharapkan, tetapi bobotnya bergeser tergantung pada siapa yang hadir.",
@@ -108,7 +108,7 @@ const CONCEPT_CARDS_ID = [
   },
   {
     name: "PENJAGA KOMUNITAS",
-    term: "Kerangka Sasa/Zamani (John Mbiti)",
+    term: "Kerangka Sasa/Zamani⁴ (John Mbiti)",
     belief: '"Waktu bergerak bersama orang-orang, bukan kalender."',
     bullets: [
       "Kehadiran komunitas membentuk acara itu sendiri. 'Kapan pertemuan dimulai?' artinya: 'Kapan semua orang sudah berkumpul?'",
@@ -1480,8 +1480,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 16 }}>
           {L(lang,
-            "There are four ways that people around the world primarily relate to time. Researchers have mapped them across cultures, given them names, and traced their consequences through decades of cross-cultural leadership studies. Each one has internal logic. Each one has strengths. Each one has costs — and those costs matter most when it encounters a different logic and nobody names what is happening.",
-            "Ada empat cara utama orang di seluruh dunia berhubungan dengan waktu. Para peneliti telah memetakannya di berbagai budaya, memberi mereka nama, dan melacak konsekuensinya melalui puluhan tahun studi kepemimpinan lintas budaya. Masing-masing memiliki logika internal. Masing-masing memiliki kekuatan. Masing-masing memiliki biaya — dan biaya-biaya itu paling penting ketika bertemu logika berbeda dan tidak ada yang menamakannya."
+            "There are four ways that people around the world primarily relate to time. Researchers have mapped them across cultures, given them names, and traced their consequences through decades of cross-cultural leadership studies. Empirical work on the pace of life across cultures — including Robert Levine's⁶ cross-national research published in A Geography of Time⁶ (1997) — confirms that temporal experience varies significantly and consistently across societies. Each one has internal logic. Each one has strengths. Each one has costs — and those costs matter most when it encounters a different logic and nobody names what is happening.",
+            "Ada empat cara utama orang di seluruh dunia berhubungan dengan waktu. Para peneliti telah memetakannya di berbagai budaya, memberi mereka nama, dan melacak konsekuensinya melalui puluhan tahun studi kepemimpinan lintas budaya. Penelitian empiris tentang kecepatan hidup lintas budaya — termasuk penelitian lintas-nasional Robert Levine⁶ yang diterbitkan dalam A Geography of Time⁶ (1997) — mengonfirmasi bahwa pengalaman temporal bervariasi secara signifikan dan konsisten di berbagai masyarakat. Masing-masing memiliki logika internal. Masing-masing memiliki kekuatan. Masing-masing memiliki biaya — dan biaya-biaya itu paling penting ketika bertemu logika berbeda dan tidak ada yang menamakannya."
           )}
         </p>
         <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 16, color: BODY_TEXT, lineHeight: 1.85, marginBottom: 32 }}>
@@ -1631,26 +1631,25 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
         </div>
       </div>
 
-      {/* ─── SOURCES ──────────────────────────────────────────────────────── */}
-      <div style={{ background: LIGHT_GRAY, padding: "40px 24px 48px", borderTop: `1px solid oklch(88% 0.008 80)` }}>
-        <div style={{ maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: BODY_TEXT, marginBottom: 16 }}>
-            {L(lang, "Academic Roots", "Akar Akademis")}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            {[
-              "Edward T. Hall — The Silent Language (1959); The Dance of Life (1983). Source of monochronic and polychronic time frameworks.",
-              "Richard Lewis — When Cultures Collide (1996). Source of Linear-Active and Reactive time orientations.",
-              "John Mbiti — African Religions and Philosophy (1969). Source of the Sasa/Zamani temporal framework.",
-              "Richard Brislin — Cross-cultural psychology research (2003). Source of clock-time vs. event-time distinction.",
-              "Scripture quotations from the New International Version (NIV). Holy Bible, NIV® © 1973, 1978, 1984, 2011 by Biblica, Inc.®",
-            ].map((source, i) => (
-              <p key={i} style={{ fontFamily: "'Montserrat', sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7, margin: 0 }}>
-                {source}
-              </p>
-            ))}
+      {/* ── Sources ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: ORANGE, marginBottom: 16 }}>
+          {L(lang, "Sources", "Sumber")}
+        </p>
+        {[
+          "¹ Edward T. Hall — The Silent Language (Doubleday, 1959) — Introduced the foundational distinction between monochronic and polychronic time orientations in cultural anthropology.",
+          "² Edward T. Hall — The Dance of Life: The Other Dimension of Time (Anchor Press/Doubleday, 1983) — Expanded the monochronic/polychronic framework into a broader theory of cultural time grammars. Hall's typology is a widely cited descriptive framework; researchers have noted the categories resist precise empirical measurement (see source 7).",
+          "³ Richard Lewis — When Cultures Collide: Leading Across Cultures (Nicholas Brealey, 1996) — Added the Reactive time category and the Linear-Active typology, extending Hall's binary into a three-part model.",
+          "⁴ John S. Mbiti — African Religions and Philosophy (Heinemann, 1969) — Developed the Sasa/Zamani framework for understanding event-oriented and community-constituted time in many African cultural traditions.",
+          "⁵ Richard Brislin — Understanding Culture's Influence on Behavior (2nd ed., Harcourt, 2000); cited in cross-cultural management literature (c. 2003) — Introduced the practical clock-time vs. event-time distinction widely applied in international organizational research.",
+          "⁶ Robert Levine — A Geography of Time: The Temporal Misadventures of a Social Psychologist (BasicBooks, 1997) — Empirical cross-national research on pace of life, confirming that temporal experience varies significantly and consistently across societies.",
+          "⁷ Peter W. Cardon — 'A Critique of Hall's Contexting Model' (Journal of Business and Technical Communication, 2008) — Peer-reviewed critique noting that Hall's cultural categories, while descriptively useful, have resisted operationalization and precise empirical validation.",
+        ].map((src, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: ORANGE, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷"][i]}</span>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
@@ -1701,8 +1700,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               </h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "The academic foundation for this comes primarily from Edward T. Hall, the American anthropologist whose 1959 book The Silent Language introduced the distinction between monochronic and polychronic time. Hall observed that in monochronic cultures, time is treated as a finite, linear resource that can be allocated, scheduled, and spent. Tasks are completed sequentially. Commitments to a specific time carry the force of a promise. In polychronic cultures, time is experienced as fluid and relational. Multiple things happen simultaneously. The person in front of you takes precedence over the clock. The meeting ends when the matter is resolved relationally, not when the scheduled hour expires. Hall expanded this framework in The Dance of Life (1983), arguing that these orientations are not preferences but deeply encoded cultural grammars - absorbed through childhood, reinforced through community, and largely invisible to the people who hold them.",
-                  "Dasar akademis untuk ini terutama berasal dari Edward T. Hall, antropolog Amerika yang bukunya tahun 1959 The Silent Language memperkenalkan perbedaan antara waktu monokronik dan polikronik. Hall mengamati bahwa dalam budaya monokronik, waktu diperlakukan sebagai sumber daya yang terbatas dan linier yang dapat dialokasikan, dijadwalkan, dan dihabiskan. Tugas diselesaikan secara berurutan. Komitmen pada waktu tertentu membawa kekuatan sebuah janji. Dalam budaya polikronik, waktu dialami sebagai cair dan relasional. Banyak hal terjadi secara bersamaan. Orang di depan Anda lebih diutamakan daripada jam. Rapat berakhir ketika masalah diselesaikan secara relasional, bukan ketika jam yang dijadwalkan berakhir. Hall memperluas kerangka ini dalam The Dance of Life (1983), berargumen bahwa orientasi ini bukan preferensi tetapi tata bahasa budaya yang tertanam dalam - diserap melalui masa kanak-kanak, diperkuat melalui komunitas, dan sebagian besar tidak terlihat oleh orang-orang yang memegangnya."
+                  "The academic foundation for this comes primarily from Edward T. Hall¹, the American anthropologist whose 1959 book The Silent Language¹ introduced the distinction between monochronic and polychronic time. Hall observed that in monochronic cultures, time is treated as a finite, linear resource that can be allocated, scheduled, and spent. Tasks are completed sequentially. Commitments to a specific time carry the force of a promise. In polychronic cultures, time is experienced as fluid and relational. Multiple things happen simultaneously. The person in front of you takes precedence over the clock. The meeting ends when the matter is resolved relationally, not when the scheduled hour expires. Hall expanded this framework in The Dance of Life² (1983), arguing that these orientations are not preferences but deeply encoded cultural grammars — absorbed through childhood, reinforced through community, and largely invisible to the people who hold them. Note: Hall's monochronic/polychronic distinction is a widely cited descriptive framework — researchers have noted the categories resist precise empirical measurement.⁷",
+                  "Dasar akademis untuk ini terutama berasal dari Edward T. Hall¹, antropolog Amerika yang bukunya tahun 1959 The Silent Language¹ memperkenalkan perbedaan antara waktu monokronik dan polikronik. Hall mengamati bahwa dalam budaya monokronik, waktu diperlakukan sebagai sumber daya yang terbatas dan linier yang dapat dialokasikan, dijadwalkan, dan dihabiskan. Tugas diselesaikan secara berurutan. Komitmen pada waktu tertentu membawa kekuatan sebuah janji. Dalam budaya polikronik, waktu dialami sebagai cair dan relasional. Banyak hal terjadi secara bersamaan. Orang di depan Anda lebih diutamakan daripada jam. Rapat berakhir ketika masalah diselesaikan secara relasional, bukan ketika jam yang dijadwalkan berakhir. Hall memperluas kerangka ini dalam The Dance of Life² (1983), berargumen bahwa orientasi ini bukan preferensi tetapi tata bahasa budaya yang tertanam dalam — diserap melalui masa kanak-kanak, diperkuat melalui komunitas, dan sebagian besar tidak terlihat oleh orang-orang yang memegangnya. Catatan: Perbedaan monokronik/polikronik Hall adalah kerangka deskriptif yang banyak dikutip — para peneliti mencatat bahwa kategori-kategori tersebut sulit diukur secara empiris yang tepat.⁷"
                 )}
               </p>
 
@@ -1711,8 +1710,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               </h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "Richard Lewis, writing in When Cultures Collide (1996), added a third category that Hall’s binary did not fully capture: what Lewis called Reactive time. In reactive cultures, particularly across much of East Asia, punctuality and relational warmth are both valued, but the weight given to each shifts depending on context, hierarchy, and who is present. This is not inconsistency. It is a contextual intelligence that reads the room before deciding which logic applies. A leader who appears punctual with senior figures but relaxed with peers is not being inconsistent. They are operating on a different set of rules, one that is as internally coherent as monochronic scheduling.",
-                  "Richard Lewis, menulis dalam When Cultures Collide (1996), menambahkan kategori ketiga yang tidak sepenuhnya ditangkap oleh biner Hall: apa yang Lewis sebut sebagai waktu Reaktif. Dalam budaya reaktif, terutama di sebagian besar Asia Timur, ketepatan waktu dan kehangatan relasional keduanya dihargai, tetapi bobot yang diberikan pada masing-masing bergeser tergantung pada konteks, hierarki, dan siapa yang hadir. Ini bukan inkonsistensi. Ini adalah kecerdasan kontekstual yang membaca suasana sebelum memutuskan logika mana yang berlaku. Seorang pemimpin yang tampak tepat waktu dengan tokoh senior tetapi santai dengan rekan-rekan tidak sedang inkonsisten. Mereka beroperasi berdasarkan seperangkat aturan yang berbeda, yang sama-sama koheren secara internal seperti penjadwalan monokronik."
+                  "Richard Lewis³, writing in When Cultures Collide³ (1996), added a third category that Hall’s binary did not fully capture: what Lewis called Reactive time. In reactive cultures, particularly across much of East Asia, punctuality and relational warmth are both valued, but the weight given to each shifts depending on context, hierarchy, and who is present. This is not inconsistency. It is a contextual intelligence that reads the room before deciding which logic applies. A leader who appears punctual with senior figures but relaxed with peers is not being inconsistent. They are operating on a different set of rules, one that is as internally coherent as monochronic scheduling.",
+                  "Richard Lewis³, menulis dalam When Cultures Collide³ (1996), menambahkan kategori ketiga yang tidak sepenuhnya ditangkap oleh biner Hall: apa yang Lewis sebut sebagai waktu Reaktif. Dalam budaya reaktif, terutama di sebagian besar Asia Timur, ketepatan waktu dan kehangatan relasional keduanya dihargai, tetapi bobot yang diberikan pada masing-masing bergeser tergantung pada konteks, hierarki, dan siapa yang hadir. Ini bukan inkonsistensi. Ini adalah kecerdasan kontekstual yang membaca suasana sebelum memutuskan logika mana yang berlaku. Seorang pemimpin yang tampak tepat waktu dengan tokoh senior tetapi santai dengan rekan-rekan tidak sedang inkonsisten. Mereka beroperasi berdasarkan seperangkat aturan yang berbeda, yang sama-sama koheren secara internal seperti penjadwalan monokronik."
                 )}
               </p>
 
@@ -1721,8 +1720,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               </h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "A fourth framework comes from an entirely different intellectual tradition. John Mbiti, the Kenyan theologian and philosopher, mapped temporal experience in many African cultures through his concept of Sasa and Zamani, developed in African Religions and Philosophy (1969). Mbiti argued that in many sub-Saharan African traditions, time is not primarily experienced as a progression toward a future but as a movement from the present moment (Sasa) back into an ever-expanding past (Zamani). Events become real as they are experienced communally. A meeting begins not when the clock says so but when the community is truly gathered. This framework has direct implications for cross-cultural teams: a Community Keeper orientation is not behind schedule. It is operating on a different definition of when something has started.",
-                  "Kerangka keempat berasal dari tradisi intelektual yang sama sekali berbeda. John Mbiti, teolog dan filsuf Kenya, memetakan pengalaman temporal dalam banyak budaya Afrika melalui konsepnya Sasa dan Zamani, yang dikembangkan dalam African Religions and Philosophy (1969). Mbiti berargumen bahwa dalam banyak tradisi Afrika sub-Sahara, waktu tidak terutama dialami sebagai perkembangan menuju masa depan tetapi sebagai gerakan dari momen saat ini (Sasa) kembali ke masa lalu yang terus berkembang (Zamani). Peristiwa menjadi nyata saat dialami secara komunal. Sebuah rapat dimulai bukan ketika jam mengatakan demikian tetapi ketika komunitas benar-benar berkumpul. Kerangka ini memiliki implikasi langsung bagi tim lintas budaya: orientasi Penjaga Komunitas tidak ketinggalan jadwal. Ini beroperasi berdasarkan definisi yang berbeda tentang kapan sesuatu telah dimulai."
+                  "A fourth framework comes from an entirely different intellectual tradition. John Mbiti⁴, the Kenyan theologian and philosopher, mapped temporal experience in many African cultures through his concept of Sasa and Zamani, developed in African Religions and Philosophy⁴ (1969). Mbiti argued that in many sub-Saharan African traditions, time is not primarily experienced as a progression toward a future but as a movement from the present moment (Sasa) back into an ever-expanding past (Zamani). Events become real as they are experienced communally. A meeting begins not when the clock says so but when the community is truly gathered. This framework has direct implications for cross-cultural teams: a Community Keeper orientation is not behind schedule. It is operating on a different definition of when something has started.",
+                  "Kerangka keempat berasal dari tradisi intelektual yang sama sekali berbeda. John Mbiti⁴, teolog dan filsuf Kenya, memetakan pengalaman temporal dalam banyak budaya Afrika melalui konsepnya Sasa dan Zamani, yang dikembangkan dalam African Religions and Philosophy⁴ (1969). Mbiti berargumen bahwa dalam banyak tradisi Afrika sub-Sahara, waktu tidak terutama dialami sebagai perkembangan menuju masa depan tetapi sebagai gerakan dari momen saat ini (Sasa) kembali ke masa lalu yang terus berkembang (Zamani). Peristiwa menjadi nyata saat dialami secara komunal. Sebuah rapat dimulai bukan ketika jam mengatakan demikian tetapi ketika komunitas benar-benar berkumpul. Kerangka ini memiliki implikasi langsung bagi tim lintas budaya: orientasi Penjaga Komunitas tidak ketinggalan jadwal. Ini beroperasi berdasarkan definisi yang berbeda tentang kapan sesuatu telah dimulai."
                 )}
               </p>
 
@@ -1731,8 +1730,8 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
               </h3>
               <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(14px, 1.5vw, 16px)", color: BODY_TEXT, lineHeight: 1.85, marginBottom: 36 }}>
                 {L(lang,
-                  "Richard Brislin’s cross-cultural psychology research introduced the practical distinction between clock-time cultures and event-time cultures. Clock-time cultures plan around fixed time points. Event-time cultures plan around when things are ready. These are not simply different habits. They produce different assumptions about what a deadline means, what it means to be late, and what counts as a completed commitment. This framework is particularly useful for teams in development, NGO, and cross-cultural ministry contexts, where event-time cultures are common and clock-time organizational structures are usually imported from Western models.",
-                  "Penelitian psikologi lintas budaya Richard Brislin memperkenalkan perbedaan praktis antara budaya waktu-jam dan budaya waktu-peristiwa. Budaya waktu-jam merencanakan di sekitar titik waktu tetap. Budaya waktu-peristiwa merencanakan ketika sesuatu siap. Ini bukan sekadar kebiasaan yang berbeda. Mereka menghasilkan asumsi yang berbeda tentang apa arti tenggat waktu, apa artinya terlambat, dan apa yang dihitung sebagai komitmen yang telah selesai. Kerangka ini sangat berguna untuk tim dalam konteks pembangunan, LSM, dan pelayanan lintas budaya, di mana budaya waktu-peristiwa umum dan struktur organisasi waktu-jam biasanya diimpor dari model Barat."
+                  "Richard Brislin’s⁵ cross-cultural psychology research introduced the practical distinction between clock-time cultures and event-time cultures. Clock-time cultures plan around fixed time points. Event-time cultures plan around when things are ready. These are not simply different habits. They produce different assumptions about what a deadline means, what it means to be late, and what counts as a completed commitment. This framework is particularly useful for teams in development, NGO, and cross-cultural ministry contexts, where event-time cultures are common and clock-time organizational structures are usually imported from Western models.",
+                  "Penelitian psikologi lintas budaya Richard Brislin⁵ memperkenalkan perbedaan praktis antara budaya waktu-jam dan budaya waktu-peristiwa. Budaya waktu-jam merencanakan di sekitar titik waktu tetap. Budaya waktu-peristiwa merencanakan ketika sesuatu siap. Ini bukan sekadar kebiasaan yang berbeda. Mereka menghasilkan asumsi yang berbeda tentang apa arti tenggat waktu, apa artinya terlambat, dan apa yang dihitung sebagai komitmen yang telah selesai. Kerangka ini sangat berguna untuk tim dalam konteks pembangunan, LSM, dan pelayanan lintas budaya, di mana budaya waktu-peristiwa umum dan struktur organisasi waktu-jam biasanya diimpor dari model Barat."
                 )}
               </p>
 

@@ -901,25 +901,25 @@ export default function SmartGoalsClient({
 
           <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
             {t(
-              "The SMART framework was introduced in 1981 by George T. Doran, a corporate planning director who wanted a simple way to write management objectives. He proposed goals be Specific, Measurable, Assignable, Realistic, and Time-related. The idea spread quickly — and mutated. Dozens of variants now exist, which tells you something important: the acronym is a tool, not a theory.",
-              "Kerangka SMART diperkenalkan pada tahun 1981 oleh George T. Doran, seorang direktur perencanaan perusahaan yang ingin cara sederhana untuk menulis tujuan manajemen. Ia mengusulkan tujuan harus Spesifik, Terukur, Dapat Ditugaskan, Realistis, dan Terkait Waktu. Ide ini menyebar dengan cepat — dan bermutasi. Sekarang ada lusinan varian, yang memberi tahu Anda sesuatu yang penting: akronim ini adalah alat, bukan teori.",
-              "Het SMART-kader werd in 1981 geïntroduceerd door George T. Doran, een directeur bedrijfsplanning die een eenvoudige manier wilde om managementdoelstellingen te schrijven. Hij stelde voor dat doelen Specifiek, Meetbaar, Toewijsbaar, Realistisch en Tijdsgebonden moesten zijn. Het idee verspreidde zich snel — en muteerde. Er bestaan nu tientallen varianten, wat je iets belangrijks vertelt: het acroniem is een hulpmiddel, geen theorie."
+              "The SMART framework was introduced in 1981 by George T. Doran¹, a corporate planning director who wanted a simple way to write management objectives. He proposed goals be Specific, Measurable, Assignable, Realistic, and Time-related. The idea spread quickly — and mutated. Dozens of variants now exist, which tells you something important: the acronym is a tool, not a theory⁴.",
+              "Kerangka SMART diperkenalkan pada tahun 1981 oleh George T. Doran¹, seorang direktur perencanaan perusahaan yang ingin cara sederhana untuk menulis tujuan manajemen. Ia mengusulkan tujuan harus Spesifik, Terukur, Dapat Ditugaskan, Realistis, dan Terkait Waktu. Ide ini menyebar dengan cepat — dan bermutasi. Sekarang ada lusinan varian, yang memberi tahu Anda sesuatu yang penting: akronim ini adalah alat, bukan teori⁴.",
+              "Het SMART-kader werd in 1981 geïntroduceerd door George T. Doran¹, een directeur bedrijfsplanning die een eenvoudige manier wilde om managementdoelstellingen te schrijven. Hij stelde voor dat doelen Specifiek, Meetbaar, Toewijsbaar, Realistisch en Tijdsgebonden moesten zijn. Het idee verspreidde zich snel — en muteerde. Er bestaan nu tientallen varianten, wat je iets belangrijks vertelt: het acroniem is een hulpmiddel, geen theorie⁴."
             )}
           </p>
 
           <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
             {t(
-              "The real science behind SMART comes from Edwin Locke and Gary Latham, whose forty years of research across more than 1,000 studies showed this: specific, well-defined goals consistently produce better results than vague ones. Not because of the acronym — because clarity, commitment, and feedback work. That foundation is what this tool is built on.",
-              "Ilmu pengetahuan nyata di balik SMART berasal dari Edwin Locke dan Gary Latham, yang empat puluh tahun penelitiannya di lebih dari 1.000 studi menunjukkan ini: tujuan yang spesifik dan terdefinisi dengan baik secara konsisten menghasilkan hasil yang lebih baik daripada tujuan yang samar. Bukan karena akronimnya — karena kejelasan, komitmen, dan umpan balik bekerja. Itulah fondasi yang menjadi dasar alat ini.",
-              "De echte wetenschap achter SMART komt van Edwin Locke en Gary Latham, wier veertig jaar onderzoek over meer dan 1.000 studies dit aantoonde: specifieke, goed omschreven doelen produceren consistent betere resultaten dan vage doelen. Niet vanwege het acroniem — omdat duidelijkheid, betrokkenheid en feedback werken. Dat fundament is waar dit hulpmiddel op gebouwd is."
+              "The real science behind SMART comes from Edwin Locke² and Gary Latham, whose forty years of research across more than 1,000 studies³ showed this: specific, well-defined goals consistently produce better results than vague ones. Not because of the acronym — because clarity, commitment, and feedback work. That foundation is what this tool is built on.",
+              "Ilmu pengetahuan nyata di balik SMART berasal dari Edwin Locke² dan Gary Latham, yang empat puluh tahun penelitiannya di lebih dari 1.000 studi³ menunjukkan ini: tujuan yang spesifik dan terdefinisi dengan baik secara konsisten menghasilkan hasil yang lebih baik daripada tujuan yang samar. Bukan karena akronimnya — karena kejelasan, komitmen, dan umpan balik bekerja. Itulah fondasi yang menjadi dasar alat ini.",
+              "De echte wetenschap achter SMART komt van Edwin Locke² en Gary Latham, wier veertig jaar onderzoek over meer dan 1.000 studies³ dit aantoonde: specifieke, goed omschreven doelen produceren consistent betere resultaten dan vage doelen. Niet vanwege het acroniem — omdat duidelijkheid, betrokkenheid en feedback werken. Dat fundament is waar dit hulpmiddel op gebouwd is."
             )}
           </p>
 
           <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
             {t(
-              "This module follows Ken Blanchard's variant — Specific, Motivating, Achievable, Relevant, Trackable — because two changes matter deeply for cross-cultural leaders. 'Motivating' replaces 'Measurable': before asking how to count progress, we ask why this goal matters at all. 'Trackable' replaces 'Time-bound': in complex, relational, and ministry work, noticing movement is more honest than hitting a fixed deadline. These aren't softer standards — they're more honest ones.",
-              "Modul ini mengikuti varian Ken Blanchard — Spesifik, Memotivasi, Dapat Dicapai, Relevan, Dapat Dilacak — karena dua perubahan sangat penting bagi pemimpin lintas budaya. 'Memotivasi' menggantikan 'Terukur': sebelum bertanya bagaimana menghitung kemajuan, kami bertanya mengapa tujuan ini sama sekali penting. 'Dapat Dilacak' menggantikan 'Terikat Waktu': dalam pekerjaan yang kompleks, relasional, dan pelayanan, memperhatikan pergerakan lebih jujur daripada memenuhi tenggat waktu yang tetap.",
-              "Deze module volgt de variant van Ken Blanchard — Specifiek, Motiverend, Haalbaar, Relevant, Traceerbaar — omdat twee veranderingen diep van belang zijn voor cross-culturele leiders. 'Motiverend' vervangt 'Meetbaar': voordat we vragen hoe we voortgang kunnen tellen, vragen we waarom dit doel überhaupt belangrijk is. 'Traceerbaar' vervangt 'Tijdsgebonden': in complex, relationeel en ministerie-werk is het eerlijker beweging op te merken dan een vaste deadline te halen."
+              "This module follows Ken Blanchard's⁵ variant — Specific, Motivating, Achievable, Relevant, Trackable — because two changes matter deeply for cross-cultural leaders. 'Motivating' replaces 'Measurable': before asking how to count progress, we ask why this goal matters at all. 'Trackable' replaces 'Time-bound': in complex, relational, and ministry work, noticing movement is more honest than hitting a fixed deadline. These aren't softer standards — they're more honest ones.",
+              "Modul ini mengikuti varian Ken Blanchard⁵ — Spesifik, Memotivasi, Dapat Dicapai, Relevan, Dapat Dilacak — karena dua perubahan sangat penting bagi pemimpin lintas budaya. 'Memotivasi' menggantikan 'Terukur': sebelum bertanya bagaimana menghitung kemajuan, kami bertanya mengapa tujuan ini sama sekali penting. 'Dapat Dilacak' menggantikan 'Terikat Waktu': dalam pekerjaan yang kompleks, relasional, dan pelayanan, memperhatikan pergerakan lebih jujur daripada memenuhi tenggat waktu yang tetap.",
+              "Deze module volgt de variant van Ken Blanchard⁵ — Specifiek, Motiverend, Haalbaar, Relevant, Traceerbaar — omdat twee veranderingen diep van belang zijn voor cross-culturele leiders. 'Motiverend' vervangt 'Meetbaar': voordat we vragen hoe we voortgang kunnen tellen, vragen we waarom dit doel überhaupt belangrijk is. 'Traceerbaar' vervangt 'Tijdsgebonden': in complex, relationeel en ministerie-werk is het eerlijker beweging op te merken dan een vaste deadline te halen."
             )}
           </p>
 
@@ -1146,6 +1146,25 @@ export default function SmartGoalsClient({
           )}
         </div>
       </section>
+
+      {/* ── Sources ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
+          {t("Sources", "Sumber", "Bronnen")}
+        </p>
+        {[
+          "¹ George T. Doran — 'There's a S.M.A.R.T. way to write management's goals and objectives' (Management Review, vol. 70 no. 11, 1981) — The original practitioner memo that introduced the SMART acronym; a management tool, not a peer-reviewed study.",
+          "² Edwin A. Locke & Gary P. Latham — A Theory of Goal Setting and Task Performance (Prentice Hall, 1990) — The foundational text of Goal Setting Theory, synthesising decades of empirical research showing that specific, challenging goals drive higher performance.",
+          "³ Edwin A. Locke & Gary P. Latham — 'Building a practically useful theory of goal setting and task motivation' (American Psychologist, vol. 57 no. 9, 2002) — Key meta-analytic paper summarising findings from more than 1,000 studies on goal specificity, commitment, and feedback.",
+          "⁴ Lisa D. Ordóñez, Maurice E. Schweitzer, Adam D. Galinsky & Max H. Bazerman — 'Goals Gone Wild: The Systematic Side Effects of Over-Prescribing Goal Setting' (Academy of Management Perspectives, vol. 23 no. 1, 2009) — Argues that narrowly prescribed goals can reduce intrinsic motivation and ethical behaviour; the SMART acronym should be used as a prompt, not a rigid formula.",
+          "⁵ Ken Blanchard & Spencer Johnson — The One Minute Manager (William Morrow, 1982) — Source of the Motivating/Trackable variant used in this module, emphasising inner drive and observable progress over purely quantitative measures.",
+        ].map((src, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵"][i]}</span>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵]\s*/,"")}</span>
+          </div>
+        ))}
+      </div>
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

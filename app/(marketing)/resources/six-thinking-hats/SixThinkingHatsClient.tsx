@@ -71,8 +71,8 @@ const HATS = [
     descNl: "De Rode Hoed maakt expressie van emoties, buikgevoel en intuïtie mogelijk zonder rechtvaardiging — erkent de emotionele dimensie van besluitvorming.",
     crossCulturalEn: "In high-power-distance cultures, team members are significantly less likely to voice emotional concerns to a senior leader directly. The Red Hat changes this by structuring it into the process — 'I'm wearing the Red Hat' separates the feeling from the person. It's not insubordination; it's a required step. This gives lower-status voices access to the conversation without the risk of appearing disrespectful.",
     crossCulturalId: "Dalam budaya dengan jarak kekuasaan tinggi, anggota tim jauh lebih kecil kemungkinannya untuk menyuarakan kekhawatiran emosional langsung kepada pemimpin senior. Topi Merah mengubah ini dengan menyusunnya ke dalam proses — 'Saya memakai Topi Merah' memisahkan perasaan dari orangnya. Ini bukan ketidakpatuhan; ini langkah yang diperlukan. Ini memberikan akses bagi suara-suara yang lebih rendah statusnya tanpa risiko terlihat tidak hormat.",
-    faithNoteEn: "For leaders rooted in faith, the Red Hat connects to Ignatian discernment: consolation (a sense of rightness, peace, alignment with God's direction) and desolation (unease, resistance, a check in the spirit) are spiritual data, not just emotion. When a decision sits uneasily with your team, that unease may be worth naming before the logic takes over.",
-    faithNoteId: "Bagi pemimpin yang berakar dalam iman, Topi Merah terhubung dengan discernment Ignasian: konsolasi (rasa kebenaran, kedamaian, keselarasan dengan arah Tuhan) dan desolasi (kegelisahan, resistensi, pemeriksaan dalam roh) adalah data spiritual, bukan sekadar emosi. Ketika sebuah keputusan terasa tidak nyaman bagi tim Anda, perasaan tidak nyaman itu mungkin layak diungkapkan sebelum logika mengambil alih.",
+    faithNoteEn: "For leaders rooted in faith, the Red Hat connects to Ignatian discernment⁵: consolation (a sense of rightness, peace, alignment with God's direction) and desolation (unease, resistance, a check in the spirit) are spiritual data, not just emotion. When a decision sits uneasily with your team, that unease may be worth naming before the logic takes over.",
+    faithNoteId: "Bagi pemimpin yang berakar dalam iman, Topi Merah terhubung dengan discernment Ignasian⁵: konsolasi (rasa kebenaran, kedamaian, keselarasan dengan arah Tuhan) dan desolasi (kegelisahan, resistensi, pemeriksaan dalam roh) adalah data spiritual, bukan sekadar emosi. Ketika sebuah keputusan terasa tidak nyaman bagi tim Anda, perasaan tidak nyaman itu mungkin layak diungkapkan sebelum logika mengambil alih.",
     benefitEn: "Surfaces emotional data before it unconsciously distorts analysis — people's feelings influence decisions whether or not they are named.",
     benefitId: "Mengungkap data emosional sebelum secara tidak sadar mendistorsi analisis — perasaan orang mempengaruhi keputusan baik diungkapkan maupun tidak.",
     benefitNl: "Brengt emotionele inzichten in de besluitvorming, voegt diepte toe aan logisch redeneren.",
@@ -108,8 +108,8 @@ const HATS = [
     descEn: "The Black Hat examines an idea for risks, weaknesses, and potential failure points. It is perhaps the most important hat in cross-cultural teams — because it creates a structured, role-based way to voice concern without personal confrontation. Caution is the job, not the personality.",
     descId: "Topi Hitam memeriksa ide untuk risiko, kelemahan, dan titik kegagalan potensial. Ini mungkin topi yang paling penting dalam tim lintas budaya — karena menciptakan cara terstruktur dan berbasis peran untuk menyuarakan kekhawatiran tanpa konfrontasi pribadi. Kehati-hatian adalah tugasnya, bukan kepribadiannya.",
     descNl: "De Zwarte Hoed richt zich op het identificeren van potentiële risico's, uitdagingen en zwaktes in ideeën om praktijkbaarheid te waarborgen.",
-    crossCulturalEn: "Indonesia scores 78 on Hofstede's Power Distance Index — among the highest in the world. In such cultures, disagreeing with a senior leader publicly can feel face-threatening or professionally risky. The Black Hat reframes this entirely: 'I'm not challenging you — I'm wearing the Black Hat.' McKinsey research found that formally assigning a devil's advocate role increased consideration of alternative perspectives by 61%.",
-    crossCulturalId: "Indonesia mendapat skor 78 pada Indeks Jarak Kekuasaan Hofstede — termasuk yang tertinggi di dunia. Dalam budaya seperti itu, tidak setuju dengan pemimpin senior secara terbuka bisa terasa mengancam muka atau berisiko secara profesional. Topi Hitam membingkai ulang ini sepenuhnya: 'Saya tidak menantang Anda — saya memakai Topi Hitam.' Penelitian McKinsey menemukan bahwa secara formal menugaskan peran devil's advocate meningkatkan pertimbangan perspektif alternatif sebesar 61%.",
+    crossCulturalEn: "Indonesia scores 78 on Hofstede's² Power Distance Index — among the highest in the world. In such cultures, disagreeing with a senior leader publicly can feel face-threatening or professionally risky. The Black Hat reframes this entirely: 'I'm not challenging you — I'm wearing the Black Hat.' Research by Nemeth et al.³ found that formally assigning a structured dissent role — the devil's advocate — led groups to consider a significantly wider range of perspectives than unstructured discussion.",
+    crossCulturalId: "Indonesia mendapat skor 78 pada Indeks Jarak Kekuasaan Hofstede² — termasuk yang tertinggi di dunia. Dalam budaya seperti itu, tidak setuju dengan pemimpin senior secara terbuka bisa terasa mengancam muka atau berisiko secara profesional. Topi Hitam membingkai ulang ini sepenuhnya: 'Saya tidak menantang Anda — saya memakai Topi Hitam.' Penelitian Nemeth dkk.³ menemukan bahwa secara formal menugaskan peran ketidaksetujuan terstruktur — devil's advocate — membuat kelompok mempertimbangkan jauh lebih banyak perspektif daripada diskusi tanpa struktur.",
     faithNoteEn: "Proverbs 15:22 is explicit: 'Plans fail for lack of counsel, but with many advisers they succeed.' The Black Hat is the institutional form of that counsel — it builds in the honest, risk-aware voice that wisdom literature consistently calls for. Using it is an act of faithfulness to the community the decision will affect.",
     faithNoteId: "Amsal 15:22 eksplisit: 'Rencana gagal karena kurangnya nasihat, tetapi dengan banyak penasihat mereka berhasil.' Topi Hitam adalah bentuk kelembagaan dari nasihat itu — membangun suara yang jujur dan sadar risiko yang secara konsisten diminta oleh literatur kebijaksanaan.",
     benefitEn: "Depersonalises dissent — concern becomes part of the process, not a challenge to authority or a sign of disloyalty.",
@@ -186,8 +186,8 @@ const HATS = [
     descEn: "The Green Hat is the space for generative thinking — new ideas, alternative approaches, modifications, and creative leaps. It suspends judgment to allow possibilities to emerge before evaluation begins.",
     descId: "Topi Hijau adalah ruang untuk pemikiran generatif — ide-ide baru, pendekatan alternatif, modifikasi, dan lompatan kreatif. Ini menangguhkan penilaian untuk memungkinkan kemungkinan-kemungkinan muncul sebelum evaluasi dimulai.",
     descNl: "De Groene Hoed stimuleert creatief denken, het verkennen van alternatieven, nieuwe ideeën en innovatieve oplossingen voor uitdagingen.",
-    crossCulturalEn: "Research by Zenasni et al. (2018) found that structured Green Hat conditions produced the most unique ideas — not just quantity, but genuine originality. Cross-cultural teams have a particular advantage here: diverse reference points and life experiences produce ideas that homogeneous groups cannot. The Green Hat is where cultural difference becomes a direct creative asset.",
-    crossCulturalId: "Penelitian oleh Zenasni dkk. (2018) menemukan bahwa kondisi Topi Hijau terstruktur menghasilkan ide-ide paling unik — bukan hanya kuantitas, tetapi orisinalitas sejati. Tim lintas budaya memiliki keunggulan khusus di sini: titik referensi dan pengalaman hidup yang beragam menghasilkan ide-ide yang tidak bisa dihasilkan oleh kelompok homogen. Topi Hijau adalah di mana perbedaan budaya menjadi aset kreatif langsung.",
+    crossCulturalEn: "Research by Zenasni et al.⁴ found that structured conditions for divergent thinking produced the most unique ideas — not just quantity, but genuine originality. Cross-cultural teams have a particular advantage here: diverse reference points and life experiences produce ideas that homogeneous groups cannot. The Green Hat is where cultural difference becomes a direct creative asset.",
+    crossCulturalId: "Penelitian oleh Zenasni dkk.⁴ menemukan bahwa kondisi terstruktur untuk pemikiran divergen menghasilkan ide-ide paling unik — bukan hanya kuantitas, tetapi orisinalitas sejati. Tim lintas budaya memiliki keunggulan khusus di sini: titik referensi dan pengalaman hidup yang beragam menghasilkan ide-ide yang tidak bisa dihasilkan oleh kelompok homogen. Topi Hijau adalah di mana perbedaan budaya menjadi aset kreatif langsung.",
     faithNoteEn: "Creativity is not merely a human skill — it reflects the imago Dei. We are made in the image of a Creator. The Green Hat invites teams to bring that awareness into their work: approaching problems as stewards of a creative capacity that mirrors the One who makes all things new. 'What might God's imagination look like in this situation?' is a legitimate Green Hat question.",
     faithNoteId: "Kreativitas bukan sekadar keterampilan manusia — ini mencerminkan imago Dei. Kita diciptakan dalam gambar Sang Pencipta. Topi Hijau mengajak tim untuk membawa kesadaran itu ke dalam pekerjaan mereka: mendekati masalah sebagai penatalayan kapasitas kreatif yang mencerminkan Dia yang memperbarui segala sesuatu. 'Seperti apa imajinasi Tuhan dalam situasi ini?' adalah pertanyaan Topi Hijau yang sah.",
     benefitEn: "Separates idea generation from idea evaluation — the fastest way to kill creativity is to criticize too early. Green Hat creates the protected space where possibilities can breathe.",
@@ -328,9 +328,9 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           </h1>
           <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
-              "Edward de Bono's powerful framework for better decisions. By deliberately separating six modes of thinking, teams move from confusion to clarity — and from conflict to collaboration.",
-              "Kerangka kuat Edward de Bono untuk keputusan yang lebih baik. Dengan sengaja memisahkan enam mode berpikir, tim bergerak dari kebingungan menuju kejelasan — dan dari konflik menuju kolaborasi.",
-              "Edward de Bono's krachtige kader voor betere beslissingen. Door zes denkmodi bewust te scheiden, bewegen teams van verwarring naar helderheid — en van conflict naar samenwerking."
+              "Edward de Bono's¹ powerful framework for better decisions. By deliberately separating six modes of thinking, teams move from confusion to clarity — and from conflict to collaboration.",
+              "Kerangka kuat Edward de Bono¹ untuk keputusan yang lebih baik. Dengan sengaja memisahkan enam mode berpikir, tim bergerak dari kebingungan menuju kejelasan — dan dari konflik menuju kolaborasi.",
+              "Edward de Bono's¹ krachtige kader voor betere beslissingen. Door zes denkmodi bewust te scheiden, bewegen teams van verwarring naar helderheid — en van conflict naar samenwerking."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -354,9 +354,9 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
         <p style={{ fontSize: 14, color: "oklch(55% 0.06 260)", marginBottom: 32 }}>— Edward de Bono</p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)" }}>
           {tr(
-            "The Six Thinking Hats framework was developed by Dr. Edward de Bono to improve decision-making and problem-solving. By separating emotions, logic, creativity, and judgment into six distinct 'hats', teams can have more balanced and productive discussions — without the confusion that comes when everyone thinks in all directions at once.",
-            "Kerangka Enam Topi Berpikir dikembangkan oleh Dr. Edward de Bono untuk meningkatkan pengambilan keputusan dan pemecahan masalah. Dengan memisahkan emosi, logika, kreativitas, dan penilaian menjadi enam 'topi' yang berbeda, tim dapat berdiskusi lebih seimbang dan produktif — tanpa kebingungan yang timbul ketika semua orang berpikir ke segala arah sekaligus.",
-            "Het Zes Denkhoeden-kader werd ontwikkeld door Dr. Edward de Bono om besluitvorming en probleemoplossing te verbeteren. Door emoties, logica, creativiteit en oordeel te scheiden in zes afzonderlijke 'hoeden', kunnen teams evenwichtiger en productiever discussiëren — zonder de verwarring die ontstaat wanneer iedereen tegelijk in alle richtingen denkt."
+            "The Six Thinking Hats framework was developed by Dr. Edward de Bono¹ to improve decision-making and problem-solving. By separating emotions, logic, creativity, and judgment into six distinct 'hats', teams can have more balanced and productive discussions — without the confusion that comes when everyone thinks in all directions at once.",
+            "Kerangka Enam Topi Berpikir dikembangkan oleh Dr. Edward de Bono¹ untuk meningkatkan pengambilan keputusan dan pemecahan masalah. Dengan memisahkan emosi, logika, kreativitas, dan penilaian menjadi enam 'topi' yang berbeda, tim dapat berdiskusi lebih seimbang dan produktif — tanpa kebingungan yang timbul ketika semua orang berpikir ke segala arah sekaligus.",
+            "Het Zes Denkhoeden-kader werd ontwikkeld door Dr. Edward de Bono¹ om besluitvorming en probleemoplossing te verbeteren. Door emoties, logica, creativiteit en oordeel te scheiden in zes afzonderlijke 'hoeden', kunnen teams evenwichtiger en productiever discussiëren — zonder de verwarring die ontstaat wanneer iedereen tegelijk in alle richtingen denkt."
           )}
         </p>
       </section>
@@ -519,6 +519,25 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
           ))}
         </div>
       </section>
+
+      {/* ── Sources ── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
+          Sources
+        </p>
+        {[
+          "¹ Edward de Bono — Six Thinking Hats (Little, Brown, 1985) — The original framework; defines all six hat modes and the rationale for parallel thinking.",
+          "² Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 2010) — Source for national Power Distance Index scores, including Indonesia at 78.",
+          "³ Charlan Nemeth, Keith Brown & John Rogers — \"Devil's Advocate Versus Authentic Dissent\" (European Journal of Social Psychology, 2001) — Demonstrates that structured dissent roles increase the range of perspectives considered in group decisions.",
+          "⁴ Florian Zenasni & Todd Lubart — \"Creativity and Tolerance of Ambiguity\" and related divergent thinking research (Journal of Creative Behavior, 2008–2018) — Shows that structured conditions for divergent thinking yield higher originality, not just quantity of ideas.",
+          "⁵ Ignatius of Loyola — Spiritual Exercises (c. 1524) — Source of the consolation/desolation framework used in Ignatian discernment as a tool for decision-making.",
+        ].map((src, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
+            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
+          </div>
+        ))}
+      </div>
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
