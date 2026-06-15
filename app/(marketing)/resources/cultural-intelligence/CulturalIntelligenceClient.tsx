@@ -44,7 +44,7 @@ const cqDimensions = [
     en_low: "Low Cognitive CQ sounds like: 'I've read a book on this culture — I get it.' Or arriving somewhere new and thinking three months on the ground makes you an expert. Cultural knowledge is a starting point, not a destination.",
     id_low: "CQ Kognitif rendah terlihat seperti: mengasumsikan bahwa karena Anda telah membaca satu buku tentang suatu budaya, Anda memahaminya. Terlihat seperti menerapkan dimensi Hofstede seolah-olah mereka menggambarkan individu daripada kecenderungan statistik.",
     nl_low: "Lage Cognitieve CQ ziet eruit als: aannemen dat je een cultuur begrijpt omdat je er ——n boek over hebt gelezen. Het lijkt op het toepassen van Hofstedes dimensies alsof ze individuen beschrijven in plaats van statistische tendensen.",
-    en_scenario: "Scenario: A Korean-American pastor plants a church in Lagos, Nigeria. He's studied African cultures — or so he thinks. He arrives expecting a high-context, oral, communal culture. What he finds is a sophisticated urban congregation shaped by Pentecostalism, British colonial history, and 21st-century tech entrepreneurship. His framework was a starting point, not a destination.",
+    en_scenario: "Scenario: A Korean-American pastor plants a church in Lagos, Nigeria. He's studied African cultures — or so he thinks. He arrives expecting what he assumed would be a high-context, oral, communal culture. What he finds is a sophisticated urban congregation shaped by Pentecostalism, British colonial history, and 21st-century tech entrepreneurship. His framework was a starting point, not a destination.",
     id_scenario: "Skenario: Seorang pendeta Korea-Amerika menanam gereja di Lagos, Nigeria. Dia telah mempelajari budaya Afrika — atau begitu pikirnya. Dia tiba dengan mengharapkan budaya konteks tinggi, lisan, dan komunal. Yang dia temukan adalah jemaat perkotaan yang canggih yang dibentuk oleh Pentakostalisme, sejarah kolonial Inggris, dan kewirausahaan teknologi abad ke-21.",
     nl_scenario: "Scenario: Een Koreaans-Amerikaanse pastor plant een kerk in Lagos, Nigeria. Hij heeft Afrikaanse culturen bestudeerd — of zo denkt hij. Hij verwacht een hogere-context, mondelinge, gemeenschappelijke cultuur. Wat hij vindt is een geavanceerde stadsgemeente gevormd door het Pinksterchristendom, de Britse koloniale geschiedenis en 21e-eeuwse tech-ondernemerschap.",
   },
@@ -99,9 +99,9 @@ const developmentLevels = [
     color: "#4A90D9",
     actions: [
       {
-        en: "Take the Cultural Values Profile assessment (free at CulturalQ.com). Don't just note your scores — sit with what surprises you. Your lowest score is your most urgent growth edge.",
-        id: "Ambil penilaian Profil Nilai Budaya (gratis di CulturalQ.com). Jangan hanya catat skor Anda — renungkan apa yang mengejutkan Anda. Skor terendah Anda adalah tepi pertumbuhan paling mendesak.",
-        nl: "Doe de Cultural Values Profile-beoordeling (gratis op CulturalQ.com). Noteer niet alleen je scores — blijf stilstaan bij wat je verrast. Je laagste score is je meest urgente groeipunt.",
+        en: "Take the Cultural Values Profile assessment at CulturalQ.com (verify current free/paid status). Don't just note your scores — sit with what surprises you. Your lowest score is your most urgent growth edge.",
+        id: "Ambil penilaian Profil Nilai Budaya di CulturalQ.com (periksa status gratis/berbayar saat ini). Jangan hanya catat skor Anda — renungkan apa yang mengejutkan Anda. Skor terendah Anda adalah tepi pertumbuhan paling mendesak.",
+        nl: "Doe de Cultural Values Profile-beoordeling op CulturalQ.com (controleer de huidige gratis/betaalde status). Noteer niet alleen je scores — blijf stilstaan bij wat je verrast. Je laagste score is je meest urgente groeipunt.",
       },
       {
         en: "Choose one person in your context whose cultural background significantly differs from yours. Spend 30 minutes asking them about their culture — not to analyze, but to genuinely understand. Listen more than you speak.",
@@ -356,8 +356,8 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
-            "Cultural Intelligence (CQ) was developed by researchers Christopher Earley and David Livermore. Simply put: it is your ability to work well with people from different backgrounds — not just different countries, but different generations, organisations, and faith traditions too.",
-            "Kecerdasan Budaya (CQ) diperkenalkan pada tahun 2003 oleh peneliti Christopher Earley dan Soon Ang, dan dikembangkan secara signifikan oleh David Livermore. Ini adalah kemampuan untuk berfungsi secara efektif di berbagai situasi yang beragam secara budaya.",
+            "Cultural Intelligence (CQ) was originally developed by researchers Christopher Earley and Soon Ang.¹ David Livermore later applied the framework extensively to Christian and global leadership contexts.² Simply put: CQ is your ability to work well with people from different backgrounds — not just different countries, but different generations, organisations, and faith traditions too.",
+            "Kecerdasan Budaya (CQ) diperkenalkan pada tahun 2003 oleh peneliti Christopher Earley dan Soon Ang,¹ dan dikembangkan secara signifikan oleh David Livermore untuk konteks kepemimpinan Kristen dan global.² Ini adalah kemampuan untuk berfungsi secara efektif di berbagai situasi yang beragam secara budaya.",
             "Culturele Intelligentie (CQ) werd in 2003 ge—ntroduceerd door onderzoekers Christopher Earley en Soon Ang, en significant ontwikkeld door David Livermore. Het is het vermogen om effectief te functioneren in cultureel diverse situaties."
           )}
         </p>
@@ -765,10 +765,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
             {bgOpen ? "Close ↑" : "Read the research →"}
           </button>
           {bgOpen && [
-            "Cultural intelligence as a formal construct entered leadership research in 2003, when P. Christopher Earley and Soon Ang published their foundational work through Stanford University Press. Their core argument was that intelligence is context-dependent. A leader can be analytically sharp, emotionally perceptive, and still consistently ineffective when the cultural context shifts significantly from the one they were formed in. CQ was their term for the specific capability that fills that gap.",
+            "Cultural intelligence as a formal construct entered leadership research in 2003, when P. Christopher Earley and Soon Ang published their foundational work through Stanford University Press.¹ Their core argument was that intelligence is context-dependent. A leader can be analytically sharp, emotionally perceptive, and still consistently ineffective when the cultural context shifts significantly from the one they were formed in. CQ was their term for the specific capability that fills that gap.",
             "The framework Earley and Ang proposed has four dimensions. Metacognitive CQ is the capacity to think about culture in real time — catching your own assumptions, noticing when a situation is not behaving the way you expected, and adjusting your interpretation before you act on it incorrectly. Cognitive CQ is the knowledge dimension: understanding the norms, values, communication patterns, and social structures of cultures different from your own. Motivational CQ is the drive to engage — genuine curiosity and willingness to invest in cross-cultural relationships even when they are slow, ambiguous, or uncomfortable. Behavioural CQ is the ability to actually change what you do: tone, pace, posture, directness, formality, depending on what the situation calls for.",
             "Most leaders who have lived or worked internationally develop some cognitive CQ over time. They accumulate knowledge. They know, for example, that hierarchy is more explicit in many Asian and Middle Eastern contexts, or that relationship-building precedes task-work in most of sub-Saharan Africa. The harder development, and the one research repeatedly identifies as the missing piece in global ministry leadership specifically, is metacognitive CQ. This is the dimension that requires catching yourself mid-assumption — not after the fact, but in the room, before the damage is done.",
-            "David Livermore, whose work applies CQ research directly to Christian leadership contexts, frames the development challenge in terms that go beyond professional competency. In his view, CQ growth is not a behaviour modification project. It is a matter of inward transformation: becoming the kind of person who can genuinely love across difference. The Great Commandment does not come with a cultural exemption. Loving your neighbour as yourself assumes you first do the work of understanding how your neighbour actually experiences life. That understanding does not happen automatically. It requires the humility to admit that your instincts — even the well-meaning ones — were formed in a particular place, and that formation was not universal.",
+            "David Livermore, whose work applies CQ research directly to Christian leadership contexts,² frames the development challenge in terms that go beyond professional competency. In his view, CQ growth is not a behaviour modification project. It is a matter of inward transformation: becoming the kind of person who can genuinely love across difference. The Great Commandment does not come with a cultural exemption. Loving your neighbour as yourself assumes you first do the work of understanding how your neighbour actually experiences life. That understanding does not happen automatically. It requires the humility to admit that your instincts — even the well-meaning ones — were formed in a particular place, and that formation was not universal.",
             "This matters enormously for cross-cultural workers, for team leaders managing multicultural staff, and for church leaders serving globally mobile congregations. The relational breakdowns that derail cross-cultural partnerships are rarely caused by malice or incompetence. They are caused by leaders operating from unexamined assumptions: assuming that directness communicates respect (it sometimes communicates disrespect), assuming that silence signals agreement (it often signals discomfort), assuming that enthusiasm inspires (it sometimes signals immaturity or untrustworthiness in cultures where measured speech is a mark of wisdom).",
             "In cross-cultural mission contexts, research has documented the human and institutional cost of low CQ at scale. Long-term partnerships have collapsed because decisions were made without adequate consultation of local stakeholders — not because the outside leader was unwilling to consult, but because they assumed consultation had happened when it had not, because they were reading relational signals through the wrong cultural lens. Field workers have spent years in communities without gaining the depth of trust needed to do meaningful work, not because they were disliked, but because their behavioural patterns communicated something unintended: impatience, transactionality, or a subtle assumption of authority that was never earned locally.",
             "The cross-cultural nuance in CQ development is particularly important here. CQ assessment tools can be valuable starting points, but they need to be interpreted carefully. What constitutes adaptive behaviour varies. A behavioural CQ adjustment that is effective in one context — for example, adopting a more indirect communication style — can come across as inauthentic or evasive in a context where directness is expected even between people of different cultural backgrounds. The goal is not cultural mimicry. It is genuine flexibility rooted in respect, and that distinction matters both relationally and ethically.",
@@ -781,6 +781,26 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
             </p>
           ))}
         </div>
+      </div>
+
+      {/* --- SOURCES ---------------------------------------------------------- */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orangeOklch, marginBottom: 14 }}>
+          Sources
+        </p>
+        <ol style={{ margin: 0, padding: "0 0 0 18px", display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "P. Christopher Earley & Soon Ang — Cultural Intelligence: Individual Interactions Across Cultures (Stanford Business Books, 2003)",
+            "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022)",
+            "David Livermore — Serving with Eyes Wide Open (Baker Books, 2nd ed., 2013)",
+            "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008)",
+            "David J. Bosch — Transforming Mission: Paradigm Shifts in Theology of Mission (Orbis Books, 2011)",
+          ].map((src, i) => (
+            <li key={i} style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>
+              {src}
+            </li>
+          ))}
+        </ol>
       </div>
 
       {/* --- CTA FOOTER ------------------------------------------------------- */}
