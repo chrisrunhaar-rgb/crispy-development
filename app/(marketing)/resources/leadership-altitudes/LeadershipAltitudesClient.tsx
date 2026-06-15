@@ -196,9 +196,9 @@ const ALTITUDES = [
     qualities: ["Vision casting", "Legacy thinking", "Global perspective", "Organizational stewardship"],
     qualitiesId: ["Penetapan visi", "Pemikiran warisan", "Perspektif global", "Pengelolaan organisasi"],
     qualitiesNl: ["Visie uitdragen", "Erfenisdenken", "Globaal perspectief", "Organisatorisch beheer"],
-    strategy: "Focus on what only you can do. Develop leaders who can operate at every altitude.",
-    strategyId: "Fokus pada apa yang hanya bisa Anda lakukan. Kembangkan pemimpin yang dapat beroperasi di setiap ketinggian.",
-    strategyNl: "Focus op wat alleen jij kunt doen. Ontwikkel leiders die op elke hoogte kunnen opereren.",
+    strategy: "Focus on what only you can do. Develop leaders who can operate at every altitude.⁶",
+    strategyId: "Fokus pada apa yang hanya bisa Anda lakukan. Kembangkan pemimpin yang dapat beroperasi di setiap ketinggian.⁶",
+    strategyNl: "Focus op wat alleen jij kunt doen. Ontwikkel leiders die op elke hoogte kunnen opereren.⁶",
     strengths: ["Global organizational influence", "Vision clarity and coherence", "Long-term structural thinking"],
     strengthsId: ["Pengaruh organisasi global", "Kejelasan dan koherensi visi", "Pemikiran struktural jangka panjang"],
     strengthsNl: ["Globale organisatorische invloed", "Helderheid en coherentie van visie", "Langetermijn structureel denken"],
@@ -256,9 +256,9 @@ const PRINCIPLES = [
     titleEn: "Practice Self-Awareness",
     titleId: "Praktikkan Kesadaran Diri",
     titleNl: "Oefen Zelfbewustzijn",
-    descEn: "The greatest danger is operating at the wrong altitude without knowing it. Regular reflection, feedback, and accountability keep you calibrated.",
-    descId: "Bahaya terbesar adalah beroperasi di ketinggian yang salah tanpa menyadarinya. Refleksi rutin, umpan balik, dan akuntabilitas membuat Anda tetap terkalibrasi.",
-    descNl: "Het grootste gevaar is opereren op de verkeerde hoogte zonder dat te weten. Regelmatige reflectie, feedback en verantwoording houden u gekalibreerd.",
+    descEn: "The greatest danger is operating at the wrong altitude without knowing it — research suggests only 10–15% of leaders are genuinely self-aware.⁵ Regular reflection, feedback, and accountability keep you calibrated.",
+    descId: "Bahaya terbesar adalah beroperasi di ketinggian yang salah tanpa menyadarinya — penelitian menunjukkan hanya 10–15% pemimpin yang benar-benar sadar diri.⁵ Refleksi rutin, umpan balik, dan akuntabilitas membuat Anda tetap terkalibrasi.",
+    descNl: "Het grootste gevaar is opereren op de verkeerde hoogte zonder dat te weten — onderzoek suggereert dat slechts 10–15% van de leiders werkelijk zelfbewust is.⁵ Regelmatige reflectie, feedback en verantwoording houden u gekalibreerd.",
   },
 ];
 
@@ -379,16 +379,16 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {t(
-            "The Leadership Altitudes framework uses the metaphor of flight to describe different levels of organizational leadership. From the ground-level team member executing daily tasks to the international organization casting global vision — each altitude has a distinct focus, span of control, and set of responsibilities.",
-            "Kerangka Ketinggian Kepemimpinan menggunakan metafora penerbangan untuk menggambarkan berbagai level kepemimpinan organisasi. Dari anggota tim tingkat dasar yang melaksanakan tugas harian hingga organisasi internasional yang menetapkan visi global — setiap ketinggian memiliki fokus, rentang kendali, dan serangkaian tanggung jawab yang berbeda.",
-            "Het Leiderschapshoogtes kader gebruikt de metafoor van vliegen om verschillende niveaus van organisatorisch leiderschap te beschrijven. Van het teamlid op de werkvloer dat dagelijkse taken uitvoert tot de internationale organisatie die een globale visie uitzet — elke hoogte heeft een unieke focus, beheersspanne en reeks verantwoordelijkheden."
+            "The Leadership Altitudes framework uses the metaphor of flight to describe different levels of organizational leadership. From the ground-level team member executing daily tasks to the international organization casting global vision — each altitude has a distinct focus, span of control,¹ and set of responsibilities.",
+            "Kerangka Ketinggian Kepemimpinan menggunakan metafora penerbangan untuk menggambarkan berbagai level kepemimpinan organisasi. Dari anggota tim tingkat dasar yang melaksanakan tugas harian hingga organisasi internasional yang menetapkan visi global — setiap ketinggian memiliki fokus, rentang kendali,¹ dan serangkaian tanggung jawab yang berbeda.",
+            "Het Leiderschapshoogtes kader gebruikt de metafoor van vliegen om verschillende niveaus van organisatorisch leiderschap te beschrijven. Van het teamlid op de werkvloer dat dagelijkse taken uitvoert tot de internationale organisatie die een globale visie uitzet — elke hoogte heeft een unieke focus, beheersspanne¹ en reeks verantwoordelijkheden."
           )}
         </p>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)" }}>
           {t(
-            "A leader can — and often must — operate at multiple altitudes. But the art is knowing which altitude the moment demands.",
-            "Seorang pemimpin bisa — dan seringkali harus — beroperasi di berbagai ketinggian. Tetapi seninya adalah mengetahui ketinggian mana yang dibutuhkan saat ini.",
-            "Een leider kan — en moet vaak — op meerdere hoogtes opereren. Maar de kunst is te weten welke hoogte het moment vraagt."
+            "A leader can — and often must — operate at multiple altitudes. But the art is knowing which altitude the moment demands.² This framework is a practitioner conceptual tool — it maps accumulated leadership wisdom, not a single validated empirical model.",
+            "Seorang pemimpin bisa — dan seringkali harus — beroperasi di berbagai ketinggian. Tetapi seninya adalah mengetahui ketinggian mana yang dibutuhkan saat ini.² Kerangka ini adalah alat konseptual praktisi — memetakan kebijaksanaan kepemimpinan yang terakumulasi, bukan model empiris yang divalidasi tunggal.",
+            "Een leider kan — en moet vaak — op meerdere hoogtes opereren. Maar de kunst is te weten welke hoogte het moment vraagt.² Dit kader is een practitioner-conceptueel hulpmiddel — het brengt geaccumuleerde leiderschapswijsheid in kaart, geen enkel gevalideerd empirisch model."
           )}
         </p>
       </section>
@@ -555,16 +555,16 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(75% 0.04 260)", marginBottom: 24 }}>
             {t(
-              "Effective leaders are not locked into one altitude. A Field Director may need to descend to Team Leader altitude to coach a struggling team — then rise back to 30,000 ft to navigate a strategic decision. This movement is healthy and necessary.",
-              "Pemimpin yang efektif tidak terkunci pada satu ketinggian. Seorang Direktur Lapangan mungkin perlu turun ke ketinggian Pemimpin Tim untuk melatih tim yang kesulitan — kemudian naik kembali ke 30.000 kaki untuk menavigasi keputusan strategis. Pergerakan ini sehat dan diperlukan.",
-              "Effectieve leiders zitten niet vast aan ——n hoogte. Een Veldirecteur moet misschien dalen naar de hoogte van Teamleider om een moeizaam team te coachen — en dan weer stijgen naar 30.000 voet om een strategische beslissing te navigeren. Deze beweging is gezond en noodzakelijk."
+              "Effective leaders are not locked into one altitude. A Field Director may need to descend to Team Leader altitude to coach a struggling team³ — then rise back to 30,000 ft to navigate a strategic decision. This movement is healthy and necessary.",
+              "Pemimpin yang efektif tidak terkunci pada satu ketinggian. Seorang Direktur Lapangan mungkin perlu turun ke ketinggian Pemimpin Tim untuk melatih tim yang kesulitan³ — kemudian naik kembali ke 30.000 kaki untuk menavigasi keputusan strategis. Pergerakan ini sehat dan diperlukan.",
+              "Effectieve leiders zitten niet vast aan ——n hoogte. Een Veldirecteur moet misschien dalen naar de hoogte van Teamleider om een moeizaam team te coachen³ — en dan weer stijgen naar 30.000 voet om een strategische beslissing te navigeren. Deze beweging is gezond en noodzakelijk."
             )}
           </p>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(75% 0.04 260)" }}>
             {t(
-              "The danger is when a leader becomes stuck — either micromanaging at a level too low for their role, or flying too high and losing touch with reality. Self-awareness and consistent feedback are the corrective mechanisms.",
-              "Bahayanya adalah ketika seorang pemimpin terjebak — entah mengelola secara mikro pada level yang terlalu rendah untuk peran mereka, atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.",
-              "Het gevaar is wanneer een leider vastzit — ofwel micromanagend op een niveau dat te laag is voor hun rol, of te hoog vliegend en het contact met de realiteit verliezend. Zelfbewustzijn en consistente feedback zijn de corrigerende mechanismen."
+              "The danger is when a leader becomes stuck — either micromanaging at a level too low for their role,⁴ or flying too high and losing touch with reality. Self-awareness and consistent feedback are the corrective mechanisms.⁵",
+              "Bahayanya adalah ketika seorang pemimpin terjebak — entah mengelola secara mikro pada level yang terlalu rendah untuk peran mereka,⁴ atau terbang terlalu tinggi dan kehilangan kontak dengan realitas. Kesadaran diri dan umpan balik yang konsisten adalah mekanisme korektif.⁵",
+              "Het gevaar is wanneer een leider vastzit — ofwel micromanagend op een niveau dat te laag is voor hun rol,⁴ of te hoog vliegend en het contact met de realiteit verliezend. Zelfbewustzijn en consistente feedback zijn de corrigerende mechanismen.⁵"
             )}
           </p>
         </div>
@@ -639,6 +639,32 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
             <div key={r.roman} style={{ display: "flex", gap: 20, padding: "18px 24px", background: "white", borderRadius: 8, boxShadow: "0 1px 6px oklch(20% 0.06 260 / 0.06)" }}>
               <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 18, fontWeight: 600, color: "oklch(65% 0.15 45)", minWidth: 28, flexShrink: 0, paddingTop: 2 }}>{r.roman}</span>
               <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: "oklch(32% 0.07 260)" }}>{t(r.en, r.id, r.nl)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* -- SOURCES ------------------------------------------------------------- */}
+      <section style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Ram Charan, Stephen Drotter & James Noel — The Leadership Pipeline: How to Build the Leadership Powered Company (Jossey-Bass, 2001) — foundational work on differentiated leadership levels, span of control, and role transitions.",
+            "Bill Hybels — Axiom: Powerful Leadership Proverbs (Zondervan, 2008); see also Liz Wiseman & Greg McKeown — Multipliers: How the Best Leaders Make Everyone Smarter (HarperBusiness, 2010) — practitioner frameworks describing altitude-like leadership differentiation.",
+            "Marcus Buckingham & Curt Coffman — First, Break All the Rules (Simon & Schuster, 1999) — Gallup research on manager-level coaching, people development, and why the direct leader is the primary variable in team performance.",
+            "Liz Wiseman — Multipliers (HarperBusiness, 2010) — research on diminisher vs. multiplier leaders; the cost of leaders operating below their altitude (micromanagement) and above it (ivory-tower detachment).",
+            "Tasha Eurich — Insight: Why We're Not as Self-Aware as We Think, and How Seeing Ourselves Clearly Helps Us Succeed at Work and in Life (Crown Business, 2017) — research finding only 10–15% of people are genuinely self-aware; practical methods for accurate self-assessment.",
+            "Elliott Jaques — Requisite Organization (Cason Hall, 1989) — time-span of discretion theory; empirical basis for the idea that different organizational levels require qualitatively different thinking horizons and decision-making capacity.",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
             </div>
           ))}
         </div>

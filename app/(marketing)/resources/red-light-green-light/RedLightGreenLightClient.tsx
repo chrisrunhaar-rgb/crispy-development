@@ -26,19 +26,19 @@ const GREEN_PRINCIPLES = [
   },
   {
     titleEn: "Divergent Thinking", titleId: "Pemikiran Divergen", titleNl: "Divergent Denken",
-    descEn: "Aim for quantity over quality — you'll sort later. Volume of ideas fuels creativity.",
+    descEn: "Aim for quantity over quality — you'll sort later. Volume of ideas fuels creativity.¹",
     descId: "Utamakan kuantitas daripada kualitas — Anda akan memilah nanti. Volume ide mendorong kreativitas.",
     descNl: "Streef naar kwantiteit boven kwaliteit — je sorteert later. Volume aan idee—n voedt creativiteit.",
   },
   {
     titleEn: "Encouragement", titleId: "Dorongan", titleNl: "Aanmoediging",
-    descEn: "Build on others' suggestions with 'Yes, and—' thinking. Momentum grows through addition.",
+    descEn: "Build on others' suggestions with 'Yes, and—' thinking.² Momentum grows through addition.",
     descId: "Bangun di atas saran orang lain dengan pemikiran 'Ya, dan—'. Momentum tumbuh melalui penambahan.",
     descNl: "Bouw voort op suggesties van anderen met 'Ja, en—' denken. Momentum groeit door toevoeging.",
   },
   {
     titleEn: "No Judgment", titleId: "Tanpa Penilaian", titleNl: "Geen Oordeel",
-    descEn: "No criticism, evaluation, or filtering at this stage. Premature judgment kills creativity.",
+    descEn: "No criticism, evaluation, or filtering at this stage. Premature judgment kills creativity.¹",
     descId: "Tidak ada kritik, evaluasi, atau penyaringan pada tahap ini. Penilaian dini membunuh kreativitas.",
     descNl: "Geen kritiek, evaluatie of filteren in dit stadium. Voortijdig oordelen doodt creativiteit.",
   },
@@ -65,7 +65,7 @@ const RED_PRINCIPLES = [
   },
   {
     titleEn: "Convergent Thinking", titleId: "Pemikiran Konvergen", titleNl: "Convergent Denken",
-    descEn: "Narrow ideas to the most viable options. Focus enables execution — too many options stall progress.",
+    descEn: "Narrow ideas to the most viable options. Focus enables execution — too many options stall progress.³",
     descId: "Sempurnakan ide menjadi pilihan yang paling layak. Fokus memungkinkan pelaksanaan — terlalu banyak pilihan menghentikan kemajuan.",
     descNl: "Versmal idee—n tot de meest haalbare opties. Focus maakt uitvoering mogelijk — te veel opties blokkeren voortgang.",
   },
@@ -77,7 +77,7 @@ const RED_PRINCIPLES = [
   },
   {
     titleEn: "Feedback", titleId: "Umpan Balik", titleNl: "Feedback",
-    descEn: "Offer constructive critique to improve or combine ideas. Refinement is an act of respect for the original thinking.",
+    descEn: "Offer constructive critique to improve or combine ideas. Refinement is an act of respect for the original thinking.⁵",
     descId: "Berikan kritik konstruktif untuk memperbaiki atau menggabungkan ide. Penyempurnaan adalah bentuk penghormatan terhadap pemikiran asli.",
     descNl: "Bied constructieve kritiek om idee—n te verbeteren of combineren. Verfijning is een blijk van respect voor het oorspronkelijke denken.",
   },
@@ -270,9 +270,11 @@ export default function RedLightGreenLightClient({
             {t("Red Light & Green Light Thinking", "Pemikiran Lampu Merah & Lampu Hijau", "Rood Licht & Groen Licht Denken")}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
-            {t(
-              "A facilitation framework that separates creative idea generation (Green Light) from critical evaluation and decision-making (Red Light) — helping teams be more innovative and more decisive.",
-              "Kerangka fasilitasi yang memisahkan generasi ide kreatif (Lampu Hijau) dari evaluasi kritis dan pengambilan keputusan (Lampu Merah) — membantu tim menjadi lebih inovatif dan lebih tegas.",
+            {lang === "en" ? (
+              <>A facilitation framework that separates creative idea generation (Green Light) from critical evaluation and decision-making (Red Light)<sup style={{ fontSize: "0.65em", verticalAlign: "super", lineHeight: 0 }}>⁴</sup> — helping teams be more innovative and more decisive.</>
+            ) : lang === "id" ? (
+              "Kerangka fasilitasi yang memisahkan generasi ide kreatif (Lampu Hijau) dari evaluasi kritis dan pengambilan keputusan (Lampu Merah) — membantu tim menjadi lebih inovatif dan lebih tegas."
+            ) : (
               "Een facilitatiekader dat creatieve idee—ngeneratie (Groen Licht) scheidt van kritische evaluatie en besluitvorming (Rood Licht) — teams helpen innovatiever en besluitvaardiger te zijn."
             )}
           </p>
@@ -573,13 +575,39 @@ export default function RedLightGreenLightClient({
           <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(38% 0.06 260)", margin: 0 }}>
             <strong style={{ color: "oklch(22% 0.10 260)" }}>{t("Practical tip:", "Tips praktis:", "Praktische tip:")}</strong>{" "}
             {t(
-              "Use visual cues like colored cards or signs to mark phase shifts. Appoint a facilitator to keep the team in the right mode. Learn to recognize what the moment calls for — creative space when the team is stuck, or focused evaluation when there are too many ideas.",
+              "Use visual cues like colored cards or signs to mark phase shifts. Appoint a facilitator to keep the team in the right mode. Learn to recognize what the moment calls for — creative space when the team is stuck, or focused evaluation when there are too many ideas.⁶",
               "Gunakan isyarat visual seperti kartu atau tanda berwarna untuk menandai perpindahan fase. Tunjuk fasilitator untuk menjaga tim dalam mode yang tepat. Belajarlah mengenali apa yang dibutuhkan saat ini — ruang kreatif ketika tim terhenti, atau evaluasi terfokus ketika ada terlalu banyak ide.",
               "Gebruik visuele signalen zoals gekleurde kaarten of borden om fasewisselingen te markeren. Wijs een facilitator aan om het team in de juiste modus te houden. Leer herkennen wat het moment vraagt — creatieve ruimte wanneer het team vastzit, of gerichte evaluatie wanneer er te veel idee—n zijn."
             )}
           </p>
         </div>
       </section>
+
+      {/* SOURCES */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
+          Sources
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Alex F. Osborn — Applied Imagination: Principles and Procedures of Creative Problem-Solving (Scribner, 1953) — originator of brainstorming, the no-judgment rule, and divergent idea generation",
+            "Keith Johnstone — Impro: Improvisation and the Theatre (Methuen, 1979) — foundational source for 'Yes, and—' as a collaborative building principle",
+            "Sheena S. Iyengar & Mark R. Lepper — 'When Choice is Demotivating: Can One Desire Too Much of a Good Thing?' (Journal of Personality and Social Psychology, 2000) — empirical evidence that excessive options reduce decision quality and motivation",
+            "J. P. Guilford — The Nature of Human Intelligence (McGraw-Hill, 1967) — introduced the divergent/convergent thinking distinction foundational to phase-separated facilitation",
+            "Amy C. Edmondson — 'Psychological Safety and Learning Behavior in Work Teams' (Administrative Science Quarterly, 44(2), 1999) — team-level evidence that non-judgmental feedback cultures increase learning and performance",
+            "Michael Michalko — Thinkertoys: A Handbook of Creative-Thinking Techniques (Ten Speed Press, 2nd ed., 2006) — structured phase-based creative facilitation methods",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

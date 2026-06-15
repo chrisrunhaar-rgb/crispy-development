@@ -96,8 +96,8 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
       {
         title: { en: "The 15-minute draft rule", id: "Aturan draft 15 menit" },
         body: {
-          en: "Set a timer for 15 minutes. Write, design, or build something — anything — before the timer ends. It will not be your best work. That is exactly the point. An imperfect draft that exists gives you something to improve. The Zeigarnik effect guarantees your brain will pull toward completion once it has started. Perfectionism thrives on blankness.",
-          id: "Atur timer selama 15 menit. Tulis, desain, atau bangun sesuatu — apa saja — sebelum timer berakhir. Itu tidak akan menjadi karya terbaikmu. Itulah intinya. Draft tidak sempurna yang ada memberimu sesuatu untuk diperbaiki. Efek Zeigarnik menjamin otakmu akan menarik ke arah penyelesaian begitu sudah dimulai. Perfeksionisme berkembang dalam kekosongan.",
+          en: "Set a timer for 15 minutes. Write, design, or build something — anything — before the timer ends. It will not be your best work. That is exactly the point. An imperfect draft that exists gives you something to improve. The Zeigarnik effect² guarantees your brain will pull toward completion once it has started. Perfectionism thrives on blankness.",
+          id: "Atur timer selama 15 menit. Tulis, desain, atau bangun sesuatu — apa saja — sebelum timer berakhir. Itu tidak akan menjadi karya terbaikmu. Itulah intinya. Draft tidak sempurna yang ada memberimu sesuatu untuk diperbaiki. Efek Zeigarnik² menjamin otakmu akan menarik ke arah penyelesaian begitu sudah dimulai. Perfeksionisme berkembang dalam kekosongan.",
         },
       },
       {
@@ -120,15 +120,15 @@ const DISGUISES: Record<DisguiseKey, DisguiseData> = {
       {
         title: { en: "Smallest possible first action", id: "Tindakan pertama yang sekecil mungkin" },
         body: {
-          en: "Not 'write the report.' Not 'plan the project.' Open the document. Send one email. Look at the brief. The task itself does not shrink — but your relationship to it changes the moment you have started. Research confirms: starting anything, even imperfectly, activates momentum. The Zeigarnik effect means your brain will pull toward completion once it has begun.",
-          id: "Bukan 'tulis laporan.' Bukan 'rencanakan proyek.' Buka dokumennya. Kirim satu email. Lihat briefnya. Tugasnya sendiri tidak mengecil — tapi hubunganmu dengannya berubah di saat kamu sudah memulai. Penelitian mengonfirmasi: memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik berarti otakmu akan menarik ke arah penyelesaian begitu sudah dimulai.",
+          en: "Not 'write the report.' Not 'plan the project.' Open the document. Send one email. Look at the brief. The task itself does not shrink — but your relationship to it changes the moment you have started. Research confirms: starting anything, even imperfectly, activates momentum. The Zeigarnik effect² means your brain will pull toward completion once it has begun.",
+          id: "Bukan 'tulis laporan.' Bukan 'rencanakan proyek.' Buka dokumennya. Kirim satu email. Lihat briefnya. Tugasnya sendiri tidak mengecil — tapi hubunganmu dengannya berubah di saat kamu sudah memulai. Penelitian mengonfirmasi: memulai apapun, meskipun tidak sempurna, mengaktifkan momentum. Efek Zeigarnik² berarti otakmu akan menarik ke arah penyelesaian begitu sudah dimulai.",
         },
       },
       {
         title: { en: "If-then planning", id: "Perencanaan jika-maka" },
         body: {
-          en: "'I will work on [specific task] on [day] at [time] at [place].' Research across 642 independent tests found this format produced a medium-to-large effect on follow-through (d = 0.65). It bypasses the deliberation phase where procrastination initiates. Once the brain has a concrete trigger, it no longer has to decide whether to begin — it only has to recognise the cue.",
-          id: "'Saya akan mengerjakan [tugas spesifik] pada [hari] pukul [waktu] di [tempat].' Penelitian lintas 642 uji independen menemukan format ini menghasilkan efek signifikan pada tindak lanjut (d = 0,65). Ini melewati fase deliberasi tempat penundaan dimulai. Begitu otak memiliki pemicu yang konkret, ia tidak lagi harus memutuskan apakah akan mulai — hanya perlu mengenali isyaratnya.",
+          en: "'I will work on [specific task] on [day] at [time] at [place].' Research across 642 independent tests found this format produced a medium-to-large effect on follow-through (d = 0.65).³ It bypasses the deliberation phase where procrastination initiates. Once the brain has a concrete trigger, it no longer has to decide whether to begin — it only has to recognise the cue.",
+          id: "'Saya akan mengerjakan [tugas spesifik] pada [hari] pukul [waktu] di [tempat].' Penelitian lintas 642 uji independen menemukan format ini menghasilkan efek signifikan pada tindak lanjut (d = 0,65).³ Ini melewati fase deliberasi tempat penundaan dimulai. Begitu otak memiliki pemicu yang konkret, ia tidak lagi harus memutuskan apakah akan mulai — hanya perlu mengenali isyaratnya.",
         },
       },
       {
@@ -432,8 +432,8 @@ export default function OvercomingProcrastinationClient({
             <div>
               <p style={{ fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: "0 0 1.1rem" }}>
                 {t(
-                  "In 2013, researchers Fuschia Sirois and Timothy Pychyl published what has since become the defining framework for understanding procrastination. Their finding: procrastination is not a time management failure. It is an emotion regulation strategy.",
-                  "Pada tahun 2013, peneliti Fuschia Sirois dan Timothy Pychyl menerbitkan kerangka kerja yang sejak saat itu menjadi acuan utama untuk memahami penundaan. Temuan mereka: penundaan bukan kegagalan manajemen waktu. Itu adalah strategi regulasi emosi.",
+                  "In 2013, researchers Fuschia Sirois and Timothy Pychyl published what has since become the defining framework for understanding procrastination.¹ Their finding: procrastination is not a time management failure. It is an emotion regulation strategy.",
+                  "Pada tahun 2013, peneliti Fuschia Sirois dan Timothy Pychyl menerbitkan kerangka kerja yang sejak saat itu menjadi acuan utama untuk memahami penundaan.¹ Temuan mereka: penundaan bukan kegagalan manajemen waktu. Itu adalah strategi regulasi emosi.",
                   lang
                 )}
               </p>
@@ -683,8 +683,8 @@ export default function OvercomingProcrastinationClient({
               <div style={{ background: "white", padding: "1.25rem 1.5rem", margin: "1.25rem 0", borderLeft: `3px solid ${ORANGE}` }}>
                 <p style={{ fontSize: "0.875rem", lineHeight: 1.75, color: BODY_TEXT, margin: 0 }}>
                   {t(
-                    "Indonesia's power distance index is 78/100 — very high. Team members may be unlikely to raise concerns about unrealistic timelines, waiting instead for clear direction before beginning. What looks like individual delay may be deference to hierarchy.",
-                    "Indeks jarak kekuasaan Indonesia adalah 78/100 — sangat tinggi. Anggota tim mungkin tidak akan mengangkat kekhawatiran tentang jadwal yang tidak realistis, malah menunggu arahan yang jelas sebelum memulai. Apa yang terlihat seperti penundaan individual mungkin adalah kepatuhan pada hierarki.",
+                    "Indonesia's power distance index is 78/100⁵ — very high. Team members may be unlikely to raise concerns about unrealistic timelines, waiting instead for clear direction before beginning. What looks like individual delay may be deference to hierarchy.",
+                    "Indeks jarak kekuasaan Indonesia adalah 78/100⁵ — sangat tinggi. Anggota tim mungkin tidak akan mengangkat kekhawatiran tentang jadwal yang tidak realistis, malah menunggu arahan yang jelas sebelum memulai. Apa yang terlihat seperti penundaan individual mungkin adalah kepatuhan pada hierarki.",
                     lang
                   )}
                 </p>
@@ -714,8 +714,8 @@ export default function OvercomingProcrastinationClient({
               </p>
               <p style={{ fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>
                 {t(
-                  "The Christian tradition has named this condition for 1,600 years. Evagrius Ponticus, writing in the 4th century, called it acedia — the 'noonday demon' that attacks when the day is long and progress feels impossible. Thomas Aquinas refined the definition: acedia is 'oppressive sadness that depresses man's mind so that he can do nothing freely.' Aquinas distinguished acedia from depression or laziness — it is a failure of will toward the good, and its remedy is not more self-discipline, but contemplation of what is truly worth doing.",
-                  "Tradisi Kristen telah memberi nama kondisi ini selama 1.600 tahun. Evagrius Ponticus, yang menulis pada abad ke-4, menyebutnya acedia — 'setan tengah hari' yang menyerang ketika hari terasa panjang dan kemajuan terasa mustahil. Thomas Aquinas menyempurnakan definisinya: acedia adalah 'kesedihan yang menindas yang menekan pikiran manusia sehingga ia tidak dapat melakukan apapun dengan bebas.' Aquinas membedakan acedia dari depresi atau kemalasan — ini adalah kegagalan kehendak terhadap yang baik, dan obatnya bukan lebih banyak disiplin diri, melainkan perenungan tentang apa yang benar-benar layak dilakukan.",
+                  "The Christian tradition has named this condition for 1,600 years. Evagrius Ponticus,⁴ writing in the 4th century, called it acedia — the 'noonday demon' that attacks when the day is long and progress feels impossible. Thomas Aquinas refined the definition: acedia is 'oppressive sadness that depresses man's mind so that he can do nothing freely.' Aquinas distinguished acedia from depression or laziness — it is a failure of will toward the good, and its remedy is not more self-discipline, but contemplation of what is truly worth doing.",
+                  "Tradisi Kristen telah memberi nama kondisi ini selama 1.600 tahun. Evagrius Ponticus,⁴ yang menulis pada abad ke-4, menyebutnya acedia — 'setan tengah hari' yang menyerang ketika hari terasa panjang dan kemajuan terasa mustahil. Thomas Aquinas menyempurnakan definisinya: acedia adalah 'kesedihan yang menindas yang menekan pikiran manusia sehingga ia tidak dapat melakukan apapun dengan bebas.' Aquinas membedakan acedia dari depresi atau kemalasan — ini adalah kegagalan kehendak terhadap yang baik, dan obatnya bukan lebih banyak disiplin diri, melainkan perenungan tentang apa yang benar-benar layak dilakukan.",
                   lang
                 )}
               </p>
@@ -747,8 +747,8 @@ export default function OvercomingProcrastinationClient({
               </p>
               <p style={{ fontSize: "0.9375rem", lineHeight: 1.8, color: BODY_TEXT, margin: 0 }}>
                 {t(
-                  "The deepest solution to perfectionism-driven delay is not more willpower — it is grace. When identity is built on performance, producing something imperfect is an existential threat. Justification by faith means the outcome does not define you. You are free to begin imperfectly, to complete inadequately, and to offer it faithfully. Anna Smith, writing in Modern Reformation, argues that perfectionism is a form of self-justification — and that grace is not a soft encouragement but a structural reorientation: when your worth is no longer at stake in your output, you can finally begin.",
-                  "Solusi terdalam untuk penundaan yang didorong perfeksionisme bukan lebih banyak kemauan — melainkan kasih karunia. Ketika identitas dibangun di atas kinerja, menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Pembenaran melalui iman berarti hasilnya tidak mendefinisikan kamu. Kamu bebas untuk memulai secara tidak sempurna, menyelesaikan secara tidak memadai, dan mempersembahkannya dengan setia. Anna Smith, dalam Modern Reformation, berpendapat bahwa perfeksionisme adalah bentuk pembenaran diri — dan bahwa kasih karunia bukan dorongan yang lemah melainkan reorientasi struktural: ketika nilaimu tidak lagi dipertaruhkan dalam outputmu, kamu akhirnya bisa mulai.",
+                  "The deepest solution to perfectionism-driven delay is not more willpower — it is grace. When identity is built on performance, producing something imperfect is an existential threat. Justification by faith means the outcome does not define you. You are free to begin imperfectly, to complete inadequately, and to offer it faithfully. Anna Smith, writing in Modern Reformation,⁶ argues that perfectionism is a form of self-justification — and that grace is not a soft encouragement but a structural reorientation: when your worth is no longer at stake in your output, you can finally begin.",
+                  "Solusi terdalam untuk penundaan yang didorong perfeksionisme bukan lebih banyak kemauan — melainkan kasih karunia. Ketika identitas dibangun di atas kinerja, menghasilkan sesuatu yang tidak sempurna adalah ancaman eksistensial. Pembenaran melalui iman berarti hasilnya tidak mendefinisikan kamu. Kamu bebas untuk memulai secara tidak sempurna, menyelesaikan secara tidak memadai, dan mempersembahkannya dengan setia. Anna Smith, dalam Modern Reformation,⁶ berpendapat bahwa perfeksionisme adalah bentuk pembenaran diri — dan bahwa kasih karunia bukan dorongan yang lemah melainkan reorientasi struktural: ketika nilaimu tidak lagi dipertaruhkan dalam outputmu, kamu akhirnya bisa mulai.",
                   lang
                 )}
               </p>
@@ -766,8 +766,8 @@ export default function OvercomingProcrastinationClient({
           </h2>
           <p style={{ fontSize: "0.9rem", color: "oklch(72% 0.04 260)", lineHeight: 1.7, margin: "0.5rem 0 2.5rem", maxWidth: 560 }}>
             {t(
-              "Across 642 independent tests, specifying when, where, and exactly what you will do produced a medium-to-large effect on follow-through (d = 0.65). Complete the sentence below.",
-              "Dalam 642 uji independen, menentukan kapan, di mana, dan apa tepatnya yang akan kamu lakukan menghasilkan efek signifikan pada tindak lanjut (d = 0,65). Lengkapi kalimat di bawah ini.",
+              "Across 642 independent tests, specifying when, where, and exactly what you will do produced a medium-to-large effect on follow-through (d = 0.65).³ Complete the sentence below.",
+              "Dalam 642 uji independen, menentukan kapan, di mana, dan apa tepatnya yang akan kamu lakukan menghasilkan efek signifikan pada tindak lanjut (d = 0,65).³ Lengkapi kalimat di bawah ini.",
               lang
             )}
           </p>
@@ -934,8 +934,8 @@ export default function OvercomingProcrastinationClient({
                 id: "Penghindaran jangka pendek sungguh-sungguh memberikan kelegaan — itulah mengapa siklusnya terus berlanjut. Memberi nama emosi di balik penundaan adalah langkah pertama untuk memutusnya.",
               },
               {
-                en: "If-then planning produces the strongest evidence-based effect on follow-through (d = 0.65 across 642 tests). Specify the task, day, time, and place — before the moment arrives.",
-                id: "Perencanaan jika-maka menghasilkan efek berbasis bukti terkuat pada tindak lanjut (d = 0,65 dalam 642 uji). Tentukan tugasnya, harinya, waktunya, dan tempatnya — sebelum momennya tiba.",
+                en: "If-then planning produces the strongest evidence-based effect on follow-through (d = 0.65 across 642 tests).³ Specify the task, day, time, and place — before the moment arrives.",
+                id: "Perencanaan jika-maka menghasilkan efek berbasis bukti terkuat pada tindak lanjut (d = 0,65 dalam 642 uji).³ Tentukan tugasnya, harinya, waktunya, dan tempatnya — sebelum momennya tiba.",
               },
               {
                 en: "Grace is the structural solution to perfectionism. When your worth is not on the line, you are free to begin — imperfectly, inadequately, faithfully.",
@@ -985,6 +985,32 @@ export default function OvercomingProcrastinationClient({
           </blockquote>
         </div>
       </section>
+
+      {/* SOURCES */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
+          {t("Sources", "Sumber", lang)}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {[
+            "Fuschia Sirois & Timothy Pychyl — 'Procrastination and the Priority of Short-Term Mood Regulation: Consequences for Future Self' (Social and Personality Psychology Compass, 2013)",
+            "Bluma Zeigarnik — 'On Finished and Unfinished Tasks' (Psychologische Forschung, 1927) — foundational research establishing that incomplete tasks occupy cognitive attention until completed",
+            "Peter M. Gollwitzer & Paschal Sheeran — 'Implementation Intentions and Goal Achievement: A Meta-Analysis of Effects and Processes' (Advances in Experimental Social Psychology, 2006) — meta-analysis of 642 independent tests; effect size d = 0.65",
+            "Evagrius Ponticus — The Praktikos & Chapters on Prayer (c. 375 CE); Thomas Aquinas — Summa Theologiae II-II, Q.35 (c. 1274) — primary sources on acedia in the Christian tradition",
+            "Hofstede Insights — Country Comparison: Indonesia (hofstede-insights.com) — Power Distance Index 78/100",
+            "Anna Smith — 'Grace and the Perfectionist' (Modern Reformation) — perfectionism as self-justification; grace as structural reorientation",
+          ].map((src, i) => (
+            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+              </span>
+              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                {src}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
     </div>
   );

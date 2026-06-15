@@ -370,17 +370,17 @@ const L: Record<Lang, {
     subtitle: "Most leaders know they should serve. Fewer have asked what that actually costs, where it comes from, or how it changes when the culture around them doesn't reward it.",
 
     introTitle: "What Is Servant Leadership — Really?",
-    introBody: "Most leadership training tells you what to do. This module asks who you are. Servant leadership is not a technique to apply — it is a posture formed over time. Two distinct traditions shape this idea: Robert Greenleaf's social research (1970) and the Christological model of Philippians 2. Each produces humble leaders. But their source, mechanism, and cross-cultural expressions differ in ways that matter enormously for anyone leading across cultures or in communities where positional authority is the norm.",
+    introBody: "Most leadership training tells you what to do. This module asks who you are. Servant leadership is not a technique to apply — it is a posture formed over time. Two distinct traditions shape this idea: Robert Greenleaf's social research (1970)¹ and the Christological model of Philippians 2. Each produces humble leaders. But their source, mechanism, and cross-cultural expressions differ in ways that matter enormously for anyone leading across cultures or in communities where positional authority is the norm.",
 
     greenleafTitle: "The Greenleaf Framework",
-    greenleafBody: "In 1970, Robert Greenleaf — a retired AT&T executive — published an essay that changed how the world thinks about leadership. Inspired by Hermann Hesse's novel Journey to the East, he described a leader whose primary motivation is to serve. The movement begins not with strategy but with disposition: the servant-first leader asks, above all else, how to help others flourish. His defining question — the 'best test' of servant leadership — became the standard for the entire field: Do those served grow as persons, becoming healthier, wiser, freer, more autonomous, and more likely to become servants themselves? Researchers Liden et al. later validated seven measurable dimensions of servant leadership:",
+    greenleafBody: "In 1970, Robert Greenleaf — a retired AT&T executive — published an essay that changed how the world thinks about leadership.¹ Inspired by Hermann Hesse's novel Journey to the East,² he described a leader whose primary motivation is to serve. The movement begins not with strategy but with disposition: the servant-first leader asks, above all else, how to help others flourish. His defining question — the 'best test' of servant leadership — became the standard for the entire field: Do those served grow as persons, becoming healthier, wiser, freer, more autonomous, and more likely to become servants themselves? Researchers Liden et al. later validated seven measurable dimensions of servant leadership:³",
     spearsTitle: "Seven Dimensions of Servant Leadership",
 
     philTitle: "Philippians 2 — Kenosis and the Downward Movement",
-    philBody: "The Apostle Paul's description of Christ in Philippians 2:5-11 offers a different frame. Christ, who existed in the form of God, did not hold onto that status — but emptied himself (Greek: ekenōsen), taking the form of a servant. This is the theological root of servant leadership: not absence of power, but chosen self-limitation in service of others. New Testament scholar Daniel Wallace identifies four practical implications of kenosis for leaders today:",
+    philBody: "The Apostle Paul's description of Christ in Philippians 2:5-11 offers a different frame. Christ, who existed in the form of God, did not hold onto that status — but emptied himself (Greek: ekenōsen), taking the form of a servant. This is the theological root of servant leadership: not absence of power, but chosen self-limitation in service of others. New Testament scholar Daniel Wallace identifies four practical implications of kenosis for leaders today:⁴",
 
     crossTitle: "Servant Leadership Across Cultures",
-    crossBody: "Research spanning 59 societies reveals one consistent finding: moral integrity is universally endorsed as a leadership quality. But egalitarianism and empowering behaviours — often assumed to be the core of servant leadership — are among the weakest cross-cultural dimensions. In high power-distance contexts like Indonesia (power-distance score: 78/100) and much of Southeast Asia, leading from below creates confusion unless it is expressed through moral authority and relational investment rather than positional equalization. Pekerti and Sendjaya found that Indonesian leaders emphasise responsible morality and transforming influence rather than structural power-sharing. The servant leader retains authority — kenosis empties status, not the capacity to lead.",
+    crossBody: "Research spanning 59 societies reveals one consistent finding: moral integrity is universally endorsed as a leadership quality.⁵ But egalitarianism and empowering behaviours — often assumed to be the core of servant leadership — are among the weakest cross-cultural dimensions. In high power-distance contexts like Indonesia (power-distance score: 78/100)⁶ and much of Southeast Asia, leading from below creates confusion unless it is expressed through moral authority and relational investment rather than positional equalization. Pekerti and Sendjaya found that Indonesian leaders emphasise responsible morality and transforming influence rather than structural power-sharing.⁷ The servant leader retains authority — kenosis empties status, not the capacity to lead.",
 
     twoTitle: "Two Sources of Servant Power",
     twoBody: "Robert Greenleaf's model locates power in an upward movement: authority earned through service, confirmed by follower trust. Philippians 2 locates it differently — power flows downward from God, through voluntary self-emptying. Both produce humble leaders. But the source shapes everything, especially when serving gets costly or when the culture around you does not reward humility.",
@@ -428,17 +428,17 @@ const L: Record<Lang, {
     subtitle: "Sebagian besar pemimpin tahu bahwa mereka harus melayani. Lebih sedikit yang pernah bertanya apa sebenarnya biayanya, dari mana asalnya, atau bagaimana cara kerjanya ketika budaya di sekitar mereka tidak menghargainya.",
 
     introTitle: "Apa Itu Kepemimpinan Hamba — Sebenarnya?",
-    introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970) dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
+    introBody: "Sebagian besar pelatihan kepemimpinan memberi tahu kamu apa yang harus dilakukan. Modul ini menanyakan siapa kamu. Kepemimpinan hamba bukan teknik yang diterapkan — melainkan postur yang dibentuk dari waktu ke waktu. Dua tradisi berbeda membentuk gagasan ini: penelitian sosial Robert Greenleaf (1970)¹ dan model Kristologis dari Filipi 2. Keduanya menghasilkan pemimpin yang rendah hati. Namun sumber, mekanisme, dan ekspresi lintas budayanya berbeda dengan cara yang sangat penting bagi siapa pun yang memimpin lintas budaya atau dalam komunitas di mana otoritas posisional adalah norma.",
 
     greenleafTitle: "Kerangka Greenleaf",
-    greenleafBody: "Pada tahun 1970, Robert Greenleaf — seorang eksekutif AT&T yang pensiun — menerbitkan sebuah esai yang mengubah cara dunia berpikir tentang kepemimpinan. Terinspirasi dari novel Hermann Hesse, ia menggambarkan pemimpin yang motivasi utamanya adalah melayani. Pertanyaan penentunya — 'uji terbaik' kepemimpinan hamba — menjadi standar seluruh bidang ini: Apakah mereka yang dilayani tumbuh sebagai pribadi, menjadi lebih sehat, lebih bijaksana, lebih bebas, lebih mandiri, dan lebih mungkin menjadi pelayan sendiri? Para peneliti kemudian memvalidasi tujuh dimensi kepemimpinan hamba yang terukur:",
+    greenleafBody: "Pada tahun 1970, Robert Greenleaf — seorang eksekutif AT&T yang pensiun — menerbitkan sebuah esai yang mengubah cara dunia berpikir tentang kepemimpinan.¹ Terinspirasi dari novel Hermann Hesse,² ia menggambarkan pemimpin yang motivasi utamanya adalah melayani. Pertanyaan penentunya — 'uji terbaik' kepemimpinan hamba — menjadi standar seluruh bidang ini: Apakah mereka yang dilayani tumbuh sebagai pribadi, menjadi lebih sehat, lebih bijaksana, lebih bebas, lebih mandiri, dan lebih mungkin menjadi pelayan sendiri? Para peneliti kemudian memvalidasi tujuh dimensi kepemimpinan hamba yang terukur:³",
     spearsTitle: "Tujuh Dimensi Kepemimpinan Hamba",
 
     philTitle: "Filipi 2 — Kenosis dan Gerakan ke Bawah",
-    philBody: "Deskripsi Paulus tentang Kristus dalam Filipi 2:5-11 menawarkan kerangka yang berbeda. Kristus, yang ada dalam rupa Allah, tidak mempertahankan status itu — tetapi mengosongkan diri-Nya (bahasa Yunani: ekenōsen), mengambil rupa seorang hamba. Inilah akar teologis kepemimpinan hamba: bukan ketiadaan kuasa, melainkan pembatasan diri yang dipilih demi melayani orang lain. Pakar Perjanjian Baru Daniel Wallace mengidentifikasi empat implikasi praktis kenosis bagi para pemimpin masa kini:",
+    philBody: "Deskripsi Paulus tentang Kristus dalam Filipi 2:5-11 menawarkan kerangka yang berbeda. Kristus, yang ada dalam rupa Allah, tidak mempertahankan status itu — tetapi mengosongkan diri-Nya (bahasa Yunani: ekenōsen), mengambil rupa seorang hamba. Inilah akar teologis kepemimpinan hamba: bukan ketiadaan kuasa, melainkan pembatasan diri yang dipilih demi melayani orang lain. Pakar Perjanjian Baru Daniel Wallace mengidentifikasi empat implikasi praktis kenosis bagi para pemimpin masa kini:⁴",
 
     crossTitle: "Kepemimpinan Hamba Lintas Budaya",
-    crossBody: "Penelitian yang mencakup 59 masyarakat mengungkapkan satu temuan konsisten: integritas moral secara universal diakui sebagai kualitas kepemimpinan. Namun egalitarianisme dan perilaku memberdayakan — yang sering dianggap sebagai inti kepemimpinan hamba — adalah dimensi lintas budaya yang paling lemah. Dalam konteks jarak kuasa tinggi seperti Indonesia (skor jarak kuasa: 78/100) dan sebagian besar Asia Tenggara, memimpin dari bawah menciptakan kebingungan kecuali diungkapkan melalui otoritas moral dan investasi relasional, bukan penyetaraan posisional. Pemimpin hamba mempertahankan otoritas — kenosis mengosongkan status, bukan kapasitas untuk memimpin.",
+    crossBody: "Penelitian yang mencakup 59 masyarakat mengungkapkan satu temuan konsisten: integritas moral secara universal diakui sebagai kualitas kepemimpinan.⁵ Namun egalitarianisme dan perilaku memberdayakan — yang sering dianggap sebagai inti kepemimpinan hamba — adalah dimensi lintas budaya yang paling lemah. Dalam konteks jarak kuasa tinggi seperti Indonesia (skor jarak kuasa: 78/100)⁶ dan sebagian besar Asia Tenggara, memimpin dari bawah menciptakan kebingungan kecuali diungkapkan melalui otoritas moral dan investasi relasional, bukan penyetaraan posisional. Pekerti dan Sendjaya menemukan bahwa pemimpin Indonesia menekankan moralitas yang bertanggung jawab dan pengaruh transformatif daripada berbagi kuasa secara struktural.⁷ Pemimpin hamba mempertahankan otoritas — kenosis mengosongkan status, bukan kapasitas untuk memimpin.",
 
     twoTitle: "Dua Sumber Kuasa Hamba",
     twoBody: "Model Greenleaf menempatkan kuasa dalam gerakan ke atas: otoritas yang diperoleh melalui pelayanan, dikonfirmasi oleh kepercayaan pengikut. Filipi 2 menempatkannya berbeda — kuasa mengalir ke bawah dari Allah, melalui pengosongan diri secara sukarela. Keduanya menghasilkan pemimpin yang rendah hati. Tapi sumbernya membentuk segalanya, terutama ketika melayani menjadi mahal atau ketika budaya di sekitarmu tidak menghargai kerendahan hati.",
@@ -990,6 +990,33 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
 
         {/* ── AI Challenge Advisor ── */}
         <AIChallengeSection placements={placements} lang={lang} />
+
+        {/* ── Sources ── */}
+        <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
+          <p style={{ fontFamily: FONT_BODY, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
+            Sources
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            {[
+              "Robert K. Greenleaf — The Servant as Leader (essay, Robert K. Greenleaf Center, 1970; republished Paulist Press, 1991)",
+              "Hermann Hesse — Journey to the East (Die Morgenlandfahrt, 1932; English trans. Holt, Rinehart & Winston, 1956)",
+              "Robert C. Liden, Sandy J. Wayne, Hao Zhao & David Henderson — Servant Leadership: Development of a Multidimensional Measure and Multi-Level Assessment (The Leadership Quarterly, 19:2, 2008, pp. 161–177)",
+              "Daniel B. Wallace — Greek Grammar Beyond the Basics: An Exegetical Syntax of the New Testament (Zondervan, 1996) — kenosis analysis of Philippians 2:7",
+              "Dirk van Dierendonck — Servant Leadership: A Review and Synthesis (Journal of Management, 37:4, 2011, pp. 1228–1261) — meta-analysis of servant leadership across cultures",
+              "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions and Organizations Across Nations (2nd ed., Sage, 2001) — Indonesia PDI score 78",
+              "Andre Pekerti & Sandra Sendjaya — Exploring Servant Leadership Across Cultures: Comparative Study in Australia and Indonesia (The International Journal of Human Resource Management, 21:5, 2010, pp. 754–780)",
+            ].map((src, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
+                  {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
+                </span>
+                <p style={{ fontFamily: FONT_BODY, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
+                  {src}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* ── Save button ── */}
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "2.5rem" }}>
