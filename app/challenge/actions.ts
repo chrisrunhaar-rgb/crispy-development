@@ -59,21 +59,6 @@ export async function enrollExistingUser() {
     redirect(`/challenge/day/${existing.current_day}`);
   }
 
-  if (!existing) {
-    await supabase.auth.updateUser({
-      data: { challenge_enrolled: true },
-    });
-
-    await admin.from("challenge_enrollments").insert({
-      user_id: user.id,
-      path: "solo",
-      current_day: 1,
-      status: "active",
-    });
-
-    revalidatePath("/", "layout");
-  }
-
   redirect("/challenge/onboarding");
 }
 

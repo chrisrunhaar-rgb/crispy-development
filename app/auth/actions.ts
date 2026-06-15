@@ -59,7 +59,8 @@ export async function signUp(formData: FormData) {
   if (error) return { error: error.message };
 
   if (!data.session) {
-    redirect(`/signup/confirm${callbackExtra}`);
+    const nameParam = firstName ? `${callbackExtra ? "&" : "?"}name=${encodeURIComponent(firstName)}` : "";
+    redirect(`/signup/confirm${callbackExtra}${nameParam}`);
   }
 
   if (inviteToken && data.user) {
