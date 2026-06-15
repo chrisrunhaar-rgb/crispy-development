@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -8,38 +8,35 @@ import LangToggle from "@/components/LangToggle";
 
 // -- TYPES ----------------------------------------------------------------------
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 // -- HELPERS --------------------------------------------------------------------
 
-const t = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const t = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 
 // -- DATA -----------------------------------------------------------------------
 
 const HATS = [
   {
     num: "01",
-    colorName: "White", colorNameId: "Putih", colorNameNl: "Wit",
+    colorName: "White", colorNameId: "Putih",
     emoji: "⬜",
     bg: "oklch(94% 0.00 0)",
     color: "oklch(35% 0.03 260)",
     accent: "oklch(55% 0.04 260)",
     hatImage: "/resources/hats/hat-white.png",
-    focusEn: "Facts & Information", focusId: "Fakta & Informasi", focusNl: "Feiten & Informatie",
+    focusEn: "Facts & Information", focusId: "Fakta & Informasi",
     descEn: "The White Hat focuses on objective data, facts, and figures. It asks: what do we know, what don't we know, and what do we need to find out? It sets aside interpretation and emotion, creating a shared factual baseline before analysis begins.",
     descId: "Topi Putih berfokus pada data objektif, fakta, dan angka. Pertanyaannya: apa yang kita ketahui, apa yang tidak kita ketahui, dan apa yang perlu kita cari tahu? Menyingkirkan interpretasi dan emosi, menciptakan landasan faktual bersama sebelum analisis dimulai.",
-    descNl: "De Witte Hoed richt zich op objectieve gegevens, feiten en cijfers. Hij moedigt neutrale analyse aan van wat bekend is en identificeert informatiegaten.",
     crossCulturalEn: "What counts as 'evidence' varies across cultures. Some contexts weight personal testimony and oral precedent more heavily than statistics; others rely on community consensus over individual data points. The White Hat invites teams to surface these assumptions explicitly: whose data are we using, and who decided it counts?",
     crossCulturalId: "Apa yang dianggap 'bukti' berbeda-beda antar budaya. Beberapa konteks lebih mengutamakan kesaksian pribadi dan preseden lisan daripada statistik; yang lain mengandalkan konsensus komunitas daripada data individu. Topi Putih mengajak tim untuk mengungkap asumsi ini secara eksplisit: data siapa yang kita gunakan, dan siapa yang memutuskan bahwa itu berlaku?",
     faithNoteEn: "Proverbs 18:15 calls us to seek understanding before speaking. The White Hat creates space for that discipline — gathering before judging, listening before concluding. It resists the pressure to have an answer before the picture is clear.",
     faithNoteId: "Amsal 18:15 memanggil kita untuk mencari pemahaman sebelum berbicara. Topi Putih menciptakan ruang untuk disiplin itu — mengumpulkan sebelum menghakimi, mendengarkan sebelum menyimpulkan. Ini menolak tekanan untuk memiliki jawaban sebelum gambaran jelas.",
     benefitEn: "Creates a shared factual baseline before analysis begins, reducing disagreements rooted in different assumptions about reality.",
     benefitId: "Menciptakan landasan faktual bersama sebelum analisis dimulai, mengurangi perselisihan yang berakar dari asumsi berbeda tentang kenyataan.",
-    benefitNl: "Stimuleert datagestuurde beslissingen door feiten te benadrukken en aannames te vermijden.",
     riskEn: "Over-reliance on available data can crowd out intuition, local knowledge, and lived experience — all of which may be harder to quantify but equally valid.",
     riskId: "Ketergantungan berlebihan pada data yang tersedia dapat mengabaikan intuisi, pengetahuan lokal, dan pengalaman hidup — yang mungkin lebih sulit dikuantifikasi tetapi sama validnya.",
-    riskNl: "Overmatig vertrouwen op beschikbare informatie kan intuïtie of creativiteit negeren.",
     questionsEn: [
       "What information do we have, and what do we need to find out?",
       "Are the sources of this information reliable and accurate?",
@@ -52,33 +49,26 @@ const HATS = [
       "Asumsi apa yang saat ini kita anggap sebagai fakta yang sudah terbukti?",
       "Pengetahuan atau pengalaman siapa yang tidak ada dalam gambaran ini?",
     ],
-    questionsNl: [
-      "Welke informatie hebben we, en wat moeten we nog uitzoeken?",
-      "Zijn de bronnen van deze informatie betrouwbaar en nauwkeurig?",
-    ],
   },
   {
     num: "02",
-    colorName: "Red", colorNameId: "Merah", colorNameNl: "Rood",
+    colorName: "Red", colorNameId: "Merah",
     emoji: "🔴",
     bg: "oklch(94% 0.05 25)",
     color: "oklch(42% 0.18 25)",
     accent: "oklch(55% 0.20 25)",
     hatImage: "/resources/hats/hat-red.png",
-    focusEn: "Feelings & Intuition", focusId: "Perasaan & Intuisi", focusNl: "Gevoel & Intuïtie",
+    focusEn: "Feelings & Intuition", focusId: "Perasaan & Intuisi",
     descEn: "The Red Hat gives everyone permission to share emotional responses, gut feelings, and intuitions without needing to justify them. It acknowledges that feelings are information — not noise to be filtered out, but signal worth hearing before analysis crowds it out.",
     descId: "Topi Merah memberikan izin kepada semua orang untuk berbagi respons emosional, perasaan naluriah, dan intuisi tanpa perlu membenarkannya. Ini mengakui bahwa perasaan adalah informasi — bukan gangguan yang harus disaring, tetapi sinyal yang layak didengar sebelum analisis mendominasinya.",
-    descNl: "De Rode Hoed maakt expressie van emoties, buikgevoel en intuïtie mogelijk zonder rechtvaardiging — erkent de emotionele dimensie van besluitvorming.",
     crossCulturalEn: "In high-power-distance cultures, team members are significantly less likely to voice emotional concerns to a senior leader directly. The Red Hat changes this by structuring it into the process — 'I'm wearing the Red Hat' separates the feeling from the person. It's not insubordination; it's a required step. This gives lower-status voices access to the conversation without the risk of appearing disrespectful.",
     crossCulturalId: "Dalam budaya dengan jarak kekuasaan tinggi, anggota tim jauh lebih kecil kemungkinannya untuk menyuarakan kekhawatiran emosional langsung kepada pemimpin senior. Topi Merah mengubah ini dengan menyusunnya ke dalam proses — 'Saya memakai Topi Merah' memisahkan perasaan dari orangnya. Ini bukan ketidakpatuhan; ini langkah yang diperlukan. Ini memberikan akses bagi suara-suara yang lebih rendah statusnya tanpa risiko terlihat tidak hormat.",
     faithNoteEn: "For leaders rooted in faith, the Red Hat connects to Ignatian discernment⁵: consolation (a sense of rightness, peace, alignment with God's direction) and desolation (unease, resistance, a check in the spirit) are spiritual data, not just emotion. When a decision sits uneasily with your team, that unease may be worth naming before the logic takes over.",
     faithNoteId: "Bagi pemimpin yang berakar dalam iman, Topi Merah terhubung dengan discernment Ignasian⁵: konsolasi (rasa kebenaran, kedamaian, keselarasan dengan arah Tuhan) dan desolasi (kegelisahan, resistensi, pemeriksaan dalam roh) adalah data spiritual, bukan sekadar emosi. Ketika sebuah keputusan terasa tidak nyaman bagi tim Anda, perasaan tidak nyaman itu mungkin layak diungkapkan sebelum logika mengambil alih.",
     benefitEn: "Surfaces emotional data before it unconsciously distorts analysis — people's feelings influence decisions whether or not they are named.",
     benefitId: "Mengungkap data emosional sebelum secara tidak sadar mendistorsi analisis — perasaan orang mempengaruhi keputusan baik diungkapkan maupun tidak.",
-    benefitNl: "Brengt emotionele inzichten in de besluitvorming, voegt diepte toe aan logisch redeneren.",
     riskEn: "Without good facilitation, the Red Hat can become a space for venting rather than surfacing signal — the facilitator needs to draw out the feeling, not extend it.",
     riskId: "Tanpa fasilitasi yang baik, Topi Merah bisa menjadi ruang untuk melampiaskan daripada mengungkap sinyal — fasilitator perlu mengeluarkan perasaan, bukan memperpanjangnya.",
-    riskNl: "Beslissingen kunnen te sterk worden beïnvloed door emoties in plaats van bewijs of logica.",
     questionsEn: [
       "What is my gut feeling about this situation or idea?",
       "How do emotions — mine or others' — impact this decision?",
@@ -91,33 +81,26 @@ const HATS = [
       "Apa yang diungkapkan rasa tidak nyaman atau antusias Anda tentang apa yang paling penting?",
       "Apakah ada rasa damai, resistensi, atau kegelisahan tentang arah ini?",
     ],
-    questionsNl: [
-      "Wat is mijn gevoel over deze situatie of dit idee?",
-      "Hoe beïnvloeden emoties — van mij of anderen — deze beslissing?",
-    ],
   },
   {
     num: "03",
-    colorName: "Black", colorNameId: "Hitam", colorNameNl: "Zwart",
+    colorName: "Black", colorNameId: "Hitam",
     emoji: "⬛",
     bg: "oklch(94% 0.01 260)",
     color: "oklch(22% 0.04 260)",
     accent: "oklch(38% 0.05 260)",
     hatImage: "/resources/hats/hat-black.png",
-    focusEn: "Critical Judgment", focusId: "Penilaian Kritis", focusNl: "Kritisch Oordeel",
+    focusEn: "Critical Judgment", focusId: "Penilaian Kritis",
     descEn: "The Black Hat examines an idea for risks, weaknesses, and potential failure points. It is perhaps the most important hat in cross-cultural teams — because it creates a structured, role-based way to voice concern without personal confrontation. Caution is the job, not the personality.",
     descId: "Topi Hitam memeriksa ide untuk risiko, kelemahan, dan titik kegagalan potensial. Ini mungkin topi yang paling penting dalam tim lintas budaya — karena menciptakan cara terstruktur dan berbasis peran untuk menyuarakan kekhawatiran tanpa konfrontasi pribadi. Kehati-hatian adalah tugasnya, bukan kepribadiannya.",
-    descNl: "De Zwarte Hoed richt zich op het identificeren van potentiële risico's, uitdagingen en zwaktes in ideeën om praktijkbaarheid te waarborgen.",
     crossCulturalEn: "Indonesia scores 78 on Hofstede's² Power Distance Index — among the highest in the world. In such cultures, disagreeing with a senior leader publicly can feel face-threatening or professionally risky. The Black Hat reframes this entirely: 'I'm not challenging you — I'm wearing the Black Hat.' Research by Nemeth et al.³ found that formally assigning a structured dissent role — the devil's advocate — led groups to consider a significantly wider range of perspectives than unstructured discussion.",
     crossCulturalId: "Indonesia mendapat skor 78 pada Indeks Jarak Kekuasaan Hofstede² — termasuk yang tertinggi di dunia. Dalam budaya seperti itu, tidak setuju dengan pemimpin senior secara terbuka bisa terasa mengancam muka atau berisiko secara profesional. Topi Hitam membingkai ulang ini sepenuhnya: 'Saya tidak menantang Anda — saya memakai Topi Hitam.' Penelitian Nemeth dkk.³ menemukan bahwa secara formal menugaskan peran ketidaksetujuan terstruktur — devil's advocate — membuat kelompok mempertimbangkan jauh lebih banyak perspektif daripada diskusi tanpa struktur.",
     faithNoteEn: "Proverbs 15:22 is explicit: 'Plans fail for lack of counsel, but with many advisers they succeed.' The Black Hat is the institutional form of that counsel — it builds in the honest, risk-aware voice that wisdom literature consistently calls for. Using it is an act of faithfulness to the community the decision will affect.",
     faithNoteId: "Amsal 15:22 eksplisit: 'Rencana gagal karena kurangnya nasihat, tetapi dengan banyak penasihat mereka berhasil.' Topi Hitam adalah bentuk kelembagaan dari nasihat itu — membangun suara yang jujur dan sadar risiko yang secara konsisten diminta oleh literatur kebijaksanaan.",
     benefitEn: "Depersonalises dissent — concern becomes part of the process, not a challenge to authority or a sign of disloyalty.",
     benefitId: "Mendepersonalisasi ketidaksetujuan — kekhawatiran menjadi bagian dari proses, bukan tantangan terhadap otoritas atau tanda ketidaksetiaan.",
-    benefitNl: "Stimuleert grondige evaluatie door potentiële valkuilen te benadrukken en voorzichtige planning te bevorderen.",
     riskEn: "If used too early or too heavily, the Black Hat can extinguish momentum and discourage creative risk-taking — sequence it thoughtfully, not reflexively.",
     riskId: "Jika digunakan terlalu awal atau terlalu berat, Topi Hitam dapat memadamkan momentum dan menghambat pengambilan risiko kreatif — gunakan dengan urutan yang bijaksana, bukan refleks.",
-    riskNl: "Overmatige focus op negatieven kan creativiteit en optimisme onderdrukken.",
     questionsEn: [
       "What are the potential risks or downsides of this idea?",
       "What obstacles or challenges could prevent success?",
@@ -130,33 +113,26 @@ const HATS = [
       "Apa yang telah salah dalam situasi serupa sebelumnya?",
       "Siapa yang mungkin terdampak negatif, dan dengan cara apa?",
     ],
-    questionsNl: [
-      "Wat zijn de potentiële risico's of nadelen van dit idee?",
-      "Welke obstakels of uitdagingen kunnen succes verhinderen?",
-    ],
   },
   {
     num: "04",
-    colorName: "Yellow", colorNameId: "Kuning", colorNameNl: "Geel",
+    colorName: "Yellow", colorNameId: "Kuning",
     emoji: "🟡",
     bg: "oklch(96% 0.06 90)",
     color: "oklch(45% 0.14 85)",
     accent: "oklch(60% 0.16 85)",
     hatImage: "/resources/hats/hat-yellow.png",
-    focusEn: "Optimistic Thinking", focusId: "Pemikiran Optimistis", focusNl: "Optimistisch Denken",
+    focusEn: "Optimistic Thinking", focusId: "Pemikiran Optimistis",
     descEn: "The Yellow Hat focuses on benefits, opportunities, and the logical case for why something could work. It builds the constructive argument for an idea — not wishful thinking, but grounded optimism backed by reasoning.",
     descId: "Topi Kuning berfokus pada manfaat, peluang, dan argumen logis mengapa sesuatu bisa berhasil. Ini membangun argumen konstruktif untuk sebuah ide — bukan angan-angan, tetapi optimisme yang beralasan dan didukung oleh logika.",
-    descNl: "De Gele Hoed benadrukt positiviteit, identificeert voordelen, kansen en logische redenen voor succes.",
     crossCulturalEn: "In collectivist or shame-oriented cultures, speaking positively about your own idea can feel like self-promotion — culturally inappropriate. The Yellow Hat provides cover: articulating benefits is the hat's job, not yours. This unlocks voices that would otherwise stay silent out of cultural modesty, and ensures good ideas receive a fair hearing regardless of who proposed them.",
     crossCulturalId: "Dalam budaya kolektivis atau berorientasi malu, berbicara positif tentang ide sendiri bisa terasa seperti promosi diri — tidak sesuai secara budaya. Topi Kuning memberikan perlindungan: mengartikulasikan manfaat adalah tugas topi, bukan Anda. Ini membuka suara yang sebelumnya diam karena kesopanan budaya, dan memastikan ide-ide baik mendapat perhatian yang adil terlepas dari siapa yang mengusulkannya.",
     faithNoteEn: "The Yellow Hat reflects a biblical posture of hope — looking toward what might be possible, not only what could go wrong. It is the visionary complement to the Black Hat's realism. Together, they produce what cross-cultural leaders need: discerning optimism, grounded in faith, tested by honest scrutiny.",
     faithNoteId: "Topi Kuning mencerminkan sikap alkitabiah tentang harapan — melihat ke arah apa yang mungkin terjadi, bukan hanya apa yang bisa salah. Ini adalah pelengkap visioner dari realisme Topi Hitam. Bersama-sama, mereka menghasilkan apa yang dibutuhkan pemimpin lintas budaya: optimisme yang cerdas, berakar pada iman, diuji oleh pemeriksaan yang jujur.",
     benefitEn: "Ensures good ideas receive a full hearing before critical assessment — sequencing Yellow before Black produces stronger, more resilient thinking.",
     benefitId: "Memastikan ide-ide baik mendapatkan perhatian penuh sebelum penilaian kritis — menempatkan Kuning sebelum Hitam menghasilkan pemikiran yang lebih kuat dan tangguh.",
-    benefitNl: "Belicht kansen en potentiële voordelen, bevordert een positieve en oplossingsgerichte denkwijze.",
     riskEn: "Yellow Hat optimism requires logical grounding — 'this will work because...' rather than 'I feel good about this.' Without that discipline, it becomes cheerleading rather than analysis.",
     riskId: "Optimisme Topi Kuning membutuhkan landasan logis — 'ini akan berhasil karena...' bukan 'saya merasa baik tentang ini.' Tanpa disiplin itu, ini menjadi sorak-sorak daripada analisis.",
-    riskNl: "Kan risico's of nadelen over het hoofd zien door een te optimistische kijk.",
     questionsEn: [
       "What are the specific benefits and opportunities this idea could bring?",
       "Why might this plan succeed, and what would need to be true for it to work?",
@@ -169,33 +145,26 @@ const HATS = [
       "Apa hasil terbaik yang realistis yang bisa kita harapkan?",
       "Nilai apa yang ini ciptakan bagi orang-orang yang kita layani?",
     ],
-    questionsNl: [
-      "Welke voordelen en kansen kan dit idee bieden?",
-      "Waarom kan dit plan slagen, en hoe kunnen we het potentieel maximaliseren?",
-    ],
   },
   {
     num: "05",
-    colorName: "Green", colorNameId: "Hijau", colorNameNl: "Groen",
+    colorName: "Green", colorNameId: "Hijau",
     emoji: "🟢",
     bg: "oklch(94% 0.05 145)",
     color: "oklch(38% 0.14 145)",
     accent: "oklch(52% 0.16 145)",
     hatImage: "/resources/hats/hat-green.png",
-    focusEn: "Creativity & Alternatives", focusId: "Kreativitas & Alternatif", focusNl: "Creativiteit & Alternatieven",
+    focusEn: "Creativity & Alternatives", focusId: "Kreativitas & Alternatif",
     descEn: "The Green Hat is the space for generative thinking — new ideas, alternative approaches, modifications, and creative leaps. It suspends judgment to allow possibilities to emerge before evaluation begins.",
     descId: "Topi Hijau adalah ruang untuk pemikiran generatif — ide-ide baru, pendekatan alternatif, modifikasi, dan lompatan kreatif. Ini menangguhkan penilaian untuk memungkinkan kemungkinan-kemungkinan muncul sebelum evaluasi dimulai.",
-    descNl: "De Groene Hoed stimuleert creatief denken, het verkennen van alternatieven, nieuwe ideeën en innovatieve oplossingen voor uitdagingen.",
     crossCulturalEn: "Research by Zenasni et al.⁴ found that structured conditions for divergent thinking produced the most unique ideas — not just quantity, but genuine originality. Cross-cultural teams have a particular advantage here: diverse reference points and life experiences produce ideas that homogeneous groups cannot. The Green Hat is where cultural difference becomes a direct creative asset.",
     crossCulturalId: "Penelitian oleh Zenasni dkk.⁴ menemukan bahwa kondisi terstruktur untuk pemikiran divergen menghasilkan ide-ide paling unik — bukan hanya kuantitas, tetapi orisinalitas sejati. Tim lintas budaya memiliki keunggulan khusus di sini: titik referensi dan pengalaman hidup yang beragam menghasilkan ide-ide yang tidak bisa dihasilkan oleh kelompok homogen. Topi Hijau adalah di mana perbedaan budaya menjadi aset kreatif langsung.",
     faithNoteEn: "Creativity is not merely a human skill — it reflects the imago Dei. We are made in the image of a Creator. The Green Hat invites teams to bring that awareness into their work: approaching problems as stewards of a creative capacity that mirrors the One who makes all things new. 'What might God's imagination look like in this situation?' is a legitimate Green Hat question.",
     faithNoteId: "Kreativitas bukan sekadar keterampilan manusia — ini mencerminkan imago Dei. Kita diciptakan dalam gambar Sang Pencipta. Topi Hijau mengajak tim untuk membawa kesadaran itu ke dalam pekerjaan mereka: mendekati masalah sebagai penatalayan kapasitas kreatif yang mencerminkan Dia yang memperbarui segala sesuatu. 'Seperti apa imajinasi Tuhan dalam situasi ini?' adalah pertanyaan Topi Hijau yang sah.",
     benefitEn: "Separates idea generation from idea evaluation — the fastest way to kill creativity is to criticize too early. Green Hat creates the protected space where possibilities can breathe.",
     benefitId: "Memisahkan generasi ide dari evaluasi ide — cara tercepat untuk membunuh kreativitas adalah mengkritik terlalu awal. Topi Hijau menciptakan ruang yang dilindungi di mana kemungkinan-kemungkinan dapat berkembang.",
-    benefitNl: "Bevordert innovatieve ideeën en stimuleert out-of-the-box denken.",
     riskEn: "Green Hat thinking requires psychological safety — if team members fear judgment, they will self-censor. The facilitator must actively protect the generative space.",
     riskId: "Pemikiran Topi Hijau membutuhkan keamanan psikologis — jika anggota tim takut penilaian, mereka akan menyensor diri sendiri. Fasilitator harus aktif melindungi ruang generatif.",
-    riskNl: "Overmatige focus op creativiteit kan leiden tot onpraktische of onhaalbare oplossingen.",
     questionsEn: [
       "What new ideas or approaches could we explore here?",
       "How might we solve this problem in a completely different way?",
@@ -208,33 +177,26 @@ const HATS = [
       "Apa yang akan kita coba jika kita tahu kita tidak bisa gagal?",
       "Apa yang akan disarankan oleh seseorang dari budaya, bidang, atau tradisi yang berbeda?",
     ],
-    questionsNl: [
-      "Welke nieuwe ideeën of benaderingen kunnen we verkennen?",
-      "Hoe kunnen we anders denken om dit probleem op te lossen?",
-    ],
   },
   {
     num: "06",
-    colorName: "Blue", colorNameId: "Biru", colorNameNl: "Blauw",
+    colorName: "Blue", colorNameId: "Biru",
     emoji: "🔵",
     bg: "oklch(93% 0.04 250)",
     color: "oklch(40% 0.16 250)",
     accent: "oklch(55% 0.18 250)",
     hatImage: "/resources/hats/hat-blue.png",
-    focusEn: "Process Control", focusId: "Kontrol Proses", focusNl: "Procescontrole",
+    focusEn: "Process Control", focusId: "Kontrol Proses",
     descEn: "The Blue Hat manages the thinking process itself — setting the agenda, sequencing the hats, monitoring progress, and ensuring the discussion stays productive. It is the conductor's baton, not an instrument. The Blue Hat begins and ends every Six Hats session.",
     descId: "Topi Biru mengelola proses berpikir itu sendiri — menetapkan agenda, mengurutkan topi, memantau kemajuan, dan memastikan diskusi tetap produktif. Ini adalah tongkat konduktor, bukan instrumen. Topi Biru membuka dan menutup setiap sesi Enam Topi.",
-    descNl: "De Blauwe Hoed richt zich op leiderschap en organisatie — het beheren van het denkproces en ervoor zorgen dat alle perspectieven effectief worden behandeld.",
     crossCulturalEn: "In cultures where open disagreement is face-threatening, the Blue Hat facilitator holds unusual power: they can redirect, slow down, or re-sequence the conversation without anyone losing face. The course correction comes from the process, not from a person challenging another person. Used skillfully, the Blue Hat makes cross-cultural facilitation far more effective than unstructured discussion.",
     crossCulturalId: "Dalam budaya di mana ketidaksetujuan terbuka mengancam muka, fasilitator Topi Biru memegang kekuatan yang luar biasa: mereka dapat mengarahkan ulang, memperlambat, atau mengurutkan ulang percakapan tanpa siapapun kehilangan muka. Koreksi alur berasal dari proses, bukan dari seseorang yang menantang orang lain. Jika digunakan dengan terampil, Topi Biru membuat fasilitasi lintas budaya jauh lebih efektif daripada diskusi tanpa struktur.",
     faithNoteEn: "Acts 15 records the Jerusalem Council — perhaps the most consequential cross-cultural leadership meeting in history. Blue Hat principles are visible throughout: diverse voices were heard, the process was deliberate, and the conclusion was framed as Spirit-guided discernment. For faith communities, opening a Blue Hat session in prayer and closing it in gratitude transforms facilitation into an act of trust.",
     faithNoteId: "Kisah Para Rasul 15 mencatat Konsili Yerusalem — mungkin pertemuan kepemimpinan lintas budaya paling berpengaruh dalam sejarah. Prinsip-prinsip Topi Biru terlihat di seluruhnya: suara yang beragam didengar, prosesnya disengaja, dan kesimpulannya dibingkai sebagai discernment yang dipandu Roh. Bagi komunitas iman, membuka sesi Topi Biru dalam doa dan menutupnya dalam ucapan syukur mengubah fasilitasi menjadi tindakan kepercayaan.",
     benefitEn: "Keeps complex, multi-voice discussions from fragmenting — the Blue Hat holds the whole, so no individual voice has to carry it.",
     benefitId: "Menjaga diskusi yang kompleks dan multi-suara agar tidak terfragmentasi — Topi Biru memegang keseluruhan, sehingga tidak ada suara individu yang harus menanggungnya.",
-    benefitNl: "Zorgt voor georganiseerd en evenwichtig denken door de stroom van de discussie te beheren.",
     riskEn: "The Blue Hat facilitator must resist using process control to steer toward a predetermined conclusion — the hat is about enabling good thinking, not managing toward a preferred outcome.",
     riskId: "Fasilitator Topi Biru harus menghindari penggunaan kontrol proses untuk mengarah pada kesimpulan yang telah ditentukan — topi ini tentang memungkinkan pemikiran yang baik, bukan mengelola menuju hasil yang disukai.",
-    riskNl: "Slechte facilitering kan leiden tot vooringenomenheid of verwaarlozing van specifieke hoeden.",
     questionsEn: [
       "What is our goal today, and which hats does this conversation need?",
       "Are we covering all the perspectives this decision requires?",
@@ -247,49 +209,39 @@ const HATS = [
       "Di mana kita dalam proses ini, dan pemikiran apa yang belum kita lakukan?",
       "Apa yang akan dikatakan pengamat bijak yang tidak memihak tentang jalannya diskusi ini?",
     ],
-    questionsNl: [
-      "Wat is ons doel, en hoe moeten we de discussie structureren?",
-      "Hebben we alle perspectieven overwogen, en wat is de volgende stap?",
-    ],
   },
 ];
 
 const USE_CASES = [
   {
-    titleEn: "Team Meetings", titleId: "Rapat Tim", titleNl: "Teamvergaderingen",
+    titleEn: "Team Meetings", titleId: "Rapat Tim",
     descEn: "Assign specific hats to team members for structured, comprehensive discussion. Each person focuses on one perspective — facts, risks, or opportunities. Reduces bias and enhances collaboration.",
     descId: "Tetapkan topi tertentu kepada anggota tim untuk diskusi yang terstruktur dan komprehensif. Setiap orang berfokus pada satu perspektif — fakta, risiko, atau peluang. Mengurangi bias dan meningkatkan kolaborasi.",
-    descNl: "Wijs specifieke hoeden toe aan teamleden voor gestructureerde, uitgebreide discussie. Iedereen richt zich op één perspectief — feiten, risico's of kansen. Vermindert vooringenomenheid en verbetert samenwerking.",
   },
   {
-    titleEn: "Decision-Making", titleId: "Pengambilan Keputusan", titleNl: "Besluitvorming",
+    titleEn: "Decision-Making", titleId: "Pengambilan Keputusan",
     descEn: "Sequentially apply the hats (White for facts, Black for risks, Yellow for opportunities) to create a logical flow. All perspectives are considered, resulting in informed and balanced decisions.",
     descId: "Terapkan topi secara berurutan (Putih untuk fakta, Hitam untuk risiko, Kuning untuk peluang) untuk menciptakan alur yang logis. Semua perspektif dipertimbangkan, menghasilkan keputusan yang terinformasi dan seimbang.",
-    descNl: "Pas de hoeden opeenvolgend toe (Wit voor feiten, Zwart voor risico's, Geel voor kansen) om een logische stroom te creëren. Alle perspectieven worden meegenomen, wat resulteert in geïnformeerde en evenwichtige beslissingen.",
   },
   {
-    titleEn: "Problem-Solving", titleId: "Pemecahan Masalah", titleNl: "Probleemoplossing",
+    titleEn: "Problem-Solving", titleId: "Pemecahan Masalah",
     descEn: "Start with Green for creative solutions, switch to Black for challenges, then Blue to prioritize and create an action plan.",
     descId: "Mulai dengan Hijau untuk solusi kreatif, beralih ke Hitam untuk tantangan, lalu Biru untuk memprioritaskan dan membuat rencana tindakan.",
-    descNl: "Begin met Groen voor creatieve oplossingen, schakel over naar Zwart voor uitdagingen, dan Blauw om te prioriteren en een actieplan op te stellen.",
   },
   {
-    titleEn: "Conflict Resolution", titleId: "Resolusi Konflik", titleNl: "Conflictoplossing",
+    titleEn: "Conflict Resolution", titleId: "Resolusi Konflik",
     descEn: "Begin with Red to allow everyone to express emotions, then White for factual points, Yellow to identify common goals and opportunities for resolution.",
     descId: "Mulai dengan Merah untuk memungkinkan semua orang mengekspresikan emosi, lalu Putih untuk poin faktual, Kuning untuk mengidentifikasi tujuan bersama dan peluang resolusi.",
-    descNl: "Begin met Rood zodat iedereen emoties kan uiten, dan Wit voor feitelijke punten, Geel om gemeenschappelijke doelen en kansen voor oplossing te identificeren.",
   },
   {
-    titleEn: "Strategic Planning", titleId: "Perencanaan Strategis", titleNl: "Strategische Planning",
+    titleEn: "Strategic Planning", titleId: "Perencanaan Strategis",
     descEn: "White to analyze current data, Black to identify risks, Green for innovative strategies, Blue to organize all ideas into a coherent long-term plan.",
     descId: "Putih untuk menganalisis data saat ini, Hitam untuk mengidentifikasi risiko, Hijau untuk strategi inovatif, Biru untuk mengorganisir semua ide menjadi rencana jangka panjang yang koheren.",
-    descNl: "Wit om huidige data te analyseren, Zwart om risico's te identificeren, Groen voor innovatieve strategieën, Blauw om alle ideeën te organiseren tot een coherent langetermijnplan.",
   },
   {
-    titleEn: "Self-Reflection", titleId: "Refleksi Diri", titleNl: "Zelfreflectie",
+    titleEn: "Self-Reflection", titleId: "Refleksi Diri",
     descEn: "Use all six hats individually to explore your thoughts, emotions, and ideas from multiple angles. Uncover blind spots and ensure a well-rounded understanding of personal challenges.",
     descId: "Gunakan keenam topi secara individual untuk mengeksplorasi pikiran, emosi, dan ide Anda dari berbagai sudut pandang. Temukan titik buta dan pastikan pemahaman yang menyeluruh tentang tantangan pribadi.",
-    descNl: "Gebruik alle zes hoeden individueel om uw gedachten, emoties en ideeën vanuit meerdere hoeken te verkennen. Ontdek blinde vlekken en zorg voor een afgerond begrip van persoonlijke uitdagingen.",
   },
 ];
 
@@ -299,12 +251,12 @@ type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function SixThinkingHatsClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [activeHat, setActiveHat] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const tr = (en: string, id: string, nl: string) => t(en, id, nl, lang);
+  const tr = (en: string, id: string) => t(en, id, lang);
 
   function handleSave() {
     if (saved) return;
@@ -390,10 +342,10 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                   <img src={hat.hatImage} alt="" style={{ width: 44, height: 44, objectFit: "contain", flexShrink: 0, mixBlendMode: "multiply" }} />
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 700, color: isActive ? hat.color : "oklch(25% 0.08 260)", marginBottom: 3 }}>
-                      {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)}
+                      {tr(hat.colorName, hat.colorNameId)}
                     </div>
                     <div style={{ fontSize: 11, color: isActive ? hat.accent : "oklch(52% 0.05 260)", fontWeight: 500, letterSpacing: "0.02em", lineHeight: 1.4 }}>
-                      {tr(hat.focusEn, hat.focusId, hat.focusNl)}
+                      {tr(hat.focusEn, hat.focusId)}
                     </div>
                   </div>
                 </button>
@@ -412,10 +364,10 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                     <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, color: hat.color, lineHeight: 1 }}>{hat.num}</span>
                     <div>
                       <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: hat.color, margin: 0 }}>
-                        {tr(hat.colorName, hat.colorNameId, hat.colorNameNl)} Hat
+                        {tr(hat.colorName, hat.colorNameId)} Hat
                       </h3>
                       <p style={{ margin: 0, fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: hat.accent }}>
-                        {tr(hat.focusEn, hat.focusId, hat.focusNl)}
+                        {tr(hat.focusEn, hat.focusId)}
                       </p>
                     </div>
                   </div>
@@ -428,7 +380,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
 
                 {/* Description */}
                 <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(28% 0.06 260)", marginBottom: 24 }}>
-                  {tr(hat.descEn, hat.descId, hat.descNl)}
+                  {tr(hat.descEn, hat.descId)}
                 </p>
 
                 {/* Cross-cultural note */}
@@ -448,7 +400,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                       {tr("Benefit", "Manfaat", "Voordeel")}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
-                      {tr(hat.benefitEn, hat.benefitId, hat.benefitNl)}
+                      {tr(hat.benefitEn, hat.benefitId)}
                     </p>
                   </div>
                   <div style={{ background: "white", borderRadius: 8, padding: "18px 20px" }}>
@@ -456,7 +408,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                       {tr("Risk", "Risiko", "Risico")}
                     </p>
                     <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
-                      {tr(hat.riskEn, hat.riskId, hat.riskNl)}
+                      {tr(hat.riskEn, hat.riskId)}
                     </p>
                   </div>
                 </div>
@@ -476,7 +428,7 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: hat.accent, margin: "0 0 12px" }}>
                     {tr("Key Questions", "Pertanyaan Utama", "Sleutelvragen")}
                   </p>
-                  {(lang === "en" ? hat.questionsEn : lang === "id" ? hat.questionsId : hat.questionsNl).map(q => (
+                  {(lang === "id" ? hat.questionsId : hat.questionsEn).map(q => (
                     <p key={q} style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: "0 0 10px", fontStyle: "italic" }}>"{q}"</p>
                   ))}
                 </div>
@@ -508,10 +460,10 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
-                    {tr(u.titleEn, u.titleId, u.titleNl)}
+                    {tr(u.titleEn, u.titleId)}
                   </h3>
                   <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
-                    {tr(u.descEn, u.descId, u.descNl)}
+                    {tr(u.descEn, u.descId)}
                   </p>
                 </div>
               </div>
@@ -557,25 +509,21 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
               {
                 en: { n: "01", title: "Name the hat out loud", body: "\"I'm putting on my Black Hat.\" That phrase does real work — it separates the concern from the person raising it, which makes honest thinking safe." },
                 id: { n: "01", title: "Sebutkan topi dengan lantang", body: "\"Saya memakai Topi Hitam.\" Kalimat itu bekerja nyata — ia memisahkan kekhawatiran dari orang yang menyampaikannya, sehingga berpikir jujur menjadi aman." },
-                nl: { n: "01", title: "Noem de hoed hardop", body: "\"Ik zet mijn Zwarte Hoed op.\" Die zin doet echt werk — het scheidt de zorg van de persoon die het uitbrengt, wat eerlijk denken veilig maakt." },
               },
               {
                 en: { n: "02", title: "Switch hats when you need to", body: "You're not locked in. If new information surfaces mid-discussion, name it and move. Flexibility is part of the design." },
                 id: { n: "02", title: "Ganti topi saat dibutuhkan", body: "Anda tidak terkunci. Jika informasi baru muncul di tengah diskusi, sebutkan dan lanjutkan. Fleksibilitas adalah bagian dari desainnya." },
-                nl: { n: "02", title: "Wissel van hoed wanneer nodig", body: "Je zit niet vast. Als er nieuwe informatie opduikt, benoem het en ga verder. Flexibiliteit is onderdeel van het ontwerp." },
               },
               {
                 en: { n: "03", title: "Use all six — not just your favourites", body: "Teams default to one or two hats and skip the rest. The framework only works when you move through modes that feel uncomfortable too. The Green Hat is exactly as important as the Black." },
                 id: { n: "03", title: "Gunakan semua enam — bukan hanya favorit", body: "Tim cenderung hanya menggunakan satu atau dua topi. Kerangka ini hanya bekerja ketika Anda melewati mode yang terasa tidak nyaman juga. Topi Hijau sama pentingnya dengan Topi Hitam." },
-                nl: { n: "03", title: "Gebruik alle zes — niet alleen je favorieten", body: "Teams gaan standaard naar één of twee hoeden en slaan de rest over. Het kader werkt alleen als je ook door ongemakkelijke modi beweegt. De Groene Hoed is even belangrijk als de Zwarte." },
               },
               {
                 en: { n: "04", title: "Notice your team's default hat", body: "Most people gravitate to one hat naturally — the cautious thinker goes to Black, the visionary to Green or Yellow. Once your team names this, meetings become more self-aware. The facilitator knows whose voice to draw out." },
                 id: { n: "04", title: "Perhatikan topi default tim Anda", body: "Kebanyakan orang secara alami condong ke satu topi — pemikir hati-hati ke Hitam, visioner ke Hijau atau Kuning. Begitu tim Anda menamai ini, rapat menjadi lebih sadar diri. Fasilitator tahu suara siapa yang perlu dimunculkan." },
-                nl: { n: "04", title: "Merk de standaardhoed van je team op", body: "De meeste mensen graviteren van nature naar één hoed. Zodra je team dit benoemt, worden vergaderingen zelfbewuster. De facilitator weet wiens stem naar voren gehaald moet worden." },
               },
             ].map((tip) => {
-              const d = lang === "id" ? tip.id : lang === "nl" ? tip.nl : tip.en;
+              const d = lang === "id" ? tip.id : tip.en;
               return (
                 <div key={tip.en.n} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "oklch(28% 0.09 260)", borderRadius: 10, padding: "18px 20px" }}>
                   <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 22, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{d.n}</span>

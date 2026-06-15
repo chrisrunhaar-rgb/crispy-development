@@ -61,7 +61,7 @@ export const RemotionRoot = () => {
       <Composition
         id="ModuleRevealReel"
         component={ModuleRevealReel}
-        durationInFrames={800}
+        durationInFrames={890}
         fps={30}
         width={1080}
         height={1920}

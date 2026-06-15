@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -6,80 +6,68 @@ import Link from "next/link";
 import { saveResourceToDashboard, saveRLGLScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
-const tr = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const tr = (en: string, id: string, lang: Lang) => lang === "id" ? id : en;
 
 const GREEN_PRINCIPLES = [
   {
-    titleEn: "Exploration", titleId: "Eksplorasi", titleNl: "Verkenning",
+    titleEn: "Exploration", titleId: "Eksplorasi",
     descEn: "Open the floor to any and all possibilities — no idea is too wild at this stage.",
     descId: "Buka ruang untuk semua kemungkinan — tidak ada ide yang terlalu liar pada tahap ini.",
-    descNl: "Open de vloer voor alle mogelijkheden — geen idee is te gek in dit stadium.",
   },
   {
-    titleEn: "Open-Mindedness", titleId: "Keterbukaan Pikiran", titleNl: "Openheid",
+    titleEn: "Open-Mindedness", titleId: "Keterbukaan Pikiran",
     descEn: "Consider even the 'unlikely' or 'radical' ideas. Breakthrough thinking often starts at the edges.",
     descId: "Pertimbangkan bahkan ide yang 'tidak mungkin' atau 'radikal'. Pemikiran terobosan sering dimulai dari pinggiran.",
-    descNl: "Overweeg zelfs de 'onwaarschijnlijke' of 'radicale' idee—n. Doorbraakdenken begint vaak aan de randen.",
   },
   {
-    titleEn: "Divergent Thinking", titleId: "Pemikiran Divergen", titleNl: "Divergent Denken",
+    titleEn: "Divergent Thinking", titleId: "Pemikiran Divergen",
     descEn: "Aim for quantity over quality — you'll sort later. Volume of ideas fuels creativity.¹",
     descId: "Utamakan kuantitas daripada kualitas — Anda akan memilah nanti. Volume ide mendorong kreativitas.",
-    descNl: "Streef naar kwantiteit boven kwaliteit — je sorteert later. Volume aan idee—n voedt creativiteit.",
   },
   {
-    titleEn: "Encouragement", titleId: "Dorongan", titleNl: "Aanmoediging",
+    titleEn: "Encouragement", titleId: "Dorongan",
     descEn: "Build on others' suggestions with 'Yes, and—' thinking.² Momentum grows through addition.",
     descId: "Bangun di atas saran orang lain dengan pemikiran 'Ya, dan—'. Momentum tumbuh melalui penambahan.",
-    descNl: "Bouw voort op suggesties van anderen met 'Ja, en—' denken. Momentum groeit door toevoeging.",
   },
   {
-    titleEn: "No Judgment", titleId: "Tanpa Penilaian", titleNl: "Geen Oordeel",
+    titleEn: "No Judgment", titleId: "Tanpa Penilaian",
     descEn: "No criticism, evaluation, or filtering at this stage. Premature judgment kills creativity.¹",
     descId: "Tidak ada kritik, evaluasi, atau penyaringan pada tahap ini. Penilaian dini membunuh kreativitas.",
-    descNl: "Geen kritiek, evaluatie of filteren in dit stadium. Voortijdig oordelen doodt creativiteit.",
   },
   {
-    titleEn: "Delay Analysis", titleId: "Tunda Analisis", titleNl: "Uitgestelde Analyse",
+    titleEn: "Delay Analysis", titleId: "Tunda Analisis",
     descEn: "Don't try to decide yet — just imagine what's possible. The decision comes later.",
     descId: "Jangan mencoba memutuskan dulu — bayangkan saja apa yang mungkin. Keputusan akan datang kemudian.",
-    descNl: "Probeer nog niet te beslissen — stel je gewoon voor wat mogelijk is. De beslissing komt later.",
   },
 ];
 
 const RED_PRINCIPLES = [
   {
-    titleEn: "Evaluation", titleId: "Evaluasi", titleNl: "Evaluatie",
+    titleEn: "Evaluation", titleId: "Evaluasi",
     descEn: "Critically assess all the ideas generated in the Green phase — not to kill them, but to stress-test them.",
     descId: "Nilai secara kritis semua ide yang dihasilkan dalam fase Hijau — bukan untuk mematikannya, tetapi untuk mengujinya.",
-    descNl: "Beoordeel kritisch alle idee—n uit de Groene fase — niet om ze te doden, maar om ze te testen.",
   },
   {
-    titleEn: "Critical Thinking", titleId: "Pemikiran Kritis", titleNl: "Kritisch Denken",
+    titleEn: "Critical Thinking", titleId: "Pemikiran Kritis",
     descEn: "Weigh risks, benefits, and practicalities. Good ideas survive scrutiny; great ones become better through it.",
     descId: "Timbang risiko, manfaat, dan kepraktisan. Ide yang baik bertahan dari pengawasan; ide yang hebat menjadi lebih baik karenanya.",
-    descNl: "Weeg risico's, voordelen en praktische aspecten. Goede idee—n overleven scrutiny; grote idee—n worden er beter door.",
   },
   {
-    titleEn: "Convergent Thinking", titleId: "Pemikiran Konvergen", titleNl: "Convergent Denken",
+    titleEn: "Convergent Thinking", titleId: "Pemikiran Konvergen",
     descEn: "Narrow ideas to the most viable options. Focus enables execution — too many options stall progress.³",
     descId: "Sempurnakan ide menjadi pilihan yang paling layak. Fokus memungkinkan pelaksanaan — terlalu banyak pilihan menghentikan kemajuan.",
-    descNl: "Versmal idee—n tot de meest haalbare opties. Focus maakt uitvoering mogelijk — te veel opties blokkeren voortgang.",
   },
   {
-    titleEn: "Decision-Making", titleId: "Pengambilan Keputusan", titleNl: "Besluitvorming",
+    titleEn: "Decision-Making", titleId: "Pengambilan Keputusan",
     descEn: "Choose based on values, evidence, and strategy — not just what feels comfortable or familiar.",
     descId: "Pilih berdasarkan nilai, bukti, dan strategi — bukan hanya apa yang terasa nyaman atau familiar.",
-    descNl: "Kies op basis van waarden, bewijs en strategie — niet alleen wat comfortabel of vertrouwd voelt.",
   },
   {
-    titleEn: "Feedback", titleId: "Umpan Balik", titleNl: "Feedback",
+    titleEn: "Feedback", titleId: "Umpan Balik",
     descEn: "Offer constructive critique to improve or combine ideas. Refinement is an act of respect for the original thinking.⁵",
     descId: "Berikan kritik konstruktif untuk memperbaiki atau menggabungkan ide. Penyempurnaan adalah bentuk penghormatan terhadap pemikiran asli.",
-    descNl: "Bied constructieve kritiek om idee—n te verbeteren of combineren. Verfijning is een blijk van respect voor het oorspronkelijke denken.",
   },
 ];
 
@@ -137,55 +125,51 @@ const RED_PHRASES_NL = [
 const STEPS = [
   {
     num: "01",
-    titleEn: "Explain the Two Phases", titleId: "Jelaskan Dua Fase", titleNl: "Leg de Twee Fasen Uit",
+    titleEn: "Explain the Two Phases", titleId: "Jelaskan Dua Fase",
     descEn: "Clarify the difference between Green and Red thinking before starting. Make sure everyone understands which mode is active.",
     descId: "Jelaskan perbedaan antara pemikiran Hijau dan Merah sebelum memulai. Pastikan semua orang memahami mode mana yang aktif.",
-    descNl: "Verduidelijk het verschil tussen Groen en Rood denken voordat je begint. Zorg dat iedereen begrijpt welke modus actief is.",
   },
   {
     num: "02",
-    titleEn: "Begin with GREEN Phase", titleId: "Mulai dengan Fase HIJAU", titleNl: "Begin met de GROENE Fase",
+    titleEn: "Begin with GREEN Phase", titleId: "Mulai dengan Fase HIJAU",
     descEn: "Set a timer (e.g., 10—15 mins). Capture all ideas — no limits. Appoint a scribe so nothing is lost.",
     descId: "Atur timer (misalnya, 10-15 menit). Catat semua ide — tanpa batas. Tunjuk pencatat agar tidak ada yang terlewat.",
-    descNl: "Stel een timer in (bijv. 10—15 min). Noteer alle idee—n — geen beperkingen. Wijs een notulist aan zodat niets verloren gaat.",
   },
   {
     num: "03",
-    titleEn: "Shift to RED Phase", titleId: "Beralih ke Fase MERAH", titleNl: "Schakel over naar de RODE Fase",
+    titleEn: "Shift to RED Phase", titleId: "Beralih ke Fase MERAH",
     descEn: "Announce the switch clearly. Begin reviewing, discussing, and deciding. Don't let the phases blur.",
     descId: "Umumkan perpindahan dengan jelas. Mulai tinjau, diskusikan, dan putuskan. Jangan biarkan fase-fase menjadi kabur.",
-    descNl: "Kondig de overschakeling duidelijk aan. Begin met beoordelen, bespreken en beslissen. Laat de fasen niet vervagen.",
   },
   {
     num: "04",
-    titleEn: "Finalize & Assign Action", titleId: "Finalisasi & Tetapkan Tindakan", titleNl: "Finaliseer & Wijs Actie Toe",
+    titleEn: "Finalize & Assign Action", titleId: "Finalisasi & Tetapkan Tindakan",
     descEn: "Choose next steps, assign responsibilities, and revisit if more clarity is needed. End with clear ownership.",
     descId: "Pilih langkah selanjutnya, tetapkan tanggung jawab, dan tinjau kembali jika diperlukan lebih banyak kejelasan. Akhiri dengan kepemilikan yang jelas.",
-    descNl: "Kies volgende stappen, wijs verantwoordelijkheden toe en herzie indien meer duidelijkheid nodig is. Eindig met duidelijk eigenaarschap.",
   },
 ];
 
 const QUIZ_STATEMENTS = [
-  { en: "Let's collect as many ideas as possible before we judge any of them.", id: "Mari kumpulkan sebanyak mungkin ide sebelum kita menilai salah satunya.", nl: "Laten we zo veel mogelijk idee—n verzamelen voordat we er een beoordelen.", answer: "green" as const },
-  { en: "Which of these options best aligns with our goals and available resources?", id: "Pilihan mana yang paling sesuai dengan tujuan dan sumber daya kita?", nl: "Welke van deze opties sluit het beste aan bij onze doelen en beschikbare middelen?", answer: "red" as const },
-  { en: "What if we tried the complete opposite of what we normally do?", id: "Bagaimana jika kita mencoba kebalikan dari apa yang biasanya kita lakukan?", nl: "Wat als we het tegenovergestelde probeerden van wat we normaal doen?", answer: "green" as const },
-  { en: "We need to assess the risks before committing to this direction.", id: "Kita perlu menilai risiko sebelum berkomitmen pada arah ini.", nl: "We moeten de risico's beoordelen voordat we ons committeren aan deze richting.", answer: "red" as const },
-  { en: "Yes, and — what if we built on that idea and took it even further?", id: "Ya, dan — bagaimana jika kita membangun di atas ide itu dan membawanya lebih jauh lagi?", nl: "Ja, en — wat als we voortbouwden op dat idee en het nog verder brachten?", answer: "green" as const },
-  { en: "Let's narrow this down to the two strongest options and make a decision today.", id: "Mari persempit ini menjadi dua opsi terkuat dan buat keputusan hari ini.", nl: "Laten we dit terugbrengen tot de twee sterkste opties en vandaag een beslissing nemen.", answer: "red" as const },
-  { en: "There are no bad ideas at this stage — everything is welcome.", id: "Tidak ada ide yang buruk pada tahap ini — semuanya disambut.", nl: "Er zijn geen slechte idee—n in dit stadium — alles is welkom.", answer: "green" as const },
-  { en: "What evidence do we have that this approach will actually work?", id: "Bukti apa yang kita miliki bahwa pendekatan ini benar-benar akan berhasil?", nl: "Welk bewijs hebben we dat deze aanpak echt zal werken?", answer: "red" as const },
-  { en: "Let's give everyone 5 minutes to write down every idea — no matter how wild.", id: "Mari berikan semua orang 5 menit untuk menuliskan setiap ide — tidak peduli seberapa liarnya.", nl: "Laten we iedereen 5 minuten geven om elk idee op te schrijven — hoe wild ook.", answer: "green" as const },
-  { en: "Before we move on, who will own this decision and be accountable for the outcome?", id: "Sebelum kita melanjutkan, siapa yang akan memiliki keputusan ini dan bertanggung jawab atas hasilnya?", nl: "Voordat we verdergaan, wie neemt eigenaarschap over deze beslissing en is verantwoordelijk voor de uitkomst?", answer: "red" as const },
-  { en: "What would the most creative solution look like if there were no constraints at all?", id: "Seperti apa solusi paling kreatif jika tidak ada hambatan sama sekali?", nl: "Hoe zou de meest creatieve oplossing eruitzien als er helemaal geen beperkingen waren?", answer: "green" as const },
-  { en: "Let's be realistic — not all of these ideas fit our current budget or timeline.", id: "Mari realistis — tidak semua ide ini sesuai dengan anggaran atau jadwal kita saat ini.", nl: "Laten we realistisch zijn — niet al deze idee—n passen in ons huidige budget of tijdlijn.", answer: "red" as const },
-  { en: "Let's suspend judgment for now and keep adding to the list.", id: "Mari tunda penilaian untuk sementara dan terus tambahkan ke daftar.", nl: "Laten we het oordeel voorlopig uitstellen en doorgaan met toevoegen aan de lijst.", answer: "green" as const },
-  { en: "Let's evaluate each idea against our defined criteria before moving forward.", id: "Mari evaluasi setiap ide berdasarkan kriteria yang telah ditetapkan sebelum melanjutkan.", nl: "Laten we elk idee beoordelen aan de hand van onze vastgestelde criteria voordat we verdergaan.", answer: "red" as const },
-  { en: "I want to hear from everyone — every perspective adds value at this point.", id: "Saya ingin mendengar dari semua orang — setiap perspektif menambah nilai pada titik ini.", nl: "Ik wil van iedereen horen — elk perspectief voegt op dit punt waarde toe.", answer: "green" as const },
-  { en: "Based on the data, option A performs better — let's go with that.", id: "Berdasarkan data, opsi A lebih baik — mari kita pilih itu.", nl: "Op basis van de gegevens presteert optie A beter — laten we daarvoor kiezen.", answer: "red" as const },
-  { en: "Even unlikely solutions might lead us somewhere unexpected and valuable.", id: "Bahkan solusi yang tampak tidak mungkin bisa membawa kita ke suatu tempat yang tidak terduga dan berharga.", nl: "Zelfs onwaarschijnlijke oplossingen kunnen ons naar iets onverwachts en waardevols leiden.", answer: "green" as const },
-  { en: "Let's weigh the pros and cons and commit to one clear direction.", id: "Mari pertimbangkan pro dan kontra dan berkomitmen pada satu arah yang jelas.", nl: "Laten we de voor- en nadelen afwegen en ons committeren aan ——n duidelijke richting.", answer: "red" as const },
-  { en: "What's a completely different approach we've never considered before?", id: "Apa pendekatan yang sama sekali berbeda yang belum pernah kita pertimbangkan sebelumnya?", nl: "Wat is een compleet andere aanpak die we nog nooit hebben overwogen?", answer: "green" as const },
-  { en: "We need to document this decision and the reasoning behind it for the team.", id: "Kita perlu mendokumentasikan keputusan ini dan alasan di baliknya untuk tim.", nl: "We moeten deze beslissing en de redenering erachter documenteren voor het team.", answer: "red" as const },
+  { en: "Let's collect as many ideas as possible before we judge any of them.", id: "Mari kumpulkan sebanyak mungkin ide sebelum kita menilai salah satunya.", answer: "green" as const },
+  { en: "Which of these options best aligns with our goals and available resources?", id: "Pilihan mana yang paling sesuai dengan tujuan dan sumber daya kita?", answer: "red" as const },
+  { en: "What if we tried the complete opposite of what we normally do?", id: "Bagaimana jika kita mencoba kebalikan dari apa yang biasanya kita lakukan?", answer: "green" as const },
+  { en: "We need to assess the risks before committing to this direction.", id: "Kita perlu menilai risiko sebelum berkomitmen pada arah ini.", answer: "red" as const },
+  { en: "Yes, and — what if we built on that idea and took it even further?", id: "Ya, dan — bagaimana jika kita membangun di atas ide itu dan membawanya lebih jauh lagi?", answer: "green" as const },
+  { en: "Let's narrow this down to the two strongest options and make a decision today.", id: "Mari persempit ini menjadi dua opsi terkuat dan buat keputusan hari ini.", answer: "red" as const },
+  { en: "There are no bad ideas at this stage — everything is welcome.", id: "Tidak ada ide yang buruk pada tahap ini — semuanya disambut.", answer: "green" as const },
+  { en: "What evidence do we have that this approach will actually work?", id: "Bukti apa yang kita miliki bahwa pendekatan ini benar-benar akan berhasil?", answer: "red" as const },
+  { en: "Let's give everyone 5 minutes to write down every idea — no matter how wild.", id: "Mari berikan semua orang 5 menit untuk menuliskan setiap ide — tidak peduli seberapa liarnya.", answer: "green" as const },
+  { en: "Before we move on, who will own this decision and be accountable for the outcome?", id: "Sebelum kita melanjutkan, siapa yang akan memiliki keputusan ini dan bertanggung jawab atas hasilnya?", answer: "red" as const },
+  { en: "What would the most creative solution look like if there were no constraints at all?", id: "Seperti apa solusi paling kreatif jika tidak ada hambatan sama sekali?", answer: "green" as const },
+  { en: "Let's be realistic — not all of these ideas fit our current budget or timeline.", id: "Mari realistis — tidak semua ide ini sesuai dengan anggaran atau jadwal kita saat ini.", answer: "red" as const },
+  { en: "Let's suspend judgment for now and keep adding to the list.", id: "Mari tunda penilaian untuk sementara dan terus tambahkan ke daftar.", answer: "green" as const },
+  { en: "Let's evaluate each idea against our defined criteria before moving forward.", id: "Mari evaluasi setiap ide berdasarkan kriteria yang telah ditetapkan sebelum melanjutkan.", answer: "red" as const },
+  { en: "I want to hear from everyone — every perspective adds value at this point.", id: "Saya ingin mendengar dari semua orang — setiap perspektif menambah nilai pada titik ini.", answer: "green" as const },
+  { en: "Based on the data, option A performs better — let's go with that.", id: "Berdasarkan data, opsi A lebih baik — mari kita pilih itu.", answer: "red" as const },
+  { en: "Even unlikely solutions might lead us somewhere unexpected and valuable.", id: "Bahkan solusi yang tampak tidak mungkin bisa membawa kita ke suatu tempat yang tidak terduga dan berharga.", answer: "green" as const },
+  { en: "Let's weigh the pros and cons and commit to one clear direction.", id: "Mari pertimbangkan pro dan kontra dan berkomitmen pada satu arah yang jelas.", answer: "red" as const },
+  { en: "What's a completely different approach we've never considered before?", id: "Apa pendekatan yang sama sekali berbeda yang belum pernah kita pertimbangkan sebelumnya?", answer: "green" as const },
+  { en: "We need to document this decision and the reasoning behind it for the team.", id: "Kita perlu mendokumentasikan keputusan ini dan alasan di baliknya untuk tim.", answer: "red" as const },
 ];
 
 export default function RedLightGreenLightClient({
@@ -198,7 +182,7 @@ export default function RedLightGreenLightClient({
   savedScore?: number | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [activePhase, setActivePhase] = useState<"green" | "red">("green");
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
@@ -210,7 +194,7 @@ export default function RedLightGreenLightClient({
   const [scoreSaved, setScoreSaved] = useState(savedScore != null);
   const [isSavingScore, startSaveScore] = useTransition();
 
-  const t = (en: string, id: string, nl: string) => tr(en, id, nl, lang);
+  const t = (en: string, id: string) => tr(en, id, lang);
 
   function handleSave() {
     startTransition(async () => {
@@ -332,10 +316,10 @@ export default function RedLightGreenLightClient({
                 {principles.map(p => (
                   <div key={p.titleEn} style={{ marginBottom: 16 }}>
                     <h4 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 4px" }}>
-                      {t(p.titleEn, p.titleId, p.titleNl)}
+                      {t(p.titleEn, p.titleId)}
                     </h4>
                     <p style={{ fontSize: 13, lineHeight: 1.6, color: "oklch(40% 0.06 260)", margin: 0 }}>
-                      {t(p.descEn, p.descId, p.descNl)}
+                      {t(p.descEn, p.descId)}
                     </p>
                   </div>
                 ))}
@@ -422,7 +406,7 @@ export default function RedLightGreenLightClient({
                         <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0, marginTop: 2, minWidth: 28 }}>{String(i + 1).padStart(2, "0")}</span>
                         <div style={{ flex: 1 }}>
                           <p style={{ fontSize: 15, lineHeight: 1.6, color: "oklch(22% 0.10 260)", margin: "0 0 14px", fontWeight: 500 }}>
-                            {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
+                            {lang === "id" ? q.id : q.en}
                           </p>
                           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                             <button
@@ -561,10 +545,10 @@ export default function RedLightGreenLightClient({
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 36, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>{step.num}</span>
                 <div>
                   <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
-                    {t(step.titleEn, step.titleId, step.titleNl)}
+                    {t(step.titleEn, step.titleId)}
                   </h3>
                   <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
-                    {t(step.descEn, step.descId, step.descNl)}
+                    {t(step.descEn, step.descId)}
                   </p>
                 </div>
               </div>

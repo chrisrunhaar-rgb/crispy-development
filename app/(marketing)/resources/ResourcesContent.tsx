@@ -293,13 +293,11 @@ export default function ResourcesContent({
 
   function localTitle(resource: Resource) {
     if (lang === "id" && resource.titleId) return resource.titleId;
-    if (lang === "nl" && resource.titleNl) return resource.titleNl;
     return resource.title;
   }
 
   function localDescription(resource: Resource) {
     if (lang === "id" && resource.descriptionId) return resource.descriptionId;
-    if (lang === "nl" && resource.descriptionNl) return resource.descriptionNl;
     return resource.description;
   }
 

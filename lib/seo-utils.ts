@@ -45,7 +45,7 @@ export function generateResourceArticleSchema(slug: string) {
       name: "Chris Runhaar",
     },
     educationalUse: "Leadership Development",
-    inLanguage: ["en", "id", "nl"],
+    inLanguage: ["en", "id"],
   };
 }
 

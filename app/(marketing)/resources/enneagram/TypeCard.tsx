@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-type Lang = "en" | "id" | "nl";
-type T3 = { en: string; id: string; nl: string };
+type Lang = "en" | "id";
+type T3 = { en: string; id: string };
 
 interface EnneagramType {
   number: number;
@@ -14,8 +14,8 @@ interface EnneagramType {
   overview: T3;
   motivation: T3;
   fear: T3;
-  strengths: { en: string[]; id: string[]; nl: string[] };
-  blindspots: { en: string[]; id: string[]; nl: string[] };
+  strengths: { en: string[]; id: string[] };
+  blindspots: { en: string[]; id: string[] };
   communication: T3;
   crossCultural: T3;
 }
@@ -185,17 +185,17 @@ export default function TypeCard({
 
           <div style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.5 }}>
             <p style={{ marginBottom: "0.5rem", fontWeight: 600, color: type.color, fontSize: "0.65rem" }}>
-              {lang === "en" ? "Motivation" : lang === "id" ? "Motivasi" : "Motivatie"}
+              {lang === "en" ? "Motivation" : "Motivasi"}
             </p>
             <p style={{ marginBottom: "0.75rem", fontSize: "0.68rem" }}>{tFn(type.motivation, lang)}</p>
 
             <p style={{ marginBottom: "0.5rem", fontWeight: 600, color: type.color, fontSize: "0.65rem" }}>
-              {lang === "en" ? "Challenge" : lang === "id" ? "Tantangan" : "Uitdaging"}
+              {lang === "en" ? "Challenge" : "Tantangan"}
             </p>
             <p style={{ marginBottom: "0.75rem", fontSize: "0.68rem" }}>{tFn(type.fear, lang)}</p>
 
             <p style={{ marginBottom: "0.5rem", fontWeight: 600, color: type.color, fontSize: "0.65rem" }}>
-              {lang === "en" ? "Growth" : lang === "id" ? "Pertumbuhan" : "Groei"}
+              {lang === "en" ? "Growth" : "Pertumbuhan"}
             </p>
             <p style={{ fontSize: "0.65rem" }}>{tFn(type.communication, lang)}</p>
           </div>

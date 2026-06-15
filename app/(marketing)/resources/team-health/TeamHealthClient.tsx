@@ -1,105 +1,93 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "id";
+const tFn = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 type VerseKey = "1cor-12-12" | "eph-4-3";
 
-const VERSES: Record<VerseKey, { en_ref: string; id_ref: string; nl_ref: string; en: string; id: string; nl: string }> = {
+const VERSES: Record<VerseKey, { en_ref: string; id_ref: string; en: string; id: string }> = {
   "1cor-12-12": {
-    en_ref: "1 Corinthians 12:12", id_ref: "1 Korintus 12:12", nl_ref: "1 Korinti—rs 12:12",
+    en_ref: "1 Corinthians 12:12", id_ref: "1 Korintus 12:12",
     en: "Just as a body, though one, has many parts, but all its many parts form one body, so it is with Christ.",
     id: "Karena sama seperti tubuh itu satu dan anggota-anggotanya banyak, dan segala anggota itu, sekalipun banyak, merupakan satu tubuh, demikian pula Kristus.",
-    nl: "Een lichaam is een eenheid die uit vele delen bestaat; ondanks de veelheid aan delen vormen ze samen ——n lichaam. Zo is het ook met het lichaam van Christus.",
   },
   "eph-4-3": {
-    en_ref: "Ephesians 4:3", id_ref: "Efesus 4:3", nl_ref: "Efezi—rs 4:3",
+    en_ref: "Ephesians 4:3", id_ref: "Efesus 4:3",
     en: "Make every effort to keep the unity of the Spirit through the bond of peace.",
     id: "dan berusahalah memelihara kesatuan Roh oleh ikatan damai sejahtera.",
-    nl: "Span u in om door de samenbindende vrede de eenheid te bewaren die de Geest u geeft.",
   },
 };
 
 const DIMENSIONS = [
   {
-    en_name: "Psychological Safety", id_name: "Keamanan Psikologis", nl_name: "Psychologische Veiligheid",
-    en_short: "Safety", id_short: "Aman", nl_short: "Veiligheid",
-    en_low: "Fear of speaking up", id_low: "Takut untuk berbicara", nl_low: "Angst om te spreken",
-    en_high: "Full honesty, no fear", id_high: "Kejujuran penuh, tanpa rasa takut", nl_high: "Volledige eerlijkheid, geen angst",
+    en_name: "Psychological Safety", id_name: "Keamanan Psikologis",
+    en_short: "Safety", id_short: "Aman",
+    en_low: "Fear of speaking up", id_low: "Takut untuk berbicara",
+    en_high: "Full honesty, no fear", id_high: "Kejujuran penuh, tanpa rasa takut",
     en_desc: "Team members can speak up, disagree, and admit mistakes without fear of punishment or humiliation. This is the single most important factor in team effectiveness.",
     id_desc: "Anggota tim dapat berbicara, tidak setuju, dan mengakui kesalahan tanpa takut dihukum atau dipermalukan. Ini adalah faktor terpenting dalam efektivitas tim.",
-    nl_desc: "Teamleden kunnen spreken, het oneens zijn en fouten toegeven zonder angst voor bestraffing of vernedering. Dit is de meest bepalende factor voor teameffectiviteit.",
     en_fix: "Start with one-on-one conversations. Ask: 'What's one thing you'd say if you knew there'd be no consequences?' Then make sure there aren't any.",
     id_fix: "Mulailah dengan percakapan satu lawan satu. Tanyakan: 'Apa satu hal yang akan kamu katakan jika kamu tahu tidak ada konsekuensinya?' Kemudian pastikan tidak ada.",
-    nl_fix: "Begin met ——n-op-——n gesprekken. Vraag: 'Wat is ——n ding dat je zou zeggen als je wist dat er geen gevolgen waren?' Zorg er dan voor dat die er ook niet zijn.",
   },
   {
-    en_name: "Clarity of Purpose & Roles", id_name: "Kejelasan Tujuan & Peran", nl_name: "Duidelijkheid van Doel & Rollen",
-    en_short: "Clarity", id_short: "Kejelasan", nl_short: "Duidelijkheid",
-    en_low: "Confusion about direction", id_low: "Kebingungan tentang arah", nl_low: "Verwarring over richting",
-    en_high: "Crystal clear to everyone", id_high: "Sangat jelas bagi semua orang", nl_high: "Volstrekt duidelijk voor iedereen",
+    en_name: "Clarity of Purpose & Roles", id_name: "Kejelasan Tujuan & Peran",
+    en_short: "Clarity", id_short: "Kejelasan",
+    en_low: "Confusion about direction", id_low: "Kebingungan tentang arah",
+    en_high: "Crystal clear to everyone", id_high: "Sangat jelas bagi semua orang",
     en_desc: "Everyone knows what the team is trying to achieve and what their specific contribution is. Ambiguity about purpose or role is a leading cause of quiet disengagement.",
     id_desc: "Semua orang tahu apa yang ingin dicapai tim dan apa kontribusi spesifik mereka. Ambiguitas tentang tujuan atau peran adalah penyebab utama ketidakterlibatan diam-diam.",
-    nl_desc: "Iedereen weet wat het team probeert te bereiken en wat hun specifieke bijdrage is. Ambigu—teit over doel of rol is een voorname oorzaak van stille desengagement.",
     en_fix: "Write your team's purpose in one sentence. Then ask each member to write theirs independently. Compare. The gaps show you exactly what to clarify.",
     id_fix: "Tuliskan tujuan tim Anda dalam satu kalimat. Kemudian minta setiap anggota menuliskan milik mereka secara independen. Bandingkan. Celahnya menunjukkan apa yang perlu diklarifikasi.",
-    nl_fix: "Schrijf het doel van je team in ——n zin. Vraag dan elk lid het hunne onafhankelijk te schrijven. Vergelijk. De kloven tonen je precies wat je moet verduidelijken.",
   },
   {
-    en_name: "Healthy Conflict", id_name: "Konflik Sehat", nl_name: "Gezond Conflict",
-    en_short: "Conflict", id_short: "Konflik", nl_short: "Conflict",
-    en_low: "Silence or always destructive", id_low: "Keheningan atau selalu destruktif", nl_low: "Stilte of altijd destructief",
-    en_high: "Open, ideas-only debate", id_high: "Debat terbuka, hanya tentang ide", nl_high: "Open debat, alleen over idee—n",
+    en_name: "Healthy Conflict", id_name: "Konflik Sehat",
+    en_short: "Conflict", id_short: "Konflik",
+    en_low: "Silence or always destructive", id_low: "Keheningan atau selalu destruktif",
+    en_high: "Open, ideas-only debate", id_high: "Debat terbuka, hanya tentang ide",
     en_desc: "The team can disagree on ideas without it becoming personal or political. Healthy teams fight for the best outcome. Absence of conflict is not health — it is suppression.",
     id_desc: "Tim dapat tidak setuju pada ide tanpa menjadi pribadi atau politis. Tim yang sehat berjuang untuk hasil terbaik. Ketiadaan konflik bukan kesehatan — itu penekanan.",
-    nl_desc: "Het team kan het oneens zijn over idee—n zonder dat het persoonlijk of politiek wordt. Gezonde teams strijden voor het beste resultaat. Afwezigheid van conflict is geen gezondheid — het is onderdrukking.",
     en_fix: "Introduce structured disagreement: 'Before we move on, who sees a risk we haven't named?' Making conflict a named part of process lowers the personal cost of raising it.",
     id_fix: "Perkenalkan ketidaksetujuan terstruktur: 'Sebelum kita melanjutkan, siapa yang melihat risiko yang belum kita sebutkan?' Menjadikan konflik sebagai bagian bernama dari proses menurunkan biaya pribadi.",
-    nl_fix: "Introduceer gestructureerde onenigheid: 'Voordat we verdergaan, wie ziet een risico dat we nog niet hebben benoemd?' Het benoemen van conflict als deel van het proces verlaagt de persoonlijke kosten.",
   },
   {
-    en_name: "Accountability", id_name: "Akuntabilitas", nl_name: "Verantwoording",
-    en_short: "Accountability", id_short: "Akuntabilitas", nl_short: "Verantwoording",
-    en_low: "No follow-through or punitive", id_low: "Tidak ada tindak lanjut atau hukuman", nl_low: "Geen follow-through of bestraffend",
-    en_high: "Clear, honest, and kind", id_high: "Jelas, jujur, dan baik", nl_high: "Helder, eerlijk en vriendelijk",
+    en_name: "Accountability", id_name: "Akuntabilitas",
+    en_short: "Accountability", id_short: "Akuntabilitas",
+    en_low: "No follow-through or punitive", id_low: "Tidak ada tindak lanjut atau hukuman",
+    en_high: "Clear, honest, and kind", id_high: "Jelas, jujur, dan baik",
     en_desc: "People are held to clear expectations, and when those expectations are not met, it is addressed honestly and constructively. A team where no one is held accountable breeds resentment.",
     id_desc: "Orang dipegang pada harapan yang jelas, dan ketika harapan itu tidak terpenuhi, itu ditangani dengan jujur dan konstruktif. Tim tanpa akuntabilitas menimbulkan kebencian.",
-    nl_desc: "Mensen worden gehouden aan duidelijke verwachtingen, en wanneer die niet worden gehaald, wordt dit eerlijk en constructief besproken. Een team zonder verantwoording kweekt wrok.",
     en_fix: "The problem is rarely that people don't want accountability — expectations were never made explicit. Start there: write three things you expect of every team member this quarter.",
     id_fix: "Masalahnya jarang bahwa orang tidak menginginkan akuntabilitas — harapan tidak pernah dibuat eksplisit. Mulailah dari sana: tuliskan tiga hal yang Anda harapkan dari setiap anggota tim.",
-    nl_fix: "Het probleem is zelden dat mensen geen verantwoording willen — verwachtingen zijn nooit expliciet gemaakt. Begin daar: schrijf drie dingen op die je dit kwartaal van elk teamlid verwacht.",
   },
   {
-    en_name: "Shared Celebration", id_name: "Perayaan Bersama", nl_name: "Gedeeld Vieren",
-    en_short: "Celebration", id_short: "Perayaan", nl_short: "Vieren",
-    en_low: "Only leader or high performers", id_low: "Hanya pemimpin atau pemain tinggi", nl_low: "Alleen leider of toppresteerders",
-    en_high: "Whole team celebrates together", id_high: "Seluruh tim merayakan bersama", nl_high: "Heel team viert samen",
+    en_name: "Shared Celebration", id_name: "Perayaan Bersama",
+    en_short: "Celebration", id_short: "Perayaan",
+    en_low: "Only leader or high performers", id_low: "Hanya pemimpin atau pemain tinggi",
+    en_high: "Whole team celebrates together", id_high: "Seluruh tim merayakan bersama",
     en_desc: "The team celebrates together — not just the leader, not just the high performers. Shared celebration creates shared identity, and shared identity sustains teams through hard seasons.",
     id_desc: "Tim merayakan bersama — bukan hanya pemimpin, bukan hanya pemain tinggi. Perayaan bersama menciptakan identitas bersama, dan identitas bersama menopang tim melalui musim yang sulit.",
-    nl_desc: "Het team viert samen — niet alleen de leider, niet alleen de toppresteerders. Gedeeld vieren cre—ert gedeelde identiteit, en gedeelde identiteit houdt teams staande in moeilijke tijden.",
     en_fix: "Next time your team hits a milestone, make celebration specific: name what each person contributed. Generic praise for 'the team' lands differently than hearing your own contribution named.",
     id_fix: "Lain kali tim Anda mencapai tonggak, jadikan perayaannya spesifik: sebutkan apa yang dikontribusikan setiap orang. Pujian generik berbeda artinya dari mendengar kontribusi Anda sendiri disebutkan.",
-    nl_fix: "De volgende keer dat je team een mijlpaal bereikt, maak de viering specifiek: benoem wat elk persoon heeft bijgedragen. Generieke lof landt anders dan het horen van jouw eigen bijdrage.",
   },
 ];
 
 const WARNING_SIGNS = [
-  { en: "Conversations are cautious — people say what the leader wants to hear, not what they actually think.", id: "Percakapan berhati-hati — orang mengatakan apa yang ingin didengar pemimpin, bukan apa yang sebenarnya mereka pikirkan.", nl: "Gesprekken zijn voorzichtig — mensen zeggen wat de leider wil horen, niet wat ze werkelijk denken." },
-  { en: "The best people are quietly looking for the exit — often silent before they announce they're leaving.", id: "Orang-orang terbaik diam-diam mencari jalan keluar — sering diam sebelum mereka mengumumkan kepergian mereka.", nl: "De beste mensen zoeken stilletjes naar de uitgang — vaak stil voordat ze aankondigen te vertrekken." },
-  { en: "No one ever pushes back in meetings — all ideas are agreed to but not all acted upon.", id: "Tidak ada yang pernah mendorong balik dalam rapat — semua ide disetujui tetapi tidak semua dilaksanakan.", nl: "Niemand duwt ooit terug in vergaderingen — alle idee—n worden ingestemd maar niet allemaal uitgevoerd." },
-  { en: "Small tensions never get fully resolved — they accumulate into factions or quiet disengagement.", id: "Ketegangan kecil tidak pernah benar-benar terselesaikan — mereka menumpuk menjadi faksi atau ketidakterlibatan diam-diam.", nl: "Kleine spanningen worden nooit volledig opgelost — ze stapelen zich op tot facties of stille desengagement." },
-  { en: "The leader is the only one who seems energised — the team is executing, not co-creating.", id: "Pemimpinlah satu-satunya yang tampak bersemangat — tim sedang menjalankan, bukan mencipta bersama.", nl: "De leider is de enige die energiek lijkt — het team voert uit, cre—ert niet mee." },
+  { en: "Conversations are cautious — people say what the leader wants to hear, not what they actually think.", id: "Percakapan berhati-hati — orang mengatakan apa yang ingin didengar pemimpin, bukan apa yang sebenarnya mereka pikirkan." },
+  { en: "The best people are quietly looking for the exit — often silent before they announce they're leaving.", id: "Orang-orang terbaik diam-diam mencari jalan keluar — sering diam sebelum mereka mengumumkan kepergian mereka." },
+  { en: "No one ever pushes back in meetings — all ideas are agreed to but not all acted upon.", id: "Tidak ada yang pernah mendorong balik dalam rapat — semua ide disetujui tetapi tidak semua dilaksanakan." },
+  { en: "Small tensions never get fully resolved — they accumulate into factions or quiet disengagement.", id: "Ketegangan kecil tidak pernah benar-benar terselesaikan — mereka menumpuk menjadi faksi atau ketidakterlibatan diam-diam." },
+  { en: "The leader is the only one who seems energised — the team is executing, not co-creating.", id: "Pemimpinlah satu-satunya yang tampak bersemangat — tim sedang menjalankan, bukan mencipta bersama." },
 ];
 
 type Props = { userPathway: string | null; isSaved: boolean };
 export default function TeamHealthClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [scores, setScores] = useState<number[]>([5, 5, 5, 5, 5]);
@@ -107,7 +95,8 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
   const [commitment, setCommitment] = useState("");
   const [committed, setCommitted] = useState(false);
 
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const t = (en: string, id: string, _nl?: string) => tFn(en, id, lang);
   const navy = "oklch(22% 0.10 260)";
   const orange = "oklch(65% 0.15 45)";
   const offWhite = "oklch(97% 0.005 80)";
@@ -128,10 +117,6 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
       : avgScore >= 6 ? "Berkembang — kekuatan nyata dan kesenjangan nyata. Fokus di mana skor terendah."
       : avgScore >= 4 ? "Berkembang — tim ini membutuhkan pekerjaan yang disengaja."
       : "Berisiko — fondasi perlu dibangun kembali sebelum tim bisa berkembang.",
-    nl: avgScore >= 8 ? "Sterk fundament — bescherm en blijf investeren."
-      : avgScore >= 6 ? "Groeiend — echte krachten en echte hiaten. Focus waar de score het laagst is."
-      : avgScore >= 4 ? "Ontwikkelend — dit team heeft bewust werk nodig."
-      : "Risico — de fundamenten moeten worden herbouwd voordat het team kan groeien.",
   };
 
   // Pentagon SVG math
@@ -220,7 +205,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
                 <div key={i}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
                     <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: i === minIdx ? "oklch(45% 0.12 25)" : navy, margin: 0 }}>
-                      {tFn(dim.en_name, dim.id_name, dim.nl_name, lang)}
+                      {tFn(dim.en_name, dim.id_name, lang)}
                       {i === minIdx && <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", color: "oklch(55% 0.12 25)", marginLeft: 8, textTransform: "uppercase" }}>
                         {t("focus area", "area fokus", "aandachtsgebied")}
                       </span>}
@@ -239,10 +224,10 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
                   />
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, color: "oklch(55% 0.08 25)", fontStyle: "italic" }}>
-                      {tFn(dim.en_low, dim.id_low, dim.nl_low, lang)}
+                      {tFn(dim.en_low, dim.id_low, lang)}
                     </span>
                     <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, color: "oklch(42% 0.12 155)", fontStyle: "italic" }}>
-                      {tFn(dim.en_high, dim.id_high, dim.nl_high, lang)}
+                      {tFn(dim.en_high, dim.id_high, lang)}
                     </span>
                   </div>
                 </div>
@@ -266,7 +251,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
                 {labelPos.map((lp, i) => (
                   <text key={i} x={lp.x.toFixed(1)} y={(lp.y + lp.dy).toFixed(1)} textAnchor={lp.anchor}
                     style={{ fontFamily: "Montserrat, sans-serif", fontSize: "8.5px", fontWeight: 700, fill: i === minIdx ? "oklch(45% 0.12 25)" : navy, letterSpacing: "0.06em" }}>
-                    {tFn(DIMENSIONS[i].en_short, DIMENSIONS[i].id_short, DIMENSIONS[i].nl_short, lang).toUpperCase()}
+                    {tFn(DIMENSIONS[i].en_short, DIMENSIONS[i].id_short, lang).toUpperCase()}
                   </text>
                 ))}
               </svg>
@@ -280,7 +265,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
                   {avgScore.toFixed(1)}
                 </p>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(80% 0.03 260)", lineHeight: 1.6, margin: 0 }}>
-                  {tFn(tierText.en, tierText.id, tierText.nl, lang)}
+                  {tFn(tierText.en, tierText.id, lang)}
                 </p>
               </div>
             </div>
@@ -292,14 +277,14 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
               {t("Lowest Score — Start Here", "Skor Terendah — Mulai di Sini", "Laagste Score — Begin Hier")}
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: navy, margin: "0 0 8px" }}>
-              {tFn(DIMENSIONS[minIdx].en_name, DIMENSIONS[minIdx].id_name, DIMENSIONS[minIdx].nl_name, lang)}: {scores[minIdx]}/10
+              {tFn(DIMENSIONS[minIdx].en_name, DIMENSIONS[minIdx].id_name, lang)}: {scores[minIdx]}/10
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: bodyText, lineHeight: 1.75, margin: "0 0 14px" }}>
-              {tFn(DIMENSIONS[minIdx].en_desc, DIMENSIONS[minIdx].id_desc, DIMENSIONS[minIdx].nl_desc, lang)}
+              {tFn(DIMENSIONS[minIdx].en_desc, DIMENSIONS[minIdx].id_desc, lang)}
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(35% 0.10 155)", lineHeight: 1.7, margin: 0 }}>
               <strong style={{ color: "oklch(35% 0.12 155)" }}>{t("One practical step: ", "Satu langkah praktis: ", "——n praktische stap: ")}</strong>
-              <em>{tFn(DIMENSIONS[minIdx].en_fix, DIMENSIONS[minIdx].id_fix, DIMENSIONS[minIdx].nl_fix, lang)}</em>
+              <em>{tFn(DIMENSIONS[minIdx].en_fix, DIMENSIONS[minIdx].id_fix, lang)}</em>
             </p>
           </div>
         </div>
@@ -317,7 +302,7 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
               <div key={i} style={{ display: "flex", gap: 14, padding: "14px 20px", background: lightGray, borderRadius: 8, alignItems: "flex-start" }}>
                 <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 700, color: "oklch(60% 0.12 25)", lineHeight: 1.3, minWidth: 16, flexShrink: 0 }}>!</span>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>
-                  {tFn(ws.en, ws.id, ws.nl, lang)}
+                  {tFn(ws.en, ws.id, lang)}
                 </p>
               </div>
             ))}
@@ -345,14 +330,14 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
               return (
                 <div key={vKey} style={{ padding: "28px 28px", background: lightGray, borderRadius: 10 }}>
                   <p style={{ fontFamily: serif, fontSize: 19, fontStyle: "italic", color: navy, lineHeight: 1.7, marginBottom: 16 }}>
-                    "{lang === "en" ? v.en : lang === "id" ? v.id : v.nl}"
+                    "{lang === "id" ? v.id : v.en}"
                   </p>
                   <button onClick={() => setActiveVerse(vKey)} style={{
                     background: "none", border: "none", cursor: "pointer",
                     fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700,
                     color: orange, letterSpacing: "0.08em", textDecoration: "underline dotted", padding: 0,
                   }}>
-                    {lang === "en" ? v.en_ref : lang === "id" ? v.id_ref : v.nl_ref}
+                    {lang === "id" ? v.id_ref : v.en_ref}
                   </button>
                 </div>
               );
@@ -371,25 +356,22 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
                 roman: "I",
                 en: "On the 5 dimensions, where does your team score highest? Where does it most need attention?",
                 id: "Pada 5 dimensi, di mana tim Anda mendapat skor tertinggi? Di mana itu paling membutuhkan perhatian?",
-                nl: "Op de 5 dimensies, waar scoort je team het hoogst? Waar heeft het het meest aandacht nodig?",
               },
               {
                 roman: "II",
                 en: "Does your team have genuine psychological safety? What specific evidence do you have?",
                 id: "Apakah tim Anda memiliki keamanan psikologis yang tulus? Bukti spesifik apa yang Anda miliki?",
-                nl: "Heeft je team echte psychologische veiligheid? Welk specifiek bewijs heb je?",
               },
               {
                 roman: "III",
                 en: "What would your team say if asked anonymously: 'Does our leader model the health they call us to?'",
                 id: "Apa yang akan dikatakan tim Anda jika ditanya secara anonim: 'Apakah pemimpin kami mencontohkan kesehatan yang mereka serukan kepada kami?'",
-                nl: "Wat zou je team zeggen als anoniem gevraagd: 'Modelleert onze leider de gezondheid waartoe ze ons oproepen?'",
               },
-            ] as { roman: string; en: string; id: string; nl: string }[]).map(q => (
+            ] as { roman: string; en: string; id: string }[]).map(q => (
               <div key={q.roman} style={{ display: "flex", gap: 18, padding: "18px 22px", background: lightGray, borderRadius: 10, alignItems: "flex-start" }}>
                 <span style={{ fontFamily: serif, fontSize: 22, fontWeight: 700, color: orange, minWidth: 26, flexShrink: 0, lineHeight: 1.2 }}>{q.roman}</span>
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-                  {tFn(q.en, q.id, q.nl, lang)}
+                  {tFn(q.en, q.id, lang)}
                 </p>
               </div>
             ))}
@@ -462,10 +444,10 @@ export default function TeamHealthClient({ userPathway, isSaved: initialSaved }:
             background: offWhite, borderRadius: 16, padding: "40px 36px", maxWidth: 520, width: "100%",
           }}>
             <p style={{ fontFamily: serif, fontSize: 22, lineHeight: 1.65, color: navy, fontStyle: "italic", marginBottom: 16 }}>
-              "{lang === "en" ? VERSES[activeVerse].en : lang === "id" ? VERSES[activeVerse].id : VERSES[activeVerse].nl}"
+              "{lang === "id" ? VERSES[activeVerse].id : VERSES[activeVerse].en}"
             </p>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 24 }}>
-              — {lang === "en" ? VERSES[activeVerse].en_ref : lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].nl_ref} {lang === "en" ? "(NIV)" : lang === "id" ? "(TB)" : "(NBV)"}
+              — {lang === "id" ? VERSES[activeVerse].id_ref : VERSES[activeVerse].en_ref} {lang === "id" ? "(TB)" : "(NIV)"}
             </p>
             <button onClick={() => setActiveVerse(null)} style={{
               padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12,

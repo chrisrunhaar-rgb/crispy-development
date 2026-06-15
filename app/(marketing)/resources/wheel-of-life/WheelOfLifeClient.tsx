@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useRef, useCallback } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -6,10 +6,10 @@ import Link from "next/link";
 import { saveResourceToDashboard, saveWheelScores, saveWheelReflections } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
-const tr = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const tr = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 
 // SVG wheel constants
 const CX = 250, CY = 250, MAX_R = 155;
@@ -18,14 +18,14 @@ const GRID_RINGS = [2, 4, 6, 8, 10];
 
 // Segments in clockwise order from top — matches PDF layout
 const SEGMENTS = [
-  { key: "family",    titleEn: "Family",           titleId: "Keluarga",     titleNl: "Familie",         color: "#3b5fa0", colorFill: "rgba(59,95,160,0.12)", colorLight: "rgba(59,95,160,0.06)" },
-  { key: "finance",   titleEn: "Finance",           titleId: "Keuangan",     titleNl: "Financi—n",       color: "#c4762a", colorFill: "rgba(196,118,42,0.12)", colorLight: "rgba(196,118,42,0.06)" },
-  { key: "relaxation",titleEn: "Relaxation",        titleId: "Relaksasi",    titleNl: "Ontspanning",     color: "#2a8f8f", colorFill: "rgba(42,143,143,0.12)", colorLight: "rgba(42,143,143,0.06)" },
-  { key: "ministry",  titleEn: "Ministry",          titleId: "Pelayanan",    titleNl: "Bediening",       color: "#b83820", colorFill: "rgba(184,56,32,0.12)",  colorLight: "rgba(184,56,32,0.06)" },
-  { key: "spiritual", titleEn: "Spiritual",         titleId: "Spiritual",    titleNl: "Spiritueel",      color: "#8a6415", colorFill: "rgba(138,100,21,0.12)", colorLight: "rgba(138,100,21,0.06)" },
-  { key: "community", titleEn: "Community",         titleId: "Komunitas",    titleNl: "Gemeenschap",     color: "#2a8a64", colorFill: "rgba(42,138,100,0.12)", colorLight: "rgba(42,138,100,0.06)" },
-  { key: "learning",  titleEn: "Lifelong Learning", titleId: "Pembelajaran", titleNl: "Levenslang Leren",color: "#6a3a9e", colorFill: "rgba(106,58,158,0.12)", colorLight: "rgba(106,58,158,0.06)" },
-  { key: "health",    titleEn: "Health",            titleId: "Kesehatan",    titleNl: "Gezondheid",      color: "#2e8a40", colorFill: "rgba(46,138,64,0.12)",  colorLight: "rgba(46,138,64,0.06)" },
+  { key: "family",    titleEn: "Family",           titleId: "Keluarga",     color: "#3b5fa0", colorFill: "rgba(59,95,160,0.12)", colorLight: "rgba(59,95,160,0.06)" },
+  { key: "finance",   titleEn: "Finance",           titleId: "Keuangan",     color: "#c4762a", colorFill: "rgba(196,118,42,0.12)", colorLight: "rgba(196,118,42,0.06)" },
+  { key: "relaxation",titleEn: "Relaxation",        titleId: "Relaksasi",    color: "#2a8f8f", colorFill: "rgba(42,143,143,0.12)", colorLight: "rgba(42,143,143,0.06)" },
+  { key: "ministry",  titleEn: "Ministry",          titleId: "Pelayanan",    color: "#b83820", colorFill: "rgba(184,56,32,0.12)",  colorLight: "rgba(184,56,32,0.06)" },
+  { key: "spiritual", titleEn: "Spiritual",         titleId: "Spiritual",    color: "#8a6415", colorFill: "rgba(138,100,21,0.12)", colorLight: "rgba(138,100,21,0.06)" },
+  { key: "community", titleEn: "Community",         titleId: "Komunitas",    color: "#2a8a64", colorFill: "rgba(42,138,100,0.12)", colorLight: "rgba(42,138,100,0.06)" },
+  { key: "learning",  titleEn: "Lifelong Learning", titleId: "Pembelajaran", color: "#6a3a9e", colorFill: "rgba(106,58,158,0.12)", colorLight: "rgba(106,58,158,0.06)" },
+  { key: "health",    titleEn: "Health",            titleId: "Kesehatan",    color: "#2e8a40", colorFill: "rgba(46,138,64,0.12)",  colorLight: "rgba(46,138,64,0.06)" },
 ];
 
 const SEGMENT_DETAILS = [
@@ -33,142 +33,112 @@ const SEGMENT_DETAILS = [
     key: "family",
     descEn: "Quality of relationships and time with family members.",
     descId: "Kualitas hubungan dan waktu bersama keluarga.",
-    descNl: "Kwaliteit van relaties en tijd met familieleden.",
     expandEn: "This covers your marriage, parent-child relationships, and extended family connections. A God-honoring family life is built on intentional investment — not just presence, but quality time, emotional attunement, and shared faith.",
     expandId: "Ini mencakup pernikahan, hubungan orang tua-anak, dan koneksi keluarga besar. Kehidupan keluarga yang memuliakan Tuhan dibangun di atas investasi yang disengaja — bukan sekadar kehadiran, tetapi waktu berkualitas, kepekaan emosional, dan iman bersama.",
-    expandNl: "Dit omvat uw huwelijk, ouder-kindrelaties en contacten met de bredere familie. Een God-erende familieleven is gebouwd op bewuste investering — niet alleen aanwezig zijn, maar kwaliteitstijd, emotionele afstemming en gedeeld geloof.",
     questionsEn: ["Are you present — truly present — with your family?", "Are your most important relationships growing or drifting?", "Are you modeling faith, integrity, and love at home?"],
     questionsId: ["Apakah Anda hadir — benar-benar hadir — bersama keluarga?", "Apakah hubungan terpenting Anda tumbuh atau memudar?", "Apakah Anda menjadi contoh iman, integritas, dan kasih di rumah?"],
-    questionsNl: ["Bent u aanwezig — echt aanwezig — bij uw familie?", "Groeien uw belangrijkste relaties of vervagen ze?", "Bent u een voorbeeld van geloof, integriteit en liefde thuis?"],
   },
   {
     key: "finance",
     descEn: "Financial stability, budgeting, and satisfaction with your financial state.",
     descId: "Stabilitas keuangan, penganggaran, dan kepuasan kondisi keuangan.",
-    descNl: "Financi—le stabiliteit, budgettering en tevredenheid over uw financi—le situatie.",
     expandEn: "Financial health is not about wealth — it's about stewardship. Are you living within your means, giving generously, saving wisely, and free from the anxiety of financial mismanagement? Money is a tool; this dimension asks how well you're stewarding it.",
     expandId: "Kesehatan keuangan bukan tentang kekayaan — melainkan tentang pengelolaan. Apakah Anda hidup sesuai kemampuan, memberi dengan murah hati, menabung dengan bijak, dan bebas dari kecemasan salah kelola keuangan?",
-    expandNl: "Financi—le gezondheid gaat niet over rijkdom — het gaat over rentmeesterschap. Leeft u binnen uw middelen, geeft u vrijgevig, spaart u verstandig en bent u vrij van de angst voor financieel wanbeheer?",
     questionsEn: ["Do you have a budget and stick to it?", "Are you free from financial anxiety?", "Are you giving generously as an act of worship?"],
     questionsId: ["Apakah Anda memiliki anggaran dan mengikutinya?", "Apakah Anda bebas dari kecemasan finansial?", "Apakah Anda memberi dengan murah hati sebagai bentuk ibadah?"],
-    questionsNl: ["Heeft u een budget en houdt u zich eraan?", "Bent u vrij van financi—le angst?", "Geeft u vrijgevig als een daad van aanbidding?"],
   },
   {
     key: "relaxation",
     descEn: "Your ability to rest, recharge, and enjoy leisure activities.",
     descId: "Kemampuan beristirahat, mengisi ulang energi, dan menikmati waktu santai.",
-    descNl: "Uw vermogen om te rusten, op te laden en te genieten van vrije tijdsactiviteiten.",
     expandEn: "Rest is not laziness — it's obedience. God rested on the seventh day and commanded us to do the same. This dimension explores whether you are caring for your soul and body through sabbath rhythms, hobbies, play, and genuine restoration.",
     expandId: "Istirahat bukan kemalasan — ini adalah ketaatan. Tuhan beristirahat pada hari ketujuh dan memerintahkan kita melakukan hal yang sama. Dimensi ini mengeksplorasi apakah Anda merawat jiwa dan tubuh melalui ritme sabat, hobi, bermain, dan restorasi sejati.",
-    expandNl: "Rust is geen luiheid — het is gehoorzaamheid. God rustte op de zevende dag en gebood ons hetzelfde te doen. Deze dimensie onderzoekt of u voor uw ziel en lichaam zorgt via sabbatritmiek, hobby's, spel en echte herstel.",
     questionsEn: ["Do you regularly take Sabbath rest?", "Do you have activities that genuinely recharge you?", "Is rest guilt-free in your life, or does it feel unproductive?"],
     questionsId: ["Apakah Anda secara teratur beristirahat pada hari Sabat?", "Apakah Anda memiliki aktivitas yang benar-benar mengisi ulang energi?", "Apakah istirahat terasa bebas bersalah, atau terasa tidak produktif?"],
-    questionsNl: ["Neemt u regelmatig sabbatrust?", "Heeft u activiteiten die u echt opladen?", "Is rusten schuldvrij in uw leven, of voelt het onproductief?"],
   },
   {
     key: "ministry",
     descEn: "Involvement and satisfaction with serving others and fulfilling your calling.",
     descId: "Keterlibatan dan kepuasan melayani orang lain dan memenuhi panggilan.",
-    descNl: "Betrokkenheid bij en tevredenheid over het dienen van anderen en het vervullen van uw roeping.",
     expandEn: "We are created to serve. Ministry is not only for pastors — it's for every follower of Christ. This dimension asks whether you are using your gifts, time, and platform to advance the Kingdom. Are you serving from overflow, or running on empty?",
     expandId: "Kita diciptakan untuk melayani. Pelayanan bukan hanya untuk pendeta — ini untuk setiap pengikut Kristus. Dimensi ini menanyakan apakah Anda menggunakan karunia, waktu, dan platform Anda untuk memajukan Kerajaan.",
-    expandNl: "We zijn geschapen om te dienen. Bediening is niet alleen voor voorgangers — het is voor elke volgeling van Christus. Deze dimensie vraagt of u uw gaven, tijd en platform gebruikt om het Koninkrijk te bevorderen. Dient u vanuit overvloed, of werkt u op leeg?",
     questionsEn: ["Are you actively serving in your church or community?", "Does your ministry flow from calling or obligation?", "Are you investing in others' growth and discipleship?"],
     questionsId: ["Apakah Anda aktif melayani di gereja atau komunitas Anda?", "Apakah pelayanan Anda mengalir dari panggilan atau kewajiban?", "Apakah Anda berinvestasi dalam pertumbuhan dan pemuridan orang lain?"],
-    questionsNl: ["Dient u actief in uw kerk of gemeenschap?", "Vloeit uw bediening voort uit roeping of verplichting?", "Investeert u in de groei en discipelschap van anderen?"],
   },
   {
     key: "spiritual",
     descEn: "Connection to your faith, spiritual practices, and relationship with God.",
     descId: "Hubungan dengan iman, praktik spiritual, dan relasi dengan Tuhan.",
-    descNl: "Verbinding met uw geloof, spirituele praktijken en relatie met God.",
     expandEn: "This is the center of the wheel. How is your relationship with God? Not your theology, your title, or your church attendance — your actual, lived relationship. Are you reading Scripture? Praying? Listening? Surrendering? Everything else flows from here. Spiritual formation⁶ is not passive — it requires ordering our whole life around disciplines that open us to transformation.",
     expandId: "Ini adalah pusat dari roda. Bagaimana hubungan Anda dengan Tuhan? Bukan teologi Anda, gelar Anda, atau kehadiran gereja — melainkan hubungan nyata yang Anda jalani. Apakah Anda membaca Kitab Suci? Berdoa? Mendengarkan? Menyerahkan diri? Pembentukan spiritual⁶ bukan proses pasif — melainkan menata seluruh hidup di sekitar disiplin-disiplin yang membuka kita bagi transformasi.",
-    expandNl: "Dit is het centrum van het wiel. Hoe is uw relatie met God? Niet uw theologie, uw titel, of uw kerkbezoek — uw werkelijke, geleefde relatie. Leest u de Schrift? Bidt u? Luistert u? Geeft u zich over? Alles vloeit van hieruit. Geestelijke vorming⁶ is niet passief — het vereist dat we ons hele leven ordenen rond disciplines die ons openstellen voor transformatie.",
     questionsEn: ["Is your relationship with God growing or stagnant?", "Do you have regular practices of prayer, Scripture, and worship?", "Are you surrendering control, or trying to manage life on your own terms?"],
     questionsId: ["Apakah hubungan Anda dengan Tuhan bertumbuh atau stagnan?", "Apakah Anda memiliki kebiasaan doa, Kitab Suci, dan penyembahan?", "Apakah Anda menyerahkan kendali, atau mencoba mengelola hidup sendiri?"],
-    questionsNl: ["Groeit uw relatie met God of stagneert ze?", "Heeft u regelmatige gewoonten van gebed, Bijbellezen en aanbidding?", "Geeft u controle over, of probeert u het leven op eigen voorwaarden te beheren?"],
   },
   {
     key: "community",
     descEn: "Relationships outside family and contributions to the broader community.",
     descId: "Hubungan di luar keluarga dan kontribusi kepada komunitas yang lebih luas.",
-    descNl: "Relaties buiten het gezin en bijdragen aan de bredere gemeenschap.",
     expandEn: "We were not designed to live in isolation. Community includes friendships, peer groups, neighbors, and the broader social fabric around you. Are you investing in meaningful relationships? Are you known and knowing? Do you contribute to something larger than yourself?",
     expandId: "Kita tidak dirancang untuk hidup terisolasi. Komunitas mencakup persahabatan, kelompok sebaya, tetangga, dan jaringan sosial yang lebih luas. Apakah Anda berinvestasi dalam hubungan yang bermakna?",
-    expandNl: "We zijn niet ontworpen om in isolatie te leven. Gemeenschap omvat vriendschappen, peergroepen, buren en het bredere sociale weefsel om u heen. Investeert u in betekenisvolle relaties? Bent u gekend en kent u anderen?",
     questionsEn: ["Do you have deep, honest friendships?", "Are you known by others, and do you know others well?", "Are you contributing to community beyond your own household?"],
     questionsId: ["Apakah Anda memiliki persahabatan yang dalam dan jujur?", "Apakah Anda dikenal orang lain, dan apakah Anda mengenal mereka dengan baik?", "Apakah Anda berkontribusi kepada komunitas di luar rumah tangga Anda?"],
-    questionsNl: ["Heeft u diepe, eerlijke vriendschappen?", "Bent u bekend bij anderen, en kent u anderen goed?", "Draagt u bij aan gemeenschap buiten uw eigen huishouden?"],
   },
   {
     key: "learning",
     descEn: "Commitment to personal growth through education and skill-building.",
     descId: "Komitmen terhadap pertumbuhan pribadi melalui pendidikan dan pengembangan.",
-    descNl: "Betrokkenheid bij persoonlijke groei door educatie en vaardigheids—ontwikkeling.",
     expandEn: "Leaders are readers. Lifelong learners remain humble, curious, and sharp. This dimension asks whether you are growing — through books, mentors, formal study, experience, or reflection. Stagnation is dangerous; intentional learning is a discipline worth protecting.",
     expandId: "Pemimpin adalah pembaca. Pelajar sepanjang hayat tetap rendah hati, penasaran, dan tajam. Dimensi ini menanyakan apakah Anda bertumbuh — melalui buku, mentor, studi formal, pengalaman, atau refleksi.",
-    expandNl: "Leiders zijn lezers. Levenslange leerders blijven bescheiden, nieuwsgierig en scherp. Deze dimensie vraagt of u groeit — door boeken, mentoren, formele studie, ervaring of reflectie. Stagnatie is gevaarlijk; bewust leren is een discipline waard om te beschermen.",
     questionsEn: ["Are you actively learning something new?", "Do you have mentors or peers who challenge you to grow?", "Is learning a scheduled priority, or something that happens by accident?"],
     questionsId: ["Apakah Anda aktif mempelajari sesuatu yang baru?", "Apakah Anda memiliki mentor atau rekan yang menantang Anda untuk bertumbuh?", "Apakah belajar merupakan prioritas terjadwal, atau sesuatu yang terjadi secara kebetulan?"],
-    questionsNl: ["Leert u actief iets nieuws?", "Heeft u mentoren of collega's die u uitdagen te groeien?", "Is leren een geplande prioriteit, of iets wat toevallig gebeurt?"],
   },
   {
     key: "health",
     descEn: "Physical and mental well-being, fitness, energy levels, and emotional health.",
     descId: "Kesejahteraan fisik dan mental, kebugaran, energi, dan kesehatan emosional.",
-    descNl: "Fysiek en mentaal welzijn, conditie, energieniveau en emotionele gezondheid.",
     expandEn: "Your body is a temple. Leadership requires energy, and energy requires care. This dimension covers sleep⁵, exercise, nutrition, mental health, and emotional regulation. You cannot lead well from a depleted body or a unprocessed soul. Physical neglect is not spiritual virtue.",
     expandId: "Tubuh Anda adalah bait. Kepemimpinan membutuhkan energi, dan energi membutuhkan perawatan. Dimensi ini mencakup tidur⁵, olahraga, nutrisi, kesehatan mental, dan regulasi emosional.",
-    expandNl: "Uw lichaam is een tempel. Leiderschap vereist energie, en energie vereist zorg. Deze dimensie omvat slaap⁵, beweging, voeding, geestelijke gezondheid en emotionele regulatie. U kunt niet goed leiden vanuit een uitgeput lichaam of een onverwerkte ziel.",
     questionsEn: ["Are you sleeping enough and exercising regularly?", "Are you managing stress, or is stress managing you?", "Are you attending to your emotional and mental health?"],
     questionsId: ["Apakah Anda tidur cukup dan berolahraga secara teratur?", "Apakah Anda mengelola stres, atau stres yang mengelola Anda?", "Apakah Anda memperhatikan kesehatan emosional dan mental Anda?"],
-    questionsNl: ["Slaapt u voldoende en beweegt u regelmatig?", "Beheert u stress, of beheert stress u?", "Besteedt u aandacht aan uw emotionele en geestelijke gezondheid?"],
   },
 ];
 
 const HOW_TO_STEPS = [
   {
     num: "01",
-    titleEn: "Read Each Dimension", titleId: "Baca Setiap Dimensi", titleNl: "Lees Elke Dimensie",
+    titleEn: "Read Each Dimension", titleId: "Baca Setiap Dimensi",
     descEn: "Work through the 8 segments below. Read the description and reflect on your current state before you score anything.",
     descId: "Kerjakan 8 segmen di bawah ini. Baca deskripsi dan renungkan kondisi Anda saat ini sebelum memberi skor apa pun.",
-    descNl: "Werk de 8 segmenten hieronder door. Lees de beschrijving en reflecteer op uw huidige situatie voordat u scoort.",
   },
   {
     num: "02",
-    titleEn: "Be Brutally Honest", titleId: "Jujur Sepenuhnya", titleNl: "Wees Eerlijk",
+    titleEn: "Be Brutally Honest", titleId: "Jujur Sepenuhnya",
     descEn: "Score where you actually are — not where you want to be. Accurate assessment is the beginning of real change.",
     descId: "Nilai di mana Anda sebenarnya berada — bukan di mana Anda ingin berada. Penilaian yang akurat adalah awal dari perubahan nyata.",
-    descNl: "Scoor waar u werkelijk staat — niet waar u wilt staan. Nauwkeurige beoordeling is het begin van echte verandering.",
   },
   {
     num: "03",
-    titleEn: "Rate 1—10", titleId: "Nilai 1—10", titleNl: "Scoor 1—10",
+    titleEn: "Rate 1—10", titleId: "Nilai 1—10",
     descEn: "1 = completely neglected, 10 = thriving and intentional. Most dimensions will land somewhere in the middle.",
     descId: "1 = benar-benar diabaikan, 10 = berkembang dan disengaja. Kebanyakan dimensi akan berada di tengah.",
-    descNl: "1 = volledig verwaarloosd, 10 = bloeiend en intentioneel. De meeste dimensies zullen ergens in het midden landen.",
   },
   {
     num: "04",
-    titleEn: "Read Your Shape", titleId: "Baca Bentuk Anda", titleNl: "Lees je Vorm",
+    titleEn: "Read Your Shape", titleId: "Baca Bentuk Anda",
     descEn: "A balanced wheel rolls smoothly. An uneven shape reveals where energy is leaking and where to invest next.",
     descId: "Roda yang seimbang bergulir lancar. Bentuk yang tidak merata mengungkapkan di mana energi bocor dan di mana perlu investasi.",
-    descNl: "Een evenwichtig wiel rolt soepel. Een ongelijkmatige vorm onthult waar energie lekt en waar u als volgende moet investeren.",
   },
   {
     num: "05",
-    titleEn: "Build an Action Plan", titleId: "Bangun Rencana Aksi", titleNl: "Maak een Actieplan",
+    titleEn: "Build an Action Plan", titleId: "Bangun Rencana Aksi",
     descEn: "For each low-scoring area: What are you thankful for? What's the challenge? What one action will you take?",
     descId: "Untuk setiap area dengan skor rendah: Apa yang Anda syukuri? Apa tantangannya? Satu tindakan apa yang akan Anda ambil?",
-    descNl: "Voor elk laagscorend gebied: Waar bent u dankbaar voor? Wat is de uitdaging? Welke ene actie gaat u ondernemen?",
   },
   {
     num: "06",
-    titleEn: "Review Regularly", titleId: "Tinjau Secara Teratur", titleNl: "Beoordeel Regelmatig",
+    titleEn: "Review Regularly", titleId: "Tinjau Secara Teratur",
     descEn: "Reassess every 3 months. Save your scores to track progress over time and share with a coach or your team.",
     descId: "Nilai ulang setiap 3 bulan. Simpan skor untuk melacak kemajuan dari waktu ke waktu dan bagikan kepada pelatih atau tim Anda.",
-    descNl: "Herevalueer elke 3 maanden. Sla uw scores op om voortgang bij te houden en deel ze met een coach of uw team.",
   },
 ];
 
@@ -237,7 +207,7 @@ export default function WheelOfLifeClient({
   savedReflections?: Record<string, { gratitude: string; action: string }> | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [scores, setScores] = useState<Record<string, number>>(savedScores ?? DEFAULT_SCORES);
   const [saved, setSaved] = useState(isSaved);
   const [scoresSaved, setScoresSaved] = useState(!!savedScores);
@@ -254,7 +224,7 @@ export default function WheelOfLifeClient({
   const [bgOpen, setBgOpen] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const t = (en: string, id: string, nl: string) => tr(en, id, nl, lang);
+  const t = (en: string, id: string) => tr(en, id, lang);
 
   function handleSave() {
     startTransition(async () => {
@@ -323,26 +293,25 @@ export default function WheelOfLifeClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
+            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("The Wheel of Life", "Roda Kehidupan", "Het Levenswiel")}
+            {t("The Wheel of Life", "Roda Kehidupan")}
           </h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
             {t(
               "A holistic self-assessment covering 8 dimensions of a God-honoring life. Understand where you're thriving, where you're leaking energy, and what to do about it.",
-              "Penilaian diri holistik yang mencakup 8 dimensi kehidupan yang memuliakan Tuhan. Pahami di mana Anda berkembang, di mana energi Anda bocor, dan apa yang harus dilakukan.",
-              "Een holistische zelfevaluatie over 8 dimensies van een God-ererend leven. Begrijp waar u bloeit, waar u energie lekt en wat u eraan kunt doen."
+              "Penilaian diri holistik yang mencakup 8 dimensi kehidupan yang memuliakan Tuhan. Pahami di mana Anda berkembang, di mana energi Anda bocor, dan apa yang harus dilakukan."
             )}
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>
-                ? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                ? {t("Saved to Dashboard", "Tersimpan di Dashboard")}
               </span>
             )}
           </div>
@@ -353,29 +322,26 @@ export default function WheelOfLifeClient({
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 20px" }}>
-            {t("What Is the Wheel of Life?", "Apa Itu Roda Kehidupan?", "Wat Is het Levenswiel?")}
+            {t("What Is the Wheel of Life?", "Apa Itu Roda Kehidupan?")}
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 28 }}>
             <div>
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "oklch(32% 0.06 260)", margin: "0 0 20px" }}>
                 {t(
                   "The Wheel of Life¹ is a coaching tool that gives you a bird's-eye view of your life — not just your career or ministry, but the whole person God created you to be.",
-                  "Roda Kehidupan¹ adalah alat pembinaan yang memberi Anda pandangan luas tentang hidup Anda — bukan hanya karier atau pelayanan, tetapi seluruh pribadi yang Tuhan ciptakan.",
-                  "Het Levenswiel¹ is een coachingstool die u een vogelperspectief op uw leven geeft — niet alleen uw carri—re of bediening, maar de hele persoon die God u heeft geschapen te zijn."
+                  "Roda Kehidupan¹ adalah alat pembinaan yang memberi Anda pandangan luas tentang hidup Anda — bukan hanya karier atau pelayanan, tetapi seluruh pribadi yang Tuhan ciptakan."
                 )}
               </p>
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "oklch(32% 0.06 260)", margin: "0 0 20px" }}>
                 {t(
                   "It works by dividing life into 8 key dimensions. You rate each one honestly on a scale of 1 to 10. The resulting shape on the wheel reveals where you're thriving and where you're running on empty.",
-                  "Cara kerjanya dengan membagi kehidupan menjadi 8 dimensi kunci. Anda menilai masing-masing dengan jujur pada skala 1 hingga 10. Bentuk yang dihasilkan pada roda mengungkapkan di mana Anda berkembang dan di mana Anda kehabisan tenaga.",
-                  "Het werkt door het leven in 8 sleuteldimensies te verdelen. U beoordeelt elke dimensie eerlijk op een schaal van 1 tot 10. De resulterende vorm op het wiel onthult waar u bloeit en waar u op leeg draait."
+                  "Cara kerjanya dengan membagi kehidupan menjadi 8 dimensi kunci. Anda menilai masing-masing dengan jujur pada skala 1 hingga 10. Bentuk yang dihasilkan pada roda mengungkapkan di mana Anda berkembang dan di mana Anda kehabisan tenaga."
                 )}
               </p>
               <p style={{ fontSize: 16, lineHeight: 1.8, color: "oklch(32% 0.06 260)", margin: 0 }}>
                 {t(
                   "A perfectly balanced wheel rolls smoothly. An uneven wheel creates friction. This tool helps you identify the friction — and choose where to invest next.",
-                  "Roda yang seimbang sempurna bergulir lancar. Roda yang tidak merata menciptakan gesekan. Alat ini membantu Anda mengidentifikasi gesekan — dan memilih di mana harus berinvestasi selanjutnya.",
-                  "Een perfect evenwichtig wiel rolt soepel. Een ongelijkmatig wiel cre—ert wrijving. Dit instrument helpt u de wrijving te identificeren — en te kiezen waar u als volgende in investeert."
+                  "Roda yang seimbang sempurna bergulir lancar. Roda yang tidak merata menciptakan gesekan. Alat ini membantu Anda mengidentifikasi gesekan — dan memilih di mana harus berinvestasi selanjutnya."
                 )}
               </p>
             </div>
@@ -383,30 +349,30 @@ export default function WheelOfLifeClient({
               {[
                 {
                   color: "#3b5fa0",
-                  titleEn: "Relational", titleId: "Relasional", titleNl: "Relationeel",
-                  itemsEn: "Family — Community", itemsId: "Keluarga — Komunitas", itemsNl: "Familie — Gemeenschap",
+                  titleEn: "Relational", titleId: "Relasional",
+                  itemsEn: "Family — Community", itemsId: "Keluarga — Komunitas",
                 },
                 {
                   color: "#8a6415",
-                  titleEn: "Spiritual", titleId: "Spiritual", titleNl: "Spiritueel",
-                  itemsEn: "Spiritual — Ministry", itemsId: "Spiritual — Pelayanan", itemsNl: "Spiritueel — Bediening",
+                  titleEn: "Spiritual", titleId: "Spiritual",
+                  itemsEn: "Spiritual — Ministry", itemsId: "Spiritual — Pelayanan",
                 },
                 {
                   color: "#2a8a64",
-                  titleEn: "Physical & Mental", titleId: "Fisik & Mental", titleNl: "Fysiek & Mentaal",
-                  itemsEn: "Health — Relaxation", itemsId: "Kesehatan — Relaksasi", itemsNl: "Gezondheid — Ontspanning",
+                  titleEn: "Physical & Mental", titleId: "Fisik & Mental",
+                  itemsEn: "Health — Relaxation", itemsId: "Kesehatan — Relaksasi",
                 },
                 {
                   color: "#c4762a",
-                  titleEn: "Developmental", titleId: "Pengembangan", titleNl: "Ontwikkeling",
-                  itemsEn: "Finance — Lifelong Learning", itemsId: "Keuangan — Pembelajaran", itemsNl: "Financi—n — Levenslang Leren",
+                  titleEn: "Developmental", titleId: "Pengembangan",
+                  itemsEn: "Finance — Lifelong Learning", itemsId: "Keuangan — Pembelajaran",
                 },
               ].map(cat => (
                 <div key={cat.titleEn} style={{ background: "white", borderRadius: 8, padding: "14px 18px", display: "flex", alignItems: "center", gap: 14, boxShadow: "0 1px 4px oklch(20% 0.06 260 / 0.05)" }}>
                   <span style={{ width: 10, height: 10, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
                   <div>
-                    <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: cat.color }}>{t(cat.titleEn, cat.titleId, cat.titleNl)}</span>
-                    <span style={{ fontSize: 13, color: "oklch(44% 0.06 260)", marginLeft: 8 }}>{t(cat.itemsEn, cat.itemsId, cat.itemsNl)}</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: cat.color }}>{t(cat.titleEn, cat.titleId)}</span>
+                    <span style={{ fontSize: 13, color: "oklch(44% 0.06 260)", marginLeft: 8 }}>{t(cat.itemsEn, cat.itemsId)}</span>
                   </div>
                 </div>
               ))}
@@ -419,13 +385,12 @@ export default function WheelOfLifeClient({
       <section style={{ padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("The 8 Dimensions", "8 Dimensi", "De 8 Dimensies")}
+            {t("The 8 Dimensions", "8 Dimensi")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {t(
               "Read through each dimension before you rate. Understanding what each covers leads to more honest and useful scores.",
-              "Bacalah setiap dimensi sebelum memberi nilai. Memahami apa yang dicakup masing-masing menghasilkan skor yang lebih jujur dan berguna.",
-              "Lees elke dimensie door voordat u beoordeelt. Begrijpen wat elke dimensie omvat, leidt tot eerlijkere en nuttigere scores."
+              "Bacalah setiap dimensi sebelum memberi nilai. Memahami apa yang dicakup masing-masing menghasilkan skor yang lebih jujur dan berguna."
             )}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -442,10 +407,10 @@ export default function WheelOfLifeClient({
                     <span style={{ width: 10, height: 10, borderRadius: "50%", background: match.color, flexShrink: 0 }} />
                     <div style={{ flex: 1 }}>
                       <span style={{ fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", letterSpacing: "0.02em" }}>
-                        {t(match.titleEn, match.titleId, match.titleNl)}
+                        {t(match.titleEn, match.titleId)}
                       </span>
                       <span style={{ fontSize: 13, color: "oklch(52% 0.06 260)", marginLeft: 10 }}>
-                        {t(seg.descEn, seg.descId, seg.descNl)}
+                        {t(seg.descEn, seg.descId)}
                       </span>
                     </div>
                     <span style={{ fontSize: 16, color: "oklch(52% 0.06 260)", flexShrink: 0, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>?</span>
@@ -453,13 +418,13 @@ export default function WheelOfLifeClient({
                   {isOpen && (
                     <div style={{ padding: "0 24px 24px 80px" }}>
                       <p style={{ fontSize: 15, lineHeight: 1.8, color: "oklch(32% 0.06 260)", margin: "0 0 20px" }}>
-                        {t(seg.expandEn, seg.expandId, seg.expandNl)}
+                        {t(seg.expandEn, seg.expandId)}
                       </p>
                       <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: match.color, margin: "0 0 10px" }}>
-                        {t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen")}
+                        {t("Reflection Questions", "Pertanyaan Refleksi")}
                       </p>
                       <ul style={{ margin: 0, padding: "0 0 0 4px", listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-                        {(lang === "en" ? seg.questionsEn : lang === "id" ? seg.questionsId : seg.questionsNl).map((q, qi) => (
+                        {(lang === "id" ? seg.questionsId : seg.questionsEn).map((q, qi) => (
                           <li key={qi} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                             <span style={{ width: 6, height: 6, borderRadius: "50%", background: match.color, flexShrink: 0, marginTop: 7 }} />
                             <span style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(38% 0.06 260)", fontStyle: "italic" }}>{q}</span>
@@ -479,13 +444,12 @@ export default function WheelOfLifeClient({
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("How to Use This Tool", "Cara Menggunakan Alat Ini", "Hoe Dit Instrument te Gebruiken")}
+            {t("How to Use This Tool", "Cara Menggunakan Alat Ini")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {t(
               "Six steps to get the most from your Wheel of Life assessment.",
-              "Enam langkah untuk mendapatkan manfaat maksimal dari penilaian Roda Kehidupan Anda.",
-              "Zes stappen om het meeste uit uw Levenswiel-beoordeling te halen."
+              "Enam langkah untuk mendapatkan manfaat maksimal dari penilaian Roda Kehidupan Anda."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
@@ -495,10 +459,10 @@ export default function WheelOfLifeClient({
                   <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 36, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1, flexShrink: 0 }}>{step.num}</span>
                   <div>
                     <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: "oklch(22% 0.10 260)", margin: "0 0 8px" }}>
-                      {t(step.titleEn, step.titleId, step.titleNl)}
+                      {t(step.titleEn, step.titleId)}
                     </h3>
                     <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(42% 0.06 260)", margin: 0 }}>
-                      {t(step.descEn, step.descId, step.descNl)}
+                      {t(step.descEn, step.descId)}
                     </p>
                   </div>
                 </div>
@@ -511,46 +475,39 @@ export default function WheelOfLifeClient({
       {/* ACTION PLAN FRAMEWORK */}
       <section style={{ padding: "72px 24px", maxWidth: 900, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-          {t("Your Action Plan Framework", "Kerangka Rencana Aksi Anda", "Uw Actieplanraamwerk")}
+          {t("Your Action Plan Framework", "Kerangka Rencana Aksi Anda")}
         </h2>
         <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
           {t(
             "For each segment, work through these three questions. Download the PDF for the full worksheet.",
-            "Untuk setiap segmen, kerjakan tiga pertanyaan ini. Unduh PDF untuk lembar kerja lengkap.",
-            "Werk voor elk segment deze drie vragen door. Download de PDF voor het volledige werkblad."
+            "Untuk setiap segmen, kerjakan tiga pertanyaan ini. Unduh PDF untuk lembar kerja lengkap."
           )}
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
           {[
             {
               num: "01", color: "#2e8a40",
-              labelEn: "Gratitude", labelId: "Syukur", labelNl: "Dankbaarheid",
+              labelEn: "Gratitude", labelId: "Syukur",
               questionEn: "What are you thankful for in this area?",
               questionId: "Apa yang Anda syukuri di area ini?",
-              questionNl: "Waar bent u dankbaar voor op dit gebied?",
               hintEn: "Start with thanksgiving — it shifts your perspective before you assess.",
               hintId: "Mulailah dengan syukur — itu mengubah perspektif Anda sebelum menilai.",
-              hintNl: "Begin met dankzegging — het verandert uw perspectief voordat u beoordeelt.",
             },
             {
               num: "02", color: "#b83820",
-              labelEn: "Challenge", labelId: "Tantangan", labelNl: "Uitdaging",
+              labelEn: "Challenge", labelId: "Tantangan",
               questionEn: "What is your challenge, frustration, or concern?",
               questionId: "Apa tantangan, frustrasi, atau kekhawatiran Anda?",
-              questionNl: "Wat is uw uitdaging, frustratie of zorg?",
               hintEn: "Name what's hard — clarity about the problem is the first step.",
               hintId: "Namai apa yang sulit — kejelasan tentang masalah adalah langkah pertama.",
-              hintNl: "Benoem wat moeilijk is — helderheid over het probleem is de eerste stap.",
             },
             {
               num: "03", color: "#3b5fa0",
-              labelEn: "God-Honoring Action", labelId: "Tindakan Memuliakan Tuhan", labelNl: "God-Erende Actie",
+              labelEn: "God-Honoring Action", labelId: "Tindakan Memuliakan Tuhan",
               questionEn: "What one action will lead to God-honoring results?",
               questionId: "Satu tindakan apa yang akan menghasilkan hasil yang memuliakan Tuhan?",
-              questionNl: "Welke ene actie zal leiden tot God-erende resultaten?",
               hintEn: "Keep it concrete — one action, not a project plan.",
               hintId: "Buatlah konkret — satu tindakan, bukan rencana proyek.",
-              hintNl: "Houd het concreet — ——n actie, geen projectplan.",
             },
           ].map(item => (
             <div key={item.num} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
@@ -558,15 +515,15 @@ export default function WheelOfLifeClient({
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 40, fontWeight: 600, color: item.color, lineHeight: 1, flexShrink: 0 }}>{item.num}</span>
                 <div>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: item.color, margin: "0 0 4px" }}>
-                    {t(item.labelEn, item.labelId, item.labelNl)}
+                    {t(item.labelEn, item.labelId)}
                   </p>
                   <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: 0, lineHeight: 1.3, fontStyle: "italic" }}>
-                    &ldquo;{t(item.questionEn, item.questionId, item.questionNl)}&rdquo;
+                    &ldquo;{t(item.questionEn, item.questionId)}&rdquo;
                   </h3>
                 </div>
               </div>
               <p style={{ fontSize: 13, lineHeight: 1.65, color: "oklch(48% 0.06 260)", margin: 0 }}>
-                {t(item.hintEn, item.hintId, item.hintNl)}
+                {t(item.hintEn, item.hintId)}
               </p>
             </div>
           ))}
@@ -577,13 +534,12 @@ export default function WheelOfLifeClient({
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 1020, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("Rate Your Wheel", "Nilai Roda Anda", "Beoordeel Uw Wiel")}
+            {t("Rate Your Wheel", "Nilai Roda Anda")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {t(
               "Now that you've read through each dimension, rate your current state honestly. Select 1—10 for each segment and watch your wheel take shape.",
-              "Sekarang setelah Anda membaca setiap dimensi, nilai kondisi Anda saat ini dengan jujur. Pilih 1—10 untuk setiap segmen dan lihat roda Anda terbentuk.",
-              "Nu u elke dimensie heeft doorgelezen, beoordeelt u uw huidige situatie eerlijk. Selecteer 1—10 voor elk segment en zie uw wiel vorm krijgen."
+              "Sekarang setelah Anda membaca setiap dimensi, nilai kondisi Anda saat ini dengan jujur. Pilih 1—10 untuk setiap segmen dan lihat roda Anda terbentuk."
             )}
           </p>
 
@@ -629,7 +585,7 @@ export default function WheelOfLifeClient({
                 })}
                 {SEGMENTS.map((seg, i) => {
                   const { x, y, anchor, dy } = getLabelPos(i);
-                  const title = lang === "en" ? seg.titleEn : lang === "id" ? seg.titleId : seg.titleNl;
+                  const title = lang === "id" ? seg.titleId : seg.titleEn;
                   const score = scores[seg.key] ?? 5;
                   const parts = title.split(" ");
                   return (
@@ -652,15 +608,15 @@ export default function WheelOfLifeClient({
 
               <div style={{ display: "flex", gap: 10, marginTop: 20, flexWrap: "wrap", justifyContent: "center" }}>
                 <button onClick={handleDownload} style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "10px 22px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}>
-                  {t("Download Image", "Unduh Gambar", "Afbeelding Downloaden")}
+                  {t("Download Image", "Unduh Gambar")}
                 </button>
                 {!scoresSaved ? (
                   <button onClick={handleSaveScores} disabled={isSavingScores} style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "10px 22px", borderRadius: 12, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", letterSpacing: "0.04em" }}>
-                    {isSavingScores ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save Scores", "Simpan Skor", "Scores Opslaan")}
+                    {isSavingScores ? t("Saving—", "Menyimpan—") : t("Save Scores", "Simpan Skor")}
                   </button>
                 ) : (
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "oklch(38% 0.14 145)", fontSize: 13, fontWeight: 700, padding: "10px 0" }}>
-                    ? {t("Scores Saved", "Skor Tersimpan", "Scores Opgeslagen")}
+                    ? {t("Scores Saved", "Skor Tersimpan")}
                   </span>
                 )}
               </div>
@@ -677,10 +633,10 @@ export default function WheelOfLifeClient({
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                         <div>
                           <span style={{ fontSize: 13, fontWeight: 700, color: seg.color }}>
-                            {t(seg.titleEn, seg.titleId, seg.titleNl)}
+                            {t(seg.titleEn, seg.titleId)}
                           </span>
                           <span style={{ fontSize: 11, color: "oklch(55% 0.05 260)", marginLeft: 8 }}>
-                            {t(detail.descEn, detail.descId, detail.descNl)}
+                            {t(detail.descEn, detail.descId)}
                           </span>
                         </div>
                         <span style={{ fontSize: 22, fontWeight: 800, color: seg.color, fontFamily: "Cormorant Garamond, serif", lineHeight: 1, marginLeft: 12, flexShrink: 0 }}>{score}</span>
@@ -704,10 +660,10 @@ export default function WheelOfLifeClient({
               <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 10, padding: "20px 24px", marginTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
                 <div>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.08 260)", margin: "0 0 4px" }}>
-                    {t("Overall Average", "Rata-rata Keseluruhan", "Algeheel Gemiddelde")}
+                    {t("Overall Average", "Rata-rata Keseluruhan")}
                   </p>
                   <p style={{ fontSize: 13, color: "oklch(75% 0.05 260)", margin: 0 }}>
-                    {t("Across all 8 dimensions", "Di semua 8 dimensi", "Over alle 8 dimensies")}
+                    {t("Across all 8 dimensions", "Di semua 8 dimensi")}
                   </p>
                 </div>
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, color: "oklch(65% 0.15 45)", lineHeight: 1 }}>{avg}</span>
@@ -722,16 +678,15 @@ export default function WheelOfLifeClient({
         <section style={{ background: "white", padding: "72px 24px" }}>
           <div style={{ maxWidth: 900, margin: "0 auto" }}>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-              {t("Step 05 — Action Plan", "Langkah 05 — Rencana Aksi", "Stap 05 — Actieplan")}
+              {t("Step 05 — Action Plan", "Langkah 05 — Rencana Aksi")}
             </p>
             <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-              {t("Your Personal Action Plan", "Rencana Aksi Pribadi Anda", "Uw Persoonlijk Actieplan")}
+              {t("Your Personal Action Plan", "Rencana Aksi Pribadi Anda")}
             </h2>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65, maxWidth: 600 }}>
               {t(
                 "For each area of your life, reflect on what you're grateful for and name the one action that will lead to God-honoring results.",
-                "Untuk setiap area hidupmu, renungkan apa yang kamu syukuri dan tentukan satu tindakan yang akan menghasilkan hasil yang memuliakan Tuhan.",
-                "Reflecteer voor elk levensgebied op wat u dankbaar voor bent en benoem de ene actie die tot God-erende resultaten leidt."
+                "Untuk setiap area hidupmu, renungkan apa yang kamu syukuri dan tentukan satu tindakan yang akan menghasilkan hasil yang memuliakan Tuhan."
               )}
             </p>
 
@@ -745,7 +700,7 @@ export default function WheelOfLifeClient({
                     <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
                       <span style={{ width: 10, height: 10, borderRadius: "50%", background: seg.color, flexShrink: 0 }} />
                       <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: seg.color }}>
-                        {t(seg.titleEn, seg.titleId, seg.titleNl)}
+                        {t(seg.titleEn, seg.titleId)}
                       </span>
                       <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, fontWeight: 600, color: seg.color, marginLeft: "auto" }}>
                         {score}/10
@@ -755,13 +710,13 @@ export default function WheelOfLifeClient({
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1rem" }}>
                       <div>
                         <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(42% 0.06 260)", marginBottom: 8 }}>
-                          {t("What are you thankful for in this area?", "Apa yang kamu syukuri di area ini?", "Waar bent u dankbaar voor op dit gebied?")}
+                          {t("What are you thankful for in this area?", "Apa yang kamu syukuri di area ini?")}
                         </label>
                         <textarea
                           value={reflection.gratitude}
                           onChange={e => handleReflectionChange(seg.key, "gratitude", e.target.value)}
                           rows={3}
-                          placeholder={t("Start with thanksgiving—", "Mulailah dengan syukur—", "Begin met dankbaarheid—")}
+                          placeholder={t("Start with thanksgiving—", "Mulailah dengan syukur—")}
                           style={{
                             width: "100%",
                             fontFamily: "Montserrat, sans-serif",
@@ -780,13 +735,13 @@ export default function WheelOfLifeClient({
                       </div>
                       <div>
                         <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(42% 0.06 260)", marginBottom: 8 }}>
-                          {t("What action will lead to God-honoring results?", "Tindakan apa yang akan menghasilkan hasil memuliakan Tuhan?", "Welke actie leidt tot God-erende resultaten?")}
+                          {t("What action will lead to God-honoring results?", "Tindakan apa yang akan menghasilkan hasil memuliakan Tuhan?")}
                         </label>
                         <textarea
                           value={reflection.action}
                           onChange={e => handleReflectionChange(seg.key, "action", e.target.value)}
                           rows={3}
-                          placeholder={t("One concrete step—", "Satu langkah konkret—", "——n concrete stap—")}
+                          placeholder={t("One concrete step—", "Satu langkah konkret—")}
                           style={{
                             width: "100%",
                             fontFamily: "Montserrat, sans-serif",
@@ -828,12 +783,12 @@ export default function WheelOfLifeClient({
                   }}
                 >
                   {isSavingReflections
-                    ? t("Saving—", "Menyimpan—", "Opslaan—")
-                    : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                    ? t("Saving—", "Menyimpan—")
+                    : t("Save to Dashboard", "Simpan ke Dashboard")}
                 </button>
               ) : (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(38% 0.14 145)", fontSize: 14, fontWeight: 700, fontFamily: "Montserrat, sans-serif" }}>
-                  ? {t("Action plan saved", "Rencana aksi tersimpan", "Actieplan opgeslagen")}
+                  ? {t("Action plan saved", "Rencana aksi tersimpan")}
                 </span>
               )}
             </div>
@@ -845,27 +800,24 @@ export default function WheelOfLifeClient({
       <div style={{ background: "oklch(97% 0.005 80)", padding: "clamp(64px, 9vw, 88px) 24px", borderTop: "3px solid oklch(65% 0.15 45)" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 12 }}>
-            {t("Key Takeaway", "Poin Utama", "Belangrijkste Conclusie")}
+            {t("Key Takeaway", "Poin Utama")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(18px, 2.2vw, 24px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 36 }}>
-            {t("Three things to act on this week", "Tiga hal yang bisa kamu terapkan minggu ini", "Drie dingen om deze week op te handelen")}
+            {t("Three things to act on this week", "Tiga hal yang bisa kamu terapkan minggu ini")}
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {[
               t(
                 "Complete the Wheel of Life today and identify your two lowest-scoring domains. Before doing anything else, spend 10 minutes writing about why those scores are low — circumstances, choices, or life season.",
-                "Selesaikan Roda Kehidupan hari ini dan identifikasi dua domain dengan skor terendah. Sebelum melakukan hal lain, luangkan 10 menit untuk menulis mengapa skor itu rendah — keadaan, pilihan, atau musim hidup.",
-                "Vul vandaag het Wiel van het Leven in en bepaal je twee laagst scorende domeinen. Besteed eerst tien minuten aan het opschrijven waarom die scores laag zijn — omstandigheden, keuzes of levensseasoen."
+                "Selesaikan Roda Kehidupan hari ini dan identifikasi dua domain dengan skor terendah. Sebelum melakukan hal lain, luangkan 10 menit untuk menulis mengapa skor itu rendah — keadaan, pilihan, atau musim hidup."
               ),
               t(
                 "If your lowest-scoring domain involves relationships or rest, treat it as a leading indicator: it often degrades before the others follow. What is one small change you could make this week?",
-                "Jika domain dengan skor terendah melibatkan hubungan atau istirahat, anggap itu sebagai indikator awal: area itu sering memburuk sebelum yang lain mengikutinya. Perubahan kecil apa yang bisa kamu lakukan minggu ini?",
-                "Als je laagst scorende domein relaties of rust betreft, behandel het als een vroege indicator: dat gebied verslechtert vaak voordat de andere volgen. Welke kleine verandering kun je deze week maken?"
+                "Jika domain dengan skor terendah melibatkan hubungan atau istirahat, anggap itu sebagai indikator awal: area itu sering memburuk sebelum yang lain mengikutinya. Perubahan kecil apa yang bisa kamu lakukan minggu ini?"
               ),
               t(
                 "Share your Wheel of Life with one trusted person and ask them to reflect back what they observe. Sometimes our self-scores miss what others can see from the outside.",
-                "Bagikan Roda Kehidupanmu dengan seseorang yang kamu percaya dan minta mereka merefleksikan apa yang mereka amati. Terkadang penilaian diri kita melewatkan apa yang bisa dilihat orang lain dari luar.",
-                "Deel je Wiel van het Leven met een vertrouwd persoon en vraag hun te reflecteren op wat zij waarnemen. Soms missen onze eigen scores wat anderen van buitenaf kunnen zien."
+                "Bagikan Roda Kehidupanmu dengan seseorang yang kamu percaya dan minta mereka merefleksikan apa yang mereka amati. Terkadang penilaian diri kita melewatkan apa yang bisa dilihat orang lain dari luar."
               ),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 24px", background: "oklch(95% 0.008 80)" }}>
@@ -883,13 +835,12 @@ export default function WheelOfLifeClient({
       <div style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, marginBottom: 12 }}>
-            {t("Background", "Latar Belakang", "Achtergrond")}
+            {t("Background", "Latar Belakang")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "oklch(22% 0.10 260)", marginBottom: 32, lineHeight: 1.2 }}>
             {t(
               "The Wheel of Life Assessment Across Cultures: A Guide for Leaders and Cross-Cultural Workers",
-              "Asesmen Roda Kehidupan Lintas Budaya: Panduan bagi Pemimpin dan Pekerja Lintas Budaya",
-              "Het Wiel van het Leven over Culturen Heen: Een Gids voor Leiders en Interculturele Werkers"
+              "Asesmen Roda Kehidupan Lintas Budaya: Panduan bagi Pemimpin dan Pekerja Lintas Budaya"
             )}
           </h2>
           <button
@@ -908,43 +859,35 @@ export default function WheelOfLifeClient({
           {bgOpen && [
             t(
               "Most leaders who encounter the Wheel of Life for the first time find it disarmingly simple. You draw a circle, divide it into segments, give each segment a score, and connect the dots. The resulting shape, rarely a perfect circle, tells you something immediately visible about where life feels full and where it feels depleted. That simplicity is its strength. But simplicity also conceals assumptions, and for leaders working across cultures, those assumptions deserve careful examination.",
-              "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Kamu menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama.",
-              "De meeste leiders die voor het eerst het Wiel van het Leven tegenkomen, vinden het verrassend eenvoudig. Je tekent een cirkel, verdeelt hem in segmenten, geeft elk segment een score en verbindt de punten. De resulterende vorm, zelden een perfecte cirkel, vertelt je onmiddellijk waar het leven vol aanvoelt en waar het leeg aanvoelt. Die eenvoud is de kracht. Maar eenvoud verhult ook aannames, en voor leiders die cultuuroverschrijdend werken, verdienen die aannames zorgvuldige aandacht."
+              "Sebagian besar pemimpin yang pertama kali menemukan Roda Kehidupan merasa alat ini sangat sederhana. Kamu menggambar lingkaran, membaginya menjadi segmen, memberikan skor pada setiap segmen, dan menghubungkan titik-titiknya. Bentuk yang dihasilkan, jarang merupakan lingkaran sempurna, langsung menunjukkan di mana hidup terasa penuh dan di mana terasa terkuras. Kesederhanaan itu adalah kekuatannya. Namun kesederhanaan juga menyembunyikan asumsi, dan bagi pemimpin yang bekerja lintas budaya, asumsi-asumsi itu layak untuk diperiksa dengan seksama."
             ),
             t(
               "The Wheel of Life is most commonly attributed to Paul J. Meyer¹, the founder of the Success Motivation Institute, who introduced it as a coaching tool in the mid-20th century. The standard version divides life into domains such as career, finances, health, family and friends, romance, personal growth, recreation, and spiritual life. Each domain receives a satisfaction score from 0 to 10, and the shape of the completed wheel reveals which areas are receiving abundant attention and which are running on empty. The visual metaphor of the wheel is intentional: a bumpy, uneven wheel does not roll smoothly.",
-              "Roda Kehidupan paling sering dikaitkan dengan Paul J. Meyer¹, pendiri Success Motivation Institute, yang memperkenalkannya sebagai alat coaching pada pertengahan abad ke-20. Versi standar membagi kehidupan ke dalam domain-domain seperti karier, keuangan, kesehatan, keluarga dan teman, romansa, pertumbuhan pribadi, rekreasi, dan kehidupan spiritual. Setiap domain mendapat skor kepuasan dari 0 hingga 10, dan bentuk roda yang lengkap mengungkapkan area mana yang mendapat perhatian berlimpah dan mana yang hampir kosong.",
-              "Het Wiel van het Leven wordt het meest toegeschreven aan Paul J. Meyer¹, de oprichter van het Success Motivation Institute. De standaardversie verdeelt het leven in domeinen zoals carri—re, financi—n, gezondheid, familie en vrienden, romantiek, persoonlijke groei, recreatie en spiritueel leven. Elk domein krijgt een tevredenheidsscore van 0 tot 10, en de vorm van het voltooide wiel onthult welke gebieden overvloedige aandacht ontvangen en welke leegloopt."
+              "Roda Kehidupan paling sering dikaitkan dengan Paul J. Meyer¹, pendiri Success Motivation Institute, yang memperkenalkannya sebagai alat coaching pada pertengahan abad ke-20. Versi standar membagi kehidupan ke dalam domain-domain seperti karier, keuangan, kesehatan, keluarga dan teman, romansa, pertumbuhan pribadi, rekreasi, dan kehidupan spiritual. Setiap domain mendapat skor kepuasan dari 0 hingga 10, dan bentuk roda yang lengkap mengungkapkan area mana yang mendapat perhatian berlimpah dan mana yang hampir kosong."
             ),
             t(
               "This metaphor holds real diagnostic power, and the framework has become one of the most widely used starting-point assessments in personal development coaching worldwide. The problem is not the tool itself but the invisible cultural assumptions it carries. The standard Wheel of Life divides life into segments that reflect an individualist, Western understanding of how life is organized. It assumes that a person experiences career as separate from family, personal growth as distinct from community, and self-care as a domain that can be evaluated independently from relational obligations. In much of the world, these separations feel artificial at best and disrespectful at worst.",
-              "Metafora ini memiliki kekuatan diagnostik yang nyata, dan kerangka ini telah menjadi salah satu asesmen titik awal yang paling banyak digunakan dalam coaching pengembangan pribadi di seluruh dunia. Masalahnya bukan pada alatnya sendiri tetapi pada asumsi budaya tersembunyi yang dibawanya. Roda Kehidupan standar membagi kehidupan menjadi segmen-segmen yang mencerminkan pemahaman individualistis dan Barat tentang bagaimana kehidupan diorganisasikan. Ia mengasumsikan bahwa seseorang mengalami karier sebagai sesuatu yang terpisah dari keluarga. Di banyak bagian dunia, pemisahan-pemisahan ini terasa artifisial atau bahkan tidak menghormati.",
-              "Deze metafoor heeft echte diagnostische kracht, en het kader is uitgegroeid tot een van de meest gebruikte startbeoordelingen in persoonlijk ontwikkelingscoaching wereldwijd. Het probleem is niet het instrument zelf, maar de onzichtbare culturele aannames die het met zich meebrengt. Het standaard Wiel van het Leven verdeelt het leven in segmenten die een individualistisch, westers begrip weerspiegelen van hoe het leven is georganiseerd."
+              "Metafora ini memiliki kekuatan diagnostik yang nyata, dan kerangka ini telah menjadi salah satu asesmen titik awal yang paling banyak digunakan dalam coaching pengembangan pribadi di seluruh dunia. Masalahnya bukan pada alatnya sendiri tetapi pada asumsi budaya tersembunyi yang dibawanya. Roda Kehidupan standar membagi kehidupan menjadi segmen-segmen yang mencerminkan pemahaman individualistis dan Barat tentang bagaimana kehidupan diorganisasikan. Ia mengasumsikan bahwa seseorang mengalami karier sebagai sesuatu yang terpisah dari keluarga. Di banyak bagian dunia, pemisahan-pemisahan ini terasa artifisial atau bahkan tidak menghormati."
             ),
             t(
               "Cross-cultural workers, including long-term field workers serving in contexts far from their home culture, face a particular version of this challenge. Their lived experience often involves a near-total collapse of the boundaries the standard Wheel assumes. They live at their workplace. Their colleagues are their primary community. Their spiritual practice is expressed through their daily ministry activity. Applying a standard Wheel of Life to this reality and asking someone to score 'work-life balance' may produce a score that means little, because the model assumes a separation that simply does not exist in their daily life.",
-              "Pekerja lintas budaya, termasuk pekerja lapangan jangka panjang yang melayani di konteks jauh dari budaya asal mereka, menghadapi versi khusus dari tantangan ini. Pengalaman hidup mereka sering melibatkan runtuhnya hampir semua batas yang diasumsikan oleh Roda standar. Mereka hidup di tempat kerja mereka. Rekan-rekan mereka adalah komunitas utama mereka. Praktik spiritual mereka diekspresikan melalui aktivitas pelayanan sehari-hari. Menerapkan Roda Kehidupan standar pada realitas ini mungkin menghasilkan skor yang tidak banyak bermakna.",
-              "Interculturele werkers, inclusief langetermijn veldwerkers die dienen in contexten ver van hun thuiscultuur, worden geconfronteerd met een specifieke versie van deze uitdaging. Hun leefervaring omvat vaak een bijna totale ineenstorting van de grenzen die het standaard Wiel aanneemt. Ze wonen op hun werkplek. Hun collega's zijn hun primaire gemeenschap. Het toepassen van een standaard Wiel van het Leven op deze realiteit kan scores opleveren die weinig betekenen."
+              "Pekerja lintas budaya, termasuk pekerja lapangan jangka panjang yang melayani di konteks jauh dari budaya asal mereka, menghadapi versi khusus dari tantangan ini. Pengalaman hidup mereka sering melibatkan runtuhnya hampir semua batas yang diasumsikan oleh Roda standar. Mereka hidup di tempat kerja mereka. Rekan-rekan mereka adalah komunitas utama mereka. Praktik spiritual mereka diekspresikan melalui aktivitas pelayanan sehari-hari. Menerapkan Roda Kehidupan standar pada realitas ini mungkin menghasilkan skor yang tidak banyak bermakna."
             ),
             t(
               "The concept of balance itself deserves cultural examination. In the individualist framework underlying the standard Wheel of Life, balance implies a managed equilibrium across all domains, achieved through deliberate personal choices about time and energy allocation. Research on life satisfaction²³ shows that the components people weight most heavily vary significantly by culture⁴. In seasonal, communal, and oral cultures, flourishing is more often understood as rhythmic rather than balanced. Periods of intense communal activity are followed by periods of rest and recovery. The Wheel of Life, applied cross-culturally, works best when it is treated as a diagnostic conversation starter rather than a prescription for equal investment in every domain simultaneously.",
-              "Konsep keseimbangan itu sendiri layak untuk diperiksa secara budaya. Dalam kerangka individualistis yang mendasari Roda Kehidupan standar, keseimbangan menyiratkan ekuilibrium yang dikelola di semua domain. Penelitian tentang kepuasan hidup²³ menunjukkan bahwa komponen yang paling penting bagi orang bervariasi secara signifikan menurut budaya⁴. Dalam budaya yang musiman, komunal, dan lisan, kemakmuran lebih sering dipahami sebagai sesuatu yang ritmis daripada seimbang. Periode aktivitas komunal yang intens diikuti oleh periode istirahat dan pemulihan. Roda Kehidupan paling baik diperlakukan sebagai pemicu percakapan diagnostik, bukan resep investasi yang sama di setiap domain sekaligus.",
-              "Het concept van balans zelf verdient cultureel onderzoek. In het individualistische kader dat ten grondslag ligt aan het standaard Wiel van het Leven, impliceert balans een beheerd evenwicht over alle domeinen. Onderzoek naar levenstevredenheid²³ toont aan dat de componenten die mensen het zwaarst wegen aanzienlijk variëren per cultuur⁴. In seizoensgebonden, gemeenschappelijke en mondelinge culturen wordt bloei vaker begrepen als ritmisch dan gebalanceerd. Het Wiel van het Leven werkt het beste als het wordt behandeld als een diagnostisch gespreksstarter."
+              "Konsep keseimbangan itu sendiri layak untuk diperiksa secara budaya. Dalam kerangka individualistis yang mendasari Roda Kehidupan standar, keseimbangan menyiratkan ekuilibrium yang dikelola di semua domain. Penelitian tentang kepuasan hidup²³ menunjukkan bahwa komponen yang paling penting bagi orang bervariasi secara signifikan menurut budaya⁴. Dalam budaya yang musiman, komunal, dan lisan, kemakmuran lebih sering dipahami sebagai sesuatu yang ritmis daripada seimbang. Periode aktivitas komunal yang intens diikuti oleh periode istirahat dan pemulihan. Roda Kehidupan paling baik diperlakukan sebagai pemicu percakapan diagnostik, bukan resep investasi yang sama di setiap domain sekaligus."
             ),
             t(
               "Richard Foster's Celebration of Discipline⁷, which explores the classical Christian spiritual disciplines as pathways to freedom and wholeness, offers a framework that sits naturally alongside the Wheel of Life for leaders of faith. Foster argues that ordered patterns of life — including the disciplines of study, simplicity, solitude, and rest — are not legalistic impositions but liberating structures that create space for genuine flourishing. The Wheel of Life, completed regularly and reflectively, supports exactly the kind of honest self-examination that Foster commends.",
-              "Buku Richard Foster Celebration of Discipline⁷, yang mengeksplorasi disiplin rohani Kristen klasik sebagai jalan menuju kebebasan dan keutuhan, menawarkan kerangka yang secara alami berdampingan dengan Roda Kehidupan bagi pemimpin iman. Foster berpendapat bahwa pola hidup yang teratur — termasuk disiplin studi, kesederhanaan, kesunyian, dan istirahat — bukanlah pemaksaan legalistis tetapi struktur yang membebaskan dan menciptakan ruang bagi kemakmuran sejati.",
-              "Richard Fosters Celebration of Discipline⁷ biedt een kader dat van nature naast het Wiel van het Leven past voor leiders van het geloof. Foster betoogt dat geordende levenspatronen — inclusief de disciplines van studie, eenvoud, eenzaamheid en rust — geen wettische oplegingen zijn maar bevrijdende structuren die ruimte scheppen voor echte bloei."
+              "Buku Richard Foster Celebration of Discipline⁷, yang mengeksplorasi disiplin rohani Kristen klasik sebagai jalan menuju kebebasan dan keutuhan, menawarkan kerangka yang secara alami berdampingan dengan Roda Kehidupan bagi pemimpin iman. Foster berpendapat bahwa pola hidup yang teratur — termasuk disiplin studi, kesederhanaan, kesunyian, dan istirahat — bukanlah pemaksaan legalistis tetapi struktur yang membebaskan dan menciptakan ruang bagi kemakmuran sejati."
             ),
             t(
               "Luke 2:52 offers a theological benchmark that the Wheel of Life, rightly adapted, aspires toward: Jesus grew 'in wisdom and stature, and in favor with God and man.' This four-dimensional portrait of human development, covering the intellectual, physical, spiritual, and relational domains, is not a prescription for equal investment in four quadrants simultaneously but a picture of whole-person growth over time. The Wheel of Life, at its best, is an instrument for noticing where growth has stalled, where depletion has set in unnoticed, and where the work of restoration needs to begin.",
-              "Lukas 2:52 menawarkan tolak ukur teologis yang menjadi aspirasi Roda Kehidupan: Yesus bertumbuh 'dalam hikmat dan statur, dan dalam kasih karunia pada Allah dan manusia.' Potret empat dimensi perkembangan manusia ini bukan resep investasi yang sama di empat kuadran sekaligus, melainkan gambaran pertumbuhan manusia seutuhnya dari waktu ke waktu. Roda Kehidupan, pada terbaiknya, adalah instrumen untuk memperhatikan di mana pertumbuhan terhenti dan di mana pemulihan perlu dimulai.",
-              "Lucas 2:52 biedt een theologische maatstaf waarnaar het Wiel van het Leven, goed aangepast, streeft: Jezus groeide 'in wijsheid en gestalte, en in genade bij God en mensen.' Dit vierdimensionale portret van menselijke ontwikkeling is geen recept voor gelijke investering in vier kwadranten tegelijk, maar een beeld van groei als geheel persoon door de tijd heen."
+              "Lukas 2:52 menawarkan tolak ukur teologis yang menjadi aspirasi Roda Kehidupan: Yesus bertumbuh 'dalam hikmat dan statur, dan dalam kasih karunia pada Allah dan manusia.' Potret empat dimensi perkembangan manusia ini bukan resep investasi yang sama di empat kuadran sekaligus, melainkan gambaran pertumbuhan manusia seutuhnya dari waktu ke waktu. Roda Kehidupan, pada terbaiknya, adalah instrumen untuk memperhatikan di mana pertumbuhan terhenti dan di mana pemulihan perlu dimulai."
             ),
             t(
               "The deepest theological resource for whole-life assessment is the Hebrew concept of shalom. Shalom is not simply peace in the sense of absence of conflict but comprehensive flourishing — right relationship with God, with others, with oneself, and with creation. The Wheel of Life, for a person of faith, is not primarily a productivity tool or a personal optimization exercise. It is an instrument of honest self-knowledge in the service of shalom, a way of seeing clearly where life is not yet as it was made to be, and of bringing that honesty before God and trusted community with humility, hope, and the confidence that the One who began a good work is faithfully completing it.",
-              "Sumber daya teologis terdalam untuk penilaian kehidupan secara menyeluruh adalah konsep Ibrani tentang shalom. Shalom bukan sekadar kedamaian dalam arti ketiadaan konflik tetapi kemakmuran yang komprehensif — hubungan yang benar dengan Allah, dengan sesama, dengan diri sendiri, dan dengan ciptaan. Roda Kehidupan, bagi orang beriman, bukan terutama alat produktivitas atau latihan optimasi pribadi. Ini adalah instrumen pengenalan diri yang jujur demi shalom, cara melihat dengan jelas di mana hidup belum seperti yang seharusnya.",
-              "De diepste theologische bron voor een beoordeling van het hele leven is het Hebreeuwse begrip shalom. Shalom is niet alleen vrede in de zin van afwezigheid van conflict, maar alomvattend bloei — juiste relatie met God, met anderen, met jezelf en met de schepping. Het Wiel van het Leven is voor een gelovige niet primair een productiviteitsinstrument maar een middel voor eerlijke zelfkennis in dienst van shalom."
+              "Sumber daya teologis terdalam untuk penilaian kehidupan secara menyeluruh adalah konsep Ibrani tentang shalom. Shalom bukan sekadar kedamaian dalam arti ketiadaan konflik tetapi kemakmuran yang komprehensif — hubungan yang benar dengan Allah, dengan sesama, dengan diri sendiri, dan dengan ciptaan. Roda Kehidupan, bagi orang beriman, bukan terutama alat produktivitas atau latihan optimasi pribadi. Ini adalah instrumen pengenalan diri yang jujur demi shalom, cara melihat dengan jelas di mana hidup belum seperti yang seharusnya."
             ),
           ].map((para, i) => (
             <p key={i} style={{ fontSize: 16, color: "oklch(38% 0.05 260)", lineHeight: 1.85, marginBottom: 20 }}>
@@ -981,11 +924,11 @@ export default function WheelOfLifeClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
-            {t("Take Stock of Your Whole Life", "Tinjau Seluruh Hidup Anda", "Neem Uw Hele Leven Onder de Loep")}
+            {t("Take Stock of Your Whole Life", "Tinjau Seluruh Hidup Anda")}
           </h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Training", "Pelatihan", "Contentbibliotheek")}
+              {t("Training", "Pelatihan")}
             </Link>
           </div>
         </div>

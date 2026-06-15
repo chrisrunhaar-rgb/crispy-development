@@ -24,13 +24,6 @@ const personalFeatureDescriptions: Record<string, Record<string, string>> = {
     "Community Access": "Terhubung dengan pemimpin lintas budaya lain yang memahami konteksmu.",
     "8 PDF Resources": "Perpustakaan dasar yang mencakup budaya, kepemimpinan, identitas, dan iman — milikmu.",
   },
-  nl: {
-    "Curated Leadership Content": "Materialen specifiek geselecteerd voor cross-culturele contexten — geen generiek hergebruikt advies.",
-    "Reflection Tools": "Gestructureerde prompts en kaders voor het verwerken van de unieke druk van leidinggeven over culturen heen.",
-    "Progress Tracking": "Zie wat je hebt afgerond, wat er nog komt en hoe ver je bent op je traject.",
-    "Community Access": "Maak contact met andere cross-culturele leiders die jouw context begrijpen.",
-    "8 PDF Resources": "Een basisbibliotheek over cultuur, leiderschap, identiteit en geloof — voor jou te bewaren.",
-  },
 };
 
 const featureTitles: Record<string, Record<string, string>> = {
@@ -47,13 +40,6 @@ const featureTitles: Record<string, Record<string, string>> = {
     "Progress Tracking": "Pelacakan Kemajuan",
     "Community Access": "Akses Komunitas",
     "8 PDF Resources": "8 Sumber Daya PDF",
-  },
-  nl: {
-    "Curated Leadership Content": "Gecureerde Leiderschapscontent",
-    "Reflection Tools": "Reflectietools",
-    "Progress Tracking": "Voortgangsbewaking",
-    "Community Access": "Gemeenschapstoegang",
-    "8 PDF Resources": "8 PDF-materialen",
   },
 };
 

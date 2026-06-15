@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -8,12 +8,12 @@ import LangToggle from "@/components/LangToggle";
 
 // -- TYPES ----------------------------------------------------------------------
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 // -- HELPERS --------------------------------------------------------------------
 
-const t = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const t = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 
 // -- DATA -----------------------------------------------------------------------
 
@@ -198,10 +198,10 @@ const LEARNING_METHODS = [
 ];
 
 const BREAKS = [
-  { emoji: "??", en: "Drink water", id: "Minum air", nl: "Water drinken" },
-  { emoji: "??", en: "Brief journaling or reflection", id: "Jurnal atau refleksi singkat", nl: "Kort dagboekschrijven of reflectie" },
-  { emoji: "??", en: "Light stretching or movement", id: "Peregangan ringan atau gerakan", nl: "Lichte rekken of beweging" },
-  { emoji: "??", en: "Short peer interaction", id: "Interaksi singkat dengan sesama", nl: "Korte interactie met een ander" },
+  { emoji: "??", en: "Drink water", id: "Minum air" },
+  { emoji: "??", en: "Brief journaling or reflection", id: "Jurnal atau refleksi singkat" },
+  { emoji: "??", en: "Light stretching or movement", id: "Peregangan ringan atau gerakan" },
+  { emoji: "??", en: "Short peer interaction", id: "Interaksi singkat dengan sesama" },
 ];
 
 // -- COMPONENT -----------------------------------------------------------------
@@ -210,11 +210,11 @@ type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function AttentionRetentionClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
 
-  const tr = (en: string, id: string, nl: string) => t(en, id, nl, lang);
+  const tr = (en: string, id: string) => t(en, id, lang);
 
   function handleSave() {
     if (saved) return;
@@ -241,10 +241,10 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
           {/* lang toggle */}
 
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
+            {tr("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, margin: "0 0 24px", color: "oklch(96% 0.005 80)" }}>
-            {tr("Attention & Retention", "Perhatian & Retensi", "Aandacht & Retentie")}
+            {tr("Attention & Retention", "Perhatian & Retensi")}
           </h1>
           <p style={{ fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
@@ -263,7 +263,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? tr("Saved to Dashboard", "Tersimpan di Dashboard") : tr("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       {/* -- ATTENTION SECTION --------------------------------------------------- */}
       <section style={{ padding: "80px 24px", maxWidth: 760, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 24px" }}>
-          {tr("How Attention Works", "Bagaimana Perhatian Bekerja", "Hoe Aandacht Werkt")}
+          {tr("How Attention Works", "Bagaimana Perhatian Bekerja")}
         </h2>
         <p style={{ fontSize: 16, lineHeight: 1.75, color: "oklch(38% 0.05 260)", marginBottom: 24 }}>
           {tr(
@@ -292,12 +292,12 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
         {/* attention curve visual */}
         <div style={{ background: "oklch(22% 0.10 260)", borderRadius: 12, padding: "40px", marginBottom: 48 }}>
           <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
-            {tr("The Attention Curve", "Kurva Perhatian", "De Aandachtscurve")}
+            {tr("The Attention Curve", "Kurva Perhatian")}
           </h3>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "stretch" }}>
             {[
               {
-                time: tr("0—5 min", "0—5 mnt", "0—5 min"),
+                time: tr("0—5 min", "0—5 mnt"),
                 levelEn: "High", levelId: "Tinggi", levelNl: "Hoog",
                 descEn: "Peak engagement. Introduce key concepts and prime the learner.",
                 descId: "Keterlibatan puncak. Perkenalkan konsep kunci dan persiapkan peserta.",
@@ -305,7 +305,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
                 height: "100%", color: "oklch(45% 0.14 145)"
               },
               {
-                time: tr("5—15 min", "5—15 mnt", "5—15 min"),
+                time: tr("5—15 min", "5—15 mnt"),
                 levelEn: "Sustained", levelId: "Berkelanjutan", levelNl: "Aanhoudend",
                 descEn: "Solid focus. Core content delivery — your main teaching window.",
                 descId: "Fokus solid. Penyampaian konten inti — jendela pengajaran utama Anda.",
@@ -313,7 +313,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
                 height: "88%", color: "oklch(48% 0.14 45)"
               },
               {
-                time: tr("15—20 min", "15—20 mnt", "15—20 min"),
+                time: tr("15—20 min", "15—20 mnt"),
                 levelEn: "Fading", levelId: "Memudar", levelNl: "Wegvallend",
                 descEn: "Natural decline begins. Introduce interaction or activity to reset.",
                 descId: "Penurunan alami dimulai. Perkenalkan interaksi atau aktivitas untuk menyegarkan.",
@@ -321,7 +321,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
                 height: "62%", color: "oklch(52% 0.14 55)"
               },
               {
-                time: tr("20+ min", "20+ mnt", "20+ min"),
+                time: tr("20+ min", "20+ mnt"),
                 levelEn: "Low", levelId: "Rendah", levelNl: "Laag",
                 descEn: "Without a break or reset, retention drops significantly.",
                 descId: "Tanpa jeda atau penyegaran, retensi menurun secara signifikan.",
@@ -347,7 +347,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
 
         {/* recovery breaks */}
         <h3 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(35% 0.08 260)", marginBottom: 20 }}>
-          {tr("Recovery Breaks That Work", "Jeda Pemulihan yang Efektif", "Herstelpauzess Die Werken")}
+          {tr("Recovery Breaks That Work", "Jeda Pemulihan yang Efektif")}
         </h3>
         <p style={{ fontSize: 15, lineHeight: 1.7, color: "oklch(40% 0.06 260)", marginBottom: 24 }}>
           {tr(
@@ -419,7 +419,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       {/* -- LEARNING STYLES ----------------------------------------------------- */}
       <section style={{ padding: "80px 24px", maxWidth: 900, margin: "0 auto" }}>
         <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-          {tr("Seven Learning Styles", "Tujuh Gaya Belajar", "Zeven Leerstijlen")}
+          {tr("Seven Learning Styles", "Tujuh Gaya Belajar")}
         </h2>
         <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
           {tr(
@@ -468,7 +468,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       <section style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {tr("Ten Learning Methods", "Sepuluh Metode Pembelajaran", "Tien Leermethoden")}
+            {tr("Ten Learning Methods", "Sepuluh Metode Pembelajaran")}
           </h2>
           <p style={{ fontSize: 16, color: "oklch(44% 0.06 260)", marginBottom: 48, lineHeight: 1.65 }}>
             {tr(
@@ -544,7 +544,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 20px" }}>
-            {tr("Design Better Training", "Rancang Pelatihan yang Lebih Baik", "Ontwerp Betere Training")}
+            {tr("Design Better Training", "Rancang Pelatihan yang Lebih Baik")}
           </h2>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href={userPathway ? "/dashboard" : "/personal"} style={{
@@ -552,7 +552,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
               padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14,
               border: "1px solid oklch(42% 0.08 260)", textDecoration: "none",
             }}>
-              {userPathway ? tr("Go to Dashboard", "Ke Dashboard", "Naar Dashboard") : tr("Explore Pathways", "Jelajahi Jalur", "Verken Trajecten")}
+              {userPathway ? tr("Go to Dashboard", "Ke Dashboard") : tr("Explore Pathways", "Jelajahi Jalur")}
             </Link>
           </div>
         </div>

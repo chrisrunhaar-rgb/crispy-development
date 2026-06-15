@@ -3,8 +3,8 @@
 import { useState } from "react";
 import TypeCard from "./TypeCard";
 
-type Lang = "en" | "id" | "nl";
-type T3 = { en: string; id: string; nl: string };
+type Lang = "en" | "id";
+type T3 = { en: string; id: string };
 
 interface EnneagramType {
   number: number;
@@ -15,8 +15,8 @@ interface EnneagramType {
   overview: T3;
   motivation: T3;
   fear: T3;
-  strengths: { en: string[]; id: string[]; nl: string[] };
-  blindspots: { en: string[]; id: string[]; nl: string[] };
+  strengths: { en: string[]; id: string[] };
+  blindspots: { en: string[]; id: string[] };
   communication: T3;
   crossCultural: T3;
 }
@@ -44,9 +44,7 @@ export default function EnneagramTypesGrid({
       >
         {lang === "en"
           ? "The Nine Types"
-          : lang === "id"
-            ? "Sembilan Tipe"
-            : "De Negen Types"}
+          : "Sembilan Tipe"}
       </div>
       <div
         style={{

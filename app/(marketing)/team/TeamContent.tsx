@@ -20,14 +20,6 @@ const teamFeatureDescriptions: Record<string, { title: string; description: stri
     { title: "Ruang Diskusi Tim", description: "Ruang khusus bagi tim Anda untuk mendiskusikan konten dan berbagi wawasan." },
     { title: "Alat Pemimpin", description: "Sumber daya dan panduan tambahan khusus untuk pemimpin tim dalam konteks lintas budaya." },
   ],
-  nl: [
-    { title: "Teamdashboard", description: "Een gedeeld overzicht van je team — leden, geselecteerde content en groepsactiviteit." },
-    { title: "Ledenbeheer", description: "Nodig teamleden uit via e-mail of deelbare link. Verwijder of beheer toegang op elk moment." },
-    { title: "Contentselectie", description: "Doorzoek de volledige contentbibliotheek en kies wat je team ziet. Jij hebt de controle." },
-    { title: "Persoonlijk Traject Inbegrepen", description: "Elk teamlid heeft ook volledige toegang tot de functies van het Persoonlijk Traject." },
-    { title: "Teamdiscussieruimte", description: "Een speciale ruimte voor je team om content te bespreken en inzichten te delen." },
-    { title: "Leiderstools", description: "Extra materialen en gidsen specifiek voor teamleiders in cross-culturele contexten." },
-  ],
 };
 
 export default function TeamContent({ ctaHref = "/pricing" }: { ctaHref?: string }) {

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -6,9 +6,9 @@ import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "id";
+const tFn = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 
 // --- CQ Dimensions (accordion data) -------------------------------------------
 const cqDimensions = [
@@ -16,73 +16,53 @@ const cqDimensions = [
     number: "01",
     en_title: "Motivational CQ — The Drive",
     id_title: "CQ Motivasi — Dorongan",
-    nl_title: "Motivationele CQ — De Drijfveer",
     en_tagline: "Do you actually want to understand them — or just manage them?",
     id_tagline: "Apakah Anda benar-benar ingin memahami mereka — atau sekadar mengelola mereka?",
-    nl_tagline: "Wil je hen echt begrijpen — of alleen maar managen?",
     en_desc: "Motivational CQ drives the whole model. It is your genuine desire to understand people who are different from you — your willingness to feel uncomfortable, your belief that you can grow, and your curiosity about how others see the world. Without this, nothing else works.",
     id_desc: "CQ Motivasi adalah sumber energi dari seluruh model. Ini adalah minat intrinsik Anda dalam keterlibatan lintas budaya — kesediaan Anda untuk duduk dengan ketidaknyamanan, keyakinan bahwa Anda bisa belajar, keingintahuan sejati tentang bagaimana orang lain melihat dunia.",
-    nl_desc: "Motivationele CQ is de energiebron van het hele model. Het is je intrinsieke interesse in interculturele betrokkenheid — je bereidheid om met ongemak te zitten, je vertrouwen dat je kunt leren, je echte nieuwsgierigheid naar hoe anderen de wereld zien.",
     en_low: "Low Motivational CQ sounds like: 'I just prefer working with my own people' — which is often fear wearing a polite face. It looks like ticking diversity boxes on a form while secretly wishing everyone would just think like you do.",
     id_low: "CQ Motivasi rendah terlihat seperti: kecemasan yang disamarkan sebagai 'Saya lebih suka bekerja dengan orang-orang saya sendiri.' Terlihat seperti mencentang kotak budaya di formulir sambil diam-diam berharap semua orang berpikir seperti Anda.",
-    nl_low: "Lage Motivationele CQ ziet eruit als: angst vermomd als 'Ik werk liever met mijn eigen mensen.' Het lijkt op het afvinken van culturele vakjes op een formulier terwijl je stiekem wenst dat iedereen gewoon zoals jij zou denken.",
     en_scenario: "Scenario: A Dutch leader in Jakarta notices his Indonesian team rarely speaks up in group meetings. Low Motivational CQ assumes they're passive. High Motivational CQ gets curious: what does respectful contribution look like here? He asks. He listens. He restructures his meetings.",
     id_scenario: "Skenario: Seorang pemimpin Belanda di Jakarta memperhatikan timnya jarang berbicara dalam rapat kelompok. CQ Motivasi rendah menganggap mereka pasif. CQ Motivasi tinggi menjadi penasaran: seperti apa kontribusi yang penuh hormat di sini? Dia bertanya. Dia mendengarkan. Dia merestrukturisasi rapatnya.",
-    nl_scenario: "Scenario: Een Nederlandse leider in Jakarta merkt dat zijn Indonesische team zelden spreekt tijdens groepsvergaderingen. Lage Motivationele CQ veronderstelt passiviteit. Hoge Motivationele CQ wordt nieuwsgierig: hoe ziet respectvolle bijdrage er hier uit? Hij vraagt. Hij luistert. Hij herstructureert zijn vergaderingen.",
   },
   {
     number: "02",
     en_title: "Cognitive CQ — The Knowledge",
     id_title: "CQ Kognitif — Pengetahuan",
-    nl_title: "Cognitieve CQ — De Kennis",
     en_tagline: "Understanding cultures is not the same as knowing facts about them.",
     id_tagline: "Memahami budaya tidak sama dengan mengetahui fakta tentang mereka.",
-    nl_tagline: "Culturen begrijpen is niet hetzelfde als feiten over hen kennen.",
     en_desc: "Cognitive CQ is knowledge — but deeper than memorising customs. It means understanding how culture shapes the way people think: how they see time, authority, family, honour, and truth. It also means knowing the key differences between cultures — like whether a society values the individual or the group, how people relate to those in power, and whether communication tends to be direct or indirect.",
     id_desc: "CQ Kognitif adalah basis pengetahuan budaya Anda — tetapi lebih dari sekadar menghafal adat istiadat. Ini adalah memahami bagaimana budaya membentuk arsitektur mendalam pemikiran manusia: bagaimana orang mendefinisikan waktu, otoritas, rasa malu, kehormatan, kewajiban keluarga, dan kebenaran.",
-    nl_desc: "Cognitieve CQ is je culturele kennisbasis — maar het is meer dan gewoonten memoriseren. Het is begrijpen hoe cultuur de diepe architectuur van menselijk denken vormt: hoe mensen tijd, autoriteit, schaamte, eer, familieverplichting en waarheid defini—ren.",
     en_low: "Low Cognitive CQ sounds like: 'I've read a book on this culture — I get it.' Or arriving somewhere new and thinking three months on the ground makes you an expert. Cultural knowledge is a starting point, not a destination.",
     id_low: "CQ Kognitif rendah terlihat seperti: mengasumsikan bahwa karena Anda telah membaca satu buku tentang suatu budaya, Anda memahaminya. Terlihat seperti menerapkan dimensi Hofstede seolah-olah mereka menggambarkan individu daripada kecenderungan statistik.",
-    nl_low: "Lage Cognitieve CQ ziet eruit als: aannemen dat je een cultuur begrijpt omdat je er ——n boek over hebt gelezen. Het lijkt op het toepassen van Hofstedes dimensies alsof ze individuen beschrijven in plaats van statistische tendensen.",
     en_scenario: "Scenario: A Korean-American pastor plants a church in Lagos, Nigeria. He's studied African cultures — or so he thinks. He arrives expecting what he assumed would be a high-context, oral, communal culture. What he finds is a sophisticated urban congregation shaped by Pentecostalism, British colonial history, and 21st-century tech entrepreneurship. His framework was a starting point, not a destination.",
     id_scenario: "Skenario: Seorang pendeta Korea-Amerika menanam gereja di Lagos, Nigeria. Dia telah mempelajari budaya Afrika — atau begitu pikirnya. Dia tiba dengan mengharapkan budaya konteks tinggi, lisan, dan komunal. Yang dia temukan adalah jemaat perkotaan yang canggih yang dibentuk oleh Pentakostalisme, sejarah kolonial Inggris, dan kewirausahaan teknologi abad ke-21.",
-    nl_scenario: "Scenario: Een Koreaans-Amerikaanse pastor plant een kerk in Lagos, Nigeria. Hij heeft Afrikaanse culturen bestudeerd — of zo denkt hij. Hij verwacht een hogere-context, mondelinge, gemeenschappelijke cultuur. Wat hij vindt is een geavanceerde stadsgemeente gevormd door het Pinksterchristendom, de Britse koloniale geschiedenis en 21e-eeuwse tech-ondernemerschap.",
   },
   {
     number: "03",
     en_title: "Metacognitive CQ — The Strategy",
     id_title: "CQ Metakognitif — Strategi",
-    nl_title: "Metacognitieve CQ — De Strategie",
     en_tagline: "The hardest skill: watching yourself think — in real time.",
     id_tagline: "Keterampilan tersulit: mengamati diri sendiri berpikir — secara real time.",
-    nl_tagline: "De moeilijkste vaardigheid: jezelf zien denken — in real time.",
     en_desc: "Metacognitive CQ is the ability to watch your own thinking in real time. It is the habit of pausing and asking: 'Am I reading this through my own cultural assumptions? What might I be missing?' Leaders with high metacognitive CQ prepare before entering complex cross-cultural situations, stay aware during them, and reflect afterwards. They catch themselves before a wrong assumption turns into a real mistake.",
     id_desc: "CQ Metakognitif adalah kesadaran tentang proses berpikir Anda sendiri selama pertemuan lintas budaya. Ini adalah kapasitas untuk berhenti di tengah interpretasi dan bertanya: 'Apakah saya membaca situasi ini melalui lensa budaya saya sendiri?'",
-    nl_desc: "Metacognitieve CQ is bewustzijn van je eigen denkproces tijdens interculturele ontmoetingen. Het is het vermogen om midden in een interpretatie te pauzeren en te vragen: 'Lees ik deze situatie door mijn eigen culturele lens? Welke aannames breng ik hier mee?'",
     en_low: "Low Metacognitive CQ looks like never questioning your first read of a situation. Assuming silence means agreement. Assuming directness means respect. Assuming busyness means commitment. These are habits from your own culture — not universal truths.",
     id_low: "CQ Metakognitif rendah terlihat seperti: tidak pernah mempertanyakan pembacaan pertama Anda tentang suatu situasi. Mengasumsikan keheningan berarti persetujuan. Mengasumsikan ketegasan berarti rasa hormat. Ini semua adalah default budaya yang disamarkan sebagai kebenaran universal.",
-    nl_low: "Lage Metacognitieve CQ ziet eruit als: nooit je eerste lezing van een situatie in twijfel trekken. Ervan uitgaan dat stilte instemming betekent. Ervan uitgaan dat directheid respect betekent. Dit zijn allemaal culturele standaardinstellingen vermomd als universele waarheid.",
     en_scenario: "Scenario: A British NGO director in Cairo gets frustrated that her Egyptian counterpart never disagrees with her in meetings. She concludes he's a yes-man. Metacognitive CQ would prompt her to ask: 'Is public disagreement with a female foreign director simply not the way criticism works here? Where does his real feedback surface?' Answer: in private conversations, over tea, after the meeting ends.",
     id_scenario: "Skenario: Seorang direktur LSM Inggris di Kairo frustrasi karena mitra Mesirnya tidak pernah tidak setuju dengannya dalam rapat. Dia menyimpulkan dia orang yang hanya mengiyakan. CQ Metakognitif akan mendorongnya untuk bertanya: 'Apakah ketidaksetujuan publik dengan direktur asing perempuan bukan cara kritik bekerja di sini?'",
-    nl_scenario: "Scenario: Een Britse NGO-directeur in Ca—ro wordt gefrustreerd omdat haar Egyptische tegenhanger het nooit met haar oneens is in vergaderingen. Ze concludeert dat hij een ja-knikker is. Metacognitieve CQ zou haar ertoe aanzetten te vragen: 'Is openbaar meningsverschil met een vrouwelijke buitenlandse directeur hier gewoon niet de manier waarop kritiek werkt?'",
   },
   {
     number: "04",
     en_title: "Behavioral CQ — The Action",
     id_title: "CQ Perilaku — Tindakan",
-    nl_title: "Gedragsmatige CQ — De Actie",
     en_tagline: "Knowing is not enough. You have to actually change how you show up.",
     id_tagline: "Mengetahui saja tidak cukup. Anda harus benar-benar mengubah cara Anda hadir.",
-    nl_tagline: "Weten is niet genoeg. Je moet daadwerkelijk veranderen hoe je verschijnt.",
     en_desc: "Behavioral CQ is where everything shows up — in your actual behavior. It is how you adjust the way you speak, listen, and carry yourself in cross-cultural settings: your tone, pace, eye contact, how direct you are, how you give feedback, how you handle silence. High behavioral CQ doesn't mean pretending to be someone else. It means expanding your range.",
     id_desc: "CQ Perilaku adalah output yang terlihat dari seluruh model — penyesuaian aktual dari perilaku verbal dan nonverbal Anda dalam pengaturan lintas budaya. Ini mencakup nada, kecepatan berbicara, kontak mata, kedekatan fisik, kesentuhan, ketegasan, formalitas.",
-    nl_desc: "Gedragsmatige CQ is de zichtbare uitvoer van het hele model — de feitelijke aanpassing van je verbale en non-verbale gedrag in interculturele omgevingen. Dit omvat toon, spreektempo, oogcontact, fysieke nabijheid, aanraking, directheid, formaliteit.",
     en_low: "Low Behavioral CQ looks like knowing everything about a culture — and still reverting to your default style the moment things get tense. Or going so far in the other direction that people feel patronised. ('He tries too hard to be one of us.') The goal is genuine flexibility, not a performance.",
     id_low: "CQ Perilaku rendah terlihat seperti: mengetahui segalanya tentang suatu budaya dan masih kembali ke gaya default Anda di bawah tekanan. Atau terlalu mengoreksi secara agresif sehingga orang merasa direndahkan. Tujuannya adalah jangkauan yang otentik, bukan pertunjukan.",
-    nl_low: "Lage Gedragsmatige CQ ziet eruit als: alles over een cultuur weten en toch terugvallen op je standaardstijl onder druk. Of zo agressief overcorrigeren dat mensen zich betutteld voelen. Het doel is authentiek bereik, geen optreden.",
     en_scenario: "Scenario: An American church planter in Thailand learns intellectually that Thai culture values indirect communication and 'saving face.' But in a tense team meeting, he reverts to his direct American style: 'Let's just be honest about what's not working.' The room goes silent — not with agreement, but with shutdown. His behavioral CQ failed at the moment it mattered most.",
     id_scenario: "Skenario: Seorang penanam gereja Amerika di Thailand belajar secara intelektual bahwa budaya Thailand menghargai komunikasi tidak langsung dan 'menyelamatkan muka.' Tetapi dalam rapat tim yang tegang, dia kembali ke gaya Amerika yang langsung: 'Mari kita jujur tentang apa yang tidak berhasil.' Ruangan menjadi sunyi — bukan dengan persetujuan, tetapi dengan penutupan.",
-    nl_scenario: "Scenario: Een Amerikaanse kerkplanter in Thailand leert intellectueel dat de Thaise cultuur indirecte communicatie en 'gezichtsbehoud' waardeert. Maar in een gespannen teamvergadering valt hij terug op zijn directe Amerikaanse stijl: 'Laten we gewoon eerlijk zijn over wat niet werkt.' De kamer wordt stil — niet met instemming, maar met sluiting.",
   },
 ];
 
@@ -92,21 +72,17 @@ const developmentLevels = [
     level: "01",
     en_label: "Beginner",
     id_label: "Pemula",
-    nl_label: "Beginner",
     en_subtitle: "Build your foundation — honest self-awareness first",
     id_subtitle: "Bangun fondasi Anda — kesadaran diri yang jujur lebih dulu",
-    nl_subtitle: "Bouw je fundament — eerlijke zelfbewustwording eerst",
     color: "#4A90D9",
     actions: [
       {
         en: "Take the Cultural Values Profile assessment at CulturalQ.com (verify current free/paid status). Don't just note your scores — sit with what surprises you. Your lowest score is your most urgent growth edge.",
         id: "Ambil penilaian Profil Nilai Budaya di CulturalQ.com (periksa status gratis/berbayar saat ini). Jangan hanya catat skor Anda — renungkan apa yang mengejutkan Anda. Skor terendah Anda adalah tepi pertumbuhan paling mendesak.",
-        nl: "Doe de Cultural Values Profile-beoordeling op CulturalQ.com (controleer de huidige gratis/betaalde status). Noteer niet alleen je scores — blijf stilstaan bij wat je verrast. Je laagste score is je meest urgente groeipunt.",
       },
       {
         en: "Choose one person in your context whose cultural background significantly differs from yours. Spend 30 minutes asking them about their culture — not to analyze, but to genuinely understand. Listen more than you speak.",
         id: "Pilih satu orang dalam konteks Anda yang latar belakang budayanya sangat berbeda dari Anda. Habiskan 30 menit bertanya tentang budaya mereka — bukan untuk menganalisis, tetapi untuk benar-benar memahami.",
-        nl: "Kies ——n persoon in jouw context wiens culturele achtergrond significant verschilt van de jouwe. Besteed 30 minuten aan het stellen van vragen over hun cultuur — niet om te analyseren, maar om oprecht te begrijpen.",
       },
     ],
   },
@@ -114,21 +90,17 @@ const developmentLevels = [
     level: "02",
     en_label: "Practitioner",
     id_label: "Praktisi",
-    nl_label: "Practitioner",
     en_subtitle: "Build systematic habits — discipline over inspiration",
     id_subtitle: "Bangun kebiasaan sistematis — disiplin lebih dari inspirasi",
-    nl_subtitle: "Bouw systematische gewoonten — discipline boven inspiratie",
     color: "#E07540",
     actions: [
       {
         en: "After every significant cross-cultural interaction, write three sentences: (1) What happened. (2) What I assumed. (3) What might have actually been going on. This is metacognitive CQ in practice — and it compounds over time.",
         id: "Setelah setiap interaksi lintas budaya yang signifikan, tulis tiga kalimat: (1) Apa yang terjadi. (2) Apa yang saya asumsikan. (3) Apa yang mungkin sebenarnya terjadi. Ini adalah CQ Metakognitif dalam praktik — dan itu bertambah seiring waktu.",
-        nl: "Schrijf na elke significante interculturele interactie drie zinnen: (1) Wat er gebeurde. (2) Wat ik veronderstelde. (3) Wat er eigenlijk aan de hand kon zijn. Dit is Metacognitieve CQ in de praktijk — en het accumuleert in de loop van de tijd.",
       },
       {
         en: "Find a cultural mentor — ideally someone local to your context who respects you enough to be honest. Meet monthly. Ask explicitly: 'What am I missing? What do I get wrong that you haven't told me yet?' Honour their honesty.",
         id: "Temukan mentor budaya — idealnya seseorang yang lokal untuk konteks Anda yang cukup menghormati Anda untuk jujur. Bertemu setiap bulan. Tanyakan secara eksplisit: 'Apa yang saya lewatkan? Apa yang saya salah yang belum Anda ceritakan?'",
-        nl: "Vind een culturele mentor — idealiter iemand die lokaal is in jouw context en je genoeg respecteert om eerlijk te zijn. Kom maandelijks samen. Vraag expliciet: 'Wat mis ik? Wat doe ik fout dat je me nog niet hebt verteld?' Eer hun eerlijkheid.",
       },
     ],
   },
@@ -136,21 +108,17 @@ const developmentLevels = [
     level: "03",
     en_label: "Advanced",
     id_label: "Lanjutan",
-    nl_label: "Gevorderd",
     en_subtitle: "Lead others into growth — teach what you've learned",
     id_subtitle: "Pimpin orang lain dalam pertumbuhan — ajarkan apa yang telah Anda pelajari",
-    nl_subtitle: "Leid anderen in groei — onderwijs wat je hebt geleerd",
     color: "#1B3A6B",
     actions: [
       {
         en: "Deliberately put yourself in culturally unfamiliar situations where you hold no positional power — as a guest, a learner, a follower. Experience what it feels like to be the cultural minority in the room. This builds empathy that no seminar can teach.",
         id: "Dengan sengaja tempatkan diri Anda dalam situasi yang tidak dikenal secara budaya di mana Anda tidak memiliki kekuatan posisional — sebagai tamu, pelajar, pengikut. Rasakan seperti apa menjadi minoritas budaya di ruangan.",
-        nl: "Stel jezelf bewust bloot aan cultureel onbekende situaties waar je geen positionele macht hebt — als gast, leerling, volgeling. Ervaar hoe het voelt om de culturele minderheid in de kamer te zijn.",
       },
       {
         en: "Build CQ development into your team culture. Debrief cross-cultural failures openly. Celebrate cultural learning moments. Create space for your team members from minority cultures to name what isn't working — and actually change when they do.",
         id: "Bangun pengembangan CQ ke dalam budaya tim Anda. Debriefkan kegagalan lintas budaya secara terbuka. Rayakan momen pembelajaran budaya. Ciptakan ruang bagi anggota tim Anda dari budaya minoritas untuk menyebutkan apa yang tidak berhasil — dan benar-benar berubah ketika mereka melakukannya.",
-        nl: "Bouw CQ-ontwikkeling in je teamcultuur. Bespreek interculturele mislukkingen openlijk. Vier culturele leermomenten. Maak ruimte voor je teamleden uit minderhedenculturen om te benoemen wat niet werkt — en verander daadwerkelijk als ze dat doen.",
       },
     ],
   },
@@ -162,25 +130,21 @@ const reflectionQuestions = [
     roman: "I",
     en: "Think of a cross-cultural relationship that hasn't worked well. Which CQ dimension was most underdeveloped — yours, not theirs?",
     id: "Pikirkan hubungan lintas budaya yang tidak berjalan dengan baik. Dimensi CQ mana yang paling kurang berkembang — Anda, bukan mereka?",
-    nl: "Denk aan een interculturele relatie die niet goed werkte. Welke CQ-dimensie was het meest onderontwikkeld — die van jou, niet van hen?",
   },
   {
     roman: "II",
     en: "What is one cultural assumption you hold that you have never seriously questioned? Where did it come from?",
     id: "Apa satu asumsi budaya yang Anda pegang yang belum pernah Anda pertanyakan secara serius? Dari mana asalnya?",
-    nl: "Wat is ——n culturele aanname die je hebt die je nooit serieus hebt bevraagd? Waar komt die vandaan?",
   },
   {
     roman: "III",
     en: "In what ways has your faith community subtly exported your home culture alongside the gospel? What would it look like to untangle those two things?",
     id: "Dengan cara apa komunitas iman Anda secara halus mengekspor budaya rumah Anda bersama dengan Injil? Seperti apa memisahkan kedua hal tersebut?",
-    nl: "Op welke manieren heeft jouw geloofsgemeenschap stilletjes je thuiscultuur samen met het evangelie ge—xporteerd? Hoe zou het eruitzien om die twee dingen los te koppelen?",
   },
   {
     roman: "IV",
     en: "Who in your life has higher CQ than you in specific dimensions? What would it look like to deliberately learn from them this month?",
     id: "Siapa dalam hidup Anda yang memiliki CQ lebih tinggi dari Anda di dimensi tertentu? Seperti apa secara sengaja belajar dari mereka bulan ini?",
-    nl: "Wie in je leven heeft een hogere CQ dan jij op specifieke dimensies? Hoe zou het eruitzien om deze maand bewust van hen te leren?",
   },
 ];
 
@@ -188,12 +152,12 @@ type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function CulturalIntelligenceClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openDimension, setOpenDimension] = useState<number | null>(null);
   const [bgOpen, setBgOpen] = useState(false);
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const t = (en: string, id: string) => tFn(en, id, lang);
 
   function handleSave() {
     if (saved) return;
@@ -227,10 +191,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orangeOklch, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Cross-Cultural — Guide", "Lintas Budaya — Panduan", "Cross-Cultureel — Gids")}
+            {t("Cross-Cultural — Guide", "Lintas Budaya — Panduan")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Cultural Intelligence (CQ)", "Kecerdasan Budaya (CQ)", "Culturele Intelligentie (CQ)")}
+            {t("Cultural Intelligence (CQ)", "Kecerdasan Budaya (CQ)")}
           </h1>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 16px", lineHeight: 1.65 }}>
             {t(
@@ -247,7 +211,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
               style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
           </div>
         </div>
@@ -257,7 +221,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       {/* Format: Vivid narrative story block with left-border pull styling */}
       <div style={{ padding: "80px 24px 0", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 24 }}>
-          {t("A Story", "Sebuah Kisah", "Een Verhaal")}
+          {t("A Story", "Sebuah Kisah")}
         </p>
 
         {/* Story block */}
@@ -265,22 +229,19 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 2.8vw, 26px)", color: navyOklch, lineHeight: 1.55, marginBottom: 20, fontStyle: "italic" }}>
             {t(
               "Mark had led teams in five countries. MBA from a top school. Strong communicator. Clear vision. Everyone said he was going places.",
-              "Mark telah memimpin tim di lima negara. MBA dari sekolah terkemuka. Komunikator yang kuat. Visi yang jelas. Semua orang mengatakan dia akan berhasil.",
-              "Mark had teams geleid in vijf landen. MBA van een topschool. Sterke communicator. Heldere visie. Iedereen zei dat hij ver zou komen."
+              "Mark telah memimpin tim di lima negara. MBA dari sekolah terkemuka. Komunikator yang kuat. Visi yang jelas. Semua orang mengatakan dia akan berhasil."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
             {t(
               "When he arrived in Malaysia to lead a regional church-planting network, he did what he always did: called a team meeting, laid out the vision, assigned roles, and asked for input. The room nodded. He left energised.",
-              "Ketika dia tiba di Malaysia untuk memimpin jaringan penanaman gereja regional, dia melakukan apa yang selalu dilakukannya: mengadakan rapat tim, memaparkan visi, memberikan peran, dan meminta masukan. Ruangan mengangguk. Dia pergi dengan penuh semangat.",
-              "Toen hij in Maleisi— aankwam om een regionaal kerkplantersnetwerk te leiden, deed hij wat hij altijd deed: een teamvergadering beleggen, de visie uiteenzetten, rollen toewijzen en om input vragen. De kamer knikte. Hij vertrok vol energie."
+              "Ketika dia tiba di Malaysia untuk memimpin jaringan penanaman gereja regional, dia melakukan apa yang selalu dilakukannya: mengadakan rapat tim, memaparkan visi, memberikan peran, dan meminta masukan. Ruangan mengangguk. Dia pergi dengan penuh semangat."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
             {t(
               "Three months later, nothing had moved. The team was polite, present, and perfectly unproductive. People were carrying out tasks without any sense of ownership. Two senior local leaders had quietly stopped coming. When Mark finally asked a trusted colleague what was wrong, the answer stopped him cold:",
-              "Tiga bulan kemudian, tidak ada yang bergerak. Tim itu sopan, hadir, dan sepenuhnya tidak produktif. Orang-orang melakukan tugas tanpa rasa kepemilikan apapun. Dua pemimpin lokal senior telah diam-diam berhenti datang. Ketika Mark akhirnya bertanya kepada seorang kolega terpercaya apa yang salah, jawabannya membuatnya terdiam:",
-              "Drie maanden later was er niets veranderd. Het team was beleefd, aanwezig en volkomen onproductief. Mensen voerden taken uit zonder enige eigenaarschap. Twee senior lokale leiders waren stilletjes gestopt met komen. Toen Mark eindelijk aan een vertrouwde collega vroeg wat er mis was, trof het antwoord hem als een koude douche:"
+              "Tiga bulan kemudian, tidak ada yang bergerak. Tim itu sopan, hadir, dan sepenuhnya tidak produktif. Orang-orang melakukan tugas tanpa rasa kepemilikan apapun. Dua pemimpin lokal senior telah diam-diam berhenti datang. Ketika Mark akhirnya bertanya kepada seorang kolega terpercaya apa yang salah, jawabannya membuatnya terdiam:"
             )}
           </p>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 23px)", color: navyOklch, lineHeight: 1.6, fontStyle: "italic", marginBottom: 0 }}>
@@ -295,12 +256,11 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
           {t(
             "Mark had high IQ. He had strong EQ. He understood the gospel. But he lacked Cultural Intelligence — and it cost him a year of leadership and several key relationships.",
-            "Mark memiliki IQ tinggi. Dia memiliki EQ yang kuat. Dia memahami Injil. Tetapi dia kekurangan Kecerdasan Budaya — dan itu menghabiskan satu tahun kepemimpinan dan beberapa hubungan kunci.",
-            "Mark had een hoge IQ. Hij had sterke EQ. Hij begreep het evangelie. Maar hij miste Culturele Intelligentie — en dat kostte hem een jaar leiderschap en verschillende sleutelrelaties."
+            "Mark memiliki IQ tinggi. Dia memiliki EQ yang kuat. Dia memahami Injil. Tetapi dia kekurangan Kecerdasan Budaya — dan itu menghabiskan satu tahun kepemimpinan dan beberapa hubungan kunci."
           )}
         </p>
         <p style={{ fontSize: 17, fontWeight: 700, color: navyOklch, lineHeight: 1.7, marginBottom: 0 }}>
-          {t("This is a CQ problem. And it is far more common than you think.", "Ini adalah masalah CQ. Dan ini jauh lebih umum dari yang Anda kira.", "Dit is een CQ-probleem. En het komt veel vaker voor dan je denkt.")}
+          {t("This is a CQ problem. And it is far more common than you think.", "Ini adalah masalah CQ. Dan ini jauh lebih umum dari yang Anda kira.")}
         </p>
       </div>
 
@@ -317,7 +277,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           />
         </div>
         <p style={{ textAlign: "center", fontSize: 12, color: "oklch(60% 0.04 260)", marginTop: 10, fontStyle: "italic" }}>
-          {t("Cross-cultural dialogue requires more than goodwill — it requires intelligence.", "Dialog lintas budaya membutuhkan lebih dari niat baik — membutuhkan kecerdasan.", "Interculturele dialoog vereist meer dan goede wil — het vereist intelligentie.")}
+          {t("Cross-cultural dialogue requires more than goodwill — it requires intelligence.", "Dialog lintas budaya membutuhkan lebih dari niat baik — membutuhkan kecerdasan.")}
         </p>
       </div>
 
@@ -325,13 +285,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       <div style={{ background: navyOklch, padding: "clamp(48px, 7vw, 64px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orangeOklch, marginBottom: 24 }}>
-            {t("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+            {t("After This Module", "Setelah Modul Ini")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              t("Define Cultural Intelligence (CQ) and explain how it differs from cultural knowledge or general cross-cultural awareness.", "Mendefinisikan Kecerdasan Budaya (CQ) dan menjelaskan bagaimana perbedaannya dengan pengetahuan budaya atau kesadaran lintas budaya.", "Culturele Intelligentie (CQ) defini—ren en uitleggen hoe het verschilt van culturele kennis of algemeen intercultureel bewustzijn."),
-              t("Identify your current CQ level across the four dimensions — Drive, Knowledge, Strategy, and Action.", "Mengidentifikasi tingkat CQ Anda saat ini di empat dimensi — Drive, Pengetahuan, Strategi, dan Tindakan.", "Jouw huidige CQ-niveau identificeren op de vier dimensies — Drive, Kennis, Strategie en Actie."),
-              t("Apply one deliberate CQ practice to a real cross-cultural interaction you face in your current context.", "Menerapkan satu praktik CQ yang disengaja pada interaksi lintas budaya nyata yang Anda hadapi dalam konteks Anda saat ini.", "——n bewuste CQ-praktijk toepassen op een echte interculturele interactie in jouw huidige context."),
+              t("Define Cultural Intelligence (CQ) and explain how it differs from cultural knowledge or general cross-cultural awareness.", "Mendefinisikan Kecerdasan Budaya (CQ) dan menjelaskan bagaimana perbedaannya dengan pengetahuan budaya atau kesadaran lintas budaya."),
+              t("Identify your current CQ level across the four dimensions — Drive, Knowledge, Strategy, and Action.", "Mengidentifikasi tingkat CQ Anda saat ini di empat dimensi — Drive, Pengetahuan, Strategi, dan Tindakan."),
+              t("Apply one deliberate CQ practice to a real cross-cultural interaction you face in your current context.", "Menerapkan satu praktik CQ yang disengaja pada interaksi lintas budaya nyata yang Anda hadapi dalam konteks Anda saat ini."),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                 <div style={{ width: 3, height: 20, background: orangeOklch, flexShrink: 0, marginTop: 3 }} />
@@ -348,17 +308,16 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       {/* Format: Two-column concept split with pull-quote */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("The Framework", "Kerangka Kerja", "Het Kader")}
+          {t("The Framework", "Kerangka Kerja")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("What CQ Actually Is — and What It Isn't", "Apa CQ Sebenarnya — dan Apa yang Bukan", "Wat CQ Echt Is — en Wat Niet")}
+          {t("What CQ Actually Is — and What It Isn't", "Apa CQ Sebenarnya — dan Apa yang Bukan")}
         </h2>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "Cultural Intelligence (CQ) was originally developed by researchers Christopher Earley and Soon Ang.¹ David Livermore later applied the framework extensively to Christian and global leadership contexts.² Simply put: CQ is your ability to work well with people from different backgrounds — not just different countries, but different generations, organisations, and faith traditions too.",
-            "Kecerdasan Budaya (CQ) diperkenalkan pada tahun 2003 oleh peneliti Christopher Earley dan Soon Ang,¹ dan dikembangkan secara signifikan oleh David Livermore untuk konteks kepemimpinan Kristen dan global.² Ini adalah kemampuan untuk berfungsi secara efektif di berbagai situasi yang beragam secara budaya.",
-            "Culturele Intelligentie (CQ) werd in 2003 ge—ntroduceerd door onderzoekers Christopher Earley en Soon Ang, en significant ontwikkeld door David Livermore. Het is het vermogen om effectief te functioneren in cultureel diverse situaties."
+            "Kecerdasan Budaya (CQ) diperkenalkan pada tahun 2003 oleh peneliti Christopher Earley dan Soon Ang,¹ dan dikembangkan secara signifikan oleh David Livermore untuk konteks kepemimpinan Kristen dan global.² Ini adalah kemampuan untuk berfungsi secara efektif di berbagai situasi yang beragam secara budaya."
           )}
         </p>
 
@@ -378,38 +337,34 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "CQ is not the same as cultural knowledge. You can know everything about gift-giving customs in Japan and still completely misread a moment of silence from a Japanese colleague. Knowledge is raw material. CQ is what you build with it.",
-            "CQ tidak sama dengan pengetahuan budaya. Anda bisa mengetahui segalanya tentang adat pemberian hadiah di Jepang dan masih sepenuhnya salah membaca momen keheningan dari kolega Jepang. Pengetahuan adalah bahan mentah. CQ adalah apa yang Anda bangun dengannya.",
-            "CQ is niet hetzelfde als culturele kennis. Je kunt alles weten over cadeaugeefgewoonten in Japan en toch een moment van stilte van een Japanse collega volledig verkeerd lezen. Kennis is ruwe stof. CQ is wat je ermee bouwt."
+            "CQ tidak sama dengan pengetahuan budaya. Anda bisa mengetahui segalanya tentang adat pemberian hadiah di Jepang dan masih sepenuhnya salah membaca momen keheningan dari kolega Jepang. Pengetahuan adalah bahan mentah. CQ adalah apa yang Anda bangun dengannya."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "It is not the same as EQ either. Emotional intelligence helps you read people; cultural intelligence helps you read context. Both are necessary. A leader with high EQ but low CQ will be genuinely empathetic — and still systematically misunderstand the people they lead.",
-            "Itu juga tidak sama dengan EQ. Kecerdasan emosional membantu Anda membaca orang; kecerdasan budaya membantu Anda membaca konteks. Keduanya diperlukan. Pemimpin dengan EQ tinggi tetapi CQ rendah akan benar-benar empatik — dan masih secara sistematis salah memahami orang-orang yang dipimpinnya.",
-            "Het is ook niet hetzelfde als EQ. Emotionele intelligentie helpt je mensen te lezen; culturele intelligentie helpt je context te lezen. Beide zijn noodzakelijk. Een leider met hoge EQ maar lage CQ zal oprecht empathisch zijn — en nog steeds systematisch de mensen die hij leidt verkeerd begrijpen."
+            "Itu juga tidak sama dengan EQ. Kecerdasan emosional membantu Anda membaca orang; kecerdasan budaya membantu Anda membaca konteks. Keduanya diperlukan. Pemimpin dengan EQ tinggi tetapi CQ rendah akan benar-benar empatik — dan masih secara sistematis salah memahami orang-orang yang dipimpinnya."
           )}
         </p>
 
         {/* Faith anchor: the Incarnation */}
         <div style={{ borderTop: `3px solid ${orangeOklch}`, paddingTop: 32, marginTop: 36 }}>
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Faith Anchor", "Jangkar Iman", "Geloofsanker")}
+            {t("Faith Anchor", "Jangkar Iman")}
           </p>
           <h3 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 20, fontWeight: 700, color: navyOklch, marginBottom: 16 }}>
-            {t("The Incarnation as the Ultimate CQ Model", "Inkarnasi sebagai Model CQ Tertinggi", "De Incarnatie als het Ultieme CQ-Model")}
+            {t("The Incarnation as the Ultimate CQ Model", "Inkarnasi sebagai Model CQ Tertinggi")}
           </h3>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 16 }}>
             {t(
               "The most profound act of cultural intelligence in history was not a leadership seminar — it was the Incarnation. God did not shout instructions from heaven. He moved into the neighbourhood. He learned the language, ate the food, understood the honour-shame dynamics of first-century Jewish culture, and communicated truth in forms his audience could receive.",
-              "Tindakan kecerdasan budaya paling mendalam dalam sejarah bukan seminar kepemimpinan — itu adalah Inkarnasi. Allah tidak berteriak instruksi dari surga. Dia pindah ke lingkungan. Dia belajar bahasa, makan makanan, memahami dinamika kehormatan-rasa malu dari budaya Yahudi abad pertama.",
-              "De meest diepgaande daad van culturele intelligentie in de geschiedenis was geen leiderschapsseminaar — het was de Incarnatie. God schreeuwde geen instructies vanuit de hemel. Hij verhuisde naar de buurt. Hij leerde de taal, at het voedsel, begreep de eer-schaamdynamiek van de eerste-eeuwse Joodse cultuur."
+              "Tindakan kecerdasan budaya paling mendalam dalam sejarah bukan seminar kepemimpinan — itu adalah Inkarnasi. Allah tidak berteriak instruksi dari surga. Dia pindah ke lingkungan. Dia belajar bahasa, makan makanan, memahami dinamika kehormatan-rasa malu dari budaya Yahudi abad pertama."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85 }}>
             {t(
               "In Acts 17, Paul in Athens doesn't quote the Hebrew scriptures — he quotes Greek poets. He enters the cultural conversation on its own terms before redirecting it toward truth. Paul's entire missionary method is an exercise in high CQ: 'I have become all things to all people, so that by all possible means I might save some' (1 Cor 9:22). This is not compromise. This is intelligence.",
-              "Dalam Kisah Para Rasul 17, Paulus di Athena tidak mengutip Kitab Suci Ibrani — dia mengutip penyair Yunani. Dia memasuki percakapan budaya dengan syaratnya sendiri sebelum mengarahkannya menuju kebenaran. Seluruh metode misionaris Paulus adalah latihan CQ tinggi: 'Aku menjadi semua hal bagi semua orang' (1 Kor 9:22).",
-              "In Handelingen 17 citeert Paulus in Athene niet de Hebreeuwse geschriften — hij citeert Griekse dichters. Hij treedt de culturele conversatie op haar eigen voorwaarden toe voordat hij die richting de waarheid stuurt. Paulus' hele missionaire methode is een oefening in hoge CQ: 'Ik ben alles voor allen geworden' (1 Kor 9:22)."
+              "Dalam Kisah Para Rasul 17, Paulus di Athena tidak mengutip Kitab Suci Ibrani — dia mengutip penyair Yunani. Dia memasuki percakapan budaya dengan syaratnya sendiri sebelum mengarahkannya menuju kebenaran. Seluruh metode misionaris Paulus adalah latihan CQ tinggi: 'Aku menjadi semua hal bagi semua orang' (1 Kor 9:22)."
             )}
           </p>
         </div>
@@ -420,16 +375,15 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("The Four Dimensions", "Empat Dimensi", "De Vier Dimensies")}
+            {t("The Four Dimensions", "Empat Dimensi")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 12, lineHeight: 1.2 }}>
-            {t("The CQ Model — Deep Dive", "Model CQ — Pendalaman", "Het CQ-Model — Verdieping")}
+            {t("The CQ Model — Deep Dive", "Model CQ — Pendalaman")}
           </h2>
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "Each dimension builds on the others. A deficit in any one collapses the whole. Click each to go deeper.",
-              "Setiap dimensi dibangun di atas yang lain. Kekurangan di salah satu runtuhkan semuanya. Klik masing-masing untuk lebih dalam.",
-              "Elke dimensie bouwt voort op de anderen. Een tekort in ——n ervan laat het geheel instorten. Klik op elk voor meer diepgang."
+              "Setiap dimensi dibangun di atas yang lain. Kekurangan di salah satu runtuhkan semuanya. Klik masing-masing untuk lebih dalam."
             )}
           </p>
 
@@ -450,10 +404,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
                     </span>
                     <div style={{ flex: 1 }}>
                       <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navyOklch, margin: "0 0 4px" }}>
-                        {lang === "en" ? d.en_title : lang === "id" ? d.id_title : d.nl_title}
+                        {lang === "id" ? d.id_title : d.en_title}
                       </p>
                       <p style={{ fontSize: 13, color: bodyText, margin: 0, fontStyle: "italic" }}>
-                        {lang === "en" ? d.en_tagline : lang === "id" ? d.id_tagline : d.nl_tagline}
+                        {lang === "id" ? d.id_tagline : d.en_tagline}
                       </p>
                     </div>
                     <span style={{ color: isOpen ? orangeOklch : "oklch(65% 0.04 260)", fontSize: 22, fontWeight: 300, transform: isOpen ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s ease, color 0.15s ease", flexShrink: 0 }}>+</span>
@@ -463,26 +417,26 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
                     <div style={{ padding: "0 28px 28px", borderTop: "1px solid oklch(92% 0.01 80)" }}>
                       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 20 }}>
                         <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.85, margin: 0 }}>
-                          {lang === "en" ? d.en_desc : lang === "id" ? d.id_desc : d.nl_desc}
+                          {lang === "id" ? d.id_desc : d.en_desc}
                         </p>
 
                         {/* Low CQ failure mode */}
                         <div style={{ background: "oklch(97% 0.008 25)", border: "1px solid oklch(88% 0.04 30)", borderRadius: 8, padding: "16px 20px" }}>
                           <p style={{ fontSize: 12, fontWeight: 700, color: "oklch(50% 0.10 30)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                            {t("Failure Mode — Low CQ", "Mode Kegagalan — CQ Rendah", "Faalvorm — Lage CQ")}
+                            {t("Failure Mode — Low CQ", "Mode Kegagalan — CQ Rendah")}
                           </p>
                           <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                            {lang === "en" ? d.en_low : lang === "id" ? d.id_low : d.nl_low}
+                            {lang === "id" ? d.id_low : d.en_low}
                           </p>
                         </div>
 
                         {/* Scenario */}
                         <div style={{ borderLeft: `3px solid ${orangeOklch}`, paddingLeft: 20 }}>
                           <p style={{ fontSize: 12, fontWeight: 700, color: orangeOklch, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                            {t("In Practice", "Dalam Praktik", "In de Praktijk")}
+                            {t("In Practice", "Dalam Praktik")}
                           </p>
                           <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                            {lang === "en" ? d.en_scenario : lang === "id" ? d.id_scenario : d.nl_scenario}
+                            {lang === "id" ? d.id_scenario : d.en_scenario}
                           </p>
                         </div>
                       </div>
@@ -499,17 +453,16 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       {/* Format: Editorial essay with bold statement callouts */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("For the Whole Team", "Untuk Seluruh Tim", "Voor het Hele Team")}
+          {t("For the Whole Team", "Untuk Seluruh Tim")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("CQ Goes Both Ways", "CQ Berlaku untuk Semua", "CQ Werkt Twee Kanten Op")}
+          {t("CQ Goes Both Ways", "CQ Berlaku untuk Semua")}
         </h2>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>
           {t(
             "Most CQ books were written for Westerners stepping into non-Western contexts — a foreigner arriving in Asia, Africa, or the Middle East. But that is only half the picture. CQ matters for everyone on a cross-cultural team. Not just the outsider. Not just the local. Both.",
-            "Inilah masalah dengan sebagian besar pelatihan CQ: itu dibangun untuk orang Barat yang bernavigasi konteks non-Barat. Narasi dominan mengasumsikan Anda adalah orang luar yang memasuki budaya orang lain — biasanya profesional berkulit putih, Barat, berpendidikan yang memasuki Asia, Afrika, atau Timur Tengah.",
-            "Hier is het probleem met de meeste CQ-training: het werd gebouwd voor Westerlingen die niet-westerse contexten navigeren. De dominante vertelling veronderstelt dat je de buitenstaander bent die de cultuur van iemand anders binnentreedt — gewoonlijk een witte, westerse, opgeleide professional die Azi—, Afrika of het Midden-Oosten binnenstapt."
+            "Inilah masalah dengan sebagian besar pelatihan CQ: itu dibangun untuk orang Barat yang bernavigasi konteks non-Barat. Narasi dominan mengasumsikan Anda adalah orang luar yang memasuki budaya orang lain — biasanya profesional berkulit putih, Barat, berpendidikan yang memasuki Asia, Afrika, atau Timur Tengah."
           )}
         </p>
 
@@ -518,8 +471,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 27px)", color: offWhite, lineHeight: 1.5, margin: 0, fontStyle: "italic" }}>
             {t(
               "But what about the Filipino leader navigating a Korean-dominated church? The Nigerian pastor working under Swiss mission leadership? The Indonesian pastor from Kalimantan, starting a new ministry plant in Bali? CQ cuts both ways — and power matters.",
-              "Tapi bagaimana dengan pemimpin Filipina yang bernavigasi di gereja yang didominasi Korea? Pendeta Nigeria yang bekerja di bawah kepemimpinan misi Swiss? Pendeta Indonesia dari Kalimantan, yang memulai penanaman jemaat baru di Bali? CQ berlaku dua arah — dan kekuasaan penting.",
-              "Maar hoe zit het met de Filipijnse leider die een door Korea gedomineerde kerk navigeert? De Nigeriaanse pastor die werkt onder Zwitserse zendingsleiding? De Indonesische pastor uit Kalimantan, die een nieuwe gemeenteplanting start in Bali? CQ werkt beide kanten op — en macht telt."
+              "Tapi bagaimana dengan pemimpin Filipina yang bernavigasi di gereja yang didominasi Korea? Pendeta Nigeria yang bekerja di bawah kepemimpinan misi Swiss? Pendeta Indonesia dari Kalimantan, yang memulai penanaman jemaat baru di Bali? CQ berlaku dua arah — dan kekuasaan penting."
             )}
           </p>
         </div>
@@ -527,27 +479,24 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "The foreign leader joining a local team needs CQ — to understand the culture they have stepped into. But the local team needs it too — to bridge the gap from their side, to not just wait and hope the foreigner figures it out. On a healthy cross-cultural team, everyone is moving toward each other. No one gets to stay put.",
-            "Ketika Anda adalah budaya minoritas dalam organisasi Anda, pengembangan CQ terlihat berbeda. Anda sudah melakukan pekerjaan adaptasi setiap hari — seringkali tidak terlihat, seringkali tanpa pengakuan, seringkali dengan biaya pribadi yang nyata. Kerja emosional dalam terus-menerus menerjemahkan diri Anda sangat melelahkan dengan cara yang jarang diperhatikan oleh pemimpin budaya mayoritas.",
-            "Wanneer je de minderheidscultuur bent in je organisatie, ziet CQ-ontwikkeling er anders uit. Je doet het aanpassingswerk al elke dag — vaak onzichtbaar, vaak zonder erkenning, vaak tegen echte persoonlijke kosten. De emotionele arbeid van jezelf voortdurend vertalen is uitputtend op manieren die leiders van de meerderheidscultuur zelden opmerken."
+            "Ketika Anda adalah budaya minoritas dalam organisasi Anda, pengembangan CQ terlihat berbeda. Anda sudah melakukan pekerjaan adaptasi setiap hari — seringkali tidak terlihat, seringkali tanpa pengakuan, seringkali dengan biaya pribadi yang nyata. Kerja emosional dalam terus-menerus menerjemahkan diri Anda sangat melelahkan dengan cara yang jarang diperhatikan oleh pemimpin budaya mayoritas."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "And none of this means giving up who you are. There is a big difference between adapting your style and losing your identity. High CQ does not mean becoming culturally neutral — it means being able to move between different cultural settings without losing your core. The Indonesian team member who learns to speak up more directly in meetings does not stop being Indonesian. The adaptation fits the moment. The identity stays.",
-            "CQ tidak sama dengan asimilasi. Ada perbedaan penting antara mengadaptasi gaya Anda dan meninggalkan identitas Anda. CQ tinggi tidak berarti menjadi netral secara budaya — itu berarti mampu bergerak di antara register budaya tanpa kehilangan inti Anda.",
-            "CQ is niet hetzelfde als assimilatie. Er is een cruciaal verschil tussen je stijl aanpassen en je identiteit opgeven. Hoge CQ betekent niet cultureel neutraal worden — het betekent in staat zijn tussen culturele registers te bewegen zonder je kern te verliezen."
+            "CQ tidak sama dengan asimilasi. Ada perbedaan penting antara mengadaptasi gaya Anda dan meninggalkan identitas Anda. CQ tinggi tidak berarti menjadi netral secara budaya — itu berarti mampu bergerak di antara register budaya tanpa kehilangan inti Anda."
           )}
         </p>
 
         <div style={{ background: lightGray, borderRadius: 10, padding: "28px 32px", marginTop: 32 }}>
           <p style={{ fontSize: 13, fontWeight: 700, color: navyOklch, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
-            {t("A Word on Responsibility", "Tentang Tanggung Jawab", "Een Woord over Verantwoordelijkheid")}
+            {t("A Word on Responsibility", "Tentang Tanggung Jawab")}
           </p>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
             {t(
               "The person with the most influence in a team — whether that is the foreign leader or the senior local member — carries the most responsibility to adapt. CQ is not just for the newcomer. It is not just for the local team. Whoever holds the most trust in the room should be the one most willing to stretch. Leadership and cultural humility belong together.",
-              "Orang yang paling berpengaruh dalam sebuah tim — baik itu pemimpin asing maupun anggota lokal senior — memiliki tanggung jawab terbesar untuk beradaptasi. CQ bukan hanya untuk pendatang baru. Bukan hanya untuk tim lokal. Siapa pun yang memiliki kepercayaan terbesar di ruangan itu harus paling bersedia untuk meregangkan diri. Kepemimpinan dan kerendahan hati budaya berjalan bersama.",
-              "Degene met de meeste invloed in een team — of dat nu de buitenlandse leider is of het senior lokale lid — draagt de meeste verantwoordelijkheid om zich aan te passen. CQ is niet alleen voor de nieuwkomer. Niet alleen voor het lokale team. Wie het meeste vertrouwen heeft in de kamer, moet het meest bereid zijn om te groeien. Leiderschap en culturele bescheidenheid horen bij elkaar."
+              "Orang yang paling berpengaruh dalam sebuah tim — baik itu pemimpin asing maupun anggota lokal senior — memiliki tanggung jawab terbesar untuk beradaptasi. CQ bukan hanya untuk pendatang baru. Bukan hanya untuk tim lokal. Siapa pun yang memiliki kepercayaan terbesar di ruangan itu harus paling bersedia untuk meregangkan diri. Kepemimpinan dan kerendahan hati budaya berjalan bersama."
             )}
           </p>
         </div>
@@ -558,16 +507,15 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("Development Path", "Jalur Pengembangan", "Ontwikkelingspad")}
+            {t("Development Path", "Jalur Pengembangan")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 12, lineHeight: 1.2 }}>
-            {t("How to Build Your CQ", "Cara Membangun CQ Anda", "Hoe Je Je CQ Opbouwt")}
+            {t("How to Build Your CQ", "Cara Membangun CQ Anda")}
           </h2>
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "CQ is not a personality trait — it is a practiced discipline. These three levels are progressive. Don't skip ahead.",
-              "CQ bukan sifat kepribadian — ini adalah disiplin yang dipraktikkan. Tiga tingkat ini bersifat progresif. Jangan melompat ke depan.",
-              "CQ is geen persoonlijkheidstrek — het is een geoefende discipline. Deze drie niveaus zijn progressief. Sla niet vooruit."
+              "CQ bukan sifat kepribadian — ini adalah disiplin yang dipraktikkan. Tiga tingkat ini bersifat progresif. Jangan melompat ke depan."
             )}
           </p>
 
@@ -579,10 +527,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
                 style={{ flex: 1, background: level.color, padding: "12px 16px", textAlign: "center", position: "relative" }}
               >
                 <p style={{ color: "white", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 2px", opacity: 0.8 }}>
-                  {t("Level", "Tingkat", "Niveau")} {level.level}
+                  {t("Level", "Tingkat")} {level.level}
                 </p>
                 <p style={{ color: "white", fontSize: 14, fontWeight: 700, margin: 0 }}>
-                  {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
+                  {lang === "id" ? level.id_label : level.en_label}
                 </p>
                 {i < developmentLevels.length - 1 && (
                   <div style={{ position: "absolute", right: -12, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, background: level.color, clipPath: "polygon(0 0, 100% 50%, 0 100%)", zIndex: 1 }} />
@@ -602,10 +550,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
                     <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 40, fontWeight: 700, color: level.color, lineHeight: 1 }}>{level.level}</span>
                     <div>
                       <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navyOklch, margin: 0 }}>
-                        {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
+                        {lang === "id" ? level.id_label : level.en_label}
                       </p>
                       <p style={{ fontSize: 13, color: bodyText, margin: 0, fontStyle: "italic" }}>
-                        {lang === "en" ? level.en_subtitle : lang === "id" ? level.id_subtitle : level.nl_subtitle}
+                        {lang === "id" ? level.id_subtitle : level.en_subtitle}
                       </p>
                     </div>
                   </div>
@@ -617,7 +565,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
                         <span style={{ color: "white", fontSize: 13, fontWeight: 700 }}>{ai + 1}</span>
                       </div>
                       <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                        {lang === "en" ? action.en : lang === "id" ? action.id : action.nl}
+                        {lang === "id" ? action.id : action.en}
                       </p>
                     </div>
                   ))}
@@ -640,7 +588,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           />
         </div>
         <p style={{ textAlign: "center", fontSize: 12, color: "oklch(60% 0.04 260)", marginTop: 10, fontStyle: "italic" }}>
-          {t("Cultural intelligence grows from the inside out — grounded in identity, not performance.", "Kecerdasan budaya tumbuh dari dalam ke luar — berakar pada identitas, bukan penampilan.", "Culturele intelligentie groeit van binnenuit — geworteld in identiteit, niet in prestatie.")}
+          {t("Cultural intelligence grows from the inside out — grounded in identity, not performance.", "Kecerdasan budaya tumbuh dari dalam ke luar — berakar pada identitas, bukan penampilan.")}
         </p>
       </div>
 
@@ -648,10 +596,10 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       {/* Format: Scripture callout (Cormorant) + journal questions grid */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("Closing Reflection", "Refleksi Penutup", "Slotreflectie")}
+          {t("Closing Reflection", "Refleksi Penutup")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navyOklch, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("Why This Matters Eternally", "Mengapa Ini Penting Secara Abadi", "Waarom Dit Eeuwig Telt")}
+          {t("Why This Matters Eternally", "Mengapa Ini Penting Secara Abadi")}
         </h2>
 
         {/* Scripture callout */}
@@ -659,7 +607,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
           <div style={{ position: "absolute", top: -20, left: -20, width: 120, height: 120, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.4 }} />
           <div style={{ position: "absolute", bottom: -30, right: -10, width: 160, height: 160, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.3 }} />
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20, position: "relative" }}>
-            {t("Scripture", "Kitab Suci", "Schriftuur")}
+            {t("Scripture", "Kitab Suci")}
           </p>
           <blockquote style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", color: offWhite, lineHeight: 1.65, fontStyle: "italic", margin: "0 0 20px", position: "relative" }}>
             {t(
@@ -669,35 +617,32 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
             )}
           </blockquote>
           <p style={{ color: orangeOklch, fontSize: 14, fontWeight: 600, margin: 0, position: "relative" }}>
-            {t("Acts 17:26—27 (NIV)", "Kisah Para Rasul 17:26—27", "Handelingen 17:26—27")}
+            {t("Acts 17:26—27 (NIV)", "Kisah Para Rasul 17:26—27")}
           </p>
         </div>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "Every culture you encounter is not an obstacle to the gospel — it is a context in which God has been at work long before you arrived. The diversity of nations is not a problem to be managed. It is, according to Acts 17, a deliberate design — God placed every people in their time and place so that they might seek him.",
-            "Setiap budaya yang Anda temui bukan penghalang bagi Injil — itu adalah konteks di mana Allah telah bekerja jauh sebelum Anda tiba. Keragaman bangsa-bangsa bukan masalah yang harus dikelola. Menurut Kisah Para Rasul 17, itu adalah desain yang disengaja — Allah menempatkan setiap orang di waktu dan tempat mereka sehingga mereka dapat mencari-Nya.",
-            "Elke cultuur die je tegenkomt is geen obstakel voor het evangelie — het is een context waarin God aan het werk was lang voordat jij arriveerde. De diversiteit van volken is geen probleem om te beheren. Het is, volgens Handelingen 17, een bewust ontwerp — God plaatste elk volk in hun tijd en plaats zodat ze hem zouden zoeken."
+            "Setiap budaya yang Anda temui bukan penghalang bagi Injil — itu adalah konteks di mana Allah telah bekerja jauh sebelum Anda tiba. Keragaman bangsa-bangsa bukan masalah yang harus dikelola. Menurut Kisah Para Rasul 17, itu adalah desain yang disengaja — Allah menempatkan setiap orang di waktu dan tempat mereka sehingga mereka dapat mencari-Nya."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 48 }}>
           {t(
             "This means cross-cultural intelligence is not just a professional competency. It is a form of faithfulness. When you develop your CQ, you are taking seriously the world God made — the world in which his image is distributed across every tribe and tongue and people and nation (Rev 5:9). To dismiss a culture you do not understand is, in a real sense, to dismiss part of the image of God. And to grow in CQ is to grow in your capacity to see him more fully.",
-            "Ini berarti kecerdasan lintas budaya bukan hanya kompetensi profesional. Ini adalah bentuk kesetiaan. Ketika Anda mengembangkan CQ Anda, Anda mengambil dengan serius dunia yang Allah ciptakan — dunia di mana gambar-Nya tersebar di setiap suku dan lidah dan orang dan bangsa (Why 5:9).",
-            "Dit betekent dat interculturele intelligentie niet alleen een professionele competentie is. Het is een vorm van trouw. Wanneer je je CQ ontwikkelt, neem je de wereld die God maakte serieus — de wereld waarin zijn beeld verspreid is over elke stam en taal en volk en natie (Op 5:9)."
+            "Ini berarti kecerdasan lintas budaya bukan hanya kompetensi profesional. Ini adalah bentuk kesetiaan. Ketika Anda mengembangkan CQ Anda, Anda mengambil dengan serius dunia yang Allah ciptakan — dunia di mana gambar-Nya tersebar di setiap suku dan lidah dan orang dan bangsa (Why 5:9)."
           )}
         </p>
 
         {/* Journal Questions Grid */}
         <div style={{ borderTop: `3px solid ${orangeOklch}`, paddingTop: 40 }}>
           <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 8 }}>
-            {t("Journal Questions", "Pertanyaan Jurnal", "Journaalvragen")}
+            {t("Journal Questions", "Pertanyaan Jurnal")}
           </p>
           <p style={{ color: bodyText, fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
             {t(
               "Take time with each. These are not quiz questions — they are invitations to grow.",
-              "Luangkan waktu untuk masing-masing. Ini bukan pertanyaan kuis — ini adalah undangan untuk bertumbuh.",
-              "Neem de tijd voor elk. Dit zijn geen quizvragen — het zijn uitnodigingen om te groeien."
+              "Luangkan waktu untuk masing-masing. Ini bukan pertanyaan kuis — ini adalah undangan untuk bertumbuh."
             )}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 16 }}>
@@ -708,7 +653,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
               >
                 <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 24, fontWeight: 700, color: orangeOklch, lineHeight: 1, minWidth: 24, flexShrink: 0, paddingTop: 2 }}>{q.roman}</span>
                 <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                  {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
+                  {lang === "id" ? q.id : q.en}
                 </p>
               </div>
             ))}
@@ -813,13 +758,12 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orangeOklch }} />
         <div style={{ position: "relative", maxWidth: 600, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 800, color: offWhite, marginBottom: 16, lineHeight: 1.2 }}>
-            {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
+            {t("Keep Growing", "Terus Bertumbuh")}
           </h2>
           <p style={{ color: "oklch(75% 0.04 260)", fontSize: 16, lineHeight: 1.75, marginBottom: 32 }}>
             {t(
               "Explore more training modules to deepen your cross-cultural leadership.",
-              "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.",
-              "Verken meer bronnen om je intercultureel leiderschap te verdiepen."
+              "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda."
             )}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -827,13 +771,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
               href="/resources"
               style={{ display: "inline-block", padding: "14px 32px", background: orangeOklch, color: offWhite, borderRadius: 12, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none", letterSpacing: "0.02em" }}
             >
-              {t("Training", "Pelatihan", "Contentbibliotheek")}
+              {t("Training", "Pelatihan")}
             </Link>
             <Link
               href="/resources/power-distance"
               style={{ display: "inline-block", padding: "14px 32px", border: "1px solid oklch(45% 0.05 260)", color: offWhite, borderRadius: 12, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, textDecoration: "none" }}
             >
-              {t("Power Distance", "Jarak Kekuasaan", "Machtafstand")}
+              {t("Power Distance", "Jarak Kekuasaan")}
             </Link>
           </div>
         </div>

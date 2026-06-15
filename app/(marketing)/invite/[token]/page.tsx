@@ -7,7 +7,7 @@ import { acceptInvite } from "@/app/(app)/dashboard/actions";
 
 export const dynamic = "force-dynamic";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
 const COPY: Record<Lang, {
   heading: (leaderName: string | null, teamName: string) => string;
@@ -34,16 +34,6 @@ const COPY: Record<Lang, {
         : "Pemimpin Anda sudah menyiapkan tempat untuk Anda di Crispy Development — platform untuk tim lintas budaya. Tim Anda sudah menunggu.",
     cta: "Buat Akun & Bergabung →",
     login: "Sudah punya akun? Masuk →",
-  },
-  nl: {
-    heading: (leader, team) =>
-      leader ? `${leader} nodigt je uit voor ${team}.` : `${team} bouwt aan iets dat het waard is.`,
-    subtext: (leader, _team) =>
-      leader
-        ? `${leader} heeft een plek voor jou op Crispy Development — een platform voor interculturele teams. Je team staat klaar.`
-        : "Je leider heeft een plek voor jou op Crispy Development — een platform voor interculturele teams. Je team staat klaar.",
-    cta: "Account aanmaken & team joinen →",
-    login: "Al een account? Inloggen →",
   },
 };
 
@@ -136,7 +126,7 @@ export default async function InviteLandingPage({
           color: "oklch(65% 0.15 45)",
           marginBottom: "0.875rem",
         }}>
-          {lang === "id" ? "Anda diundang" : lang === "nl" ? "Je bent uitgenodigd" : "You're invited"}
+          {lang === "id" ? "Anda diundang" : "You're invited"}
         </p>
 
         <h1 style={{
@@ -196,8 +186,6 @@ export default async function InviteLandingPage({
         }}>
           {lang === "id"
             ? `Link ini berlaku ${daysLeft} hari lagi.`
-            : lang === "nl"
-            ? `Deze link verloopt over ${daysLeft} dag${daysLeft !== 1 ? "en" : ""}.`
             : `This link expires in ${daysLeft} day${daysLeft !== 1 ? "s" : ""}.`}
         </p>
       </div>

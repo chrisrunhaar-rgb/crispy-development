@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -6,9 +6,9 @@ import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
-const tFn = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+type Lang = "en" | "id";
+const tFn = (en: string, id: string, lang: Lang) =>
+  lang === "id" ? id : en;
 
 // --- Communication Dimensions (accordion) ------------------------------------
 const dimensions = [
@@ -16,61 +16,45 @@ const dimensions = [
     number: "01",
     en_title: "High-Context vs. Low-Context",
     id_title: "Konteks Tinggi vs. Konteks Rendah",
-    nl_title: "Hoge-Context vs. Lage-Context",
     en_tagline: "Some cultures say it. Others imply it.",
     id_tagline: "Beberapa budaya mengatakannya. Yang lain menyiratkannya.",
-    nl_tagline: "Sommige culturen zeggen het. Anderen impliceren het.",
     en_body: "Anthropologist Edward Hall¹ introduced the widely used descriptive framework of high-context and low-context communication — a lens that, while not a precise scientific taxonomy, captures real and observable differences in how cultures convey meaning. In cultures Hall described as high-context (Indonesia, Japan, most of Southeast Asia, the Arab world), meaning travels through relationship, tone, timing, and what is NOT said. The message lives between the words. In what he called low-context cultures (Netherlands, Germany, USA, Australia), explicit and direct verbal communication is trusted — the message is in the words themselves.\n\nNeither is more honest. They are different languages of meaning. When a low-context communicator hears 'We'll think about it,' they take it at face value. When a high-context communicator says 'We'll think about it,' they often mean no — and they expect you to understand that. Erin Meyer's Culture Map² offers a more granular, empirically grounded way to map these differences across specific national cultures.",
     id_body: "Antropolog Edward Hall¹ memperkenalkan kerangka deskriptif konteks tinggi dan konteks rendah — sebuah lensa yang, meskipun bukan taksonomi ilmiah yang tepat, menangkap perbedaan nyata dan dapat diamati dalam cara budaya menyampaikan makna. Dalam budaya yang digambarkan Hall sebagai konteks tinggi (Indonesia, Jepang, sebagian besar Asia Tenggara, dunia Arab), makna disampaikan melalui hubungan, nada, waktu, dan apa yang TIDAK dikatakan. Pesan hidup di antara kata-kata. Budaya konteks rendah (Belanda, Jerman, AS, Australia) mengandalkan komunikasi verbal yang eksplisit dan langsung.\n\nKetika komunikator konteks rendah mendengar 'Kami akan pikirkan,' mereka mengambilnya secara harfiah. Ketika komunikator konteks tinggi mengatakan 'Kami akan pikirkan,' mereka sering berarti tidak — dan mereka mengharapkan Anda untuk memahami itu. Culture Map Erin Meyer² menawarkan cara yang lebih terperinci dan berbasis data untuk memetakan perbedaan ini.",
-    nl_body: "Antropoloog Edward Hall¹ introduceerde het veelgebruikte beschrijvende kader van hoge- en lage-contextcommunicatie — een lens die, hoewel geen precieze wetenschappelijke taxonomie, echte en waarneembare verschillen in betekenisoverdracht vastlegt. In wat Hall hoge-contextculturen noemde (Indonesi—, Japan, Zuidoost-Azi—, de Arabische wereld) reist betekenis via relatie, toon, timing en wat NIET gezegd wordt. De boodschap leeft tussen de woorden. Lage-contextculturen (Nederland, Duitsland, VS, Australi—) vertrouwen op expliciete, directe verbale communicatie.\n\nAls een lage-context communicator 'We denken erover na' hoort, neemt hij dat letterlijk. Als een hoge-context communicator 'We denken erover na' zegt, bedoelen ze vaak nee — en ze verwachten dat je dat begrijpt. Erin Meyers Culture Map² biedt een meer genuanceerde, empirisch onderbouwde manier om deze verschillen in kaart te brengen.",
     en_practice: "In high-context conversations, listen for what is NOT said. Notice hesitations, indirect questions, and changes of subject — these often carry the real message. In low-context settings, be explicit: say what you mean, confirm what you heard, and don't assume implication.",
     id_practice: "Dalam percakapan konteks tinggi, dengarkan apa yang TIDAK dikatakan. Perhatikan keraguan, pertanyaan tidak langsung, dan perubahan topik — ini sering membawa pesan nyata. Dalam pengaturan konteks rendah, jadilah eksplisit: katakan apa yang Anda maksud, konfirmasikan apa yang Anda dengar.",
-    nl_practice: "In hoge-context gesprekken: luister naar wat NIET gezegd wordt. Let op aarzelingen, indirecte vragen en onderwerpwisselingen — die bevatten vaak de echte boodschap. In lage-context omgevingen: wees expliciet, zeg wat je bedoelt, bevestig wat je hoorde.",
   },
   {
     number: "02",
     en_title: "Direct vs. Indirect Communication",
     id_title: "Komunikasi Langsung vs. Tidak Langsung",
-    nl_title: "Directe vs. Indirecte Communicatie",
     en_tagline: "Direct is not always honest. Indirect is not always evasive.",
     id_tagline: "Langsung tidak selalu jujur. Tidak langsung tidak selalu menghindar.",
-    nl_tagline: "Direct is niet altijd eerlijk. Indirect is niet altijd ontwijkend.",
     en_body: "Direct communicators say what they mean — clearly, efficiently, without much softening. It feels honest and respectful to them. Indirect communicators convey difficult truths through story, metaphor, questions, or a trusted go-between. It feels caring and respectful to them. Erin Meyer's research² maps this dimension across dozens of national cultures, showing that directness vs. indirectness operates independently of how much a culture disagrees — indirect cultures can be intensely confrontational within their own register.\n\nThe problem: direct communicators read indirectness as dishonesty or weakness. Indirect communicators read directness as aggression or disrespect. Both are wrong. They are not different ethics — they are different grammars for delivering the same truth.",
     id_body: "Komunikator langsung mengatakan apa yang mereka maksud — dengan jelas, efisien, tanpa banyak pelunakan. Itu terasa jujur dan penuh hormat bagi mereka. Komunikator tidak langsung menyampaikan kebenaran sulit melalui cerita, metafora, pertanyaan, atau perantara yang dipercaya. Penelitian Erin Meyer² memetakan dimensi ini di lusinan budaya nasional.\n\nMasalahnya: komunikator langsung membaca ketidaklangsungan sebagai ketidakjujuran. Komunikator tidak langsung membaca ketegasan sebagai agresi. Keduanya salah — itu bukan etika yang berbeda, melainkan tata bahasa yang berbeda untuk menyampaikan kebenaran yang sama.",
-    nl_body: "Directe communicatoren zeggen wat ze bedoelen — duidelijk, effici—nt, zonder veel verzachting. Dat voelt voor hen eerlijk en respectvol. Indirecte communicatoren brengen moeilijke waarheden over via verhaal, metafoor, vragen of een vertrouwde tussenpersoon. Erin Meyers onderzoek² brengt deze dimensie in kaart voor tientallen nationale culturen.\n\nHet probleem: directe communicatoren lezen indirectheid als oneerlijkheid. Indirecte communicatoren lezen directheid als agressie. Beiden hebben het mis — het zijn geen verschillende ethieken maar verschillende grammatica's voor dezelfde waarheid.",
     en_practice: "If you are a direct communicator working with indirect communicators: soften the delivery, use private settings for hard feedback, and create space for the indirect response to surface (it may come hours or days later). If you are indirect, practise naming hard things clearly with people who expect directness — it is a skill, not a betrayal of your culture.",
     id_practice: "Jika Anda komunikator langsung yang bekerja dengan komunikator tidak langsung: lembutkan penyampaian, gunakan pengaturan pribadi untuk umpan balik keras, dan ciptakan ruang untuk respons tidak langsung muncul (mungkin datang berjam-jam atau berhari-hari kemudian). Jika Anda tidak langsung, berlatihlah menyebutkan hal-hal sulit dengan jelas dengan orang yang mengharapkan ketegasan.",
-    nl_practice: "Als je een directe communicator bent die samenwerkt met indirecte communicatoren: verzacht de boodschap, gebruik priv—omgevingen voor harde feedback, en maak ruimte voor de indirecte reactie (die kan uren of dagen later komen). Als je indirect bent, oefen dan moeilijke dingen duidelijk te benoemen met mensen die directheid verwachten.",
   },
   {
     number: "03",
     en_title: "Formal vs. Informal",
     id_title: "Formal vs. Informal",
-    nl_title: "Formeel vs. Informeel",
     en_tagline: "Titles, greetings, and seating — the rituals that build or break trust.",
     id_tagline: "Gelar, salam, dan tempat duduk — ritual yang membangun atau menghancurkan kepercayaan.",
-    nl_tagline: "Titels, begroetingen en zitplaatsen — de rituelen die vertrouwen opbouwen of afbreken.",
     en_body: "In many Asian and African cultures, formality is not bureaucracy — it is how respect is expressed. Getting someone's title right, greeting the senior person first, and following meeting protocols communicates that you take the relationship seriously. Geert Hofstede's research³ on power distance shows that cultures with high PDI scores place much stronger importance on these status markers than low-PDI cultures do.\n\nIn Dutch, Scandinavian, and Australian cultures, formality can feel like distance. First names signal trust. Casual is warm. But using someone's first name before they have offered it — or skipping formal greetings — can read as presumptuousness in cultures where those rituals matter.",
     id_body: "Dalam banyak budaya Asia dan Afrika, formalitas bukan birokrasi — itu adalah cara rasa hormat diekspresikan. Mendapatkan gelar seseorang dengan benar, menyapa orang senior pertama, dan mengikuti protokol rapat mengomunikasikan bahwa Anda menganggap hubungan itu serius. Penelitian Geert Hofstede³ tentang jarak kekuasaan menunjukkan bahwa budaya dengan skor PDI tinggi memberikan kepentingan yang jauh lebih besar pada penanda status ini.\n\nDalam budaya Belanda, Skandinavia, dan Australia, formalitas bisa terasa seperti jarak. Nama depan menandakan kepercayaan. Dalam budaya di mana ritual itu penting, menggunakan nama depan seseorang sebelum mereka menawarkannya bisa dibaca sebagai kesombongan.",
-    nl_body: "In veel Aziatische en Afrikaanse culturen is formaliteit geen bureaucratie — het is hoe respect wordt uitgedrukt. Iemands titel goed gebruiken, de senior persoon eerst begroeten, en vergaderprotocollen volgen communiceert dat je de relatie serieus neemt. Hofstedes onderzoek³ naar machtafstand toont aan dat culturen met hoge PDI-scores veel meer gewicht hechten aan deze statusmarkers.\n\nIn Nederlandse, Scandinavische en Australische culturen kan formaliteit aanvoelen als afstand. Voornamen signaleren vertrouwen. Maar iemands voornaam gebruiken voordat ze die hebben aangeboden, kan in culturen waar die rituelen belangrijk zijn als aanmatigend worden ervaren.",
     en_practice: "When entering a new cultural context, follow their formality level before assuming your own. Observe how people greet each other. Ask a trusted local: 'What would be respectful here?' It takes one hour to learn and saves months of confusion.",
     id_practice: "Saat memasuki konteks budaya baru, ikuti tingkat formalitas mereka sebelum mengasumsikan milik Anda sendiri. Amati bagaimana orang saling menyapa. Tanya orang lokal yang dipercaya: 'Apa yang akan sopan di sini?' Butuh satu jam untuk belajar dan menghemat berbulan-bulan kebingungan.",
-    nl_practice: "Wanneer je een nieuwe culturele context betreedt, volg dan hun formaliteitsniveau voordat je het jouwe aanneemt. Observeer hoe mensen elkaar begroeten. Vraag een vertrouwde lokale persoon: 'Wat zou hier respectvol zijn?' Het kost ——n uur om te leren en bespaart maanden verwarring.",
   },
   {
     number: "04",
     en_title: "Expressive vs. Reserved",
     id_title: "Ekspresif vs. Tertahan",
-    nl_title: "Expressief vs. Gereserveerd",
     en_tagline: "What reads as passion in one culture reads as instability in another.",
     id_tagline: "Apa yang dibaca sebagai semangat dalam satu budaya dibaca sebagai ketidakstabilan dalam budaya lain.",
-    nl_tagline: "Wat als passie wordt gelezen in de ene cultuur wordt als instabiliteit gelezen in de andere.",
     en_body: "Expressive cultures (Latin America, the Middle East, much of Africa, and parts of Indonesia) openly show emotion in professional contexts — warmth, frustration, enthusiasm, grief. It signals authenticity and engagement. Reserved cultures (Nordic countries, East Asia, Northern Europe) value emotional control in professional settings — calm signals competence and trustworthiness. The GLOBE Study,⁴ one of the most rigorous cross-cultural research projects to date covering 62 societies, documents significant variation in societal norms around emotional expression and what leaders are expected to display.\n\nThe danger: a reserved leader in an expressive culture reads as cold, uninterested, or arrogant. An expressive leader in a reserved culture reads as unprofessional, unstable, or untrustworthy. Neither is accurate — but both are real perceptions with real consequences.",
     id_body: "Budaya ekspresif (Amerika Latin, Timur Tengah, banyak Afrika, dan sebagian Indonesia) secara terbuka menunjukkan emosi dalam konteks profesional — kehangatan, frustrasi, antusiasme. Itu menandakan keaslian dan keterlibatan. Budaya tertahan (negara-negara Nordik, Asia Timur, Eropa Utara) menghargai kendali emosional dalam pengaturan profesional. Studi GLOBE,⁴ yang mencakup 62 masyarakat, mendokumentasikan variasi signifikan dalam norma-norma sosial seputar ekspresi emosional.\n\nBahayanya: pemimpin yang tertahan dalam budaya ekspresif dibaca sebagai dingin atau arogan. Pemimpin ekspresif dalam budaya tertahan dibaca sebagai tidak profesional atau tidak dapat dipercaya.",
-    nl_body: "Expressieve culturen (Latijns-Amerika, het Midden-Oosten, een groot deel van Afrika) tonen openlijk emotie in professionele contexten — warmte, frustratie, enthousiasme. Dat signaleert authenticiteit. Gereserveerde culturen (Scandinavische landen, Oost-Azi—, Noord-Europa) waarderen emotionele controle in professionele omgevingen. De GLOBE-studie,⁴ die 62 samenlevingen omspant, documenteert significante variatie in maatschappelijke normen rond emotionele expressie.\n\nHet gevaar: een gereserveerde leider in een expressieve cultuur wordt gelezen als koud of arrogant. Een expressieve leider in een gereserveerde cultuur wordt gelezen als onprofessioneel of onbetrouwbaar.",
     en_practice: "Expand your range in both directions. If you are reserved: practise visible warmth — a genuine smile, a personal question at the start of a meeting — it signals you are present, not just performing. If you are expressive: practise measured composure in reserved settings — it is not repression, it is adaptation.",
     id_practice: "Perluas jangkauan Anda di kedua arah. Jika Anda tertahan: berlatihlah kehangatan yang terlihat — senyum tulus, pertanyaan pribadi di awal rapat. Jika Anda ekspresif: berlatihlah ketenangan terukur dalam pengaturan tertahan — itu bukan represi, itu adaptasi.",
-    nl_practice: "Vergroot je bereik in beide richtingen. Als je gereserveerd bent: oefen zichtbare warmte — een echte glimlach, een persoonlijke vraag aan het begin van een vergadering. Als je expressief bent: oefen gemeten kalmte in gereserveerde omgevingen — het is geen onderdrukking, het is aanpassing.",
   },
 ];
 
@@ -80,21 +64,17 @@ const developmentLevels = [
     level: "01",
     en_label: "Beginner",
     id_label: "Pemula",
-    nl_label: "Beginner",
     en_subtitle: "Map yourself before you map others",
     id_subtitle: "Petakan diri Anda sebelum memetakan orang lain",
-    nl_subtitle: "Breng jezelf eerst in kaart",
     color: "#4A90D9",
     actions: [
       {
         en: "Answer these four questions about yourself, honestly: (1) Are you direct or indirect when delivering hard news? (2) Do you prefer explicit or implied communication? (3) How quickly do you use someone's first name? (4) How much emotion do you show at work? Your answers reveal your communication default — and where your assumptions live.",
         id: "Jawab empat pertanyaan ini tentang diri Anda dengan jujur: (1) Apakah Anda langsung atau tidak langsung saat menyampaikan berita buruk? (2) Apakah Anda lebih suka komunikasi eksplisit atau tersirat? (3) Seberapa cepat Anda menggunakan nama depan seseorang? (4) Berapa banyak emosi yang Anda tunjukkan di tempat kerja?",
-        nl: "Beantwoord deze vier vragen over jezelf eerlijk: (1) Ben je direct of indirect bij het brengen van slecht nieuws? (2) Geef je de voorkeur aan expliciete of impliciete communicatie? (3) Hoe snel gebruik je iemands voornaam? (4) Hoeveel emotie toon je op het werk? Je antwoorden onthullen je communicatiestandaard.",
       },
       {
         en: "Pick one conversation this week where you were not sure if you were understood — or where you were not sure you understood the other person. Write down: what was said, what you assumed it meant, and what it might have actually meant. One honest reflection compounds over time into real skill.",
         id: "Pilih satu percakapan minggu ini di mana Anda tidak yakin apakah Anda dipahami — atau di mana Anda tidak yakin Anda memahami orang lain. Tulis: apa yang dikatakan, apa yang Anda asumsikan artinya, dan apa yang mungkin sebenarnya dimaksud.",
-        nl: "Kies ——n gesprek deze week waarbij je niet zeker wist of je begrepen werd — of waarbij je de ander niet zeker begreep. Schrijf op: wat gezegd werd, wat je aannam dat het betekende, en wat het eigenlijk kon hebben betekend.",
       },
     ],
   },
@@ -102,21 +82,17 @@ const developmentLevels = [
     level: "02",
     en_label: "Practitioner",
     id_label: "Praktisi",
-    nl_label: "Practitioner",
     en_subtitle: "Build habits that work across styles",
     id_subtitle: "Bangun kebiasaan yang bekerja di berbagai gaya",
-    nl_subtitle: "Bouw gewoonten die over stijlen heen werken",
     color: "#E07540",
     actions: [
       {
         en: "End every team meeting with one question: 'Is there anything you wanted to say that we didn't get to?' This is a communication lifeline for indirect communicators who needed the group pressure to lift before they could speak. Do it consistently — the first few times nothing may surface, but the habit trains your team to trust that space.",
         id: "Akhiri setiap rapat tim dengan satu pertanyaan: 'Apakah ada sesuatu yang ingin Anda katakan yang tidak sempat kita bahas?' Ini adalah jalur komunikasi bagi komunikator tidak langsung yang membutuhkan tekanan kelompok untuk terangkat sebelum mereka dapat berbicara.",
-        nl: "Sluit elke teamvergadering af met ——n vraag: 'Is er iets wat je wilde zeggen maar niet aan bod is gekomen?' Dit is een communicatieredlijn voor indirecte communicatoren. Doe het consequent — de eerste paar keer komt er misschien niets naar boven, maar de gewoonte traint je team om die ruimte te vertrouwen.",
       },
       {
         en: "Practise 'looping back.' When you think you have received an indirect message, say it back: 'It sounds like you might be saying that... is that right?' This validates their communication style while making sure you actually understood. It builds trust with high-context communicators who often feel their signals go unnoticed.",
         id: "Berlatihlah 'kembali melingkar.' Saat Anda pikir Anda telah menerima pesan tidak langsung, katakan kembali: 'Sepertinya Anda mungkin ingin mengatakan bahwa... apakah itu benar?' Ini memvalidasi gaya komunikasi mereka sambil memastikan Anda benar-benar memahami.",
-        nl: "Oefen 'terugkoppelen.' Als je denkt dat je een indirecte boodschap hebt ontvangen, zeg het terug: 'Het klinkt alsof je misschien wilt zeggen dat... klopt dat?' Dit valideert hun communicatiestijl terwijl je ervoor zorgt dat je het echt begrepen hebt.",
       },
     ],
   },
@@ -124,21 +100,17 @@ const developmentLevels = [
     level: "03",
     en_label: "Advanced",
     id_label: "Lanjutan",
-    nl_label: "Gevorderd",
     en_subtitle: "Build communication culture into your team",
     id_subtitle: "Bangun budaya komunikasi ke dalam tim Anda",
-    nl_subtitle: "Bouw communicatiecultuur in je team",
     color: "#1B3A6B",
     actions: [
       {
         en: "Write a team communication agreement together. Not a policy — a conversation: 'In this team, here is how we will handle hard feedback. Here is how we will disagree. Here is what silence means in our meetings.' Name both direct and indirect approaches as valid. Make the invisible visible. Teams that name their communication norms can hold each other to them — and repair faster when they break down.",
         id: "Tulis perjanjian komunikasi tim bersama. Bukan kebijakan — sebuah percakapan: 'Dalam tim ini, begini cara kami menangani umpan balik yang sulit. Begini cara kami tidak setuju. Begini arti keheningan dalam rapat kami.' Sebutkan pendekatan langsung dan tidak langsung sebagai valid.",
-        nl: "Schrijf samen een teamcommunicatieovereenkomst. Niet een beleid — een gesprek: 'In dit team, zo gaan we om met harde feedback. Zo zijn we het oneens. Dit betekent stilte in onze vergaderingen.' Noem zowel directe als indirecte benaderingen als geldig.",
       },
       {
         en: "Create multiple communication channels — not just group meetings. Some people speak best in one-on-ones. Some communicate better in writing. Some need time to process before responding. A team that only uses one channel is structurally excluding communicators who work differently. Vary the modes deliberately: announce in meetings, discuss in pairs, decide in writing.",
         id: "Ciptakan berbagai saluran komunikasi — bukan hanya rapat kelompok. Beberapa orang berbicara paling baik dalam satu-satu. Beberapa berkomunikasi lebih baik secara tertulis. Beberapa membutuhkan waktu untuk memproses sebelum merespons. Tim yang hanya menggunakan satu saluran secara struktural mengecualikan komunikator yang bekerja secara berbeda.",
-        nl: "Cre—er meerdere communicatiekanalen — niet alleen groepsvergaderingen. Sommige mensen spreken het best in ——n-op-——n. Sommigen communiceren beter schriftelijk. Sommigen hebben tijd nodig om te verwerken. Een team dat maar ——n kanaal gebruikt, sluit structureel communicatoren uit die anders werken.",
       },
     ],
   },
@@ -150,31 +122,26 @@ const reflectionQuestions = [
     roman: "I",
     en: "Are you a high-context or low-context communicator? What has that cost you in cross-cultural relationships?",
     id: "Apakah Anda komunikator konteks tinggi atau rendah? Apa yang telah itu biayai Anda dalam hubungan lintas budaya?",
-    nl: "Ben jij een hoge-context of lage-context communicator? Wat heeft dat je gekost in interculturele relaties?",
   },
   {
     roman: "II",
     en: "Think of a cross-cultural miscommunication that made sense only in hindsight. What dimension was at play?",
     id: "Pikirkan miskomunikasi lintas budaya yang hanya masuk akal dalam retrospeksi. Dimensi apa yang berperan?",
-    nl: "Denk aan een interculturele miscommunicatie die pas achteraf logisch was. Welke dimensie speelde een rol?",
   },
   {
     roman: "III",
     en: "What does silence mean in your culture? What does it mean in your team's culture? When have those meanings clashed?",
     id: "Apa arti keheningan dalam budaya Anda? Apa artinya dalam budaya tim Anda? Kapan makna-makna itu bertabrakan?",
-    nl: "Wat betekent stilte in jouw cultuur? Wat betekent het in de cultuur van je team? Wanneer zijn die betekenissen gebotst?",
   },
   {
     roman: "IV",
     en: "Paul says 'speak truth in love' (Eph 4:15). What does that look like when the other person's culture receives truth very differently than yours?",
     id: "Paulus berkata 'berkata benar dengan kasih' (Ef 4:15). Seperti apa itu ketika budaya orang lain menerima kebenaran sangat berbeda dari budaya Anda?",
-    nl: "Paulus zegt 'waarheid spreken in liefde' (Ef 4:15). Hoe ziet dat eruit wanneer de cultuur van de ander waarheid heel anders ontvangt dan de jouwe?",
   },
   {
     roman: "V",
     en: "What communication change could you make this month that would most help one specific person on your team feel genuinely heard?",
     id: "Perubahan komunikasi apa yang bisa Anda lakukan bulan ini yang paling membantu satu orang tertentu di tim Anda merasa benar-benar didengar?",
-    nl: "Welke communicatieverandering kun je deze maand maken die ——n specifieke persoon in je team het meest zou helpen zich echt gehoord te voelen?",
   },
 ];
 
@@ -182,11 +149,11 @@ type Props = { userPathway: string | null; isSaved: boolean };
 
 export default function InterculturalCommunicationClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [openDim, setOpenDim] = useState<number | null>(null);
-  const t = (en: string, id: string, nl: string) => tFn(en, id, nl, lang);
+  const t = (en: string, id: string) => tFn(en, id, lang);
 
   function handleSave() {
     if (saved) return;
@@ -214,10 +181,10 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 16 }}>
-            {t("Cross-Cultural — Guide", "Lintas Budaya — Panduan", "Cross-Cultureel — Gids")}
+            {t("Cross-Cultural — Guide", "Lintas Budaya — Panduan")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
-            {t("Intercultural Communication", "Komunikasi Antarbudaya", "Interculturele Communicatie")}
+            {t("Intercultural Communication", "Komunikasi Antarbudaya")}
           </h1>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(16px, 2vw, 19px)", color: "oklch(85% 0.03 80)", maxWidth: 580, margin: "0 0 16px", lineHeight: 1.65 }}>
             {t(
@@ -230,7 +197,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={handleSave} disabled={saved || isPending} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: saved ? "oklch(35% 0.08 260)" : "transparent", color: "oklch(75% 0.04 260)", padding: "14px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: saved ? "default" : "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+              {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
           </div>
         </div>
@@ -239,50 +206,44 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       {/* --- SECTION 1: OPENING STORY ----------------------------------------- */}
       <div style={{ padding: "80px 24px 0", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 24 }}>
-          {t("A Story", "Sebuah Kisah", "Een Verhaal")}
+          {t("A Story", "Sebuah Kisah")}
         </p>
         <div style={{ borderLeft: `4px solid ${orange}`, paddingLeft: 28, marginBottom: 40 }}>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 2.8vw, 26px)", color: navy, lineHeight: 1.55, marginBottom: 20, fontStyle: "italic" }}>
             {t(
               "Anna was a German development worker in Manila. She was known for her clarity. When she had feedback, she gave it — directly, in writing, with specific points. It felt professional to her. Respectful, even.",
-              "Anna adalah pekerja pembangunan Jerman di Manila. Dia dikenal karena kejelasannya. Ketika dia memiliki umpan balik, dia memberikannya — langsung, secara tertulis, dengan poin-poin spesifik. Itu terasa profesional baginya. Bahkan penuh hormat.",
-              "Anna was een Duitse ontwikkelingswerker in Manila. Ze stond bekend om haar duidelijkheid. Als ze feedback had, gaf ze die — direct, schriftelijk, met specifieke punten. Dat voelde professioneel voor haar. Zelfs respectvol."
+              "Anna adalah pekerja pembangunan Jerman di Manila. Dia dikenal karena kejelasannya. Ketika dia memiliki umpan balik, dia memberikannya — langsung, secara tertulis, dengan poin-poin spesifik. Itu terasa profesional baginya. Bahkan penuh hormat."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
             {t(
               "One day she sent a detailed written critique of a report to her Filipino team member, Ramon. Bullet points. What was missing. What needed to change. She expected a response. She got silence.",
-              "Suatu hari dia mengirimkan kritik tertulis terperinci atas sebuah laporan kepada anggota tim Filipinanya, Ramon. Poin-poin. Apa yang kurang. Apa yang perlu diubah. Dia mengharapkan respons. Dia mendapat keheningan.",
-              "Op een dag stuurde ze een gedetailleerde schriftelijke kritiek op een rapport naar haar Filipijns teamlid, Ramon. Bulletpoints. Wat ontbrak. Wat moest veranderen. Ze verwachtte een reactie. Ze kreeg stilte."
+              "Suatu hari dia mengirimkan kritik tertulis terperinci atas sebuah laporan kepada anggota tim Filipinanya, Ramon. Poin-poin. Apa yang kurang. Apa yang perlu diubah. Dia mengharapkan respons. Dia mendapat keheningan."
             )}
           </p>
           <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
             {t(
               "Ramon became quiet in team meetings. He stopped volunteering ideas. Three weeks later, Anna learned through a colleague that Ramon had been asking around whether she was building a case to have him let go.",
-              "Ramon menjadi pendiam dalam rapat tim. Dia berhenti menawarkan ide. Tiga minggu kemudian, Anna mengetahui melalui seorang rekan bahwa Ramon telah bertanya-tanya apakah Anna sedang membangun kasus untuk memecatnya.",
-              "Ramon werd stil in teamvergaderingen. Hij stopte met het aandragen van idee—n. Drie weken later hoorde Anna via een collega dat Ramon had rondgevraagd of zij een zaak aan het opbouwen was om hem te ontslaan."
+              "Ramon menjadi pendiam dalam rapat tim. Dia berhenti menawarkan ide. Tiga minggu kemudian, Anna mengetahui melalui seorang rekan bahwa Ramon telah bertanya-tanya apakah Anna sedang membangun kasus untuk memecatnya."
             )}
           </p>
           <p style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(19px, 2.5vw, 23px)", color: navy, lineHeight: 1.6, fontStyle: "italic" }}>
             {t(
               "Anna had not been trying to shame him. She had been trying to help him. But in Ramon's culture, written direct critique from a superior — especially on work he had put his name to — was not feedback. It was a formal record of failure.",
-              "Anna tidak mencoba mempermalukannya. Dia mencoba membantunya. Tapi dalam budaya Ramon, kritik langsung tertulis dari atasan — terutama pada pekerjaan yang telah dia beri namanya — bukan umpan balik. Itu adalah catatan formal kegagalan.",
-              "Anna probeerde hem niet te beschamen. Ze probeerde hem te helpen. Maar in Ramons cultuur was schriftelijke directe kritiek van een meerdere — zeker op werk waar hij zijn naam aan had gegeven — geen feedback. Het was een formeel record van falen."
+              "Anna tidak mencoba mempermalukannya. Dia mencoba membantunya. Tapi dalam budaya Ramon, kritik langsung tertulis dari atasan — terutama pada pekerjaan yang telah dia beri namanya — bukan umpan balik. Itu adalah catatan formal kegagalan."
             )}
           </p>
         </div>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.8, marginBottom: 16 }}>
           {t(
             "Communication is never just the transfer of information. It is a cultural act — shaped by history, value systems, and how a culture defines dignity.⁵ What feels clear and honest in one context can feel threatening and humiliating in another.",
-            "Komunikasi bukan sekadar transfer informasi. Ini adalah tindakan budaya — dibentuk oleh sejarah, sistem nilai, dan bagaimana suatu budaya mendefinisikan martabat. Apa yang terasa jelas dan jujur dalam satu konteks bisa terasa mengancam dan merendahkan di konteks lain.",
-            "Communicatie is nooit alleen de overdracht van informatie. Het is een culturele daad — gevormd door geschiedenis, waardensystemen en hoe een cultuur waardigheid definieert. Wat in ——n context duidelijk en eerlijk aanvoelt, kan in een andere dreigend en vernederend aanvoelen."
+            "Komunikasi bukan sekadar transfer informasi. Ini adalah tindakan budaya — dibentuk oleh sejarah, sistem nilai, dan bagaimana suatu budaya mendefinisikan martabat. Apa yang terasa jelas dan jujur dalam satu konteks bisa terasa mengancam dan merendahkan di konteks lain."
           )}
         </p>
         <p style={{ fontSize: 17, fontWeight: 700, color: navy, lineHeight: 1.7 }}>
           {t(
             "Anna was not wrong to give feedback. She was wrong about how to give it. That is an intercultural communication problem — and it is one of the most common on cross-cultural teams.",
-            "Anna tidak salah memberikan umpan balik. Dia salah tentang cara memberikannya. Itulah masalah komunikasi antarbudaya — dan ini adalah salah satu yang paling umum dalam tim lintas budaya.",
-            "Anna had het niet mis om feedback te geven. Ze had het mis over hoe dat te doen. Dat is een intercultureel communicatieprobleem — en het is een van de meest voorkomende in interculturele teams."
+            "Anna tidak salah memberikan umpan balik. Dia salah tentang cara memberikannya. Itulah masalah komunikasi antarbudaya — dan ini adalah salah satu yang paling umum dalam tim lintas budaya."
           )}
         </p>
       </div>
@@ -295,8 +256,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
         <p style={{ textAlign: "center", fontSize: 12, color: "oklch(60% 0.04 260)", marginTop: 10, fontStyle: "italic" }}>
           {t(
             "Communication is not just what is said — it is what the other person receives.",
-            "Komunikasi bukan hanya apa yang dikatakan — melainkan apa yang diterima orang lain.",
-            "Communicatie is niet alleen wat gezegd wordt — het is wat de ander ontvangt."
+            "Komunikasi bukan hanya apa yang dikatakan — melainkan apa yang diterima orang lain."
           )}
         </p>
       </div>
@@ -305,16 +265,15 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       <div style={{ background: lightGray, padding: "80px 24px", marginTop: 48 }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("The Framework", "Kerangka Kerja", "Het Kader")}
+            {t("The Framework", "Kerangka Kerja")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.2 }}>
-            {t("4 Communication Dimensions", "4 Dimensi Komunikasi", "4 Communicatiedimensies")}
+            {t("4 Communication Dimensions", "4 Dimensi Komunikasi")}
           </h2>
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "Every cross-cultural communication breakdown can usually be traced to one of these four dimensions. Click each to go deeper.",
-              "Setiap kerusakan komunikasi lintas budaya biasanya dapat ditelusuri ke salah satu dari empat dimensi ini. Klik masing-masing untuk lebih dalam.",
-              "Elke interculturele communicatiebreuk is meestal terug te voeren op een van deze vier dimensies. Klik op elk voor meer diepgang."
+              "Setiap kerusakan komunikasi lintas budaya biasanya dapat ditelusuri ke salah satu dari empat dimensi ini. Klik masing-masing untuk lebih dalam."
             )}
           </p>
 
@@ -330,10 +289,10 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
                     <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 700, color: isOpen ? orange : "oklch(75% 0.04 260)", lineHeight: 1, minWidth: 44, flexShrink: 0, transition: "color 0.15s ease" }}>{d.number}</span>
                     <div style={{ flex: 1 }}>
                       <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 17, fontWeight: 700, color: navy, margin: "0 0 4px" }}>
-                        {lang === "en" ? d.en_title : lang === "id" ? d.id_title : d.nl_title}
+                        {lang === "id" ? d.id_title : d.en_title}
                       </p>
                       <p style={{ fontSize: 13, color: bodyText, margin: 0, fontStyle: "italic" }}>
-                        {lang === "en" ? d.en_tagline : lang === "id" ? d.id_tagline : d.nl_tagline}
+                        {lang === "id" ? d.id_tagline : d.en_tagline}
                       </p>
                     </div>
                     <span style={{ color: isOpen ? orange : "oklch(65% 0.04 260)", fontSize: 22, fontWeight: 300, transform: isOpen ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s ease, color 0.15s ease", flexShrink: 0 }}>+</span>
@@ -341,15 +300,15 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
                   {isOpen && (
                     <div style={{ padding: "0 28px 28px", borderTop: "1px solid oklch(92% 0.01 80)" }}>
                       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 20 }}>
-                        {(lang === "en" ? d.en_body : lang === "id" ? d.id_body : d.nl_body).split("\n\n").map((para, pi) => (
+                        {(lang === "id" ? d.id_body : d.en_body).split("\n\n").map((para, pi) => (
                           <p key={pi} style={{ fontSize: 15, color: bodyText, lineHeight: 1.85, margin: 0 }}>{para}</p>
                         ))}
                         <div style={{ borderLeft: `3px solid ${orange}`, paddingLeft: 20 }}>
                           <p style={{ fontSize: 12, fontWeight: 700, color: orange, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-                            {t("What to do", "Apa yang harus dilakukan", "Wat te doen")}
+                            {t("What to do", "Apa yang harus dilakukan")}
                           </p>
                           <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                            {lang === "en" ? d.en_practice : lang === "id" ? d.id_practice : d.nl_practice}
+                            {lang === "id" ? d.id_practice : d.en_practice}
                           </p>
                         </div>
                       </div>
@@ -365,16 +324,16 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       {/* --- SECTION 3: FAITH ANCHOR ------------------------------------------ */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("Faith Anchor", "Jangkar Iman", "Geloofsanker")}
+          {t("Faith Anchor", "Jangkar Iman")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 32, lineHeight: 1.2 }}>
-          {t("Truth Spoken in Love", "Kebenaran yang Diucapkan dengan Kasih", "Waarheid Gesproken in Liefde")}
+          {t("Truth Spoken in Love", "Kebenaran yang Diucapkan dengan Kasih")}
         </h2>
 
         <div style={{ background: navy, borderRadius: 12, padding: "40px 44px", marginBottom: 40, position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: -20, left: -20, width: 120, height: 120, borderRadius: "50%", background: "oklch(30% 0.12 260)", opacity: 0.4 }} />
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 20, position: "relative" }}>
-            {t("Scripture", "Kitab Suci", "Schriftuur")}
+            {t("Scripture", "Kitab Suci")}
           </p>
           <blockquote style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", color: offWhite, lineHeight: 1.65, fontStyle: "italic", margin: "0 0 20px", position: "relative" }}>
             {t(
@@ -384,29 +343,26 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
             )}
           </blockquote>
           <p style={{ color: orange, fontSize: 14, fontWeight: 600, margin: 0, position: "relative" }}>
-            {t("Ephesians 4:15 (NIV)", "Efesus 4:15", "Efezi—rs 4:15")}
+            {t("Ephesians 4:15 (NIV)", "Efesus 4:15")}
           </p>
         </div>
 
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "Paul's phrase 'speaking the truth in love' is often read as a balance between honesty and kindness. But in cross-cultural communication, it asks a deeper question: what does it mean to speak truth in a way that can actually be received by the person you are speaking to?",
-            "Frasa Paulus 'berkata benar dengan kasih' sering dibaca sebagai keseimbangan antara kejujuran dan kebaikan. Tetapi dalam komunikasi lintas budaya, ini mengajukan pertanyaan yang lebih dalam: apa artinya berkata benar dengan cara yang benar-benar dapat diterima oleh orang yang Anda ajak bicara?",
-            "Paulus' zinsnede 'waarheid spreken in liefde' wordt vaak gelezen als een balans tussen eerlijkheid en vriendelijkheid. Maar in interculturele communicatie stelt het een diepere vraag: wat betekent het om waarheid te spreken op een manier die daadwerkelijk kan worden ontvangen door de persoon tot wie je spreekt?"
+            "Frasa Paulus 'berkata benar dengan kasih' sering dibaca sebagai keseimbangan antara kejujuran dan kebaikan. Tetapi dalam komunikasi lintas budaya, ini mengajukan pertanyaan yang lebih dalam: apa artinya berkata benar dengan cara yang benar-benar dapat diterima oleh orang yang Anda ajak bicara?"
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
           {t(
             "Watch how Jesus communicates with the Samaritan woman at the well (John 4). He does not open with theology. He asks for water. He starts on her terms, in her space, respecting her dignity before moving toward truth. He does not abandon truth — but he earns the right to speak it by the way he listens first.",
-            "Perhatikan bagaimana Yesus berkomunikasi dengan perempuan Samaria di sumur (Yohanes 4). Dia tidak membuka dengan teologi. Dia meminta air. Dia mulai dengan syaratnya, di ruangnya, menghormati martabatnya sebelum bergerak menuju kebenaran. Dia tidak meninggalkan kebenaran — tetapi dia mendapatkan hak untuk mengatakannya dengan cara dia mendengarkan terlebih dahulu.",
-            "Let op hoe Jezus communiceert met de Samaritaanse vrouw bij de put (Johannes 4). Hij opent niet met theologie. Hij vraagt om water. Hij begint op haar voorwaarden, in haar ruimte, haar waardigheid respecterend voordat hij richting de waarheid beweegt. Hij verlaat de waarheid niet — maar hij verdient het recht om haar te spreken door de manier waarop hij eerst luistert."
+            "Perhatikan bagaimana Yesus berkomunikasi dengan perempuan Samaria di sumur (Yohanes 4). Dia tidak membuka dengan teologi. Dia meminta air. Dia mulai dengan syaratnya, di ruangnya, menghormati martabatnya sebelum bergerak menuju kebenaran. Dia tidak meninggalkan kebenaran — tetapi dia mendapatkan hak untuk mengatakannya dengan cara dia mendengarkan terlebih dahulu."
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85 }}>
           {t(
             "Truth spoken in love is not just honest — it is received. And what it takes to be received varies by culture. This is not compromise. This is communication that actually works.",
-            "Kebenaran yang diucapkan dengan kasih bukan sekadar jujur — melainkan diterima. Dan apa yang diperlukan untuk diterima bervariasi menurut budaya. Ini bukan kompromi. Ini adalah komunikasi yang benar-benar berhasil.",
-            "Waarheid gesproken in liefde is niet alleen eerlijk — ze wordt ontvangen. En wat nodig is om ontvangen te worden, verschilt per cultuur. Dit is geen compromis. Dit is communicatie die echt werkt."
+            "Kebenaran yang diucapkan dengan kasih bukan sekadar jujur — melainkan diterima. Dan apa yang diperlukan untuk diterima bervariasi menurut budaya. Ini bukan kompromi. Ini adalah komunikasi yang benar-benar berhasil."
           )}
         </p>
       </div>
@@ -419,8 +375,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
         <p style={{ textAlign: "center", fontSize: 12, color: "oklch(60% 0.04 260)", marginTop: 10, fontStyle: "italic" }}>
           {t(
             "Real understanding crosses more than language — it crosses cultural assumptions about what communication even is.",
-            "Pemahaman nyata melampaui lebih dari sekadar bahasa — melintasi asumsi budaya tentang apa komunikasi itu.",
-            "Echt begrip overschrijdt meer dan taal — het overschrijdt culturele aannames over wat communicatie —berhaupt is."
+            "Pemahaman nyata melampaui lebih dari sekadar bahasa — melintasi asumsi budaya tentang apa komunikasi itu."
           )}
         </p>
       </div>
@@ -429,16 +384,15 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-            {t("Development Path", "Jalur Pengembangan", "Ontwikkelingspad")}
+            {t("Development Path", "Jalur Pengembangan")}
           </p>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.2 }}>
-            {t("How to Grow as a Communicator", "Cara Bertumbuh sebagai Komunikator", "Hoe Te Groeien als Communicator")}
+            {t("How to Grow as a Communicator", "Cara Bertumbuh sebagai Komunikator")}
           </h2>
           <p style={{ color: bodyText, fontSize: 16, lineHeight: 1.75, marginBottom: 48 }}>
             {t(
               "Communication skills develop through deliberate practice — not just exposure. Start with yourself, then build habits, then shape your team's culture.",
-              "Keterampilan komunikasi berkembang melalui latihan yang disengaja — bukan sekadar paparan. Mulailah dengan diri sendiri, lalu bangun kebiasaan, lalu bentuk budaya tim Anda.",
-              "Communicatievaardigheden ontwikkelen zich door bewuste oefening — niet alleen door blootstelling. Begin met jezelf, bouw dan gewoonten op, en vorm dan de cultuur van je team."
+              "Keterampilan komunikasi berkembang melalui latihan yang disengaja — bukan sekadar paparan. Mulailah dengan diri sendiri, lalu bangun kebiasaan, lalu bentuk budaya tim Anda."
             )}
           </p>
 
@@ -446,10 +400,10 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
             {developmentLevels.map((level, i) => (
               <div key={level.level} style={{ flex: 1, background: level.color, padding: "12px 16px", textAlign: "center", position: "relative" }}>
                 <p style={{ color: "white", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", margin: "0 0 2px", opacity: 0.8 }}>
-                  {t("Level", "Tingkat", "Niveau")} {level.level}
+                  {t("Level", "Tingkat")} {level.level}
                 </p>
                 <p style={{ color: "white", fontSize: 14, fontWeight: 700, margin: 0 }}>
-                  {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
+                  {lang === "id" ? level.id_label : level.en_label}
                 </p>
                 {i < developmentLevels.length - 1 && (
                   <div style={{ position: "absolute", right: -12, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, background: level.color, clipPath: "polygon(0 0, 100% 50%, 0 100%)", zIndex: 1 }} />
@@ -466,10 +420,10 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
                     <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 40, fontWeight: 700, color: level.color, lineHeight: 1 }}>{level.level}</span>
                     <div>
                       <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 18, fontWeight: 800, color: navy, margin: 0 }}>
-                        {lang === "en" ? level.en_label : lang === "id" ? level.id_label : level.nl_label}
+                        {lang === "id" ? level.id_label : level.en_label}
                       </p>
                       <p style={{ fontSize: 13, color: bodyText, margin: 0, fontStyle: "italic" }}>
-                        {lang === "en" ? level.en_subtitle : lang === "id" ? level.id_subtitle : level.nl_subtitle}
+                        {lang === "id" ? level.id_subtitle : level.en_subtitle}
                       </p>
                     </div>
                   </div>
@@ -481,7 +435,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
                         <span style={{ color: "white", fontSize: 13, fontWeight: 700 }}>{ai + 1}</span>
                       </div>
                       <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                        {lang === "en" ? action.en : lang === "id" ? action.id : action.nl}
+                        {lang === "id" ? action.id : action.en}
                       </p>
                     </div>
                   ))}
@@ -495,16 +449,15 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       {/* --- SECTION 5: REFLECTION QUESTIONS --------------------------------- */}
       <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
-          {t("Reflection Questions", "Pertanyaan Refleksi", "Reflectievragen")}
+          {t("Reflection Questions", "Pertanyaan Refleksi")}
         </p>
         <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 800, color: navy, marginBottom: 12, lineHeight: 1.2 }}>
-          {t("Sit With These", "Renungkan Ini", "Neem de Tijd Hiervoor")}
+          {t("Sit With These", "Renungkan Ini")}
         </h2>
         <p style={{ color: bodyText, fontSize: 15, lineHeight: 1.7, marginBottom: 40 }}>
           {t(
             "For personal reflection and team conversation.",
-            "Untuk refleksi pribadi dan percakapan tim.",
-            "Voor persoonlijke reflectie en teamgesprek."
+            "Untuk refleksi pribadi dan percakapan tim."
           )}
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 16 }}>
@@ -512,7 +465,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
             <div key={q.roman} style={{ background: lightGray, borderRadius: 10, padding: "24px 24px 24px 20px", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: `3px solid ${orange}` }}>
               <span style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif", fontSize: 24, fontWeight: 700, color: orange, lineHeight: 1, minWidth: 24, flexShrink: 0, paddingTop: 2 }}>{q.roman}</span>
               <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.8, margin: 0 }}>
-                {lang === "en" ? q.en : lang === "id" ? q.id : q.nl}
+                {lang === "id" ? q.id : q.en}
               </p>
             </div>
           ))}
@@ -549,17 +502,17 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orange }} />
         <div style={{ position: "relative", maxWidth: 600, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 800, color: offWhite, marginBottom: 16, lineHeight: 1.2 }}>
-            {t("Keep Growing", "Terus Bertumbuh", "Blijf Groeien")}
+            {t("Keep Growing", "Terus Bertumbuh")}
           </h2>
           <p style={{ color: "oklch(75% 0.04 260)", fontSize: 16, lineHeight: 1.75, marginBottom: 32 }}>
-            {t("Explore more training modules to deepen your cross-cultural leadership.", "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.", "Verken meer bronnen om je intercultureel leiderschap te verdiepen.")}
+            {t("Explore more training modules to deepen your cross-cultural leadership.", "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.")}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 12, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
-              {t("Training", "Pelatihan", "Contentbibliotheek")}
+              {t("Training", "Pelatihan")}
             </Link>
             <Link href="/resources/time-and-culture" style={{ display: "inline-block", padding: "14px 32px", border: "1px solid oklch(45% 0.05 260)", color: offWhite, borderRadius: 12, fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 15, fontWeight: 600, textDecoration: "none" }}>
-              {t("Time & Culture", "Waktu & Budaya", "Tijd & Cultuur")}
+              {t("Time & Culture", "Waktu & Budaya")}
             </Link>
           </div>
         </div>

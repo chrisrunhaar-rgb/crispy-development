@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
@@ -23,15 +23,15 @@ import {
 
 // ─── Types & Helpers ──────────────────────────────────────────────────────────
 
-type LangCode = "en" | "id" | "nl";
+type LangCode = "en" | "id";
 
 type Props = { userPathway: string | null; isSaved: boolean };
 
 // ─── Flip Card Data ───────────────────────────────────────────────────────────
 
 type FlipCard = {
-  title: { en: string; id: string; nl: string };
-  back: { en: string; id: string; nl: string };
+  title: { en: string; id: string };
+  back: { en: string; id: string };
 };
 
 const FLIP_CARDS: FlipCard[] = [
@@ -39,60 +39,50 @@ const FLIP_CARDS: FlipCard[] = [
     title: {
       en: "What Vision Actually Is",
       id: "Apa Sebenarnya Visi Itu",
-      nl: "Wat Visie Werkelijk Is",
     },
     back: {
       en: "Vision is a clear mental picture of what could be, fuelled by the conviction that it should be. It is not a goal, not a strategy, and not a mission statement. Vision is a living picture that moves people toward a preferred future. Without it, leaders manage — with it, they mobilise.",
       id: "Visi adalah gambaran mental yang jelas tentang apa yang bisa ada, didorong oleh keyakinan bahwa itu seharusnya ada. Ini bukan tujuan, bukan strategi, dan bukan pernyataan misi. Visi adalah gambaran hidup yang menggerakkan orang menuju masa depan yang lebih baik.",
-      nl: "Visie is een helder mentaal beeld van wat zou kunnen zijn, gevoed door de overtuiging dat het zo moet zijn. Het is geen doel, geen strategie en geen missieverklaring. Visie is een levend beeld dat mensen beweegt naar een gewenste toekomst.",
     },
   },
   {
     title: {
       en: "The Four Channels",
       id: "Empat Saluran",
-      nl: "De Vier Kanalen",
     },
     back: {
       en: "God speaks vision through four channels: Passion (what you cannot put down), Dreams (what stirs your imagination), Revelation (what God speaks directly), and Others (what your team sees that you cannot). Most leaders only use one or two. The strongest visions draw from all four.",
       id: "Allah berbicara visi melalui empat saluran: Gairah (yang tidak bisa Anda tinggalkan), Mimpi (yang menggerakkan imajinasi Anda), Wahyu (apa yang Allah ucapkan langsung), dan Sesama (apa yang tim Anda lihat yang tidak bisa Anda lihat). Visi terkuat menggali dari keempat-empatnya.",
-      nl: "God spreekt visie door vier kanalen: Passie (wat je niet kunt neerleggen), Dromen (wat je verbeelding beweegt), Openbaring (wat God rechtstreeks spreekt), en Anderen (wat je team ziet dat jij niet ziet). De sterkste visies putten uit alle vier.",
     },
   },
   {
     title: {
       en: "Vision and the Great Commission",
       id: "Visi dan Amanat Agung",
-      nl: "Visie en de Grote Opdracht",
     },
     back: {
       en: "For a cross-cultural Christian leader, every team vision sits inside the Great Commission — Jesus' ongoing call to make disciples of every nation. Your specific vision is a small piece of God's larger vision for the world. Knowing this is the difference between leading a project and stewarding a calling.",
       id: "Bagi seorang pemimpin Kristen lintas budaya, setiap visi tim berada di dalam Amanat Agung — panggilan Yesus yang terus-menerus untuk menjadikan semua bangsa murid-Nya. Visi spesifik Anda adalah bagian kecil dari visi Allah yang lebih besar untuk dunia.",
-      nl: "Voor een interculturele christelijke leider ligt elke teamvisie binnen de Grote Opdracht — Jezus' voortdurende roep om van alle volken discipelen te maken. Jouw specifieke visie is een klein stukje van Gods grotere visie voor de wereld.",
     },
   },
   {
     title: {
       en: "How to Test a Vision",
       id: "Cara Menguji Visi",
-      nl: "Hoe Visie te Testen",
     },
     back: {
       en: "Not every strong feeling is God-given vision. Five tests help distinguish a God-originated vision from a good idea or personal ambition: Time (does it survive months of prayer?), Scripture (does it align with God's character?), Community (have trusted people confirmed it?), Sacrifice (are you willing to pay the cost?), and Fruit (what is it producing?).",
       id: "Tidak setiap perasaan kuat adalah visi yang diberikan Allah. Lima pengujian membantu membedakan visi yang berasal dari Allah: Waktu, Kitab Suci, Komunitas, Pengorbanan, dan Buah.",
-      nl: "Niet elk sterk gevoel is door God gegeven visie. Vijf testen helpen onderscheid te maken: Tijd, Schrift, Gemeenschap, Opoffering en Vrucht.",
     },
   },
   {
     title: {
       en: "How Team Leaders Cast Vision",
       id: "Cara Pemimpin Tim Menebar Visi",
-      nl: "Hoe Teamleiders Visie Uitdragen",
     },
     back: {
       en: "Vision must be repeated seven to ten times² before it settles. Use story, not slides. Invite people in — don't announce to them. In cross-cultural teams, vision must be framed collectively ('what we will do together'), not as a hero-leader announcement. The vision that emerges from the team together is almost always larger than the one you started with.",
       id: "Visi harus diulangi tujuh hingga sepuluh kali² sebelum menetap. Gunakan cerita, bukan slide. Undang orang masuk — jangan umumkan kepada mereka. Dalam tim lintas budaya, visi harus dibingkai secara kolektif.",
-      nl: "Visie moet zeven tot tien keer² worden herhaald voordat het landt. Gebruik verhalen, geen slides. Nodig mensen uit — kondig niet aan. In interculturele teams moet visie collectief worden geframed: 'wat we samen zullen doen'.",
     },
   },
 ];
@@ -101,7 +91,7 @@ const FLIP_CARDS: FlipCard[] = [
 
 export default function VisionCastingClient({ userPathway, isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as LangCode;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as LangCode;
 
   // Helper
   const t = (field: Lang): string => field[lang];
@@ -179,7 +169,6 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
   const threeMonthNote: Lang = {
     en: "Return to this audit in three months. Vision is tested by time.",
     id: "Kembali ke audit ini dalam tiga bulan. Visi diuji oleh waktu.",
-    nl: "Keer over drie maanden terug naar deze audit. Visie wordt getoetst door de tijd.",
   };
 
   // ─── Style constants ─────────────────────────────────────────────
@@ -550,13 +539,13 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
       <div style={{ background: navy, padding: "clamp(48px, 7vw, 64px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: montserrat, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
-            {t({ en: "After This Module", id: "Setelah Modul Ini", nl: "Na Dit Module" })}
+            {t({ en: "After This Module", id: "Setelah Modul Ini" })}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              t({ en: "Describe three or more cultural frameworks for how vision is cast and received across different team cultures.", id: "Menjelaskan tiga atau lebih kerangka budaya tentang bagaimana visi disampaikan dan diterima di berbagai budaya tim.", nl: "Drie of meer culturele kaders beschrijven voor hoe visie wordt gecommuniceerd en ontvangen in verschillende teamculturen." }),
-              t({ en: "Apply Nehemiah's four-part vision sequence to structure a real leadership communication challenge in your context.", id: "Menerapkan urutan visi empat bagian Nehemia untuk menyusun tantangan komunikasi kepemimpinan nyata dalam konteks Anda.", nl: "Nehemia's vierdelige visievolgorde toepassen om een echte leiderschapscommunicatie-uitdaging in jouw context te structureren." }),
-              t({ en: "Identify the gap between how you currently cast vision and how it is actually being received by your team.", id: "Mengidentifikasi kesenjangan antara cara Anda saat ini menyampaikan visi dan bagaimana visi tersebut sebenarnya diterima oleh tim Anda.", nl: "Het verschil identificeren tussen hoe jij nu visie communiceert en hoe die daadwerkelijk wordt ontvangen door jouw team." }),
+              t({ en: "Describe three or more cultural frameworks for how vision is cast and received across different team cultures.", id: "Menjelaskan tiga atau lebih kerangka budaya tentang bagaimana visi disampaikan dan diterima di berbagai budaya tim." }),
+              t({ en: "Apply Nehemiah's four-part vision sequence to structure a real leadership communication challenge in your context.", id: "Menerapkan urutan visi empat bagian Nehemia untuk menyusun tantangan komunikasi kepemimpinan nyata dalam konteks Anda." }),
+              t({ en: "Identify the gap between how you currently cast vision and how it is actually being received by your team.", id: "Mengidentifikasi kesenjangan antara cara Anda saat ini menyampaikan visi dan bagaimana visi tersebut sebenarnya diterima oleh tim Anda." }),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                 <div style={{ width: 3, height: 20, background: orange, flexShrink: 0, marginTop: 3 }} />

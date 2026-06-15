@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -20,149 +20,149 @@ const SHUFFLE_ORDERS: number[][] = [
 ];
 
 const QS = [
-  { en: "When starting a new project, your first priority is:", id: "Saat memulai proyek baru, prioritas pertama Anda adalah:", nl: "Als je aan een nieuw project begint, is jouw eerste prioriteit:", options: [
-    { en: "Define the goal and get moving immediately.", id: "Menetapkan tujuan dan segera bergerak.", nl: "Het doel bepalen en meteen aan de slag gaan.", t: "D" },
-    { en: "Build energy and excitement with the team.", id: "Membangun semangat dan antusias bersama tim.", nl: "Energie en enthousiasme opbouwen samen met het team.", t: "I" },
-    { en: "Ensure everyone understands their role and feels included.", id: "Memastikan semua orang memahami perannya dan merasa dilibatkan.", nl: "Zorgen dat iedereen zijn rol begrijpt en zich betrokken voelt.", t: "S" },
-    { en: "Gather all relevant information and create a thorough plan.", id: "Mengumpulkan semua informasi relevan dan membuat rencana yang menyeluruh.", nl: "Alle relevante informatie verzamelen en een grondig plan maken.", t: "C" },
+  { en: "When starting a new project, your first priority is:", id: "Saat memulai proyek baru, prioritas pertama Anda adalah:", options: [
+    { en: "Define the goal and get moving immediately.", id: "Menetapkan tujuan dan segera bergerak.", t: "D" },
+    { en: "Build energy and excitement with the team.", id: "Membangun semangat dan antusias bersama tim.", t: "I" },
+    { en: "Ensure everyone understands their role and feels included.", id: "Memastikan semua orang memahami perannya dan merasa dilibatkan.", t: "S" },
+    { en: "Gather all relevant information and create a thorough plan.", id: "Mengumpulkan semua informasi relevan dan membuat rencana yang menyeluruh.", t: "C" },
   ]},
-  { en: "In a team meeting that's running off track, you tend to:", id: "Dalam rapat tim yang berjalan tidak sesuai rencana, Anda cenderung:", nl: "In een teamvergadering die uit de hand loopt, ben jij geneigd om:", options: [
-    { en: "Redirect the conversation directly and push for a decision.", id: "Langsung mengarahkan kembali diskusi dan mendorong pengambilan keputusan.", nl: "Het gesprek direct sturen en aansturen op een beslissing.", t: "D" },
-    { en: "Re-energise the group and lighten the atmosphere.", id: "Membangkitkan energi kelompok dan mencairkan suasana.", nl: "De groep nieuwe energie te geven en de sfeer te verlichten.", t: "I" },
-    { en: "Support whoever tries to get things back on track.", id: "Mendukung siapa pun yang berusaha mengembalikan rapat ke jalur yang benar.", nl: "Degene te ondersteunen die probeert de vergadering terug op koers te brengen.", t: "S" },
-    { en: "Identify the root cause and propose a structured agenda.", id: "Mengidentifikasi akar masalah dan mengusulkan agenda yang terstruktur.", nl: "De oorzaak te achterhalen en een gestructureerde agenda voor te stellen.", t: "C" },
+  { en: "In a team meeting that's running off track, you tend to:", id: "Dalam rapat tim yang berjalan tidak sesuai rencana, Anda cenderung:", options: [
+    { en: "Redirect the conversation directly and push for a decision.", id: "Langsung mengarahkan kembali diskusi dan mendorong pengambilan keputusan.", t: "D" },
+    { en: "Re-energise the group and lighten the atmosphere.", id: "Membangkitkan energi kelompok dan mencairkan suasana.", t: "I" },
+    { en: "Support whoever tries to get things back on track.", id: "Mendukung siapa pun yang berusaha mengembalikan rapat ke jalur yang benar.", t: "S" },
+    { en: "Identify the root cause and propose a structured agenda.", id: "Mengidentifikasi akar masalah dan mengusulkan agenda yang terstruktur.", t: "C" },
   ]},
-  { en: "When giving feedback to a colleague, you tend to:", id: "Ketika memberikan umpan balik kepada rekan kerja, Anda cenderung:", nl: "Als je feedback geeft aan een collega, ben jij geneigd om:", options: [
-    { en: "Be direct and get straight to the point.", id: "Langsung pada intinya tanpa basa-basi.", nl: "Direct en to-the-point te zijn.", t: "D" },
-    { en: "Frame it positively and focus on encouragement.", id: "Menyampaikannya secara positif dengan fokus pada dorongan semangat.", nl: "Het positief te framen en te focussen op aanmoediging.", t: "I" },
-    { en: "Find a private moment and deliver it gently.", id: "Mencari waktu yang tepat dan menyampaikannya dengan lembut.", nl: "Een rustig moment te zoeken en het vriendelijk over te brengen.", t: "S" },
-    { en: "Prepare thoroughly and give specific, evidence-based input.", id: "Mempersiapkan dengan matang dan memberikan masukan yang spesifik berbasis fakta.", nl: "Je goed voor te bereiden en specifieke, op feiten gebaseerde input te geven.", t: "C" },
+  { en: "When giving feedback to a colleague, you tend to:", id: "Ketika memberikan umpan balik kepada rekan kerja, Anda cenderung:", options: [
+    { en: "Be direct and get straight to the point.", id: "Langsung pada intinya tanpa basa-basi.", t: "D" },
+    { en: "Frame it positively and focus on encouragement.", id: "Menyampaikannya secara positif dengan fokus pada dorongan semangat.", t: "I" },
+    { en: "Find a private moment and deliver it gently.", id: "Mencari waktu yang tepat dan menyampaikannya dengan lembut.", t: "S" },
+    { en: "Prepare thoroughly and give specific, evidence-based input.", id: "Mempersiapkan dengan matang dan memberikan masukan yang spesifik berbasis fakta.", t: "C" },
   ]},
-  { en: "Under pressure, others would most likely describe you as:", id: "Di bawah tekanan, orang lain kemungkinan besar akan menggambarkan Anda sebagai:", nl: "Onder druk zouden anderen jou het meest omschrijven als:", options: [
-    { en: "Decisive and assertive.", id: "Tegas dan berani mengambil sikap.", nl: "Besluitvaardig en assertief.", t: "D" },
-    { en: "Energetic and optimistic.", id: "Energik dan optimistis.", nl: "Energiek en optimistisch.", t: "I" },
-    { en: "Calm and steady.", id: "Tenang dan stabil.", nl: "Kalm en stabiel.", t: "S" },
-    { en: "Careful and detail-focused.", id: "Hati-hati dan fokus pada detail.", nl: "Zorgvuldig en detailgericht.", t: "C" },
+  { en: "Under pressure, others would most likely describe you as:", id: "Di bawah tekanan, orang lain kemungkinan besar akan menggambarkan Anda sebagai:", options: [
+    { en: "Decisive and assertive.", id: "Tegas dan berani mengambil sikap.", t: "D" },
+    { en: "Energetic and optimistic.", id: "Energik dan optimistis.", t: "I" },
+    { en: "Calm and steady.", id: "Tenang dan stabil.", t: "S" },
+    { en: "Careful and detail-focused.", id: "Hati-hati dan fokus pada detail.", t: "C" },
   ]},
-  { en: "You are most motivated by:", id: "Anda paling termotivasi oleh:", nl: "Jij wordt het meest gemotiveerd door:", options: [
-    { en: "Winning, achieving results, and overcoming challenges.", id: "Meraih kemenangan, mencapai hasil, dan mengatasi tantangan.", nl: "Winnen, resultaten behalen en uitdagingen overwinnen.", t: "D" },
-    { en: "Connecting with others, recognition, and creative freedom.", id: "Terhubung dengan orang lain, pengakuan, dan kebebasan berkreasi.", nl: "Verbinding met anderen, erkenning en creatieve vrijheid.", t: "I" },
-    { en: "Harmony, security, and genuinely helping those around you.", id: "Keharmonisan, rasa aman, dan benar-benar membantu orang-orang di sekitar Anda.", nl: "Harmonie, veiligheid en oprecht helpen van de mensen om je heen.", t: "S" },
-    { en: "Accuracy, quality, and doing things the right way.", id: "Akurasi, kualitas, dan melakukan segala sesuatu dengan benar.", nl: "Nauwkeurigheid, kwaliteit en dingen op de juiste manier doen.", t: "C" },
+  { en: "You are most motivated by:", id: "Anda paling termotivasi oleh:", options: [
+    { en: "Winning, achieving results, and overcoming challenges.", id: "Meraih kemenangan, mencapai hasil, dan mengatasi tantangan.", t: "D" },
+    { en: "Connecting with others, recognition, and creative freedom.", id: "Terhubung dengan orang lain, pengakuan, dan kebebasan berkreasi.", t: "I" },
+    { en: "Harmony, security, and genuinely helping those around you.", id: "Keharmonisan, rasa aman, dan benar-benar membantu orang-orang di sekitar Anda.", t: "S" },
+    { en: "Accuracy, quality, and doing things the right way.", id: "Akurasi, kualitas, dan melakukan segala sesuatu dengan benar.", t: "C" },
   ]},
-  { en: "When you disagree with a leadership decision, you:", id: "Ketika Anda tidak setuju dengan keputusan pimpinan, Anda:", nl: "Als jij het niet eens bent met een beslissing van de leiding, dan:", options: [
-    { en: "Speak up immediately and challenge it directly.", id: "Langsung berbicara dan menantang keputusan tersebut secara langsung.", nl: "Spreek je je meteen uit en daag je het direct uit.", t: "D" },
-    { en: "Talk to others about it and try to build consensus.", id: "Membicarakannya dengan orang lain dan mencoba membangun konsensus.", nl: "Praat je erover met anderen en probeer je draagvlak te cre—ren.", t: "I" },
-    { en: "Quietly follow through while hoping things improve.", id: "Diam-diam menjalankannya sambil berharap keadaan akan membaik.", nl: "Voer je het stilletjes uit terwijl je hoopt dat het beter wordt.", t: "S" },
-    { en: "Document your concerns and present your reasoning carefully.", id: "Mendokumentasikan kekhawatiran Anda dan menyampaikan alasan dengan cermat.", nl: "Leg je je bezwaren vast en breng je je redenering zorgvuldig onder woorden.", t: "C" },
+  { en: "When you disagree with a leadership decision, you:", id: "Ketika Anda tidak setuju dengan keputusan pimpinan, Anda:", options: [
+    { en: "Speak up immediately and challenge it directly.", id: "Langsung berbicara dan menantang keputusan tersebut secara langsung.", t: "D" },
+    { en: "Talk to others about it and try to build consensus.", id: "Membicarakannya dengan orang lain dan mencoba membangun konsensus.", t: "I" },
+    { en: "Quietly follow through while hoping things improve.", id: "Diam-diam menjalankannya sambil berharap keadaan akan membaik.", t: "S" },
+    { en: "Document your concerns and present your reasoning carefully.", id: "Mendokumentasikan kekhawatiran Anda dan menyampaikan alasan dengan cermat.", t: "C" },
   ]},
-  { en: "In a cross-cultural team, your natural contribution is:", id: "Dalam tim lintas budaya, kontribusi alami Anda adalah:", nl: "In een intercultureel team is jouw natuurlijke bijdrage:", options: [
-    { en: "Setting a clear direction and making fast decisions.", id: "Menetapkan arah yang jelas dan membuat keputusan cepat.", nl: "Een heldere richting bepalen en snel beslissingen nemen.", t: "D" },
-    { en: "Creating connection and breaking down social barriers.", id: "Membangun koneksi dan meruntuhkan hambatan sosial.", nl: "Verbinding cre—ren en sociale barri—res doorbreken.", t: "I" },
-    { en: "Creating a safe environment where everyone feels included.", id: "Menciptakan lingkungan yang aman di mana semua orang merasa dilibatkan.", nl: "Een veilige omgeving scheppen waar iedereen zich welkom voelt.", t: "S" },
-    { en: "Ensuring quality and attention to important cultural details.", id: "Memastikan kualitas dan memperhatikan detail budaya yang penting.", nl: "Kwaliteit waarborgen en aandacht geven aan belangrijke culturele details.", t: "C" },
+  { en: "In a cross-cultural team, your natural contribution is:", id: "Dalam tim lintas budaya, kontribusi alami Anda adalah:", options: [
+    { en: "Setting a clear direction and making fast decisions.", id: "Menetapkan arah yang jelas dan membuat keputusan cepat.", t: "D" },
+    { en: "Creating connection and breaking down social barriers.", id: "Membangun koneksi dan meruntuhkan hambatan sosial.", t: "I" },
+    { en: "Creating a safe environment where everyone feels included.", id: "Menciptakan lingkungan yang aman di mana semua orang merasa dilibatkan.", t: "S" },
+    { en: "Ensuring quality and attention to important cultural details.", id: "Memastikan kualitas dan memperhatikan detail budaya yang penting.", t: "C" },
   ]},
-  { en: "When a plan changes unexpectedly, you:", id: "Ketika rencana berubah secara tiba-tiba, Anda:", nl: "Als een plan onverwacht verandert, dan:", options: [
-    { en: "Adapt quickly and find a new path forward.", id: "Beradaptasi dengan cepat dan menemukan jalan baru ke depan.", nl: "Pas jij je snel aan en zoek je een nieuwe weg vooruit.", t: "D" },
-    { en: "Look for the positive angle and keep the team's spirits up.", id: "Mencari sisi positifnya dan menjaga semangat tim.", nl: "Zoek jij de positieve kant en houd jij de teamgeest hoog.", t: "I" },
-    { en: "Need time to process the change before fully committing.", id: "Membutuhkan waktu untuk memproses perubahan sebelum sepenuhnya berkomitmen.", nl: "Heb jij tijd nodig om de verandering te verwerken voordat je er volledig in meegaat.", t: "S" },
-    { en: "Want to understand fully why it changed before accepting it.", id: "Ingin memahami sepenuhnya mengapa perubahan terjadi sebelum menerimanya.", nl: "Wil jij volledig begrijpen waarom het is veranderd voordat je het accepteert.", t: "C" },
+  { en: "When a plan changes unexpectedly, you:", id: "Ketika rencana berubah secara tiba-tiba, Anda:", options: [
+    { en: "Adapt quickly and find a new path forward.", id: "Beradaptasi dengan cepat dan menemukan jalan baru ke depan.", t: "D" },
+    { en: "Look for the positive angle and keep the team's spirits up.", id: "Mencari sisi positifnya dan menjaga semangat tim.", t: "I" },
+    { en: "Need time to process the change before fully committing.", id: "Membutuhkan waktu untuk memproses perubahan sebelum sepenuhnya berkomitmen.", t: "S" },
+    { en: "Want to understand fully why it changed before accepting it.", id: "Ingin memahami sepenuhnya mengapa perubahan terjadi sebelum menerimanya.", t: "C" },
   ]},
-  { en: "You are most frustrated when:", id: "Anda paling frustrasi ketika:", nl: "Jij raakt het meest gefrustreerd als:", options: [
-    { en: "Decisions drag on and things move too slowly.", id: "Keputusan berlarut-larut dan segalanya berjalan terlalu lambat.", nl: "Beslissingen eindeloos duren en alles te langzaam gaat.", t: "D" },
-    { en: "The atmosphere is cold and people don't engage.", id: "Suasana dingin dan orang-orang tidak mau terlibat.", nl: "De sfeer koud is en mensen zich niet betrokken tonen.", t: "I" },
-    { en: "There is constant conflict or instability in the team.", id: "Ada konflik yang terus-menerus atau ketidakstabilan dalam tim.", nl: "Er voortdurend conflict of instabiliteit in het team is.", t: "S" },
-    { en: "Work is done carelessly or without attention to quality.", id: "Pekerjaan dilakukan dengan sembarangan atau tanpa memperhatikan kualitas.", nl: "Werk slordig of zonder aandacht voor kwaliteit wordt gedaan.", t: "C" },
+  { en: "You are most frustrated when:", id: "Anda paling frustrasi ketika:", options: [
+    { en: "Decisions drag on and things move too slowly.", id: "Keputusan berlarut-larut dan segalanya berjalan terlalu lambat.", t: "D" },
+    { en: "The atmosphere is cold and people don't engage.", id: "Suasana dingin dan orang-orang tidak mau terlibat.", t: "I" },
+    { en: "There is constant conflict or instability in the team.", id: "Ada konflik yang terus-menerus atau ketidakstabilan dalam tim.", t: "S" },
+    { en: "Work is done carelessly or without attention to quality.", id: "Pekerjaan dilakukan dengan sembarangan atau tanpa memperhatikan kualitas.", t: "C" },
   ]},
-  { en: "When presenting ideas, you prefer to:", id: "Ketika mempresentasikan ide, Anda lebih suka:", nl: "Als je idee—n presenteert, geef jij er de voorkeur aan om:", options: [
-    { en: "Be brief, direct, and confident.", id: "Singkat, langsung, dan penuh keyakinan.", nl: "Kort, direct en zelfverzekerd te zijn.", t: "D" },
-    { en: "Be engaging, enthusiastic, and use stories.", id: "Menarik, penuh semangat, dan menggunakan cerita.", nl: "Boeiend en enthousiast te zijn en verhalen te gebruiken.", t: "I" },
-    { en: "Check with others first and present collaboratively.", id: "Berkonsultasi dengan orang lain terlebih dahulu dan mempresentasikan secara kolaboratif.", nl: "Eerst anderen te raadplegen en samen te presenteren.", t: "S" },
-    { en: "Prepare thoroughly with data and a clear structure.", id: "Mempersiapkan dengan matang menggunakan data dan struktur yang jelas.", nl: "Je grondig voor te bereiden met data en een heldere structuur.", t: "C" },
+  { en: "When presenting ideas, you prefer to:", id: "Ketika mempresentasikan ide, Anda lebih suka:", options: [
+    { en: "Be brief, direct, and confident.", id: "Singkat, langsung, dan penuh keyakinan.", t: "D" },
+    { en: "Be engaging, enthusiastic, and use stories.", id: "Menarik, penuh semangat, dan menggunakan cerita.", t: "I" },
+    { en: "Check with others first and present collaboratively.", id: "Berkonsultasi dengan orang lain terlebih dahulu dan mempresentasikan secara kolaboratif.", t: "S" },
+    { en: "Prepare thoroughly with data and a clear structure.", id: "Mempersiapkan dengan matang menggunakan data dan struktur yang jelas.", t: "C" },
   ]},
-  { en: "Others come to you most often for:", id: "Orang lain paling sering datang kepada Anda untuk:", nl: "Anderen komen het vaakst bij jou voor:", options: [
-    { en: "Quick decisions and solving problems.", id: "Keputusan cepat dan pemecahan masalah.", nl: "Snelle beslissingen en het oplossen van problemen.", t: "D" },
-    { en: "Energy, ideas, and encouragement.", id: "Energi, ide, dan semangat.", nl: "Energie, idee—n en aanmoediging.", t: "I" },
-    { en: "Support, stability, and a listening ear.", id: "Dukungan, stabilitas, dan telinga yang siap mendengarkan.", nl: "Steun, stabiliteit en een luisterend oor.", t: "S" },
-    { en: "Accuracy, analysis, and careful thinking.", id: "Akurasi, analisis, dan pemikiran yang cermat.", nl: "Nauwkeurigheid, analyse en zorgvuldig denken.", t: "C" },
+  { en: "Others come to you most often for:", id: "Orang lain paling sering datang kepada Anda untuk:", options: [
+    { en: "Quick decisions and solving problems.", id: "Keputusan cepat dan pemecahan masalah.", t: "D" },
+    { en: "Energy, ideas, and encouragement.", id: "Energi, ide, dan semangat.", t: "I" },
+    { en: "Support, stability, and a listening ear.", id: "Dukungan, stabilitas, dan telinga yang siap mendengarkan.", t: "S" },
+    { en: "Accuracy, analysis, and careful thinking.", id: "Akurasi, analisis, dan pemikiran yang cermat.", t: "C" },
   ]},
-  { en: "In a new team, your role naturally becomes:", id: "Dalam tim baru, peran Anda secara alami menjadi:", nl: "In een nieuw team word jij van nature degene die:", options: [
-    { en: "The one who sets the pace and direction.", id: "Orang yang menetapkan tempo dan arah.", nl: "Het tempo en de richting bepaalt.", t: "D" },
-    { en: "The one who creates connections and builds energy.", id: "Orang yang membangun koneksi dan menciptakan energi.", nl: "Verbindingen legt en energie cre—ert.", t: "I" },
-    { en: "The one who ensures no one is left behind.", id: "Orang yang memastikan tidak ada yang tertinggal.", nl: "Ervoor zorgt dat niemand achterblijft.", t: "S" },
-    { en: "The one who catches errors and ensures quality.", id: "Orang yang menangkap kesalahan dan memastikan kwaliteit.", nl: "Fouten opspoort en kwaliteit bewaakt.", t: "C" },
+  { en: "In a new team, your role naturally becomes:", id: "Dalam tim baru, peran Anda secara alami menjadi:", options: [
+    { en: "The one who sets the pace and direction.", id: "Orang yang menetapkan tempo dan arah.", t: "D" },
+    { en: "The one who creates connections and builds energy.", id: "Orang yang membangun koneksi dan menciptakan energi.", t: "I" },
+    { en: "The one who ensures no one is left behind.", id: "Orang yang memastikan tidak ada yang tertinggal.", t: "S" },
+    { en: "The one who catches errors and ensures quality.", id: "Orang yang menangkap kesalahan dan memastikan kwaliteit.", t: "C" },
   ]},
-  { en: "When someone on your team makes a mistake, you:", id: "Ketika seseorang di tim Anda membuat kesalahan, Anda:", nl: "Als iemand in jouw team een fout maakt, dan:", options: [
-    { en: "Address it quickly and directly.", id: "Menanganinya dengan cepat dan langsung.", nl: "Pak jij het snel en direct aan.", t: "D" },
-    { en: "Turn it into a learning moment with a positive framing.", id: "Mengubahnya menjadi momen belajar dengan bingkai yang positif.", nl: "Maak jij er een leermoment van met een positieve insteek.", t: "I" },
-    { en: "Handle it privately and protect their dignity.", id: "Menanganinya secara pribadi dan menjaga martabat mereka.", nl: "Handel jij het priv— af en bescherm je hun waardigheid.", t: "S" },
-    { en: "Analyse what went wrong to prevent it happening again.", id: "Menganalisis apa yang salah untuk mencegah hal itu terulang.", nl: "Analyseer jij wat er fout ging om herhaling te voorkomen.", t: "C" },
+  { en: "When someone on your team makes a mistake, you:", id: "Ketika seseorang di tim Anda membuat kesalahan, Anda:", options: [
+    { en: "Address it quickly and directly.", id: "Menanganinya dengan cepat dan langsung.", t: "D" },
+    { en: "Turn it into a learning moment with a positive framing.", id: "Mengubahnya menjadi momen belajar dengan bingkai yang positif.", t: "I" },
+    { en: "Handle it privately and protect their dignity.", id: "Menanganinya secara pribadi dan menjaga martabat mereka.", t: "S" },
+    { en: "Analyse what went wrong to prevent it happening again.", id: "Menganalisis apa yang salah untuk mencegah hal itu terulang.", t: "C" },
   ]},
-  { en: "Your preferred working pace is:", id: "Tempo kerja pilihan Anda adalah:", nl: "Jouw voorkeurstempo bij het werken is:", options: [
-    { en: "Fast and decisive.", id: "Cepat dan tegas.", nl: "Snel en besluitvaardig.", t: "D" },
-    { en: "Dynamic and collaborative.", id: "Dinamis dan kolaboratif.", nl: "Dynamisch en samenwerkend.", t: "I" },
-    { en: "Steady and predictable.", id: "Stabil dan dapat diprediksi.", nl: "Gestaag en voorspelbaar.", t: "S" },
-    { en: "Methodical and thorough.", id: "Metodis dan menyeluruh.", nl: "Methodisch en grondig.", t: "C" },
+  { en: "Your preferred working pace is:", id: "Tempo kerja pilihan Anda adalah:", options: [
+    { en: "Fast and decisive.", id: "Cepat dan tegas.", t: "D" },
+    { en: "Dynamic and collaborative.", id: "Dinamis dan kolaboratif.", t: "I" },
+    { en: "Steady and predictable.", id: "Stabil dan dapat diprediksi.", t: "S" },
+    { en: "Methodical and thorough.", id: "Metodis dan menyeluruh.", t: "C" },
   ]},
-  { en: "When dealing with conflict, you:", id: "Ketika menghadapi konflik, Anda:", nl: "Als je met conflict te maken hebt, dan:", options: [
-    { en: "Address it head-on and resolve it immediately.", id: "Menghadapinya langsung dan menyelesaikannya segera.", nl: "Pak jij het direct aan en los je het meteen op.", t: "D" },
-    { en: "Try to smooth things over and restore the relationship.", id: "Berusaha meredakan ketegangan dan memulihkan hubungan.", nl: "Probeer jij de situatie te sussen en de relatie te herstellen.", t: "I" },
-    { en: "Avoid it if possible and hope it resolves naturally.", id: "Menghindarinya jika memungkinkan dan berharap itu selesai dengan sendirinya.", nl: "Vermijd jij het indien mogelijk en hoop je dat het vanzelf overgaat.", t: "S" },
-    { en: "Gather all the facts first, then address it logically.", id: "Mengumpulkan semua fakta terlebih dahulu, lalu menanganinya secara logis.", nl: "Verzamel jij eerst alle feiten en pak je het daarna logisch aan.", t: "C" },
+  { en: "When dealing with conflict, you:", id: "Ketika menghadapi konflik, Anda:", options: [
+    { en: "Address it head-on and resolve it immediately.", id: "Menghadapinya langsung dan menyelesaikannya segera.", t: "D" },
+    { en: "Try to smooth things over and restore the relationship.", id: "Berusaha meredakan ketegangan dan memulihkan hubungan.", t: "I" },
+    { en: "Avoid it if possible and hope it resolves naturally.", id: "Menghindarinya jika memungkinkan dan berharap itu selesai dengan sendirinya.", t: "S" },
+    { en: "Gather all the facts first, then address it logically.", id: "Mengumpulkan semua fakta terlebih dahulu, lalu menanganinya secara logis.", t: "C" },
   ]},
-  { en: "When faced with a long to-do list, you:", id: "Ketika menghadapi daftar tugas yang panjang, Anda:", nl: "Als je voor een lange takenlijst staat, dan:", options: [
-    { en: "Prioritise ruthlessly and power through the most important items.", id: "Memprioritaskan dengan tegas dan mengerjakan hal-hal terpenting.", nl: "Prioriteer jij zonder compromissen en werk je door de belangrijkste punten heen.", t: "D" },
-    { en: "Work best when others are around to keep the energy up.", id: "Bekerja paling baik ketika ada orang lain di sekitar untuk menjaga semangat.", nl: "Werk jij het beste als anderen in de buurt zijn om de energie hoog te houden.", t: "I" },
-    { en: "Work through it steadily, one task at a time.", id: "Mengerjakannya secara stabil, satu tugas demi satu.", nl: "Werk jij er gestaag doorheen, taak voor taak.", t: "S" },
-    { en: "Create a structured system and track everything carefully.", id: "Membuat sistem yang terstruktur dan melacak semuanya dengan cermat.", nl: "Maak jij een gestructureerd systeem en houd je alles nauwkeurig bij.", t: "C" },
+  { en: "When faced with a long to-do list, you:", id: "Ketika menghadapi daftar tugas yang panjang, Anda:", options: [
+    { en: "Prioritise ruthlessly and power through the most important items.", id: "Memprioritaskan dengan tegas dan mengerjakan hal-hal terpenting.", t: "D" },
+    { en: "Work best when others are around to keep the energy up.", id: "Bekerja paling baik ketika ada orang lain di sekitar untuk menjaga semangat.", t: "I" },
+    { en: "Work through it steadily, one task at a time.", id: "Mengerjakannya secara stabil, satu tugas demi satu.", t: "S" },
+    { en: "Create a structured system and track everything carefully.", id: "Membuat sistem yang terstruktur dan melacak semuanya dengan cermat.", t: "C" },
   ]},
-  { en: "When learning something new, you prefer:", id: "Ketika mempelajari sesuatu yang baru, Anda lebih suka:", nl: "Als je iets nieuws leert, geef jij de voorkeur aan:", options: [
-    { en: "A brief overview, then diving straight in hands-on.", id: "Gambaran singkat, lalu langsung terjun melakukannya.", nl: "Een kort overzicht, dan meteen hands-on aan de slag.", t: "D" },
-    { en: "Interactive group sessions with discussion and shared energy.", id: "Sesi kelompok interaktif dengan diskusi dan semangat bersama.", nl: "Interactieve groepssessies met discussie en gedeelde energie.", t: "I" },
-    { en: "Step-by-step guidance with plenty of time to practice.", id: "Panduan langkah demi langkah dengan banyak waktu untuk berlatih.", nl: "Stap-voor-stap begeleiding met voldoende tijd om te oefenen.", t: "S" },
-    { en: "Thorough documentation and deep understanding before starting.", id: "Dokumentasi menyeluruh dan pemahaman mendalam sebelum memulai.", nl: "Uitgebreide documentatie en diep begrip voordat je begint.", t: "C" },
+  { en: "When learning something new, you prefer:", id: "Ketika mempelajari sesuatu yang baru, Anda lebih suka:", options: [
+    { en: "A brief overview, then diving straight in hands-on.", id: "Gambaran singkat, lalu langsung terjun melakukannya.", t: "D" },
+    { en: "Interactive group sessions with discussion and shared energy.", id: "Sesi kelompok interaktif dengan diskusi dan semangat bersama.", t: "I" },
+    { en: "Step-by-step guidance with plenty of time to practice.", id: "Panduan langkah demi langkah dengan banyak waktu untuk berlatih.", t: "S" },
+    { en: "Thorough documentation and deep understanding before starting.", id: "Dokumentasi menyeluruh dan pemahaman mendalam sebelum memulai.", t: "C" },
   ]},
-  { en: "When someone disagrees with your idea, you:", id: "Ketika seseorang tidak setuju dengan ide Anda, Anda:", nl: "Als iemand het niet eens is met jouw idee, dan:", options: [
-    { en: "Stand your ground unless they give compelling evidence.", id: "Tetap pada pendirian Anda kecuali mereka memberikan bukti yang meyakinkan.", nl: "Houd jij voet bij stuk, tenzij ze overtuigend bewijs leveren.", t: "D" },
-    { en: "Try to win them over through enthusiasm and persuasion.", id: "Berusaha memenangkan mereka melalui antusiasme dan persuasi.", nl: "Probeer jij ze mee te krijgen via enthousiasme en overtuigingskracht.", t: "I" },
-    { en: "Listen carefully and often adapt your position.", id: "Mendengarkan dengan saksama dan sering kali menyesuaikan posisi Anda.", nl: "Luister jij aandachtig en pas je je standpunt vaak aan.", t: "S" },
-    { en: "Welcome specific objections and adjust your thinking accordingly.", id: "Menyambut keberatan yang spesifik dan menyesuaikan pemikiran Anda.", nl: "Verwelkom jij specifieke bezwaren en pas je je denken daar op aan.", t: "C" },
+  { en: "When someone disagrees with your idea, you:", id: "Ketika seseorang tidak setuju dengan ide Anda, Anda:", options: [
+    { en: "Stand your ground unless they give compelling evidence.", id: "Tetap pada pendirian Anda kecuali mereka memberikan bukti yang meyakinkan.", t: "D" },
+    { en: "Try to win them over through enthusiasm and persuasion.", id: "Berusaha memenangkan mereka melalui antusiasme dan persuasi.", t: "I" },
+    { en: "Listen carefully and often adapt your position.", id: "Mendengarkan dengan saksama dan sering kali menyesuaikan posisi Anda.", t: "S" },
+    { en: "Welcome specific objections and adjust your thinking accordingly.", id: "Menyambut keberatan yang spesifik dan menyesuaikan pemikiran Anda.", t: "C" },
   ]},
-  { en: "Your leadership style is best described as:", id: "Gaya kepemimpinan Anda paling baik digambarkan sebagai:", nl: "Jouw leiderschapsstijl is het beste te omschrijven als:", options: [
-    { en: "Driving toward results with clear expectations.", id: "Mendorong ke arah hasil dengan ekspektasi yang jelas.", nl: "Sturen op resultaten met heldere verwachtingen.", t: "D" },
-    { en: "Inspiring and motivating through energy and vision.", id: "Menginspirasi dan memotivasi melalui energi dan visi.", nl: "Inspireren en motiveren via energie en visie.", t: "I" },
-    { en: "Supporting and developing people with patience.", id: "Mendukung dan mengembangkan orang-orang dengan sabar.", nl: "Mensen ondersteunen en ontwikkelen met geduld.", t: "S" },
-    { en: "Leading through expertise, precision, and high standards.", id: "Memimpin melalui keahlian, ketepatan, dan standar yang tinggi.", nl: "Leiden via vakmanschap, precisie en hoge standaarden.", t: "C" },
+  { en: "Your leadership style is best described as:", id: "Gaya kepemimpinan Anda paling baik digambarkan sebagai:", options: [
+    { en: "Driving toward results with clear expectations.", id: "Mendorong ke arah hasil dengan ekspektasi yang jelas.", t: "D" },
+    { en: "Inspiring and motivating through energy and vision.", id: "Menginspirasi dan memotivasi melalui energi dan visi.", t: "I" },
+    { en: "Supporting and developing people with patience.", id: "Mendukung dan mengembangkan orang-orang dengan sabar.", t: "S" },
+    { en: "Leading through expertise, precision, and high standards.", id: "Memimpin melalui keahlian, ketepatan, dan standar yang tinggi.", t: "C" },
   ]},
-  { en: "In a crisis, your instinct is to:", id: "Dalam situasi krisis, naluri Anda adalah:", nl: "In een crisis is jouw instinct om:", options: [
-    { en: "Take immediate control and start making decisions.", id: "Langsung mengambil kendali dan mulai membuat keputusan.", nl: "Direct de leiding te nemen en beslissingen te gaan nemen.", t: "D" },
-    { en: "Rally people together and maintain positive energy.", id: "Menyatukan orang-orang dan mempertahankan energi positif.", nl: "Mensen samen te brengen en de positieve energie vast te houden.", t: "I" },
-    { en: "Stay calm and provide stability to those around you.", id: "Tetap tenang dan memberikan stabilitas kepada orang-orang di sekitar Anda.", nl: "Kalm te blijven en de mensen om je heen stabiliteit te bieden.", t: "S" },
-    { en: "Assess the situation carefully and systematically before acting.", id: "Menilai situasi secara cermat dan sistematis sebelum bertindak.", nl: "De situatie zorgvuldig en systematisch te beoordelen voordat je handelt.", t: "C" },
+  { en: "In a crisis, your instinct is to:", id: "Dalam situasi krisis, naluri Anda adalah:", options: [
+    { en: "Take immediate control and start making decisions.", id: "Langsung mengambil kendali dan mulai membuat keputusan.", t: "D" },
+    { en: "Rally people together and maintain positive energy.", id: "Menyatukan orang-orang dan mempertahankan energi positif.", t: "I" },
+    { en: "Stay calm and provide stability to those around you.", id: "Tetap tenang dan memberikan stabilitas kepada orang-orang di sekitar Anda.", t: "S" },
+    { en: "Assess the situation carefully and systematically before acting.", id: "Menilai situasi secara cermat dan sistematis sebelum bertindak.", t: "C" },
   ]},
-  { en: "You feel a task is complete when:", id: "Anda merasa sebuah tugas selesai ketika:", nl: "Jij vindt een taak klaar als:", options: [
-    { en: "The goal is achieved — results matter most.", id: "Tujuan tercapai — hasil adalah yang terpenting.", nl: "Het doel behaald is — resultaten tellen het zwaarst.", t: "D" },
-    { en: "The process was engaging and the team feels good about it.", id: "Prosesnya menyenangkan dan tim merasa puas dengannya.", nl: "Het proces energiek was en het team er goed over voelt.", t: "I" },
-    { en: "Everyone involved feels good about how it went.", id: "Semua orang yang terlibat merasa baik tentang jalannya pekerjaan.", nl: "Iedereen die erbij betrokken was tevreden is over hoe het gegaan is.", t: "S" },
-    { en: "Every detail has been checked and the quality is right.", id: "Setiap detail telah diperiksa dan kualitasnya sudah benar.", nl: "Elk detail is nagelopen en de kwaliteit klopt.", t: "C" },
+  { en: "You feel a task is complete when:", id: "Anda merasa sebuah tugas selesai ketika:", options: [
+    { en: "The goal is achieved — results matter most.", id: "Tujuan tercapai — hasil adalah yang terpenting.", t: "D" },
+    { en: "The process was engaging and the team feels good about it.", id: "Prosesnya menyenangkan dan tim merasa puas dengannya.", t: "I" },
+    { en: "Everyone involved feels good about how it went.", id: "Semua orang yang terlibat merasa baik tentang jalannya pekerjaan.", t: "S" },
+    { en: "Every detail has been checked and the quality is right.", id: "Setiap detail telah diperiksa dan kualitasnya sudah benar.", t: "C" },
   ]},
-  { en: "Others sometimes see you as:", id: "Orang lain terkadang melihat Anda sebagai:", nl: "Anderen zien jou soms als:", options: [
-    { en: "Too blunt or impatient.", id: "Terlalu blak-blakan atau tidak sabar.", nl: "Te direct of ongeduldig.", t: "D" },
-    { en: "Too talkative or disorganised.", id: "Terlalu banyak bicara atau kurang terorganisir.", nl: "Te praatgraag of ongeorganiseerd.", t: "I" },
-    { en: "Too slow to take initiative or overly accommodating.", id: "Terlalu lambat mengambil inisiatif atau terlalu mudah mengalah.", nl: "Te traag in het nemen van initiatief of te meegaand.", t: "S" },
-    { en: "Too critical or overly cautious.", id: "Terlalu kritis atau terlalu berhati-hati.", nl: "Te kritisch of te voorzichtig.", t: "C" },
+  { en: "Others sometimes see you as:", id: "Orang lain terkadang melihat Anda sebagai:", options: [
+    { en: "Too blunt or impatient.", id: "Terlalu blak-blakan atau tidak sabar.", t: "D" },
+    { en: "Too talkative or disorganised.", id: "Terlalu banyak bicara atau kurang terorganisir.", t: "I" },
+    { en: "Too slow to take initiative or overly accommodating.", id: "Terlalu lambat mengambil inisiatif atau terlalu mudah mengalah.", t: "S" },
+    { en: "Too critical or overly cautious.", id: "Terlalu kritis atau terlalu berhati-hati.", t: "C" },
   ]},
-  { en: "You feel most alive in your work when:", id: "Anda merasa paling bersemangat dalam pekerjaan Anda ketika:", nl: "Jij voelt je het meest levend in je werk als:", options: [
-    { en: "You're winning and seeing measurable results.", id: "Anda meraih kemenangan dan melihat hasil yang terukur.", nl: "Je wint en meetbare resultaten ziet.", t: "D" },
-    { en: "You're inspiring people and creating real momentum.", id: "Anda menginspirasi orang-orang dan menciptakan momentum nyata.", nl: "Je mensen inspireert en echte momentum cre—ert.", t: "I" },
-    { en: "You're making a genuine difference in someone's life.", id: "Anda membuat perbedaan nyata dalam kehidupan seseorang.", nl: "Je een oprecht verschil maakt in iemands leven.", t: "S" },
-    { en: "You've solved a complex problem with care and precision.", id: "Anda telah memecahkan masalah yang kompleks dengan teliti dan tepat.", nl: "Je een complex probleem met zorg en precisie hebt opgelost.", t: "C" },
+  { en: "You feel most alive in your work when:", id: "Anda merasa paling bersemangat dalam pekerjaan Anda ketika:", options: [
+    { en: "You're winning and seeing measurable results.", id: "Anda meraih kemenangan dan melihat hasil yang terukur.", t: "D" },
+    { en: "You're inspiring people and creating real momentum.", id: "Anda menginspirasi orang-orang dan menciptakan momentum nyata.", t: "I" },
+    { en: "You're making a genuine difference in someone's life.", id: "Anda membuat perbedaan nyata dalam kehidupan seseorang.", t: "S" },
+    { en: "You've solved a complex problem with care and precision.", id: "Anda telah memecahkan masalah yang kompleks dengan teliti dan tepat.", t: "C" },
   ]},
-  { en: "When closing out a project, you focus most on:", id: "Ketika menyelesaikan sebuah proyek, Anda paling berfokus pada:", nl: "Als je een project afsluit, let jij het meest op:", options: [
-    { en: "Did we hit the target?", id: "Apakah kita mencapai target?", nl: "Hebben we het doel gehaald?", t: "D" },
-    { en: "Did the team enjoy the process and celebrate the win?", id: "Apakah tim menikmati prosesnya dan merayakan keberhasilan?", nl: "Heeft het team genoten van het proces en de overwinning gevierd?", t: "I" },
-    { en: "Is everyone OK? Does anyone need additional support?", id: "Apakah semua orang baik-baik saja? Apakah ada yang membutuhkan dukungan tambahan?", nl: "Is iedereen in orde? Heeft iemand extra ondersteuning nodig?", t: "S" },
-    { en: "Were all quality standards met? What can we improve next time?", id: "Apakah semua standar kualitas terpenuhi? Apa yang bisa kita tingkatkan lain kali?", nl: "Zijn alle kwaliteitsstandaarden gehaald? Wat kunnen we volgende keer beter doen?", t: "C" },
+  { en: "When closing out a project, you focus most on:", id: "Ketika menyelesaikan sebuah proyek, Anda paling berfokus pada:", options: [
+    { en: "Did we hit the target?", id: "Apakah kita mencapai target?", t: "D" },
+    { en: "Did the team enjoy the process and celebrate the win?", id: "Apakah tim menikmati prosesnya dan merayakan keberhasilan?", t: "I" },
+    { en: "Is everyone OK? Does anyone need additional support?", id: "Apakah semua orang baik-baik saja? Apakah ada yang membutuhkan dukungan tambahan?", t: "S" },
+    { en: "Were all quality standards met? What can we improve next time?", id: "Apakah semua standar kualitas terpenuhi? Apa yang bisa kita tingkatkan lain kali?", t: "C" },
   ]},
 ];
 
@@ -171,8 +171,8 @@ const QS = [
 const DISC_TYPES = [
   {
     key: "D",
-    label: { en: "Dominance", id: "Dominance", nl: "Dominantie" },
-    tagline: { en: "Direct. Bold. Results-driven.", id: "Langsung. Berani. Berorientasi Hasil.", nl: "Direct. Gedurfd. Resultaatgericht." },
+    label: { en: "Dominance", id: "Dominance" },
+    tagline: { en: "Direct. Bold. Results-driven.", id: "Langsung. Berani. Berorientasi Hasil." },
     color: "oklch(52% 0.27 25)",
     colorLight: "oklch(62% 0.22 25)",
     colorVeryLight: "oklch(96% 0.05 25)",
@@ -180,37 +180,30 @@ const DISC_TYPES = [
     overview: {
       en: "The D-type leader is direct, competitive, and driven by results. They make decisions quickly, take charge under pressure, and thrive in environments where they can set direction and drive outcomes. They are natural initiators who cut through complexity and act.",
       id: "Pemimpin tipe D bersifat langsung, kompetitif, dan didorong oleh hasil. Mereka mengambil keputusan dengan cepat, mengambil kendali di bawah tekanan, dan berkembang di lingkungan di mana mereka dapat menentukan arah dan mendorong hasil. Mereka adalah inisiator alami yang memotong kompleksitas dan segera bertindak.",
-      nl: "De D-type leider is direct, competitief en gedreven door resultaten. Ze nemen snel beslissingen, pakken de leiding onder druk en gedijen in omgevingen waar ze richting kunnen bepalen en resultaten kunnen bewerkstelligen. Het zijn natuurlijke initiatiefnemers die complexiteit doorbreken en gewoon handelen.",
     },
     motivation: {
       en: "Results, control, challenges, and the freedom to lead without restriction.",
       id: "Hasil, kendali, tantangan, dan kebebasan untuk memimpin tanpa batasan.",
-      nl: "Resultaten, controle, uitdagingen en de vrijheid om te leiden zonder beperkingen.",
     },
     fear: {
       en: "Being taken advantage of, losing control, or appearing weak.",
       id: "Dimanfaatkan, kehilangan kendali, atau terlihat lemah.",
-      nl: "Misbruikt worden, de controle verliezen of zwak overkomen.",
     },
     strengths: {
       en: ["Decisive under pressure", "Goal-oriented and focused", "Drives results quickly", "Natural initiator", "Tackles challenges head-on"],
       id: ["Tegas di bawah tekanan", "Berorientasi tujuan dan fokus", "Mendorong hasil dengan cepat", "Inisiator alami", "Menghadapi tantangan secara langsung"],
-      nl: ["Besluitvaardig onder druk", "Doelgericht en gefocust", "Bereikt snel resultaten", "Natuurlijke initiatiefnemer", "Pakt uitdagingen direct aan"],
     },
     blindspots: {
       en: ["Can be too blunt or intimidating", "May steamroll others' input", "Impatient with slower processes", "Can prioritise outcomes over people"],
       id: ["Bisa terlalu blak-blakan atau mengintimidasi", "Mungkin mengabaikan masukan orang lain", "Tidak sabar dengan proses yang lebih lambat", "Bisa memprioritaskan hasil di atas orang"],
-      nl: ["Kan te direct of intimiderend zijn", "Neigt ertoe de inbreng van anderen te overrulen", "Ongeduldig met tragere processen", "Kan resultaten boven mensen stellen"],
     },
     communication: {
       en: "Be direct. Lead with the bottom line. Keep it brief and respect their time. Avoid long explanations and get to the point immediately.",
       id: "Bersikap langsung. Mulai dengan intinya. Tetap ringkas dan hormati waktu mereka. Hindari penjelasan panjang dan langsung pada intinya.",
-      nl: "Wees direct. Begin met de kern. Houd het kort en respecteer hun tijd. Vermijd lange uitleg en kom meteen ter zake.",
     },
     crossCultural: {
       en: "In high-context cultures, the D-type's directness can feel aggressive or disrespectful. Learning to slow down, read the room, and allow indirect communication to unfold is a key growth area in cross-cultural contexts.",
       id: "Dalam budaya high-context, kecenderungan langsung tipe D bisa terasa agresif atau tidak sopan. Belajar untuk memperlambat, membaca situasi, dan membiarkan komunikasi tidak langsung berkembang adalah area pertumbuhan utama dalam konteks lintas budaya.",
-      nl: "In high-context culturen kan de directheid van de D-type agressief of respectloos aanvoelen. Leren vertragen, de sfeer lezen en indirecte communicatie de ruimte geven is een belangrijk groeipunt in interculturele contexten.",
     },
     biblical: {
       name: "Paul",
@@ -219,8 +212,8 @@ const DISC_TYPES = [
   },
   {
     key: "I",
-    label: { en: "Influence", id: "Influence", nl: "Invloed" },
-    tagline: { en: "Enthusiastic. Persuasive. People-first.", id: "Antusias. Persuasif. Mengutamakan Orang.", nl: "Enthousiast. Overtuigend. Mensgericht." },
+    label: { en: "Influence", id: "Influence" },
+    tagline: { en: "Enthusiastic. Persuasive. People-first.", id: "Antusias. Persuasif. Mengutamakan Orang." },
     color: "oklch(62% 0.22 87)",
     colorLight: "oklch(72% 0.18 87)",
     colorVeryLight: "oklch(96% 0.04 87)",
@@ -228,37 +221,30 @@ const DISC_TYPES = [
     overview: {
       en: "The I-type leader is enthusiastic, expressive, and energised by people. They are gifted communicators who inspire others, build rapport quickly, and create momentum through energy and optimism. They thrive in collaborative, visible roles where their personality can shine.",
       id: "Pemimpin tipe I antusias, ekspresif, dan bersemangat oleh orang-orang. Mereka adalah komunikator berbakat yang menginspirasi orang lain, membangun hubungan dengan cepat, dan menciptakan momentum melalui energi dan optimisme. Mereka berkembang dalam peran yang kolaboratif dan terlihat di mana kepribadian mereka dapat bersinar.",
-      nl: "De I-type leider is enthousiast, expressief en krijgt energie van mensen. Het zijn getalenteerde communicators die anderen inspireren, snel een band opbouwen en momentum cre—ren door energie en optimisme. Ze gedijen in samenwerkende, zichtbare rollen waar hun persoonlijkheid kan schitteren.",
     },
     motivation: {
       en: "Recognition, social connection, freedom of expression, and collaborative success.",
       id: "Pengakuan, koneksi sosial, kebebasan berekspresi, dan keberhasilan bersama.",
-      nl: "Erkenning, sociale verbinding, vrijheid van expressie en gezamenlijk succes.",
     },
     fear: {
       en: "Social rejection, being ignored, or losing their influence over others.",
       id: "Penolakan sosial, diabaikan, atau kehilangan pengaruh mereka terhadap orang lain.",
-      nl: "Sociale afwijzing, genegeerd worden of hun invloed op anderen verliezen.",
     },
     strengths: {
       en: ["Builds relationships naturally", "Highly persuasive and inspiring", "Creates positive team culture", "Enthusiastic and energising", "Collaborative and inclusive"],
       id: ["Membangun hubungan secara alami", "Sangat persuasif dan inspiratif", "Menciptakan budaya tim yang positif", "Antusias dan membangkitkan semangat", "Kolaboratif dan inklusif"],
-      nl: ["Bouwt moeiteloos relaties op", "Zeer overtuigend en inspirerend", "Cre—ert een positieve teamcultuur", "Enthousiast en aanstekelijk", "Samenwerkend en inclusief"],
     },
     blindspots: {
       en: ["Can over-promise and under-deliver", "May lose focus on details and follow-through", "Emotions can drive decision-making", "Can struggle with structure and consistency"],
       id: ["Bisa terlalu banyak berjanji dan kurang memenuhinya", "Mungkin kehilangan fokus pada detail dan tindak lanjut", "Emosi bisa mendorong pengambilan keputusan", "Bisa kesulitan dengan struktur dan konsistensi"],
-      nl: ["Kan te veel beloven en te weinig nakomen", "Kan het zicht op details en opvolging verliezen", "Emoties kunnen besluitvorming sturen", "Kan moeite hebben met structuur en consistentie"],
     },
     communication: {
       en: "Be warm and personal. Start with the relationship before business. Give them space to talk and share ideas. Affirm their contributions and avoid being overly critical.",
       id: "Bersikap hangat dan personal. Mulai dengan hubungan sebelum bisnis. Beri mereka ruang untuk berbicara dan berbagi ide. Akui kontribusi mereka dan hindari terlalu kritis.",
-      nl: "Wees warm en persoonlijk. Begin met de relatie voordat je zakelijk wordt. Geef ze ruimte om te praten en idee—n te delen. Bevestig hun bijdragen en vermijd overdreven kritiek.",
     },
     crossCultural: {
       en: "The I-type's expressiveness is a gift in relational cultures but can feel superficial or exhausting in more reserved contexts. Building genuine depth — not just warmth — is the growth edge in cross-cultural leadership.",
       id: "Ekspresivitas tipe I adalah anugerah dalam budaya relasional tetapi bisa terasa dangkal atau melelahkan dalam konteks yang lebih tertutup. Membangun kedalaman sejati — bukan hanya kehangatan — adalah area pertumbuhan dalam kepemimpinan lintas budaya.",
-      nl: "De expressiviteit van de I-type is een gave in relationele culturen, maar kan oppervlakkig of vermoeiend aanvoelen in meer gereserveerde contexten. Echte diepgang opbouwen — niet alleen warmte — is het groeipunt in intercultureel leiderschap.",
     },
     biblical: {
       name: "Peter",
@@ -267,8 +253,8 @@ const DISC_TYPES = [
   },
   {
     key: "S",
-    label: { en: "Steadiness", id: "Steadiness", nl: "Standvastigheid" },
-    tagline: { en: "Patient. Loyal. Consistently supportive.", id: "Sabar. Setia. Konsisten dalam Dukungan.", nl: "Geduldig. Loyaal. Betrouwbaar ondersteunend." },
+    label: { en: "Steadiness", id: "Steadiness" },
+    tagline: { en: "Patient. Loyal. Consistently supportive.", id: "Sabar. Setia. Konsisten dalam Dukungan." },
     color: "oklch(52% 0.22 145)",
     colorLight: "oklch(62% 0.18 145)",
     colorVeryLight: "oklch(95% 0.05 145)",
@@ -276,37 +262,30 @@ const DISC_TYPES = [
     overview: {
       en: "The S-type leader is patient, dependable, and deeply loyal. They create stable, supportive environments where people feel safe and valued. They are skilled listeners and excellent mediators who hold teams together through consistency, warmth, and quiet strength.",
       id: "Pemimpin tipe S sabar, dapat diandalkan, dan sangat setia. Mereka menciptakan lingkungan yang stabil dan mendukung di mana orang merasa aman dan dihargai. Mereka adalah pendengar terampil dan mediator yang sangat baik yang menyatukan tim melalui konsistensi, kehangatan, dan kekuatan yang tenang.",
-      nl: "De S-type leider is geduldig, betrouwbaar en diep loyaal. Ze cre—ren stabiele, ondersteunende omgevingen waar mensen zich veilig en gewaardeerd voelen. Het zijn vaardige luisteraars en uitstekende bemiddelaars die teams bij elkaar houden via consistentie, warmte en stille kracht.",
     },
     motivation: {
       en: "Stability, sincere appreciation, contributing to a team they believe in, and harmonious working relationships.",
       id: "Stabilitas, penghargaan tulus, berkontribusi pada tim yang mereka percayai, dan hubungan kerja yang harmonis.",
-      nl: "Stabiliteit, oprechte waardering, bijdragen aan een team dat ze vertrouwen en harmonieuze werkrelaties.",
     },
     fear: {
       en: "Sudden change, conflict, loss of security, and letting people down.",
       id: "Perubahan mendadak, konflik, kehilangan rasa aman, dan mengecewakan orang lain.",
-      nl: "Plotselinge verandering, conflict, verlies van veiligheid en mensen teleurstellen.",
     },
     strengths: {
       en: ["Deeply reliable and consistent", "Excellent listener and mediator", "Creates psychological safety", "Long-term loyalty and commitment", "Holds teams together under pressure"],
       id: ["Sangat dapat diandalkan dan konsisten", "Pendengar dan mediator yang luar biasa", "Menciptakan keamanan psikologis", "Loyalitas dan komitmen jangka panjang", "Menyatukan tim di bawah tekanan"],
-      nl: ["Zeer betrouwbaar en consistent", "Uitstekende luisteraar en bemiddelaar", "Cre—ert psychologische veiligheid", "Loyaliteit en toewijding op de lange termijn", "Houdt teams bij elkaar onder druk"],
     },
     blindspots: {
       en: ["Avoids necessary conflict", "Can resist change even when needed", "May say yes when they mean no", "Slow to take initiative without encouragement"],
       id: ["Menghindari konflik yang diperlukan", "Bisa menolak perubahan bahkan ketika dibutuhkan", "Mungkin mengatakan ya ketika maksudnya tidak", "Lambat mengambil inisiatif tanpa dorongan"],
-      nl: ["Vermijdt noodzakelijk conflict", "Kan verandering weerstaan ook als die nodig is", "Zegt soms ja terwijl ze nee bedoelen", "Traag in het nemen van initiatief zonder aanmoediging"],
     },
     communication: {
       en: "Be sincere, warm, and patient. Give them time to respond. Avoid sudden changes without explanation. Show genuine care for them as a person — not just a team member.",
       id: "Bersikap tulus, hangat, dan sabar. Beri mereka waktu untuk merespons. Hindari perubahan mendadak tanpa penjelasan. Tunjukkan perhatian tulus kepada mereka sebagai pribadi — bukan hanya anggota tim.",
-      nl: "Wees oprecht, warm en geduldig. Geef ze tijd om te reageren. Vermijd plotselinge veranderingen zonder uitleg. Toon echte betrokkenheid bij hen als persoon — niet alleen als teamlid.",
     },
     crossCultural: {
       en: "The S-type's patience and harmony-seeking are deeply valued across most cultures. The growth edge is learning to express disagreement and take the lead — especially in cultures that respect assertiveness and directness.",
       id: "Kesabaran dan pencarian harmoni tipe S sangat dihargai di sebagian besar budaya. Area pertumbuhan adalah belajar mengungkapkan ketidaksetujuan dan mengambil inisiatif — terutama dalam budaya yang menghormati ketegasan dan keterbukaan.",
-      nl: "Het geduld en het streven naar harmonie van de S-type worden in de meeste culturen zeer gewaardeerd. Het groeipunt is leren om meningsverschillen te uiten en het voortouw te nemen — vooral in culturen die assertiviteit en directheid waarderen.",
     },
     biblical: {
       name: "Barnabas",
@@ -315,8 +294,8 @@ const DISC_TYPES = [
   },
   {
     key: "C",
-    label: { en: "Conscientiousness", id: "Conscientiousness", nl: "Consci—ntieusheid" },
-    tagline: { en: "Precise. Analytical. Excellence-driven.", id: "Tepat. Analitis. Berorientasi Keunggulan.", nl: "Precies. Analytisch. Kwaliteitsgericht." },
+    label: { en: "Conscientiousness", id: "Conscientiousness" },
+    tagline: { en: "Precise. Analytical. Excellence-driven.", id: "Tepat. Analitis. Berorientasi Keunggulan." },
     color: "oklch(50% 0.22 245)",
     colorLight: "oklch(60% 0.18 245)",
     colorVeryLight: "oklch(95% 0.05 245)",
@@ -324,37 +303,30 @@ const DISC_TYPES = [
     overview: {
       en: "The C-type leader is analytical, precise, and driven by accuracy. They value quality over speed, data over assumption, and systems over intuition. They are natural problem-solvers who bring rigour, structure, and careful thinking to everything they do.",
       id: "Pemimpin tipe C analitis, tepat, dan didorong oleh akurasi. Mereka menghargai kualitas di atas kecepatan, data di atas asumsi, dan sistem di atas intuisi. Mereka adalah pemecah masalah alami yang membawa kekakuan, struktur, dan pemikiran cermat ke dalam semua yang mereka lakukan.",
-      nl: "De C-type leider is analytisch, precies en gedreven door nauwkeurigheid. Ze stellen kwaliteit boven snelheid, data boven aannames en systemen boven intu—tie. Het zijn natuurlijke probleemoplossers die discipline, structuur en zorgvuldig denken inbrengen in alles wat ze doen.",
     },
     motivation: {
       en: "Accuracy, quality, deep expertise, and being given the time and space to do things right.",
       id: "Akurasi, kualitas, keahlian mendalam, dan diberi waktu serta ruang untuk melakukan segala sesuatu dengan benar.",
-      nl: "Nauwkeurigheid, kwaliteit, diepgaande expertise en de tijd en ruimte krijgen om dingen goed te doen.",
     },
     fear: {
       en: "Being wrong, producing poor quality work, criticism without substance, and acting without enough information.",
       id: "Salah, menghasilkan pekerjaan berkualitas buruk, kritik tanpa substansi, dan bertindak tanpa informasi yang cukup.",
-      nl: "Ongelijk hebben, werk van slechte kwaliteit leveren, kritiek zonder onderbouwing en handelen zonder voldoende informatie.",
     },
     strengths: {
       en: ["High standards and attention to detail", "Systematic problem-solving", "Critical thinking and analysis", "Reliable and thorough", "Brings structure and precision"],
       id: ["Standar tinggi dan perhatian terhadap detail", "Pemecahan masalah sistematis", "Pemikiran kritis dan analisis", "Dapat diandalkan dan menyeluruh", "Membawa struktur dan ketepatan"],
-      nl: ["Hoge standaarden en oog voor detail", "Systematisch probleemoplossen", "Kritisch denken en analyse", "Betrouwbaar en grondig", "Brengt structuur en precisie"],
     },
     blindspots: {
       en: ["Can over-analyse and delay decisions", "May be overly critical of others' work", "Can come across as cold or aloof", "Perfectionistic tendencies can slow progress"],
       id: ["Bisa terlalu banyak menganalisis dan menunda keputusan", "Mungkin terlalu kritis terhadap pekerjaan orang lain", "Bisa terkesan dingin atau tidak peduli", "Kecenderungan perfeksionis dapat memperlambat kemajuan"],
-      nl: ["Kan te veel analyseren en beslissingen uitstellen", "Kan overdreven kritisch zijn op andermans werk", "Kan koel of afstandelijk overkomen", "Perfectionistische neigingen kunnen vooruitgang vertragen"],
     },
     communication: {
       en: "Be accurate and prepared. Provide evidence and logical reasoning. Give them time to process and don't rush to a decision. Avoid vague language — they want specifics.",
       id: "Bersikap akurat dan siap. Berikan bukti dan penalaran logis. Beri mereka waktu untuk memproses dan jangan terburu-buru mengambil keputusan. Hindari bahasa yang samar — mereka menginginkan hal yang spesifik.",
-      nl: "Wees nauwkeurig en voorbereid. Lever bewijs en logische redenering. Geef ze tijd om te verwerken en haast je niet naar een beslissing. Vermijd vage taal — ze willen specifieke informatie.",
     },
     crossCultural: {
       en: "The C-type's need for precision is a great asset in technical or quality-focused cultures. The growth edge is learning to work with relational ambiguity — where trust is built through relationships, not systems — and to communicate warmth alongside accuracy.",
       id: "Kebutuhan tipe C akan ketepatan adalah aset besar dalam budaya teknis atau yang berfokus pada kualitas. Area pertumbuhan adalah belajar bekerja dengan ambiguitas relasional — di mana kepercayaan dibangun melalui hubungan, bukan sistem — dan untuk mengkomunikasikan kehangatan bersama ketepatan.",
-      nl: "De behoefte aan precisie van de C-type is een groot pluspunt in technische of kwaliteitsgerichte culturen. Het groeipunt is leren omgaan met relationele ambigu—teit — waar vertrouwen wordt opgebouwd via relaties, niet systemen — en warmte te communiceren naast nauwkeurigheid.",
     },
     biblical: {
       name: "Luke",
@@ -367,7 +339,7 @@ const DISC_TYPES = [
 
 type ResultKey = "D" | "I" | "S" | "C" | "DI" | "DS" | "DC" | "IS" | "IC" | "SC";
 
-const RESULT_PROFILES: Record<"en" | "id" | "nl", Record<ResultKey, string>> = {
+const RESULT_PROFILES: Record<"en" | "id", Record<ResultKey, string>> = {
   en: {
     D: "You lead with boldness and results. Your greatest strength is driving action and cutting through indecision. Growth edge: slow down enough to bring people with you — not just past them.",
     I: "You lead with energy and relationships. Your greatest strength is inspiring others and creating momentum. Growth edge: follow through on commitments and develop your eye for detail.",
@@ -391,18 +363,6 @@ const RESULT_PROFILES: Record<"en" | "id" | "nl", Record<ResultKey, string>> = {
     IS: "Anda memadukan antusiasme dengan kehangatan — menginspirasi orang-orang sambil benar-benar peduli terhadap mereka. Anugerah dalam konteks relasional dan lintas budaya.",
     IC: "Anda menggabungkan persuasi dengan ketepatan — komunikator yang menarik dan pemikir yang cermat. Seimbangkan spontanitas dengan tindak lanjut.",
     SC: "Anda membawa kestabilan dan ketelitian bersama-sama — dapat diandalkan, sabar, dan berorientasi kualitas. Jangkar terpercaya bagi tim mana pun.",
-  },
-  nl: {
-    D: "Jij leidt met durf en focus op resultaten. Je grootste kracht is het in beweging brengen van mensen en het doorbreken van besluiteloosheid. Groeipunt: vertraag genoeg om mensen mee te nemen — niet alleen voorbij ze te gaan.",
-    I: "Jij leidt met energie en relaties. Je grootste kracht is het inspireren van anderen en het cre—ren van momentum. Groeipunt: kom je beloften na en ontwikkel je oog voor detail.",
-    S: "Jij leidt met geduld en loyaliteit. Je grootste kracht is het cre—ren van omgevingen waar mensen zich veilig en gewaardeerd voelen. Groeipunt: oefen in het nemen van initiatief en spreek je zorgen eerder uit.",
-    C: "Jij leidt met precisie en expertise. Je grootste kracht is het inbrengen van discipline en kwaliteit in alles. Groeipunt: leer te handelen met onvolledige informatie en deel je inzichten opener.",
-    DI: "Jij combineert durf met mensgerichte energie — je behaalt resultaten terwijl je anderen ge—nspireerd houdt. Een krachtige combinatie bij het leiden van diverse teams.",
-    DS: "Jij balanceert directheid met standvastigheid — doelgericht maar in staat om stabiele, loyale teams te bouwen. Jij leidt met zowel kracht als consistentie.",
-    DC: "Jij combineert gedrevenheid met precisie — resultaatgericht en kwaliteitsgedreven. Je uitdaging: laat perfectionisme het momentum niet vertragen.",
-    IS: "Jij mengt enthousiasme met warmte — je inspireert mensen terwijl je oprecht om hen geeft. Een gave in relationele en interculturele contexten.",
-    IC: "Jij combineert overtuigingskracht met precisie — een boeiende communicator en een zorgvuldig denker. Balanceer spontaniteit met opvolging.",
-    SC: "Jij brengt standvastigheid en discipline samen — betrouwbaar, geduldig en kwaliteitsgericht. Een vertrouwd ankerpunt voor elk team.",
   },
 };
 
@@ -521,7 +481,7 @@ function getResultKey(scores: { D: number; I: number; S: number; C: number }): R
 
 // -- TYPES ---------------------------------------------------------------------
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 type ScoreKey = "D" | "I" | "S" | "C";
 type QuizState = "idle" | "active" | "done";
 
@@ -537,7 +497,7 @@ export default function DiscClient({
   discScores: { D: number; I: number; S: number; C: number } | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [quizState, setQuizState] = useState<QuizState>(
     discResult && discScores ? "done" : "idle"
   );
@@ -563,7 +523,7 @@ export default function DiscClient({
     return () => clearTimeout(t);
   }, [currentQ, noHover]);
 
-  const tr = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "nl" ? nl : id;
+  const tr = (en: string, id: string) => lang === "id" ? id : en;
 
   // Build shuffled options for current question using fixed per-question shuffle
   function getShuffledOptions(qIndex: number) {
@@ -697,31 +657,28 @@ export default function DiscClient({
 
         <div className="container-wide" style={{ position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {tr("Leadership — Assessment", "Kepemimpinan — Penilaian", "Leiderschap — Beoordeling")}
+            {tr("Leadership — Assessment", "Kepemimpinan — Penilaian")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, lineHeight: 1.08, color: "oklch(97% 0.005 80)", marginBottom: "1.5rem", maxWidth: "18ch" }}>
-            {lang === "en"
-              ? <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Personality Profile.</span></>
-              : lang === "nl"
-              ? <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Persoonlijkheidsprofiel.</span></>
-              : <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Profil Kepribadian.</span></>}
+            {lang === "id"
+              ? <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Profil Kepribadian.</span></>
+              : <>DISC<br /><span style={{ color: "oklch(65% 0.15 45)" }}>Personality Profile.</span></>}
           </h1>
           <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(16px, 2vw, 19px)", lineHeight: 1.65, color: "oklch(78% 0.04 260)", maxWidth: 580, margin: "0 0 40px" }}>
             {tr(
               "See how you lead across cultures — authentically.",
-              "Lihat bagaimana Anda memimpin lintas budaya — dengan autentik.",
-              "Zie hoe je authentiek leiding geeft in interculturele contexten."
+              "Lihat bagaimana Anda memimpin lintas budaya — dengan autentik."
             )}
           </p>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "3rem" }}>
             <button onClick={startQuiz} className="btn-primary">
               {quizState === "done"
-                ? tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")
-                : tr("Discover Your Style", "Temukan Gaya Anda", "Ontdek jouw stijl")}
+                ? tr("Retake Assessment", "Ulangi Assessment")
+                : tr("Discover Your Style", "Temukan Gaya Anda")}
             </button>
             <a href="#disc-types" className="btn-ghost" style={{ textDecoration: "none" }}>
-              {tr("Explore the Styles", "Jelajahi Gaya-Gaya", "Verken de stijlen")}
+              {tr("Explore the Styles", "Jelajahi Gaya-Gaya")}
             </a>
             {saved ? (
               <Link href="/dashboard" style={{
@@ -729,7 +686,7 @@ export default function DiscClient({
                 letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none",
                 display: "inline-flex", alignItems: "center", gap: "0.375rem",
               }}>
-                ? {tr("In your dashboard", "Di dashboard Anda", "In je dashboard")}
+                ? {tr("In your dashboard", "Di dashboard Anda")}
               </Link>
             ) : (
               <button onClick={handleSave} disabled={isPending} style={{
@@ -741,8 +698,8 @@ export default function DiscClient({
               }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                 {isPending
-                  ? tr("Saving—", "Menyimpan—", "Opslaan—")
-                  : tr("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                  ? tr("Saving—", "Menyimpan—")
+                  : tr("Save to Dashboard", "Simpan ke Dashboard")}
               </button>
             )}
           </div>
@@ -754,10 +711,10 @@ export default function DiscClient({
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("Self-Awareness", "Kesadaran Diri", "Zelfbewustzijn")}
+            {tr("Self-Awareness", "Kesadaran Diri")}
           </p>
           <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
-            {tr("Which leader are you when things go wrong?", "Pemimpin seperti apa Anda ketika sesuatu tidak berjalan sesuai rencana?", "Welk leider ben jij als het fout gaat?")}
+            {tr("Which leader are you when things go wrong?", "Pemimpin seperti apa Anda ketika sesuatu tidak berjalan sesuai rencana?")}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "60ch", marginBottom: "3rem" }}>
             {tr(
@@ -780,10 +737,10 @@ export default function DiscClient({
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1px", background: "oklch(88% 0.008 80)", marginBottom: hookSelected ? "2.5rem" : 0 }}>
             {[
-              { key: "D", color: "oklch(52% 0.20 25)", action: tr("You call the team together immediately. Someone needs to own this — and you're ready to figure out who.", "Anda segera mengumpulkan tim. Seseorang harus bertanggung jawab atas ini — dan Anda siap mencari tahu siapa.", "Jij roept het team meteen bij elkaar. Iemand moet dit opeisen — en jij bent klaar om uit te zoeken wie."), reaction: tr("When the pressure hits, you reach for control. That's not a flaw. It's a wiring.", "Ketika tekanan datang, Anda meraih kendali. Itu bukan kelemahan. Itu adalah cara Anda terhubung.", "Als de druk toeslaat, grijp jij naar controle. Dat is geen fout. Het is een bedrading.") },
-              { key: "I", color: "oklch(52% 0.18 80)", action: tr("You start by rallying the group. The mood is low — you want to bring the energy back before digging into what happened.", "Anda mulai dengan menyemangati kelompok. Suasana sedang rendah — Anda ingin memulihkan energi sebelum menggali apa yang terjadi.", "Jij begint met het mobiliseren van de groep. De sfeer is laag — je wilt de energie herstellen voor je dieper graaft."), reaction: tr("You know that how people feel in the room matters as much as what gets decided.", "Anda tahu bahwa bagaimana perasaan orang dalam ruangan sama pentingnya dengan apa yang diputuskan.", "Jij weet dat hoe mensen zich voelen even belangrijk is als wat er wordt besloten.") },
-              { key: "S", color: "oklch(48% 0.18 145)", action: tr("Before anything else, you check in privately with the people who look most affected.", "Sebelum hal lain, Anda memeriksa secara pribadi orang-orang yang tampaknya paling terpengaruh.", "Voordat je iets doet, check jij priv— bij de mensen die het meest geraakt lijken."), reaction: tr("You notice who's carrying the weight. And you move toward them first.", "Anda memperhatikan siapa yang menanggung beban. Dan Anda bergerak menuju mereka terlebih dahulu.", "Jij merkt wie het gewicht draagt. En jij beweegt als eerste naar hen toe.") },
-              { key: "C", color: "oklch(48% 0.18 250)", action: tr("You go quiet. You want to review the timeline and understand exactly where and why things broke down before anyone says anything.", "Anda diam. Anda ingin meninjau linimasa dan memahami dengan tepat di mana dan mengapa sesuatu gagal sebelum ada yang berkata apa pun.", "Jij wordt stil. Je wilt de tijdlijn bekijken en precies begrijpen waar en waarom het fout ging voordat iemand iets zegt."), reaction: tr("You believe you can't fix what you don't understand. So you go looking for the truth first.", "Anda percaya Anda tidak bisa memperbaiki apa yang tidak Anda pahami. Jadi Anda mencari kebenaran terlebih dahulu.", "Jij gelooft dat je niet kunt repareren wat je niet begrijpt. Dus zoek jij eerst de waarheid.") },
+              { key: "D", color: "oklch(52% 0.20 25)", action: tr("You call the team together immediately. Someone needs to own this — and you're ready to figure out who.", "Anda segera mengumpulkan tim. Seseorang harus bertanggung jawab atas ini — dan Anda siap mencari tahu siapa."), reaction: tr("When the pressure hits, you reach for control. That's not a flaw. It's a wiring.", "Ketika tekanan datang, Anda meraih kendali. Itu bukan kelemahan. Itu adalah cara Anda terhubung.") },
+              { key: "I", color: "oklch(52% 0.18 80)", action: tr("You start by rallying the group. The mood is low — you want to bring the energy back before digging into what happened.", "Anda mulai dengan menyemangati kelompok. Suasana sedang rendah — Anda ingin memulihkan energi sebelum menggali apa yang terjadi."), reaction: tr("You know that how people feel in the room matters as much as what gets decided.", "Anda tahu bahwa bagaimana perasaan orang dalam ruangan sama pentingnya dengan apa yang diputuskan.") },
+              { key: "S", color: "oklch(48% 0.18 145)", action: tr("Before anything else, you check in privately with the people who look most affected.", "Sebelum hal lain, Anda memeriksa secara pribadi orang-orang yang tampaknya paling terpengaruh."), reaction: tr("You notice who's carrying the weight. And you move toward them first.", "Anda memperhatikan siapa yang menanggung beban. Dan Anda bergerak menuju mereka terlebih dahulu.") },
+              { key: "C", color: "oklch(48% 0.18 250)", action: tr("You go quiet. You want to review the timeline and understand exactly where and why things broke down before anyone says anything.", "Anda diam. Anda ingin meninjau linimasa dan memahami dengan tepat di mana dan mengapa sesuatu gagal sebelum ada yang berkata apa pun."), reaction: tr("You believe you can't fix what you don't understand. So you go looking for the truth first.", "Anda percaya Anda tidak bisa memperbaiki apa yang tidak Anda pahami. Jadi Anda mencari kebenaran terlebih dahulu.") },
             ].map(card => (
               <button
                 key={card.key}
@@ -823,7 +780,7 @@ export default function DiscClient({
 
           {hookSelected && (
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(52% 0.008 260)", marginTop: "1.5rem" }}>
-              {tr("Scroll down to read about all four styles — then take the assessment.", "Gulir ke bawah untuk membaca semua empat gaya — lalu ikuti penilaian.", "Scroll naar beneden om alle vier stijlen te lezen — en doe dan de assessment.")}
+              {tr("Scroll down to read about all four styles — then take the assessment.", "Gulir ke bawah untuk membaca semua empat gaya — lalu ikuti penilaian.")}
               {" "}<a href="#disc-types" style={{ color: "oklch(65% 0.15 45)", fontWeight: 600, textDecoration: "none" }}>?</a>
             </p>
           )}
@@ -834,13 +791,13 @@ export default function DiscClient({
       <section style={{ background: "oklch(22% 0.10 260)", padding: "clamp(48px, 7vw, 64px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 24 }}>
-            {tr("After This Module", "Setelah Modul Ini", "Na Dit Module")}
+            {tr("After This Module", "Setelah Modul Ini")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              tr("Identify your DISC type and explain how it shapes your default leadership communication and decision style.", "Mengidentifikasi tipe DISC Anda dan menjelaskan bagaimana tipe tersebut membentuk gaya komunikasi dan pengambilan keputusan kepemimpinan default Anda.", "Jouw DISC-type identificeren en uitleggen hoe het jouw standaard leiderschapscommunicatie en besluitvormingsstijl vormt."),
-              tr("Recognize how each of the four DISC types communicates, processes decisions, and responds to stress in team settings.", "Mengenali bagaimana masing-masing dari empat tipe DISC berkomunikasi, memproses keputusan, dan merespons tekanan dalam setting tim.", "Herkennen hoe elk van de vier DISC-typen communiceert, beslissingen verwerkt en reageert op stress in teamsettings."),
-              tr("Apply DISC awareness to one specific collaboration challenge in your current multicultural or cross-cultural team.", "Menerapkan kesadaran DISC pada satu tantangan kolaborasi spesifik dalam tim multikultural atau lintas budaya Anda saat ini.", "DISC-bewustzijn toepassen op ——n specifieke samenwerkingsuitdaging in jouw huidige multiculturele of interculturele team."),
+              tr("Identify your DISC type and explain how it shapes your default leadership communication and decision style.", "Mengidentifikasi tipe DISC Anda dan menjelaskan bagaimana tipe tersebut membentuk gaya komunikasi dan pengambilan keputusan kepemimpinan default Anda."),
+              tr("Recognize how each of the four DISC types communicates, processes decisions, and responds to stress in team settings.", "Mengenali bagaimana masing-masing dari empat tipe DISC berkomunikasi, memproses keputusan, dan merespons tekanan dalam setting tim."),
+              tr("Apply DISC awareness to one specific collaboration challenge in your current multicultural or cross-cultural team.", "Menerapkan kesadaran DISC pada satu tantangan kolaborasi spesifik dalam tim multikultural atau lintas budaya Anda saat ini."),
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
                 <div style={{ width: 3, height: 20, background: "oklch(65% 0.15 45)", flexShrink: 0, marginTop: 3 }} />
@@ -857,10 +814,10 @@ export default function DiscClient({
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("A Behavioural Framework", "Kerangka Perilaku", "Een gedragskader")}
+            {tr("A Behavioural Framework", "Kerangka Perilaku")}
           </p>
           <h2 className="t-section" style={{ marginBottom: "2.5rem" }}>
-            {tr("Understanding how people are wired to behave.", "Memahami bagaimana orang terkondisi untuk berperilaku.", "Begrijpen hoe mensen van nature gedragen.")}
+            {tr("Understanding how people are wired to behave.", "Memahami bagaimana orang terkondisi untuk berperilaku.")}
           </h2>
 
           <style>{`
@@ -880,24 +837,24 @@ export default function DiscClient({
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
             {[
               {
-                title: tr("What DISC does", "Apa yang DISC lakukan", "Wat DISC doet"),
+                title: tr("What DISC does", "Apa yang DISC lakukan"),
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>,
-                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The framework traces to William Moulton Marston's 1928 research¹ and was later adapted into the workplace assessments widely used today.² You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Kerangka ini berakar dari penelitian William Moulton Marston tahun 1928¹ dan kemudian diadaptasi menjadi alat penilaian tempat kerja yang banyak digunakan hari ini.² Anda mendapatkan gambaran cepat tentang default Anda.", "DISC brengt in kaart hoe jij geneigd bent te gedragen — niet wie jij bent. Het groepeert gedrag in vier patronen: Dominantie, Invloed, Standvastigheid en Consci—ntieusheid. Het kader gaat terug op het onderzoek van William Moulton Marston uit 1928¹ en werd later omgezet in de werkplekbeoordelingen die vandaag breed worden gebruikt.²"),
+                back: tr("DISC maps how you tend to behave — not who you are. It groups behaviour into four patterns: Dominance, Influence, Steadiness, and Conscientiousness. The framework traces to William Moulton Marston's 1928 research¹ and was later adapted into the workplace assessments widely used today.² You get a quick read on your default: how you start projects, respond to pressure, give feedback, handle conflict.", "DISC memetakan bagaimana Anda cenderung berperilaku — bukan siapa diri Anda. Ini mengelompokkan perilaku ke dalam empat pola: Dominance, Influence, Steadiness, dan Conscientiousness. Kerangka ini berakar dari penelitian William Moulton Marston tahun 1928¹ dan kemudian diadaptasi menjadi alat penilaian tempat kerja yang banyak digunakan hari ini.² Anda mendapatkan gambaran cepat tentang default Anda."),
               },
               {
-                title: tr("Why it helps your team", "Mengapa ini membantu tim Anda", "Waarom het je team helpt"),
+                title: tr("Why it helps your team", "Mengapa ini membantu tim Anda"),
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-                back: tr("In cross-cultural teams, miscommunication is rarely about content — it is about style. DISC gives your team a shared vocabulary to name those differences without judgement. A team that knows its mix makes decisions more honestly, shares roles more wisely, and forgives each other's defaults more quickly.", "Dalam tim lintas budaya, miskomunikasi jarang tentang konten — ini tentang gaya. DISC memberi tim Anda kosakata bersama untuk menyebut perbedaan tersebut tanpa penilaian.", "In interculturele teams gaat miscommunicatie zelden over inhoud — het gaat over stijl. DISC geeft je team een gedeeld vocabulaire om die verschillen te benoemen zonder oordeel."),
+                back: tr("In cross-cultural teams, miscommunication is rarely about content — it is about style. DISC gives your team a shared vocabulary to name those differences without judgement. A team that knows its mix makes decisions more honestly, shares roles more wisely, and forgives each other's defaults more quickly.", "Dalam tim lintas budaya, miskomunikasi jarang tentang konten — ini tentang gaya. DISC memberi tim Anda kosakata bersama untuk menyebut perbedaan tersebut tanpa penilaian."),
               },
               {
-                title: tr("How to read your result", "Cara membaca hasil Anda", "Hoe je je resultaat leest"),
+                title: tr("How to read your result", "Cara membaca hasil Anda"),
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
-                back: tr("Read your result as a tendency, not a verdict. You are not 'a D.' You lead with D-energy and probably balance it with another style. Look at your top one or two letters and ask: where does this style serve me? Where does it cost me — especially cross-culturally? Which opposite style do I most need to learn from?", "Baca hasil Anda sebagai kecenderungan, bukan vonis. Anda bukan 'seorang D.' Anda memimpin dengan energi D dan kemungkinan menyeimbangkannya dengan gaya lain.", "Lees je resultaat als een neiging, niet als een vonnis. Jij bent niet 'een D.' Je leidt met D-energie en balanceert dat waarschijnlijk met een andere stijl."),
+                back: tr("Read your result as a tendency, not a verdict. You are not 'a D.' You lead with D-energy and probably balance it with another style. Look at your top one or two letters and ask: where does this style serve me? Where does it cost me — especially cross-culturally? Which opposite style do I most need to learn from?", "Baca hasil Anda sebagai kecenderungan, bukan vonis. Anda bukan 'seorang D.' Anda memimpin dengan energi D dan kemungkinan menyeimbangkannya dengan gaya lain."),
               },
               {
-                title: tr("Putting it to work", "Menerapkannya dalam praktik", "In de praktijk brengen"),
+                title: tr("Putting it to work", "Menerapkannya dalam praktik"),
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.12 260)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>,
-                back: tr("Map your team on the four-quadrant chart. Before a hard conversation, look up the other person's profile and match your message to their style. When tension rises, name your default out loud: 'My D is showing up here — give me a second to slow down.' Self-aware leadership is contagious.", "Petakan tim Anda pada grafik empat kuadran. Sebelum percakapan sulit, cari profil orang lain dan sesuaikan pesan Anda dengan gaya mereka.", "Breng je team in kaart op het vierkvadrantenschema. Zoek voor een moeilijk gesprek het profiel van de ander op. Als spanning oploopt, benoem je default hardop."),
+                back: tr("Map your team on the four-quadrant chart. Before a hard conversation, look up the other person's profile and match your message to their style. When tension rises, name your default out loud: 'My D is showing up here — give me a second to slow down.' Self-aware leadership is contagious.", "Petakan tim Anda pada grafik empat kuadran. Sebelum percakapan sulit, cari profil orang lain dan sesuaikan pesan Anda dengan gaya mereka."),
               },
             ].map((card, i) => (
               <div
@@ -918,7 +875,7 @@ export default function DiscClient({
                       </h3>
                     </div>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(68% 0.008 260)", marginBottom: 0 }}>
-                      {tr("Tap to explore", "Ketuk untuk jelajahi", "Tik om te verkennen")}
+                      {tr("Tap to explore", "Ketuk untuk jelajahi")}
                     </p>
                   </div>
                   <div className="disc-flip-back">
@@ -926,7 +883,7 @@ export default function DiscClient({
                       {card.back}
                     </p>
                     <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginTop: "1rem", marginBottom: 0 }}>
-                      ? {tr("Tap to close", "Ketuk untuk tutup", "Tik om te sluiten")}
+                      ? {tr("Tap to close", "Ketuk untuk tutup")}
                     </p>
                   </div>
                 </div>
@@ -941,7 +898,7 @@ export default function DiscClient({
             padding: "1.5rem 2rem",
           }}>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(52% 0.14 45)", marginBottom: "0.5rem" }}>
-              {tr("CULTURAL CONTEXT", "KONTEKS BUDAYA", "CULTURELE CONTEXT")}
+              {tr("CULTURAL CONTEXT", "KONTEKS BUDAYA")}
             </p>
             <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", color: "oklch(32% 0.008 260)", lineHeight: 1.75, margin: 0 }}>
               {tr(
@@ -1005,7 +962,7 @@ export default function DiscClient({
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
                     <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
-                        {tr("Motivated by", "Termotivasi oleh", "Gemotiveerd door")}
+                        {tr("Motivated by", "Termotivasi oleh")}
                       </p>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
                         {type.motivation[lang]}
@@ -1013,7 +970,7 @@ export default function DiscClient({
                     </div>
                     <div style={{ padding: "1.25rem", background: type.colorVeryLight, borderLeft: `3px solid ${type.color}` }}>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.5rem" }}>
-                        {tr("Fears", "Ketakutan", "Angsten")}
+                        {tr("Fears", "Ketakutan")}
                       </p>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8125rem", lineHeight: 1.6, color: "oklch(32% 0.008 260)" }}>
                         {type.fear[lang]}
@@ -1038,14 +995,14 @@ export default function DiscClient({
                       width: "100%",
                     }}
                   >
-                    <span>{expandedType === type.key ? tr("Hide Details", "Sembunyikan", "Verberg details") : tr("Show Full Profile", "Tampilkan Profil Lengkap", "Toon volledig profiel")}</span>
+                    <span>{expandedType === type.key ? tr("Hide Details", "Sembunyikan") : tr("Show Full Profile", "Tampilkan Profil Lengkap")}</span>
                   </button>
 
                   {/* Always visible: strengths + blindspots */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                     <div>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
-                        {tr("Strengths", "Kekuatan", "Sterktes")}
+                        {tr("Strengths", "Kekuatan")}
                       </p>
                       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                         {type.strengths[lang].map((s, i) => (
@@ -1058,7 +1015,7 @@ export default function DiscClient({
                     </div>
                     <div>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.75rem" }}>
-                        {tr("Blind Spots", "Titik Buta", "Blinde vlekken")}
+                        {tr("Blind Spots", "Titik Buta")}
                       </p>
                       <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                         {type.blindspots[lang].map((s, i) => (
@@ -1093,7 +1050,7 @@ export default function DiscClient({
                     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                       <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
-                          {tr("How to Communicate with Them", "Cara Berkomunikasi dengan Mereka", "Hoe communiceer je met hen")}
+                          {tr("How to Communicate with Them", "Cara Berkomunikasi dengan Mereka")}
                         </p>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
                           {type.communication[lang]}
@@ -1101,7 +1058,7 @@ export default function DiscClient({
                       </div>
                       <div style={{ padding: "1.25rem 1.5rem", background: type.colorVeryLight, borderTop: `2px solid ${type.color}` }}>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: type.color, marginBottom: "0.625rem" }}>
-                          {tr("Cross-Cultural Leadership Note", "Catatan Kepemimpinan Lintas Budaya", "Interculturele leiderschapsnotitie")}
+                          {tr("Cross-Cultural Leadership Note", "Catatan Kepemimpinan Lintas Budaya")}
                         </p>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(32% 0.008 260)" }}>
                           {type.crossCultural[lang]}
@@ -1280,10 +1237,10 @@ export default function DiscClient({
       }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem", fontSize: "0.62rem" }}>
-            {tr("Self-Assessment", "Penilaian Diri", "Zelfreflectie")}
+            {tr("Self-Assessment", "Penilaian Diri")}
           </p>
           <h2 className="t-section" style={{ color: "oklch(22% 0.005 260)", marginBottom: "0.75rem" }}>
-            {tr("Discover your DISC style.", "Temukan gaya DISC Anda.", "Ontdek jouw DISC-stijl.")}
+            {tr("Discover your DISC style.", "Temukan gaya DISC Anda.")}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", color: "oklch(65% 0.04 260)", marginBottom: "3rem", maxWidth: "52ch" }}>
             {tr(
@@ -1307,7 +1264,7 @@ export default function DiscClient({
                     )}
                   </p>
                   <button onClick={startQuiz} className="btn-primary">
-                    {tr("Start Assessment", "Mulai Tes", "Start Test")}
+                    {tr("Start Assessment", "Mulai Tes")}
                   </button>
                 </div>
               )}
@@ -1326,7 +1283,7 @@ export default function DiscClient({
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: getProgressBarColor(currentQ), margin: 0 }}>
-                        {tr("Question", "Pertanyaan", "Vraag")} {currentQ + 1} {tr("of", "dari", "van")} {QS.length}
+                        {tr("Question", "Pertanyaan")} {currentQ + 1} {tr("of", "dari")} {QS.length}
                       </p>
                       {currentQ < QS.length - 1 && (
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "oklch(45% 0.008 260)", margin: 0 }}>
@@ -1383,7 +1340,7 @@ export default function DiscClient({
                         alignSelf: "flex-start",
                       }}
                     >
-                      ? {tr("Go Back", "Kembali", "Terug")}
+                      ? {tr("Go Back", "Kembali")}
                     </button>
                   )}
                 </div>
@@ -1392,7 +1349,7 @@ export default function DiscClient({
               {quizState === "done" && (
                 <div>
                   <p className="t-label" style={{ color: primaryType.colorLight, marginBottom: "1.25rem", fontSize: "0.62rem", letterSpacing: "0.14em" }}>
-                    {tr("Your DISC Profile", "Profil DISC Anda", "Jouw DISC-profiel")}
+                    {tr("Your DISC Profile", "Profil DISC Anda")}
                   </p>
 
                   {/* Identity block — type badge + name + tagline + score bars unified */}
@@ -1431,10 +1388,10 @@ export default function DiscClient({
                     {/* Score bars — tighter, mobile-safe */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
                       {[
-                        { key: "D", label: "D", fullLabel: tr("Dominance", "Dominance", "Dominantie"), pct: pD, color: "oklch(52% 0.27 25)", light: "oklch(62% 0.22 25)" },
-                        { key: "I", label: "I", fullLabel: tr("Influence", "Influence", "Invloed"), pct: pI, color: "oklch(62% 0.22 87)", light: "oklch(72% 0.18 87)" },
-                        { key: "S", label: "S", fullLabel: tr("Steadiness", "Steadiness", "Standvastigheid"), pct: pS, color: "oklch(52% 0.22 145)", light: "oklch(62% 0.18 145)" },
-                        { key: "C", label: "C", fullLabel: tr("Conscientiousness", "Conscientiousness", "Consci—ntieusheid"), pct: pC, color: "oklch(50% 0.22 245)", light: "oklch(60% 0.18 245)" },
+                        { key: "D", label: "D", fullLabel: tr("Dominance", "Dominance"), pct: pD, color: "oklch(52% 0.27 25)", light: "oklch(62% 0.22 25)" },
+                        { key: "I", label: "I", fullLabel: tr("Influence", "Influence"), pct: pI, color: "oklch(62% 0.22 87)", light: "oklch(72% 0.18 87)" },
+                        { key: "S", label: "S", fullLabel: tr("Steadiness", "Steadiness"), pct: pS, color: "oklch(52% 0.22 145)", light: "oklch(62% 0.18 145)" },
+                        { key: "C", label: "C", fullLabel: tr("Conscientiousness", "Conscientiousness"), pct: pC, color: "oklch(50% 0.22 245)", light: "oklch(60% 0.18 245)" },
                       ].map(bar => {
                         const isPrimary = bar.key === resultKey[0];
                         return (
@@ -1478,12 +1435,12 @@ export default function DiscClient({
                   <div style={{ marginBottom: "1.75rem" }}>
                     {resultSaved ? (
                       <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, color: "oklch(60% 0.14 145)", letterSpacing: "0.04em" }}>
-                        ? {tr("Result saved to your dashboard", "Hasil tersimpan ke dashboard Anda", "Resultaat opgeslagen in je dashboard")}
+                        ? {tr("Result saved to your dashboard", "Hasil tersimpan ke dashboard Anda")}
                       </p>
                     ) : (
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
                         <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "oklch(58% 0.04 260)", lineHeight: 1.5 }}>
-                          {tr("Keep this result — save it to your dashboard.", "Simpan hasil ini ke dashboard Anda.", "Bewaar dit resultaat in je dashboard.")}
+                          {tr("Keep this result — save it to your dashboard.", "Simpan hasil ini ke dashboard Anda.")}
                         </p>
                         <button
                           onClick={handleSaveResult}
@@ -1496,7 +1453,7 @@ export default function DiscClient({
                             whiteSpace: "nowrap", flexShrink: 0,
                           }}
                         >
-                          {isPending ? tr("Saving—", "Menyimpan—", "Opslaan—") : tr("Save My Result", "Simpan Hasilku", "Sla mijn resultaat op")}
+                          {isPending ? tr("Saving—", "Menyimpan—") : tr("Save My Result", "Simpan Hasilku")}
                         </button>
                       </div>
                     )}
@@ -1505,10 +1462,10 @@ export default function DiscClient({
                   {/* Retake + dashboard */}
                   <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                     <button onClick={retake} style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(58% 0.04 260)", background: "none", border: "1px solid oklch(38% 0.008 260)", padding: "0.7rem 1.375rem", cursor: "pointer" }}>
-                      {tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")}
+                      {tr("Retake Assessment", "Ulangi Assessment")}
                     </button>
                     <Link href="/dashboard" className="btn-primary" style={{ textDecoration: "none" }}>
-                      {tr("Go to Dashboard", "Ke Dashboard", "Naar dashboard")}
+                      {tr("Go to Dashboard", "Ke Dashboard")}
                     </Link>
                   </div>
                 </div>
@@ -1522,10 +1479,10 @@ export default function DiscClient({
       <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(97% 0.005 80)" }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
-            {tr("Next Steps", "Langkah Selanjutnya", "Volgende stappen")}
+            {tr("Next Steps", "Langkah Selanjutnya")}
           </p>
           <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
-            {tr("Put your profile to work.", "Terapkan profil Anda.", "Zet je profiel in de praktijk.")}
+            {tr("Put your profile to work.", "Terapkan profil Anda.")}
           </h2>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9375rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "58ch", marginBottom: "3.5rem" }}>
             {tr(
@@ -1540,7 +1497,7 @@ export default function DiscClient({
             {[
               {
                 step: "01",
-                title: tr("Reflect on your default", "Renungkan default Anda", "Reflecteer op je standaard"),
+                title: tr("Reflect on your default", "Renungkan default Anda"),
                 body: tr(
                   "Take one situation from last week where things felt tense. Which part of your DISC profile showed up — your strength or your blind spot? Write it down. Growth starts with honest observation.",
                   "Ambil satu situasi dari minggu lalu di mana sesuatu terasa tegang. Bagian mana dari profil DISC Anda yang muncul — kekuatan atau titik buta Anda? Tuliskan. Pertumbuhan dimulai dengan pengamatan yang jujur.",
@@ -1550,7 +1507,7 @@ export default function DiscClient({
               },
               {
                 step: "02",
-                title: tr("Map your team", "Petakan tim Anda", "Breng je team in kaart"),
+                title: tr("Map your team", "Petakan tim Anda"),
                 body: tr(
                   "Ask your team to take the assessment and share their results. Then map the four types on a whiteboard. Where is your team heavy? Where is there a gap? That gap often explains recurring friction.",
                   "Minta tim Anda untuk mengikuti assessment dan berbagi hasilnya. Kemudian petakan keempat tipe di papan tulis. Di mana tim Anda berat? Di mana ada kesenjangan? Kesenjangan itu sering menjelaskan gesekan yang berulang.",
@@ -1560,7 +1517,7 @@ export default function DiscClient({
               },
               {
                 step: "03",
-                title: tr("Adapt your communication", "Sesuaikan komunikasi Anda", "Pas je communicatie aan"),
+                title: tr("Adapt your communication", "Sesuaikan komunikasi Anda"),
                 body: tr(
                   "Before your next difficult conversation, identify the other person's likely DISC style and adjust your approach. A D needs directness. An S needs gentleness and time. A C needs evidence. An I needs enthusiasm and connection.",
                   "Sebelum percakapan sulit berikutnya, identifikasi gaya DISC orang lain yang mungkin dan sesuaikan pendekatan Anda. D membutuhkan ketegasan. S membutuhkan kelembutan dan waktu. C membutuhkan bukti. I membutuhkan antusiasme dan koneksi.",
@@ -1677,18 +1634,18 @@ export default function DiscClient({
           }}>
             <div>
               <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.625rem" }}>
-                {tr("Go Deeper", "Pelajari Lebih Lanjut", "Ga dieper")}
+                {tr("Go Deeper", "Pelajari Lebih Lanjut")}
               </p>
               <p style={{ fontFamily: "Cormorant Garamond, serif", fontWeight: 600, fontSize: "1.5rem", color: "oklch(97% 0.005 80)", lineHeight: 1.2, margin: 0 }}>
-                {tr("Explore more cross-cultural leadership training modules.", "Jelajahi lebih banyak modul pelatihan kepemimpinan lintas budaya.", "Verken meer interculturele leiderschapstools.")}
+                {tr("Explore more cross-cultural leadership training modules.", "Jelajahi lebih banyak modul pelatihan kepemimpinan lintas budaya.")}
               </p>
             </div>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <Link href="/resources" className="btn-primary" style={{ textDecoration: "none" }}>
-                {tr("Browse the Library", "Telusuri Perpustakaan", "Verken de bibliotheek")}
+                {tr("Browse the Library", "Telusuri Perpustakaan")}
               </Link>
               <a href="#quiz-section" className="btn-ghost" style={{ textDecoration: "none" }}>
-                {tr("Retake Assessment", "Ulangi Assessment", "Assessment opnieuw doen")}
+                {tr("Retake Assessment", "Ulangi Assessment")}
               </a>
             </div>
           </div>

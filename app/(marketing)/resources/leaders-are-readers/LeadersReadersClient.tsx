@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -6,47 +6,39 @@ import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 
-const t = (en: string, id: string, nl: string, lang: Lang) =>
-  lang === "en" ? en : lang === "id" ? id : nl;
+const t = (en: string, id: string, lang: Lang) =>
+  lang === "en" ? en : id;
 
 const REASONS = [
   {
     num: "01",
     titleEn: "Expanding Vision",
     titleId: "Memperluas Visi",
-    titleNl: "Visie Verbreden",
     descEn: "Reading exposes leaders to diverse ideas, cultures, and perspectives. By engaging with literature, biographies, and thought-provoking articles, leaders cultivate a broader worldview — enabling them to see trends, understand complex issues, and craft solutions for immediate challenges.",
     descId: "Membaca mengekspos pemimpin pada beragam ide, budaya, dan perspektif. Dengan terlibat dalam literatur, biografi, dan artikel yang memancing pemikiran, pemimpin mengembangkan pandangan dunia yang lebih luas — memungkinkan mereka melihat tren, memahami isu kompleks, dan merancang solusi untuk tantangan saat ini.",
-    descNl: "Lezen stelt leiders bloot aan diverse idee—n, culturen en perspectieven. Door boeken, biografie—n en prikkelende artikelen te lezen, ontwikkelen leiders een bredere kijk op de wereld — waardoor ze trends kunnen zien, complexe vraagstukken kunnen begrijpen en oplossingen kunnen bedenken voor directe uitdagingen.",
   },
   {
     num: "02",
     titleEn: "Refining Critical Thinking",
     titleId: "Mengasah Pemikiran Kritis",
-    titleNl: "Kritisch Denken Verfijnen",
     descEn: "Books challenge assumptions and encourage reflection. Leaders who read regularly develop sharper analytical skills, enabling them to evaluate options, make informed decisions, and navigate uncertainty with confidence.",
     descId: "Buku-buku menantang asumsi dan mendorong refleksi. Pemimpin yang rajin membaca mengembangkan keterampilan analitis yang lebih tajam, memungkinkan mereka mengevaluasi pilihan, mengambil keputusan berdasarkan informasi, dan menavigasi ketidakpastian dengan percaya diri.",
-    descNl: "Boeken stellen aannames ter discussie en moedigen reflectie aan. Leiders die regelmatig lezen ontwikkelen scherpere analytische vaardigheden, waardoor ze opties kunnen beoordelen, weloverwogen beslissingen kunnen nemen en onzekerheid met vertrouwen kunnen navigeren.",
   },
   {
     num: "03",
     titleEn: "Building Emotional Intelligence",
     titleId: "Membangun Kecerdasan Emosional",
-    titleNl: "Emotionele Intelligentie Ontwikkelen",
     descEn: "Empathy and emotional intelligence are key leadership traits. Books can enhance these qualities by offering insights into human behavior, relationships, and effective communication — enabling leaders to connect deeply with their teams and communities.",
     descId: "Empati dan kecerdasan emosional adalah sifat kepemimpinan yang utama. Buku dapat meningkatkan kualitas-kualitas ini dengan memberikan wawasan tentang perilaku manusia, hubungan, dan komunikasi efektif — memungkinkan pemimpin terhubung secara mendalam dengan tim dan komunitas mereka.",
-    descNl: "Empathie en emotionele intelligentie zijn sleuteleigenschappen van leiderschap. Boeken kunnen deze kwaliteiten versterken door inzicht te bieden in menselijk gedrag, relaties en effectieve communicatie — waardoor leiders diep verbinding kunnen maken met hun teams en gemeenschappen.",
   },
   {
     num: "04",
     titleEn: "Staying Relevant",
     titleId: "Tetap Relevan",
-    titleNl: "Relevant Blijven",
     descEn: "Reading helps leaders remain informed about innovations and disruptions. By engaging with research, industry reports, and case studies, leaders stay ahead of the curve and are better equipped to navigate challenges, seize opportunities, and guide their teams through transitions.",
     descId: "Membaca membantu pemimpin tetap terinformasi tentang inovasi dan gangguan. Dengan terlibat dalam penelitian, laporan industri, dan studi kasus, pemimpin tetap berada di garis terdepan dan lebih siap untuk menghadapi tantangan, memanfaatkan peluang, dan memandu tim mereka melalui transisi.",
-    descNl: "Lezen helpt leiders op de hoogte te blijven van innovaties en verstoringen. Door onderzoek, brancherapporten en casestudies te lezen, blijven leiders voorop lopen en zijn ze beter uitgerust om uitdagingen het hoofd te bieden, kansen te grijpen en hun teams door transities te begeleiden.",
   },
 ];
 
@@ -55,37 +47,29 @@ const HABITS = [
     num: "01",
     titleEn: "Set Clear Goals",
     titleId: "Tetapkan Tujuan yang Jelas",
-    titleNl: "Stel Duidelijke Doelen",
     descEn: "Decide on a realistic reading target, such as one book per month or 15 minutes daily. Track your progress to stay motivated.",
     descId: "Tentukan target membaca yang realistis, seperti satu buku per bulan atau 15 menit setiap hari. Lacak kemajuanmu untuk tetap termotivasi.",
-    descNl: "Bepaal een realistisch leesdoel, zoals ——n boek per maand of 15 minuten per dag. Houd je voortgang bij om gemotiveerd te blijven.",
   },
   {
     num: "02",
     titleEn: "Dedicate Time for Reading",
     titleId: "Sisihkan Waktu untuk Membaca",
-    titleNl: "Reserveer Tijd voor Lezen",
     descEn: "Set aside a specific time each day or week for reading and block this time in your schedule. Treat it like any other important meeting or task to ensure consistency.",
     descId: "Sisihkan waktu khusus setiap hari atau minggu untuk membaca dan blokir waktu ini dalam jadwalmu. Perlakukan seperti rapat atau tugas penting lainnya untuk memastikan konsistensi.",
-    descNl: "Zet elke dag of week een specifieke leestijd opzij en blokkeer deze tijd in je agenda. Behandel het als elke andere belangrijke vergadering of taak om consistentie te waarborgen.",
   },
   {
     num: "03",
     titleEn: "Create a Reading Culture",
     titleId: "Ciptakan Budaya Membaca",
-    titleNl: "Cre—er een Leescultuur",
     descEn: "Encourage your team to read and discuss insights from books. Learning together not only encourages others to read but also brings great accountability.",
     descId: "Dorong timmu untuk membaca dan mendiskusikan wawasan dari buku. Belajar bersama tidak hanya mendorong orang lain untuk membaca tetapi juga memberikan akuntabilitas yang baik.",
-    descNl: "Moedig je team aan om te lezen en inzichten uit boeken te bespreken. Samen leren moedigt anderen aan om te lezen en zorgt ook voor goede verantwoording.",
   },
   {
     num: "04",
     titleEn: "Prioritize Quality Over Quantity",
     titleId: "Prioritaskan Kualitas daripada Kuantitas",
-    titleNl: "Prioriteer Kwaliteit boven Kwantiteit",
     descEn: "Focus on books that align with your leadership goals and interests. A few deeply impactful reads are more valuable than skimming many shallow ones. You don't need to read every book cover to cover — review the index or table of contents and select sections most relevant to you.",
     descId: "Fokus pada buku-buku yang selaras dengan tujuan kepemimpinan dan minatmu. Beberapa bacaan yang sangat berdampak lebih berharga daripada membaca banyak buku secara dangkal. Kamu tidak perlu membaca setiap buku dari awal hingga akhir — tinjau indeks atau daftar isi dan pilih bagian yang paling relevan untukmu.",
-    descNl: "Focus op boeken die aansluiten bij je leidersdoelen en interesses. Een paar diep indrukwekkende lezingen zijn waardevoller dan veel oppervlakkige. Je hoeft niet elk boek van voor tot achter te lezen — bekijk de index of inhoudsopgave en selecteer de secties die het meest relevant voor je zijn.",
   },
 ];
 
@@ -104,7 +88,7 @@ export default function LeadersReadersClient({
   isSaved: boolean;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [saved, setSaved] = useState(isSavedProp);
   const [isPending, startTransition] = useTransition();
   const showAddToDashboard = userPathway !== null;
@@ -199,10 +183,10 @@ export default function LeadersReadersClient({
                 <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", flexShrink: 0, paddingTop: "0.15rem" }}>{r.num}</span>
                 <div>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1rem", color: "oklch(22% 0.005 260)", marginBottom: "0.5rem" }}>
-                    {t(r.titleEn, r.titleId, r.titleNl, lang)}
+                    {t(r.titleEn, r.titleId, lang)}
                   </p>
                   <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", lineHeight: 1.75, color: "oklch(42% 0.008 260)", maxWidth: "70ch" }}>
-                    {t(r.descEn, r.descId, r.descNl, lang)}
+                    {t(r.descEn, r.descId, lang)}
                   </p>
                 </div>
               </div>
@@ -238,10 +222,10 @@ export default function LeadersReadersClient({
               <div key={h.num} style={{ background: "oklch(28% 0.10 260)", padding: "1.75rem 2rem" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 800, fontSize: "0.65rem", color: "oklch(65% 0.15 45)", letterSpacing: "0.08em", display: "block", marginBottom: "0.75rem" }}>{h.num}</span>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.9375rem", color: "oklch(97% 0.005 80)", marginBottom: "0.625rem" }}>
-                  {t(h.titleEn, h.titleId, h.titleNl, lang)}
+                  {t(h.titleEn, h.titleId, lang)}
                 </p>
                 <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.875rem", lineHeight: 1.7, color: "oklch(65% 0.04 260)" }}>
-                  {t(h.descEn, h.descId, h.descNl, lang)}
+                  {t(h.descEn, h.descId, lang)}
                 </p>
               </div>
             ))}

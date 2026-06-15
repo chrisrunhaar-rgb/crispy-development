@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useTransition, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion, getSmartGoalCoachingResponse, getSmartGoalAiScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 type Answer = "yes" | "partial" | "no";
 
 const LETTERS = [
@@ -14,12 +14,10 @@ const LETTERS = [
     letter: "S",
     wordEn: "Specific",
     wordId: "Spesifik",
-    wordNl: "Specifiek",
     color: "oklch(42% 0.14 260)",
     colorBg: "oklch(42% 0.14 260 / 0.08)",
     descEn: "A specific goal answers the who, what, where, and why. Vague goals stay wishes; specific goals become plans.",
     descId: "Tujuan yang spesifik menjawab siapa, apa, di mana, dan mengapa. Tujuan yang samar tetap menjadi keinginan; tujuan yang spesifik menjadi rencana.",
-    descNl: "Een specifiek doel beantwoordt de vragen wie, wat, waar en waarom. Vage doelen blijven wensen; specifieke doelen worden plannen.",
     questionsEn: [
       "What exactly do you want to achieve?",
       "Who is involved or responsible?",
@@ -31,12 +29,6 @@ const LETTERS = [
       "Siapa yang terlibat atau bertanggung jawab?",
       "Di mana itu akan berlangsung (jika berlaku)?",
       "Mengapa tujuan ini penting bagi Anda?",
-    ],
-    questionsNl: [
-      "Wat wil je precies bereiken?",
-      "Wie is erbij betrokken of verantwoordelijk?",
-      "Waar vindt het plaats (indien van toepassing)?",
-      "Waarom is dit doel belangrijk voor jou?",
     ],
     worksheetQEn: [
       { q: "Does this goal describe exactly what you want to achieve in one clear sentence?", hint: "A specific goal names the outcome, not the activity." },
@@ -50,30 +42,20 @@ const LETTERS = [
       { q: "Apakah tujuan ini menetapkan di mana atau dalam konteks apa hal ini akan terjadi?", hint: "Konteks membumikan tujuan dalam kenyataan." },
       { q: "Apakah tujuan ini menjelaskan 'mengapa' — alasan mengapa hasil ini penting?", hint: "\"Mengapa\" yang kuat memotivasi tindakan ketika semangat memudar." },
     ],
-    worksheetQNl: [
-      { q: "Beschrijft dit doel precies wat je wilt bereiken in één duidelijke zin?", hint: "Een specifiek doel benoemt de uitkomst, niet de activiteit." },
-      { q: "Benoemt dit doel wie verantwoordelijk is en wie er verder bij betrokken moet zijn?", hint: "Duidelijkheid over eigenaarschap voorkomt dat doelen afdrijven." },
-      { q: "Specificeert dit doel waar of in welke context het zal plaatsvinden?", hint: "Context verankert een doel in de werkelijkheid." },
-      { q: "Legt dit doel het 'waarom' uit — de reden waarom dit resultaat ertoe doet?", hint: "Een sterk 'waarom' voedt actie wanneer de motivatie wegzakt." },
-    ],
     actionEn: "CLARIFY",
     actionId: "KLARIFIKASI",
-    actionNl: "VERDUIDELIJK",
     actionDescEn: "Rewrite your goal as a single sentence that answers: what, who, where, and why.",
     actionDescId: "Tulis ulang tujuan Anda sebagai satu kalimat yang menjawab: apa, siapa, di mana, dan mengapa.",
-    actionDescNl: "Herschrijf je doel als ——n zin die antwoord geeft op: wat, wie, waar en waarom.",
     actionColor: "oklch(42% 0.14 260)",
   },
   {
     letter: "M",
     wordEn: "Motivating",
     wordId: "Memotivasi",
-    wordNl: "Motiverend",
     color: "oklch(48% 0.18 25)",
     colorBg: "oklch(48% 0.18 25 / 0.08)",
     descEn: "A motivating goal aligns with your values and creates energy. Goals without inner fire get abandoned when difficulty comes.",
     descId: "Tujuan yang memotivasi selaras dengan nilai-nilai Anda dan menciptakan energi. Tujuan tanpa api batin akan ditinggalkan ketika kesulitan datang.",
-    descNl: "Een motiverend doel sluit aan bij je waarden en wekt energie. Doelen zonder innerlijk vuur worden opgegeven zodra het moeilijk wordt.",
     questionsEn: [
       "Does the goal align with your values and passions?",
       "Does the goal excite and inspire you, creating energy?",
@@ -83,11 +65,6 @@ const LETTERS = [
       "Apakah tujuan tersebut selaras dengan nilai-nilai dan hasrat Anda?",
       "Apakah tujuan tersebut membuat Anda bersemangat dan terinspirasi, menciptakan energi?",
       "Apakah tujuan tersebut membantu Anda melewati tantangan dan kemunduran?",
-    ],
-    questionsNl: [
-      "Sluit het doel aan bij jouw waarden en passies?",
-      "Inspireert en enthousiasmeert het doel je, waardoor het energie geeft?",
-      "Helpt het doel je door uitdagingen en tegenslagen heen?",
     ],
     worksheetQEn: [
       { q: "Does this goal connect to a value, a calling, or a dream you genuinely care about?", hint: "Intrinsic motivation outlasts external pressure every time." },
@@ -99,29 +76,20 @@ const LETTERS = [
       { q: "Apakah tujuan ini mencerminkan sesuatu yang benar-benar Anda inginkan — bukan sekadar yang Anda rasa harus dilakukan?", hint: "Jika tujuan terasa datar di atas kertas, motivasi di baliknya mungkin dipinjam." },
       { q: "Apakah tujuan ini terasa layak untuk dikejar meski ada kesulitan dan kemunduran?", hint: "Tujuan yang memotivasi terasa sepadan dengan pengorbanannya." },
     ],
-    worksheetQNl: [
-      { q: "Verbindt dit doel met een waarde, een roeping of een droom die je echt belangrijk vindt?", hint: "Intrinsieke motivatie houdt het altijd langer vol dan externe druk." },
-      { q: "Leest dit doel als iets wat je echt wilt — en niet als iets wat je denkt te moeten doen?", hint: "Als het doel op papier vlak aanvoelt, is de motivatie erachter misschien geleend." },
-      { q: "Voelt dit doel het waard om na te streven, ook door moeilijkheden en tegenslagen heen?", hint: "Motiverende doelen voelen het offer waard." },
-    ],
     actionEn: "REFRAME",
     actionId: "UBAH PERSPEKTIF",
-    actionNl: "HERFORMULEER",
     actionDescEn: "Connect the goal to a deeper value or purpose — find the 'why' that creates genuine energy.",
     actionDescId: "Hubungkan tujuan dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi yang nyata.",
-    actionDescNl: "Verbind het doel met een diepere waarde of een hoger doel — vind het 'waarom' dat echte energie geeft.",
     actionColor: "oklch(48% 0.18 25)",
   },
   {
     letter: "A",
     wordEn: "Achievable",
     wordId: "Dapat Dicapai",
-    wordNl: "Haalbaar",
     color: "oklch(46% 0.16 145)",
     colorBg: "oklch(46% 0.16 145 / 0.08)",
     descEn: "An achievable goal stretches you without breaking you. It's ambitious enough to matter, realistic enough to execute.",
     descId: "Tujuan yang dapat dicapai merentangkan Anda tanpa memecah Anda. Cukup ambisius untuk berarti, cukup realistis untuk dijalankan.",
-    descNl: "Een haalbaar doel daagt je uit zonder je te breken. Ambitieus genoeg om er toe te doen, realistisch genoeg om uit te voeren.",
     questionsEn: [
       "Is the goal realistic given your resources and constraints?",
       "What steps or actions will you take to reach the goal?",
@@ -131,11 +99,6 @@ const LETTERS = [
       "Apakah tujuan tersebut realistis mengingat sumber daya dan kendala Anda?",
       "Langkah atau tindakan apa yang akan Anda ambil untuk mencapai tujuan?",
       "Apakah Anda memiliki keterampilan dan dukungan yang diperlukan?",
-    ],
-    questionsNl: [
-      "Is het doel realistisch gezien jouw middelen en beperkingen?",
-      "Welke stappen of acties ga je ondernemen om het doel te bereiken?",
-      "Beschik je over de benodigde vaardigheden en ondersteuning?",
     ],
     worksheetQEn: [
       { q: "Does this goal reflect what's actually possible given your current time, money, and resources?", hint: "Stretch goals inspire. Impossible goals demoralise." },
@@ -147,29 +110,20 @@ const LETTERS = [
       { q: "Apakah tujuan ini menggambarkan hasil yang dapat Anda tuju dengan langkah-langkah konkret?", hint: "Jika jalurnya tidak bisa digambarkan, tujuan mungkin masih terlalu kabur." },
       { q: "Apakah tujuan ini mempertimbangkan keterampilan, hubungan, atau struktur dukungan yang diperlukan untuk berhasil?", hint: "Kesenjangan kemampuan adalah hal yang normal; mengabaikannya tidak." },
     ],
-    worksheetQNl: [
-      { q: "Weerspiegelt dit doel wat realistisch haalbaar is met je huidige tijd, geld en middelen?", hint: "Ambitieuze doelen inspireren. Onmogelijke doelen ontmoedigen." },
-      { q: "Beschrijft dit doel een uitkomst waarop je concrete, uitvoerbare stappen kunt zetten?", hint: "Als het pad niet beschreven kan worden, is het doel misschien nog te vaag." },
-      { q: "Houdt dit doel rekening met de vaardigheden, relaties of ondersteuningsstructuur die nodig zijn om te slagen?", hint: "Hiaten in capaciteit zijn normaal; ze negeren niet." },
-    ],
     actionEn: "NEGOTIATE",
     actionId: "NEGOSIASI",
-    actionNl: "ONDERHANDEL",
     actionDescEn: "Adjust the scope, timeline, or resources to make the goal doable — without losing the ambition.",
     actionDescId: "Sesuaikan ruang lingkup, jadwal, atau sumber daya agar tujuan bisa dilakukan — tanpa kehilangan ambisi.",
-    actionDescNl: "Pas de reikwijdte, planning of middelen aan zodat het doel uitvoerbaar wordt — zonder de ambitie te verliezen.",
     actionColor: "oklch(46% 0.16 145)",
   },
   {
     letter: "R",
     wordEn: "Relevant",
     wordId: "Relevan",
-    wordNl: "Relevant",
     color: "oklch(44% 0.14 290)",
     colorBg: "oklch(44% 0.14 290 / 0.08)",
     descEn: "A relevant goal fits your current season and contributes to your long-term vision. Right goals at the wrong time become burdens.",
     descId: "Tujuan yang relevan sesuai dengan musim Anda saat ini dan berkontribusi pada visi jangka panjang Anda. Tujuan yang tepat pada waktu yang salah menjadi beban.",
-    descNl: "Een relevant doel past bij jouw huidige seizoen en draagt bij aan je langetermijnvisie. De juiste doelen op het verkeerde moment worden lasten.",
     questionsEn: [
       "Does the goal fit your current season of life and circumstances?",
       "Will it contribute meaningfully to your long-term vision?",
@@ -179,11 +133,6 @@ const LETTERS = [
       "Apakah tujuan tersebut sesuai dengan musim kehidupan dan keadaan Anda saat ini?",
       "Apakah ini akan berkontribusi secara bermakna pada visi jangka panjang Anda?",
       "Apakah sekarang waktu yang tepat untuk mengejar tujuan ini?",
-    ],
-    questionsNl: [
-      "Past het doel bij jouw huidige levenssituatie en omstandigheden?",
-      "Draagt het betekenisvol bij aan jouw langetermijnvisie?",
-      "Is dit het juiste moment om dit doel na te streven?",
     ],
     worksheetQEn: [
       { q: "Does this goal fit where you are right now — your role, your season, your priorities?", hint: "A goal right for the future can still be wrong for today." },
@@ -195,29 +144,20 @@ const LETTERS = [
       { q: "Apakah tujuan ini terhubung dengan visi atau panggilan yang lebih besar — bukan sekadar keinginan jangka pendek?", hint: "Tujuan yang relevan saling membangun. Yang tidak relevan mencerai-beraikan energi." },
       { q: "Apakah mengejar tujuan ini masuk akal sekarang, mengingat semua hal lain yang ada di piring Anda?", hint: "Berkata ya pada satu hal berarti berkata tidak pada banyak hal lainnya." },
     ],
-    worksheetQNl: [
-      { q: "Past dit doel bij waar je nu staat — je rol, je seizoen, je prioriteiten?", hint: "Een doel dat juist is voor de toekomst kan vandaag toch verkeerd zijn." },
-      { q: "Verbindt dit doel met jouw grotere visie of roeping — en niet slechts met een kortetermijnwens?", hint: "Relevante doelen bouwen op elkaar voort. Irrelevante doelen versnipperen energie." },
-      { q: "Is het zinvol om dit doel nu na te streven, gegeven alles wat er al op je bord ligt?", hint: "Ja zeggen tegen één ding betekent nee zeggen tegen veel andere dingen." },
-    ],
     actionEn: "NEGOTIATE",
     actionId: "NEGOSIASI",
-    actionNl: "ONDERHANDEL",
     actionDescEn: "Ask whether this is the right goal for this season — or if it belongs in a different chapter.",
     actionDescId: "Tanyakan apakah ini tujuan yang tepat untuk musim ini — atau apakah itu milik bab yang berbeda.",
-    actionDescNl: "Vraag je af of dit het juiste doel is voor dit seizoen — of dat het thuishoort in een ander hoofdstuk.",
     actionColor: "oklch(44% 0.14 290)",
   },
   {
     letter: "T",
     wordEn: "Trackable",
     wordId: "Dapat Dilacak",
-    wordNl: "Meetbaar",
     color: "oklch(40% 0.12 60)",
     colorBg: "oklch(40% 0.12 60 / 0.08)",
     descEn: "A trackable goal has clear milestones and a definition of done. What gets measured gets managed — and celebrated.",
     descId: "Tujuan yang dapat dilacak memiliki tonggak yang jelas dan definisi selesai. Apa yang diukur dikelola — dan dirayakan.",
-    descNl: "Een meetbaar doel heeft duidelijke mijlpalen en een definitie van 'klaar'. Wat gemeten wordt, wordt beheerd — en gevierd.",
     questionsEn: [
       "How will you track progress?",
       "How will you know when the goal is accomplished?",
@@ -227,11 +167,6 @@ const LETTERS = [
       "Bagaimana Anda akan melacak kemajuan?",
       "Bagaimana Anda akan tahu kapan tujuan tercapai?",
       "Apakah ada tonggak atau pos pemeriksaan di sepanjang jalan?",
-    ],
-    questionsNl: [
-      "Hoe ga je de voortgang bijhouden?",
-      "Hoe weet je wanneer het doel bereikt is?",
-      "Zijn er mijlpalen of controlepunten onderweg?",
     ],
     worksheetQEn: [
       { q: "Does this goal include a clear finish line — a specific outcome that tells you when it's done?", hint: "Without a finish line, goals become habits. Sometimes that's fine. Often it isn't." },
@@ -243,42 +178,32 @@ const LETTERS = [
       { q: "Apakah tujuan ini menyebutkan setidaknya satu cara untuk mengukur kemajuan yang berarti?", hint: "Tonggak menciptakan momentum. Mereka memungkinkan Anda merayakan sebelum akhir." },
       { q: "Apakah tujuan ini memiliki tanggal tinjauan atau metrik konkret yang sudah tercantum?", hint: "Pelacakan perlu dibangun, bukan sekadar diharapkan." },
     ],
-    worksheetQNl: [
-      { q: "Bevat dit doel een duidelijke eindstreep — een specifieke uitkomst die aangeeft wanneer het klaar is?", hint: "Zonder eindstreep worden doelen gewoontes. Soms is dat goed. Vaak niet." },
-      { q: "Noemt dit doel minstens één manier om betekenisvolle voortgang te meten?", hint: "Mijlpalen creëren momentum. Ze laten je vieren voor het einde." },
-      { q: "Bevat dit doel een concrete evaluatiedatum of meetlat?", hint: "Bijhouden moet ingebouwd zijn, niet gehoopt worden." },
-    ],
     actionEn: "CLARIFY",
     actionId: "KLARIFIKASI",
-    actionNl: "VERDUIDELIJK",
     actionDescEn: "Add a specific deadline, at least one measurable outcome, and a regular review point.",
     actionDescId: "Tambahkan tenggat waktu tertentu, setidaknya satu hasil yang terukur, dan titik tinjauan rutin.",
-    actionDescNl: "Voeg een specifieke deadline toe, minimaal ——n meetbaar resultaat en een regelmatig evaluatiemoment.",
     actionColor: "oklch(42% 0.14 260)",
   },
 ];
 
 const ACTIONS = [
   {
-    labelEn: "CLARIFY", labelId: "KLARIFIKASI", labelNl: "VERDUIDELIJK",
+    labelEn: "CLARIFY", labelId: "KLARIFIKASI",
     color: "oklch(42% 0.14 260)",
     descEn: "Use when your goal is not Specific or Trackable. Make it precise — add details, define the finish line, break it into steps.",
     descId: "Gunakan ketika tujuan Anda tidak Spesifik atau Dapat Dilacak. Jadikan tepat — tambahkan detail, tentukan garis akhir, pecah menjadi langkah-langkah.",
-    descNl: "Gebruik dit wanneer je doel niet Specifiek of Meetbaar is. Maak het precies — voeg details toe, bepaal de eindstreep, verdeel het in stappen.",
   },
   {
-    labelEn: "REFRAME", labelId: "UBAH PERSPEKTIF", labelNl: "HERFORMULEER",
+    labelEn: "REFRAME", labelId: "UBAH PERSPEKTIF",
     color: "oklch(48% 0.18 25)",
     descEn: "Use when your goal is not Motivating. Reconnect it to a deeper value or purpose — find the 'why' that creates energy.",
     descId: "Gunakan ketika tujuan Anda tidak Memotivasi. Hubungkan kembali dengan nilai atau tujuan yang lebih dalam — temukan 'mengapa' yang menciptakan energi.",
-    descNl: "Gebruik dit wanneer je doel niet Motiverend is. Verbind het opnieuw met een diepere waarde of een hoger doel — vind het 'waarom' dat energie geeft.",
   },
   {
-    labelEn: "NEGOTIATE", labelId: "NEGOSIASI", labelNl: "ONDERHANDEL",
+    labelEn: "NEGOTIATE", labelId: "NEGOSIASI",
     color: "oklch(46% 0.16 145)",
     descEn: "Use when your goal is not Achievable or Relevant. Adjust scope, timing, or resources — or ask: 'Is this the right goal for this season?'",
     descId: "Gunakan ketika tujuan Anda tidak Dapat Dicapai atau Relevan. Sesuaikan ruang lingkup, waktu, atau sumber daya — atau tanyakan: 'Apakah ini tujuan yang tepat untuk musim ini?'",
-    descNl: "Gebruik dit wanneer je doel niet Haalbaar of Relevant is. Pas reikwijdte, timing of middelen aan — of vraag: 'Is dit het juiste doel voor dit seizoen?'",
   },
 ];
 
@@ -299,7 +224,7 @@ export default function SmartGoalsClient({
   savedGoal?: Record<string, string> | null;
 }) {
   const { lang: _ctxLang } = useLanguage();
-  const lang = (_ctxLang === "id" || _ctxLang === "nl" ? _ctxLang : "en") as Lang;
+  const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
   const [activeLetter, setActiveLetter] = useState<number | null>(0);
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
@@ -320,7 +245,7 @@ export default function SmartGoalsClient({
   const [aiScore, setAiScore] = useState<{ score: number; reason: string } | null>(null);
   const worksheetCardRef = useRef<HTMLDivElement>(null);
 
-  const t = (en: string, id: string, nl: string) => lang === "en" ? en : lang === "id" ? id : nl;
+  const t = (en: string, id: string) => lang === "id" ? id : en;
 
   const active = activeLetter !== null ? LETTERS[activeLetter] : null;
 
@@ -405,7 +330,7 @@ export default function SmartGoalsClient({
 
   async function handleAiSuggest(li: number) {
     const letter = LETTERS[li];
-    const qs = lang === "en" ? letter.worksheetQEn : lang === "id" ? letter.worksheetQId : letter.worksheetQNl;
+    const qs = lang === "id" ? letter.worksheetQId : letter.worksheetQEn;
     const letterAnswers = answers[li] ?? {};
     const weakQuestions = qs
       .filter((_, qi) => letterAnswers[qi] === "partial" || letterAnswers[qi] === "no")
@@ -430,10 +355,10 @@ export default function SmartGoalsClient({
 
   function renderAnswerButtons(letterIdx: number, qIdx: number) {
     const current = answers[letterIdx]?.[qIdx] ?? null;
-    const opts: { val: Answer; labelEn: string; labelId: string; labelNl: string; color: string }[] = [
-      { val: "yes", labelEn: "Yes", labelId: "Ya", labelNl: "Ja", color: "oklch(46% 0.16 145)" },
-      { val: "partial", labelEn: "Partly", labelId: "Sebagian", labelNl: "Deels", color: "oklch(48% 0.18 55)" },
-      { val: "no", labelEn: "Not yet", labelId: "Belum", labelNl: "Nog niet", color: "oklch(44% 0.14 25)" },
+    const opts: { val: Answer; labelEn: string; labelId: string; color: string }[] = [
+      { val: "yes", labelEn: "Yes", labelId: "Ya", color: "oklch(46% 0.16 145)" },
+      { val: "partial", labelEn: "Partly", labelId: "Sebagian", color: "oklch(48% 0.18 55)" },
+      { val: "no", labelEn: "Not yet", labelId: "Belum", color: "oklch(44% 0.14 25)" },
     ];
     return (
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -454,7 +379,7 @@ export default function SmartGoalsClient({
               transition: "all 0.12s",
             }}
           >
-            {t(opt.labelEn, opt.labelId, opt.labelNl)}
+            {t(opt.labelEn, opt.labelId)}
           </button>
         ))}
       </div>
@@ -473,13 +398,13 @@ export default function SmartGoalsClient({
     return (
       <div style={{ marginTop: 28, borderTop: "1px solid oklch(88% 0.008 260)", paddingTop: 24 }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: letter.color, marginBottom: 8 }}>
-          {t("Refine Your Goal", "Sempurnakan Tujuan Anda", "Verfijn uw doel")}
+          {t("Refine Your Goal", "Sempurnakan Tujuan Anda")}
         </p>
         <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", lineHeight: 1.65, marginBottom: 16 }}>
           {t(
             `Your goal could be stronger on ${letter.wordEn}. Rewrite it below to address what's missing — the improved version carries into the next step.`,
             `Tujuan Anda bisa lebih kuat pada ${letter.wordId}. Tulis ulang di bawah untuk mengatasi kekurangannya — versi yang diperbaiki akan dibawa ke langkah berikutnya.`,
-            `Uw doel kan sterker op ${letter.wordNl}. Herschrijf het hieronder om de zwakke punten aan te pakken — de verbeterde versie gaat mee naar de volgende stap.`
+            `Your goal can be stronger on ${letter.wordEn}. Rewrite it below to address the weak points — the improved version carries forward to the next step.`
           )}
         </p>
         <textarea
@@ -520,10 +445,10 @@ export default function SmartGoalsClient({
               cursor: rewriteTexts[li]?.trim() && rewriteTexts[li] !== goalText ? "pointer" : "not-allowed",
             }}
           >
-            {t("Use this version →", "Gunakan versi ini →", "Gebruik deze versie →")}
+            {t("Use this version →", "Gunakan versi ini →")}
           </button>
           <span style={{ fontSize: 12, color: "oklch(55% 0.05 260)" }}>
-            {t("Optional — continue without rewriting if your goal already addresses this.", "Opsional — lanjutkan tanpa menulis ulang jika tujuan Anda sudah membahas ini.", "Optioneel — ga door zonder herschrijven als uw doel dit al behandelt.")}
+            {t("Optional — continue without rewriting if your goal already addresses this.", "Opsional — lanjutkan tanpa menulis ulang jika tujuan Anda sudah membahas ini.")}
           </span>
         </div>
       </div>
@@ -536,10 +461,10 @@ export default function SmartGoalsClient({
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Step 1 of 6 — Your Goal", "Langkah 1 dari 6 — Tujuan Anda", "Stap 1 van 6 — Jouw doel")}
+            {t("Step 1 of 6 — Your Goal", "Langkah 1 dari 6 — Tujuan Anda")}
           </p>
           <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 10px" }}>
-            {t("What is the goal you want to evaluate?", "Apa tujuan yang ingin Anda evaluasi?", "Wat is het doel dat je wilt evalueren?")}
+            {t("What is the goal you want to evaluate?", "Apa tujuan yang ingin Anda evaluasi?")}
           </h3>
           <p style={{ fontSize: 14, color: "oklch(44% 0.06 260)", lineHeight: 1.65, marginBottom: 24 }}>
             {t(
@@ -591,7 +516,7 @@ export default function SmartGoalsClient({
     if (step >= 1 && step <= 5) {
       const li = currentLetterIdx();
       const letter = LETTERS[li];
-      const qs = lang === "en" ? letter.worksheetQEn : lang === "id" ? letter.worksheetQId : letter.worksheetQNl;
+      const qs = lang === "id" ? letter.worksheetQId : letter.worksheetQEn;
       const letterAnswers = answers[li] ?? {};
       const answered = Object.keys(letterAnswers).length;
       const total = qs.length;
@@ -599,18 +524,18 @@ export default function SmartGoalsClient({
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: letter.color, marginBottom: 8 }}>
-            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} dari 6`, `Stap ${step + 1} van 6`)} — {t(letter.wordEn, letter.wordId, letter.wordNl)}
+            {t(`Step ${step + 1} of 6`, `Langkah ${step + 1} dari 6`, `Stap ${step + 1} van 6`)} — {t(letter.wordEn, letter.wordId)}
           </p>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 16 }}>
             <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 56, fontWeight: 600, color: letter.color, lineHeight: 1 }}>{letter.letter}</span>
             <div>
-              <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 26, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: 0 }}>{t(letter.wordEn, letter.wordId, letter.wordNl)}</h3>
-              <p style={{ margin: "4px 0 0", fontSize: 13, color: "oklch(44% 0.06 260)", lineHeight: 1.5 }}>{t(letter.descEn, letter.descId, letter.descNl)}</p>
+              <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 26, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: 0 }}>{t(letter.wordEn, letter.wordId)}</h3>
+              <p style={{ margin: "4px 0 0", fontSize: 13, color: "oklch(44% 0.06 260)", lineHeight: 1.5 }}>{t(letter.descEn, letter.descId)}</p>
             </div>
           </div>
 
           <div style={{ background: letter.colorBg, borderRadius: 8, padding: "12px 16px", marginBottom: 24, fontSize: 13, color: "oklch(30% 0.06 260)", lineHeight: 1.55 }}>
-            <span style={{ fontWeight: 700, color: letter.color }}>{t("Your goal: ", "Tujuan Anda: ", "Jouw doel: ")}</span>
+            <span style={{ fontWeight: 700, color: letter.color }}>{t("Your goal: ", "Tujuan Anda: ")}</span>
             {goalText}
           </div>
 
@@ -632,7 +557,7 @@ export default function SmartGoalsClient({
           </div>
 
           <p style={{ fontSize: 12, color: "oklch(55% 0.05 260)", marginTop: 16, textAlign: "right" }}>
-            {answered}/{total} {t("answered", "dijawab", "beantwoord")}
+            {answered}/{total} {t("answered", "dijawab")}
           </p>
 
           {/* AI suggestion */}
@@ -651,7 +576,7 @@ export default function SmartGoalsClient({
               >
                 <span style={{ fontSize: 15 }}>✦</span>
                 {aiLoading[li]
-                  ? t("Thinking—", "Memproses—", "Bezig—")
+                  ? t("Thinking—", "Memproses—")
                   : t(`AI: improve the ${letter.wordEn} element`, `AI: perkuat elemen ${letter.wordId}`, `AI: versterk het ${letter.wordNl} element`)}
               </button>
               <span style={{ fontSize: 12, color: "oklch(55% 0.05 260)" }}>
@@ -661,7 +586,7 @@ export default function SmartGoalsClient({
             {aiSuggestions[li] && (
               <div style={{ background: "oklch(65% 0.15 45 / 0.07)", border: "1px solid oklch(65% 0.15 45 / 0.25)", borderRadius: 8, padding: "14px 16px" }}>
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(48% 0.12 45)", margin: "0 0 10px" }}>
-                  {t("What to add to your goal", "Yang perlu ditambahkan ke tujuan Anda", "Wat toe te voegen aan je doel")}
+                  {t("What to add to your goal", "Yang perlu ditambahkan ke tujuan Anda")}
                 </p>
                 <div style={{ fontSize: 14, color: "oklch(22% 0.10 260)", lineHeight: 1.7 }}>
                   {aiSuggestions[li].split("\n").filter(Boolean).map((line, i) => (
@@ -669,7 +594,7 @@ export default function SmartGoalsClient({
                   ))}
                 </div>
                 <p style={{ fontSize: 12, color: "oklch(52% 0.06 260)", margin: "10px 0 0", fontStyle: "italic" }}>
-                  {t("Use these to refine your goal in the box below.", "Gunakan ini untuk menyempurnakan tujuan Anda di kotak di bawah.", "Gebruik dit om je doel te verfijnen in het vak hieronder.")}
+                  {t("Use these to refine your goal in the box below.", "Gunakan ini untuk menyempurnakan tujuan Anda di kotak di bawah.")}
                 </p>
               </div>
             )}
@@ -684,36 +609,33 @@ export default function SmartGoalsClient({
     if (step === 6) {
       const coachingActions: Array<{
         key: "clarify" | "reframe" | "negotiate";
-        labelEn: string; labelId: string; labelNl: string;
-        descEn: string; descId: string; descNl: string;
+        labelEn: string; labelId: string;
+        descEn: string; descId: string;
         color: string; colorBg: string; colorBorder: string;
       }> = [
         {
           key: "clarify",
-          labelEn: "Clarify", labelId: "Klarifikasi", labelNl: "Verduidelijken",
+          labelEn: "Clarify", labelId: "Klarifikasi",
           descEn: "Ask AI to surface what's still unclear or missing in your goal.",
           descId: "Minta AI mengungkap apa yang masih belum jelas dalam tujuan Anda.",
-          descNl: "Vraag AI wat nog onduidelijk of ontbreekt in je doel.",
           color: "oklch(42% 0.14 260)",
           colorBg: "oklch(42% 0.14 260 / 0.06)",
           colorBorder: "oklch(42% 0.14 260 / 0.25)",
         },
         {
           key: "reframe",
-          labelEn: "Reframe", labelId: "Bingkai Ulang", labelNl: "Herformuleren",
+          labelEn: "Reframe", labelId: "Bingkai Ulang",
           descEn: "Ask AI for a question that connects this goal to what matters most to you.",
           descId: "Minta AI pertanyaan yang menghubungkan tujuan ini dengan apa yang terpenting.",
-          descNl: "Vraag AI een vraag die dit doel verbindt met wat voor jou het meest belangrijk is.",
           color: "oklch(65% 0.15 45)",
           colorBg: "oklch(65% 0.15 45 / 0.07)",
           colorBorder: "oklch(65% 0.15 45 / 0.30)",
         },
         {
           key: "negotiate",
-          labelEn: "Negotiate", labelId: "Negosiasi", labelNl: "Onderhandelen",
+          labelEn: "Negotiate", labelId: "Negosiasi",
           descEn: "Ask AI to suggest how to adjust the scope without losing the ambition.",
           descId: "Minta AI menyarankan cara menyesuaikan lingkup tanpa kehilangan ambisi.",
-          descNl: "Vraag AI hoe je de omvang aanpast zonder de ambitie te verliezen.",
           color: "oklch(46% 0.16 145)",
           colorBg: "oklch(46% 0.16 145 / 0.07)",
           colorBorder: "oklch(46% 0.16 145 / 0.28)",
@@ -723,23 +645,23 @@ export default function SmartGoalsClient({
       return (
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "oklch(55% 0.08 260)", marginBottom: 8 }}>
-            {t("Your Goal", "Tujuan Anda", "Jouw Doel")}
+            {t("Your Goal", "Tujuan Anda")}
           </p>
           <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 28, fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 16px" }}>
-            {t("You've worked through every element.", "Anda telah mengerjakan setiap elemen.", "Je hebt elk element doorgewerkt.")}
+            {t("You've worked through every element.", "Anda telah mengerjakan setiap elemen.")}
           </h3>
 
           {/* Goal display */}
           <div style={{ background: "oklch(22% 0.10 260 / 0.05)", borderRadius: 8, padding: "12px 16px", marginBottom: 28, fontSize: 14, color: "oklch(28% 0.08 260)", lineHeight: 1.65 }}>
             <span style={{ fontWeight: 700, color: "oklch(22% 0.10 260)", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", display: "block", marginBottom: 4 }}>
-              {t("Goal", "Tujuan", "Doel")}
+              {t("Goal", "Tujuan")}
             </span>
             {goalText}
           </div>
 
           {/* Three coaching actions */}
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.06 260)", marginBottom: 12 }}>
-            {t("One more question?", "Satu pertanyaan lagi?", "Nog een vraag?")}
+            {t("One more question?", "Satu pertanyaan lagi?")}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
             {coachingActions.map(action => (
@@ -768,11 +690,10 @@ export default function SmartGoalsClient({
                   >
                     <span style={{ fontSize: 13 }}>✦</span>
                     {coachingLoading[action.key]
-                      ? t("Thinking—", "Memproses—", "Bezig—")
-                      : t(action.labelEn, action.labelId, action.labelNl)}
+                      ? t("Thinking—", "Memproses—")
+                      : t(action.labelEn)}
                   </button>
-                  <span style={{ fontSize: 13, color: "oklch(48% 0.06 260)", lineHeight: 1.5 }}>
-                    {t(action.descEn, action.descId, action.descNl)}
+                  <span style={{ fontSize: 13, color: "oklch(48% 0.06 260)" }}>
                   </span>
                 </div>
                 {coachingResult[action.key] && (
@@ -788,7 +709,7 @@ export default function SmartGoalsClient({
 
           {/* Final goal edit */}
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(52% 0.06 260)", marginBottom: 10 }}>
-            {t("Refine your goal (optional)", "Sempurnakan tujuan Anda (opsional)", "Verfijn je doel (optioneel)")}
+            {t("Refine your goal (optional)", "Sempurnakan tujuan Anda (opsional)")}
           </p>
           <textarea
             value={goalText}
@@ -811,7 +732,7 @@ export default function SmartGoalsClient({
                 </svg>
                 <div>
                   <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "oklch(65% 0.15 45)", margin: "0 0 4px" }}>
-                    {t("AI Score", "Skor AI", "AI Score")}
+                    {t("AI Score", "Skor AI")}
                   </p>
                   <p style={{ fontSize: 14, color: "oklch(28% 0.08 260)", margin: 0, lineHeight: 1.55 }}>{aiScore.reason}</p>
                 </div>
@@ -827,19 +748,19 @@ export default function SmartGoalsClient({
                 disabled={savingWorksheet}
                 style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "12px 24px", borderRadius: 12, fontWeight: 700, fontSize: 14, border: "none", cursor: savingWorksheet ? "not-allowed" : "pointer" }}
               >
-                {savingWorksheet ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {savingWorksheet ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
               </button>
             ) : (
               <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(46% 0.16 145)", fontSize: 14, fontWeight: 700, padding: "12px 0" }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="oklch(46% 0.16 145)"/><path d="M4.5 8l2.5 2.5 4.5-4.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}
+                {t("Saved to Dashboard", "Tersimpan di Dashboard")}
               </span>
             )}
             <button
               onClick={handleRetake}
               style={{ background: "transparent", color: "oklch(44% 0.06 260)", padding: "12px 24px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "2px solid oklch(86% 0.008 260)", cursor: "pointer" }}
             >
-              {t("Evaluate Another Goal", "Evaluasi Tujuan Lain", "Evalueer een ander doel")}
+              {t("Evaluate Another Goal", "Evaluasi Tujuan Lain")}
             </button>
           </div>
         </div>
@@ -864,7 +785,7 @@ export default function SmartGoalsClient({
         <div style={{ position: "absolute", inset: 0, background: "oklch(22% 0.10 260 / 0.82)" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 820, margin: "0 auto", padding: "80px 24px 72px" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
-            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja", "Persoonlijke Ontwikkeling — Werkblad")}
+            {t("Personal Development — Worksheet", "Pengembangan Pribadi — Lembar Kerja")}
           </p>
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: "oklch(96% 0.005 80)", margin: "0 0 24px", lineHeight: 1.08 }}>SMART Goals</h1>
           <p style={{ fontSize: 17, color: "oklch(72% 0.05 260)", lineHeight: 1.7, maxWidth: 620, marginBottom: 40 }}>
@@ -879,14 +800,14 @@ export default function SmartGoalsClient({
               onClick={() => { setWorksheetOpen(true); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
               style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "13px 28px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
             >
-              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
+              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya")}
             </button>
             {!saved ? (
               <button onClick={handleSave} disabled={isPending} style={{ background: "transparent", color: "oklch(85% 0.04 260)", padding: "13px 28px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", cursor: "pointer" }}>
-                {isPending ? t("Saving—", "Menyimpan—", "Opslaan—") : t("Save to Dashboard", "Simpan ke Dashboard", "Opslaan in Dashboard")}
+                {isPending ? t("Saving—", "Menyimpan—") : t("Save to Dashboard", "Simpan ke Dashboard")}
               </button>
             ) : (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard", "Opgeslagen in Dashboard")}</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "oklch(65% 0.15 145)", fontSize: 14, fontWeight: 600, padding: "13px 0" }}>? {t("Saved to Dashboard", "Tersimpan di Dashboard")}</span>
             )}
           </div>
         </div>
@@ -896,7 +817,7 @@ export default function SmartGoalsClient({
       <section style={{ background: "white", padding: "64px 24px 56px", borderBottom: "1px solid oklch(91% 0.008 260)" }}>
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 20px" }}>
-            {t("Why SMART goals work", "Mengapa tujuan SMART berhasil", "Waarom SMART-doelen werken")}
+            {t("Why SMART goals work", "Mengapa tujuan SMART berhasil")}
           </h2>
 
           <p style={{ fontSize: 15, color: "oklch(38% 0.05 260)", lineHeight: 1.75, marginBottom: 20 }}>
@@ -947,7 +868,7 @@ export default function SmartGoalsClient({
       <section style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("The Five Elements", "Lima Elemen", "De Vijf Elementen")}
+            {t("The Five Elements", "Lima Elemen")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
             {t(
@@ -962,7 +883,7 @@ export default function SmartGoalsClient({
             {LETTERS.map((l, i) => (
               <button key={l.letter} onClick={() => setActiveLetter(activeLetter === i ? null : i)} style={{ flex: 1, minWidth: 120, padding: "20px 16px", borderRadius: 10, border: `2px solid ${activeLetter === i ? l.color : "oklch(88% 0.008 260)"}`, background: activeLetter === i ? l.color : "white", color: activeLetter === i ? "white" : "oklch(30% 0.06 260)", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 48, fontWeight: 600, display: "block", lineHeight: 1, color: activeLetter === i ? "white" : l.color }}>{l.letter}</span>
-                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", display: "block", marginTop: 4 }}>{t(l.wordEn, l.wordId, l.wordNl)}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.04em", display: "block", marginTop: 4 }}>{t(l.wordEn, l.wordId)}</span>
               </button>
             ))}
           </div>
@@ -973,16 +894,16 @@ export default function SmartGoalsClient({
               <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20, flexWrap: "wrap" }}>
                 <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 72, fontWeight: 600, color: active.color, lineHeight: 1 }}>{active.letter}</span>
                 <div>
-                  <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: active.color, margin: 0 }}>{t(active.wordEn, active.wordId, active.wordNl)}</h3>
-                  <p style={{ margin: "4px 0 0", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 260)" }}>{t(active.descEn, active.descId, active.descNl)}</p>
+                  <h3 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 32, fontWeight: 600, color: active.color, margin: 0 }}>{t(active.wordEn, active.wordId)}</h3>
+                  <p style={{ margin: "4px 0 0", fontSize: 15, lineHeight: 1.65, color: "oklch(35% 0.06 260)" }}>{t(active.descEn, active.descId)}</p>
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
                 <div style={{ background: "white", borderRadius: 8, padding: "20px 24px" }}>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: active.color, marginBottom: 14 }}>
-                    {t("Questions to Ask", "Pertanyaan yang Perlu Ditanyakan", "Te stellen vragen")}
+                    {t("Questions to Ask", "Pertanyaan yang Perlu Ditanyakan")}
                   </p>
-                  {(lang === "en" ? active.questionsEn : lang === "id" ? active.questionsId : active.questionsNl).map((q, qi) => (
+                  {(lang === "id" ? active.questionsId : active.questionsEn).map((q, qi) => (
                     <div key={qi} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: qi < active.questionsEn.length - 1 ? 10 : 0 }}>
                       <span style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 16, fontWeight: 600, color: active.color, flexShrink: 0, lineHeight: 1.5 }}>{qi + 1}.</span>
                       <p style={{ fontSize: 14, lineHeight: 1.6, color: "oklch(30% 0.06 260)", margin: 0 }}>{q}</p>
@@ -991,20 +912,19 @@ export default function SmartGoalsClient({
                 </div>
                 <div style={{ background: "white", borderRadius: 8, padding: "20px 24px" }}>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: active.actionColor, marginBottom: 14 }}>
-                    {t("If not met", "Jika tidak terpenuhi", "Als niet voldaan")}
+                    {t("If not met", "Jika tidak terpenuhi")}
                   </p>
-                  <div style={{ display: "inline-block", background: active.actionColor, color: "white", padding: "6px 14px", borderRadius: 4, fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", marginBottom: 12 }}>
-                    {t(active.actionEn, active.actionId, active.actionNl)}
+                  <div style={{ display: "inline-block" }}>
                   </div>
                   <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(30% 0.06 260)", margin: 0 }}>
-                    {t(active.actionDescEn, active.actionDescId, active.actionDescNl)}
+                    {t(active.actionDescEn, active.actionDescId)}
                   </p>
                 </div>
               </div>
             </div>
           ) : (
             <div style={{ background: "white", borderRadius: 12, padding: "32px", textAlign: "center", color: "oklch(55% 0.05 260)", fontSize: 15 }}>
-              {t("Select a letter above to explore it.", "Pilih huruf di atas untuk menjelajahinya.", "Selecteer hierboven een letter om het te verkennen.")}
+              {t("Select a letter above to explore it.", "Pilih huruf di atas untuk menjelajahinya.")}
             </div>
           )}
         </div>
@@ -1014,7 +934,7 @@ export default function SmartGoalsClient({
       <section style={{ padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
-            {t("When a Goal Falls Short", "Ketika Tujuan Kurang Memenuhi", "Wanneer een Doel Tekortschiet")}
+            {t("When a Goal Falls Short", "Ketika Tujuan Kurang Memenuhi")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 40, lineHeight: 1.65 }}>
             {t(
@@ -1027,10 +947,10 @@ export default function SmartGoalsClient({
             {ACTIONS.map(action => (
               <div key={action.labelEn} style={{ background: "white", borderRadius: 10, padding: "28px", boxShadow: "0 1px 8px oklch(20% 0.06 260 / 0.07)" }}>
                 <div style={{ display: "inline-block", background: action.color, color: "white", padding: "6px 14px", borderRadius: 4, fontWeight: 700, fontSize: 13, letterSpacing: "0.06em", marginBottom: 16 }}>
-                  {t(action.labelEn, action.labelId, action.labelNl)}
+                  {t(action.labelEn, action.labelId)}
                 </div>
                 <p style={{ fontSize: 14, lineHeight: 1.65, color: "oklch(38% 0.06 260)", margin: 0 }}>
-                  {t(action.descEn, action.descId, action.descNl)}
+                  {t(action.descEn, action.descId)}
                 </p>
               </div>
             ))}
@@ -1042,7 +962,7 @@ export default function SmartGoalsClient({
       <section id="worksheet-section" style={{ background: "oklch(94% 0.008 260)", padding: "72px 24px" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(65% 0.15 45)", margin: "0 0 12px" }}>
-            {t("SMART Goal Creator", "Pembuat Tujuan SMART", "SMART Doel Creator")}
+            {t("SMART Goal Creator", "Pembuat Tujuan SMART")}
           </h2>
           <p style={{ fontSize: 15, color: "oklch(44% 0.06 260)", marginBottom: 32, lineHeight: 1.65 }}>
             {t(
@@ -1063,7 +983,7 @@ export default function SmartGoalsClient({
               {savedGoal?.goal && (
                 <div style={{ background: "oklch(46% 0.16 145 / 0.08)", border: "1px solid oklch(46% 0.16 145 / 0.3)", borderRadius: 8, padding: "14px 20px", marginBottom: 24, textAlign: "left" }}>
                   <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(46% 0.16 145)", margin: "0 0 6px" }}>
-                    {t("Last saved goal", "Tujuan terakhir yang disimpan", "Laatste opgeslagen doel")}
+                    {t("Last saved goal", "Tujuan terakhir yang disimpan")}
                   </p>
                   <p style={{ fontSize: 14, color: "oklch(30% 0.06 260)", margin: 0, lineHeight: 1.6 }}>{savedGoal.goal}</p>
                 </div>
@@ -1073,8 +993,8 @@ export default function SmartGoalsClient({
                 style={{ background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", letterSpacing: "0.03em" }}
               >
                 {savedGoal?.goal
-                  ? t("Create a New Goal", "Buat Tujuan Baru", "Nieuw doel maken")
-                  : t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
+                  ? t("Create a New Goal", "Buat Tujuan Baru")
+                  : t("Start Creating My Goal", "Mulai Membuat Tujuan Saya")}
               </button>
               </div>
             </div>
@@ -1089,9 +1009,9 @@ export default function SmartGoalsClient({
               <div style={{ padding: "16px 24px 0", display: "flex", gap: 6, flexWrap: "wrap" }}>
                 {["Goal", "S", "M", "A", "R", "T", "Results"].map((label, i) => {
                   const displayLabel = i === 0
-                    ? t("Goal", "Tujuan", "Doel")
+                    ? t("Goal", "Tujuan")
                     : i === 6
-                    ? t("Results", "Hasil", "Resultaten")
+                    ? t("Results", "Hasil")
                     : label;
                   return (
                     <div key={i} style={{
@@ -1121,7 +1041,7 @@ export default function SmartGoalsClient({
                     onClick={step === 0 ? () => setWorksheetOpen(false) : handleBack}
                     style={{ background: "transparent", color: "oklch(44% 0.06 260)", padding: "10px 20px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "2px solid oklch(86% 0.008 260)", cursor: "pointer" }}
                   >
-                    {step === 0 ? t("Cancel", "Batal", "Annuleren") : t("Back", "Kembali", "Terug")}
+                    {step === 0 ? t("Cancel", "Batal") : t("Back", "Kembali")}
                   </button>
                   <button
                     onClick={handleNext}
@@ -1138,7 +1058,7 @@ export default function SmartGoalsClient({
                       transition: "all 0.15s",
                     }}
                   >
-                    {step === 5 ? t("See Results", "Lihat Hasil", "Bekijk resultaten") : t("Next", "Berikutnya", "Volgende")}
+                    {step === 5 ? t("See Results", "Lihat Hasil") : t("Next", "Berikutnya")}
                   </button>
                 </div>
               )}
@@ -1150,7 +1070,7 @@ export default function SmartGoalsClient({
       {/* ── Sources ── */}
       <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-          {t("Sources", "Sumber", "Bronnen")}
+          {t("Sources", "Sumber")}
         </p>
         {[
           "¹ George T. Doran — 'There's a S.M.A.R.T. way to write management's goals and objectives' (Management Review, vol. 70 no. 11, 1981) — The original practitioner memo that introduced the SMART acronym; a management tool, not a peer-reviewed study.",
@@ -1188,10 +1108,10 @@ export default function SmartGoalsClient({
               onClick={() => { setWorksheetOpen(true); setStep(0); window.scrollTo({ top: document.getElementById("worksheet-section")?.offsetTop ?? 0, behavior: "smooth" }); }}
               style={{ display: "inline-block", background: "oklch(65% 0.15 45)", color: "oklch(15% 0.05 45)", padding: "14px 32px", borderRadius: 12, fontWeight: 700, fontSize: 14, letterSpacing: "0.04em", border: "none", cursor: "pointer" }}
             >
-              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya", "Begin mijn doel te maken")}
+              {t("Start Creating My Goal", "Mulai Membuat Tujuan Saya")}
             </button>
             <Link href="/resources" style={{ display: "inline-block", background: "transparent", color: "oklch(85% 0.04 260)", padding: "14px 32px", borderRadius: 12, fontWeight: 600, fontSize: 14, border: "1px solid oklch(42% 0.08 260)", textDecoration: "none" }}>
-              {t("Training", "Pelatihan", "Bekijk alle bronnen")}
+              {t("Training", "Pelatihan")}
             </Link>
           </div>
         </div>

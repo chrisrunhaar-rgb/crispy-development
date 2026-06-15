@@ -17,7 +17,7 @@ export type RosterMember = {
   tenureLabel: string | null;
 };
 
-type Lang = "en" | "id" | "nl";
+type Lang = "en" | "id";
 function r(lang: Lang): TeamLang { return lang === "id" ? "id" : "en"; }
 
 const SHARE_COPY: Record<Lang, (teamName: string, url: string) => { title: string; text: string; whatsapp: string }> = {
@@ -30,11 +30,6 @@ const SHARE_COPY: Record<Lang, (teamName: string, url: string) => { title: strin
     title: `Bergabunglah dengan ${teamName} di Crispy Development`,
     text: `Pemimpinmu sudah menyiapkan tempat untukmu.\n\n${teamName} sedang membangun sesuatu — Crispy Development adalah tempat pemimpin lintas budaya bertumbuh. Timmu sudah menunggu.\n\n👉 ${url}`,
     whatsapp: encodeURIComponent(`Pemimpinmu sudah menyiapkan tempat untukmu.\n\n${teamName} sedang membangun sesuatu — Crispy Development adalah tempat pemimpin lintas budaya bertumbuh. Timmu sudah menunggu.\n\n👉 ${url}`),
-  }),
-  nl: (teamName, url) => ({
-    title: `Sluit je aan bij ${teamName} op Crispy Development`,
-    text: `Je leider heeft een plek voor jou.\n\n${teamName} bouwt aan iets — Crispy Development is het platform voor interculturele leiders. Je team staat klaar.\n\n👉 ${url}`,
-    whatsapp: encodeURIComponent(`Je leider heeft een plek voor jou.\n\n${teamName} bouwt aan iets — Crispy Development is het platform voor interculturele leiders. Je team staat klaar.\n\n👉 ${url}`),
   }),
 };
 
