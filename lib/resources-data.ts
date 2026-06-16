@@ -611,7 +611,7 @@ export const RESOURCES: Resource[] = [
   },
   {
     id: "emotional-safety-families",
-    slug: null,
+    slug: "emotional-safety-families",
     title: "Emotional Safety for Families",
     titleId: "Keamanan Emosional untuk Keluarga",
     description: "Parental stress directly shapes children's wellbeing. How to build emotional safety at home — and model humility through relational repair.",
