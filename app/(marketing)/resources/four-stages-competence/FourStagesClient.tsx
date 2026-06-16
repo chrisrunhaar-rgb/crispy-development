@@ -160,7 +160,9 @@ function CompetenceMatrix({ selectedStage, onSelect, lang }: {
                   color: isSelected ? offWhite : bodyText,
                   textAlign: "center" as const, lineHeight: 1.3,
                 }}>
-                  {lang === "id" ? stage.id_label : stage.en_label}
+                  {lang === "id"
+                    ? <>{stage.id_label.split(" ")[0]}<br />{stage.id_label.split(" ").slice(1).join(" ")}</>
+                    : stage.en_label}
                 </span>
                 <span style={{
                   fontFamily: "Cormorant Garamond, serif",
