@@ -196,9 +196,13 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     title: "Influential Leadership Framework — Crispy Development",
     description: "Expand your influence. Lead effectively without formal authority through integrity and relationships.",
   },
+  "calling-is-never-solo": {
+    title: "Calling Is Never Solo — Crispy Development",
+    description: "Your calling is never purely individual — it is shaped, confirmed, and sustained through community. A module on vocation, accountability, and passing the baton.",
+  },
   "leading-without-losing-faith": {
-    title: "Leading Without Losing Faith — Crispy Development",
-    description: "Sustain faith in leadership. Navigate doubts, challenges, and maintain spiritual grounding.",
+    title: "Leading Without Losing Your Faith — Crispy Development",
+    description: "Sustain faith in leadership. Navigate drift, burnout, and spiritual dryness — and discover what it looks like to lead from abiding, not striving.",
   },
   "psychological-first-aid": {
     title: "Psychological First Aid — Crispy Development",
