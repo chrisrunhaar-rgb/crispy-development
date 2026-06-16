@@ -92,9 +92,9 @@ function CompetenceMatrix({ selectedStage, onSelect, lang }: {
   // Grid layout: top-left=S2, top-right=S4, bottom-left=S1, bottom-right=S3
   const quadrants = [
     { stageNum: 2, gridArea: "tl" },
-    { stageNum: 3, gridArea: "tr" },
+    { stageNum: 4, gridArea: "tr" },
     { stageNum: 1, gridArea: "bl" },
-    { stageNum: 4, gridArea: "br" },
+    { stageNum: 3, gridArea: "br" },
   ];
 
   return (

@@ -650,7 +650,7 @@ export const RESOURCES: Resource[] = [
   },
   {
     id: "sustainable-pace",
-    slug: null,
+    slug: "sustainable-pace",
     title: "Sustainable Pace",
     titleId: "Tempo yang Berkelanjutan",
     description: "Sabbath rhythms, personal health architecture, and the theology of rest. Practical resilience habits for leaders built to last.",

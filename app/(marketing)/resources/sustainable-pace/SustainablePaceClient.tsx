@@ -63,11 +63,11 @@ const SPHERES: {
     key: "self",
     level: 2,
     en_title: "Self-Care",
-    id_title: "Perawatan Diri",
+    id_title: "Kepedulian Diri",
     en_subtitle: "Your personal health architecture",
     id_subtitle: "Arsitektur kesehatan pribadi kamu",
     en_desc: "Self-care is not indulgence. It is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
-    id_desc: "Perawatan diri bukan kemewahan. Itu adalah penatalayanan. Kamu adalah instrumen yang dipilih Tuhan untuk digunakan. Cara kamu mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitasmu untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
+    id_desc: "Kepedulian diri bukan kemewahan. Itu adalah penatalayanan. Kamu adalah instrumen yang dipilih Tuhan untuk digunakan. Cara kamu mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitasmu untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
     en_examples: ["Consistent sleep (7 to 8 hours) as a non-negotiable", "Physical movement, whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
     id_examples: ["Tidur yang konsisten (7 hingga 8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik, apapun yang sesuai dengan konteks dan tubuhmu", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang kamu tanggung"],
     en_question: "Which of the three, body, mind, or spirit, is most depleted right now? What is one specific thing you could protect for it this week?",
@@ -78,11 +78,11 @@ const SPHERES: {
     key: "mutual",
     level: 3,
     en_title: "Peer Care",
-    id_title: "Perawatan Sesama",
+    id_title: "Kepedulian Sesama",
     en_subtitle: "Teammates who know the real weight",
     id_subtitle: "Rekan tim yang mengenal beban nyata",
     en_desc: "The people you work alongside are not just colleagues. They are potential co-sustainers. Peer care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
-    id_desc: "Orang-orang yang bekerja bersamamu bukan sekadar rekan kerja. Mereka adalah pemelihara bersama yang potensial. Perawatan sesama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
+    id_desc: "Orang-orang yang bekerja bersamamu bukan sekadar rekan kerja. Mereka adalah pemelihara bersama yang potensial. Kepedulian sesama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
     en_examples: ["Regular honest check-ins with a trusted peer, not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
     id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya, bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
     en_question: "Who on your team is watching your pace right now, and what signals are you giving them about what is acceptable for them to carry?",
@@ -93,7 +93,7 @@ const SPHERES: {
     key: "sender",
     level: 4,
     en_title: "Sender Care",
-    id_title: "Perawatan dari Pengirim",
+    id_title: "Kepedulian dari Pengirim",
     en_subtitle: "Your agency, church, or organisation",
     id_subtitle: "Lembaga, gereja, atau organisasi kamu",
     en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing, not just their output. This includes a clear financial sustainability arrangement — however it is structured, it must be openly named and continuously reviewed so that economic stress does not become a permanent background weight — alongside regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution, not just more personal resilience.",
@@ -108,11 +108,11 @@ const SPHERES: {
     key: "specialist",
     level: 5,
     en_title: "Specialist Care",
-    id_title: "Perawatan Spesialis",
+    id_title: "Kepedulian Spesialis",
     en_subtitle: "Professional support when you need it",
     id_subtitle: "Dukungan profesional saat kamu membutuhkannya",
     en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care (a counsellor, therapist, psychologist, doctor, or spiritual director) is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
-    id_desc: "Ada saat-saat ketika beban yang kamu tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional (konselor, terapis, psikolog, dokter, atau direktur spiritual) bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
+    id_desc: "Ada saat-saat ketika beban yang kamu tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Kepedulian profesional (konselor, terapis, psikolog, dokter, atau direktur spiritual) bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari kepedulian spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
     en_examples: ["Regular counselling or therapy, preventive rather than crisis response only", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
     id_examples: ["Konseling atau terapi teratur, preventif bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
     en_question: "Is there something you are carrying that would benefit from a professional conversation? What has been the barrier to seeking it?",
@@ -467,10 +467,12 @@ const HABIT_CATEGORIES: {
   habits: { en: string; id: string; }[];
   color: string;
   letter: string;
+  id_letter: string;
 }[] = [
   {
     key: "body",
     letter: "B",
+    id_letter: "T",
     color: navy,
     en_title: "Body",
     id_title: "Tubuh",
@@ -496,6 +498,7 @@ const HABIT_CATEGORIES: {
   {
     key: "mind",
     letter: "M",
+    id_letter: "P",
     color: navy,
     en_title: "Mind",
     id_title: "Pikiran",
@@ -521,6 +524,7 @@ const HABIT_CATEGORIES: {
   {
     key: "spirit",
     letter: "S",
+    id_letter: "R",
     color: navy,
     en_title: "Spirit",
     id_title: "Roh",
@@ -544,6 +548,12 @@ const HABIT_CATEGORIES: {
     ],
   },
 ];
+
+// -- FIELD STORY ---------------------------------------------------------------
+const FIELD_STORY = {
+  en: "A field worker I know — I'll call her Miriam — sent me a message at 11pm on a Tuesday. She was asking for advice about her team. She wasn't burned out yet. Or so she thought.\n\nWe talked for an hour. Somewhere in the middle of the conversation, she mentioned she hadn't taken a full day off in four months. She said it almost as an aside, as if it were unremarkable.\n\nI asked how that felt. She said it felt normal. That was the part that worried me.\n\nWhen I pressed further, the picture became clearer. Her organisation had no structured pastoral check-in. Her sending church's idea of support was a WhatsApp message once a month. Her teammates were equally overloaded — so asking anyone for help felt like adding to their burden. She was quietly filling every role that wasn't getting filled, without telling anyone.\n\nThe spheres around her had collapsed one by one. Not dramatically. Just gradually.\n\nWhat she described wasn't a character flaw. It was an architecture problem. She had been faithful in every visible dimension — the work was good, the relationships were real, the impact was measurable. But no one had built the scaffolding that was supposed to hold her up. And she had been too busy holding everyone else up to notice.\n\nWe made a plan. She started with the Stress Audit. Her scores on Peer Care and Sender Care were the lowest. She started one honest conversation with her team leader. Then another. Slowly, the invisible weight became something speakable.\n\nShe is still in the field. She is pacing differently now. Not perfectly — but she knows what the slippage looks like, and she has people who notice it too.\n\nThat is the difference sustainable pace makes. Not the absence of pressure. Just the architecture to hold you when it comes.",
+  id: "Seorang pekerja lapangan yang saya kenal — sebut saja Miriam — mengirim pesan pukul 11 malam di hari Selasa. Dia meminta saran tentang timnya. Dia belum burnout. Begitu pikirnya.\n\nKami berbicara selama satu jam. Di tengah percakapan, dia menyebutkan bahwa dia tidak mengambil hari libur penuh selama empat bulan. Dia mengatakannya hampir sebagai tambahan, seolah itu bukan hal yang luar biasa.\n\nSaya bertanya bagaimana rasanya. Dia bilang terasa normal. Bagian itulah yang membuat saya khawatir.\n\nKetika saya terus bertanya, gambarannya semakin jelas. Organisasinya tidak memiliki check-in pastoral yang terstruktur. Cara gereja pengirimnya memberikan dukungan adalah pesan WhatsApp sekali sebulan. Rekan-rekannya sama-sama kelebihan beban — jadi meminta bantuan kepada siapa pun terasa seperti menambah beban mereka. Dia diam-diam mengisi setiap peran yang tidak terisi, tanpa memberi tahu siapa pun.\n\nLingkup kepedulian di sekitarnya runtuh satu per satu. Bukan secara dramatis. Hanya secara bertahap.\n\nApa yang dia gambarkan bukan cacat karakter. Itu masalah arsitektur. Dia telah setia dalam setiap dimensi yang terlihat — pekerjaannya baik, hubungannya nyata, dampaknya terukur. Tetapi tidak ada yang membangun perancah yang seharusnya menopangnya. Dan dia terlalu sibuk menopang orang lain untuk menyadarinya.\n\nKami membuat rencana. Dia memulai dengan Audit Stres. Skornya pada Kepedulian Sesama dan Kepedulian dari Pengirim adalah yang terendah. Dia memulai satu percakapan jujur dengan pemimpin timnya. Lalu satu lagi. Perlahan, beban yang tidak terlihat menjadi sesuatu yang bisa dibicarakan.\n\nDia masih di lapangan. Sekarang dia mengatur kecepatannya secara berbeda. Tidak sempurna — tetapi dia tahu seperti apa kemerosotan itu, dan ada orang-orang yang juga memperhatikannya.\n\nItulah perbedaan yang dibuat oleh kecepatan yang berkelanjutan. Bukan ketiadaan tekanan. Hanya arsitektur untuk menopangmu ketika tekanan itu datang.",
+};
 
 // -- PROPS ---------------------------------------------------------------------
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -805,7 +815,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2,
             fontStyle: "italic", textAlign: "center",
           }}>
-            {t("The Five Spheres of Care", "Lima Lingkup Perawatan")}
+            {t("The Five Spheres of Care", "Lima Lingkup Kepedulian")}
           </h2>
           <p style={{
             fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)",
@@ -1226,7 +1236,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                       fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, transition: "background 0.2s, color 0.2s",
                     }}>
-                      {cat.letter}
+                      {lang === "id" ? cat.id_letter : cat.letter}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{
@@ -1589,6 +1599,31 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                   {t(item.en, item.id)}
                 </p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* -- FROM THE FIELD -- */}
+      <section style={{ background: lightGray, padding: "96px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ borderLeft: `4px solid ${orange}`, paddingLeft: 32 }}>
+            <p style={{
+              fontFamily: serif, fontSize: 11, fontWeight: 400,
+              letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 8,
+            }}>
+              {t("From the Field", "Dari Lapangan")}
+            </p>
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, color: bodyText, margin: "0 0 24px", letterSpacing: "0.04em" }}>
+              {t("Field story — composite, based on documented patterns. Name withheld.", "Kisah dari lapangan — komposit, berdasarkan pola yang terdokumentasi. Nama dirahasiakan.")}
+            </p>
+            {FIELD_STORY[lang].split("\n\n").map((para, i) => (
+              <p key={i} style={{
+                fontFamily: serif, fontSize: "clamp(16px, 1.9vw, 20px)", color: bodyText,
+                lineHeight: 1.9, marginBottom: 20,
+              }}>
+                {para}
+              </p>
             ))}
           </div>
         </div>
