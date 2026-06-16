@@ -251,6 +251,10 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     title: "Creating Healthy Conflict — An Underrated Leadership Skill — Crispy Development",
     description: "Healthy conflict in teams is a leadership skill, not a personality trait. Learn how to surface tension in high-context, multicultural teams before it hardens.",
   },
+  "four-stages-competence": {
+    title: "Four Stages of Competence — Crispy Development",
+    description: "The Four Stages of Competence explained for cross-cultural leaders: from unconscious incompetence to mastery, with coaching guidance for each stage.",
+  },
 
   // Fallback
   resources: {
