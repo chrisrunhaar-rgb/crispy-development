@@ -623,7 +623,6 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
   };
 
   const verseData = activeVerse ? VERSES[activeVerse as keyof typeof VERSES] : null;
-  const activeSphereData = activeSphere ? SPHERES.find(s => s.key === activeSphere) : null;
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
@@ -1201,66 +1200,63 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             )}
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {HABIT_CATEGORIES.map(cat => {
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, border: `1.5px solid oklch(85% 0.008 260)`, borderRadius: 12, overflow: "hidden" }}>
+            {HABIT_CATEGORIES.map((cat, idx) => {
               const isOpen = openHabit === cat.key;
               return (
                 <div
                   key={cat.key}
-                  style={{
-                    background: offWhite, borderRadius: 14, overflow: "hidden",
-                    border: `1.5px solid ${isOpen ? cat.color : "oklch(88% 0.008 260)"}`,
-                    borderTop: `3px solid ${cat.color}`,
-                    transition: "border-color 0.2s",
-                    display: "flex", flexDirection: "column",
-                  }}
+                  style={{ borderTop: idx > 0 ? `1px solid oklch(88% 0.008 260)` : "none" }}
                 >
                   <button
                     onClick={() => setOpenHabit(isOpen ? null : cat.key)}
                     style={{
-                      width: "100%", textAlign: "left", padding: "28px 28px 20px",
-                      background: "none", border: "none", cursor: "pointer",
-                      display: "flex", alignItems: "flex-start", gap: 16,
+                      width: "100%", textAlign: "left", padding: "24px 28px",
+                      background: isOpen ? navy : offWhite, border: "none", cursor: "pointer",
+                      display: "flex", alignItems: "center", gap: 16,
+                      transition: "background 0.2s",
                     }}
                   >
-                    {/* Letter badge */}
                     <div style={{
-                      width: 40, height: 40, borderRadius: "50%", background: cat.color,
-                      color: offWhite, fontFamily: "Montserrat, sans-serif", fontWeight: 800,
+                      width: 40, height: 40, borderRadius: "50%",
+                      background: isOpen ? offWhite : cat.color,
+                      color: isOpen ? navy : offWhite,
+                      fontFamily: "Montserrat, sans-serif", fontWeight: 800,
                       fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0,
+                      flexShrink: 0, transition: "background 0.2s, color 0.2s",
                     }}>
                       {cat.letter}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{
                         fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                        fontSize: 20, color: isOpen ? cat.color : navy, marginBottom: 4,
+                        fontSize: 18, color: isOpen ? offWhite : navy,
+                        transition: "color 0.2s",
                       }}>
                         {lang === "en" ? cat.en_title : cat.id_title}
                       </div>
-                      <div style={{ fontFamily: serif, fontSize: 14, color: bodyText, fontStyle: "italic" }}>
+                      <div style={{ fontFamily: serif, fontSize: 14, color: isOpen ? "oklch(75% 0.02 80)" : bodyText, fontStyle: "italic", transition: "color 0.2s" }}>
                         {lang === "en" ? cat.en_tagline : cat.id_tagline}
                       </div>
                     </div>
                     <span style={{
-                      fontSize: 20, color: cat.color, fontWeight: 300,
+                      fontSize: 22, color: isOpen ? offWhite : cat.color, fontWeight: 300,
                       transform: isOpen ? "rotate(45deg)" : "none",
-                      transition: "transform 0.2s", flexShrink: 0, marginTop: 8,
+                      transition: "transform 0.2s, color 0.2s", flexShrink: 0,
                     }}>
                       +
                     </span>
                   </button>
 
                   {isOpen && (
-                    <div style={{ padding: "0 28px 32px" }}>
+                    <div style={{ padding: "32px 28px 36px", background: offWhite }}>
                       <p style={{
                         fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)",
                         color: bodyText, lineHeight: 1.85, marginBottom: 28,
                       }}>
                         {lang === "en" ? cat.en_desc : cat.id_desc}
                       </p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                         {cat.habits.map((habit, i) => (
                           <div
                             key={i}
@@ -1271,9 +1267,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                             }}
                           >
                             <div style={{
-                              fontFamily: serif, fontSize: "clamp(28px, 3vw, 38px)",
+                              fontFamily: serif, fontSize: "clamp(26px, 3vw, 34px)",
                               fontWeight: 700, color: cat.color, lineHeight: 1,
-                              minWidth: 28, flexShrink: 0, marginTop: -2,
+                              minWidth: 26, flexShrink: 0, marginTop: -2,
                             }}>
                               {i + 1}
                             </div>
@@ -1706,9 +1702,9 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
         {[
           "¹ Taylor, W.D. (Ed.) — Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition (William Carey Library, 1997) — ReMap I global study of cross-cultural worker attrition; identifies personal health neglect as leading preventable cause.",
           "² O'Donnell, K. (ed.) — Doing Member Care Well: Perspectives and Practices from the Field (William Carey Library, 2002) — establishes the five-sphere concentric model of member care for long-term cross-cultural workers.",
-          "³ Abdul Aziz, A.F. & Ong, T. (2024). Prevalence and associated factors of burnout among working adults in Southeast Asia: results from a public health assessment. Frontiers in Public Health, March 14, 2024. DOI: 10.3389/fpubh.2024.1326227 -- survey of 4,338 full-time employees across Malaysia, Singapore, Philippines, and Indonesia; 62.91% reported high or very high burnout; cross-cultural field worker research consistently identifies Sabbath neglect as a primary contributing factor.",
-          "⁴ Brueggemann, W. — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — theological argument that Sabbath is counter-cultural resistance to productivity idolatry, not mere recuperation.",
-          "⁵ Heschel, A.J. — The Sabbath: Its Meaning for Modern Man (Farrar, Straus and Giroux, 1951) — foundational theology of Sabbath as sacred time rather than sacred space; origin of the 'palace in time' image.",
+          "³ Abdul Aziz, A.F. & Ong, T. (2024). Prevalence and associated factors of burnout among working adults in Southeast Asia: results from a public health assessment. Frontiers in Public Health, March 14, 2024. DOI: 10.3389/fpubh.2024.1326227. Survey of 4,338 full-time employees across Malaysia, Singapore, Philippines, and Indonesia; 62.91% reported high or very high burnout; cross-cultural field worker research consistently identifies Sabbath neglect as a primary contributing factor.",
+          "⁴ Brueggemann, W. Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014). Theological argument that Sabbath is counter-cultural resistance to productivity idolatry, not mere recuperation.",
+          "⁵ Heschel, A.J. The Sabbath: Its Meaning for Modern Man (Farrar, Straus and Giroux, 1951). Foundational theology of Sabbath as sacred time rather than sacred space; origin of the 'palace in time' image.",
           "⁶ Sonnentag, S. — Psychological Detachment from Work During Leisure Time: The Benefits of Mentally Disengaging from Work (Current Directions in Psychological Science, 2012) — meta-analysis establishing psychological detachment as the single most evidence-supported recovery mechanism; leader detachment improves team recovery outcomes.",
           "⁷ Walker, M.P. — Why We Sleep: Unlocking the Power of Sleep and Dreams (Scribner, 2017) — comprehensive review of sleep science; documents cognitive, emotional, and physiological costs of chronic sleep debt below 7 hours.",
           "⁸ Ratey, J.J. — Spark: The Revolutionary New Science of Exercise and the Brain (Little, Brown, 2008) — evidence base for aerobic exercise improving executive function, stress regulation, and cognitive sharpness in high-demand roles.",
