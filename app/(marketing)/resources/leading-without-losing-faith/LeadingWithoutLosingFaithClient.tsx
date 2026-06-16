@@ -282,16 +282,6 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
 
       {/* Language bar */}
 
-      {/* Slow reading notice */}
-      <div style={{ background: "oklch(94% 0.012 65)", borderBottom: "1px solid oklch(88% 0.02 65)", padding: "12px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 13, color: "oklch(42% 0.08 50)", fontStyle: "italic", margin: 0, fontFamily: serif }}>
-          {t(
-            "This is a contemplative module. Set aside 20 minutes. Read slowly — and honestly.",
-            "Ini adalah modul kontemplatif. Sisihkan 20 menit. Baca dengan lambat — dan jujur."
-          )}
-        </p>
-      </div>
-
       {/* Hero */}
       <div style={{ background: navy, padding: "88px 24px 80px", position: "relative", overflow: "hidden" }}>
         <img src="/images/resources/leading-without-losing-faith/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
