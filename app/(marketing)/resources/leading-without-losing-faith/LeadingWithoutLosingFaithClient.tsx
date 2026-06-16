@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
@@ -241,6 +241,13 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
   const [bgOpen, setBgOpen] = useState(false);
 
+  useEffect(() => {
+    if (!activeVerse) return;
+    function onKey(e: KeyboardEvent) { if (e.key === "Escape") setActiveVerse(null); }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeVerse]);
+
   const t = (en: string, id: string) => tFn(en, id, lang);
 
   const navy = "oklch(22% 0.10 260)";
@@ -300,7 +307,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             )}
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
+            <button onClick={handleSave} disabled={saved || isPending} style={{ padding: "12px 28px", minHeight: 44, border: "none", cursor: saved ? "default" : "pointer", fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, background: saved ? "oklch(35% 0.05 260)" : orange, color: offWhite, letterSpacing: "0.04em", borderRadius: 4 }}>
               {saved ? t("Saved to Dashboard", "Tersimpan di Dashboard") : t("Save to Dashboard", "Simpan ke Dashboard")}
             </button>
           </div>
@@ -308,7 +315,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       </div>
 
       {/* Introduction */}
-      <div style={{ padding: "80px 24px 0", maxWidth: 720, margin: "0 auto" }}>
+      <div style={{ padding: "80px 24px 64px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
           {t(
             "Faith rarely disappears in a single dramatic moment. It drifts. Quietly. Through seasons of high demand, complex relationships, repeated disappointments, and the slow absorption of the culture around us. Most leaders who lose their faith don't choose to — they simply stop noticing it happening.",
@@ -321,15 +328,17 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             <>Penelitian mengkonfirmasi skalanya: 42%<sup>¹</sup> pendeta Protestan yang disurvei pada 2022 telah mempertimbangkan meninggalkan pelayanan dalam setahun sebelumnya. Selama periode yang sama, proporsi yang menerima dukungan rohani rutin dari rekan atau mentor turun dari 37% menjadi 22%.<sup>²</sup> Pekerja lintas budaya menghadapi tekanan yang sama — seringkali tanpa komunitas asal untuk menyerap bebannya.</>
           )}
         </p>
-        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 40 }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
           {t(
             "What follows are five of the most common drift threats for cross-cultural leaders. Each one is real, slow-moving, and dangerous precisely because it masquerades as faithfulness. Read each section with your own story in mind.",
             "Berikut ini adalah lima ancaman hanyut paling umum bagi pemimpin lintas budaya. Masing-masing nyata, bergerak lambat, dan berbahaya justru karena menyamar sebagai kesetiaan. Baca setiap bagian dengan cerita Anda sendiri di benak Anda."
           )}
         </p>
+      </div>
 
-        {/* Research background toggle */}
-        <div style={{ borderTop: `1px solid oklch(88% 0.008 80)`, paddingTop: 32, marginBottom: 80 }}>
+      {/* Research background toggle — own section */}
+      <div style={{ background: lightGray, borderTop: `1px solid oklch(88% 0.008 80)`, borderBottom: `1px solid oklch(88% 0.008 80)`, padding: "28px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <button
             onClick={() => setBgOpen(o => !o)}
             aria-expanded={bgOpen}
@@ -337,15 +346,21 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             style={{
               background: "none", border: "none", cursor: "pointer", padding: 0,
               fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-              color: orange, letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 8,
+              color: orange, letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 10,
             }}
           >
+            <span style={{
+              display: "inline-block", width: 7, height: 7, flexShrink: 0,
+              borderRight: `2px solid ${orange}`, borderBottom: `2px solid ${orange}`,
+              transform: bgOpen ? "rotate(225deg) translateY(2px)" : "rotate(45deg) translateY(-2px)",
+              transition: "transform 0.2s ease",
+            }} />
             {bgOpen
-              ? t("Hide the research ↑", "Sembunyikan penelitian ↑")
-              : t("Read the research →", "Baca penelitian →")}
+              ? t("Hide the research", "Sembunyikan penelitian")
+              : t("Read the research", "Baca penelitian")}
           </button>
           {bgOpen && (
-            <div id="research-background-panel" style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+            <div id="research-background-panel" style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 24 }}>
               {(lang === "id" ? RESEARCH_BG_PARAS_ID : RESEARCH_BG_PARAS_EN).map((para, i) => (
                 <p key={i} style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
                   {para}
@@ -362,10 +377,8 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         const bg = isEven ? offWhite : lightGray;
         return (
           <div key={drift.number} style={{ background: bg }}>
-            {/* Divider line */}
-            <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-              <div style={{ height: 1, background: "oklch(88% 0.008 80)" }} />
-            </div>
+            {/* Section accent */}
+            <div style={{ height: 3, background: orange }} />
 
             <div style={{ padding: "96px 24px", maxWidth: 720, margin: "0 auto" }}>
               {/* Number + title */}
@@ -386,7 +399,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
 
               {/* How it shows up */}
               <div style={{ marginBottom: 56 }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
                   {t("How it shows up", "Bagaimana ini muncul")}
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -444,11 +457,11 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               </div>
 
               {/* Returning practice */}
-              <div>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: bodyText, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
+              <div style={{ background: navy, borderRadius: 4, padding: "32px 40px" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
                   {t("Returning practice", "Praktik kembali")}
                 </p>
-                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.9, padding: "20px 24px", background: offWhite, borderLeft: `3px solid ${navy}`, margin: 0, borderRadius: "0 4px 4px 0" }}>
+                <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(80% 0.025 80)", lineHeight: 1.9, margin: 0, fontStyle: "italic" }}>
                   {lang === "id" ? drift.id_practice : drift.en_practice}
                 </p>
               </div>
@@ -458,11 +471,11 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       })}
 
       {/* ── Faith Anchor ───────────────────────────────────────────── */}
-      <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>
-          {t("Faith Anchor", "Jangkar Iman")}
-        </p>
-        <div style={{ background: lightGray, borderRadius: 6, padding: "44px 48px", textAlign: "center" }}>
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+            {t("Faith Anchor", "Jangkar Iman")}
+          </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 28px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 20 }}>
             {t(
               "But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
@@ -618,14 +631,16 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda."
           )}
         </p>
-        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em" }}>
-          {t("Training", "Pelatihan")}
+        <Link href="/resources" style={{ display: "inline-block", padding: "14px 36px", minHeight: 44, background: orange, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", borderRadius: 4, letterSpacing: "0.04em" }}>
+          {t("Explore All Resources", "Jelajahi Semua Sumber")}
         </Link>
       </div>
 
       {/* Verse Popup */}
       {activeVerse && verseData && (
         <div
+          role="dialog"
+          aria-modal="true"
           onClick={() => setActiveVerse(null)}
           style={{ position: "fixed", inset: 0, background: "oklch(10% 0.05 260 / 0.65)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}
         >
@@ -641,8 +656,10 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               {lang === "id" ? "(TB)" : "(NIV)"}
             </p>
             <button
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               onClick={() => setActiveVerse(null)}
-              style={{ padding: "10px 24px", background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}
+              style={{ padding: "10px 24px", minHeight: 44, background: navy, color: offWhite, border: "none", borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, cursor: "pointer" }}
             >
               {t("Close", "Tutup")}
             </button>
