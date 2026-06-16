@@ -285,7 +285,7 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" ? "id" : "en") as Lang;
   const [saved, setSaved] = useState(initialSaved);
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [selectedStage, setSelectedStage] = useState<number | null>(null);
   const [verse411Open, setVerse411Open] = useState(false);
 
