@@ -1,6 +1,7 @@
 "use client";
 import { useState, useTransition, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
 import Image from "next/image";
@@ -1162,26 +1163,16 @@ export default function UnderstandingHighContextClient({ isSaved: initialSaved }
       </div>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: ORANGE, marginBottom: 16 }}>
-          Sources
-        </p>
-        {[
-          "¹ Edward T. Hall — Beyond Culture (Anchor Books, 1976) and The Silent Language (Doubleday, 1959) — originator of the high/low-context distinction; framework is widely cited but not empirically validated by systematic research.",
-          "² Peter W. Cardon — 'A Critique of Hall's Contexting Model,' Journal of Business and Technical Communication (2008) — meta-analysis of 224 articles across seven intercultural journals; found no validating instrument for Hall's country classifications.",
-          "³ Markus Kittler, David Rygl, and Alex Mackinnon — 'Special Review Article: Cultural Frameworks in I/B Research,' International Journal of Cross Cultural Management (2011) — concluded that most studies relying on Hall's binary scale use inadequate evidence and risk codifying stereotypes.",
-          "⁴ Erin Meyer — The Culture Map (PublicAffairs, 2014) — eight-scale model developed at INSEAD across 62+ countries; refines Hall's communicating dimension and shows cultures can vary independently across dimensions.",
-          "⁵ Robert J. House et al. — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (Sage, 2004) — large-scale survey of 17,000+ managers; provides empirical grounding for collectivism, power distance, and indirect communication patterns.",
-          "⁶ Geert Hofstede — Cultures and Organizations: Software of the Mind (McGraw-Hill, 1991; 3rd ed. 2010) — cultural dimensions model covering power distance, individualism/collectivism, and uncertainty avoidance across 50+ countries.",
-          "⁷ CIPD — Valuing Differences: Developing Cultural Capability (CIPD, 2017) — documents sungkan (Javanese respectful restraint) and basa-basi as communicative norms in Indonesian workplaces; notes systematic misreading by non-Indonesian managers.",
-          "⁸ Dean Flemming — Contextualization in the New Testament: Patterns for Theology and Mission (InterVarsity Press, 2004) — argues that Paul's Athens speech (Acts 17) demonstrates that both form and substance of the gospel message can be contextualised without compromising theological content.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: ORANGE, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "Edward T. Hall — Beyond Culture (Anchor Books, 1976) and The Silent Language (Doubleday, 1959) — originator of the high/low-context distinction; framework is widely cited but not empirically validated by systematic research.",
+        "Peter W. Cardon — 'A Critique of Hall's Contexting Model,' Journal of Business and Technical Communication (2008) — meta-analysis of 224 articles across seven intercultural journals; found no validating instrument for Hall's country classifications.",
+        "Markus Kittler, David Rygl, and Alex Mackinnon — 'Special Review Article: Cultural Frameworks in I/B Research,' International Journal of Cross Cultural Management (2011) — concluded that most studies relying on Hall's binary scale use inadequate evidence and risk codifying stereotypes.",
+        "Erin Meyer — The Culture Map (PublicAffairs, 2014) — eight-scale model developed at INSEAD across 62+ countries; refines Hall's communicating dimension and shows cultures can vary independently across dimensions.",
+        "Robert J. House et al. — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (Sage, 2004) — large-scale survey of 17,000+ managers; provides empirical grounding for collectivism, power distance, and indirect communication patterns.",
+        "Geert Hofstede — Cultures and Organizations: Software of the Mind (McGraw-Hill, 1991; 3rd ed. 2010) — cultural dimensions model covering power distance, individualism/collectivism, and uncertainty avoidance across 50+ countries.",
+        "CIPD — Valuing Differences: Developing Cultural Capability (CIPD, 2017) — documents sungkan (Javanese respectful restraint) and basa-basi as communicative norms in Indonesian workplaces; notes systematic misreading by non-Indonesian managers.",
+        "Dean Flemming — Contextualization in the New Testament: Patterns for Theology and Mission (InterVarsity Press, 2004) — argues that Paul's Athens speech (Acts 17) demonstrates that both form and substance of the gospel message can be contextualised without compromising theological content.",
+      ]} lang={lang} />
     </>
   );
 }

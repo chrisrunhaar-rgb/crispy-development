@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useTransition, useRef, useCallback } from "react";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveWheelScores, saveWheelReflections } from "../actions";
@@ -898,27 +899,15 @@ export default function WheelOfLifeClient({
       </div>
 
       {/* ── Sources ── */}
-      <div style={{ background: "oklch(95% 0.008 80)", padding: "0 24px 64px" }}>
-        <div style={{ padding: "48px 0 0", maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-            Sources
-          </p>
-          {[
-            "¹ Paul J. Meyer — Success Motivation Institute (1960s) — Originator of the Wheel of Life as a practitioner coaching tool; widely adapted since and not empirically validated as a diagnostic instrument.",
-            "² Ed Diener — 'Subjective Well-Being' (Psychological Bulletin, 1984) — Foundational review establishing life satisfaction as a measurable construct and its key components.",
-            "³ Martin E. P. Seligman — Flourish (Free Press, 2011) — Introduces the PERMA model of well-being (Positive emotion, Engagement, Relationships, Meaning, Accomplishment) as a multi-domain framework.",
-            "⁴ Ed Diener & Eunkook M. Suh — 'Measuring Quality of Life: Economic, Social, and Subjective Indicators' (Social Indicators Research, 1997) — Documents cultural variation in what components of life satisfaction are weighted most heavily.",
-            "⁵ Matthew Walker — Why We Sleep (Scribner, 2017) — Comprehensive review of sleep science linking sleep quality to physical health, cognitive performance, emotional regulation, and longevity.",
-            "⁶ Dallas Willard — Renovation of the Heart (NavPress, 2002) — Argues that spiritual formation requires the intentional ordering of all dimensions of the human person — will, mind, body, social context — toward Christlikeness.",
-            "⁷ Richard Foster — Celebration of Discipline (Harper & Row, 1978) — Classic exposition of classical Christian spiritual disciplines as liberating structures for whole-person flourishing, not legalistic impositions.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷"][i]}</span>
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Paul J. Meyer — Success Motivation Institute (1960s) — Originator of the Wheel of Life as a practitioner coaching tool; widely adapted since and not empirically validated as a diagnostic instrument.",
+        "Ed Diener — 'Subjective Well-Being' (Psychological Bulletin, 1984) — Foundational review establishing life satisfaction as a measurable construct and its key components.",
+        "Martin E. P. Seligman — Flourish (Free Press, 2011) — Introduces the PERMA model of well-being (Positive emotion, Engagement, Relationships, Meaning, Accomplishment) as a multi-domain framework.",
+        "Ed Diener & Eunkook M. Suh — 'Measuring Quality of Life: Economic, Social, and Subjective Indicators' (Social Indicators Research, 1997) — Documents cultural variation in what components of life satisfaction are weighted most heavily.",
+        "Matthew Walker — Why We Sleep (Scribner, 2017) — Comprehensive review of sleep science linking sleep quality to physical health, cognitive performance, emotional regulation, and longevity.",
+        "Dallas Willard — Renovation of the Heart (NavPress, 2002) — Argues that spiritual formation requires the intentional ordering of all dimensions of the human person — will, mind, body, social context — toward Christlikeness.",
+        "Richard Foster — Celebration of Discipline (Harper & Row, 1978) — Classic exposition of classical Christian spiritual disciplines as liberating structures for whole-person flourishing, not legalistic impositions.",
+      ]} lang={lang} />
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>
