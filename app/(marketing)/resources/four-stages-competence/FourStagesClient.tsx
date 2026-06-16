@@ -1,5 +1,6 @@
 ﻿"use client";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
@@ -362,21 +363,33 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
               lang
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button
-              onClick={handleSave}
-              aria-label={saved ? t("Saved to dashboard", "Tersimpan ke dasbor", lang) : t("Save to dashboard", "Simpan ke dasbor", lang)}
-              style={{
-                background: saved ? "oklch(55% 0.15 150)" : orange,
-                color: offWhite,
-                fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-                padding: "6px 14px", borderRadius: 4,
-                border: "none", cursor: saved ? "default" : "pointer",
-                minHeight: 44,
-              }}
-            >
-              {saved ? t("✓ SAVED", "✓ TERSIMPAN", lang) : t("+ SAVE", "+ SIMPAN", lang)}
-            </button>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginTop: 8 }}>
+            {saved ? (
+              <Link href="/dashboard" style={{
+                fontFamily: "Montserrat, sans-serif", fontSize: "0.78rem", fontWeight: 700,
+                letterSpacing: "0.06em", color: "oklch(72% 0.14 145)", textDecoration: "none",
+                display: "inline-flex", alignItems: "center", gap: "0.375rem",
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                {t("In your dashboard", "Di dasbor Anda", lang)}
+              </Link>
+            ) : (
+              <button
+                onClick={handleSave}
+                disabled={isPending}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  background: "transparent",
+                  color: "oklch(78% 0.03 80)",
+                  padding: "10px 20px", borderRadius: 8, fontWeight: 600, fontSize: 13,
+                  border: "1px solid oklch(55% 0.05 260)", cursor: isPending ? "wait" : "pointer",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                {isPending ? t("Saving…", "Menyimpan…", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
+              </button>
+            )}
           </div>
         </div>
       </div>
