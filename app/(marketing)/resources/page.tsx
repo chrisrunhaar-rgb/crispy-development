@@ -27,7 +27,7 @@ export default async function ResourcesPage() {
   const moduleFormats: Record<string, string[]> = {};
   for (const row of statusRows ?? []) {
     moduleStatuses[row.slug] = row.status;
-    if (row.library_category) moduleCategories[row.slug] = row.library_category;
+    moduleCategories[row.slug] = row.library_category ?? "";
     if (Array.isArray(row.module_formats) && row.module_formats.length > 0) moduleFormats[row.slug] = row.module_formats;
   }
 

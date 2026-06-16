@@ -69,8 +69,9 @@ function getLibraryCategory(
   resource: Resource,
   moduleCategories: Record<string, string>
 ): string {
-  if (resource.slug && moduleCategories[resource.slug]) {
-    return moduleCategories[resource.slug];
+  if (resource.slug && resource.slug in moduleCategories) {
+    const cat = moduleCategories[resource.slug];
+    return cat || "__hidden__"; // "" = explicitly UNSET → hidden from all sections
   }
   if (resource.format === "Assessment") return "assessments";
   return resource.topics[0] ?? "personal-development";

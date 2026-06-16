@@ -481,6 +481,36 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
         </div>
       </div>
 
+      {/* ── Key Takeaways ─────────────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("Key Takeaways", "Poin-Poin Kunci")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {(lang === "en" ? [
+              "Calling in Scripture is never purely individual — it is shaped, confirmed, and sustained through community.",
+              "Both the internal call (your own sense of vocation) and the external call (community recognition) are needed. Neither is complete without the other.",
+              "A calling without accountability is structurally fragile. Isolation is not devotion — it is a design flaw.",
+              "In most of the world, calling has always been relational by default. The communal model may be closer to the biblical pattern than we assume.",
+              "A calling that is received but never passed on has quietly become a possession. Someone should be reaching for what you carry.",
+            ] : [
+              "Panggilan dalam Kitab Suci tidak pernah murni individual — ia dibentuk, dikonfirmasi, dan ditopang melalui komunitas.",
+              "Baik panggilan internal (rasa panggilanmu sendiri) maupun panggilan eksternal (pengakuan komunitas) dibutuhkan. Tidak ada yang lengkap tanpa yang lain.",
+              "Panggilan tanpa akuntabilitas rapuh secara struktural. Isolasi bukan pengabdian — itu adalah cacat desain.",
+              "Di sebagian besar dunia, panggilan selalu bersifat relasional secara alami. Model komunal mungkin lebih dekat dengan pola alkitabiah daripada yang kita asumsikan.",
+              "Panggilan yang diterima tetapi tidak pernah diteruskan telah diam-diam menjadi kepemilikan. Seseorang seharusnya meraih apa yang kamu emban.",
+            ]).map((item, i) => (
+              <div key={i} style={{ background: offWhite, border: `1.5px solid oklch(90% 0.008 80)`, borderLeft: `4px solid ${orange}`, borderRadius: "0 8px 8px 0", padding: "18px 24px" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(14px, 1.5vw, 15px)", fontWeight: 700, color: navy, margin: 0, lineHeight: 1.6 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── Sources ────────────────────────────────────────────────── */}
       <div style={{ padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
