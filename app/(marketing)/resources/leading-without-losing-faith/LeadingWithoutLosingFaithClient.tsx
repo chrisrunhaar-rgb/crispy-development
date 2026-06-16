@@ -209,6 +209,24 @@ const DRIFTS = [
   },
 ];
 
+// --- RESEARCH BACKGROUND -------------------------------------------------------
+
+const RESEARCH_BG_PARAS_EN = [
+  `Leadership attrition is not rare — it is structurally predictable. A Barna Group survey of 510 Protestant pastors found that 42% had seriously considered leaving full-time ministry in the previous twelve months, up from 29% just a year earlier. The top driver was not theological doubt but unrelenting pressure: 56% cited immense job stress, 43% cited loneliness and isolation. Over the same seven years, the proportion receiving regular peer or mentor support fell from 37% to 22% — a structural collapse in the very relationships that most protect against drift. Cross-cultural workers face compounding stressors on top of this: linguistic displacement, cultural disorientation, distance from home support networks, and often the absence of a church community worshipping in a familiar register.`,
+  `Researchers have distinguished between general burnout and something more specific: spiritual dryness. Büssing et al. (2013) developed a Spiritual Dryness Scale and administered it to 425 Catholic priests. Up to 40% experienced spiritual dryness occasionally; 13% reported it often or regularly. Crucially, workload — hours worked, parish size, responsibilities — did not predict spiritual dryness. Structural relief alone cannot resolve a spiritual problem. Dryness explained 44% of variance in daily spiritual experience and 30% of depressive symptoms, making it a significant vocational risk factor, not a minor inconvenience.`,
+  `Retention studies reinforce the pattern. The ReMAP I study (Taylor, 1997) surveyed 551 mission organisations across 14 countries and found approximately 5.1% of cross-cultural workers leave annually, with 71% of departures preventable. The most common causes are inadequate spiritual preparation, lack of peer support, and unresolved personal concerns. The follow-up ReMAP II study found that high-retaining agencies averaged 17 years of worker service while low-retaining agencies averaged just 7 — a ten-year difference driven primarily by relational health, not strategy. Compass Asia identifies a shame cycle specific to Southeast Asia: the belief that "if I had stronger faith I wouldn't struggle" creates silence that prevents workers from seeking the care that could sustain them.`,
+  `Six foundations protect ministry leaders from burnout, according to NCLS Research (2024) drawing on data from 20+ Australian denominations: private spiritual practice, clarity of calling, a sense of self independent of role or approval, alignment between gifting and task, supportive close relationships, and clear boundaries. Of these, clarity of calling consistently reduced emotional exhaustion — suggesting that vocational grounding, not merely skill or support, is the core protective factor. The Engage! Study (Missio Nexus, 2010) found that healthy field community relationships ranked among the top five retention factors for cross-cultural workers. The antidote to drift is not heroic individual discipline — it is relational and communal.`,
+  `The Christian tradition has always recognised this. Afaradi's peer-reviewed study (2025) of 1 Kings 19 identifies three causes of Elijah's crisis: psychological pressure, despair from perceived ministry failure, and profound isolation — the belief that he alone remained faithful. God's restoration follows a deliberate sequence: physical care before spiritual instruction, compassionate presence rather than rebuke, and renewed commission with succession arrangements. Ruth Haley Barton diagnoses leadership depletion through Moses: when a leader becomes "tired of helping others enjoy God," the soul signals that performance has displaced presence. Henri Nouwen argued that authentic ministry flows not from professional competence but from acknowledged woundedness — "our service will not be perceived as authentic unless it comes from a heart wounded by the suffering about which we speak." These are not a therapeutic softening of the call. They are its structural requirements.`,
+];
+
+const RESEARCH_BG_PARAS_ID = [
+  `Attrisi kepemimpinan bukanlah hal yang langka — ini adalah sesuatu yang dapat diprediksi secara struktural. Survei Barna Group terhadap 510 pendeta Protestan menemukan bahwa 42% telah mempertimbangkan untuk meninggalkan pelayanan penuh waktu dalam dua belas bulan sebelumnya, naik dari 29% setahun sebelumnya. Pendorong utamanya bukan keraguan teologis melainkan tekanan yang tak henti-hentinya: 56% menyebut stres pekerjaan yang luar biasa, 43% menyebut kesepian dan isolasi. Selama tujuh tahun yang sama, proporsi yang menerima dukungan rohani rutin dari rekan atau mentor turun dari 37% menjadi 22% — kehancuran struktural dalam hubungan yang paling melindungi dari hanyut. Pekerja lintas budaya menghadapi tekanan berlipat ganda di atas ini: perpindahan linguistik, disorientasi budaya, jarak dari jaringan dukungan rumah, dan seringkali ketiadaan komunitas gereja yang beribadah dalam register yang familiar.`,
+  `Para peneliti telah membedakan antara kelelahan umum dan sesuatu yang lebih spesifik: kekeringan rohani. Büssing et al. (2013) mengembangkan Skala Kekeringan Rohani dan menerapkannya pada 425 imam Katolik. Hingga 40% mengalami kekeringan rohani kadang-kadang; 13% melaporkannya sering atau secara teratur. Yang krusial, beban kerja — jam kerja, ukuran jemaat, tanggung jawab — tidak memprediksi kekeringan rohani. Bantuan struktural saja tidak dapat menyelesaikan masalah rohani. Kekeringan menjelaskan 44% varians dalam pengalaman rohani sehari-hari dan 30% gejala depresi, menjadikannya faktor risiko panggilan yang signifikan, bukan ketidaknyamanan kecil.`,
+  `Studi retensi memperkuat pola ini. Studi ReMAP I (Taylor, 1997) mensurvei 551 organisasi misi di 14 negara dan menemukan sekitar 5,1% pekerja lintas budaya pergi setiap tahun, dengan 71% dari kepergian tersebut dapat dicegah. Penyebab paling umum adalah persiapan rohani yang tidak memadai, kurangnya dukungan rekan, dan masalah pribadi yang tidak terselesaikan. Studi ReMAP II lanjutan menemukan bahwa lembaga dengan retensi tinggi rata-rata 17 tahun masa kerja sementara lembaga retensi rendah hanya rata-rata 7 tahun — perbedaan sepuluh tahun yang didorong terutama oleh kesehatan relasional, bukan strategi. Compass Asia mengidentifikasi siklus rasa malu yang spesifik untuk Asia Tenggara: keyakinan bahwa "jika iman saya lebih kuat, saya tidak akan berjuang" menciptakan keheningan yang mencegah pekerja mencari perawatan yang dapat menopang mereka.`,
+  `Enam fondasi melindungi pemimpin pelayanan dari kelelahan, menurut NCLS Research (2024) berdasarkan data dari 20+ denominasi Australia: praktik rohani pribadi, kejelasan panggilan, rasa diri yang tidak bergantung pada peran atau persetujuan, keselarasan antara karunia dan tugas, hubungan dekat yang mendukung, dan batasan yang jelas. Dari keenam ini, kejelasan panggilan secara konsisten mengurangi kelelahan emosional — menunjukkan bahwa pengakaran panggilan, bukan hanya keterampilan atau dukungan, adalah faktor pelindung inti. Studi Engage! (Missio Nexus, 2010) menemukan bahwa hubungan komunitas lapangan yang sehat berada di antara lima faktor retensi teratas bagi pekerja lintas budaya. Penawar terhadap hanyut bukan disiplin heroik individual — ini adalah relasional dan komunal.`,
+  `Tradisi Kristen selalu mengenali ini. Studi teologis yang ditinjau sejawat oleh Afaradi (2025) tentang 1 Raja-raja 19 mengidentifikasi tiga penyebab krisis Elia: tekanan psikologis, keputusasaan dari kegagalan pelayanan yang dirasakan, dan isolasi yang mendalam — keyakinan bahwa hanya ia yang tetap setia. Pemulihan Allah mengikuti urutan yang disengaja: perawatan fisik sebelum instruksi rohani, kehadiran yang penuh kasih daripada teguran, dan komisi baru dengan pengaturan suksesi. Ruth Haley Barton mendiagnosis kelelahan kepemimpinan melalui Musa: ketika seorang pemimpin menjadi "lelah membantu orang lain menikmati Tuhan," jiwa memberi sinyal bahwa kinerja telah menggantikan kehadiran. Henri Nouwen berpendapat bahwa pelayanan yang otentik mengalir bukan dari kompetensi profesional tetapi dari kerentanan yang diakui — "pelayanan kita tidak akan dianggap otentik kecuali datang dari hati yang terluka oleh penderitaan yang kita bicarakan." Ini bukan pelunakan terapeutik dari panggilan. Ini adalah persyaratan strukturalnya.`,
+];
+
 // --- TYPES & PROPS ------------------------------------------------------------
 
 type Props = { userPathway: string | null; isSaved: boolean };
@@ -221,6 +239,7 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [activeVerse, setActiveVerse] = useState<string | null>(null);
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -274,8 +293,9 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       </div>
 
       {/* Hero */}
-      <div style={{ background: navy, padding: "88px 24px 80px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+      <div style={{ background: navy, padding: "88px 24px 80px", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/leading-without-losing-faith/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center", position: "relative" }}>
           <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Faith & Calling — Lectio-Style Exploration", "Iman & Panggilan — Eksplorasi Gaya Lectio")}
           </p>
@@ -298,19 +318,52 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       </div>
 
       {/* Introduction */}
-      <div style={{ padding: "80px 24px 64px", maxWidth: 720, margin: "0 auto" }}>
+      <div style={{ padding: "80px 24px 0", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
           {t(
             "Faith rarely disappears in a single dramatic moment. It drifts. Quietly. Through seasons of high demand, complex relationships, repeated disappointments, and the slow absorption of the culture around us. Most leaders who lose their faith don't choose to — they simply stop noticing it happening.",
             "Iman jarang menghilang dalam satu momen dramatis. Ia hanyut. Diam-diam. Melalui musim permintaan tinggi, hubungan yang kompleks, kekecewaan berulang, dan penyerapan lambat budaya di sekitar kita. Kebanyakan pemimpin yang kehilangan iman mereka tidak memilihnya — mereka hanya berhenti memperhatikan itu terjadi."
           )}
         </p>
-        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 0 }}>
+        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 28 }}>
+          {t(
+            <>Research confirms the scale: 42%<sup>¹</sup> of Protestant pastors surveyed in 2022 had seriously considered leaving ministry in the previous year. Over the same period, the proportion receiving regular peer or mentor support fell from 37% to 22%.<sup>²</sup> Cross-cultural workers face the same pressures — often without a home-culture community to absorb the weight.</>,
+            <>Penelitian mengkonfirmasi skalanya: 42%<sup>¹</sup> pendeta Protestan yang disurvei pada 2022 telah mempertimbangkan meninggalkan pelayanan dalam setahun sebelumnya. Selama periode yang sama, proporsi yang menerima dukungan rohani rutin dari rekan atau mentor turun dari 37% menjadi 22%.<sup>²</sup> Pekerja lintas budaya menghadapi tekanan yang sama — seringkali tanpa komunitas asal untuk menyerap bebannya.</>
+          )}
+        </p>
+        <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9, marginBottom: 40 }}>
           {t(
             "What follows are five of the most common drift threats for cross-cultural leaders. Each one is real, slow-moving, and dangerous precisely because it masquerades as faithfulness. Read each section with your own story in mind.",
             "Berikut ini adalah lima ancaman hanyut paling umum bagi pemimpin lintas budaya. Masing-masing nyata, bergerak lambat, dan berbahaya justru karena menyamar sebagai kesetiaan. Baca setiap bagian dengan cerita Anda sendiri di benak Anda."
           )}
         </p>
+
+        {/* Research background toggle */}
+        <div style={{ borderTop: `1px solid oklch(88% 0.008 80)`, paddingTop: 32, marginBottom: 80 }}>
+          <button
+            onClick={() => setBgOpen(o => !o)}
+            aria-expanded={bgOpen}
+            aria-controls="research-background-panel"
+            style={{
+              background: "none", border: "none", cursor: "pointer", padding: 0,
+              fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
+              color: orange, letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 8,
+            }}
+          >
+            {bgOpen
+              ? t("Hide the research ↑", "Sembunyikan penelitian ↑")
+              : t("Read the research →", "Baca penelitian →")}
+          </button>
+          {bgOpen && (
+            <div id="research-background-panel" style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+              {(lang === "id" ? RESEARCH_BG_PARAS_ID : RESEARCH_BG_PARAS_EN).map((para, i) => (
+                <p key={i} style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.9, margin: 0 }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Five Drift Threats */}
@@ -414,6 +467,30 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         );
       })}
 
+      {/* ── Faith Anchor ───────────────────────────────────────────── */}
+      <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>
+          {t("Faith Anchor", "Jangkar Iman")}
+        </p>
+        <div style={{ background: lightGray, borderRadius: 6, padding: "44px 48px", textAlign: "center" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 28px)", fontStyle: "italic", color: navy, lineHeight: 1.75, marginBottom: 20 }}>
+            {t(
+              "But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
+              "Tetapi orang-orang yang menantikan TUHAN mendapat kekuatan baru: mereka seumpama rajawali yang naik terbang dengan kekuatan sayapnya; mereka berlari dan tidak menjadi lesu, mereka berjalan dan tidak menjadi lelah."
+            )}
+          </p>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 28 }}>
+            — {t("Isaiah 40:31 (NIV)", "Yesaya 40:31 (TB)")}
+          </p>
+          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, margin: 0 }}>
+            {t(
+              "Five drifts, five pressures, one promise that holds across all of them. Your strength is not the variable. His faithfulness is. The leader who returns to this — not as a slogan but as a lived dependence — finds that the wellspring does not run dry.",
+              "Lima hanyut, lima tekanan, satu janji yang berlaku di semuanya. Kekuatanmu bukan variabelnya. Kesetiaan-Nya yang tetap. Pemimpin yang kembali ke ini — bukan sebagai slogan tetapi sebagai ketergantungan yang dihidupi — menemukan bahwa sumber mata air tidak pernah kering."
+            )}
+          </p>
+        </div>
+      </div>
+
       {/* -- Remaining in the Vine — John 15 Closing -- */}
       <div style={{ background: navy, padding: "104px 24px 96px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
@@ -511,6 +588,32 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── Sources ─────────────────────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+          {t("Sources", "Sumber")}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {[
+            { n: 0, authors: "Barna Group", title: "Pastors Share Top Reasons They've Considered Quitting Ministry", year: "2022", url: "https://www.barna.com/research/pastors-quitting-ministry/" },
+            { n: 1, authors: "Barna Group", title: "7-Year Trends: Pastors Feel More Loneliness and Less Support", year: "2022", url: "https://www.barna.com/research/pastor-support-systems/" },
+            { n: 2, authors: "Büssing et al.", title: "Spiritual Dryness as a Measure of a Specific Spiritual Crisis in Catholic Priests", year: "Evidence-Based Complementary and Alternative Medicine, 2013", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3703410/" },
+            { n: 3, authors: "Taylor, William D. (ed.)", title: "Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition", year: "William Carey Library, 1997", url: "https://propempo.com/community/propempo-blog/the-truth-about-missionary-attrition2/" },
+            { n: 4, authors: "Barton, Ruth Haley", title: "Strengthening the Soul of Your Leadership", year: "InterVarsity Press, 2018", url: "https://www.ivpress.com/strengthening-the-soul-of-your-leadership" },
+            { n: 5, authors: "Nouwen, Henri", title: "The Wounded Healer: Ministry in Contemporary Society", year: "Doubleday, 1972", url: "https://www.henrinouwen.org/books/the-wounded-healer" },
+          ].map((s) => (
+            <div key={s.n} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, color: orange, fontWeight: 700, minWidth: 16, flexShrink: 0, paddingTop: 2 }}>
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][s.n]}
+              </span>
+              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(50% 0.05 260)", lineHeight: 1.65, margin: 0 }}>
+                {s.authors} — <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: navy, textDecoration: "underline" }}>{s.title}</a> ({s.year})
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 

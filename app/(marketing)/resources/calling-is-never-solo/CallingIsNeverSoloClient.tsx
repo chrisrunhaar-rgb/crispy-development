@@ -61,32 +61,6 @@ const BIBLE_CARDS = [
   },
 ];
 
-const WEB_NODES = [
-  { key: "sent_by",       en_label: "Sent by",          id_label: "Diutus oleh",       en_hint: "Who commissioned or released you",    id_hint: "Siapa yang mengutus atau melepaskan Anda" },
-  { key: "trained_by",    en_label: "Trained by",        id_label: "Dibentuk oleh",     en_hint: "Who shaped your thinking",            id_hint: "Siapa yang membentuk pemikiran Anda" },
-  { key: "praying_with",  en_label: "Praying with",      id_label: "Berdoa bersama",    en_hint: "Who intercedes for you",              id_hint: "Siapa yang mendoakan Anda" },
-  { key: "working_with",  en_label: "Working alongside", id_label: "Bekerja bersama",   en_hint: "Who is in the mission with you",      id_hint: "Siapa yang ada dalam misi bersama Anda" },
-  { key: "learning_from", en_label: "Learning from",     id_label: "Belajar dari",      en_hint: "Who you are still being shaped by",   id_hint: "Siapa yang masih membentuk Anda" },
-  { key: "serving_with",  en_label: "Serving together",  id_label: "Melayani bersama",  en_hint: "Who you are building something with", id_hint: "Siapa yang sedang membangun sesuatu bersama Anda" },
-];
-
-// Static community web node definitions for the inspirational SVG
-const COMMUNITY_NODES = [
-  { en: "Church",           id: "Gereja",           x: 200, y: 58  },
-  { en: "Senders",          id: "Pengutus",         x: 302, y: 97  },
-  { en: "Mentor",           id: "Mentor",           x: 342, y: 200 },
-  { en: "Prayer Partners",  id: "Mitra Doa",        x: 302, y: 303 },
-  { en: "Co-workers",       id: "Rekan Kerja",      x: 200, y: 342 },
-  { en: "Disciples",        id: "Murid",            x: 98,  y: 303 },
-  { en: "Peers",            id: "Sesama",           x: 58,  y: 200 },
-  { en: "Local Community",  id: "Komunitas Lokal",  x: 98,  y: 97  },
-];
-
-// Ring connections + cross-connections for the web
-const COMMUNITY_CONNECTIONS: [number, number][] = [
-  [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0], // ring
-  [0,4],[2,6],[1,5],[3,7],                           // diagonals
-];
 
 type Props = { isSaved: boolean };
 
@@ -96,13 +70,7 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
   const [saved, setSaved] = useState(initialSaved);
   const [isPending, startTransition] = useTransition();
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
-
-  const [centerName, setCenterName] = useState("");
-  const [nodeValues, setNodeValues] = useState<Record<string, string>>({
-    sent_by: "", trained_by: "", praying_with: "", working_with: "", learning_from: "", serving_with: "",
-  });
-  const filledCount = Object.values(nodeValues).filter((v) => v.trim() !== "").length;
-  const allFilled = filledCount === 6;
+  const [bgOpen, setBgOpen] = useState(false);
 
   const t = (en: string, id: string) => tFn(en, id, lang);
 
@@ -118,10 +86,24 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
   const orange  = "oklch(65% 0.15 45)";
   const offWhite = "oklch(97% 0.005 80)";
   const lightGray = "oklch(95% 0.008 80)";
-  const warmCream = "oklch(96% 0.012 60)";
   const bodyText = "oklch(38% 0.05 260)";
   const serif   = "var(--font-cormorant, Cormorant Garamond, Georgia, serif)";
-  const nodeAngles = [0, 60, 120, 180, 240, 300];
+
+  const RESEARCH_BG_PARAS_EN = [
+    `The pattern of communal calling runs through the whole of Scripture. Israel was called as a people, not merely as a collection of individuals. In Acts 13:1–3, the commissioning of Paul and Barnabas followed communal fasting, prayer, and confirmation — the whole church laid hands on them and sent them together. Biblical scholars have identified this Antioch pattern as the normative model for vocational commissioning: the congregation's ethnic diversity and apostolic team structure were not incidental to the commissioning — they were constitutive of it.`,
+    `The Reformation tradition formalised what Scripture implied: the distinction between the internal call (one's own sense of vocation) and the external call (community recognition and confirmation). The internal call alone is considered insufficient for legitimate ministry — not because God cannot speak to individuals, but because the human capacity for self-deception is real. The external call provides a structural check. Fuller Seminary's vocational formation framework extends this into a 'locus and focus' model: the locus of calling is the community from which it emerges; the focus is the specific work to which it points.`,
+    `The individualist model of calling is largely a Western development, shaped by Enlightenment ideas about personal identity and individual moral agency. Cultural research scores Indonesia's individualism at 14 and Malaysia's at 26 — among the most collectivist societies globally. In such contexts, identity and vocation are relational by default: calling is not primarily a private discovery but something the community sees in a person, names aloud, and sends them into. Missiologists have documented how importing Western calling frameworks into collectivist contexts creates friction, while community-first approaches aligned with Acts 16:31 are both missiologically effective and culturally coherent.`,
+    `Empirical research has quantified the cost of calling without community. Among cross-cultural workers, the Lausanne Movement estimated approximately 1,500 North American ministry workers leave their positions monthly. The ReMAP II study — spanning 22 countries and 600 agencies — found that agencies with fewer than 50 workers lose approximately 33% of their field workers annually, compared to just 6% for larger organisations. Inadequate home support and peer isolation ranked consistently among the most preventable causes of attrition. The pattern holds in secular leadership too: studies of senior leaders find that 50% experience significant loneliness, with 61% reporting it hampers their effectiveness.`,
+    `The New Testament never pictures isolated calling as the norm. Jesus sent the seventy-two in pairs (Luke 10:1). Paul always travelled with co-workers. Elders were appointed in groups, never individually. Henri Nouwen identified the antidote to isolated leadership as communities where "power is decentralised, shared, and rich in honesty and accountability." The accountability relationships essential for sustainable Christian workers include moral, spiritual, financial, relational, missiological, and organisational dimensions. The communal calling model is not a modern innovation or a cultural accommodation — it is the original pattern.`,
+  ];
+
+  const RESEARCH_BG_PARAS_ID = [
+    `Pola panggilan komunal mengalir melalui seluruh Kitab Suci. Israel dipanggil sebagai satu umat, bukan sekadar kumpulan individu. Dalam Kisah Para Rasul 13:1–3, pengutusan Paulus dan Barnabas didahului oleh puasa, doa, dan konfirmasi bersama — seluruh jemaat menumpangkan tangan dan mengutus mereka bersama-sama. Para teolog Alkitab telah mengidentifikasi pola Antiokhia ini sebagai model normatif untuk penugasan vokasional: keragaman etnis jemaat dan struktur tim apostolik bukan sekadar latar pengutusan — melainkan bagian konstitutifnya.`,
+    `Tradisi Reformasi memformalkan apa yang tersirat dalam Kitab Suci: perbedaan antara panggilan internal (rasa panggilan seseorang) dan panggilan eksternal (pengakuan dan konfirmasi komunitas). Panggilan internal saja dianggap tidak cukup untuk pelayanan yang sah — bukan karena Allah tidak dapat berbicara kepada individu, tetapi karena kapasitas manusia untuk menipu diri sendiri adalah nyata. Panggilan eksternal memberikan pemeriksaan struktural. Kerangka pembentukan vokasional Fuller Seminary memperluas ini menjadi model 'locus dan fokus': locus panggilan adalah komunitas dari mana ia muncul; fokusnya adalah pekerjaan spesifik yang ditunjuknya.`,
+    `Model panggilan individualistis sebagian besar merupakan perkembangan Barat, dibentuk oleh gagasan-gagasan Pencerahan tentang identitas pribadi dan agen moral individual. Riset budaya memberi skor individualisme Indonesia sebesar 14 dan Malaysia sebesar 26 — termasuk masyarakat yang paling kolektivistis secara global. Dalam konteks seperti itu, identitas dan panggilan secara alami bersifat relasional: panggilan bukan terutama penemuan pribadi, melainkan sesuatu yang komunitas lihat dalam seseorang, nyatakan dengan lantang, dan utus mereka ke dalamnya. Para misiolog telah mendokumentasikan bagaimana mengimpor kerangka panggilan Barat ke konteks kolektivistis menciptakan gesekan, sementara pendekatan komunitas-pertama yang selaras dengan Kisah Para Rasul 16:31 efektif secara missiologis dan koheren secara budaya.`,
+    `Penelitian empiris telah mengkuantifikasi biaya panggilan tanpa komunitas. Di antara para pekerja lintas budaya, Gerakan Lausanne memperkirakan sekitar 1.500 pekerja pelayanan Amerika Utara meninggalkan posisi mereka setiap bulan. Studi ReMAP II — mencakup 22 negara dan 600 lembaga — menemukan bahwa lembaga dengan kurang dari 50 pekerja kehilangan sekitar 33% pekerja lapangan mereka setiap tahun, dibandingkan hanya 6% untuk organisasi yang lebih besar. Dukungan rumah yang tidak memadai dan isolasi sesama rekan kerja secara konsisten berada di antara penyebab gesekan yang paling bisa dicegah. Pola ini juga berlaku dalam kepemimpinan sekuler: studi terhadap pemimpin senior menemukan bahwa 50% mengalami kesepian yang signifikan, dengan 61% melaporkan hal itu menghambat efektivitas mereka.`,
+    `Perjanjian Baru tidak pernah menggambarkan panggilan terisolasi sebagai norma. Yesus mengutus tujuh puluh dua orang berdua-dua (Lukas 10:1). Paulus selalu bepergian bersama rekan-rekan kerja. Penatua diangkat dalam kelompok, tidak pernah secara individual. Henri Nouwen mengidentifikasi penangkal kepemimpinan yang terisolasi sebagai komunitas di mana "kekuasaan didesentralisasi, dibagikan, dan kaya akan kejujuran dan akuntabilitas." Hubungan akuntabilitas yang esensial bagi pekerja Kristen yang berkelanjutan mencakup dimensi moral, spiritual, keuangan, relasional, missiologis, dan organisasional. Model panggilan komunal bukan inovasi modern atau akomodasi budaya — melainkan pola aslinya.`,
+  ];
 
   return (
     <div style={{ fontFamily: "Montserrat, sans-serif", background: offWhite, minHeight: "100vh" }}>
@@ -161,13 +143,39 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
       </div>
 
       {/* ── Hook ───────────────────────────────────────────────────── */}
-      <div style={{ padding: "80px 24px 0", maxWidth: 720, margin: "0 auto" }}>
+      <div style={{ padding: "80px 24px 48px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: "clamp(19px, 2.2vw, 24px)", fontStyle: "italic", color: navy, lineHeight: 1.8, padding: "0 0 0 28px", borderLeft: `3px solid ${orange}` }}>
           {t(
             "You have probably heard it said that God has a plan for your life. A personal plan. A specific calling, meant just for you, found in quiet moments alone. People who accepted this idea and people who quietly questioned it can end up in the same place — doing the work of God in growing isolation, wondering why it feels smaller than it should.",
             "Anda mungkin pernah mendengar bahwa Allah memiliki rencana bagi hidup Anda. Rencana pribadi. Panggilan khusus, hanya untuk Anda, ditemukan dalam momen-momen sunyi sendirian. Orang yang menerima gagasan ini dan orang yang diam-diam meragukannya bisa berakhir di tempat yang sama — melakukan pekerjaan Allah dalam kesendirian yang semakin besar, bertanya-tanya mengapa rasanya lebih kecil dari seharusnya."
           )}
         </p>
+
+        <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: bodyText, lineHeight: 1.85, marginTop: 32 }}>
+          {t(
+            "The idea that calling can be received and lived in isolation runs against the grain of nearly every biblical text that describes it. Across cultures and traditions, the pattern is consistent: calling requires witnesses, senders, and community to become fully itself. Research confirms what Scripture assumed — leaders who pursue calling alone face structural fragility, not just relational loneliness. Studies show 50% of senior leaders experience significant isolation, with 61% reporting it hinders their effectiveness.¹ Among cross-cultural workers, approximately 1,500 leave ministry roles monthly in North America alone,² and agencies with fewer than 50 workers lose up to 33% of their field workers each year.³",
+            "Gagasan bahwa panggilan dapat diterima dan dijalani dalam kesendirian bertentangan dengan hampir setiap teks Alkitab yang menggambarkannya. Di seluruh budaya dan tradisi, polanya konsisten: panggilan membutuhkan saksi, pengutus, dan komunitas agar menjadi sepenuhnya dirinya sendiri. Penelitian mengkonfirmasi apa yang Kitab Suci asumsikan — pemimpin yang mengejar panggilan sendirian menghadapi kerapuhan struktural. Penelitian menunjukkan 50% pemimpin senior mengalami isolasi yang signifikan, dengan 61% melaporkan hal itu menghambat efektivitas mereka.¹ Di antara pekerja lintas budaya, sekitar 1.500 meninggalkan peran pelayanan setiap bulan di Amerika Utara saja,² dan lembaga dengan kurang dari 50 pekerja kehilangan hingga 33% pekerja lapangan mereka setiap tahun.³"
+          )}
+        </p>
+
+        <div style={{ marginTop: 32, borderTop: "1px solid oklch(90% 0.008 80)", paddingTop: 24 }}>
+          <button
+            onClick={() => setBgOpen(o => !o)}
+            aria-expanded={bgOpen}
+            aria-controls="cins-research-bg"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: 8, fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700, color: navy, letterSpacing: "0.04em" }}
+          >
+            <span style={{ color: orange }}>{bgOpen ? "↑" : "→"}</span>
+            {bgOpen ? t("Hide the research ↑", "Sembunyikan penelitian ↑") : t("Read the research →", "Baca penelitiannya →")}
+          </button>
+          {bgOpen && (
+            <div id="cins-research-bg" style={{ marginTop: 20, padding: "28px 32px", background: lightGray, borderRadius: 6 }}>
+              {(lang === "en" ? RESEARCH_BG_PARAS_EN : RESEARCH_BG_PARAS_ID).map((para, i) => (
+                <p key={i} style={{ fontFamily: serif, fontSize: "clamp(15px, 1.6vw, 17px)", color: bodyText, lineHeight: 1.85, marginBottom: i < RESEARCH_BG_PARAS_EN.length - 1 ? 20 : 0 }}>{para}</p>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div style={{ maxWidth: 720, margin: "48px auto 0", padding: "0 24px" }}>
@@ -370,198 +378,6 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
         </div>
       </div>
 
-      {/* ── Community Web — Inspirational Image ───────────────────── */}
-      <div style={{ background: warmCream, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center" }}>
-            {t("What It Can Look Like", "Seperti Apa Bentuknya")}
-          </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 700, color: navy, marginBottom: 16, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
-            {t("A Healthy Calling Community", "Komunitas Panggilan yang Sehat")}
-          </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 18px)", color: bodyText, lineHeight: 1.75, textAlign: "center", marginBottom: 48, maxWidth: 540, margin: "0 auto 48px" }}>
-            {t(
-              "A calling community is not a support group. It is a web of real relationships — people who send you, form you, pray for you, work alongside you, and receive from you in return.",
-              "Komunitas panggilan bukan sekadar kelompok dukungan. Ini adalah jaringan hubungan nyata — orang-orang yang mengutusmu, membentukmu, mendoakanmu, bekerja bersamamu, dan menerima darimu sebagai balasannya."
-            )}
-          </p>
-
-          {/* Static SVG web */}
-          <div style={{ maxWidth: 400, margin: "0 auto" }}>
-            <svg viewBox="0 0 400 400" width="100%" style={{ display: "block" }} aria-label={t("Calling community web diagram", "Diagram web komunitas panggilan")}>
-              {/* Cross-connections first (behind nodes) */}
-              {COMMUNITY_CONNECTIONS.map(([a, b], i) => (
-                <line
-                  key={`conn-${i}`}
-                  x1={COMMUNITY_NODES[a].x} y1={COMMUNITY_NODES[a].y}
-                  x2={COMMUNITY_NODES[b].x} y2={COMMUNITY_NODES[b].y}
-                  stroke="oklch(65% 0.15 45 / 0.22)"
-                  strokeWidth="1.5"
-                />
-              ))}
-              {/* Spokes from center to each node */}
-              {COMMUNITY_NODES.map((n, i) => (
-                <line key={`spoke-${i}`} x1="200" y1="200" x2={n.x} y2={n.y} stroke="oklch(65% 0.15 45 / 0.45)" strokeWidth="1.5" />
-              ))}
-              {/* Outer nodes */}
-              {COMMUNITY_NODES.map((n, i) => (
-                <g key={`node-${i}`}>
-                  <circle cx={n.x} cy={n.y} r="28" fill="oklch(22% 0.10 260)" />
-                  <text
-                    x={n.x} y={n.y}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fontSize="8"
-                    fontFamily="Montserrat, sans-serif"
-                    fontWeight="700"
-                    fill="oklch(97% 0.005 80)"
-                    style={{ letterSpacing: "0.04em" }}
-                  >
-                    {(lang === "en" ? n.en : n.id).split(" ").map((word, wi, arr) => (
-                      <tspan key={wi} x={n.x} dy={wi === 0 ? (arr.length > 1 ? "-0.5em" : "0") : "1.15em"}>{word}</tspan>
-                    ))}
-                  </text>
-                </g>
-              ))}
-              {/* Center node */}
-              <circle cx="200" cy="200" r="38" fill="oklch(65% 0.15 45)" />
-              <text x="200" y="200" textAnchor="middle" dominantBaseline="middle" fontSize="13" fontFamily="Montserrat, sans-serif" fontWeight="700" fill="oklch(97% 0.005 80)">
-                {t("You", "Anda")}
-              </text>
-            </svg>
-          </div>
-          <p style={{ fontFamily: serif, fontSize: "clamp(14px, 1.5vw, 16px)", color: bodyText, lineHeight: 1.75, textAlign: "center", marginTop: 32, fontStyle: "italic", maxWidth: 480, margin: "32px auto 0" }}>
-            {t(
-              "The connections between people in your community are as important as the connections to you. A healthy calling community is a web — not a wheel.",
-              "Koneksi antara orang-orang dalam komunitasmu sama pentingnya dengan koneksi ke dirimu. Komunitas panggilan yang sehat adalah jaring — bukan roda."
-            )}
-          </p>
-        </div>
-      </div>
-
-      {/* ── Interactive: The Calling Web ──────────────────────────── */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 16, textAlign: "center" }}>
-            {t("Your Turn", "Giliran Anda")}
-          </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 700, color: navy, marginBottom: 12, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
-            {t("The Calling Web", "Jaring Panggilan")}
-          </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 18px)", color: bodyText, lineHeight: 1.75, textAlign: "center", marginBottom: 52 }}>
-            {t(
-              "Put your name in the centre. Then name one person for each role around you.",
-              "Tulis nama Anda di tengah. Kemudian namai satu orang untuk setiap peran di sekitar Anda."
-            )}
-          </p>
-
-          {/* Web diagram */}
-          <div style={{ position: "relative", width: "100%", maxWidth: 560, margin: "0 auto", aspectRatio: "1 / 1" }}>
-            {nodeAngles.map((angle, i) => {
-              const rad = (angle - 90) * (Math.PI / 180);
-              const cx = 50, cy = 50, r = 38;
-              const nx = cx + r * Math.cos(rad);
-              const ny = cy + r * Math.sin(rad);
-              const dx = nx - cx, dy = ny - cy;
-              const length = Math.sqrt(dx * dx + dy * dy);
-              const angleDeg = Math.atan2(dy, dx) * (180 / Math.PI);
-              const filled = nodeValues[WEB_NODES[i].key]?.trim() !== "";
-              return (
-                <div
-                  key={i}
-                  style={{ position: "absolute", left: `${cx}%`, top: `${cy}%`, width: `${length}%`, height: 2, background: filled ? orange : "oklch(82% 0.01 80)", transformOrigin: "0 50%", transform: `rotate(${angleDeg}deg)`, transition: "background 0.3s ease" }}
-                />
-              );
-            })}
-
-            {/* Centre */}
-            <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: 100, height: 100, borderRadius: "50%", background: navy, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 2, boxShadow: "0 4px 20px oklch(10% 0.05 260 / 0.2)" }}>
-              <input value={centerName} onChange={(e) => setCenterName(e.target.value)} placeholder={t("Your name", "Nama Anda")} maxLength={20}
-                style={{ width: 80, background: "transparent", border: "none", borderBottom: `1px solid ${orange}`, color: offWhite, fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, textAlign: "center", outline: "none", padding: "2px 0", letterSpacing: "0.04em" }}
-              />
-              <span style={{ fontFamily: serif, fontSize: 9, color: "oklch(68% 0.025 80)", marginTop: 4, letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                {t("centre", "pusat")}
-              </span>
-            </div>
-
-            {/* Outer nodes */}
-            {WEB_NODES.map((node, i) => {
-              const angle = nodeAngles[i];
-              const rad = (angle - 90) * (Math.PI / 180);
-              const r = 38;
-              const cx = 50 + r * Math.cos(rad);
-              const cy = 50 + r * Math.sin(rad);
-              const filled = nodeValues[node.key]?.trim() !== "";
-              return (
-                <div key={node.key} style={{ position: "absolute", left: `${cx}%`, top: `${cy}%`, transform: "translate(-50%, -50%)", width: 96, zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                  <div style={{ width: 72, height: 72, borderRadius: "50%", background: filled ? orange : offWhite, border: `2px solid ${filled ? orange : "oklch(82% 0.01 80)"}`, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", transition: "background 0.3s ease, border-color 0.3s ease", boxShadow: filled ? `0 2px 12px ${orange}44` : "none" }}>
-                    {filled
-                      ? <span style={{ fontSize: 20, color: offWhite }}>✓</span>
-                      : <span style={{ fontFamily: serif, fontSize: 8, color: bodyText, letterSpacing: "0.04em", textTransform: "uppercase", textAlign: "center", padding: "0 8px", lineHeight: 1.3 }}>{lang === "en" ? node.en_label : node.id_label}</span>
-                    }
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Input fields */}
-          <div style={{ marginTop: 48, display: "flex", flexDirection: "column", gap: 20 }}>
-            {WEB_NODES.map((node, i) => {
-              const filled = nodeValues[node.key]?.trim() !== "";
-              return (
-                <div key={node.key} style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
-                  <div style={{ width: 32, height: 32, borderRadius: "50%", background: filled ? orange : "oklch(88% 0.01 80)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "background 0.3s ease", marginTop: 4 }}>
-                    {filled
-                      ? <span style={{ color: offWhite, fontSize: 14, fontWeight: 700 }}>✓</span>
-                      : <span style={{ color: "oklch(60% 0.01 80)", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700 }}>{i + 1}</span>
-                    }
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <label style={{ display: "block", fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
-                      {lang === "en" ? node.en_label : node.id_label}
-                    </label>
-                    <p style={{ fontFamily: serif, fontSize: 13, color: bodyText, marginBottom: 8, fontStyle: "italic" }}>
-                      {lang === "en" ? node.en_hint : node.id_hint}
-                    </p>
-                    <input
-                      type="text"
-                      value={nodeValues[node.key]}
-                      onChange={(e) => setNodeValues((prev) => ({ ...prev, [node.key]: e.target.value }))}
-                      placeholder={t("Name a person...", "Namai seseorang...")}
-                      style={{ width: "100%", padding: "10px 14px", fontFamily: serif, fontSize: "clamp(15px, 1.6vw, 17px)", color: bodyText, background: offWhite, border: `1px solid ${filled ? orange : "oklch(88% 0.01 80)"}`, borderRadius: 4, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s ease" }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {allFilled && (
-            <div style={{ marginTop: 48, background: navy, borderRadius: 6, padding: "40px", textAlign: "center" }}>
-              <p style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 26px)", fontStyle: "italic", color: offWhite, lineHeight: 1.75, marginBottom: 20 }}>
-                {t("This is your calling — not just the part in the middle.", "Inilah panggilanmu — bukan hanya bagian di tengahnya.")}
-              </p>
-              <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 18px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
-                {t(
-                  "You have named six people who are woven into the work God has called you to. Every one of them is part of the tapestry. None of it belongs to you alone.",
-                  "Anda telah menamai enam orang yang terjalin dalam pekerjaan yang Allah panggil Anda untuk lakukan. Setiap satu dari mereka adalah bagian dari permadani. Tidak ada yang menjadi milik Anda sendiri."
-                )}
-              </p>
-            </div>
-          )}
-          {!allFilled && filledCount > 0 && (
-            <p style={{ textAlign: "center", marginTop: 32, fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText, letterSpacing: "0.06em" }}>
-              {filledCount} / 6 {t("completed", "selesai")}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
-      </div>
-
       {/* ── Section 5: A Calling That Cannot Be Held ──────────────── */}
       <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
@@ -644,80 +460,6 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
         </div>
       </div>
 
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ height: 1, background: "oklch(90% 0.008 80)" }} />
-      </div>
-
-      {/* ── Section 7: Stay Here a While ──────────────────────────── */}
-      <div style={{ background: navy, padding: "80px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>
-            {t("Self-Reflection", "Refleksi Diri")}
-          </p>
-          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: offWhite, marginBottom: 16, lineHeight: 1.2, fontStyle: "italic", textAlign: "center" }}>
-            {t("Stay Here a While", "Tinggal Sejenak di Sini")}
-          </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(76% 0.03 80)", lineHeight: 1.75, textAlign: "center", marginBottom: 64 }}>
-            {t(
-              "These questions are not easy. They are worth sitting with slowly.",
-              "Pertanyaan-pertanyaan ini tidak mudah. Mereka layak untuk direnungkan dengan perlahan."
-            )}
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {([
-              {
-                en_title: "Who sent you?",
-                id_title: "Siapa yang mengutusmu?",
-                en_body: "Not who inspired you, or who encouraged you to think about it. Who actually sent you? Who said: we see this in you, we are behind you, we will answer for you? And do those people still know where you are — not your organisation's records, but the people themselves? If you have moved so far from the community that sent you that they could not describe what you do on a Tuesday, something worth examining has happened in the distance between you and them.",
-                id_body: "Bukan siapa yang menginspirasimu, atau siapa yang mendorongmu untuk memikirkannya. Siapa yang benar-benar mengutusmu? Siapa yang berkata: kami melihat ini dalam dirimu, kami mendukungmu, kami akan bertanggung jawab atasmu? Dan apakah orang-orang itu masih tahu di mana kamu berada — bukan catatan organisasimu, tetapi orangnya sendiri? Jika kamu telah bergerak begitu jauh dari komunitas yang mengutusmu sehingga mereka tidak bisa menggambarkan apa yang kamu lakukan pada hari Selasa, ada sesuatu yang layak diperiksa dalam jarak antara kamu dan mereka.",
-              },
-              {
-                en_title: "What part of the body are you?",
-                id_title: "Bagian tubuh apakah kamu?",
-                en_body: "Paul's question in 1 Corinthians 12 is not just a metaphor. It is a practical one. Every part of the body has a specific function and specific limits. The eye does excellent eye work. It does not try to walk. There is something clarifying about asking honestly: what does my particular part do well, and where have I been quietly trying to do the work of a part I am not? This is not a question about personality types. It is a question about the shape of your obedience.",
-                id_body: "Pertanyaan Paulus dalam 1 Korintus 12 bukan sekadar metafora. Itu adalah pertanyaan praktis. Setiap bagian tubuh memiliki fungsi spesifik dan batas spesifik. Mata melakukan pekerjaan mata dengan sangat baik. Ia tidak mencoba berjalan. Ada sesuatu yang menjernihkan ketika kita bertanya dengan jujur: apa yang bagian tubuhku ini lakukan dengan baik, dan di mana aku diam-diam mencoba melakukan pekerjaan bagian yang bukan aku? Ini bukan pertanyaan tentang tipe kepribadian. Ini pertanyaan tentang bentuk ketaatanmu.",
-              },
-              {
-                en_title: "Who are you passing this to?",
-                id_title: "Kepada siapa kamu meneruskan ini?",
-                en_body: "Is there someone, right now, who is learning something from being close to you that they could not learn from a book or a course? If the answer is no, it is worth asking why. It may be that you do not yet have the capacity or the right context. But it may also be that somewhere along the way, the calling quietly stopped being something you carry for others and became something you carry for yourself. Both deserve honest attention.",
-                id_body: "Apakah ada seseorang, saat ini, yang sedang belajar sesuatu karena dekat denganmu, sesuatu yang tidak bisa mereka pelajari dari buku atau kursus? Jika jawabannya tidak, ada baiknya bertanya mengapa. Mungkin kamu belum memiliki kapasitas atau konteks yang tepat. Tetapi mungkin juga karena di suatu titik dalam perjalanan ini, panggilan itu diam-diam berhenti menjadi sesuatu yang kamu emban untuk orang lain dan menjadi sesuatu yang kamu emban untuk dirimu sendiri. Keduanya layak mendapat perhatian yang jujur.",
-              },
-              {
-                en_title: "What would it mean to hold this more loosely?",
-                id_title: "Apa artinya memegang ini dengan lebih longgar?",
-                en_body: "Not to abandon it. Not to be careless with it. But to hold it in a way where, if God asked you tomorrow to set it down, hand it to someone else, or pick it up in a different form, you would be able to. A calling held too tightly can look like devotion from the inside. From the outside — and in the quiet moments when you are honest with yourself — it sometimes looks more like control. The question is not whether you are committed. It is whether what you are committed to has room to breathe, to grow, and to be given away.",
-                id_body: "Bukan untuk meninggalkannya. Bukan untuk tidak peduli dengannya. Tetapi memegangnya sedemikian rupa sehingga, jika Tuhan memintamu besok untuk meletakkannya, menyerahkannya kepada orang lain, atau mengangkatnya dalam bentuk yang berbeda, kamu bisa melakukannya. Panggilan yang dipegang terlalu erat bisa terlihat seperti pengabdian dari dalam. Dari luar — dan di momen-momen sunyi ketika kamu jujur dengan dirimu sendiri — kadang-kadang itu terlihat lebih seperti kontrol. Pertanyaannya bukan apakah kamu berkomitmen. Melainkan apakah hal yang kamu perjuangkan itu punya ruang untuk bernafas, untuk tumbuh, dan untuk diberikan.",
-              },
-            ] as const).map((q, i) => (
-              <div
-                key={i}
-                style={{
-                  borderTop: `1px solid oklch(35% 0.06 260)`,
-                  paddingTop: 48,
-                  paddingBottom: 48,
-                }}
-              >
-                <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: "50%", border: `2px solid ${orange}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
-                    <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 14, fontWeight: 700, color: orange }}>{i + 1}</span>
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 700, color: offWhite, marginBottom: 20, fontStyle: "italic", lineHeight: 1.3 }}>
-                      {lang === "en" ? q.en_title : q.id_title}
-                    </h3>
-                    <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 19px)", color: "oklch(72% 0.025 80)", lineHeight: 1.9, margin: 0 }}>
-                      {lang === "en" ? q.en_body : q.id_body}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ── Faith Anchor ───────────────────────────────────────────── */}
       <div style={{ padding: "80px 24px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24, textAlign: "center" }}>
@@ -736,6 +478,31 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
               "Panggilanmu tidak menjadi lebih kecil karena menjadi satu bagian dari banyak bagian. Ia menjadi sepenuhnya dirinya sendiri justru karena seluruh tubuh membutuhkannya."
             )}
           </p>
+        </div>
+      </div>
+
+      {/* ── Sources ────────────────────────────────────────────────── */}
+      <div style={{ padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
+        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+          {t("Sources", "Sumber")}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {[
+            { marker: "¹", text: t("RHR International — Loneliness: An Under-Diagnosed Epidemic Among New CEOs. Inc. Magazine.", "RHR International — Kesepian: Epidemi yang Kurang Terdiagnosis di Antara CEO Baru. Majalah Inc."), url: "https://www.inc.com/jessica-stillman/loneliness-an-under-diagnosed-epidemic-among-new-ceos.html" },
+            { marker: "²", text: t("Billy Drum — Burnout Among Cross-Cultural Workers. Lausanne Global Analysis, March 2024.", "Billy Drum — Kelelahan di Antara Pekerja Lintas Budaya. Analisis Global Lausanne, Maret 2024."), url: "https://lausanne.org/global-analysis/burnout-among-missionaries" },
+            { marker: "³", text: t("Ronald Koteskey — Attrition of Cross-Cultural Workers. CrossCulturalWorkers.com, citing ReMAP I & II (WEA, 1997 & 2007).", "Ronald Koteskey — Gesekan Pekerja Lintas Budaya. CrossCulturalWorkers.com, mengutip ReMAP I & II (WEA, 1997 & 2007)."), url: "https://crossculturalworkers.com/attrition" },
+            { marker: "⁴", text: t("Aaron Kuecker — Vocation in the Context of Community (Acts 13:1–3). Theology of Work Project.", "Aaron Kuecker — Panggilan dalam Konteks Komunitas (Kisah Para Rasul 13:1–3). Proyek Teologi Pekerjaan."), url: "https://www.theologyofwork.org/new-testament/acts/a-clash-of-kingdoms-community-and-powerbrokers-acts-13-19/vocation-in-the-context-of-community-acts-131-3/" },
+            { marker: "⁵", text: t("Fuller Seminary — Three Dimensions of Call. Next Faithful Step Resource Series.", "Fuller Seminary — Tiga Dimensi Panggilan. Seri Sumber Next Faithful Step."), url: "https://fuller.edu/next-faithful-step/resources/three-dimensions-of-call/" },
+            { marker: "⁶", text: t("Henri J.M. Nouwen — The Wounded Healer. Doubleday, 1972.", "Henri J.M. Nouwen — The Wounded Healer. Doubleday, 1972."), url: "https://www.henrinouwen.org/books/the-wounded-healer" },
+          ].map(({ marker, text, url }) => (
+            <div key={marker} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <span style={{ fontFamily: serif, fontSize: 14, color: orange, fontWeight: 700, flexShrink: 0, minWidth: 18 }}>{marker}</span>
+              <p style={{ fontFamily: serif, fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
+                {text}{" "}
+                <a href={url} target="_blank" rel="noopener noreferrer" style={{ color: orange, textDecoration: "underline" }}>{url.replace("https://", "")}</a>
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
