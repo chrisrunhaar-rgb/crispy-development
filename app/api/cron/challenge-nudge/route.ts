@@ -4,6 +4,69 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
+const NUDGE_BODIES: Record<number, string> = {
+  1:  "Your first insight is ready. Start strong.",
+  2:  "Session 2 is ready. The habit begins here.",
+  3:  "Three sessions in. Something worth reading today.",
+  4:  "Session 4 is ready. Your insight is waiting.",
+  5:  "Five sessions in. Keep building.",
+  6:  "Session 6 is ready. Your reading is waiting.",
+  7:  "Seven sessions in. You are building momentum.",
+  8:  "Session 8 is ready. Your insight is waiting.",
+  9:  "Nine sessions in. Keep going.",
+  10: "Ten sessions in. Your reading is ready.",
+  11: "Session 11 is ready. Eleven sessions of leadership thinking.",
+  12: "Twelve sessions in. Your insight is waiting.",
+  13: "Session 13 is ready. Keep building.",
+  14: "Fourteen sessions in. Your reading is waiting.",
+  15: "Session 15 is ready. A quarter of the way there.",
+  16: "Sixteen sessions in. Your insight is waiting.",
+  17: "Session 17 is ready. Keep going.",
+  18: "Eighteen sessions in. Your reading is waiting.",
+  19: "Session 19 is ready. Your insight is waiting.",
+  20: "Twenty sessions in. One third of the way there.",
+  21: "Session 21 is ready. Keep building.",
+  22: "Twenty-two sessions in. Your reading is waiting.",
+  23: "Session 23 is ready. Your insight is waiting.",
+  24: "Twenty-four sessions in. Keep going.",
+  25: "Session 25 is ready. Approaching the halfway point.",
+  26: "Twenty-six sessions in. Your reading is waiting.",
+  27: "Session 27 is ready. Your insight is waiting.",
+  28: "Twenty-eight sessions in. Keep building.",
+  29: "Session 29 is ready. One away from halfway.",
+  30: "Thirty sessions in. Halfway there. Your reading is ready.",
+  31: "Session 31 is ready. Past the halfway point.",
+  32: "Thirty-two sessions in. Your insight is waiting.",
+  33: "Session 33 is ready. Keep going.",
+  34: "Thirty-four sessions in. Your reading is waiting.",
+  35: "Session 35 is ready. Your insight is waiting.",
+  36: "Thirty-six sessions in. Keep building.",
+  37: "Session 37 is ready. Your reading is waiting.",
+  38: "Thirty-eight sessions in. Your insight is waiting.",
+  39: "Session 39 is ready. Keep going.",
+  40: "Forty sessions in. Two thirds of the way there.",
+  41: "Session 41 is ready. Your insight is waiting.",
+  42: "Forty-two sessions in. Keep building.",
+  43: "Session 43 is ready. Your reading is waiting.",
+  44: "Forty-four sessions in. Your insight is waiting.",
+  45: "Session 45 is ready. Forty-five sessions of leadership growth.",
+  46: "Fourteen sessions to go. Your reading is ready.",
+  47: "Thirteen sessions to go. Your insight is waiting.",
+  48: "Twelve sessions to go. Keep going.",
+  49: "Eleven sessions to go. Your reading is ready.",
+  50: "Ten sessions to go. Your insight is waiting.",
+  51: "Nine sessions to go. Your reading is ready.",
+  52: "Eight sessions to go. Keep building.",
+  53: "Seven sessions to go. Your insight is waiting.",
+  54: "Six sessions to go. Your reading is ready.",
+  55: "Five sessions to go. Almost there.",
+  56: "Four sessions to go. Your insight is waiting.",
+  57: "Three sessions to go. Your reading is ready.",
+  58: "Two sessions to go. Keep going.",
+  59: "One session left after this. Your insight is waiting.",
+  60: "Final session. Your last insight is ready. Finish strong.",
+};
+
 export async function GET(req: Request) {
   const authHeader = req.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -44,9 +107,10 @@ export async function GET(req: Request) {
       if (!subs || subs.length === 0) return;
 
       const day = enrollment.current_day;
+      const body = NUDGE_BODIES[day] ?? "Your insight is waiting.";
       const payload = JSON.stringify({
-        title: `Your Day ${day} reading is ready 📖`,
-        body: "Don't break your streak — your insight is waiting.",
+        title: `Influential Leadership Challenge - Day ${day}`,
+        body,
         data: { url: `/challenge/day/${day}` },
         tag: "challenge-nudge",
       });
