@@ -52,10 +52,10 @@ const SPHERES: {
     id_subtitle: "Pemeliharaan Tuhan untuk kamu",
     en_desc: "The foundation of everything. God is not a supervisor tracking your output. He is the shepherd who actively leads you to rest and restores your soul. Before you build any structure, you must believe that God's care for you is not contingent on your performance. He cares for the vessel, not just the mission.",
     id_desc: "Fondasi dari segalanya. Tuhan bukan pengawas yang melacak outputmu. Ia adalah gembala yang secara aktif membimbingmu ke tempat istirahat dan memulihkan jiwamu. Sebelum kamu membangun struktur apapun, kamu harus percaya bahwa pemeliharaan Tuhan terhadapmu tidak tergantung pada kinerjamu. Ia merawat bejana, bukan hanya misi.",
-    en_examples: ["Daily communion with God -- not as duty but as source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
-    id_examples: ["Persekutuan harian dengan Tuhan -- bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika kamu beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
-    en_question: "When did you last come to God not to report, request, or produce -- but simply to be held? What would it take to protect that space this week?",
-    id_question: "Kapan terakhir kali kamu datang kepada Tuhan bukan untuk melaporkan, meminta, atau menghasilkan -- tetapi sekadar untuk ditopang? Apa yang diperlukan untuk melindungi ruang itu minggu ini?",
+    en_examples: ["Daily communion with God, not as a duty but as a source", "Prayer as honest conversation, not performance", "Trusting that God holds the mission when you step away", "Reading Scripture as nourishment, not information"],
+    id_examples: ["Persekutuan harian dengan Tuhan, bukan sebagai kewajiban tetapi sebagai sumber", "Doa sebagai percakapan jujur, bukan pertunjukan", "Mempercayai bahwa Tuhan memegang misi ketika kamu beristirahat", "Membaca Kitab Suci sebagai makanan rohani, bukan informasi"],
+    en_question: "When did you last come to God not to report, request, or produce, but simply to be held? What would it take to protect that space this week?",
+    id_question: "Kapan terakhir kali kamu datang kepada Tuhan bukan untuk melaporkan, meminta, atau menghasilkan, tetapi sekadar untuk ditopang? Apa yang diperlukan untuk melindungi ruang itu minggu ini?",
     color: navy,
   },
   {
@@ -65,12 +65,12 @@ const SPHERES: {
     id_title: "Perawatan Diri",
     en_subtitle: "Your personal health architecture",
     id_subtitle: "Arsitektur kesehatan pribadi kamu",
-    en_desc: "Self-care is not indulgence -- it is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
-    id_desc: "Perawatan diri bukan kemewahan -- itu adalah penatalayanan. Kamu adalah instrumen yang dipilih Tuhan untuk digunakan. Cara kamu mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitasmu untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
-    en_examples: ["Consistent sleep (7 to 8 hours) as a non-negotiable", "Physical movement -- whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
-    id_examples: ["Tidur yang konsisten (7 hingga 8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik -- apapun yang sesuai dengan konteks dan tubuhmu", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang kamu tanggung"],
-    en_question: "Which of the three -- body, mind, or spirit -- is most depleted right now? What is one specific thing you could protect for it this week?",
-    id_question: "Di antara ketiganya -- tubuh, pikiran, atau roh -- mana yang paling terkuras saat ini? Apa satu hal konkret yang bisa kamu lindungi untuknya minggu ini?",
+    en_desc: "Self-care is not indulgence. It is stewardship. You are the instrument God has chosen to use. The way you manage your body, mind, and spirit directly determines your capacity to love others and lead well. Neglect here is not humility; it is poor stewardship of a resource that belongs to God.",
+    id_desc: "Perawatan diri bukan kemewahan. Itu adalah penatalayanan. Kamu adalah instrumen yang dipilih Tuhan untuk digunakan. Cara kamu mengelola tubuh, pikiran, dan roh secara langsung menentukan kapasitasmu untuk mengasihi orang lain dan memimpin dengan baik. Mengabaikan hal ini bukan kerendahan hati; itu adalah penatalayanan yang buruk atas sumber daya yang menjadi milik Tuhan.",
+    en_examples: ["Consistent sleep (7 to 8 hours) as a non-negotiable", "Physical movement, whatever fits your context and body", "Mental rest: time without inputs, screens, or demands", "Emotional awareness: naming what you're carrying"],
+    id_examples: ["Tidur yang konsisten (7 hingga 8 jam) sebagai hal yang tidak bisa ditawar", "Gerak fisik, apapun yang sesuai dengan konteks dan tubuhmu", "Istirahat mental: waktu tanpa masukan, layar, atau tuntutan", "Kesadaran emosional: menamakan apa yang kamu tanggung"],
+    en_question: "Which of the three, body, mind, or spirit, is most depleted right now? What is one specific thing you could protect for it this week?",
+    id_question: "Di antara ketiganya, tubuh, pikiran, atau roh, mana yang paling terkuras saat ini? Apa satu hal konkret yang bisa kamu lindungi untuknya minggu ini?",
     color: orange,
   },
   {
@@ -80,12 +80,12 @@ const SPHERES: {
     id_title: "Perawatan Bersama",
     en_subtitle: "Teammates who know the real weight",
     id_subtitle: "Rekan tim yang mengenal beban nyata",
-    en_desc: "The people you work alongside are not just colleagues -- they are potential co-sustainers. Mutual care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
-    id_desc: "Orang-orang yang bekerja bersamamu bukan sekadar rekan kerja -- mereka adalah pemelihara bersama yang potensial. Perawatan bersama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
-    en_examples: ["Regular honest check-ins with a trusted peer -- not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
-    id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya -- bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
-    en_question: "Who on your team is watching your pace right now -- and what signals are you giving them about what is acceptable for them to carry?",
-    id_question: "Siapa di timmu yang sedang mengamati langkahmu saat ini -- dan sinyal apa yang kamu berikan kepada mereka tentang apa yang boleh mereka tanggung?",
+    en_desc: "The people you work alongside are not just colleagues. They are potential co-sustainers. Mutual care happens when teammates hold one another's burdens, tell each other the truth, and create space to be human. It requires intentionality: in high-performance cultures, this care is often the first casualty of busyness.",
+    id_desc: "Orang-orang yang bekerja bersamamu bukan sekadar rekan kerja. Mereka adalah pemelihara bersama yang potensial. Perawatan bersama terjadi ketika anggota tim saling menanggung beban, saling mengatakan kebenaran, dan menciptakan ruang untuk menjadi manusia. Ini membutuhkan kesengajaan: dalam budaya berkinerja tinggi, perawatan ini sering menjadi korban pertama dari kesibukan.",
+    en_examples: ["Regular honest check-ins with a trusted peer, not just task updates", "Permission to name fatigue without it being seen as weakness", "Cross-cultural teams: acknowledge that care languages differ", "Celebrating wins together, not just pushing through to the next challenge"],
+    id_examples: ["Check-in jujur secara teratur dengan rekan yang dipercaya, bukan hanya pembaruan tugas", "Izin untuk mengungkapkan kelelahan tanpa dianggap sebagai kelemahan", "Tim lintas budaya: akui bahwa bahasa kepedulian berbeda-beda", "Merayakan kemenangan bersama, bukan hanya terus mendorong ke tantangan berikutnya"],
+    en_question: "Who on your team is watching your pace right now, and what signals are you giving them about what is acceptable for them to carry?",
+    id_question: "Siapa di timmu yang sedang mengamati langkahmu saat ini, dan sinyal apa yang kamu berikan kepada mereka tentang apa yang boleh mereka tanggung?",
     color: navy,
   },
   {
@@ -95,12 +95,12 @@ const SPHERES: {
     id_title: "Perawatan dari Pengirim",
     en_subtitle: "Your agency, church, or organisation",
     id_subtitle: "Lembaga, gereja, atau organisasi kamu",
-    en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing -- not just their output. This includes adequate financial support, regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution -- not just more personal resilience.",
-    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka -- bukan hanya output mereka. Ini termasuk dukungan keuangan yang memadai, check-in pastoral yang teratur, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadimu. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural -- bukan hanya lebih banyak ketahanan pribadi.",
+    en_desc: "Sustainable leaders need a sending community that actively invests in their wellbeing, not just their output. This includes adequate financial support, regular pastoral check-ins, accountability structures, and genuine interest in your personal flourishing. If this is missing or broken, that is a structural problem requiring structural solution, not just more personal resilience.",
+    id_desc: "Pemimpin yang berkelanjutan membutuhkan komunitas pengirim yang secara aktif berinvestasi dalam kesejahteraan mereka, bukan hanya output mereka. Ini termasuk dukungan keuangan yang memadai, check-in pastoral yang teratur, struktur akuntabilitas, dan minat sejati dalam pertumbuhan pribadimu. Jika ini hilang atau rusak, itu adalah masalah struktural yang memerlukan solusi struktural, bukan hanya lebih banyak ketahanan pribadi.",
     en_examples: ["Annual review conversations that include wellbeing, not just performance", "Financial support that removes economic stress", "A pastor or mentor who knows your personal situation", "Clear re-entry support and debriefing after difficult seasons"],
     id_examples: ["Percakapan tinjauan tahunan yang mencakup kesejahteraan, bukan hanya kinerja", "Dukungan keuangan yang menghilangkan tekanan ekonomi", "Seorang pendeta atau mentor yang mengenal situasi pribadimu", "Dukungan kepulangan dan debriefing yang jelas setelah musim-musim yang sulit"],
-    en_question: "What is one thing your sending community doesn't know about how you are really doing right now -- and what would it take to tell them before the end of this month? If your sender relationship is healthy, what is one way you could go deeper in it?",
-    id_question: "Apa satu hal yang tidak diketahui komunitas pengirimmu tentang kondisimu yang sebenarnya saat ini -- dan apa yang diperlukan untuk memberitahu mereka sebelum akhir bulan ini? Jika hubungan pengirimmu sehat, apa satu cara kamu bisa memperdalamnya?",
+    en_question: "What is one thing your sending community doesn't know about how you are really doing right now, and what would it take to tell them before the end of this month? If your sender relationship is healthy, what is one way you could go deeper in it?",
+    id_question: "Apa satu hal yang tidak diketahui komunitas pengirimmu tentang kondisimu yang sebenarnya saat ini, dan apa yang diperlukan untuk memberitahu mereka sebelum akhir bulan ini? Jika hubungan pengirimmu sehat, apa satu cara kamu bisa memperdalamnya?",
     color: navy,
   },
   {
@@ -110,10 +110,10 @@ const SPHERES: {
     id_title: "Perawatan Spesialis",
     en_subtitle: "Professional support when you need it",
     id_subtitle: "Dukungan profesional saat kamu membutuhkannya",
-    en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care -- a counsellor, therapist, psychologist, doctor, or spiritual director -- is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
-    id_desc: "Ada saat-saat ketika beban yang kamu tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional -- konselor, terapis, psikolog, dokter, atau direktur spiritual -- bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
-    en_examples: ["Regular counselling or therapy -- preventive, not just crisis response", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
-    id_examples: ["Konseling atau terapi teratur -- preventif, bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
+    en_desc: "There are moments when the weight you carry requires more than a good friend, a caring team, or a supportive organisation. Professional care (a counsellor, therapist, psychologist, doctor, or spiritual director) is not a sign of failure. It is the wise use of a resource God has provided. In many cross-cultural contexts, seeking specialist care carries stigma. That stigma costs lives and ministries.",
+    id_desc: "Ada saat-saat ketika beban yang kamu tanggung membutuhkan lebih dari sekadar teman yang baik, tim yang peduli, atau organisasi yang mendukung. Perawatan profesional (konselor, terapis, psikolog, dokter, atau direktur spiritual) bukan tanda kegagalan. Itu adalah penggunaan bijak dari sumber daya yang telah Tuhan sediakan. Dalam banyak konteks lintas budaya, mencari perawatan spesialis membawa stigma. Stigma itu merugikan kehidupan dan pelayanan.",
+    en_examples: ["Regular counselling or therapy, preventive rather than crisis response only", "Medical check-ups, including mental health screening", "A spiritual director who provides structured reflection", "Crisis debriefing after traumatic field experiences"],
+    id_examples: ["Konseling atau terapi teratur, preventif bukan hanya respons krisis", "Pemeriksaan kesehatan rutin, termasuk skrining kesehatan mental", "Seorang direktur spiritual yang memberikan refleksi terstruktur", "Debriefing krisis setelah pengalaman lapangan yang traumatis"],
     en_question: "Is there something you are carrying that would benefit from a professional conversation? What has been the barrier to seeking it?",
     id_question: "Apakah ada sesuatu yang kamu tanggung yang akan mendapat manfaat dari percakapan profesional? Apa yang selama ini menjadi hambatan untuk mencarinya?",
     color: navy,
@@ -154,8 +154,8 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Plenty of room", id_anchor_high: "Banyak ruang",
       },
       {
-        en: "How sustainable does your current pace feel -- could you maintain it for another six months without significant personal cost?",
-        id: "Seberapa berkelanjutan kecepatan kerjamu saat ini -- bisakah kamu mempertahankannya selama enam bulan lagi tanpa biaya pribadi yang signifikan?",
+        en: "How sustainable does your current pace feel? Could you maintain it for another six months without significant personal cost?",
+        id: "Seberapa berkelanjutan kecepatan kerjamu saat ini? Bisakah kamu mempertahankannya selama enam bulan lagi tanpa biaya pribadi yang signifikan?",
         en_anchor_low: "Unsustainable", id_anchor_low: "Tidak berkelanjutan",
         en_anchor_high: "Sustainable", id_anchor_high: "Berkelanjutan",
       },
@@ -212,14 +212,14 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
-        en: "How connected do you feel to God's presence in your daily work and relationships -- not just in designated spiritual time?",
-        id: "Seberapa terhubung kamu dengan kehadiran Tuhan dalam pekerjaan dan hubunganmu sehari-hari -- bukan hanya dalam waktu rohani yang ditentukan?",
+        en: "How connected do you feel to God's presence in your daily work and relationships, not just in designated spiritual time?",
+        id: "Seberapa terhubung kamu dengan kehadiran Tuhan dalam pekerjaan dan hubunganmu sehari-hari, bukan hanya dalam waktu rohani yang ditentukan?",
         en_anchor_low: "Disconnected", id_anchor_low: "Terputus",
         en_anchor_high: "Deeply connected", id_anchor_high: "Sangat terhubung",
       },
       {
-        en: "How honest is your prayer life -- does it include your doubts, fears, and frustrations, or mostly your requests and reports?",
-        id: "Seberapa jujur kehidupan doamu -- apakah mencakup keraguan, ketakutan, dan frustrasimu, atau sebagian besar hanya permintaan dan laporan?",
+        en: "How honest is your prayer life? Does it include your doubts, fears, and frustrations, or mostly your requests and reports?",
+        id: "Seberapa jujur kehidupan doamu? Apakah mencakup keraguan, ketakutan, dan frustrasimu, atau sebagian besar hanya permintaan dan laporan?",
         en_anchor_low: "Surface only", id_anchor_low: "Permukaan saja",
         en_anchor_high: "Fully honest", id_anchor_high: "Sepenuhnya jujur",
       },
@@ -238,20 +238,20 @@ const STRESS_AUDIT: StressAuditArea[] = [
     habitCategory: "Spirit",
     questions: [
       {
-        en: "How many people in your life have full access to how you are really doing -- not your ministry update, but your actual state?",
-        id: "Berapa banyak orang dalam hidupmu yang memiliki akses penuh ke kondisimu yang sesungguhnya -- bukan pembaruan pelayananmu, tetapi keadaanmu yang sebenarnya?",
+        en: "How many people in your life have full access to how you are really doing: not your ministry update, but your actual state?",
+        id: "Berapa banyak orang dalam hidupmu yang memiliki akses penuh ke kondisimu yang sesungguhnya: bukan pembaruan pelayananmu, tetapi keadaanmu yang sebenarnya?",
         en_anchor_low: "No one", id_anchor_low: "Tidak ada",
         en_anchor_high: "Several", id_anchor_high: "Beberapa",
       },
       {
-        en: "How much genuine mutual support exists in your closest work relationships -- can weight be shared?",
-        id: "Seberapa besar dukungan saling yang tulus dalam hubungan kerjamu yang paling dekat -- bisakah beban dibagi?",
+        en: "How much genuine mutual support exists in your closest work relationships? Can weight be shared?",
+        id: "Seberapa besar dukungan saling yang tulus dalam hubungan kerjamu yang paling dekat? Bisakah beban dibagi?",
         en_anchor_low: "Very little", id_anchor_low: "Sangat sedikit",
         en_anchor_high: "Significant", id_anchor_high: "Signifikan",
       },
       {
-        en: "How honest are your most important relationships -- can difficult things be said and received without damage?",
-        id: "Seberapa jujur hubunganmu yang paling penting -- bisakah hal-hal sulit dikatakan dan diterima tanpa merusak?",
+        en: "How honest are your most important relationships? Can difficult things be said and received without damage?",
+        id: "Seberapa jujur hubunganmu yang paling penting? Bisakah hal-hal sulit dikatakan dan diterima tanpa merusak?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
@@ -302,8 +302,8 @@ const STRESS_AUDIT: StressAuditArea[] = [
     habitCategory: "Spirit",
     questions: [
       {
-        en: "How present and genuinely connected are you with your family in the time you spend together -- not physically present but mentally elsewhere?",
-        id: "Seberapa hadir dan benar-benar terhubung kamu dengan keluargamu dalam waktu yang kamu habiskan bersama -- bukan sekadar hadir secara fisik tetapi pikiran di tempat lain?",
+        en: "How present and genuinely connected are you with your family in the time you spend together, not physically present but mentally elsewhere?",
+        id: "Seberapa hadir dan benar-benar terhubung kamu dengan keluargamu dalam waktu yang kamu habiskan bersama, bukan sekadar hadir secara fisik tetapi pikiran di tempat lain?",
         en_anchor_low: "Rarely present", id_anchor_low: "Jarang hadir",
         en_anchor_high: "Fully present", id_anchor_high: "Sepenuhnya hadir",
       },
@@ -340,8 +340,8 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Very clear", id_anchor_high: "Sangat jelas",
       },
       {
-        en: "How motivated do you feel by the work itself -- not by obligation or duty, but genuine engagement?",
-        id: "Seberapa termotivasi kamu oleh pekerjaan itu sendiri -- bukan karena kewajiban atau tugas, tetapi keterlibatan yang tulus?",
+        en: "How motivated do you feel by the work itself, not by obligation or duty, but genuine engagement?",
+        id: "Seberapa termotivasi kamu oleh pekerjaan itu sendiri, bukan karena kewajiban atau tugas, tetapi keterlibatan yang tulus?",
         en_anchor_low: "Disengaged", id_anchor_low: "Tidak terlibat",
         en_anchor_high: "Genuinely motivated", id_anchor_high: "Benar-benar termotivasi",
       },
@@ -372,14 +372,14 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
-        en: "How often do you actively process difficult experiences -- with a trusted person, through writing, or in honest prayer?",
-        id: "Seberapa sering kamu secara aktif memproses pengalaman sulit -- dengan orang yang dipercaya, melalui tulisan, atau dalam doa yang jujur?",
+        en: "How often do you actively process difficult experiences: with a trusted person, through writing, or in honest prayer?",
+        id: "Seberapa sering kamu secara aktif memproses pengalaman sulit: dengan orang yang dipercaya, melalui tulisan, atau dalam doa yang jujur?",
         en_anchor_low: "Almost never", id_anchor_low: "Hampir tidak pernah",
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
-        en: "How much unprocessed weight are you carrying right now -- things you have not had space to work through?",
-        id: "Seberapa besar beban yang belum diproses yang kamu tanggung saat ini -- hal-hal yang belum sempat kamu selesaikan?",
+        en: "How much unprocessed weight are you carrying right now: things you have not had space to work through?",
+        id: "Seberapa besar beban yang belum diproses yang kamu tanggung saat ini: hal-hal yang belum sempat kamu selesaikan?",
         en_anchor_low: "Very heavy", id_anchor_low: "Sangat berat",
         en_anchor_high: "Minimal", id_anchor_high: "Minimal",
       },
@@ -404,8 +404,8 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Regularly", id_anchor_high: "Secara teratur",
       },
       {
-        en: "How alive does your inner creative life feel right now -- your capacity for wonder, play, and making?",
-        id: "Seberapa hidup kehidupan kreatif batinmu saat ini -- kapasitasmu untuk kekaguman, bermain, dan berkreasi?",
+        en: "How alive does your inner creative life feel right now: your capacity for wonder, play, and making?",
+        id: "Seberapa hidup kehidupan kreatif batinmu saat ini: kapasitasmu untuk kekaguman, bermain, dan berkreasi?",
         en_anchor_low: "Dry", id_anchor_low: "Kering",
         en_anchor_high: "Alive", id_anchor_high: "Hidup",
       },
@@ -416,8 +416,8 @@ const STRESS_AUDIT: StressAuditArea[] = [
         en_anchor_high: "Meaningful time", id_anchor_high: "Waktu yang berarti",
       },
       {
-        en: "How often do you create or explore something simply for the joy of it -- with no outcome in mind?",
-        id: "Seberapa sering kamu menciptakan atau menjelajahi sesuatu hanya karena kesenangannya -- tanpa tujuan tertentu?",
+        en: "How often do you create or explore something simply for the joy of it, with no outcome in mind?",
+        id: "Seberapa sering kamu menciptakan atau menjelajahi sesuatu hanya karena kesenangannya, tanpa tujuan tertentu?",
         en_anchor_low: "Never", id_anchor_low: "Tidak pernah",
         en_anchor_high: "Often", id_anchor_high: "Sering",
       },
@@ -430,14 +430,14 @@ const STRESS_AUDIT: StressAuditArea[] = [
     habitCategory: "Body",
     questions: [
       {
-        en: "How consistently are you protecting one full day each week as genuine rest -- genuinely offline from your responsibilities?",
-        id: "Seberapa konsisten kamu melindungi satu hari penuh setiap minggu sebagai istirahat sejati -- benar-benar offline dari tanggung jawabmu?",
+        en: "How consistently are you protecting one full day each week as genuine rest, genuinely offline from your responsibilities?",
+        id: "Seberapa konsisten kamu melindungi satu hari penuh setiap minggu sebagai istirahat sejati, benar-benar offline dari tanggung jawabmu?",
         en_anchor_low: "Rarely", id_anchor_low: "Jarang",
         en_anchor_high: "Consistently", id_anchor_high: "Konsisten",
       },
       {
-        en: "How restful is the rest you take -- are you truly recovering, or are you resting while remaining mentally on?",
-        id: "Seberapa memulihkan istirahat yang kamu ambil -- apakah kamu benar-benar pulih, atau beristirahat sambil tetap aktif secara mental?",
+        en: "How restful is the rest you take? Are you truly recovering, or are you resting while remaining mentally on?",
+        id: "Seberapa memulihkan istirahat yang kamu ambil? Apakah kamu benar-benar pulih, atau beristirahat sambil tetap aktif secara mental?",
         en_anchor_low: "Not restful", id_anchor_low: "Tidak memulihkan",
         en_anchor_high: "Genuinely restorative", id_anchor_high: "Benar-benar memulihkan",
       },
@@ -716,20 +716,27 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
               onClick={handleSave}
               disabled={saved || isPending}
               style={{
-                padding: "14px 36px",
+                padding: "12px 28px",
                 background: "transparent",
-                border: `1.5px solid ${offWhite}`,
-                cursor: saved ? "default" : "pointer",
-                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 700,
-                color: offWhite, letterSpacing: "0.06em", borderRadius: 4,
+                border: `1.5px solid oklch(55% 0.05 260)`,
+                cursor: saved ? "default" : isPending ? "wait" : "pointer",
+                fontFamily: "Montserrat, sans-serif", fontSize: 13, fontWeight: 600,
+                color: offWhite, letterSpacing: "0.04em", borderRadius: 8,
                 opacity: saved ? 0.7 : 1,
+                display: "inline-flex", alignItems: "center", gap: 8,
               }}
             >
-              {isPending
-                ? t("Saving...", "Menyimpan...")
-                : saved
-                ? `✓ ${t("Saved to Dashboard", "Tersimpan di Dashboard")}`
-                : t("Save to Dashboard", "Simpan ke Dashboard")}
+              {saved ? (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                  {t("Saved to Dashboard", "Tersimpan di Dashboard")}
+                </>
+              ) : (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                  {isPending ? t("Saving...", "Menyimpan...") : t("Save to Dashboard", "Simpan ke Dashboard")}
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -820,141 +827,103 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             )}
           </p>
 
-          {/* Sphere visual */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 700, margin: "0 auto 48px" }}>
-            {SPHERES.map((sphere, i) => {
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, maxWidth: 700, margin: "0 auto 48px" }}>
+            {SPHERES.map((sphere) => {
               const isActive = activeSphere === sphere.key;
-              const indent = i * 20;
               return (
-                <button
-                  key={sphere.key}
-                  onClick={() => setActiveSphere(isActive ? null : sphere.key)}
-                  style={{
-                    textAlign: "left",
-                    marginLeft: indent,
-                    marginRight: indent,
-                    padding: "20px 28px",
-                    borderRadius: 10,
-                    border: `2px solid ${isActive ? sphere.color : "oklch(88% 0.008 260)"}`,
-                    background: isActive ? lightGray : offWhite,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 20,
-                    transition: "border-color 0.15s",
-                    boxShadow: isActive ? `0 0 0 4px ${sphere.color}20` : "none",
-                  }}
-                >
-                  <div style={{
-                    width: 36, height: 36, borderRadius: "50%",
-                    background: sphere.color,
-                    flexShrink: 0,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "white", fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 800, fontSize: 13,
-                  }}>
-                    {sphere.level}
-                  </div>
-                  <div style={{ flex: 1 }}>
+                <div key={sphere.key} style={{ borderBottom: `1px solid oklch(85% 0.008 260)` }}>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setActiveSphere(isActive ? null : sphere.key)}
+                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") setActiveSphere(isActive ? null : sphere.key); }}
+                    style={{
+                      textAlign: "left",
+                      padding: "20px 24px",
+                      background: isActive ? offWhite : "transparent",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 20,
+                      transition: "background 0.15s",
+                      outline: "none",
+                    }}
+                  >
                     <div style={{
-                      fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                      fontSize: 15, color: isActive ? sphere.color : navy, marginBottom: 2,
+                      width: 36, height: 36, borderRadius: "50%",
+                      background: sphere.color,
+                      flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      color: "white", fontFamily: "Montserrat, sans-serif",
+                      fontWeight: 800, fontSize: 13,
                     }}>
-                      {lang === "en" ? sphere.en_title : sphere.id_title}
+                      {sphere.level}
                     </div>
-                    <div style={{ fontFamily: serif, fontSize: 14, color: bodyText, fontStyle: "italic" }}>
-                      {lang === "en" ? sphere.en_subtitle : sphere.id_subtitle}
+                    <div style={{ flex: 1 }}>
+                      <div style={{
+                        fontFamily: "Montserrat, sans-serif", fontWeight: 800,
+                        fontSize: 15, color: isActive ? sphere.color : navy, marginBottom: 2,
+                      }}>
+                        {lang === "en" ? sphere.en_title : sphere.id_title}
+                      </div>
+                      <div style={{ fontFamily: serif, fontSize: 14, color: bodyText, fontStyle: "italic" }}>
+                        {lang === "en" ? sphere.en_subtitle : sphere.id_subtitle}
+                      </div>
                     </div>
+                    <span style={{
+                      fontSize: 18, color: sphere.color, fontWeight: 300,
+                      transform: isActive ? "rotate(45deg)" : "none",
+                      transition: "transform 0.2s", flexShrink: 0,
+                    }}>
+                      +
+                    </span>
                   </div>
-                  <span style={{
-                    fontSize: 18, color: sphere.color, fontWeight: 300,
-                    transform: isActive ? "rotate(45deg)" : "none",
-                    transition: "transform 0.2s", flexShrink: 0,
-                  }}>
-                    +
-                  </span>
-                </button>
+
+                  {isActive && (
+                    <div style={{
+                      padding: "0 24px 32px 80px",
+                      background: offWhite,
+                    }}>
+                      <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: bodyText, lineHeight: 1.85, marginBottom: 24 }}>
+                        {lang === "en" ? sphere.en_desc : sphere.id_desc}
+                      </p>
+                      <div style={{ marginBottom: 20 }}>
+                        <p style={{
+                          fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
+                          letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 10,
+                        }}>
+                          {t("What This Looks Like", "Bagaimana Ini Terlihat")}
+                        </p>
+                        <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                          {(lang === "en" ? sphere.en_examples : sphere.id_examples).map((ex, i) => (
+                            <li key={i} style={{
+                              display: "flex", gap: 10, alignItems: "flex-start",
+                              marginBottom: 8, fontFamily: serif,
+                              fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.6, color: bodyText,
+                            }}>
+                              <span style={{ color: sphere.color, fontWeight: 700, flexShrink: 0, marginTop: 3 }}>›</span>
+                              {ex}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div style={{
+                        background: lightGray, borderRadius: 10, padding: "18px 20px",
+                        borderLeft: `3px solid ${sphere.color}`,
+                      }}>
+                        <p style={{
+                          fontFamily: serif, fontSize: "clamp(14px, 1.5vw, 16px)",
+                          color: navy, lineHeight: 1.7, fontStyle: "italic", margin: 0,
+                        }}>
+                          {lang === "en" ? sphere.en_question : sphere.id_question}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
-
-          {/* Sphere detail panel */}
-          {activeSphereData && (
-            <div style={{
-              background: offWhite, borderRadius: 16, padding: "40px 36px",
-              border: `2px solid ${activeSphereData.color}40`,
-              marginBottom: 8,
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: "50%",
-                  background: activeSphereData.color,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "white", fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 800, fontSize: 18, flexShrink: 0,
-                }}>
-                  {activeSphereData.level}
-                </div>
-                <div>
-                  <div style={{
-                    fontFamily: "Montserrat, sans-serif", fontWeight: 800,
-                    fontSize: 20, color: activeSphereData.color,
-                  }}>
-                    {lang === "en" ? activeSphereData.en_title : activeSphereData.id_title}
-                  </div>
-                  <div style={{ fontFamily: serif, fontSize: 15, color: bodyText, fontStyle: "italic" }}>
-                    {lang === "en" ? activeSphereData.en_subtitle : activeSphereData.id_subtitle}
-                  </div>
-                </div>
-              </div>
-
-              <p style={{ fontFamily: serif, fontSize: "clamp(16px, 1.8vw, 18px)", color: bodyText, lineHeight: 1.85, marginBottom: 32 }}>
-                {lang === "en" ? activeSphereData.en_desc : activeSphereData.id_desc}
-              </p>
-
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 28 }}>
-                <div>
-                  <p style={{
-                    fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-                    letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12,
-                  }}>
-                    {t("What This Looks Like", "Bagaimana Ini Terlihat")}
-                  </p>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-                    {(lang === "en" ? activeSphereData.en_examples : activeSphereData.id_examples).map((ex, i) => (
-                      <li key={i} style={{
-                        display: "flex", gap: 10, alignItems: "flex-start",
-                        marginBottom: 10, fontFamily: serif,
-                        fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.6, color: bodyText,
-                      }}>
-                        <span style={{ color: activeSphereData.color, fontWeight: 700, flexShrink: 0, marginTop: 3 }}>›</span>
-                        {ex}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p style={{
-                    fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
-                    letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 12,
-                  }}>
-                    {t("Reflection", "Refleksi")}
-                  </p>
-                  <div style={{
-                    background: lightGray, borderRadius: 10, padding: "20px 22px",
-                    borderLeft: `3px solid ${activeSphereData.color}`,
-                  }}>
-                    <p style={{
-                      fontFamily: serif, fontSize: "clamp(14px, 1.5vw, 17px)",
-                      color: navy, lineHeight: 1.7, fontStyle: "italic", margin: 0,
-                    }}>
-                      {lang === "en" ? activeSphereData.en_question : activeSphereData.id_question}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
@@ -978,8 +947,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: bodyText, lineHeight: 1.85, maxWidth: 640, marginBottom: 40,
           }}>
             {t(
-              "Forty questions across ten areas. Answer honestly -- no one else will see this. The audit takes about five minutes and gives you a clear picture of where your energy is actually going.",
-              "Empat puluh pertanyaan di sepuluh area. Jawab dengan jujur -- tidak ada orang lain yang akan melihat ini. Audit ini membutuhkan sekitar lima menit dan memberikanmu gambaran jelas tentang ke mana energimu sebenarnya pergi."
+              "Forty questions across ten areas. Answer honestly. No one sees your results. The audit takes about five minutes and gives you a clear picture of where your energy is actually going.",
+              "Empat puluh pertanyaan di sepuluh area. Jawab dengan jujur. Hasilnya hanya untuk kamu. Audit ini membutuhkan sekitar lima menit dan memberikanmu gambaran jelas tentang ke mana energimu sebenarnya pergi."
             )}
           </p>
 
@@ -1021,7 +990,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
                 <div style={{ display: "flex", gap: 20, marginBottom: 16, flexWrap: "wrap" }}>
                   <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em" }}>
                     {t(`Area ${auditAreaIndex + 1} of ${STRESS_AUDIT.length}`, `Area ${auditAreaIndex + 1} dari ${STRESS_AUDIT.length}`)}
-                    {" — "}
+                    {": "}
                     {lang === "en" ? area.en_label : area.id_label}
                   </span>
                   <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText }}>
@@ -1076,86 +1045,124 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           {/* Audit complete: summary */}
           {auditComplete && lowestArea && (
             <div>
-              <h3 style={{ fontFamily: serif, fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 700, color: navy, marginBottom: 8, fontStyle: "italic" }}>
-                {t("Your Results", "Hasil Auditmu")}
-              </h3>
-              <p style={{ fontFamily: serif, fontSize: 16, color: bodyText, lineHeight: 1.75, marginBottom: 32 }}>
-                {t(
-                  "Your lowest area is highlighted. That is where to start -- not the whole framework, just one honest investment.",
-                  "Area terendahmu disorot. Di situlah kamu mulai -- bukan seluruh kerangka, cukup satu investasi yang jujur."
-                )}
-              </p>
-              {/* Area list */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 40 }}>
+              {/* Score overview */}
+              {(() => {
+                const allAvg = areaAverages.reduce((s, r) => s + r.avg, 0) / areaAverages.length;
+                const overallLabel = allAvg <= 2.5
+                  ? t("High Depletion", "Kelelahan Tinggi")
+                  : allAvg <= 3.5
+                  ? t("Moderate Strain", "Tekanan Sedang")
+                  : t("Healthy Margin", "Margin Sehat");
+                const overallColor = allAvg <= 2.5 ? "oklch(55% 0.18 25)" : allAvg <= 3.5 ? orange : "oklch(45% 0.14 145)";
+                return (
+                  <div style={{
+                    background: navy, borderRadius: 14, padding: "28px 32px", marginBottom: 32,
+                    display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap",
+                  }}>
+                    <div style={{ textAlign: "center", minWidth: 80 }}>
+                      <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 42, fontWeight: 800, color: overallColor, lineHeight: 1 }}>
+                        {allAvg.toFixed(1)}
+                      </div>
+                      <div style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, color: overallColor, letterSpacing: "0.1em", marginTop: 4 }}>
+                        {overallLabel}
+                      </div>
+                    </div>
+                    <div style={{ flex: 1, minWidth: 200 }}>
+                      <p style={{ fontFamily: serif, fontSize: "clamp(14px, 1.6vw, 16px)", color: "oklch(80% 0.03 80)", lineHeight: 1.75, margin: 0 }}>
+                        {allAvg <= 2.5
+                          ? t(
+                              "Significant depletion across multiple areas. This is the time for structural change, not more willpower. Start with your lowest area.",
+                              "Penipisan signifikan di beberapa area. Ini saatnya perubahan struktural, bukan kemauan yang lebih keras. Mulai dari area terendahmu."
+                            )
+                          : allAvg <= 3.5
+                          ? t(
+                              "You are managing, but margin is thin. Your lowest areas need focused attention before they become crises.",
+                              "Kamu bisa bertahan, tetapi ruang gerakmu sempit. Area terendahmu perlu perhatian terfokus sebelum menjadi krisis."
+                            )
+                          : t(
+                              "Your overall health looks solid. The practice now is maintenance: protect what is working and stay honest about any areas beginning to slip.",
+                              "Kesehatan keseluruhanmu terlihat solid. Praktik sekarang adalah pemeliharaan: lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun."
+                            )}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Lowest area callout */}
+              <div style={{
+                background: offWhite, border: `2px solid ${orange}`, borderRadius: 12,
+                padding: "20px 24px", marginBottom: 28,
+              }}>
+                <p style={{
+                  fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700,
+                  color: orange, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8,
+                }}>
+                  {t("Start Here", "Mulai Di Sini")}
+                </p>
+                <p style={{ fontFamily: serif, fontSize: "clamp(18px, 2vw, 22px)", color: navy, fontWeight: 700, fontStyle: "italic", marginBottom: 6, lineHeight: 1.3 }}>
+                  {lang === "en" ? lowestArea.area.en_label : lowestArea.area.id_label}
+                </p>
+                <p style={{ fontFamily: serif, fontSize: "clamp(14px, 1.5vw, 16px)", color: bodyText, margin: 0, lineHeight: 1.65 }}>
+                  {lowestArea.area.habitCategory === "Body"
+                    ? t(
+                        "Your body is the first to signal overload and the last to receive care. Open the Body section below to find one habit to protect this week.",
+                        "Tubuhmu adalah yang pertama memberi sinyal kelebihan beban dan yang terakhir menerima perawatan. Buka bagian Tubuh di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                      )
+                    : lowestArea.area.habitCategory === "Mind"
+                    ? t(
+                        "Mental overload accumulates silently until it becomes unmistakable. Open the Mind section below to find one habit to protect this week.",
+                        "Kelebihan beban mental terakumulasi diam-diam sampai menjadi tak terbantahkan. Buka bagian Pikiran di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                      )
+                    : t(
+                        "Spiritual depletion often hides beneath religious busyness. Open the Spirit section below to find one habit to protect this week.",
+                        "Penipisan rohani sering tersembunyi di balik kesibukan keagamaan. Buka bagian Roh di bawah untuk menemukan satu kebiasaan yang bisa kamu lindungi minggu ini."
+                      )}
+                </p>
+              </div>
+
+              {/* Area breakdown with bars */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32 }}>
                 {areaAverages.map(({ area, avg }) => {
                   const isLowest = area.key === lowestArea.area.key;
                   const scoreColor = getScoreColor(avg);
+                  const scoreLabel = avg <= 2 ? t("Critical", "Kritis") : avg <= 3 ? t("Watch", "Perhatikan") : t("Healthy", "Sehat");
                   return (
                     <div key={area.key} style={{
-                      display: "flex", alignItems: "center", gap: 16,
-                      padding: "14px 20px", borderRadius: 8,
-                      background: isLowest ? "oklch(94% 0.008 45)" : offWhite,
+                      padding: "12px 16px", borderRadius: 8,
+                      background: isLowest ? "oklch(98% 0.008 45)" : offWhite,
                       border: `1.5px solid ${isLowest ? orange : "oklch(88% 0.008 80)"}`,
                     }}>
-                      <div style={{ width: 12, height: 12, borderRadius: "50%", background: scoreColor, flexShrink: 0 }} />
-                      <span style={{ flex: 1, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 14, color: navy }}>
-                        {lang === "en" ? area.en_label : area.id_label}
-                        {isLowest && (
-                          <span style={{ marginLeft: 10, fontFamily: serif, fontWeight: 400, fontStyle: "italic", fontSize: 13, color: orange }}>
-                            {t("lowest", "terendah")}
-                          </span>
-                        )}
-                      </span>
-                      <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 16, color: scoreColor }}>
-                        {avg.toFixed(1)}
-                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+                        <span style={{ flex: 1, fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13, color: navy }}>
+                          {lang === "en" ? area.en_label : area.id_label}
+                          {isLowest && (
+                            <span style={{ marginLeft: 8, fontFamily: serif, fontWeight: 400, fontStyle: "italic", fontSize: 12, color: orange }}>
+                              {t("lowest", "terendah")}
+                            </span>
+                          )}
+                        </span>
+                        <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, color: scoreColor, letterSpacing: "0.06em" }}>
+                          {scoreLabel}
+                        </span>
+                        <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: 14, color: scoreColor, minWidth: 28, textAlign: "right" }}>
+                          {avg.toFixed(1)}
+                        </span>
+                      </div>
+                      <div style={{ height: 4, background: lightGray, borderRadius: 4, overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${(avg / 5) * 100}%`, background: scoreColor, borderRadius: 4, transition: "width 0.4s ease" }} />
+                      </div>
                     </div>
                   );
                 })}
               </div>
-              {/* Interpretive text */}
-              {(() => {
-                const allAvg = areaAverages.reduce((s, r) => s + r.avg, 0) / areaAverages.length;
-                return (
-                  <div style={{ background: navy, borderRadius: 14, padding: "28px 32px", marginBottom: 24 }}>
-                    <p style={{ fontFamily: serif, fontSize: "clamp(15px, 1.7vw, 17px)", color: "oklch(80% 0.03 80)", lineHeight: 1.8, margin: 0 }}>
-                      {allAvg <= 2.5
-                        ? t(
-                            "Your overall picture shows significant depletion. This is not the time for more willpower -- it is the time for structural change. Start with your lowest area.",
-                            "Gambaran keseluruhanmu menunjukkan penipisan yang signifikan. Ini bukan saatnya untuk lebih banyak kemauan -- ini saatnya untuk perubahan struktural. Mulai dari area terendahmu."
-                          )
-                        : allAvg <= 3.5
-                        ? t(
-                            "You are managing, but the margin is thin. Your lowest-scoring areas are worth focused attention before they become crises.",
-                            "Kamu bisa bertahan, tetapi ruang gerakmu sempit. Area dengan skor terendahmu layak mendapat perhatian terfokus sebelum menjadi krisis."
-                          )
-                        : t(
-                            "Your overall health looks solid. The practice now is maintenance -- protect what is working and stay honest about any areas that start to slip.",
-                            "Kesehatan keseluruhanmu terlihat solid. Praktik sekarang adalah pemeliharaan -- lindungi apa yang berhasil dan tetap jujur tentang area yang mulai menurun."
-                          )}
-                    </p>
-                  </div>
-                );
-              })()}
-              {/* Start here nudge */}
-              <div style={{ background: offWhite, border: `2px solid ${orange}`, borderRadius: 10, padding: "20px 24px", marginBottom: 24 }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontWeight: 700, color: orange, letterSpacing: "0.08em", marginBottom: 6 }}>
-                  {t("BASED ON YOUR LOWEST SCORE, START HERE:", "BERDASARKAN SKOR TERENDAHMU, MULAI DI SINI:")}
-                </p>
-                <p style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: navy, fontWeight: 700, fontStyle: "italic", margin: 0 }}>
-                  {lowestArea.area.habitCategory === "Body"
-                    ? t("Body habits -- scroll to Section IV and open Body", "Kebiasaan Tubuh -- gulir ke Bagian IV dan buka Tubuh")
-                    : lowestArea.area.habitCategory === "Mind"
-                    ? t("Mind habits -- scroll to Section IV and open Mind", "Kebiasaan Pikiran -- gulir ke Bagian IV dan buka Pikiran")
-                    : t("Spirit habits -- scroll to Section IV and open Spirit", "Kebiasaan Roh -- gulir ke Bagian IV dan buka Roh")}
-                </p>
-              </div>
-              {/* Retake button */}
+
+              {/* Retake */}
               <button
                 onClick={resetAudit}
                 style={{
                   padding: "12px 32px", background: "transparent",
-                  border: `1.5px solid ${navy}`, borderRadius: 4,
+                  border: `1.5px solid ${navy}`, borderRadius: 8,
                   fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: 13,
                   color: navy, letterSpacing: "0.04em", cursor: "pointer",
                 }}
@@ -1194,7 +1201,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             )}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {HABIT_CATEGORIES.map(cat => {
               const isOpen = openHabit === cat.key;
               return (
@@ -1306,8 +1313,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
           <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
             <p style={{ marginBottom: 28 }}>
               {t(
-                "A 2024 public health study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found 62.91% reporting high or very high burnout levels³ -- and research among cross-cultural field workers consistently identifies Sabbath neglect as a primary contributing factor.",
-                "Sebuah studi kesehatan masyarakat 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi³ -- dan penelitian di antara pekerja lapangan lintas budaya secara konsisten mengidentifikasi penolakan Sabat sebagai faktor penyebab utama."
+                "A 2024 public health study of 4,338 full-time workers across Malaysia, Singapore, the Philippines, and Indonesia found 62.91% reporting high or very high burnout levels³; research among cross-cultural field workers consistently identifies Sabbath neglect as a primary contributing factor.",
+                "Sebuah studi kesehatan masyarakat 2024 terhadap 4.338 pekerja penuh waktu di Malaysia, Singapura, Filipina, dan Indonesia menemukan 62,91% melaporkan tingkat kelelahan yang tinggi atau sangat tinggi³; penelitian di antara pekerja lapangan lintas budaya secara konsisten mengidentifikasi penolakan Sabat sebagai faktor penyebab utama."
               )}
             </p>
             <p style={{ marginBottom: 28 }}>
@@ -1611,8 +1618,8 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
             color: bodyText, lineHeight: 1.85, textAlign: "center", marginBottom: 48,
           }}>
             {t(
-              "Look back at your Stress Audit. Which area scored lowest? That is where you begin. Not the whole framework -- one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
-              "Lihat kembali Audit Stres kamu. Area mana yang mendapat skor terendah? Di situlah kamu memulai. Bukan seluruh kerangka -- satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu."
+              "Look back at your Stress Audit. Which area scored lowest? That is where you begin: not the whole framework, just one habit, one sphere, one honest conversation. Sustainable pace is built one protected investment at a time.",
+              "Lihat kembali Audit Stres kamu. Area mana yang mendapat skor terendah? Di situlah kamu memulai: bukan seluruh kerangka, cukup satu kebiasaan, satu lingkup, satu percakapan yang jujur. Kecepatan berkelanjutan dibangun satu investasi yang terlindungi pada satu waktu."
             )}
           </p>
           <p style={{
