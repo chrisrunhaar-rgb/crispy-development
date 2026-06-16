@@ -788,8 +788,9 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
       <LangToggle />
 
       {/* 1 — Hero */}
-      <div style={{ background: NAVY, padding: "clamp(64px, 10vw, 96px) 24px clamp(56px, 8vw, 80px)" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      <div style={{ background: NAVY, padding: "clamp(64px, 10vw, 96px) 24px clamp(56px, 8vw, 80px)", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/building-trust-across-cultures/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
           <p style={{ fontFamily: FONT_BODY, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: ORANGE, marginBottom: 16 }}>
             {t("Cross-Cultural — Module", "Lintas Budaya — Modul")}
           </p>

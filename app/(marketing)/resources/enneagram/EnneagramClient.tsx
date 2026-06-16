@@ -876,8 +876,11 @@ export default function EnneagramClient({
         background: quizState === "done" ? primaryType.bg : "oklch(22% 0.10 260)",
         padding: "4rem 2rem 3.5rem",
         transition: "background 0.6s ease",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "3rem", alignItems: "flex-start" }}>
+        {quizState !== "done" && <img src="/images/resources/enneagram/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />}
+        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "3rem", alignItems: "flex-start", position: "relative" }}>
           <div style={{ flex: 1 }}>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: 800,

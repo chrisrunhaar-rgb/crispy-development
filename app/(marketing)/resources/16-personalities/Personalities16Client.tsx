@@ -912,8 +912,9 @@ export default function Personalities16Client({
         `}</style>
 
         {/* ── HERO HEADER — Crispy Navy ── */}
-        <div style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "72px 24px 64px" }}>
-          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+        <div style={{ background: "oklch(22% 0.10 260)", color: "white", padding: "72px 24px 64px", position: "relative", overflow: "hidden" }}>
+          <img src="/images/resources/16-personalities/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+          <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
             <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: "'Montserrat', sans-serif" }}>
               {lang === "id" ? "Pengembangan Diri · Penilaian" : "Personal Development · Assessment"}
             </p>

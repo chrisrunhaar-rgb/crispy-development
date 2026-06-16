@@ -264,6 +264,7 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
         position: "relative",
         overflow: "hidden",
       }}>
+        <img src="/images/resources/leadership-altitudes/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{ position: "absolute", inset: 0, opacity: 0.06, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(65% 0.15 45) 0%, transparent 60%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
           {/* lang toggle */}

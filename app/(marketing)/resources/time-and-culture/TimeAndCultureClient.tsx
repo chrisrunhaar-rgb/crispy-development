@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 function L<T>(lang: string, en: T, id: T): T {
   return lang === "id" ? id : en;
@@ -1134,6 +1135,7 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
       <div style={{ background: NAVY, padding: "clamp(64px, 8vw, 96px) 24px clamp(56px, 7vw, 80px)", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/time-and-culture/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: ORANGE }} />
         <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle at 75% 50%, oklch(30% 0.12 260) 0%, transparent 60%)`, opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>
@@ -1632,25 +1634,15 @@ export default function TimeAndCultureClient({ isSaved: initialSaved }: Props) {
       </div>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: ORANGE, marginBottom: 16 }}>
-          {L(lang, "Sources", "Sumber")}
-        </p>
-        {[
-          "¹ Edward T. Hall — The Silent Language (Doubleday, 1959) — Introduced the foundational distinction between monochronic and polychronic time orientations in cultural anthropology.",
-          "² Edward T. Hall — The Dance of Life: The Other Dimension of Time (Anchor Press/Doubleday, 1983) — Expanded the monochronic/polychronic framework into a broader theory of cultural time grammars. Hall's typology is a widely cited descriptive framework; researchers have noted the categories resist precise empirical measurement (see source 7).",
-          "³ Richard Lewis — When Cultures Collide: Leading Across Cultures (Nicholas Brealey, 1996) — Added the Reactive time category and the Linear-Active typology, extending Hall's binary into a three-part model.",
-          "⁴ John S. Mbiti — African Religions and Philosophy (Heinemann, 1969) — Developed the Sasa/Zamani framework for understanding event-oriented and community-constituted time in many African cultural traditions.",
-          "⁵ Richard Brislin — Understanding Culture's Influence on Behavior (2nd ed., Harcourt, 2000); cited in cross-cultural management literature (c. 2003) — Introduced the practical clock-time vs. event-time distinction widely applied in international organizational research.",
-          "⁶ Robert Levine — A Geography of Time: The Temporal Misadventures of a Social Psychologist (BasicBooks, 1997) — Empirical cross-national research on pace of life, confirming that temporal experience varies significantly and consistently across societies.",
-          "⁷ Peter W. Cardon — 'A Critique of Hall's Contexting Model' (Journal of Business and Technical Communication, 2008) — Peer-reviewed critique noting that Hall's cultural categories, while descriptively useful, have resisted operationalization and precise empirical validation.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: ORANGE, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: BODY_TEXT, lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "¹ Edward T. Hall — The Silent Language (Doubleday, 1959) — Introduced the foundational distinction between monochronic and polychronic time orientations in cultural anthropology.",
+        "² Edward T. Hall — The Dance of Life: The Other Dimension of Time (Anchor Press/Doubleday, 1983) — Expanded the monochronic/polychronic framework into a broader theory of cultural time grammars. Hall's typology is a widely cited descriptive framework; researchers have noted the categories resist precise empirical measurement (see source 7).",
+        "³ Richard Lewis — When Cultures Collide: Leading Across Cultures (Nicholas Brealey, 1996) — Added the Reactive time category and the Linear-Active typology, extending Hall's binary into a three-part model.",
+        "⁴ John S. Mbiti — African Religions and Philosophy (Heinemann, 1969) — Developed the Sasa/Zamani framework for understanding event-oriented and community-constituted time in many African cultural traditions.",
+        "⁵ Richard Brislin — Understanding Culture's Influence on Behavior (2nd ed., Harcourt, 2000); cited in cross-cultural management literature (c. 2003) — Introduced the practical clock-time vs. event-time distinction widely applied in international organizational research.",
+        "⁶ Robert Levine — A Geography of Time: The Temporal Misadventures of a Social Psychologist (BasicBooks, 1997) — Empirical cross-national research on pace of life, confirming that temporal experience varies significantly and consistently across societies.",
+        "⁷ Peter W. Cardon — 'A Critique of Hall's Contexting Model' (Journal of Business and Technical Communication, 2008) — Peer-reviewed critique noting that Hall's cultural categories, while descriptively useful, have resisted operationalization and precise empirical validation.",
+      ]} lang={lang} />
 
       {/* ─── LONG-FORM SEO SECTION ──────────────────────────────────────────── */}
       <div style={{ background: LIGHT_GRAY, padding: "clamp(64px, 9vw, 88px) 24px" }}>

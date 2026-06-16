@@ -246,8 +246,9 @@ export default function RedLightGreenLightClient({
       <LangToggle />
 
       {/* HERO */}
-      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+      <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/red-light-green-light/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
           <p style={{ color: "oklch(65% 0.15 45)", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20 }}>
             {t("Team & Facilitation — Guide", "Tim & Fasilitasi — Panduan", "Team & Facilitatie — Gids")}
           </p>

@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => lang === "en" ? en : id;
@@ -1575,25 +1576,15 @@ export default function UnderstandingBurnoutClient({
       </section>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
-          Sources
-        </p>
-        {[
-          "¹ World Health Organization — Burn-out an \"occupational phenomenon\": International Classification of Diseases (ICD-11, 2019) — Establishes burnout as a syndrome of chronic workplace stress, the foundational classification used throughout this module.",
-          "² Christina Maslach & Michael P. Leiter — The Truth About Burnout (Jossey-Bass, 1997) — Defines the three-dimension model (exhaustion, cynicism, reduced efficacy) that underpins the MBI and most burnout research since.",
-          "³ Jesús Montero-Marín, Javier García-Campayo et al. — \"A newer and broader definition of burnout: Validation of the Burnout Clinical Subtype Questionnaire (BCSQ-36)\" (BMC Public Health, 2011) — Introduces the frenetic, underchallenged, and worn-out subtypes used in the assessment and spectrum diagram.",
-          "⁴ Arnold Bakker & Evangelia Demerouti — \"The Job Demands-Resources model: State of the art\" (Journal of Managerial Psychology, 2007) — The structural model explaining how demand-resource imbalance produces burnout regardless of individual resilience.",
-          "⁵ Bruce S. McEwen — \"Stressed or stressed out: What is the difference?\" (Journal of Psychiatry & Neuroscience, 2005) — Documents how chronic cortisol elevation impairs prefrontal cortex function and sensitises the amygdala, underpinning the neuroscience section.",
-          "⁶ Abdul Aziz & Ong — \"Prevalence and associated factors of burnout among working adults in Southeast Asia\" (Frontiers in Public Health, 2024) — Regional prevalence data providing context for cross-cultural ministry leaders in Southeast Asia.",
-          "⁷ Walter Brueggemann — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — Theological framing of Sabbath rest as a counter-cultural act of freedom, cited in the frenetic pathway.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: bodyText, lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "¹ World Health Organization — Burn-out an \"occupational phenomenon\": International Classification of Diseases (ICD-11, 2019) — Establishes burnout as a syndrome of chronic workplace stress, the foundational classification used throughout this module.",
+        "² Christina Maslach & Michael P. Leiter — The Truth About Burnout (Jossey-Bass, 1997) — Defines the three-dimension model (exhaustion, cynicism, reduced efficacy) that underpins the MBI and most burnout research since.",
+        "³ Jesús Montero-Marín, Javier García-Campayo et al. — \"A newer and broader definition of burnout: Validation of the Burnout Clinical Subtype Questionnaire (BCSQ-36)\" (BMC Public Health, 2011) — Introduces the frenetic, underchallenged, and worn-out subtypes used in the assessment and spectrum diagram.",
+        "⁴ Arnold Bakker & Evangelia Demerouti — \"The Job Demands-Resources model: State of the art\" (Journal of Managerial Psychology, 2007) — The structural model explaining how demand-resource imbalance produces burnout regardless of individual resilience.",
+        "⁵ Bruce S. McEwen — \"Stressed or stressed out: What is the difference?\" (Journal of Psychiatry & Neuroscience, 2005) — Documents how chronic cortisol elevation impairs prefrontal cortex function and sensitises the amygdala, underpinning the neuroscience section.",
+        "⁶ Abdul Aziz & Ong — \"Prevalence and associated factors of burnout among working adults in Southeast Asia\" (Frontiers in Public Health, 2024) — Regional prevalence data providing context for cross-cultural ministry leaders in Southeast Asia.",
+        "⁷ Walter Brueggemann — Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014) — Theological framing of Sabbath rest as a counter-cultural act of freedom, cited in the frenetic pathway.",
+      ]} lang={lang} />
 
       {/* Fade-in keyframe for emotion reflection */}
       <style>{`

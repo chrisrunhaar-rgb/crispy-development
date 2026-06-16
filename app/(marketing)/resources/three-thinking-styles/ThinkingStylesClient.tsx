@@ -7,6 +7,7 @@ import Link from "next/link";
 import { saveResourceToDashboard, saveThinkingStyleResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // -- QUIZ DATA -----------------------------------------------------------------
 
@@ -1052,24 +1053,14 @@ export default function ThinkingStylesClient({
 
       {/* ── Sources ── */}
       <div style={{ background: "oklch(95% 0.008 80)", padding: "0 24px 16px" }}>
-        <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-            Sources
-          </p>
-          {[
-            "¹ Daniel Kahneman — Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011) — Foundational account of System 1 (fast, intuitive) and System 2 (slow, analytical) cognition; the Conceptual style maps closely to deliberate Type 2 reasoning.",
-            "² Peter Senge — The Fifth Discipline: The Art and Practice of the Learning Organization (Doubleday, 1990) — Defines systems thinking as the discipline of seeing interrelationships and patterns of change rather than static snapshots; the basis for the Holistic style's description.",
-            "³ Richard E. Nisbett — The Geography of Thought: How Asians and Westerners Think Differently — and Why (Free Press, 2003) — Documents empirical cross-cultural differences between analytic (field-independent) and holistic (field-dependent, context-sensitive) cognitive orientations, directly relevant to cross-cultural team dynamics.",
-            "⁴ Michael Polanyi — The Tacit Dimension (Doubleday, 1966) — Articulates the concept of tacit knowledge — the kind of embodied, experiential knowing that exceeds formal articulation — which underpins the Intuitional style's description.",
-            "⁵ Gary Klein — Sources of Power: How People Make Decisions (MIT Press, 1998) — Research on naturalistic decision-making shows that experts in complex environments use pattern recognition and mental simulation rather than analytical comparison; grounds the Intuitional thinker's expertise claim.",
-            "⁶ Scott E. Page — The Difference: How the Power of Diversity Creates Better Groups, Firms, Schools, and Societies (Princeton University Press, 2007) — Formal and empirical argument that cognitive diversity — differences in how people represent problems and generate solutions — consistently improves group performance on complex tasks.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-            </div>
-          ))}
-        </div>
+        <SourcesDropdown sources={[
+          "¹ Daniel Kahneman — Thinking, Fast and Slow (Farrar, Straus and Giroux, 2011) — Foundational account of System 1 (fast, intuitive) and System 2 (slow, analytical) cognition; the Conceptual style maps closely to deliberate Type 2 reasoning.",
+          "² Peter Senge — The Fifth Discipline: The Art and Practice of the Learning Organization (Doubleday, 1990) — Defines systems thinking as the discipline of seeing interrelationships and patterns of change rather than static snapshots; the basis for the Holistic style's description.",
+          "³ Richard E. Nisbett — The Geography of Thought: How Asians and Westerners Think Differently — and Why (Free Press, 2003) — Documents empirical cross-cultural differences between analytic (field-independent) and holistic (field-dependent, context-sensitive) cognitive orientations, directly relevant to cross-cultural team dynamics.",
+          "⁴ Michael Polanyi — The Tacit Dimension (Doubleday, 1966) — Articulates the concept of tacit knowledge — the kind of embodied, experiential knowing that exceeds formal articulation — which underpins the Intuitional style's description.",
+          "⁵ Gary Klein — Sources of Power: How People Make Decisions (MIT Press, 1998) — Research on naturalistic decision-making shows that experts in complex environments use pattern recognition and mental simulation rather than analytical comparison; grounds the Intuitional thinker's expertise claim.",
+          "⁶ Scott E. Page — The Difference: How the Power of Diversity Creates Better Groups, Firms, Schools, and Societies (Princeton University Press, 2007) — Formal and empirical argument that cognitive diversity — differences in how people represent problems and generate solutions — consistently improves group performance on complex tasks.",
+        ]} lang={lang} />
       </div>
 
       {/* -- CTA -- */}

@@ -844,8 +844,9 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
     <div style={{ fontFamily: "var(--font-montserrat)" }}>
       <LangToggle />
       {/* Ã¢â€â‚¬Ã¢â€â‚¬ HERO Ã¢â€â‚¬Ã¢â€â‚¬ */}
-      <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+      <div style={{ background: BG_DARK, padding: "4rem 1.5rem 3rem", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/karunia-rohani/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <div style={{ maxWidth: "720px", margin: "0 auto", position: "relative" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", marginBottom: "1.5rem" }}>
             <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", color: PRIMARY, textTransform: "uppercase", margin: 0 }}>
               {lang === "id" ? "Assessment Ã‚Â· 20 menit" : "Assessment Ã‚Â· 20 minutes"}

@@ -185,6 +185,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
       {/* --- HERO ------------------------------------------------------------- */}
       <div style={{ background: navyOklch, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
+        <img src="/images/resources/cultural-intelligence/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         {/* Orange left-edge accent bar */}
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orangeOklch }} />
         {/* Subtle texture overlay */}

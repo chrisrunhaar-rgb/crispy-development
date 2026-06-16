@@ -427,7 +427,9 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
         background: navy,
         padding: "clamp(72px, 10vw, 96px) 24px clamp(64px, 9vw, 88px)",
         position: "relative",
+        overflow: "hidden",
       }}>
+        <img src="/images/resources/healthy-conflict/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
         <div style={{
           position: "absolute",
           left: 0,
