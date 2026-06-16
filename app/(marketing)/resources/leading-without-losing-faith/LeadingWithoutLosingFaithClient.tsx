@@ -216,7 +216,7 @@ const RESEARCH_BG_PARAS_EN = [
   `Researchers have distinguished between general burnout and something more specific: spiritual dryness. Büssing et al. (2013) developed a Spiritual Dryness Scale and administered it to 425 Catholic priests. Up to 40% experienced spiritual dryness occasionally; 13% reported it often or regularly. Crucially, workload (hours worked, parish size, responsibilities) did not predict spiritual dryness. Structural relief alone cannot resolve a spiritual problem. Dryness explained 44% of variance in daily spiritual experience and 30% of depressive symptoms, making it a significant vocational risk factor, not a minor inconvenience.`,
   `Retention studies reinforce the pattern. The ReMAP I study (Taylor, 1997) surveyed 551 mission organisations across 14 countries and found approximately 5.1% of cross-cultural workers leave annually, with 71% of departures preventable. The most common causes are inadequate spiritual preparation, lack of peer support, and unresolved personal concerns. The follow-up ReMAP II study found that high-retaining agencies averaged 17 years of worker service while low-retaining agencies averaged just 7, a ten-year difference driven primarily by relational health, not strategy. Compass Asia identifies a shame cycle specific to Southeast Asia: the belief that "if I had stronger faith I wouldn't struggle" creates silence that prevents workers from seeking the care that could sustain them.`,
   `Six foundations protect ministry leaders from burnout, according to NCLS Research (2024) drawing on data from 20+ Australian denominations: private spiritual practice, clarity of calling, a sense of self independent of role or approval, alignment between gifting and task, supportive close relationships, and clear boundaries. Of these, clarity of calling consistently reduced emotional exhaustion, suggesting that vocational grounding, not merely skill or support, is the core protective factor. The Engage! Study (Missio Nexus, 2010) found that healthy field community relationships ranked among the top five retention factors for cross-cultural workers. The antidote to drift is not heroic individual discipline; it is relational and communal.`,
-  `The Christian tradition has always recognised this. Afaradi's peer-reviewed study (2025) of 1 Kings 19 identifies three causes of Elijah's crisis: psychological pressure, despair from perceived ministry failure, and profound isolation, the belief that he alone remained faithful. God's restoration follows a deliberate sequence: physical care before spiritual instruction, compassionate presence rather than rebuke, and renewed commission with succession arrangements. Ruth Haley Barton diagnoses leadership depletion through Moses: when a leader becomes "tired of helping others enjoy God," the soul signals that performance has displaced presence. Henri Nouwen argued that authentic ministry flows not from professional competence but from acknowledged woundedness: "our service will not be perceived as authentic unless it comes from a heart wounded by the suffering about which we speak." These are not a therapeutic softening of the call. They are its structural requirements.`,
+  `The Christian tradition has always recognised this. Afaradi's theological study (2025) of 1 Kings 19 identifies three causes of Elijah's crisis: psychological pressure, despair from perceived ministry failure, and profound isolation, the belief that he alone remained faithful. God's restoration follows a deliberate sequence: physical care before spiritual instruction, compassionate presence rather than rebuke, and renewed commission with succession arrangements. Ruth Haley Barton diagnoses leadership depletion through Moses: when a leader becomes "tired of helping others enjoy God," the soul signals that performance has displaced presence. Henri Nouwen argued that authentic ministry flows not from professional competence but from acknowledged woundedness: "our service will not be perceived as authentic unless it comes from a heart wounded by the suffering about which we speak." These are not a therapeutic softening of the call. They are its structural requirements.`,
 ];
 
 const RESEARCH_BG_PARAS_ID = [
@@ -224,7 +224,7 @@ const RESEARCH_BG_PARAS_ID = [
   `Para peneliti telah membedakan antara kelelahan umum dan sesuatu yang lebih spesifik: kekeringan rohani. Büssing et al. (2013) mengembangkan Skala Kekeringan Rohani dan menerapkannya pada 425 imam Katolik. Hingga 40% mengalami kekeringan rohani kadang-kadang; 13% melaporkannya sering atau secara teratur. Yang krusial, beban kerja (jam kerja, ukuran jemaat, tanggung jawab) tidak memprediksi kekeringan rohani. Bantuan struktural saja tidak dapat menyelesaikan masalah rohani. Kekeringan menjelaskan 44% varians dalam pengalaman rohani sehari-hari dan 30% gejala depresi, menjadikannya faktor risiko panggilan yang signifikan, bukan ketidaknyamanan kecil.`,
   `Studi retensi memperkuat pola ini. Studi ReMAP I (Taylor, 1997) mensurvei 551 organisasi misi di 14 negara dan menemukan sekitar 5,1% pekerja lintas budaya pergi setiap tahun, dengan 71% dari kepergian tersebut dapat dicegah. Penyebab paling umum adalah persiapan rohani yang tidak memadai, kurangnya dukungan rekan, dan masalah pribadi yang tidak terselesaikan. Studi ReMAP II lanjutan menemukan bahwa lembaga dengan retensi tinggi rata-rata 17 tahun masa kerja sementara lembaga retensi rendah hanya rata-rata 7 tahun, perbedaan sepuluh tahun yang didorong terutama oleh kesehatan relasional, bukan strategi. Compass Asia mengidentifikasi siklus rasa malu yang spesifik untuk Asia Tenggara: keyakinan bahwa "jika iman saya lebih kuat, saya tidak akan berjuang" menciptakan keheningan yang mencegah pekerja mencari perawatan yang dapat menopang mereka.`,
   `Enam fondasi melindungi pemimpin pelayanan dari kelelahan, menurut NCLS Research (2024) berdasarkan data dari 20+ denominasi Australia: praktik rohani pribadi, kejelasan panggilan, rasa diri yang tidak bergantung pada peran atau persetujuan, keselarasan antara karunia dan tugas, hubungan dekat yang mendukung, dan batasan yang jelas. Dari keenam ini, kejelasan panggilan secara konsisten mengurangi kelelahan emosional, menunjukkan bahwa pengakaran panggilan, bukan hanya keterampilan atau dukungan, adalah faktor pelindung inti. Studi Engage! (Missio Nexus, 2010) menemukan bahwa hubungan komunitas lapangan yang sehat berada di antara lima faktor retensi teratas bagi pekerja lintas budaya. Penawar terhadap hanyut bukan disiplin heroik individual; ini adalah relasional dan komunal.`,
-  `Tradisi Kristen selalu mengenali ini. Studi teologis yang ditinjau sejawat oleh Afaradi (2025) tentang 1 Raja-raja 19 mengidentifikasi tiga penyebab krisis Elia: tekanan psikologis, keputusasaan dari kegagalan pelayanan yang dirasakan, dan isolasi yang mendalam, keyakinan bahwa hanya ia yang tetap setia. Pemulihan Allah mengikuti urutan yang disengaja: perawatan fisik sebelum instruksi rohani, kehadiran yang penuh kasih daripada teguran, dan komisi baru dengan pengaturan suksesi. Ruth Haley Barton mendiagnosis kelelahan kepemimpinan melalui Musa: ketika seorang pemimpin menjadi "lelah membantu orang lain menikmati Tuhan," jiwa memberi sinyal bahwa kinerja telah menggantikan kehadiran. Henri Nouwen berpendapat bahwa pelayanan yang otentik mengalir bukan dari kompetensi profesional tetapi dari kerentanan yang diakui: "pelayanan kita tidak akan dianggap otentik kecuali datang dari hati yang terluka oleh penderitaan yang kita bicarakan." Ini bukan pelunakan terapeutik dari panggilan. Ini adalah persyaratan strukturalnya.`,
+  `Tradisi Kristen selalu mengenali ini. Studi teologis oleh Afaradi (2025) tentang 1 Raja-raja 19 mengidentifikasi tiga penyebab krisis Elia: tekanan psikologis, keputusasaan dari kegagalan pelayanan yang dirasakan, dan isolasi yang mendalam, keyakinan bahwa hanya ia yang tetap setia. Pemulihan Allah mengikuti urutan yang disengaja: perawatan fisik sebelum instruksi rohani, kehadiran yang penuh kasih daripada teguran, dan komisi baru dengan pengaturan suksesi. Ruth Haley Barton mendiagnosis kelelahan kepemimpinan melalui Musa: ketika seorang pemimpin menjadi "lelah membantu orang lain menikmati Tuhan," jiwa memberi sinyal bahwa kinerja telah menggantikan kehadiran. Henri Nouwen berpendapat bahwa pelayanan yang otentik mengalir bukan dari kompetensi profesional tetapi dari kerentanan yang diakui: "pelayanan kita tidak akan dianggap otentik kecuali datang dari hati yang terluka oleh penderitaan yang kita bicarakan." Ini bukan pelunakan terapeutik dari panggilan. Ini adalah persyaratan strukturalnya.`,
 ];
 
 // --- TYPES & PROPS ------------------------------------------------------------
@@ -470,6 +470,53 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         );
       })}
 
+      {/* ── From the Field ─────────────────────────────────────────── */}
+      <div style={{ background: lightGray, padding: "80px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
+            {t("From the Field", "Dari Lapangan")}
+          </p>
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("Working For God Instead of With Him", "Bekerja untuk Tuhan, Bukan Bersama-Nya")}
+          </h2>
+          <div style={{ fontFamily: serif, fontSize: "clamp(17px, 2vw, 20px)", color: bodyText, lineHeight: 1.9 }}>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "He had led a cross-cultural team for nine years. From the outside, nothing was wrong. The work was moving forward. The team respected him. His organisation was satisfied with his reports.",
+                "Ia telah memimpin tim lintas budaya selama sembilan tahun. Dari luar, tidak ada yang salah. Pekerjaan terus maju. Tim menghormatinya. Organisasinya puas dengan laporan-laporannya."
+              )}
+            </p>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "But privately, prayer had become a list. Scripture had become preparation material. The interior life he had once described as his foundation had quietly become a performance. He had not told anyone, because nothing had visibly broken down.",
+                "Tetapi secara pribadi, doa telah menjadi daftar. Kitab Suci telah menjadi bahan persiapan. Kehidupan batin yang pernah ia gambarkan sebagai fondasinya telah diam-diam menjadi sebuah pertunjukan. Ia tidak memberitahu siapa pun, karena tidak ada yang tampak rusak."
+              )}
+            </p>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "A colleague noticed the shift before he did. Not in his performance, but in his language. She said, quietly, one afternoon: \"You used to talk about what God was doing. Now you talk about what needs to happen.\"",
+                "Seorang kolega memperhatikan pergeseran itu sebelum ia sendiri menyadarinya. Bukan dalam kinerjanya, tetapi dalam bahasanya. Ia berkata, dengan tenang, suatu siang: \"Kamu dulu berbicara tentang apa yang Tuhan sedang lakukan. Sekarang kamu berbicara tentang apa yang perlu terjadi.\""
+              )}
+            </p>
+            <p style={{ marginBottom: 24 }}>
+              {t(
+                "He took five days away. Not a holiday, not quite a retreat. He read slowly, slept more than he had in years, and walked in the mornings. On the fourth day, he wrote in his journal: \"I think I have been working for God instead of with him.\"",
+                "Ia mengambil lima hari pergi. Bukan liburan, bukan retreat juga. Ia membaca dengan lambat, tidur lebih banyak dari yang ia lakukan dalam bertahun-tahun, dan berjalan di pagi hari. Pada hari keempat, ia menulis dalam jurnalnya: \"Saya pikir saya telah bekerja untuk Tuhan alih-alih bersama-Nya.\""
+              )}
+            </p>
+            <p style={{ marginBottom: 0 }}>
+              {t(
+                "He returned to his team without anything dramatic to announce. No new vision. No restructure. No public renewal moment. But the people closest to him said, simply, that he came back lighter. That was enough to begin again.",
+                "Ia kembali ke timnya tanpa hal dramatis untuk diumumkan. Tidak ada visi baru. Tidak ada restrukturisasi. Tidak ada momen pembaruan publik. Tetapi orang-orang yang paling dekat dengannya berkata, dengan sederhana, bahwa ia kembali lebih ringan. Itu sudah cukup untuk memulai kembali."
+              )}
+            </p>
+          </div>
+          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, fontStyle: "italic", color: bodyText, marginTop: 24 }}>
+            {t("Composite vignette. Not attributed to a specific individual.", "Kisah majemuk. Tidak dikaitkan dengan individu tertentu.")}
+          </p>
+        </div>
+      </div>
+
       {/* ── Faith Anchor ───────────────────────────────────────────── */}
       <div style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
@@ -594,6 +641,36 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
         </div>
       </div>
 
+      {/* ── Key Takeaways ──────────────────────────────────────────── */}
+      <div style={{ background: offWhite, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: serif, fontSize: "clamp(28px, 3.5vw, 40px)", fontWeight: 700, color: navy, marginBottom: 32, lineHeight: 1.2, fontStyle: "italic" }}>
+            {t("Key Takeaways", "Poin-Poin Kunci")}
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {(lang === "en" ? [
+              "Faith drift is not dramatic. It moves quietly through busyness, disillusionment, pride, isolation, and syncretism — each one capable of masquerading as faithfulness.",
+              "Research confirms that workload alone does not cause spiritual dryness, and structural relief alone cannot cure it. The problem is spiritual, and it requires a spiritual response.",
+              "Abiding while leading does not mean withdrawal. It means bringing the real weight of the work back into God's presence: the fear, the fatigue, the disappointment, and the hope.",
+              "Recovery rarely begins with effort. Elijah's restoration started with food and rest, not rebuke. God's first move toward the depleted leader is usually care, not demand.",
+              "The goal is not to lead well and then stop. It is to finish with your soul intact. That is what Paul counted when it was over.",
+            ] : [
+              "Hanyut iman tidak dramatis. Ia bergerak diam-diam melalui kesibukan, kekecewaan, kesombongan, isolasi, dan sinkretisme — masing-masing mampu menyamar sebagai kesetiaan.",
+              "Penelitian mengkonfirmasi bahwa beban kerja saja tidak menyebabkan kekeringan rohani, dan bantuan struktural saja tidak dapat menyembuhkannya. Masalahnya bersifat rohani, dan membutuhkan respons rohani.",
+              "Tinggal dalam Kristus selagi memimpin tidak berarti menarik diri. Ini berarti membawa beban nyata pekerjaan kembali ke hadirat Allah: ketakutan, kelelahan, kekecewaan, dan harapan.",
+              "Pemulihan jarang dimulai dengan usaha. Pemulihan Elia dimulai dengan makanan dan istirahat, bukan teguran. Langkah pertama Allah kepada pemimpin yang kelelahan biasanya adalah kepedulian, bukan tuntutan.",
+              "Tujuannya bukan memimpin dengan baik lalu berhenti. Tujuannya adalah menyelesaikan dengan jiwa yang utuh. Itulah yang Paulus hitung ketika semuanya berakhir.",
+            ]).map((item, i) => (
+              <div key={i} style={{ background: offWhite, border: `1.5px solid oklch(90% 0.008 80)`, borderLeft: `4px solid ${orange}`, borderRadius: "0 8px 8px 0", padding: "18px 24px" }}>
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: "clamp(14px, 1.5vw, 15px)", fontWeight: 700, color: navy, margin: 0, lineHeight: 1.6 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ── Sources ─────────────────────────────────────────────────── */}
       <div style={{ background: offWhite, padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
         <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
@@ -607,13 +684,21 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
             { n: 3, authors: "Taylor, William D. (ed.)", title: "Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition", year: "William Carey Library, 1997", url: "https://propempo.com/community/propempo-blog/the-truth-about-missionary-attrition2/" },
             { n: 4, authors: "Barton, Ruth Haley", title: "Strengthening the Soul of Your Leadership", year: "InterVarsity Press, 2018", url: "https://www.ivpress.com/strengthening-the-soul-of-your-leadership" },
             { n: 5, authors: "Nouwen, Henri", title: "The Wounded Healer: Ministry in Contemporary Society", year: "Doubleday, 1972", url: "https://www.henrinouwen.org/books/the-wounded-healer" },
+            { n: 6, authors: "NCLS Research", title: "Foundations for Flourishing: National Pastoral Wellbeing Research", year: "2024", url: "https://ncls.org.au/" },
+            { n: 7, authors: "Afaradi", title: "Leadership Crisis and Restoration in 1 Kings 19: A Theological Study", year: "2025", url: "" },
+            { n: 8, authors: "Compass Asia", title: "Cross-Cultural Worker Care and Attrition in Asian Contexts", year: "", url: "https://compassasia.org/" },
+            { n: 9, authors: "Missio Nexus", title: "Engage! Research on Cross-Cultural Worker Retention", year: "2010", url: "https://missionexus.org/" },
           ].map((s) => (
             <div key={s.n} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
               <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, color: orange, fontWeight: 700, minWidth: 16, flexShrink: 0, paddingTop: 2 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][s.n]}
+                {["¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹","¹⁰"][s.n]}
               </span>
               <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(50% 0.05 260)", lineHeight: 1.65, margin: 0 }}>
-                {s.authors} — <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: navy, textDecoration: "underline" }}>{s.title}</a> ({s.year})
+                {s.authors} — {s.url ? (
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: navy, textDecoration: "underline" }}>{s.title}</a>
+                ) : (
+                  <span style={{ color: navy }}>{s.title}</span>
+                )}{s.year ? ` (${s.year})` : ""}
               </p>
             </div>
           ))}
