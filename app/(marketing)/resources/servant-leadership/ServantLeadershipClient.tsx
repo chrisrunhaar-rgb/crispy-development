@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
 import { askServantLeadershipAI } from "./sl-actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const NAVY       = "oklch(22% 0.10 260)";
@@ -992,31 +993,15 @@ export default function ServantLeadershipClient({ isSaved = false }: Props) {
         <AIChallengeSection placements={placements} lang={lang} />
 
         {/* ── Sources ── */}
-        <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: FONT_BODY, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
-            Sources
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {[
-              "Robert K. Greenleaf — The Servant as Leader (essay, Robert K. Greenleaf Center, 1970; republished Paulist Press, 1991)",
-              "Hermann Hesse — Journey to the East (Die Morgenlandfahrt, 1932; English trans. Holt, Rinehart & Winston, 1956)",
-              "Robert C. Liden, Sandy J. Wayne, Hao Zhao & David Henderson — Servant Leadership: Development of a Multidimensional Measure and Multi-Level Assessment (The Leadership Quarterly, 19:2, 2008, pp. 161–177)",
-              "Daniel B. Wallace — Greek Grammar Beyond the Basics: An Exegetical Syntax of the New Testament (Zondervan, 1996) — kenosis analysis of Philippians 2:7",
-              "Dirk van Dierendonck — Servant Leadership: A Review and Synthesis (Journal of Management, 37:4, 2011, pp. 1228–1261) — meta-analysis of servant leadership across cultures",
-              "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions and Organizations Across Nations (2nd ed., Sage, 2001) — Indonesia PDI score 78",
-              "Andre Pekerti & Sandra Sendjaya — Exploring Servant Leadership Across Cultures: Comparative Study in Australia and Indonesia (The International Journal of Human Resource Management, 21:5, 2010, pp. 754–780)",
-            ].map((src, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-                <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                  {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-                </span>
-                <p style={{ fontFamily: FONT_BODY, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                  {src}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SourcesDropdown sources={[
+          "Robert K. Greenleaf — The Servant as Leader (essay, Robert K. Greenleaf Center, 1970; republished Paulist Press, 1991)",
+          "Hermann Hesse — Journey to the East (Die Morgenlandfahrt, 1932; English trans. Holt, Rinehart & Winston, 1956)",
+          "Robert C. Liden, Sandy J. Wayne, Hao Zhao & David Henderson — Servant Leadership: Development of a Multidimensional Measure and Multi-Level Assessment (The Leadership Quarterly, 19:2, 2008, pp. 161–177)",
+          "Daniel B. Wallace — Greek Grammar Beyond the Basics: An Exegetical Syntax of the New Testament (Zondervan, 1996) — kenosis analysis of Philippians 2:7",
+          "Dirk van Dierendonck — Servant Leadership: A Review and Synthesis (Journal of Management, 37:4, 2011, pp. 1228–1261) — meta-analysis of servant leadership across cultures",
+          "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions and Organizations Across Nations (2nd ed., Sage, 2001) — Indonesia PDI score 78",
+          "Andre Pekerti & Sandra Sendjaya — Exploring Servant Leadership Across Cultures: Comparative Study in Australia and Indonesia (The International Journal of Human Resource Management, 21:5, 2010, pp. 754–780)",
+        ]} lang={lang} />
 
         {/* ── Save button ── */}
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "2.5rem" }}>

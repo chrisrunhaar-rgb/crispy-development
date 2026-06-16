@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 
 type Lang = "en" | "id";
@@ -563,30 +564,14 @@ export default function LeadershipAltitudesClient({ userPathway, isSaved: initia
       </section>
 
       {/* -- SOURCES ------------------------------------------------------------- */}
-      <section style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Ram Charan, Stephen Drotter & James Noel — The Leadership Pipeline: How to Build the Leadership Powered Company (Jossey-Bass, 2001) — foundational work on differentiated leadership levels, span of control, and role transitions.",
-            "Bill Hybels — Axiom: Powerful Leadership Proverbs (Zondervan, 2008); see also Liz Wiseman & Greg McKeown — Multipliers: How the Best Leaders Make Everyone Smarter (HarperBusiness, 2010) — practitioner frameworks describing altitude-like leadership differentiation.",
-            "Marcus Buckingham & Curt Coffman — First, Break All the Rules (Simon & Schuster, 1999) — Gallup research on manager-level coaching, people development, and why the direct leader is the primary variable in team performance.",
-            "Liz Wiseman — Multipliers (HarperBusiness, 2010) — research on diminisher vs. multiplier leaders; the cost of leaders operating below their altitude (micromanagement) and above it (ivory-tower detachment).",
-            "Tasha Eurich — Insight: Why We're Not as Self-Aware as We Think, and How Seeing Ourselves Clearly Helps Us Succeed at Work and in Life (Crown Business, 2017) — research finding only 10–15% of people are genuinely self-aware; practical methods for accurate self-assessment.",
-            "Elliott Jaques — Requisite Organization (Cason Hall, 1989) — time-span of discretion theory; empirical basis for the idea that different organizational levels require qualitatively different thinking horizons and decision-making capacity.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <SourcesDropdown sources={[
+        "Ram Charan, Stephen Drotter & James Noel — The Leadership Pipeline: How to Build the Leadership Powered Company (Jossey-Bass, 2001) — foundational work on differentiated leadership levels, span of control, and role transitions.",
+        "Bill Hybels — Axiom: Powerful Leadership Proverbs (Zondervan, 2008); see also Liz Wiseman & Greg McKeown — Multipliers: How the Best Leaders Make Everyone Smarter (HarperBusiness, 2010) — practitioner frameworks describing altitude-like leadership differentiation.",
+        "Marcus Buckingham & Curt Coffman — First, Break All the Rules (Simon & Schuster, 1999) — Gallup research on manager-level coaching, people development, and why the direct leader is the primary variable in team performance.",
+        "Liz Wiseman — Multipliers (HarperBusiness, 2010) — research on diminisher vs. multiplier leaders; the cost of leaders operating below their altitude (micromanagement) and above it (ivory-tower detachment).",
+        "Tasha Eurich — Insight: Why We're Not as Self-Aware as We Think, and How Seeing Ourselves Clearly Helps Us Succeed at Work and in Life (Crown Business, 2017) — research finding only 10–15% of people are genuinely self-aware; practical methods for accurate self-assessment.",
+        "Elliott Jaques — Requisite Organization (Cason Hall, 1989) — time-span of discretion theory; empirical basis for the idea that different organizational levels require qualitatively different thinking horizons and decision-making capacity.",
+      ]} lang={lang} />
 
       {/* -- CTA ----------------------------------------------------------------- */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => lang === "id" ? id : en;
@@ -715,44 +716,18 @@ export default function FourStagesClient({ isSaved: initialSaved }: Props) {
       </div>
 
       {/* ── 9. SOURCES ───────────────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "48px 24px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <p style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: "0.12em",
-            textTransform: "uppercase", color: orange,
-            margin: "0 0 20px",
-            fontVariant: "small-caps" as const,
-          }}>
-            {t("Sources", "Sumber", lang)}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {[
-              "Broadwell, M. M. (1969). Teaching for learning. The Gospel Guardian, February 1969.",
-              "Pardoe, T. E. (1923). Learning-progression framework. Cited in historical accounts of competence model origins.",
-              "Howell, W. C. (1982). The empathic communicator. Wadsworth Publishing.",
-              "Burch, N. (c. 1970s). Four stages of learning a new skill. Gordon Training International.",
-              "Ericsson, K. A., & Pool, R. (2016). Peak: Secrets from the new science of expertise. Houghton Mifflin Harcourt.",
-              "Baume, D. (2004). Towards the end of stage theories. Learning and Teaching in Higher Education.",
-              "Robinson, W. L. (1974). Conscious competency: The mark of a competent instructor. Personnel Journal, 53(7).",
-              "Bennett, M. J. (1986). A developmental approach to training for intercultural sensitivity. International Journal of Intercultural Relations, 10(2), 179-196.",
-              "Earley, P. C., & Ang, S. (2003). Cultural intelligence: Individual interactions across cultures. Stanford Business Books.",
-              "Moore, R. (2010). Commentary on power and the four stages model. Training & Development Journal.",
-            ].map((source, i) => (
-              <div key={i} style={{ display: "flex", gap: 12 }}>
-                <span style={{
-                  fontSize: 11, color: orange, fontWeight: 700,
-                  minWidth: 20, flexShrink: 0,
-                }}>
-                  {i + 1}.
-                </span>
-                <p style={{ fontSize: 13, lineHeight: 1.7, color: bodyText, margin: 0 }}>
-                  {source}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Broadwell, M. M. (1969). Teaching for learning. The Gospel Guardian, February 1969.",
+        "Pardoe, T. E. (1923). Learning-progression framework. Cited in historical accounts of competence model origins.",
+        "Howell, W. C. (1982). The empathic communicator. Wadsworth Publishing.",
+        "Burch, N. (c. 1970s). Four stages of learning a new skill. Gordon Training International.",
+        "Ericsson, K. A., & Pool, R. (2016). Peak: Secrets from the new science of expertise. Houghton Mifflin Harcourt.",
+        "Baume, D. (2004). Towards the end of stage theories. Learning and Teaching in Higher Education.",
+        "Robinson, W. L. (1974). Conscious competency: The mark of a competent instructor. Personnel Journal, 53(7).",
+        "Bennett, M. J. (1986). A developmental approach to training for intercultural sensitivity. International Journal of Intercultural Relations, 10(2), 179-196.",
+        "Earley, P. C., & Ang, S. (2003). Cultural intelligence: Individual interactions across cultures. Stanford Business Books.",
+        "Moore, R. (2010). Commentary on power and the four stages model. Training & Development Journal.",
+      ]} lang={lang} markerStyle="number" />
 
       {/* ── Phil 4:11 modal ──────────────────────────────────────────────────── */}
       {verse411Open && (

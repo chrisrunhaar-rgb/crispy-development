@@ -5,6 +5,7 @@ import { saveResourceToDashboard, saveFiveLanguagesResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // ── TYPES ─────────────────────────────────────────────────────────────────────
 
@@ -1386,27 +1387,11 @@ export default function FiveLanguagesClient({
       </div>
 
       {/* ─── SOURCES ──────────────────────────────────────────────────────────── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Gary Chapman — The 5 Love Languages: The Secret to Love That Lasts (Northfield Publishing, 1992)",
-            "Gary Chapman & Paul White — The 5 Languages of Appreciation in the Workplace (Northfield Publishing, 2012)",
-            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Gary Chapman — The 5 Love Languages: The Secret to Love That Lasts (Northfield Publishing, 1992)",
+        "Gary Chapman & Paul White — The 5 Languages of Appreciation in the Workplace (Northfield Publishing, 2012)",
+        "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014)",
+      ]} lang={lang} />
     </div>
   );
 }

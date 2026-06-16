@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // ── LANGUAGE ───────────────────────────────────────────────────────────────────
 
@@ -1415,38 +1416,14 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       </div>
 
       {/* ── 14. SOURCES ──────────────────────────────────────────────────────── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{
-          fontFamily: "var(--font-montserrat), Montserrat, sans-serif",
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: amber,
-          marginBottom: 14,
-        }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Amy C. Edmondson — Psychological Safety and Learning Behavior in Work Teams (Administrative Science Quarterly, 1999)",
-            "Google People Operations — Project Aristotle: Understanding Team Effectiveness (2016) — re.work/guides/understanding-team-effectiveness",
-            "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions, and Organizations Across Nations (Sage, 2nd ed., 2001); country scores via Hofstede Insights (hofstede-insights.com)",
-            "Patrick Lencioni — The Five Dysfunctions of a Team (Jossey-Bass, 2002). Practitioner framework — no peer-reviewed empirical validation.",
-            "J. Richard Hackman — Leading Teams: Setting the Stage for Great Performances (Harvard Business Review Press, 2002). Six conditions explaining 50–74% of variance in team effectiveness.",
-            "Sherwood G. Lingenfelter — Teamwork Cross-Culturally: Christ-Centered Solutions for Multicultural Teams (Baker Academic, 2024)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: amber, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Amy C. Edmondson — Psychological Safety and Learning Behavior in Work Teams (Administrative Science Quarterly, 1999)",
+        "Google People Operations — Project Aristotle: Understanding Team Effectiveness (2016) — re.work/guides/understanding-team-effectiveness",
+        "Geert Hofstede — Culture's Consequences: Comparing Values, Behaviors, Institutions, and Organizations Across Nations (Sage, 2nd ed., 2001); country scores via Hofstede Insights (hofstede-insights.com)",
+        "Patrick Lencioni — The Five Dysfunctions of a Team (Jossey-Bass, 2002). Practitioner framework — no peer-reviewed empirical validation.",
+        "J. Richard Hackman — Leading Teams: Setting the Stage for Great Performances (Harvard Business Review Press, 2002). Six conditions explaining 50–74% of variance in team effectiveness.",
+        "Sherwood G. Lingenfelter — Teamwork Cross-Culturally: Christ-Centered Solutions for Multicultural Teams (Baker Academic, 2024)",
+      ]} lang={lang} />
 
       {/* ── 15. CTA FOOTER ───────────────────────────────────────────────────── */}
       <div style={{

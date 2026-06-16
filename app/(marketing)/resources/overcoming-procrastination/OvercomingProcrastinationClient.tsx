@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 const NAVY = "oklch(22% 0.10 260)";
 const ORANGE = "oklch(65% 0.15 45)";
@@ -987,30 +988,14 @@ export default function OvercomingProcrastinationClient({
       </section>
 
       {/* SOURCES */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat)", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
-          {t("Sources", "Sumber", lang)}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Fuschia Sirois & Timothy Pychyl — 'Procrastination and the Priority of Short-Term Mood Regulation: Consequences for Future Self' (Social and Personality Psychology Compass, 2013)",
-            "Bluma Zeigarnik — 'On Finished and Unfinished Tasks' (Psychologische Forschung, 1927) — foundational research establishing that incomplete tasks occupy cognitive attention until completed",
-            "Peter M. Gollwitzer & Paschal Sheeran — 'Implementation Intentions and Goal Achievement: A Meta-Analysis of Effects and Processes' (Advances in Experimental Social Psychology, 2006) — meta-analysis of 642 independent tests; effect size d = 0.65",
-            "Evagrius Ponticus — The Praktikos & Chapters on Prayer (c. 375 CE); Thomas Aquinas — Summa Theologiae II-II, Q.35 (c. 1274) — primary sources on acedia in the Christian tradition",
-            "Hofstede Insights — Country Comparison: Indonesia (hofstede-insights.com) — Power Distance Index 78/100",
-            "Anna Smith — 'Grace and the Perfectionist' (Modern Reformation) — perfectionism as self-justification; grace as structural reorientation",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Fuschia Sirois & Timothy Pychyl — 'Procrastination and the Priority of Short-Term Mood Regulation: Consequences for Future Self' (Social and Personality Psychology Compass, 2013)",
+        "Bluma Zeigarnik — 'On Finished and Unfinished Tasks' (Psychologische Forschung, 1927) — foundational research establishing that incomplete tasks occupy cognitive attention until completed",
+        "Peter M. Gollwitzer & Paschal Sheeran — 'Implementation Intentions and Goal Achievement: A Meta-Analysis of Effects and Processes' (Advances in Experimental Social Psychology, 2006) — meta-analysis of 642 independent tests; effect size d = 0.65",
+        "Evagrius Ponticus — The Praktikos & Chapters on Prayer (c. 375 CE); Thomas Aquinas — Summa Theologiae II-II, Q.35 (c. 1274) — primary sources on acedia in the Christian tradition",
+        "Hofstede Insights — Country Comparison: Indonesia (hofstede-insights.com) — Power Distance Index 78/100",
+        "Anna Smith — 'Grace and the Perfectionist' (Modern Reformation) — perfectionism as self-justification; grace as structural reorientation",
+      ]} lang={lang} />
 
     </div>
   );

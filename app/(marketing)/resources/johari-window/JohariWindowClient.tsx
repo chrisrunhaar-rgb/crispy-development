@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) => lang === "id" ? id : en;
@@ -473,28 +474,12 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
       </section>
 
       {/* ── SOURCES ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Joseph Luft & Harry Ingham — \"Of Human Interaction\" (National Press Books, 1969) — the published formalization of the Johari Window, building on their 1955 UCLA conference presentation",
-            "Sidney M. Jourard — \"The Transparent Self\" (Van Nostrand Reinhold, 2nd ed., 1971) — foundational research on self-disclosure, authenticity, and the psychological cost of concealment",
-            "Amy C. Edmondson — \"Psychological Safety and Learning Behavior in Work Teams\" (Administrative Science Quarterly, 44(2), 1999) — landmark study on team safety as the structural precondition for honest feedback",
-            "Geert Hofstede — \"Cultures and Organizations: Software of the Mind\" (McGraw-Hill, 3rd ed., 2010) — power distance research documenting cross-cultural variation in upward feedback norms and deference patterns",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Joseph Luft & Harry Ingham — \"Of Human Interaction\" (National Press Books, 1969) — the published formalization of the Johari Window, building on their 1955 UCLA conference presentation",
+        "Sidney M. Jourard — \"The Transparent Self\" (Van Nostrand Reinhold, 2nd ed., 1971) — foundational research on self-disclosure, authenticity, and the psychological cost of concealment",
+        "Amy C. Edmondson — \"Psychological Safety and Learning Behavior in Work Teams\" (Administrative Science Quarterly, 44(2), 1999) — landmark study on team safety as the structural precondition for honest feedback",
+        "Geert Hofstede — \"Cultures and Organizations: Software of the Mind\" (McGraw-Hill, 3rd ed., 2010) — power distance research documenting cross-cultural variation in upward feedback norms and deference patterns",
+      ]} lang={lang} />
 
       {/* ── CTA ── */}
       <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(97% 0.005 80)" }}>

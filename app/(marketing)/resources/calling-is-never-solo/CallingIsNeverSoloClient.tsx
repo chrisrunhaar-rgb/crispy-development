@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) => lang === "en" ? en : id;
@@ -565,29 +566,14 @@ export default function CallingIsNeverSoloClient({ isSaved: initialSaved }: Prop
       </div>
 
       {/* ── Sources ────────────────────────────────────────────────── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
-          {t("Sources", "Sumber")}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {[
-            { marker: "¹", text: t("RHR International — Loneliness: An Under-Diagnosed Epidemic Among New CEOs. Inc. Magazine.", "RHR International — Kesepian: Epidemi yang Kurang Terdiagnosis di Antara CEO Baru. Majalah Inc."), url: "https://www.inc.com/jessica-stillman/loneliness-an-under-diagnosed-epidemic-among-new-ceos.html" },
-            { marker: "²", text: t("Billy Drum — Burnout Among Cross-Cultural Workers. Lausanne Global Analysis, March 2024.", "Billy Drum — Kelelahan di Antara Pekerja Lintas Budaya. Analisis Global Lausanne, Maret 2024."), url: "https://lausanne.org/global-analysis/burnout-among-missionaries" },
-            { marker: "³", text: t("Ronald Koteskey — Attrition of Cross-Cultural Workers. CrossCulturalWorkers.com, citing ReMAP I & II (WEA, 1997 & 2007).", "Ronald Koteskey — Gesekan Pekerja Lintas Budaya. CrossCulturalWorkers.com, mengutip ReMAP I & II (WEA, 1997 & 2007)."), url: "https://crossculturalworkers.com/attrition" },
-            { marker: "⁴", text: t("Aaron Kuecker — Vocation in the Context of Community (Acts 13:1–3). Theology of Work Project.", "Aaron Kuecker — Panggilan dalam Konteks Komunitas (Kisah Para Rasul 13:1–3). Proyek Teologi Pekerjaan."), url: "https://www.theologyofwork.org/new-testament/acts/a-clash-of-kingdoms-community-and-powerbrokers-acts-13-19/vocation-in-the-context-of-community-acts-131-3/" },
-            { marker: "⁵", text: t("Fuller Seminary — Three Dimensions of Call. Next Faithful Step Resource Series.", "Fuller Seminary — Tiga Dimensi Panggilan. Seri Sumber Next Faithful Step."), url: "https://fuller.edu/next-faithful-step/resources/three-dimensions-of-call/" },
-            { marker: "⁶", text: t("Henri J.M. Nouwen — The Wounded Healer. Doubleday, 1972.", "Henri J.M. Nouwen — The Wounded Healer. Doubleday, 1972."), url: "https://www.henrinouwen.org/books/the-wounded-healer" },
-          ].map(({ marker, text, url }) => (
-            <div key={marker} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-              <span style={{ fontFamily: serif, fontSize: 14, color: orange, fontWeight: 700, flexShrink: 0, minWidth: 18 }}>{marker}</span>
-              <p style={{ fontFamily: serif, fontSize: 14, color: bodyText, lineHeight: 1.7, margin: 0 }}>
-                {text}{" "}
-                <a href={url} target="_blank" rel="noopener noreferrer" style={{ color: orange, textDecoration: "underline" }}>{url.replace("https://", "")}</a>
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "RHR International — Loneliness: An Under-Diagnosed Epidemic Among New CEOs. Inc. Magazine. https://www.inc.com/jessica-stillman/loneliness-an-under-diagnosed-epidemic-among-new-ceos.html",
+        "Billy Drum — Burnout Among Cross-Cultural Workers. Lausanne Global Analysis, March 2024. https://lausanne.org/global-analysis/burnout-among-missionaries",
+        "Ronald Koteskey — Attrition of Cross-Cultural Workers. CrossCulturalWorkers.com, citing ReMAP I & II (WEA, 1997 & 2007). https://crossculturalworkers.com/attrition",
+        "Aaron Kuecker — Vocation in the Context of Community (Acts 13:1–3). Theology of Work Project. https://www.theologyofwork.org/new-testament/acts/a-clash-of-kingdoms-community-and-powerbrokers-acts-13-19/vocation-in-the-context-of-community-acts-131-3/",
+        "Fuller Seminary — Three Dimensions of Call. Next Faithful Step Resource Series. https://fuller.edu/next-faithful-step/resources/three-dimensions-of-call/",
+        "Henri J.M. Nouwen — The Wounded Healer. Doubleday, 1972. https://www.henrinouwen.org/books/the-wounded-healer",
+      ]} lang={lang} />
 
       {/* ── Footer ─────────────────────────────────────────────────── */}
       <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import { encourageComfortZone } from "./cz-actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const t = (en: string, id: string, lang: Lang) => lang === "en" ? en : id;
@@ -781,29 +782,13 @@ export default function ComfortZoneClient({
       </section>
 
       {/* ── SOURCES ── */}
-      <section style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: ORANGE, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Tom Senninger — Vom Erfahrungsraum zum Lernraum (2000, via Vygotsky's Zone of Proximal Development). The 4-zone model (Comfort / Fear / Learning / Growth) is a widely used conceptual tool, not a peer-reviewed framework; practitioner origin uncertain, popularised c.2019. 'Comfort zone' as a phrase: Judith M. Bardwick, Danger in the Comfort Zone (AMACOM, 1991).",
-            "Acculturative stress and identity disruption in cross-cultural transition: J.W. Berry, 'Immigration, acculturation, and adaptation' (Applied Psychology, 1997); T. Jurcik et al., 'Making sense of mainstream culture' (PLoS ONE, 2013). Cross-cultural leaders face layered disruption — behavioral, relational, and identity-level — as documented in acculturation research.",
-            "Structural framing of optimal arousal for learning: the inverted-U pattern (Yerkes & Dodson, Journal of Comparative Neurology, 1908, as qualified by later researchers) and Window of Tolerance (D.J. Siegel, The Developing Mind, Guilford Press, 1999). Both describe the zone between under- and over-arousal where learning is most available.",
-            "Social identity threat and cross-cultural leadership: H. Tajfel & J.C. Turner, 'An integrative theory of intergroup conflict' (1979); R.J. Berry & T. Jurcik (2013, as above). Identity-level disruption — 'Who am I here?' — reflects social identity and acculturative stress research rather than the zone model alone.",
-            "Self-efficacy and competence transfer: A. Bandura, Self-Efficacy: The Exercise of Control (Freeman, 1997). The shift from effortful performance to automatic competence is documented in skill acquisition and self-efficacy literature.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <SourcesDropdown sources={[
+        "Tom Senninger — Vom Erfahrungsraum zum Lernraum (2000, via Vygotsky's Zone of Proximal Development). The 4-zone model (Comfort / Fear / Learning / Growth) is a widely used conceptual tool, not a peer-reviewed framework; practitioner origin uncertain, popularised c.2019. 'Comfort zone' as a phrase: Judith M. Bardwick, Danger in the Comfort Zone (AMACOM, 1991).",
+        "Acculturative stress and identity disruption in cross-cultural transition: J.W. Berry, 'Immigration, acculturation, and adaptation' (Applied Psychology, 1997); T. Jurcik et al., 'Making sense of mainstream culture' (PLoS ONE, 2013). Cross-cultural leaders face layered disruption — behavioral, relational, and identity-level — as documented in acculturation research.",
+        "Structural framing of optimal arousal for learning: the inverted-U pattern (Yerkes & Dodson, Journal of Comparative Neurology, 1908, as qualified by later researchers) and Window of Tolerance (D.J. Siegel, The Developing Mind, Guilford Press, 1999). Both describe the zone between under- and over-arousal where learning is most available.",
+        "Social identity threat and cross-cultural leadership: H. Tajfel & J.C. Turner, 'An integrative theory of intergroup conflict' (1979); R.J. Berry & T. Jurcik (2013, as above). Identity-level disruption — 'Who am I here?' — reflects social identity and acculturative stress research rather than the zone model alone.",
+        "Self-efficacy and competence transfer: A. Bandura, Self-Efficacy: The Exercise of Control (Freeman, 1997). The shift from effortful performance to automatic competence is documented in skill acquisition and self-efficacy literature.",
+      ]} lang={lang} />
 
       {/* ── ACTION CLOSE / CTA ── */}
       <section style={{ background: NAVY, ...sectionPadding }}>

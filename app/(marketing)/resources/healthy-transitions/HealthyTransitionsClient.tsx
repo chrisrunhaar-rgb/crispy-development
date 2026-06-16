@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveRaftPlan } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) => lang === "id" ? id : en;
@@ -791,30 +792,14 @@ export default function HealthyTransitionsClient({ userPathway, isSaved: initial
       </div>
 
       {/* Sources */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 14 }}>
-          {t("Sources", "Sumber")}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "David Pollock & Ruth Van Reken — Third Culture Kids: Preparing for the Life Between Worlds (Nicholas Brealey, 3rd ed., 2017). The source work for the RAFT model — a widely trusted practitioner framework developed through decades of field work; no peer-reviewed empirical validation exists.",
-            "Melissa Selby — The Journey Back: Understanding Re-entry and Attrition in Cross-Cultural Workers (William Carey Library, 2018). Field research on attrition patterns and the predictive relationship between departure quality and re-entry adjustment.",
-            "William Bridges with Susan Bridges — Transitions: Making Sense of Life's Changes (Da Capo Press, 4th ed., 2019). The transition phases on this page are a directional normalising map drawn from this and similar practitioner literature — a way of naming common experiences, not an empirically validated sequence.",
-            "Adrian Furnham & Stephen Bochner — Culture Shock: Psychological Reactions to Unfamiliar Environments (Routledge, 1986); P. Adler — 'The Transitional Experience: An Alternative View of Culture Shock,' Journal of Humanistic Psychology (1975). The research base for disorientation timelines in cross-cultural adjustment; duration varies significantly by individual and cultural distance.",
-            "Clyde Austin (ed.) — Cross-Cultural Re-Entry: A Book of Readings (Abilene Christian University Press, 1986). Foundational collection on reverse culture shock; the experience of return as harder than initial arrival is consistently documented across this literature.",
-            "PMC12840645 (Chan et al., 2026, Hong Kong/China context): perceived support appraisal quality outweighs network size. Confirms Zavala-Barajas (2022) missionary-context finding: one attuned relationship sustains more than a large network with formulaic responses.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: orange, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "David Pollock & Ruth Van Reken — Third Culture Kids: Preparing for the Life Between Worlds (Nicholas Brealey, 3rd ed., 2017). The source work for the RAFT model — a widely trusted practitioner framework developed through decades of field work; no peer-reviewed empirical validation exists.",
+        "Melissa Selby — The Journey Back: Understanding Re-entry and Attrition in Cross-Cultural Workers (William Carey Library, 2018). Field research on attrition patterns and the predictive relationship between departure quality and re-entry adjustment.",
+        "William Bridges with Susan Bridges — Transitions: Making Sense of Life's Changes (Da Capo Press, 4th ed., 2019). The transition phases on this page are a directional normalising map drawn from this and similar practitioner literature — a way of naming common experiences, not an empirically validated sequence.",
+        "Adrian Furnham & Stephen Bochner — Culture Shock: Psychological Reactions to Unfamiliar Environments (Routledge, 1986); P. Adler — 'The Transitional Experience: An Alternative View of Culture Shock,' Journal of Humanistic Psychology (1975). The research base for disorientation timelines in cross-cultural adjustment; duration varies significantly by individual and cultural distance.",
+        "Clyde Austin (ed.) — Cross-Cultural Re-Entry: A Book of Readings (Abilene Christian University Press, 1986). Foundational collection on reverse culture shock; the experience of return as harder than initial arrival is consistently documented across this literature.",
+        "PMC12840645 (Chan et al., 2026, Hong Kong/China context): perceived support appraisal quality outweighs network size. Confirms Zavala-Barajas (2022) missionary-context finding: one attuned relationship sustains more than a large network with formulaic responses.",
+      ]} lang={lang} />
 
       {/* Footer */}
       <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>

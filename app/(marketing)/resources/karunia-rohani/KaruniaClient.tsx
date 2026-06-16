@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveKaruniaResult } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import VerseChip from "@/components/VerseChip";
 import { VERSES } from "@/lib/verses";
@@ -1218,28 +1219,12 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: PRIMARY, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column" as const, gap: 5 }}>
-          {[
-            "Gordon D. Fee — God's Empowering Presence: The Holy Spirit in the Letters of Paul (Hendrickson, 1994). Landmark exegetical study of pneumatology in Paul's letters; foundational for understanding charismatic gifts in their original context.",
-            "Leslie Newbigin — The Gospel in a Pluralist Society (Eerdmans, 1989). Missional theology classic; grounds the community's corporate discernment of gifts in its witness to the world.",
-            "Wayne Grudem — Systematic Theology: An Introduction to Biblical Doctrine (Zondervan, 1994). Standard evangelical reference on the nature, purpose, and continuity of spiritual gifts.",
-            "Jim Burns & Doug Fields — The Word on Finding and Using Your Spiritual Gifts (Gospel Light/Regal Books, 1993). Source of the 76-statement pastoral assessment instrument used in this module.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: PRIMARY, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Gordon D. Fee — God's Empowering Presence: The Holy Spirit in the Letters of Paul (Hendrickson, 1994). Landmark exegetical study of pneumatology in Paul's letters; foundational for understanding charismatic gifts in their original context.",
+        "Leslie Newbigin — The Gospel in a Pluralist Society (Eerdmans, 1989). Missional theology classic; grounds the community's corporate discernment of gifts in its witness to the world.",
+        "Wayne Grudem — Systematic Theology: An Introduction to Biblical Doctrine (Zondervan, 1994). Standard evangelical reference on the nature, purpose, and continuity of spiritual gifts.",
+        "Jim Burns & Doug Fields — The Word on Finding and Using Your Spiritual Gifts (Gospel Light/Regal Books, 1993). Source of the 76-statement pastoral assessment instrument used in this module.",
+      ]} lang={lang} />
 
       <div style={{ background: BG_DARK, padding: "4rem 1.5rem" }}>
         <div style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" as const }}>

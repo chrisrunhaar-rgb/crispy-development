@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) =>
@@ -1168,31 +1169,15 @@ export default function PowerDistanceClient({ userPathway, isSaved: initialSaved
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010). Original PDI research: Hofstede, Culture's Consequences (SAGE, 2nd ed., 2001). McSweeney critique: B. McSweeney, 'Hofstede's Model of National Cultural Differences and their Consequences,' Human Relations 55(1), 2002.",
-            "Robert J. House et al. — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (SAGE, 2004). GLOBE Leadership Effectiveness findings: House et al., Strategic Leadership Across Cultures (SAGE, 2014).",
-            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014).",
-            "Edward T. Hall — Beyond Culture (Anchor Books, 1976). Note: the high/low-context binary is used here as a directional lens; for validated measurement see Cardon, P.W. (2008), 'A Critique of Hall's Contexting Model,' Journal of Business and Technical Communication 22(4).",
-            "B. Husted — 'Wealth, Culture, and Corruption,' Journal of International Business Studies 30(2), 1999; H. Park — 'Determinants of Corruption: A Cross-National Analysis,' Multinational Business Review 11(2), 2003.",
-            "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008).",
-            "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022).",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: orange, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010). Original PDI research: Hofstede, Culture's Consequences (SAGE, 2nd ed., 2001). McSweeney critique: B. McSweeney, 'Hofstede's Model of National Cultural Differences and their Consequences,' Human Relations 55(1), 2002.",
+        "Robert J. House et al. — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (SAGE, 2004). GLOBE Leadership Effectiveness findings: House et al., Strategic Leadership Across Cultures (SAGE, 2014).",
+        "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014).",
+        "Edward T. Hall — Beyond Culture (Anchor Books, 1976). Note: the high/low-context binary is used here as a directional lens; for validated measurement see Cardon, P.W. (2008), 'A Critique of Hall's Contexting Model,' Journal of Business and Technical Communication 22(4).",
+        "B. Husted — 'Wealth, Culture, and Corruption,' Journal of International Business Studies 30(2), 1999; H. Park — 'Determinants of Corruption: A Cross-National Analysis,' Multinational Business Review 11(2), 2003.",
+        "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008).",
+        "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022).",
+      ]} lang={lang} />
 
     </div>
   );

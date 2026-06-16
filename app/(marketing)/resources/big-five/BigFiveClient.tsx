@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveBigFiveResult } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 
@@ -873,27 +874,11 @@ export default function BigFiveClient({
         </div>
 
         {/* ── SOURCES ──────────────────────────────────────────────────────── */}
-        <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-          <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-            Sources
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {[
-              "Robert R. McCrae & Paul T. Costa Jr. — Validation of the Five-Factor Model of Personality Across Instruments and Observers (Journal of Personality and Social Psychology, 1987); and NEO-PI-R Professional Manual (Psychological Assessment Resources, 1992)",
-              "David P. Schmitt et al. — The Geographic Distribution of Big Five Personality Traits: Patterns and Profiles of Human Self-Description Across 56 Nations (Journal of Cross-Cultural Psychology, 2007)",
-              "David C. Funder & Daniel J. Ozer — Evaluating Effect Size in Psychological Research: Sense and Nonsense (Advances in Methods and Practices in Psychological Science, 2019); cf. Randall W. Pittenger — Measuring the MBTI … And Coming Up Short (Journal of Career Planning and Employment, 1993) — type instability 39–76% within five weeks",
-            ].map((src, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-                <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                  {["¹","²","³"][i]}
-                </span>
-                <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                  {src}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SourcesDropdown sources={[
+          "Robert R. McCrae & Paul T. Costa Jr. — Validation of the Five-Factor Model of Personality Across Instruments and Observers (Journal of Personality and Social Psychology, 1987); and NEO-PI-R Professional Manual (Psychological Assessment Resources, 1992)",
+          "David P. Schmitt et al. — The Geographic Distribution of Big Five Personality Traits: Patterns and Profiles of Human Self-Description Across 56 Nations (Journal of Cross-Cultural Psychology, 2007)",
+          "David C. Funder & Daniel J. Ozer — Evaluating Effect Size in Psychological Research: Sense and Nonsense (Advances in Methods and Practices in Psychological Science, 2019); cf. Randall W. Pittenger — Measuring the MBTI … And Coming Up Short (Journal of Career Planning and Employment, 1993) — type instability 39–76% within five weeks",
+        ]} lang={lang} />
 
       </div>
     );

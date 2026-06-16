@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) =>
@@ -473,29 +474,13 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Edward T. Hall — The Silent Language (Doubleday, 1959); Beyond Culture (Anchor Books, 1976) — originator of the high-context/low-context descriptive framework for cross-cultural communication",
-            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — empirically grounded mapping of communication styles (direct vs. indirect) across national cultures",
-            "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010) — cross-national research on power distance, individualism, and their effect on communication norms",
-            "Robert J. House et al. (eds.) — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (SAGE, 2004) — large-scale empirical study of societal and organizational culture, including expressive vs. reserved norms across 62 countries",
-            "Milton J. Bennett — 'Towards Ethnorelativism: A Developmental Model of Intercultural Sensitivity,' in Education for the Intercultural Experience (Intercultural Press, 1993) — foundational framework for understanding how cultural communication differences are experienced and developed",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: orange, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Edward T. Hall — The Silent Language (Doubleday, 1959); Beyond Culture (Anchor Books, 1976) — originator of the high-context/low-context descriptive framework for cross-cultural communication",
+        "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — empirically grounded mapping of communication styles (direct vs. indirect) across national cultures",
+        "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010) — cross-national research on power distance, individualism, and their effect on communication norms",
+        "Robert J. House et al. (eds.) — Culture, Leadership, and Organizations: The GLOBE Study of 62 Societies (SAGE, 2004) — large-scale empirical study of societal and organizational culture, including expressive vs. reserved norms across 62 countries",
+        "Milton J. Bennett — 'Towards Ethnorelativism: A Developmental Model of Intercultural Sensitivity,' in Education for the Intercultural Experience (Intercultural Press, 1993) — foundational framework for understanding how cultural communication differences are experienced and developed",
+      ]} lang={lang} />
 
       {/* --- CTA FOOTER ------------------------------------------------------- */}
       <div style={{ background: navy, padding: "72px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>

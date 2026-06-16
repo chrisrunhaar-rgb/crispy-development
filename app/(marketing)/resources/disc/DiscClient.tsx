@@ -7,6 +7,7 @@ import Image from "next/image";
 import { saveResourceToDashboard, saveDISCResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // -- ASSESSMENT DATA -----------------------------------------------------------------
 
@@ -1736,27 +1737,11 @@ export default function DiscClient({
       </section>
 
       {/* -- SOURCES -- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "William Moulton Marston — Emotions of Normal People (Kegan Paul, 1928). The theoretical foundation for DISC — Marston proposed four primary emotional types: Dominance, Inducement, Submission, Compliance.",
-            "John Geier — Personal Profile System (Performax Systems International, 1977); Walter V. Clarke — Activity Vector Analysis (Clarke, 1956). Clarke first adapted Marston's theory for workplace assessment; Geier developed the instrument that became today's widely used DISC tools.",
-            "Arthur E. Poropat — 'A meta-analysis of the five-factor model of personality and academic performance' (Psychological Bulletin, 2009); Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory (PAR, 1985). The Big Five framework has the strongest cross-cultural empirical support among personality models; DISC is a practitioner tool with substantial application history but more limited peer-reviewed validation.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "William Moulton Marston — Emotions of Normal People (Kegan Paul, 1928). The theoretical foundation for DISC — Marston proposed four primary emotional types: Dominance, Inducement, Submission, Compliance.",
+        "John Geier — Personal Profile System (Performax Systems International, 1977); Walter V. Clarke — Activity Vector Analysis (Clarke, 1956). Clarke first adapted Marston's theory for workplace assessment; Geier developed the instrument that became today's widely used DISC tools.",
+        "Arthur E. Poropat — 'A meta-analysis of the five-factor model of personality and academic performance' (Psychological Bulletin, 2009); Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory (PAR, 1985). The Big Five framework has the strongest cross-cultural empirical support among personality models; DISC is a practitioner tool with substantial application history but more limited peer-reviewed validation.",
+      ]} lang={lang} />
     </>
   );
 }

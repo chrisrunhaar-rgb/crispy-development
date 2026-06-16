@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) =>
@@ -672,38 +673,18 @@ export default function LeadingWithoutLosingFaithClient({ userPathway, isSaved: 
       </div>
 
       {/* ── Sources ─────────────────────────────────────────────────── */}
-      <div style={{ background: offWhite, padding: "48px 24px 32px", maxWidth: 720, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 24 }}>
-          {t("Sources", "Sumber")}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {[
-            { n: 0, authors: "Barna Group", title: "Pastors Share Top Reasons They've Considered Quitting Ministry", year: "2022", url: "https://www.barna.com/research/pastors-quitting-ministry/" },
-            { n: 1, authors: "Barna Group", title: "7-Year Trends: Pastors Feel More Loneliness and Less Support", year: "2022", url: "https://www.barna.com/research/pastor-support-systems/" },
-            { n: 2, authors: "Büssing et al.", title: "Spiritual Dryness as a Measure of a Specific Spiritual Crisis in Catholic Priests", year: "Evidence-Based Complementary and Alternative Medicine, 2013", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3703410/" },
-            { n: 3, authors: "Taylor, William D. (ed.)", title: "Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition", year: "William Carey Library, 1997", url: "https://propempo.com/community/propempo-blog/the-truth-about-missionary-attrition2/" },
-            { n: 4, authors: "Barton, Ruth Haley", title: "Strengthening the Soul of Your Leadership", year: "InterVarsity Press, 2018", url: "https://www.ivpress.com/strengthening-the-soul-of-your-leadership" },
-            { n: 5, authors: "Nouwen, Henri", title: "The Wounded Healer: Ministry in Contemporary Society", year: "Doubleday, 1972", url: "https://www.henrinouwen.org/books/the-wounded-healer" },
-            { n: 6, authors: "NCLS Research", title: "Foundations for Flourishing: National Pastoral Wellbeing Research", year: "2024", url: "https://ncls.org.au/" },
-            { n: 7, authors: "Afaradi", title: "Leadership Crisis and Restoration in 1 Kings 19: A Theological Study", year: "2025", url: "" },
-            { n: 8, authors: "Compass Asia", title: "Cross-Cultural Worker Care and Attrition in Asian Contexts", year: "", url: "https://compassasia.org/" },
-            { n: 9, authors: "Missio Nexus", title: "Engage! Research on Cross-Cultural Worker Retention", year: "2010", url: "https://missionexus.org/" },
-          ].map((s) => (
-            <div key={s.n} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-              <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, color: orange, fontWeight: 700, minWidth: 16, flexShrink: 0, paddingTop: 2 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹","¹⁰"][s.n]}
-              </span>
-              <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(50% 0.05 260)", lineHeight: 1.65, margin: 0 }}>
-                {s.authors} — {s.url ? (
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: navy, textDecoration: "underline" }}>{s.title}</a>
-                ) : (
-                  <span style={{ color: navy }}>{s.title}</span>
-                )}{s.year ? ` (${s.year})` : ""}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Barna Group — Pastors Share Top Reasons They've Considered Quitting Ministry (2022) https://www.barna.com/research/pastors-quitting-ministry/",
+        "Barna Group — 7-Year Trends: Pastors Feel More Loneliness and Less Support (2022) https://www.barna.com/research/pastor-support-systems/",
+        "Büssing et al. — Spiritual Dryness as a Measure of a Specific Spiritual Crisis in Catholic Priests (Evidence-Based Complementary and Alternative Medicine, 2013) https://pmc.ncbi.nlm.nih.gov/articles/PMC3703410/",
+        "Taylor, William D. (ed.) — Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition (William Carey Library, 1997) https://propempo.com/community/propempo-blog/the-truth-about-missionary-attrition2/",
+        "Barton, Ruth Haley — Strengthening the Soul of Your Leadership (InterVarsity Press, 2018) https://www.ivpress.com/strengthening-the-soul-of-your-leadership",
+        "Nouwen, Henri — The Wounded Healer: Ministry in Contemporary Society (Doubleday, 1972) https://www.henrinouwen.org/books/the-wounded-healer",
+        "NCLS Research — Foundations for Flourishing: National Pastoral Wellbeing Research (2024) https://ncls.org.au/",
+        "Afaradi — Leadership Crisis and Restoration in 1 Kings 19: A Theological Study (2025)",
+        "Compass Asia — Cross-Cultural Worker Care and Attrition in Asian Contexts https://compassasia.org/",
+        "Missio Nexus — Engage! Research on Cross-Cultural Worker Retention (2010) https://missionexus.org/",
+      ]} lang={lang} />
 
       {/* Footer */}
       <div style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>

@@ -3,6 +3,7 @@ import { useState, useTransition, useEffect, useRef, Fragment, type CSSPropertie
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const NAVY       = "oklch(22% 0.10 260)";
@@ -2513,50 +2514,14 @@ export default function GivingFeedbackClient({ isSaved, ...rest }: Props) {
       </section>
 
       {/* Sources */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{
-          fontFamily: FONT_BODY,
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: ORANGE,
-          marginBottom: 14,
-        }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014). Foundation for the two-dial Communicating/Evaluating framework used throughout this module.",
-            "Edward T. Hall — The Silent Language (Anchor Books, 1959); Beyond Culture (Anchor Books / Doubleday, 1976). Hall coined the high-context / low-context distinction. Note: the descriptive framework's cross-cultural measurement validity has been questioned by subsequent scholars (Cardon, 2008; Kittler, 2011); the phenomena Hall identified remain well documented.",
-            "Clifford Geertz — The Religion of Java (University of Chicago Press, 1960); Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010). Sources on malu, face, and shame dynamics in Indonesian and collectivist cultures.",
-            "Chung Hyun Pai Balcom — \"Nunchi: The Art of Reading the Room\" (contextual scholarship on Korean interpersonal communication); general literature on chae-myun (face) in Korean professional contexts.",
-            "John S. Mbiti — African Religions and Philosophy (Heinemann, 2nd ed., 1990). Foundational source for ubuntu philosophy and communal identity in sub-Saharan African societies.",
-            "Glen Caudill Dealy — The Latin Americans: Spirit and Ethos (Westview Press, 1992); Glen H. Elder Jr. and cross-cultural relational literature on personalismo as a trust-before-task operating norm in Latin American professional contexts.",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{
-                fontSize: 11,
-                color: ORANGE,
-                fontWeight: 700,
-                flexShrink: 0,
-                marginTop: 1,
-              }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{
-                fontSize: 12,
-                color: "oklch(52% 0.04 260)",
-                lineHeight: 1.7,
-                margin: 0,
-                fontFamily: FONT_BODY,
-              }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014). Foundation for the two-dial Communicating/Evaluating framework used throughout this module.",
+        "Edward T. Hall — The Silent Language (Anchor Books, 1959); Beyond Culture (Anchor Books / Doubleday, 1976). Hall coined the high-context / low-context distinction. Note: the descriptive framework's cross-cultural measurement validity has been questioned by subsequent scholars (Cardon, 2008; Kittler, 2011); the phenomena Hall identified remain well documented.",
+        "Clifford Geertz — The Religion of Java (University of Chicago Press, 1960); Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed., 2010). Sources on malu, face, and shame dynamics in Indonesian and collectivist cultures.",
+        "Chung Hyun Pai Balcom — \"Nunchi: The Art of Reading the Room\" (contextual scholarship on Korean interpersonal communication); general literature on chae-myun (face) in Korean professional contexts.",
+        "John S. Mbiti — African Religions and Philosophy (Heinemann, 2nd ed., 1990). Foundational source for ubuntu philosophy and communal identity in sub-Saharan African societies.",
+        "Glen Caudill Dealy — The Latin Americans: Spirit and Ethos (Westview Press, 1992); Glen H. Elder Jr. and cross-cultural relational literature on personalismo as a trust-before-task operating norm in Latin American professional contexts.",
+      ]} lang={lang} />
     </>
   );
 }

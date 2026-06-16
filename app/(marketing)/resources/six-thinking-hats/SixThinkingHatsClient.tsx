@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // -- TYPES ----------------------------------------------------------------------
 
@@ -473,23 +474,13 @@ export default function SixThinkingHatsClient({ userPathway, isSaved: initialSav
       </section>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-          Sources
-        </p>
-        {[
-          "¹ Edward de Bono — Six Thinking Hats (Little, Brown, 1985) — The original framework; defines all six hat modes and the rationale for parallel thinking.",
-          "² Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 2010) — Source for national Power Distance Index scores, including Indonesia at 78.",
-          "³ Charlan Nemeth, Keith Brown & John Rogers — \"Devil's Advocate Versus Authentic Dissent\" (European Journal of Social Psychology, 2001) — Demonstrates that structured dissent roles increase the range of perspectives considered in group decisions.",
-          "⁴ Florian Zenasni & Todd Lubart — \"Creativity and Tolerance of Ambiguity\" and related divergent thinking research (Journal of Creative Behavior, 2008–2018) — Shows that structured conditions for divergent thinking yield higher originality, not just quantity of ideas.",
-          "⁵ Ignatius of Loyola — Spiritual Exercises (c. 1524) — Source of the consolation/desolation framework used in Ignatian discernment as a tool for decision-making.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "Edward de Bono — Six Thinking Hats (Little, Brown, 1985) — The original framework; defines all six hat modes and the rationale for parallel thinking.",
+        "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 2010) — Source for national Power Distance Index scores, including Indonesia at 78.",
+        "Charlan Nemeth, Keith Brown & John Rogers — \"Devil's Advocate Versus Authentic Dissent\" (European Journal of Social Psychology, 2001) — Demonstrates that structured dissent roles increase the range of perspectives considered in group decisions.",
+        "Florian Zenasni & Todd Lubart — \"Creativity and Tolerance of Ambiguity\" and related divergent thinking research (Journal of Creative Behavior, 2008–2018) — Shows that structured conditions for divergent thinking yield higher originality, not just quantity of ideas.",
+        "Ignatius of Loyola — Spiritual Exercises (c. 1524) — Source of the consolation/desolation framework used in Ignatian discernment as a tool for decision-making.",
+      ]} lang={lang} />
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

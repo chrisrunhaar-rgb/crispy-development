@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import LangToggle from "@/components/LangToggle";
 
 // -- TYPES ----------------------------------------------------------------------
@@ -518,27 +519,11 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       </section>
 
       {/* -- SOURCES ------------------------------------------------------------ */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "John Medina — Brain Rules: 12 Principles for Surviving and Thriving at Work, Home, and School (Pear Press, 2nd ed., 2014) — research basis for the 10–20 minute adult attention window in learning environments",
-            "Malcolm Knowles — The Adult Learner: A Neglected Species (Gulf Publishing, 3rd ed., 1984); The Modern Practice of Adult Education: From Pedagogy to Andragogy (Cambridge Books, 1980) — originator of the five principles of andragogy",
-            "David A. Kolb — Experiential Learning: Experience as the Source of Learning and Development (Prentice Hall, 1984) — the four-stage experiential learning cycle (concrete experience, reflective observation, abstract conceptualisation, active experimentation)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "John Medina — Brain Rules: 12 Principles for Surviving and Thriving at Work, Home, and School (Pear Press, 2nd ed., 2014) — research basis for the 10–20 minute adult attention window in learning environments",
+        "Malcolm Knowles — The Adult Learner: A Neglected Species (Gulf Publishing, 3rd ed., 1984); The Modern Practice of Adult Education: From Pedagogy to Andragogy (Cambridge Books, 1980) — originator of the five principles of andragogy",
+        "David A. Kolb — Experiential Learning: Experience as the Source of Learning and Development (Prentice Hall, 1984) — the four-stage experiential learning cycle (concrete experience, reflective observation, abstract conceptualisation, active experimentation)",
+      ]} lang={lang} />
 
       {/* -- CTA ----------------------------------------------------------------- */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

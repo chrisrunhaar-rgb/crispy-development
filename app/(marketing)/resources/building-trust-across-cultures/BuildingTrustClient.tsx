@@ -3,6 +3,7 @@ import { Fragment, useState, useTransition, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import LangToggle from "@/components/LangToggle";
 import { saveResourceToDashboard } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 const NAVY = "oklch(22% 0.10 260)";
 const ORANGE = "oklch(65% 0.15 45)";
@@ -1217,27 +1218,11 @@ export default function BuildingTrustClient({ isSaved: initialSaved }: Props) {
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: FONT_BODY, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            `Daniel J. McAllister — "Affect- and Cognition-Based Trust as Foundations for Interpersonal Cooperation in Organizations" (Academy of Management Journal, Vol. 38, No. 1, 1995) — foundational empirical study establishing the cognitive/affective trust distinction used throughout this module`,
-            `Denise M. Rousseau, Sim B. Sitkin, Ronald S. Burt & Colin Camerer — "Not So Different After All: A Cross-Discipline View of Trust" (Academy of Management Review, Vol. 23, No. 3, 1998) — cross-disciplinary definition of trust; trust asymmetry as a structural property of trust relationships`,
-            "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — country-level mapping of task-based vs. relationship-based trust defaults across cultures",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontFamily: FONT_BODY, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        `Daniel J. McAllister — "Affect- and Cognition-Based Trust as Foundations for Interpersonal Cooperation in Organizations" (Academy of Management Journal, Vol. 38, No. 1, 1995) — foundational empirical study establishing the cognitive/affective trust distinction used throughout this module`,
+        `Denise M. Rousseau, Sim B. Sitkin, Ronald S. Burt & Colin Camerer — "Not So Different After All: A Cross-Discipline View of Trust" (Academy of Management Review, Vol. 23, No. 3, 1998) — cross-disciplinary definition of trust; trust asymmetry as a structural property of trust relationships`,
+        "Erin Meyer — The Culture Map: Breaking Through the Invisible Boundaries of Global Business (PublicAffairs, 2014) — country-level mapping of task-based vs. relationship-based trust defaults across cultures",
+      ]} lang={lang} />
     </>
   );
 }

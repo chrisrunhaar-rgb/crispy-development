@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard, saveMindsetScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 
@@ -995,29 +996,13 @@ export default function FixedGrowthMindsetClient({
       </section>
 
       {/* SOURCES */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Carol S. Dweck — Mindset: The New Psychology of Success (Random House, 2006)",
-            "Jeni L. Burnette, Ernest H. O'Boyle, Eric M. VanEpps, Jeffrey M. Pollack & Eli J. Finkel — \"Mind-Sets Matter: A Meta-Analytic Review of Implicit Theories and Self-Regulation\" (Psychological Bulletin, 139(3), 655–701, 2013); Victoria F. Sisk, Alexander P. Burgoyne, Jingze Sun, Jennifer L. Butler & Brooke N. Macnamara — \"To What Extent and Under Which Circumstances Are Growth Mind-Sets Important to Academic Achievement? Two Meta-Analyses\" (Psychological Science, 29(4), 549–571, 2018)",
-            "Carol S. Dweck & David S. Yeager — \"Mindsets: A View From Two Eras\" (Perspectives on Psychological Science, 14(3), 481–496, 2019)",
-            "David S. Yeager et al. — \"A synergistic mindsets intervention protects adolescents from stress\" (Nature, 607, 512–520, 2022) — N=2,717+; growth mindset combined with stress-as-enhancing significantly outperformed either alone",
-            "Lisa S. Blackwell, Kali H. Trzesniewski & Carol S. Dweck — \"Implicit theories of intelligence predict achievement across an adolescent transition: A longitudinal study and an intervention\" (Child Development, 78(1), 246–263, 2007)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: ORANGE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Carol S. Dweck — Mindset: The New Psychology of Success (Random House, 2006)",
+        "Jeni L. Burnette, Ernest H. O'Boyle, Eric M. VanEpps, Jeffrey M. Pollack & Eli J. Finkel — \"Mind-Sets Matter: A Meta-Analytic Review of Implicit Theories and Self-Regulation\" (Psychological Bulletin, 139(3), 655–701, 2013); Victoria F. Sisk, Alexander P. Burgoyne, Jingze Sun, Jennifer L. Butler & Brooke N. Macnamara — \"To What Extent and Under Which Circumstances Are Growth Mind-Sets Important to Academic Achievement? Two Meta-Analyses\" (Psychological Science, 29(4), 549–571, 2018)",
+        "Carol S. Dweck & David S. Yeager — \"Mindsets: A View From Two Eras\" (Perspectives on Psychological Science, 14(3), 481–496, 2019)",
+        "David S. Yeager et al. — \"A synergistic mindsets intervention protects adolescents from stress\" (Nature, 607, 512–520, 2022) — N=2,717+; growth mindset combined with stress-as-enhancing significantly outperformed either alone",
+        "Lisa S. Blackwell, Kali H. Trzesniewski & Carol S. Dweck — \"Implicit theories of intelligence predict achievement across an adolescent transition: A longitudinal study and an intervention\" (Child Development, 78(1), 246–263, 2007)",
+      ]} lang={lang} />
 
       {/* CTA */}
       <section style={{ background: NAVY, padding: "80px 24px" }}>

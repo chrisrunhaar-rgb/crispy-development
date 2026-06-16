@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 const tFn = (en: string, id: string, lang: Lang) =>
@@ -729,29 +730,13 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: orangeOklch, marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "P. Christopher Earley & Soon Ang — Cultural Intelligence: Individual Interactions Across Cultures (Stanford Business Books, 2003)",
-            "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022)",
-            "David Livermore — Serving with Eyes Wide Open (Baker Books, 2nd ed., 2013)",
-            "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008)",
-            "David J. Bosch — Transforming Mission: Paradigm Shifts in Theology of Mission (Orbis Books, 2011)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: orangeOklch, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "P. Christopher Earley & Soon Ang — Cultural Intelligence: Individual Interactions Across Cultures (Stanford Business Books, 2003)",
+        "David Livermore — Leading with Cultural Intelligence (AMACOM, 2nd ed., 2022)",
+        "David Livermore — Serving with Eyes Wide Open (Baker Books, 2nd ed., 2013)",
+        "Sherwood G. Lingenfelter — Leading Cross-Culturally: Covenant Relationships for Effective Christian Leadership (Baker Academic, 2008)",
+        "David J. Bosch — Transforming Mission: Paradigm Shifts in Theology of Mission (Orbis Books, 2011)",
+      ]} lang={lang} />
 
       {/* --- CTA FOOTER ------------------------------------------------------- */}
       <div style={{ background: navyOklch, padding: "72px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>

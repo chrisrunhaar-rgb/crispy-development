@@ -6,6 +6,7 @@ import { saveResourceToDashboard, save16PersonalitiesResult } from "../actions";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import LangToggle from "@/components/LangToggle";
 import { useLanguage } from "@/lib/LanguageContext";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 const QUESTIONS: { text: string; d: string; dir: "A" | "B" }[] = [
@@ -1239,28 +1240,12 @@ export default function Personalities16Client({
         </div>
 
       {/* ── SOURCES ─────────────────────────────────────────────────────── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Carl G. Jung — Psychological Types (Princeton University Press, 1971 [orig. 1921])",
-            "Isabel Briggs Myers & Peter B. Myers — Gifts Differing: Understanding Personality Type (Davies-Black Publishing, 1980)",
-            "Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory-Revised (PAR, 1992) — foundational instrument for the Big Five model",
-            "David Livermore — Leading with Cultural Intelligence: The Real Secret to Success (AMACOM, 2nd ed., 2022)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Carl G. Jung — Psychological Types (Princeton University Press, 1971 [orig. 1921])",
+        "Isabel Briggs Myers & Peter B. Myers — Gifts Differing: Understanding Personality Type (Davies-Black Publishing, 1980)",
+        "Paul T. Costa Jr. & Robert R. McCrae — NEO Personality Inventory-Revised (PAR, 1992) — foundational instrument for the Big Five model",
+        "David Livermore — Leading with Cultural Intelligence: The Real Secret to Success (AMACOM, 2nd ed., 2022)",
+      ]} lang={lang as "en" | "id"} />
 
       </div>
     );

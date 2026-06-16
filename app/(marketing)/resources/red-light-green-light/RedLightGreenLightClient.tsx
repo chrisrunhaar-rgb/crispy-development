@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveRLGLScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 
@@ -568,30 +569,14 @@ export default function RedLightGreenLightClient({
       </section>
 
       {/* SOURCES */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Alex F. Osborn — Applied Imagination: Principles and Procedures of Creative Problem-Solving (Scribner, 1953) — originator of brainstorming, the no-judgment rule, and divergent idea generation",
-            "Keith Johnstone — Impro: Improvisation and the Theatre (Methuen, 1979) — foundational source for 'Yes, and—' as a collaborative building principle",
-            "Sheena S. Iyengar & Mark R. Lepper — 'When Choice is Demotivating: Can One Desire Too Much of a Good Thing?' (Journal of Personality and Social Psychology, 2000) — empirical evidence that excessive options reduce decision quality and motivation",
-            "J. P. Guilford — The Nature of Human Intelligence (McGraw-Hill, 1967) — introduced the divergent/convergent thinking distinction foundational to phase-separated facilitation",
-            "Amy C. Edmondson — 'Psychological Safety and Learning Behavior in Work Teams' (Administrative Science Quarterly, 44(2), 1999) — team-level evidence that non-judgmental feedback cultures increase learning and performance",
-            "Michael Michalko — Thinkertoys: A Handbook of Creative-Thinking Techniques (Ten Speed Press, 2nd ed., 2006) — structured phase-based creative facilitation methods",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Alex F. Osborn — Applied Imagination: Principles and Procedures of Creative Problem-Solving (Scribner, 1953) — originator of brainstorming, the no-judgment rule, and divergent idea generation",
+        "Keith Johnstone — Impro: Improvisation and the Theatre (Methuen, 1979) — foundational source for 'Yes, and—' as a collaborative building principle",
+        "Sheena S. Iyengar & Mark R. Lepper — 'When Choice is Demotivating: Can One Desire Too Much of a Good Thing?' (Journal of Personality and Social Psychology, 2000) — empirical evidence that excessive options reduce decision quality and motivation",
+        "J. P. Guilford — The Nature of Human Intelligence (McGraw-Hill, 1967) — introduced the divergent/convergent thinking distinction foundational to phase-separated facilitation",
+        "Amy C. Edmondson — 'Psychological Safety and Learning Behavior in Work Teams' (Administrative Science Quarterly, 44(2), 1999) — team-level evidence that non-judgmental feedback cultures increase learning and performance",
+        "Michael Michalko — Thinkertoys: A Handbook of Creative-Thinking Techniques (Ten Speed Press, 2nd ed., 2006) — structured phase-based creative facilitation methods",
+      ]} lang={lang} />
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

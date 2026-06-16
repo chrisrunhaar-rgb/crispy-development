@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import {
   Lang,
   ChannelId,
@@ -1322,23 +1323,13 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
           </div>
 
           {/* ── Sources ── */}
-          <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-            <p style={{ fontFamily: montserrat, fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
-              Sources
-            </p>
-            {[
-              "¹ Andy Stanley — Visioneering (Multnomah, 1999; rev. 2014) — Primary source for the vision-as-concern framework, the four-channel model, and the five discernment tests adapted throughout this module.",
-              "² John P. Kotter — Leading Change (Harvard Business Review Press, 1996) — Kotter's research found leaders under-communicate vision by a factor of ten; the seven-to-ten repetitions standard is grounded in his organizational change studies.",
-              "³ Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed. 2010) — Foundational cross-cultural research establishing the individualism–collectivism dimension and its implications for how authority and collective vision are communicated.",
-              "⁴ Bill Hybels — Courageous Leadership (Zondervan, 2002; updated 2009) — Practitioner account of vision casting in complex organizations; especially strong on the discipline of vision repetition and distinguishing vision from strategy.",
-              "⁵ Will Mancini & Warren Bird — God Dreams (B&H Publishing, 2016) — Identifies twelve recurring patterns in how God-given vision takes shape across different ministry contexts; useful framework for teams moving from intuition to articulation.",
-            ].map((src, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-                <span style={{ fontFamily: montserrat, fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵"][i]}</span>
-                <span style={{ fontFamily: montserrat, fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-              </div>
-            ))}
-          </div>
+          <SourcesDropdown sources={[
+            "Andy Stanley — Visioneering (Multnomah, 1999; rev. 2014) — Primary source for the vision-as-concern framework, the four-channel model, and the five discernment tests adapted throughout this module.",
+            "John P. Kotter — Leading Change (Harvard Business Review Press, 1996) — Kotter's research found leaders under-communicate vision by a factor of ten; the seven-to-ten repetitions standard is grounded in his organizational change studies.",
+            "Geert Hofstede, Gert Jan Hofstede & Michael Minkov — Cultures and Organizations: Software of the Mind (McGraw-Hill, 3rd ed. 2010) — Foundational cross-cultural research establishing the individualism–collectivism dimension and its implications for how authority and collective vision are communicated.",
+            "Bill Hybels — Courageous Leadership (Zondervan, 2002; updated 2009) — Practitioner account of vision casting in complex organizations; especially strong on the discipline of vision repetition and distinguishing vision from strategy.",
+            "Will Mancini & Warren Bird — God Dreams (B&H Publishing, 2016) — Identifies twelve recurring patterns in how God-given vision takes shape across different ministry contexts; useful framework for teams moving from intuition to articulation.",
+          ]} lang={lang} background={navy} />
 
           {/* CTA */}
           <div style={{

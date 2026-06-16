@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard, saveSmartGoal, saveSmartGoalToTable, getSmartGoalAiSuggestion, getSmartGoalCoachingResponse, getSmartGoalAiScore } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 type Lang = "en" | "id";
 type Answer = "yes" | "partial" | "no";
@@ -1068,23 +1069,13 @@ export default function SmartGoalsClient({
       </section>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "oklch(65% 0.15 45)", marginBottom: 16 }}>
-          {t("Sources", "Sumber")}
-        </p>
-        {[
-          "¹ George T. Doran — 'There's a S.M.A.R.T. way to write management's goals and objectives' (Management Review, vol. 70 no. 11, 1981) — The original practitioner memo that introduced the SMART acronym; a management tool, not a peer-reviewed study.",
-          "² Edwin A. Locke & Gary P. Latham — A Theory of Goal Setting and Task Performance (Prentice Hall, 1990) — The foundational text of Goal Setting Theory, synthesising decades of empirical research showing that specific, challenging goals drive higher performance.",
-          "³ Edwin A. Locke & Gary P. Latham — 'Building a practically useful theory of goal setting and task motivation' (American Psychologist, vol. 57 no. 9, 2002) — Key meta-analytic paper summarising findings from more than 1,000 studies on goal specificity, commitment, and feedback.",
-          "⁴ Lisa D. Ordóñez, Maurice E. Schweitzer, Adam D. Galinsky & Max H. Bazerman — 'Goals Gone Wild: The Systematic Side Effects of Over-Prescribing Goal Setting' (Academy of Management Perspectives, vol. 23 no. 1, 2009) — Argues that narrowly prescribed goals can reduce intrinsic motivation and ethical behaviour; the SMART acronym should be used as a prompt, not a rigid formula.",
-          "⁵ Ken Blanchard & Spencer Johnson — The One Minute Manager (William Morrow, 1982) — Source of the Motivating/Trackable variant used in this module, emphasising inner drive and observable progress over purely quantitative measures.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(65% 0.15 45)", flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "George T. Doran — 'There's a S.M.A.R.T. way to write management's goals and objectives' (Management Review, vol. 70 no. 11, 1981) — The original practitioner memo that introduced the SMART acronym; a management tool, not a peer-reviewed study.",
+        "Edwin A. Locke & Gary P. Latham — A Theory of Goal Setting and Task Performance (Prentice Hall, 1990) — The foundational text of Goal Setting Theory, synthesising decades of empirical research showing that specific, challenging goals drive higher performance.",
+        "Edwin A. Locke & Gary P. Latham — 'Building a practically useful theory of goal setting and task motivation' (American Psychologist, vol. 57 no. 9, 2002) — Key meta-analytic paper summarising findings from more than 1,000 studies on goal specificity, commitment, and feedback.",
+        "Lisa D. Ordóñez, Maurice E. Schweitzer, Adam D. Galinsky & Max H. Bazerman — 'Goals Gone Wild: The Systematic Side Effects of Over-Prescribing Goal Setting' (Academy of Management Perspectives, vol. 23 no. 1, 2009) — Argues that narrowly prescribed goals can reduce intrinsic motivation and ethical behaviour; the SMART acronym should be used as a prompt, not a rigid formula.",
+        "Ken Blanchard & Spencer Johnson — The One Minute Manager (William Morrow, 1982) — Source of the Motivating/Trackable variant used in this module, emphasising inner drive and observable progress over purely quantitative measures.",
+      ]} lang={lang} />
 
       {/* CTA */}
       <section style={{ background: "oklch(22% 0.10 260)", padding: "80px 24px" }}>

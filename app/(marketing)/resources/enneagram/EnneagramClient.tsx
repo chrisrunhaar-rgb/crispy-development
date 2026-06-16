@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { saveResourceToDashboard, saveEnneagramResult } from "../actions";
+import SourcesDropdown from "@/components/SourcesDropdown";
 import { trackAssessmentCompletion } from "@/lib/ga-events";
 import EnneagramTypesGrid from "./EnneagramTypesGrid";
 import TypeCard from "./TypeCard";
@@ -1516,30 +1517,14 @@ export default function EnneagramClient({
       </div>
 
       {/* --- SOURCES ---------------------------------------------------------- */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-montserrat), Montserrat, sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: 14 }}>
-          Sources
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-          {[
-            "Oscar Ichazo — originator of the modern Enneagram of Personality system (Arica Institute, 1960s–1970s)",
-            "Claudio Naranjo — Character and Neurosis: An Enneagram-Based Investigation (Gateways Books, 1994)",
-            "Don Richard Riso & Russ Hudson — The Wisdom of the Enneagram (Bantam Books, 1999); Personality Types (Houghton Mifflin, rev. ed., 1996)",
-            "Richard Rohr & Andreas Ebert — The Enneagram: A Christian Perspective (Crossroad Publishing, 2001)",
-            "Ian Morgan Cron & Suzanne Stabile — The Road Back to You: An Enneagram Journey to Self-Discovery (IVP Books, 2016)",
-            "Christopher Heuertz — The Sacred Enneagram: Finding Your Unique Path to Spiritual Growth (Zondervan, 2017)",
-          ].map((src, i) => (
-            <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <span style={{ fontSize: 11, color: "oklch(65% 0.15 45)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>
-                {["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}
-              </span>
-              <p style={{ fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7, margin: 0 }}>
-                {src}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SourcesDropdown sources={[
+        "Oscar Ichazo — originator of the modern Enneagram of Personality system (Arica Institute, 1960s–1970s)",
+        "Claudio Naranjo — Character and Neurosis: An Enneagram-Based Investigation (Gateways Books, 1994)",
+        "Don Richard Riso & Russ Hudson — The Wisdom of the Enneagram (Bantam Books, 1999); Personality Types (Houghton Mifflin, rev. ed., 1996)",
+        "Richard Rohr & Andreas Ebert — The Enneagram: A Christian Perspective (Crossroad Publishing, 2001)",
+        "Ian Morgan Cron & Suzanne Stabile — The Road Back to You: An Enneagram Journey to Self-Discovery (IVP Books, 2016)",
+        "Christopher Heuertz — The Sacred Enneagram: Finding Your Unique Path to Spiritual Growth (Zondervan, 2017)",
+      ]} lang={lang} />
     </>
   );
 }

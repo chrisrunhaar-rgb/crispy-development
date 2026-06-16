@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { saveResourceToDashboard } from "../actions";
 import LangToggle from "@/components/LangToggle";
+import SourcesDropdown from "@/components/SourcesDropdown";
 
 // -- TYPES & LANG --------------------------------------------------------------
 type Lang = "en" | "id";
@@ -1695,26 +1696,16 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
       </section>
 
       {/* ── Sources ── */}
-      <div style={{ padding: "48px 24px 32px", maxWidth: 780, margin: "0 auto" }}>
-        <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: orange, marginBottom: 16 }}>
-          Sources
-        </p>
-        {[
-          "¹ Taylor, W.D. (Ed.) — Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition (William Carey Library, 1997) — ReMap I global study of cross-cultural worker attrition; identifies personal health neglect as leading preventable cause.",
-          "² O'Donnell, K. (ed.) — Doing Member Care Well: Perspectives and Practices from the Field (William Carey Library, 2002) — establishes the five-sphere concentric model of member care for long-term cross-cultural workers.",
-          "³ Abdul Aziz, A.F. & Ong, T. (2024). Prevalence and associated factors of burnout among working adults in Southeast Asia: results from a public health assessment. Frontiers in Public Health, March 14, 2024. DOI: 10.3389/fpubh.2024.1326227. Survey of 4,338 full-time employees across Malaysia, Singapore, Philippines, and Indonesia; 62.91% reported high or very high burnout; cross-cultural field worker research consistently identifies Sabbath neglect as a primary contributing factor.",
-          "⁴ Brueggemann, W. Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014). Theological argument that Sabbath is counter-cultural resistance to productivity idolatry, not mere recuperation.",
-          "⁵ Heschel, A.J. The Sabbath: Its Meaning for Modern Man (Farrar, Straus and Giroux, 1951). Foundational theology of Sabbath as sacred time rather than sacred space; origin of the 'palace in time' image.",
-          "⁶ Sonnentag, S. — Psychological Detachment from Work During Leisure Time: The Benefits of Mentally Disengaging from Work (Current Directions in Psychological Science, 2012) — meta-analysis establishing psychological detachment as the single most evidence-supported recovery mechanism; leader detachment improves team recovery outcomes.",
-          "⁷ Walker, M.P. — Why We Sleep: Unlocking the Power of Sleep and Dreams (Scribner, 2017) — comprehensive review of sleep science; documents cognitive, emotional, and physiological costs of chronic sleep debt below 7 hours.",
-          "⁸ Ratey, J.J. — Spark: The Revolutionary New Science of Exercise and the Brain (Little, Brown, 2008) — evidence base for aerobic exercise improving executive function, stress regulation, and cognitive sharpness in high-demand roles.",
-        ].map((src, i) => (
-          <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: orange, flexShrink: 0, lineHeight: 1.7 }}>{["¹","²","³","⁴","⁵","⁶","⁷","⁸"][i]}</span>
-            <span style={{ fontFamily: "Montserrat, sans-serif", fontSize: 12, color: "oklch(52% 0.04 260)", lineHeight: 1.7 }}>{src.replace(/^[¹²³⁴⁵⁶⁷⁸]\s*/,"")}</span>
-          </div>
-        ))}
-      </div>
+      <SourcesDropdown sources={[
+        "Taylor, W.D. (Ed.) — Too Valuable to Lose: Exploring the Causes and Cures of Missionary Attrition (William Carey Library, 1997) — ReMap I global study of cross-cultural worker attrition; identifies personal health neglect as leading preventable cause.",
+        "O'Donnell, K. (ed.) — Doing Member Care Well: Perspectives and Practices from the Field (William Carey Library, 2002) — establishes the five-sphere concentric model of member care for long-term cross-cultural workers.",
+        "Abdul Aziz, A.F. & Ong, T. (2024). Prevalence and associated factors of burnout among working adults in Southeast Asia: results from a public health assessment. Frontiers in Public Health, March 14, 2024. DOI: 10.3389/fpubh.2024.1326227. Survey of 4,338 full-time employees across Malaysia, Singapore, Philippines, and Indonesia; 62.91% reported high or very high burnout; cross-cultural field worker research consistently identifies Sabbath neglect as a primary contributing factor.",
+        "Brueggemann, W. Sabbath as Resistance: Saying No to the Culture of Now (Westminster John Knox Press, 2014). Theological argument that Sabbath is counter-cultural resistance to productivity idolatry, not mere recuperation.",
+        "Heschel, A.J. The Sabbath: Its Meaning for Modern Man (Farrar, Straus and Giroux, 1951). Foundational theology of Sabbath as sacred time rather than sacred space; origin of the 'palace in time' image.",
+        "Sonnentag, S. — Psychological Detachment from Work During Leisure Time: The Benefits of Mentally Disengaging from Work (Current Directions in Psychological Science, 2012) — meta-analysis establishing psychological detachment as the single most evidence-supported recovery mechanism; leader detachment improves team recovery outcomes.",
+        "Walker, M.P. — Why We Sleep: Unlocking the Power of Sleep and Dreams (Scribner, 2017) — comprehensive review of sleep science; documents cognitive, emotional, and physiological costs of chronic sleep debt below 7 hours.",
+        "Ratey, J.J. — Spark: The Revolutionary New Science of Exercise and the Brain (Little, Brown, 2008) — evidence base for aerobic exercise improving executive function, stress regulation, and cognitive sharpness in high-demand roles.",
+      ]} lang={lang} />
 
       {/* -- FOOTER -- */}
       <section style={{ background: navy, padding: "72px 24px", textAlign: "center" }}>
