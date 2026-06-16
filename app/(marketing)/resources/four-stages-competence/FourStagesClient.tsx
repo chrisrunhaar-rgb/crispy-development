@@ -89,12 +89,13 @@ function CompetenceMatrix({ selectedStage, onSelect, lang }: {
 }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Grid layout: top-left=S2, top-right=S4, bottom-left=S1, bottom-right=S3
+  // Grid layout: top-left=S2, top-right=S3, bottom-left=S1, bottom-right=S4
+  // Top = high awareness (both conscious types). Bottom = low awareness (both unconscious types).
   const quadrants = [
     { stageNum: 2, gridArea: "tl" },
-    { stageNum: 4, gridArea: "tr" },
+    { stageNum: 3, gridArea: "tr" },
     { stageNum: 1, gridArea: "bl" },
-    { stageNum: 3, gridArea: "br" },
+    { stageNum: 4, gridArea: "br" },
   ];
 
   return (
