@@ -91,9 +91,9 @@ function CompetenceMatrix({ selectedStage, onSelect, lang }: {
   // Grid layout: top-left=S2, top-right=S4, bottom-left=S1, bottom-right=S3
   const quadrants = [
     { stageNum: 2, gridArea: "tl" },
-    { stageNum: 4, gridArea: "tr" },
+    { stageNum: 3, gridArea: "tr" },
     { stageNum: 1, gridArea: "bl" },
-    { stageNum: 3, gridArea: "br" },
+    { stageNum: 4, gridArea: "br" },
   ];
 
   return (
@@ -195,19 +195,6 @@ function CompetenceMatrix({ selectedStage, onSelect, lang }: {
         {t("LOW AWARENESS", "KESADARAN RENDAH", lang)}
       </div>
 
-      {/* Journey note */}
-      <p style={{
-        marginTop: 16, textAlign: "center",
-        fontFamily: "Cormorant Garamond, serif",
-        fontSize: 13, fontStyle: "italic",
-        color: "oklch(55% 0.04 260)", lineHeight: 1.5,
-      }}>
-        {t(
-          "The journey runs: Unconscious Incompetence → Conscious Incompetence → Unconscious Competence → Conscious Competence",
-          "Perjalanannya: Ketidaksadaran atas Ketidakmampuan → Ketidakmampuan yang Disadari → Kompetensi Tidak Sadar → Kompetensi yang Disadari",
-          lang
-        )}
-      </p>
     </div>
   );
 }
