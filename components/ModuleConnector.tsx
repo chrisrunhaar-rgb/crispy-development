@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function ModuleConnector({ currentSlug, savedResources, isLoggedIn }: Props) {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const mc = t.moduleConnector;
   const connections = getConnectionsForModule(currentSlug);
   const [sectionTops, setSectionTops] = useState<Record<string, number>>({});
@@ -303,7 +303,7 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                         margin: "0 0 10px",
                         lineHeight: 1.3,
                       }}>
-                        {conn.targetTitle}
+                        {lang === "id" && conn.targetTitle_id ? conn.targetTitle_id : conn.targetTitle}
                       </p>
 
                       <p style={{
@@ -313,9 +313,14 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                         margin: 0,
                       }}>
                         {mc.readingAbout}{" "}
-                        <span style={{ color: offWhite, fontWeight: 500 }}>{conn.topic}</span>
-                        {". "}{mc.inOur}{" "}<strong style={{ color: offWhite }}>{conn.targetTitle}</strong>{" "}
-                        {mc.moduleWord} {mc.weExplore} {conn.angle}.
+                        <span style={{ color: offWhite, fontWeight: 500 }}>
+                          {lang === "id" && conn.topic_id ? conn.topic_id : conn.topic}
+                        </span>
+                        {". "}{mc.inOur}{" "}
+                        <strong style={{ color: offWhite }}>
+                          {lang === "id" && conn.targetTitle_id ? conn.targetTitle_id : conn.targetTitle}
+                        </strong>{" "}
+                        {mc.moduleWord} {mc.weExplore} {lang === "id" && conn.angle_id ? conn.angle_id : conn.angle}.
                       </p>
 
                       {state.saveState === "saved" && (
@@ -342,7 +347,7 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                           onClick={() => handleSave(key, conn.targetSlug)}
                           disabled={state.saveState === "saving"}
                         >
-                          {state.saveState === "saving" ? mc.saving : `${mc.save} ${conn.targetTitle} ${mc.saveToDashboard}`}
+                          {state.saveState === "saving" ? mc.saving : `${mc.save} ${lang === "id" && conn.targetTitle_id ? conn.targetTitle_id : conn.targetTitle} ${mc.saveToDashboard}`}
                         </button>
                       )}
                       <a href={`/resources/${conn.targetSlug}`} className="mc-open-link">

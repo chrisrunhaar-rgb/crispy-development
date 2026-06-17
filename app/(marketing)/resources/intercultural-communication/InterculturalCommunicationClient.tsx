@@ -264,7 +264,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       </div>
 
       {/* --- SECTION 2: THE FOUR DIMENSIONS — ACCORDION ---------------------- */}
-      <div id="mc-dimensions" style={{ background: lightGray, padding: "80px 24px", marginTop: 48 }}>
+      <div style={{ background: lightGray, padding: "80px 24px", marginTop: 48 }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
             {t("The Framework", "Kerangka Kerja")}
@@ -283,7 +283,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
             {dimensions.map((d, i) => {
               const isOpen = openDim === i;
               return (
-                <div key={d.number} style={{ background: offWhite, borderRadius: 10, overflow: "hidden", boxShadow: isOpen ? "0 4px 24px oklch(20% 0.08 260 / 0.12)" : "none", transition: "box-shadow 0.2s ease" }}>
+                <div key={d.number} id={d.number === "03" ? "mc-dimensions" : undefined} style={{ background: offWhite, borderRadius: 10, overflow: "hidden", boxShadow: isOpen ? "0 4px 24px oklch(20% 0.08 260 / 0.12)" : "none", transition: "box-shadow 0.2s ease" }}>
                   <button
                     onClick={() => setOpenDim(isOpen ? null : i)}
                     style={{ width: "100%", background: "none", border: "none", padding: "24px 28px", display: "flex", alignItems: "center", gap: 20, cursor: "pointer", textAlign: "left" }}

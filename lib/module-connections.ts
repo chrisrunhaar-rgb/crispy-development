@@ -3,8 +3,11 @@ export type ModuleConnection = {
   sourceSectionId: string;
   targetSlug: string;
   targetTitle: string;
+  targetTitle_id?: string;
   topic: string;
+  topic_id?: string;
   angle: string;
+  angle_id?: string;
 };
 
 export const MODULE_CONNECTIONS: ModuleConnection[] = [
@@ -14,16 +17,22 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-dimensions",
     targetSlug: "power-distance",
     targetTitle: "Power Distance in Leadership",
+    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
     topic: "power distance and cultural communication",
+    topic_id: "jarak kekuasaan dan komunikasi budaya",
     angle: "how power distance determines who speaks, who stays silent, and who gets heard",
+    angle_id: "bagaimana jarak kekuasaan menentukan siapa yang berbicara, siapa yang diam, dan siapa yang didengar",
   },
   {
     sourceSlug: "intercultural-communication",
     sourceSectionId: "mc-faith-anchor",
     targetSlug: "giving-feedback-across-cultures",
     targetTitle: "Giving Feedback Across Cultures",
+    targetTitle_id: "Memberikan Umpan Balik Lintas Budaya",
     topic: "speaking truth in ways that can be received",
+    topic_id: "menyampaikan kebenaran dengan cara yang bisa diterima",
     angle: "why truth-telling fails cross-culturally — and how to deliver feedback that actually lands",
+    angle_id: "mengapa kejujuran lintas budaya sering gagal — dan cara menyampaikan umpan balik yang benar-benar diterima",
   },
 
   // Sabbath Leadership → Understanding Burnout
@@ -33,8 +42,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-portraits",
     targetSlug: "understanding-burnout",
     targetTitle: "Understanding Burnout",
+    targetTitle_id: "Memahami Burnout",
     topic: "the hidden cost of never stopping",
+    topic_id: "biaya tersembunyi dari tidak pernah berhenti",
     angle: "what unaddressed burnout actually looks like in leaders — and how to recognise it before collapse",
+    angle_id: "seperti apa burnout yang tidak ditangani pada pemimpin — dan cara mengenalinya sebelum terjadi keruntuhan",
   },
 
   // Sustainable Pace → Sabbath Leadership
@@ -44,8 +56,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-sabbath-ref",
     targetSlug: "sabbath-leadership",
     targetTitle: "Sabbath Leadership",
+    targetTitle_id: "Kepemimpinan Sabat",
     topic: "Sabbath rest as a leadership practice",
+    topic_id: "istirahat Sabat sebagai praktik kepemimpinan",
     angle: "the theological foundation and practical rhythm of Sabbath that this module points toward",
+    angle_id: "fondasi teologis dan ritme praktis Sabat yang ditunjuk oleh modul ini",
   },
 
   // Sustainable Pace → Understanding Burnout
@@ -55,8 +70,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-burnout-data",
     targetSlug: "understanding-burnout",
     targetTitle: "Understanding Burnout",
+    targetTitle_id: "Memahami Burnout",
     topic: "burnout rates among cross-cultural workers",
+    topic_id: "tingkat burnout di antara pekerja lintas budaya",
     angle: "the research on what burnout looks like — and how to read the signals before your body breaks",
+    angle_id: "penelitian tentang seperti apa burnout — dan cara membaca sinyal-sinyal sebelum tubuh Anda menyerah",
   },
 
   // Healthy Conflict → Power Distance
@@ -66,8 +84,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-research",
     targetSlug: "power-distance",
     targetTitle: "Power Distance in Leadership",
+    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
     topic: "how power distance shapes conflict and silence",
+    topic_id: "bagaimana jarak kekuasaan membentuk konflik dan keheningan",
     angle: "Hofstede's framework for understanding why silence in high-PDI cultures is not disengagement — it is respect",
+    angle_id: "kerangka Hofstede untuk memahami mengapa keheningan dalam budaya PDI tinggi bukan ketidaktertarikan — melainkan rasa hormat",
   },
 
   // DISC → Big Five
@@ -77,8 +98,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "disc-about",
     targetSlug: "big-five",
     targetTitle: "Big Five Personality",
+    targetTitle_id: "Kepribadian Big Five",
     topic: "cross-cultural validity of personality frameworks",
+    topic_id: "validitas lintas budaya dari kerangka kepribadian",
     angle: "why the Big Five is more rigorously validated across cultures than DISC — and what that means for your team",
+    angle_id: "mengapa Big Five lebih ketat divalidasi lintas budaya dibanding DISC — dan apa artinya bagi tim Anda",
   },
 
   // DISC → Understanding High-Context Cultures
@@ -88,8 +112,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "disc-D",
     targetSlug: "understanding-high-context",
     targetTitle: "Understanding High-Context Cultures",
+    targetTitle_id: "Memahami Budaya Konteks Tinggi",
     topic: "how D-type directness lands in high-context cultures",
+    topic_id: "bagaimana ketegasan tipe-D ditanggapi dalam budaya konteks tinggi",
     angle: "why direct, task-focused communication often creates friction in high-context settings — and what to do instead",
+    angle_id: "mengapa komunikasi langsung dan berorientasi tugas sering menciptakan gesekan dalam budaya konteks tinggi — dan apa yang harus dilakukan",
   },
 
   // Cultural Intelligence → Emotional Intelligence
@@ -99,8 +126,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-what-cq",
     targetSlug: "emotional-intelligence",
     targetTitle: "Emotional Intelligence",
+    targetTitle_id: "Kecerdasan Emosional",
     topic: "EQ vs CQ — what each does and why you need both",
+    topic_id: "EQ vs CQ — apa fungsinya masing-masing dan mengapa Anda butuh keduanya",
     angle: "how emotional intelligence and cultural intelligence work together — and what breaks when you have one without the other",
+    angle_id: "bagaimana kecerdasan emosional dan kultural bekerja bersama — dan apa yang rusak jika hanya punya salah satunya",
   },
 
   // Attention Retention → Storytelling Leadership
@@ -110,8 +140,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-methods",
     targetSlug: "storytelling-leadership",
     targetTitle: "Storytelling in Leadership",
+    targetTitle_id: "Bercerita dalam Kepemimpinan",
     topic: "storytelling as a learning method",
+    topic_id: "bercerita sebagai metode pembelajaran",
     angle: "how to use narrative-driven teaching to embed concepts in ways people actually remember",
+    angle_id: "cara menggunakan pengajaran berbasis narasi untuk menanamkan konsep yang benar-benar diingat orang",
   },
 
   // Influential Leadership Framework → Cultural Intelligence
@@ -121,8 +154,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-cq",
     targetSlug: "cultural-intelligence",
     targetTitle: "Cultural Intelligence (CQ)",
+    targetTitle_id: "Kecerdasan Budaya (CQ)",
     topic: "cultural intelligence as a pillar of leadership influence",
+    topic_id: "kecerdasan budaya sebagai pilar pengaruh kepemimpinan",
     angle: "the framework, dimensions, and developmental pathway for building genuine CQ",
+    angle_id: "kerangka, dimensi, dan jalur pengembangan untuk membangun CQ yang nyata",
   },
 
   // Wheel of Life → Sabbath Leadership
@@ -132,8 +168,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-rest",
     targetSlug: "sabbath-leadership",
     targetTitle: "Sabbath Leadership",
+    targetTitle_id: "Kepemimpinan Sabat",
     topic: "Sabbath rest as a dimension of a whole leader",
+    topic_id: "istirahat Sabat sebagai dimensi pemimpin yang utuh",
     angle: "the theological and practical case for building rest into your rhythm as a leader",
+    angle_id: "alasan teologis dan praktis untuk membangun istirahat dalam ritme Anda sebagai pemimpin",
   },
 
   // Johari Window → Power Distance
@@ -143,8 +182,11 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     sourceSectionId: "mc-cross-cultural",
     targetSlug: "power-distance",
     targetTitle: "Power Distance in Leadership",
+    targetTitle_id: "Jarak Kekuasaan dalam Kepemimpinan",
     topic: "how power distance affects upward feedback and blind spots",
+    topic_id: "bagaimana jarak kekuasaan memengaruhi umpan balik ke atas dan titik buta",
     angle: "why high power-distance cultures make leader blind spots larger — and what to do about it",
+    angle_id: "mengapa budaya jarak kekuasaan tinggi memperbesar titik buta pemimpin — dan apa yang harus dilakukan",
   },
 ];
 
