@@ -204,7 +204,7 @@ export default function AboveBelowClient(_props: {
       {/* HERO */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
         <img
-          src="/images/social/question-above-below-line.png"
+          src="/images/abl-rope-header.jpg"
           alt=""
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.28, mixBlendMode: "soft-light", pointerEvents: "none" }}
         />
