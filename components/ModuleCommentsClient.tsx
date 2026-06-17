@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { submitModuleComment, deleteModuleComment } from "@/app/(marketing)/resources/actions";
 import type { ModuleComment } from "./ModuleComments";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const FONT = "var(--font-montserrat)";
 const CORMORANT = "var(--font-cormorant), 'Cormorant Garamond', Georgia, serif";
@@ -29,6 +30,10 @@ export default function ModuleCommentsClient({
   publishedComments: ModuleComment[];
   myComment: ModuleComment | null;
 }) {
+  const { lang: ctxLang } = useLanguage();
+  const isId = ctxLang === "id";
+  const tr = (en: string, id: string) => (isId ? id : en);
+
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(!!myComment);
   const [currentComment, setCurrentComment] = useState<ModuleComment | null>(myComment);
@@ -90,7 +95,7 @@ export default function ModuleCommentsClient({
         textTransform: "uppercase",
         margin: "0 0 12px",
       }}>
-        From the Field
+        {tr("From the Field", "Dari Lapangan")}
       </p>
       <h2 style={{
         fontFamily: CORMORANT,
@@ -100,7 +105,7 @@ export default function ModuleCommentsClient({
         margin: "0 0 12px",
         lineHeight: 1.2,
       }}>
-        What&apos;s working in your context?
+        {tr("What's working in your context?", "Apa yang berhasil dalam konteks Anda?")}
       </h2>
       <p style={{
         fontFamily: FONT,
@@ -110,8 +115,11 @@ export default function ModuleCommentsClient({
         margin: "0 0 32px",
         maxWidth: 560,
       }}>
-        Share what you tried, what surprised you, and what you would pass on to someone just starting.
-        {hasPublished && " Below are reflections from others in the Crispy community."}
+        {tr(
+          "Share what you tried, what surprised you, and what you would pass on to someone just starting.",
+          "Bagikan apa yang Anda coba, apa yang mengejutkan Anda, dan apa yang akan Anda teruskan kepada seseorang yang baru memulai."
+        )}
+        {hasPublished && " " + tr("Below are reflections from others in the Crispy community.", "Berikut adalah refleksi dari anggota komunitas Crispy lainnya.")}
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -132,7 +140,7 @@ export default function ModuleCommentsClient({
               color: "oklch(45% 0.12 45)",
               margin: "0 0 8px",
             }}>
-              Reply from Crispy
+              {tr("Reply from Crispy", "Balasan dari Crispy")}
             </p>
             <p style={{
               fontFamily: FONT,
@@ -168,7 +176,7 @@ export default function ModuleCommentsClient({
                     fontWeight: 700,
                     color: navy,
                   }}>
-                    {entry.display_name ?? "Community member"}
+                    {entry.display_name ?? tr("Community member", "Anggota komunitas")}
                   </span>
                   <span style={{
                     fontFamily: FONT,
@@ -212,12 +220,12 @@ export default function ModuleCommentsClient({
                 fontWeight: 700,
                 color: "oklch(42% 0.12 260)",
               }}>
-                Your reflection
+                {tr("Your reflection", "Refleksi Anda")}
                 {currentComment.visibility === "private"
-                  ? " · Sent to Crispy"
+                  ? " · " + tr("Sent to Crispy", "Terkirim ke Crispy")
                   : currentComment.visibility === "public_pending"
-                  ? " · Pending approval"
-                  : " · Published"}
+                  ? " · " + tr("Pending approval", "Menunggu persetujuan")
+                  : " · " + tr("Published", "Diterbitkan")}
               </span>
               <button
                 type="button"
@@ -236,7 +244,7 @@ export default function ModuleCommentsClient({
                   textUnderlineOffset: "3px",
                 }}
               >
-                {isDeleting ? "Removing…" : "Remove"}
+                {isDeleting ? tr("Removing…", "Menghapus…") : tr("Remove", "Hapus")}
               </button>
             </div>
             <p style={{
@@ -257,7 +265,7 @@ export default function ModuleCommentsClient({
             <textarea
               value={comment}
               onChange={e => setComment(e.target.value)}
-              placeholder="What has this looked like in your context? What worked, what surprised you?"
+              placeholder={tr("What has this looked like in your context? What worked, what surprised you?", "Bagaimana ini terlihat dalam konteks Anda? Apa yang berhasil, apa yang mengejutkan Anda?")}
               rows={4}
               style={{
                 width: "100%",
@@ -305,7 +313,7 @@ export default function ModuleCommentsClient({
                   transition: "opacity 0.15s",
                 }}
               >
-                {isPending ? "Sending…" : "Share with Community"}
+                {isPending ? tr("Sending…", "Mengirim…") : tr("Share with Community", "Bagikan ke Komunitas")}
               </button>
               <button
                 type="button"
@@ -326,7 +334,7 @@ export default function ModuleCommentsClient({
                   transition: "opacity 0.15s",
                 }}
               >
-                {isPending ? "Sending…" : "Send to Crispy"}
+                {isPending ? tr("Sending…", "Mengirim…") : tr("Send to Crispy", "Kirim ke Crispy")}
               </button>
             </div>
           </div>
@@ -349,9 +357,9 @@ export default function ModuleCommentsClient({
                 textUnderlineOffset: "3px",
               }}
             >
-              Sign in
+              {tr("Sign in", "Masuk")}
             </a>{" "}
-            to share your field experience.
+            {tr("to share your field experience.", "untuk berbagi pengalaman lapangan Anda.")}
           </p>
         )}
 

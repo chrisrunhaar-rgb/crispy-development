@@ -220,7 +220,7 @@ export default function AboveBelowClient(_props: {
           <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(16px, 2vw, 20px)", color: "oklch(85% 0.03 80)", maxWidth: 540, margin: 0, lineHeight: 1.65, fontStyle: "italic" }}>
             {t(
               "Are you leading as a Victor — or a Victim?",
-              "Apakah Anda memimpin sebagai Victor — atau Korban?",
+              "Apakah Anda memimpin sebagai Pemenang — atau Korban?",
               lang
             )}
           </p>
@@ -319,7 +319,7 @@ export default function AboveBelowClient(_props: {
             {t("The Impact", "Dampaknya", lang)}
           </p>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 600, color: navy, margin: "0 0 16px" }}>
-            {t("Victor or Victim?", "Victor atau Korban?", lang)}
+            {t("Victor or Victim?", "Pemenang atau Korban?", lang)}
           </h2>
           <p style={{ fontSize: 15, color: bodyText, lineHeight: 1.75, maxWidth: 620, margin: "0 0 44px" }}>
             {t(
@@ -337,7 +337,7 @@ export default function AboveBelowClient(_props: {
                   {t("Above the Line", "Di Atas Garis", lang)}
                 </div>
                 <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 30, fontWeight: 600, color: offWhite, lineHeight: 1.1 }}>
-                  {t("The Victor", "Victor", lang)}
+                  {t("The Victor", "Pemenang", lang)}
                 </div>
               </div>
               <div style={{ background: "white", padding: "28px" }}>
