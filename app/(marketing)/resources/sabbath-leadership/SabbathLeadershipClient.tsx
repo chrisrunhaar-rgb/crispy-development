@@ -256,7 +256,7 @@ export default function SabbathLeadershipClient({ userPathway, isSaved: initialS
       </div>
 
       {/* Section 3: Three Portraits */}
-      <div style={{ background: lightGray, padding: "96px 24px" }}>
+      <div id="mc-portraits" style={{ background: lightGray, padding: "96px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: serif, fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", color: orange, marginBottom: 32 }}>
             {t("III. Three Portraits", "III. Tiga Potret")}

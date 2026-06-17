@@ -414,7 +414,7 @@ export default function InfluentialLeadershipClient({
         const currentRating = ratings[idx];
 
         return (
-          <div key={pillar.num} style={{ background: bg, padding: "72px 24px" }}>
+          <div key={pillar.num} id={pillar.num === 5 ? "mc-cq" : undefined} style={{ background: bg, padding: "72px 24px" }}>
             <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
               {/* Pillar header */}

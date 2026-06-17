@@ -400,7 +400,7 @@ export default function WheelOfLifeClient({
               const match = SEGMENTS.find(s => s.key === seg.key)!;
               const isOpen = expandedSegment === seg.key;
               return (
-                <div key={seg.key} style={{ background: isOpen ? "white" : "oklch(97.5% 0.005 260)", borderRadius: 10, overflow: "hidden", boxShadow: isOpen ? "0 2px 12px oklch(20% 0.06 260 / 0.08)" : "none", transition: "box-shadow 0.2s", marginBottom: isOpen ? 8 : 0 }}>
+                <div key={seg.key} id={seg.key === "relaxation" ? "mc-rest" : undefined} style={{ background: isOpen ? "white" : "oklch(97.5% 0.005 260)", borderRadius: 10, overflow: "hidden", boxShadow: isOpen ? "0 2px 12px oklch(20% 0.06 260 / 0.08)" : "none", transition: "box-shadow 0.2s", marginBottom: isOpen ? 8 : 0 }}>
                   <button
                     onClick={() => setExpandedSegment(isOpen ? null : seg.key)}
                     style={{ width: "100%", padding: "18px 24px", background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 16, textAlign: "left" }}

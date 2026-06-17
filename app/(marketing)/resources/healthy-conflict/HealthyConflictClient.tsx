@@ -803,7 +803,7 @@ export default function HealthyConflictClient({ isSaved: initialSaved }: Props) 
       ))}
 
       {/* ── 6. RESEARCH CALLOUTS ─────────────────────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "clamp(56px, 8vw, 72px) 24px" }}>
+      <div id="mc-research" style={{ background: lightGray, padding: "clamp(56px, 8vw, 72px) 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{
             fontFamily: "var(--font-montserrat), Montserrat, sans-serif",

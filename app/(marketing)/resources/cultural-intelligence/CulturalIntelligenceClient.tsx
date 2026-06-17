@@ -308,7 +308,7 @@ export default function CulturalIntelligenceClient({ userPathway, isSaved: initi
 
       {/* --- SECTION 2: WHAT CQ ACTUALLY IS ---------------------------------- */}
       {/* Format: Two-column concept split with pull-quote */}
-      <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
+      <div id="mc-what-cq" style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orangeOklch, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
           {t("The Framework", "Kerangka Kerja")}
         </p>

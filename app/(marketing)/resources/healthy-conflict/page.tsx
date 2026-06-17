@@ -5,6 +5,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import HealthyConflictClient from "./HealthyConflictClient";
+import ModuleConnector from "@/components/ModuleConnector";
 
 export const dynamic = "force-dynamic";
 
@@ -91,6 +92,7 @@ export default async function ResourcePage(props: any) {
       </div>
 
       <HealthyConflictClient userId={user?.id ?? null} isSaved={isSaved} />
+      <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
 
       <div className="bg-gray-50 border-t border-gray-200 py-12">
         <div className="container-wide">

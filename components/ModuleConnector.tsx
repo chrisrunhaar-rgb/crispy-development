@@ -203,6 +203,20 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
           transition: background 0.15s;
         }
         .mc-signin-link:hover { background: rgba(255,255,255,0.06); }
+        .mc-open-link {
+          display: block;
+          text-align: center;
+          color: rgba(255,255,255,0.55);
+          font-family: Montserrat, sans-serif;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          text-decoration: none;
+          margin-top: 10px;
+          padding: 6px;
+          transition: color 0.15s;
+        }
+        .mc-open-link:hover { color: rgba(255,255,255,0.9); }
       `}</style>
 
       {activePopup && (
@@ -328,6 +342,9 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                           {state.saveState === "saving" ? "Saving…" : `Save ${conn.targetTitle} to my dashboard →`}
                         </button>
                       )}
+                      <a href={`/resources/${conn.targetSlug}`} className="mc-open-link">
+                        Open module →
+                      </a>
                     </div>
                   )}
                 </div>

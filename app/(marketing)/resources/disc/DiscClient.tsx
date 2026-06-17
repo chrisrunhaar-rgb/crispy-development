@@ -813,7 +813,7 @@ export default function DiscClient({
       </section>
 
       {/* -- SECTION 2: ABOUT DISC (FLIP CARDS) -- */}
-      <section style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
+      <section id="disc-about" style={{ paddingBlock: "clamp(4rem, 7vw, 7rem)", background: "oklch(94% 0.006 80)" }}>
         <div className="container-wide">
           <p className="t-label" style={{ color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
             {tr("A Behavioural Framework", "Kerangka Perilaku")}

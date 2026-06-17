@@ -434,7 +434,7 @@ export default function JohariWindowClient({ userPathway, isSaved: initialSaved 
       </div>
 
       {/* ── LONG-FORM SEO SECTION ─────────────────────────────────────────────── */}
-      <section style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
+      <section id="mc-cross-cultural" style={{ paddingBlock: "clamp(3rem, 5vw, 5rem)", background: "oklch(95% 0.008 80)" }}>
         <div className="container-wide" style={{ maxWidth: 720 }}>
           <p style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(65% 0.15 45)", marginBottom: "0.875rem" }}>
             Background

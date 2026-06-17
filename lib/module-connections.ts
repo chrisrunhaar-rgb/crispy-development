@@ -8,98 +8,14 @@ export type ModuleConnection = {
 };
 
 export const MODULE_CONNECTIONS: ModuleConnection[] = [
-  // Cognitive Biases → other modules
-  {
-    sourceSlug: "cognitive-biases",
-    sourceSectionId: "mc-bias-library",
-    targetSlug: "disc",
-    targetTitle: "DISC Personality Profile",
-    topic: "in-group bias and personality type",
-    angle: "how your DISC profile shapes which biases you're most susceptible to",
-  },
-  {
-    sourceSlug: "cognitive-biases",
-    sourceSectionId: "mc-bias-library",
-    targetSlug: "intercultural-communication",
-    targetTitle: "Intercultural Communication",
-    topic: "perception and cultural filters",
-    angle: "how cultural assumptions distort what we hear and how we interpret silence",
-  },
-  {
-    sourceSlug: "cognitive-biases",
-    sourceSectionId: "mc-bias-library",
-    targetSlug: "ladder-of-inference",
-    targetTitle: "Ladder of Inference",
-    topic: "how biases drive flawed conclusions",
-    angle: "a step-by-step framework for catching the moment bias becomes bad judgment",
-  },
-  {
-    sourceSlug: "cognitive-biases",
-    sourceSectionId: "mc-counter-strategies",
-    targetSlug: "conflict-resolution",
-    targetTitle: "Cross-Cultural Conflict Resolution",
-    topic: "bias interruption in conflict",
-    angle: "practical tools for naming bias before it escalates a cross-cultural disagreement",
-  },
-  {
-    sourceSlug: "cognitive-biases",
-    sourceSectionId: "mc-counter-strategies",
-    targetSlug: "giving-feedback-across-cultures",
-    targetTitle: "Giving Feedback Across Cultures",
-    topic: "debiasing your feedback process",
-    angle: "why the same feedback lands differently across cultures — and how to adjust",
-  },
-
-  // DISC → other modules
-  {
-    sourceSlug: "disc",
-    sourceSectionId: "disc-types",
-    targetSlug: "cognitive-biases",
-    targetTitle: "Cognitive Biases",
-    topic: "personality and blind spots",
-    angle: "which cognitive biases each DISC type is most likely to act on under pressure",
-  },
-  {
-    sourceSlug: "disc",
-    sourceSectionId: "disc-types",
-    targetSlug: "conflict-resolution",
-    targetTitle: "Cross-Cultural Conflict Resolution",
-    topic: "DISC styles in conflict",
-    angle: "how D, I, S, and C types approach conflict differently — and what that means cross-culturally",
-  },
-  {
-    sourceSlug: "disc",
-    sourceSectionId: "disc-D",
-    targetSlug: "power-distance",
-    targetTitle: "Power Distance in Leadership",
-    topic: "directness and authority",
-    angle: "why high-D leaders clash with high power-distance cultures — and how to bridge it",
-  },
-  {
-    sourceSlug: "disc",
-    sourceSectionId: "disc-S",
-    targetSlug: "giving-feedback-across-cultures",
-    targetTitle: "Giving Feedback Across Cultures",
-    topic: "harmony-seeking and feedback avoidance",
-    angle: "how S-type leaders can give honest feedback without damaging relational trust",
-  },
-
-  // Intercultural Communication → other modules
+  // Intercultural Communication → other modules (explicit text references)
   {
     sourceSlug: "intercultural-communication",
     sourceSectionId: "mc-dimensions",
     targetSlug: "power-distance",
     targetTitle: "Power Distance in Leadership",
-    topic: "communication and hierarchy",
+    topic: "power distance and cultural communication",
     angle: "how power distance determines who speaks, who stays silent, and who gets heard",
-  },
-  {
-    sourceSlug: "intercultural-communication",
-    sourceSectionId: "mc-dimensions",
-    targetSlug: "cognitive-biases",
-    targetTitle: "Cognitive Biases",
-    topic: "cultural filters and perception bias",
-    angle: "the cognitive shortcuts that make cross-cultural misreading almost automatic",
   },
   {
     sourceSlug: "intercultural-communication",
@@ -107,33 +23,128 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
     targetSlug: "giving-feedback-across-cultures",
     targetTitle: "Giving Feedback Across Cultures",
     topic: "speaking truth in ways that can be received",
-    angle: "why truth-telling fails cross-culturally — and how to deliver honest feedback in ways that land without breaking trust",
-  },
-  {
-    sourceSlug: "intercultural-communication",
-    sourceSectionId: "mc-development-path",
-    targetSlug: "cultural-intelligence",
-    targetTitle: "Cultural Intelligence (CQ)",
-    topic: "building communication competence",
-    angle: "CQ as the developmental framework that makes intercultural communication learnable",
+    angle: "why truth-telling fails cross-culturally — and how to deliver feedback that actually lands",
   },
 
-  // Vision Casting → other modules
+  // Sabbath Leadership → Understanding Burnout
+  // (portraits section explicitly names burnout — "He doesn't recognise it as burnout")
   {
-    sourceSlug: "vision-casting",
-    sourceSectionId: "mc-vision-compass",
-    targetSlug: "intercultural-communication",
-    targetTitle: "Intercultural Communication",
-    topic: "vision language across cultures",
-    angle: "why the same vision statement lands differently across cultures — and how to adapt it",
+    sourceSlug: "sabbath-leadership",
+    sourceSectionId: "mc-portraits",
+    targetSlug: "understanding-burnout",
+    targetTitle: "Understanding Burnout",
+    topic: "the hidden cost of never stopping",
+    angle: "what unaddressed burnout actually looks like in leaders — and how to recognise it before collapse",
   },
+
+  // Sustainable Pace → Sabbath Leadership
+  // (intro explicitly says "This is not the Sabbath module — that is about theological rest")
   {
-    sourceSlug: "vision-casting",
-    sourceSectionId: "mc-discernment",
-    targetSlug: "cognitive-biases",
-    targetTitle: "Cognitive Biases",
-    topic: "bias in discernment and decision-making",
-    angle: "the mental shortcuts that masquerade as strategic clarity when casting vision",
+    sourceSlug: "sustainable-pace",
+    sourceSectionId: "mc-sabbath-ref",
+    targetSlug: "sabbath-leadership",
+    targetTitle: "Sabbath Leadership",
+    topic: "Sabbath rest as a leadership practice",
+    angle: "the theological foundation and practical rhythm of Sabbath that this module points toward",
+  },
+
+  // Sustainable Pace → Understanding Burnout
+  // (Section V cites 62.91% burnout rates among cross-cultural workers)
+  {
+    sourceSlug: "sustainable-pace",
+    sourceSectionId: "mc-burnout-data",
+    targetSlug: "understanding-burnout",
+    targetTitle: "Understanding Burnout",
+    topic: "burnout rates among cross-cultural workers",
+    angle: "the research on what burnout looks like — and how to read the signals before your body breaks",
+  },
+
+  // Healthy Conflict → Power Distance
+  // (Research section explicitly cites Hofstede's Power Distance Index with country scores)
+  {
+    sourceSlug: "healthy-conflict",
+    sourceSectionId: "mc-research",
+    targetSlug: "power-distance",
+    targetTitle: "Power Distance in Leadership",
+    topic: "how power distance shapes conflict and silence",
+    angle: "Hofstede's framework for understanding why silence in high-PDI cultures is not disengagement — it is respect",
+  },
+
+  // DISC → Big Five
+  // (About DISC section explicitly names "Big Five personality framework" as the cross-cultural benchmark)
+  {
+    sourceSlug: "disc",
+    sourceSectionId: "disc-about",
+    targetSlug: "big-five",
+    targetTitle: "Big Five Personality",
+    topic: "cross-cultural validity of personality frameworks",
+    angle: "why the Big Five is more rigorously validated across cultures than DISC — and what that means for your team",
+  },
+
+  // DISC → Understanding High-Context Cultures
+  // (disc-D cross-cultural note explicitly says "In high-context cultures, the D-type's directness can feel aggressive")
+  {
+    sourceSlug: "disc",
+    sourceSectionId: "disc-D",
+    targetSlug: "understanding-high-context",
+    targetTitle: "Understanding High-Context Cultures",
+    topic: "how D-type directness lands in high-context cultures",
+    angle: "why direct, task-focused communication often creates friction in high-context settings — and what to do instead",
+  },
+
+  // Cultural Intelligence → Emotional Intelligence
+  // (Section 2 explicitly says "Emotional intelligence helps you read people; cultural intelligence helps you read context")
+  {
+    sourceSlug: "cultural-intelligence",
+    sourceSectionId: "mc-what-cq",
+    targetSlug: "emotional-intelligence",
+    targetTitle: "Emotional Intelligence",
+    topic: "EQ vs CQ — what each does and why you need both",
+    angle: "how emotional intelligence and cultural intelligence work together — and what breaks when you have one without the other",
+  },
+
+  // Attention Retention → Storytelling Leadership
+  // (Learning Methods section lists "Storytelling" as Method 04 with full description)
+  {
+    sourceSlug: "attention-retention",
+    sourceSectionId: "mc-methods",
+    targetSlug: "storytelling-leadership",
+    targetTitle: "Storytelling in Leadership",
+    topic: "storytelling as a learning method",
+    angle: "how to use narrative-driven teaching to embed concepts in ways people actually remember",
+  },
+
+  // Influential Leadership Framework → Cultural Intelligence
+  // (Pillar 5 is explicitly titled "Cultural Intelligence (CQ)" with full CQ framework description)
+  {
+    sourceSlug: "influential-leadership-framework",
+    sourceSectionId: "mc-cq",
+    targetSlug: "cultural-intelligence",
+    targetTitle: "Cultural Intelligence (CQ)",
+    topic: "cultural intelligence as a pillar of leadership influence",
+    angle: "the framework, dimensions, and developmental pathway for building genuine CQ",
+  },
+
+  // Wheel of Life → Sabbath Leadership
+  // (Relaxation dimension explicitly asks "Do you regularly take Sabbath rest?")
+  {
+    sourceSlug: "wheel-of-life",
+    sourceSectionId: "mc-rest",
+    targetSlug: "sabbath-leadership",
+    targetTitle: "Sabbath Leadership",
+    topic: "Sabbath rest as a dimension of a whole leader",
+    angle: "the theological and practical case for building rest into your rhythm as a leader",
+  },
+
+  // Johari Window → Power Distance
+  // (Long-form section explicitly discusses Hofstede power distance research on upward feedback norms)
+  {
+    sourceSlug: "johari-window",
+    sourceSectionId: "mc-cross-cultural",
+    targetSlug: "power-distance",
+    targetTitle: "Power Distance in Leadership",
+    topic: "how power distance affects upward feedback and blind spots",
+    angle: "why high power-distance cultures make leader blind spots larger — and what to do about it",
   },
 ];
 

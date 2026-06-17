@@ -467,7 +467,7 @@ export default function AttentionRetentionClient({ userPathway, isSaved: initial
       </section>
 
       {/* -- LEARNING METHODS ---------------------------------------------------- */}
-      <section style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
+      <section id="mc-methods" style={{ background: "oklch(95% 0.008 80)", padding: "80px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 600, color: "oklch(22% 0.10 260)", margin: "0 0 12px" }}>
             {tr("Ten Learning Methods", "Sepuluh Metode Pembelajaran")}

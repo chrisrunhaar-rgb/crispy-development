@@ -640,7 +640,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
       <LangToggle />
 
       {/* -- HERO: SURVIVING VS THRIVING -- */}
-      <section style={{ background: navy, padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
+      <section id="mc-sabbath-ref" style={{ background: navy, padding: "96px 24px 80px", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           background: "radial-gradient(ellipse at 70% 0%, oklch(30% 0.12 260 / 0.6) 0%, transparent 65%)",
@@ -1303,7 +1303,7 @@ export default function SustainablePaceClient({ userPathway, isSaved: initialSav
       </section>
 
       {/* -- SECTION V: WHY STOPPING IS HARD HERE -- */}
-      <section style={{ background: offWhite, padding: "96px 24px" }}>
+      <section id="mc-burnout-data" style={{ background: offWhite, padding: "96px 24px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <p style={{
             fontFamily: serif, fontSize: 11, fontWeight: 400,

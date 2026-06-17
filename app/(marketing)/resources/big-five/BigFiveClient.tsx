@@ -723,7 +723,7 @@ export default function BigFiveClient({
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "56px 24px" }}>
 
           {/* What is Big Five */}
-          <section style={{ marginBottom: 56 }}>
+          <section id="mc-what-is" style={{ marginBottom: 56 }}>
             <h2 style={{ fontFamily: "Cormorant Garamond, Georgia, serif", fontSize: 28, fontWeight: 400, color: "oklch(22% 0.16 280)", marginBottom: 16 }}>
               {t.whatIsTitle}
             </h2>
