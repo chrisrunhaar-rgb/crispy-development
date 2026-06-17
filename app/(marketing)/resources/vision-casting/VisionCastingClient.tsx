@@ -243,7 +243,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
       {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <img src="/images/vision-casting/hero.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <img src="/images/resources/disc/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
 
         <p style={{
           color: orange,
