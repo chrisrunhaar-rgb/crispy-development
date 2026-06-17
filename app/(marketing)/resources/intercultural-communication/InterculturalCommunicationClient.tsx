@@ -264,7 +264,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       </div>
 
       {/* --- SECTION 2: THE FOUR DIMENSIONS — ACCORDION ---------------------- */}
-      <div style={{ background: lightGray, padding: "80px 24px", marginTop: 48 }}>
+      <div id="mc-dimensions" style={{ background: lightGray, padding: "80px 24px", marginTop: 48 }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
             {t("The Framework", "Kerangka Kerja")}
@@ -324,7 +324,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       </div>
 
       {/* --- SECTION 3: FAITH ANCHOR ------------------------------------------ */}
-      <div style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
+      <div id="mc-faith-anchor" style={{ padding: "80px 24px", maxWidth: 780, margin: "0 auto" }}>
         <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
           {t("Faith Anchor", "Jangkar Iman")}
         </p>
@@ -383,7 +383,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
       </div>
 
       {/* --- SECTION 4: DEVELOPMENT PATH -------------------------------------- */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
+      <div id="mc-development-path" style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
             {t("Development Path", "Jalur Pengembangan")}

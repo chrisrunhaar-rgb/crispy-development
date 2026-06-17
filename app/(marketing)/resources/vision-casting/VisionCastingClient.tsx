@@ -552,7 +552,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
       </div>
 
       {/* ── SECTION 3: VISION COMPASS ──────────────────────────────── */}
-      <div style={{ background: lightGray, padding: "80px 24px" }}>
+      <div id="mc-vision-compass" style={{ background: lightGray, padding: "80px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <h2 style={{
             fontFamily: cormorant,
@@ -817,7 +817,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
       </div>
 
       {/* ── SECTION 4: DISCERNMENT AUDIT ───────────────────────────── */}
-      <div style={{ background: offWhite, padding: "80px 24px" }}>
+      <div id="mc-discernment" style={{ background: offWhite, padding: "80px 24px" }}>
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <h2 style={{
             fontFamily: cormorant,

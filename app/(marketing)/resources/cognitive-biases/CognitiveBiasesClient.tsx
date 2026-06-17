@@ -786,7 +786,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       </div>
 
       {/* 50-BIAS SEARCHABLE LIBRARY */}
-      <div style={{ background: lightGray, padding: "72px 24px" }}>
+      <div id="mc-bias-library" style={{ background: lightGray, padding: "72px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
 
           <div style={{ textAlign: "center", marginBottom: 40 }}>
@@ -921,7 +921,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       </div>
 
       {/* Counter strategies — process flow */}
-      <div style={{ background: navy, padding: "72px 24px" }}>
+      <div id="mc-counter-strategies" style={{ background: navy, padding: "72px 24px" }}>
         <div style={{ maxWidth: 680, margin: "0 auto" }}>
           <p style={{ color: orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12, textAlign: "center" }}>
             {t("Practical Framework", "Kerangka Praktis")}

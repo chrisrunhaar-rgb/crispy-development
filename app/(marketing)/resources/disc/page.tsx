@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import DiscClient from "./DiscClient";
+import ModuleConnector from "@/components/ModuleConnector";
 
 export const dynamic = "force-dynamic";
 
@@ -100,6 +101,7 @@ export default async function ResourcePage(props: any) {
 
       {/* Assessment Content */}
       <DiscClient isSaved={isSaved} discResult={discResult} discScores={discScores} />
+      <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
 
       {/* Related Resources */}
       <div className="border-t border-gray-100 py-10">
