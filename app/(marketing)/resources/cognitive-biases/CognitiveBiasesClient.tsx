@@ -640,6 +640,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<BiasCategory | "all">("all");
   const [selectedBias, setSelectedBias] = useState<Bias | null>(null);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
   const t = (en: string, id: string) => tFn(en, id, lang);
 
   useEffect(() => {
@@ -746,8 +747,8 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/resources/cognitive-biases/hero.jpg" alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.2 }} />
-        <div style={{ position: "relative", zIndex: 1 }}>
-        <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 820, margin: "0 auto" }}>
+          <p style={{ color: orange, fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16 }}>
           {t("Thinking Tools — Guide", "Alat Berpikir — Panduan")}
         </p>
         <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
@@ -981,16 +982,26 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
       </div>
 
       {/* Sources */}
-      <div style={{ padding: "60px 24px", background: lightGray }}>
+      <div style={{ padding: "40px 24px", background: lightGray }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 20 }}>
-            {t("Research Sources", "Sumber Penelitian")}
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {sources.map((s, i) => (
-              <p key={i} style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>{s}</p>
-            ))}
-          </div>
+          <button
+            onClick={() => setSourcesOpen(o => !o)}
+            style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer", padding: 0, width: "100%" }}
+          >
+            <p style={{ fontFamily: "Montserrat, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, margin: 0 }}>
+              {t("Research Sources", "Sumber Penelitian")}
+            </p>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: sourcesOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          {sourcesOpen && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
+              {sources.map((s, i) => (
+                <p key={i} style={{ fontSize: 13, color: bodyText, lineHeight: 1.7, margin: 0 }}>{s}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -999,7 +1010,7 @@ export default function CognitiveBiasesClient({ userPathway, isSaved: initialSav
         <h2 style={{ fontFamily: "Montserrat, sans-serif", fontSize: 28, fontWeight: 800, color: offWhite, marginBottom: 16 }}>
           {t("Keep Growing", "Terus Bertumbuh")}
         </h2>
-        <p style={{ color: "oklch(80% 0.03 80)", fontSize: 16, lineHeight: 1.75, maxWidth: 540, margin: "0 0 32px" }}>
+        <p style={{ color: "oklch(80% 0.03 80)", fontSize: 16, lineHeight: 1.75, maxWidth: 540, margin: "0 auto 32px", textAlign: "center" }}>
           {t("Explore more training modules to deepen your cross-cultural leadership.", "Jelajahi lebih banyak modul pelatihan untuk memperdalam kepemimpinan lintas budaya Anda.")}
         </p>
         <Link href="/resources" style={{ display: "inline-block", padding: "14px 32px", background: orange, color: offWhite, borderRadius: 12, fontFamily: "Montserrat, sans-serif", fontSize: 15, fontWeight: 700, textDecoration: "none" }}>
