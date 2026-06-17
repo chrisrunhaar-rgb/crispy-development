@@ -139,6 +139,8 @@ const ABOVE_CONFIGS: PhraseConfig[] = [
   { left: "88%", top: "68%", delay: "6s",    dur: "8s",    size: 12 },
   { left: "37%", top: "82%", delay: "2s",    dur: "11s",   size: 11 },
   { left: "73%", top: "12%", delay: "8.5s",  dur: "9.5s",  size: 14 },
+  { left: "58%", top: "34%", delay: "10s",   dur: "10s",   size: 12 },
+  { left: "21%", top: "40%", delay: "11.5s", dur: "9s",    size: 13 },
 ];
 
 const BELOW_CONFIGS: PhraseConfig[] = [
