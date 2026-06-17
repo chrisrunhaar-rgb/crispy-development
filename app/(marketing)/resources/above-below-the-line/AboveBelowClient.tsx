@@ -206,7 +206,7 @@ export default function AboveBelowClient(_props: {
         <img
           src="/images/abl-rope-header.jpg"
           alt=""
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.28, mixBlendMode: "soft-light", pointerEvents: "none" }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.55, mixBlendMode: "soft-light", pointerEvents: "none" }}
         />
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orange }} />
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
