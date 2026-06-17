@@ -42,6 +42,58 @@ export default async function ResourcePage(props: any) {
         }}
       />
       <Script
+        id={`faq-${RESOURCE_SLUG}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is a cognitive bias?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A cognitive bias is a systematic pattern of deviation from rational judgment. These are mental shortcuts the brain uses to process information quickly. While often helpful in daily life, they can lead to flawed decisions — especially in cross-cultural leadership contexts where the brain is working with incomplete or unfamiliar cultural data."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do cognitive biases affect cross-cultural leaders?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cross-cultural leaders are especially vulnerable to cognitive biases because they operate in environments where their familiar pattern-recognition shortcuts don't apply. Biases like in-group favoritism, confirmation bias, and the fundamental attribution error are particularly damaging in multicultural teams, leading to poor hiring decisions, misreading of local team behaviour, and strategic blind spots."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can cognitive biases be eliminated?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cognitive biases cannot be fully eliminated — they are built into how the human brain processes information. However, they can be interrupted and mitigated through practices such as naming biases before high-stakes decisions, building cross-cultural accountability structures, delaying judgment, and actively seeking disconfirming evidence."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which cognitive biases are most common in cross-cultural leadership?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The biases most commonly damaging in cross-cultural leadership include: Fundamental Attribution Error (assuming local team behaviour reflects character rather than context), In-Group Favoritism (giving disproportionate trust and opportunity to culturally similar people), Confirmation Bias (filtering out evidence that challenges existing cultural assumptions), Anchoring Bias (being disproportionately influenced by the first information received), and Groupthink (expat teams that suppress honest dissent to maintain harmony)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How many cognitive biases are there?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Researchers have identified over 200 named cognitive biases. This resource focuses on 50 of the most relevant biases for cross-cultural leaders, organised across six categories: Social, Memory, Learning, Belief, Money, and Politics."
+                }
+              }
+            ]
+          }),
+        }}
+      />
+      <Script
         id="cb-ga-tracking"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
