@@ -18,6 +18,14 @@ const bodyText = "oklch(38% 0.05 260)";
 const t = (en: string, id: string, lang: Lang) =>
   lang === "en" ? en : id;
 
+function Ref({ n }: { n: number }) {
+  return (
+    <sup style={{ fontSize: "0.68em", fontWeight: 700, color: orange, marginLeft: 1, lineHeight: 0, position: "relative", top: "-0.25em" }}>
+      {n}
+    </sup>
+  );
+}
+
 const STORIES = [
   {
     titleEn: "The Missed Deadline",
@@ -65,6 +73,7 @@ const BIBLICAL_STORIES = [
     titleId: "Pergeseran Kesalahan Pertama",
     textEn: "When God confronted Adam, his response was layered: \"The woman whom you gave to be with me, she gave me fruit of the tree, and I ate.\" He displaced blame onto Eve — and subtly implicated God. Eve blamed the serpent. Neither owned what they did. This is the oldest recorded below-the-line pattern: evasion, excuse, and deflection.",
     textId: "Ketika Allah menghadapi Adam, responsnya berlapis: \"Perempuan yang Kautempatkan di sisiku, dialah yang memberi buah pohon itu kepadaku, maka kumakan.\" Dia memindahkan kesalahan kepada Hawa — dan secara halus menyiratkan Allah. Hawa menyalahkan ular. Tidak ada yang mengakui apa yang mereka lakukan.",
+    sourceNum: 10,
   },
   {
     ref: "2 Samuel 12:13 vs 1 Samuel 15",
@@ -73,6 +82,7 @@ const BIBLICAL_STORIES = [
     titleId: "Dua Pemimpin, Dua Respons",
     textEn: "When Nathan confronted David, David said: \"I have sinned against the Lord.\" No deflection. No committee. Saul's pattern was different — denial, blame shifted to the people, reputation management. God removed Saul not because his sin was worse than David's, but because David owned it. Ownership, not perfection, is the leadership standard.",
     textId: "Ketika Natan menghadapi Daud, Daud berkata: 'Aku telah berdosa kepada Tuhan.' Tidak ada pengalihan. Tidak ada komite. Pola Saul berbeda — penyangkalan, menyalahkan rakyat, manajemen reputasi. Allah membuang Saul bukan karena dosanya lebih besar, tetapi karena Daud mengakuinya.",
+    sourceNum: null,
   },
   {
     ref: "Matthew 25:14–30",
@@ -81,6 +91,7 @@ const BIBLICAL_STORIES = [
     titleId: "Pasif Adalah Di Bawah Garis",
     textEn: "The servant who buried his talent was condemned not for spectacular failure but for inaction. He had a reason — fear. But passivity itself is a below-the-line choice. The other two servants received equal commendation despite unequal results. Faithfulness proportional to capacity, not outcome, is the standard.",
     textId: "Hamba yang mengubur talentanya dikecam bukan karena kegagalan spektakuler tetapi karena ketidakaktifan. Dia punya alasan — rasa takut. Tetapi pasif sendiri adalah pilihan di bawah garis. Kesetiaan sesuai kapasitas, bukan hasil, adalah standarnya.",
+    sourceNum: 9,
   },
   {
     ref: "1 Samuel 25",
@@ -89,6 +100,7 @@ const BIBLICAL_STORIES = [
     titleId: "Di Atas Garis Tanpa Konfrontasi",
     textEn: "Abigail did not wait for someone else to solve a crisis she could see. She took ownership, acted wisely, and interrupted David's destructive plan through relational courage — not direct confrontation. A model for leaders in contexts where direct challenge closes the door it was meant to open.",
     textId: "Abigail tidak menunggu orang lain memecahkan krisis yang dia lihat. Dia mengambil kepemilikan, bertindak bijaksana, dan menghentikan rencana destruktif Daud melalui keberanian relasional — bukan konfrontasi langsung.",
+    sourceNum: null,
   },
 ];
 
@@ -276,17 +288,17 @@ export default function AboveBelowClient(_props: {
           {t("The Framework", "Kerangka Kerja", lang)}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 20 }}>
-          {t(
-            "In 1994, Roger Connors, Tom Smith, and Craig Hickman introduced a deceptively simple idea: there is a line. Every response you give to any situation in your life — a setback, a conflict, a failure, a difficult person — lands either above it or below it. Above the line is the territory of ownership, accountability, and agency. Below the line is the territory of blame, excuses, and waiting for rescue. The choice between them is always yours.",
-            "Pada tahun 1994, Roger Connors, Tom Smith, dan Craig Hickman memperkenalkan sebuah ide yang tampak sederhana: ada sebuah garis. Setiap respons yang Anda berikan terhadap situasi apapun dalam hidup Anda — kemunduran, konflik, kegagalan, orang yang sulit — mendarat di atas atau di bawahnya. Di atas garis adalah wilayah kepemilikan, akuntabilitas, dan keagenan. Di bawah garis adalah wilayah menyalahkan, alasan, dan menunggu penyelamatan. Pilihan di antara keduanya selalu ada di tangan Anda.",
-            lang
+          {lang === "en" ? (
+            <>In 1994, Roger Connors, Tom Smith, and Craig Hickman introduced a deceptively simple idea<Ref n={1} />: there is a line. Every response you give to any situation in your life — a setback, a conflict, a failure, a difficult person — lands either above it or below it. Above the line is the territory of ownership, accountability, and agency. Below the line is the territory of blame, excuses, and waiting for rescue. The choice between them is always yours.</>
+          ) : (
+            <>Pada tahun 1994, Roger Connors, Tom Smith, dan Craig Hickman memperkenalkan sebuah ide yang tampak sederhana<Ref n={1} />: ada sebuah garis. Setiap respons yang Anda berikan terhadap situasi apapun dalam hidup Anda — kemunduran, konflik, kegagalan, orang yang sulit — mendarat di atas atau di bawahnya. Di atas garis adalah wilayah kepemilikan, akuntabilitas, dan keagenan. Di bawah garis adalah wilayah menyalahkan, alasan, dan menunggu penyelamatan. Pilihan di antara keduanya selalu ada di tangan Anda.</>
           )}
         </p>
         <p style={{ fontSize: 16, color: bodyText, lineHeight: 1.85, marginBottom: 72 }}>
-          {t(
-            "Research from Culture Partners, drawing on 40,000 participants across hundreds of organizations, found that 80% of people experience accountability as punishment — something that only happens when things go wrong. And 84% cite leader behavior as the single most important factor in shaping accountability culture. The line is not just a personal concept. The pattern a leader repeats becomes the culture a team inherits.",
-            "Penelitian dari Culture Partners, yang melibatkan 40.000 peserta di ratusan organisasi, menemukan bahwa 80% orang merasakan akuntabilitas sebagai hukuman — sesuatu yang hanya terjadi ketika sesuatu salah. Dan 84% menyebut perilaku pemimpin sebagai faktor terpenting dalam membentuk budaya akuntabilitas. Garis ini bukan hanya konsep pribadi. Pola yang seorang pemimpin ulangi menjadi budaya yang tim warisi.",
-            lang
+          {lang === "en" ? (
+            <>Research from Culture Partners, drawing on 40,000 participants across hundreds of organizations, found that 80% of people experience accountability as punishment — something that only happens when things go wrong. And 84% cite leader behavior as the single most important factor in shaping accountability culture.<Ref n={2} /> The line is not just a personal concept. The pattern a leader repeats becomes the culture a team inherits.</>
+          ) : (
+            <>Penelitian dari Culture Partners, yang melibatkan 40.000 peserta di ratusan organisasi, menemukan bahwa 80% orang merasakan akuntabilitas sebagai hukuman — sesuatu yang hanya terjadi ketika sesuatu salah. Dan 84% menyebut perilaku pemimpin sebagai faktor terpenting dalam membentuk budaya akuntabilitas.<Ref n={2} /> Garis ini bukan hanya konsep pribadi. Pola yang seorang pemimpin ulangi menjadi budaya yang tim warisi.</>
           )}
         </p>
       </div>
@@ -509,7 +521,7 @@ export default function AboveBelowClient(_props: {
                   {t(story.titleEn, story.titleId, lang)}
                 </div>
                 <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.58)", lineHeight: 1.78, margin: 0 }}>
-                  {t(story.textEn, story.textId, lang)}
+                  {t(story.textEn, story.textId, lang)}{story.sourceNum != null && <Ref n={story.sourceNum} />}
                 </p>
               </div>
             ))}
@@ -583,10 +595,10 @@ export default function AboveBelowClient(_props: {
               {t("Cross-Cultural Note", "Catatan Lintas Budaya", lang)}
             </div>
             <p style={{ fontSize: 14, color: bodyText, lineHeight: 1.75, margin: 0 }}>
-              {t(
-                "These four steps assume an individualist, low-context starting point. In honor/shame cultures — dominant across Southeast Asia, the Middle East, and much of Africa — direct confrontation can close the door this framework is meant to open. Adapt, don't abandon: \"See It\" may need to happen privately. \"Own It\" may begin as \"we contributed\" before \"I contributed.\" Build psychological safety through relational trust first. The framework works — it just needs to enter through the culture, not against it.",
-                "Empat langkah ini mengasumsikan titik awal individualis dan konteks-rendah. Dalam budaya kehormatan/rasa malu — dominan di seluruh Asia Tenggara, Timur Tengah, dan sebagian besar Afrika — konfrontasi langsung dapat menutup pintu yang dimaksudkan kerangka ini untuk dibuka. Adaptasi, jangan tinggalkan: \"Melihat\" mungkin perlu terjadi secara pribadi. \"Memiliki\" mungkin dimulai sebagai \"kami berkontribusi\" sebelum \"saya berkontribusi.\" Bangun keamanan psikologis melalui kepercayaan relasional terlebih dahulu.",
-                lang
+              {lang === "en" ? (
+                <>These four steps assume an individualist, low-context starting point. In honor/shame cultures<Ref n={7} /><Ref n={8} /> — dominant across Southeast Asia<Ref n={4} />, the Middle East, and much of Africa — direct confrontation can close the door this framework is meant to open. Adapt, don&apos;t abandon: &ldquo;See It&rdquo; may need to happen privately. &ldquo;Own It&rdquo; may begin as &ldquo;we contributed&rdquo; before &ldquo;I contributed.&rdquo; Build psychological safety through relational trust first.<Ref n={5} /> The framework works — it just needs to enter through the culture, not against it.</>
+              ) : (
+                <>Empat langkah ini mengasumsikan titik awal individualis dan konteks-rendah. Dalam budaya kehormatan/rasa malu<Ref n={7} /><Ref n={8} /> — dominan di seluruh Asia Tenggara<Ref n={4} />, Timur Tengah, dan sebagian besar Afrika — konfrontasi langsung dapat menutup pintu yang dimaksudkan kerangka ini untuk dibuka. Adaptasi, jangan tinggalkan: &ldquo;Melihat&rdquo; mungkin perlu terjadi secara pribadi. &ldquo;Memiliki&rdquo; mungkin dimulai sebagai &ldquo;kami berkontribusi&rdquo; sebelum &ldquo;saya berkontribusi.&rdquo; Bangun keamanan psikologis melalui kepercayaan relasional terlebih dahulu.<Ref n={5} /></>
               )}
             </p>
           </div>
