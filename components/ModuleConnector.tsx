@@ -109,7 +109,15 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
           50% { transform: translateY(-5px); }
         }
         @media (max-width: 767px) {
-          .mc-icon-btn, .mc-popup { display: none !important; }
+          .mc-popup {
+            position: fixed !important;
+            left: 12px !important;
+            right: 12px !important;
+            bottom: 80px !important;
+            top: auto !important;
+            width: auto !important;
+            transform: none !important;
+          }
         }
         .mc-icon-btn {
           width: 44px;
