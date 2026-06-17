@@ -111,12 +111,12 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
         @media (max-width: 767px) {
           .mc-popup {
             position: fixed !important;
-            left: 12px !important;
-            right: 12px !important;
-            bottom: 80px !important;
-            top: auto !important;
+            left: 16px !important;
+            right: 16px !important;
+            top: 50% !important;
+            bottom: auto !important;
             width: auto !important;
-            transform: none !important;
+            transform: translateY(-50%) !important;
           }
         }
         .mc-icon-btn {
