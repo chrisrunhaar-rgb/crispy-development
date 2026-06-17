@@ -243,7 +243,7 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
 
       {/* ── SECTION 1: NAVY HERO ────────────────────────────────────── */}
       <div style={{ background: navy, padding: "80px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <img src="/images/resources/vision-casting/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <img src="/images/vision-casting/hero.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.22, mixBlendMode: "luminosity", pointerEvents: "none" }} />
 
         <p style={{
           color: orange,
@@ -304,27 +304,18 @@ export default function VisionCastingClient({ userPathway, isSaved: initialSaved
             style={{
               padding: "13px 28px",
               borderRadius: 12,
-              border: "none",
+              border: `2px solid ${saved ? "oklch(60% 0.04 260)" : offWhite}`,
               cursor: saved ? "default" : "pointer",
               fontFamily: montserrat,
               fontSize: 14,
               fontWeight: 700,
-              background: saved ? "oklch(45% 0.06 260)" : orange,
-              color: offWhite,
+              background: "transparent",
+              color: saved ? "oklch(60% 0.04 260)" : offWhite,
               letterSpacing: "0.04em",
-              transition: "background 0.2s ease",
+              transition: "border-color 0.2s ease, color 0.2s ease",
             }}>
             {saved ? t(ui.buttons.savedToDashboard) : t(ui.buttons.saveToDashboard)}
           </button>
-
-          <span style={{
-            color: "oklch(65% 0.03 260)",
-            fontSize: 13,
-            fontFamily: montserrat,
-            fontWeight: 500,
-          }}>
-            8 min read
-          </span>
         </div>
       </div>
 

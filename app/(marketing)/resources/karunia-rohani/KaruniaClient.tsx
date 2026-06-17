@@ -362,7 +362,7 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
   const lang = (_ctxLang === "id" || "en") as Lang;
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [page, setPage] = useState(0);
-  const [showResults, setShowResults] = useState(karuniaTopGifts !== null);
+  const [showResults, setShowResults] = useState(false);
   const [resultScores, setResultScores] = useState<Record<string, number> | null>(karuniaScores);
   const [resultTopGifts, setResultTopGifts] = useState<string[]>(karuniaTopGifts ?? []);
   const [saved, setSaved] = useState(!!(karuniaTopGifts && karuniaTopGifts.length > 0));
@@ -487,7 +487,6 @@ export default function KaruniaClient({ isSaved, isLoggedIn, karuniaTopGifts, ka
 
     return (
       <>
-        <LangToggle />
         {/* Print styles */}
         <style>{`
           @media print {

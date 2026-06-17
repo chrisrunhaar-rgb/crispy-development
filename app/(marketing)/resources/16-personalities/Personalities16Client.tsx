@@ -714,7 +714,7 @@ export default function Personalities16Client({
   const searchParams = useSearchParams();
   const isRetake = searchParams.get("retake") === "1";
   const isViewModule = searchParams.get("view") === "module";
-  const initialState: QuizState = isRetake ? "active" : (isViewModule || !savedType || !savedScores) ? "idle" : "done";
+  const initialState: QuizState = isRetake ? "active" : "idle";
   const [quizState, setQuizState] = useState<QuizState>(initialState);
   const [currentIdx, setCurrentIdx] = useState(0);
   const blankScores = { EI_A: 0, EI_B: 0, SN_A: 0, SN_B: 0, TF_A: 0, TF_B: 0, JP_A: 0, JP_B: 0 };

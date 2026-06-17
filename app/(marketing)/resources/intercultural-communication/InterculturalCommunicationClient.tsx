@@ -178,7 +178,7 @@ export default function InterculturalCommunicationClient({ userPathway, isSaved:
 
       {/* --- HERO ------------------------------------------------------------- */}
       <div style={{ background: navy, padding: "80px 24px 72px", position: "relative", overflow: "hidden" }}>
-        <img src="/images/resources/intercultural-communication/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.18, mixBlendMode: "luminosity", pointerEvents: "none" }} />
+        <img src="/images/resources/intercultural-communication/hero.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: 0.32, mixBlendMode: "soft-light", pointerEvents: "none" }} />
         <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 5, background: orange }} />
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%, oklch(30% 0.12 260) 0%, transparent 60%)", opacity: 0.5 }} />
         <div style={{ position: "relative", maxWidth: 780, margin: "0 auto" }}>

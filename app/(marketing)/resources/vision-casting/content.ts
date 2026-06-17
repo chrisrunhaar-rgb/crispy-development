@@ -29,8 +29,8 @@ export const pageHero = {
     id: "Amsal 29:18",
   },
   caption: {
-    en: "Most leaders only listen in one direction. God speaks in four.",
-    id: "Kebanyakan pemimpin hanya mendengar dari satu arah. Allah berbicara melalui empat.",
+    en: "Most leaders only listen in one direction. Understanding all four directions of the Vision Compass.",
+    id: "Kebanyakan pemimpin hanya mendengar dari satu arah. Mengenal semua empat arah Kompas Visi.",
   },
   intro1: {
     en: "Vision in Scripture is almost always the opposite of what we expect. It is something God reveals to us — often slowly, often through more than one channel, and almost always larger than the leader who first glimpses it. Andy Stanley¹ puts it this way: vision is \"a clear mental picture of what could be, fuelled by the conviction that it should be\" (Visioneering¹, 1999). Without that conviction — the moral weight that comes from God — vision is just a goal.",
