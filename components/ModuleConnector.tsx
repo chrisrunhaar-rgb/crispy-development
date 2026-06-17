@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition } from "react";
 import { saveResourceToDashboard } from "@/app/(marketing)/resources/actions";
 import { getConnectionsForModule, ModuleConnection } from "@/lib/module-connections";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const navy = "oklch(22% 0.10 260)";
 const orange = "oklch(65% 0.15 45)";
@@ -22,6 +23,8 @@ type Props = {
 };
 
 export default function ModuleConnector({ currentSlug, savedResources, isLoggedIn }: Props) {
+  const { t } = useLanguage();
+  const mc = t.moduleConnector;
   const connections = getConnectionsForModule(currentSlug);
   const [sectionTops, setSectionTops] = useState<Record<string, number>>({});
   const [activePopup, setActivePopup] = useState<string | null>(null);
@@ -289,7 +292,7 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                         color: orange,
                         margin: "0 0 10px",
                       }}>
-                        Connected Module
+                        {mc.label}
                       </p>
 
                       <p style={{
@@ -309,29 +312,29 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                         lineHeight: 1.6,
                         margin: 0,
                       }}>
-                        You&apos;re reading about{" "}
+                        {mc.readingAbout}{" "}
                         <span style={{ color: offWhite, fontWeight: 500 }}>{conn.topic}</span>
-                        . In our <strong style={{ color: offWhite }}>{conn.targetTitle}</strong> module,
-                        we explore {conn.angle}.
+                        {". "}{mc.inOur}{" "}<strong style={{ color: offWhite }}>{conn.targetTitle}</strong>{" "}
+                        {mc.moduleWord} {mc.weExplore} {conn.angle}.
                       </p>
 
                       {state.saveState === "saved" && (
                         <p style={{ marginTop: 14, fontSize: 13, color: "#4ade80", fontWeight: 600, textAlign: "center" }}>
-                          ✓ Saved to your dashboard
+                          {mc.saved}
                         </p>
                       )}
                       {state.saveState === "already" && (
                         <p style={{ marginTop: 14, fontSize: 13, color: "rgba(255,255,255,0.5)", textAlign: "center" }}>
-                          Already on your dashboard ✓
+                          {mc.alreadySaved}
                         </p>
                       )}
                       {state.saveState === "error" && (
                         <p style={{ marginTop: 14, fontSize: 12, color: "#f87171", textAlign: "center" }}>
-                          Something went wrong. Try again.
+                          {mc.error}
                         </p>
                       )}
                       {state.saveState === "signin" && (
-                        <a href="/login" className="mc-signin-link">Sign in to save →</a>
+                        <a href="/login" className="mc-signin-link">{mc.signIn}</a>
                       )}
                       {(state.saveState === "idle" || state.saveState === "saving" || state.saveState === "error") && (
                         <button
@@ -339,11 +342,11 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
                           onClick={() => handleSave(key, conn.targetSlug)}
                           disabled={state.saveState === "saving"}
                         >
-                          {state.saveState === "saving" ? "Saving…" : `Save ${conn.targetTitle} to my dashboard →`}
+                          {state.saveState === "saving" ? mc.saving : `${mc.save} ${conn.targetTitle} ${mc.saveToDashboard}`}
                         </button>
                       )}
                       <a href={`/resources/${conn.targetSlug}`} className="mc-open-link">
-                        Open module →
+                        {mc.openModule}
                       </a>
                     </div>
                   )}
