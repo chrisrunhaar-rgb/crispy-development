@@ -104,10 +104,10 @@ export const MODULE_CONNECTIONS: ModuleConnection[] = [
   {
     sourceSlug: "intercultural-communication",
     sourceSectionId: "mc-faith-anchor",
-    targetSlug: "vision-casting",
-    targetTitle: "Vision Casting for Leaders",
-    topic: "communicating vision across cultures",
-    angle: "how to cast vision that resonates across cultural communication styles",
+    targetSlug: "giving-feedback-across-cultures",
+    targetTitle: "Giving Feedback Across Cultures",
+    topic: "speaking truth in ways that can be received",
+    angle: "why truth-telling fails cross-culturally — and how to deliver honest feedback in ways that land without breaking trust",
   },
   {
     sourceSlug: "intercultural-communication",
