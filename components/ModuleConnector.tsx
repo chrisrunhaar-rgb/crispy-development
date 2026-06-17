@@ -233,6 +233,7 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
         const sectionConns = sectionGroups[sectionId];
         if (!sectionConns || sectionConns.length === 0) return null;
         const centerTop = sectionTops[sectionId];
+        const stackHeight = sectionConns.length * 44 + Math.max(0, sectionConns.length - 1) * 10;
 
         return (
           <div
@@ -240,8 +241,7 @@ export default function ModuleConnector({ currentSlug, savedResources, isLoggedI
             style={{
               position: "fixed",
               right: 16,
-              top: centerTop,
-              transform: "translateY(-50%)",
+              top: centerTop - stackHeight / 2,
               zIndex: 50,
               display: "flex",
               flexDirection: "column",
