@@ -63,7 +63,7 @@ export default async function ResourcePage(props: any) {
         savedResources={savedResources}
         isLoggedIn={!!user}
       />
-      <AboveBelowClient {...props} isSaved={isSaved} />
+      <AboveBelowClient {...props} isSaved={isSaved} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="above-below-the-line" />

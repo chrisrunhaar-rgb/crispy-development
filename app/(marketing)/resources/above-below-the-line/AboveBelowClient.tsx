@@ -1,9 +1,11 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import LangToggle from "@/components/LangToggle";
 import SourcesDropdown from "@/components/SourcesDropdown";
+import { saveResourceToDashboard } from "@/app/(marketing)/resources/actions";
 
 type Lang = "en" | "id";
 
@@ -187,12 +189,28 @@ const SOURCES_ID = [
   "The Shiloh Project — Analisis Kejadian 3 dan pola pergeseran kesalahan dalam narasi kejatuhan.",
 ];
 
+type SaveState = "idle" | "saving" | "saved" | "already" | "signin";
+
 export default function AboveBelowClient(_props: {
   userPathway?: string | null;
   isSaved?: boolean;
+  isLoggedIn?: boolean;
 }) {
+  const { isSaved = false, isLoggedIn = false } = _props;
   const { lang: _ctxLang } = useLanguage();
   const lang = (_ctxLang === "id" ? _ctxLang : "en") as Lang;
+
+  const [saveState, setSaveState] = useState<SaveState>(isSaved ? "already" : "idle");
+  const [, startSaving] = useTransition();
+
+  function handleSave() {
+    if (!isLoggedIn) { setSaveState("signin"); return; }
+    setSaveState("saving");
+    startSaving(async () => {
+      const res = await saveResourceToDashboard("above-below-the-line");
+      setSaveState(res.error ? "idle" : res.already ? "already" : "saved");
+    });
+  }
 
   const abovePhrases = lang === "en" ? ABOVE_PHRASES : ABOVE_PHRASES_ID;
   const belowPhrases = lang === "en" ? BELOW_PHRASES : BELOW_PHRASES_ID;
@@ -217,13 +235,38 @@ export default function AboveBelowClient(_props: {
           <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(40px, 6vw, 72px)", fontWeight: 600, color: offWhite, margin: "0 0 24px", lineHeight: 1.08 }}>
             {t("Above & Below the Line", "Di Atas & Di Bawah Garis", lang)}
           </h1>
-          <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(16px, 2vw, 20px)", color: "oklch(85% 0.03 80)", maxWidth: 540, margin: 0, lineHeight: 1.65, fontStyle: "italic" }}>
+          <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "clamp(16px, 2vw, 20px)", color: "oklch(85% 0.03 80)", maxWidth: 540, margin: "0 0 28px", lineHeight: 1.65, fontStyle: "italic" }}>
             {t(
               "Are you leading as a Victor — or a Victim?",
               "Apakah Anda memimpin sebagai Pemenang — atau Korban?",
               lang
             )}
           </p>
+
+          {saveState === "saved" && (
+            <p style={{ fontSize: 13, color: "oklch(72% 0.18 145)", fontWeight: 600 }}>
+              {t("Saved to your dashboard.", "Tersimpan ke dasbor Anda.", lang)}
+            </p>
+          )}
+          {saveState === "already" && (
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>
+              {t("Already in your dashboard.", "Sudah ada di dasbor Anda.", lang)}
+            </p>
+          )}
+          {saveState === "signin" && (
+            <Link href="/login" style={{ display: "inline-block", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: orange, border: `1px solid ${orange}`, borderRadius: 8, padding: "10px 20px", textDecoration: "none" }}>
+              {t("Sign in to save", "Masuk untuk menyimpan", lang)}
+            </Link>
+          )}
+          {(saveState === "idle" || saveState === "saving") && (
+            <button
+              onClick={handleSave}
+              disabled={saveState === "saving"}
+              style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "white", background: orange, border: "none", borderRadius: 8, padding: "10px 20px", cursor: saveState === "saving" ? "default" : "pointer", opacity: saveState === "saving" ? 0.6 : 1 }}
+            >
+              {saveState === "saving" ? t("Saving…", "Menyimpan…", lang) : t("Save to Dashboard", "Simpan ke Dasbor", lang)}
+            </button>
+          )}
         </div>
       </div>
 
@@ -259,6 +302,10 @@ export default function AboveBelowClient(_props: {
               92%  { opacity: 0; }
               100% { opacity: 0; transform: translateY(-10px); }
             }
+            @media (max-width: 640px) {
+              .ab-phrase { font-size: 9px !important; }
+              .ab-step-arrow { display: none !important; }
+            }
           `}</style>
 
           <div style={{ position: "relative", height: 420, borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 48px oklch(20% 0.10 260 / 0.18)" }}>
@@ -274,7 +321,7 @@ export default function AboveBelowClient(_props: {
               {abovePhrases.map((phrase, i) => {
                 const cfg = ABOVE_CONFIGS[i % ABOVE_CONFIGS.length];
                 return (
-                  <span key={i} style={{ position: "absolute", left: cfg.left, top: cfg.top, fontSize: cfg.size, fontWeight: 600, color: "oklch(86% 0.14 145)", opacity: 0, letterSpacing: "0.03em", whiteSpace: "nowrap", animation: `ab-phrase ${cfg.dur} ${cfg.delay} ease-in-out infinite`, textShadow: "0 0 28px oklch(48% 0.24 145 / 0.7)", pointerEvents: "none", userSelect: "none" }}>
+                  <span key={i} className="ab-phrase" style={{ position: "absolute", left: cfg.left, top: cfg.top, fontSize: cfg.size, fontWeight: 600, color: "oklch(86% 0.14 145)", opacity: 0, letterSpacing: "0.03em", whiteSpace: "nowrap", animation: `ab-phrase ${cfg.dur} ${cfg.delay} ease-in-out infinite`, textShadow: "0 0 28px oklch(48% 0.24 145 / 0.7)", pointerEvents: "none", userSelect: "none" }}>
                     {phrase}
                   </span>
                 );
@@ -299,7 +346,7 @@ export default function AboveBelowClient(_props: {
               {belowPhrases.map((phrase, i) => {
                 const cfg = BELOW_CONFIGS[i % BELOW_CONFIGS.length];
                 return (
-                  <span key={i} style={{ position: "absolute", left: cfg.left, top: cfg.top, fontSize: cfg.size, fontWeight: 600, color: "oklch(84% 0.12 25)", opacity: 0, letterSpacing: "0.03em", whiteSpace: "nowrap", animation: `ab-phrase ${cfg.dur} ${cfg.delay} ease-in-out infinite`, textShadow: "0 0 28px oklch(48% 0.24 25 / 0.7)", pointerEvents: "none", userSelect: "none" }}>
+                  <span key={i} className="ab-phrase" style={{ position: "absolute", left: cfg.left, top: cfg.top, fontSize: cfg.size, fontWeight: 600, color: "oklch(84% 0.12 25)", opacity: 0, letterSpacing: "0.03em", whiteSpace: "nowrap", animation: `ab-phrase ${cfg.dur} ${cfg.delay} ease-in-out infinite`, textShadow: "0 0 28px oklch(48% 0.24 25 / 0.7)", pointerEvents: "none", userSelect: "none" }}>
                     {phrase}
                   </span>
                 );
@@ -452,7 +499,7 @@ export default function AboveBelowClient(_props: {
             )}
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16, marginBottom: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 40 }}>
             {BIBLICAL_STORIES.map((story, i) => (
               <div key={i} style={{ background: "oklch(20% 0.09 260)", borderRadius: 12, padding: "28px", borderTop: `3px solid ${orange}` }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: orange, marginBottom: 10 }}>
@@ -524,7 +571,7 @@ export default function AboveBelowClient(_props: {
                   {t(step.descEn, step.descId, lang)}
                 </p>
                 {i < FOUR_STEPS.length - 1 && (
-                  <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", zIndex: 2, width: 20, height: 20, background: orange, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 10, fontWeight: 700 }}>→</div>
+                  <div className="ab-step-arrow" style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", zIndex: 2, width: 20, height: 20, background: orange, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 10, fontWeight: 700 }}>→</div>
                 )}
               </div>
             ))}
