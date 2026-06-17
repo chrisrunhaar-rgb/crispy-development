@@ -288,25 +288,32 @@ export default function RedLightGreenLightClient({
             {t("Select a phase to explore its principles and suggested phrases.", "Pilih fase untuk menjelajahi prinsip dan frasa yang disarankan.", "Selecteer een fase om de principes en voorgestelde zinnen te verkennen.")}
           </p>
 
-          <div style={{ display: "flex", gap: 12, marginBottom: 32, flexWrap: "wrap" }}>
-            <button onClick={() => setActivePhase("green")} style={{ flex: 1, minWidth: 200, padding: "20px 24px", borderRadius: 10, border: `2px solid ${isGreen ? "oklch(46% 0.16 145)" : "oklch(88% 0.008 260)"}`, background: isGreen ? "oklch(46% 0.16 145)" : "white", color: isGreen ? "white" : "oklch(30% 0.06 260)", cursor: "pointer", textAlign: "left" }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: 6, color: isGreen ? "oklch(92% 0.06 145)" : "oklch(46% 0.16 145)" }}>Phase 1</div>
-              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 24, fontWeight: 600, lineHeight: 1.2 }}>
-                ?? {t("Green Light", "Lampu Hijau", "Groen Licht")}
-              </div>
-              <div style={{ fontSize: 13, marginTop: 6, color: isGreen ? "oklch(90% 0.05 145)" : "oklch(48% 0.06 260)" }}>
-                {t("Generate ideas freely", "Hasilkan ide secara bebas", "Genereer idee—n vrijelijk")}
-              </div>
-            </button>
-            <button onClick={() => setActivePhase("red")} style={{ flex: 1, minWidth: 200, padding: "20px 24px", borderRadius: 10, border: `2px solid ${!isGreen ? "oklch(48% 0.18 25)" : "oklch(88% 0.008 260)"}`, background: !isGreen ? "oklch(48% 0.18 25)" : "white", color: !isGreen ? "white" : "oklch(30% 0.06 260)", cursor: "pointer", textAlign: "left" }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", marginBottom: 6, color: !isGreen ? "oklch(92% 0.06 25)" : "oklch(48% 0.18 25)" }}>Phase 2</div>
-              <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 24, fontWeight: 600, lineHeight: 1.2 }}>
-                ?? {t("Red Light", "Lampu Merah", "Rood Licht")}
-              </div>
-              <div style={{ fontSize: 13, marginTop: 6, color: !isGreen ? "oklch(90% 0.05 25)" : "oklch(48% 0.06 260)" }}>
-                {t("Evaluate and decide", "Evaluasi dan putuskan", "Evalueer en beslis")}
-              </div>
-            </button>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 32 }}>
+            <div style={{ background: "oklch(18% 0.02 260)", borderRadius: 24, padding: "20px 28px", display: "flex", flexDirection: "column", gap: 14, boxShadow: "0 8px 32px oklch(0% 0 0 / 0.30)", border: "3px solid oklch(26% 0.04 260)" }}>
+              <button
+                onClick={() => setActivePhase("green")}
+                style={{ width: 128, height: 128, borderRadius: "50%", border: "none", background: isGreen ? "oklch(56% 0.18 145)" : "oklch(22% 0.08 145)", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", boxShadow: isGreen ? "0 0 36px oklch(56% 0.18 145 / 0.75), 0 0 10px oklch(56% 0.18 145)" : "inset 0 2px 6px oklch(0% 0 0 / 0.4)", transition: "all 0.3s ease", padding: 0 }}
+              >
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: isGreen ? "oklch(92% 0.06 145)" : "oklch(44% 0.08 145)", marginBottom: 5 }}>Phase 1</div>
+                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 17, fontWeight: 600, lineHeight: 1.2, color: isGreen ? "white" : "oklch(44% 0.06 145)", textAlign: "center", padding: "0 10px" }}>
+                  {t("Green Light", "Lampu Hijau", "Groen Licht")}
+                </div>
+              </button>
+              <button
+                onClick={() => setActivePhase("red")}
+                style={{ width: 128, height: 128, borderRadius: "50%", border: "none", background: !isGreen ? "oklch(52% 0.20 25)" : "oklch(22% 0.08 25)", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", boxShadow: !isGreen ? "0 0 36px oklch(52% 0.20 25 / 0.75), 0 0 10px oklch(52% 0.20 25)" : "inset 0 2px 6px oklch(0% 0 0 / 0.4)", transition: "all 0.3s ease", padding: 0 }}
+              >
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: !isGreen ? "oklch(92% 0.06 25)" : "oklch(44% 0.08 25)", marginBottom: 5 }}>Phase 2</div>
+                <div style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 17, fontWeight: 600, lineHeight: 1.2, color: !isGreen ? "white" : "oklch(44% 0.06 25)", textAlign: "center", padding: "0 10px" }}>
+                  {t("Red Light", "Lampu Merah", "Rood Licht")}
+                </div>
+              </button>
+            </div>
+            <p style={{ fontSize: 13, color: "oklch(44% 0.06 260)", marginTop: 14, textAlign: "center" }}>
+              {isGreen
+                ? t("Generate ideas freely", "Hasilkan ide secara bebas", "Genereer ideeën vrijelijk")
+                : t("Evaluate and decide", "Evaluasi dan putuskan", "Evalueer en beslis")}
+            </p>
           </div>
 
           <div style={{ background: phaseBg, borderRadius: 12, padding: "40px", border: `1px solid ${phaseColor}30` }}>
@@ -422,7 +429,8 @@ export default function RedLightGreenLightClient({
                                 letterSpacing: "0.04em",
                               }}
                             >
-                              ?? {t("Green Light", "Lampu Hijau", "Groen Licht")}
+                              <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: userAnswer === "green" ? "white" : "oklch(56% 0.18 145)", marginRight: 7, verticalAlign: "middle", flexShrink: 0 }} />
+                              {t("Green Light", "Lampu Hijau", "Groen Licht")}
                             </button>
                             <button
                               onClick={() => !quizSubmitted && handleAnswer(i, "red")}
@@ -435,11 +443,12 @@ export default function RedLightGreenLightClient({
                                 letterSpacing: "0.04em",
                               }}
                             >
-                              ?? {t("Red Light", "Lampu Merah", "Rood Licht")}
+                              <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: userAnswer === "red" ? "white" : "oklch(52% 0.20 25)", marginRight: 7, verticalAlign: "middle", flexShrink: 0 }} />
+                              {t("Red Light", "Lampu Merah", "Rood Licht")}
                             </button>
                             {showResult && userAnswer && (
                               <span style={{ display: "flex", alignItems: "center", fontSize: 13, fontWeight: 700, color: isCorrect ? "oklch(40% 0.16 145)" : "oklch(42% 0.18 25)", gap: 4 }}>
-                                {isCorrect ? "? " : "? "}
+                                {isCorrect ? "✓ " : "✗ "}
                                 {!isCorrect && (
                                   <span style={{ fontWeight: 400, color: "oklch(42% 0.18 25)" }}>
                                     {t(
