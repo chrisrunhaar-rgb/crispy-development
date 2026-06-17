@@ -1,13 +1,12 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireModuleAccess } from "@/lib/require-module-access";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
-import SabbathLeadershipClient from "./SabbathLeadershipClient";
+import SabbathLeaderClient from "./SabbathLeaderClient";
 import ModuleConnector from "@/components/ModuleConnector";
 
 export const dynamic = "force-dynamic";
@@ -46,7 +45,7 @@ export default async function ResourcePage(props: any) {
         id="sl-sabbath-ga-tracking"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `window.gtag?.('event', 'resource_viewed', { resource: '${RESOURCE_SLUG}', category: 'personal-growth' });`,
+          __html: `window.gtag?.('event', 'resource_viewed', { resource: '${RESOURCE_SLUG}', category: 'leadership' });`,
         }}
       />
 
@@ -56,13 +55,13 @@ export default async function ResourcePage(props: any) {
             items={[
               { label: "Home", href: "/" },
               { label: "Resources", href: "/resources" },
-              { label: "Sabbath Leadership" },
+              { label: "The Sabbath Leader" },
             ]}
           />
         </div>
       </div>
 
-      <SabbathLeadershipClient {...props} isSaved={isSaved} />
+      <SabbathLeaderClient isSaved={isSaved} isLoggedIn={!!user} />
       <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">

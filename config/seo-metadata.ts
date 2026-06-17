@@ -163,8 +163,8 @@ export const resourceMetadata: Record<string, { title: string; description: stri
     description: "Break through limitations. Learn strategies to embrace growth and expand your capabilities.",
   },
   "sabbath-leadership": {
-    title: "Sabbath Leadership: Rest and Renewal — Crispy Development",
-    description: "Practice sustainable leadership. Discover the power of rest and rhythms for long-term effectiveness.",
+    title: "The Sabbath Leader — Crispy Development",
+    description: "Why sustainable leaders build rhythms of Sabbath — and how to practise it in high-demand cross-cultural environments. A story-based module through the Elijah narrative.",
   },
   "leaders-are-readers": {
     title: "Leaders Are Readers — Crispy Development",
