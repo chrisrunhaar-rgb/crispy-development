@@ -619,8 +619,28 @@ export default function SabbathLeaderClient({
         background: navy,
         padding: "5rem 24px 4.5rem",
         textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
       }}>
-        <div style={{ maxWidth: MX, margin: "0 auto" }}>
+        {/* Hero photo — luminosity blend over navy */}
+        <img
+          src="/images/resources/sabbath-leadership/hero-a.jpg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover", objectPosition: "center",
+            opacity: 0.22, mixBlendMode: "luminosity",
+            pointerEvents: "none", userSelect: "none",
+          }}
+        />
+        {/* Duotone overlay */}
+        <div style={{
+          position: "absolute", inset: 0,
+          background: navy, opacity: 0.15, mixBlendMode: "multiply",
+          pointerEvents: "none",
+        }} />
+        <div style={{ maxWidth: MX, margin: "0 auto", position: "relative" }}>
           <p style={{
             fontFamily: FONT,
             fontSize: "0.68rem",
