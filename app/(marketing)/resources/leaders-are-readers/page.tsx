@@ -1,10 +1,12 @@
 ﻿import { Metadata } from "next";
 import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
+import { requireModuleAccess } from "@/lib/require-module-access";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
+import ModuleConnector from "@/components/ModuleConnector";
 import LeadersReadersClient from "./LeadersReadersClient";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +18,7 @@ export const metadata = generateResourceMetadata(RESOURCE_SLUG);
 export default async function ResourcePage(props: any) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  await requireModuleAccess(supabase, user?.id ?? null, RESOURCE_SLUG, user?.email ?? null);
   const savedResources = (user?.user_metadata?.saved_resources ?? []) as string[];
   const isSaved = savedResources.includes(RESOURCE_SLUG);
 
@@ -57,7 +60,8 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <LeadersReadersClient {...props} isSaved={isSaved} />
+      <LeadersReadersClient isSaved={isSaved} isLoggedIn={!!user} />
+      <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="leaders-are-readers" />
