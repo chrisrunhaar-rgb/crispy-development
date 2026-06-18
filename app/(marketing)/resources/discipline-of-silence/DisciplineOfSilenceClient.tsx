@@ -193,6 +193,13 @@ export default function DisciplineOfSilenceClient({
 
   const [saved, setSaved] = useState(isSaved);
   const [isPending, startTransition] = useTransition();
+  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1024);
+
+  React.useEffect(() => {
+    const onResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   // Assessment state
   const [answers, setAnswers] = useState<(number | null)[]>([null, null, null, null, null]);
@@ -254,10 +261,12 @@ export default function DisciplineOfSilenceClient({
     }
     setAssessmentResult(resultText);
     setAssessmentComplete(true);
+    window.gtag?.('event', 'assessment_completed', { resource: 'discipline-of-silence', score: total });
   }
 
   const handleGenerateAdvice = async () => {
     setAiLoading(true);
+    window.gtag?.('event', 'ai_advice_generated', { resource: 'discipline-of-silence' });
     try {
       const assessmentSummary = assessmentQuestions.map((q, i) => ({
         dimension: q.dimension ?? `Area ${i + 1}`,
@@ -825,8 +834,8 @@ export default function DisciplineOfSilenceClient({
               </p>
               <p style={prose}>
                 {t(
-                  "For cross-cultural leaders - who carry more complexity, more cultural weight, and more unresolved tension than most - this is not a luxury. It is a survival strategy. Bonhoeffer's warning is pointed: 'When we do not take time to be alone in God's presence, we become dangerous or harmful in the human community.' Leaders who do not practice solitude unconsciously demand from others what only God can give.",
-                  "Bagi pemimpin lintas budaya - yang membawa lebih banyak kompleksitas, beban budaya, dan ketegangan yang belum terselesaikan dari kebanyakan orang - ini bukan kemewahan. Ini adalah strategi bertahan hidup. Peringatan Bonhoeffer sangat tepat: 'Ketika kita tidak meluangkan waktu untuk sendirian di hadirat Tuhan, kita menjadi berbahaya atau merugikan dalam komunitas manusia.' Pemimpin yang tidak mempraktikkan kesendirian secara tidak sadar menuntut dari orang lain apa yang hanya Tuhan bisa berikan."
+                  "For cross-cultural leaders - who carry more complexity, more cultural weight, and more unresolved tension than most - this is not a luxury. It is a survival strategy. Ruth Haley Barton, drawing on Bonhoeffer, puts the warning directly: 'When we do not take time to be alone in God's presence, we become dangerous or harmful in the human community.' Leaders who do not practice solitude unconsciously demand from others what only God can give.",
+                  "Bagi pemimpin lintas budaya - yang membawa lebih banyak kompleksitas, beban budaya, dan ketegangan yang belum terselesaikan dari kebanyakan orang - ini bukan kemewahan. Ini adalah strategi bertahan hidup. Ruth Haley Barton, berdasarkan Bonhoeffer, menyampaikan peringatannya secara langsung: 'Ketika kita tidak meluangkan waktu untuk sendirian di hadirat Tuhan, kita menjadi berbahaya atau merugikan dalam komunitas manusia.' Pemimpin yang tidak mempraktikkan kesendirian secara tidak sadar menuntut dari orang lain apa yang hanya Tuhan bisa berikan."
                 )}
                 <sup style={supStyle}>10</sup>
               </p>
@@ -911,7 +920,7 @@ export default function DisciplineOfSilenceClient({
 
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: windowWidth < 600 ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
                 gap: 16,
               }}>
                 {[...personalCards, ...teamCards].map((card, i) => {
@@ -1138,6 +1147,18 @@ export default function DisciplineOfSilenceClient({
                 </div>
               ))}
 
+              <p style={{
+                fontFamily: FONT,
+                fontSize: "0.72rem",
+                color: "oklch(58% 0.05 260)",
+                marginBottom: "1rem",
+                lineHeight: 1.5,
+              }}>
+                {t(
+                  "Your responses will be sent to Google AI to generate personalised advice. They are not stored.",
+                  "Responsmu akan dikirim ke Google AI untuk menghasilkan saran personal. Data tidak disimpan."
+                )}
+              </p>
               <button
                 onClick={handleGenerateAdvice}
                 disabled={aiLoading || (!openAnswers.area && !openAnswers.challenge && !openAnswers.impact)}
@@ -1251,32 +1272,6 @@ export default function DisciplineOfSilenceClient({
           </section>
 
           {/* ════════════════════════════════════════════════════════════
-              CTA STRIP
-          ════════════════════════════════════════════════════════════ */}
-          <section style={{
-            background: navy,
-            padding: "3rem 24px",
-            textAlign: "center",
-          }}>
-            <div style={{ maxWidth: MX, margin: "0 auto" }}>
-              <p style={{
-                fontFamily: CORMORANT,
-                fontStyle: "italic",
-                fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)",
-                color: "white",
-                lineHeight: 1.7,
-                maxWidth: 600,
-                margin: "0 auto",
-              }}>
-                {t(
-                  "The most important next step is the smallest one. Choose one practice from the scenario cards above. Try it this week. Return here when you are ready to go deeper.",
-                  "Langkah terpenting berikutnya adalah yang terkecil. Pilih satu praktik dari kartu skenario di atas. Coba minggu ini. Kembali ke sini ketika Anda siap untuk lebih dalam."
-                )}
-              </p>
-            </div>
-          </section>
-
-          {/* ════════════════════════════════════════════════════════════
               SOURCES
           ════════════════════════════════════════════════════════════ */}
           <section style={sec(lightGray, "0")}>
@@ -1326,7 +1321,7 @@ export default function DisciplineOfSilenceClient({
                   <div style={{ minHeight: 0 }}>
                     {[
                       { n: 1, text: "Frontiers in Cognition, \"The Impact of Digital Technology, Social Media, and AI on Cognitive Functions\" (2023)", url: "https://www.frontiersin.org/journals/cognition/articles/10.3389/fcogn.2023.1203077/full" },
-                      { n: 2, text: "Scientific Reports, \"Acute Smartphone Use Impairs Vigilance and Inhibition Capacities\" (2023)", url: "https://preview-www.nature.com/articles/s41598-023-50354-3" },
+                      { n: 2, text: "Scientific Reports, \"Acute Smartphone Use Impairs Vigilance and Inhibition Capacities\" (2023)", url: "https://www.nature.com/articles/s41598-023-50354-3" },
                       { n: 3, text: "Scientific Reports / PMC, \"Does the Brain Drain Effect Really Exist?\" (2023)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10525686/" },
                       { n: 4, text: "Church Life Journal (Notre Dame), \"This Is Your Brain in a Digital Age\"", url: "https://churchlifejournal.nd.edu/articles/this-is-your-brain-in-a-digital-age/" },
                       { n: 5, text: "Working Preacher, Commentary on 1 Kings 19:1-15", url: "https://www.workingpreacher.org/commentaries/revised-common-lectionary/ordinary-12-3/commentary-on-1-kings-191-45-78-15a-2" },
@@ -1369,6 +1364,32 @@ export default function DisciplineOfSilenceClient({
           </section>
 
           {/* ════════════════════════════════════════════════════════════
+              CTA STRIP
+          ════════════════════════════════════════════════════════════ */}
+          <section style={{
+            background: navy,
+            padding: "3rem 24px",
+            textAlign: "center",
+          }}>
+            <div style={{ maxWidth: MX, margin: "0 auto" }}>
+              <p style={{
+                fontFamily: CORMORANT,
+                fontStyle: "italic",
+                fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)",
+                color: "white",
+                lineHeight: 1.7,
+                maxWidth: 600,
+                margin: "0 auto",
+              }}>
+                {t(
+                  "The most important next step is the smallest one. Choose one practice from the scenario cards above. Try it this week. Return here when you are ready to go deeper.",
+                  "Langkah terpenting berikutnya adalah yang terkecil. Pilih satu praktik dari kartu skenario di atas. Coba minggu ini. Kembali ke sini ketika Anda siap untuk lebih dalam."
+                )}
+              </p>
+            </div>
+          </section>
+
+          {/* ════════════════════════════════════════════════════════════
               BACKGROUND — SEO
           ════════════════════════════════════════════════════════════ */}
           <div style={{ background: navy, padding: "80px 24px" }}>
@@ -1385,9 +1406,9 @@ export default function DisciplineOfSilenceClient({
                 {t("Background", "Latar Belakang")}
               </p>
               <h2 style={{
-                fontFamily: FONT,
+                fontFamily: CORMORANT,
                 fontSize: "clamp(22px, 3vw, 32px)",
-                fontWeight: 800,
+                fontWeight: 600,
                 color: offWhite,
                 marginBottom: 32,
                 lineHeight: 1.2,
@@ -1465,6 +1486,9 @@ export default function DisciplineOfSilenceClient({
             }}
           >
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={t("Practice details", "Detail praktik")}
               onClick={e => e.stopPropagation()}
               style={{
                 background: "white",

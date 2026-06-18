@@ -761,10 +761,10 @@ export const RESOURCES: Resource[] = [
     titleId: "Disiplin Keheningan",
     description: "In a world that is always on, intentional silence has become the rarest leadership discipline. Discover why God speaks in quiet - and how to build the practice into your life and your team.",
     descriptionId: "Di dunia yang selalu hidup, keheningan yang intentional telah menjadi disiplin kepemimpinan yang paling langka. Temukan mengapa Allah berbicara dalam ketenangan - dan bagaimana membangun praktik ini dalam hidup dan tim Anda.",
-    time: "12 min",
+    time: "20 min",
     format: "Guide",
-    languages: ["en"],
-    gated: false,
+    languages: ["en", "id"],
+    gated: true,
     topics: ["faith-calling", "self-care", "leadership"],
   },
   {
