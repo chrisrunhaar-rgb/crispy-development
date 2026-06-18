@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Script from "next/script";
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireModuleAccess } from "@/lib/require-module-access";
 import { generateResourceArticleSchema, generateResourceBreadcrumbSchema, generateResourceMetadata } from "@/lib/seo-utils";
@@ -8,6 +7,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import RelatedResources from "@/components/RelatedResources";
 import ModuleComments from "@/components/ModuleComments";
 import DisciplineOfSilenceClient from "./DisciplineOfSilenceClient";
+import ModuleConnector from "@/components/ModuleConnector";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +61,8 @@ export default async function ResourcePage(props: any) {
         </div>
       </div>
 
-      <DisciplineOfSilenceClient {...props} isSaved={isSaved} />
+      <DisciplineOfSilenceClient isSaved={isSaved} isLoggedIn={!!user} />
+      <ModuleConnector currentSlug={RESOURCE_SLUG} savedResources={savedResources} isLoggedIn={!!user} />
       <div className="border-t border-gray-100 py-10">
         <div className="container-wide">
           <ModuleComments slug="discipline-of-silence" />
